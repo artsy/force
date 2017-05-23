@@ -18,6 +18,6 @@ desktop/public/assets
 mobile/public/assets
 dump.rdb
 /node_modules
-coffeelint.json
 manifest.json
 public
+.vscode/settings.json

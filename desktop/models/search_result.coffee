@@ -30,7 +30,7 @@ module.exports = class SearchResult extends Backbone.Model
     _s.trim(_s.truncate(@get('display'), 75))
 
   location: ->
-    if @get('model') is 'profile'
+    if @get('model') is 'profile' || @get('model') is 'page'
       "/#{@get('id')}"
     else if @get('model') is 'fair'
       "/#{@get('profile_id')}"
@@ -57,7 +57,7 @@ module.exports = class SearchResult extends Backbone.Model
     _s.capitalize model
 
   imageUrl: ->
-    return null if @get('display_model') is 'Artist'
+    return "/images/icon-70.png" if @get('display_model') in ['Page', 'City'] # internal pages
     @get('image_url')
 
   resultsPageTitle: ->
@@ -81,7 +81,7 @@ module.exports = class SearchResult extends Backbone.Model
       @formatEventAbout('Sale')
     else if @get('display_model') in ['Show', 'Booth']
       @formatShowAbout()
-    else if @get('display_model') in ['Artwork', 'Feature', 'Gallery']
+    else if @get('display_model') in ['Artwork', 'Feature', 'Gallery', 'Page']
       @get('description')
     else if @get('display_model') == 'City'
       @formatCityAbout()

@@ -2,12 +2,11 @@ moment = require 'moment'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Sale = require '../../models/sale'
 Artwork = require '../../models/artwork'
+Sale = require '../../models/sale'
 
 describe 'Sale', ->
   beforeEach ->
-    @sd = API_URL: 'http://localhost:5000'
     @sale = new Sale fabricate 'sale'
 
     sinon.stub Backbone, 'sync'
@@ -209,10 +208,9 @@ describe 'Sale', ->
 
     it 'fetches the sale artworks', ->
       @sale.fetchArtworks()
-      Backbone.sync.args[0][1].url.should.match /// /api/v1/sale/.*/sale_artworks ///
+      Backbone.sync.args[0][1].url().should.match /// /api/v1/sale/.*/sale_artworks ///
 
   describe '#registerUrl', ->
-
     it 'points to the secure auction registration page'
     it 'points to the signup page when not logged in'
 

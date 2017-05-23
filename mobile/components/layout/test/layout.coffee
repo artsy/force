@@ -5,8 +5,6 @@ Backbone = require 'backbone'
 benv = require 'benv'
 { resolve } = require 'path'
 sd = require('sharify').data
-servers = require '../../../test/helpers/servers'
-Browser = require 'zombie'
 rewire = require 'rewire'
 sinon = require 'sinon'
 
@@ -63,21 +61,6 @@ describe 'Layout init code', ->
     window.location.should.equal '/users/sign_out'
     sd.CURRENT_USER = null
 
-describe 'Html class from user agent', ->
-
-  before (done) ->
-    servers.setup -> done()
-
-  after ->
-    servers.teardown()
-
-  it 'adds the hide header/footer artsy-mobile class to the html tag', (done) ->
-    browser = new Browser(userAgent: 'Artsy-Mobile')
-    browser.visit 'http://localhost:5000', ->
-      browser.wait ->
-        browser.querySelector('html').className.should.containEql 'layout-artsy-mobile-app'
-        done()
-
 describe 'Canonical url', ->
 
   xit "renders the canonical meta tag", ->
@@ -85,7 +68,7 @@ describe 'Canonical url', ->
     jade.compile(
       fs.readFileSync(filename),
       { filename: filename }
-    )(pathname: '/test', sd: { ARTSY_URL: 'http://artsy.net'}).should.containEql "link href=\"http://artsy.net/test\" rel=\"canonical\""
+    )(pathname: '/test', sd: { APP_URL: 'http://artsy.net'}).should.containEql "link href=\"http://artsy.net/test\" rel=\"canonical\""
 
 describe 'inquiry cookies', ->
 

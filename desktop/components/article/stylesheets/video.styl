@@ -1,0 +1,87 @@
+column-width = 580px
+play-button-size = 30px
+body-width = 580px
+
+.article-section-video
+  position relative
+  iframe
+    width 100%
+    height 100%
+    max-width 100%
+    max-height ((default-max-page-width * .5625) - 50)
+  figcaption
+      margin-top 10px
+      text-align left
+      color gray-darker-color
+      garamond-size('l-caption')
+      a
+        color gray-darker-color
+
+.article-section-container.responsive-layout-container[data-section-type="video"]
+  &[data-layout="column_width"]
+    max-width column-width
+    margin auto
+  &[data-layout="overflow_fillwidth"]
+    max-width 100vw
+    @media screen and (max-width 1250px)
+      margin 45px 0
+    .article-section-video
+      width 100%
+      padding 40px 75px
+      @media screen and (max-width 900px)
+        padding 40px 0
+      &.article-video-background-black
+        width 100%
+        background black
+      .article-video-container
+        width body-width + 200
+        position relative
+        margin auto
+        @media screen and (max-width 1250px)
+          width 100%
+
+.article-large-format-video-container .article-video
+  position relative
+  max-width 1250px
+  margin-bottom 50px
+
+  iframe
+    width 100%
+    height 100%
+    max-width 100%
+    max-height ((default-max-page-width * .5625) - 50)
+
+.article-video-play-button
+  background white
+  width play-button-size + 40px
+  height @width
+  position absolute
+  top "calc(50% - %s)" % (@width / 2)
+  left "calc(50% - %s)" % (@width / 2)
+  z-index 2
+  cursor pointer
+  border 0
+  outline 0
+
+.article-video-play-button-caret
+  width 0
+  height 0
+  top 14px
+  left 22px
+  position absolute
+  border-top (play-button-size - 10) solid transparent
+  border-bottom (play-button-size - 10) solid transparent
+  border-left play-button-size solid black
+
+.article-video-cover-image
+  background center center
+  background-size cover
+  width 100%
+  height 100%
+  position absolute
+  top 0
+  left 0
+  z-index 1
+
+.article-large-format-video-container
+  position relative

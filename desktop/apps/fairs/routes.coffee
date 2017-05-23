@@ -1,6 +1,6 @@
 { NODE_ENV } = require '../../config'
 _ = require 'underscore'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 ViewHelpers = require './helpers/view_helpers.coffee'
 query = require './query.coffee'
 
@@ -18,5 +18,4 @@ query = require './query.coffee'
       upcomingFairs: upcomingFairs
       pastFairs: pastFairs
       ViewHelpers: ViewHelpers
-  .catch (err) ->
-    next(err if NODE_ENV is 'development')
+  .catch next

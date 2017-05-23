@@ -12,13 +12,9 @@ block body
     include banner
     .main-layout-container.responsive-layout-container
       include header
+      #associated-sale
 
       .auction-my-active-bids
-
-      section.auction-artworks-container.js-auction-artworks-section
-        - artworks = artworks.models
-        include ../../../components/auction_artworks/templates/index
-
-      section.below-auction-artworks
-        include associated_auction
+      #cf-artworks
+      if articles && articles.length > 0 || auction.get('eligible_sale_artworks_count') === 0
         include footer

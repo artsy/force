@@ -3,7 +3,7 @@ moment = require 'moment'
 tz = require 'moment-timezone'
 { USER_HOME_PAGE } = require('sharify').data
 User = require '../../../models/user.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
@@ -24,7 +24,7 @@ contexts =
       auctionTimeLabel: auctionTimeLabel(module.context)
       auctionClosesLabel: auctionClosesLabel(module.context)
   current_fairs: (module) ->
-    fairTemplate fair: module.context, timeSpan: timeSpan    
+    fairTemplate fair: module.context, timeSpan: timeSpan
 
 setupFollowedArtistsView = (module, $el, user) ->
   view = new FollowedArtistsRailView
@@ -70,12 +70,14 @@ module.exports = ->
       req: { user: user }
     ).then ({ home_page: { artwork_module } }) ->
       module = artwork_module
-
       return $el.remove() unless module.results?.length or module.key is 'followed_artists'
-      return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
+      if module.key is 'active_bids'
+        $el.find('.abrv-header h1').html(module.title)
+        return setupActiveBidsView(module, $el.find('.abrv-content'), user)
+      
       return setupFollowedArtistsView(module, $el, user) if module.key is 'followed_artists'
 
-      options = 
+      options =
         $el: $el
         artworks: module.results
         title: module.title
@@ -85,11 +87,11 @@ module.exports = ->
         category: module.key is 'genes' or module.key is 'generic_gene'
 
       if module.key is 'related_artists'
-        options.annotation = relatedArtistsAnnotation 
+        options.annotation = relatedArtistsAnnotation
           based_on: module.context?.based_on
 
       view = new ArtworkBrickRailView options
-        
+
       view.on 'post-render', ->
 
         setupFollowButton

@@ -1,5 +1,5 @@
 Artist = require '../../models/artist'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 Q = require 'bluebird-q'
 
 query = """

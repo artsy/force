@@ -22,6 +22,7 @@ describe 'ArticleView', ->
           {
             type: 'video'
             url: 'http://youtube.com'
+            caption: 'caption'
             cover_image_url: 'http://artsy.net/cover_image_url.jpg'
             layout: 'full-width'
             background_color: 'black'

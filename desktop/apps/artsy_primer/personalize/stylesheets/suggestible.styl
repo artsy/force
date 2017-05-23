@@ -1,8 +1,16 @@
+.artsy-primer-personalize-step
+  @media screen and (max-width: 768px)
+    &[data-step='artists']
+      padding 20px
+
 #artsy-primer-personalize-suggestions-container
   max-width 1080px
   margin 90px auto
   text-align center
   prevent-content-shift()
+  @media screen and (max-width: 768px)
+    margin 0 20px
+    padding 0
   > .artsy-primer-personalize-suggestions-more-container
     display none
   &[data-state='loaded']
@@ -72,6 +80,11 @@
   &.is-artist
     width 20%
     margin 0 0 30px 0
+    @media screen and (max-width: 768px)
+      width 50%
+      .avant-garde-follow-button-black
+        width calc(100% \- 20px)
+        padding 15px
     > .artsy-primer-personalize-suggestion-thumbnail
       width 90%
       height @width

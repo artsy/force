@@ -12,9 +12,13 @@ if (location.pathname.match('/gallery-partnerships')) {
     )
   })
 
-  $('#mktoForm_1238 .mktoButtonRow').click(function (e) {
+  $('#mktoForm_1238 .mktoButtonRow').click(function(e) {
+    window.email = $("#Email").val();
     analytics.track('Clicked bottom apply on gallery partnerships',
-      {session_id: sd.SESSION_ID}
-    )
+      {session_id: sd.SESSION_ID, email: email}
+    );
+    analytics.identify(
+      {session_id: sd.SESSION_ID, email: email }
+    );
   })
 }

@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-track = require('../../../lib/analytics.coffee').track
 
 StepView = class StepView extends Backbone.View
   initialize: (options) ->
@@ -12,7 +11,6 @@ StepView = class StepView extends Backbone.View
 
   advance: (e) ->
     e?.preventDefault()
-    track.funnel "Finishing #{@state.get('current_step')}", { label: "User:#{@user.id}" }
     @state.trigger 'transition:next'
 
   focus: (e) ->

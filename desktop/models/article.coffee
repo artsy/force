@@ -165,7 +165,7 @@ module.exports = class Article extends Backbone.Model
     bodyClass = "body-article body-article-#{@get('layout')}"
     if @get('hero_section') and @get('hero_section').type == 'fullscreen'
       bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
-      if @get('is_super_article')
+      if @get('is_super_article') or data.superArticle
         bodyClass += ' body-no-header'
     if @isEOYSubArticle(data.superSubArticleIds, data.superArticle)
       bodyClass += ' body-eoy-2016'
@@ -264,6 +264,9 @@ module.exports = class Article extends Backbone.Model
 
   # article metadata tag for parse.ly
   toJSONLD: ->
+    tags = @get('tags')
+    tags = tags.concat @get('vertical').name if @get('vertical')
+    tags = tags.concat @get('tracking_tags') if @get('tracking_tags')
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
@@ -273,7 +276,7 @@ module.exports = class Article extends Backbone.Model
       "dateCreated": @get('published_at')
       "articleSection": @getParselySection()
       "creator": @getAuthorArray()
-      "keywords": @get('tags')
+      "keywords": tags
     }
 
   toJSONLDAmp: ->

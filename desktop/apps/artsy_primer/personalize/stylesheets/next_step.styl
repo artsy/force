@@ -7,7 +7,7 @@
   z-index 2
   padding 20px
   width 340px
-  background rgba(255,255,255,0.8)
+  background rgba(255,255,255,0.95)
   box-shadow -4px 4px 8px rgba(0,0,0,0.3)
 
   &-progress
@@ -43,13 +43,17 @@
     color white
     &:hover, &:focus
       background purple-color
+    @media screen and (max-width: 768px)
+      margin-top 10px
 
   &-artworks
     overflow-x scroll
     width 100%
     padding-top 10px
     &-inner
-      width 100000px
+      white-space nowrap
+    @media screen and (max-width: 768px)
+      display none
 
   &-artwork
     display inline-block
@@ -61,3 +65,12 @@
 
     &-img
       height 120px
+
+  @media screen and (max-width: 768px)
+    position fixed
+    bottom 0
+    width 100%
+    height 150px
+    top auto
+    z-index 10
+

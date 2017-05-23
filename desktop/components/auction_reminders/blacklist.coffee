@@ -5,6 +5,11 @@ module.exports =
   patterns: [
     '^/personalize'
     '^/artsy-primer'
+    '^/collect-art'
+    '^/consign'
+    '^/consign2'
+    '^/signup'
+    '^/login'
     '^/user/edit'
     '^/sale/.*'
     '^/auction/.*'
@@ -17,6 +22,7 @@ module.exports =
     TEAM_BLOGS or '^/test'
     '^/2016-year-in-art'
     '^/artist/.*'
+    '^/venice-biennale.*'
   ]
 
   check: ->

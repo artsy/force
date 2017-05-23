@@ -2,6 +2,8 @@ extends ../../../components/fair_layout/templates/conditional
 
 block head
   include meta
+  if article.get('tags') && article.get('tags').indexOf('noindex') >= 0
+      meta( name='robots', content='noindex' )
 
 append locals
   - assetPackage = 'article'
@@ -20,6 +22,10 @@ block body
     //- Article body
     #articles-body-container
       include ../../../components/article/templates/index
+
+      //- Render banner for venice 2017 if article is in venice section
+      if article.get('section_ids') && article.get('section_ids').includes(sd.VENICE_2015_SECTION)
+        .venice-redirect-banner--article
 
     if sd.SCROLL_ARTICLE === "infinite"
       #article-loading: .loading-spinner

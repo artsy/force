@@ -44,8 +44,8 @@ describe 'Related Artworks', ->
             is_open: true
             artworks: [
               fabricate 'artwork', {
-                sale_artwork: lot_number: '24'
-                sale: { sale_artwork: lot_number: '24' }
+                sale_artwork: lot_label: '24'
+                sale: { sale_artwork: lot_label: '24' }
               }
             ]
 

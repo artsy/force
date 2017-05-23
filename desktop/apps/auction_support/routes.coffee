@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Analytics = require 'analytics-node'
 Feature = require '../../models/feature.coffee'
 Sale = require '../../models/sale.coffee'
 Order = require '../../models/order.coffee'
@@ -6,7 +7,7 @@ Artwork = require '../../models/artwork.coffee'
 SaleArtwork = require '../../models/sale_artwork.coffee'
 BidderPositions = require '../../collections/bidder_positions.coffee'
 buyersPremium = require '../../components/buyers_premium/index.coffee'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
@@ -16,7 +17,19 @@ registerOrRender = (sale, req, res, next) ->
         req.user.createBidder
           saleId: sale.get('id')
           error: res.backboneError
-          success: -> res.redirect sale.registrationSuccessUrl()
+          success: (bidder) ->
+            analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
+            analytics.track(
+              event: 'Registration submitted',
+              userId: req.user.get('id'),
+              properties: {
+                auction_slug: sale.get('id'),
+                auction_state: sale.get('auction_state'),
+                user_id: req.user.get('id'),
+                bidder_id: bidder.get('id')
+              }
+            )
+            res.redirect sale.registrationSuccessUrl()
       else
         order = new Order()
         res.render 'registration',

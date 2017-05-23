@@ -71,9 +71,6 @@ module.exports = class BoothsView extends Backbone.View
   hideSpinner: ->
     @$('#fair-booths-spinner').hide()
 
-  toggleBoothCount: =>
-    @$('.fair-booths-count-container')[if @params.get('section') then 'hide' else 'show']()
-
   navigateSection: =>
     if @params.get 'section'
       @router.navigate "#{@profile.id}/browse/booths/section/#{@params.get 'section'}"

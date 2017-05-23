@@ -67,29 +67,6 @@ describe 'HeaderView', ->
       spy.args[0][1].mode.should.equal 'signup'
       mediator.trigger.restore()
 
-  describe 'with flash message', ->
-    before (done) ->
-      benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
-        $.support.transition = { end: 'transitionend' }
-        $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
-        @HeaderView = rewire '../view'
-        @HeaderView.__set__ 'SearchBarView', Backbone.View
-        @HeaderView.__set__ 'AuthModalView', sinon.stub()
-        @HeaderView.__set__ 'FlashMessage', sinon.stub()
-        @HeaderView.__set__ 'sd', FLASH: 'Goodbye world.'
-        @triggerSpy = sinon.spy mediator, 'trigger'
-        @view = new @HeaderView
-          el: $('#main-layout-header')
-          $window: @$window =
-            on: sinon.stub()
-            off: sinon.stub()
-            scrollTop: -> 55
-          $body: $('body')
-        done()
-
-    it 'checks for flash messages initializes the flash message', ->
-      @HeaderView.__get__('FlashMessage').args[0][0].message.should.equal 'Goodbye world.'
-
   describe '#checkForNotifications', ->
 
     before (done) ->

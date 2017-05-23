@@ -8,7 +8,7 @@ module.exports = """
         is_leading_bidder
         sale_artwork {
           id
-          lot_number
+          lot_label
           reserve_status
           counts {
             bidder_positions
@@ -21,13 +21,14 @@ module.exports = """
             live_start_at
             end_at
             is_live_open
+            is_closed
           }
           artwork {
             href
             title
             date
             image {
-              url(version: "small")
+              url(version: "square")
             }
             artist {
               name

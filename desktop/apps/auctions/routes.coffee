@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Auctions = require '../../collections/auctions'
 AuctionReminders = require '../../components/auction_reminders/fetch'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 
 setupUser = (user, auction) ->
   if user? and auction?
@@ -20,7 +20,7 @@ setupUser = (user, auction) ->
 
   auctions.fetch(
     cache: true
-    data: published: true, size: 30, sort: '-created_at'
+    data: published: true, size: 30, sort: '-timely_at,name'
   ).then(->
     setupUser(req.user, auctions.next())
   ).then((userData) ->

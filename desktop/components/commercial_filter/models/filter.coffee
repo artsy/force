@@ -4,7 +4,7 @@ Aggregations = require '../collections/aggregations.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Artists = require '../../../collections/artists.coffee'
 User = require '../../../models/user.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 _ = require 'underscore'
 
 module.exports = class Filter extends Backbone.Model
@@ -14,7 +14,6 @@ module.exports = class Filter extends Backbone.Model
   initialize: ({ @params } = {}) ->
     throw new Error 'Requires a params model' unless @params?
     @artworks = new Artworks()
-    @popular_artists = new Artists()
     @aggregations = new Aggregations()
 
     @params.on 'change', @fetch, @
@@ -57,7 +56,6 @@ module.exports = class Filter extends Backbone.Model
         $size: Int,
         $color: String,
         $price_range: String,
-        $estimate_range: String,
         $gene_id: String,
         $gene_ids: [String],
         $artist_ids: [String],
@@ -68,7 +66,8 @@ module.exports = class Filter extends Backbone.Model
         $major_periods: [String],
         $partner_cities: [String],
         $aggregation_partner_cities: [String],
-        $include_artworks_by_followed_artists: Boolean
+        $include_artworks_by_followed_artists: Boolean,
+        $keyword: String
       ){
         filter_artworks(
           aggregations: $aggregations,
@@ -79,7 +78,6 @@ module.exports = class Filter extends Backbone.Model
           height: $height,
           color: $color,
           price_range: $price_range,
-          estimate_range: $estimate_range,
           gene_id: $gene_id,
           gene_ids: $gene_ids,
           artist_ids: $artist_ids,
@@ -90,7 +88,8 @@ module.exports = class Filter extends Backbone.Model
           major_periods: $major_periods,
           partner_cities: $partner_cities,
           aggregation_partner_cities: $aggregation_partner_cities,
-          include_artworks_by_followed_artists: $include_artworks_by_followed_artists
+          include_artworks_by_followed_artists: $include_artworks_by_followed_artists,
+          keyword: $keyword
         ){
           total
           followed_artists_total
@@ -116,7 +115,6 @@ module.exports = class Filter extends Backbone.Model
           @set loading: false
           @set total: filter_artworks.total
           @set followed_artists_total: filter_artworks.followed_artists_total
-          @popular_artists.reset filter_artworks.merchandisable_artists
           @aggregations.reset filter_artworks.aggregations if filter_artworks.aggregations
           resolve @
         .catch (error) ->

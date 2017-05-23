@@ -35,7 +35,7 @@ query = require './queries/editorial_articles.coffee'
           articles: articles
           crop: crop
 
-    .catch (err) -> next(err if NODE_ENV is 'development')
+    .catch next
 
 setupEmailSubscriptions = (user, cb) ->
   return cb({ editorial: false }) unless user?.email
@@ -61,7 +61,7 @@ setupEmailSubscriptions = (user, cb) ->
         success: (articles) ->
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.SECTION = section.toJSON()
-          res.render 'section', section: section, articles: articles
+          res.render 'section', section: section, articles: articles, veniceBanner: true
 
 @teamChannel = (req, res, next) =>
   slug = last req.url.split('/')

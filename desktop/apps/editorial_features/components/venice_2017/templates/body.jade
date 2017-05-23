@@ -1,0 +1,21 @@
+include ./mixins
+
+.venice-body--series
+  .venice-body__left
+    .venice-body__about
+      h2 About the Series
+      p!=markdown(curation.get('description'))
+
+      a(href="https://www.ubs.com/global/en/about_ubs/contemporary-art.html" target="_blank").venice-body__partner
+        span Presented In Collaboration With
+        img(src="https://artsy-media-uploads.s3.amazonaws.com/qp6GUcn5RkvscdYEBmqFXw%2FUBS_White.png")
+    +help
+
+  .venice-body__right
+    h2 Index
+    .venice-body__index
+      each section, i in curation.get('sections')
+        +index_item(section, i)
+    +help
+
+.venice-body--credit Cover photos by Alex John Beck for Artsy.

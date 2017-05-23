@@ -1,0 +1,106 @@
+{
+    "header": {
+        "headline": "Sell your Works on Artsy",
+        "button_cta":  "Start consigning",
+        "image": {
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
+        }
+    },
+    "sections": {
+        "how_consignments_work": {
+            "headline": "See if we’re consigning works for your artist",
+            "button_cta": "Get started",
+            "steps": [
+                {
+                    "title": "Submit",
+                    "icon": "write.svg",
+                    "description": "Submit details about your work in a few steps"
+                },
+                {
+                    "title": "Select",
+                    "icon": "write.svg",
+                    "description": "Receive offers from Artsy's partner network, privacy 100% guaranteed"
+                },
+                {
+                    "title": "Sell",
+                    "icon": "write.svg",
+                    "description": "Get your work placed in an upcoming sale"
+                }
+            ]
+        },
+        "placement": {
+            "headline": "Artsy will connect you with our network of top tier partners",
+            "logos": [
+                {
+                    "src": "https://artsy-media-uploads.s3.amazonaws.com/0ikmO-lqXpXfgdqCN3fyKA/BqGweX7DFx.png"
+                },
+                {
+                    "src": "https://artsy-media-uploads.s3.amazonaws.com/1ZVFBUQXVTemsmTYVU7oVA/hSbNB9tVxP.png"
+                },
+                {
+                    "src": "https://artsy-media-uploads.s3.amazonaws.com/6YrPM2MptK9e7osEHSfR9Q/QOwua6I3rO.png"
+                },
+                {
+                    "src": "https://artsy-media-uploads.s3.amazonaws.com/vM3WsFaTc8SIvxeSiSiRYQ/5FjrGytqSh.png"
+                }
+            ]
+        },
+        "top_sales": {
+            "headline": "We've been helping collectors get their works placed in top sales",
+            "button_cta": "Submit my work"
+        },
+        "recently_sold": {
+            "sub_headline": "Recently sold on Artsy",
+            "set": {
+                "id": "56e057c8139b213d70002393"
+            }
+        },
+         "in_demand": {
+            "sub_headline": "Top Artists in demand",
+            "set": {
+                "id": "56e057c8139b213d70002393"
+            }
+        },
+        "upcoming_sales": {
+            "headline": "Have your work sold at one of our upcoming partner sales",
+            "button_cta": "Submit my work",
+            "image": {
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
+            }
+        },
+        "questions": {
+            "headline": "Have questions? We're here to help",
+            "crt_photo_1": {
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
+            },
+            "crt_photo_2": {
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
+            },
+            "sections": [
+                {
+                    "sub_headline": "Why consign on Artsy?",
+                    "description": "Artsy wants to make it easy and effective to buy and sell art. We partner with premier auction houses and other third parties to remove the stress from the selling process, and to give you access to the highest level of service."
+                },
+                {
+                    "sub_headline": "What happens once I submit a work?",
+                    "description": "Submissions are routed to our network of auction house and third party partners. Our growing list of partners includes many of the top auction houses and galleries across the globe."
+                },
+                {
+                    "sub_headline": "Are there any fees?",
+                    "description": "Artsy does not charge the user any fees. When we connect you with a partner, the partner will provide you an estimate of the fees they may charge you for their services."
+                },
+                {
+                    "sub_headline": "Want to learn more? Read our full FAQ or contact us.",
+                    "description": ""
+                }
+            ]
+        },
+        "footer": {
+            "headline": "Start your consignment submission",
+            "button_cta":  "Get started",
+            "image": {
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
+            }
+        }
+    }
+}

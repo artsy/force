@@ -4,10 +4,12 @@ module.exports = """
     href
     is_inquireable
     sale {
+      href
       is_auction
+      is_closed
       is_live_open
       is_open
-      is_closed
+      is_preview
     }
     sale_artwork {
       highest_bid {

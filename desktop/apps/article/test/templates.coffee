@@ -80,6 +80,22 @@ describe 'article template', ->
     html.should.containEql 'team-channel-nav'
     html.should.containEql 'Editorial'
 
+  it "adds a noindex meta tag for articles tagged noindex", ->
+    html = render('article')
+      article: new Article
+        title: 'hi'
+        sections: []
+        section_ids: []
+        contributing_authors: []
+        tags: ['noindex']
+      crop: (url) -> url
+      resize: (url) -> url
+      moment: moment
+      sd:
+        SCROLL_ARTICLE: 'static'
+      asset: ->
+    html.should.containEql '<meta name="robots" content="noindex">'
+
 describe 'amp template', ->
 
   it 'renders headers and footers', ->

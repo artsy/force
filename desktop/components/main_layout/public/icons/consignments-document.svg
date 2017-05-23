@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="96px" height="117px" viewBox="0 0 96 117" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="11" y="0" width="85" height="105"></rect>
+        <rect id="path-2" x="0" y="12" width="85" height="105"></rect>
+    </defs>
+    <g id="Submission" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-38" transform="translate(-34.000000, -409.000000)">
+            <g id="icon" transform="translate(34.000000, 409.000000)">
+                <g id="Rectangle-10-Copy">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <rect stroke="#E5E5E5" stroke-width="6" x="14" y="3" width="79" height="99"></rect>
+                </g>
+                <g id="Rectangle-10">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    <rect stroke="#E5E5E5" stroke-width="6" x="3" y="15" width="79" height="99"></rect>
+                </g>
+                <path d="M20.6315789,95 L67.3684211,95" id="Line" stroke="#E5E5E5" stroke-width="6" stroke-linecap="square"></path>
+                <path d="M20.6315789,79 L67.3684211,79" id="Line-Copy" stroke="#E5E5E5" stroke-width="6" stroke-linecap="square"></path>
+                <path d="M20.6315789,63 L67.3684211,63" id="Line-Copy-2" stroke="#E5E5E5" stroke-width="6" stroke-linecap="square"></path>
+                <path d="M52.9652435,48 L67.3684211,48" id="Line-Copy-3" stroke="#E5E5E5" stroke-width="6" stroke-linecap="square"></path>
+                <path d="M52.9652435,35 L67.3684211,35" id="Line-Copy-4" stroke="#E5E5E5" stroke-width="6" stroke-linecap="square"></path>
+                <circle id="Oval-5" fill="#E5E5E5" cx="29.5" cy="41.5" r="11.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

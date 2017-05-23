@@ -11,7 +11,7 @@ block body
     #feature-bid-page-detail
       img( src=artwork.defaultImageUrl() )
       h2
-        .feature-bid-page-lot-num Lot #{saleArtwork.get('lot_number')}
+        .feature-bid-page-lot-num Lot #{saleArtwork.get('lot_label')}
         if artwork.get('artist')
           = artwork.get('artist').name
           br

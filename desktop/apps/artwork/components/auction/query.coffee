@@ -16,6 +16,7 @@ module.exports = """
       is_auction
       is_auction_promo
       is_with_buyers_premium
+      require_bidder_approval
     }
     sale_artwork {
       id

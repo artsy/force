@@ -1,0 +1,45 @@
+mixin index_item(section, i)
+  .venice-body__index-item
+    a(href='#{sd.APP_URL}/venice-biennale/#{section.slug}' class=section.published? 'published':'')
+      include ../icons/icon_play.svg
+      span.title=section.title
+      if !section.published && section.release_date
+        span='(' + moment(section.release_date).format('MMMM Do') + ')'
+
+mixin help
+  .venice-body__help
+    p Having trouble viewing?
+    p
+      a(href='#') Read our 360° video guide
+
+mixin follow(section)
+  .venice-body__follow
+    p Follow the artists behind the Venice Biennale to discover more incredible art.
+    each artist in section.artist_ids
+      .venice-body__follow-item
+        a(class='artist-follow' data-id=artist.id artist-id=artist._id)
+          span.follow-text
+          span=artist.value
+
+mixin share(description, url)
+  .venice-body__item-share
+    .share-item
+      a.share-to-facebook(
+        data-message='Post to Facebook',
+        data-service='facebook',
+        href="https://www.facebook.com/sharer/sharer.php?u=#{url}",
+        target='_blank'
+      ): i.icon-facebook-f.icon-in-table
+    .share-item
+      a.share-by-email(
+        data-message='Share via email',
+        data-service='email',
+        href="mailto:?subject=#{description}&body=#{description}: #{url}"
+      ): i.icon-mail.icon-in-table
+    .share-item
+      a.share-to-twitter(
+        data-message='Share on Twitter',
+        data-service='twitter',
+        href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
+        target='_blank'
+      ): i.icon-twitter.icon-in-table

@@ -4,7 +4,7 @@
 //
 
 // Track pageview
-analytics.page({path: location.pathname})
+analytics.page({path: location.pathname}, {integrations: {'Marketo': false}})
 
 // Track 15 second bounce rate
 setTimeout(function () {

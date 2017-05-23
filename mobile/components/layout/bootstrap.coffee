@@ -10,8 +10,8 @@ Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
 FastClick = require 'fastclick'
+RavenClient = require 'raven-js'
 sd = require('sharify').data
-analytics = require '../../lib/analytics.coffee'
 Cookies = require 'cookies-js'
 { parse } = require 'url'
 HeaderView = require './client/header_view.coffee'
@@ -34,6 +34,7 @@ module.exports = ->
   # removes 300ms delay
   FastClick document.body
 
+  setupErrorReporting()
   setupHeaderView()
   syncAuth()
 
@@ -60,17 +61,10 @@ syncAuth = module.exports.syncAuth = ->
           complete: ->
             window.location.reload()
 
+setupErrorReporting = ->
+  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
+
 # Show search button on focusing the search bar
 setupHeaderView = ->
   new HeaderView
     el: $('#main-header')
-
-# Initialize analytics & track page view if we included mixpanel
-# (not included in test environment).
-setupAnalytics = ->
-  return if not mixpanel? or mixpanel is 'undefined'
-  analytics(mixpanel: mixpanel, ga: ga)
-  analytics.trackPageview()
-  analytics.registerCurrentUser()
-
-setupAnalytics()

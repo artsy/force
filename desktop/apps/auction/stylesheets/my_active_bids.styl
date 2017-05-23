@@ -1,54 +1,68 @@
 @require '../../../components/stylus_lib'
 
 .auction-my-active-bids
+  &__active-bid
+    display flex
+    justify-content flex-left
+    height 130px
+    align-items center
+    border-bottom 1px solid gray-lighter-color
+
+    &:last-child
+      border-bottom none
+      margin-bottom 40px
   h2
     garamond-size('headline')
-    padding-bottom 20px
-    border-bottom 1px solid gray-lighter-color
-  td
-    padding 30px 0
-    border-bottom 1px solid gray-lighter-color
-  table
-    width 100%
+    padding 20px 0px
+    border-top 1px solid gray-lighter-color
 
-.auction-mab-artist-artwork-container
-  max-width 300px
+  &__artwork-container
+    text-align center
+    min-width 200px
 
-.auction-mab-artwork-metadata
-  > *
-    overflow ellipsis
+    img
+      max-height 100px
+      max-width 200px
 
-.auction-mab-artist-artwork
-  max-width 60%
-  h3
-    avant-garde-size('l-headline')
+  &__artwork
+    margin-left 20px
+    min-width 25%
+    max-width 25%
+    padding-right 20px
 
-.auction-mab-img
-  max-width 130px
-  max-height @max-width
-  margin-right 30px
+    > *
+      overflow ellipsis
+    h3
+      garamond-size('l-caption')
+      font-weight 600
 
-.auction-mab-title
-  garamond-size('l-caption')
+  &__title
+    garamond-size('l-caption')
 
-.auction-mab-lot-number
-  avant-garde-size('body')
+  &__lot-number
+    avant-garde-size('s-headline')
 
-.auction-mab-current-bid
-  em
-    avant-garde-size('m-headline')
+  &__current-bid, &__bids-num
+    garamond-size('l-caption')
     font-style normal
 
-.auction-mab-artist-artwork
-.auction-mab-img
-  display inline-block
-  vertical-align middle
+  &__current-bid
+    width 20%
 
-.auction-mab-bid-button, .auction-mab-bid-button-live
-  width 100%
+  &__bids-num
+    width 10%
 
-td.bid-status-cell
-  .bid-status
-    position relative
-  p
-    font-size 15px
+  &__img
+    display inline-block
+    vertical-align middle
+
+  &__bid-button, &__bid-button-live
+    width 13%
+    text-align center
+
+  .bid-status-cell
+    width 17%
+    .bid-status
+      position relative
+      p
+        avant-garde-size('s-headline')

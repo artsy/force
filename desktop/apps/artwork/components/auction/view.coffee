@@ -1,4 +1,4 @@
-{ defer, extend, before } = require 'underscore'
+{ defer, extend, before, isEqual } = require 'underscore'
 Backbone = require 'backbone'
 { AUCTION, CURRENT_USER } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
@@ -8,8 +8,11 @@ AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 template = -> require('./templates/index.jade') arguments...
+
+LOT_STANDING_MAX_POLLS = 10
+LOT_STANDING_POLL_INTERVAL = 1000
 
 module.exports = class ArtworkAuctionView extends Backbone.View
   className: 'artwork-auction'
@@ -23,7 +26,9 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'change .js-artwork-auction-max-bid': 'setMaxBid'
 
   initialize: ({ @data }) -> #
-    setInterval before(10, @updateBidLabel), 1000
+    # Defer until next tick. This really just gets the sequence right for
+    # testing to work. This doesn't feel like a great justification, though.
+    setTimeout (=> @updateBidLabel LOT_STANDING_MAX_POLLS), 0
 
   openBuyersPremium: (e) ->
     e.preventDefault()
@@ -94,19 +99,23 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       defer -> form.error message
 
   render: ->
-    @$el.html template extend {}, @data,
+    @$el.html template extend {}, @data, {
       helpers: auction: helpers
+    }
     this
 
   setMaxBid: (e) ->
     @$('.js-artwork-auction-bid-button')
       .text "Bid #{$(e.target).find('option:selected').attr 'data-display'}"
 
-  updateBidLabel: =>
+  updateBidLabel: (remaining) ->
     metaphysics
       query: """
         query artwork($id: String!, $sale_id: String!) {
           me {
+            bidders(sale_id: $sale_id) {
+              qualified_for_bidding
+            }
             lot_standing(artwork_id: $id, sale_id: $sale_id) {
               is_leading_bidder
               most_recent_bid {
@@ -125,7 +134,14 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       variables: id: AUCTION.artwork_id, sale_id: AUCTION.id
       req: user: CURRENT_USER
     .then (data) =>
+      old_data = @data
       @data = extend data, user: CURRENT_USER?
-      @render()
+
+      @render() unless isEqual(old_data, data)
+
+      @delayedUpdateBidLabel(remaining - 1) if remaining > 0
+
     .catch console.error.bind console
 
+  delayedUpdateBidLabel: (remaining) ->
+    setTimeout (=> @updateBidLabel remaining), LOT_STANDING_POLL_INTERVAL

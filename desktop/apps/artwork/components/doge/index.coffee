@@ -1,5 +1,5 @@
 _ = require 'underscore'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 query = require './query.coffee'

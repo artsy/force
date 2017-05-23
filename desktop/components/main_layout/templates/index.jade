@@ -1,12 +1,14 @@
 //- Override any locals with `append locals`
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
+  - defaultOptions = {modal: true, flash: true, stripe: true, sailthru: true, marketo: true, quantcast: true}
+- options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 doctype html
 html(
   data-useragent=userAgent
   data-user-type=sd.CURRENT_USER && sd.CURRENT_USER.type
-  data-lab-features=sd.CURRENT_USER && sd.CURRENT_USER.lab_features.join(',')
+  data-lab-features=sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.join(',')
 )
   head
     include head

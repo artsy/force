@@ -21,6 +21,10 @@ module.exports = '''
       banner_size
       organizer {
         profile_id
+        profile {
+          is_publically_visible
+          href
+        }
       }
       image {
         url(version: "wide")

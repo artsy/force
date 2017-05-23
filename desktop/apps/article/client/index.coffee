@@ -8,6 +8,7 @@ GalleryInsightsView = require '../../../components/email/client/gallery_insights
 EditorialSignupView = require '../../../components/email/client/editorial_signup.coffee'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 TeamChannelNavView = require '../../../components/channel_nav/view.coffee'
+VeniceBanner = require '../../../components/venice_banner/index.coffee'
 Channel = require '../../../models/channel.coffee'
 Sale = require '../../../models/sale.coffee'
 Partner = require '../../../models/partner.coffee'
@@ -46,6 +47,8 @@ module.exports = class ArticleIndexView extends Backbone.View
     if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
       @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
         @setupPromotedContent()
+    if @article.get('section_ids')?.includes sd.VENICE_2015_SECTION
+      @setupVeniceBanner()
     @setupTeamChannel() if @channel.isTeam()
 
   setupTeamChannel: ->
@@ -53,6 +56,9 @@ module.exports = class ArticleIndexView extends Backbone.View
       el: $('body')
       $content: $('.article-content')
       offset: 0
+
+  setupVeniceBanner: ->
+    new VeniceBanner el: @$('.venice-redirect-banner--article')
 
   setupInfiniteScroll: ->
     @displayedArticles = [@article.get('slug')]

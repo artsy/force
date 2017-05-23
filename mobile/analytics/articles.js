@@ -53,11 +53,11 @@ if(location.pathname.match('/article/')){
 
   analyticsHooks.on('readmore', function(options) {
     analytics.track('Clicked Read More', {});
-    analytics.page({path: location.pathname});
+    analytics.page({path: location.pathname}, {integrations: {'Marketo': false}});
     if(window.PARSELY){
       window.PARSELY.beacon.trackPageView({
-        url: sd.ARTSY_URL + location.pathname,
-        urlref: sd.ARTSY_URL + '/article/' + options.urlref,
+        url: sd.APP_URL + location.pathname,
+        urlref: sd.APP_URL + '/article/' + options.urlref,
         js: 1,
         action_name: 'infinite'
       });
@@ -67,7 +67,7 @@ if(location.pathname.match('/article/')){
         domain: 'horizon.artsy.net',
         spider: true,
         track_url: true,
-        url: sd.ARTSY_URL + '/' + location.pathname,
+        url: sd.APP_URL + '/' + location.pathname,
         use_stored_tags: true
      });
     }

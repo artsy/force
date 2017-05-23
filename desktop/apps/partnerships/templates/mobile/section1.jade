@@ -1,0 +1,15 @@
+- section = sections[1]
+
+.gallery-partnerships-section-header.audience
+  h2= section.title
+  h3= section.heading
+  p.preamble= section.preamble
+
+.gallery-partnerships-section-content.audience
+  .audience-map
+    img( src=section.images[0].src )
+  .audience-quotes
+    - q = section.quotes[0]
+    .quote
+      .quote-text= q.quote
+      .quote-author #{q.author}, #{q.title}

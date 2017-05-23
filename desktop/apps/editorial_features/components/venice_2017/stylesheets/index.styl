@@ -1,0 +1,200 @@
+@require './video'
+@require './body'
+@require './carousel'
+@require './guide'
+
+nav-height = 54px
+
+.venice-feature
+  background-color black
+  color white
+  a
+    color white
+
+.venice-nav
+  position absolute
+  top 0
+  left 0
+  right 0
+  z-index 11
+  border-bottom 1px solid white
+  display flex
+  flex-direction row
+  justify-content space-between
+  align-items center
+  height nav-height
+  a
+    text-decoration none
+  &__sticky-artsy-logo
+    font-size 26px
+  &__sticky-right, &__sticky-left
+    margin 0px 20px
+  &__sticky-right
+    margin-right -1
+    avant-garde-size('body')
+  &__sticky-left
+    display flex
+    align-items center
+    .venice-nav__sticky-ubs-logo img
+      height 26px
+    .venice-nav__plus
+      transform rotate(45deg)
+      margin 10px
+      font-size 17px
+      font-smoothing antialiased
+
+.venice-header
+  min-height 100vh
+
+.venice-info-icon
+  position absolute
+  bottom 0
+  right 0
+  margin 30px
+  z-index 15
+  border 1px solid white
+  border-radius 50%
+  width 50px
+  height 50px
+  display flex
+  background-color rgba(0,0,0,0.5)
+  cursor pointer
+  svg
+    width 8px
+    margin auto
+    fill white
+  &:hover
+    background-color white
+    svg
+      fill black
+
+.venice-overlay, #vrvideo
+  min-height 100vh
+  width 100%
+  position absolute
+
+#vrvideo
+  height 100vh
+
+.venice-overlay, .venice-nav
+  transition display 0.5s ease
+
+.venice-feature .artist-follow
+  display flex
+  align-items center
+  float left
+  margin-left -5px
+  color white
+  .follow-text
+    display flex
+    align-items center
+    &:before
+      font-family artsy-icons
+      font-size 32px
+      line-height 32px
+      content '\e629'
+    &:after
+      margin-right 4px
+      content 'Follow'
+  &[data-state=following]
+    .follow-text:after
+      content 'Following'
+    .follow-text:before
+      content '\e628'
+  &[data-state=following]:hover
+    .follow-text:after
+      content 'Unfollow'
+
+.venice-footer
+  max-width 1100px
+  width 100%
+  padding 0 2em
+  padding-bottom 180px
+  margin 0 auto
+  a
+    text-decoration none
+    width 100%
+  h2
+    garamond-size('headline')
+    white-space initial
+    line-height 1.1em
+    &.title
+      margin-bottom 40px
+  &__articles
+    padding-top 20px
+    border-top 2px solid gray-color
+  &__article-carousel
+    .mgr-dots
+      display none
+    .mgr-cell
+      transition opacity .25s
+      width 31%
+      margin-right 3.5%
+      img
+        width 100%
+        margin-bottom 15px
+      &:hover
+        opacity .7
+    &[data-length='2'] .mgr-cell
+      width 48%
+      margin-right 3%
+    &[data-length='3'] nav a,
+    &[data-length='2'] nav a
+      display none
+    &[data-length='over'] .mgr-horizontal-nav .mgr-navigation
+        opacity 1
+    .mgr-arrow-left,
+    .mgr-arrow-right
+      height 220px
+    .mgr-arrow-left
+      right 102%
+    .mgr-arrow-right
+      left 102%
+
+@media screen and (max-width: 1150px)
+  .venice-footer__article-carousel
+    .mgr-arrow-left, .mgr-arrow-right
+      top -80px
+      height 50px
+      .mgr-arrow-icon
+        font-size 25px
+        padding 0
+    .mgr-arrow-left
+      right 4%
+    .mgr-arrow-right
+      left 98%
+
+// Mobile
+@media screen and (max-width: 900px)
+  .venice-footer
+    padding 0
+    &__articles
+      padding 20px 1em 180px 1em
+    &__article-carousel
+      .mgr-cell
+        width 48%
+        margin-right 3%
+      .mgr-arrow-left
+        right 8%
+      .mgr-arrow-right
+        left 95%
+
+@media screen and (max-width: 550px)
+  .venice-nav
+    &__sticky-right
+      display none
+    &__sticky-left
+      margin 0px 15px
+
+  .venice-info-icon
+    margin 15px
+
+  .venice-footer
+    &__articles
+      padding 20px 0 180px 1em
+    &__article-carousel
+      .mgr-navigation
+        display none
+      .mgr-cell
+        width 85%
+        margin-right 5%

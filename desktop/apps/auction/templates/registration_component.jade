@@ -1,22 +1,11 @@
 if auction.isClosed()
   = ''
-else if !user && auction.isPreview()
-  .auction-registration-wrapper
-    .auction-registration-preview
-      p Receive an email invitation when the auction begins.
-      form.auction-preview-sidebar-form
-        label.avant-garde-form-label( for='email' ) Email
-        input.bordered-input.is-block(
-          name='email', type='email', value= email, required, autofocus= autofocus
-        )
-        .form-errors.js-form-errors
-        button.avant-garde-button-black.is-block Notify me
-else if user && user.get('registered_to_bid') && !user.get('qualified_for_bidding')
+else if me && me.bidders && me.bidders.length > 0 && !me.bidders[0].qualified_for_bidding
   .auction-registration-wrapper
     button.avant-garde-button-black.is-block.is-disabled
       | Registration pending
     .auction-registration-small.auction-registration-small-warning Reviewing submitted information
-else if user && user.get('registered_to_bid')
+else if me && me.bidders && me.bidders.length > 0
   .auction-registration-approved
     span.icon-check
     | Approved to Bid
@@ -25,18 +14,19 @@ else if auction.isRegistrationEnded()
     button.avant-garde-button-black.is-block.is-disabled
       | Registration closed
     .auction-registration-small Registration required to bid
-else if !user || user && !user.get('registered_to_bid')
+else
   .auction-registration-wrapper
     a.avant-garde-button-black.is-block.js-register-button(
       href= auction.registerUrl()
     ) Register to bid
     .auction-registration-small Registration required to bid
 
-a.auction-registration-how-to-bid( href="/how-auctions-work" )
-  img( src="/images/kiosk-cta.png" alt="How to Bid on Artsy" )
-  | How to Bid on Artsy
+.auction-registration-how-to-bid
+  strong Questions?
+  br
+  a( href="/how-auctions-work" ) How to Bid on Artsy
 .auction-registration-question
-  strong Questions? Contact us
+  strong Contact us
   br
   a( href='mailto:specialist@artsy.net' ) specialist@artsy.net
   br

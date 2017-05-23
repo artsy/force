@@ -86,23 +86,3 @@ module.exports = class Following extends Backbone.Collection
     follow = @findByModelId id
     @remove follow
     follow?.destroy options
-
-  followAll: (ids, options = {}) ->
-    ids = [ids] unless _.isArray ids
-    ids = _.map ids, (id) -> id.toLowerCase()
-
-    options.success = _.wrap options.success, (success, model, response, options) =>
-      @set _.map response, (attributes) =>
-        new Follow attributes, kind: @kind
-      success?()
-
-    new Backbone.Model().save null,
-      _.extend options, url: @url(), data: $.param('profile_id[]': ids, auto: true)
-
-  # There's no bulk unfollow endpoint yet
-  unfollowAll: (ids, options = {}) ->
-    ids = [ids] unless _.isArray ids
-    unfollows = _.map ids, (id) => @unfollow id
-    @remove unfollows # Optimistically remove
-    # This is only used on the client for now
-    $.when.apply(null, unfollows).then(options.success, options.error)

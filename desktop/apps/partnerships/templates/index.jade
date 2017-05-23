@@ -4,9 +4,14 @@ block head
   include meta
 
 append locals
-  - bodyClass = bodyClass + ' body-no-margins body-partnerships body-partnerships--' + subject
+  unless sd.IS_MOBILE
+    - bodyClass = bodyClass + ' body-no-margins body-partnerships body-partnerships--' + subject
   - assetPackage = 'partners'
 
 block body
-  .partnerships-container
-    include content
+  if sd.IS_MOBILE
+    #gallery-partnerships.gallery-partnerships-container
+      include mobile/index
+  else
+    .partnerships-container
+      include content

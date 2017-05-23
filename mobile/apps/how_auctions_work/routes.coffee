@@ -2,7 +2,7 @@ request = require 'superagent'
 sd = require('sharify').data
 
 module.exports.index = (req, res) ->
-  url = "#{sd.ARTSY_URL}/how-auctions-work/data"
+  url = "#{sd.APP_URL}/how-auctions-work/data"
   request
     .get(url)
     .end (err, data) ->

@@ -24,8 +24,6 @@ moment = require 'moment'
   author:
     id: "506999f123c3980002000342"
     name: "Elena Soboleva"
-    profile_id: "5086df0a8523e60002000015"
-    profile_handle: "elena"
   thumbnail_title: 'Top Ten Booths at miart 2014',
   thumbnail_teaser: 'Look here! Before the lines start forming...',
   thumbnail_image: 'http://kitten.com',
@@ -44,7 +42,7 @@ moment = require 'moment'
       items: [
         { type: 'artwork', id: '54276766fd4f50996aeca2b8' }
         { type: 'image', url: '', caption: '' }
-        { type: 'video', url: ''  }
+        { type: 'video', url: '', caption: '' }
       ]
     }
     {
@@ -82,7 +80,8 @@ moment = require 'moment'
     }
     {
       type: 'video',
-      url: 'http://youtu.be/yYjLrJRuMnY'
+      url: 'http://youtu.be/yYjLrJRuMnY',
+      caption: 'Doug and Claire get sucked into a marathon of Battlestar Galactica from Season 2 of Portlandia on IFC.'
     }
   ]
   featured_artist_ids: ['5086df098523e60002000012']

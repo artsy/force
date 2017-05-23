@@ -12,6 +12,8 @@ app.locals.crop = crop
 app.locals.toSentence = toSentence
 
 app.get('/artsy-primer/:id', routes.article)
+app.get('/primer-digest/:id', routes.article)
 app.get('/artsy-primer-personalize*', routes.personalize)
+app.post('/artsy-primer/set-sailthru', routes.setSailthruData)
 
 export default app

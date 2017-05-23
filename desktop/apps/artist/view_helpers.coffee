@@ -70,7 +70,7 @@ module.exports =
       "@context": "http://schema.org"
       "@type": "Person"
       additionalType: 'Artist'
-      image: artist.image.url
+      image: artist.image?.url || ''
       name: artist.name
       url: "#{APP_URL}#{artist.href}"
       gender: artist.gender
@@ -100,7 +100,7 @@ module.exports =
         url: "#{APP_URL}#{artwork.href}"
         image:
           "@type": 'ImageObject'
-          thumbnailUrl: artwork.image.url
+          thumbnailUrl: artwork.image?.url || ''
     }
 
   formatAuctionDetail: (auction) ->

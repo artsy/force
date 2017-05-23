@@ -3,12 +3,11 @@ Backbone = require 'backbone'
 template = -> require('../../templates/sections/shows.jade') arguments...
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/shows.coffee'
+ArtistArtworksView = require './artworks.coffee'
 
-module.exports = class ShowsView extends Backbone.View
-  subViews: []
-
+module.exports = class ShowsView extends ArtistArtworksView
   initialize: ->
     @listenTo this, 'artist:shows:sync', @render
 
@@ -20,16 +19,7 @@ module.exports = class ShowsView extends Backbone.View
     .then ({ artist }) => @trigger 'artist:shows:sync', artist
 
   postRender: ->
-    @subViews.push rail = new ArtworkRailView
-      $el: @$(".artist-artworks-rail")
-      collection: @model.related().artworks
-      title: "Works by #{@model.get('name')}"
-      viewAllUrl: "#{@model.href()}/works"
-      imageHeight: 180
-      totalArtworksCount: @model.get('counts').artworks
-      viewAllCell: true
-
-    rail.collection.trigger 'sync'
+    super
     @fadeInSection $('#artist-related-shows-section')
 
   fadeInSection: ($el) ->
@@ -38,9 +28,5 @@ module.exports = class ShowsView extends Backbone.View
 
   render: (artist) ->
     @$el.html template _.extend { showHelpers }, artist
-    _.defer => @postRender()
-    this
-
-  remove: ->
-    _.invoke @subViews, 'remove'
     super
+    this

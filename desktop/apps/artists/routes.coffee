@@ -1,7 +1,7 @@
 { extend } = require 'underscore'
 { capitalize } = require 'underscore.string'
 ArtistsByLetter = require './collections/artists_by_letter'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 
 @index = (req, res, next) ->
   send = query: require './query'

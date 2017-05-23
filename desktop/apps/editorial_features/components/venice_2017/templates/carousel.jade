@@ -1,0 +1,29 @@
+.venice-carousel
+  .mgr-cells.js-mgr-cells
+    for section, index in curation.get('sections')
+      .mgr-cell.js-mgr-cell
+        .venice-overlay(style="background-image:url(#{section.cover_image})" data-published="#{section.published}")
+          .venice-overlay__text
+            .venice-overlay__title Inside the Biennale
+            .venice-overlay__sub-title= section.title
+            if section.published
+              .venice-overlay__play(data-state="loading")
+                .venice-overlay__play-button
+                .venice-overlay__play-text
+                .venice-overlay__play-length= section.video_length
+              .venice-overlay__error
+            else
+              .venice-overlay__subscribe
+                .venice-overlay__launch-date='Launching ' + moment(section.release_date, moment.ISO_8601).format('MMM Do')
+                unless isSubscribed
+                  .venice-overlay__cta
+                    .venice-overlay__cta-text
+                      | Sign up for the editorial newsletter to be
+                      br
+                      | notified when new films are released
+                    button.avant-garde-button.venice-overlay__cta-button Subscribe
+                    .venice-overlay__subscribe-form
+                      input(placeholder='Enter your email address', type='email', name='email', required)
+                      button.avant-garde-button-black.is-small Subscribe
+            include ./video_completed
+  include ../../../../../components/merry_go_round/templates/bottom_navigation.jade

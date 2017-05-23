@@ -3,11 +3,11 @@ cheerio = require 'cheerio'
 path = require 'path'
 jade = require 'jade'
 fs = require 'fs'
+moment = require 'moment'
 { fabricate } = require 'antigravity'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 Artwork = require '../../../models/artwork'
-Artworks = require '../../../collections/artworks'
 Section = require '../../../models/section'
 
 render = (templateName) ->
@@ -17,42 +17,31 @@ render = (templateName) ->
     { filename: filename }
   )
 
-describe 'artwork sitemap template', ->
+describe 'misc sitemap template', ->
 
-  it 'renders the correct artwork URLs', ->
-    xml = render('artworks')
-      models: new Artworks([fabricate 'artwork', id: 'foobar']).models
-      _: _
-      sd: {}
-    xml.should.containEql '/artwork/foobar'
+  it 'renders the correct misc URLs', ->
+    xml = render('misc')
+      sd: APP_URL: 'www.artsy.net'
+    xml.should.containEql '<loc>www.artsy.net</loc><priority>1</priority>'
+    xml.should.containEql 'www.artsy.net/about'
+    xml.should.containEql '/press/in-the-media'
+    xml.should.containEql '/press/press-releases'
+    xml.should.containEql '/collect'
+    xml.should.containEql '/log_in'
+    xml.should.containEql '/security'
+    xml.should.containEql '/privacy'
+    xml.should.containEql '/shows'
+    xml.should.containEql '/artists'
+    xml.should.containEql '/categories'
+    xml.should.containEql '/sign_up'
+    xml.should.containEql '/terms'
 
-describe 'image sitemap template', ->
+describe 'news sitemap template', ->
 
-  it 'renders the correct image URLs', ->
-    xml = render('images')
-      models: new Artworks([fabricate('artwork', {
-        images: 
-          [{image_urls: {
-            medium: 'https://d32dm0rphc51dk.cloudfront.net/foo.jpg'
-            small: 'baz.jpg'
-            }
-          }]
-        })
-      ]).models
-      _: _
-      sd: {}
-    xml.should.containEql 'https://d32dm0rphc51dk.cloudfront.net/foo.jpg'
-
-  it 'renders the correct caption data', ->
-    xml = render('images')
-       models: new Artworks([fabricate 'artwork', title: 'Moo']).models
-      _: _
-      sd: {}
-    xml.should.containEql 'Moo'
-
-  it 'does not include images for which imageUrl() is undefined', ->
-    xml = render('images')
-       models: new Artworks([fabricate 'artwork', id: 'james', images: undefined]).models
-      _: _
-      sd: {}
-    xml.should.not.containEql 'james'
+  it 'renders article info', ->
+    xml = render('news')
+      articles: [new Article fabricate 'article']
+    xml.should.containEql 'https://www.artsy.net/article/editorial-on-the-heels-of-a-stellar-year'
+    xml.should.containEql '<news:name>Artsy</news:name>'
+    xml.should.containEql '2014-09-24T23:24:54.000Z'
+    xml.should.containEql 'On The Heels of A Stellar Year in the West, Sterling Ruby Makes His Vivid Mark on Asia'

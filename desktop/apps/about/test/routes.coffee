@@ -9,6 +9,19 @@ send = null
 json = null
 
 describe 'About routes', ->
+  describe '#index', ->
+    beforeEach ->
+      @res = { redirect: sinon.stub(), locals: sd: IS_MOBILE: true }
+
+    it 'redirects to collect-art if it is mobile', ->
+      routes.index {}, @res
+      @res.redirect.args[0].should.eql ['/collect-art']
+
+    it 'doesnt redirect if not mobile', ->
+      @res.locals.sd.IS_MOBILE = false
+      routes.index {}, @res
+      @res.redirect.called.should.not.be.ok()
+
   describe '#sendSMS', ->
     beforeEach ->
       @req = param: -> '+1 555 111 2222'

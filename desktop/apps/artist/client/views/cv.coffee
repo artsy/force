@@ -3,14 +3,12 @@ template = -> require('../../templates/sections/cv.jade') arguments...
 sd = require('sharify').data
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 query = require '../../queries/cv.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
 artistHelpers = require '../../view_helpers.coffee'
+ArtistArtworksView = require './artworks.coffee'
 
-module.exports = class CVView extends Backbone.View
-
-  subViews: []
-
+module.exports = class CVView extends ArtistArtworksView
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:cv:sync', @render
 
@@ -23,24 +21,10 @@ module.exports = class CVView extends Backbone.View
         shows: @statuses.shows || @statuses.cv
     .then ({ artist }) => @trigger 'artist:cv:sync', artist
 
-  postRender: ->
-    @subViews.push rail = new ArtworkRailView
-      $el: @$(".artist-artworks-rail")
-      collection: @model.related().artworks
-      title: "Works by #{@model.get('name')}"
-      viewAllUrl: "#{@model.href()}/works"
-      imageHeight: 180
-      totalArtworksCount: @model.get('counts').artworks
-      viewAllCell: true
-
-    rail.collection.trigger 'sync'
-
   render: (artist = {}) ->
     artistMetadata = artistHelpers.artistMeta @model.toJSON()
     @$el.html template _.extend { showHelpers, artistMetadata }, artist
-    _.defer => @postRender()
-    this
-
-  remove: ->
+    if artistMetadata.length == 0
+      @$('#artist-cv-section').remove()
     super
-    _.invoke @subViews, 'remove'
+    this

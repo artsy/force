@@ -1,0 +1,139 @@
+@require '../../../components/stylus_lib'
+@require '../../../components/search_bar'
+@require './small_screen_header'
+
+#main-layout-header
+  background-color white
+  position absolute
+  width 100%
+  top 0
+  left 0
+  z-index zindex-primary-nav
+  border-bottom 1px solid gray-lighter-color
+
+.mlh-navbar
+  align-items center
+  display flex
+  @media (max-width: nav-bar-break - 1)
+    display none
+
+.mlh-navbar-cell
+  white-space nowrap
+
+#main-layout-header-left
+  flex-grow 1
+  #main-layout-header-minimal-title
+    display none
+
+#main-layout-header-home-logo
+  flex-shrink 0
+  display inline-block
+  width home-logo-size
+  text-align center
+  text-decoration none
+  vertical-align middle
+  > i
+    font-size default-icon-font-size
+    line-height home-logo-size
+#main-layout-header-center
+  padding 0 20px
+  flex-grow 1
+#main-layout-header-center
+.main-layout-header-user
+  avant-garde()
+.main-layout-header-user
+  height 100%
+  flex-shrink 0
+  text-align right
+
+.mlh-nav-link
+  position relative
+  display inline-block
+  padding 15px 10px
+  vertical-align middle
+  text-decoration none
+  font-size 13px
+  line-height 1
+  &.is-active
+    color purple-color
+.mlh-top-nav-link
+  @extends .mlh-nav-link
+  &:hover
+  &:active
+  &:focus
+    color purple-color
+.mlh-login
+  padding-left 20px
+.mlh-signup
+  padding-right 20px
+.mlh-user-name
+  @extends .mlh-nav-link
+  padding-left 30px
+  padding-right @padding-left
+  border-left 1px solid transparify(gray-lighter-color, black)
+  position relative
+  min-width 130px
+  text-align center
+  white-space nowrap
+  &:hover #main-layout-header-user-nav
+    display block
+.mlh-hamburger
+  @extends .mlh-nav-link
+  padding 8px 20px
+  position relative
+  text-align center
+  white-space nowrap
+  border-left  1px solid transparify(gray-lighter-color, black)
+  svg
+    fill black
+    width 25px
+    height 30px
+.mlh-notification
+  @extends .mlh-nav-link
+  padding 8px 20px
+  position relative
+  text-align center
+  white-space nowrap
+  border-left  1px solid transparify(gray-lighter-color, black)
+  &.hover-pulldown
+    &:before
+      border none
+  svg
+    fill black
+    width 25px
+    height 25px
+  .hpm-header
+    cursor default
+  .hover-pulldown-menu
+    width 300px
+    padding-bottom 0px
+  .hpm-view-all
+    text-align center
+    border-top 1px solid gray-darkest-color
+    padding 20px 0px
+    avant-garde-size('body')
+.mlh-bundle-count
+  avant-garde()
+  display none
+  font-size 10px
+  background-color purple-color
+  border-radius 50px
+  width 19px
+  height 19px
+  position absolute
+  top 4px
+  right 15px
+  line-height 19px
+  color white
+.mlh-bundle-count[data-visible=true]
+  display block
+
+.mshr-garamond-nav-link
+  display inline-block
+  margin 0 10px
+  text-decoration none
+  vertical-align middle
+
+@media (max-width: 600px)
+  .body-responsive #main-layout-header-center
+    display none

@@ -8,7 +8,6 @@ module.exports = class Params extends Backbone.Model
     'medium'
     'color',
     'price_range',
-    'estimate_range',
     'width',
     'height',
     'gene_id',
@@ -17,7 +16,8 @@ module.exports = class Params extends Backbone.Model
     'partner_cities',
     'sale_id',
     'gene_ids',
-    'artist_ids'
+    'artist_ids',
+    'keyword'
   ]
 
   defaults:
@@ -28,7 +28,7 @@ module.exports = class Params extends Backbone.Model
     partner_cities: []
     gene_ids: []
     artist_ids: []
-    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS', 'MERCHANDISABLE_ARTISTS']
+    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS']
     ranges:
       price_range:
         min: 50.00

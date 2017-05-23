@@ -27,7 +27,8 @@ describe 'Auctions template', ->
           upcomingAuctions: [@previewAuction]
           promoAuctions: []
           nextAuction: @previewAuction
-        done()
+        , ->
+          done()
 
     after ->
       benv.teardown()

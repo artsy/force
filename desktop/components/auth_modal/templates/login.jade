@@ -1,8 +1,7 @@
 #auth-page.vam-outer
   .vam-inner
     include ./_header
-      aside
-        = copy.get('login') || 'Log in to Artsy'
+      aside= copy.get('login') || 'Log in to Artsy'
 
     section#auth-body
       .auth-login-social

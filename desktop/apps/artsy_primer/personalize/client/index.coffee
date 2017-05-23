@@ -1,14 +1,17 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 qs = require 'qs'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PersonalizeState = require './state.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 Transition = require '../../../../components/mixins/transition.coffee'
+AuthModalView = require '../../../../components/auth_modal/view.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
 NextStepView = require './views/next_step.coffee'
+
 views =
   CollectView: require './views/collect.coffee'
   ArtistsView: require './views/artists.coffee'
@@ -74,17 +77,16 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
     @$el.attr 'data-state', 'loading'
 
-    $.when.apply(null, [
-      @user.save()
-      $.post('/flash', message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.')
-    ]).always =>
-      location.assign @redirectLocation()
+    Q($.post('/artsy-primer/set-sailthru'))
+    .then => @user.save()
+    .finally => location.assign @redirectLocation()
 
 module.exports.init = ->
   { force, reonboarding, email, name } = qs.parse location.search.slice(1)
+
   # If there's no user, open the auth modal
   unless user = CurrentUser.orNull()
-    mediator.once 'open:auth', -> _.defer ->
+    mediator.once 'modal:opened', -> _.defer ->
 
       # Prefill the email and name query params
       $('.auth-register [name=email]').val email if email
@@ -93,11 +95,18 @@ module.exports.init = ->
       # Don't let the user close out by hacking the close points
       $('.modal-close').hide()
       $('.modal-backdrop').click (e) -> e.stopPropagation()
-    mediator.trigger 'open:auth', mode: 'register'
+    new AuthModalView
+      mode: 'register'
+      redirectTo: location.href
+      width: 500
 
   # Init the personalize flow
   else
     user.approximateLocation success: -> user.save()
-    new PersonalizeRouter user: user, reonboarding: reonboarding?, force: force
+    user.set receive_personalized_email: false
+    new PersonalizeRouter
+      user: user
+      reonboarding: reonboarding?
+      force: force
     Backbone.history.start pushState: true
     require('./analytics.coffee')(user)

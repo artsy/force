@@ -2,19 +2,38 @@
 // Generic events for tracking events around account creation.
 //
 
+const getUrlParameter = name => {
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  let results = regex.exec(location.search);
+  return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+const getAcquisitionInitiative = () => getUrlParameter('m-id') || getUrlParameter('acquisition_initiative')
+
+const trackAccountCreation = options => {
+  analytics.track('Created account', _.pick(options, 'acquisition_initiative', 'signup_service', 'user_id', 'context'))
+  analytics.identify(options.user_id, _.pick(options, 'email'), {
+    integrations: {
+      'All': false,
+      'Marketo': true
+    }
+  })
+}
+
 // Created account (via email)
 $(document).on(
   'submit',
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form',
   function() {
-    $(document).one('ajaxComplete', function(e, xhr, options) {
-      analytics.track('Created account', {
-        acquisition_initiative: location.search.replace('?m-id=', ''),
+    $(document).one('ajaxComplete', (e, xhr, options) =>
+      trackAccountCreation({
+        acquisition_initiative: getAcquisitionInitiative(),
         signup_service: 'email',
         user_id: xhr.responseJSON.user.id,
-        context: options.context
-      })
-    })
+        context: options.context,
+        email: xhr.responseJSON.user.email
+      }))
   }
 )
 
@@ -28,7 +47,7 @@ $(document).on(
     // 2. Store some data in cookies before being redirected everywhere
     Cookies.set('analytics-signup', JSON.stringify({
       service: 'facebook',
-      acquisition_initiative: location.search.replace('?m-id=', ''),
+      acquisition_initiative: getAcquisitionInitiative(),
       context: $(e.currentTarget).data('context')
     }))
   }
@@ -38,15 +57,26 @@ $(document).on(
 if (Cookies.get('analytics-signup')) {
   var data = JSON.parse(Cookies.get('analytics-signup'))
   Cookies.expire('analytics-signup')
+
   if (sd.CURRENT_USER) {
-    analytics.track('Created account', {
+    trackAccountCreation({
       acquisition_initiative: data.acquisition_initiative,
       signup_service: data.service,
       user_id: sd.CURRENT_USER.id,
-      context: data.context
-    })
+      context: data.context,
+      email: sd.CURRENT_USER.email
+    });
   }
 }
+
+// Created account on the Inquire via Phone modal (via email)
+analyticsHooks.on('signUpFromPhoneModal', ({user}) =>
+  trackAccountCreation({
+    signup_service: 'email',
+    email: user.email,
+    user_id: user.id,
+    context: 'show phone number'
+  }))
 
 analyticsHooks.on('auth:login', function (options) {
   analytics.track('Successfully logged in')

@@ -23,6 +23,10 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('article', model: 'article'))
         model.href().should.containEql '/article/' + model.id
 
+      it 'has a location attribute when it is a page', ->
+        model = new SearchResult(fabricate('page', model: 'page'))
+        model.href().should.containEql '/' + model.id
+
       it 'has a location attribute when it is a fair', ->
         model = new SearchResult(fabricate('fair', model: 'fair', profile_id: 'foo-profile'))
         model.href().should.containEql '/foo-profile'
@@ -48,6 +52,10 @@ describe 'SearchResult', ->
         model = new SearchResult(model: 'article')
         model.get('display_model').should.equal 'Article'
 
+      it 'has a display_model attribute when it is a page', ->
+        model = new SearchResult(model: 'page')
+        model.get('display_model').should.equal 'Page'
+
       it 'has a display_model attribute when it is a profile', ->
         model = new SearchResult(model: 'profile')
         model.get('display_model').should.equal 'Gallery'
@@ -59,6 +67,15 @@ describe 'SearchResult', ->
       it 'has a display_model attribute when it an institution seller profile', ->
         model = new SearchResult(model: 'profile', owner_type: 'PartnerInstitutionalSeller')
         model.get('display_model').should.equal 'Institution'
+
+    describe '#imageUrl', ->
+      it 'has a image url attribute when it an Artist', ->
+        model = new SearchResult(model: 'artist', image_url: 'foo')
+        model.imageUrl().should.equal 'foo'
+
+      it 'has a default artsy icon thumnbnail when it a Page', ->
+        model = new SearchResult(model: 'page')
+        model.imageUrl().should.equal '/images/icon-70.png'
 
   describe '#updateForFair', ->
     it 'cleans up data returned from fair search API', ->

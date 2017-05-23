@@ -5,12 +5,11 @@ ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 { FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/artists.coffee'
+ArtistArtworksView = require './artworks.coffee'
 
-module.exports = class RelatedArtistsView extends Backbone.View
-  subViews: []
-
+module.exports = class RelatedArtistsView extends ArtistArtworksView
   initialize: ({ @user, @statuses }) ->
     if @user?
       @following = new Following(null, kind: 'artist')
@@ -46,20 +45,9 @@ module.exports = class RelatedArtistsView extends Backbone.View
     @following?.syncFollows ids
 
   postRender: ->
+    super
     @setupFollowButtons()
-    rail = new ArtworkRailView
-      $el: @$(".artist-artworks-rail")
-      collection: @model.related().artworks
-      title: "Works by #{@model.get('name')}"
-      viewAllUrl: "#{@model.href()}/works"
-      imageHeight: 180
-      totalArtworksCount: @model.get('counts').artworks
-      viewAllCell: true
-
-    @subViews.push rail
     @fadeInSection @$('.artist-related-artists-section')
-
-    rail.collection.trigger 'sync'
 
   fadeInSection: ($el) ->
     $el.show()
@@ -69,9 +57,6 @@ module.exports = class RelatedArtistsView extends Backbone.View
   render: ({ artists, contemporary } = {})->
     @relatedArtists = _.compact(_.flatten([artists, contemporary]))
     @$el.html template { artists, contemporary }
-    _.defer => @postRender()
+    super
     this
 
-  remove: ->
-    _.invoke @subViews, 'remove'
-    super

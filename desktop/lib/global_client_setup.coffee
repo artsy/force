@@ -7,9 +7,10 @@
 Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
+_.get = require 'lodash.get'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
-rg4js = require 'raygun4js'
+Raven = require 'raven-js'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
@@ -20,6 +21,7 @@ listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 
 module.exports = ->
+  setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
   syncAuth()
@@ -27,12 +29,18 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  setupRaygun()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
   for attr in ['id', 'type', 'name', 'email', 'phone', 'lab_features',
                'default_profile_id', 'has_partner_access', 'collector_level']
+
+    # NOTE:
+    # If any of the above props have changed between two routes, and the second
+    # route fails to mount sd.locals.CURRENT_USER with the latest req.user.fetch()
+    # data, a hard refresh will occur once the client-side mounts as the two
+    # will be out of sync.
+
     if not _.isEqual data[attr], sd.CURRENT_USER[attr]
       $.ajax('/user/refresh').then -> window.location.reload()
 
@@ -57,11 +65,6 @@ setupReferrerTracking = ->
     Cookies.set 'force-referrer', document.referrer
     Cookies.set 'force-session-start', window.location.href
 
-setupRaygun = ->
-  if sd.RAYGUN_KEY
-    rg4js 'enableCrashReporting', true 
-    rg4js 'apiKey', sd.RAYGUN_KEY
-
 setupJquery = ->
   require 'typeahead.js/dist/typeahead.bundle.min.js'
   require 'jquery.transition'
@@ -85,3 +88,7 @@ setupJquery = ->
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
   window[key] = helper for key, helper of templateModules
+
+setupErrorReporting = ->
+  Raven.config(sd.SENTRY_PUBLIC_DSN).install()
+  Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER

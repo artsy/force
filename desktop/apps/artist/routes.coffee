@@ -9,11 +9,12 @@ ReferrerParser = require 'referer-parser'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 query = require './queries/server.coffee'
 payoffQuery = require '../../components/artist_page_cta/query'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
+currentVeniceFeature = require './components/current_venice_feature/index'
 sd = require('sharify').data
 
 @index = (req, res, next) ->
@@ -35,25 +36,27 @@ sd = require('sharify').data
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
-          currentItem = currentShowAuction(artist)
+        currentVeniceFeature(artist)
+          .then (veniceFeature) ->
+            currentItem = veniceFeature or currentShowAuction(artist)
 
-          res.locals.sd.ARTIST = artist
-          res.locals.sd.TAB = tab
-          res.locals.sd.CURRENT_ITEM = currentItem
-          res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !(res.locals.sd.CURRENT_USER? || res.locals.sd.REFERRER?.includes(APP_URL))
+            res.locals.sd.ARTIST = artist
+            res.locals.sd.TAB = tab
+            res.locals.sd.CURRENT_ITEM = currentItem
+            res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !(res.locals.sd.CURRENT_USER? || res.locals.sd.REFERRER?.includes(APP_URL))
 
-          res.render 'index',
-            viewHelpers: helpers
-            artist: artist
-            tab: tab
-            nav: nav
-            currentItem: currentItem
-            jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
+            res.render 'index',
+              viewHelpers: helpers
+              artist: artist
+              tab: tab
+              nav: nav
+              currentItem: currentItem
+              jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
 
       else
         res.redirect artist.href
 
-    .catch (err) -> next(err if NODE_ENV is 'development')
+    .catch next
 
 @tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
@@ -90,6 +93,6 @@ sd = require('sharify').data
                   name: user.name
                   href: "/artist/#{req.params.id}?#{qs.stringify req.query}"
                   artist: artist
-              .catch (err) -> next(err if NODE_ENV is 'development')
+              .catch (err) -> next
   else
     res.redirect "/artist/#{req.params.id}"

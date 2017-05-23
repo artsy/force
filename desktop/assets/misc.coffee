@@ -16,7 +16,7 @@ routes =
 
   '/personalize': require('../apps/personalize/client/index.coffee').init
 
-  '/professional-buyer': -> require('../apps/pro_buyer/client/index.coffee')
+  '/professional-buyer': require('../apps/pro_buyer/client/index.coffee')
 
   '/style-guide': require('../apps/style_guide/client/index.coffee').init
 
@@ -24,9 +24,17 @@ routes =
 
   '/consign': require('../apps/consignments/client/index.coffee')
 
+  '/consign2/submission': require('../apps/consignments2/client/submission.js').default
+
+  '/consign2': require('../apps/consignments2/client/index.js').default
+
   '/users/auth': require('../apps/auth/client/index.coffee').init
 
   '/reset_password': require('../apps/auth/client/index.coffee').init
+
+  '/signup': require('../apps/auth/client/auth.coffee').init
+
+  '/login': require('../apps/auth/client/auth.coffee').init
 
   '/works-for-you': require('../apps/notifications/client/index.coffee').init
 
@@ -37,6 +45,8 @@ routes =
   '/search': require('../apps/search/client/index.coffee').init
 
   '/artsy-primer/.*': require('../apps/artsy_primer/client.js').default
+
+  '/primer-digest/.*': require('../apps/artsy_primer/client.js').default
 
   '/artsy-primer-personalize': require('../apps/artsy_primer/personalize/client/index.coffee').init
 

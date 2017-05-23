@@ -4,9 +4,12 @@ moment = require 'moment'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
+Curation = require '../../../models/curation'
 rewire = require 'rewire'
 routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+markdown = require '../../../components/util/markdown.coffee'
+
 
 describe 'EOY route', ->
 
@@ -41,3 +44,121 @@ describe 'EOY route', ->
       @res.render.args[0][1].article.get('title').should.equal 'Moo'
       @res.render.args[0][1].superSubArticles.length.should.equal 2
       done()
+
+describe 'Venice route', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    Backbone.sync
+      .onCall 0
+      .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice', title: 'venice'}, {slug: 'venice-2'}], sub_articles: ['123'] }
+      .onCall 1
+      .yieldsTo 'success', {title: 'Video Guide'}
+      .onCall 2
+      .yieldsTo 'success', [{title: 'Sub Article'}]
+    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @next = sinon.stub()
+    routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
+    routes.__set__ 'sailthru', sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'sets a video index', ->
+    @req = { params: { slug: 'venice-2' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+      @res.render.args[0][1].videoIndex.should.equal 1
+
+  it 'defaults to the first video', ->
+    @req = { params: { slug: 'blah' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.redirect.args[0].should.eql [ 301, '/venice-biennale/toward-venice' ]
+
+  it 'sets a curation', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+      @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
+
+  it 'sets the 360 video guide', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.render.args[0][1].videoGuide.get('title').should.eql 'Video Guide'
+
+  it 'Fetches sub articles', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.render.args[0][1].sub_articles.length.should.eql 1
+
+  it 'renders json ld', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.locals.jsonLD.should.containEql '"headline":"Inside the Biennale venice"'
+
+  it 'includes sailthru', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.locals.sd.INCLUDE_SAILTHRU.should.be.true()
+
+describe 'Vanity route', ->
+
+  beforeEach ->
+    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @next = sinon.stub()
+    routes.__set__ 'proxy',
+      web: @web = sinon.stub()
+
+  it 'checks that the asset is whitelisted and sets up proxy', ->
+    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    @req = { params: ['videos/final-video.mp4'], headers: host: '' }
+    routes.vanity @req, @res, @next
+    @web.args[0][2].target.should.containEql '/videos/final-video.mp4'
+
+  it 'rejects assets that are not whitelisted', ->
+    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    @req = { params: ['videos/demo-video.mp4'], headers: host: '' }
+    routes.vanity @req, @res, @next
+    @next.called.should.be.true()
+
+  it 'redirects to articles page if there is a proxy error', ->
+    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    @req = { params: ['videos/final-video.mp4'], headers: host: '' }
+    routes.vanity @req, @res, @next
+    @web.args[0][3]('Error')
+    @res.redirect.args[0][0].should.equal 301
+    @res.redirect.args[0][1].should.equal '/articles'
+
+describe 'SMS route', ->
+  twilioConstructorArgs = null
+  twilioSendSmsArgs = null
+  send = null
+  status = null
+  json = null
+
+  beforeEach ->
+    @req = body: to: '+1 555 111 2222', message: 'Explore Venice in 360°: link'
+    @res = send: send = sinon.stub(), json: json = sinon.stub(), status: status = sinon.stub()
+    twilio = routes.__get__ 'twilio'
+    twilio.RestClient = class TwilioClientStub
+      constructor: -> twilioConstructorArgs = arguments
+      sendSms: -> twilioSendSmsArgs = arguments
+    routes.sendSMS @req, @res
+
+  it 'sends a link with a valid phone number', ->
+    twilioSendSmsArgs[0].to.should.equal '+15551112222'
+    twilioSendSmsArgs[0].body.should.match 'Explore Venice in 360°: link'
+    twilioSendSmsArgs[1] null, 'SUCCESS!'
+    send.args[0][0].should.equal 201
+    send.args[0][1].msg.should.containEql 'success'
+
+  it 'throws an error if twilio doesnt like it', ->
+    twilioSendSmsArgs[1] message: 'Error!'
+    send.args[0][1].msg.should.equal 'Error!'

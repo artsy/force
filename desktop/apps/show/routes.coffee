@@ -1,7 +1,7 @@
 { NODE_ENV } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json'
 PartnerShow = require '../../models/partner_show'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 DateHelpers = require '../../components/util/date_helpers'
 ViewHelpers = require './helpers/view_helpers'
 
@@ -146,5 +146,4 @@ query = """
       res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
       data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
       res.render 'index', data
-    .catch (err) ->
-      next(err if NODE_ENV is 'development')
+    .catch next

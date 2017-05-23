@@ -37,6 +37,10 @@ item-margin-bottom = 16px
 .my-active-bids-item-details
   line-height 20px
 
+.my-active-bids-item-details--hide-bid
+  @extends .my-active-bids-item-details
+  padding-top 10px
+
 .bid-status
   position absolute
   top 0
@@ -46,13 +50,11 @@ item-margin-bottom = 16px
 
 .my-active-bids-bid-button
   small-avant-garde()
+  margin-top 26px
   padding 7px 14px
   position absolute
-  bottom item-margin-bottom
   right 0
 
 .my-active-bids-bid-live-button
-  small-avant-garde()
-  padding 7px 14px
-  position absolute
-  right 0
+  @extends .my-active-bids-bid-button
+  margin-top 14px

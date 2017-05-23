@@ -4,6 +4,6 @@ a.current-item(href= currentItem.href)
       img.current-item__image(src= currentItem.imageUrl)
   .current-item__right
     .current-item__label.avant-garde-s-headline= currentItem.heading
-    .current-item__name= currentItem.name
+    .current-item__name(style= currentItem.name && currentItem.detail && "white-space:nowrap;")= currentItem.name
     if currentItem.detail
-      .current-item__detail!= currentItem.detail
+      .current-item__detail(style= "white-space:nowrap;")!= currentItem.detail

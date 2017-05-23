@@ -4,9 +4,9 @@
   a( href='/artwork/' + artwork.get('id') )
     img( src=imageUrl data-id=artwork.get('_id') )
   .artwork-columns-artwork-details
-    if artwork.get('sale_artwork') && artwork.get('sale_artwork').lot_number
+    if artwork.get('sale_artwork') && artwork.get('sale_artwork').lot_label
       p.artwork-columns-artwork-details__auction-lot-number
-        | Lot #{artwork.get('sale_artwork').lot_number}
+        | Lot #{artwork.get('sale_artwork').lot_label}
 
     if artwork.get('artist')
       p= artwork.get('artist').name
@@ -17,9 +17,5 @@
         = artwork.get('date')
       p= artwork.partnerName()
 
-    if artwork.get('sale')
-      .artwork-columns-artwork-details__bid-now
-        if artwork.get('sale').is_open
-          p.bid-now-link Bid now
-        else
-          p.bid-now-link Auction closed
+    .artwork-columns-artwork-details__bid-now
+      p.bid-now-link Bid now

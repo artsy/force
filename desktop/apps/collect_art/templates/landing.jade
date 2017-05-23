@@ -1,0 +1,138 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'collect_art'
+
+block head
+  include meta
+
+block body
+  .collect-art-header( style="background-image: url(#{header.image});" )
+    .collect-art-responsive-layout-container
+      .collect-art-main-layout-container
+        .collect-art-header__content
+          .collect-art-header__title.collect-art-text-center-on-mobile= header.headline
+          .collect-art-show-on-desktop
+            .collect-art-header__signup-buttons
+              a.ba__email-signup-button(
+                href='/signup?acquisition_initiative=collector_marketing',
+                data-section='header: an art collection for every budget'
+                data-label='Sign up using email'
+              )
+                .collect-art__svg-icon( style="background-image: url(#{header.email_icon});" )
+                | Sign up using email
+              a.ba__facebook-signup-button(
+                href='/users/auth/facebook?redirect-to=/personalize&acquisition_initiative=collector_marketing',
+                data-section='header: an art collection for every budget',
+                data-label='Sign up with facebook'
+              )
+                i.icon-facebook
+                | Sign up with Facebook
+          .collect-art-show-on-mobile.collect-art-text-center-on-mobile
+            a.collect-art-signup-button(
+              href='/signup',
+              data-section='header: an art collection for every budget',
+              data-label='Sign up'
+            )
+              | Sign up
+
+        i.icon-logotype
+        .collect-art-header__chevron
+          i.icon-chevron-right
+
+  .collect-art-intro
+    .collect-art-intro__mobile-background-image.collect-art-show-on-mobile( style="background-image: url(#{sections[0].mobile_image});" )
+    .collect-art-intro__desktop-background-image.collect-art-show-on-desktop( style="background-image: url(#{sections[0].image});" )
+
+    .collect-art-intro__content
+      .collect-art-intro__title= sections[0].headline
+      .collect-art-intro__subtitle= sections[0].sub_headline
+      .collect-art-intro__stat_container
+        each stat in sections[0].stats
+          .collect-art-intro__stat
+            .collect-art-intro__stat-number= stat.number
+            .collect-art-intro__desktop-type.collect-art-show-on-desktop= stat.desktop_type
+            .collect-art-intro__mobile-type.collect-art-show-on-mobile= stat.mobile_type
+      .collect-art-intro__signup-button-container
+        a.collect-art-signup-button(
+          href='/signup?acquisition_initiative=collector_marketing',
+          data-section="all the world's art in one place",
+          data-label='Sign up'
+        )
+          | Sign up
+
+  .collect-art-benefits
+    .collect-art-responsive-layout-container
+      .collect-art-main-layout-container.collector-marketing.collect-art-text-center-on-mobile
+        .row
+          .col-xs-12.col-lg-6
+            .collect-art-benefits__title.collect-art-text-center-on-mobile= sections[1].headline
+            a.collect-art-signup-button(
+              href='/signup?acquisition_initiative=collector_marketing',
+              data-section='used by the most experienced collectors',
+              data-label='Sign up'
+            )
+              | Sign up
+            .collect-art-benefits__benefits-container.collector-marketing
+              each benefit in sections[1].benefits
+                .collect-art-benefits__items.row
+                  .col-xs-12.col-lg-2
+                    img(src=benefit.image)
+                  .col-xs-12.col-lg-10
+                    .collect-art-benefits__info-subtitle= benefit.title
+                    .collect-art-benefits__info-content= benefit.content
+          .col-xs-12.col-lg-6.collect-art-benefits__image-section
+            img( src=sections[1].image )
+
+  .collect-art-faqs
+    .collect-art-responsive-layout-container
+      .collect-art-main-layout-container
+        .collect-art-faqs__image-banner
+          img(src=sections[2].image)
+        .collect-art-faqs__title=sections[2].headline
+        .collect-art-faqs__items-container.collector-marketing
+          .row
+            each faq in sections[2].faqs
+              .col-xs-12.col-lg-6
+                .collect-art-faqs__item-grid
+                  .collect-art-faqs__item-title= faq.title
+                  .collect-art-faqs__item-content= faq.content
+            .col-xs-12.col-lg-6.collect-art-text-center-on-mobile
+              a.collect-art-signup-button(
+                href='/signup?acquisition_initiative=collector_marketing',
+                data-section='faq',
+                data-label='Sign up'
+              )
+                | Sign up
+
+  .collect-art-footer
+    .collect-art-footer__mobile-background-image.collect-art-show-on-mobile( style="background-image: url(#{footer.mobile_image});" )
+    .collect-art-footer__desktop-background-image.collect-art-show-on-desktop( style="background-image: url(#{footer.image});" )
+
+    .collect-art-responsive-layout-container
+      .collect-art-main-layout-container.collect-art-text-center-on-mobile
+        .collect-art-footer__title= footer.headline
+        .collect-art-show-on-desktop
+          .collect-art-footer__signup-buttons
+            a.ba__email-signup-button(
+              href='/signup?acquisition_initiative=collector_marketing',
+              data-section='footer: start buying art by your favorite artists on artsy',
+              data-label='Sign up using email'
+            )
+              .collect-art__svg-icon( style="background-image: url(#{header.email_icon});" )
+              | Sign up using email
+            a.ba__facebook-signup-button(
+              href='/users/auth/facebook?redirect-to=/personalize&acquisition_initiative=collector_marketing',
+              data-section='footer: start buying art by your favorite artists on artsy',
+              data-label='Sign up with facebook'
+            )
+              i.icon-facebook
+              | Sign up with Facebook
+        .collect-art-show-on-mobile
+          a.collect-art-signup-button(
+            href='/signup?acquisition_initiative=collector_marketing',
+            data-section='footer: start buying art by your favorite artists on artsy',
+            data-label='Sign up'
+          )
+            | Sign up
+        i.icon-logo

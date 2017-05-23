@@ -28,6 +28,7 @@ renderArtwork = (artworkOptions = {}, sdOptions = {}) ->
       partner_stub:
         contacts: sinon.stub()
         location: sinon.stub()
+        artistIds: sinon.stub()
       commercial:
         isWithConsignableArtists: sinon.stub()
   )

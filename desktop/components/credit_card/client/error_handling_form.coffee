@@ -46,6 +46,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       field.el.val xssFilters.inHTMLData(field.el.val())
 
   showError: (description, response={}) =>
+    @errors = if (_.isFunction @errors) then @errors() else @errors
     if response.responseText? and (errorJson = try JSON.parse response.responseText)
       switch errorJson.type
         when 'payment_error'

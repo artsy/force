@@ -1,0 +1,69 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'misc'
+
+block head
+  title Log in to Artsy - Artsy
+
+block body
+  #auth-page.vam-outer
+    .vam-inner
+      header#auth-header
+        #auth-header-logo.icon-logotype
+        aside
+          | Start buying art by your favorite artists on Artsy
+
+      section#auth-body
+        .auth-login-social
+          nav.auth-options
+            a.auth-login-facebook.avant-garde-button-black(
+              href=sd.AP.facebookPath + '?redirect-to=/'
+              rel='nofollow'
+            )
+              i.icon-facebook
+              | Log in using Facebook
+            a.auth-login-twitter.avant-garde-button-black(
+              href=sd.AP.twitterPath + '?redirect-to=/'
+              rel='nofollow'
+            )
+              i.icon-twitter
+              | Log in using Twitter
+
+        form.auth-login-email.auth-form(
+          action=sd.AP.loginPagePath + '?redirect-to=/'
+          method='POST'
+          data-action="login"
+          data-after-auth="/"
+        )
+          .auth-errors
+          input.bordered-input.is-block(
+            name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus
+          )
+          input.bordered-input.is-block(
+            name='password', type='password', placeholder='Password', autocomplete='on', required
+          )
+          input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+          button#auth-submit.avant-garde-button-black.is-block Log in
+
+          footer.auth-form-options
+            .artsy-checkbox
+              .artsy-checkbox--checkbox.standard-auth-login-page__checkbox
+                input( id='remember_me', name='remember_me', type='checkbox', value='1', checked )
+                label( for='remember_me' )
+              label.artsy-checkbox--label( for='remember_me' ) Remember me
+            a.faux-underline.auth-toggle( href='/forgot', data-mode='forgot', rel='nofollow' ) Forgot Password?
+
+      footer#auth-footer.standard-auth-signup-page__footer
+        p
+          | Don&rsquo;t have an account?&nbsp;
+          a.faux-underline.auth-toggle(
+            href='/signup', data-mode='signup'
+          ) Sign up
+
+        aside
+          | By signing up, you agree to our&nbsp;
+          a.faux-underline( href='/terms' ) Terms of Use
+          | &nbsp;and&nbsp;
+          a.faux-underline( href='/privacy' ) Privacy Policy
+          | .
