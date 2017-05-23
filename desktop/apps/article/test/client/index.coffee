@@ -29,6 +29,7 @@ describe 'ArticleIndexView', ->
             artworks: []
           }
         ]
+        auction_ids: ['456']
       @channel = new Channel _.extend {}, fixtures.channel,
         type: 'team'
       @options = {
