@@ -35,16 +35,10 @@ mixin fullscreen(article)
     .article-fullscreen-down-arrow
       a.icon-chevron-down
 
-    if article.get('is_super_article')
+    if superArticle
       .main-layout-container.article-sa-fullscreen-logos
-        .article-sa-primary-logos
-          a( href="/" ).article-sa-artsy-logo.icon-logotype
-          if article.get('super_article').partner_logo && article.get('super_article').partner_logo_link
-            .article-sa-plus-container
-              .article-sa-plus.icon-close
-              .article-sa-primary-logo
-                a( href=article.get('super_article').partner_logo_link )
-                  img( src=article.get('super_article').partner_fullscreen_header_logo )
+        if superArticle
+          +superArticleLogos(superArticle)
         .article-share-fixed-fullscreen(data-id=article.get('id'))
           +share-fixed( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
 
@@ -58,6 +52,16 @@ mixin fullscreen(article)
           .article-lead-paragraph-container
             .article-lead-paragraph.article-fullscreen-intro
               != article.get('hero_section').intro
+
+mixin superArticleLogos(article)
+  .article-sa-primary-logos
+    a( href="/" ).article-sa-artsy-logo.icon-logotype
+    if article.get('super_article').partner_logo && article.get('super_article').partner_logo_link
+      .article-sa-plus-container
+        .article-sa-plus.icon-close
+        .article-sa-primary-logo
+          a( href=article.get('super_article').partner_logo_link )
+            img( src=article.get('super_article').partner_fullscreen_header_logo )
 
 mixin callout(section)
   .article-section-callout(data-id=section.article)

@@ -39,12 +39,13 @@ module.exports = class AuthModalView extends ModalView
     super
 
   preInitialize: (options = {}) ->
-    { @copy } = options
+    { @copy, @context } = options
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
 
     @templateData = _.extend {
+      context: @context
       copy: @renderCopy(options.copy)
       redirectTo: switch @state.get 'mode'
         when 'login' then @redirectTo or location.pathname

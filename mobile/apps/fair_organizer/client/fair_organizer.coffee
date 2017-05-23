@@ -37,7 +37,7 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
       @$('#fair-organization__articles__show-more').hide()
     else
       @toggleArticlesSpinner()
-      @$('#fair-organization__articles').append articlesTemplate
+      @$('#fair-organization__articles').html articlesTemplate
         articles: @articles.models
 
   toggleArticlesSpinner: =>
@@ -50,10 +50,9 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
     @articles.fetch
       remove: false
       data:
-        author_id: sd.AUTHOR_ID
+        'fair_ids[]': sd.FAIR_IDS
         published: true
         offset: 10 * (@page += 1)
-
 
 module.exports.init = ->
   bootstrap()

@@ -111,7 +111,8 @@ module.exports = class VeniceView extends Backbone.View
       video: @chooseVideoFile()
       slug: @section.slug
 
-  onReadMore: ->
+  onReadMore: (e) ->
+    e.preventDefault()
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
     $('html,body').animate({ scrollTop: window.innerHeight }, 400)
@@ -155,7 +156,8 @@ module.exports = class VeniceView extends Backbone.View
         @$(e.currentTarget).removeClass 'is-loading'
         @$('.venice-overlay__cta').hide()
 
-  toggleVideoGuide: ->
+  toggleVideoGuide: (e) ->
+    e.preventDefault()
     $('.venice-guide').fadeToggle('fast')
 
   setupFollowButtons: ->

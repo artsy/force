@@ -4,22 +4,22 @@ path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Fair = require '../../../models/fair'
-Fairs = require '../../../collections/fairs'
-FairOrganizer = require '../../../models/fair_organizer'
-Profile = require '../../../models/profile'
-Articles = require '../../../collections/articles'
-CoverImage = require '../../../models/cover_image'
-SearchResult = require '../../../models/search_result'
-Item = require '../../../models/item'
-Items = require '../../../collections/items'
-OrderedSet = require '../../../models/ordered_set'
-OrderedSets = require '../../../collections/ordered_sets'
+Fair = require '../../../../models/fair'
+Fairs = require '../../../../collections/fairs'
+FairOrganizer = require '../../../../models/fair_organizer'
+Profile = require '../../../../models/profile'
+Articles = require '../../../../collections/articles'
+CoverImage = require '../../../../models/cover_image'
+SearchResult = require '../../../../models/search_result'
+Item = require '../../../../models/item'
+Items = require '../../../../collections/items'
+OrderedSet = require '../../../../models/ordered_set'
+OrderedSets = require '../../../../collections/ordered_sets'
 cheerio = require 'cheerio'
 sinon = require 'sinon'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
+  filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }

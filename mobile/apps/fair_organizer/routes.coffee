@@ -59,7 +59,10 @@ module.exports.fetchFairOrgData = (req, res, next) ->
         fairs.map representation
         articles.fetch(
           cache: true
-          data: { published: true, fair_ids: fairs.pluck('_id'), sort: '-published_at' }
+          data:
+            published: true
+            'fair_ids[]': fairs.pluck('_id')
+            sort: '-published_at'
         )
       ]
 

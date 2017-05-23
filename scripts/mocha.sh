@@ -2,6 +2,8 @@
 
 set -e -x
 
+trap "exit" INT
+
 for file in "$@"
   do
     mocha \

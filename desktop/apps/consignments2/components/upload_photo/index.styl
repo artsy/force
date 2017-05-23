@@ -4,6 +4,50 @@
     margin-top 40px
     margin-bottom 10px
 
+  &__submit-button[disabled]
+    pointer-events none
+    background-color white
+    color gray-color
+    border 1px solid gray-color
+
   &__error
     color red-color
     text-align center
+
+  &__drop-area
+    border 1px dashed black
+    display flex
+    align-items center
+    justify-content center
+    height 124px
+    width 100%
+
+    &:hover
+      border-color purple-color
+      cursor pointer
+      color purple-color
+      g
+        fill purple-color
+
+  &__drop-area-contents
+    text-align center
+
+  &__camera-icon
+    svg
+      width 23px
+
+  &__cta
+    avant-garde-size('s-headline')
+
+  &__file-upload
+    width 0.1px
+    height 0.1px
+    opacity 0
+    overflow hidden
+    position absolute
+    z-index -1
+
+  &__upload-instructions
+    margin-top 20px
+    color gray-dark-color
+    margin-bottom 10px

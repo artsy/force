@@ -40,6 +40,6 @@ mixin share(description, url)
       a.share-to-twitter(
         data-message='Share on Twitter',
         data-service='twitter',
-        href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}: #{url}&url=#{url}&via=artsy",
+        href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
         target='_blank'
       ): i.icon-twitter.icon-in-table
