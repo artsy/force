@@ -11,6 +11,7 @@ Articles = require '../../../../collections/articles.coffee'
 { crop, resize } = require '../../../../components/resizer'
 sd = require('sharify').data
 moment = require 'moment'
+Q = require 'bluebird-q'
 
 describe 'ArticleIndexView', ->
 
@@ -51,6 +52,19 @@ describe 'ArticleIndexView', ->
       $.fn.waypoint = sinon.stub()
       sinon.stub Backbone, 'sync'
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
+      queries = {
+        partner:
+          name: 'Gagosian Gallery'
+          profile:
+            image: cropped: url: 'http://image.jpg'
+            href: '/getty'
+        sale:
+          cover_image: cropped: url: 'http://cover_image.jpg'
+          name: 'Whitney Art Party'
+          href: '/sale/whtney-art-party'
+      }
+
+      @ArticleIndexView.__set__ 'metaphysics', sinon.stub().returns(Q.resolve(queries))
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       @ArticleIndexView.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       @ArticleIndexView.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
@@ -134,11 +148,9 @@ describe 'ArticleIndexView', ->
         done()
 
     it 'displays promoted content banner for partner', ->
-      Backbone.sync.args[3][2].success fabricate 'partner'
-      Backbone.sync.args[4][2].success fabricate 'partner_profile'
-      $('.articles-promoted__img').attr('src').should.equal '/images/missing_image.png'
+      $('.articles-promoted__img').attr('src').should.eql 'http://image.jpg'
       $('.articles-promoted__name').text().should.equal 'Gagosian Gallery'
-      $('.articles-promoted__explore-button').text().should.equal 'Explore Institution'
+      $('.articles-promoted__explore-button').text().should.equal 'Explore Gallery'
       $('.articles-promoted__explore').attr('href').should.equal '/getty'
 
   describe 'promoted content auction', ->
@@ -152,8 +164,7 @@ describe 'ArticleIndexView', ->
         done()
 
     it 'displays promoted content banner for auction', ->
-      Backbone.sync.args[5][2].success fabricate 'sale'
-      $('.articles-promoted__img').attr('src').should.equal 'https://i.embed.ly/1/display/crop?url=%2Fimages%2Fmissing_image.png&width=250&height=165&quality=95'
+      $('.articles-promoted__img').attr('src').should.equal 'http://cover_image.jpg'
       $('.articles-promoted__name').text().should.equal 'Whitney Art Party'
       $('.articles-promoted__explore-button').text().should.equal 'Explore Auction'
       $('.articles-promoted__explore').attr('href').should.equal '/sale/whtney-art-party'

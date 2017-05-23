@@ -123,7 +123,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           src: data.partner.profile.image.cropped.url
           name: data.partner.name
           href: data.partner.profile.href
-          type: 'gallery' # TODO: ADD PROFILE TYPE TO METAPHYSICS
+          type: 'Gallery' # TODO: ADD PROFILE TYPE TO METAPHYSICS
     else if @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
       send = method: 'post', query: saleQuery(@article.get('auction_ids')?[0])
       metaphysics send
