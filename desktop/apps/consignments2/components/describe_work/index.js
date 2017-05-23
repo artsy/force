@@ -54,6 +54,7 @@ function renderSuggestion (suggestion) {
 
 function DescribeWork (props) {
   const {
+    categoryOptions,
     chooseLocationAction,
     clearLocationSuggestionsAction,
     error,
@@ -93,10 +94,18 @@ function DescribeWork (props) {
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <Field name='medium' component={renderSelectInput}
+          <Field name='medium' component={renderTextInput}
             item={'medium'}
             label={'Medium*'}
-            options={['painting', 'sculpture', 'print']}
+          />
+        </div>
+      </div>
+      <div className={b('row')}>
+        <div className={b('row-item')}>
+          <Field name='category' component={renderSelectInput}
+            item={'category'}
+            label={'Category*'}
+            options={categoryOptions}
           />
         </div>
         <div className={b('row-item')}>
@@ -199,6 +208,7 @@ function DescribeWork (props) {
 
 const mapStateToProps = (state) => {
   return {
+    categoryOptions: state.submissionFlow.categoryOptions,
     error: state.submissionFlow.error,
     locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
     locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
@@ -226,6 +236,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 DescribeWork.propTypes = {
+  categoryOptions: PropTypes.array.isRequired,
   chooseLocationAction: PropTypes.func.isRequired,
   clearLocationSuggestionsAction: PropTypes.func.isRequired,
   error: PropTypes.string,
