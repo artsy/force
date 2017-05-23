@@ -64,6 +64,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
         res.locals.sd.VIDEO_INDEX = videoIndex
+        res.locals.sd.INCLUDE_SAILTHRU = true
         section = curation.get('sections')[videoIndex]
         jsonLD = {
           "@context": "http://schema.org"
