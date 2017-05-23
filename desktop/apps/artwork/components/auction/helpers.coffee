@@ -1,4 +1,5 @@
 get  = require 'lodash.get'
+moment = require 'moment'
 { compact } = require 'underscore'
 { liveAuctionUrl } = require '../../../../../utils/domain/auctions/urls'
 
@@ -25,6 +26,8 @@ module.exports = {
         'qualified-to-bid'
       else
         'registration-pending'
+    else if moment().isAfter(auction.registration_ends_at)
+      'registration-closed'
     else if me && auction.require_bidder_approval
       'registration-required'
     else if me
