@@ -62,7 +62,7 @@
             }
         },
         "upcoming_sales": {
-            "headeline": "Have your work sold at one of our upcoming partner sales",
+            "headline": "Have your work sold at one of our upcoming partner sales",
             "button_cta": "Submit my work",
             "image": {
                 "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"

@@ -14,8 +14,10 @@
   background-position center center
 
   &__consign-button
+    avant-garde-size('body')
     background-color white
     color black
+    min-width 195px
     &:hover
       color purple-color
       background-color white
@@ -45,15 +47,24 @@
 
 .consignments2-section
   padding 0 55px
-  @media screen and (min-width: 1440px)
-    padding 0 150px
-  @media screen and (min-width: 1660px)
-    padding 0 200px
+  // @media screen and (min-width: 1440px)
+  //   padding 0 150px
+  // @media screen and (min-width: 1660px)
+  //   padding 0 200px
+
+  &__consign-button.avant-garde-button-black
+    avant-garde-size('body')
+    background-color black
+    color white
+    min-width 195px
+    margin-top 0px
+    &:hover
+      color purple-color
 
   &__about
     &__headline
       margin-bottom 38px
-      garamond-size('l-headline')
+      garamond-size('xl-headline')
     &__description
       block-margins(gutter)
       garamond-size('l-body')
@@ -66,15 +77,13 @@
 
     &.consignments2-section__images--logos
       display flex
-      justify-content center
+      justify-content space-around
+      align-items center
       img
         display block
         max-width 180px
         height auto
         width auto
-      // display inline-block
-      // margin (gutter / 2)
-      // vertical-align middle !important
 
 .consignments2-steps
   padding gutter
@@ -90,8 +99,15 @@
       text-align center
       &__image
         max-width 100%
+        display inline-block
+        width 80px
+        margin-bottom 35px
+
+      &__title
+        avant-garde-size('body')
+
       &__description
-        margin 20px 0 40px
+        margin 10px 0 40px
         > span
           float left
           margin-right gutter
@@ -101,55 +117,128 @@
           garamond-size('l-body')
 
 .consignments2-how-consignments-work
-  height 495px
   padding-top 60px
   padding-bottom 60px
 
 .consignments2-logos
   background-color gray-lightest-color
-  height 350px
   padding-top 60px
   padding-bottom 60px
-  padding-left 0px
-  padding-right 0px
+
+  &__content
+    max-width 1100px
+    margin 0 auto
+
+  .consignments2-section__about__headline
+    margin-bottom 60px
 
 .consignments2-top-sales
-  height 318px
-  padding-top 60px
-  padding-bottom 40px
+  margin-top 85px
+  margin-bottom 40px
+  margin-left auto
+  margin-right auto
+  max-width 1100px
+
+  .consignments2-section__about__headline
+    margin-bottom 0px
+
+  .consignments2-section__consign-button.avant-garde-button-black
+    margin-top 35px
+
+.consignments2-recently-sold
+  padding-top 20px
 
 .consignments2-in-demand
+  padding-top 70px
+  padding-bottom 70px
+  max-width 1100px
+  margin 0 auto
+
   &__artists
     display flex
-    justify-content space-between
     flex-wrap wrap
-    margin gutter 0
+
     &__artist
-      width 15%
-      margin-bottom gutter
-      &__thumbnail
-        display block
-        > img
-          width 100%
-      &__name
-        margin 10px 0
+      padding 15px
+      width 165px
+
+      h4
+        padding-top 10px
         avant-garde-size('body')
-      &__button
-        //
 
-.consignments2-footer
-  text-align center
-  width 40%
+     img
+        width 150px
+        height 150px
+        clip-path circle(70px at center)
+
+.consignments2-upcoming-sales
+  height 480px
+  padding-top 60px
+  color white
+
+  &__content
+    max-width 900px
+    width 60%
+    min-width 400px
+    margin-left 150px
+    text-align left
+
+  &__sales
+    display flex
+    flex-wrap wrap
+    justify-content space-between
+    align-items flex-start
+
+    &__sale, &__button
+      width 45%
+      min-width 300px
+      padding-right 10px
+      max-width 420px
+
+    &__sale
+      padding-bottom 40px
+      h5
+        avant-garde-size('body')
+      p
+        garamond-size('l-body')
+
+.consignments2-section__questions
+  padding-top 100px
+  padding-bottom 70px
+  text-align left
+  max-width 1100px
   margin 0 auto
-  padding (gutter * 2) 0 (gutter * 4)
-  > h3
-    margin-bottom gutter
 
-.consignments2-credit
-  garamond-size('s-body')
-  color gray-color
-  font-style italic
+  &__header-section
+    display flex
+    justify-content space-around
 
+    .consignments2-section__about, .consignments2-section__questions__crt-photos
+      width 45%
+      min-width 400px
+      padding-right 10px
+      max-width 420px
+
+  &__crt-photos
+    display flex
+
+    &__photo
+      padding-right 20px
+
+  &__sections
+    display flex
+    flex-wrap wrap
+    justify-content space-around
+
+    &__section
+      width 45%
+      min-width 400px
+      padding-bottom 40px
+      padding-right 10px
+      max-width 420px
+
+      h4
+        padding-bottom 15px
 
 mpv-height = 665px
 mpv-padding = 20px

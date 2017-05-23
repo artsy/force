@@ -37,12 +37,13 @@ block body
 
     //- Placement
     section.consignments2-section.consignments2-logos
-      .consignments2-section__about
-        h3.consignments2-section__about__headline
-          = sections.placement.headline
-      .consignments2-section__images.consignments2-section__images--logos
-        for logo in sections.placement.logos
-          img.consignments2-section__images__logo( src= logo.src )
+      .consignments2-logos__content
+        .consignments2-section__about
+          h3.consignments2-section__about__headline
+            = sections.placement.headline
+        .consignments2-section__images.consignments2-section__images--logos
+          for logo in sections.placement.logos
+            img.consignments2-section__images__logo( src= logo.src )
 
     //- Top sales
     section.consignments2-section.consignments2-top-sales
@@ -62,13 +63,13 @@ block body
 
     //- In Demand
     section.consignments2-section.consignments2-in-demand
-      h3= sections.in_demand.sub_headline
+      h4= sections.in_demand.sub_headline
       .consignments2-in-demand__artists
         for artist in inDemand.models
           .consignments2-in-demand__artists__artist
-            .consignments2-in-demand__artists__artist__thumbnail( class='js-in-demand-submit' )
+            .consignments2-in-demand__artists__artist__thumbnail
               img(
-                src= artist.imageUrl('four_thirds')
+                src= artist.imageUrl('square')
                 alt= artist.get('name')
               )
 
@@ -79,24 +80,33 @@ block body
     section.consignments2-section.consignments2-upcoming-sales(
       style='background-image: url(#{sections.upcoming_sales.image.src});'
     )
-      .consignments2-steps__headline
-        = sections.upcoming_sales.headline
-      a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
-          = sections.upcoming_sales.button_cta
+      .consignments2-upcoming-sales__content
+        .consignments2-section__about
+          h3.consignments2-section__about__headline
+            = sections.upcoming_sales.headline
+        .consignments2-upcoming-sales__sales
+          for sale in sales
+            .consignments2-upcoming-sales__sales__sale
+              h5= moment(sale.start_at).format('MMM D')
+              p= sale.name
+          .consignments2-upcoming-sales__sales__button
+            a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+                = sections.upcoming_sales.button_cta
 
     //- Questions
-    section.consignments2-section.consignments2-section--questions
-      .consignments2-section__about
-        h3.consignments2-section__about__headline
-          = sections.questions.headline
-        .consignments2-section--questions__crt-photos
-          .consignments2-section--questions__crt-photos__photo
-            img( src= sections.questions.crt_photo_1 )
-          .consignments2-section--questions__crt-photos__photo
-            img( src= sections.questions.crt_photo_2 )
-      .consignments2-section--questions__sections
+    section.consignments2-section.consignments2-section__questions
+      .consignments2-section__questions__header-section
+        .consignments2-section__about
+          h3.consignments2-section__about__headline
+            = sections.questions.headline
+        .consignments2-section__questions__crt-photos
+          .consignments2-section__questions__crt-photos__photo
+            img( src= sections.questions.crt_photo_1.src )
+          .consignments2-section__questions__crt-photos__photo
+            img( src= sections.questions.crt_photo_2.src )
+      .consignments2-section__questions__sections
         for section in sections.questions.sections
-          .consignments2-section--questions__sections__section
+          .consignments2-section__questions__sections__section
             h4= section.sub_headline
             p= section.description
 
@@ -110,3 +120,11 @@ block body
         = sections.footer.button_cta
 
 
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'misc'
+  - bodyClass = bodyClass + ' body-no-margins'
