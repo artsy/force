@@ -165,7 +165,7 @@ module.exports = class Article extends Backbone.Model
     bodyClass = "body-article body-article-#{@get('layout')}"
     if @get('hero_section') and @get('hero_section').type == 'fullscreen'
       bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
-      if @get('is_super_article')
+      if @get('is_super_article') or data.superArticle
         bodyClass += ' body-no-header'
     if @isEOYSubArticle(data.superSubArticleIds, data.superArticle)
       bodyClass += ' body-eoy-2016'
