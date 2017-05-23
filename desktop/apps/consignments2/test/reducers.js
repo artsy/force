@@ -162,17 +162,17 @@ describe('Reducers', () => {
       describe('#updateInputs', () => {
         it('merges the initial input data with user-inputted data', () => {
           initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql(true)
-          initialResponse.submissionFlow.inputs.medium.should.eql('painting')
+          initialResponse.submissionFlow.inputs.category.should.eql('Painting')
           initialResponse.submissionFlow.inputs.signature.should.eql(true)
           initialResponse.submissionFlow.inputs.title.should.eql('')
           const newInputs = {
             authenticity_certificate: 'no',
             title: 'My Artwork!',
-            medium: 'sculpture'
+            category: 'Sculpture'
           }
           const newInputsStep = reducers(initialResponse, actions.updateInputs(newInputs))
           newInputsStep.submissionFlow.inputs.authenticity_certificate.should.eql(false)
-          newInputsStep.submissionFlow.inputs.medium.should.eql('sculpture')
+          newInputsStep.submissionFlow.inputs.category.should.eql('Sculpture')
           newInputsStep.submissionFlow.inputs.signature.should.eql(true)
           newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
         })
