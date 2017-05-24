@@ -52,6 +52,7 @@ module.exports = class VeniceView extends Backbone.View
       friction: 0.8
       selectedAttraction: 0.2
     , (carousel) =>
+      $('.venice-header__overlay').fadeOut()
       @flickity = carousel.cells.flickity
       # Use 'settle' for changes that should have a delay ie: video swapping
       @flickity.on 'settle', =>
