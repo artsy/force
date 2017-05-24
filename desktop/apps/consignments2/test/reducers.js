@@ -218,16 +218,12 @@ describe('Reducers', () => {
           })
         })
 
-        it('stops processing the image and updates the error if it does not succeed', () => {
+        it('updates the error if it does not succeed', () => {
           request.send = sinon.stub().returns('TypeError')
           const expectedActions = [
             {
               type: 'UPDATE_ERROR',
               payload: { error: 'Unable to upload image.' }
-            },
-            {
-              type: 'STOP_PROCESSING_IMAGE',
-              payload: { fileName: 'astronaut.jpg' }
             }
           ]
           const filePath = 'http://s3.com/abcdefg%2Fastronaut.jpg'
