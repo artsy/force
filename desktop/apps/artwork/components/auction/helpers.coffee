@@ -26,7 +26,7 @@ module.exports = {
         'qualified-to-bid'
       else
         'registration-pending'
-    else if moment().isAfter(auction.registration_ends_at)
+    else if auction.is_registration_closed
       'registration-closed'
     else if me && auction.require_bidder_approval
       'registration-required'
