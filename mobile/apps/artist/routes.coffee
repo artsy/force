@@ -18,6 +18,14 @@ query = """
 
 """
 
+shouldDisplayAppBanner = (req) ->
+  userAgent = req.headers['user-agent']
+  dismissedAppBanner = req.cookies['dismissed-app-banner'] || false
+  
+  userAgent.match(/iPhone/i) and
+    not userAgent.match('Artsy-Mobile') and
+    not dismissedAppBanner
+
 module.exports.index = (req, res, next) ->
   artist = new Artist id: req.params.id
   artist.fetch
@@ -26,6 +34,11 @@ module.exports.index = (req, res, next) ->
     artist.maybeFetchAndSetFeaturedBio()
     artist.fetchArtworks(data: {size: 50})
   ]).then ([artistData, partnerArtists, artworks]) ->
+    res.locals.sd.modal =
+      slug: 'artist'
+      copy: "Be the first to know when works by #{artist.get('name')} are available."
+      image: artist.get('image_urls').square
+    res.locals.sd.shouldDisplayAppBanner = shouldDisplayAppBanner(req)
     res.locals.sd.ARTIST = artistData
     res.locals.sd.ARTWORKS = artworks
     showAuctionLink = artist.get('display_auction_link')
