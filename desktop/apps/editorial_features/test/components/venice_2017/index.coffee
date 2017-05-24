@@ -21,6 +21,7 @@ describe 'Venice Main', ->
         markdown: markdown
         crop: crop = sinon.stub().returns 'http://artsy.net/image.jpg'
       Backbone.$ = $
+      $.fn.fadeOut = @fadeOut = sinon.stub()
       @animateSpy = sinon.spy $.fn, 'animate'
       @curation =
         description: 'description'
@@ -99,6 +100,8 @@ describe 'Venice Main', ->
     @initCarousel.args[0][1].advanceBy.should.equal 1
     @initCarousel.args[0][1].wrapAround.should.be.true()
     @initCarousel.args[0][1].initialIndex.should.equal 0
+    @initCarousel.args[0][2](cells: flickity: on: ->)
+    @fadeOut.callCount.should.equal 2
 
   it 'Sets up the footer carousel', ->
     $(@view.el).find('.venice-footer').html().should.containEql '<h2 class="title">The Venice Biennale</h2>'

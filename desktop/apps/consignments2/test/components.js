@@ -49,7 +49,7 @@ describe('React components', () => {
         <UploadedImage store={initialStore} file={file} />
       )
       const rendered = wrapper.render()
-      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
     })
 
     it('correctly displays the processing state when the image is processing', () => {
@@ -63,7 +63,7 @@ describe('React components', () => {
         <UploadedImage store={initialStore} file={file} />
       )
       const rendered = wrapper.render()
-      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(1)
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(1)
     })
 
     it('correctly displays the processing state when a different image is processing', () => {
@@ -77,7 +77,7 @@ describe('React components', () => {
         <UploadedImage store={initialStore} file={file} />
       )
       const rendered = wrapper.render()
-      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
     })
   })
 

@@ -1,5 +1,6 @@
 accounting = require 'accounting'
 benv = require 'benv'
+moment = require 'moment'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 
@@ -136,6 +137,17 @@ describe 'auction', ->
           view.$('.js-artwork-auction-bid').attr('action')
             .should.equal "/artwork/#{@data.artwork.id}"
 
+        it 'renders a disabled "Registration Closed" button', ->
+          @data.accounting = accounting
+          @data.artwork.sale.is_registration_closed = true
+          @data.me = {}
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('.artwork-auction__bid-form__button').text()
+            .should.containEql 'Registration Closed'
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
+
         it 'renders a auction registration button', ->
           @data.accounting = accounting
           @data.artwork.sale.require_bidder_approval = true
@@ -147,7 +159,6 @@ describe 'auction', ->
             .should.equal "/auction-registration/#{@data.artwork.sale.id}"
           view.$('.js-artwork-auction-bid').attr('action')
             .should.equal "/artwork/#{@data.artwork.id}"
-
 
         it 'renders an open registration bid button', ->
           @data.accounting = accounting

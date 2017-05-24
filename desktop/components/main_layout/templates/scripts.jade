@@ -7,72 +7,94 @@ if options.marketo
     {
     "nolog": true,
     "stageMappings": {
-    "initial": [
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_First_Channel__c"
+      "initial": [
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_First_Channel__c"
+        },
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_First_Medium__c"
+        },
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_First_Source_Detail__c"
+        }
+      ],
+      "rolling": [
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_Acquisition_Channel__c"
+        },
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_Acquisition_Medium__c"
+        },
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_Acquisition_Source_Detail__c"
+        }
+      ],
+      "recent": [
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_Recent_Channel__c"
+        },
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_Recent_Medium__c"
+        },
+        {
+          "when": "{referrer.domain}",
+          "matches": "{internal.domain}",
+          "skip": "RC_Recent_Source_Detail__c"
+        }
+      ]
     },
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_First_Medium__c"
+    "nameMappings": {
+      "RC_First_Medium__c": "utm_medium_First_Touch__c",
+      "RC_First_Source__c": "utm_source_First_Touch__c",
+      "RC_First_Campaign__c": "utm_campaign_First_Touch__c",
+      "RC_First_Term__c": "utm_term_First_Touch__c",
+      "RC_First_Content__c": "utm_content_First_Touch__c",
+      "RC_First_Source_Detail__c": "Web_Referrer_First_Touch__c",
+      "RC_Acquisition_Medium__c": "utm_medium_Lead_Creation__c",
+      "RC_Acquisition_Source__c": "utm_source_Lead_Creation__c",
+      "RC_Acquisition_Campaign__c": "utm_campaign_Lead_Creation__c",
+      "RC_Acquisition_Term__c": "utm_term_Lead_Creation__c",
+      "RC_Acquisition_Content__c": "utm_content_Lead_Creation__c",
+      "RC_Acquisition_Source_Detail__c": "Web_Referrer_Lead_Creation__c",
+      "RC_Recent_Medium__c": "utm_medium_Most_Recent__c",
+      "RC_Recent_Source__c": "utm_source_Most_Recent__c",
+      "RC_Recent_Campaign__c": "utm_campaign_Most_Recent__c",
+      "RC_Recent_Term__c": "utm_term_Most_Recent__c",
+      "RC_Recent_Content__c": "utm_content_Most_Recent__c",
+      "RC_Recent_Source_Detail__c": "Web_Referrer_Most_Recent__c"
     },
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_First_Source_Detail__c"
-    }
-    ],
-    "rolling": [
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_Acquisition_Channel__c"
-    },
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_Acquisition_Medium__c"
-    },
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_Acquisition_Source_Detail__c"
-    }
-    ],
-    "recent": [
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_Recent_Channel__c"
-    },
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_Recent_Medium__c"
-    },
-    {
-    "when": "{referrer.domain}",
-    "matches": "{internal.domain}",
-    "skip": "RC_Recent_Source_Detail__c"
-    }
-    ]
-    },
-    "nameMappings": {},
     "cookies": {
-    "useCompatibleNames" : false
+      "useCompatibleNames": false
     },
     "session": {
-    "duration" : {
-    "recent" : 30
-    },
-    "internalDomains" : {
-    "alternates" : ["artsy.space", "artsy.info"]
-    },
-    "prioritizeNonDirect" :  {
-    "recent" : true
-    }
+      "duration": {
+        "recent": 30
+      },
+      "internalDomains": {
+        "alternates": [
+          "artsy.space",
+          "artsy.info"
+        ]
+      },
+      "prioritizeNonDirect": {
+        "recent": true
+      }
     }
     }
 

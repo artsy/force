@@ -32,11 +32,29 @@ const stepsMapping = [
 const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
+  categoryOptions: [
+    'Painting',
+    'Sculpture',
+    'Photography',
+    'Print',
+    'Drawing, Collage or other Work on Paper',
+    'Mixed Media',
+    'Performance Art',
+    'Installation',
+    'Video/Film/Animation',
+    'Architecture',
+    'Fashion Design and Wearable Art',
+    'Jewelry',
+    'Design/Decorative Art',
+    'Textile Arts',
+    'Other'
+  ],
   currentStep: 0,
   error: null,
   inputs: {
     artist_id: '',
     authenticity_certificate: true,
+    category: 'Painting',
     depth: '',
     dimensions_metric: 'in',
     edition: false,
@@ -44,7 +62,7 @@ const initialState = {
     location_city: '',
     location_state: '',
     location_country: '',
-    medium: 'painting',
+    medium: '',
     provenance: '',
     signature: true,
     title: '',
@@ -55,11 +73,10 @@ const initialState = {
   locationAutocompleteValue: '',
   notConsigningArtist: false,
   processingImages: [],
+  progressBars: {},
   skipPhotoSubmission: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: {
-    id: 46
-  },
+  submission: {},
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: []
 }
@@ -191,6 +208,15 @@ function submissionFlow (state = initialState, action) {
           location_city: action.payload.city,
           location_country: action.payload.country,
           location_state: action.payload.state
+        }
+      }, state)
+    }
+    case actions.UPDATE_PROGRESS_BAR: {
+      const updatedProgress = { [action.payload.fileName]: action.payload.percent }
+      return u({
+        progressBars: {
+          ...state.progressBars,
+          ...updatedProgress
         }
       }, state)
     }
