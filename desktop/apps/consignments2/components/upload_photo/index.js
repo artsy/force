@@ -1,3 +1,4 @@
+import Alert from '../../../../components/main_layout/public/icons/alert.svg'
 import Camera from '../../../../components/main_layout/public/icons/camera.svg'
 import CheckboxInput from '../checkbox_input'
 import PropTypes from 'prop-types'
@@ -23,7 +24,15 @@ function UploadPhoto (props) {
 
   return (
     <div className={b()}>
-      <label htmlFor='file' className={b('drop-area')}>
+      <label
+        htmlFor='file'
+        className={b('drop-area')}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          e.preventDefault()
+          selectPhotoAction(e.dataTransfer.files[0])
+        }}
+      >
         <div className={b('drop-area-contents')}>
           <input
             type='file'
@@ -36,7 +45,7 @@ function UploadPhoto (props) {
             <Camera />
           </div>
           <div className={b('cta')}>
-            Click to upload photos
+            Drag or Click to upload photos
           </div>
         </div>
       </label>
@@ -50,8 +59,8 @@ function UploadPhoto (props) {
         value={skipPhotoSubmission}
       />
       {
-        uploadedImages.map((file) =>
-          <UploadedImage file={file} key={file.fileName} />
+        uploadedImages.map((file, index) =>
+          <UploadedImage file={file} key={`${file.fileName}-${index}`} />
         )
       }
       <div
@@ -62,7 +71,16 @@ function UploadPhoto (props) {
         Submit
       </div>
       {
-        error && <div className={b('error')}>{error}</div>
+        error &&
+        <div className={b('error')}>
+          <div className={b('error-alert')}>
+            <Alert />
+          </div>
+          <div className={b('error-content')}>
+            <b>Please try uploading again or <a onClick={submitPhotoAction}>submit without photo.</a></b>
+            The image file should be JPG or PNG and should be less than 30mb.
+          </div>
+        </div>
       }
     </div>
   )

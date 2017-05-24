@@ -1,5 +1,6 @@
 .consignments2-submission-uploaded-image
   &__image-wrapper
+    padding-right 30px
     display flex
     border 1px solid gray-dark-color
     align-items center
@@ -7,11 +8,24 @@
     width 100%
     margin-top 20px
 
+    &_processing
+      opacity .15
+
   &__image
     height 60px
     max-width 300px
     margin-left 25px
-    margin-right 20px
+    margin-right 30px
 
   &__filename
     color gray-dark-color
+
+  &__progress-wrapper
+    background-color gray-lighter-color
+    height 2px
+    width 100%
+
+  &__progress
+    height 2px
+    background-color purple-color
+

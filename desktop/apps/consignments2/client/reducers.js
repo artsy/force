@@ -73,11 +73,10 @@ const initialState = {
   locationAutocompleteValue: '',
   notConsigningArtist: false,
   processingImages: [],
+  progressBars: {},
   skipPhotoSubmission: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: {
-    id: 46
-  },
+  submission: {},
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: []
 }
@@ -209,6 +208,15 @@ function submissionFlow (state = initialState, action) {
           location_city: action.payload.city,
           location_country: action.payload.country,
           location_state: action.payload.state
+        }
+      }, state)
+    }
+    case actions.UPDATE_PROGRESS_BAR: {
+      const updatedProgress = { [action.payload.fileName]: action.payload.percent }
+      return u({
+        progressBars: {
+          ...state.progressBars,
+          ...updatedProgress
         }
       }, state)
     }
