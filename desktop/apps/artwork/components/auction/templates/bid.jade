@@ -44,6 +44,9 @@ if showAuctionForm
         a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
           href='/auction-registration/#{auction.id}'
         )= bidAmount
+      when 'registration-closed'
+        .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
+          | Registration Closed
       when 'logged-in'
         a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
           href='/auction/#{auction.id}/bid/#{artwork.id}'
