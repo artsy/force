@@ -9,8 +9,10 @@ module.exports = """
     is_auction
     is_auction_promo
 
+    is_live_open
     is_registration_closed
     registration_ends_at
+    require_bidder_approval
 
     is_with_buyers_premium
     start_at

@@ -1,6 +1,6 @@
 import get from 'lodash.get'
 
-// TODO: Write test
+// TODO: Write test, move to Metaphysics
 
 export function getBidderStatus (me, auction) {
   const foundQualifiedForBiddingKey = get(me, 'bidders.0', {}).hasOwnProperty('qualified_for_bidding')

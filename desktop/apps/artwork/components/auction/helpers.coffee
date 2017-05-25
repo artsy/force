@@ -5,8 +5,6 @@ moment = require 'moment'
 { getBidderStatus } = require '../../../../../utils/domain/auctions/getBidderStatus'
 { getRedirectActionUrl } = require '../../../../../utils/domain/auctions/getBidRedirectActionUrl'
 
-console.log getBidderStatus
-
 pluralize = (word, count, irregular = null) ->
   if count is 1
     "#{count} #{word}"
