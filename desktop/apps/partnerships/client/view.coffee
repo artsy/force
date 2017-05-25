@@ -2,6 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 mediator = require '../../../lib/mediator.coffee'
+Cookies = require 'cookies-js'
+sd = require('sharify')
 { resize } = require '../../../components/resizer/index.coffee'
 { jump } = require '../../../components/jump/view.coffee'
 
@@ -11,8 +13,8 @@ module.exports = class PartnershipsView extends Backbone.View
 
   initialize: ->
     @$window = $(window)
-
     @cacheSelectors()
+    @setupSessionCookie()
     @setupStickyNav()
     @setupSectionNavHighlighting()
     @setupHeroUnitSlideshow()
@@ -30,6 +32,12 @@ module.exports = class PartnershipsView extends Backbone.View
     @$heroUnitsContainer = @$ '.partnerships-hero-unit-images'
     @$heroUnitsSlides = @$ '.partnerships-hero-unit-image'
     @$liaisonsContainer = @$ '.support-liaisons'
+
+  setupSessionCookie: ->
+    # Used by Marketo to link inquiries to anonymous users
+    if Cookies.get('marketo-session-id') and Cookies.get('marketo-session-id') isnt sd.SESSION_ID
+      Cookies.expire 'marketo-session-id'
+    Cookies.set('marketo-session-id', sd.SESSION_ID) if !Cookies.get('marketo-session-id')
 
   #
   # Replace a liaison image and info, and call the callback after image
