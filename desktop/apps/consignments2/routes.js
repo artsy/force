@@ -7,7 +7,7 @@ import { extend } from 'underscore'
 const landing = new JSONPage({ name: 'consignments2/landing' })
 
 export const landingPage = async (req, res, next) => {
-  const recentlySold = new Items([], { item_type: 'Artwork' })
+  // const recentlySold = new Items([], { item_type: 'Artwork' })
   const inDemand = new Items([], { item_type: 'Artist' })
 
   try {
@@ -16,18 +16,17 @@ export const landingPage = async (req, res, next) => {
       recently_sold,
       in_demand
     } = data.sections
-    recentlySold.id = recently_sold.set.id
     inDemand.id = in_demand.set.id
 
-    await recentlySold.fetch({ cache: true })
     await inDemand.fetch({ cache: true })
-    const { sales } = await metaphysics({ query: SalesQuery(req.params.id) })
+    const { ordered_set: recentlySold } = await metaphysics({ query: RecentlySoldQuery(recently_sold.set.id) })
+    const { sales } = await metaphysics({ query: SalesQuery() })
 
-    res.locals.sd.RECENTLY_SOLD = recentlySold.toJSON()
+    res.locals.sd.RECENTLY_SOLD = recentlySold.artworks
     res.locals.sd.IN_DEMAND = inDemand.toJSON()
 
     const pageData = extend(data, {
-      recentlySold: recentlySold,
+      recentlySold: recentlySold.artworks,
       sales: sales,
       inDemand: inDemand,
       markdown: markdown
@@ -47,7 +46,38 @@ export const submissionUpload = async (req, res, next) => {
   res.render('submission_flow', { user: req.user })
 }
 
-function SalesQuery (id) {
+function RecentlySoldQuery (id) {
+  return `
+    {
+      ordered_set(id: "${id}") {
+        id
+        name
+        artworks: items {
+          ... on ArtworkItem {
+            id
+            title
+            date
+            artists(shallow: true) {
+              name
+            }
+            partner(shallow: true) {
+              name
+            }
+            image {
+              placeholder
+              thumb: resized(height: 170, version: ["large", "larger"]) {
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+    }
+  `
+}
+
+function SalesQuery () {
   return `{
     sales(live: true, published: true, is_auction: true, size: 3) {
       _id
@@ -64,4 +94,3 @@ function SalesQuery (id) {
     }
   }`
 }
-

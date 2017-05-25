@@ -1,4 +1,4 @@
-.consignments2-header
+.consignments2-header, .consignments2-footer
   position relative
   padding gutter
   text-align center
@@ -11,7 +11,7 @@
   flex-direction column
   background-size cover
   background-repeat none
-  background-position center center
+  background-position right
 
   &__consign-button
     avant-garde-size('body')
@@ -26,6 +26,7 @@
     max-width 750px
     margin-bottom 15px
     garamond-size('xl-headline')
+
   &__subheadline
     garamond-size('s-headline')
 
@@ -46,11 +47,7 @@
     garamond-size('headline')
 
 .consignments2-section
-  padding 0 55px
-  // @media screen and (min-width: 1440px)
-  //   padding 0 150px
-  // @media screen and (min-width: 1660px)
-  //   padding 0 200px
+  padding 60px 55px
 
   &__consign-button.avant-garde-button-black
     avant-garde-size('body')
@@ -65,6 +62,10 @@
     &__headline
       margin-bottom 38px
       garamond-size('xl-headline')
+
+      @media screen and (max-width: 768px)
+        font-size 40px
+
     &__description
       block-margins(gutter)
       garamond-size('l-body')
@@ -79,11 +80,12 @@
       display flex
       justify-content space-around
       align-items center
+
       img
         display block
         max-width 180px
         height auto
-        width auto
+        width 23%
 
 .consignments2-steps
   padding gutter
@@ -95,13 +97,16 @@
   &__steps
     display flex
     justify-content center
+    max-width 1100px
+    margin 0 auto
+
     &__step
       text-align center
       &__image
         max-width 100%
         display inline-block
         width 80px
-        margin-bottom 35px
+        margin-bottom 15px
 
       &__title
         avant-garde-size('body')
@@ -113,7 +118,7 @@
           margin-right gutter
           garamond-size('xxl-headline')
         > p
-          padding 0 (gutter * 2)
+          padding 0 20px
           garamond-size('l-body')
 
 .consignments2-how-consignments-work
@@ -133,8 +138,6 @@
     margin-bottom 60px
 
 .consignments2-top-sales
-  margin-top 85px
-  margin-bottom 40px
   margin-left auto
   margin-right auto
   max-width 1100px
@@ -147,24 +150,60 @@
 
 .consignments2-recently-sold
   padding-top 20px
+  max-width 1700px
+
+  &__artworks
+    display flex
+    overflow hidden
+    flex-wrap wrap
+    height 300px
+    justify-content center
+    padding-top 30px
+
+    &__artwork
+      text-align left
+      garamond-size('m-caption')
+      color gray-darker-color
+      padding 0 10px
+      padding-top 20px
+      position relative
+      height 300px
+
+      &__data
+        padding-top 10px
+        position absolute
+        max-width 100%
+        padding-right 15px
+
+        > *
+          overflow ellipsis
+
+      &__artists
+        font-weight bold
+
+      &__title
+        font-style italic
 
 .consignments2-in-demand
-  padding-top 70px
+  padding-top 20px
   padding-bottom 70px
-  max-width 1100px
+  max-width 1300px
   margin 0 auto
 
   &__artists
     display flex
     flex-wrap wrap
+    height 400px
+    overflow hidden
+    justify-content center
 
     &__artist
       padding 15px
-      width 165px
 
       h4
         padding-top 10px
         avant-garde-size('body')
+        max-width 150px
 
      img
         width 150px
@@ -173,15 +212,24 @@
 
 .consignments2-upcoming-sales
   height 480px
-  padding-top 60px
   color white
+  padding-top 60px
+  background-size cover
+  background-position right
+
+  &--mobile
+    @media screen and (min-width: 641px)
+      display none
 
   &__content
     max-width 900px
-    width 60%
     min-width 400px
-    margin-left 150px
+    margin-left 10%
     text-align left
+
+    @media screen and (max-width: 960px)
+      width 100%
+      margin-left 0px
 
   &__sales
     display flex
@@ -191,7 +239,7 @@
 
     &__sale, &__button
       width 45%
-      min-width 300px
+      min-width 250px
       padding-right 10px
       max-width 420px
 
@@ -203,7 +251,7 @@
         garamond-size('l-body')
 
 .consignments2-section__questions
-  padding-top 100px
+  padding-top 80px
   padding-bottom 70px
   text-align left
   max-width 1100px
@@ -215,15 +263,18 @@
 
     .consignments2-section__about, .consignments2-section__questions__crt-photos
       width 45%
-      min-width 400px
       padding-right 10px
       max-width 420px
 
   &__crt-photos
     display flex
 
-    &__photo
+    &__photo1, &__photo2
       padding-right 20px
+
+    &__photo1
+      @media screen and (max-width: 768px)
+        display none
 
   &__sections
     display flex
@@ -232,7 +283,6 @@
 
     &__section
       width 45%
-      min-width 400px
       padding-bottom 40px
       padding-right 10px
       max-width 420px
@@ -240,8 +290,8 @@
       h4
         padding-bottom 15px
 
-mpv-height = 665px
-mpv-padding = 20px
-// narrow mpv height based on 1024 x 768 viewport
-// to catch some differing FAQ lengths
-mpv-height-narrow = 710px
+#main-layout-footer
+  display none
+
+#main-layout-container
+  margin-top 0px !important

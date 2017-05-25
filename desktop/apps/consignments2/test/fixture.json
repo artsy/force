@@ -66,6 +66,9 @@
             "button_cta": "Submit my work",
             "image": {
                 "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
+            },
+            "mobile_image": {
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/HZLuFUBchvFORQFMGjSRHg/banner-2.jpg"
             }
         },
         "questions": {
