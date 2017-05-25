@@ -83,7 +83,6 @@ fetchMetaphysicsData = (req)->
 
       res.locals.sd.HERO_UNITS = heroUnits
       res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
-      res.locals.sd.HIGHLIGHT_HEADER_SEARCH = req.query?.highlight_header_search
 
       res.render 'index',
         heroUnits: heroUnits
