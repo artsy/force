@@ -1,14 +1,11 @@
 import get from 'lodash.get'
-import moment from 'moment'
 
 // TODO: Write test, move to Metaphysics
 
 export function getBidderStatus (me, auction) {
   const foundQualifiedForBiddingKey = get(me, 'bidders.0', {}).hasOwnProperty('qualified_for_bidding')
 
-  if (auction.is_closed || moment().isAfter(auction.end_at)) {
-    return 'auction-closed'
-  } else if (auction.is_registration_closed) {
+  if (auction.is_registration_closed) {
     return 'registration-closed'
 
     /**
