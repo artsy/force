@@ -169,7 +169,7 @@ module.exports = class SearchBarView extends Backbone.View
   emptyItemClick: ->
     analyticsHooks.trigger 'search:empty-item:click',
       query: @query
-      item_number: 1
+      item_number: 0
       item_type: 'search'
       destination_path: "#{sd.APP_URL}/search?q=#{@query}"
     @selected = true
@@ -179,7 +179,7 @@ module.exports = class SearchBarView extends Backbone.View
     return @emptyItemClick() unless model
     analyticsHooks.trigger 'search:item:click',
       query: @query
-      item_number: model.get('collection').models.findIndex( (result) -> return result.id == model.id ) + 1
+      item_number: model.collection.models.findIndex( (result) -> return result.id == model.id ) + 1
       item_type: model.get('display_model')
       destination_path: "#{sd.APP_URL}/#{model.href()}"
     @selected = true
