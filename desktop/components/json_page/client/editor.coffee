@@ -84,15 +84,29 @@ module.exports = class JSONPageEditor
     # Remove some other features
     $(@disable.join ',').remove()
     $('input, textarea').each initImageUpload
+
     $('.hulk-array').each ->
       $(this).children('.hulk-array-element').each ->
         attachRemove $(this)
+
       $(this).append $button = $ "<button>Add</button>"
+
       $button.click ->
         attachRemove $el = $(this).prev().clone()
         $(this).before $el
 
-    # Add sorting arrows
+    @addSortingArrows()
+    this
+
+  #
+  # Adds the ability to sort array items with arrows.
+  # Unfortunately Hulk.js doesn't provide this functionality or the ability to
+  # re-render based on data manipulations so we have to jump through hoops to
+  # associate the DOM to `@data` and update the ordering for both.
+  # We could porbably avoid this classic problem with a React based solution:
+  # https://github.com/arqex/react-json
+  #
+  addSortingArrows: ->
     $('.hulk-array-element').prepend "
       <div class='json-page-array-header'>
         <div class='json-page-array-header-up'>▲</div>
@@ -137,5 +151,3 @@ module.exports = class JSONPageEditor
       goUpALevelFrom $(e.target)
     $('.json-page-array-header-up').click moveArrayItem('up')
     $('.json-page-array-header-down').click moveArrayItem('down')
-
-    this
