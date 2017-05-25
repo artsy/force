@@ -6,6 +6,8 @@ include ../../../../../components/bid_status/index
 - showAuctionForm = auction.is_open && !artwork.is_sold && !auction.is_live_open
 - actionUrl = helpers.auction.getRedirectActionUrl(bidderStatus, artwork, auction)
 
+- console.log(bidderStatus)
+
 if showAuctionForm
   form.artwork-auction__bid-form(
     method='GET'
@@ -47,6 +49,9 @@ if showAuctionForm
       when 'registration-closed'
         .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
           | Registration Closed
+      when 'auction-closed'
+        .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
+          | Online Bidding Closed
       when 'logged-in'
         a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
           href='/auction/#{auction.id}/bid/#{artwork.id}'

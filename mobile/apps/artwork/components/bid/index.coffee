@@ -32,7 +32,8 @@ module.exports = ->
 
   .then ({ artwork, me }) ->
     $('.artwork-auction-bid-module__current-bid').html template _.extend {},
-      helpers: helpers,
       artwork: artwork,
       bidder: me,
+      helpers: helpers,
+      user: CURRENT_USER?
       _: _
