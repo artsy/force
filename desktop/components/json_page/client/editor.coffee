@@ -1,3 +1,4 @@
+_ = require 'underscore'
 require 'hulk-editor'
 require 'jquery-ui'
 require 'blueimp-file-upload'
@@ -34,13 +35,18 @@ module.exports = class JSONPageEditor
   setup: ->
     @$el.html "
       <div class='hulk-editor-wrap'>
-        <div class='hulk-editor'></div>
+        <div class='hulk-editor-container'>
+          <div class='hulk-editor'></div>
+        </div>
         <div class='hulk-preview-iframe'>
           <iframe src='#{@paths.show}'></iframe>
         </div>
       </div>
     "
+    @render()
 
+  render: ->
+    @$el.find('.hulk-editor').html('')
     $.hulk @$el.find('.hulk-editor'), @data, @save,
       depth: 0
       separator: null
@@ -77,17 +83,59 @@ module.exports = class JSONPageEditor
 
     # Remove some other features
     $(@disable.join ',').remove()
-
     $('input, textarea').each initImageUpload
-
     $('.hulk-array').each ->
       $(this).children('.hulk-array-element').each ->
         attachRemove $(this)
-
       $(this).append $button = $ "<button>Add</button>"
-
       $button.click ->
         attachRemove $el = $(this).prev().clone()
         $(this).before $el
+
+    # Add sorting arrows
+    $('.hulk-array-element').prepend "
+      <div class='json-page-array-header'>
+        <div class='json-page-array-header-up'>▲</div>
+        <div class='json-page-array-header-down'>▼</div>
+      </div>
+    "
+    moveArrayItem = (dir) => (e) =>
+      # Find the array's key and index this arrow is a part of in @data
+      arrayKey = $(e.target)
+        .closest('.hulk-array')
+        .siblings('.hulk-map-key')
+        .val()
+      index = $(e.target).closest('.hulk-array-element').index()
+      targetIndex = index + if dir is 'up' then -1 else 1
+
+      # Traverse to the top of the DOM tree, storing the `keys` needed
+      # to then traverse down @data and grab the associated data reference
+      keys = [arrayKey]
+      goUpALevelFrom = ($el) =>
+        $map = $el.closest('.hulk-map')
+        $parentVal = $map.closest('.hulk-map-value-container')
+        if $parentVal.length
+          keys.unshift $parentVal.siblings('.hulk-map-key').val()
+          goUpALevelFrom $map
+        else
+          array = keys.reduce ((acc, part) => acc && acc[part]), @data
+
+          # Now that we've found the reference in @data swap the two items
+          # in @data and re-render keeping the list expanded
+          [item, target] = [array[index], array[targetIndex]]
+          array[index] = target
+          array[targetIndex] = item
+          @render()
+          $(".hulk-map-key[value=#{arrayKey}]")
+            .siblings('.hulk-collapse-item')
+            .removeClass('collapsed')
+            .html('Collapse')
+            .siblings('.hulk-array')
+            .show()
+          $('.hulk-preview-iframe').get().contentDocument.location.reload(true)
+
+      goUpALevelFrom $(e.target)
+    $('.json-page-array-header-up').click moveArrayItem('up')
+    $('.json-page-array-header-down').click moveArrayItem('down')
 
     this
