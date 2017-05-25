@@ -1,5 +1,5 @@
 - auction = artwork.auction
-- bidderStatus = helpers.getBidderStatus(me, auction)
+- bidderStatus = helpers.getBidderStatus(bidder, auction)
 
 include ./bid_status_message.jade
 - bidderPositions = artwork.auction.sale_artwork.counts.bidder_positions
@@ -20,6 +20,5 @@ include ./bid_status_message.jade
     //- else
     //-   span No reserve
     
-  if bidder && bidder.lot_standing && typeof window !== 'undefined'
-    if bidder && bidderStatus === 'qualified-to-bid'
-      +bidStatusMessage(bidder.lot_standing, artwork.auction.sale_artwork)
+  if bidder && bidder.lot_standing && typeof window !== 'undefined' && bidderStatus === 'qualified-to-bid'
+    +bidStatusMessage(bidder.lot_standing, artwork.auction.sale_artwork)

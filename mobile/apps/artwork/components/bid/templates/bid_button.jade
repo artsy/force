@@ -1,7 +1,6 @@
 - auction = artwork.auction
 - bidderStatus = helpers.getBidderStatus(me, auction)
 - actionUrl = helpers.getRedirectActionUrl(bidderStatus, artwork, auction)
-- console.log(bidderStatus)
 
 form.artwork-auction-bid-form.js-artwork-auction-bid-form(
   method="GET"
@@ -35,8 +34,3 @@ form.artwork-auction-bid-form.js-artwork-auction-bid-form(
           disabled=false
           class='js-artwork-auction-bid-button'
         ) Bid
-        
-    //- button.auction-avant-garde-black-button(
-    //-   type= 'submit'
-    //-   disabled= false
-    //- ) Bid
