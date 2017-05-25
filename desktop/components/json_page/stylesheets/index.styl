@@ -14,14 +14,17 @@
   overflow-y scroll
   margin 10px
   background-color white
-.hulk-editor
+.hulk-editor-container
   position absolute
   top 0
   right 50%
   bottom 45px
   left 0
   padding 10px
-  margin-right 5px
+  overflow-y scroll
+.hulk-editor
+  min-height 1000000px
+  padding-right 10px
 .hulk-preview-iframe
   position absolute
   top 0
@@ -77,8 +80,6 @@
 .hulk-array-element
   padding 10px
   border 2px solid gray-lightest-color
-  &:hover
-    border-color gray-dark-color
 
 .hulk-map
 .hulk-map-pair
@@ -97,9 +98,6 @@
   padding-top 10px
   padding-left 10px
   border-left 2px solid gray-lightest-color
-  &:hover
-    border-color black
-
   > .hulk-map-key
     margin-bottom 10px
 
@@ -110,3 +108,21 @@
   &.is-loading
     input[type=file]::after
       content 'Uploading...'
+
+.json-page-array-header
+  position absolute
+  right 46px
+  font-size 13px
+  &-up, &-down
+    cursor pointer
+    height 15px
+    color gray-lighter-color
+    &:hover
+      color black
+
+.hulk-array-element:first-child .json-page-array-header-up
+  display none
+
+.hulk-array-element:last-child .json-page-array-header-down
+  display none
+
