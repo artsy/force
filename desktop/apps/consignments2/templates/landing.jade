@@ -18,129 +18,134 @@ block body
         a.avant-garde-button-white.consignments2-header__consign-button( href='/consign2/submission' )
           = header.button_cta
 
-  .consignments2-sections
-    //- How consignments work
-    section.consignments2-section.consignments2-how-consignments-work
-      .consignments2-section__about
-        h3.consignments2-section__about__headline
-          = sections.how_consignments_work.headline
-        .consignments2-steps__steps
-          for step, i in sections.how_consignments_work.steps
-            .consignments2-steps__steps__step
-              img.consignments2-steps__steps__step__image( src= step.icon )
-              .consignments2-steps__steps__step__title
-                = step.title
-              .consignments2-steps__steps__step__description
-                p= step.description
+    .consignments2-sections
+      //- How consignments work
+      section.consignments2-section.consignments2-how-consignments-work
+        .consignments2-section__about
+          h3.consignments2-section__about__headline
+            = sections.how_consignments_work.headline
+          .consignments2-steps__steps
+            for step, i in sections.how_consignments_work.steps
+              .consignments2-steps__steps__step
+                img.consignments2-steps__steps__step__image( src= step.icon )
+                .consignments2-steps__steps__step__title
+                  = step.title
+                .consignments2-steps__steps__step__description
+                  p= step.description
+          a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+            = sections.how_consignments_work.button_cta
+
+      //- Placement
+      section.consignments2-section.consignments2-logos
+        .consignments2-logos__content
+          .consignments2-section__about
+            h3.consignments2-section__about__headline
+              = sections.placement.headline
+          .consignments2-section__images.consignments2-section__images--logos
+            for logo in sections.placement.logos
+              img.consignments2-section__images__logo( src= logo.src )
+
+      //- Top sales
+      section.consignments2-section.consignments2-top-sales
+        .consignments2-section__about
+          h3.consignments2-section__about__headline
+            = sections.top_sales.headline
         a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
-          = sections.how_consignments_work.button_cta
+            = sections.top_sales.button_cta
 
-    //- Placement
-    section.consignments2-section.consignments2-logos
-      .consignments2-logos__content
-        .consignments2-section__about
-          h3.consignments2-section__about__headline
-            = sections.placement.headline
-        .consignments2-section__images.consignments2-section__images--logos
-          for logo in sections.placement.logos
-            img.consignments2-section__images__logo( src= logo.src )
+      //- Recently Sold
+      section.consignments2-section.consignments2-recently-sold
+        h4= sections.recently_sold.sub_headline
+        .consignments2-recently-sold__artworks
+          for artwork in recentlySold
+            .consignments2-recently-sold__artworks__artwork
+              figure
+                img( src= artwork.image.thumb.url )
+                figcaption.consignments2-recently-sold__artworks__artwork__data
+                  .consignments2-recently-sold__artworks__artwork__artists
+                    = artwork.artists.map((aa) => aa.name).join(', ')
+                  .consignments2-recently-sold__artworks__artwork__title
+                    = artwork.title
+                  .consignments2-recently-sold__artworks__artwork__partner
+                    = artwork.partner.name
 
-    //- Top sales
-    section.consignments2-section.consignments2-top-sales
-      .consignments2-section__about
-        h3.consignments2-section__about__headline
-          = sections.top_sales.headline
-       a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
-          = sections.top_sales.button_cta
+      //- In Demand
+      section.consignments2-section.consignments2-in-demand
+        h4= sections.in_demand.sub_headline
+        .consignments2-in-demand__artists
+          for artist in inDemand.models
+            .consignments2-in-demand__artists__artist
+              .consignments2-in-demand__artists__artist__thumbnail
+                img(
+                  src= artist.imageUrl('square')
+                  alt= artist.get('name')
+                )
 
-    //- Recently Sold
-    section.consignments2-section.consignments2-recently-sold
-      h4= sections.recently_sold.sub_headline
-      .consignments2-recently-sold__artworks
-        for artwork in recentlySold
-          .consignments2-recently-sold__artworks__artwork
-            figure
-              img( src= artwork.image.thumb.url )
-              figcaption.consignments2-recently-sold__artworks__artwork__data
-                .consignments2-recently-sold__artworks__artwork__artists
-                  = artwork.artists.map((aa) => aa.name).join(', ')
-                .consignments2-recently-sold__artworks__artwork__title
-                  = artwork.title
-                .consignments2-recently-sold__artworks__artwork__partner
-                  = artwork.partner.name
+              h4.consignments2-in-demand__artists__artist__name
+                = artist.get('name')
 
-    //- In Demand
-    section.consignments2-section.consignments2-in-demand
-      h4= sections.in_demand.sub_headline
-      .consignments2-in-demand__artists
-        for artist in inDemand.models
-          .consignments2-in-demand__artists__artist
-            .consignments2-in-demand__artists__artist__thumbnail
-              img(
-                src= artist.imageUrl('square')
-                alt= artist.get('name')
-              )
+      //- Upcoming sales, desktop version
+      section.consignments2-section.consignments2-upcoming-sales.consignments2-upcoming-sales--desktop(
+        style='background-image: url(#{sections.upcoming_sales.image.src});'
+      )
+        .consignments2-upcoming-sales__content
+          .consignments2-section__about
+            h3.consignments2-section__about__headline
+              = sections.upcoming_sales.headline
+          .consignments2-upcoming-sales__sales
+            for sale in sales
+              .consignments2-upcoming-sales__sales__sale
+                h5= moment(sale.start_at).format('MMM D')
+                p= sale.name
+            .consignments2-upcoming-sales__sales__button
+              a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+                  = sections.upcoming_sales.button_cta
 
-            h4.consignments2-in-demand__artists__artist__name
-              = artist.get('name')
-
-    //- Upcoming sales, desktop version
-    section.consignments2-section.consignments2-upcoming-sales.consignments2-upcoming-sales--desktop(
-      style='background-image: url(#{sections.upcoming_sales.image.src});'
-    )
-      .consignments2-upcoming-sales__content
-        .consignments2-section__about
-          h3.consignments2-section__about__headline
-            = sections.upcoming_sales.headline
-        .consignments2-upcoming-sales__sales
-          for sale in sales
-            .consignments2-upcoming-sales__sales__sale
-              h5= moment(sale.start_at).format('MMM D')
-              p= sale.name
+      //- Upcoming sales, mobile version
+      section.consignments2-section.consignments2-upcoming-sales.consignments2-upcoming-sales--mobile(
+        style='background-image: url(#{sections.upcoming_sales.mobile_image.src});'
+      )
+        .consignments2-upcoming-sales__content
+          .consignments2-section__about
+            h3.consignments2-section__about__headline
+              = sections.upcoming_sales.headline
           .consignments2-upcoming-sales__sales__button
             a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
-                = sections.upcoming_sales.button_cta
-
-    //- Upcoming sales, mobile version
-    section.consignments2-section.consignments2-upcoming-sales.consignments2-upcoming-sales--mobile(
-      style='background-image: url(#{sections.upcoming_sales.mobile_image.src});'
-    )
-      .consignments2-upcoming-sales__content
-        .consignments2-section__about
-          h3.consignments2-section__about__headline
-            = sections.upcoming_sales.headline
-        .consignments2-upcoming-sales__sales__button
-          a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
-            = sections.upcoming_sales.button_cta
-        .consignments2-upcoming-sales__sales
-          for sale in sales
-            .consignments2-upcoming-sales__sales__sale
-              h5= moment(sale.start_at).format('MMM D')
-              p= sale.name
+              = sections.upcoming_sales.button_cta
+          .consignments2-upcoming-sales__sales
+            for sale in sales
+              .consignments2-upcoming-sales__sales__sale
+                h5= moment(sale.start_at).format('MMM D')
+                p= sale.name
 
 
-    //- Questions
-    section.consignments2-section.consignments2-section__questions
-      .consignments2-section__questions__header-section
-        .consignments2-section__about
-          h3.consignments2-section__about__headline
-            = sections.questions.headline
-        .consignments2-section__questions__crt-photos
-          .consignments2-section__questions__crt-photos__photo1
-            img( src= sections.questions.crt_photo_1.src )
-          .consignments2-section__questions__crt-photos__photo2
-            img( src= sections.questions.crt_photo_2.src )
-      .consignments2-section__questions__sections
-        for section in sections.questions.sections
+      //- Questions
+      section.consignments2-section.consignments2-section__questions
+        .consignments2-section__questions__header-section
+          .consignments2-section__about
+            h3.consignments2-section__about__headline
+              = sections.questions.headline
+          .consignments2-section__questions__crt-photos
+            .consignments2-section__questions__crt-photos__photo1
+              img( src= sections.questions.crt_photo_1.src )
+            .consignments2-section__questions__crt-photos__photo2
+              img( src= sections.questions.crt_photo_2.src )
+        .consignments2-section__questions__sections
+          for section in sections.questions.sections
+            .consignments2-section__questions__sections__section
+              h4= section.sub_headline
+              p= section.description
           .consignments2-section__questions__sections__section
-            h4= section.sub_headline
-            p= section.description
+            h4 Want to learn more? Read our <a id='consignments2-open-faq-modal' href='#'>full FAQ</a> or&nbsp;
+              a( href='mailto:consignments@artsy.net' ) contact us.
 
-  .consignments2-footer(
-    style='background-image: url(#{sections.footer.image.src});'
-  )
-    h1.consignments2-header__headline
-      = sections.footer.headline
-    .consignments2-header__cta
-      a.avant-garde-button-white.consignments2-header__consign-button( href='/consign2/submission' )
-        = sections.footer.button_cta
+    .consignments2-footer(
+      style='background-image: url(#{sections.footer.image.src});'
+    )
+      h1.consignments2-header__headline
+        = sections.footer.headline
+      .consignments2-header__cta
+        a.avant-garde-button-white.consignments2-header__consign-button( href='/consign2/submission' )
+          = sections.footer.button_cta
+
+  include ./faq

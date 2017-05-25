@@ -7,7 +7,6 @@ import { extend } from 'underscore'
 const landing = new JSONPage({ name: 'consignments2/landing' })
 
 export const landingPage = async (req, res, next) => {
-  // const recentlySold = new Items([], { item_type: 'Artwork' })
   const inDemand = new Items([], { item_type: 'Artist' })
 
   try {
