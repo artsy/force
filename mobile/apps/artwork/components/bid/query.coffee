@@ -8,6 +8,10 @@ module.exports = """
     is_closed
     is_auction
     is_auction_promo
+
+    is_registration_closed
+    registration_ends_at
+
     is_with_buyers_premium
     start_at
     end_at
