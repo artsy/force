@@ -17,7 +17,7 @@ module.exports = class JSONPageEditor
   save: (data) =>
     return unless confirm 'Are you sure you want to update the data (these changes can’t be undone)?'
 
-    ($button = $('.hulk-save'))
+    ($button = @$el.find('.hulk-save'))
       .addClass 'is-loading'
 
     $.ajax
@@ -25,8 +25,8 @@ module.exports = class JSONPageEditor
       url: @paths.edit
       data: JSON.stringify(data)
       contentType: 'application/json'
-      success: ->
-        $('.hulk-preview-iframe > iframe')[0]
+      success: =>
+        @$el.find('.hulk-preview-iframe > iframe')[0]
           .contentWindow.location.reload true
         $button.removeClass 'is-loading'
       error: ->
@@ -79,13 +79,13 @@ module.exports = class JSONPageEditor
         $form.addClass 'is-loading'
 
     # Visually disable key editing
-    $('.hulk-map-key').prop 'disabled', true
+    @$el.find('.hulk-map-key').prop 'disabled', true
 
     # Remove some other features
     $(@disable.join ',').remove()
-    $('input, textarea').each initImageUpload
+    @$el.find('input, textarea').each initImageUpload
 
-    $('.hulk-array').each ->
+    @$el.find('.hulk-array').each ->
       $(this).children('.hulk-array-element').each ->
         attachRemove $(this)
 
@@ -107,7 +107,7 @@ module.exports = class JSONPageEditor
   # https://github.com/arqex/react-json
   #
   addSortingArrows: ->
-    $('.hulk-array-element').prepend "
+    @$el.find('.hulk-array-element').prepend "
       <div class='json-page-array-header'>
         <div class='json-page-array-header-up'>▲</div>
         <div class='json-page-array-header-down'>▼</div>
@@ -140,14 +140,18 @@ module.exports = class JSONPageEditor
           array[index] = target
           array[targetIndex] = item
           @render()
-          $(".hulk-map-key[value=#{arrayKey}]")
+          @$el.find(".hulk-map-key[value=#{arrayKey}]")
             .siblings('.hulk-collapse-item')
             .removeClass('collapsed')
             .html('Collapse')
             .siblings('.hulk-array')
             .show()
-          $('.hulk-preview-iframe').get().contentDocument.location.reload(true)
+          @$el.find('.hulk-preview-iframe')
+            .get()
+            .contentWindow
+            ?.location
+            .reload true
 
       goUpALevelFrom $(e.target)
-    $('.json-page-array-header-up').click moveArrayItem('up')
-    $('.json-page-array-header-down').click moveArrayItem('down')
+    @$el.find('.json-page-array-header-up').click moveArrayItem('up')
+    @$el.find('.json-page-array-header-down').click moveArrayItem('down')
