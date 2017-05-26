@@ -292,8 +292,8 @@ arrify@^1.0.0:
     underscore "*"
 
 "artsy-eigen-web-association@git://github.com/artsy/artsy-eigen-web-association.git":
-  version "1.0.5"
-  resolved "git://github.com/artsy/artsy-eigen-web-association.git#7132c8ea550f1fa7259c2ded31b10b786044dec0"
+  version "1.0.6"
+  resolved "git://github.com/artsy/artsy-eigen-web-association.git#bb0e133b0a7bf08a94a20ed4653e4272b4ffd06d"
   dependencies:
     express "*"
 
