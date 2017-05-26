@@ -139,7 +139,7 @@ describe 'auction', ->
 
         it 'renders a disabled "Registration Closed" button', ->
           @data.accounting = accounting
-          @data.artwork.sale.registration_ends_at = moment().subtract(2, 'days').format()
+          @data.artwork.sale.is_registration_closed = true
           @data.me = {}
           view = new @ArtworkAuctionView data: @data
           view.render()

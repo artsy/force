@@ -22,6 +22,7 @@ function validate (values) {
     authenticity_certificate,
     height,
     location,
+    medium,
     signature,
     title,
     width,
@@ -32,6 +33,7 @@ function validate (values) {
   if (!authenticity_certificate) errors.authenticity_certificate = 'Required'
   if (!height) errors.height = 'Required'
   if (!location) errors.location = 'Required'
+  if (!medium) errors.medium = 'Required'
   if (!signature) errors.signature = 'Required'
   if (!title) errors.title = 'Required'
   if (!width) errors.width = 'Required'
