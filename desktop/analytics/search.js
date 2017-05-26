@@ -14,4 +14,8 @@
   analyticsHooks.on('search:empty-item:click search:item:click', function (data) {
     analytics.track('Selected item from search', data)
   })
+
+  analyticsHooks.on('search-page:item:click', function (data) {
+    analytics.track('Selected item from search page', data)
+  })
 })()
