@@ -50,7 +50,8 @@ describe 'SearchBarView', ->
 
   describe '#selectResult', ->
     it 'takes a search result model and sets window.location to the models location', ->
-      model = new SearchResult(fabricate('artwork', model: 'artwork', collection: { models: [] } ))
+      model = new SearchResult(fabricate('artwork', model: 'artwork' ))
+      model.collection = { models: [] }
       @view.selectResult({}, model)
       location.assign.args[0][0].should.equal model.get 'location'
 

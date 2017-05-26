@@ -181,7 +181,7 @@ module.exports = class SearchBarView extends Backbone.View
       query: @query
       item_number: model.collection.models.findIndex( (result) -> return result.id == model.id ) + 1
       item_type: model.get('display_model')
-      destination_path: "#{sd.APP_URL}/#{model.href()}"
+      destination_path: "#{sd.APP_URL}#{model.href()}"
     @selected = true
     location.assign model.href()
 
