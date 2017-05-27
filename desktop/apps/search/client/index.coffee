@@ -6,6 +6,7 @@ Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
 Artwork = require '../../../models/artwork.coffee'
 { crop } = require '../../../components/resizer/index.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 imageTemplate = -> require('../templates/image-template.jade') arguments...
 resolvedImage = -> require('../templates/image.jade') arguments...
@@ -13,6 +14,9 @@ resolvedImage = -> require('../templates/image.jade') arguments...
 module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
 
   el: '#search-page'
+
+  events:
+    'click .search-result': 'trackSelectResult'
 
   initialize: (options) ->
     if options.results
@@ -62,6 +66,16 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
           url = artwork.get('image_url')
           crop url, width: 70, height: 70
         @$(".search-result[data-id='#{result.id}'] .search-result-thumbnail-fallback").html resolvedImage(result: artwork)
+
+  trackSelectResult: (e) ->
+    e.preventDefault()
+    term = $('#main-layout-search-bar-input').val()
+    $searchResult = $(e.currentTarget)
+    analyticsHooks.trigger 'search-page:item:click',
+      query: term
+      item_number: $searchResult.parent().children().index($searchResult)
+      item_type: $searchResult.attr('class').replace('search-result ', '')
+      destination_path: "#{sd.APP_URL}#{$searchResult.attr('href')}"
 
 module.exports.init = ->
   new SearchResultsView
