@@ -10,7 +10,7 @@ const stepsMapping = [
   {
     id: 'create_account',
     label: 'Create Account',
-    title: 'Create an Account'
+    title: ''
   },
   {
     id: 'choose_artist',
@@ -32,6 +32,7 @@ const stepsMapping = [
 const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
+  authFormState: 'logIn',
   categoryOptions: [
     'Painting',
     'Sculpture',
@@ -78,7 +79,8 @@ const initialState = {
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: {},
   submissionIdFromServer: sd.SUBMISSION_ID,
-  uploadedImages: []
+  uploadedImages: [],
+  user: sd.CURRENT_USER
 }
 
 function submissionFlow (state = initialState, action) {
@@ -172,6 +174,11 @@ function submissionFlow (state = initialState, action) {
         artistAutocompleteSuggestions: action.payload.suggestions
       }, state)
     }
+    case actions.UPDATE_AUTH_FORM_STATE: {
+      return u({
+        authFormState: action.payload.state
+      }, state)
+    }
     case actions.UPDATE_ERROR: {
       return u({
         error: action.payload.error
@@ -228,6 +235,11 @@ function submissionFlow (state = initialState, action) {
     case actions.UPDATE_SUBMISSION: {
       return u({
         submission: action.payload.submission
+      }, state)
+    }
+    case actions.UPDATE_USER: {
+      return u({
+        user: action.payload.user
       }, state)
     }
     default: return state

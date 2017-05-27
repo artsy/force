@@ -19,6 +19,7 @@ export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
+export const UPDATE_AUTH_FORM_STATE = 'UPDATE_AUTH_FORM_STATE'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
 export const UPDATE_INPUTS = 'UPDATE_INPUTS'
 export const UPDATE_LOCATION_AUTOCOMPLETE_VALUE = 'UPDATE_LOCATION_AUTOCOMPLETE_VALUE'
@@ -28,6 +29,7 @@ export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
 export const UPDATE_PROGRESS_BAR = 'UPDATE_PROGRESS_BAR'
 export const UPDATE_SKIP_PHOTO_SUBMISSION = 'UPDATE_SKIP_PHOTO_SUBMISSION'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
+export const UPDATE_USER = 'UPDATE_USER'
 
 // Action creators
 export function addImageToUploadedImages (fileName, src) {
@@ -104,13 +106,14 @@ export function clearLocationSuggestions () {
 export function completeSubmission () {
   return async (dispatch, getState) => {
     try {
-      const token = await fetchToken()
       const {
         submissionFlow: {
           submission,
-          submissionIdFromServer
+          submissionIdFromServer,
+          user
         }
       } = getState()
+      const token = await fetchToken(user)
 
       const submissionQueryParam = submission ? submission.id : submissionIdFromServer
       const submissionResponse = await request
@@ -130,12 +133,13 @@ export function completeSubmission () {
 export function createSubmission () {
   return async (dispatch, getState) => {
     try {
-      const token = await fetchToken()
       const {
         submissionFlow: {
-          inputs
+          inputs,
+          user
         }
       } = getState()
+      const token = await fetchToken(user)
       const { body } = await request
                           .post(`${sd.CONVECTION_APP_URL}/api/submissions`)
                           .set('Authorization', `Bearer ${token}`)
@@ -152,10 +156,11 @@ export function createSubmission () {
 export function fetchArtistSuggestions (value) {
   return async (dispatch, getState) => {
     try {
+      const { submissionFlow: { user } } = getState()
       const res = await request
                           .get(`${sd.API_URL}/api/v1/match/artists`)
                           .query({ visible_to_public: 'true', term: value })
-                          .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+                          .set('X-ACCESS-TOKEN', user.accessToken)
       dispatch(updateArtistSuggestions(res.body))
       dispatch(hideNotConsigningMessage())
     } catch (err) {
@@ -223,6 +228,52 @@ export function hideNotConsigningMessage () {
 export function incrementStep () {
   return {
     type: INCREMENT_STEP
+  }
+}
+
+export function logIn (values) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        email: values.email,
+        password: values.password,
+        _csrf: sd.CSRF_TOKEN
+      }
+      const user = await request
+                      .post(sd.AP.loginPagePath)
+                      .set('Content-Type', 'application/json')
+                      .set('Accept', 'application/json')
+                      .set('X-Requested-With', 'XMLHttpRequest')
+                      .send(options)
+      dispatch(updateUser(user.body.user))
+      dispatch(incrementStep())
+      dispatch(clearError())
+    } catch (err) {
+      dispatch(updateError(err.response.body.error))
+    }
+  }
+}
+
+export function signUp (values) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        email: values.email,
+        name: values.name,
+        password: values.password,
+        _csrf: sd.CSRF_TOKEN
+      }
+      await request
+              .post(sd.AP.signupPagePath)
+              .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
+              .set('X-Requested-With', 'XMLHttpRequest')
+              .send(options)
+
+      await dispatch(logIn(values))
+    } catch (err) {
+      dispatch(updateError(err.response.body.error))
+    }
   }
 }
 
@@ -312,6 +363,15 @@ export function updateArtistSuggestions (suggestions) {
     type: UPDATE_ARTIST_SUGGESTIONS,
     payload: {
       suggestions
+    }
+  }
+}
+
+export function updateAuthFormState (state) {
+  return {
+    type: UPDATE_AUTH_FORM_STATE,
+    payload: {
+      state
     }
   }
 }
@@ -417,11 +477,20 @@ export function updateSubmission (submission) {
   }
 }
 
+export function updateUser (user) {
+  return {
+    type: UPDATE_USER,
+    payload: {
+      user
+    }
+  }
+}
+
 export function uploadImageToConvection (geminiToken, fileName) {
   return async (dispatch, getState) => {
     try {
-      const token = await fetchToken()
-      const { submissionFlow: { submission } } = getState()
+      const { submissionFlow: { submission, user } } = getState()
+      const token = await fetchToken(user)
       const inputs = {
         submission_id: submission.id,
         gemini_token: geminiToken
@@ -470,14 +539,14 @@ export function uploadImageToGemini (key, bucket, fileName) {
 }
 
 // helpers
-async function fetchToken () {
+async function fetchToken (user) {
   const {
     body: {
       token
     }
   } = await request
               .post(`${sd.API_URL}/api/v1/me/token`)
-              .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+              .set('X-ACCESS-TOKEN', user.accessToken)
               .send({ client_application_id: sd.CONVECTION_APP_ID })
   return token
 }
