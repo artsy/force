@@ -103,7 +103,7 @@ module.exports = class JSONPageEditor
   # Unfortunately Hulk.js doesn't provide this functionality or the ability to
   # re-render based on data manipulations so we have to jump through hoops to
   # associate the DOM to `@data` and update the ordering for both.
-  # We could porbably avoid this classic problem with a React based solution:
+  # We could probably avoid this classic problem with a React based solution:
   # https://github.com/arqex/react-json
   #
   addSortingArrows: ->
