@@ -17,7 +17,7 @@ routes =
 
   '''
   /gene/.*
-  ''': require('../apps/gene/client.coffee').init
+  ''': require('../apps/gene/client.js').default.init
 
 for paths, init of routes
   for path in paths.split('\n')
