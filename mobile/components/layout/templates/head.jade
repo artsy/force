@@ -6,7 +6,7 @@ meta( name="apple-mobile-web-app-capable", content="yes" )
 meta( property="al:ios:app_store_id" content='703796080' )
 meta( property="al:ios:app_name" content='Artsy' )
 meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
-if !sd.shouldDisplayAppBanner
+if !sd.SHOULD_DISPLAY_APP_BANNER
     meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )
 link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )

@@ -1,10 +1,10 @@
 AppBanner = require '../app_banner/app_banner.coffee'
-{ USER_AGENT, modal } = require('sharify').data
+{ USER_AGENT, APP_BANNER_MODAL } = require('sharify').data
 
 class ArtistAppBanner extends AppBanner
     template: ->
-      $ require('./index.jade') { modal: modal }
-    
+      $ require('./index.jade') { modal: APP_BANNER_MODAL }
+
     @shouldDisplay: ->
       USER_AGENT?.match(/iPhone/i)? and
       not @hasDismissed() and
