@@ -55,6 +55,7 @@ describe 'ArticleIndexView', ->
       queries = {
         partner:
           name: 'Gagosian Gallery'
+          type: 'Gallery'
           profile:
             image: cropped: url: 'http://image.jpg'
             href: '/getty'

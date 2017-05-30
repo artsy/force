@@ -5,6 +5,7 @@ module.exports = (id) ->
     {
       default_profile_id
       name
+      type
       profile {
         id
         href

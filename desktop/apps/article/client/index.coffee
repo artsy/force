@@ -120,16 +120,16 @@ module.exports = class ArticleIndexView extends Backbone.View
       metaphysics send
       .then (data) =>
         $('#articles-show').prepend promotedTemplate
-          src: data.partner.profile.image.cropped.url
+          src: data.partner.profile.image.cropped?.url
           name: data.partner.name
           href: data.partner.profile.href
-          type: 'Gallery' # TODO: ADD PROFILE TYPE TO METAPHYSICS
+          type: if data.partner.type is 'Gallery' then 'Gallery' else 'Institution'
     else if @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
       send = method: 'post', query: saleQuery(@article.get('auction_ids')?[0])
       metaphysics send
       .then (data) =>
         $('#articles-show').prepend promotedTemplate
-          src: data.sale.cover_image.cropped.url
+          src: data.sale.cover_image.cropped?.url
           name: data.sale.name
           href: data.sale.href
           type: 'Auction'
