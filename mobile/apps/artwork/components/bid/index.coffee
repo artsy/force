@@ -27,7 +27,9 @@ module.exports = ->
 
   metaphysics
     query: query
-    variables: id: ARTWORK.id, sale_id: ARTWORK.auction.id
+    variables:
+      id: ARTWORK.id,
+      sale_id: ARTWORK.auction.id
     req: user: CurrentUser.orNull()
 
   .then ({ artwork, me }) ->
