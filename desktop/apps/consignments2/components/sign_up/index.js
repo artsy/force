@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { renderTextInput } from '../text_input'
 import {
   signUp,
-  updateAuthFormState
+  updateAuthFormStateAndClearError
 } from '../../client/actions'
 
 function validate (values) {
@@ -32,10 +32,10 @@ function SignUp (props) {
     signUpAction,
     invalid,
     pristine,
-    updateAuthFormStateAction
+    updateAuthFormStateAndClearErrorAction
   } = props
 
-  const b = block('consignments2-submission-log-in')
+  const b = block('consignments2-submission-sign-up')
 
   return (
     <div className={b()}>
@@ -43,7 +43,7 @@ function SignUp (props) {
         Create an Account
       </div>
       <div className={b('subtitle')}>
-        Already have an account? <span className={b('clickable')} onClick={() => updateAuthFormStateAction('logIn')}>Log in</span>.
+        Already have an account? <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('logIn')}>Log in</span>.
       </div>
       <form className={b('form')} onSubmit={handleSubmit(signUpAction)}>
         <div className={b('row')}>
@@ -97,8 +97,8 @@ const mapDispatchToProps = (dispatch) => {
     signUpAction (values) {
       dispatch(signUp(values))
     },
-    updateAuthFormStateAction (state) {
-      dispatch(updateAuthFormState(state))
+    updateAuthFormStateAndClearErrorAction (state) {
+      dispatch(updateAuthFormStateAndClearError(state))
     }
   }
 }
@@ -109,12 +109,12 @@ SignUp.propTypes = {
   invalid: PropTypes.bool,
   signUpAction: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
-  updateAuthFormStateAction: PropTypes.func.isRequired
+  updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
 }
 
 export default compose(
   reduxForm({
-    form: 'logIn', // a unique identifier for this form
+    form: 'signUp', // a unique identifier for this form
     validate
   }),
   connect(

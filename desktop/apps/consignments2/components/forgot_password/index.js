@@ -6,19 +6,17 @@ import { compose } from 'underscore'
 import { connect } from 'react-redux'
 import { renderTextInput } from '../text_input'
 import {
-  logIn
+  resetPassword,
+  updateAuthFormStateAndClearError
 } from '../../client/actions'
 
 function validate (values) {
   const {
-    email,
-    password
+    email
   } = values
   const errors = {}
 
   if (!email) errors.email = 'Required'
-  if (!password) errors.password = 'Required'
-
   return errors
 }
 
@@ -26,43 +24,47 @@ function ForgotPassword (props) {
   const {
     error,
     handleSubmit,
-    logInAction,
     invalid,
-    pristine
+    pristine,
+    resetPasswordAction,
+    resetPasswordSuccess,
+    updateAuthFormStateAndClearErrorAction
   } = props
 
-  const b = block('consignments2-submission-log-in')
+  const b = block('consignments2-submission-forgot-password')
 
   return (
-    <form className={b()} onSubmit={handleSubmit(logInAction)}>
-      <div className={b('row')}>
-        <div className={b('row-item')}>
-          <Field name='email' component={renderTextInput}
-            item={'email'}
-            label={'Email'}
-          />
-        </div>
+    <div className={b()}>
+      <div className={b('title')}>
+        Enter the email address associated with your account
       </div>
-      <div className={b('row')}>
-        <div className={b('row-item')}>
-          <Field name='password' component={renderTextInput}
-            item={'password'}
-            label={'Password'}
-            type={'password'}
-          />
-        </div>
+      <div className={b('subtitle')}>
+        New to Artsy? <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('signUp')}>Sign up</span>.
       </div>
-      <button
-        className={b('next-button').mix('avant-garde-button-black')}
-        disabled={pristine || invalid}
-        type='submit'
-      >
-        Log In
-      </button>
-      {
-        error && <div className={b('error')}>{error}</div>
-      }
-    </form>
+      <form className={b()} onSubmit={handleSubmit(resetPasswordAction)}>
+        <div className={b('row')}>
+          <div className={b('row-item')}>
+            <Field name='email' component={renderTextInput}
+              item={'email'}
+              label={'Email'}
+            />
+          </div>
+        </div>
+        <button
+          className={b('reset-password-button').mix('avant-garde-button-black')}
+          disabled={pristine || invalid}
+          type='submit'
+        >
+          Reset Password
+        </button>
+        {
+          error && <div className={b('error')}>{error}</div>
+        }
+        {
+          resetPasswordSuccess && <div className={b('success')}>Instructions on how to reset your password have been sent.</div>
+        }
+      </form>
+    </div>
   )
 }
 
@@ -71,14 +73,18 @@ const mapStateToProps = (state) => {
     categoryOptions: state.submissionFlow.categoryOptions,
     error: state.submissionFlow.error,
     locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
-    locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
+    locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue,
+    resetPasswordSuccess: state.submissionFlow.resetPasswordSuccess
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logInAction (values) {
-      dispatch(logIn(values))
+    resetPasswordAction (values) {
+      dispatch(resetPassword(values))
+    },
+    updateAuthFormStateAndClearErrorAction (state) {
+      dispatch(updateAuthFormStateAndClearError(state))
     }
   }
 }
@@ -87,13 +93,15 @@ ForgotPassword.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   invalid: PropTypes.bool,
-  logInAction: PropTypes.func.isRequired,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  resetPasswordAction: PropTypes.func.isRequired,
+  resetPasswordSuccess: PropTypes.bool.isRequired,
+  updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
 }
 
 export default compose(
   reduxForm({
-    form: 'logIn', // a unique identifier for this form
+    form: 'forgotPassword', // a unique identifier for this form
     validate
   }),
   connect(

@@ -38,7 +38,7 @@ describe('Reducers', () => {
           const middlewares = [ thunk ]
           const mockStore = configureMockStore(middlewares)
 
-          store = mockStore(initialResponse)
+          store = mockStore({ submissionFlow: { user: { accessToken: 'foo' } } })
           const request = sinon.stub()
           request.get = sinon.stub().returns(request)
           request.query = sinon.stub().returns(request)
@@ -84,6 +84,130 @@ describe('Reducers', () => {
           fourthStep.submissionFlow.currentStep.should.eql(3)
           const fifthStep = reducers(thirdStep, actions.incrementStep())
           fifthStep.submissionFlow.currentStep.should.eql(3)
+        })
+      })
+
+      describe('#logIn', () => {
+        let store
+        let request
+
+        beforeEach(() => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+          const userResponse = {
+            body: {
+              user: {
+                id: 'sarah'
+              }
+            }
+          }
+
+          store = mockStore(initialResponse)
+          request = sinon.stub()
+          request.post = sinon.stub().returns(request)
+          request.set = sinon.stub().returns(request)
+          request.send = sinon.stub().returns(userResponse)
+
+          ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('sd', { AP: { loginPagePath: 'https://artsy/login' }, CSRF_TOKEN: 'foo' })
+        })
+
+        afterEach(() => {
+          ActionsRewireApi.__ResetDependency__('request')
+          ActionsRewireApi.__ResetDependency__('sd')
+        })
+
+        it('calls the correct actions', () => {
+          const expectedActions = [
+            {
+              type: 'UPDATE_USER',
+              payload: { user: { id: 'sarah' } }
+            },
+            { type: 'INCREMENT_STEP' },
+            { type: 'CLEAR_ERROR' }
+          ]
+          store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
+        })
+      })
+
+      describe('#resetPassword', () => {
+        let store
+        let request
+
+        beforeEach(() => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+
+          store = mockStore(initialResponse)
+          request = sinon.stub()
+          request.post = sinon.stub().returns(request)
+          request.set = sinon.stub().returns(request)
+          request.send = sinon.stub().returns({ success: true })
+
+          ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('sd', { API_URL: 'api.artsy.net', ARTSY_XAPP_TOKEN: 'foo' })
+        })
+
+        afterEach(() => {
+          ActionsRewireApi.__ResetDependency__('request')
+          ActionsRewireApi.__ResetDependency__('sd')
+        })
+
+        it('calls the correct actions', () => {
+          const expectedActions = [
+            { type: 'CLEAR_ERROR' },
+            { type: 'SHOW_RESET_PASSWORD_SUCESS_MESSAGE' }
+          ]
+          store.dispatch(actions.resetPassword({ email: 'sarah@sarah.com' })).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
+        })
+      })
+
+      describe('#signUp', () => {
+        let store
+        let request
+
+        beforeEach(() => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+          const userResponse = {
+            body: {
+              user: {
+                id: 'sarah'
+              }
+            }
+          }
+
+          store = mockStore(initialResponse)
+          request = sinon.stub()
+          request.post = sinon.stub().returns(request)
+          request.set = sinon.stub().returns(request)
+          request.send = sinon.stub().returns(userResponse)
+
+          ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('sd', { AP: { loginPagePath: 'https://artsy/login' }, CSRF_TOKEN: 'foo' })
+        })
+
+        afterEach(() => {
+          ActionsRewireApi.__ResetDependency__('request')
+          ActionsRewireApi.__ResetDependency__('sd')
+        })
+
+        it('calls the correct actions', () => {
+          const expectedActions = [
+            {
+              type: 'UPDATE_USER',
+              payload: { user: { id: 'sarah' } }
+            },
+            { type: 'INCREMENT_STEP' },
+            { type: 'CLEAR_ERROR' }
+          ]
+          store.dispatch(actions.signUp({ name: 'Sarah', email: 'sarah@sarah.com', password: '1234' })).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
         })
       })
 
@@ -181,7 +305,6 @@ describe('Reducers', () => {
       describe('#uploadImageToConvection', () => {
         let store
         let request
-        let stubbedToken = { body: { token: 'i-have-access' } }
 
         beforeEach(() => {
           benv.setup(() => {
@@ -190,11 +313,16 @@ describe('Reducers', () => {
           const middlewares = [ thunk ]
           const mockStore = configureMockStore(middlewares)
 
-          store = mockStore(initialResponse)
+          store = mockStore({
+            submissionFlow: {
+              user: { accessToken: 'foo' },
+              submission: { id: 'sub1' }
+            }
+          })
           request = sinon.stub()
           request.post = sinon.stub().returns(request)
           request.set = sinon.stub().returns(request)
-          request.send = sinon.stub().returns(stubbedToken)
+          request.send = sinon.stub().returns({ body: { token: 'i-have-access' } })
 
           global.window = { btoa: sinon.stub() }
           ActionsRewireApi.__Rewire__('request', request)
@@ -204,6 +332,8 @@ describe('Reducers', () => {
         afterEach(() => {
           benv.teardown()
           global.btoa.restore()
+          ActionsRewireApi.__ResetDependency__('request')
+          ActionsRewireApi.__ResetDependency__('sd')
         })
 
         it('stops processing the image if it succeeds', () => {

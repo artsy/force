@@ -75,6 +75,7 @@ const initialState = {
   notConsigningArtist: false,
   processingImages: [],
   progressBars: {},
+  resetPasswordSuccess: false,
   skipPhotoSubmission: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: {},
@@ -137,6 +138,11 @@ function submissionFlow (state = initialState, action) {
     case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: true
+      }, state)
+    }
+    case actions.SHOW_RESET_PASSWORD_SUCESS_MESSAGE: {
+      return u({
+        resetPasswordSuccess: true
       }, state)
     }
     case actions.START_PROCESSING_IMAGE: {

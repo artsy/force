@@ -28,7 +28,7 @@
 
   &__forgot-password
     text-align right
-    margin 7px 0px
+    margin 10px 0px
 
     a
       color gray-dark-color
@@ -59,3 +59,26 @@
       fill white
       padding-right 10px
 
+  &__or
+    width 100%
+    margin 20px 0
+    margin-top 10px
+    text-align center
+    position relative
+
+    &:after
+      content ''
+      width 100%
+      border-bottom solid 1px gray-lightest-color
+      position absolute
+      left 0
+      top 50%
+
+  &__or-content
+    avant-garde-size('s-headline')
+    color gray-color
+    display inline-block
+    padding 0 20px
+    position relative
+    z-index 3
+    background-color white

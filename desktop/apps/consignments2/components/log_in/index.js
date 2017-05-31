@@ -9,7 +9,7 @@ import { data as sd } from 'sharify'
 import { renderTextInput } from '../text_input'
 import {
   logIn,
-  updateAuthFormState
+  updateAuthFormStateAndClearError
 } from '../../client/actions'
 
 function validate (values) {
@@ -32,7 +32,7 @@ function LogIn (props) {
     logInAction,
     invalid,
     pristine,
-    updateAuthFormStateAction
+    updateAuthFormStateAndClearErrorAction
   } = props
 
   const b = block('consignments2-submission-log-in')
@@ -43,7 +43,7 @@ function LogIn (props) {
         Log In
       </div>
       <div className={b('subtitle')}>
-        New to Artsy? <span className={b('clickable')} onClick={() => updateAuthFormStateAction('signUp')}>Sign up</span>.
+        New to Artsy? <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('signUp')}>Sign up</span>.
       </div>
       <form className={b('form')} onSubmit={handleSubmit(logInAction)}>
         <div className={b('row')}>
@@ -64,7 +64,7 @@ function LogIn (props) {
           </div>
         </div>
         <div className={b('forgot-password')}>
-          <span className={b('clickable')} onClick={() => updateAuthFormStateAction('forgotPassword')}>Forgot Password</span>
+          <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('forgotPassword')}>Forgot Password</span>
         </div>
         <button
           className={b('log-in-button').mix('avant-garde-button-black')}
@@ -76,6 +76,9 @@ function LogIn (props) {
         {
           error && <div className={b('error')}>{error}</div>
         }
+        <div className={b('or')}>
+          <div className={b('or-content')}>Or</div>
+        </div>
         <a
           className={b('facebook-button').mix('avant-garde-button')}
           href={sd.AP.facebookPath}
@@ -99,8 +102,8 @@ const mapDispatchToProps = (dispatch) => {
     logInAction (values) {
       dispatch(logIn(values))
     },
-    updateAuthFormStateAction (state) {
-      dispatch(updateAuthFormState(state))
+    updateAuthFormStateAndClearErrorAction (state) {
+      dispatch(updateAuthFormStateAndClearError(state))
     }
   }
 }
@@ -111,7 +114,7 @@ LogIn.propTypes = {
   invalid: PropTypes.bool,
   logInAction: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
-  updateAuthFormStateAction: PropTypes.func.isRequired
+  updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
 }
 
 export default compose(

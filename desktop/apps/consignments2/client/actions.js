@@ -14,6 +14,7 @@ export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
+export const SHOW_RESET_PASSWORD_SUCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCESS_MESSAGE'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
@@ -245,6 +246,7 @@ export function logIn (values) {
                       .set('Accept', 'application/json')
                       .set('X-Requested-With', 'XMLHttpRequest')
                       .send(options)
+
       dispatch(updateUser(user.body.user))
       dispatch(incrementStep())
       dispatch(clearError())
@@ -254,23 +256,20 @@ export function logIn (values) {
   }
 }
 
-export function signUp (values) {
+export function resetPassword (values) {
   return async (dispatch, getState) => {
     try {
       const options = {
-        email: values.email,
-        name: values.name,
-        password: values.password,
-        _csrf: sd.CSRF_TOKEN
+        email: values.email
       }
       await request
-              .post(sd.AP.signupPagePath)
-              .set('Content-Type', 'application/json')
-              .set('Accept', 'application/json')
-              .set('X-Requested-With', 'XMLHttpRequest')
-              .send(options)
-
-      await dispatch(logIn(values))
+        .post(`${sd.API_URL}/api/v1/users/send_reset_password_instructions`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN)
+        .send(options)
+      dispatch(clearError())
+      dispatch(showResetPasswordSuccessMessage())
     } catch (err) {
       dispatch(updateError(err.response.body.error))
     }
@@ -294,6 +293,35 @@ export function scrubLocation () {
 export function showNotConsigningMessage () {
   return {
     type: SHOW_NOT_CONSIGNING_MESSAGE
+  }
+}
+
+export function showResetPasswordSuccessMessage () {
+  return {
+    type: SHOW_RESET_PASSWORD_SUCESS_MESSAGE
+  }
+}
+
+export function signUp (values) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        email: values.email,
+        name: values.name,
+        password: values.password,
+        _csrf: sd.CSRF_TOKEN
+      }
+      await request
+              .post(sd.AP.signupPagePath)
+              .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
+              .set('X-Requested-With', 'XMLHttpRequest')
+              .send(options)
+
+      await dispatch(logIn(values))
+    } catch (err) {
+      dispatch(updateError(err.response.body.error))
+    }
   }
 }
 
@@ -373,6 +401,13 @@ export function updateAuthFormState (state) {
     payload: {
       state
     }
+  }
+}
+
+export function updateAuthFormStateAndClearError (state) {
+  return (dispatch, getState) => {
+    dispatch(updateAuthFormState(state))
+    dispatch(clearError())
   }
 }
 
