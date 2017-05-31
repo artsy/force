@@ -28,7 +28,6 @@ shouldDisplayAppBanner = (req) ->
 
 module.exports.index = (req, res, next) ->
   artist = new Artist id: req.params.id
-  artist.fetch
   Q.all([
     artist.fetch(cache: true)
     artist.maybeFetchAndSetFeaturedBio()
@@ -37,7 +36,7 @@ module.exports.index = (req, res, next) ->
     res.locals.sd.APP_BANNER_MODAL =
       slug: 'artist'
       copy: "Be the first to know when works by #{artist.get('name')} are available."
-      image: artist.get('image_urls').square
+      image: artist.get('image_urls')?.square
       link: "https://app.adjust.com/ue4nzl"
     res.locals.sd.SHOULD_DISPLAY_APP_BANNER = shouldDisplayAppBanner(req)
     res.locals.sd.ARTIST = artistData
