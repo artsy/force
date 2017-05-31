@@ -14,7 +14,7 @@ export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
-export const SHOW_RESET_PASSWORD_SUCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCESS_MESSAGE'
+export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
@@ -298,7 +298,7 @@ export function showNotConsigningMessage () {
 
 export function showResetPasswordSuccessMessage () {
   return {
-    type: SHOW_RESET_PASSWORD_SUCESS_MESSAGE
+    type: SHOW_RESET_PASSWORD_SUCCESS_MESSAGE
   }
 }
 
@@ -318,7 +318,7 @@ export function signUp (values) {
               .set('X-Requested-With', 'XMLHttpRequest')
               .send(options)
 
-      await dispatch(logIn(values))
+      dispatch(logIn(values))
     } catch (err) {
       dispatch(updateError(err.response.body.error))
     }

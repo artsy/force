@@ -140,7 +140,7 @@ function submissionFlow (state = initialState, action) {
         notConsigningArtist: true
       }, state)
     }
-    case actions.SHOW_RESET_PASSWORD_SUCESS_MESSAGE: {
+    case actions.SHOW_RESET_PASSWORD_SUCCESS_MESSAGE: {
       return u({
         resetPasswordSuccess: true
       }, state)

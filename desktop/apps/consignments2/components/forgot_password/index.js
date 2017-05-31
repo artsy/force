@@ -61,7 +61,11 @@ function ForgotPassword (props) {
           error && <div className={b('error')}>{error}</div>
         }
         {
-          resetPasswordSuccess && <div className={b('success')}>Instructions on how to reset your password have been sent.</div>
+          resetPasswordSuccess && (
+            <div className={b('success')}>
+              Instructions on how to reset your password have been sent.
+            </div>
+          )
         }
       </form>
     </div>

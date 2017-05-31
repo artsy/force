@@ -158,7 +158,7 @@ describe('Reducers', () => {
         it('calls the correct actions', () => {
           const expectedActions = [
             { type: 'CLEAR_ERROR' },
-            { type: 'SHOW_RESET_PASSWORD_SUCESS_MESSAGE' }
+            { type: 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE' }
           ]
           store.dispatch(actions.resetPassword({ email: 'sarah@sarah.com' })).then(() => {
             store.getActions().should.eql(expectedActions)
