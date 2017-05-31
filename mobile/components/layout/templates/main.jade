@@ -3,10 +3,11 @@ include ./login-signup
 
 block body
   #content
-    if showMarketingSignupModal
-      include ../../marketing_signup_modal/index
-    else
-      mixin login-signup
+    block banner
+      if showMarketingSignupModal
+        include ../../marketing_signup_modal/index
+      else
+        mixin login-signup
 
     header#main-header
       nav.main-dropdown-menu.js-main-dropdown-menu

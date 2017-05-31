@@ -50,7 +50,7 @@ module.exports = class AppBanner
     window.location = @iTunesUrl()
 
   remove: ->
-    @seen()
+    @dismissed()
     @$el.remove()
     @$content.css marginTop: 0
 
