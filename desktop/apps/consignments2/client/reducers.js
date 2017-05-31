@@ -9,23 +9,19 @@ import { routerReducer } from 'react-router-redux'
 const stepsMapping = [
   {
     id: 'create_account',
-    label: 'Create Account',
-    title: ''
+    label: 'Create Account'
   },
   {
     id: 'choose_artist',
-    label: 'Verify Artist/Designer',
-    title: 'Enter the name of the artist/designer who created the work'
+    label: 'Verify Artist/Designer'
   },
   {
     id: 'describe_work',
-    label: 'Describe the Work',
-    title: 'Enter details about the work'
+    label: 'Describe the Work'
   },
   {
     id: 'upload_photos',
-    label: 'Upload Photo',
-    title: 'Upload photos'
+    label: 'Upload Photo'
   }
 ]
 
@@ -51,8 +47,9 @@ const initialState = {
     'Textile Arts',
     'Other'
   ],
-  currentStep: 0,
+  currentStep: 1,
   error: null,
+  erroredImages: [],
   inputs: {
     artist_id: '',
     authenticity_certificate: true,
@@ -60,6 +57,8 @@ const initialState = {
     depth: '',
     dimensions_metric: 'in',
     edition: false,
+    edition_number: '',
+    edition_size: 0,
     height: '',
     location_city: '',
     location_state: '',
@@ -71,6 +70,8 @@ const initialState = {
     width: '',
     year: ''
   },
+  loading: false,
+  locationAutocompleteFrozen: false,
   locationAutocompleteSuggestions: [],
   locationAutocompleteValue: '',
   notConsigningArtist: false,
@@ -121,6 +122,20 @@ function submissionFlow (state = initialState, action) {
         locationAutocompleteSuggestions: []
       }, state)
     }
+    case actions.ERROR_ON_IMAGE: {
+      const fileName = action.payload.fileName
+      if (!contains(state.erroredImages, fileName)) {
+        return u({
+          erroredImages: state.erroredImages.concat(fileName)
+        }, state)
+      }
+      return state
+    }
+    case actions.FREEZE_LOCATION_INPUT: {
+      return u({
+        locationAutocompleteFrozen: true
+      }, state)
+    }
     case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: false
@@ -136,6 +151,21 @@ function submissionFlow (state = initialState, action) {
         return state
       }
     }
+    case actions.REMOVE_ERRORED_IMAGE: {
+      const fileName = action.payload.fileName
+      if (contains(state.erroredImages, fileName)) {
+        return u({
+          erroredImages: u.reject((ff) => ff === fileName)
+        }, state)
+      }
+      return state
+    }
+    case actions.REMOVE_UPLOADED_IMAGE: {
+      const fileName = action.payload.fileName
+      return u({
+        uploadedImages: u.reject((ff) => ff.fileName === fileName)
+      }, state)
+    }
     case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: true
@@ -144,6 +174,11 @@ function submissionFlow (state = initialState, action) {
     case actions.SHOW_RESET_PASSWORD_SUCCESS_MESSAGE: {
       return u({
         resetPasswordSuccess: true
+      }, state)
+    }
+    case actions.START_LOADING: {
+      return u({
+        loading: true
       }, state)
     }
     case actions.START_PROCESSING_IMAGE: {
@@ -155,6 +190,11 @@ function submissionFlow (state = initialState, action) {
       }
       return state
     }
+    case actions.STOP_LOADING: {
+      return u({
+        loading: false
+      }, state)
+    }
     case actions.STOP_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName
       if (contains(state.processingImages, fileName)) {
@@ -163,6 +203,11 @@ function submissionFlow (state = initialState, action) {
         }, state)
       }
       return state
+    }
+    case actions.UNFREEZE_LOCATION_INPUT: {
+      return u({
+        locationAutocompleteFrozen: false
+      }, state)
     }
     case actions.UPDATE_ARTIST_AUTOCOMPLETE_VALUE: {
       return u({

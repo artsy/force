@@ -8,7 +8,7 @@ import StepMarker from '../step_marker'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function SubmissionFlow ({ CurrentStepComponent, currentStepTitle }) {
+function SubmissionFlow ({ CurrentStepComponent }) {
   const b = block('consignments2-submission')
 
   return (
@@ -17,9 +17,6 @@ function SubmissionFlow ({ CurrentStepComponent, currentStepTitle }) {
         Consign your work to Artsy in just a few steps
       </div>
       <StepMarker />
-      <div className={b('step-title')}>
-        { currentStepTitle }
-      </div>
       <div className={b('step-form')}>
         <CurrentStepComponent />
       </div>
@@ -42,11 +39,10 @@ const mapStateToProps = (state) => {
     upload_photos: UploadPhoto
   }
 
-  const { id, title } = steps[currentStep]
+  const { id } = steps[currentStep]
 
   return {
-    CurrentStepComponent: stepsToComponents[id],
-    currentStepTitle: title
+    CurrentStepComponent: stepsToComponents[id]
   }
 }
 
@@ -55,6 +51,5 @@ export default connect(
 )(SubmissionFlow)
 
 SubmissionFlow.propTypes = {
-  CurrentStepComponent: PropTypes.func.isRequired,
-  currentStepTitle: PropTypes.string.isRequired
+  CurrentStepComponent: PropTypes.func.isRequired
 }

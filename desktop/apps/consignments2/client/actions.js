@@ -11,12 +11,19 @@ export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
 export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
+export const ERROR_ON_IMAGE = 'ERROR_ON_IMAGE'
+export const FREEZE_LOCATION_INPUT = 'FREEZE_LOCATION_INPUT'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
+export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
+export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
 export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
+export const START_LOADING = 'START_LOADING'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
+export const STOP_LOADING = 'STOP_LOADING'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
+export const UNFREEZE_LOCATION_INPUT = 'UNFREEZE_LOCATION_INPUT'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTIST_NAME = 'UPDATE_ARTIST_NAME'
@@ -68,6 +75,7 @@ export function chooseLocation (location) {
         const stateDisplay = state && state.long_name
 
         dispatch(updateLocationInputValues(cityDisplay, stateDisplay, countryDisplay))
+        dispatch(freezeLocationInput())
       }
     }
 
@@ -127,6 +135,7 @@ export function completeSubmission () {
       dispatch(updateSubmission(submissionResponse.body))
       dispatch(push('/consign2/submission/thank_you'))
     } catch (err) {
+      dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
       console.error('error!', err)
     }
@@ -148,10 +157,21 @@ export function createSubmission () {
                           .set('Authorization', `Bearer ${token}`)
                           .send(inputs)
       dispatch(updateSubmission(body)) // update state to reflect current submission
+      dispatch(stopLoading())
       dispatch(incrementStep()) // move to next step
     } catch (err) {
+      dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
       console.error('error!', err)
+    }
+  }
+}
+
+export function errorOnImage (fileName) {
+  return {
+    type: ERROR_ON_IMAGE,
+    payload: {
+      fileName
     }
   }
 }
@@ -193,29 +213,40 @@ export function fetchLocationSuggestions (value) {
   }
 }
 
+export function freezeLocationInput () {
+  return {
+    type: FREEZE_LOCATION_INPUT
+  }
+}
+
 export function handleImageUpload (file) {
   return async (dispatch, getState) => {
     try {
-      const options = {
-        acl: 'private',
-        app: sd.CONVECTION_GEMINI_APP,
-        key: sd.GEMINI_S3_ACCESS_KEY,
-        fail: (_err) => {
-          dispatch(updateError('Unable to upload at this time.'))
-        },
-        add: (src) => {
-          dispatch(addImageToUploadedImages(file.name, src))
-          dispatch(startProcessingImage(file.name))
-        },
-        progress: (percent) => {
-          dispatch(updateProgressBar(file.name, percent))
-        },
-        done: (src, geminiKey, bucket) => {
-          const key = `${geminiKey}/${file.name}`
-          dispatch(uploadImageToGemini(key, bucket, file.name))
+      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+        const options = {
+          acl: 'private',
+          app: sd.CONVECTION_GEMINI_APP,
+          key: sd.GEMINI_S3_ACCESS_KEY,
+          fail: (_err) => {
+            dispatch(errorOnImage(file.name))
+          },
+          add: (src) => {
+            dispatch(addImageToUploadedImages(file.name, src))
+            dispatch(startProcessingImage(file.name))
+          },
+          progress: (percent) => {
+            dispatch(updateProgressBar(file.name, percent))
+          },
+          done: (src, geminiKey, bucket) => {
+            const key = `${geminiKey}/${file.name}`
+            dispatch(uploadImageToGemini(key, bucket, file.name))
+          }
         }
+        gemup(file, options)
+      } else {
+        dispatch(addImageToUploadedImages(file.name))
+        dispatch(errorOnImage(file.name))
       }
-      gemup(file, options)
     } catch (err) {
       console.error('error!', err)
     }
@@ -254,6 +285,32 @@ export function logIn (values) {
       dispatch(clearError())
     } catch (err) {
       dispatch(updateError(err.response.body.error))
+    }
+  }
+}
+
+export function removeErroredImage (fileName) {
+  return {
+    type: REMOVE_ERRORED_IMAGE,
+    payload: {
+      fileName
+    }
+  }
+}
+
+export function removeImage (fileName) {
+  return (dispatch) => {
+    dispatch(removeErroredImage(fileName))
+    dispatch(stopProcessingImage(fileName))
+    dispatch(removeUploadedImage(fileName))
+  }
+}
+
+export function removeUploadedImage (fileName) {
+  return {
+    type: REMOVE_UPLOADED_IMAGE,
+    payload: {
+      fileName
     }
   }
 }
@@ -347,6 +404,7 @@ export function stopProcessingImage (fileName) {
 
 export function submitDescribeWork (values) {
   return (dispatch) => {
+    dispatch(startLoading())
     dispatch(updateInputs(values)) // update the inputs
     dispatch(scrubLocation())
     dispatch(createSubmission()) // create the submission in convection
@@ -359,14 +417,34 @@ export function selectPhoto (file) {
   }
 }
 
+export function startLoading () {
+  return {
+    type: START_LOADING
+  }
+}
+
+export function stopLoading () {
+  return {
+    type: STOP_LOADING
+  }
+}
+
 export function submitPhoto () {
   return async (dispatch, getState) => {
+    dispatch(startLoading())
     try {
       dispatch(completeSubmission())
     } catch (err) {
+      dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
       console.error('error!', err)
     }
+  }
+}
+
+export function unfreezeLocationInput () {
+  return {
+    type: UNFREEZE_LOCATION_INPUT
   }
 }
 
@@ -549,7 +627,7 @@ export function uploadImageToConvection (geminiToken, fileName) {
 
       dispatch(stopProcessingImage(fileName))
     } catch (err) {
-      dispatch(updateError('Unable to upload image.'))
+      dispatch(errorOnImage(fileName))
       console.error('error!', err)
     }
   }
@@ -580,7 +658,7 @@ export function uploadImageToGemini (key, bucket, fileName) {
 
       dispatch(uploadImageToConvection(token, fileName))
     } catch (err) {
-      dispatch(updateError('Unable to process image.'))
+      dispatch(errorOnImage(fileName))
       console.error('error!', err)
     }
   }
