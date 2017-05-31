@@ -3,15 +3,9 @@ import $ from 'jquery'
 import imagesLoaded from 'imagesloaded'
 imagesLoaded.makeJQueryPlugin($)
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import * as Relay from 'react-relay'
 import { data as sd } from 'sharify'
-
-import { artsyNetworkLayer } from '@artsy/reaction-force/dist/relay/config'
-import components from '@artsy/reaction-force/dist/components/index'
-import * as Artsy from '@artsy/reaction-force/dist/components/artsy'
-import GeneQueryConfig from '@artsy/reaction-force/dist/relay/queries/gene'
+import components, { init } from '@artsy/reaction-force/dist/components/index'
+import configs from '@artsy/reaction-force/dist/relay/index'
 
 import Gene from '../../models/gene.coffee'
 import CurrentUser from '../../models/current_user.coffee'
@@ -20,21 +14,21 @@ import ShareView from '../../components/share/view.coffee'
 import RelatedGenesView from '../../components/related_links/types/gene_genes.coffee'
 import blurb from '../../components/gradient_blurb/index.coffee'
 
-const relatedArtistsTemplate = (args) => { return require('./templates/related_artists.jade')(args) }
+const relatedArtistsTemplate = (args) => {
+  return require('./templates/related_artists.jade')(args)
+}
 
-function init () {
-  Relay.injectNetworkLayer(artsyNetworkLayer(sd.CURRENT_USER))
-  ReactDOM.render(
-    <Artsy.ContextProvider currentUser={sd.CURRENT_USER}>
-      <Relay.RootContainer
-        Component={components.Gene}
-        route={new GeneQueryConfig({ geneID: sd.GENE.id })}
-      />
-    </Artsy.ContextProvider>, document.getElementById('gene-filter')
-  )
+function setupGenePage () {
+  // Init GenePage component
+  init({
+    user: sd.CURRENT_USER,
+    component: components.Gene,
+    domID: 'gene-filter',
+    queryConfig: new configs.GeneQueryConfig({ geneID: sd.GENE.id })
+  })
 
   // Load related artists
-  let gene = new Gene(sd.GENE)
+  const gene = new Gene(sd.GENE)
   gene.relatedArtists.on('sync', (artists) => {
     const html = relatedArtistsTemplate({
       artists: artists.models
@@ -48,7 +42,7 @@ function init () {
 
   // Setup user
   const user = CurrentUser.orNull()
-  const following = user ? new Following(null, {kind: 'gene'}) : null
+  const following = user ? new Following(null, { kind: 'gene' }) : null
   new FollowButton({
     el: $('.follow-button'),
     following: following,
@@ -71,4 +65,4 @@ function init () {
   })
 }
 
-export default { init }
+export default { setupGenePage }

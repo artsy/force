@@ -17,7 +17,7 @@ routes =
 
   '''
   /gene/.*
-  ''': require('../apps/gene/client.js').default.init
+  ''': require('../apps/gene/client.js').default.setupGenePage
 
 for paths, init of routes
   for path in paths.split('\n')
