@@ -2,7 +2,7 @@
 if artwork.auction
   .js-artwork-auction-container
     .artwork-auction-bid-module
-      if artwork.auction.is_open && !artwork.is_sold
+      if artwork.auction.is_open && !artwork.auction.is_live_open && !artwork.is_sold
         .artwork-auction-bid-module__current-bid
           include ./templates/bid.jade
 
@@ -20,6 +20,13 @@ if artwork.auction
           a.js-auction-multipage(data-id="auction-faqs") AUCTION FAQ
           a.conditions-of-sale(href='/conditions-of-sale') Conditions of Sale
           a.ask-a-specialist(href="/artwork/#{artwork.id}/ask_specialist") Ask a Specialist
+          
+      else if artwork.auction.is_live_open
+        - liveUrl = helpers.getLiveAuctionUrl(artwork.auction.id, { isLoggedIn: Boolean(bidder) })
+        a( href="#{liveUrl}" class='js-artwork-auction-button') 
+          button.auction-avant-garde-black-button.is-block(
+            type='button'
+          ) Enter Live Auction
       else if artwork.is_sold
         .artwork-auction-bid-module__sold
           | Sold

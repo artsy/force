@@ -1,7 +1,7 @@
 get  = require 'lodash.get'
 moment = require 'moment'
 { compact } = require 'underscore'
-{ liveAuctionUrl } = require '../../../../../utils/domain/auctions/urls'
+{ getLiveAuctionUrl } = require '../../../../../utils/domain/auctions/urls'
 { getBidderStatus } = require '../../../../../utils/domain/auctions/getBidderStatus'
 { getRedirectActionUrl } = require '../../../../../utils/domain/auctions/getBidRedirectActionUrl'
 
@@ -12,7 +12,7 @@ pluralize = (word, count, irregular = null) ->
     "#{count} #{irregular or word + 's'}"
 
 module.exports = {
-  liveAuctionUrl: liveAuctionUrl,
+  getLiveAuctionUrl: getLiveAuctionUrl,
   getBidderStatus: getBidderStatus
   getRedirectActionUrl: getRedirectActionUrl
 

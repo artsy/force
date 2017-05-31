@@ -6,7 +6,7 @@ const sd = require('sharify').data
  * @param {Boolean} [options.isLoggedIn] - whether there is a user present
  * @return {String} live auction url
  */
-export const liveAuctionUrl = (id, options = {}) => {
+export const getLiveAuctionUrl = (id, options = {}) => {
   const liveAuctionRoot = sd.PREDICTION_URL
   const url = `${liveAuctionRoot}/${id}`
   if (options.isLoggedIn) {

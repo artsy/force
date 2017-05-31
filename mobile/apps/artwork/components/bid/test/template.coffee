@@ -1,11 +1,11 @@
-_ = require 'underscore'
-jade = require 'jade'
-cheerio = require 'cheerio'
-path = require 'path'
-fs = require 'fs'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+_ = require 'underscore'
+cheerio = require 'cheerio'
+fs = require 'fs'
 helpers = require '../../../helpers.coffee'
+jade = require 'jade'
+path = require 'path'
+{ fabricate } = require 'antigravity'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
@@ -98,6 +98,18 @@ describe 'Artwork bid templates', ->
         .should.equal 'Bid'
       @$('.artwork-auction-bid-form.js-artwork-auction-bid-form').attr('action')
         .should.containEql "/artwork/#{@data.artwork.id}"
+
+  describe 'auction is live', ->
+    it 'renders "Enter Live Auction button"', ->
+      @data.artwork.auction.is_live_open = true
+      @data.me = {}
+      @html = render('index')(@data)
+      @$ = cheerio.load(@html)
+
+      @$('.auction-avant-garde-black-button').text()
+        .should.equal 'Enter Live Auction'
+      @$('.js-artwork-auction-button').attr('href')
+        .should.containEql helpers.getLiveAuctionUrl(@data.artwork.auction.id, { isLoggedIn: true })
 
   describe 'sold artwork in open auction', ->
     beforeEach ->
