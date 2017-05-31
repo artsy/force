@@ -4,7 +4,7 @@ include ../../../../../components/bid_status/index
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
 - showAuctionForm = auction.is_open && !artwork.is_sold && !auction.is_live_open
-- actionUrl = helpers.auction.getRedirectActionUrl(bidderStatus, artwork, auction)
+- actionUrl = helpers.auction.getBidRedirectActionUrl(bidderStatus, artwork, auction)
 
 if showAuctionForm
   form.artwork-auction__bid-form(

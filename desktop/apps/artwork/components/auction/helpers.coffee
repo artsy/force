@@ -1,9 +1,8 @@
 get  = require 'lodash.get'
 moment = require 'moment'
 { compact } = require 'underscore'
-{ getLiveAuctionUrl } = require '../../../../../utils/domain/auctions/urls'
 { getBidderStatus } = require '../../../../../utils/domain/auctions/getBidderStatus'
-{ getRedirectActionUrl } = require '../../../../../utils/domain/auctions/getBidRedirectActionUrl'
+{ getLiveAuctionUrl, getBidRedirectActionUrl } = require '../../../../../utils/domain/auctions/urls'
 
 pluralize = (word, count, irregular = null) ->
   if count is 1
@@ -14,7 +13,7 @@ pluralize = (word, count, irregular = null) ->
 module.exports = {
   getLiveAuctionUrl: getLiveAuctionUrl,
   getBidderStatus: getBidderStatus
-  getRedirectActionUrl: getRedirectActionUrl
+  getBidRedirectActionUrl: getBidRedirectActionUrl
 
   count: ({ counts, reserve_message }) ->
     compact [
