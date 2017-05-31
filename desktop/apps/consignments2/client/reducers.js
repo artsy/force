@@ -32,6 +32,7 @@ const stepsMapping = [
 const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
+  artistName: '',
   authFormState: 'logIn',
   categoryOptions: [
     'Painting',
@@ -173,6 +174,11 @@ function submissionFlow (state = initialState, action) {
         inputs: {
           artist_id: action.payload.artistId
         }
+      }, state)
+    }
+    case actions.UPDATE_ARTIST_NAME: {
+      return u({
+        artistName: action.payload.artistName
       }, state)
     }
     case actions.UPDATE_ARTIST_SUGGESTIONS: {

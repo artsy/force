@@ -19,6 +19,7 @@ export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
+export const UPDATE_ARTIST_NAME = 'UPDATE_ARTIST_NAME'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
 export const UPDATE_AUTH_FORM_STATE = 'UPDATE_AUTH_FORM_STATE'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
@@ -46,6 +47,7 @@ export function addImageToUploadedImages (fileName, src) {
 export function chooseArtistAndAdvance (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
+    dispatch(updateArtistName(value.name))
     dispatch(incrementStep()) // move to next step
   }
 }
@@ -382,6 +384,15 @@ export function updateArtistId (artistId) {
     type: UPDATE_ARTIST_ID,
     payload: {
       artistId
+    }
+  }
+}
+
+export function updateArtistName (artistName) {
+  return {
+    type: UPDATE_ARTIST_NAME,
+    payload: {
+      artistName
     }
   }
 }

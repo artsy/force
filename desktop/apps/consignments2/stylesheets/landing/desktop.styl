@@ -49,6 +49,10 @@
 .consignments2-section
   padding 60px 55px
 
+  &__content
+    margin 0 auto
+    max-width 1100px
+
   &__consign-button.avant-garde-button-black
     avant-garde-size('body')
     background-color black
@@ -130,10 +134,6 @@
   padding-top 60px
   padding-bottom 60px
 
-  &__content
-    max-width 1100px
-    margin 0 auto
-
   .consignments2-section__about__headline
     margin-bottom 60px
 
@@ -156,9 +156,9 @@
     display flex
     overflow hidden
     flex-wrap wrap
-    height 300px
+    height 270px
     justify-content center
-    padding-top 30px
+    padding-top 10px
 
     &__artwork
       text-align left
@@ -167,7 +167,7 @@
       padding 0 10px
       padding-top 20px
       position relative
-      height 300px
+      height 270px
 
       &__data
         padding-top 10px
@@ -187,8 +187,9 @@
 .consignments2-in-demand
   padding-top 20px
   padding-bottom 70px
-  max-width 1300px
-  margin 0 auto
+
+  h4
+    padding-bottom 15px
 
   &__artists
     display flex
@@ -222,9 +223,7 @@
       display none
 
   &__content
-    max-width 900px
     min-width 400px
-    margin-left 10%
     text-align left
 
     @media screen and (max-width: 960px)
@@ -232,6 +231,7 @@
       margin-left 0px
 
   &__sales
+    max-width 900px
     display flex
     flex-wrap wrap
     justify-content space-between
@@ -254,12 +254,15 @@
   padding-top 80px
   padding-bottom 70px
   text-align left
-  max-width 1100px
-  margin 0 auto
+
+  &__button-wrapper
+    text-align center
+    @media screen and (min-width: 641px)
+      display none
 
   &__header-section
     display flex
-    justify-content space-around
+    justify-content space-between
 
     .consignments2-section__about, .consignments2-section__questions__crt-photos
       width 45%
@@ -279,7 +282,7 @@
   &__sections
     display flex
     flex-wrap wrap
-    justify-content space-around
+    justify-content space-between
 
     &__section
       width 45%

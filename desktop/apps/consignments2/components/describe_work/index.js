@@ -56,6 +56,7 @@ function renderSuggestion (suggestion) {
 
 function DescribeWork (props) {
   const {
+    artistName,
     categoryOptions,
     chooseLocationAction,
     clearLocationSuggestionsAction,
@@ -96,14 +97,6 @@ function DescribeWork (props) {
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <Field name='medium' component={renderTextInput}
-            item={'medium'}
-            label={'Medium*'}
-          />
-        </div>
-      </div>
-      <div className={b('row')}>
-        <div className={b('row-item')}>
           <Field name='category' component={renderSelectInput}
             item={'category'}
             label={'Category*'}
@@ -114,6 +107,14 @@ function DescribeWork (props) {
           <Field name='year' component={renderTextInput}
             item={'year'}
             label={'Year*'}
+          />
+        </div>
+      </div>
+      <div className={b('row')}>
+        <div className={b('row-item')}>
+          <Field name='medium' component={renderTextInput}
+            item={'medium'}
+            label={'Medium*'}
           />
         </div>
       </div>
@@ -210,6 +211,7 @@ function DescribeWork (props) {
 
 const mapStateToProps = (state) => {
   return {
+    artistName: state.submissionFlow.artistName,
     categoryOptions: state.submissionFlow.categoryOptions,
     error: state.submissionFlow.error,
     locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
@@ -238,6 +240,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 DescribeWork.propTypes = {
+  artistName: PropTypes.string.isRequired,
   categoryOptions: PropTypes.array.isRequired,
   chooseLocationAction: PropTypes.func.isRequired,
   clearLocationSuggestionsAction: PropTypes.func.isRequired,
