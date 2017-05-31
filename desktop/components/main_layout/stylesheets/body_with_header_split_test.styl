@@ -34,6 +34,19 @@ search-bar-input-placeholder()
     .body-header-fixed #main-layout-header
       position absolute
 
+  #main-layout-search-bar-container
+    border-color #e5e5e5
+    background-color #f0f0f0 !important
+    #main-layout-search-bar-input
+      &::placeholder
+        color #666 !important
+      &:hover
+        border 1px solid black
+      &:focus
+        border 1px solid #6e00ff
+  #main-layout-search-bar-icon
+    color #666
+
   // Pages like checkout or onboarding remove options from the header to heavily
   // focus on the task at hand.
   .minimal-header
