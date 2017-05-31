@@ -78,15 +78,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    resetPasswordAction (values) {
-      dispatch(resetPassword(values))
-    },
-    updateAuthFormStateAndClearErrorAction (state) {
-      dispatch(updateAuthFormStateAndClearError(state))
-    }
-  }
+const mapDispatchToProps = {
+  resetPasswordAction: resetPassword,
+  updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError
 }
 
 ForgotPassword.propTypes = {

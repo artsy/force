@@ -92,15 +92,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return { // TODO make shorthand??
-    signUpAction (values) {
-      dispatch(signUp(values))
-    },
-    updateAuthFormStateAndClearErrorAction (state) {
-      dispatch(updateAuthFormStateAndClearError(state))
-    }
-  }
+const mapDispatchToProps = {
+  signUpAction: signUp,
+  updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError
 }
 
 SignUp.propTypes = {
