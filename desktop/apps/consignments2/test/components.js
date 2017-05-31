@@ -1,5 +1,6 @@
 import * as actions from '../client/actions'
 import ChooseArtist from '../components/choose_artist'
+import CreateAccount from '../components/create_account'
 import StepMarker from '../components/step_marker'
 import SubmissionFlow from '../components/submission_flow'
 import UploadPhoto from '../components/upload_photo'
@@ -34,6 +35,58 @@ describe('React components', () => {
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
         activeText.should.containEql('Create Account')
+      })
+    })
+  })
+
+  describe('CreateAccount', () => {
+    beforeEach(() => {
+      CreateAccount.__Rewire__('ForgotPassword', () => <div className='forgot-password' />)
+      CreateAccount.__Rewire__('LogIn', () => <div className='log-in' />)
+      CreateAccount.__Rewire__('SignUp', () => <div className='sign-up' />)
+    })
+
+    afterEach(() => {
+      CreateAccount.__ResetDependency__('ForgotPassword')
+      CreateAccount.__ResetDependency__('LogInCreateAccount')
+      CreateAccount.__ResetDependency__('SignUp')
+    })
+
+    describe('log in', () => {
+      it('the log in form', () => {
+        const wrapper = shallow(
+          <CreateAccount store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.log-in').length.should.eql(1)
+        rendered.find('.forgot-password').length.should.eql(0)
+        rendered.find('.sign-up').length.should.eql(0)
+      })
+    })
+
+    describe('forgot password', () => {
+      it('the forgot password form', () => {
+        initialStore.dispatch(actions.updateAuthFormState('forgotPassword'))
+        const wrapper = shallow(
+          <CreateAccount store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.log-in').length.should.eql(0)
+        rendered.find('.forgot-password').length.should.eql(1)
+        rendered.find('.sign-up').length.should.eql(0)
+      })
+    })
+
+    describe('sign up', () => {
+      it('the forgot password form', () => {
+        initialStore.dispatch(actions.updateAuthFormState('signUp'))
+        const wrapper = shallow(
+          <CreateAccount store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.log-in').length.should.eql(0)
+        rendered.find('.forgot-password').length.should.eql(0)
+        rendered.find('.sign-up').length.should.eql(1)
       })
     })
   })
@@ -188,9 +241,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Create an Account')
         rendered.find('.create-account').length.should.eql(1)
       })
       it('shows the choose artist step second', () => {
