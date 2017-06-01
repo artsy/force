@@ -47,7 +47,7 @@ const initialState = {
     'Textile Arts',
     'Other'
   ],
-  currentStep: 1,
+  currentStep: 0,
   error: null,
   erroredImages: [],
   inputs: {

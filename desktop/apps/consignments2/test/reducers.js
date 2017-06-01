@@ -261,6 +261,79 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#removeImage', () => {
+        it('removes the image from all of the arrays', () => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+          const store = mockStore({
+            submissionFlow: {
+              erroredImages: ['astronaut.jpg'],
+              uploadedImages: [{fileName: 'astronaut.jpg', src: 'bloop', processing: true}],
+              processingImages: ['astronaut.jpg']
+            }
+          })
+
+          const expectedActions = [
+            {
+              type: 'REMOVE_ERRORED_IMAGE',
+              payload: { fileName: 'astronaut.jpg' }
+            },
+            {
+              type: 'STOP_PROCESSING_IMAGE',
+              payload: { fileName: 'astronaut.jpg' }
+            },
+            {
+              type: 'REMOVE_UPLOADED_IMAGE',
+              payload: { fileName: 'astronaut.jpg' }
+            }
+          ]
+          store.dispatch(actions.removeImage('astronaut.jpg'))
+          store.getActions().should.eql(expectedActions)
+        })
+      })
+
+      describe('#errorOnImage', () => {
+        it('adds a filename to an empty list, but does not add it twice', () => {
+          initialResponse.submissionFlow.erroredImages.should.eql([])
+          const newErroredImage = reducers(initialResponse, actions.errorOnImage('astronaut.jpg'))
+          newErroredImage.submissionFlow.erroredImages.should.eql(['astronaut.jpg'])
+          const addedImageAgain = reducers(newErroredImage, actions.errorOnImage('astronaut.jpg'))
+          addedImageAgain.submissionFlow.erroredImages.should.eql(['astronaut.jpg'])
+        })
+      })
+
+      describe('#removeErroredImage', () => {
+        it('removes a filename if it exists', () => {
+          initialResponse.submissionFlow.erroredImages.should.eql([])
+          const stopErroringImage = reducers(initialResponse, actions.removeErroredImage('astronaut.jpg'))
+          stopErroringImage.submissionFlow.erroredImages.should.eql([])
+          const newErroredImage = reducers(stopErroringImage, actions.errorOnImage('astronaut.jpg'))
+          newErroredImage.submissionFlow.erroredImages.should.eql(['astronaut.jpg'])
+          const stopNewImage = reducers(newErroredImage, actions.removeErroredImage('astronaut.jpg'))
+          stopNewImage.submissionFlow.erroredImages.should.eql([])
+        })
+      })
+
+      describe('#addImageToUploadedImages', () => {
+        it('adds a filename to the hash', () => {
+          initialResponse.submissionFlow.uploadedImages.should.eql([])
+          const newUploadedImage = reducers(initialResponse, actions.addImageToUploadedImages('astronaut.jpg', 'bloop'))
+          newUploadedImage.submissionFlow.uploadedImages.should.eql([{fileName: 'astronaut.jpg', src: 'bloop', processing: true}])
+        })
+      })
+
+      describe('#removeUploadedImage', () => {
+        it('removes a filename if it exists', () => {
+          initialResponse.submissionFlow.uploadedImages.should.eql([])
+          const stopUploadingImage = reducers(initialResponse, actions.removeUploadedImage('astronaut.jpg'))
+          stopUploadingImage.submissionFlow.uploadedImages.should.eql([])
+          const newUploadedImage = reducers(initialResponse, actions.addImageToUploadedImages('astronaut.jpg', 'blahblah'))
+          newUploadedImage.submissionFlow.uploadedImages.should.eql([{fileName: 'astronaut.jpg', src: 'blahblah', processing: true}])
+          const stopNewImage = reducers(newUploadedImage, actions.removeUploadedImage('astronaut.jpg'))
+          stopNewImage.submissionFlow.uploadedImages.should.eql([])
+        })
+      })
+
       describe('#startProcessingImage', () => {
         it('adds a filename to an empty list, but does not add it twice', () => {
           initialResponse.submissionFlow.processingImages.should.eql([])
@@ -299,6 +372,33 @@ describe('Reducers', () => {
           newInputsStep.submissionFlow.inputs.category.should.eql('Sculpture')
           newInputsStep.submissionFlow.inputs.signature.should.eql(true)
           newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
+        })
+      })
+
+      describe('#handleImageUpload', () => {
+        let store
+
+        beforeEach(() => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+
+          store = mockStore(initialResponse)
+        })
+
+        it('errors if the image is not the right type', () => {
+          const expectedActions = [
+            {
+              type: 'ADD_IMAGE_TO_UPLOADED_IMAGES',
+              payload: { fileName: 'hello.pdf', src: undefined }
+            },
+            {
+              type: 'ERROR_ON_IMAGE',
+              payload: { fileName: 'hello.pdf' }
+            }
+          ]
+          store.dispatch(actions.handleImageUpload({ type: 'pdf', name: 'hello.pdf' })).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
         })
       })
 
@@ -352,8 +452,8 @@ describe('Reducers', () => {
           request.send = sinon.stub().returns('TypeError')
           const expectedActions = [
             {
-              type: 'UPDATE_ERROR',
-              payload: { error: 'Unable to upload image.' }
+              type: 'ERROR_ON_IMAGE',
+              payload: { fileName: 'astronaut.jpg' }
             }
           ]
           const filePath = 'http://s3.com/abcdefg%2Fastronaut.jpg'
