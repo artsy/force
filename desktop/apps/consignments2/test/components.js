@@ -132,6 +132,49 @@ describe('React components', () => {
       const rendered = wrapper.render()
       rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
     })
+
+    it('correctly displays the error state when the image is errored', () => {
+      initialStore.dispatch(actions.errorOnImage('astronaut.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__error').length.should.eql(1)
+    })
+
+    it('correctly displays the error state when the image is errored and processing', () => {
+      initialStore.dispatch(actions.startProcessingImage('astronaut.jpg'))
+      initialStore.dispatch(actions.errorOnImage('astronaut.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__error').length.should.eql(1)
+    })
+
+    it('correctly displays the error state when a different image is errored', () => {
+      initialStore.dispatch(actions.errorOnImage('another-image.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__error').length.should.eql(0)
+    })
   })
 
   describe('UploadPhoto', () => {
@@ -249,9 +292,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Enter the name of the artist/designer who created the work')
         rendered.find('.choose-artist').length.should.eql(1)
       })
 
@@ -262,9 +302,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Enter details about the work')
         rendered.find('.describe-work').length.should.eql(1)
       })
 
@@ -276,9 +313,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Upload photos')
         rendered.find('.upload-photos').length.should.eql(1)
       })
     })

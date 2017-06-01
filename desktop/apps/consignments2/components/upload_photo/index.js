@@ -1,4 +1,3 @@
-import Alert from '../../../../components/main_layout/public/icons/alert.svg'
 import Camera from '../../../../components/main_layout/public/icons/camera.svg'
 import CheckboxInput from '../checkbox_input'
 import PropTypes from 'prop-types'
@@ -12,6 +11,7 @@ function UploadPhoto (props) {
   const {
     error,
     hideCheckbox,
+    loading,
     processingImages,
     selectPhotoAction,
     skipPhotoSubmission,
@@ -25,68 +25,66 @@ function UploadPhoto (props) {
 
   return (
     <div className={b()}>
-      <label
-        htmlFor='file'
-        className={b('drop-area')}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault()
-          selectPhotoAction(e.dataTransfer.files[0])
-        }}
-      >
-        <div className={b('drop-area-contents')}>
-          <input
-            type='file'
-            name='file'
-            id='file'
-            className={b('file-upload')}
-            onChange={(e) => selectPhotoAction(e.target.files[0])}
-          />
-          <div className={b('camera-icon')}>
-            <Camera />
-          </div>
-          <div className={b('cta')}>
-            Drag or Click to upload photos
-          </div>
-        </div>
-      </label>
-      <div className={b('upload-instructions')}>
-        Please upload JPG or PNG image files 1000x1000 pixels or more. Image files should have a file size less than 30mb.
+      <div className={b('title')}>
+        Upload photos
       </div>
-      {
-        !hideCheckbox && (
-          <CheckboxInput
-            item={'skip'}
-            label={'No photo currently available'}
-            onChange={updateSkipPhotoSubmissionAction}
-            value={skipPhotoSubmission}
-          />
-        )
-      }
-      {
-        uploadedImages.map((file, index) =>
-          <UploadedImage file={file} key={`${file.fileName}-${index}`} />
-        )
-      }
-      <div
-        className={b('submit-button').mix('avant-garde-button-black')}
-        onClick={submitPhotoAction}
-        disabled={!nextEnabled}
-      >
-        Submit
-      </div>
-      {
-        error &&
-        <div className={b('error')}>
-          <div className={b('error-alert')}>
-            <Alert />
+      <div className={b('form')}>
+        <label
+          htmlFor='file'
+          className={b('drop-area')}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault()
+            selectPhotoAction(e.dataTransfer.files[0])
+          }}
+        >
+          <div className={b('drop-area-contents')}>
+            <input
+              type='file'
+              name='file'
+              id='file'
+              className={b('file-upload')}
+              onChange={(e) => selectPhotoAction(e.target.files[0])}
+            />
+            <div className={b('camera-icon')}>
+              <Camera />
+            </div>
+            <div className={b('cta')}>
+              Drag or Click to upload photos
+            </div>
           </div>
-          <div className={b('error-content')}>
-            <b>Please try uploading again or <a onClick={submitPhotoAction}>submit without photo.</a></b>
-            The image file should be JPG or PNG and should be less than 30mb.
-          </div>
+        </label>
+        <div className={b('upload-instructions')}>
+          Please upload JPG or PNG image files 1000x1000 pixels or more. Image files should have a file size less than 30mb.
         </div>
-      }
+        {
+          !hideCheckbox && (
+            <CheckboxInput
+              item={'skip'}
+              label={'No photo currently available'}
+              onChange={updateSkipPhotoSubmissionAction}
+              value={skipPhotoSubmission}
+            />
+          )
+        }
+        {
+          uploadedImages.map((file, index) =>
+            <UploadedImage file={file} key={`${file.fileName}-${index}`} />
+          )
+        }
+        <div
+          className={b('submit-button').mix('avant-garde-button-black')}
+          onClick={submitPhotoAction}
+          disabled={!nextEnabled}
+        >
+          {
+            loading ? <div className='loading-spinner-white' /> : 'Submit'
+          }
+        </div>
+        {
+          error && <div className={b('error')}>{error}</div>
+        }
+      </div>
     </div>
   )
 }
@@ -94,6 +92,7 @@ function UploadPhoto (props) {
 const mapStateToProps = (state) => {
   return {
     error: state.submissionFlow.error,
+    loading: state.submissionFlow.loading,
     processingImages: state.submissionFlow.processingImages,
     skipPhotoSubmission: state.submissionFlow.skipPhotoSubmission,
     uploadedImages: state.submissionFlow.uploadedImages
@@ -114,6 +113,7 @@ export default connect(
 UploadPhoto.propTypes = {
   error: PropTypes.string,
   hideCheckbox: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
   processingImages: PropTypes.array.isRequired,
   selectPhotoAction: PropTypes.func.isRequired,
   skipPhotoSubmission: PropTypes.bool.isRequired,
