@@ -108,7 +108,7 @@ describe 'Artwork bid templates', ->
 
       @$('.auction-avant-garde-black-button').text()
         .should.equal 'Enter Live Auction'
-      @$('.js-artwork-auction-button').attr('href')
+      @$('.artwork-auction-live-button').attr('href')
         .should.containEql helpers.getLiveAuctionUrl(@data.artwork.auction.id, { isLoggedIn: true })
 
   describe 'sold artwork in open auction', ->

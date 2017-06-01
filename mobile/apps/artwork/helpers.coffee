@@ -9,6 +9,7 @@ module.exports =
   getBidderStatus: getBidderStatus
   getLiveAuctionUrl: getLiveAuctionUrl
   getBidRedirectActionUrl: getBidRedirectActionUrl
+  moment: moment
 
   sortExhibitions: (shows) ->
     sortBy(shows, 'start_at').reverse()

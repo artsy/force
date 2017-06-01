@@ -2,7 +2,7 @@
 if artwork.auction
   .js-artwork-auction-container
     .artwork-auction-bid-module
-      if artwork.auction.is_open && !artwork.auction.is_live_open && !artwork.is_sold
+      if artwork.auction.is_open && !artwork.auction.is_live_open && !artwork.is_sold && !helpers.moment().isAfter(artwork.auction.end_at)
         .artwork-auction-bid-module__current-bid
           include ./templates/bid.jade
 
@@ -23,7 +23,7 @@ if artwork.auction
           
       else if artwork.auction.is_live_open
         - liveUrl = helpers.getLiveAuctionUrl(artwork.auction.id, { isLoggedIn: Boolean(bidder) })
-        a( href="#{liveUrl}" class='js-artwork-auction-button') 
+        a( href="#{liveUrl}" class='artwork-auction-live-button') 
           button.auction-avant-garde-black-button.is-block(
             type='button'
           ) Enter Live Auction
