@@ -23,6 +23,13 @@
     })
   })
 
+  $('.main-layout-container').on('click', '#partner2-contact .email-gallery', function (e) {
+    analytics.track('Click',{
+      partner_id: $(e.currentTarget).data('partner-id'),
+      label: "Contact gallery by email"
+    })
+  })
+
   $('.main-layout-container').on('click', '#partner2-contact .partner2-website', function (e) {
     analytics.track('Click', {
       partner_id: $(e.currentTarget).data('partner-id'),
