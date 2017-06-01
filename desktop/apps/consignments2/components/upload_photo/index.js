@@ -11,6 +11,7 @@ import { selectPhoto, submitPhoto, updateSkipPhotoSubmission } from '../../clien
 function UploadPhoto (props) {
   const {
     error,
+    hideCheckbox,
     processingImages,
     selectPhotoAction,
     skipPhotoSubmission,
@@ -52,12 +53,16 @@ function UploadPhoto (props) {
       <div className={b('upload-instructions')}>
         Please upload JPG or PNG image files 1000x1000 pixels or more. Image files should have a file size less than 30mb.
       </div>
-      <CheckboxInput
-        item={'skip'}
-        label={'No photo currently available'}
-        onChange={updateSkipPhotoSubmissionAction}
-        value={skipPhotoSubmission}
-      />
+      {
+        !hideCheckbox && (
+          <CheckboxInput
+            item={'skip'}
+            label={'No photo currently available'}
+            onChange={updateSkipPhotoSubmissionAction}
+            value={skipPhotoSubmission}
+          />
+        )
+      }
       {
         uploadedImages.map((file, index) =>
           <UploadedImage file={file} key={`${file.fileName}-${index}`} />
@@ -94,6 +99,7 @@ const mapStateToProps = (state) => {
     uploadedImages: state.submissionFlow.uploadedImages
   }
 }
+
 const mapDispatchToProps = {
   selectPhotoAction: selectPhoto,
   submitPhotoAction: submitPhoto,
@@ -107,6 +113,7 @@ export default connect(
 
 UploadPhoto.propTypes = {
   error: PropTypes.string,
+  hideCheckbox: PropTypes.bool,
   processingImages: PropTypes.array.isRequired,
   selectPhotoAction: PropTypes.func.isRequired,
   skipPhotoSubmission: PropTypes.bool.isRequired,
