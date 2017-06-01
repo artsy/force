@@ -7,7 +7,7 @@ BidderPosition = require '../../../models/bidder_position.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 { SESSION_ID } = require('sharify').data
-{ liveAuctionUrl } = require '../../../../utils/domain/auctions/urls.js'
+{ getLiveAuctionUrl } = require '../../../../utils/domain/auctions/urls.js'
 
 module.exports = class BidForm extends ErrorHandlingForm
 
@@ -15,7 +15,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   maxTimesPolledForBidPlacement: sd.MAX_POLLS_FOR_MAX_BIDS
   errors: -> {
     "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
-    "Live Bidding has Started": "Sorry, your bid wasn't received before live bidding started. <br/>To continue bidding, please <a href=\"#{liveAuctionUrl(@model.get('id'), {isLoggedIn: Boolean(@user)} )}\">join the live auction</a>."
+    "Live Bidding has Started": "Sorry, your bid wasn't received before live bidding started. <br/>To continue bidding, please <a href=\"#{getLiveAuctionUrl(@model.get('id'), {isLoggedIn: Boolean(@user)} )}\">join the live auction</a>."
     connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
     "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
   }

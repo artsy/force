@@ -18,7 +18,7 @@ describe('auction templates', () => {
       auction: new Auction(),
       footerItems: footerItems,
       me: null,
-      viewHelpers: { liveAuctionUrl: () => 'placeholderauctionurl.com' }
+      viewHelpers: { getLiveAuctionUrl: () => 'placeholderauctionurl.com' }
     }
   })
 

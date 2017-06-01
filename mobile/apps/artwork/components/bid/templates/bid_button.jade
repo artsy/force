@@ -1,9 +1,36 @@
+- auction = artwork.auction
+- bidderStatus = helpers.getBidderStatus(me, auction)
+- actionUrl = helpers.getBidRedirectActionUrl(bidderStatus, artwork, auction)
+
 form.artwork-auction-bid-form.js-artwork-auction-bid-form(
-    method="GET"
-    action= "/auction/#{artwork.auction.id}/bid/#{artwork.id}"
-  )
-    .artwork-auction-bid-module__bid-button
-      button.auction-avant-garde-black-button(
-        type= 'submit'
-        disabled= false
-      ) Bid
+  method="GET"
+  action="#{actionUrl}"
+)
+  .artwork-auction-bid-module__bid-button
+    case bidderStatus
+      when 'registration-pending'
+        button.auction-avant-garde-black-button.is-block.is-disabled(
+          type='button'
+          disabled=true
+        ) Registration Pending
+      when 'registration-closed'
+        button.auction-avant-garde-black-button.is-block.is-disabled(
+          type='button'
+          disabled=true
+        ) Registration Closed
+      when 'registration-required'
+        a( href="/auction-registration/#{auction.id}" ) 
+          button.auction-avant-garde-black-button.is-block.js-register-button(
+            type='button'
+          ) Bid
+      when 'logged-in'
+        a( href="/auction/#{auction.id}/bid/#{artwork.id}" ) 
+          button.auction-avant-garde-black-button.is-block.js-register-button(
+            type='button'
+          ) Bid
+      default
+        button.auction-avant-garde-black-button.is-block(
+          type='submit'
+          disabled=false
+          class='js-artwork-auction-bid-button'
+        ) Bid

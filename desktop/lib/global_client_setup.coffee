@@ -7,7 +7,6 @@
 Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
-_.get = require 'lodash.get'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 Raven = require 'raven-js'

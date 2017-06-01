@@ -49,7 +49,7 @@ describe 'Artwork Client', ->
           @variables.auctionId.should.equal 'test-auction'
 
         it 'sets up initializers', ->
-          @init.length.should.eql 3
+          @init.length.should.eql 4
 
       describe 'closed', ->
         beforeEach ->

@@ -61,8 +61,9 @@ describe 'Venice route', ->
     routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
     routes.__set__ 'sailthru', sinon.stub()
 
-  afterEach ->
+  afterEach (done) ->
     Backbone.sync.restore()
+    done()
 
   it 'sets a video index', ->
     @req = { params: { slug: 'venice-2' } }
