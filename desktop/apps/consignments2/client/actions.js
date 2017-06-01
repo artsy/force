@@ -116,7 +116,7 @@ export function completeSubmission () {
       } = getState()
       const token = await fetchToken(user)
 
-      const submissionQueryParam = submission ? submission.id : submissionIdFromServer
+      const submissionQueryParam = submission.id || submissionIdFromServer
       const submissionResponse = await request
                           .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submissionQueryParam}`)
                           .set('Authorization', `Bearer ${token}`)
@@ -524,10 +524,11 @@ export function updateUser (user) {
 export function uploadImageToConvection (geminiToken, fileName) {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { submission, user } } = getState()
+      const { submissionFlow: { submission, submissionIdFromServer, user } } = getState()
+      const submissionId = submission.id || submissionIdFromServer
       const token = await fetchToken(user)
       const inputs = {
-        submission_id: submission.id,
+        submission_id: submissionId,
         gemini_token: geminiToken
       }
       await request
@@ -546,14 +547,15 @@ export function uploadImageToConvection (geminiToken, fileName) {
 export function uploadImageToGemini (key, bucket, fileName) {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { submission } } = getState()
+      const { submissionFlow: { submission, submissionIdFromServer } } = getState()
+      const submissionId = submission.id || submissionIdFromServer
       const inputs = {
         entry: {
           template_key: sd.CONVECTION_GEMINI_APP,
           source_key: key,
           source_bucket: bucket,
           metadata: {
-            id: submission.id,
+            id: submissionId,
             _type: 'Consignment'
           }
         }
