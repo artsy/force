@@ -55,8 +55,6 @@ if article.get('published')
   meta( name="sailthru.tags" content=keywords.join(','))
   meta( name="sailthru.date" content=article.get('published_at'))
 
-if sd.INCLUDE_ESCAPED_FRAGMENT
-  meta( name='fragment', content='!' )
 if article.get('contributing_authors') && article.get('contributing_authors').length
   - for author in article.get('contributing_authors')
       if author.name
