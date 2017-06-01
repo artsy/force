@@ -85,7 +85,9 @@ export function chooseLocation (location) {
         await placesService.getDetails({ placeId: location.place_id }, parseDetails)
       }
     } catch (err) {
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ chooseLocation) Error:', err
+      )
     }
   }
 }
@@ -137,7 +139,9 @@ export function completeSubmission () {
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ completeSubmission) Error:', err
+      )
     }
   }
 }
@@ -162,7 +166,9 @@ export function createSubmission () {
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ createSubmission) Error:', err
+      )
     }
   }
 }
@@ -187,7 +193,9 @@ export function fetchArtistSuggestions (value) {
       dispatch(updateArtistSuggestions(res.body))
       dispatch(hideNotConsigningMessage())
     } catch (err) {
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ fetchArtistSuggestions) Error:', err
+      )
     }
   }
 }
@@ -207,8 +215,10 @@ export function fetchLocationSuggestions (value) {
         const autocompleteService = new window.google.maps.places.AutocompleteService()
         await autocompleteService.getPlacePredictions({ input: value, types: ['(cities)'] }, displaySuggestions)
       }
-    } catch (error) {
-      console.error('error!', error)
+    } catch (err) {
+      console.error(
+        '(consignments/client/actions.js @ fetchLocationSuggestions) Error:', err
+      )
     }
   }
 }
@@ -248,7 +258,9 @@ export function handleImageUpload (file) {
         dispatch(errorOnImage(file.name))
       }
     } catch (err) {
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ handleImageUpload) Error:', err
+      )
     }
   }
 }
@@ -437,7 +449,9 @@ export function submitPhoto () {
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ submitPhoto) Error:', err
+      )
     }
   }
 }
@@ -628,7 +642,9 @@ export function uploadImageToConvection (geminiToken, fileName) {
       dispatch(stopProcessingImage(fileName))
     } catch (err) {
       dispatch(errorOnImage(fileName))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ uploadImageToConvection) Error:', err
+      )
     }
   }
 }
@@ -659,7 +675,9 @@ export function uploadImageToGemini (key, bucket, fileName) {
       dispatch(uploadImageToConvection(token, fileName))
     } catch (err) {
       dispatch(errorOnImage(fileName))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ uploadImageToGemini) Error:', err
+      )
     }
   }
 }
