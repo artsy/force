@@ -22,6 +22,8 @@ module.exports = class HeaderView extends Backbone.View
     'click .mlh-signup': 'signup'
     'click .user-nav-profile-link': 'showProfilePrivateDialog'
     'click .mlh-logout': 'logout'
+    'click #main-layout-search-bar-container': 'highlightSearch'
+    'blur #main-layout-search-bar-container': 'unhighlightSearch'
 
   initialize: ->
     @currentUser = CurrentUser.orNull()
@@ -126,3 +128,10 @@ module.exports = class HeaderView extends Backbone.View
       new FlashMessage message: 'Thank you for personalizing your profile'
     else if document.referrer.match '/artsy-primer-personalize/'
       new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
+
+  highlightSearch: (e) ->
+    if $('.html-highlight-header-search-split-test #main-layout-search-bar-input').is(':focus')
+      $('#main-layout-search-bar-container').addClass('focused')
+
+  unhighlightSearch: (e) ->
+    $(e.currentTarget).removeClass('focused')
