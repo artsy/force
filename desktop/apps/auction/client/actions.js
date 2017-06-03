@@ -9,6 +9,7 @@ export const GET_ARTWORKS_FAILURE = 'GET_ARTWORKS_FAILURE'
 export const GET_ARTWORKS_REQUEST = 'GET_ARTWORKS_REQUEST'
 export const GET_ARTWORKS_SUCCESS = 'GET_ARTWORKS_SUCCESS'
 export const INCREMENT_FOLLOWED_ARTISTS_PAGE = 'INCREMENT_FOLLOWED_ARTISTS_PAGE'
+export const RESET_FILTERS = 'RESET_FILTERS'
 export const SHOW_FOLLOWED_ARTISTS_RAIL = 'SHOW_FOLLOWED_ARTISTS_RAIL'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
@@ -210,6 +211,15 @@ export function resetArtworks () {
       dispatch(updatePage(true))
       dispatch(fetchArtworks())
     }
+  }
+}
+
+export function resetFilters () {
+  return (dispatch) => {
+    dispatch({
+      type: RESET_FILTERS
+    })
+    dispatch(resetArtworks())
   }
 }
 

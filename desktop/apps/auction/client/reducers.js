@@ -90,6 +90,25 @@ function auctionArtworks (state = initialState, action) {
         }, state)
       }
     }
+    case actions.RESET_FILTERS: {
+      const {
+        aggregatedArtists,
+        aggregatedMediums,
+        initialMediumMap,
+        saleArtworks
+      } = state
+
+      return u({
+        ...initialState,
+
+        // Preserve current result state while resetting so that display doesn't
+        // perform a hard reset.
+        aggregatedArtists,
+        aggregatedMediums,
+        initialMediumMap,
+        saleArtworks
+      }, state)
+    }
     case actions.TOGGLE_LIST_VIEW: {
       return u({
         isListView: action.payload.isListView
