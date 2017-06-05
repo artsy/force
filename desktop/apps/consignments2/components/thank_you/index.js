@@ -5,12 +5,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SpeechBubble from '../../../../components/main_layout/public/icons/consignments-speech-bubble.svg'
 import block from 'bem-cn'
+import get from 'lodash.get'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
 
-function ThankYou ({ submission, uploadedImages }) {
+function ThankYou ({ submission, processingImages, uploadedImages }) {
   const b = block('consignments2-submission-thank-you')
-  const submissionImage = get(uploadedImages, '0.src') ? get(uploadedImages, '0.src') : '/images/missing_image.png'
+  const uploadedImageSrc = get(uploadedImages, '0.src')
+  const submissionImage = uploadedImageSrc && processingImages.length === 0 ? uploadedImageSrc : '/images/missing_image.png'
 
   return (
     <div className={b()}>
@@ -62,6 +63,7 @@ function ThankYou ({ submission, uploadedImages }) {
 }
 
 const mapStateToProps = (state) => ({
+  processingImages: state.submissionFlow.processingImages,
   submission: state.submissionFlow.submission,
   uploadedImages: state.submissionFlow.uploadedImages
 })
@@ -71,6 +73,7 @@ export default connect(
 )(ThankYou)
 
 ThankYou.propTypes = {
+  processingImages: PropTypes.array.isRequired,
   submission: PropTypes.object.isRequired,
   uploadedImages: PropTypes.array
 }

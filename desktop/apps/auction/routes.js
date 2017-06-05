@@ -5,7 +5,7 @@ import MeQuery from './queries/me'
 import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
 import metaphysics from '../../../lib/metaphysics'
-import { liveAuctionUrl } from '../../../utils/domain/auctions/urls'
+import { getLiveAuctionUrl } from '../../../utils/domain/auctions/urls'
 
 export const index = async (req, res) => {
   const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
@@ -37,7 +37,7 @@ export const index = async (req, res) => {
     articles: auctionArticles,
     auction: newAuction,
     footerItems: footerItems,
-    viewHelpers: { liveAuctionUrl },
+    viewHelpers: { getLiveAuctionUrl },
     me: me
   })
 }
@@ -47,7 +47,7 @@ export const redirectLive = async (req, res, next) => {
   if (sale && sale.is_live_open) {
     const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
     if (me && me.bidders && me.bidders.length > 0 && me.bidders[0].qualified_for_bidding) {
-      res.redirect(liveAuctionUrl(sale.id, {isLoggedIn: Boolean(me)}))
+      res.redirect(getLiveAuctionUrl(sale.id, {isLoggedIn: Boolean(me)}))
     } else {
       next()
     }

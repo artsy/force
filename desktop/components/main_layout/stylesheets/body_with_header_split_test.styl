@@ -1,0 +1,187 @@
+//
+// Styles that affect the layout at large such as when the header becomes fixed
+// or when a featured banner/view in room changes the content to fit underneath
+// a transparent header.
+//
+
+@require '../../stylus_lib'
+@require '../../eggs/invert'
+@require '../../eggs/bounce'
+
+search-bar-input-placeholder()
+  color white
+
+.body-header-fixed
+  #main-layout-container
+    margin-top (main-header-height + content-margin-top)
+  #main-layout-header
+    position fixed
+    z-index zindex-primary-nav
+    // Prevent repaints
+    force-hardware-acceleration()
+    &.force-position-absolute
+      position absolute
+
+// same as fixed header but with no annoying 10px extra margin
+.body-header-fixed-no-margin
+  @extend .body-header-fixed
+  #main-layout-container
+    margin-top main-header-height !important
+
+// If this A/B test wins we should remove this class and de-indent everything
+.html-highlight-header-search-split-test
+  html[data-useragent*="iPad"]
+    .body-header-fixed #main-layout-header
+      position absolute
+
+  #main-layout-search-bar-container
+    border-color #e5e5e5
+    background-color #f0f0f0 !important
+    &:hover
+      border 1px solid black
+
+  #main-layout-header
+    #main-layout-search-bar-container.focused
+      &:hover
+        border-color #6e00ff !important
+
+  #main-layout-header
+    #main-layout-search-bar-container.focused
+      border-color #6e00ff !important
+
+    #main-layout-search-bar-input
+      &::placeholder
+        color #666 !important
+  #main-layout-search-bar-icon
+    color #666
+
+  // Pages like checkout or onboarding remove options from the header to heavily
+  // focus on the task at hand.
+  .minimal-header
+    #main-layout-header
+      position relative !important
+    #main-layout-header-left #main-layout-header-minimal-title
+      display block
+    #main-layout-search-bar-container
+    #main-layout-header-center
+    .main-layout-header-user
+      display none
+    #main-layout-header-home-logo
+      border-right 1px solid gray-lighter-color
+
+  // Simply hides the header
+  .body-no-header
+    #main-layout-header
+      display none
+    #main-layout-container
+      margin-top 0 !important
+
+  // View in room and home page hero units will sit underneath a transparent
+  // header.
+  @media(min-width: nav-bar-break)
+    .body-transparent-header-white
+    .body-transparent-header
+      #main-layout-header
+        background white
+
+  .body-transparent-header
+    #main-layout-header
+      border-color rgba(black, 0.1)
+      *:not(.tt-suggestion):not(.tt-dropdown-menu):not(.hover-pulldown-menu *)
+        border-color rgba(black, 0.1)
+      #main-layout-search-bar-icon
+        color #666
+      #main-layout-search-bar-container
+        border-color #e5e5e5
+        #main-layout-search-bar-input
+          background-color #f0f0f0 !important
+          &::placeholder
+            color #666
+  .body-hide-header
+    #main-layout-header
+      display none
+
+  // Dark banners and backgrounds need the header it to be white text and outlines
+  // for visiblity.
+  @media(min-width: nav-bar-break)
+    .body-transparent-header-white
+      // Modified styles for split test
+      #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, #main-layout-header-home-logo
+      #main-layout-search-bar-icon, #main-layout-search-bar-input, span.mlh-top-nav-link, span.mlh-top-nav-link:before
+        color black
+      #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, span.mlh-top-nav-link
+        &:hover
+          color #6e00ff
+      .hover-pulldown-menu a
+        color white !important
+      .hover-pulldown:not(.mlh-hamburger):not(.mlh-notification):not(.artist-page-cta-overlay__feed__pulldown):before
+        border-top-color black
+      #main-layout-search-bar-icon
+        color #666
+      #main-layout-search-bar-input
+        color #000
+        &::placeholder
+          color #666
+      #main-layout-header
+        border-color rgba(white, 0.3)
+        *:not(.tt-suggestion):not(.tt-dropdown-menu)
+          border-color rgba(white, 0.3)
+        #main-layout-search-bar-container
+          background-color #f0f0f0
+          border-color #e5e5e5
+          &:hover
+            border-color black !important
+
+      #main-layout-header
+        #main-layout-search-bar-container.focused
+          &:hover
+            border-color #6e00ff !important
+
+      #main-layout-header
+        #main-layout-search-bar-container.focused
+          border-color #6e00ff !important
+
+      #main-layout-search-bar-container.is-loading .loading-spinner-small
+        background black
+      #main-layout-header-home-logo::after
+        border-color #666
+
+  // A page that infinite scrolls will hide the footer
+  .body-infinite-scroll
+    #main-layout-footer
+      display none
+
+  // Hides header and footer, and some margin adjustments for the iPad app
+  .body-eigen
+    #main-layout-footer, #main-layout-header
+      display none !important
+    #main-layout-container
+      margin-top 0 !important
+      padding 0
+      @media(min-device-width: 768px)
+        padding 0 layout-side-margin
+
+  // Loosens up some styling like min-widths so the page can be responsive
+  .body-responsive
+    min-width inherit
+    #main-layout-container
+      margin 30px 20px
+
+  // Some elements need to break out of the standard side and top margins to fill
+  // the full viewport. (Removes all side margins and content-margin-top)
+  .body-no-margins
+    #main-layout-container
+      margin-top (welcome-header-height + main-header-height)
+      margin-left 0
+      margin-right 0
+    &.body-header-fixed
+      #main-layout-container
+        margin-top main-header-height
+    &.body-fullscreen-article
+      min-width unset
+      #main-layout-container
+        margin-top 0px
+
+  .body-no-padding
+    #main-layout-container
+      padding 0

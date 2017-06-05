@@ -1,5 +1,6 @@
 import * as actions from '../client/actions'
 import ChooseArtist from '../components/choose_artist'
+import CreateAccount from '../components/create_account'
 import StepMarker from '../components/step_marker'
 import SubmissionFlow from '../components/submission_flow'
 import UploadPhoto from '../components/upload_photo'
@@ -38,6 +39,58 @@ describe('React components', () => {
     })
   })
 
+  describe('CreateAccount', () => {
+    beforeEach(() => {
+      CreateAccount.__Rewire__('ForgotPassword', () => <div className='forgot-password' />)
+      CreateAccount.__Rewire__('LogIn', () => <div className='log-in' />)
+      CreateAccount.__Rewire__('SignUp', () => <div className='sign-up' />)
+    })
+
+    afterEach(() => {
+      CreateAccount.__ResetDependency__('ForgotPassword')
+      CreateAccount.__ResetDependency__('LogInCreateAccount')
+      CreateAccount.__ResetDependency__('SignUp')
+    })
+
+    describe('log in', () => {
+      it('the log in form', () => {
+        const wrapper = shallow(
+          <CreateAccount store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.log-in').length.should.eql(1)
+        rendered.find('.forgot-password').length.should.eql(0)
+        rendered.find('.sign-up').length.should.eql(0)
+      })
+    })
+
+    describe('forgot password', () => {
+      it('the forgot password form', () => {
+        initialStore.dispatch(actions.updateAuthFormState('forgotPassword'))
+        const wrapper = shallow(
+          <CreateAccount store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.log-in').length.should.eql(0)
+        rendered.find('.forgot-password').length.should.eql(1)
+        rendered.find('.sign-up').length.should.eql(0)
+      })
+    })
+
+    describe('sign up', () => {
+      it('the forgot password form', () => {
+        initialStore.dispatch(actions.updateAuthFormState('signUp'))
+        const wrapper = shallow(
+          <CreateAccount store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.log-in').length.should.eql(0)
+        rendered.find('.forgot-password').length.should.eql(0)
+        rendered.find('.sign-up').length.should.eql(1)
+      })
+    })
+  })
+
   describe('UploadedImage', () => {
     it('correctly displays the processing state when there are no processing images', () => {
       initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
@@ -49,7 +102,7 @@ describe('React components', () => {
         <UploadedImage store={initialStore} file={file} />
       )
       const rendered = wrapper.render()
-      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
     })
 
     it('correctly displays the processing state when the image is processing', () => {
@@ -63,7 +116,7 @@ describe('React components', () => {
         <UploadedImage store={initialStore} file={file} />
       )
       const rendered = wrapper.render()
-      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(1)
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(1)
     })
 
     it('correctly displays the processing state when a different image is processing', () => {
@@ -77,7 +130,50 @@ describe('React components', () => {
         <UploadedImage store={initialStore} file={file} />
       )
       const rendered = wrapper.render()
-      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+    })
+
+    it('correctly displays the error state when the image is errored', () => {
+      initialStore.dispatch(actions.errorOnImage('astronaut.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__error').length.should.eql(1)
+    })
+
+    it('correctly displays the error state when the image is errored and processing', () => {
+      initialStore.dispatch(actions.startProcessingImage('astronaut.jpg'))
+      initialStore.dispatch(actions.errorOnImage('astronaut.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__error').length.should.eql(1)
+    })
+
+    it('correctly displays the error state when a different image is errored', () => {
+      initialStore.dispatch(actions.errorOnImage('another-image.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__progress-wrapper').length.should.eql(0)
+      rendered.find('.consignments2-submission-uploaded-image__error').length.should.eql(0)
     })
   })
 
@@ -188,9 +284,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Create an Account')
         rendered.find('.create-account').length.should.eql(1)
       })
       it('shows the choose artist step second', () => {
@@ -199,9 +292,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Enter the name of the artist/designer who created the work')
         rendered.find('.choose-artist').length.should.eql(1)
       })
 
@@ -212,9 +302,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Enter details about the work')
         rendered.find('.describe-work').length.should.eql(1)
       })
 
@@ -226,9 +313,6 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-submission__step-title').length.should.eql(1)
-        const renderedText = rendered.text()
-        renderedText.should.containEql('Upload photos')
         rendered.find('.upload-photos').length.should.eql(1)
       })
     })

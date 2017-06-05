@@ -7,7 +7,7 @@ mixin bidBlock(saleArtwork, bid)
   - isLiveOpenOrClosed = isLiveOpen || isClosed
   - detailsClass = isLiveOpenOrClosed ? 'my-active-bids-item-details--hide-bid' : 'my-active-bids-item-details'
   - bidButtonLabel = isLiveOpen ? 'Bid Live' : isClosed ? 'View Lot' : 'Bid'
-  - bidButtonLink = isLiveOpen ? viewHelpers.liveAuctionUrl(saleArtwork.sale_id, {isLoggedIn: true}) : artwork.href
+  - bidButtonLink = isLiveOpen ? viewHelpers.getLiveAuctionUrl(saleArtwork.sale_id, {isLoggedIn: true}) : artwork.href
   - bidButtonClass = isLiveOpenOrClosed ? 'my-active-bids-bid-live-button' : 'my-active-bids-bid-button'
   
   a( href=artwork.href )

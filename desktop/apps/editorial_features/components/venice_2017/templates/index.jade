@@ -3,7 +3,7 @@ extends ../../../../../components/main_layout/templates/blank.jade
 append locals
   - assetPackage = 'editorial_features'
   - section = curation.get('sections')[videoIndex]
-  - options = {modal: false, stripe: false, marketo: false}
+  - options = {stripe: false, marketo: false}
 
 block head
   include head
@@ -17,6 +17,7 @@ block body
         include ../icons/icon_i.svg
       include ./video
       include ./carousel
+      .venice-header__overlay
 
     .venice-body
       include ./body

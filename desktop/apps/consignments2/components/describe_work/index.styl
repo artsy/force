@@ -1,7 +1,18 @@
 .consignments2-submission-describe-work
   padding-bottom 100px
 
+  &__title
+    margin-top 50px
+    text-align center
+    garamond-size('headline')
+    margin-bottom 30px
+
+  &__form
+    max-width 550px
+    margin 0 auto
+
   &__next-button.avant-garde-button-black
+    height 40px
     margin-top 0px
     width 100%
     margin-bottom 10px
@@ -58,3 +69,23 @@
     &:hover
       cursor pointer
       background-color gray-lightest-color
+
+  &__location-input
+    position relative
+
+    &_disabled
+      input
+        pointer-events none
+        background-color gray-lightest-color
+
+  &__unfreeze
+    position absolute
+    right 7px
+    top 4px
+
+    &:hover
+      cursor pointer
+
+    svg
+      width 17px
+      fill gray-dark-color

@@ -9,13 +9,16 @@ module.exports = """
     sale {
       id
       name
+      end_at
       is_open
       is_live_open
       is_preview
       is_closed
       is_auction
       is_auction_promo
+      is_registration_closed
       is_with_buyers_premium
+      registration_ends_at
       require_bidder_approval
     }
     sale_artwork {

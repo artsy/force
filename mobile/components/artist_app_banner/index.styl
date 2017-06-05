@@ -1,0 +1,51 @@
+@import '../layout/stylesheets/buttons'
+
+.artist-app-banner
+    position absolute
+    top 0
+    right 0
+    left 0
+    height height
+    background-color black
+    z-index z-app-banner
+    border-bottom 1px solid #333
+    color white
+
+    &-container
+        margin 40px 30px
+
+    &-close-button
+        position absolute
+        top 0
+        bottom 0
+        right 0
+        width close-button-width
+        font-size 44px
+        color light-gray-text-color
+        text-align center
+        line-height height
+        padding 5px
+
+    &-content
+        display flex
+        margin 20px 0
+        flex-direction horizontal
+        align-items center
+
+    &-copy
+        garamond-size('l-body')
+        font-size 18px
+        margin-right 10px
+
+    &-img
+        height 80px
+        width @height
+        border-radius @height
+        margin-right 20px
+    
+    &-button
+        @extends .avant-garde-box-button
+        background-color #6E1FFF
+        border none
+        color white
+        text-transform uppercase

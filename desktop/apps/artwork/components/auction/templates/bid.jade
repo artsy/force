@@ -4,7 +4,7 @@ include ../../../../../components/bid_status/index
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
 - showAuctionForm = auction.is_open && !artwork.is_sold && !auction.is_live_open
-- actionUrl = helpers.auction.getRedirectActionUrl(bidderStatus, artwork, auction)
+- actionUrl = helpers.auction.getBidRedirectActionUrl(bidderStatus, artwork, auction)
 
 if showAuctionForm
   form.artwork-auction__bid-form(
@@ -44,6 +44,9 @@ if showAuctionForm
         a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
           href='/auction-registration/#{auction.id}'
         )= bidAmount
+      when 'registration-closed'
+        .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
+          | Registration Closed
       when 'logged-in'
         a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
           href='/auction/#{auction.id}/bid/#{artwork.id}'

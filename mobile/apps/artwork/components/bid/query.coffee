@@ -1,17 +1,21 @@
 module.exports = """
   auction: sale {
-    id
-    name
     auction_state
-    is_open
-    is_preview
-    is_closed
+    end_at
+    id
     is_auction
     is_auction_promo
+    is_closed
+    is_live_open
+    is_open
+    is_preview
+    is_registration_closed
     is_with_buyers_premium
-    start_at
-    end_at
     live_start_at
+    name
+    registration_ends_at
+    require_bidder_approval
+    start_at
     sale_artwork(id: $id) {
       id
       estimate

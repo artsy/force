@@ -1,7 +1,7 @@
 template = require('jade').compileFile(require.resolve '../template.jade')
 cheerio = require 'cheerio'
 moment = require 'moment'
-{liveAuctionUrl} = require('../../../../utils/domain/auctions/urls')
+{getLiveAuctionUrl} = require('../../../../utils/domain/auctions/urls')
 
 fixture = -> [
   {
@@ -39,7 +39,7 @@ describe 'My Active Bids template', ->
   beforeEach ->
     @locals =
       myActiveBids: fixture()
-      viewHelpers: { liveAuctionUrl }
+      viewHelpers: { getLiveAuctionUrl }
       accounting: formatMoney: (s) -> s
 
   it 'renders highest bid if user is leading bidder and reserve met\
