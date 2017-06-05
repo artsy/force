@@ -40,6 +40,8 @@ dependencies:
     - yarn install
 test:
   override:
-    - "gem install danger --version '~> 4.0' && danger"
+    # TODO: See if we can check in a danger token
+    # https://artsy.slack.com/archives/C0350895E/p1496696371745758
+    # - "gem install danger --version '~> 4.0' && danger"
     - yarn test:
         parallel: true
