@@ -1,3 +1,4 @@
+import AppContainer from '../components/app_container'
 import React from 'react'
 import SubmissionFlow from '../components/submission_flow'
 import ThankYou from '../components/thank_you'
@@ -30,13 +31,15 @@ function setupSubmissionFlow () {
 
   render(
     <Provider store={store}>
-      <Router history={history}>
-        <div>
-          <Route exact path='/consign2/submission' component={SubmissionFlow} />
-          <Route path='/consign2/submission/thank_you' component={ThankYou} />
-          <Route path='/consign2/submission/:submission_id/upload' component={UploadPhotoLanding} />
-        </div>
-      </Router>
+      <AppContainer>
+        <Router history={history}>
+          <div>
+            <Route exact path='/consign2/submission' component={SubmissionFlow} />
+            <Route path='/consign2/submission/:submission_id/thank_you' component={ThankYou} />
+            <Route path='/consign2/submission/:submission_id/upload' component={UploadPhotoLanding} />
+          </div>
+        </Router>
+      </AppContainer>
     </Provider>,
     document.getElementById('consignments2-submission__flow')
   )

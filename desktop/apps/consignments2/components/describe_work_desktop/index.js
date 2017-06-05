@@ -1,5 +1,4 @@
-import Autosuggest from 'react-autosuggest'
-import Close from '../../../../components/main_layout/public/icons/close.svg'
+import LocationAutocomplete from '../location_autocomplete'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
@@ -11,22 +10,16 @@ import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
 import { renderTextInput } from '../text_input'
 import {
-  chooseLocation,
-  clearLocationSuggestions,
-  fetchLocationSuggestions,
-  submitDescribeWork,
-  unfreezeLocationInput,
-  updateLocationAutocomplete
+  submitDescribeWork
 } from '../../client/actions'
 
-function validate (values) {
+function validate (values, props) {
   const {
     authenticity_certificate,
     edition,
     edition_number,
     edition_size,
     height,
-    location,
     medium,
     signature,
     title,
@@ -36,13 +29,13 @@ function validate (values) {
   const errors = {}
 
   if (!authenticity_certificate) errors.authenticity_certificate = 'Required'
-  if (!height) errors.height = 'Required'
-  if (!location) errors.location = 'Required'
-  if (!medium) errors.medium = 'Required'
   if (!signature) errors.signature = 'Required'
   if (!title) errors.title = 'Required'
-  if (!width) errors.width = 'Required'
   if (!year) errors.year = 'Required'
+  if (!width) errors.width = 'Required'
+  if (!medium) errors.medium = 'Required'
+  if (!height) errors.height = 'Required'
+
   if (edition) {
     if (!edition_size) errors.edition_size = 'Required'
     if (!edition_number) errors.edition_number = 'Required'
@@ -51,56 +44,30 @@ function validate (values) {
   return errors
 }
 
-function getSuggestionValue (suggestion) {
-  return suggestion.description
-}
-
-function renderSuggestion (suggestion) {
-  return (
-    <div className='autosuggest-suggestion'>
-      <div>{suggestion.description}</div>
-    </div>
-  )
-}
-
-function DescribeWork (props) {
+function DescribeWorkDesktop (props) {
   const {
     artistName,
     categoryOptions,
-    chooseLocationAction,
-    clearLocationSuggestionsAction,
     error,
     loading,
-    fetchLocationSuggestionsAction,
     handleSubmit,
     hasEditionValue,
     locationAutocompleteFrozen,
-    locationAutocompleteSuggestions,
     locationAutocompleteValue,
     submitDescribeWorkAction,
-    unfreezeLocationInputAction,
-    updateLocationAutocompleteAction,
     invalid,
     pristine
   } = props
 
   const b = block('consignments2-submission-describe-work')
 
-  const locationAutosuggestInputProps = {
-    value: locationAutocompleteValue,
-    onChange: updateLocationAutocompleteAction
-  }
-
-  const renderInputComponent = inputProps => (
-    <div>
-      <input {...inputProps} className={b('input').mix('bordered-input')} />
-    </div>
-  )
-
   return (
     <div className={b()}>
       <div className={b('title')}>
         Enter details about the work by {artistName}
+      </div>
+      <div className={b('subtitle')}>
+        To ensure a quick response please provide as much information as possible.
       </div>
       <form className={b('form')} onSubmit={handleSubmit(submitDescribeWorkAction)}>
         <div className={b('row')}>
@@ -135,6 +102,7 @@ function DescribeWork (props) {
             />
           </div>
         </div>
+
         <div className={b('row')}>
           <div className={b('row-item')}>
             <Field name='height' component={renderTextInput}
@@ -218,19 +186,7 @@ function DescribeWork (props) {
         <div className={b('row')}>
           <div className={b('row-item')}>
             <div className={b('instructions')}>What city is the work located in?*</div>
-            <div className={b('location-input', { disabled: locationAutocompleteFrozen })}>
-              <Autosuggest
-                suggestions={locationAutocompleteSuggestions}
-                onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
-                onSuggestionsClearRequested={clearLocationSuggestionsAction}
-                onSuggestionSelected={chooseLocationAction}
-                getSuggestionValue={getSuggestionValue}
-                renderInputComponent={renderInputComponent}
-                renderSuggestion={renderSuggestion}
-                inputProps={locationAutosuggestInputProps}
-              />
-              { locationAutocompleteFrozen && <div className={b('unfreeze')} onClick={unfreezeLocationInputAction}><Close /></div> }
-            </div>
+            <LocationAutocomplete />
           </div>
         </div>
         <button
@@ -261,52 +217,26 @@ const mapStateToProps = (state) => {
     loading: state.submissionFlow.loading,
     hasEditionValue,
     locationAutocompleteFrozen: state.submissionFlow.locationAutocompleteFrozen,
-    locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
     locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    chooseLocationAction (event, { suggestion, suggestionValue }) {
-      dispatch(chooseLocation(suggestion))
-    },
-    clearLocationSuggestionsAction () {
-      dispatch(clearLocationSuggestions())
-    },
-    fetchLocationSuggestionsAction ({ value }) {
-      dispatch(fetchLocationSuggestions(value))
-    },
-    submitDescribeWorkAction (values) {
-      dispatch(submitDescribeWork(values))
-    },
-    unfreezeLocationInputAction () {
-      dispatch(unfreezeLocationInput())
-    },
-    updateLocationAutocompleteAction (event, { newValue }) {
-      dispatch(updateLocationAutocomplete(newValue))
-    }
-  }
+const mapDispatchToProps = {
+  submitDescribeWorkAction: submitDescribeWork
 }
 
-DescribeWork.propTypes = {
+DescribeWorkDesktop.propTypes = {
   artistName: PropTypes.string.isRequired,
   categoryOptions: PropTypes.array.isRequired,
-  chooseLocationAction: PropTypes.func.isRequired,
-  clearLocationSuggestionsAction: PropTypes.func.isRequired,
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  fetchLocationSuggestionsAction: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   hasEditionValue: PropTypes.bool.isRequired,
   invalid: PropTypes.bool,
   locationAutocompleteFrozen: PropTypes.bool.isRequired,
-  locationAutocompleteSuggestions: PropTypes.array,
   locationAutocompleteValue: PropTypes.string,
   pristine: PropTypes.bool,
-  submitDescribeWorkAction: PropTypes.func.isRequired,
-  unfreezeLocationInputAction: PropTypes.func.isRequired,
-  updateLocationAutocompleteAction: PropTypes.func.isRequired
+  submitDescribeWorkAction: PropTypes.func.isRequired
 }
 
 export default compose(
@@ -318,4 +248,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   )
-)(DescribeWork)
+)(DescribeWorkDesktop)

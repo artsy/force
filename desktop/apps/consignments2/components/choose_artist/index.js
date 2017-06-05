@@ -33,6 +33,7 @@ function ChooseArtist (props) {
     clearArtistSuggestionsAction,
     chooseArtistAndAdvanceAction,
     fetchArtistSuggestionsAction,
+    isMobile,
     notConsigningArtist,
     showNotConsigningMessageAction,
     updateArtistAutocompleteValueAction
@@ -53,7 +54,7 @@ function ChooseArtist (props) {
   const nextEnabled = artistAutocompleteValue.length > 0
 
   return (
-    <div className={b()}>
+    <div className={b({mobile: isMobile})}>
       <div className={b('title')}>
         Enter the name of the artist/designer who created the work
       </div>
@@ -81,7 +82,7 @@ function ChooseArtist (props) {
         {
           notConsigningArtist &&
           <div className={b('not-consigning')}>
-            Unfortunately, we are not currently consigning works for {artistAutocompleteValue}.<br /><a href='/'>Back to Artsy</a>
+            Unfortunately we are not accepting consignments for works by {artistAutocompleteValue}.<br /><a href='/'>Back to Artsy</a>
           </div>
         }
       </div>
@@ -93,6 +94,7 @@ const mapStateToProps = (state) => {
   return {
     artistAutocompleteSuggestions: state.submissionFlow.artistAutocompleteSuggestions,
     artistAutocompleteValue: state.submissionFlow.artistAutocompleteValue,
+    isMobile: state.submissionFlow.isMobile,
     notConsigningArtist: state.submissionFlow.notConsigningArtist
   }
 }
@@ -128,6 +130,7 @@ ChooseArtist.propTypes = {
   clearArtistSuggestionsAction: PropTypes.func.isRequired,
   chooseArtistAndAdvanceAction: PropTypes.func.isRequired,
   fetchArtistSuggestionsAction: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
   notConsigningArtist: PropTypes.bool,
   showNotConsigningMessageAction: PropTypes.func.isRequired,
   updateArtistAutocompleteValueAction: PropTypes.func.isRequired

@@ -5,15 +5,15 @@ import UploadPhoto from '../upload_photo'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function UploadPhotoLanding ({ user }) {
+function UploadPhotoLanding ({ isMobile, user }) {
   const b = block('consignments2-submission-upload-photo-landing')
   return (
-    <div className={b()}>
+    <div className={b({mobile: isMobile})}>
       {
         user ? (
           <div>
             <div className={b('title')}>
-              Upload a Photo
+              Add photos to your consignment submission
             </div>
             <div className={b('step-form')}>
               <UploadPhoto hideCheckbox />
@@ -31,6 +31,7 @@ function UploadPhotoLanding ({ user }) {
 
 const mapStateToProps = (state) => {
   return {
+    isMobile: state.submissionFlow.isMobile,
     user: state.submissionFlow.user
   }
 }
@@ -40,5 +41,6 @@ export default connect(
 )(UploadPhotoLanding)
 
 UploadPhotoLanding.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
   user: PropTypes.object
 }

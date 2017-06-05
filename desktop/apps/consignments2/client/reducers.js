@@ -9,19 +9,23 @@ import { routerReducer } from 'react-router-redux'
 const stepsMapping = [
   {
     id: 'create_account',
-    label: 'Create Account'
+    label: 'Create Account',
+    shortLabel: 'Create'
   },
   {
     id: 'choose_artist',
-    label: 'Verify Artist/Designer'
+    label: 'Verify Artist/Designer',
+    shortLabel: 'Verify'
   },
   {
     id: 'describe_work',
-    label: 'Describe the Work'
+    label: 'Describe the Work',
+    shortLabel: 'Describe'
   },
   {
     id: 'upload_photos',
-    label: 'Upload Photo'
+    label: 'Upload Photo',
+    shortLabel: 'Upload'
   }
 ]
 
@@ -70,6 +74,7 @@ const initialState = {
     width: '',
     year: ''
   },
+  isMobile: false,
   loading: false,
   locationAutocompleteFrozen: false,
   locationAutocompleteSuggestions: [],
@@ -164,6 +169,11 @@ function submissionFlow (state = initialState, action) {
       const fileName = action.payload.fileName
       return u({
         uploadedImages: u.reject((ff) => ff.fileName === fileName)
+      }, state)
+    }
+    case actions.RESIZE_WINDOW: {
+      return u({
+        isMobile: action.payload.windowSize <= 640
       }, state)
     }
     case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
