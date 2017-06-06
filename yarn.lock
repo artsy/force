@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.1.41":
-  version "0.1.41"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.41.tgz#efed4903ec57fb7648fe3a36667b6f4750b4d012"
+"@artsy/reaction-force@^0.1.42":
+  version "0.1.42"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.42.tgz#39ed2af4b6e384528ec6396f61cdee76cece6236"
   dependencies:
     artsy-passport "^1.6.1"
     artsy-xapp "^1.0.4"
@@ -14,6 +14,7 @@
     cookie-parser "^1.4.3"
     cookie-session "^2.0.0-beta.1"
     express "^4.15.2"
+    history "^4.6.1"
     isomorphic-fetch "^2.2.1"
     isomorphic-relay "^0.7.4"
     lodash "^4.17.4"
@@ -24,6 +25,7 @@
     react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
     react-sizeme "^2.3.2"
     react-styled-flexboxgrid "^1.0.2"
+    react-url-query "^1.1.4"
     request "^2.81.0"
     sharify "^0.1.6"
     styled-components "^1.4.3"
@@ -5503,7 +5505,7 @@ prompt@0.2.14:
     utile "0.2.x"
     winston "0.8.x"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@~15.5.7:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5578,6 +5580,13 @@ qs@6.4.0, qs@^6.0.2, qs@^6.1.0, qs@^6.3.0, qs@~6.4.0:
 qs@~6.2.0:
   version "6.2.3"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.3.tgz#1cfcb25c10a9b2b483053ff39f5dfc9233908cfe"
+
+query-string@^4.2.3:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
+  dependencies:
+    object-assign "^4.1.0"
+    strict-uri-encode "^1.0.0"
 
 querystring-es3@~0.2.0:
   version "0.2.1"
@@ -5803,6 +5812,14 @@ react-themeable@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
   dependencies:
     object-assign "^3.0.0"
+
+react-url-query@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-url-query/-/react-url-query-1.1.4.tgz#664d805f682edb5d7870ec216b90d187a7bf5c58"
+  dependencies:
+    loose-envify "^1.2.0"
+    prop-types "^15.5.9"
+    query-string "^4.2.3"
 
 react@^15.4.2:
   version "15.5.4"
@@ -6682,6 +6699,10 @@ stream-splicer@^2.0.0:
   dependencies:
     inherits "^2.0.1"
     readable-stream "^2.0.2"
+
+strict-uri-encode@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
 
 string-width@^1.0.1, string-width@^1.0.2:
   version "1.0.2"
