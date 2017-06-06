@@ -63,6 +63,7 @@
     "express": "^4.13.3",
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
+    "express-react-views": "^0.10.2",
     "factor-bundle": "^2.5.0",
     "forever": "^0.15.3",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
