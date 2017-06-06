@@ -1,3 +1,6 @@
+- auction = artwork.auction
+- bidderStatus = helpers.getBidderStatus(bidder, auction)
+
 include ./bid_status_message.jade
 - bidderPositions = artwork.auction.sale_artwork.counts.bidder_positions
 .artwork-auction-bid-module__bid-status
@@ -12,8 +15,10 @@ include ./bid_status_message.jade
       span #{bidderPositions > 0 ? ', ' : '' }Reserve met
     else if artwork.auction.sale_artwork.reserve_status == 'reserve_not_met'
       span #{bidderPositions > 0 ? ', ' : '' }Reserve not met
+      
     //- TODO: https://github.com/artsy/auctions/issues/124
     //- else
     //-   span No reserve
-  if bidder && bidder.lot_standing && typeof window !== 'undefined'
+    
+  if bidder && bidder.lot_standing && typeof window !== 'undefined' && bidderStatus === 'qualified-to-bid'
     +bidStatusMessage(bidder.lot_standing, artwork.auction.sale_artwork)

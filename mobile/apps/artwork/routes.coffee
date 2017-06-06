@@ -1,8 +1,9 @@
 { extend } = require 'underscore'
 qs = require 'qs'
+get = require 'lodash.get'
 metaphysics = require '../../../lib/metaphysics'
 { METAPHYSICS_ENDPOINT, CURRENT_USER } = require('sharify').data
-Helpers = require './helpers'
+helpers = require './helpers'
 
 query = (user) -> """
   query artwork($id: String!) {
@@ -90,6 +91,16 @@ query = (user) -> """
   }
 """
 
+meQuery = """
+  query artwork($sale_id: String!) {
+    me {
+      bidders(sale_id: $sale_id) {
+        qualified_for_bidding
+      }
+    }
+  }
+"""
+
 module.exports.index = (req, res, next) ->
   send = query: query(req.user), variables: req.params, req: req
 
@@ -102,8 +113,19 @@ module.exports.index = (req, res, next) ->
       res.locals.artwork = data.artwork
       res.locals.sd.ARTWORK = data.artwork
       res.locals.sd.SEADRAGON_URL = res.locals.asset('/assets/mobile_openseadragon.js')
-      res.locals.helpers = Helpers
-      res.render 'index'
+      res.locals.helpers = helpers
+
+      # If a saleId is found, then check to see if user has been qualified for
+      # bidding so that bid button UI is correct from the server down.
+      saleId = get(data, 'artwork.auction.id', false)
+
+      if saleId
+        fetchMeData(meQuery, req.user, saleId)
+          .then (meData) ->
+            res.render 'index', extend data, meData
+          .catch next
+      else
+        res.render 'index', data
     .catch next
 
 module.exports.askSpecialist = (req, res, next) ->
@@ -119,3 +141,16 @@ module.exports.askSpecialist = (req, res, next) ->
       res.locals.sd.ARTWORK = data.artwork
       res.render 'ask_specialist_page'
     .catch next
+
+# Helpers
+fetchMeData = (query, user, saleId) ->
+  new Promise (resolve, reject) ->
+    metaphysics
+      method: 'post'
+      query: query,
+      req:
+        user: user
+      variables:
+        sale_id: saleId
+    .then resolve
+    .catch reject

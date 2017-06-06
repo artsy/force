@@ -45,6 +45,11 @@ export const submissionUpload = async (req, res, next) => {
   res.render('submission_flow', { user: req.user })
 }
 
+export const submissionThankYou = async (req, res, next) => {
+  res.locals.sd.SUBMISSION_ID = req.params.id
+  res.render('submission_flow', { user: req.user })
+}
+
 function RecentlySoldQuery (id) {
   return `
     {

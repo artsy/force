@@ -75,6 +75,7 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
       query: term
       item_number: $searchResult.parent().children().index($searchResult)
       item_type: $searchResult.attr('class').replace('search-result ', '')
+      item_id: $searchResult.data('mongo-id')
       destination_path: "#{sd.APP_URL}#{$searchResult.attr('href')}"
 
 module.exports.init = ->

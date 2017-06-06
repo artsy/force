@@ -2,8 +2,8 @@ extends ../../../components/fair_layout/templates/conditional
 
 block head
   include meta
-  if article.get('tags') && article.get('tags').indexOf('noindex') >= 0
-      meta( name='robots', content='noindex' )
+  if !article.get('indexable')
+    meta( name='robots', content='noindex' )
 
 append locals
   - assetPackage = 'article'

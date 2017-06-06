@@ -20,16 +20,19 @@
   &__name
     garamond-size('s-headline')
     margin-top 5px
+  &__explore
+    text-decoration none
   &__explore-button
     height 45px
     margin auto
   i.icon-chevron-right
     display none
 
-@media screen and (max-width 600px)
+@media screen and (max-width 1000px)
   .articles-promoted
-    margin-left 20px
-    margin-right 20px
+    max-width calc(100% \- 40px)
+    margin-left auto
+    margin-right auto
     &__explore-button, &__img
       display none
     i.icon-chevron-right

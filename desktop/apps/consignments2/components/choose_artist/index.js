@@ -33,6 +33,7 @@ function ChooseArtist (props) {
     clearArtistSuggestionsAction,
     chooseArtistAndAdvanceAction,
     fetchArtistSuggestionsAction,
+    isMobile,
     notConsigningArtist,
     showNotConsigningMessageAction,
     updateArtistAutocompleteValueAction
@@ -53,33 +54,38 @@ function ChooseArtist (props) {
   const nextEnabled = artistAutocompleteValue.length > 0
 
   return (
-    <div className={b()}>
-      <div className={b('label')}>Artist/Designer Name</div>
-      <div className={b('autosuggest')}>
-        <Autosuggest
-          suggestions={artistAutocompleteSuggestions}
-          onSuggestionsFetchRequested={fetchArtistSuggestionsAction}
-          onSuggestionsClearRequested={clearArtistSuggestionsAction}
-          onSuggestionSelected={chooseArtistAndAdvanceAction}
-          getSuggestionValue={getSuggestionValue}
-          renderInputComponent={renderInputComponent}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-        />
+    <div className={b({mobile: isMobile})}>
+      <div className={b('title')}>
+        Enter the name of the artist/designer who created the work
       </div>
-      <div
-        className={b('next-button').mix('avant-garde-button-black')}
-        onClick={showNotConsigningMessageAction}
-        disabled={!nextEnabled}
-      >
-        Next
-      </div>
-      {
-        notConsigningArtist &&
-        <div className={b('not-consigning')}>
-          Unfortunately, we are not currently consigning works for {artistAutocompleteValue}.<br /><a href='/'>Back to Artsy</a>
+      <div className={b('form')}>
+        <div className={b('label')}>Artist/Designer Name</div>
+        <div className={b('autosuggest')}>
+          <Autosuggest
+            suggestions={artistAutocompleteSuggestions}
+            onSuggestionsFetchRequested={fetchArtistSuggestionsAction}
+            onSuggestionsClearRequested={clearArtistSuggestionsAction}
+            onSuggestionSelected={chooseArtistAndAdvanceAction}
+            getSuggestionValue={getSuggestionValue}
+            renderInputComponent={renderInputComponent}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
+          />
         </div>
-      }
+        <div
+          className={b('next-button').mix('avant-garde-button-black')}
+          onClick={showNotConsigningMessageAction}
+          disabled={!nextEnabled}
+        >
+          Next
+        </div>
+        {
+          notConsigningArtist &&
+          <div className={b('not-consigning')}>
+            Unfortunately we are not accepting consignments for works by {artistAutocompleteValue}.<br /><a href='/'>Back to Artsy</a>
+          </div>
+        }
+      </div>
     </div>
   )
 }
@@ -88,6 +94,7 @@ const mapStateToProps = (state) => {
   return {
     artistAutocompleteSuggestions: state.submissionFlow.artistAutocompleteSuggestions,
     artistAutocompleteValue: state.submissionFlow.artistAutocompleteValue,
+    isMobile: state.submissionFlow.isMobile,
     notConsigningArtist: state.submissionFlow.notConsigningArtist
   }
 }
@@ -123,6 +130,7 @@ ChooseArtist.propTypes = {
   clearArtistSuggestionsAction: PropTypes.func.isRequired,
   chooseArtistAndAdvanceAction: PropTypes.func.isRequired,
   fetchArtistSuggestionsAction: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
   notConsigningArtist: PropTypes.bool,
   showNotConsigningMessageAction: PropTypes.func.isRequired,
   updateArtistAutocompleteValueAction: PropTypes.func.isRequired
