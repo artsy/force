@@ -34,6 +34,27 @@ search-bar-input-placeholder()
     .body-header-fixed #main-layout-header
       position absolute
 
+  #main-layout-search-bar-container
+    border-color #e5e5e5
+    background-color #f0f0f0 !important
+    &:hover
+      border 1px solid black
+
+  #main-layout-header
+    #main-layout-search-bar-container.focused
+      &:hover
+        border-color #6e00ff !important
+
+  #main-layout-header
+    #main-layout-search-bar-container.focused
+      border-color #6e00ff !important
+
+    #main-layout-search-bar-input
+      &::placeholder
+        color #666 !important
+  #main-layout-search-bar-icon
+    color #666
+
   // Pages like checkout or onboarding remove options from the header to heavily
   // focus on the task at hand.
   .minimal-header
@@ -76,8 +97,6 @@ search-bar-input-placeholder()
           background-color #f0f0f0 !important
           &::placeholder
             color #666
-          &:focus
-            border 1px solid #6e00ff
   .body-hide-header
     #main-layout-header
       display none
@@ -103,8 +122,6 @@ search-bar-input-placeholder()
         color #000
         &::placeholder
           color #666
-        &:focus
-          border 1px solid #6e00ff !important
       #main-layout-header
         border-color rgba(white, 0.3)
         *:not(.tt-suggestion):not(.tt-dropdown-menu)
@@ -112,6 +129,18 @@ search-bar-input-placeholder()
         #main-layout-search-bar-container
           background-color #f0f0f0
           border-color #e5e5e5
+          &:hover
+            border-color black !important
+
+      #main-layout-header
+        #main-layout-search-bar-container.focused
+          &:hover
+            border-color #6e00ff !important
+
+      #main-layout-header
+        #main-layout-search-bar-container.focused
+          border-color #6e00ff !important
+
       #main-layout-search-bar-container.is-loading .loading-spinner-small
         background black
       #main-layout-header-home-logo::after

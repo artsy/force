@@ -8,7 +8,7 @@ Clock = require './mixins/clock.coffee'
 Relations = require './mixins/relations/sale.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
 Eventable = require './mixins/eventable.coffee'
-{ liveAuctionUrl } = require '../../utils/domain/auctions/urls'
+{ getLiveAuctionUrl } = require '../../utils/domain/auctions/urls'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock
@@ -61,7 +61,7 @@ module.exports = class Sale extends Backbone.Model
     if @isClosed()
       label: 'Auction Closed', enabled: false, classes: 'is-disabled', href: ''
     else if @isLiveOpen()
-      label: 'Enter Live Auction', enabled: true, href: liveAuctionUrl(@get('id'), { isLoggedIn: Boolean(user) })
+      label: 'Enter Live Auction', enabled: true, href: getLiveAuctionUrl(@get('id'), { isLoggedIn: Boolean(user) })
     else if artwork.get('sold') and not artwork.get('acquireable')
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
     else

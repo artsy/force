@@ -9,6 +9,7 @@ module.exports = """
     sale {
       id
       name
+      end_at
       is_open
       is_live_open
       is_preview

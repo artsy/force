@@ -1,0 +1,20 @@
+- section = sections[5]
+
+.gallery-partnerships-section-header
+  h2= section.title
+  h3= section.heading
+  p.preamble= section.preamble
+
+.gallery-partnerships-section-content
+  .support-liaisons
+    each liaison in section.liaisons.slice(0, 5)
+      .support-liaison
+        img( src=liaison.src )
+        .support-liaison-name= liaison.name
+        .support-liaison-location= liaison.location
+
+  .support-quotes
+    - q = section.quotes[0]
+    .quote
+      .quote-text= q.quote
+      .quote-author #{q.author}, #{q.title}

@@ -11,14 +11,25 @@ export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
 export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
+export const ERROR_ON_IMAGE = 'ERROR_ON_IMAGE'
+export const FREEZE_LOCATION_INPUT = 'FREEZE_LOCATION_INPUT'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
+export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
+export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
+export const RESIZE_WINDOW = 'RESIZE_WINDOW'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
+export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
+export const START_LOADING = 'START_LOADING'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
+export const STOP_LOADING = 'STOP_LOADING'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
+export const UNFREEZE_LOCATION_INPUT = 'UNFREEZE_LOCATION_INPUT'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
+export const UPDATE_ARTIST_NAME = 'UPDATE_ARTIST_NAME'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
+export const UPDATE_AUTH_FORM_STATE = 'UPDATE_AUTH_FORM_STATE'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
 export const UPDATE_INPUTS = 'UPDATE_INPUTS'
 export const UPDATE_LOCATION_AUTOCOMPLETE_VALUE = 'UPDATE_LOCATION_AUTOCOMPLETE_VALUE'
@@ -28,6 +39,7 @@ export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
 export const UPDATE_PROGRESS_BAR = 'UPDATE_PROGRESS_BAR'
 export const UPDATE_SKIP_PHOTO_SUBMISSION = 'UPDATE_SKIP_PHOTO_SUBMISSION'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
+export const UPDATE_USER = 'UPDATE_USER'
 
 // Action creators
 export function addImageToUploadedImages (fileName, src) {
@@ -43,6 +55,7 @@ export function addImageToUploadedImages (fileName, src) {
 export function chooseArtistAndAdvance (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
+    dispatch(updateArtistName(value.name))
     dispatch(incrementStep()) // move to next step
   }
 }
@@ -63,6 +76,7 @@ export function chooseLocation (location) {
         const stateDisplay = state && state.long_name
 
         dispatch(updateLocationInputValues(cityDisplay, stateDisplay, countryDisplay))
+        dispatch(freezeLocationInput())
       }
     }
 
@@ -72,7 +86,9 @@ export function chooseLocation (location) {
         await placesService.getDetails({ placeId: location.place_id }, parseDetails)
       }
     } catch (err) {
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ chooseLocation) Error:', err
+      )
     }
   }
 }
@@ -104,25 +120,29 @@ export function clearLocationSuggestions () {
 export function completeSubmission () {
   return async (dispatch, getState) => {
     try {
-      const token = await fetchToken()
       const {
         submissionFlow: {
           submission,
-          submissionIdFromServer
+          submissionIdFromServer,
+          user
         }
       } = getState()
+      const token = await fetchToken(user)
 
-      const submissionQueryParam = submission ? submission.id : submissionIdFromServer
+      const submissionQueryParam = submission.id || submissionIdFromServer
       const submissionResponse = await request
                           .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submissionQueryParam}`)
                           .set('Authorization', `Bearer ${token}`)
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
-      dispatch(push('/consign2/submission/thank_you'))
+      dispatch(push(`/consign2/submission/${submissionResponse.body.id}/thank_you`))
     } catch (err) {
+      dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ completeSubmission) Error:', err
+      )
     }
   }
 }
@@ -130,21 +150,35 @@ export function completeSubmission () {
 export function createSubmission () {
   return async (dispatch, getState) => {
     try {
-      const token = await fetchToken()
       const {
         submissionFlow: {
-          inputs
+          inputs,
+          user
         }
       } = getState()
+      const token = await fetchToken(user)
       const { body } = await request
                           .post(`${sd.CONVECTION_APP_URL}/api/submissions`)
                           .set('Authorization', `Bearer ${token}`)
                           .send(inputs)
       dispatch(updateSubmission(body)) // update state to reflect current submission
+      dispatch(stopLoading())
       dispatch(incrementStep()) // move to next step
     } catch (err) {
+      dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ createSubmission) Error:', err
+      )
+    }
+  }
+}
+
+export function errorOnImage (fileName) {
+  return {
+    type: ERROR_ON_IMAGE,
+    payload: {
+      fileName
     }
   }
 }
@@ -152,14 +186,17 @@ export function createSubmission () {
 export function fetchArtistSuggestions (value) {
   return async (dispatch, getState) => {
     try {
+      const { submissionFlow: { user } } = getState()
       const res = await request
                           .get(`${sd.API_URL}/api/v1/match/artists`)
                           .query({ visible_to_public: 'true', term: value })
-                          .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+                          .set('X-ACCESS-TOKEN', user.accessToken)
       dispatch(updateArtistSuggestions(res.body))
       dispatch(hideNotConsigningMessage())
     } catch (err) {
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ fetchArtistSuggestions) Error:', err
+      )
     }
   }
 }
@@ -179,37 +216,52 @@ export function fetchLocationSuggestions (value) {
         const autocompleteService = new window.google.maps.places.AutocompleteService()
         await autocompleteService.getPlacePredictions({ input: value, types: ['(cities)'] }, displaySuggestions)
       }
-    } catch (error) {
-      console.error('error!', error)
+    } catch (err) {
+      console.error(
+        '(consignments/client/actions.js @ fetchLocationSuggestions) Error:', err
+      )
     }
+  }
+}
+
+export function freezeLocationInput () {
+  return {
+    type: FREEZE_LOCATION_INPUT
   }
 }
 
 export function handleImageUpload (file) {
   return async (dispatch, getState) => {
     try {
-      const options = {
-        acl: 'private',
-        app: sd.CONVECTION_GEMINI_APP,
-        key: sd.GEMINI_S3_ACCESS_KEY,
-        fail: (_err) => {
-          dispatch(updateError('Unable to upload at this time.'))
-        },
-        add: (src) => {
-          dispatch(addImageToUploadedImages(file.name, src))
-          dispatch(startProcessingImage(file.name))
-        },
-        progress: (percent) => {
-          dispatch(updateProgressBar(file.name, percent))
-        },
-        done: (src, geminiKey, bucket) => {
-          const key = `${geminiKey}/${file.name}`
-          dispatch(uploadImageToGemini(key, bucket, file.name))
+      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+        const options = {
+          acl: 'private',
+          app: sd.CONVECTION_GEMINI_APP,
+          key: sd.GEMINI_S3_ACCESS_KEY,
+          fail: (_err) => {
+            dispatch(errorOnImage(file.name))
+          },
+          add: (src) => {
+            dispatch(addImageToUploadedImages(file.name, src))
+            dispatch(startProcessingImage(file.name))
+          },
+          progress: (percent) => {
+            dispatch(updateProgressBar(file.name, percent))
+          },
+          done: (src, geminiKey, bucket) => {
+            const key = `${geminiKey}/${file.name}`
+            dispatch(uploadImageToGemini(key, bucket, file.name))
+          }
         }
+        gemup(file, options)
+      } else {
+        dispatch(addImageToUploadedImages(file.name))
+        dispatch(errorOnImage(file.name))
       }
-      gemup(file, options)
     } catch (err) {
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ handleImageUpload) Error:', err
+      )
     }
   }
 }
@@ -223,6 +275,85 @@ export function hideNotConsigningMessage () {
 export function incrementStep () {
   return {
     type: INCREMENT_STEP
+  }
+}
+
+export function logIn (values) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        email: values.email,
+        password: values.password,
+        _csrf: sd.CSRF_TOKEN
+      }
+      const user = await request
+                      .post(sd.AP.loginPagePath)
+                      .set('Content-Type', 'application/json')
+                      .set('Accept', 'application/json')
+                      .set('X-Requested-With', 'XMLHttpRequest')
+                      .send(options)
+
+      dispatch(updateUser(user.body.user))
+      dispatch(incrementStep())
+      dispatch(clearError())
+    } catch (err) {
+      dispatch(updateError(err.response.body.error))
+    }
+  }
+}
+
+export function removeErroredImage (fileName) {
+  return {
+    type: REMOVE_ERRORED_IMAGE,
+    payload: {
+      fileName
+    }
+  }
+}
+
+export function removeImage (fileName) {
+  return (dispatch) => {
+    dispatch(removeErroredImage(fileName))
+    dispatch(stopProcessingImage(fileName))
+    dispatch(removeUploadedImage(fileName))
+  }
+}
+
+export function removeUploadedImage (fileName) {
+  return {
+    type: REMOVE_UPLOADED_IMAGE,
+    payload: {
+      fileName
+    }
+  }
+}
+
+export function resetPassword (values) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        email: values.email
+      }
+      await request
+        .post(`${sd.API_URL}/api/v1/users/send_reset_password_instructions`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN)
+        .send(options)
+      dispatch(clearError())
+      dispatch(showResetPasswordSuccessMessage())
+    } catch (err) {
+      dispatch(updateError(err.response.body.error))
+    }
+  }
+}
+
+export function resizeWindow (windowSize) {
+  return {
+    type: RESIZE_WINDOW,
+    payload: {
+      windowSize
+    }
   }
 }
 
@@ -246,6 +377,35 @@ export function showNotConsigningMessage () {
   }
 }
 
+export function showResetPasswordSuccessMessage () {
+  return {
+    type: SHOW_RESET_PASSWORD_SUCCESS_MESSAGE
+  }
+}
+
+export function signUp (values) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        email: values.email,
+        name: values.name,
+        password: values.password,
+        _csrf: sd.CSRF_TOKEN
+      }
+      await request
+              .post(sd.AP.signupPagePath)
+              .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
+              .set('X-Requested-With', 'XMLHttpRequest')
+              .send(options)
+
+      dispatch(logIn(values))
+    } catch (err) {
+      dispatch(updateError(err.response.body.error))
+    }
+  }
+}
+
 export function startProcessingImage (fileName) {
   return {
     type: START_PROCESSING_IMAGE,
@@ -266,6 +426,8 @@ export function stopProcessingImage (fileName) {
 
 export function submitDescribeWork (values) {
   return (dispatch) => {
+    dispatch(clearError())
+    dispatch(startLoading())
     dispatch(updateInputs(values)) // update the inputs
     dispatch(scrubLocation())
     dispatch(createSubmission()) // create the submission in convection
@@ -278,14 +440,36 @@ export function selectPhoto (file) {
   }
 }
 
+export function startLoading () {
+  return {
+    type: START_LOADING
+  }
+}
+
+export function stopLoading () {
+  return {
+    type: STOP_LOADING
+  }
+}
+
 export function submitPhoto () {
   return async (dispatch, getState) => {
+    dispatch(startLoading())
     try {
       dispatch(completeSubmission())
     } catch (err) {
+      dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
-      console.error('error!', err)
+      console.error(
+        '(consignments/client/actions.js @ submitPhoto) Error:', err
+      )
     }
+  }
+}
+
+export function unfreezeLocationInput () {
+  return {
+    type: UNFREEZE_LOCATION_INPUT
   }
 }
 
@@ -307,12 +491,37 @@ export function updateArtistId (artistId) {
   }
 }
 
+export function updateArtistName (artistName) {
+  return {
+    type: UPDATE_ARTIST_NAME,
+    payload: {
+      artistName
+    }
+  }
+}
+
 export function updateArtistSuggestions (suggestions) {
   return {
     type: UPDATE_ARTIST_SUGGESTIONS,
     payload: {
       suggestions
     }
+  }
+}
+
+export function updateAuthFormState (state) {
+  return {
+    type: UPDATE_AUTH_FORM_STATE,
+    payload: {
+      state
+    }
+  }
+}
+
+export function updateAuthFormStateAndClearError (state) {
+  return (dispatch, getState) => {
+    dispatch(updateAuthFormState(state))
+    dispatch(clearError())
   }
 }
 
@@ -417,13 +626,23 @@ export function updateSubmission (submission) {
   }
 }
 
+export function updateUser (user) {
+  return {
+    type: UPDATE_USER,
+    payload: {
+      user
+    }
+  }
+}
+
 export function uploadImageToConvection (geminiToken, fileName) {
   return async (dispatch, getState) => {
     try {
-      const token = await fetchToken()
-      const { submissionFlow: { submission } } = getState()
+      const { submissionFlow: { submission, submissionIdFromServer, user } } = getState()
+      const submissionId = submission.id || submissionIdFromServer
+      const token = await fetchToken(user)
       const inputs = {
-        submission_id: submission.id,
+        submission_id: submissionId,
         gemini_token: geminiToken
       }
       await request
@@ -433,8 +652,10 @@ export function uploadImageToConvection (geminiToken, fileName) {
 
       dispatch(stopProcessingImage(fileName))
     } catch (err) {
-      dispatch(updateError('Unable to upload image.'))
-      console.error('error!', err)
+      dispatch(errorOnImage(fileName))
+      console.error(
+        '(consignments/client/actions.js @ uploadImageToConvection) Error:', err
+      )
     }
   }
 }
@@ -442,14 +663,15 @@ export function uploadImageToConvection (geminiToken, fileName) {
 export function uploadImageToGemini (key, bucket, fileName) {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { submission } } = getState()
+      const { submissionFlow: { submission, submissionIdFromServer } } = getState()
+      const submissionId = submission.id || submissionIdFromServer
       const inputs = {
         entry: {
           template_key: sd.CONVECTION_GEMINI_APP,
           source_key: key,
           source_bucket: bucket,
           metadata: {
-            id: submission.id,
+            id: submissionId,
             _type: 'Consignment'
           }
         }
@@ -463,21 +685,23 @@ export function uploadImageToGemini (key, bucket, fileName) {
 
       dispatch(uploadImageToConvection(token, fileName))
     } catch (err) {
-      dispatch(updateError('Unable to process image.'))
-      console.error('error!', err)
+      dispatch(errorOnImage(fileName))
+      console.error(
+        '(consignments/client/actions.js @ uploadImageToGemini) Error:', err
+      )
     }
   }
 }
 
 // helpers
-async function fetchToken () {
+async function fetchToken (user) {
   const {
     body: {
       token
     }
   } = await request
               .post(`${sd.API_URL}/api/v1/me/token`)
-              .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+              .set('X-ACCESS-TOKEN', user.accessToken)
               .send({ client_application_id: sd.CONVECTION_APP_ID })
   return token
 }

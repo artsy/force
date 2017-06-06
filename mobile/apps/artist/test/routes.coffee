@@ -12,6 +12,10 @@ describe '#index', ->
     @req =
       params:
         id: 'artist-id'
+      headers:
+        'user-agent': 'iPhone; Artsy-Mobile'
+      cookies:
+        'dismissed-app-banner': true
     @res =
       locals:
         sd: {}
@@ -19,7 +23,12 @@ describe '#index', ->
     @next = sinon.stub()
     sinon.stub Backbone, 'sync'
       .onCall 0
-      .returns Promise.resolve fabricate('artist', name: 'Oliver')
+      .returns Promise.resolve fabricate('artist', 
+        name: 'Oliver'
+        image_urls:
+          square: ''
+        link: 'https://app.adjust.com/ue4nzl'
+      )
       .onCall 1
       .returns Promise.resolve []
       .onCall 2

@@ -11,7 +11,7 @@ export const renderTextInput = ({ input, ...custom }) => (
 )
 
 function TextInput (props) {
-  const { item, label, instructions, onChange } = props
+  const { item, label, instructions, onChange, type } = props
   const b = block('consignments2-submission-text-input')
 
   return (
@@ -21,7 +21,7 @@ function TextInput (props) {
       <input
         data={item}
         className={b('input').mix('bordered-input')}
-        type='text'
+        type={type || 'text'}
         onKeyUp={(e) => onChange(e.target.value)}
       />
     </div>
@@ -32,5 +32,6 @@ TextInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
   instructions: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  type: PropTypes.string
 }

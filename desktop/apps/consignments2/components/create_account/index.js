@@ -1,20 +1,18 @@
+import ForgotPassword from '../forgot_password'
+import LogIn from '../log_in'
 import PropTypes from 'prop-types'
 import React from 'react'
+import SignUp from '../sign_up'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { incrementStep } from '../../client/actions'
 
-function CreateAccount ({ incrementStepAction }) {
+function CreateAccount ({ CurrentStateComponent }) {
   const b = block('consignments2-submission-create-account')
 
   return (
     <div className={b()}>
-      <div
-        className={b('next-button').mix('avant-garde-button-black')}
-        onClick={incrementStepAction}
-      >
-        Next
-      </div>
+      <CurrentStateComponent />
     </div>
   )
 }
@@ -23,11 +21,29 @@ const mapDispatchToProps = {
   incrementStepAction: incrementStep
 }
 
+const mapStateToProps = (state) => {
+  const {
+    submissionFlow: {
+      authFormState
+    }
+  } = state
+
+  const stateToComponents = {
+    'logIn': LogIn,
+    'signUp': SignUp,
+    'forgotPassword': ForgotPassword
+  }
+
+  return {
+    CurrentStateComponent: stateToComponents[authFormState]
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreateAccount)
 
 CreateAccount.propTypes = {
-  incrementStepAction: PropTypes.func.isRequired
+  CurrentStateComponent: PropTypes.func.isRequired
 }

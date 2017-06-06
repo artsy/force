@@ -1,25 +1,28 @@
+import AppContainer from '../app_container'
 import ChooseArtist from '../choose_artist'
 import CreateAccount from '../create_account'
-import DescribeWork from '../describe_work'
+import DescribeWorkDesktop from '../describe_work_desktop'
+import DescribeWorkMobile from '../describe_work_mobile'
 import PropTypes from 'prop-types'
 import React from 'react'
 import UploadPhoto from '../upload_photo'
 import StepMarker from '../step_marker'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
+import {
+  resizeWindow
+} from '../../client/actions'
 
-function SubmissionFlow ({ CurrentStepComponent, currentStepTitle }) {
+function SubmissionFlow (props) {
   const b = block('consignments2-submission')
+  const { CurrentStepComponent, isMobile } = props
 
   return (
     <div className={b()}>
-      <div className={b('title')}>
-        Consign your work to Artsy in just a few steps
+      <div className={b('title', {mobile: isMobile})}>
+        Consign your work through Artsy in just a few quick steps
       </div>
       <StepMarker />
-      <div className={b('step-title')}>
-        { currentStepTitle }
-      </div>
       <div className={b('step-form')}>
         <CurrentStepComponent />
       </div>
@@ -31,30 +34,37 @@ const mapStateToProps = (state) => {
   const {
     submissionFlow: {
       currentStep,
+      isMobile,
       steps
     }
   } = state
 
+  const describeWorkComponent = isMobile ? DescribeWorkMobile : DescribeWorkDesktop
   const stepsToComponents = {
     create_account: CreateAccount,
     choose_artist: ChooseArtist,
-    describe_work: DescribeWork,
+    describe_work: describeWorkComponent,
     upload_photos: UploadPhoto
   }
 
-  const { id, title } = steps[currentStep]
+  const { id } = steps[currentStep]
 
   return {
     CurrentStepComponent: stepsToComponents[id],
-    currentStepTitle: title
+    isMobile
   }
+}
+
+const mapDispatchToProps = {
+  resizeWindowAction: resizeWindow
 }
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(SubmissionFlow)
 
 SubmissionFlow.propTypes = {
   CurrentStepComponent: PropTypes.func.isRequired,
-  currentStepTitle: PropTypes.string.isRequired
+  isMobile: PropTypes.bool.isRequired
 }

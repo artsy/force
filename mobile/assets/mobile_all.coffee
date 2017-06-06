@@ -66,9 +66,6 @@ hash =
   '^/personalize': ->
     require('../apps/personalize/client/router.coffee').init()
 
-  '^/gallery-partnerships': ->
-    require('../apps/gallery_partnerships/client/index.coffee').init()
-
   '^/.*/articles.*': ->
     require '../apps/partner_profile/client/articles.coffee'
 

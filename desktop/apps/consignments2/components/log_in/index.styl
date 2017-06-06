@@ -1,0 +1,85 @@
+.consignments2-submission-log-in
+  &__title
+    margin-top 50px
+    text-align center
+    garamond-size('headline')
+    line-height 1.1
+    margin-bottom 5px
+
+  &__subtitle
+    text-align center
+    color gray-dark-color
+    margin-bottom 37px
+
+  &__error
+    color red-color
+    padding-bottom 15px
+    text-align center
+
+  &__clickable
+    color gray-dark-color
+    text-decoration underline
+    cursor pointer
+
+  &__row
+    padding-bottom 27px
+
+    &_no-padding
+      padding-bottom 0px
+
+  &__forgot-password
+    text-align right
+    margin 10px 0px
+
+    a
+      color gray-dark-color
+
+  &__log-in-button.avant-garde-button-black
+    margin-top 0px
+    width 100%
+    margin-bottom 10px
+
+  &__log-in-button[disabled]
+    pointer-events none
+    background-color white
+    color gray-color
+    border 1px solid gray-color
+
+  &__facebook-button
+    display flex
+    background-color #4E65B1
+    color white
+    width 100%
+    justify-content center
+    align-items center
+    padding-top 5px
+    padding-bottom 5px
+    avant-garde-size('s-headline')
+
+    svg
+      fill white
+      padding-right 10px
+
+  &__or
+    width 100%
+    margin 20px 0
+    margin-top 10px
+    text-align center
+    position relative
+
+    &:after
+      content ''
+      width 100%
+      border-bottom solid 1px gray-lightest-color
+      position absolute
+      left 0
+      top 50%
+
+  &__or-content
+    avant-garde-size('s-headline')
+    color gray-color
+    display inline-block
+    padding 0 20px
+    position relative
+    z-index 3
+    background-color white

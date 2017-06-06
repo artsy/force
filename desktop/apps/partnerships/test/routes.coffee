@@ -16,8 +16,9 @@ describe 'Partnerships routes', ->
       status: sinon.stub()
       send: sinon.stub()
     }
-    routes.__set__ 'client', @client = { getFile: sinon.stub(), putBuffer: sinon.stub() }
-    routes.__set__ 'request', @request = {}
+    @jsonPage = get: sinon.stub()
+    @JSONPage = sinon.stub().returns @jsonPage
+    routes.__set__ 'JSONPage', @JSONPage
 
   afterEach ->
     Backbone.sync.restore()
@@ -29,24 +30,6 @@ describe 'Partnerships routes', ->
         tmpl.should.equal 'index'
         locals.foo.should.equal 'bar'
         done()
-      @request.get = -> on: -> end: (cb) -> cb null, { text: '{"foo": "bar"}' }
       @req.url = '/gallery-partnerships'
-      routes.index @req, @res
-
-  describe '#adminOnly', ->
-
-    it 'restricts admins', ->
-      @req.user = new Backbone.Model(type: 'User')
-      routes.adminOnly @req, @res, next = sinon.stub()
-      next.args[0][0].toString().should.containEql 'You must be logged in as an admin'
-
-  describe '#upload', ->
-
-    it 'uploads the file to S3', ->
-      @req.body = { foo: 'bar' }
-      @req.url = '/gallery-partnerships'
-      routes.upload @req, @res
-      @client.putBuffer.args[0][0].toString().should.equal JSON.stringify @req.body
-      @client.putBuffer.args[0][3](null, {})
-      @res.send.args[0][0].should.equal 200
-      @res.send.args[0][1].msg.should.equal 'success'
+      routes.index @req, @res, done
+      @jsonPage.get.args[0][0] null, { foo: 'bar' }

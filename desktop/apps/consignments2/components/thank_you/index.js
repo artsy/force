@@ -3,18 +3,17 @@ import GreenCheck from '../../../../components/main_layout/public/icons/green-ch
 import OpposingArrows from '../../../../components/main_layout/public/icons/consignments-opposing-arrows.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SpeechBubble from '../../../../components/main_layout/public/icons/consignments-speech-bubble.svg'
 import block from 'bem-cn'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
 
-function ThankYou ({ submission, processingImages, uploadedImages }) {
+function ThankYou ({ isMobile, submission, processingImages, uploadedImages }) {
   const b = block('consignments2-submission-thank-you')
   const uploadedImageSrc = get(uploadedImages, '0.src')
   const submissionImage = uploadedImageSrc && processingImages.length === 0 ? uploadedImageSrc : '/images/missing_image.png'
 
   return (
-    <div className={b()}>
+    <div className={b({mobile: isMobile})}>
       <div className={b('submitted-work')}>
         <div className={b('submitted-image')}>
           <img src={submissionImage} />
@@ -30,14 +29,6 @@ function ThankYou ({ submission, processingImages, uploadedImages }) {
         What’s Next?
       </div>
       <div className={b('next-steps')}>
-        <div className={b('specialist')}>
-          <div className={b('step-icon')}>
-            <SpeechBubble />
-          </div>
-          <div className={b('instructions')}>
-            An Artsy specialist will reach out to confirm demand for your work.
-          </div>
-        </div>
         <div className={b('review')}>
           <div className={b('step-icon')}>
             <Document />
@@ -63,6 +54,7 @@ function ThankYou ({ submission, processingImages, uploadedImages }) {
 }
 
 const mapStateToProps = (state) => ({
+  isMobile: state.submissionFlow.isMobile,
   processingImages: state.submissionFlow.processingImages,
   submission: state.submissionFlow.submission,
   uploadedImages: state.submissionFlow.uploadedImages
@@ -73,6 +65,7 @@ export default connect(
 )(ThankYou)
 
 ThankYou.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
   processingImages: PropTypes.array.isRequired,
   submission: PropTypes.object.isRequired,
   uploadedImages: PropTypes.array
