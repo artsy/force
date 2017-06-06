@@ -11,6 +11,7 @@ import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { Router, Route } from 'react-router'
 import { createStore, applyMiddleware } from 'redux'
+import { updateAuthFormStateAndClearError } from './actions'
 import { render } from 'react-dom'
 import { routerMiddleware } from 'react-router-redux'
 
@@ -36,7 +37,13 @@ function setupSubmissionFlow () {
           <div>
             <Route exact path='/consign2/submission' component={SubmissionFlow} />
             <Route path='/consign2/submission/:submission_id/thank_you' component={ThankYou} />
-            <Route path='/consign2/submission/:submission_id/upload' component={UploadPhotoLanding} />
+            <Route
+              path='/consign2/submission/:submission_id/upload'
+              render={() => {
+                store.dispatch(updateAuthFormStateAndClearError('logIn'))
+                return (<UploadPhotoLanding />)
+              }}
+            />
           </div>
         </Router>
       </AppContainer>

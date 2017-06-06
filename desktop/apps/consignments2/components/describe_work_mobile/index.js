@@ -33,6 +33,7 @@ function validate (values, props) {
 
 function DescribeWorkMobile (props) {
   const {
+    artistName,
     categoryOptions,
     error,
     loading,
@@ -48,6 +49,9 @@ function DescribeWorkMobile (props) {
 
   return (
     <div className={b()}>
+      <div className={b('title')}>
+        Enter details about the work by {artistName}
+      </div>
       <form className={b('form')} onSubmit={handleSubmit(submitDescribeWorkAction)}>
         <div className={b('row')}>
           <div className={b('row-item')}>
@@ -55,6 +59,7 @@ function DescribeWorkMobile (props) {
               item={'title'}
               instructions={'If the title is unknown, please enter your best guess.'}
               label={'Title*'}
+              autofocus
             />
           </div>
         </div>
@@ -146,6 +151,7 @@ const mapDispatchToProps = {
 }
 
 DescribeWorkMobile.propTypes = {
+  artistName: PropTypes.string.isRequired,
   categoryOptions: PropTypes.array.isRequired,
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,

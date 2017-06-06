@@ -41,12 +41,13 @@ function ForgotPassword (props) {
       <div className={b('subtitle')}>
         New to Artsy? <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('signUp')}>Sign up</span>.
       </div>
-      <form className={b()} onSubmit={handleSubmit(resetPasswordAction)}>
+      <form className={b('form')} onSubmit={handleSubmit(resetPasswordAction)}>
         <div className={b('row')}>
           <div className={b('row-item')}>
             <Field name='email' component={renderTextInput}
               item={'email'}
               label={'Email'}
+              autofocus
             />
           </div>
         </div>
