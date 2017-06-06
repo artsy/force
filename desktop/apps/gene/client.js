@@ -24,8 +24,6 @@ function setupGenePage () {
   const urlParams = qs.parse(location.search.replace(/^\?/, ''))
   const options = Object.assign({}, urlParams, { geneID: sd.GENE.id })
 
-  console.log('options', options)
-
   init({
     user: sd.CURRENT_USER,
     component: components.Gene,
