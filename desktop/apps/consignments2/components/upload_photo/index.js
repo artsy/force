@@ -29,7 +29,7 @@ function UploadPhoto (props) {
         Upload photos
       </div>
       <div className={b('subtitle')}>
-        Take a quick snapshot of the work so we can better asses the condition of the work. We suggest a photo of the front and back of the work.
+        Take a quick snapshot of the work so we can better assess the condition of the work. We suggest a photo of the front and back of the work.
       </div>
       <div className={b('form')}>
         <label

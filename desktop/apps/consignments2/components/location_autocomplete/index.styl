@@ -6,7 +6,7 @@
     width 100%
 
   .react-autosuggest__suggestion
-    height 40px
+    min-height 40px
     padding 10px
     border 1px solid gray-lighter-color
     border-top none
@@ -19,6 +19,9 @@
     input
       pointer-events none
       background-color gray-lightest-color
+
+      &:focus, &:active
+        border-color gray-lighter-color
 
   &__unfreeze
     position absolute

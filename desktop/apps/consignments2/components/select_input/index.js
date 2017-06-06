@@ -24,28 +24,22 @@ function SelectInput (props) {
   return (
     <div className={b({item})}>
       { label && <div className={b('label')}>{ label }</div> }
-      <div className={b('select').mix('bordered-pulldown')}>
-        <a className='bordered-pulldown-toggle' href='#'>
-          <span className='bordered-pulldown-text'>{ value || options[0] }</span>
-          <div className='bordered-pulldown-toggle-caret'>
-            <span className='caret' />
-          </div>
-        </a>
-        <div className='bordered-pulldown-options'>
+      <label className={b('select').mix('bordered-select')}>
+        <select>
           {
             map(options, (option) => {
               return (
-                <a
+                <option
                   href='#'
                   className='bordered-pulldown-active'
                   key={option}
                   onClick={() => onChange(option)}
-                >{ option }</a>
+                >{ option }</option>
               )
             })
           }
-        </div>
-      </div>
+        </select>
+      </label>
     </div>
   )
 }

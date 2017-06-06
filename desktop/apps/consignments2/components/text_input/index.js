@@ -11,7 +11,7 @@ export const renderTextInput = ({ input, ...custom }) => (
 )
 
 function TextInput (props) {
-  const { item, label, instructions, onChange, type } = props
+  const { autofocus, item, label, instructions, onChange, type } = props
   const b = block('consignments2-submission-text-input')
 
   return (
@@ -19,6 +19,7 @@ function TextInput (props) {
       { label && <div className={b('label')}>{ label }</div> }
       { instructions && <div className={b('instructions')}>{ instructions }</div> }
       <input
+        autoFocus={autofocus}
         data={item}
         className={b('input').mix('bordered-input')}
         type={type || 'text'}
@@ -29,6 +30,7 @@ function TextInput (props) {
 }
 
 TextInput.propTypes = {
+  autofocus: PropTypes.bool,
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
   instructions: PropTypes.string,

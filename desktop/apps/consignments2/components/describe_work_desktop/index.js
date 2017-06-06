@@ -76,6 +76,7 @@ function DescribeWorkDesktop (props) {
               item={'title'}
               instructions={'If the title is unknown, please enter your best guess.'}
               label={'Title*'}
+              autofocus
             />
           </div>
         </div>

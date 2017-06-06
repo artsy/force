@@ -51,6 +51,7 @@ function SignUp (props) {
             <Field name='name' component={renderTextInput}
               item={'name'}
               label={'Full Name'}
+              autofocus
             />
           </div>
         </div>

@@ -33,7 +33,7 @@ const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
   artistName: '',
-  authFormState: 'logIn',
+  authFormState: 'signUp',
   categoryOptions: [
     'Painting',
     'Sculpture',
