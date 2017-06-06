@@ -1,0 +1,33 @@
+.consignments2-location-input
+  position relative
+
+  input
+    height 40px
+    width 100%
+
+  .react-autosuggest__suggestion
+    height 40px
+    padding 10px
+    border 1px solid gray-lighter-color
+    border-top none
+
+    &:hover
+      cursor pointer
+      background-color gray-lightest-color
+
+  &_disabled
+    input
+      pointer-events none
+      background-color gray-lightest-color
+
+  &__unfreeze
+    position absolute
+    right 7px
+    top 4px
+
+    &:hover
+      cursor pointer
+
+    svg
+      width 17px
+      fill gray-dark-color

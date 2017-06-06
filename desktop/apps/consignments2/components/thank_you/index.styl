@@ -19,6 +19,9 @@
     margin-left 40px
     margin-right 40px
 
+  &__icon-check
+    padding-right 10px
+
   &__title
     garamond-size('xl-headline')
     margin-top 75px
@@ -26,9 +29,12 @@
 
   &__next-steps
     display flex
-    justify-content space-between
+    justify-content space-around
     > *
       max-width 290px
+
+  &__step-icon
+    height 120px
 
   &__instructions
     garamond-size('l-body')
@@ -37,3 +43,17 @@
   &__personalize-button
     margin-top 145px
     width 60%
+
+  &_mobile
+    .consignments2-submission-thank-you__title
+      garamond-size('headline')
+      margin-top 30px
+      margin-bottom 30px
+
+    .consignments2-submission-thank-you__submitted-image img
+      margin-left 20px
+      margin-right 10px
+
+    .consignments2-submission-thank-you__personalize-button
+      width 100%
+      margin-top 30px

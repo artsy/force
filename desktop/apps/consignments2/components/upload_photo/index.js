@@ -28,6 +28,9 @@ function UploadPhoto (props) {
       <div className={b('title')}>
         Upload photos
       </div>
+      <div className={b('subtitle')}>
+        Take a quick snapshot of the work so we can better asses the condition of the work. We suggest a photo of the front and back of the work.
+      </div>
       <div className={b('form')}>
         <label
           htmlFor='file'
@@ -54,9 +57,6 @@ function UploadPhoto (props) {
             </div>
           </div>
         </label>
-        <div className={b('upload-instructions')}>
-          Please upload JPG or PNG image files 1000x1000 pixels or more. Image files should have a file size less than 30mb.
-        </div>
         {
           !hideCheckbox && (
             <CheckboxInput

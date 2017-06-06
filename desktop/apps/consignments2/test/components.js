@@ -36,6 +36,17 @@ describe('React components', () => {
         const activeText = rendered.text()
         activeText.should.containEql('Create Account')
       })
+
+      it('includes the shorter labels if in mobile mode', () => {
+        initialStore.dispatch(actions.resizeWindow(600))
+        const wrapper = shallow(
+          <StepMarker store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
+        const activeText = rendered.text()
+        activeText.should.eql('CreateVerifyDescribeUpload')
+      })
     })
   })
 
@@ -265,7 +276,8 @@ describe('React components', () => {
     beforeEach(() => {
       SubmissionFlow.__Rewire__('ChooseArtist', () => <div className='choose-artist' />)
       SubmissionFlow.__Rewire__('CreateAccount', () => <div className='create-account' />)
-      SubmissionFlow.__Rewire__('DescribeWork', () => <div className='describe-work' />)
+      SubmissionFlow.__Rewire__('DescribeWorkDesktop', () => <div className='describe-work-desktop' />)
+      SubmissionFlow.__Rewire__('DescribeWorkMobile', () => <div className='describe-work-mobile' />)
       SubmissionFlow.__Rewire__('StepMarker', () => <div className='step-marker' />)
       SubmissionFlow.__Rewire__('UploadPhoto', () => <div className='upload-photos' />)
     })
@@ -273,7 +285,8 @@ describe('React components', () => {
     afterEach(() => {
       SubmissionFlow.__ResetDependency__('ChooseArtist')
       SubmissionFlow.__ResetDependency__('CreateAccount')
-      SubmissionFlow.__ResetDependency__('DescribeWork')
+      SubmissionFlow.__ResetDependency__('DescribeWorkDesktop')
+      SubmissionFlow.__ResetDependency__('DescribeWorkMobile')
       SubmissionFlow.__ResetDependency__('StepMarker')
       SubmissionFlow.__ResetDependency__('UploadPhoto')
     })
@@ -302,7 +315,20 @@ describe('React components', () => {
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.describe-work').length.should.eql(1)
+        rendered.find('.describe-work-desktop').length.should.eql(1)
+        rendered.find('.describe-work-mobile').length.should.eql(0)
+      })
+
+      it('shows the describe work mobile step if the screen is small', () => {
+        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.resizeWindow(620))
+        const wrapper = shallow(
+          <SubmissionFlow store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.describe-work-desktop').length.should.eql(0)
+        rendered.find('.describe-work-mobile').length.should.eql(1)
       })
 
       it('shows the upload photo step last', () => {

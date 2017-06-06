@@ -17,6 +17,7 @@ export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
 export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
+export const RESIZE_WINDOW = 'RESIZE_WINDOW'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
 export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
 export const START_LOADING = 'START_LOADING'
@@ -135,7 +136,7 @@ export function completeSubmission () {
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
-      dispatch(push('/consign2/submission/thank_you'))
+      dispatch(push(`/consign2/submission/${submissionResponse.body.id}/thank_you`))
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
@@ -347,6 +348,15 @@ export function resetPassword (values) {
   }
 }
 
+export function resizeWindow (windowSize) {
+  return {
+    type: RESIZE_WINDOW,
+    payload: {
+      windowSize
+    }
+  }
+}
+
 export function scrubLocation () {
   return (dispatch, getState) => {
     const { submissionFlow: { inputs, locationAutocompleteValue } } = getState()
@@ -416,6 +426,7 @@ export function stopProcessingImage (fileName) {
 
 export function submitDescribeWork (values) {
   return (dispatch) => {
+    dispatch(clearError())
     dispatch(startLoading())
     dispatch(updateInputs(values)) // update the inputs
     dispatch(scrubLocation())
