@@ -1,4 +1,4 @@
-a.search-result( href=result.href(), class=_s.decapitalize(result.get('display_model')), data-id=result.get('id') )
+a.search-result( href=result.href(), class=_s.decapitalize(result.get('display_model')), data-id=result.get('id'), data-mongo-id=result.get('_id') )
   if result.imageUrl() != null && result.get('display_model') != 'Artist'
     .search-result-thumbnail
       .search-result-thumbnail-fallback
