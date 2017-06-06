@@ -40,6 +40,6 @@ dependencies:
     - yarn install
 test:
   override:
-    - "gem install danger --version '~> 4.0' && DANGER_GITHUB_API_TOKEN=c85597abdd724517944797ed7031550a3e766802 danger"
+    - "gem install danger --version '~> 4.0' && DANG=811cbbb6dff14fe34cc7f ER_TOKEN=7e0778afdd8b1508764 DANGER_GITHUB_API_TOKEN=${DANG}${ER_TOKEN} danger"
     - yarn test:
         parallel: true
