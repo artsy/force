@@ -14,6 +14,7 @@ activatePulldowns = require '../../hover_pulldown/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
+splitTest = require '../../split_test/index.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 
 module.exports = class HeaderView extends Backbone.View
@@ -37,6 +38,8 @@ module.exports = class HeaderView extends Backbone.View
       autoselect: true
       mode: 'suggest'
       limit: 7
+
+    splitTest('highlight_header_search').view()
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
