@@ -9,7 +9,7 @@ describe 'GalleryPartnershipsRouter', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @Router = rewire '../../client/router'
+      @Router = rewire '../../../client/mobile/router'
       @Router.__set__ 'View', Backbone.View
       done()
 

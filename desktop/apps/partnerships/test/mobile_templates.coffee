@@ -7,11 +7,16 @@ fs = require 'fs'
 { fabricate } = require 'antigravity'
 
 render = (opts) ->
-  filename = path.resolve __dirname, "../templates/index.jade"
+  filename = path.resolve __dirname, "../templates/mobile/index.jade"
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
-  )(_.extend require('./fixture/content.json'), { sd: {}, crop: -> }, opts)
+  )(_.extend require('./fixture/content.json'), {
+    sd: {}
+    crop: ->
+    asset: ->
+    path: '/gallery-partnerships'
+  }, opts)
 
 describe 'Gallery partnerships templates', ->
 

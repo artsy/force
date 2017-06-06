@@ -11,10 +11,10 @@ describe 'GalleryPartnershipsView', ->
       benv.expose
         $: benv.require 'jquery'
       Backbone.$ = $
-      @GalleryPartnershipsView = rewire '../../client/view'
+      @GalleryPartnershipsView = rewire '../../../client/mobile/view'
       $.fn.waypoint = sinon.stub()
-      data = _.extend require('../fixture/content.json'), sd: {}
-      benv.render resolve(__dirname, '../../templates/index.jade'), data, ->
+      data = _.extend require('../../fixture/content.json'), sd: {}
+      benv.render resolve(__dirname, '../../../templates/mobile/index.jade'), data, ->
         done()
 
   after ->
