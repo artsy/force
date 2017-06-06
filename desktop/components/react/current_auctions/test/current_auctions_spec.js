@@ -1,9 +1,9 @@
 import 'moment-timezone'
 import CurrentAuctions from '../current_auctions'
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render } from 'enzyme'
 
-describe('apps/artwork/components/current_auctions', () => {
+describe('components/react/current_auctions_spec.js', () => {
   const sales = [
     {
       id: 'climate-mobilization-benefit-auction-2017',
@@ -12,8 +12,8 @@ describe('apps/artwork/components/current_auctions', () => {
       status: 'open',
       is_live_open: false,
       start_at: '2017-03-02T17:00:00+00:00',
-      end_at:  '2017-03-16T22:00:00+00:00',
-      live_start_at:null,
+      end_at: '2017-03-16T22:00:00+00:00',
+      live_start_at: null,
       cover_image: {
         cropped: {
           url: ''
@@ -27,8 +27,8 @@ describe('apps/artwork/components/current_auctions', () => {
       status: 'open',
       is_live_open: false,
       start_at: '2017-03-01T17:00:00+00:00',
-      end_at:  '2017-03-15T00:00:00+00:00',
-      live_start_at:null,
+      end_at: '2017-03-15T00:00:00+00:00',
+      live_start_at: null,
       cover_image: {
         cropped: {
           url: ''
@@ -57,7 +57,7 @@ describe('apps/artwork/components/current_auctions', () => {
       status: 'open',
       is_live_open: true,
       start_at: '2017-03-15T10:00:00+00:00',
-      end_at:  '2017-03-15T23:59:00+00:00',
+      end_at: '2017-03-15T23:59:00+00:00',
       live_start_at: '2017-03-15T10:05:00+00:00',
       cover_image: {
         cropped: {
@@ -72,7 +72,7 @@ describe('apps/artwork/components/current_auctions', () => {
       status: 'open',
       is_live_open: false,
       start_at: '2017-03-15T10:00:00+00:00',
-      end_at:  '2017-03-15T23:59:00+00:00',
+      end_at: '2017-03-15T23:59:00+00:00',
       live_start_at: '2017-03-15T10:05:00+00:00',
       cover_image: {
         cropped: {
@@ -83,24 +83,24 @@ describe('apps/artwork/components/current_auctions', () => {
   ]
 
   it('renders four items', () => {
-    const component = shallow(
+    const component = render(
       <CurrentAuctions
         sales={sales}
       />
     )
 
-    component.find('.artwork-current-auctions__sale-item').length.should.eql(4)
+    component.find('.auction-block').length.should.eql(4)
   })
 
   it('If auctionContextId is provided it renders first in the list', () => {
-    const component = shallow(
+    const component = render(
       <CurrentAuctions
         auctionContextId='san-francisco-modern-auctions-march-2016'
         sales={sales}
       />
     )
 
-    component.find('.artwork-current-auctions__sale-item').first().text()
+    component.find('.auction-block').first().text()
       .should.containEql('San Francisco Modern Auctions')
   })
 })

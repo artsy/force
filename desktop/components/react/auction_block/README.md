@@ -1,4 +1,4 @@
-# Auction Block
+# `<AuctionBlock />`
 
 A React component that displays a single auction block. For use on its own (as in the "associated sale" component on the auction page), or in a series (as in the "current auctions" component on the artwork page).
 
@@ -7,7 +7,7 @@ A React component that displays a single auction block. For use on its own (as i
 If using within a React context:
 
 ```javascript
-import { AuctionBlock } from 'components/auction_block'
+import { AuctionBlock } from 'components/react/auction_block'
 
 class Page extends Component {
   render() {
@@ -29,7 +29,7 @@ If used within a non-React context, `index.jsx` will automatically mount provide
 ```
 
 ```coffeescript
-mountAuctionBlock = require 'components/auction_block'
+mountAuctionBlock = require 'components/react/auction_block'
 
 class AuctionBlockContainer extends Backbone.View
   render: ->

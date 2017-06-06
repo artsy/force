@@ -1,4 +1,3 @@
-import AppContainer from '../app_container'
 import ChooseArtist from '../choose_artist'
 import CreateAccount from '../create_account'
 import DescribeWorkDesktop from '../describe_work_desktop'
@@ -56,7 +55,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  resizeWindowAction: resizeWindow
+  responsiveWindowAction: resizeWindow
 }
 
 export default connect(

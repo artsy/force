@@ -1,4 +1,4 @@
-# Current Auctions
+# `<CurrentAuctions />`
 
 A React component that displays a bar of four current Auctions.
 
@@ -7,7 +7,7 @@ A React component that displays a bar of four current Auctions.
 If using within a React context:
 
 ```javascript
-import { CurrentAuctions } from 'components/current_auctions'
+import { CurrentAuctions } from 'components/react/current_auctions'
 
 class Page extends Component {
   render() {
@@ -28,7 +28,7 @@ If used within a non-React context, `index.jsx` will automatically mount provide
 ```
 
 ```coffeescript
-mountCurrentAuctions = require 'components/current_auctions'
+mountCurrentAuctions = require 'components/react/current_auctions'
 
 class CurrentAuctionsContainer extends Backbone.View
   render: ->

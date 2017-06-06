@@ -1,9 +1,11 @@
 import * as actions from './actions'
 import u from 'updeep'
 import { combineReducers } from 'redux'
+import { composeReducers } from '../../../components/react/utils/compose_reducers'
 import { data as sd } from 'sharify'
 import { contains, last } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
+import { responsiveWindowReducer } from '../../../components/react/responsive_window'
 import { routerReducer } from 'react-router-redux'
 
 const stepsMapping = [
@@ -171,11 +173,6 @@ function submissionFlow (state = initialState, action) {
         uploadedImages: u.reject((ff) => ff.fileName === fileName)
       }, state)
     }
-    case actions.RESIZE_WINDOW: {
-      return u({
-        isMobile: action.payload.windowSize <= 640
-      }, state)
-    }
     case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: true
@@ -314,7 +311,10 @@ function submissionFlow (state = initialState, action) {
 }
 
 export default combineReducers({
-  submissionFlow,
+  submissionFlow: composeReducers(
+    responsiveWindowReducer,
+    submissionFlow
+  ),
   router: routerReducer,
   form: formReducer
 })
