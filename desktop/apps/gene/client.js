@@ -3,9 +3,10 @@ import $ from 'jquery'
 import imagesLoaded from 'imagesloaded'
 imagesLoaded.makeJQueryPlugin($)
 
+import qs from 'querystring'
 import { data as sd } from 'sharify'
-import components, { init } from '@artsy/reaction-force/dist/components/index'
-import configs from '@artsy/reaction-force/dist/relay/index'
+import components, { init } from '@artsy/reaction-force/dist/components'
+import configs from '@artsy/reaction-force/dist/relay'
 
 import Gene from '../../models/gene.coffee'
 import CurrentUser from '../../models/current_user.coffee'
@@ -20,11 +21,16 @@ const relatedArtistsTemplate = (args) => {
 
 function setupGenePage () {
   // Init GenePage component
+  const urlParams = qs.parse(location.search.replace(/^\?/, ''))
+  const options = Object.assign({}, urlParams, { geneID: sd.GENE.id })
+
+  console.log('options', options)
+
   init({
     user: sd.CURRENT_USER,
     component: components.Gene,
     domID: 'gene-filter',
-    queryConfig: new configs.GeneQueryConfig({ geneID: sd.GENE.id })
+    queryConfig: new configs.GeneQueryConfig(options)
   })
 
   // Load related artists
