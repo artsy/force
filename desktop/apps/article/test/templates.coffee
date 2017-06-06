@@ -80,14 +80,14 @@ describe 'article template', ->
     html.should.containEql 'team-channel-nav'
     html.should.containEql 'Editorial'
 
-  it "adds a noindex meta tag for articles tagged noindex", ->
+  it "adds a noindex meta tag for articles where indexable is false", ->
     html = render('article')
       article: new Article
         title: 'hi'
         sections: []
         section_ids: []
         contributing_authors: []
-        tags: ['noindex']
+        indexable: false
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
