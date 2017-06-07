@@ -13,13 +13,13 @@ if showAuctionForm
     class='js-artwork-auction-bid'
   )
     .artwork-auction__bid-form__errors.form-errors( class='js-form-errors' )
-      
+
     //- Rendered client-side
     if user && bidderStatus === 'qualified-to-bid'
       .artwork-auction__bid-form__max-bid
         if me && me.lot_standing
           +bidStatus(me.lot_standing, sale_artwork, {winningMessage: 'Highest Bidder', reserveMessage: 'Highest bidder, Reserve not met'})
-            
+
         else
           .artwork-auction__bid-form__max-bid-label Set your max bid
         span.help-tooltip(
@@ -35,15 +35,11 @@ if showAuctionForm
             option( value=val data-display=display )= display
 
     - bidAmount = 'Bid ' + accounting.formatMoney(firstIncr / 100, sale_artwork.symbol, 0)
-    
+
     case bidderStatus
       when 'registration-pending'
         .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
           | Registration Pending
-      when 'registration-required'
-        a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
-          href='/auction-registration/#{auction.id}'
-        )= bidAmount
       when 'registration-closed'
         .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
           | Registration Closed

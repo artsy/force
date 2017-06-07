@@ -18,13 +18,8 @@ form.artwork-auction-bid-form.js-artwork-auction-bid-form(
           type='button'
           disabled=true
         ) Registration Closed
-      when 'registration-required'
-        a( href="/auction-registration/#{auction.id}" ) 
-          button.auction-avant-garde-black-button.is-block.js-register-button(
-            type='button'
-          ) Bid
       when 'logged-in'
-        a( href="/auction/#{auction.id}/bid/#{artwork.id}" ) 
+        a( href="/auction/#{auction.id}/bid/#{artwork.id}" )
           button.auction-avant-garde-black-button.is-block.js-register-button(
             type='button'
           ) Bid

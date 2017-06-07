@@ -88,7 +88,6 @@ describe 'Artwork bid templates', ->
         .should.containEql "/artwork/#{@data.artwork.id}"
 
     it 'renders an auction registration button', ->
-      @data.artwork.auction.require_bidder_approval = true
       @data.me = {}
       @html = render('index')(@data)
       @$ = cheerio.load(@html)
