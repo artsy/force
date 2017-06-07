@@ -20,3 +20,4 @@ module.exports =
     outcomes:
       default: 50
       highlighted: 50
+    edge: 'highlighted'
