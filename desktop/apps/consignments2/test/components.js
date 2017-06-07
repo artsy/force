@@ -7,6 +7,7 @@ import UploadPhoto from '../components/upload_photo'
 import UploadedImage from '../components/uploaded_image'
 import React from 'react'
 import reducers from '../client/reducers'
+import { responsiveWindowAction } from '../../../components/react/responsive_window'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
 
@@ -38,7 +39,7 @@ describe('React components', () => {
       })
 
       it('includes the shorter labels if in mobile mode', () => {
-        initialStore.dispatch(actions.resizeWindow(600))
+        initialStore.dispatch(responsiveWindowAction(600))
         const wrapper = shallow(
           <StepMarker store={initialStore} />
         )
@@ -322,7 +323,7 @@ describe('React components', () => {
       it('shows the describe work mobile step if the screen is small', () => {
         initialStore.dispatch(actions.incrementStep())
         initialStore.dispatch(actions.incrementStep())
-        initialStore.dispatch(actions.resizeWindow(620))
+        initialStore.dispatch(responsiveWindowAction(620))
         const wrapper = shallow(
           <SubmissionFlow store={initialStore} />
         )

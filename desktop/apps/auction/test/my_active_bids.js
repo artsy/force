@@ -1,12 +1,10 @@
 require('babel-core/register')
 require('coffee-script/register')
 import moment from 'moment'
-import _ from 'underscore'
 import benv from 'benv'
 import { fabricate } from 'antigravity'
 import Auction from '../../../models/auction.coffee'
 import CurrentUser from '../../../models/current_user.coffee'
-import { resolve } from 'path'
 import MyActiveBidsView from '../../../components/my_active_bids/view.coffee'
 import Backbone from 'backbone'
 import { data as sd } from 'sharify'
@@ -62,30 +60,30 @@ describe('my active bids auction page template', () => {
         view.auction = new Auction(fabricate('sale', { name: 'An Auction', auction_state: 'open', live_start_at: moment().subtract(1, 'day').format() }))
         view.bidderPositions = [
           {
-            "is_leading_bidder": false,
-            "sale_artwork": {
-              "id": "imhuge-brillo-condensed-soap",
-              "lot_label": "2",
-              "reserve_status": "no_reserve",
-              "counts": {
-                "bidder_positions": 1
+            'is_leading_bidder': false,
+            'sale_artwork': {
+              'id': 'imhuge-brillo-condensed-soap',
+              'lot_label': '2',
+              'reserve_status': 'no_reserve',
+              'counts': {
+                'bidder_positions': 1
               },
-              "sale_id": "juliens-auctions-street-and-contemporary-art-day-sale",
-              "highest_bid": {
-                "display": "$750"
+              'sale_id': 'juliens-auctions-street-and-contemporary-art-day-sale',
+              'highest_bid': {
+                'display': '$750'
               },
-              "sale": {
-                "end_at": "2016-10-31T04:28:00+00:00"
+              'sale': {
+                'end_at': '2016-10-31T04:28:00+00:00'
               },
-              "artwork": {
-                "href": "/artwork/imhuge-brillo-condensed-soap",
-                "title": "Brillo Condensed Soap",
-                "date": "2016",
-                "image": {
-                  "url": "https://d32dm0rphc51dk.cloudfront.net/G5tbqHUjuiGvjwDtCVlsGQ/square.jpg"
+              'artwork': {
+                'href': '/artwork/imhuge-brillo-condensed-soap',
+                'title': 'Brillo Condensed Soap',
+                'date': '2016',
+                'image': {
+                  'url': 'https://d32dm0rphc51dk.cloudfront.net/G5tbqHUjuiGvjwDtCVlsGQ/square.jpg'
                 },
-                "artist": {
-                  "name": "Imhuge"
+                'artist': {
+                  'name': 'Imhuge'
                 }
               }
             }

@@ -6,7 +6,7 @@ import ConfirmRegistrationModal from '../../../components/credit_card/client/con
 import CurrentUser from '../../../models/current_user.coffee'
 import MyActiveBids from '../../../components/my_active_bids/view.coffee'
 import mediator from '../../../lib/mediator.coffee'
-import mountAuctionBlock from '../../../components/auction_block/index.jsx'
+import mountAuctionBlock from '../../../components/react/auction_block/index.jsx'
 import { data as sd } from 'sharify'
 import { setupCommercialFilter } from './commercial_filter'
 

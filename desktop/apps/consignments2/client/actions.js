@@ -2,7 +2,6 @@ import request from 'superagent'
 import { data as sd } from 'sharify'
 import { find } from 'underscore'
 import { push } from 'react-router-redux'
-
 import gemup from 'gemup'
 
 // Action types
@@ -17,7 +16,6 @@ export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
 export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
-export const RESIZE_WINDOW = 'RESIZE_WINDOW'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
 export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
 export const START_LOADING = 'START_LOADING'
@@ -344,15 +342,6 @@ export function resetPassword (values) {
       dispatch(showResetPasswordSuccessMessage())
     } catch (err) {
       dispatch(updateError(err.response.body.error))
-    }
-  }
-}
-
-export function resizeWindow (windowSize) {
-  return {
-    type: RESIZE_WINDOW,
-    payload: {
-      windowSize
     }
   }
 }
