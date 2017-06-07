@@ -14,6 +14,7 @@ module.exports = """
     live_start_at
     name
     registration_ends_at
+    require_bidder_approval
     start_at
     sale_artwork(id: $id) {
       id

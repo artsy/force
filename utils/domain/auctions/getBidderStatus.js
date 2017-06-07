@@ -13,6 +13,8 @@ export function getBidderStatus (me, auction) {
     }
   } else if (auction.is_registration_closed) {
     return 'registration-closed'
+  } else if (auction.require_bidder_approval) {
+    return 'approval-required'
   } else if (me) {
     return 'logged-in'
   } else {

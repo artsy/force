@@ -19,6 +19,7 @@ module.exports = """
       is_registration_closed
       is_with_buyers_premium
       registration_ends_at
+      require_bidder_approval
     }
     sale_artwork {
       id

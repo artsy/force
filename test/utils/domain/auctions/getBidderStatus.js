@@ -91,4 +91,22 @@ describe('getBidderStatus', () => {
 
     getBidderStatus({}, auction).should.equal('logged-in')
   })
+
+  it('returns approval-required if approval is required and you are logged in', () => {
+    const auction = {
+      is_registration_closed: false,
+      require_bidder_approval: true
+    }
+
+    getBidderStatus({}, auction).should.equal('approval-required')
+  })
+
+  it('returns approval-required if approval is required and you are logged out', () => {
+    const auction = {
+      is_registration_closed: false,
+      require_bidder_approval: true
+    }
+
+    getBidderStatus(null, auction).should.equal('approval-required')
+  })
 })
