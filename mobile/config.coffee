@@ -33,7 +33,7 @@ module.exports =
   IMAGE_PROXY: 'GEMINI'
   MAILCHIMP_AUCTION_LIST_ID: 'b7b9959ee0'
   MAILCHIMP_KEY: null
-  MOBILE_MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Sign Up to Discover and Collect Works from Art Basel","image":"https://d32dm0rphc51dk.cloudfront.net/RzsG8I1uQ957Ky0YCzSo8w/large.jpg","photoCredit":"Image courtesy of Richard Gray Gallery"}]'
+  MOBILE_MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Sign Up to Discover and Collect Works from Art Basel","image":"https://d32dm0rphc51dk.cloudfront.net/SJaRT2vCFzshOvN9PpiiUA/large.jpg","photoCredit":"Image courtesy of Richard Gray Gallery"}]'
   MAX_POLLS_FOR_MAX_BIDS: 20
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: 'https://metaphysics-production.artsy.net'
