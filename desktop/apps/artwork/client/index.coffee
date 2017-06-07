@@ -58,7 +58,7 @@ module.exports =
         #{require '../components/partner/query.coffee'}
         #{require('../components/auction_artworks/query.coffee').auction_artworks}
         #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
-        #{require('../../../components/current_auctions/query.js').default}
+        #{require('../../../components/react/current_auctions/query.js').default}
         #{require '../components/artist_artworks/query.coffee'}
         #{require '../components/related_artworks/query.coffee'}
       """
@@ -70,7 +70,7 @@ module.exports =
       init: compact [
           require '../components/partner/index.coffee'
           require '../components/auction_artworks/index.coffee' unless context.is_closed
-          require('../../../components/current_auctions/index.jsx').default unless context.is_closed
+          require('../../../components/react/current_auctions/index.jsx').default unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
           require '../components/related_artists/index.coffee'

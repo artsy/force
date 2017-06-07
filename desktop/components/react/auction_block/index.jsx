@@ -9,15 +9,12 @@ export {
 }
 
 export default function mount (data, selector = '#react-mount-auction-block') {
-  const {
-    relatedAuction,
-    sale
-  } = data
-
+  const { relatedAuction, sale } = data
   const shouldMount = !isEmpty(sale.id) && isString(selector)
 
   invariant(shouldMount,
-    `Error mounting <AuctionBlock />: sale.id (${sale.id}) or selector (${selector}) is invalid.`
+    `Error mounting <AuctionBlock />: sale.id (${sale.id}) or selector ` +
+    `(${selector}) is invalid.`
   )
 
   if (shouldMount) {

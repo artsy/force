@@ -1,4 +1,4 @@
-import AppContainer from '../components/app_container'
+import ResponsiveWindow from '../../../components/react/responsive_window'
 import React from 'react'
 import SubmissionFlow from '../components/submission_flow'
 import ThankYou from '../components/thank_you'
@@ -32,7 +32,7 @@ function setupSubmissionFlow () {
 
   render(
     <Provider store={store}>
-      <AppContainer>
+      <ResponsiveWindow>
         <Router history={history}>
           <div>
             <Route exact path='/consign2/submission' component={SubmissionFlow} />
@@ -46,7 +46,7 @@ function setupSubmissionFlow () {
             />
           </div>
         </Router>
-      </AppContainer>
+      </ResponsiveWindow>
     </Provider>,
     document.getElementById('consignments2-submission__flow')
   )

@@ -1,5 +1,5 @@
 masonry = require '../../../../components/artwork_masonry_4_column/index.coffee'
-upcomingLabel = require('../../../../components/auction_block/utils/upcoming_label').default
+upcomingLabel = require('../../../../components/react/auction_block/utils/upcoming_label').default
 { ARTWORK_DISPLAY_NUM } = require './config.coffee'
 { partition, pluck, shuffle, take } = require 'underscore'
 

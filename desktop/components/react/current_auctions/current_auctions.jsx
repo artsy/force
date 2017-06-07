@@ -47,7 +47,6 @@ CurrentAuctions.defaultProps = {
 }
 
 // Helpers
-// -------
 
 function sortSales (sales, auctionContextId = '', CAP = 4) {
   const [ currentSale, rest ] = partition(sales, (sale) => sale.id === auctionContextId)
