@@ -51,6 +51,7 @@ function LogIn (props) {
             <Field name='email' component={renderTextInput}
               item={'email'}
               label={'Email'}
+              autofocus
             />
           </div>
         </div>

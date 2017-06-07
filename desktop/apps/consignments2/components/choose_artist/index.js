@@ -33,7 +33,6 @@ function ChooseArtist (props) {
     clearArtistSuggestionsAction,
     chooseArtistAndAdvanceAction,
     fetchArtistSuggestionsAction,
-    isMobile,
     notConsigningArtist,
     showNotConsigningMessageAction,
     updateArtistAutocompleteValueAction
@@ -41,6 +40,7 @@ function ChooseArtist (props) {
   const b = block('consignments2-submission-choose-artist')
 
   const inputProps = {
+    autoFocus: true,
     value: artistAutocompleteValue,
     onChange: updateArtistAutocompleteValueAction
   }
@@ -54,7 +54,7 @@ function ChooseArtist (props) {
   const nextEnabled = artistAutocompleteValue.length > 0
 
   return (
-    <div className={b({mobile: isMobile})}>
+    <div className={b()}>
       <div className={b('title')}>
         Enter the name of the artist/designer who created the work
       </div>
@@ -94,7 +94,6 @@ const mapStateToProps = (state) => {
   return {
     artistAutocompleteSuggestions: state.submissionFlow.artistAutocompleteSuggestions,
     artistAutocompleteValue: state.submissionFlow.artistAutocompleteValue,
-    isMobile: state.submissionFlow.isMobile,
     notConsigningArtist: state.submissionFlow.notConsigningArtist
   }
 }
@@ -130,7 +129,6 @@ ChooseArtist.propTypes = {
   clearArtistSuggestionsAction: PropTypes.func.isRequired,
   chooseArtistAndAdvanceAction: PropTypes.func.isRequired,
   fetchArtistSuggestionsAction: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired,
   notConsigningArtist: PropTypes.bool,
   showNotConsigningMessageAction: PropTypes.func.isRequired,
   updateArtistAutocompleteValueAction: PropTypes.func.isRequired

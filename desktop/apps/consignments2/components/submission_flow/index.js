@@ -18,8 +18,8 @@ function SubmissionFlow (props) {
   const { CurrentStepComponent, isMobile } = props
 
   return (
-    <div className={b()}>
-      <div className={b('title', {mobile: isMobile})}>
+    <div className={b({mobile: isMobile})}>
+      <div className={b('title')}>
         Consign your work through Artsy in just a few quick steps
       </div>
       <StepMarker />

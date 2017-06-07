@@ -69,9 +69,9 @@ describe('React components', () => {
           <CreateAccount store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.log-in').length.should.eql(1)
+        rendered.find('.log-in').length.should.eql(0)
         rendered.find('.forgot-password').length.should.eql(0)
-        rendered.find('.sign-up').length.should.eql(0)
+        rendered.find('.sign-up').length.should.eql(1)
       })
     })
 

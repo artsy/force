@@ -16,7 +16,7 @@
     "test": "sh scripts/test.sh"
   },
   "dependencies": {
-    "@artsy/reaction-force": "^0.1.38",
+    "@artsy/reaction-force": "^0.1.42",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
