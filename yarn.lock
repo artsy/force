@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.1.42":
-  version "0.1.42"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.42.tgz#39ed2af4b6e384528ec6396f61cdee76cece6236"
+"@artsy/reaction-force@^0.1.43":
+  version "0.1.43"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.43.tgz#cc2e90a789d50cdd7d0e5a2ec006ca5b4448a684"
   dependencies:
     artsy-passport "^1.6.1"
     artsy-xapp "^1.0.4"
