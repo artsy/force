@@ -1,7 +1,7 @@
 import { titleAndYear } from '../utils/artwork'
 
 describe('titleAndYear', () => {
-  it ('returns empty string without title or year', () => {
+  it('returns empty string without title or year', () => {
     titleAndYear(null, null).should.equal('')
     titleAndYear('', '').should.equal('')
     titleAndYear(null, '').should.equal('')

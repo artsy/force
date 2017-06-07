@@ -162,7 +162,6 @@ describe 'auction', ->
 
         it 'renders an open registration bid button', ->
           @data.accounting = accounting
-          @data.artwork.sale.require_bidder_approval = false
           @data.me = {}
           view = new @ArtworkAuctionView data: @data
           view.render()
