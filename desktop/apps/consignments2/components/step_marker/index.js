@@ -9,7 +9,7 @@ function StepMarker ({ currentStep, isMobile, steps }) {
   return (
     <div className={b({mobile: isMobile})}>
       <div className={b('steps')}>
-        {
+        {/*{
           steps.map((step, index) => {
             return (
               <div className={b('step', { active: index <= currentStep })} key={step.label}>
@@ -20,7 +20,20 @@ function StepMarker ({ currentStep, isMobile, steps }) {
               </div>
             )
           })
-        }
+        }*/}
+        <ul>
+          {
+            steps.map((step, index) => {
+              return (
+                <li className={b('blah', { active: index === currentStep })} key={step.label}>
+                  <div className={b('label')}>
+                    {isMobile ? step.shortLabel : step.label}
+                  </div>
+                </li>
+              )
+            })
+          }
+        </ul>
       </div>
     </div>
   )
