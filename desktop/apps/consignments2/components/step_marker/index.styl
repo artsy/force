@@ -7,15 +7,16 @@
   &_mobile
     margin-top 60px
 
-  ul
-    max-width 800px
-    margin 0 auto
-    align-content center
-    align-items center
-    display flex
-    justify-content space-around
+  &__steps
+    ul
+      max-width 750px
+      margin 0 auto
+      align-content center
+      align-items center
+      display flex
+      justify-content space-around
 
-  li
+  &__step
     content ' '
     display flex
     flex-grow 1
@@ -25,30 +26,30 @@
     z-index -1
     border 1px dashed purple-color
 
-  li::before
-    background purple-color
-    border-radius 50%
-    height 12px
-    position absolute
-    text-align center
-    top -6px
-    width 12px
-    left -2px
-    content ' '
+    &::before
+      background purple-color
+      border-radius 50%
+      height 12px
+      position absolute
+      text-align center
+      top -6px
+      width 12px
+      left -2px
+      content ' '
 
-  li:last-child
-    flex-basis 0
-    flex-grow 0
-    flex-shrink 1
+    &:last-child
+      flex-basis 0
+      flex-grow 0
+      flex-shrink 1
 
-  .consignments2-step-marker__blah_active
-    border 1px dashed gray-lighter-color
+    &_active
+      border 1px dashed gray-lighter-color
 
-  .consignments2-step-marker__blah_active ~ li
-    border 1px dashed gray-lighter-color
+    &_active ~ li
+      border 1px dashed gray-lighter-color
 
-  .consignments2-step-marker__blah_active ~ li::before
-    border 1px dashed purple-color
+    &_active ~ li::before
+      border 1px dashed purple-color
 
   &__label
     color purple-color

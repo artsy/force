@@ -13,9 +13,12 @@ import {
   submitDescribeWork
 } from '../../client/actions'
 
+const numberWarning = value => value && isNaN(Number(value)) && 'Must be a number'
+
 function validate (values, props) {
   const {
     authenticity_certificate,
+    depth,
     edition,
     edition_number,
     edition_size,
@@ -32,12 +35,13 @@ function validate (values, props) {
   if (!signature) errors.signature = 'Required'
   if (!title) errors.title = 'Required'
   if (!year) errors.year = 'Required'
-  if (!width) errors.width = 'Required'
+  if (!width || numberWarning(width)) errors.width = 'Invalid'
   if (!medium) errors.medium = 'Required'
-  if (!height) errors.height = 'Required'
+  if (!height || numberWarning(height)) errors.height = 'Invalid'
+  if (numberWarning(depth)) errors.depth = 'Invalid'
 
   if (edition) {
-    if (!edition_size) errors.edition_size = 'Required'
+    if (!edition_size || numberWarning(edition_size)) errors.edition_size = 'Invalid'
     if (!edition_number) errors.edition_number = 'Required'
   }
 
@@ -109,18 +113,21 @@ function DescribeWorkDesktop (props) {
             <Field name='height' component={renderTextInput}
               item={'height'}
               label={'Height*'}
+              warn={numberWarning}
             />
           </div>
           <div className={b('row-item')}>
             <Field name='width' component={renderTextInput}
               item={'width'}
               label={'Width*'}
+              warn={numberWarning}
             />
           </div>
           <div className={b('row-item')}>
             <Field name='depth' component={renderTextInput}
               item={'depth'}
               label={'Depth'}
+              warn={numberWarning}
             />
           </div>
           <div className={b('row-item')}>
@@ -144,6 +151,7 @@ function DescribeWorkDesktop (props) {
                 <Field name='edition_size' component={renderTextInput}
                   item={'edition_size'}
                   label={'Size of Edition*'}
+                  warn={numberWarning}
                 />
               </div>
             </div>
