@@ -5,9 +5,11 @@ import MeQuery from './queries/me'
 import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
 import metaphysics from '../../../lib/metaphysics'
+import get from 'lodash.get'
+import partialRenderer from '../../lib/partial_renderer'
 import { getLiveAuctionUrl } from '../../../utils/domain/auctions/urls'
 
-export const index = async (req, res) => {
+export async function index (req, res, next) {
   const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
   const { sale } = await metaphysics({ query: SaleQuery(req.params.id) })
   const { articles } = await metaphysics({ query: ArticlesQuery(sale._id) })
@@ -33,21 +35,42 @@ export const index = async (req, res) => {
 
   const newAuction = new Auction(sale)
   const auctionArticles = new Articles(articles)
-  res.render('index', {
-    articles: auctionArticles,
-    auction: newAuction,
-    footerItems: footerItems,
-    viewHelpers: { getLiveAuctionUrl },
-    me: me
-  })
+
+  try {
+    const [html] = await partialRenderer(res, 'index', {
+      articles: auctionArticles,
+      auction: newAuction,
+      footerItems: footerItems,
+      viewHelpers: {
+        getLiveAuctionUrl
+      },
+      me: me
+    })
+
+    res.render('index.jsx', {
+      html
+    })
+  } catch (error) {
+    next()
+  }
 }
 
-export const redirectLive = async (req, res, next) => {
+export async function redirectLive (req, res, next) {
   const { sale } = await metaphysics({ query: SaleQuery(req.params.id) })
-  if (sale && sale.is_live_open) {
-    const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
-    if (me && me.bidders && me.bidders.length > 0 && me.bidders[0].qualified_for_bidding) {
-      res.redirect(getLiveAuctionUrl(sale.id, {isLoggedIn: Boolean(me)}))
+  const isLiveOpen = get(sale, 'is_live_open')
+
+  if (isLiveOpen) {
+    const { me } = await metaphysics({
+      query: MeQuery(req.params.id),
+      req: req
+    })
+
+    const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
+
+    if (qualifiedForBidding) {
+      res.redirect(getLiveAuctionUrl(sale.id, {
+        isLoggedIn: Boolean(me)
+      }))
     } else {
       next()
     }
