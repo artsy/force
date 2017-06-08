@@ -74,7 +74,12 @@ describe 'Profile page', ->
 
     it 'renders the contact page by passing on the partner locations groupped by city', ->
       routes.contact(
-        { profile: new Profile(fabricate 'profile', name: 'Foobarz', owner_type: 'PartnerGallery') }
+        profile: new Profile fabricate('profile'
+          name: 'Foobarz'
+          owner_type: 'PartnerGallery'
+          owner: fabricate('partner'
+            id: 'foobarz'
+            profile_layout: 'gallery_one'))
         { render: renderStub = sinon.stub() }
       )
       _.last(Backbone.sync.args)[2].success fabricate('partner', id: 'foobar1', displayable_shows_count: 1)
@@ -86,6 +91,25 @@ describe 'Profile page', ->
       renderStub.args[0][0].should.equal 'contact'
       renderStub.args[0][1].profile.get('name').should.equal 'Foobarz'
       renderStub.args[0][1].locationGroups['Zoo York'].length.should.equal 2
+
+    it 'renders 404 page for non-active partners', ->
+      next = sinon.spy()
+      renderStub = sinon.stub()
+
+      routes.contact(
+        profile: new Profile fabricate('profile'
+          name: 'Foobarz'
+          owner_type: 'PartnerGallery'
+          owner: fabricate('partner'
+            id: 'foobarz'
+            profile_layout: 'gallery_default'))
+        { render: renderStub }
+        next
+      )
+
+      error = next.getCall(0).args[0]
+      error.status.should.equal(404)
+      error.message.should.equal('Not Found')
 
   describe '#fetchArtworksAndRender', ->
 
