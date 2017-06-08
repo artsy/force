@@ -11,6 +11,7 @@ function UploadPhoto (props) {
   const {
     error,
     hideCheckbox,
+    isMobile,
     loading,
     processingImages,
     selectPhotoAction,
@@ -22,6 +23,7 @@ function UploadPhoto (props) {
   const b = block('consignments2-submission-upload-photo')
 
   const nextEnabled = skipPhotoSubmission || (!skipPhotoSubmission && uploadedImages.length > 0 && processingImages.length === 0)
+  const uploadCta = isMobile ? 'Click to upload photos' : 'Drag or Click to upload photos'
 
   return (
     <div className={b()}>
@@ -53,7 +55,7 @@ function UploadPhoto (props) {
               <Camera />
             </div>
             <div className={b('cta')}>
-              Drag or Click to upload photos
+              {uploadCta}
             </div>
           </div>
         </label>
@@ -92,6 +94,7 @@ function UploadPhoto (props) {
 const mapStateToProps = (state) => {
   return {
     error: state.submissionFlow.error,
+    isMobile: state.submissionFlow.isMobile,
     loading: state.submissionFlow.loading,
     processingImages: state.submissionFlow.processingImages,
     skipPhotoSubmission: state.submissionFlow.skipPhotoSubmission,
@@ -113,6 +116,7 @@ export default connect(
 UploadPhoto.propTypes = {
   error: PropTypes.string,
   hideCheckbox: PropTypes.bool,
+  isMobile: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   processingImages: PropTypes.array.isRequired,
   selectPhotoAction: PropTypes.func.isRequired,

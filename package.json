@@ -16,7 +16,7 @@
     "test": "sh scripts/test.sh"
   },
   "dependencies": {
-    "@artsy/reaction-force": "^0.1.42",
+    "@artsy/reaction-force": "^0.1.43",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
@@ -30,6 +30,7 @@
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-plugin-inline-react-svg": "^0.2.0",
+    "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-rewire": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -63,6 +64,7 @@
     "express": "^4.13.3",
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
+    "express-react-views": "^0.10.2",
     "factor-bundle": "^2.5.0",
     "forever": "^0.15.3",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",

@@ -6,6 +6,7 @@ import url from 'url'
 import chalk from 'chalk'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import { fabricate } from 'antigravity'
 
 const {
   ACCEPTANCE_TIMEOUT,
@@ -137,6 +138,15 @@ const startGravity = (port) =>
         xapp_token: 'xapp-token',
         expires_in: moment().add(100, 'days').utc().format()
       })
+    })
+    app.get('/api/v1/profile/pace-gallery', (req, res) => {
+      res.send(fabricate('profile', {
+        owner_type: 'PartnerGallery',
+        owner: fabricate('partner', {
+          id: 'pace-gallery',
+          profile_layout: 'gallery_one'
+        })
+      }))
     })
     servers.push(app.listen(port, (err) => {
       if (err) reject(err)

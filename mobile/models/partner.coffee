@@ -10,6 +10,15 @@ PartnerShows = require '../collections/partner_shows.coffee'
 fetchUntilEnd = require('artsy-backbone-mixins').Fetch().fetchUntilEnd
 Relations = require './mixins/relations/partner.coffee'
 
+INSTITUTION        = 'institution'
+GALLERY_DEFAULT    = 'gallery_default'
+GALLERY_DEPRECATED = 'gallery_deprecated'
+GALLERY_ONE        = 'gallery_one'
+GALLERY_TWO        = 'gallery_two'
+GALLERY_THREE      = 'gallery_three'
+
+ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE ]
+
 module.exports = class Partner extends Backbone.Model
   _.extend @prototype, Relations
 
@@ -115,3 +124,12 @@ module.exports = class Partner extends Backbone.Model
       artist.set 'image_url': partnerArtist.get('image_url')
       artist.set 'image_versions': partnerArtist.get('image_versions')
     artist
+
+module.exports.INSTITUTION        = INSTITUTION
+module.exports.GALLERY_DEFAULT    = GALLERY_DEFAULT
+module.exports.GALLERY_DEPRECATED = GALLERY_DEPRECATED
+module.exports.GALLERY_ONE        = GALLERY_ONE
+module.exports.GALLERY_TWO        = GALLERY_TWO
+module.exports.GALLERY_THREE      = GALLERY_THREE
+
+module.exports.ACTIVE_PARTNER_LAYOUTS = ACTIVE_PARTNER_LAYOUTS

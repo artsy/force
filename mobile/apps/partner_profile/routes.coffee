@@ -3,6 +3,7 @@ Artworks = require '../../collections/artworks'
 Artist = require '../../models/artist'
 PartnerShows = require '../../collections/partner_shows'
 Partner = require '../../models/partner'
+{ ACTIVE_PARTNER_LAYOUTS } = require '../../models/partner'
 Profile = require '../../models/profile'
 Articles = require '../../collections/articles'
 Article = require '../../models/article'
@@ -58,6 +59,7 @@ module.exports.index = (req, res, next) ->
             profile: req.profile
             partner: partner
             articles: articles
+            ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
 
 module.exports.articles = (req, res, next) ->
   return next() unless partner = partnerFromProfile(req)
@@ -132,6 +134,13 @@ module.exports.artist = (req, res, next) ->
 
 module.exports.contact = (req, res, next) ->
   return next() unless partner = partnerFromProfile(req)
+
+  unless partner.get('profile_layout') in ACTIVE_PARTNER_LAYOUTS
+    err = new Error()
+    err.status = 404
+    err.message = 'Not Found'
+    return next(err)
+
   partner.fetch
     cache: true
     success: ->

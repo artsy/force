@@ -5,9 +5,12 @@
     "stage-3"
   ],
   "plugins": [
+    "babel-plugin-rewire",
     "inline-react-svg",
     "transform-runtime",
-    "transform-class-properties",
-    "babel-plugin-rewire"
+    ["module-resolver", {
+      "root": ["./"]
+    }],
+    "transform-class-properties"
   ]
 }

@@ -8,6 +8,7 @@ Partner = require '../../../models/partner'
 { fabricate } = require 'antigravity'
 Artists = require '../../../collections/artists'
 fixtures = require '../../../test/helpers/fixtures'
+{ GALLERY_DEFAULT, GALLERY_ONE, ACTIVE_PARTNER_LAYOUTS } = require '../../../models/partner'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -41,6 +42,7 @@ describe 'Partner page templates', ->
       partner: new Partner profile.get('owner')
       profile: profile
       articles: []
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
       sd:
         PARTNER_PROFILE: profile
     $ = cheerio.load html
@@ -54,10 +56,11 @@ describe 'Partner page templates', ->
       articles: []
       represented: new Artists([fabricate 'artist']).models
       unrepresented: new Artists([fabricate 'artist']).models
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
       sd: {}
 
   it 'creates links to profile slugs, not partner slugs', ->
-    partner = new Partner fabricate 'partner', id: 'the-gagosian-gallery'
+    partner = new Partner fabricate 'partner', id: 'the-gagosian-gallery', profile_layout: GALLERY_ONE
     profile = new Profile fabricate 'profile', id: 'gagosian-gallery', icon: null
     html = render('index')
       partner: partner
@@ -65,10 +68,25 @@ describe 'Partner page templates', ->
       articles: []
       represented: new Artists([fabricate 'artist']).models
       unrepresented: new Artists([fabricate 'artist']).models
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
       sd: {}
     $ = cheerio.load html
     $("a[href*='#{partner.get('id')}']").length.should.equal 0
     $("a[href*='#{profile.get('id')}']").length.should.be.above 0
+
+  it 'does not create links to profiles for non-active partners', ->
+    partner = new Partner fabricate 'partner', id: 'the-gagosian-gallery', profile_layout: GALLERY_DEFAULT
+    profile = new Profile fabricate 'profile', id: 'gagosian-gallery', icon: null
+    html = render('index')
+      partner: partner
+      profile: profile
+      articles: []
+      represented: new Artists([fabricate 'artist']).models
+      unrepresented: new Artists([fabricate 'artist']).models
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
+      sd: {}
+    $ = cheerio.load html
+    $("a[href*='#{profile.get('id')}']").length.should.equal 0
 
   it 'hides missing telephone numbers', ->
     loc = new Backbone.Model fabricate 'location', phone: null
@@ -113,6 +131,7 @@ describe 'Partner page templates', ->
       articles: []
       represented: new Artists([fabricate 'artist']).models
       unrepresented: new Artists([fabricate 'artist']).models
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
       sd: {}
     $ = cheerio.load html
     $(".partner-profile-nav a[href*=articles]").length.should.equal 0
@@ -125,6 +144,7 @@ describe 'Partner page templates', ->
       articles: [ fixtures.article ]
       represented: new Artists([fabricate 'artist']).models
       unrepresented: new Artists([fabricate 'artist']).models
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
       sd: {}
     $ = cheerio.load html
     $(".partner-profile-nav a[href*=articles]").length.should.be.above 0
@@ -142,5 +162,6 @@ describe 'Partner page templates', ->
       articles: [ fixtures.article ]
       represented: new Artists([fabricate 'artist']).models
       unrepresented: new Artists([fabricate 'artist']).models
+      ACTIVE_PARTNER_LAYOUTS: ACTIVE_PARTNER_LAYOUTS
       sd: {}
     html.should.containEql 'foobarbaz.jpg'

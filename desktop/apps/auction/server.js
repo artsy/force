@@ -4,6 +4,10 @@ import express from 'express'
 const app = module.exports = express()
 
 app.set('view engine', 'jade')
+app.engine('jsx', require('express-react-views').createEngine({
+  transformViews: false // No need since we're already importing `babel-core/register`
+}))
+
 app.set('views', `${__dirname}/templates`)
 
 app.get('/sale/:id', routes.index)
