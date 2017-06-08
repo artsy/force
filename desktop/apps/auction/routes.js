@@ -1,11 +1,11 @@
-import Articles from 'collections/articles.coffee'
-import ArticlesQuery from 'apps/auction/queries/articles'
-import Auction from 'models/auction.coffee'
-import MeQuery from 'apps/auction/queries/me'
-import SaleQuery from 'apps/auction/queries/sale'
-import footerItems from 'apps/auction/footer_items'
-import metaphysics from 'root/lib/metaphysics'
-import { getLiveAuctionUrl } from 'root/utils/domain/auctions/urls'
+import Articles from 'desktop/collections/articles.coffee'
+import ArticlesQuery from 'desktop/apps/auction/queries/articles'
+import Auction from 'desktop/models/auction.coffee'
+import MeQuery from 'desktop/apps/auction/queries/me'
+import SaleQuery from 'desktop/apps/auction/queries/sale'
+import footerItems from 'desktop/apps/auction/footer_items'
+import metaphysics from 'lib/metaphysics.coffee'
+import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export const index = async (req, res) => {
   const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })

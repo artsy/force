@@ -9,12 +9,7 @@
     "inline-react-svg",
     "transform-runtime",
     ["module-resolver", {
-      "root": ["./desktop"],
-      "alias": {
-        "desktop": "./desktop",
-        "mobile": "./mobile",
-        "root": "./"
-      }
+      "root": ["./"]
     }],
     "transform-class-properties"
   ]
