@@ -27,5 +27,6 @@ block content
       a( href="/#{profile.get('id')}/shop" ) Shop
     if partner.hasSection('articles', profile, articles)
       a( href="/#{profile.get('id')}/articles" ) Articles
-    a( href="/#{profile.get('id')}/contact" ) Contact
+    if ACTIVE_PARTNER_LAYOUTS.includes(partner.get('profile_layout'))
+      a( href="/#{profile.get('id')}/contact" ) Contact
   br

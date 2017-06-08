@@ -23,8 +23,13 @@ describe('Partner profile page', () => {
     $.html().should.containEql('Articles')
   })
 
-  it('shows partner contact information', async () => {
+  it('does not show contact information for non-active partner', async () => {
     const $ = await browser.page('/gagosian-gallery/contact')
+    $.html().should.containEql('Sorry, the page you were looking for doesn&#x2019;t exist at this URL.')
+  })
+
+  it('show contact information for active partner', async () => {
+    const $ = await browser.page('/pace-gallery/contact')
     $.html().should.containEql('Contact')
     $.html().should.containEql('New York')
   })
