@@ -1,7 +1,10 @@
-import analyticsHooks from '../../../lib/analytics_hooks.coffee'
-import metaphysics from '../../../../lib/metaphysics.coffee'
-import { filterQuery } from '../queries/filter'
-import { worksByFollowedArtists } from '../queries/works_by_followed_artists'
+import analyticsHooks from 'lib/analytics_hooks.coffee'
+import metaphysics from 'root/lib/metaphysics.coffee'
+import { filterQuery } from 'apps/auction/queries/filter'
+import { worksByFollowedArtists } from 'apps/auction/queries/works_by_followed_artists'
+
+// FIXME: Example test for coffee-script code
+import 'apps/auction/client/test-file.coffee'
 
 // Action types
 export const DECREMENT_FOLLOWED_ARTISTS_PAGE = 'DECREMENT_FOLLOWED_ARTISTS_PAGE'

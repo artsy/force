@@ -5,9 +5,17 @@
     "stage-3"
   ],
   "plugins": [
+    "babel-plugin-rewire",
     "inline-react-svg",
     "transform-runtime",
-    "transform-class-properties",
-    "babel-plugin-rewire"
+    ["module-resolver", {
+      "root": ["./desktop"],
+      "alias": {
+        "desktop": "./desktop",
+        "mobile": "./mobile",
+        "root": "./"
+      }
+    }],
+    "transform-class-properties"
   ]
 }
