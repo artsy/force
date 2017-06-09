@@ -1,32 +1,61 @@
 .consignments2-step-marker
   margin-top 80px
+  margin-bottom 100px
+  margin-left 50px
+  margin-right 50px
 
   &_mobile
     margin-top 60px
 
   &__steps
-    margin 0 auto
-    max-width 800px
-    display flex
-    justify-content space-between
-
-  &__dot
-    margin 0 auto
-    background gray-lighter-color
-    width 10px
-    height 10px
-    border-radius 50%
-    margin-bottom 8px
-
-  &__label
-    avant-garde-size('s-headline')
-    color gray-lighter-color
+    ul
+      max-width 750px
+      margin 0 auto
+      align-content center
+      align-items center
+      display flex
+      justify-content space-around
 
   &__step
-    max-width 140px
-    text-align center
+    content ' '
+    display flex
+    flex-grow 1
+    margin 0
+    position relative
+    text-align right
+    z-index -1
+    border 1px dashed purple-color
+
+    &::before
+      background purple-color
+      border-radius 50%
+      height 12px
+      position absolute
+      text-align center
+      top -6px
+      width 12px
+      left -2px
+      content ' '
+
+    &:last-child
+      flex-basis 0
+      flex-grow 0
+      flex-shrink 1
+
     &_active
-      .consignments2-step-marker__label
-        color purple-color
-      .consignments2-step-marker__dot
-        background purple-color
+      border 1px dashed gray-lighter-color
+
+    &_active ~ li
+      border 1px dashed gray-lighter-color
+
+    &_active ~ li::before
+      border 1px dashed purple-color
+
+  &__label
+    color purple-color
+    position absolute
+    text-align center
+    width 150px
+    top 18px
+    left -67px
+    avant-garde-size('s-headline')

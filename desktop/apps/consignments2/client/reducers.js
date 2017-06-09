@@ -26,7 +26,7 @@ const stepsMapping = [
   },
   {
     id: 'upload_photos',
-    label: 'Upload Photo',
+    label: 'Upload Photos',
     shortLabel: 'Upload'
   }
 ]

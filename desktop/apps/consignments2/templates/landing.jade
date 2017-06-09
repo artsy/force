@@ -47,7 +47,8 @@ block body
                 = sections.placement.headline
             .consignments2-section__images.consignments2-section__images--logos
               for logo in sections.placement.logos
-                img.consignments2-section__images__logo( src= logo.src )
+                .consignments2-section__images__logo-wrap
+                  img.consignments2-section__images__logo( src= logo.src )
 
       //- Top sales
       section.consignments2-section.consignments2-top-sales
