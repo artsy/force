@@ -6,7 +6,7 @@ import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
 import metaphysics from 'lib/metaphysics.coffee'
 import get from 'lodash.get'
-import { makeTemplate } from 'desktop/components/react/utils/template_renderer'
+import renderTemplate from 'desktop/components/react/utils/render_template'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export async function index (req, res, next) {

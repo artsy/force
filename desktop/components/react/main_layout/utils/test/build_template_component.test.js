@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react'
-import makeTemplateComponent from '../make_template_component'
+import buildTemplateComponent from '../build_template_component'
 import { render } from 'enzyme'
 
-describe('components/react/main_layout/utils/make_template_component.jsx', () => {
+describe('components/react/main_layout/utils/build_template_component.jsx', () => {
   before(() => {
-    makeTemplateComponent.__Rewire__('getLayout', () => ({
+    buildTemplateComponent.__Rewire__('getForceLayout', () => ({
       render: (locals) => ({
         Header: ({ children }) => <header>{children}</header>,
         Body: ({ children }) => <body>{children}</body>,
@@ -16,18 +16,18 @@ describe('components/react/main_layout/utils/make_template_component.jsx', () =>
   })
 
   after(() => {
-    makeTemplateComponent.__ResetDependency__('getLayout')
+    buildTemplateComponent.__ResetDependency__('getForceLayout')
   })
 
-  describe('#makeTemplateComponent', () => {
+  describe('#buildTemplateComponent', () => {
     it('takes a string and returns a component with the innerHTML set to that string', () => {
-      const Component = makeTemplateComponent('foo')
+      const Component = buildTemplateComponent('foo')
       const wrapper = render(<Component />)
       wrapper.text().should.eql('foo')
     })
 
     it('accepts children', () => {
-      const Component = makeTemplateComponent('foo')
+      const Component = buildTemplateComponent('foo')
       const wrapper = render(<Component> hello there</Component>)
       wrapper.text().should.eql('foo hello there')
     })

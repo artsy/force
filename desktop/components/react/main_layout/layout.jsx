@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import getLayout from './utils/get_layout'
+import getForceLayout from './utils/get_force_layout'
 
 /**
  * Default layout, without custom header or footer content.
@@ -20,8 +20,8 @@ import getLayout from './utils/get_layout'
  * @param {Object} children Child content to render
  * @param {Object} props Data to render into layout
  */
-export function Layout ({ children, ...props }) {
-  const { Header, Body, Footer } = getLayout(props)
+export default function Layout ({ children, ...props }) {
+  const { Header, Body, Footer } = getForceLayout(props)
 
   return (
     <div>

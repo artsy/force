@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react'
-import { Layout, __RewireAPI__ } from '../layout'
+import Layout from '../layout'
 import { render } from 'enzyme'
 
 describe('components/react/main_layout/layout.jsx', () => {
   before(() => {
-    __RewireAPI__.__Rewire__('getLayout', () => ({
+    Layout.__Rewire__('getForceLayout', () => ({
       Header: ({ children }) => <header>{children}</header>,
       Body: ({ children }) => <body>{children}</body>,
       Footer: ({ children }) => <footer>{children}</footer>
@@ -14,7 +14,7 @@ describe('components/react/main_layout/layout.jsx', () => {
   })
 
   after(() => {
-    __RewireAPI__.__ResetDependency__('getLayout')
+    Layout.__ResetDependency__('getForceLayout')
   })
 
   describe('<Layout />', () => {

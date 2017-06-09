@@ -1,32 +1,30 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react'
-import makeLayout from '../make_layout'
+import buildReactLayout from '../build_react_layout'
 
-describe('components/react/main_layout/utils/make_layout.jsx', () => {
+describe('components/react/main_layout/utils/build_react_layout.jsx', () => {
   before(() => {
-    makeLayout.__Rewire__('getLayout', () => ({
-      render: (locals) => ({
-        Header: ({ children }) => <header>{children}</header>,
-        Body: ({ children }) => <body>{children}</body>,
-        Footer: ({ children }) => <footer>{children}</footer>
-      })
+    buildReactLayout.__Rewire__('getForceLayout', () => ({
+      Header: ({ children }) => <header>{children}</header>,
+      Body: ({ children }) => <body>{children}</body>,
+      Footer: ({ children }) => <footer>{children}</footer>
     }))
   })
 
   after(() => {
-    makeLayout.__ResetDependency__('getLayout')
+    buildReactLayout.__ResetDependency__('getForceLayout')
   })
 
-  describe('#makeLayout', () => {
+  describe('#buildReactLayout', () => {
     it('returns a layout object containing defaults', () => {
-      const container = makeLayout()
+      const container = buildReactLayout()
       container.should.have.keys('Layout')
       container.Layout.should.have.keys('Header', 'Body', 'Footer')
     })
 
     it('returns additional custom layouts plucked from template key', () => {
-      const container = makeLayout({
+      const container = buildReactLayout({
         templates: {
           foo: 'foo',
           bar: 'bar',
@@ -38,7 +36,7 @@ describe('components/react/main_layout/utils/make_layout.jsx', () => {
     })
 
     it('returns renderable components', () => {
-      const container = makeLayout({
+      const container = buildReactLayout({
         templates: {
           foo: 'foo'
         }

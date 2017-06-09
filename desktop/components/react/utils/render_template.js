@@ -1,12 +1,12 @@
 import invariant from 'invariant'
 import jade from 'jade'
 import path from 'path'
-import { merge } from 'lodash'
 
 import {
   first,
   isArray,
-  isString
+  isString,
+  defaults
 } from 'underscore'
 
 const defaultOptions = {
@@ -15,11 +15,11 @@ const defaultOptions = {
   locals: {}
 }
 
-export function makeTemplate (templates, opts = {}) {
+export default function renderTemplate (templates, opts = {}) {
   const isValid = isArray(templates) || isString(templates)
 
   invariant(isValid,
-    '(lib/template_renderer.js) ' +
+    '(components/react/utils/render_template.js) ' +
     'Error rendering templates: `templates` must be a string or array of ' +
     'strings representing the path to the template'
   )
@@ -32,17 +32,16 @@ export function makeTemplate (templates, opts = {}) {
     basePath,
     compilerOptions,
     locals
-  } = merge(defaultOptions, opts)
+  } = defaults(opts, defaultOptions)
 
   const templateFns = templates.map(file => {
     return jade.compileFile(path.join(basePath, file), {
-      cache: true,
+      cache: false,
       ...compilerOptions
     })
   })
 
-  const renderTemplate = locals => template => template(locals)
-  const renderedTemplates = templateFns.map(renderTemplate(locals))
+  const renderedTemplates = templateFns.map(template => template(locals))
 
   // If user only passed in a single template, return a single template
   const out = renderedTemplates.length > 1
