@@ -1,11 +1,12 @@
+import Layout from 'desktop/components/main_layout/templates/layout.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export default function IndexRoute ({ html }) {
+export default function IndexRoute (props) {
   return (
-    <div
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <Layout {...props}>
+      It works!!!
+    </Layout>
   )
 }
 

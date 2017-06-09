@@ -6,7 +6,8 @@ import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
 import metaphysics from '../../../lib/metaphysics'
 import get from 'lodash.get'
-import partialRenderer from '../../lib/partial_renderer'
+import templateRenderer from '../../lib/template_renderer'
+import path from 'path'
 import { getLiveAuctionUrl } from '../../../utils/domain/auctions/urls'
 
 export async function index (req, res, next) {
@@ -37,21 +38,20 @@ export async function index (req, res, next) {
   const auctionArticles = new Articles(articles)
 
   try {
-    const [html] = await partialRenderer(res, 'index', {
-      articles: auctionArticles,
-      auction: newAuction,
-      footerItems: footerItems,
-      viewHelpers: {
-        getLiveAuctionUrl
-      },
-      me: me
-    })
+    // const [html] = templateRenderer(path.join(__dirname, 'templates/index.jade')).render({
+    //   ...res.locals,
+    //   articles: auctionArticles,
+    //   auction: newAuction,
+    //   footerItems: footerItems,
+    //   viewHelpers: {
+    //     getLiveAuctionUrl
+    //   },
+    //   me: me
+    // })
 
-    res.render('index.jsx', {
-      html
-    })
+    res.render('index.jsx')
   } catch (error) {
-    next()
+    next(error)
   }
 }
 
