@@ -25,7 +25,7 @@ describe('React components', () => {
           <StepMarker store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-step-marker__dot').length.should.eql(4)
+        rendered.find('.consignments2-step-marker__step').length.should.eql(4)
       })
 
       it('updates the color of step labels', () => {

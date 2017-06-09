@@ -49,6 +49,5 @@ module.exports = (req, res, next) ->
     (ua.match(/BB10/i)) ||
     (ua.match(/BlackBerry/i))
   )
-  res.locals.sd.HIGHLIGHT_HEADER_SEARCH = req.query?.highlight_header_search
 
   next()
