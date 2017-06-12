@@ -2,16 +2,17 @@
   'use strict'
 
   $('.partner-profile-contact-email a').click(function (e) {
-    analytics.track('Clicked Contact Gallery Via Email', {
+    analytics.track('Click',{
       partner_id: $(e.currentTarget).data('partner-id'),
-      partner_slug: $(e.currentTarget).data('partner-slug')
-    })
+      label: "Contact gallery by email"
+    });
   })
 
   $('.partner-profile-contact-website a').click(function (e) {
-    analytics.track('Clicked Gallery Website', {
+    analytics.track('Click', {
       partner_id: $(e.currentTarget).data('partner-id'),
-      partner_slug: $(e.currentTarget).data('partner-slug')
+      label: "External partner site",
+      destination_path: $(e.currentTarget).attr('href')
     })
   })
 })()
