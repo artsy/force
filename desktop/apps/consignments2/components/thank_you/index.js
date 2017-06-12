@@ -1,8 +1,9 @@
 import Document from '../../../../components/main_layout/public/icons/consignments-doc.svg'
 import GreenCheck from '../../../../components/main_layout/public/icons/green-check.svg'
-import OpposingArrows from '../../../../components/main_layout/public/icons/consignments-opposing-arrows.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
+import Select from '../../../../components/main_layout/public/icons/consignments-select.svg'
+import SpeechBubble from '../../../../components/main_layout/public/icons/consignments-speech-bubble.svg'
 import block from 'bem-cn'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
@@ -34,15 +35,23 @@ function ThankYou ({ isMobile, submission, processingImages, uploadedImages }) {
             <Document />
           </div>
           <div className={b('instructions')}>
-            You’ll review any prospective estimates from our partner network.
+            Privately review estimates from our partner network.
+          </div>
+        </div>
+        <div className={b('select')}>
+          <div className={b('step-icon')}>
+            <Select />
+          </div>
+          <div className={b('instructions')}>
+            Select the offer that is best for you.
           </div>
         </div>
         <div className={b('connect')}>
           <div className={b('step-icon')}>
-            <OpposingArrows />
+            <SpeechBubble />
           </div>
           <div className={b('instructions')}>
-            We will connect you and the partner directly.
+            We will introduce you to the partner.
           </div>
         </div>
       </div>
