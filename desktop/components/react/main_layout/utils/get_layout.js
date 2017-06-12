@@ -1,6 +1,6 @@
 import path from 'path'
 import templateRenderer from 'desktop/components/react/utils/template_renderer'
-import { makePartial } from './partial'
+import { makePartial } from '../layout'
 
 const defaultLayout = [
   '_header.jade',

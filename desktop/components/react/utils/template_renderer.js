@@ -1,5 +1,6 @@
 import invariant from 'invariant'
 import jade from 'jade'
+import path from 'path'
 
 import {
   isArray,
@@ -19,8 +20,10 @@ export default function templateRenderer (templates, options = {}) {
     ? templates
     : [templates]
 
+  const basePath = options.app ? options.app.get('views') : ''
+
   const templateFns = templates.map(file => {
-    return jade.compileFile(file, {
+    return jade.compileFile(path.join(basePath, file), {
       cache: true,
       ...options
     })

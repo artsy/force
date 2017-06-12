@@ -39,17 +39,30 @@ export async function index (req, res, next) {
 
   try {
     // const [html] = templateRenderer(path.join(__dirname, 'templates/index.jade')).render({
-    //   ...res.locals,
-    //   articles: auctionArticles,
-    //   auction: newAuction,
-    //   footerItems: footerItems,
-    //   viewHelpers: {
-    //     getLiveAuctionUrl
-    //   },
-    //   me: me
+      // ...res.locals,
+      // articles: auctionArticles,
+      // auction: newAuction,
+      // footerItems: footerItems,
+      // viewHelpers: {
+      //   getLiveAuctionUrl
+      // },
+      // me: me
     // })
 
-    res.render('index.jsx')
+    const [html] = templateRenderer('index.jade', { app: res.app }).render({
+      ...res.locals,
+      articles: auctionArticles,
+      auction: newAuction,
+      footerItems: footerItems,
+      viewHelpers: {
+        getLiveAuctionUrl
+      },
+      me: me
+    })
+
+    res.render('index.jsx', {
+      html
+    })
   } catch (error) {
     next(error)
   }
