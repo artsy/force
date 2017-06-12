@@ -1,14 +1,14 @@
 import path from 'path'
-import templateRenderer from 'desktop/lib/template_renderer'
-import { makePartial } from '../templates/partial_component'
+import templateRenderer from 'desktop/components/react/utils/template_renderer'
+import { makePartial } from './partial'
 
 const defaultLayout = [
-  '../templates/layout/_header.jade',
-  '../templates/layout/_body.jade',
-  '../templates/layout/_footer.jade'
+  '_header.jade',
+  '_body.jade',
+  '_footer.jade'
 ]
   .map(templatePath => {
-    return path.join(__dirname, templatePath)
+    return path.join(__dirname, '../../../main_layout/templates/layout/', templatePath)
   })
 
 export default function getLayout (layout = defaultLayout) {

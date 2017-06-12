@@ -1,4 +1,4 @@
-import Layout from 'desktop/components/main_layout/templates/layout.jsx'
+import Layout from 'desktop/components/react/main_layout/layout.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
 

@@ -1,4 +1,4 @@
-import partialRenderer, { renderPartial } from '../../lib/partial_renderer'
+import partialRenderer, { renderPartial } from '../partial_renderer'
 
 describe('lib/partial_renderer.js', () => {
   describe('#partialRenderer', () => {

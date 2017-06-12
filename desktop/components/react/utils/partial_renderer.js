@@ -2,7 +2,8 @@ import invariant from 'invariant'
 import { isArray, isFunction, isString } from 'underscore'
 
 /**
- * Render one or many partials and return a Promise on success
+ * Render one or many partials and return a Promise on success. Useful for
+ * mixing in Jade templates with server-side React components.
  *
  * @example
  *
