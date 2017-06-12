@@ -16,8 +16,8 @@ const stepsMapping = [
   },
   {
     id: 'choose_artist',
-    label: 'Verify Artist/Designer',
-    shortLabel: 'Verify'
+    label: 'Consign Artist/Designer',
+    shortLabel: 'Consign'
   },
   {
     id: 'describe_work',

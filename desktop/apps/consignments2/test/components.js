@@ -46,7 +46,7 @@ describe('React components', () => {
         const rendered = wrapper.render()
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
-        activeText.should.eql('CreateVerifyDescribeUpload')
+        activeText.should.eql('CreateConsignDescribeUpload')
       })
     })
   })
