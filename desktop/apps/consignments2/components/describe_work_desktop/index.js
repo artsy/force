@@ -17,22 +17,18 @@ const numberWarning = value => value && isNaN(Number(value)) && 'Must be a numbe
 
 function validate (values, props) {
   const {
-    authenticity_certificate,
     depth,
     edition,
     edition_number,
     edition_size,
     height,
     medium,
-    signature,
     title,
     width,
     year
   } = values
   const errors = {}
 
-  if (!authenticity_certificate) errors.authenticity_certificate = 'Required'
-  if (!signature) errors.signature = 'Required'
   if (!title) errors.title = 'Required'
   if (!year) errors.year = 'Required'
   if (!width || numberWarning(width)) errors.width = 'Invalid'
@@ -48,213 +44,216 @@ function validate (values, props) {
   return errors
 }
 
-function DescribeWorkDesktop (props) {
-  const {
-    artistName,
-    categoryOptions,
-    error,
-    loading,
-    handleSubmit,
-    hasEditionValue,
-    locationAutocompleteFrozen,
-    locationAutocompleteValue,
-    submitDescribeWorkAction,
-    invalid,
-    pristine
-  } = props
+export function makeDescribeWorkDesktop (initialValues = {}) {
+  function DescribeWorkDesktop (props) {
+    const {
+      artistName,
+      categoryOptions,
+      error,
+      loading,
+      handleSubmit,
+      hasEditionValue,
+      locationAutocompleteFrozen,
+      locationAutocompleteValue,
+      submitDescribeWorkAction,
+      invalid,
+      pristine
+    } = props
 
-  const b = block('consignments2-submission-describe-work')
+    const b = block('consignments2-submission-describe-work')
 
-  return (
-    <div className={b()}>
-      <div className={b('title')}>
-        Enter details about the work by {artistName}
-      </div>
-      <div className={b('subtitle')}>
-        To ensure a quick response please provide as much information as possible.
-      </div>
-      <form className={b('form')} onSubmit={handleSubmit(submitDescribeWorkAction)}>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
-            <Field name='title' component={renderTextInput}
-              item={'title'}
-              instructions={'If the title is unknown, please enter your best guess.'}
-              label={'Title*'}
-              autofocus
-            />
-          </div>
+    return (
+      <div className={b()}>
+        <div className={b('title')}>
+          Enter details about the work by {artistName}
         </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
-            <Field name='category' component={renderSelectInput}
-              item={'category'}
-              label={'Category*'}
-              options={categoryOptions}
-            />
-          </div>
-          <div className={b('row-item')}>
-            <Field name='year' component={renderTextInput}
-              item={'year'}
-              label={'Year*'}
-            />
-          </div>
+        <div className={b('subtitle')}>
+          To ensure a quick response please provide as much information as possible.
         </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
-            <Field name='medium' component={renderTextInput}
-              item={'medium'}
-              label={'Medium*'}
-            />
-          </div>
-        </div>
-
-        <div className={b('row')}>
-          <div className={b('row-item')}>
-            <Field name='height' component={renderTextInput}
-              item={'height'}
-              label={'Height*'}
-              warn={numberWarning}
-            />
-          </div>
-          <div className={b('row-item')}>
-            <Field name='width' component={renderTextInput}
-              item={'width'}
-              label={'Width*'}
-              warn={numberWarning}
-            />
-          </div>
-          <div className={b('row-item')}>
-            <Field name='depth' component={renderTextInput}
-              item={'depth'}
-              label={'Depth'}
-              warn={numberWarning}
-            />
-          </div>
-          <div className={b('row-item')}>
-            <Field name='dimensions_metric' component={renderSelectInput}
-              item={'dimensions_metric'}
-              label={'Units*'}
-              options={['in', 'cm']}
-            />
-          </div>
-        </div>
-        {
-          hasEditionValue && (
-            <div className={b('row')}>
-              <div className={b('row-item')}>
-                <Field name='edition_number' component={renderTextInput}
-                  item={'edition_number'}
-                  label={'Edition Number*'}
-                />
-              </div>
-              <div className={b('row-item')}>
-                <Field name='edition_size' component={renderTextInput}
-                  item={'edition_size'}
-                  label={'Size of Edition*'}
-                  warn={numberWarning}
-                />
-              </div>
+        <form className={b('form')} onSubmit={handleSubmit(submitDescribeWorkAction)}>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='title' component={renderTextInput}
+                item={'title'}
+                instructions={'If the title is unknown, please enter your best guess.'}
+                label={'Title*'}
+                autofocus
+              />
             </div>
-          )
-        }
-        <div className={b('row', {'border-bottom': true})}>
-          <div className={b('row-item')}>
-            <Field name='edition' component={renderCheckboxInput}
-              item={'edition'}
-              label={'This is an edition'}
-            />
           </div>
-        </div>
-        <div className={b('small-row', {'border-bottom': true})}>
-          <div className={b('row-item')}>
-            <Field name='signature' component={renderRadioInput}
-              item={'signature'}
-              label={'Is this work signed?*'}
-              options={['yes', 'no']}
-            />
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='category' component={renderSelectInput}
+                item={'category'}
+                label={'Category*'}
+                options={categoryOptions}
+              />
+            </div>
+            <div className={b('row-item')}>
+              <Field name='year' component={renderTextInput}
+                item={'year'}
+                label={'Year*'}
+              />
+            </div>
           </div>
-        </div>
-        <div className={b('small-row', {'border-bottom': true})}>
-          <div className={b('row-item')}>
-            <Field name='authenticity_certificate' component={renderRadioInput}
-              item={'authenticity_certificate'}
-              label={'Does this work come with a certificate of authenticity?*'}
-              options={['yes', 'no']}
-            />
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='medium' component={renderTextInput}
+                item={'medium'}
+                label={'Medium*'}
+              />
+            </div>
           </div>
-        </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
-            <Field name='provenance' component={renderTextInput}
-              item={'provenance'}
-              instructions={'Where did you acquire this work?'}
-              label={'Provenance'}
-            />
+
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='height' component={renderTextInput}
+                item={'height'}
+                label={'Height*'}
+                warn={numberWarning}
+              />
+            </div>
+            <div className={b('row-item')}>
+              <Field name='width' component={renderTextInput}
+                item={'width'}
+                label={'Width*'}
+                warn={numberWarning}
+              />
+            </div>
+            <div className={b('row-item')}>
+              <Field name='depth' component={renderTextInput}
+                item={'depth'}
+                label={'Depth'}
+                warn={numberWarning}
+              />
+            </div>
+            <div className={b('row-item')}>
+              <Field name='dimensions_metric' component={renderSelectInput}
+                item={'dimensions_metric'}
+                label={'Units*'}
+                options={['in', 'cm']}
+              />
+            </div>
           </div>
-        </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
-            <div className={b('instructions')}>What city is the work located in?*</div>
-            <LocationAutocomplete />
-          </div>
-        </div>
-        <button
-          className={b('next-button').mix('avant-garde-button-black')}
-          disabled={pristine || invalid || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
-          type='submit'
-        >
           {
-            loading ? <div className='loading-spinner-white' /> : 'Submit'
+            hasEditionValue && (
+              <div className={b('row')}>
+                <div className={b('row-item')}>
+                  <Field name='edition_number' component={renderTextInput}
+                    item={'edition_number'}
+                    label={'Edition Number*'}
+                  />
+                </div>
+                <div className={b('row-item')}>
+                  <Field name='edition_size' component={renderTextInput}
+                    item={'edition_size'}
+                    label={'Size of Edition*'}
+                    warn={numberWarning}
+                  />
+                </div>
+              </div>
+            )
           }
-        </button>
-        {
-          error && <div className={b('error')}>{error}</div>
-        }
-      </form>
-    </div>
-  )
-}
-
-const mapStateToProps = (state) => {
-  const selector = formValueSelector('describeWork')
-  const hasEditionValue = selector(state, 'edition')
-
-  return {
-    artistName: state.submissionFlow.artistName,
-    categoryOptions: state.submissionFlow.categoryOptions,
-    error: state.submissionFlow.error,
-    loading: state.submissionFlow.loading,
-    hasEditionValue,
-    locationAutocompleteFrozen: state.submissionFlow.locationAutocompleteFrozen,
-    locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
+          <div className={b('row', {'border-bottom': true})}>
+            <div className={b('row-item')}>
+              <Field name='edition' component={renderCheckboxInput}
+                item={'edition'}
+                label={'This is an edition'}
+                value={false}
+              />
+            </div>
+          </div>
+          <div className={b('small-row', {'border-bottom': true})}>
+            <div className={b('row-item')}>
+              <Field name='signature' component={renderRadioInput}
+                item={'signature'}
+                label={'Is this work signed?*'}
+                options={[{ label: 'yes', val: true }, { label: 'no', val: false }]}
+              />
+            </div>
+          </div>
+          <div className={b('small-row', {'border-bottom': true})}>
+            <div className={b('row-item')}>
+              <Field name='authenticity_certificate' component={renderRadioInput}
+                item={'authenticity_certificate'}
+                label={'Does this work come with a certificate of authenticity?*'}
+                options={[{ label: 'yes', val: true }, { label: 'no', val: false }]}
+              />
+            </div>
+          </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='provenance' component={renderTextInput}
+                item={'provenance'}
+                instructions={'Where did you acquire this work?'}
+                label={'Provenance'}
+              />
+            </div>
+          </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <div className={b('instructions')}>What city is the work located in?*</div>
+              <LocationAutocomplete />
+            </div>
+          </div>
+          <button
+            className={b('next-button').mix('avant-garde-button-black')}
+            disabled={invalid || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
+            type='submit'
+          >
+            {
+              loading ? <div className='loading-spinner-white' /> : 'Submit'
+            }
+          </button>
+          {
+            error && <div className={b('error')}>{error}</div>
+          }
+        </form>
+      </div>
+    )
   }
-}
 
-const mapDispatchToProps = {
-  submitDescribeWorkAction: submitDescribeWork
-}
+  const mapStateToProps = (state) => {
+    const selector = formValueSelector('describeWork')
+    const hasEditionValue = selector(state, 'edition')
+    return {
+      artistName: state.submissionFlow.artistName,
+      categoryOptions: state.submissionFlow.categoryOptions,
+      error: state.submissionFlow.error,
+      loading: state.submissionFlow.loading,
+      hasEditionValue,
+      locationAutocompleteFrozen: state.submissionFlow.locationAutocompleteFrozen,
+      locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
+    }
+  }
 
-DescribeWorkDesktop.propTypes = {
-  artistName: PropTypes.string.isRequired,
-  categoryOptions: PropTypes.array.isRequired,
-  error: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  hasEditionValue: PropTypes.bool.isRequired,
-  invalid: PropTypes.bool,
-  locationAutocompleteFrozen: PropTypes.bool.isRequired,
-  locationAutocompleteValue: PropTypes.string,
-  pristine: PropTypes.bool,
-  submitDescribeWorkAction: PropTypes.func.isRequired
-}
+  const mapDispatchToProps = {
+    submitDescribeWorkAction: submitDescribeWork
+  }
 
-export default compose(
-  reduxForm({
-    form: 'describeWork', // a unique identifier for this form
-    validate
-  }),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(DescribeWorkDesktop)
+  DescribeWorkDesktop.propTypes = {
+    artistName: PropTypes.string.isRequired,
+    categoryOptions: PropTypes.array.isRequired,
+    error: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    hasEditionValue: PropTypes.bool,
+    invalid: PropTypes.bool,
+    locationAutocompleteFrozen: PropTypes.bool.isRequired,
+    locationAutocompleteValue: PropTypes.string,
+    pristine: PropTypes.bool,
+    submitDescribeWorkAction: PropTypes.func.isRequired
+  }
+
+  return compose(
+    reduxForm({
+      form: 'describeWork', // a unique identifier for this form
+      validate,
+      initialValues
+    }),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )
+  )(DescribeWorkDesktop)
+}

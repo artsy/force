@@ -1,5 +1,6 @@
 import request from 'superagent'
 import { data as sd } from 'sharify'
+import { fetchToken } from '../helpers'
 import { find } from 'underscore'
 import { push } from 'react-router-redux'
 import gemup from 'gemup'
@@ -28,6 +29,7 @@ export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTIST_NAME = 'UPDATE_ARTIST_NAME'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
 export const UPDATE_AUTH_FORM_STATE = 'UPDATE_AUTH_FORM_STATE'
+export const UPDATE_CURRENT_STEP = 'UPDATE_CURRENT_STEP'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
 export const UPDATE_INPUTS = 'UPDATE_INPUTS'
 export const UPDATE_LOCATION_AUTOCOMPLETE_VALUE = 'UPDATE_LOCATION_AUTOCOMPLETE_VALUE'
@@ -36,6 +38,8 @@ export const UPDATE_LOCATION_SUGGESTIONS = 'UPDATE_LOCATION_SUGGESTIONS'
 export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
 export const UPDATE_PROGRESS_BAR = 'UPDATE_PROGRESS_BAR'
 export const UPDATE_SKIP_PHOTO_SUBMISSION = 'UPDATE_SKIP_PHOTO_SUBMISSION'
+export const UPDATE_STEPS_WITH_USER = 'UPDATE_STEPS_WITH_USER'
+export const UPDATE_STEPS_WITHOUT_USER = 'UPDATE_STEPS_WITHOUT_USER'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 export const UPDATE_USER = 'UPDATE_USER'
 
@@ -54,7 +58,7 @@ export function chooseArtistAndAdvance (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
     dispatch(updateArtistName(value.name))
-    dispatch(incrementStep()) // move to next step
+    dispatch(push(`/consign2/submission/describe-your-work`))
   }
 }
 
@@ -125,7 +129,7 @@ export function completeSubmission () {
           user
         }
       } = getState()
-      const token = await fetchToken(user)
+      const token = await fetchToken(user.accessToken)
 
       const submissionQueryParam = submission.id || submissionIdFromServer
       const submissionResponse = await request
@@ -134,7 +138,7 @@ export function completeSubmission () {
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
-      dispatch(push(`/consign2/submission/${submissionResponse.body.id}/thank_you`))
+      dispatch(push(`/consign2/submission/${submissionResponse.body.id}/thank-you`))
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
@@ -151,17 +155,29 @@ export function createSubmission () {
       const {
         submissionFlow: {
           inputs,
+          submission,
           user
         }
       } = getState()
-      const token = await fetchToken(user)
-      const { body } = await request
-                          .post(`${sd.CONVECTION_APP_URL}/api/submissions`)
-                          .set('Authorization', `Bearer ${token}`)
-                          .send(inputs)
-      dispatch(updateSubmission(body)) // update state to reflect current submission
+      const token = await fetchToken(user.accessToken)
+
+      let submissionBody
+      if (submission.id) {
+        submissionBody = await request
+                           .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submission.id}`)
+                           .set('Authorization', `Bearer ${token}`)
+                           .send(inputs)
+      } else {
+        submissionBody = await request
+                           .post(`${sd.CONVECTION_APP_URL}/api/submissions`)
+                           .set('Authorization', `Bearer ${token}`)
+                           .send(inputs)
+      }
+
+      dispatch(updateSubmission(submissionBody.body)) // update state to reflect current submission
       dispatch(stopLoading())
-      dispatch(incrementStep()) // move to next step
+      dispatch(push(`/consign2/submission/${submissionBody.body.id}/describe-your-work`))
+      dispatch(push(`/consign2/submission/${submissionBody.body.id}/upload-photos`))
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
@@ -292,7 +308,7 @@ export function logIn (values) {
                       .send(options)
 
       dispatch(updateUser(user.body.user))
-      dispatch(incrementStep())
+      dispatch(push(`/consign2/submission/choose-artist`))
       dispatch(clearError())
     } catch (err) {
       dispatch(updateError(err.response.body.error))
@@ -508,7 +524,7 @@ export function updateAuthFormState (state) {
 }
 
 export function updateAuthFormStateAndClearError (state) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(updateAuthFormState(state))
     dispatch(clearError())
   }
@@ -523,17 +539,16 @@ export function updateError (error) {
   }
 }
 
+export function updateCurrentStep (step) {
+  return {
+    type: UPDATE_CURRENT_STEP,
+    payload: {
+      step
+    }
+  }
+}
+
 export function updateInputs (inputs) {
-  if (inputs.signature) {
-    const boolSignature = (inputs.signature === 'yes')
-    inputs.signature = boolSignature
-  }
-
-  if (inputs.authenticity_certificate) {
-    const boolCertificate = (inputs.authenticity_certificate === 'yes')
-    inputs.authenticity_certificate = boolCertificate
-  }
-
   return {
     type: UPDATE_INPUTS,
     payload: {
@@ -578,6 +593,24 @@ export function updateLocationInputValues (city, state, country) {
   }
 }
 
+export function updateLocationFromSubmissionAndFreeze (city, state, country) {
+  return (dispatch, getState) => {
+    const {
+      submissionFlow: {
+        submission: {
+          location_city,
+          location_state,
+          location_country
+        }
+      }
+    } = getState()
+    const formattedLocation = [location_city, location_state, location_country].filter((item) => item).join(', ')
+
+    dispatch(updateLocationAutocompleteValue(formattedLocation))
+    dispatch(freezeLocationInput())
+  }
+}
+
 export function updateLocationSuggestions (suggestions) {
   return {
     type: UPDATE_LOCATION_SUGGESTIONS,
@@ -606,6 +639,18 @@ export function updateSkipPhotoSubmission (skip) {
   }
 }
 
+export function updateStepsWithUser () {
+  return {
+    type: UPDATE_STEPS_WITH_USER
+  }
+}
+
+export function updateStepsWithoutUser () {
+  return {
+    type: UPDATE_STEPS_WITHOUT_USER
+  }
+}
+
 export function updateSubmission (submission) {
   return {
     type: UPDATE_SUBMISSION,
@@ -629,7 +674,7 @@ export function uploadImageToConvection (geminiToken, fileName) {
     try {
       const { submissionFlow: { submission, submissionIdFromServer, user } } = getState()
       const submissionId = submission.id || submissionIdFromServer
-      const token = await fetchToken(user)
+      const token = await fetchToken(user.accessToken)
       const inputs = {
         submission_id: submissionId,
         gemini_token: geminiToken
@@ -683,18 +728,6 @@ export function uploadImageToGemini (key, bucket, fileName) {
 }
 
 // helpers
-async function fetchToken (user) {
-  const {
-    body: {
-      token
-    }
-  } = await request
-              .post(`${sd.API_URL}/api/v1/me/token`)
-              .set('X-ACCESS-TOKEN', user.accessToken)
-              .send({ client_application_id: sd.CONVECTION_APP_ID })
-  return token
-}
-
 function encode (key, secret) {
   return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
 }

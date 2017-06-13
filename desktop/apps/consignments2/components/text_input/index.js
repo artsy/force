@@ -2,17 +2,17 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 
-export const renderTextInput = ({ input, meta: { warning }, ...custom }) => (
+export const renderTextInput = ({ input: { onChange, value }, meta: { warning }, ...custom }) => (
   <TextInput
     {...custom}
-    value={input.value}
-    onChange={input.onChange}
+    value={value}
+    onChange={onChange}
     warning={warning}
   />
 )
 
 function TextInput (props) {
-  const { autofocus, item, label, instructions, onChange, type, warning } = props
+  const { autofocus, item, label, instructions, onChange, type, warning, value, ...rest } = props
   const b = block('consignments2-submission-text-input')
 
   return (
@@ -25,6 +25,7 @@ function TextInput (props) {
         className={b('input').mix('bordered-input')}
         type={type || 'text'}
         onKeyUp={(e) => onChange(e.target.value)}
+        defaultValue={value}
       />
       {warning && <div className={b('warning')}>{warning}</div>}
     </div>
@@ -38,5 +39,9 @@ TextInput.propTypes = {
   instructions: PropTypes.string,
   onChange: PropTypes.func,
   type: PropTypes.string,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 }

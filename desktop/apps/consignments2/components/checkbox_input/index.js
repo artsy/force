@@ -2,18 +2,18 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 
-export const renderCheckboxInput = ({ input, ...custom }) => (
+export const renderCheckboxInput = ({ input: { onChange, value }, ...custom }) => (
   <CheckboxInput
     {...custom}
-    value={input.value}
-    onChange={input.onChange}
+    value={value}
+    onChange={onChange}
   />
 )
 
 export default function CheckboxInput (props) {
   const { item, label, onChange, value } = props
   const b = block('consignments2-submission-checkbox-input')
-
+  console.log(item, value)
   return (
     <div className={b('wrapper').mix('artsy-checkbox')} onClick={() => onChange(!value)}>
       <div className={b('input').mix('artsy-checkbox--checkbox')}>

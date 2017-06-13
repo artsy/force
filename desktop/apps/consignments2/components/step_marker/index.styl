@@ -16,6 +16,15 @@
       display flex
       justify-content space-around
 
+  &__label
+    color purple-color
+    position absolute
+    text-align center
+    width 150px
+    top 18px
+    left -67px
+    avant-garde-size('s-headline')
+
   &__step
     content ' '
     display flex
@@ -45,17 +54,18 @@
     &_active
       border 1px dashed gray-lighter-color
 
+      &::before
+        background purple-color
+
+      .consignments2-step-marker__label
+        color purple-color
+
     &_active ~ li
       border 1px dashed gray-lighter-color
 
-    &_active ~ li::before
-      border 1px dashed purple-color
+      .consignments2-step-marker__label
+        color gray-lighter-color
 
-  &__label
-    color purple-color
-    position absolute
-    text-align center
-    width 150px
-    top 18px
-    left -67px
-    avant-garde-size('s-headline')
+    &_active ~ li::before
+      border 1px dashed gray-lighter-color
+      background gray-lighter-color

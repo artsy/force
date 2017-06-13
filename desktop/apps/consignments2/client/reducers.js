@@ -8,33 +8,15 @@ import { reducer as formReducer } from 'redux-form'
 import { responsiveWindowReducer } from '../../../components/react/responsive_window'
 import { routerReducer } from 'react-router-redux'
 
-const stepsMapping = [
-  {
-    id: 'create_account',
-    label: 'Create Account',
-    shortLabel: 'Create'
-  },
-  {
-    id: 'choose_artist',
-    label: 'Consign Artist/Designer',
-    shortLabel: 'Consign'
-  },
-  {
-    id: 'describe_work',
-    label: 'Describe the Work',
-    shortLabel: 'Describe'
-  },
-  {
-    id: 'upload_photos',
-    label: 'Upload Photos',
-    shortLabel: 'Upload'
-  }
-]
+const createAccountStep = 'createAccount'
+const chooseArtistStep = 'chooseArtist'
+const describeWorkStep = 'describeWork'
+const uploadPhotosStep = 'uploadPhotos'
 
 const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
-  artistName: '',
+  artistName: sd.SUBMISSION_ARTIST_NAME || '',
   authFormState: 'signUp',
   categoryOptions: [
     'Painting',
@@ -53,12 +35,12 @@ const initialState = {
     'Textile Arts',
     'Other'
   ],
-  currentStep: 0,
+  currentStep: createAccountStep,
   error: null,
   erroredImages: [],
   inputs: {
     artist_id: '',
-    authenticity_certificate: true,
+    authenticity_certificate: false,
     category: 'Painting',
     depth: '',
     dimensions_metric: 'in',
@@ -71,7 +53,7 @@ const initialState = {
     location_country: '',
     medium: '',
     provenance: '',
-    signature: true,
+    signature: false,
     title: '',
     width: '',
     year: ''
@@ -86,8 +68,8 @@ const initialState = {
   progressBars: {},
   resetPasswordSuccess: false,
   skipPhotoSubmission: false,
-  steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: {},
+  steps: [],
+  submission: sd.SUBMISSION || { signature: true, authenticity_certificate: true },
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: [],
   user: sd.CURRENT_USER
@@ -147,16 +129,6 @@ function submissionFlow (state = initialState, action) {
       return u({
         notConsigningArtist: false
       }, state)
-    }
-    case actions.INCREMENT_STEP: {
-      const step = state.currentStep
-      if (step < state.steps.length) {
-        return u({
-          currentStep: step + 1
-        }, state)
-      } else {
-        return state
-      }
     }
     case actions.REMOVE_ERRORED_IMAGE: {
       const fileName = action.payload.fileName
@@ -243,6 +215,11 @@ function submissionFlow (state = initialState, action) {
         authFormState: action.payload.state
       }, state)
     }
+    case actions.UPDATE_CURRENT_STEP: {
+      return u({
+        currentStep: action.payload.step
+      }, state)
+    }
     case actions.UPDATE_ERROR: {
       return u({
         error: action.payload.error
@@ -294,6 +271,18 @@ function submissionFlow (state = initialState, action) {
     case actions.UPDATE_SKIP_PHOTO_SUBMISSION: {
       return u({
         skipPhotoSubmission: action.payload.skip
+      }, state)
+    }
+    case actions.UPDATE_STEPS_WITH_USER: {
+      return u({
+        currentStep: chooseArtistStep,
+        steps: [chooseArtistStep, describeWorkStep, uploadPhotosStep]
+      }, state)
+    }
+    case actions.UPDATE_STEPS_WITHOUT_USER: {
+      return u({
+        currentStep: createAccountStep,
+        steps: [createAccountStep, chooseArtistStep, describeWorkStep, uploadPhotosStep]
       }, state)
     }
     case actions.UPDATE_SUBMISSION: {

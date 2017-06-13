@@ -24,15 +24,15 @@ function RadioInput (props) {
         {
           map(options, (option) => {
             return (
-              <div className={b('radio-button')} key={`${item}_${option}`} onClick={() => onChange(option)}>
+              <div className={b('radio-button')} key={`${item}_${option.label}`} onClick={() => onChange(option.val)}>
                 <input
                   className={b('button')}
                   type='radio'
                   name={item}
-                  value={option}
+                  value={option.val}
                 />
-                <div className={b('button-control', { checked: option === value })} />
-                <label className={b('button-label')}>{option}</label>
+                <div className={b('button-control', { checked: option.val === value })} />
+                <label className={b('button-label')}>{option.label}</label>
               </div>
             )
           })
@@ -46,5 +46,6 @@ RadioInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired
+  options: PropTypes.array.isRequired,
+  value: PropTypes.bool
 }
