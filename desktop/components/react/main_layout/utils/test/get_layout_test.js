@@ -2,13 +2,13 @@ import getLayout from '../get_layout'
 
 describe('components/react/main_layout/utils/get_layout.js', () => {
   before(() => {
-    getLayout.__Rewire__('templateRenderer', () => ({
+    getLayout.__Rewire__('makeTemplate', () => ({
       render: (...content) => content
     }))
   })
 
   after(() => {
-    getLayout.__ResetDependency__('templateRenderer')
+    getLayout.__ResetDependency__('makeTemplate')
   })
 
   it('returns a Header, Body and Footer ', () => {

@@ -7,7 +7,7 @@ import {
   isString
 } from 'underscore'
 
-export default function templateRenderer (templates, options = {}) {
+export function makeTemplate (templates, options = {}) {
   const isValid = isArray(templates) || isString(templates)
 
   invariant(isValid,

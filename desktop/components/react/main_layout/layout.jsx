@@ -11,9 +11,9 @@ import getLayout from './utils/get_layout'
  * @example
  *
  * // routes.js
- * import templateRenderer from 'components/react/utils/template_renderer'
+ * import { makeTemplate } from 'components/react/utils/template_renderer'
  *
- * const [meta] = templateRenderer(['meta.jade']).render(res.locals)
+ * const [meta] = makeTemplate(['meta.jade']).render(res.locals)
  *
  * res.render('index.jsx', {
  *   templates: {

@@ -1,5 +1,5 @@
 import path from 'path'
-import templateRenderer from 'desktop/components/react/utils/template_renderer'
+import { makeTemplate } from 'desktop/components/react/utils/template_renderer'
 import { makeTemplateComponent } from '../index'
 
 const defaultLayout = [
@@ -14,7 +14,7 @@ const defaultLayout = [
 export default function getLayout (layout = defaultLayout) {
   return {
     render: (locals) => {
-      const [header, body, footer] = templateRenderer(layout).render(locals)
+      const [header, body, footer] = makeTemplate(layout).render(locals)
 
       return {
         Header: makeTemplateComponent(header),
