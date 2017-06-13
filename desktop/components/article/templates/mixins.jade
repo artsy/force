@@ -45,10 +45,6 @@ mixin fullscreen(article)
           h1.large-garamond-header.article-fullscreen-title= article.get('title')
         if !article.get('is_super_article')
           +author-date
-        if article.get('hero_section').intro
-          .article-lead-paragraph-container
-            .article-lead-paragraph.article-fullscreen-intro
-              != article.get('hero_section').intro
 
 mixin superArticleLogos(article)
   .article-sa-primary-logos
