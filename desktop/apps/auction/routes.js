@@ -1,13 +1,13 @@
-import Articles from '../../collections/articles.coffee'
+import Articles from 'desktop/collections/articles.coffee'
 import ArticlesQuery from './queries/articles'
-import Auction from '../../models/auction.coffee'
+import Auction from 'desktop/models/auction.coffee'
 import MeQuery from './queries/me'
 import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
-import metaphysics from '../../../lib/metaphysics'
+import metaphysics from 'lib/metaphysics.coffee'
 import get from 'lodash.get'
-import partialRenderer from '../../lib/partial_renderer'
-import { getLiveAuctionUrl } from '../../../utils/domain/auctions/urls'
+import { makeTemplate } from 'desktop/components/react/utils/template_renderer'
+import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export async function index (req, res, next) {
   const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
@@ -37,7 +37,9 @@ export async function index (req, res, next) {
   const auctionArticles = new Articles(articles)
 
   try {
-    const [html] = await partialRenderer(res, 'index', {
+    const basePath = res.app.get('views')
+    const [html] = makeTemplate('index.jade', { basePath }).render({
+      ...res.locals,
       articles: auctionArticles,
       auction: newAuction,
       footerItems: footerItems,
@@ -51,7 +53,7 @@ export async function index (req, res, next) {
       html
     })
   } catch (error) {
-    next()
+    next(error)
   }
 }
 

@@ -1,5 +1,4 @@
-import moment from 'moment'
-import upcomingLabel from '../utils/upcoming_label'
+import upcomingLabel from '../upcoming_label'
 
 describe('#upcomingLabel', () => {
   it('returns the correct label for an online-only auction that has yet to open', () => {
