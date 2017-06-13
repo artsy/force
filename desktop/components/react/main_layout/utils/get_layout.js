@@ -1,6 +1,6 @@
 import path from 'path'
 import templateRenderer from 'desktop/components/react/utils/template_renderer'
-import { makePartial } from '../layout'
+import { makeTemplateComponent } from '../layout'
 
 const defaultLayout = [
   '_header.jade',
@@ -17,9 +17,9 @@ export default function getLayout (layout = defaultLayout) {
       const [header, body, footer] = templateRenderer(layout).render(locals)
 
       return {
-        Header: makePartial(header),
-        Body: makePartial(body),
-        Footer: makePartial(footer)
+        Header: makeTemplateComponent(header),
+        Body: makeTemplateComponent(body),
+        Footer: makeTemplateComponent(footer)
       }
     }
   }

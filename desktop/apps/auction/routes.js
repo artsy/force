@@ -38,18 +38,7 @@ export async function index (req, res, next) {
   const auctionArticles = new Articles(articles)
 
   try {
-    // const [html] = templateRenderer(path.join(__dirname, 'templates/index.jade')).render({
-      // ...res.locals,
-      // articles: auctionArticles,
-      // auction: newAuction,
-      // footerItems: footerItems,
-      // viewHelpers: {
-      //   getLiveAuctionUrl
-      // },
-      // me: me
-    // })
-
-    const [html] = templateRenderer('index.jade', { app: res.app }).render({
+    const [meta] = templateRenderer(['meta.jade'], { app: res.app }).render({
       ...res.locals,
       articles: auctionArticles,
       auction: newAuction,
@@ -61,7 +50,9 @@ export async function index (req, res, next) {
     })
 
     res.render('index.jsx', {
-      html
+      templates: {
+        meta
+      }
     })
   } catch (error) {
     next(error)
