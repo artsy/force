@@ -1,13 +1,21 @@
 import invariant from 'invariant'
 import jade from 'jade'
 import path from 'path'
+import { merge } from 'lodash'
 
 import {
+  first,
   isArray,
   isString
 } from 'underscore'
 
-export function makeTemplate (templates, options = {}) {
+const defaultOptions = {
+  basePath: '',
+  compilerOptions: {},
+  locals: {}
+}
+
+export function makeTemplate (templates, opts = {}) {
   const isValid = isArray(templates) || isString(templates)
 
   invariant(isValid,
@@ -20,22 +28,26 @@ export function makeTemplate (templates, options = {}) {
     ? templates
     : [templates]
 
-  const basePath = options.basePath || ''
+  const {
+    basePath,
+    compilerOptions,
+    locals
+  } = merge(defaultOptions, opts)
 
   const templateFns = templates.map(file => {
     return jade.compileFile(path.join(basePath, file), {
       cache: true,
-      ...options
+      ...compilerOptions
     })
   })
 
-  return {
-    render: (locals = {}) => {
-      const renderTemplate = locals => template => template(locals)
+  const renderTemplate = locals => template => template(locals)
+  const renderedTemplates = templateFns.map(renderTemplate(locals))
 
-      return (
-        templateFns.map(renderTemplate(locals))
-      )
-    }
-  }
+  // If user only passed in a single template, return a single template
+  const out = renderedTemplates.length > 1
+    ? renderedTemplates
+    : first(renderedTemplates)
+
+  return out
 }
