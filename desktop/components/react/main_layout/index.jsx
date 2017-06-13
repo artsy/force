@@ -44,8 +44,8 @@ import getLayout from './utils/get_layout'
  * @param  {Object} props          Data to render into components
  * @return {Object}
  */
-export function makeLayout ({ templates = {}, ...props }) {
-  const layout = getLayout().render(props)
+export function makeLayout ({ templates, ...props } = { templates: {} }) {
+  const { Layout } = getLayout().render(props)
 
   /**
    * Map over user-supplied templates and return renderable <Component />s. Keys located
@@ -65,9 +65,7 @@ export function makeLayout ({ templates = {}, ...props }) {
     }, {})
 
   return {
-    Layout: {
-      ...layout
-    },
+    Layout,
     ...componentMap
   }
 }
@@ -117,11 +115,9 @@ export function makeTemplateComponent (html) {
  */
 export function Layout ({ children, ...props }) {
   const {
-    Layout: {
-      Header,
-      Body,
-      Footer
-    }
+    Header,
+    Body,
+    Footer
   } = getLayout().render(props)
 
   return (

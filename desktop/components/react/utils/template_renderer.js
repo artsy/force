@@ -20,7 +20,7 @@ export default function templateRenderer (templates, options = {}) {
     ? templates
     : [templates]
 
-  // Get path to subapp views
+  // If rendering from an express route get the view template basePath
   const basePath = options.app ? options.app.get('views') : ''
 
   const templateFns = templates.map(file => {
