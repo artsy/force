@@ -1,25 +1,14 @@
-import { makeLayout } from 'desktop/components/react/main_layout'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export default function IndexRoute (props) {
-  const { Layout: { Header, Body, Footer }, Meta } = makeLayout(props)
-
+export default function IndexRoute ({ html }) {
   return (
-    <div>
-      <Header>
-        <Meta />
-      </Header>
-      <Body>
-        foo
-      </Body>
-      <Footer />
-    </div>
+    <div
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   )
 }
 
 IndexRoute.propTypes = {
-  templates: PropTypes.shape({
-    meta: PropTypes.string.isRequired
-  })
+  html: PropTypes.string.isRequired
 }

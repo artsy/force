@@ -7,7 +7,6 @@ import footerItems from './footer_items'
 import metaphysics from 'lib/metaphysics.coffee'
 import get from 'lodash.get'
 import templateRenderer from 'desktop/components/react/utils/template_renderer'
-import path from 'path'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export async function index (req, res, next) {
@@ -38,7 +37,8 @@ export async function index (req, res, next) {
   const auctionArticles = new Articles(articles)
 
   try {
-    const [meta] = templateRenderer(['meta.jade'], { app: res.app }).render({
+    const basePath = res.app.get('views')
+    const [html] = templateRenderer('index.jade', { basePath }).render({
       ...res.locals,
       articles: auctionArticles,
       auction: newAuction,
@@ -50,9 +50,7 @@ export async function index (req, res, next) {
     })
 
     res.render('index.jsx', {
-      templates: {
-        meta
-      }
+      html
     })
   } catch (error) {
     next(error)

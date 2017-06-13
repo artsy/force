@@ -20,8 +20,7 @@ export default function templateRenderer (templates, options = {}) {
     ? templates
     : [templates]
 
-  // If rendering from an express route get the view template basePath
-  const basePath = options.app ? options.app.get('views') : ''
+  const basePath = options.basePath || ''
 
   const templateFns = templates.map(file => {
     return jade.compileFile(path.join(basePath, file), {

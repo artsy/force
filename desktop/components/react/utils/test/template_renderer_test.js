@@ -49,10 +49,6 @@ describe('components/react/utils/template_renderer.js', () => {
   })
 
   it('accepts an express basePath', (done) => {
-    const app = {
-      get: (key) => key
-    }
-
     templateRenderer.__Rewire__('jade', {
       compileFile: (path) => {
         path.should.eql('views/foo')
@@ -60,6 +56,6 @@ describe('components/react/utils/template_renderer.js', () => {
       }
     })
 
-    templateRenderer('foo', { app }).render()
+    templateRenderer('foo', { basePath: 'views' }).render()
   })
 })

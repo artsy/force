@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react'
-import { makeLayout, makeTemplateComponent, Layout, __RewireAPI__ } from '../index'
+import { makeLayout, makeTemplateComponent, Layout, __RewireAPI__ } from '../layout'
 import { render } from 'enzyme'
 
-describe('components/react/main_layout', () => {
+describe('components/react/main_layout/layout.jsx', () => {
   before(() => {
     __RewireAPI__.__Rewire__('getLayout', () => ({
       render: (locals) => ({
@@ -69,7 +69,7 @@ describe('components/react/main_layout', () => {
   describe('<Layout />', () => {
     it('should return a default layout', () => {
       const wrapper = render(<Layout>foo</Layout>)
-      wrapper.html().should.eql('<div><header></header><body>foo</body><footer></footer></div>')
+      wrapper.html().should.containEql('<header></header><body>foo</body><footer></footer>')
     })
   })
 })
