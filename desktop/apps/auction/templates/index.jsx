@@ -1,9 +1,9 @@
-import { makeLayout } from 'desktop/components/react/main_layout/layout.jsx'
+import { makeLayout } from 'desktop/components/react/main_layout'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 export default function IndexRoute (props) {
-  const { Header, Meta, Body, Footer } = makeLayout(props)
+  const { Layout: { Header, Body, Footer }, Meta } = makeLayout(props)
 
   return (
     <div>

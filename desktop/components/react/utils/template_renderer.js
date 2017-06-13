@@ -20,6 +20,7 @@ export default function templateRenderer (templates, options = {}) {
     ? templates
     : [templates]
 
+  // Get path to subapp views
   const basePath = options.app ? options.app.get('views') : ''
 
   const templateFns = templates.map(file => {

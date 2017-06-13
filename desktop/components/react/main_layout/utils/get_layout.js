@@ -1,6 +1,6 @@
 import path from 'path'
 import templateRenderer from 'desktop/components/react/utils/template_renderer'
-import { makeTemplateComponent } from '../layout'
+import { makeTemplateComponent } from '../index'
 
 const defaultLayout = [
   '_header.jade',
