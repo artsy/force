@@ -14,7 +14,6 @@ export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const ERROR_ON_IMAGE = 'ERROR_ON_IMAGE'
 export const FREEZE_LOCATION_INPUT = 'FREEZE_LOCATION_INPUT'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
-export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
 export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
@@ -58,7 +57,7 @@ export function chooseArtistAndAdvance (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
     dispatch(updateArtistName(value.name))
-    dispatch(push(`/consign2/submission/describe-your-work`))
+    dispatch(push('/consign2/submission/describe-your-work'))
   }
 }
 
@@ -286,12 +285,6 @@ export function hideNotConsigningMessage () {
   }
 }
 
-export function incrementStep () {
-  return {
-    type: INCREMENT_STEP
-  }
-}
-
 export function logIn (values) {
   return async (dispatch, getState) => {
     try {
@@ -308,7 +301,7 @@ export function logIn (values) {
                       .send(options)
 
       dispatch(updateUser(user.body.user))
-      dispatch(push(`/consign2/submission/choose-artist`))
+      dispatch(push('/consign2/submission/choose-artist'))
       dispatch(clearError())
     } catch (err) {
       dispatch(updateError(err.response.body.error))

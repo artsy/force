@@ -94,7 +94,6 @@ function setupSubmissionFlow () {
                 return <SubmissionFlow />
               }}
             />
-            <Route path='/consign2/submission/:submission_id/thank-you' component={ThankYou} />
             <Route
               path='/consign2/submission/:submission_id/describe-your-work'
               render={() => {
@@ -111,6 +110,7 @@ function setupSubmissionFlow () {
                 return <UploadPhotoLanding />
               }}
             />
+            <Route path='/consign2/submission/:submission_id/thank-you' component={ThankYou} />
           </Switch>
         </Router>
       </ResponsiveWindow>

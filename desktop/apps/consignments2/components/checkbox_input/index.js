@@ -13,7 +13,7 @@ export const renderCheckboxInput = ({ input: { onChange, value }, ...custom }) =
 export default function CheckboxInput (props) {
   const { item, label, onChange, value } = props
   const b = block('consignments2-submission-checkbox-input')
-  console.log(item, value)
+
   return (
     <div className={b('wrapper').mix('artsy-checkbox')} onClick={() => onChange(!value)}>
       <div className={b('input').mix('artsy-checkbox--checkbox')}>

@@ -38,7 +38,6 @@ const mapStateToProps = (state) => {
     }
   } = state
 
-  // const describeWorkComponent = isMobile ? DescribeWorkMobile : DescribeWorkDesktop
   const stepsToComponents = {
     createAccount: CreateAccount,
     chooseArtist: ChooseArtist,

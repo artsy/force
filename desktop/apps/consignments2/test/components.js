@@ -21,6 +21,7 @@ describe('React components', () => {
   describe('StepMarker', () => {
     describe('non-logged-in user', () => {
       it('displays four steps', () => {
+        initialStore.dispatch(actions.updateStepsWithoutUser())
         const wrapper = shallow(
           <StepMarker store={initialStore} />
         )
@@ -29,6 +30,7 @@ describe('React components', () => {
       })
 
       it('updates the color of step labels', () => {
+        initialStore.dispatch(actions.updateStepsWithoutUser())
         const wrapper = shallow(
           <StepMarker store={initialStore} />
         )
@@ -40,6 +42,7 @@ describe('React components', () => {
 
       it('includes the shorter labels if in mobile mode', () => {
         initialStore.dispatch(responsiveWindowAction(600))
+        initialStore.dispatch(actions.updateStepsWithoutUser())
         const wrapper = shallow(
           <StepMarker store={initialStore} />
         )
@@ -47,6 +50,40 @@ describe('React components', () => {
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
         activeText.should.eql('CreateConsignDescribeUpload')
+      })
+    })
+
+    describe('logged-in user', () => {
+      it('displays thruee steps', () => {
+        initialStore.dispatch(actions.updateStepsWithUser())
+        const wrapper = shallow(
+          <StepMarker store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.consignments2-step-marker__step').length.should.eql(3)
+      })
+
+      it('updates the color of step labels', () => {
+        initialStore.dispatch(actions.updateStepsWithUser())
+        const wrapper = shallow(
+          <StepMarker store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
+        const activeText = rendered.text()
+        activeText.should.containEql('Consign Artist/Designer')
+      })
+
+      it('includes the shorter labels if in mobile mode', () => {
+        initialStore.dispatch(responsiveWindowAction(600))
+        initialStore.dispatch(actions.updateStepsWithUser())
+        const wrapper = shallow(
+          <StepMarker store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
+        const activeText = rendered.text()
+        activeText.should.eql('ConsignDescribeUpload')
       })
     })
   })
@@ -277,8 +314,7 @@ describe('React components', () => {
     beforeEach(() => {
       SubmissionFlow.__Rewire__('ChooseArtist', () => <div className='choose-artist' />)
       SubmissionFlow.__Rewire__('CreateAccount', () => <div className='create-account' />)
-      SubmissionFlow.__Rewire__('DescribeWorkDesktop', () => <div className='describe-work-desktop' />)
-      SubmissionFlow.__Rewire__('DescribeWorkMobile', () => <div className='describe-work-mobile' />)
+      SubmissionFlow.__Rewire__('DescribeWorkContainer', () => <div className='describe-work-container' />)
       SubmissionFlow.__Rewire__('StepMarker', () => <div className='step-marker' />)
       SubmissionFlow.__Rewire__('UploadPhoto', () => <div className='upload-photos' />)
     })
@@ -286,8 +322,7 @@ describe('React components', () => {
     afterEach(() => {
       SubmissionFlow.__ResetDependency__('ChooseArtist')
       SubmissionFlow.__ResetDependency__('CreateAccount')
-      SubmissionFlow.__ResetDependency__('DescribeWorkDesktop')
-      SubmissionFlow.__ResetDependency__('DescribeWorkMobile')
+      SubmissionFlow.__ResetDependency__('DescribeWorkContainer')
       SubmissionFlow.__ResetDependency__('StepMarker')
       SubmissionFlow.__ResetDependency__('UploadPhoto')
     })
@@ -300,8 +335,8 @@ describe('React components', () => {
         const rendered = wrapper.render()
         rendered.find('.create-account').length.should.eql(1)
       })
-      it('shows the choose artist step second', () => {
-        initialStore.dispatch(actions.incrementStep())
+      it('shows the choose artist step', () => {
+        initialStore.dispatch(actions.updateCurrentStep('chooseArtist'))
         const wrapper = shallow(
           <SubmissionFlow store={initialStore} />
         )
@@ -310,32 +345,16 @@ describe('React components', () => {
       })
 
       it('shows the describe work step third', () => {
-        initialStore.dispatch(actions.incrementStep())
-        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.updateCurrentStep('describeWork'))
         const wrapper = shallow(
           <SubmissionFlow store={initialStore} />
         )
         const rendered = wrapper.render()
-        rendered.find('.describe-work-desktop').length.should.eql(1)
-        rendered.find('.describe-work-mobile').length.should.eql(0)
-      })
-
-      it('shows the describe work mobile step if the screen is small', () => {
-        initialStore.dispatch(actions.incrementStep())
-        initialStore.dispatch(actions.incrementStep())
-        initialStore.dispatch(responsiveWindowAction(620))
-        const wrapper = shallow(
-          <SubmissionFlow store={initialStore} />
-        )
-        const rendered = wrapper.render()
-        rendered.find('.describe-work-desktop').length.should.eql(0)
-        rendered.find('.describe-work-mobile').length.should.eql(1)
+        rendered.find('.describe-work-container').length.should.eql(1)
       })
 
       it('shows the upload photo step last', () => {
-        initialStore.dispatch(actions.incrementStep())
-        initialStore.dispatch(actions.incrementStep())
-        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.updateCurrentStep('uploadPhotos'))
         const wrapper = shallow(
           <SubmissionFlow store={initialStore} />
         )
