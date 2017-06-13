@@ -27,25 +27,27 @@ describe('components/react/utils/template_renderer.js', () => {
     })
   })
 
-  it('returns a render function', () => {
-    makeTemplate('foo').render.should.be.type('function')
+  it('should be a function function', () => {
+    makeTemplate.should.be.type('function')
   })
 
-  it('accepts a string or an array of template paths', () => {
-    makeTemplate('foo').render().length.should.eql(1)
-    makeTemplate(['foo', 'bar']).render().length.should.eql(2)
+  it('accepts a string or an array of template paths, and returns a string or an array', () => {
+    makeTemplate('foo').should.be.type('string')
+    makeTemplate(['foo', 'bar']).length.should.eql(2)
   })
 
   it('`render` accept locals and renders them into the template', () => {
-    makeTemplate('foo').render({ name: 'will' })[0].should.containEql('foo')
-    makeTemplate('foo').render({ name: 'will' })[0].should.containEql('will')
-    makeTemplate(['foo', 'bar']).render({ name: 'burroughs' })[1].should.containEql('bar')
-    makeTemplate(['foo', 'bar']).render({ name: 'burroughs' })[1].should.containEql('burroughs')
+    makeTemplate('foo', { locals: { name: 'will' } }).should.containEql('foo')
+    makeTemplate('foo', { locals: { name: 'will' } }).should.containEql('will')
+    makeTemplate(['foo', 'bar'], { locals: { name: 'burroughs' } })[1].should.containEql('bar')
+    makeTemplate(['foo', 'bar'], { locals: { name: 'burroughs' } })[1].should.containEql('burroughs')
   })
 
   it('returns an array of rendered template html when `render` is called', () => {
-    makeTemplate('foo').render()[0].should.containEql('<html>')
-    makeTemplate(['foo']).render()[0].should.containEql('</html>')
+    makeTemplate('foo').should.containEql('<html>')
+    makeTemplate(['foo']).should.containEql('</html>')
+    makeTemplate(['foo', 'bar'])[0].should.containEql('<html>')
+    makeTemplate(['foo', 'bar'])[1].should.containEql('</html>')
   })
 
   it('accepts an express basePath', (done) => {
@@ -53,9 +55,12 @@ describe('components/react/utils/template_renderer.js', () => {
       compileFile: (path) => {
         path.should.eql('views/foo')
         done()
+        return () => {}
       }
     })
 
-    makeTemplate('foo', { basePath: 'views' })
+    makeTemplate('foo', {
+      basePath: 'views'
+    })
   })
 })

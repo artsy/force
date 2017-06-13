@@ -37,16 +37,18 @@ export async function index (req, res, next) {
   const auctionArticles = new Articles(articles)
 
   try {
-    const basePath = res.app.get('views')
-    const [html] = makeTemplate('index.jade', { basePath }).render({
-      ...res.locals,
-      articles: auctionArticles,
-      auction: newAuction,
-      footerItems: footerItems,
-      viewHelpers: {
-        getLiveAuctionUrl
-      },
-      me: me
+    const html = makeTemplate('index.jade', {
+      basePath: res.app.get('views'),
+      locals: {
+        ...res.locals,
+        articles: auctionArticles,
+        auction: newAuction,
+        footerItems: footerItems,
+        viewHelpers: {
+          getLiveAuctionUrl
+        },
+        me: me
+      }
     })
 
     res.render('index.jsx', {

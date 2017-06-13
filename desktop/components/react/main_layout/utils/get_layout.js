@@ -11,16 +11,12 @@ const defaultLayout = [
     return path.join(__dirname, '../../../main_layout/templates/layout/', templatePath)
   })
 
-export default function getLayout (layout = defaultLayout) {
-  return {
-    render: (locals) => {
-      const [header, body, footer] = makeTemplate(layout).render(locals)
+export default function getLayout (locals = {}, layout = defaultLayout) {
+  const [header, body, footer] = makeTemplate(layout, { locals })
 
-      return {
-        Header: makeTemplateComponent(header),
-        Body: makeTemplateComponent(body),
-        Footer: makeTemplateComponent(footer)
-      }
-    }
+  return {
+    Header: makeTemplateComponent(header),
+    Body: makeTemplateComponent(body),
+    Footer: makeTemplateComponent(footer)
   }
 }
