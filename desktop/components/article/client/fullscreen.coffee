@@ -3,9 +3,6 @@ Backbone = require 'backbone'
 
 module.exports = class FullscreenView extends Backbone.View
 
-  events:
-    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
-
   initialize: (options) ->
     { @article, header } = options
     @$window = $(window)
@@ -23,9 +20,6 @@ module.exports = class FullscreenView extends Backbone.View
 
   centerFullscreenHeader: ($header) ->
 
-    $superArticleArrow = @$('.article-fullscreen-down-arrow')
-    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
-    $superArticleArrow.show()
     # Center header
     $container = $header.find('.article-fullscreen-text-overlay')
     maxHeight = @$window.height()

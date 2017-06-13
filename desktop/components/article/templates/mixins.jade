@@ -32,9 +32,6 @@ mixin fullscreen(article)
         src=resize(article.get('hero_section').background_image_url, { height: 1250, width: 1250 })
       )
 
-    .article-fullscreen-down-arrow
-      a.icon-chevron-down
-
     if superArticle
       .main-layout-container.article-sa-fullscreen-logos
         if superArticle
@@ -48,7 +45,7 @@ mixin fullscreen(article)
           h1.large-garamond-header.article-fullscreen-title= article.get('title')
         if !article.get('is_super_article')
           +author-date
-         if article.get('hero_section').intro
+        if article.get('hero_section').intro
           .article-lead-paragraph-container
             .article-lead-paragraph.article-fullscreen-intro
               != article.get('hero_section').intro
