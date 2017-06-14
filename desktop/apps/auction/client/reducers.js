@@ -29,7 +29,7 @@ const initialState = {
   aggregatedMediums: [],
   allFetched: false,
   displayFollowedArtistsRail: false,
-  filterParams: sd.AUCTION._id === '593c3fac8b0c147c16a59381' ? scrubbedParams : filterParams,
+  filterParams: sd.AUCTION && sd.AUCTION._id === '593c3fac8b0c147c16a59381' ? scrubbedParams : filterParams,
   followedArtistRailMax: 50,
   followedArtistRailPage: 1,
   followedArtistRailSize: 4,

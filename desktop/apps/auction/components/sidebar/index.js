@@ -7,10 +7,12 @@ import { connect } from 'react-redux'
 import { data as sd } from 'sharify'
 
 function Sidebar ({ isClosed }) {
+  const isCreativeTimeAuction = sd.AUCTION && sd.AUCTION._id === '593c3fac8b0c147c16a59381'
+
   return (
     <div className='auction-artworks-sidebar'>
       <div className='auction-artworks-sidebar__artist-filter'>
-        { !isClosed && sd.AUCTION._id !== '593c3fac8b0c147c16a59381' && <RangeSlider /> }
+        { !isClosed && !isCreativeTimeAuction && <RangeSlider /> }
         <MediumFilter />
         <ArtistFilter />
       </div>
