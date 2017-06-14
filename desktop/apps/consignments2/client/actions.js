@@ -1,9 +1,10 @@
 import request from 'superagent'
+import gemup from 'gemup'
+import stepsConfig from './steps_config'
 import { data as sd } from 'sharify'
 import { fetchToken } from '../helpers'
 import { find } from 'underscore'
 import { push } from 'react-router-redux'
-import gemup from 'gemup'
 
 // Action types
 export const ADD_IMAGE_TO_UPLOADED_IMAGES = 'ADD_IMAGE_TO_UPLOADED_IMAGES'
@@ -57,7 +58,7 @@ export function chooseArtistAndAdvance (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
     dispatch(updateArtistName(value.name))
-    dispatch(push('/consign2/submission/describe-your-work'))
+    dispatch(push(stepsConfig.describeWork.path))
   }
 }
 
@@ -137,7 +138,7 @@ export function completeSubmission () {
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
-      dispatch(push(`/consign2/submission/${submissionResponse.body.id}/thank-you`))
+      dispatch(push(stepsConfig.thankYou.submissionPath.replace(':id', submissionResponse.body.id)))
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
@@ -175,8 +176,8 @@ export function createSubmission () {
 
       dispatch(updateSubmission(submissionBody.body)) // update state to reflect current submission
       dispatch(stopLoading())
-      dispatch(push(`/consign2/submission/${submissionBody.body.id}/describe-your-work`))
-      dispatch(push(`/consign2/submission/${submissionBody.body.id}/upload-photos`))
+      dispatch(push(stepsConfig.describeWork.submissionPath.replace(':id', submissionBody.body.id)))
+      dispatch(push(stepsConfig.uploadPhotos.submissionPath.replace(':id', submissionBody.body.id)))
     } catch (err) {
       dispatch(stopLoading())
       dispatch(updateError('Unable to submit at this time.'))
@@ -301,7 +302,7 @@ export function logIn (values) {
                       .send(options)
 
       dispatch(updateUser(user.body.user))
-      dispatch(push('/consign2/submission/choose-artist'))
+      dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
     } catch (err) {
       dispatch(updateError(err.response.body.error))

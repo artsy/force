@@ -69,7 +69,7 @@ const initialState = {
   resetPasswordSuccess: false,
   skipPhotoSubmission: false,
   steps: [],
-  submission: sd.SUBMISSION || { signature: true, authenticity_certificate: true },
+  submission: sd.SUBMISSION || {},
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: [],
   user: sd.CURRENT_USER

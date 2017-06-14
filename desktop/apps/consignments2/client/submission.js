@@ -1,12 +1,11 @@
 import ResponsiveWindow from '../../../components/react/responsive_window'
 import React from 'react'
 import SubmissionFlow from '../components/submission_flow'
-import ThankYou from '../components/thank_you'
-import UploadPhotoLanding from '../components/upload_photo_landing'
 import geo from '../../../components/geo/index.coffee'
 import reducers from './reducers'
 import createHistory from 'history/createBrowserHistory'
 import createLogger from 'redux-logger'
+import stepsConfig from './steps_config'
 import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { Redirect, Router, Route, Switch } from 'react-router'
@@ -55,15 +54,15 @@ function setupSubmissionFlow () {
               render={() => {
                 if (sd.CURRENT_USER) {
                   store.dispatch(updateStepsWithUser())
-                  return <Redirect to='/consign2/submission/choose-artist' />
+                  return <Redirect to={stepsConfig.chooseArtist.path} />
                 } else {
                   store.dispatch(updateStepsWithoutUser())
-                  return <Redirect to='/consign2/submission/create-account' />
+                  return <Redirect to={stepsConfig.createAccount.path} />
                 }
               }}
             />
             <Route
-              path='/consign2/submission/create-account'
+              path={stepsConfig.createAccount.path}
               render={() => {
                 store.dispatch(updateStepsWithoutUser())
                 store.dispatch(updateCurrentStep('createAccount'))
@@ -71,7 +70,7 @@ function setupSubmissionFlow () {
               }}
             />
             <Route
-              path='/consign2/submission/choose-artist'
+              path={stepsConfig.chooseArtist.path}
               render={() => {
                 determineSteps()
                 store.dispatch(updateCurrentStep('chooseArtist'))
@@ -79,7 +78,7 @@ function setupSubmissionFlow () {
               }}
             />
             <Route
-              path='/consign2/submission/describe-your-work'
+              path={stepsConfig.describeWork.path}
               render={() => {
                 determineSteps()
                 store.dispatch(updateCurrentStep('describeWork'))
@@ -87,7 +86,7 @@ function setupSubmissionFlow () {
               }}
             />
             <Route
-              path='/consign2/submission/:id/upload-photos'
+              path={stepsConfig.uploadPhotos.submissionPath}
               render={() => {
                 determineSteps()
                 store.dispatch(updateCurrentStep('uploadPhotos'))
@@ -95,7 +94,7 @@ function setupSubmissionFlow () {
               }}
             />
             <Route
-              path='/consign2/submission/:submission_id/describe-your-work'
+              path={stepsConfig.describeWork.submissionPath}
               render={() => {
                 determineSteps()
                 store.dispatch(updateCurrentStep('describeWork'))
@@ -104,13 +103,14 @@ function setupSubmissionFlow () {
               }}
             />
             <Route
-              path='/consign2/submission/:submission_id/upload'
+              path={stepsConfig.uploadLanding.submissionPath}
               render={() => {
+                const Component = stepsConfig.uploadLanding.component
                 store.dispatch(updateAuthFormStateAndClearError('logIn'))
-                return <UploadPhotoLanding />
+                return <Component />
               }}
             />
-            <Route path='/consign2/submission/:submission_id/thank-you' component={ThankYou} />
+            <Route path={stepsConfig.thankYou.submissionPath} component={stepsConfig.thankYou.component} />
           </Switch>
         </Router>
       </ResponsiveWindow>

@@ -2,7 +2,6 @@ import request from 'superagent'
 import { data as sd } from 'sharify'
 
 export async function fetchToken (accessToken) {
-  console.log('fetching token!')
   const {
     body: {
       token

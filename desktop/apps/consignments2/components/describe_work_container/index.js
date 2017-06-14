@@ -3,12 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { makeDescribeWorkDesktop } from '../describe_work_desktop'
 import { makeDescribeWorkMobile } from '../describe_work_mobile'
-import { pick } from 'underscore'
+import { isEmpty, pick } from 'underscore'
 
 function DescribeWorkContainer (props) {
   const { isMobile, submission } = props
+  const populatedSubmission = isEmpty(submission) ? { signature: true, authenticity_certificate: true } : submission
   const relevantInputs = pick(
-    submission,
+    populatedSubmission,
     'artist_id',
     'authenticity_certificate',
     'category',

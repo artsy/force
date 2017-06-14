@@ -26,7 +26,4 @@ app.get('/consign2/submission/:id/upload-photos', routes.submissionFlowWithFetch
 app.get('/consign2/submission/:id/thank-you', adminOnly, routes.submissionFlowWithId)
 app.get('/consign2/submission/:id/upload', adminOnly, routes.submissionFlowWithId)
 app.get('/consign2/submission', routes.submissionFlow)
-app.get('/consign2/submission/create-account', routes.redirectToSubmissionFlow)
-app.get('/consign2/submission/choose-artist', routes.redirectToSubmissionFlow)
-app.get('/consign2/submission/describe-your-work', routes.redirectToSubmissionFlow)
-app.get('/consign2/submission/upload-photos', routes.redirectToSubmissionFlow)
+app.get('/consign2/submission*', routes.redirectToSubmissionFlow)

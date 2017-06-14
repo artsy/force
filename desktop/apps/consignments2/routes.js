@@ -1,7 +1,7 @@
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
-import metaphysics from '../../../lib/metaphysics'
+import metaphysics from 'lib/metaphysics.coffee'
 import request from 'superagent'
 import { extend } from 'underscore'
 import { fetchToken } from './helpers'
@@ -42,8 +42,8 @@ export const submissionFlow = async (req, res, next) => {
   res.render('submission_flow', { user: req.user })
 }
 
-export const redirectToSubmissionFlow = (req, res, next) => {
-  res.redirect('/consign2/submission')
+export const redirectToSubmissionFlow = async (req, res, next) => {
+  return res.redirect('/consign2/submission')
 }
 
 export const submissionFlowWithId = async (req, res, next) => {
@@ -55,14 +55,14 @@ export const submissionFlowWithFetch = async (req, res, next) => {
   try {
     const token = await fetchToken(req.user.get('accessToken'))
     const submission = await request
-                             .get(`${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`)
-                             .set('Authorization', `Bearer ${token}`)
-
+                              .get(`${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`)
+                              .set('Authorization', `Bearer ${token}`)
     const { artist: { name } } = await metaphysics({ query: ArtistQuery(submission.body.artist_id) })
     res.locals.sd.SUBMISSION = submission.body
     res.locals.sd.SUBMISSION_ARTIST_NAME = name
     res.render('submission_flow', { user: req.user })
   } catch (e) {
+    console.log('e e e', e)
     next(e)
   }
 }

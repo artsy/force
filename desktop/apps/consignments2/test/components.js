@@ -312,19 +312,27 @@ describe('React components', () => {
 
   describe('SubmissionFlow', () => {
     beforeEach(() => {
-      SubmissionFlow.__Rewire__('ChooseArtist', () => <div className='choose-artist' />)
-      SubmissionFlow.__Rewire__('CreateAccount', () => <div className='create-account' />)
-      SubmissionFlow.__Rewire__('DescribeWorkContainer', () => <div className='describe-work-container' />)
+      const componentMap = {
+        chooseArtist: {
+          component: () => <div className='choose-artist' />
+        },
+        createAccount: {
+          component: () => <div className='create-account' />
+        },
+        describeWork: {
+          component: () => <div className='describe-work-container' />
+        },
+        uploadPhotos: {
+          component: () => <div className='upload-photos' />
+        }
+      }
+      SubmissionFlow.__Rewire__('stepsConfig', componentMap)
       SubmissionFlow.__Rewire__('StepMarker', () => <div className='step-marker' />)
-      SubmissionFlow.__Rewire__('UploadPhoto', () => <div className='upload-photos' />)
     })
 
     afterEach(() => {
-      SubmissionFlow.__ResetDependency__('ChooseArtist')
-      SubmissionFlow.__ResetDependency__('CreateAccount')
-      SubmissionFlow.__ResetDependency__('DescribeWorkContainer')
+      SubmissionFlow.__ResetDependency__('stepsConfig')
       SubmissionFlow.__ResetDependency__('StepMarker')
-      SubmissionFlow.__ResetDependency__('UploadPhoto')
     })
 
     describe('non-logged-in user, stepping through', () => {

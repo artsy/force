@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
+import stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
 
-function StepMarker ({ currentStep, isMobile, stepLabels, steps }) {
+function StepMarker ({ currentStep, isMobile, steps }) {
   const b = block('consignments2-step-marker')
 
   return (
@@ -12,7 +13,7 @@ function StepMarker ({ currentStep, isMobile, stepLabels, steps }) {
         <ul>
           {
             steps.map((step) => {
-              const stepLabel = stepLabels[step]
+              const stepLabel = stepsConfig[step]
               return (
                 <li className={b('step', { active: step === currentStep })} key={stepLabel.label}>
                   <div className={b('label')}>
@@ -37,28 +38,9 @@ const mapStateToProps = (state) => {
     }
   } = state
 
-  const stepLabels = {
-    createAccount: {
-      label: 'Create Account',
-      shortLabel: 'Create'
-    },
-    chooseArtist: {
-      label: 'Consign Artist/Designer',
-      shortLabel: 'Consign'
-    },
-    describeWork: {
-      label: 'Describe the Work',
-      shortLabel: 'Describe'
-    },
-    uploadPhotos: {
-      label: 'Upload Photos',
-      shortLabel: 'Upload'
-    }
-  }
   return {
     currentStep,
     isMobile,
-    stepLabels,
     steps
   }
 }
@@ -70,6 +52,5 @@ export default connect(
 StepMarker.propTypes = {
   currentStep: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  stepLabels: PropTypes.object.isRequired,
   steps: PropTypes.array.isRequired
 }
