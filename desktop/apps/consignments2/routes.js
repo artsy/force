@@ -62,7 +62,6 @@ export const submissionFlowWithFetch = async (req, res, next) => {
     res.locals.sd.SUBMISSION_ARTIST_NAME = name
     res.render('submission_flow', { user: req.user })
   } catch (e) {
-    console.log('e e e', e)
     next(e)
   }
 }

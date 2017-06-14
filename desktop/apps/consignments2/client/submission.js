@@ -12,6 +12,7 @@ import { Redirect, Router, Route, Switch } from 'react-router'
 import { createStore, applyMiddleware } from 'redux'
 import { data as sd } from 'sharify'
 import {
+  ignoreRedirectOnAuth,
   updateAuthFormStateAndClearError,
   updateCurrentStep,
   updateLocationFromSubmissionAndFreeze,
@@ -107,6 +108,7 @@ function setupSubmissionFlow () {
               render={() => {
                 const Component = stepsConfig.uploadLanding.component
                 store.dispatch(updateAuthFormStateAndClearError('logIn'))
+                store.dispatch(ignoreRedirectOnAuth())
                 return <Component />
               }}
             />

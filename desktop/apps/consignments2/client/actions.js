@@ -15,6 +15,7 @@ export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const ERROR_ON_IMAGE = 'ERROR_ON_IMAGE'
 export const FREEZE_LOCATION_INPUT = 'FREEZE_LOCATION_INPUT'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
+export const IGNORE_REDIRECT_ON_AUTH = 'IGNORE_REDIRECT_ON_AUTH'
 export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
 export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
@@ -286,9 +287,21 @@ export function hideNotConsigningMessage () {
   }
 }
 
+export function ignoreRedirectOnAuth () {
+  return {
+    type: IGNORE_REDIRECT_ON_AUTH
+  }
+}
+
 export function logIn (values) {
   return async (dispatch, getState) => {
     try {
+      const {
+        submissionFlow: {
+          redirectOnAuth
+        }
+      } = getState()
+
       const options = {
         email: values.email,
         password: values.password,
@@ -302,7 +315,7 @@ export function logIn (values) {
                       .send(options)
 
       dispatch(updateUser(user.body.user))
-      dispatch(push(stepsConfig.chooseArtist.path))
+      redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
     } catch (err) {
       dispatch(updateError(err.response.body.error))

@@ -66,6 +66,7 @@ const initialState = {
   notConsigningArtist: false,
   processingImages: [],
   progressBars: {},
+  redirectOnAuth: true,
   resetPasswordSuccess: false,
   skipPhotoSubmission: false,
   steps: [],
@@ -128,6 +129,11 @@ function submissionFlow (state = initialState, action) {
     case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: false
+      }, state)
+    }
+    case actions.IGNORE_REDIRECT_ON_AUTH: {
+      return u({
+        redirectOnAuth: false
       }, state)
     }
     case actions.REMOVE_ERRORED_IMAGE: {

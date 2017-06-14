@@ -77,10 +77,11 @@ describe('Reducers', () => {
       describe('#logIn', () => {
         let store
         let request
+        let mockStore
 
         beforeEach(() => {
           const middlewares = [ thunk ]
-          const mockStore = configureMockStore(middlewares)
+          mockStore = configureMockStore(middlewares)
           const userResponse = {
             body: {
               user: {
@@ -116,6 +117,24 @@ describe('Reducers', () => {
                 method: 'push',
                 args: [ '/consign2/submission/choose-artist' ]
               }
+            },
+            { type: 'CLEAR_ERROR' }
+          ]
+          store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
+        })
+
+        it('ignores redirect correctly', () => {
+          store = mockStore({
+            submissionFlow: {
+              redirectOnAuth: false
+            }
+          })
+          const expectedActions = [
+            {
+              type: 'UPDATE_USER',
+              payload: { user: { id: 'sarah' } }
             },
             { type: 'CLEAR_ERROR' }
           ]
