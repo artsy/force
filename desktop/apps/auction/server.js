@@ -1,12 +1,11 @@
 import * as routes from './routes'
 import express from 'express'
+import reactRenderer from 'express-react-views'
 
 const app = module.exports = express()
 
 app.set('view engine', 'jade')
-app.engine('jsx', require('express-react-views').createEngine({
-  transformViews: false // No need since we're already importing `babel-core/register`
-}))
+app.engine('jsx', reactRenderer.createEngine({ transformViews: false }))
 
 app.set('views', `${__dirname}/templates`)
 
