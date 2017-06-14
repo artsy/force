@@ -3,11 +3,12 @@
 # https://github.com/artsy/reflection
 #
 httpProxy = require 'http-proxy'
+request = require 'superagent'
 proxy = httpProxy.createProxyServer()
 { REFLECTION_URL } = process.env
 
 module.exports = (req, res, next) ->
-  if req.query._escaped_fragment_?
+  return next() unless req.query._escaped_fragment_?
+  request.head(REFLECTION_URL + req.url).end (err) ->
+    return next() if err
     proxy.web req, res, target: REFLECTION_URL, changeOrigin: true
-  else
-    next()
