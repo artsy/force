@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 
-export const renderCheckboxInput = ({ input, ...custom }) => (
+export const renderCheckboxInput = ({ input: { onChange, value }, ...custom }) => (
   <CheckboxInput
     {...custom}
-    value={input.value}
-    onChange={input.onChange}
+    value={value}
+    onChange={onChange}
   />
 )
 

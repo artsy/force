@@ -10,7 +10,7 @@ describe('Reducers', () => {
   describe('auctions', () => {
     it('returns the initial state', () => {
       const { submissionFlow } = reducers(undefined, {})
-      submissionFlow.currentStep.should.eql(0)
+      submissionFlow.currentStep.should.eql('createAccount')
     })
 
     describe('with initial state', () => {
@@ -24,7 +24,9 @@ describe('Reducers', () => {
         it('updates the current submission with json data', () => {
           const submission = {
             id: 'submission-1',
-            image_url: 'http://test-image.png'
+            image_url: 'http://test-image.png',
+            authenticity_certificate: false,
+            signature: false
           }
           const updatedSubmission = reducers(initialResponse, actions.updateSubmission(submission))
           updatedSubmission.submissionFlow.submission.should.eql(submission)
@@ -72,28 +74,14 @@ describe('Reducers', () => {
         })
       })
 
-      describe('#incrementStep', () => {
-        it('updates the current step unless it is at the end', () => {
-          initialResponse.submissionFlow.currentStep.should.eql(0)
-          initialResponse.submissionFlow.steps.length.should.eql(4)
-          const secondStep = reducers(initialResponse, actions.incrementStep())
-          secondStep.submissionFlow.currentStep.should.eql(1)
-          const thirdStep = reducers(secondStep, actions.incrementStep())
-          thirdStep.submissionFlow.currentStep.should.eql(2)
-          const fourthStep = reducers(thirdStep, actions.incrementStep())
-          fourthStep.submissionFlow.currentStep.should.eql(3)
-          const fifthStep = reducers(thirdStep, actions.incrementStep())
-          fifthStep.submissionFlow.currentStep.should.eql(3)
-        })
-      })
-
       describe('#logIn', () => {
         let store
         let request
+        let mockStore
 
         beforeEach(() => {
           const middlewares = [ thunk ]
-          const mockStore = configureMockStore(middlewares)
+          mockStore = configureMockStore(middlewares)
           const userResponse = {
             body: {
               user: {
@@ -123,7 +111,31 @@ describe('Reducers', () => {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' } }
             },
-            { type: 'INCREMENT_STEP' },
+            {
+              type: '@@router/CALL_HISTORY_METHOD',
+              payload: {
+                method: 'push',
+                args: [ '/consign2/submission/choose-artist' ]
+              }
+            },
+            { type: 'CLEAR_ERROR' }
+          ]
+          store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
+        })
+
+        it('ignores redirect correctly', () => {
+          store = mockStore({
+            submissionFlow: {
+              redirectOnAuth: false
+            }
+          })
+          const expectedActions = [
+            {
+              type: 'UPDATE_USER',
+              payload: { user: { id: 'sarah' } }
+            },
             { type: 'CLEAR_ERROR' }
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
@@ -202,7 +214,13 @@ describe('Reducers', () => {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' } }
             },
-            { type: 'INCREMENT_STEP' },
+            {
+              type: '@@router/CALL_HISTORY_METHOD',
+              payload: {
+                method: 'push',
+                args: [ '/consign2/submission/choose-artist' ]
+              }
+            },
             { type: 'CLEAR_ERROR' }
           ]
           store.dispatch(actions.signUp({ name: 'Sarah', email: 'sarah@sarah.com', password: '1234' })).then(() => {
@@ -358,19 +376,19 @@ describe('Reducers', () => {
 
       describe('#updateInputs', () => {
         it('merges the initial input data with user-inputted data', () => {
-          initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql(true)
+          initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql(false)
           initialResponse.submissionFlow.inputs.category.should.eql('Painting')
-          initialResponse.submissionFlow.inputs.signature.should.eql(true)
+          initialResponse.submissionFlow.inputs.signature.should.eql(false)
           initialResponse.submissionFlow.inputs.title.should.eql('')
           const newInputs = {
-            authenticity_certificate: 'no',
+            authenticity_certificate: true,
             title: 'My Artwork!',
             category: 'Sculpture'
           }
           const newInputsStep = reducers(initialResponse, actions.updateInputs(newInputs))
-          newInputsStep.submissionFlow.inputs.authenticity_certificate.should.eql(false)
+          newInputsStep.submissionFlow.inputs.authenticity_certificate.should.eql(true)
           newInputsStep.submissionFlow.inputs.category.should.eql('Sculpture')
-          newInputsStep.submissionFlow.inputs.signature.should.eql(true)
+          newInputsStep.submissionFlow.inputs.signature.should.eql(false)
           newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
         })
       })
@@ -426,6 +444,7 @@ describe('Reducers', () => {
 
           global.window = { btoa: sinon.stub() }
           ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('fetchToken', sinon.stub().returns('fooToken'))
           ActionsRewireApi.__Rewire__('sd', { CURRENT_USER: { accessToken: 'foo' }, CONVECTION_APP_ID: 'myapp' })
         })
 
@@ -433,6 +452,7 @@ describe('Reducers', () => {
           benv.teardown()
           global.btoa.restore()
           ActionsRewireApi.__ResetDependency__('request')
+          ActionsRewireApi.__ResetDependency__('fetchToken')
           ActionsRewireApi.__ResetDependency__('sd')
         })
 
@@ -449,7 +469,7 @@ describe('Reducers', () => {
         })
 
         it('updates the error if it does not succeed', () => {
-          request.send = sinon.stub().returns('TypeError')
+          request.post = sinon.stub().returns('TypeError')
           const expectedActions = [
             {
               type: 'ERROR_ON_IMAGE',

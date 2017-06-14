@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
+import stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
 
 function StepMarker ({ currentStep, isMobile, steps }) {
@@ -11,11 +12,12 @@ function StepMarker ({ currentStep, isMobile, steps }) {
       <div className={b('steps')}>
         <ul>
           {
-            steps.map((step, index) => {
+            steps.map((step) => {
+              const stepLabel = stepsConfig[step]
               return (
-                <li className={b('step', { active: index === currentStep })} key={step.label}>
+                <li className={b('step', { active: step === currentStep })} key={stepLabel.label}>
                   <div className={b('label')}>
-                    {isMobile ? step.shortLabel : step.label}
+                    {isMobile ? stepLabel.shortLabel : stepLabel.label}
                   </div>
                 </li>
               )
@@ -27,18 +29,28 @@ function StepMarker ({ currentStep, isMobile, steps }) {
   )
 }
 
-const mapStateToProps = (state) => ({
-  currentStep: state.submissionFlow.currentStep,
-  isMobile: state.submissionFlow.isMobile,
-  steps: state.submissionFlow.steps
-})
+const mapStateToProps = (state) => {
+  const {
+    submissionFlow: {
+      currentStep,
+      isMobile,
+      steps
+    }
+  } = state
+
+  return {
+    currentStep,
+    isMobile,
+    steps
+  }
+}
 
 export default connect(
   mapStateToProps,
 )(StepMarker)
 
 StepMarker.propTypes = {
-  currentStep: PropTypes.number.isRequired,
+  currentStep: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
   steps: PropTypes.array.isRequired
 }

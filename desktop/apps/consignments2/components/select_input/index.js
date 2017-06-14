@@ -20,21 +20,17 @@ function SelectInput (props) {
     value
   } = props
   const b = block('consignments2-submission-select-input')
-
   return (
     <div className={b({item})}>
       { label && <div className={b('label')}>{ label }</div> }
       <label className={b('select').mix('bordered-select')}>
-        <select>
+        <select defaultValue={value} onChange={onChange}>
           {
             map(options, (option) => {
               return (
-                <option
-                  href='#'
-                  className='bordered-pulldown-active'
-                  key={option}
-                  onClick={() => onChange(option)}
-                >{ option }</option>
+                <option key={option}>
+                  { option }
+                </option>
               )
             })
           }
