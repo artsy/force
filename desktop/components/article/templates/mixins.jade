@@ -24,11 +24,11 @@ mixin video(video)
 mixin fullscreen(article)
   figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
     if article.get('hero_section').background_url
-      .article-fullscreen-overlay
-      video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
+      .article-fullscreen__overlay
+      video.article-fullscreen__video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
     else if article.get('hero_section').background_image_url
-      .article-fullscreen-overlay
-      img.article-fullscreen-image(
+      .article-fullscreen__overlay
+      img.article-fullscreen__image(
         src=resize(article.get('hero_section').background_image_url, { height: 1250, width: 1250 })
       )
 
@@ -36,15 +36,22 @@ mixin fullscreen(article)
       .main-layout-container.article-sa-fullscreen-logos
         if superArticle
           +superArticleLogos(superArticle)
-        .article-share-fixed-fullscreen(data-id=article.get('id'))
-          +share-fixed( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
 
-    .main-layout-container.article-fullscreen-text
-      .article-fullscreen-text-overlay
+    .main-layout-container.article-fullscreen__content
+      .article-fullscreen__text
         if article.get('hero_section').title
-          h1.large-garamond-header.article-fullscreen-title= article.get('title')
+          .article-fullscreen__title= article.get('title')
         if !article.get('is_super_article')
-          +author-date
+          .article-fullscreen__author-date
+            if article.get('contributing_authors').length > 0
+              = "By " + article.byline()
+            else
+              = "By " + article.related().author.get('name')
+            span
+              = article.date('published_at').format('MMM Do, YYYY h:mm a')
+
+      .article-fullscreen__share(data-id=article.get('id'))
+        +share( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
 
 mixin superArticleLogos(article)
   .article-sa-primary-logos

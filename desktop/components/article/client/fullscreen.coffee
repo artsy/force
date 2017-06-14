@@ -7,38 +7,7 @@ module.exports = class FullscreenView extends Backbone.View
     { @article, header } = options
     @$window = $(window)
     @setupArticleWaypoints()
-    @initFullscreenHeader(header)
     @duration = 500
-
-  initFullscreenHeader: ($header) ->
-    @centerFullscreenHeader $header
-
-    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
-
-    # Show after css modifications are done
-    $header.find('.main-layout-container').addClass 'visible'
-
-  centerFullscreenHeader: ($header) ->
-
-    # Center header
-    $container = $header.find('.article-fullscreen-text-overlay')
-    maxHeight = @$window.height()
-    margin = Math.round((maxHeight - $container.height()) / 2)
-    minMargin = 158
-    if margin < minMargin
-      margin = minMargin
-
-      # fix for small screens
-      headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
-
-    $container.css 'margin-top': "#{margin}px"
-
-  scrollPastFullscreenHeader: ->
-    position = @$('.article-fullscreen').height()
-    (@$htmlBody ?= $('html, body'))
-      .animate { scrollTop: position }, @duration
-    false
 
   setupArticleWaypoints: ->
     $fullscreenVideo = @$('.article-fullscreen')
