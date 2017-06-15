@@ -10,15 +10,18 @@ module.exports = class FullscreenView extends Backbone.View
     @duration = 500
 
   setupArticleWaypoints: ->
-    $fullscreenVideo = @$('.article-fullscreen')
-    return unless $fullscreenVideo.length
+    $fullscreen = @$('.article-fullscreen')
+    $fixedShareNav = @$('.article-social.fixed')
+    $fixedShareNav.addClass 'hidden'
 
     selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
     @$el.removeClass 'body-header-fixed'
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
-        $fullscreenVideo.addClass 'hidden'
+        $fullscreen.addClass 'hidden'
+        $fixedShareNav.removeClass 'hidden'
         @$el.addClass('body-header-fixed').removeClass 'body-transparent-header body-transparent-header-white'
       else
-        $fullscreenVideo.removeClass 'hidden'
+        $fullscreen.removeClass 'hidden'
+        $fixedShareNav.addClass 'hidden'
         @$el.removeClass('body-header-fixed').addClass 'body-transparent-header body-transparent-header-white'

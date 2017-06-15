@@ -41,17 +41,16 @@ mixin fullscreen(article)
       .article-fullscreen__text
         if article.get('hero_section').title
           .article-fullscreen__title= article.get('title')
-        if !article.get('is_super_article')
-          .article-fullscreen__author-date
-            if article.get('contributing_authors').length > 0
-              = "By " + article.byline()
-            else
-              = "By " + article.related().author.get('name')
-            span
-              = article.date('published_at').format('MMM Do, YYYY h:mm a')
+        .article-fullscreen__author-date
+          if article.get('contributing_authors').length > 0
+            = "By " + article.byline()
+          else
+            = "By " + article.related().author.get('name')
+          span
+            = article.date('published_at').format('MMM Do, YYYY h:mm a')
 
       .article-fullscreen__share(data-id=article.get('id'))
-        +share( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
+        +share( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref(), true)
 
 mixin superArticleLogos(article)
   .article-sa-primary-logos
