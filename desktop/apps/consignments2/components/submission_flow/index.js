@@ -9,7 +9,7 @@ import {
 } from '../../client/actions'
 
 function SubmissionFlow (props) {
-  const b = block('consignments2-submission')
+  const b = block('consignments2-submission-flow')
   const { CurrentStepComponent, isMobile } = props
 
   return (
