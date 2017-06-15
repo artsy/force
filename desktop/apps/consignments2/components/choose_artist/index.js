@@ -30,6 +30,7 @@ function ChooseArtist (props) {
   const {
     artistAutocompleteSuggestions,
     artistAutocompleteValue,
+    artistName,
     clearArtistSuggestionsAction,
     chooseArtistAndAdvanceAction,
     fetchArtistSuggestionsAction,
@@ -74,7 +75,7 @@ function ChooseArtist (props) {
         </div>
         <div
           className={b('next-button').mix('avant-garde-button-black')}
-          onClick={showNotConsigningMessageAction}
+          onClick={artistAutocompleteValue === artistName ? chooseArtistAndAdvanceAction : showNotConsigningMessageAction}
           disabled={!nextEnabled}
         >
           Next
@@ -126,6 +127,7 @@ export default connect(
 ChooseArtist.propTypes = {
   artistAutocompleteSuggestions: PropTypes.array,
   artistAutocompleteValue: PropTypes.string,
+  artistName: PropTypes.string,
   clearArtistSuggestionsAction: PropTypes.func.isRequired,
   chooseArtistAndAdvanceAction: PropTypes.func.isRequired,
   fetchArtistSuggestionsAction: PropTypes.func.isRequired,

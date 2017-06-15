@@ -36,6 +36,5 @@ export default function CheckboxInput (props) {
 CheckboxInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.bool
+  onChange: PropTypes.func.isRequired
 }
