@@ -1,0 +1,21 @@
+- imgUrl = auction.get('cover_image') ? auction.get('cover_image').cropped.url : ''
+if auction.isLiveOpen()
+  .auction-banner.auction-banner-live-open
+    .auction-banner-live-bg(
+      style='background-image: url("' + imgUrl + '")'
+      alt= auction.get('name')
+    )
+    .auction-banner-live-details
+      h1 Live Bidding Now Open
+      a.avant-garde-button-white(
+        href=viewHelpers.getLiveAuctionUrl(auction.get('id'), {isLoggedIn: Boolean(me)})
+        target='_blank'
+      ) Enter live auction
+else
+  .auction-banner
+    .auction-banner-live-bg(
+      style='background-image: url("' + imgUrl + '")'
+      alt= auction.get('name')
+    )
+      .auction-clock.white-overlay-clock.js-auction-clock
+        include ../../../components/clock/template
