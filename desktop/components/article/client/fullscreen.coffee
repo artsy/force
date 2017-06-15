@@ -7,7 +7,6 @@ module.exports = class FullscreenView extends Backbone.View
     { @article, header } = options
     @$window = $(window)
     @setupArticleWaypoints()
-    @duration = 500
 
   setupArticleWaypoints: ->
     $fullscreen = @$('.article-fullscreen')
