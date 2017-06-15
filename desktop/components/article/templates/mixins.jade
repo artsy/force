@@ -32,25 +32,26 @@ mixin fullscreen(article)
         src=resize(article.get('hero_section').background_image_url, { height: 1250, width: 1250 })
       )
 
-    if superArticle
-      .main-layout-container.article-sa-fullscreen-logos
-        if superArticle
-          +superArticleLogos(superArticle)
+    .main-layout-container.article-fullscreen__container
+      if superArticle
+        .article-sa-fullscreen-logos
+          if superArticle
+            +superArticleLogos(superArticle)
 
-    .main-layout-container.article-fullscreen__content
-      .article-fullscreen__text
-        if article.get('hero_section').title
-          .article-fullscreen__title= article.get('title')
-        .article-fullscreen__author-date
-          if article.get('contributing_authors').length > 0
-            = "By " + article.byline()
-          else
-            = "By " + article.related().author.get('name')
-          span
-            = article.date('published_at').format('MMM Do, YYYY h:mm a')
+      .article-fullscreen__content
+        .article-fullscreen__text
+          if article.get('hero_section').title
+            .article-fullscreen__title= article.get('title')
+          .article-fullscreen__author-date
+            if article.get('contributing_authors').length > 0
+              = "By " + article.byline()
+            else
+              = "By " + article.related().author.get('name')
+            span
+              = article.date('published_at').format('MMM Do, YYYY h:mm a')
 
-      .article-fullscreen__share(data-id=article.get('id'))
-        +share( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref(), true)
+        .article-fullscreen__share(data-id=article.get('id'))
+          +share( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref(), true)
 
 mixin superArticleLogos(article)
   .article-sa-primary-logos
