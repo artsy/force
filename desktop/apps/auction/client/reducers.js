@@ -1,7 +1,7 @@
 import * as actions from './actions'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
-import { contains, omit } from 'underscore'
+import { contains } from 'underscore'
 import u from 'updeep'
 
 const filterParams = {
@@ -22,14 +22,29 @@ const filterParams = {
   sort: 'position'
 }
 
-const scrubbedParams = omit(filterParams, 'estimate_range')
 
 const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],
   allFetched: false,
   displayFollowedArtistsRail: false,
-  filterParams: sd.AUCTION && sd.AUCTION._id === '593c3fac8b0c147c16a59381' ? scrubbedParams : filterParams,
+  filterParams: {
+    aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
+    artist_ids: [],
+    estimate_range: '',
+    gene_ids: [],
+    include_artworks_by_followed_artists: false,
+    page: 1,
+    sale_id: sd.AUCTION && sd.AUCTION.id,
+    size: 50,
+    ranges: {
+      estimate_range: {
+        min: 0,
+        max: 50000
+      }
+    },
+    sort: 'position'
+  },
   followedArtistRailMax: 50,
   followedArtistRailPage: 1,
   followedArtistRailSize: 4,
