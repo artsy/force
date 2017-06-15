@@ -25,22 +25,33 @@
 @require '../components/upload_photo_landing/index'
 @require '../components/uploaded_image/index'
 
-.consignments2-submission
-  #consignments2-submission__flow
-    margin-bottom 50px
+.consignments2-submission-body
+  @media (max-width: responsive-mobile-width)
+    #main-layout-header
+      height 53px
+      #main-header-search-form, #main-header-search-button
+        display none
 
-  &__footer
-    position fixed
-    left 0
-    right 0
-    bottom 0
-    background-color white
+  .mlh-notification
+    display none
 
-    @media (max-width: responsive-mobile-width)
-      display none
+  .consignments2-submission
+    min-height calc(100vh \- 210px)
 
-  &__footer-contents
-    display flex
-    justify-content space-between
-    padding 20px
-    border-top 1px solid gray-lighter-color
+    #consignments2-submission__flow
+      margin-bottom 50px
+
+    &__footer
+      position absolute
+      left 0
+      right 0
+      background-color white
+
+      @media (max-width: responsive-mobile-width)
+        display none
+
+    &__footer-contents
+      display flex
+      justify-content space-between
+      padding 20px
+      border-top 1px solid gray-lighter-color
