@@ -1,6 +1,6 @@
 import capitalize from 'underscore.string/capitalize'
-import getLayout from './get_layout'
-import makeTemplateComponent from './make_template_component'
+import getForceLayout from './get_force_layout'
+import buildTemplateComponent from './build_template_component'
 
 /**
  * Utility for working with React and Jade layout code on the server. If raw
@@ -10,10 +10,10 @@ import makeTemplateComponent from './make_template_component'
  * @example
  *
  * // routes.js
- * import { makeTemplate } from 'components/react/utils/template_renderer'
+ * import renderTemplate from 'components/react/utils/render_template'
  *
  * // Can also pass in an array to return an array
- * const meta = makeTemplate('meta.jade', { locals: res.locals })
+ * const meta = renderTemplate('meta.jade', { locals: res.locals })
  *
  * res.render('index.jsx', {
  *   templates: {
@@ -22,10 +22,10 @@ import makeTemplateComponent from './make_template_component'
  * })
  *
  * // templates/index.jsx
- * import { makeLayout } from 'components/react/main_layout'
+ * import { buildReactLayout } from 'components/react/main_layout'
  *
  * export default IndexRoute (props) {
- *   const { Layout: { Header, Body, Footer }, Meta } = makeLayout(props)
+ *   const { Layout: { Header, Body, Footer }, Meta } = buildReactLayout(props)
  *
  *   return (
  *     <div>
@@ -44,8 +44,9 @@ import makeTemplateComponent from './make_template_component'
  * @param  {Object} locals          Data to render into components
  * @return {Object}
  */
-export default function makeLayout ({ templates, ...locals } = { templates: {} }) {
-  const layout = getLayout(locals)
+export default function buildReactLayout (options) {
+  const { templates = {}, ...locals } = options || {}
+  const layout = getForceLayout(locals)
 
   /**
    * Map over user-supplied templates and return renderable <Component />s. Keys located
@@ -56,7 +57,7 @@ export default function makeLayout ({ templates, ...locals } = { templates: {} }
     .keys(templates)
     .reduce((components, key) => {
       const Name = capitalize(key)
-      const Component = makeTemplateComponent(templates[key])
+      const Component = buildTemplateComponent(templates[key])
 
       return {
         ...components,
