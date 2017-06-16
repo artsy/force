@@ -14,9 +14,9 @@ const stepsConfig = {
   },
   chooseArtist: {
     component: ChooseArtist,
-    label: 'Consign Artist/Designer',
+    label: 'Confirm Artist/Designer',
     path: '/consign2/submission/choose-artist',
-    shortLabel: 'Consign'
+    shortLabel: 'Confirm'
   },
   describeWork: {
     component: DescribeWorkContainer,

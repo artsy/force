@@ -7,7 +7,7 @@ import React from 'react'
  * @param  {String} html
  * @return {Component}
  */
-export default function makeTemplateComponent (html) {
+export default function buildTemplateComponent (html) {
   const TemplateComponent = ({ children }) => {
     return (
       <div>
