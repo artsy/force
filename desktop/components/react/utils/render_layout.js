@@ -2,23 +2,41 @@ import renderTemplate from 'desktop/components/react/utils/render_template'
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
 
-export default function renderLayout (props) {
+const { NODE_ENV } = process.env
+
+export default function renderLayout (options) {
   const {
     basePath = '',
     blocks: { header, body } = {},
     locals = {}
-  } = props
+  } = options
 
   function render (block) {
-    let html
+    let html = ''
 
-    // Passing in Jade template
-    if (isString(block)) {
-      html = renderTemplate(block, { basePath, locals })
+    // Jade template
+    if (isJadeTemplate(block)) {
+      html = renderTemplate(block, {
+        basePath,
+        locals
+      })
 
-      // Passing in Component
-    } else if (isFunction(block)) {
+      // Component
+    } else if (isReactComponent(block)) {
       html = renderToString(block(locals))
+
+      // String
+    } else if (isString(block)) {
+      html = block
+
+      // Error
+    } else {
+      if (NODE_ENV === 'development') {
+        throw new Error(
+          '(components/reaect/utils/render_layout.js) ' +
+          'Error rendering layout: `block` must be a j'
+        )
+      }
     }
 
     return html
@@ -33,4 +51,21 @@ export default function renderLayout (props) {
   })
 
   return layout
+}
+
+// Helpers
+
+function isJadeTemplate (fileName) {
+  return isString(fileName) && fileName.includes('.jade')
+}
+
+function isReactComponent (Component) {
+  if (isFunction(Component) && Component.prototype.render) {
+    throw new Error(
+      '(components/reaect/utils/render_layout.js) ' +
+      'Error rendering layout: Component must be a stateless functional component'
+    )
+  } else {
+    return isFunction(Component)
+  }
 }
