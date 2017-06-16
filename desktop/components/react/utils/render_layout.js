@@ -2,8 +2,6 @@ import renderTemplate from 'desktop/components/react/utils/render_template'
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
 
-const { NODE_ENV } = process.env
-
 export default function renderLayout (options) {
   const {
     basePath = '',
@@ -13,6 +11,10 @@ export default function renderLayout (options) {
 
   function render (block) {
     let html = ''
+
+    if (!block) {
+      return html
+    }
 
     // Jade template
     if (isJadeTemplate(block)) {
@@ -31,10 +33,11 @@ export default function renderLayout (options) {
 
       // Error
     } else {
-      if (NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         throw new Error(
           '(components/reaect/utils/render_layout.js) ' +
-          'Error rendering layout: `block` must be a j'
+          'Error rendering layout: `block` must be a Jade template, React ' +
+          'component or string'
         )
       }
     }
