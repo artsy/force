@@ -17,7 +17,7 @@ const landing = new JSONPage({
 
 const { data, edit, upload } = require('../../components/json_page/routes')(landing)
 
-app.get(landing.paths.show, adminOnly, routes.landingPage)
+app.get(landing.paths.show, routes.landingPage)
 app.get(landing.paths.show + '/data', adminOnly, data)
 app.get(landing.paths.edit, adminOnly, edit)
 app.post(landing.paths.edit, adminOnly, upload)
