@@ -9,34 +9,34 @@ const stepsConfig = {
   createAccount: {
     component: CreateAccount,
     label: 'Create Account',
-    path: '/consign2/submission/create-account',
+    path: '/consign/submission/create-account',
     shortLabel: 'Create'
   },
   chooseArtist: {
     component: ChooseArtist,
     label: 'Confirm Artist/Designer',
-    path: '/consign2/submission/choose-artist',
+    path: '/consign/submission/choose-artist',
     shortLabel: 'Confirm'
   },
   describeWork: {
     component: DescribeWorkContainer,
     label: 'Describe the Work',
-    path: '/consign2/submission/describe-your-work',
+    path: '/consign/submission/describe-your-work',
     shortLabel: 'Describe',
-    submissionPath: '/consign2/submission/:id/describe-your-work'
+    submissionPath: '/consign/submission/:id/describe-your-work'
   },
   uploadLanding: {
     component: UploadPhotoLanding,
-    submissionPath: '/consign2/submission/:id/upload'
+    submissionPath: '/consign/submission/:id/upload'
   },
   uploadPhotos: {
     component: UploadPhoto,
     label: 'Upload Photos',
     shortLabel: 'Upload',
-    submissionPath: '/consign2/submission/:id/upload-photos'
+    submissionPath: '/consign/submission/:id/upload-photos'
   },
   thankYou: {
-    submissionPath: '/consign2/submission/:id/thank-you',
+    submissionPath: '/consign/submission/:id/thank-you',
     component: ThankYou
   }
 }

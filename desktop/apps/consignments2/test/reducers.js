@@ -115,7 +115,7 @@ describe('Reducers', () => {
               type: '@@router/CALL_HISTORY_METHOD',
               payload: {
                 method: 'push',
-                args: [ '/consign2/submission/choose-artist' ]
+                args: [ '/consign/submission/choose-artist' ]
               }
             },
             { type: 'CLEAR_ERROR' }
@@ -218,7 +218,7 @@ describe('Reducers', () => {
               type: '@@router/CALL_HISTORY_METHOD',
               payload: {
                 method: 'push',
-                args: [ '/consign2/submission/choose-artist' ]
+                args: [ '/consign/submission/choose-artist' ]
               }
             },
             { type: 'CLEAR_ERROR' }
