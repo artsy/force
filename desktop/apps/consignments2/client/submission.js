@@ -51,7 +51,7 @@ function setupSubmissionFlow () {
         <Router history={history}>
           <Switch>
             <Route
-              exact path='/consign2/submission'
+              exact path='/consign/submission'
               render={() => {
                 if (sd.CURRENT_USER) {
                   store.dispatch(updateStepsWithUser())

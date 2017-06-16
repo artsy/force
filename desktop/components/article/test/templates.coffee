@@ -43,7 +43,7 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
-    html.should.containEql 'article-fullscreen-video-player'
+    html.should.containEql 'article-fullscreen__video-player'
 
   it 'renders fullscreen headers with static image', ->
     html = render('index')
@@ -60,7 +60,7 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
-    html.should.containEql 'article-fullscreen-image'
+    html.should.containEql 'article-fullscreen__image'
 
   it 'superSubArticles can render fullscreen header and SA menu with correct classes', ->
     html = render('index')
@@ -83,7 +83,7 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
-    html.should.containEql 'article-fullscreen-image'
+    html.should.containEql 'article-fullscreen__image'
     html.should.containEql 'article-sa-sticky-header'
     html.should.containEql '<a href="http://logo.com"><img src="http://fullscreen-logo.jpg"/></a>'
     html.should.not.containEql 'visible no-transition'

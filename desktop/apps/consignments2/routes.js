@@ -43,7 +43,7 @@ export const submissionFlow = async (req, res, next) => {
 }
 
 export const redirectToSubmissionFlow = async (req, res, next) => {
-  return res.redirect('/consign2/submission')
+  return res.redirect('/consign/submission')
 }
 
 export const submissionFlowWithId = async (req, res, next) => {

@@ -9,6 +9,8 @@ append locals
   - options = {modal: false, flash: false}
 
 block body
+  - submissionPath = '/consign/submission'
+
   include ./header
   .consignments2-page
     header.consignments2-header(
@@ -17,7 +19,7 @@ block body
       h1.consignments2-header__headline
         = header.headline
       .consignments2-header__cta
-        a.avant-garde-button-white.consignments2-header__consign-button( href='/consign2/submission' )
+        a.avant-garde-button-white.consignments2-header__consign-button( href= submissionPath )
           = header.button_cta
 
     .consignments2-sections
@@ -35,7 +37,7 @@ block body
                     = step.title
                   .consignments2-steps__steps__step__description
                     p= step.description
-            a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+            a.avant-garde-button-black.consignments2-section__consign-button( href=submissionPath )
               = sections.how_consignments_work.button_cta
 
       //- Placement
@@ -56,7 +58,7 @@ block body
           .consignments2-section__about
             h3.consignments2-section__about__headline
               = sections.top_sales.headline
-          a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+          a.avant-garde-button-black.consignments2-section__consign-button( href=submissionPath )
               = sections.top_sales.button_cta
 
       //- Recently Sold
@@ -106,7 +108,7 @@ block body
                 h5= moment(sale.start_at).format('MMM D')
                 p= sale.name
             .consignments2-upcoming-sales__sales__button
-              a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+              a.avant-garde-button-black.consignments2-section__consign-button( href=submissionPath )
                   = sections.upcoming_sales.button_cta
 
       //- Upcoming sales, mobile version
@@ -118,7 +120,7 @@ block body
             h3.consignments2-section__about__headline
               = sections.upcoming_sales.headline
           .consignments2-upcoming-sales__sales__button
-            a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+            a.avant-garde-button-black.consignments2-section__consign-button( href=submissionPath )
               = sections.upcoming_sales.button_cta
           .consignments2-upcoming-sales__sales
             for sale in sales
@@ -148,7 +150,7 @@ block body
               h4 Want to learn more? Read our <a id='consignments2-open-faq-modal' href='#'>full FAQ</a> or&nbsp;
                 a( href='mailto:consignments@artsy.net' ) contact us.
           .consignments2-section__questions__button-wrapper
-            a.avant-garde-button-black.consignments2-section__consign-button( href='/consign2/submission' )
+            a.avant-garde-button-black.consignments2-section__consign-button( href=submissionPath )
               = sections.footer.button_cta
 
     .consignments2-footer(
@@ -157,7 +159,7 @@ block body
       h1.consignments2-header__headline
         = sections.footer.headline
       .consignments2-header__cta
-        a.avant-garde-button-white.consignments2-header__consign-button( href='/consign2/submission' )
+        a.avant-garde-button-white.consignments2-header__consign-button( href=submissionPath )
           = sections.footer.button_cta
 
   include ./faq

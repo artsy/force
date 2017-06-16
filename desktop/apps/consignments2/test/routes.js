@@ -26,7 +26,7 @@ describe('#redirectToSubmissionFlow', () => {
 
   it('redirects to the submission page', async () => {
     await routes.redirectToSubmissionFlow(req, res, next)
-    res.redirect.args[0][0].should.eql('/consign2/submission')
+    res.redirect.args[0][0].should.eql('/consign/submission')
   })
 })
 
