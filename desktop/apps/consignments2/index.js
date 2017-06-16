@@ -10,8 +10,8 @@ app.set('view engine', 'jade')
 const landing = new JSONPage({
   name: 'consignments2/landing',
   paths: {
-    show: '/consign2',
-    edit: '/consign2/edit'
+    show: '/consign',
+    edit: '/consign/edit'
   }
 })
 
@@ -21,9 +21,9 @@ app.get(landing.paths.show, adminOnly, routes.landingPage)
 app.get(landing.paths.show + '/data', adminOnly, data)
 app.get(landing.paths.edit, adminOnly, edit)
 app.post(landing.paths.edit, adminOnly, upload)
-app.get('/consign2/submission/:id/describe-your-work', adminOnly, routes.submissionFlowWithFetch)
-app.get('/consign2/submission/:id/upload-photos', adminOnly, routes.submissionFlowWithFetch)
-app.get('/consign2/submission/:id/thank-you', adminOnly, routes.submissionFlowWithId)
-app.get('/consign2/submission/:id/upload', adminOnly, routes.submissionFlowWithId)
-app.get('/consign2/submission', adminOnly, routes.submissionFlow)
-app.get('/consign2/submission*', adminOnly, routes.redirectToSubmissionFlow)
+app.get('/consign/submission/:id/describe-your-work', routes.submissionFlowWithFetch)
+app.get('/consign/submission/:id/upload-photos', routes.submissionFlowWithFetch)
+app.get('/consign/submission/:id/thank-you', routes.submissionFlowWithId)
+app.get('/consign/submission/:id/upload', routes.submissionFlowWithId)
+app.get('/consign/submission', routes.submissionFlow)
+app.get('/consign/submission*', routes.redirectToSubmissionFlow)
