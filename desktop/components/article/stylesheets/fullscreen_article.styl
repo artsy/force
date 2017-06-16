@@ -1,13 +1,5 @@
 @require '../../stylus_lib'
 
-@keyframes pulse
-  0%
-    opacity 0.33
-  50%
-    opacity 1
-  100%
-    opacity 0.33
-
 body.body-fullscreen-article
   .article-content
     .main-layout-container.first
@@ -19,7 +11,7 @@ body.body-fullscreen-article
   background white
   z-index 1
   position relative
-  h1.large-garamond-header, .article-lead-paragraph, .article-author-date, .article-social.article-share-top
+  h1.large-garamond-header, .article-author-date, .article-social.fixed.hidden
     display none
 
   .article-share-fixed
@@ -32,29 +24,94 @@ body.body-fullscreen-article
   overflow hidden
   &.hidden
     opacity 0
-  a
-    color white
-  .article-lead-paragraph-container
-    position relative
-  .main-layout-container
-    transition opacity 0.3s
-    opacity 0
-    position relative
-    &.visible
-      opacity 1
-  .article-fullscreen-text-overlay
-    position relative
+  &__overlay
+    background black
+    opacity 0.17
+    min-height 500px
     z-index 1
-  .article-date
-    color gray-lighter-color
-  .article-author-date
-    margin-bottom 20px
+  &__overlay, &__video-player, &__image
+    position fixed
+    top 0px
+    left 0px
+    height 100vh
+    width 100vw
+    pointer-events none
+  &__video-player, &__image
+    object-fit cover
+    z-index 0
+  &__text
+    width 100%
+    display flex
+    flex-direction column
+    justify-content flex-end
+    position relative
+    color white
+    z-index 5
+    opacity 1
+  &__title
+    garamond-size('xl-headline')
+    text-align left
+    max-width 75%
+  &__author-date
+    garamond-size('l-body', true)
+    margin-top 23px
+    span
+      color gray-lighter-color
+      margin-left 20px
+  &__share
+    z-index 1
+    display flex
+    justify-content flex-end
+    flex-direction column
+    .share-item
+      a
+        text-decoration none
+        color white
+      display block
+      background-color transparent
+      transition background-color 0.25s, border-color 0.25s
+      padding 10px
+      border 1px solid white
+      &:nth-child(2)
+        border-top none
+        border-bottom none
+      &:hover
+        background-color white
+        a
+          color black
+    i
+      vertical-align middle
+  &__content
+    bottom 0
+    display flex
+    justify-content space-between
+    align-items flex-start
+  &__text, &__share
+    padding-bottom 50px
+  &__container
+    width 100%
+    height 100%
+    display flex
+    flex-direction column
+    justify-content space-between
 
   // Logos
+  .article-sa-plus-container
+    margin-left 20px
+  .article-sa-plus, .article-sa-primary-logo
+    display inline-block
+  .article-sa-plus
+    color white
+    font-size 20px
+    margin 0px
+  .article-sa-primary-logo
+    margin-left 20px
+    img
+      height 50px
   .article-sa-primary-logos
     position absolute
     z-index 1
-    top 80px
+    margin-top 30px
     .article-sa-plus
       margin-top 10px
   .article-sa-artsy-logo
@@ -62,98 +119,31 @@ body.body-fullscreen-article
     width 148px
     font-size 50px
     backface-visibility hidden
-  .article-sa-primary-logo img
-    height 50px
-
-.article-fullscreen-down-arrow
-  position absolute
-  top 0px
-  z-index 3
-  font-size 50px
-  text-align center
-  color white
-  width 100%
-  display none
-  .icon-chevron-down
-    font-size 50px
-    line-height 50px
-    animation pulse 2s infinite
-
-.article-share-fixed-fullscreen
-  position absolute
-  top 80px
-  right 0px
-  z-index 1
-  a
-    color white
-    text-decoration none
-
-.article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image
-  position fixed
-  top 0px
-  left 0px
-  height 100vh
-  width 100vw
-  pointer-events none
-
-.article-fullscreen-overlay
-  background black
-  opacity 0.17
-  min-height 500px
-  z-index 1
-
-.article-fullscreen-text-overlay
-  color white
-
-.article-fullscreen-video-player, .article-fullscreen-image
-  object-fit cover
-  z-index 0
-
-.article-container h1.article-fullscreen-title
-  font-size 72px
-  font-style italic
-  line-height 110%
-  text-align center
-
-.article-fullscreen.article-sa-fullscreen
-  h1
-    margin-bottom 60px
-    text-align left
-  .main-layout-container
-    margin-top 0px
-
-.article-fullscreen-intro.article-lead-paragraph
-  font-size 22px
-  line-height 120%
-  margin-bottom 0px
 
 .article-fullscreen
   @media screen and (max-width 550px)
-    h1.article-fullscreen-title
-      font-size 43px
-      text-align left
+    &__content
+      margin 0 20px
+    &__title
+      garamond-size('headline')
+    &__author-date
+      garamond-size('s-body')
     .article-sa-artsy-logo
       font-size 32px
       width 95px
     .article-sa-primary-logo img
       height 32px
       margin-top 0px
+    .article-sa-primary-logos
+      margin 20px
+      .article-sa-plus
+        margin-top 0px
   @media screen and (max-width 900px)
-    h1.article-fullscreen-title
-      max-width 100%
-    .article-fullscreen-text-overlay
+    &__content
       margin 0 30px
-    .article-sa-primary-logos
-      margin-left 30px
-    .article-share-fixed-fullscreen
+    &__title
+      max-width 100%
+    &__share
       display none
-  @media screen and (min-width 1100px)
-    .article-fullscreen-intro.article-lead-paragraph, .article-sa-fullscreen-logos
-      width 900px
     .article-sa-primary-logos
-      margin-left auto
-    .article-container h1.article-fullscreen-title
-      width 900px
-  @media screen and (min-width 1500px)
-    .article-fullscreen-intro.article-lead-paragraph
-      font-size 25px
+      margin 30px
