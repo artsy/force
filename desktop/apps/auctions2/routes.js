@@ -1,17 +1,18 @@
 import AuctionReminders from 'desktop/components/auction_reminders/fetch.coffee'
+import Index from './templates/index.jsx'
+import renderLayout from 'desktop/components/react/utils/render_layout'
 
 export function index (req, res, next) {
-  res.render('index.jsx', {
+  const layout = renderLayout({
     basePath: res.app.get('views'),
-    locals: {
-      ...res.locals,
-      myActiveBids: ['a', 'b', 'c']
+    blocks: {
+      header: 'meta.jade',
+      body: Index
     },
-    templates: {
-      meta: 'meta.jade',
-      myActiveBids: 'my_active_bids.jade'
-    }
+    locals: res.locals
   })
+
+  res.send(layout)
 }
 
 export function redirectAuction (req, res, next) {

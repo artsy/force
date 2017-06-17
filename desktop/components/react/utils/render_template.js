@@ -1,44 +1,20 @@
-import invariant from 'invariant'
 import jade from 'jade'
 import path from 'path'
+import { first, isArray } from 'underscore'
 
-import {
-  first,
-  isArray,
-  isString,
-  defaults
-} from 'underscore'
-
-const defaultOptions = {
-  basePath: '',
-  compilerOptions: {},
-  locals: {}
-}
-
-export default function renderTemplate (templates, opts = {}) {
-  const isValid = isArray(templates) || isString(templates)
-
-  invariant(isValid,
-    '(components/react/utils/render_template.js) ' +
-    'Error rendering templates: `templates` must be a string or array of ' +
-    'strings representing the path to the template'
-  )
-
+export default function renderTemplate (templates, options = {}) {
   templates = isArray(templates)
     ? templates
     : [templates]
 
   const {
-    basePath,
-    compilerOptions,
-    locals
-  } = defaults(opts, defaultOptions)
+    basePath = '',
+    compilerOptions = {},
+    locals = {}
+  } = options
 
   const templateFns = templates.map(file => {
-    return jade.compileFile(path.join(basePath, file), {
-      cache: false,
-      ...compilerOptions
-    })
+    return jade.compileFile(path.join(basePath, file), compilerOptions)
   })
 
   const renderedTemplates = templateFns.map(template => template(locals))

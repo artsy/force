@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import renderTemplate from './render_template'
 
 /**
  * Takes a string of html and returns a Component
@@ -7,12 +8,14 @@ import React from 'react'
  * @param  {String} html
  * @return {Component}
  */
-export default function buildTemplateComponent (html) {
+export default function buildTemplateComponent (template, options) {
   const TemplateComponent = ({ children }) => {
     return (
       <div>
         <div
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{
+            __html: renderTemplate(template, options)
+          }}
         />
         {children}
       </div>

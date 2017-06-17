@@ -13,14 +13,16 @@ markdown = require '../../../components/util/markdown.coffee'
 
 describe 'EOY route', ->
 
-  beforeEach ->
+  beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
+    done()
 
-  afterEach ->
+  afterEach (done) ->
     Backbone.sync.restore()
+    done()
 
   it 'fetches a curation and superArticle, and superSubArticles', (done) ->
     Backbone.sync
