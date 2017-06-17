@@ -197,7 +197,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
           </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
-            disabled={pristine || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
+            disabled={locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
             type='submit'
           >
             {

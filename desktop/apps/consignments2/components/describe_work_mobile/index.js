@@ -14,13 +14,11 @@ import {
 
 function validate (values, props) {
   const {
-    location,
     title,
     year
   } = values
   const errors = {}
 
-  if (!location) errors.location = 'Required'
   if (!title) errors.title = 'Required'
   if (!year) errors.year = 'Required'
 
@@ -38,7 +36,6 @@ export function makeDescribeWorkMobile (initialValues = {}) {
       locationAutocompleteFrozen,
       locationAutocompleteValue,
       submitDescribeWorkAction,
-      invalid,
       pristine
     } = props
 
@@ -112,7 +109,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
-            disabled={pristine || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
+            disabled={locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
             type='submit'
           >
             {
@@ -153,7 +150,6 @@ export function makeDescribeWorkMobile (initialValues = {}) {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    invalid: PropTypes.bool,
     locationAutocompleteFrozen: PropTypes.bool.isRequired,
     locationAutocompleteValue: PropTypes.string,
     pristine: PropTypes.bool,
