@@ -112,7 +112,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
-            disabled={pristine || invalid || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
+            disabled={pristine || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
             type='submit'
           >
             {

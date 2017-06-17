@@ -31,13 +31,13 @@ function validate (values, props) {
 
   if (!title) errors.title = 'Required'
   if (!year) errors.year = 'Required'
-  if (!width || numberWarning(width)) errors.width = 'Invalid'
+  if (!width || numberWarning(width)) errors.width = 'Required'
   if (!medium) errors.medium = 'Required'
-  if (!height || numberWarning(height)) errors.height = 'Invalid'
-  if (numberWarning(depth)) errors.depth = 'Invalid'
+  if (!height || numberWarning(height)) errors.height = 'Required'
+  if (numberWarning(depth)) errors.depth = 'Required'
 
   if (edition) {
-    if (!edition_size || numberWarning(edition_size)) errors.edition_size = 'Invalid'
+    if (!edition_size || numberWarning(edition_size)) errors.edition_size = 'Required'
     if (!edition_number) errors.edition_number = 'Required'
   }
 
@@ -56,7 +56,6 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
       locationAutocompleteFrozen,
       locationAutocompleteValue,
       submitDescribeWorkAction,
-      invalid,
       pristine
     } = props
 
@@ -198,7 +197,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
           </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
-            disabled={invalid || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
+            disabled={pristine || locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
             type='submit'
           >
             {
@@ -238,7 +237,6 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
     loading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     hasEditionValue: PropTypes.bool,
-    invalid: PropTypes.bool,
     locationAutocompleteFrozen: PropTypes.bool.isRequired,
     locationAutocompleteValue: PropTypes.string,
     pristine: PropTypes.bool,
