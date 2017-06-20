@@ -1,5 +1,5 @@
-import CommercialFilter from '../commercial_filter'
-import WorksByFollowedArtists from '../works_by_followed_artists'
+import CommercialFilter from './CommercialFilter'
+import WorksByFollowedArtists from './WorksByFollowedArtists'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'

@@ -1,9 +1,9 @@
-import BasicCheckbox from '../basic_checkbox'
+import BasicCheckbox from './BasicCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
-import { updateArtistParams } from '../../client/actions'
+import { updateArtistParams } from 'desktop/apps/auction2/client/actions'
 
 function ArtistFilter (props) {
   const {

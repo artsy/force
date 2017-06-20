@@ -22,7 +22,6 @@ const filterParams = {
   sort: 'position'
 }
 
-
 const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],

@@ -1,5 +1,5 @@
-import analyticsMiddleware from '../client/analytics_middleware'
-import auctions from '../client/reducers'
+import analyticsMiddleware from 'desktop/apps/auction2/client/analyticsMiddleware'
+import auctions from 'desktop/apps/auction2/client/reducers'
 import { applyMiddleware, createStore } from 'redux'
 import sinon from 'sinon'
 

@@ -1,6 +1,6 @@
-import AuctionGridArtwork from '../auction_grid_artwork'
-import ChevronLeft from '../../../../components/main_layout/public/icons/chevron-left.svg'
-import ChevronRight from '../../../../components/main_layout/public/icons/chevron-right.svg'
+import AuctionGridArtwork from './AuctionGridArtwork'
+// import ChevronLeft from '../../../../../components/main_layout/public/icons/chevron-left.svg'
+// import ChevronRight from '../../../../../components/main_layout/public/icons/chevron-right.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import {
   nextPageOfFollowedArtistArtworks,
   previousPageOfFollowedArtistArtworks
-} from '../../client/actions'
+} from 'desktop/apps/auction2/client/actions'
 
 function WorksByFollowedArtists (props) {
   const {
@@ -48,7 +48,7 @@ function WorksByFollowedArtists (props) {
           className={leftPageClasses}
           onClick={() => { previousPageOfFollowedArtistArtworksAction() }}
         >
-          <ChevronLeft />
+          {/* <ChevronLeft /> */}
         </div>
         <div className='auction-works-by-followed-artists__artworks'>
           {
@@ -61,7 +61,7 @@ function WorksByFollowedArtists (props) {
           className={rightPageClasses}
           onClick={() => { nextPageOfFollowedArtistArtworksAction() }}
         >
-          <ChevronRight />
+          {/* <ChevronRight /> */}
         </div>
       </div>
     </div>

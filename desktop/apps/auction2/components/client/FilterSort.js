@@ -2,7 +2,7 @@ import _ from 'underscore'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateSort } from '../../client/actions'
+import { updateSort } from 'desktop/apps/auction2/client/actions'
 
 function FilterSort (props) {
   const {

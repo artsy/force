@@ -1,6 +1,6 @@
-import Banner from './banner.jsx'
-import Header from './header.jsx'
-import Footer from './footer.jsx'
+import Banner from './Banner.jsx'
+import Header from './Header.jsx'
+import Footer from './Footer.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -30,7 +30,7 @@ export default function Index (props) {
         />
 
         {showFooter &&
-          <Footer /> }
+          <Footer {...props} /> }
       </div>
     </div>
   )

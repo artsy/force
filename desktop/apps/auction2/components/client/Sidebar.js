@@ -1,7 +1,7 @@
-import ArtistFilter from '../artist_filter'
-import MediumFilter from '../medium_filter'
+import ArtistFilter from './ArtistFilter'
+import MediumFilter from './MediumFilter'
 import PropTypes from 'prop-types'
-import RangeSlider from '../range_slider'
+import RangeSlider from './RangeSlider'
 import React from 'react'
 import { connect } from 'react-redux'
 

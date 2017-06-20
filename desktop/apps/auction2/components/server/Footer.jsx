@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
+import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
 import { first } from 'underscore'
 
 export default function Footer (props) {
@@ -8,7 +9,6 @@ export default function Footer (props) {
   const footerItem = first(footerItems)
   const showArticles = Boolean(articles.length)
   const showFooterItems = footerItem && !auction.isAuctionPromo()
-
   const b = block('auction-footer')
 
   return (
@@ -19,10 +19,12 @@ export default function Footer (props) {
     >
       { showArticles &&
         <div className={b('auction-articles')}>
-          { articles.map((article, key) => {
+          { articles.models.map((article, key) => {
+            const ArticleFigure = buildTemplateComponent('desktop/components/article_figure/template.jade', { locals: { article } })
+
             return (
               <div key={key}>
-                TODO: RETURN ARTICLES
+                <ArticleFigure />
               </div>
             )
           })}

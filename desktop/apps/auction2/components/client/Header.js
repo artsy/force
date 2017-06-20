@@ -1,11 +1,11 @@
-import FilterSort from '../filter_sort'
-import Grid from '../../../../components/main_layout/public/icons/grid.svg'
-import List from '../../../../components/main_layout/public/icons/list.svg'
+import FilterSort from './FilterSort'
+// import Grid from '../../../../../components/main_layout/public/icons/grid.svg'
+// import List from '../../../../../components/main_layout/public/icons/list.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { toggleListView } from '../../client/actions'
+import { toggleListView } from 'desktop/apps/auction2/client/actions'
 
 function displayButtonClass (buttonType, displayType) {
   return classNames(
@@ -40,10 +40,10 @@ function Header (props) {
         </div>
         <div className='auction-artworks-header__switch'>
           <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
-            <Grid />
+            {/* <Grid /> */}
           </div>
           <div className={displayButtonClass('list', displayType)} onClick={() => toggleListViewAction(true)}>
-            <List />
+            {/* <List /> */}
           </div>
         </div>
       </div>

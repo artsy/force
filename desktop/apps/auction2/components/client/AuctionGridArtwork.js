@@ -1,9 +1,9 @@
-import BidStatus from '../bid_status'
+import BidStatus from './BidStatus'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import { titleAndYear } from '../../utils/artwork'
+import { titleAndYear } from 'desktop/apps/auction2/utils/artwork'
 
 function AuctionGridArtwork ({ isClosed, saleArtwork }) {
   const artwork = saleArtwork.artwork

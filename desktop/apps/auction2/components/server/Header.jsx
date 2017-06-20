@@ -1,15 +1,11 @@
 import AddToCalendar from 'desktop/components/add_to_calendar/index.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
-import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
+import Registration from './registration'
 
 export default function Header (props) {
   const { auction } = props
   const showAddToCalendar = !(auction.isClosed() || auction.isLiveOpen())
-  const Registration = buildTemplateComponent('registration_component.jade', {
-    basePath: __dirname,
-    locals: { ...props }
-  })
 
   return (
     <header className='auction-header'>

@@ -8,7 +8,7 @@ import MyActiveBids from 'desktop/components/my_active_bids/view.coffee'
 import mediator from 'desktop/lib/mediator.coffee'
 import mountAuctionBlock from 'desktop/components/react/auction_block/index.jsx'
 import { data as sd } from 'sharify'
-import { setupCommercialFilter } from './commercial_filter'
+import { setupCommercialFilter } from './commercialFilter'
 
 export default () => {
   const auction = new Auction(sd.AUCTION)
@@ -46,7 +46,7 @@ export default () => {
   // Render my active bids if a user is present and the auction is open and not
   // in live integration mode
   if (user && sd.AUCTION && sd.AUCTION.is_open && sd.AUCTION.is_live_open === false) {
-    const myActiveBidsTemplate = require('../templates/my_active_bids.jade')
+    const myActiveBidsTemplate = require('desktop/apps/auction2/components/server/my_active_bids.jade')
     const activeBids = new MyActiveBids({
       user: user,
       el: $('#my-active-bids'),
