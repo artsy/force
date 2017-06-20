@@ -34,7 +34,7 @@ export async function index (req, res, next) {
     }
   }
 
-  const newAuction = new Auction(sale)
+  const auctionModel = new Auction(sale)
   const auctionArticles = new Articles(articles)
 
   try {
@@ -48,12 +48,13 @@ export async function index (req, res, next) {
         ...res.locals,
         articles: auctionArticles,
         assetPackage: 'auctions',
-        auction: newAuction,
+        auction: auctionModel,
         bodyClass: 'body-header-fixed body-no-margins',
         footerItems: footerItems,
-        viewHelpers: {
-          getLiveAuctionUrl
-        },
+        isLiveOpen: auctionModel.isLiveOpen(),
+        liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
+          isLoggedIn: Boolean(me)
+        }),
         me: me
       },
       templates: {

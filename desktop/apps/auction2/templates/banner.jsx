@@ -4,12 +4,10 @@ import buildTemplateComponent from 'desktop/components/react/utils/build_templat
 import get from 'lodash.get'
 
 export default function Banner (props) {
-  const { auction, me, viewHelpers } = props
-  const { id, cover_image, name } = auction.toJSON()
+  const { auction, isLiveOpen, liveAuctionUrl } = props
+  const { cover_image, name } = auction.toJSON()
   const imageUrl = get(cover_image, 'cropped.url', '')
-  const isLiveOpen = auction.isLiveOpen()
-  const liveUrl = viewHelpers.getLiveAuctionUrl(id, { isLoggedIn: !!me })
-  const Clock = buildTemplateComponent('desktop/components/clock/template.jade', props)
+  const Clock = buildTemplateComponent('desktop/components/clock/template.jade', { locals: { ...props } })
 
   const BackgroundBanner = (p) => (
     <div
@@ -32,7 +30,7 @@ export default function Banner (props) {
               Live Bidding Now Open
             </h1>
 
-            <a href={liveUrl} className='avant-garde-button-white'>
+            <a href={liveAuctionUrl} className='avant-garde-button-white'>
               Enter live auction
             </a>
           </div>
@@ -57,6 +55,6 @@ export default function Banner (props) {
 
 Banner.propTypes = {
   auction: PropTypes.object.isRequired,
-  me: PropTypes.object,
-  viewHelpers: PropTypes.object.isRequired
+  isLiveOpen: PropTypes.bool.isRequired,
+  liveAuctionUrl: PropTypes.string
 }

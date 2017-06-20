@@ -1,4 +1,5 @@
 import Banner from './banner.jsx'
+import Header from './header.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -7,7 +8,6 @@ export default function Index (props) {
     articles,
     auction,
     templateComponents: {
-      Header,
       Footer
     }
   } = props
@@ -19,7 +19,7 @@ export default function Index (props) {
       <Banner {...props} />
 
       <div className='main-layout-container responsive-layout-container'>
-        <Header />
+        <Header {...props} />
 
         <div
           id='associated-sale'
