@@ -1,12 +1,13 @@
 import Articles from 'desktop/collections/articles.coffee'
 import ArticlesQuery from './queries/articles'
 import Auction from 'desktop/models/auction.coffee'
+import Index from './templates/index'
 import MeQuery from './queries/me'
 import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
 import metaphysics from 'lib/metaphysics.coffee'
 import get from 'lodash.get'
-import renderTemplate from 'desktop/components/react/utils/render_template'
+import renderLayout from 'desktop/components/react/utils/render_layout'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export async function index (req, res, next) {
@@ -37,15 +38,33 @@ export async function index (req, res, next) {
   const auctionArticles = new Articles(articles)
 
   try {
-    res.render('index', {
-      articles: auctionArticles,
-      auction: newAuction,
-      footerItems: footerItems,
-      viewHelpers: {
-        getLiveAuctionUrl
+    const layout = renderLayout({
+      basePath: res.app.get('views'),
+      blocks: {
+        head: 'meta.jade',
+        body: Index
       },
-      me: me
+      locals: {
+        ...res.locals,
+        articles: auctionArticles,
+        assetPackage: 'auctions',
+        auction: newAuction,
+        bodyClass: 'body-header-fixed body-no-margins',
+        footerItems: footerItems,
+        viewHelpers: {
+          getLiveAuctionUrl
+        },
+        me: me
+      },
+      templates: {
+        Banner: 'banner.jade',
+        Footer: 'footer.jade',
+        Header: 'header.jade',
+        MyActiveBids: 'my_active_bids.jade'
+      }
     })
+
+    res.send(layout)
   } catch (error) {
     next(error)
   }

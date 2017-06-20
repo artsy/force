@@ -1,12 +1,14 @@
 import renderTemplate from 'desktop/components/react/utils/render_template'
+import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
 
 export default function renderLayout (options) {
   const {
     basePath = '',
-    blocks: { header, body } = {},
-    locals = {}
+    blocks: { head, body } = {},
+    locals = {},
+    templates = {}
   } = options
 
   function render (block) {
@@ -25,7 +27,8 @@ export default function renderLayout (options) {
 
       // Component
     } else if (isReactComponent(block)) {
-      html = renderToString(block(locals))
+      const templateComponents = renderTemplateComponents(templates, basePath, locals)
+      html = renderToString(block({ ...locals, templateComponents }))
 
       // String
     } else if (isString(block)) {
@@ -48,7 +51,7 @@ export default function renderLayout (options) {
   const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
     locals: {
       ...locals,
-      header: render(header),
+      header: render(head),
       body: render(body)
     }
   })
@@ -71,4 +74,18 @@ function isReactComponent (Component) {
   } else {
     return isFunction(Component)
   }
+}
+
+function renderTemplateComponents (templates, basePath, locals) {
+  const templateComponents = Object
+    .keys(templates)
+    .reduce((componentMap, key) => ({
+      ...componentMap,
+      [key]: buildTemplateComponent(templates[key], {
+        basePath,
+        locals
+      })
+    }), {})
+
+  return templateComponents
 }

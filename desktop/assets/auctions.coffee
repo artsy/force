@@ -14,6 +14,12 @@ routes =
   /auction/.*/confirm-registration
   ''': require('../apps/auction/client/index.js').default
 
+  # FIXME: Refactor path back to /auction
+  '''
+  ^/auction2/[^/]+/?$
+  /auction2/.*/confirm-registration
+  ''': require('../apps/auction2/client/index.js').default
+
   '''
   /artist/.*/auction-results
   /artist/.*/auction-result/.*

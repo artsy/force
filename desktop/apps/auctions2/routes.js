@@ -6,7 +6,7 @@ export function index (req, res, next) {
   const layout = renderLayout({
     basePath: res.app.get('views'),
     blocks: {
-      header: 'meta.jade',
+      head: 'meta.jade',
       body: Index
     },
     locals: res.locals
