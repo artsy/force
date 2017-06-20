@@ -56,10 +56,6 @@ export async function index (req, res, next) {
           isLoggedIn: Boolean(me)
         }),
         me: me
-      },
-      templates: {
-        Header: 'header.jade',
-        Footer: 'footer.jade'
       }
     })
 

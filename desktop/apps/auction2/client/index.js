@@ -49,7 +49,7 @@ export default () => {
     const myActiveBidsTemplate = require('../templates/my_active_bids.jade')
     const activeBids = new MyActiveBids({
       user: user,
-      el: $('.auction-my-active-bids'),
+      el: $('#my-active-bids'),
       template: myActiveBidsTemplate,
       saleId: sd.AUCTION.id
     })
