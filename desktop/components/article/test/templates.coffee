@@ -92,7 +92,7 @@ describe 'article show template', ->
   it 'super articles have markdown-supported footers', ->
     html = render('index')
       article: new Article
-        title: 'hi'
+        title: 'Super Article Title'
         sections: []
         contributing_authors: []
         is_super_article: true
@@ -103,9 +103,9 @@ describe 'article show template', ->
           partner_logo_link: 'http://logo.com'
           partner_fullscreen_header_logo: 'http://fullscreen-logo.jpg'
           footer_blurb: 'Article Test [Link](http://artsy.net)'
-      superSubArticles: {models: []}
-      crop: (url) -> url
-      resize: (u) -> u
+      superSubArticles: new Articles
+      crop: ->
+      resize: ->
       moment: moment
       sd: {}
       asset: ->
