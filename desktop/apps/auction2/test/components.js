@@ -1,6 +1,6 @@
 require('babel-core/register')
 require('coffee-script/register')
-import * as actions from 'desktop/apps/auction2/client/actions'
+import * as actions from 'desktop/apps/auction2/actions'
 import auctions from 'desktop/apps/auction2/client/reducers'
 import ArtistFilter from 'desktop/apps/auction2/components/client/ArtistFilter'
 import AuctionGridArtwork from 'desktop/apps/auction2/components/client/AuctionGridArtwork'

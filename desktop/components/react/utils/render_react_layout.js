@@ -3,7 +3,7 @@ import buildTemplateComponent from 'desktop/components/react/utils/build_templat
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
 
-export default function renderLayout (options) {
+export default function renderReactLayout (options) {
   const {
     basePath = '',
     blocks: { head, body } = {},
@@ -38,7 +38,7 @@ export default function renderLayout (options) {
     } else {
       if (process.env.NODE_ENV === 'development') {
         throw new Error(
-          '(components/reaect/utils/render_layout.js) ' +
+          '(components/reaect/utils/render_react_layout.js) ' +
           'Error rendering layout: `block` must be a Jade template, React ' +
           'component or string'
         )
@@ -68,7 +68,7 @@ function isJadeTemplate (fileName) {
 function isReactComponent (Component) {
   if (isFunction(Component) && Component.prototype.render) {
     throw new Error(
-      '(components/reaect/utils/render_layout.js) ' +
+      '(components/reaect/utils/render_react_layout.js) ' +
       'Error rendering layout: Component must be a stateless functional component'
     )
   } else {

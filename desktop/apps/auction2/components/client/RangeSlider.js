@@ -3,7 +3,7 @@ import React from 'react'
 import { Range } from 'rc-slider'
 import { connect } from 'react-redux'
 import { formatMoney } from 'accounting'
-import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction2/client/actions'
+import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction2/actions'
 
 function RangeSlider (props) {
   const {

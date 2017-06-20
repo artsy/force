@@ -8,7 +8,7 @@ import MyActiveBids from 'desktop/components/my_active_bids/view.coffee'
 import mediator from 'desktop/lib/mediator.coffee'
 import mountAuctionBlock from 'desktop/components/react/auction_block/index.jsx'
 import { data as sd } from 'sharify'
-import { setupCommercialFilter } from './commercialFilter'
+import { setupCommercialFilter } from './components/commercialFilter'
 
 export default () => {
   const auction = new Auction(sd.AUCTION)

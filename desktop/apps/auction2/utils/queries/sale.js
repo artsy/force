@@ -3,7 +3,7 @@ export default function SaleQuery (id) {
     sale(id: "${id}") {
       _id
       associated_sale {
-        ${require('../../../components/react/auction_block/query.js').default}
+        ${require('../../../../components/react/auction_block/query.js').default}
       }
       auction_state
       cover_image {

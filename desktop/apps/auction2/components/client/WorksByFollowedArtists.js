@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import {
   nextPageOfFollowedArtistArtworks,
   previousPageOfFollowedArtistArtworks
-} from 'desktop/apps/auction2/client/actions'
+} from 'desktop/apps/auction2/actions'
 
 function WorksByFollowedArtists (props) {
   const {

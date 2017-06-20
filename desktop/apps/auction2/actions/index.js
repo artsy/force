@@ -1,7 +1,7 @@
 import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
 import metaphysics from 'lib/metaphysics.coffee'
-import { filterQuery } from 'desktop/apps/auction2/queries/filter'
-import { worksByFollowedArtists } from 'desktop/apps/auction2/queries/worksByFollowedArtists'
+import { filterQuery } from 'desktop/apps/auction2/utils/queries/filter'
+import { worksByFollowedArtists } from 'desktop/apps/auction2/utils/queries/worksByFollowedArtists'
 
 // Action types
 export const DECREMENT_FOLLOWED_ARTISTS_PAGE = 'DECREMENT_FOLLOWED_ARTISTS_PAGE'

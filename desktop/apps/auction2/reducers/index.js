@@ -1,4 +1,4 @@
-import * as actions from './actions'
+import * as actions from 'desktop/apps/auction2/actions'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { contains } from 'underscore'

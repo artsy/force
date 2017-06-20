@@ -1,11 +1,11 @@
 import $ from 'jquery'
-import * as actions from './actions'
+import * as actions from 'desktop/apps/auction2/actions'
 import _ from 'underscore'
 import AuctionPage from 'desktop/apps/auction2/components/client/AuctionPage'
 import JumpView from 'desktop/components/jump/view.coffee'
 import React from 'react'
-import analyticsMiddleware from './analyticsMiddleware'
-import auctions from './reducers'
+import analyticsMiddleware from 'desktop/apps/auction2/utils/analyticsMiddleware'
+import auctionsReducer from 'desktop/apps/auction2/reducers'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux'
@@ -26,7 +26,7 @@ export function setupCommercialFilter () {
   }
 
   const store = createStore(
-    auctions,
+    auctionsReducer,
     applyMiddleware(...middleware)
   )
 
