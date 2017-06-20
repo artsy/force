@@ -55,12 +55,12 @@ export default function Footer (props) {
 }
 
 Footer.propTypes = {
-  articles: PropTypes.array,
-  auction: PropTypes.object.isRequired,
+  articles: PropTypes.object,
+  auction: PropTypes.object,
   footerItems: PropTypes.array
 }
 
 Footer.defaultProps = {
-  articles: [],
+  articles: {},
   footerItems: []
 }

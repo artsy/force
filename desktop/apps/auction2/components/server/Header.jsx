@@ -46,7 +46,7 @@ export default function Header (props) {
       </div>
 
       <div className='auction-header-metadata'>
-        <Registration />
+        <Registration {...props} />
       </div>
     </header>
   )
