@@ -1,3 +1,4 @@
+import Banner from './banner.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -6,7 +7,6 @@ export default function Index (props) {
     articles,
     auction,
     templateComponents: {
-      Banner,
       Header,
       Footer
     }
@@ -16,7 +16,7 @@ export default function Index (props) {
 
   return (
     <div className='auction-page'>
-      <Banner />
+      <Banner {...props} />
 
       <div className='main-layout-container responsive-layout-container'>
         <Header />

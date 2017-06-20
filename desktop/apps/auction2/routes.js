@@ -57,10 +57,8 @@ export async function index (req, res, next) {
         me: me
       },
       templates: {
-        Banner: 'banner.jade',
-        Footer: 'footer.jade',
         Header: 'header.jade',
-        MyActiveBids: 'my_active_bids.jade'
+        Footer: 'footer.jade'
       }
     })
 

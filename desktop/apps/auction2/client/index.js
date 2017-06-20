@@ -1,23 +1,25 @@
 import $ from 'jquery'
-import AddToCalendar from '../../../components/add_to_calendar/index.coffee'
-import Auction from '../../../models/auction.coffee'
-import ClockView from '../../../components/clock/view.coffee'
-import ConfirmRegistrationModal from '../../../components/credit_card/client/confirm_registration.coffee'
-import CurrentUser from '../../../models/current_user.coffee'
-import MyActiveBids from '../../../components/my_active_bids/view.coffee'
-import mediator from '../../../lib/mediator.coffee'
-import mountAuctionBlock from '../../../components/react/auction_block/index.jsx'
+import AddToCalendar from 'desktop/components/add_to_calendar/index.coffee'
+import Auction from 'desktop/models/auction.coffee'
+import ClockView from 'desktop/components/clock/view.coffee'
+import ConfirmRegistrationModal from 'desktop/components/credit_card/client/confirm_registration.coffee'
+import CurrentUser from 'desktop/models/current_user.coffee'
+import MyActiveBids from 'desktop/components/my_active_bids/view.coffee'
+import mediator from 'desktop/lib/mediator.coffee'
+import mountAuctionBlock from 'desktop/components/react/auction_block/index.jsx'
 import { data as sd } from 'sharify'
 import { setupCommercialFilter } from './commercial_filter'
 
 export default () => {
   const auction = new Auction(sd.AUCTION)
-  const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
+  const user = CurrentUser.orNull()
 
-  // If we are on the confirm-registration path then pop up a modal
-  // Page is otherwise unchanged
-  if (window.location.pathname.match('/confirm-registration') && user) {
-    new ConfirmRegistrationModal({ auction: auction })
+  // If we are on the confirm-registration path then pop up a modal Page is
+  // otherwise unchanged
+  if (user && location.pathname.match('/confirm-registration')) {
+    new ConfirmRegistrationModal({
+      auction
+    })
   }
 
   const clock = new ClockView({
@@ -33,6 +35,7 @@ export default () => {
 
   // render the associated auction if there is one
   const sale = auction.get('associated_sale')
+
   if (sale) {
     mountAuctionBlock({
       relatedAuction: true,
@@ -40,8 +43,8 @@ export default () => {
     }, '#associated-sale')
   }
 
-  // Render my active bids if a user is present and
-  // the auction is open and not in live integration mode
+  // Render my active bids if a user is present and the auction is open and not
+  // in live integration mode
   if (user && sd.AUCTION && sd.AUCTION.is_open && sd.AUCTION.is_live_open === false) {
     const myActiveBidsTemplate = require('../templates/my_active_bids.jade')
     const activeBids = new MyActiveBids({

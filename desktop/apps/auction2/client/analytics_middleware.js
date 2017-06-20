@@ -1,5 +1,5 @@
 import * as actions from './actions'
-import analyticsHooks from '../../../lib/analytics_hooks.coffee'
+import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
 import { isEqual } from 'underscore'
 
 const analyticsMiddleware = store => next => action => {

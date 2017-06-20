@@ -8,7 +8,7 @@ import renderTemplate from './render_template'
  * @param  {String} html
  * @return {Component}
  */
-export default function buildTemplateComponent (template, options) {
+export default function buildTemplateComponent (template, options = {}) {
   const TemplateComponent = ({ children }) => {
     return (
       <div>
