@@ -556,6 +556,11 @@ export function updateCurrentStep (step) {
 }
 
 export function updateInputs (inputs) {
+  if (inputs.edition === false) {
+    inputs.edition_number = ''
+    inputs.edition_size = 0
+  }
+
   return {
     type: UPDATE_INPUTS,
     payload: {

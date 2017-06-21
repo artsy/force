@@ -3,7 +3,7 @@ import u from 'updeep'
 import { combineReducers } from 'redux'
 import { composeReducers } from '../../../components/react/utils/compose_reducers'
 import { data as sd } from 'sharify'
-import { contains, last } from 'underscore'
+import { contains } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
 import { responsiveWindowReducer } from '../../../components/react/responsive_window'
 import { routerReducer } from 'react-router-redux'
@@ -191,7 +191,8 @@ function submissionFlow (state = initialState, action) {
     }
     case actions.UNFREEZE_LOCATION_INPUT: {
       return u({
-        locationAutocompleteFrozen: false
+        locationAutocompleteFrozen: false,
+        locationAutocompleteValue: ''
       }, state)
     }
     case actions.UPDATE_ARTIST_AUTOCOMPLETE_VALUE: {

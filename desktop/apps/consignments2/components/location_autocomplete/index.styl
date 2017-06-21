@@ -5,6 +5,10 @@
     height 40px
     width 100%
 
+  .react-autosuggest__container--open
+    .consignments2-location-input__error
+      display none
+
   .react-autosuggest__suggestion
     min-height 40px
     padding 10px
@@ -23,6 +27,13 @@
       &:focus, &:active
         border-color gray-lighter-color
 
+  &_error
+    .bordered-input
+      border 2px solid red-color
+
+  .bordered-input:disabled
+    border 2px solid gray-lighter-color
+
   &__unfreeze
     position absolute
     right 7px
@@ -34,3 +45,8 @@
     svg
       width 17px
       fill gray-dark-color
+
+  &__error
+    garamond-size('l-caption')
+    color red-color
+    padding-top 5px

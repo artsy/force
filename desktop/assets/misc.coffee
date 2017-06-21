@@ -22,11 +22,9 @@ routes =
 
   '/unsubscribe': require('../apps/unsubscribe/client/index.coffee').init
 
-  '/consign': require('../apps/consignments/client/index.coffee')
+  '/consign/submission': require('../apps/consignments2/client/submission.js').default
 
-  '/consign2/submission': require('../apps/consignments2/client/submission.js').default
-
-  '/consign2': require('../apps/consignments2/client/index.js').default
+  '/consign': require('../apps/consignments2/client/index.js').default
 
   '/users/auth': require('../apps/auth/client/index.coffee').init
 

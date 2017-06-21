@@ -115,7 +115,7 @@ describe('Reducers', () => {
               type: '@@router/CALL_HISTORY_METHOD',
               payload: {
                 method: 'push',
-                args: [ '/consign2/submission/choose-artist' ]
+                args: [ '/consign/submission/choose-artist' ]
               }
             },
             { type: 'CLEAR_ERROR' }
@@ -218,7 +218,7 @@ describe('Reducers', () => {
               type: '@@router/CALL_HISTORY_METHOD',
               payload: {
                 method: 'push',
-                args: [ '/consign2/submission/choose-artist' ]
+                args: [ '/consign/submission/choose-artist' ]
               }
             },
             { type: 'CLEAR_ERROR' }
@@ -390,6 +390,36 @@ describe('Reducers', () => {
           newInputsStep.submissionFlow.inputs.category.should.eql('Sculpture')
           newInputsStep.submissionFlow.inputs.signature.should.eql(false)
           newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
+        })
+
+        it('ignores edition number and size if the checkbox is not checked', () => {
+          initialResponse.submissionFlow.inputs.edition.should.eql(false)
+          initialResponse.submissionFlow.inputs.edition_number.should.eql('')
+          initialResponse.submissionFlow.inputs.edition_size.should.eql(0)
+          const newInputs = {
+            edition: false,
+            edition_number: '12a',
+            edition_size: 120
+          }
+          const newInputsStep = reducers(initialResponse, actions.updateInputs(newInputs))
+          newInputsStep.submissionFlow.inputs.edition.should.eql(false)
+          newInputsStep.submissionFlow.inputs.edition_number.should.eql('')
+          newInputsStep.submissionFlow.inputs.edition_size.should.eql(0)
+        })
+
+        it('keeps edition number and size if the checkbox is checked', () => {
+          initialResponse.submissionFlow.inputs.edition.should.eql(false)
+          initialResponse.submissionFlow.inputs.edition_number.should.eql('')
+          initialResponse.submissionFlow.inputs.edition_size.should.eql(0)
+          const newInputs = {
+            edition: true,
+            edition_number: '12a',
+            edition_size: 120
+          }
+          const newInputsStep = reducers(initialResponse, actions.updateInputs(newInputs))
+          newInputsStep.submissionFlow.inputs.edition.should.eql(true)
+          newInputsStep.submissionFlow.inputs.edition_number.should.eql('12a')
+          newInputsStep.submissionFlow.inputs.edition_size.should.eql(120)
         })
       })
 

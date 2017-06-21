@@ -5,8 +5,15 @@ block head
 
 append locals
   - assetPackage = 'misc'
+  - bodyClass = bodyClass + ' consignments2-submission-body'
 
 block body
   .consignments2-submission.responsive-layout-container
     #consignments2-submission__flow
-
+  .consignments2-submission__footer
+    .consignments2-submission__footer-contents
+      .consignments2-submission__footer-contents--title
+        | Consignments submission
+      .consignments2-submission__footer-contents--contact
+        | If you have any questions feel free to email us at&nbsp;
+        a( href='mailto:consign@artsy.net' ) consign@artsy.net

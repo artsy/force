@@ -49,7 +49,7 @@ describe('React components', () => {
         const rendered = wrapper.render()
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
-        activeText.should.eql('CreateConsignDescribeUpload')
+        activeText.should.eql('CreateConfirmDescribeUpload')
       })
     })
 
@@ -71,7 +71,7 @@ describe('React components', () => {
         const rendered = wrapper.render()
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
-        activeText.should.containEql('Consign Artist/Designer')
+        activeText.should.containEql('Confirm Artist/Designer')
       })
 
       it('includes the shorter labels if in mobile mode', () => {
@@ -83,7 +83,7 @@ describe('React components', () => {
         const rendered = wrapper.render()
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
-        activeText.should.eql('ConsignDescribeUpload')
+        activeText.should.eql('ConfirmDescribeUpload')
       })
     })
   })

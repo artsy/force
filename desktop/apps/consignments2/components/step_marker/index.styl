@@ -6,6 +6,8 @@
 
   &_mobile
     margin-top 60px
+    margin-left 30px
+    margin-right 30px
 
   &__steps
     ul
@@ -20,10 +22,14 @@
     color purple-color
     position absolute
     text-align center
-    width 150px
+    width 200px
     top 18px
-    left -67px
+    left -93px
     avant-garde-size('s-headline')
+
+    @media (max-width: 960px)
+      width 90px
+      left -42px
 
   &__step
     content ' '

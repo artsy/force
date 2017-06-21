@@ -22,7 +22,9 @@ function UploadPhoto (props) {
   } = props
   const b = block('consignments2-submission-upload-photo')
 
-  const nextEnabled = skipPhotoSubmission || (!skipPhotoSubmission && uploadedImages.length > 0 && processingImages.length === 0)
+  const imagesInProgress = uploadedImages.length > 0 && processingImages.length > 0
+  const imagesFinished = uploadedImages.length > 0 && processingImages.length === 0
+  const nextEnabled = (!skipPhotoSubmission && imagesFinished) || (skipPhotoSubmission && !imagesInProgress)
   const uploadCta = isMobile ? 'Click to upload photos' : 'Drag or Click to upload photos'
 
   return (
