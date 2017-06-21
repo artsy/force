@@ -57,7 +57,7 @@ export async function index (req, res, next) {
       const layout = renderReactLayout({
         basePath: res.app.get('views'),
         blocks: {
-          head: 'meta.jade',
+          head: 'Meta.jade',
           body: (props) => <App store={store} {...props} />
         },
         locals: res.locals,

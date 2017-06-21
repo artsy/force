@@ -1,11 +1,11 @@
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
-import Banner from 'desktop/apps/auction2/components/server/Banner'
+import Banner from 'desktop/apps/auction2/components/page/Banner'
 import CommercialFilter from './commercial_filter'
-import Footer from 'desktop/apps/auction2/components/server/Footer'
-import Header from 'desktop/apps/auction2/components/server/Header'
+import Footer from 'desktop/apps/auction2/components/page/Footer'
+import Header from 'desktop/apps/auction2/components/page/Header'
 import PropTypes from 'prop-types'
 import React from 'react'
-import WorksByFollowedArtists from './WorksByFollowedArtists'
+import WorksByFollowedArtists from 'desktop/apps/auction2/components/commercial_filter/WorksByFollowedArtists'
 import { connect } from 'react-redux'
 
 function Layout (props) {

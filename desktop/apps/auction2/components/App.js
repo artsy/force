@@ -12,7 +12,7 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={this.props.store}>
-        <DOM>
+        <DOM {...this.props}>
           <Layout {...this.props} />
         </DOM>
       </Provider>

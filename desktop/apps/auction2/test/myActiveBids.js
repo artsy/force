@@ -12,7 +12,7 @@
 // import Backbone from 'backbone'
 // import { data as sd } from 'sharify'
 //
-// const template = require('jade').compileFile(require.resolve('desktop/apps/auction2/components/server/my_active_bids.jade'))
+// const template = require('jade').compileFile(require.resolve('desktop/apps/auction2/components/page/my_active_bids.jade'))
 //
 // describe('my active bids auction page template', () => {
 //   let view

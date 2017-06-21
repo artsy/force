@@ -35,7 +35,7 @@ import 'jsdom-global/register'
 //           const data = _.extend({}, baseData,
 //             { auction: new Auction(fabricate('sale', { name: 'An Auction' })) })
 //
-//           // benv.render(resolve(__dirname, '../components/server/index.jade'), data, () => done())
+//           // benv.render(resolve(__dirname, '../components/page/index.jade'), data, () => done())
 //         })
 //       })
 //
