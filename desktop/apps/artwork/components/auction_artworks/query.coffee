@@ -26,7 +26,7 @@ module.exports.followed_artist_ids = (CurrentUser) =>
   isLoggedIn = Boolean(CurrentUser)
 
   """
-  fragment followed_artist_ids on RootQueryType {
+  fragment followed_artist_ids on Query {
     followed_artist_ids: filter_artworks(
       sale_id: $auctionId
       size: #{ARTWORK_DISPLAY_NUM},
