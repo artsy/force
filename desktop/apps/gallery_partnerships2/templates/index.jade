@@ -1,0 +1,15 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'gallery_partnerships2'
+
+block head
+  include meta
+
+block body
+  .gallery-partnerships2__header( style="background-image: url(#{header.image});" )
+    a(href="/")
+      i.icon-logotype
+    .gallery-partnerships2__header__content-container
+      .gallery-partnerships2__header__title= header.headline
+      .collect-art-signup-button Learn More

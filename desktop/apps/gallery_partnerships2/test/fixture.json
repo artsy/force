@@ -1,0 +1,79 @@
+{
+  "check_mark": "http://via.placeholder.com/15x15",
+  "header": {
+    "headline": "Reach a new audience of global collectors",
+    "image": "http://files.artsy.net/images/background1x.png"
+  },
+  "sections": [
+    {
+      "intro": [
+        {
+          "image": "http://via.placeholder.com/50x50",
+          "title": "Collector Introductions",
+          "subtitle": "Build relationships with new and seasoned collectors around the world"
+        },
+        {
+          "image": "http://via.placeholder.com/50x50",
+          "title": "Brand Exposure",
+          "subtitle": "Promote your works and artists to the largest online art audience"
+        },
+        {
+          "image": "http://via.placeholder.com/50x50",
+          "title": "0% Commission",
+          "subtitle": "Faciliate sales in one place with ease—Artsy takes no commission"
+        }
+      ],
+      "active_partner_images": [
+        "http://via.placeholder.com/91x10",
+        "http://via.placeholder.com/32x32",
+        "http://via.placeholder.com/93x10",
+        "http://via.placeholder.com/115x17",
+        "http://via.placeholder.com/42x2",
+        "http://via.placeholder.com/112x13"
+      ]
+    },
+    {
+      "title": "Connect with the right collectors in minutes",
+      "content": "Simply list your inventory on Artsy and qualified collectors will start receiving personalized notifications about your gallery. The Artsy network becomes your network—engaged, informed, and ready to inquire.",
+      "background_image": "http://via.placeholder.com/280x352",
+      "notification_image": "http://via.placeholder.com/330x101"
+    },
+    {
+      "title": "Grow your gallery presence on a global scale",
+      "stats": [
+        "Nearly 2.5 million visitors each month",
+        "Top ranking art marketplace on Google",
+        "Visitors from over 190 countries"
+      ],
+      "slideshow": [
+        "http://via.placeholder.com/1332x834",
+        "http://via.placeholder.com/1332x834",
+        "http://via.placeholder.com/1332x834"
+      ]
+    },
+    {
+      "video": "http://via.placeholder.com/1248x928",
+      "title": "Access everything you need to sell in one place",
+      "content": "Manage inquiries, review collector profiles, process payments and more—all in one place with Artsy’s easy-to-use content management system and messaging tools."
+    },
+    {
+      "title": "Carry your gallery with you, wherever you go",
+      "folio": [
+        "Artsy Folio syncs with your inventory seamlessly",
+        "Create albums to curate and share groups of works",
+        "Send one-touch emails with complete work details"
+      ],
+      "image": "http://via.placeholder.com/545x378",
+      "testimonials": [
+        {
+          "content": "Artsy has increasingly brought us inquiries and introduced us to qualified collectors worldwide, resulting in substantial sales. They contribute to our gallery program significantly.",
+          "partner": "Alan Cristea Gallery"
+        }
+      ]
+    },
+    {
+      "title": "Join the leading marketplace for art & design",
+      "content": "Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales"
+    }
+  ]
+}
