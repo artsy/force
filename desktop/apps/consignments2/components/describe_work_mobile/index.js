@@ -5,6 +5,8 @@ import block from 'bem-cn'
 import { Field, formValueSelector, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
+import { numberWarning, scrollToError, validate } from '../../client/validate'
+import { renderCheckboxInput } from '../checkbox_input'
 import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
 import { renderTextInput } from '../text_input'
@@ -12,31 +14,16 @@ import {
   submitDescribeWork
 } from '../../client/actions'
 
-function validate (values, props) {
-  const {
-    title,
-    year
-  } = values
-  const errors = {}
-
-  if (!title) errors.title = 'Required'
-  if (!year) errors.year = 'Required'
-
-  return errors
-}
-
 export function makeDescribeWorkMobile (initialValues = {}) {
   function DescribeWorkMobile (props) {
     const {
       artistName,
       categoryOptions,
       error,
+      hasEditionValue,
       loading,
       handleSubmit,
-      locationAutocompleteFrozen,
-      locationAutocompleteValue,
-      submitDescribeWorkAction,
-      pristine
+      submitDescribeWorkAction
     } = props
 
     const b = block('consignments2-submission-describe-work-mobile')
@@ -59,6 +46,14 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
+              <Field name='year' component={renderTextInput}
+                item={'year'}
+                label={'Year*'}
+              />
+            </div>
+          </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
               <Field name='category' component={renderSelectInput}
                 item={'category'}
                 label={'Category*'}
@@ -68,9 +63,73 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='year' component={renderTextInput}
-                item={'year'}
-                label={'Year*'}
+              <Field name='medium' component={renderTextInput}
+                item={'medium'}
+                label={'Medium*'}
+              />
+            </div>
+          </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='height' component={renderTextInput}
+                item={'height'}
+                label={'Height*'}
+                warn={numberWarning}
+              />
+            </div>
+            <div className={b('row-item')}>
+              <Field name='width' component={renderTextInput}
+                item={'width'}
+                label={'Width*'}
+                warn={numberWarning}
+              />
+            </div>
+          </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='depth' component={renderTextInput}
+                item={'depth'}
+                label={'Depth'}
+                warn={numberWarning}
+              />
+            </div>
+            <div className={b('row-item')}>
+              <Field name='dimensions_metric' component={renderSelectInput}
+                item={'dimensions_metric'}
+                label={'Units*'}
+                options={['in', 'cm']}
+              />
+            </div>
+          </div>
+          {
+            hasEditionValue && (
+              <div>
+                <div className={b('row')}>
+                  <div className={b('row-item')}>
+                    <Field name='edition_number' component={renderTextInput}
+                      item={'edition_number'}
+                      label={'Edition Number*'}
+                    />
+                  </div>
+                </div>
+                <div className={b('row')}>
+                  <div className={b('row-item')}>
+                    <Field name='edition_size' component={renderTextInput}
+                      item={'edition_size'}
+                      label={'Size of Edition*'}
+                      warn={numberWarning}
+                    />
+                  </div>
+                </div>
+              </div>
+            )
+          }
+          <div className={b('row', {'border-bottom': true})}>
+            <div className={b('row-item')}>
+              <Field name='edition' component={renderCheckboxInput}
+                item={'edition'}
+                label={'This is an edition'}
+                value={false}
               />
             </div>
           </div>
@@ -104,12 +163,11 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           <div className={b('row')}>
             <div className={b('row-item')}>
               <div className={b('instructions')}>What city is the work located in?*</div>
-              <LocationAutocomplete />
+              <Field name='location' component={LocationAutocomplete} />
             </div>
           </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
-            disabled={locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
             type='submit'
           >
             {
@@ -148,11 +206,9 @@ export function makeDescribeWorkMobile (initialValues = {}) {
     artistName: PropTypes.string.isRequired,
     categoryOptions: PropTypes.array.isRequired,
     error: PropTypes.string,
+    hasEditionValue: PropTypes.bool,
     loading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    locationAutocompleteFrozen: PropTypes.bool.isRequired,
-    locationAutocompleteValue: PropTypes.string,
-    pristine: PropTypes.bool,
     submitDescribeWorkAction: PropTypes.func.isRequired
   }
 
@@ -161,6 +217,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
       form: 'describeWork', // a unique identifier for this form
       validate,
       initialValues,
+      onSubmitFail: scrollToError,
       enableReinitialize: true
     }),
     connect(

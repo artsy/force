@@ -12,26 +12,19 @@ import {
   updateLocationAutocomplete
 } from '../../client/actions'
 
-function getSuggestionValue (suggestion) {
-  return suggestion.description
-}
-
-function renderSuggestion (suggestion) {
-  return (
-    <div className='autosuggest-suggestion'>
-      <div>{suggestion.description}</div>
-    </div>
-  )
-}
-
 function LocationAutocomplete (props) {
   const {
     chooseLocationAction,
     clearLocationSuggestionsAction,
     fetchLocationSuggestionsAction,
+    input,
     locationAutocompleteFrozen,
     locationAutocompleteSuggestions,
     locationAutocompleteValue,
+    meta: {
+      error,
+      touched
+    },
     unfreezeLocationInputAction,
     updateLocationAutocompleteAction
   } = props
@@ -39,29 +32,55 @@ function LocationAutocomplete (props) {
   const b = block('consignments2-location-input')
 
   const locationAutosuggestInputProps = {
-    value: locationAutocompleteValue,
-    onChange: updateLocationAutocompleteAction
+    disabled: locationAutocompleteFrozen,
+    onChange: updateLocationAutocompleteAction,
+    value: locationAutocompleteValue
   }
 
   const renderInputComponent = inputProps => (
     <div>
       <input {...inputProps} className={b('input').mix('bordered-input')} />
+      {
+        touched && (
+          (error && <div className={b('error')}>{error}</div>)
+        )
+      }
     </div>
   )
 
+  const getSuggestionValue = suggestion => (
+    suggestion.description
+  )
+
+  const renderSuggestion = suggestion => (
+    <div className='autosuggest-suggestion'>
+      <div>{suggestion.description}</div>
+    </div>
+  )
+
+  const chooseLocationOption = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    chooseLocationAction(suggestion)
+    input.onChange(suggestionValue)
+  }
+
+  const unfreeze = () => {
+    unfreezeLocationInputAction()
+    input.onChange('')
+  }
+
   return (
-    <div className={b({ disabled: locationAutocompleteFrozen })}>
+    <div className={b({ disabled: locationAutocompleteFrozen, error: Boolean(touched && error) })} name={'location'}>
       <Autosuggest
         suggestions={locationAutocompleteSuggestions}
         onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
         onSuggestionsClearRequested={clearLocationSuggestionsAction}
-        onSuggestionSelected={chooseLocationAction}
+        onSuggestionSelected={chooseLocationOption}
         getSuggestionValue={getSuggestionValue}
         renderInputComponent={renderInputComponent}
         renderSuggestion={renderSuggestion}
         inputProps={locationAutosuggestInputProps}
       />
-      { locationAutocompleteFrozen && <div className={b('unfreeze')} onClick={unfreezeLocationInputAction}><Close /></div> }
+      { locationAutocompleteFrozen && <div className={b('unfreeze')} onClick={unfreeze}><Close /></div> }
     </div>
   )
 }
@@ -74,7 +93,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    chooseLocationAction (event, { suggestion, suggestionValue }) {
+    chooseLocationAction (suggestion) {
       dispatch(chooseLocation(suggestion))
     },
     clearLocationSuggestionsAction () {
@@ -101,9 +120,11 @@ LocationAutocomplete.propTypes = {
   chooseLocationAction: PropTypes.func.isRequired,
   clearLocationSuggestionsAction: PropTypes.func.isRequired,
   fetchLocationSuggestionsAction: PropTypes.func.isRequired,
+  input: PropTypes.object.isRequired,
   locationAutocompleteFrozen: PropTypes.bool.isRequired,
   locationAutocompleteSuggestions: PropTypes.array,
   locationAutocompleteValue: PropTypes.string,
+  meta: PropTypes.object.isRequired,
   unfreezeLocationInputAction: PropTypes.func.isRequired,
   updateLocationAutocompleteAction: PropTypes.func.isRequired
 }
