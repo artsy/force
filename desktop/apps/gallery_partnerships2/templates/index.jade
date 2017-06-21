@@ -35,3 +35,21 @@ block body
           .gallery-partnerships2__connect-with-collectors__title.garamond-l-headline= sections[1].title
           .gallery-partnerships2__connect-with-collectors__content.garamond-l-body= sections[1].content
           a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+
+    .gallery-partnerships2__stats
+      .gallery-partnerships2-responsive-layout-container
+        .gallery-partnerships2-main-layout-container
+          .row
+            .col-xs-12.col-lg-6.gallery-partnerships2__stats__container
+             .gallery-partnerships2__stats__inner-container
+               .gallery-partnerships2__stats__title.garamond-l-headline= sections[2].title
+               .garamond-l-body
+                 for stat in sections[2].stats
+                   .gallery-partnerships2__stats__stat-row
+                     .gallery-partnerships2__stats__icon
+                       img(src=check_mark)
+                     .gallery-partnerships2__stats__stat_item= stat
+               a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+
+            .col-xs-12.col-lg-6
+              img( src="http://files.artsy.net/images/macbook1x.png" )
