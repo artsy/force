@@ -70,7 +70,7 @@ module.exports =
       init: compact [
           require '../components/partner/index.coffee'
           require '../components/auction_artworks/index.coffee' unless context.is_closed
-          require('../../../components/react/current_auctions/index.jsx').default unless context.is_closed
+          require('../../../components/react/current_auctions/index.js').default unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
           require '../components/related_artists/index.coffee'

@@ -1,6 +1,6 @@
-import Banner from './Banner.jsx'
-import Header from './Header.jsx'
-import Footer from './Footer.jsx'
+import Banner from './Banner'
+import Header from './Header'
+import Footer from './Footer'
 import PropTypes from 'prop-types'
 import React from 'react'
 

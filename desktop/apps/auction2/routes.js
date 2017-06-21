@@ -2,6 +2,7 @@ import Articles from 'desktop/collections/articles.coffee'
 import ArticlesQuery from 'desktop/apps/auction2/utils/queries/articles'
 import Auction from 'desktop/models/auction.coffee'
 import Index from 'desktop/apps/auction2/components/server/index'
+import AuctionApp from 'desktop/apps/auction2/components/AuctionApp'
 import MeQuery from 'desktop/apps/auction2/utils/queries/me'
 import SaleQuery from 'desktop/apps/auction2/utils/queries/sale'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
@@ -45,8 +46,8 @@ export async function index (req, res, next) {
           head: 'meta.jade',
           body: Index
         },
-        locals: {
-          ...res.locals,
+        locals: res.locals,
+        data: {
           articles: auctionArticles,
           assetPackage: 'auctions',
           auction: auctionModel,

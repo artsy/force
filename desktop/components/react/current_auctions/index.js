@@ -1,4 +1,4 @@
-import CurrentAuctions from './current_auctions.jsx'
+import CurrentAuctions from './current_auctions'
 import invariant from 'invariant'
 import React from 'react'
 import ReactDOM from 'react-dom'

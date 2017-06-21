@@ -1,3 +1,11 @@
+// import React from 'react'
+// import ReactDOM from 'react-dom'
+// import Index from 'desktop/apps/auction2/components/server/index'
+//
+// ReactDOM.render(<Index />, document.getElementById('react-root'), () => {
+//   console.log('working!')
+// })
+
 import $ from 'jquery'
 import AddToCalendar from 'desktop/components/add_to_calendar/index.coffee'
 import Auction from 'desktop/models/auction.coffee'
@@ -6,7 +14,7 @@ import ConfirmRegistrationModal from 'desktop/components/credit_card/client/conf
 import CurrentUser from 'desktop/models/current_user.coffee'
 import MyActiveBids from 'desktop/components/my_active_bids/view.coffee'
 import mediator from 'desktop/lib/mediator.coffee'
-import mountAuctionBlock from 'desktop/components/react/auction_block/index.jsx'
+import mountAuctionBlock from 'desktop/components/react/auction_block/index'
 import { data as sd } from 'sharify'
 import { setupCommercialFilter } from './components/commercialFilter'
 

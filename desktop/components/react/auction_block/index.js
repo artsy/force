@@ -1,4 +1,4 @@
-import AuctionBlock from './auction_block.jsx'
+import AuctionBlock from './auction_block'
 import invariant from 'invariant'
 import React from 'react'
 import ReactDOM from 'react-dom'

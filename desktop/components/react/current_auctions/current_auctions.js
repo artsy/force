@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { partition, take } from 'underscore'
-import AuctionBlock from '../auction_block/auction_block.jsx'
+import AuctionBlock from '../auction_block/auction_block'
 
 export default function CurrentAuctions ({ auctionContextId, sales }) {
   const sortedSales = sortSales(sales, auctionContextId)

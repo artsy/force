@@ -1,3 +1,4 @@
+import React from 'react'
 import renderTemplate from 'desktop/components/react/utils/render_template'
 import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
 import { isFunction, isString } from 'underscore'
@@ -7,7 +8,8 @@ export default function renderReactLayout (options) {
   const {
     basePath = '',
     blocks: { head, body } = {},
-    locals = {},
+    locals = {}, // Typically a spread from `res.locals`, or global state
+    data = {},   // Data relevant to components / subapp
     templates = {}
   } = options
 
@@ -22,13 +24,23 @@ export default function renderReactLayout (options) {
     if (isJadeTemplate(block)) {
       html = renderTemplate(block, {
         basePath,
-        locals
+        locals: {
+          ...locals,
+          ...data
+        }
       })
 
       // Component
     } else if (isReactComponent(block)) {
-      const templateComponents = renderTemplateComponents(templates, basePath, locals)
-      html = renderToString(block({ ...locals, templateComponents }))
+      const Component = block // Alias for JSX transpilation
+      const templateComponents = renderTemplateComponents(templates, basePath, data)
+
+      html = renderToString(
+        <Component
+          {...data}
+          templateComponents={templateComponents}
+        />
+      )
 
       // String
     } else if (isString(block)) {
@@ -51,6 +63,7 @@ export default function renderReactLayout (options) {
   const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
     locals: {
       ...locals,
+      data,
       header: render(head),
       body: render(body)
     }
@@ -66,13 +79,13 @@ function isJadeTemplate (fileName) {
 }
 
 function isReactComponent (Component) {
-  if (isFunction(Component) && Component.prototype.render) {
+  if (!isFunction(Component)) {
     throw new Error(
       '(components/reaect/utils/render_react_layout.js) ' +
-      'Error rendering layout: Component must be a stateless functional component'
+      'Error rendering layout: Invalid React component'
     )
   } else {
-    return isFunction(Component)
+    return Component
   }
 }
 
