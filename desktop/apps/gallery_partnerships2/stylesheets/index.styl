@@ -33,7 +33,7 @@
   @media screen and (max-width: 768px)
     text-align center
 
-.collect-art-signup-button
+.gallery-partnerships2-white-signup-button
   avant-garde-size('body')
   display inline-block
   width 190px
@@ -43,9 +43,11 @@
   color black
   text-align center
   text-decoration none
-  transition background-color .25s,color .25s
-  &:hover
-    background-color black
+
+.gallery-partnerships2-black-signup-button
+  @extends .gallery-partnerships2-white-signup-button
+  background-color black
+  color white
 
 .collect-art-buttons
   width 270px
@@ -85,13 +87,13 @@ background-size-cover()
   display flex
   align-items center
   position relative
-  a
+
+  .icon-logotype
     color white
-    .icon-logotype
-      font-size 35px
-      position absolute
-      top 30px
-      left 30px
+    font-size 35px
+    position absolute
+    top 30px
+    left 30px
   &__content-container
     max-width 615px
     text-align center
@@ -132,6 +134,26 @@ background-size-cover()
     display inline-block
     vertical-align middle
     transform: scale(0.5)
+
+.gallery-partnerships2__connect-with-collectors
+  height 610px
+  display flex
+
+  &__image
+    flex 1
+    display flex
+    justify-content center
+    img
+      align-self flex-end
+  &__content_container
+    display flex
+    flex 1
+    &__wrapper
+      width 450px
+      align-self center
+  &__content
+    margin 10px 0 20px
+
 
 //.collect-art-intro
 //  height 800px

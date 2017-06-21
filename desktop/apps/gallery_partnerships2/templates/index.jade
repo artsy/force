@@ -13,7 +13,7 @@ block body
         i.icon-logotype
       .gallery-partnerships2__header__content-container
         .gallery-partnerships2__header__title= header.headline
-        .collect-art-signup-button Learn More
+        a.gallery-partnerships2-white-signup-button( href="#" ) Learn More
 
     .gallery-partnerships2__intro
       .row
@@ -26,3 +26,12 @@ block body
     .gallery-partnerships2__gallery-logos
       for logo in sections[0].active_partner_images
         img(src=logo)
+
+    .gallery-partnerships2__connect-with-collectors
+      .gallery-partnerships2__connect-with-collectors__image
+        img(src=sections[1].background_image)
+      .gallery-partnerships2__connect-with-collectors__content_container
+        .gallery-partnerships2__connect-with-collectors__content_container__wrapper
+          .gallery-partnerships2__connect-with-collectors__title.garamond-l-headline= sections[1].title
+          .gallery-partnerships2__connect-with-collectors__content.garamond-l-body= sections[1].content
+          a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
