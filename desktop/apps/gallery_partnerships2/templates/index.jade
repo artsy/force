@@ -7,9 +7,22 @@ block head
   include meta
 
 block body
-  .gallery-partnerships2__header( style="background-image: url(#{header.image});" )
-    a(href="/")
-      i.icon-logotype
-    .gallery-partnerships2__header__content-container
-      .gallery-partnerships2__header__title= header.headline
-      .collect-art-signup-button Learn More
+  .gallery-partnerships2
+    .gallery-partnerships2__header( style="background-image: url(#{header.image});" )
+      a(href="/")
+        i.icon-logotype
+      .gallery-partnerships2__header__content-container
+        .gallery-partnerships2__header__title= header.headline
+        .collect-art-signup-button Learn More
+
+    .gallery-partnerships2__intro
+      .row
+        for item in sections[0].intro
+          .col-xs-12.col-lg-4
+            img.gallery-partnerships2__intro__icon( src=item.image )
+            .gallery-partnerships2__intro__title.garamond-s-headline= item.title
+            .gallery-partnerships2__io__subtitle.garamond-l-body= item.subtitle
+
+    .gallery-partnerships2__gallery-logos
+      for logo in sections[0].active_partner_images
+        img(src=logo)

@@ -8,28 +8,28 @@
     {
       "intro": [
         {
-          "image": "http://via.placeholder.com/50x50",
+          "image": "http://files.artsy.net/images/collector-introductions.svg",
           "title": "Collector Introductions",
           "subtitle": "Build relationships with new and seasoned collectors around the world"
         },
         {
-          "image": "http://via.placeholder.com/50x50",
+          "image": "http://files.artsy.net/images/brand-exposure.svg",
           "title": "Brand Exposure",
           "subtitle": "Promote your works and artists to the largest online art audience"
         },
         {
-          "image": "http://via.placeholder.com/50x50",
+          "image": "http://files.artsy.net/images/no-commission.svg",
           "title": "0% Commission",
           "subtitle": "Faciliate sales in one place with ease—Artsy takes no commission"
         }
       ],
       "active_partner_images": [
-        "http://via.placeholder.com/91x10",
-        "http://via.placeholder.com/32x32",
-        "http://via.placeholder.com/93x10",
-        "http://via.placeholder.com/115x17",
-        "http://via.placeholder.com/42x2",
-        "http://via.placeholder.com/112x13"
+        "http://files.artsy.net/images/gagosian-logo2x.png",
+        "http://files.artsy.net/images/dansk-logo2x.png",
+        "http://files.artsy.net/images/david-gill-logo2x.png",
+        "http://files.artsy.net/images/fraenkel-logo2x.png",
+        "http://files.artsy.net/images/simon-lee-logo2x.png",
+        "http://files.artsy.net/images/spruth-magers-logo2x.png"
       ]
     },
     {
