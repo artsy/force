@@ -1,7 +1,7 @@
 import AddToCalendar from 'desktop/components/add_to_calendar/index.jsx'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Registration from './registration'
+import Registration from './Registration'
 
 export default function Header (props) {
   const { auction } = props
@@ -38,11 +38,12 @@ export default function Header (props) {
             </div> }
 
         </div>
-        <div className='auction-description'>
-          <div dangerouslySetInnerHTML={{
+        <div
+          className='auction-description'
+          dangerouslySetInnerHTML={{
             __html: auction.mdToHtml('description')
-          }} />
-        </div>
+          }}
+        />
       </div>
 
       <div className='auction-header-metadata'>

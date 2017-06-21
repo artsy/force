@@ -1,8 +1,9 @@
 import * as actions from 'desktop/apps/auction2/actions'
-import { combineReducers } from 'redux'
-import { data as sd } from 'sharify'
-import { contains } from 'underscore'
+import get from 'lodash.get'
 import u from 'updeep'
+import { combineReducers } from 'redux'
+import { contains } from 'underscore'
+import { data as sd } from 'sharify'
 
 const filterParams = {
   aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
@@ -11,7 +12,7 @@ const filterParams = {
   gene_ids: [],
   include_artworks_by_followed_artists: false,
   page: 1,
-  sale_id: sd.AUCTION && sd.AUCTION.id,
+  sale_id: get(sd, 'AUCTION.id', ''),
   size: 50,
   ranges: {
     estimate_range: {
@@ -22,33 +23,17 @@ const filterParams = {
   sort: 'position'
 }
 
-const initialState = {
+export const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],
   allFetched: false,
   displayFollowedArtistsRail: false,
-  filterParams: {
-    aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
-    artist_ids: [],
-    estimate_range: '',
-    gene_ids: [],
-    include_artworks_by_followed_artists: false,
-    page: 1,
-    sale_id: sd.AUCTION && sd.AUCTION.id,
-    size: 50,
-    ranges: {
-      estimate_range: {
-        min: 0,
-        max: 50000
-      }
-    },
-    sort: 'position'
-  },
+  filterParams,
   followedArtistRailMax: 50,
   followedArtistRailPage: 1,
   followedArtistRailSize: 4,
   initialMediumMap: [],
-  isClosed: sd.AUCTION && sd.AUCTION.is_closed,
+  isClosed: get(sd, 'AUCTION.is_closed', false),
   isFetchingArtworks: false,
   isLastFollowedArtistsPage: false,
   isListView: false,
@@ -66,9 +51,9 @@ const initialState = {
     '-searchable_estimate': 'Most Expensive',
     'searchable_estimate': 'Least Expensive'
   },
-  symbol: sd.AUCTION && sd.AUCTION.symbol,
+  symbol: get(sd, 'AUCTION.symbol', '$'),
   total: 0,
-  user: sd.CURRENT_USER
+  user: get(sd, 'CURRENT_USER', false)
 }
 
 function auctionArtworks (state = initialState, action) {
