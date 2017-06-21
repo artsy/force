@@ -51,5 +51,10 @@ block body
                      .gallery-partnerships2__stats__stat_item= stat
                a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
 
-            .col-xs-12.col-lg-6
+            .col-xs-12.col-lg-6( style="position: relative;" )
               img( src="http://files.artsy.net/images/macbook1x.png" )
+              section.js-partner-stats-slideshow.gallery-partnerships2__stats__slideshow
+                .mgr-cells.js-mgr-cells
+                  for image in sections[2].slideshow
+                    .mgr-cell.js-mgr-cell
+                      img( src= image )
