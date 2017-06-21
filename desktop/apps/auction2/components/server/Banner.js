@@ -1,23 +1,36 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
 import get from 'lodash.get'
 
 export default function Banner (props) {
-  const { auction, isLiveOpen, liveAuctionUrl } = props
-  const { cover_image, name } = auction.toJSON()
-  const imageUrl = get(cover_image, 'cropped.url', '')
-  const Clock = buildTemplateComponent('desktop/components/clock/template.jade', { locals: { ...props } })
+  const {
+    auction,
+    isLiveOpen,
+    liveAuctionUrl
+  } = props
 
-  const BackgroundBanner = (p) => (
-    <div
-      className='auction-banner-live-bg'
-      style={{ backgroundImage: `url('${imageUrl}')` }}
-      alt={name}
-    >
-      {p.children}
-    </div>
-  )
+  const {
+    cover_image,
+    name
+  } = auction.toJSON()
+
+  const BackgroundBanner = ({ children }) => {
+    const imageUrl = get(cover_image, 'cropped.url', '')
+
+    return (
+      <div
+        className='auction-banner-live-bg'
+        style={{ backgroundImage: `url('${imageUrl}')` }}
+        alt={name}
+      >
+        {children}
+      </div>
+    )
+  }
+
+  BackgroundBanner.propTypes = {
+    children: PropTypes.node.isRequired
+  }
 
   return (
     <div>
@@ -37,15 +50,17 @@ export default function Banner (props) {
         </div>
         : <div className='auction-banner'>
           <BackgroundBanner>
-
-            {/*
-              Mounted Client-side
-              TODO: Port to React
-            */}
             <div className='auction-clock white-overlay-clock js-auction-clock'>
-              <Clock />
-            </div>
 
+              {/*
+                Backbone-based view:
+                components/clock/index.coffee
+              */}
+              <div className='clock'>
+                <div className='clock-header' />
+                <ul className='clock-value' />
+              </div>
+            </div>
           </BackgroundBanner>
         </div>
       }

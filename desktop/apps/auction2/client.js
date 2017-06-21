@@ -1,11 +1,8 @@
 import $ from 'jquery'
-import AddToCalendar from 'desktop/components/add_to_calendar/index.coffee'
 import App from 'desktop/apps/auction2/components/App'
 import Auction from 'desktop/models/auction.coffee'
-import ClockView from 'desktop/components/clock/view.coffee'
 import ConfirmRegistrationModal from 'desktop/components/credit_card/client/confirm_registration.coffee'
 import CurrentUser from 'desktop/models/current_user.coffee'
-import MyActiveBids from 'desktop/components/my_active_bids/view.coffee'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import auctionReducer from 'desktop/apps/auction2/reducers'
@@ -16,6 +13,27 @@ import mediator from 'desktop/lib/mediator.coffee'
 const user = CurrentUser.orNull()
 const bootstrapData = window.__BOOTSTRAP__
 const auctionModel = new Auction(bootstrapData.auction)
+
+// Redux store
+const store = configureStore(auctionReducer, {
+  auctionArtworks: bootstrapData.auctionArtworks
+})
+
+// Store model on bootstrap data as we need access to Sale Backbone methods
+bootstrapData.auction = auctionModel
+
+// Start app
+ReactDOM.render(
+  <App
+    {...bootstrapData}
+    store={store}
+  />,
+  document.getElementById('react-root')
+)
+
+maybeShowRegistration()
+
+// Helpers
 
 /**
  * If a user is redirected to page post-registration, show modal; or if no user
@@ -45,62 +63,3 @@ function maybeShowRegistration () {
     })
   }
 }
-
-/**
- * Setup Clock, Calendar and ActiveBids Backbone views.
- *
- * TODO: Refactor these into React components
- */
-function setupBackboneViews () {
-  const {
-    id,
-    is_open,
-    is_live_open
-  } = bootstrapData.auction
-
-  const showMyActiveBids = is_open && !is_live_open
-
-  // Clock
-  new ClockView({
-    modelName: 'Auction',
-    model: auctionModel,
-    el: $('.auction-clock')
-  }).start()
-
-  // Add to calendar
-  new AddToCalendar({
-    el: $('.auction-callout')
-  })
-
-  // Active Bids
-  if (showMyActiveBids) {
-    new MyActiveBids({
-      user: user,
-      el: $('#my-active-bids'),
-      saleId: id
-    }).start()
-  }
-}
-
-// Store
-const store = configureStore(auctionReducer, {
-  auctionArtworks: bootstrapData.auctionArtworks
-})
-
-// Store model on bootstrap data as we need access to Sale Backbone methods
-bootstrapData.auction = auctionModel
-
-/**
- * Mount app and start
- */
-
-ReactDOM.render(
-  <App
-    {...bootstrapData}
-    store={store}
-  />,
-  document.getElementById('react-root')
-)
-
-maybeShowRegistration()
-setupBackboneViews()

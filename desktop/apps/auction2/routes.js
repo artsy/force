@@ -25,6 +25,7 @@ export async function index (req, res, next) {
       query: SaleQuery(saleId)
     })
 
+    res.locals.sd.AUCTION = sale
     fetchUser(req, res)
 
     const store = configureStore(auctionReducer, {
@@ -40,16 +41,14 @@ export async function index (req, res, next) {
     const [
       { me },
       { articles }
-    ] = await Promise.all(
-      [
-        metaphysics({ query: MeQuery(sale.id), req: req }),
-        metaphysics({ query: ArticlesQuery(sale._id) }),
+    ] = await Promise.all([
+      metaphysics({ query: MeQuery(sale.id), req: req }),
+      metaphysics({ query: ArticlesQuery(sale._id) }),
 
-        // Hydrate store
-        store.dispatch(actions.fetchArtworksByFollowedArtists()),
-        store.dispatch(actions.fetchArtworks())
-      ]
-    )
+      // Hydrate store
+      store.dispatch(actions.fetchArtworksByFollowedArtists()),
+      store.dispatch(actions.fetchArtworks())
+    ])
 
     const auctionModel = new Auction(sale)
     const auctionArticles = new Articles(articles)
@@ -64,7 +63,7 @@ export async function index (req, res, next) {
         locals: res.locals,
         data: {
           articles: auctionArticles,
-          assetPackage: 'auctions',
+          assetPackage: 'auctions2',
           auction: auctionModel,
           auctionArtworks: store.getState().auctionArtworks,
           bodyClass: 'body-header-fixed body-no-margins',
@@ -76,8 +75,6 @@ export async function index (req, res, next) {
           me: me
         }
       })
-
-      res.locals.sd.AUCTION = sale
 
       res.send(layout)
     } catch (error) {
