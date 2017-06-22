@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import { titleAndYear } from 'desktop/apps/auction2/utils/artwork'
+import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 
 function AuctionListArtwork ({ isClosed, saleArtwork }) {
   const artwork = saleArtwork.artwork

@@ -86,26 +86,30 @@ export async function index (req, res, next) {
 }
 
 export async function redirectLive (req, res, next) {
-  const { sale } = await metaphysics({ query: SaleQuery(req.params.id) })
-  const isLiveOpen = get(sale, 'is_live_open')
+  try {
+    const { sale } = await metaphysics({ query: SaleQuery(req.params.id) })
+    const isLiveOpen = get(sale, 'is_live_open')
 
-  if (isLiveOpen) {
-    const { me } = await metaphysics({
-      query: MeQuery(req.params.id),
-      req: req
-    })
+    if (isLiveOpen) {
+      const { me } = await metaphysics({
+        query: MeQuery(req.params.id),
+        req: req
+      })
 
-    const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
+      const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
 
-    if (qualifiedForBidding) {
-      res.redirect(getLiveAuctionUrl(sale.id, {
-        isLoggedIn: Boolean(me)
-      }))
+      if (qualifiedForBidding) {
+        res.redirect(getLiveAuctionUrl(sale.id, {
+          isLoggedIn: Boolean(me)
+        }))
+      } else {
+        next()
+      }
     } else {
       next()
     }
-  } else {
-    next()
+  } catch (error) {
+    next(error)
   }
 }
 

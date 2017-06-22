@@ -1,5 +1,3 @@
-// FIXME: Reenable
-
 // require('babel-core/register')
 // require('coffee-script/register')
 // import $ from 'jquery'

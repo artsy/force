@@ -1,4 +1,4 @@
-import { titleAndYear } from 'desktop/apps/auction2/utils/artwork'
+import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 
 describe('titleAndYear', () => {
   it('returns empty string without title or year', () => {

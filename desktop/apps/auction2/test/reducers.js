@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import auctions from 'desktop/apps/auction2/client/reducers'
+import auctions from 'desktop/apps/auction2/reducers'
 import * as actions from 'desktop/apps/auction2/actions'
 import { __RewireAPI__ as ActionsRewireApi } from 'desktop/apps/auction2/actions'
 import sinon from 'sinon'
