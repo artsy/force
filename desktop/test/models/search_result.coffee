@@ -35,6 +35,10 @@ describe 'SearchResult', ->
         model = new SearchResult({ model: 'city', id: 'gotham' })
         model.href().should.containEql '/shows/gotham'
 
+      it 'has a location attribute when it is a page with a custom href', ->
+        model = new SearchResult({ model: 'page', id: 'blah', href: 'http://example.com' })
+        model.href().should.equal 'http://example.com'
+
     describe '#displayModel', ->
       it 'has a display_model attribute when it is a artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
