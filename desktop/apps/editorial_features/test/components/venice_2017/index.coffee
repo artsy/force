@@ -83,6 +83,7 @@ describe 'Venice Main', ->
             select: sinon.stub()
             next: sinon.stub()
         VeniceView.__set__ 'initFooterCarousel', @initFooterCarousel = sinon.stub()
+        VeniceView.__set__ 'FlashMessage', sinon.stub()
         @view = new VeniceView
           el: $('body')
         done()
