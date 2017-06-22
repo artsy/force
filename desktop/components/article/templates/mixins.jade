@@ -1,7 +1,8 @@
 mixin author-date
   .article-author-date
     .article-author(class= article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
-      = article.related().author.get('name')
+      if article.related()
+        = article.related().author.get('name')
     if article.get('contributing_authors').length > 0
       .article-contributing-author
         = "By " + article.byline()
