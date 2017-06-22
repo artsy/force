@@ -1,4 +1,5 @@
-//- Display price for non-auctions
+//- if the artwork is not owned by an institutional partner and not for sale
+//- and if the artwork is not in an auction
 if !hasInstitutionPartner && !hasAuctionPartner && !isAuction
   if artwork.saleMessage() && displayPrice
     a.faux-underline-hover( href=artwork.href() )
