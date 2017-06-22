@@ -11,16 +11,20 @@ export default function Footer (props) {
   const showFooterItems = footerItem && !auction.isAuctionPromo()
   const b = block('auction-footer')
 
+  if (!showArticles) {
+    return null
+  }
+
   return (
     <footer
-      className={b('')
+      className={b({without: false})
         .mix('auction-page-section')
         .mix(articles.length ? 'has-articles' : 'has-no-articles')}
     >
       { showArticles &&
         <div className={b('auction-articles')}>
           { articles.models.map((article, key) => {
-            const ArticleFigure = buildTemplateComponent('desktop/components/article_figure/template.jade', { locals: { article } })
+            const ArticleFigure = buildTemplateComponent('desktop/components/article_figure/template.jade', { locals: { article, ...props } })
 
             return (
               <div key={key}>

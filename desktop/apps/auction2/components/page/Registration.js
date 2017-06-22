@@ -4,14 +4,15 @@ import get from 'lodash.get'
 
 export default function Registration (props) {
   const { auction, me } = props
-  const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
+  const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding', true)
+  const numBidders = get(me, 'bidders.length', 0)
 
   return (
     <div>
       {(() => {
         if (auction.isClosed()) {
           return null
-        } else if (qualifiedForBidding) {
+        } else if (!qualifiedForBidding) {
           return (
             <div className='auction-registration-wrapper'>
               <button className='avant-garde-button-black is-block is-disabled'>
@@ -22,7 +23,7 @@ export default function Registration (props) {
               </div>
             </div>
           )
-        } else if (me.bidders.length > 0) {
+        } else if (numBidders > 0) {
           return (
             <div className='auction-registration-approved'>
               <span className='icon-check'>
@@ -53,7 +54,7 @@ export default function Registration (props) {
             </div>
           )
         }
-      })}
+      })()}
 
       <div className='auction-registration-how-to-bid'>
         <strong>
