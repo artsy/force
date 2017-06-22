@@ -10,13 +10,10 @@ import {
 
 function SubmissionFlow (props) {
   const b = block('consignments2-submission-flow')
-  const { CurrentStepComponent, isMobile } = props
+  const { CurrentStepComponent } = props
 
   return (
-    <div className={b({mobile: isMobile})}>
-      <div className={b('title')}>
-        Consign your work through Artsy in just a few quick steps
-      </div>
+    <div className={b()}>
       <StepMarker />
       <div className={b('step-form')}>
         <CurrentStepComponent />
@@ -28,14 +25,12 @@ function SubmissionFlow (props) {
 const mapStateToProps = (state) => {
   const {
     submissionFlow: {
-      currentStep,
-      isMobile
+      currentStep
     }
   } = state
 
   return {
-    CurrentStepComponent: stepsConfig[currentStep].component,
-    isMobile
+    CurrentStepComponent: stepsConfig[currentStep].component
   }
 }
 
@@ -49,6 +44,5 @@ export default connect(
 )(SubmissionFlow)
 
 SubmissionFlow.propTypes = {
-  CurrentStepComponent: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired
+  CurrentStepComponent: PropTypes.func.isRequired
 }

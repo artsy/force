@@ -9,7 +9,7 @@ module.exports = class AppBanner
   appUrl: 'artsy://'
 
   iTunesUrl: ->
-    "https://app.adjust.com/ue4nzl"
+    "https://app.adjust.com/r0hk13"
 
   template: -> $ """
     <div class='app-banner'>

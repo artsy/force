@@ -5,44 +5,12 @@ import block from 'bem-cn'
 import { Field, formValueSelector, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
+import { numberWarning, scrollToError, validate } from '../../client/validate'
 import { renderCheckboxInput } from '../checkbox_input'
 import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
 import { renderTextInput } from '../text_input'
-import {
-  submitDescribeWork
-} from '../../client/actions'
-
-const numberWarning = value => value && isNaN(Number(value)) && 'Must be a number'
-
-function validate (values, props) {
-  const {
-    depth,
-    edition,
-    edition_number,
-    edition_size,
-    height,
-    medium,
-    title,
-    width,
-    year
-  } = values
-  const errors = {}
-
-  if (!title) errors.title = 'Required'
-  if (!year) errors.year = 'Required'
-  if (!width || numberWarning(width)) errors.width = 'Required'
-  if (!medium) errors.medium = 'Required'
-  if (!height || numberWarning(height)) errors.height = 'Required'
-  if (numberWarning(depth)) errors.depth = 'Required'
-
-  if (edition) {
-    if (!edition_size || numberWarning(edition_size)) errors.edition_size = 'Required'
-    if (!edition_number) errors.edition_number = 'Required'
-  }
-
-  return errors
-}
+import { submitDescribeWork } from '../../client/actions'
 
 export function makeDescribeWorkDesktop (initialValues = {}) {
   function DescribeWorkDesktop (props) {
@@ -53,10 +21,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
       loading,
       handleSubmit,
       hasEditionValue,
-      locationAutocompleteFrozen,
-      locationAutocompleteValue,
-      submitDescribeWorkAction,
-      pristine
+      submitDescribeWorkAction
     } = props
 
     const b = block('consignments2-submission-describe-work')
@@ -103,7 +68,6 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
               />
             </div>
           </div>
-
           <div className={b('row')}>
             <div className={b('row-item')}>
               <Field name='height' component={renderTextInput}
@@ -192,12 +156,11 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
           <div className={b('row')}>
             <div className={b('row-item')}>
               <div className={b('instructions')}>What city is the work located in?*</div>
-              <LocationAutocomplete />
+              <Field name='location' component={LocationAutocomplete} />
             </div>
           </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
-            disabled={locationAutocompleteValue.length === 0 || !locationAutocompleteFrozen}
             type='submit'
           >
             {
@@ -237,9 +200,6 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
     loading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     hasEditionValue: PropTypes.bool,
-    locationAutocompleteFrozen: PropTypes.bool.isRequired,
-    locationAutocompleteValue: PropTypes.string,
-    pristine: PropTypes.bool,
     submitDescribeWorkAction: PropTypes.func.isRequired
   }
 
@@ -247,7 +207,8 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
     reduxForm({
       form: 'describeWork', // a unique identifier for this form
       validate,
-      initialValues
+      initialValues,
+      onSubmitFail: scrollToError
     }),
     connect(
       mapStateToProps,

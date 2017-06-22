@@ -67,49 +67,56 @@ describe 'Venice route', ->
     Backbone.sync.restore()
     done()
 
-  it 'sets a video index', ->
+  it 'sets a video index', (done) ->
     @req = { params: { slug: 'venice-2' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
       @res.render.args[0][1].videoIndex.should.equal 1
+      done()
 
-  it 'defaults to the first video', ->
+  it 'defaults to the first video', (done) ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.redirect.args[0].should.eql [ 301, '/venice-biennale/toward-venice' ]
+      done()
 
-  it 'sets a curation', ->
+  it 'sets a curation', (done) ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
       @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
+      done()
 
-  it 'sets the 360 video guide', ->
+  it 'sets the 360 video guide', (done) ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][1].videoGuide.get('title').should.eql 'Video Guide'
+      done()
 
-  it 'Fetches sub articles', ->
+  xit 'Fetches sub articles', (done) ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][1].sub_articles.length.should.eql 1
+      done()
 
-  it 'renders json ld', ->
+  it 'renders json ld', (done) ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.locals.jsonLD.should.containEql '"headline":"Inside the Biennale venice"'
+      done()
 
-  it 'includes sailthru', ->
+  it 'includes sailthru', (done) ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.locals.sd.INCLUDE_SAILTHRU.should.be.true()
+      done()
 
 describe 'Vanity route', ->
 

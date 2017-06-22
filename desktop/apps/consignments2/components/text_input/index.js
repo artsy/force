@@ -14,10 +14,22 @@ export const renderTextInput = ({ input: { onChange, value }, meta: { error, tou
 )
 
 function TextInput (props) {
-  const { autofocus, error, item, label, instructions, onChange, touched, type, warning, value, ...rest } = props
+  const {
+    autofocus,
+    error,
+    item,
+    label,
+    instructions,
+    onChange,
+    touched,
+    type,
+    warning,
+    value
+  } = props
+
   const b = block('consignments2-submission-text-input')
   return (
-    <div className={b()}>
+    <div className={b({error: Boolean(touched && error)})} name={item}>
       { label && <div className={b('label')}>{ label }</div> }
       { instructions && <div className={b('instructions')}>{ instructions }</div> }
       <input
@@ -40,7 +52,7 @@ function TextInput (props) {
 
 TextInput.propTypes = {
   autofocus: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
   instructions: PropTypes.string,

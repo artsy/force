@@ -4,6 +4,7 @@ path = require 'path'
 jade = require 'jade'
 fs = require 'fs'
 moment = require 'moment'
+markdown = require '../../../components/util/markdown'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 fixtures = require '../../../test/helpers/fixtures.coffee'
@@ -87,6 +88,29 @@ describe 'article show template', ->
     html.should.containEql 'article-sa-sticky-header'
     html.should.containEql '<a href="http://logo.com"><img src="http://fullscreen-logo.jpg"/></a>'
     html.should.not.containEql 'visible no-transition'
+
+  it 'super articles have markdown-supported footers', ->
+    html = render('index')
+      article: new Article
+        title: 'Super Article Title'
+        sections: []
+        contributing_authors: []
+        is_super_article: true
+      footerArticles: new Articles
+      superArticle: new Article
+        super_article:
+          partner_logo: 'http://logo.jpg'
+          partner_logo_link: 'http://logo.com'
+          partner_fullscreen_header_logo: 'http://fullscreen-logo.jpg'
+          footer_blurb: 'Article Test [Link](http://artsy.net)'
+      superSubArticles: new Articles
+      crop: ->
+      resize: ->
+      moment: moment
+      sd: {}
+      asset: ->
+      markdown: markdown
+    html.should.containEql '<a href="http://artsy.net">Link</a>'
 
   it 'renders a TOC', ->
     html = render('index')
