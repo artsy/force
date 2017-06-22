@@ -5,8 +5,8 @@
     if superArticle.get('super_article').footer_blurb
       .article-sa-footer-blurb!= markdown(superArticle.get('super_article').footer_blurb)
 
-    if superArticle.get('super_article').partner_link_title
-      .article-sa-cta-container
+    .article-sa-cta-container
+      if superArticle.get('super_article').partner_link_title
         a.article-sa-cta.faux-underline( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
 
     .article-sa-logos
