@@ -45,7 +45,7 @@ function Layout (props) {
 }
 
 Layout.propTypes = {
-  articles: PropTypes.array,
+  articles: PropTypes.object,
   auction: PropTypes.object.isRequired,
   displayFollowedArtistsRail: PropTypes.bool.isRequired
 }

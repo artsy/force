@@ -1,18 +1,19 @@
-require('babel-core/register')
-require('coffee-script/register')
+import 'babel-core/register'
+import 'coffee-script/register'
+
 import * as actions from 'desktop/apps/auction2/actions'
-import auctions from 'desktop/apps/auction2/client/reducers'
-import ArtistFilter from 'desktop/apps/auction2/components/client/ArtistFilter'
-import AuctionGridArtwork from 'desktop/apps/auction2/components/client/AuctionGridArtwork'
-import AuctionListArtwork from 'desktop/apps/auction2/components/client/AuctionListArtwork'
-import FilterSort from 'desktop/apps/auction2/components/client/FilterSort'
-import MediumFilter from 'desktop/apps/auction2/components/client/MediumFilter'
-import RangeSlider from 'desktop/apps/auction2/components/client/RangeSlider'
-import Sidebar from 'desktop/apps/auction2/components/client/Sidebar'
-import { shallow } from 'enzyme'
+import ArtistFilter from 'desktop/apps/auction2/components/filter/ArtistFilter'
+import AuctionGridArtwork from 'desktop/apps/auction2/components/filter/AuctionGridArtwork'
+import AuctionListArtwork from 'desktop/apps/auction2/components/filter/AuctionListArtwork'
+import FilterSort from 'desktop/apps/auction2/components/filter/FilterSort'
+import MediumFilter from 'desktop/apps/auction2/components/filter/MediumFilter'
+import RangeSlider from 'desktop/apps/auction2/components/filter/RangeSlider'
 import React from 'react'
+import Sidebar from 'desktop/apps/auction2/components/filter/Sidebar'
+import auctions from 'desktop/apps/auction2/reducers'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import { shallow } from 'enzyme'
 
 describe('React components', () => {
   let initialStore

@@ -29,7 +29,7 @@ export default function Banner (props) {
   }
 
   BackgroundBanner.propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node
   }
 
   return (
