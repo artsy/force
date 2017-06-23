@@ -5,7 +5,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 
 describe 'AboutRouter', ->
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
@@ -14,7 +14,7 @@ describe 'AboutRouter', ->
       sinon.stub _, 'defer', (cb) -> cb()
       done()
 
-  after ->
+  afterEach ->
     _.defer.restore()
     benv.teardown()
 

@@ -74,7 +74,7 @@ module.exports = class ArticleView extends Backbone.View
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
       new FullscreenView el: @$el, article: @article, header: $header
-    if sd.SUPER_SUB_ARTICLES?.length > 0
+    if sd.SUPER_SUB_ARTICLES?.length > 0 or @article.get('is_super_article')
       new SuperArticleView el: @$el, article: @article
 
     # Utility

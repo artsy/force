@@ -1,5 +1,4 @@
 sinon = require 'sinon'
-Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
 
@@ -11,7 +10,12 @@ json = null
 describe 'About routes', ->
   describe '#index', ->
     beforeEach ->
-      @res = { redirect: sinon.stub(), locals: sd: IS_MOBILE: true }
+      @res =
+        redirect: sinon.stub()
+        locals: sd: IS_MOBILE: true
+        render: sinon.stub()
+      routes.__set__ 'JSONPage', sinon.stub().returns
+        get: sinon.stub().callsArgWith 0, null, sections: []
 
     it 'redirects to collect-art if it is mobile', ->
       routes.index {}, @res
@@ -21,6 +25,7 @@ describe 'About routes', ->
       @res.locals.sd.IS_MOBILE = false
       routes.index {}, @res
       @res.redirect.called.should.not.be.ok()
+      @res.render.called.should.be.ok()
 
   describe '#sendSMS', ->
     beforeEach ->

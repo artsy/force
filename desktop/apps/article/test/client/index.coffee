@@ -15,7 +15,8 @@ Q = require 'bluebird-q'
 
 describe 'ArticleIndexView', ->
 
-  before (done) ->
+  beforeEach (done) ->
+    sinon.stub Backbone, 'sync'
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
@@ -50,7 +51,6 @@ describe 'ArticleIndexView', ->
       }
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
-      sinon.stub Backbone, 'sync'
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
       queries = {
         partner:
@@ -65,20 +65,20 @@ describe 'ArticleIndexView', ->
           href: '/sale/whtney-art-party'
       }
 
-      @ArticleIndexView.__set__ 'metaphysics', sinon.stub().returns(Q.resolve(queries))
+      @ArticleIndexView.__set__ 'metaphysics', @metaphysics = sinon.stub().returns(Q.resolve(queries))
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       @ArticleIndexView.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       @ArticleIndexView.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
       @ArticleIndexView.__set__ 'VeniceBanner', @VeniceBanner = sinon.stub()
       done()
 
-  after ->
+  afterEach ->
     benv.teardown()
     Backbone.sync.restore()
 
   describe '#initialize static articles', ->
 
-    before (done) ->
+    beforeEach (done) ->
       @options.sd.SCROLL_ARTICLE = 'static'
       benv.render resolve(__dirname, '../../templates/article.jade'), @options, =>
         @view = new @ArticleIndexView
@@ -105,7 +105,7 @@ describe 'ArticleIndexView', ->
 
   describe '#initialize infinite scroll articles', ->
 
-    before (done) ->
+    beforeEach (done) ->
       @options.sd.SCROLL_ARTICLE = 'infinite'
       @ArticlesGridView.reset()
       benv.render resolve(__dirname, '../../templates/article.jade'), _.extend(@options, {
@@ -141,12 +141,11 @@ describe 'ArticleIndexView', ->
 
   describe 'promoted content gallery', ->
 
-    before (done) ->
+    beforeEach (done) ->
       @options.sd.PC_ARTSY_CHANNEL = '5086df098523e60002000011'
       benv.render resolve(__dirname, '../../templates/article.jade'), @options, =>
-        @view = new @ArticleIndexView
-          el: $('body')
-        done()
+        @view = new @ArticleIndexView el: $('body')
+        @metaphysics.returnValues[0].then => done()
 
     it 'displays promoted content banner for partner', ->
       $('.articles-promoted__img').attr('src').should.eql 'http://image.jpg'
@@ -156,13 +155,12 @@ describe 'ArticleIndexView', ->
 
   describe 'promoted content auction', ->
 
-    before (done) ->
+    beforeEach (done) ->
       @options.sd.PC_AUCTION_CHANNEL = '5086df098523e60002000011'
       @options.sd.PC_ARTSY_CHANNEL = '5086df098523e60002000012'
       benv.render resolve(__dirname, '../../templates/article.jade'), @options, =>
-        @view = new @ArticleIndexView
-          el: $('body')
-        done()
+        @view = new @ArticleIndexView el: $('body')
+        @metaphysics.returnValues[0].then => done()
 
     it 'displays promoted content banner for auction', ->
       $('.articles-promoted__img').attr('src').should.equal 'http://cover_image.jpg'
