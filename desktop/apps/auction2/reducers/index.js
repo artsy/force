@@ -53,7 +53,7 @@ export const initialState = {
   },
   symbol: get(sd, 'AUCTION.symbol', '$'),
   total: 0,
-  user: get(sd, 'CURRENT_USER', false)
+  user: get(sd, 'CURRENT_USER', undefined)
 }
 
 function auctionArtworks (state = initialState, action) {

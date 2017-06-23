@@ -11,18 +11,17 @@ import RangeSlider from 'desktop/apps/auction2/components/filter/RangeSlider'
 import React from 'react'
 import Sidebar from 'desktop/apps/auction2/components/filter/Sidebar'
 import auctions from 'desktop/apps/auction2/reducers'
-import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
 
-describe('React components', () => {
+describe('auction/components/filter/filter.test.js', () => {
   let initialStore
 
   beforeEach(() => {
     initialStore = createStore(auctions)
   })
 
-  describe('AuctionArtwork', () => {
+  describe('<AuctionArtwork />', () => {
     let saleArtwork
 
     beforeEach(() => {
@@ -50,7 +49,7 @@ describe('React components', () => {
 
     it('renders an auction grid artwork component', () => {
       const wrapper = shallow(
-        <Provider><AuctionGridArtwork store={initialStore} saleArtwork={saleArtwork} /></Provider>
+        <AuctionGridArtwork store={initialStore} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.containEql('$100')
       wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
@@ -58,7 +57,7 @@ describe('React components', () => {
 
     it('renders an auction list artwork component', () => {
       const wrapper = shallow(
-        <Provider><AuctionListArtwork store={initialStore} saleArtwork={saleArtwork} /></Provider>
+        <AuctionListArtwork store={initialStore} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.containEql('$100')
       wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
@@ -67,7 +66,7 @@ describe('React components', () => {
     it('renders an auction grid artwork component without a bid status if the auction is closed', () => {
       const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
       const wrapper = shallow(
-        <Provider><AuctionGridArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} /></Provider>
+        <AuctionGridArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.not.containEql('$100')
     })
@@ -75,13 +74,13 @@ describe('React components', () => {
     it('renders an auction list artwork component without a bid status if the auction is closed', () => {
       const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
       const wrapper = shallow(
-        <Provider><AuctionListArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} /></Provider>
+        <AuctionListArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.not.containEql('$100')
     })
   })
 
-  describe('Sidebar', () => {
+  describe('<Sidebar />', () => {
     beforeEach(() => {
       Sidebar.__Rewire__('ArtistFilter', () => <div className='artist-filter' />)
       Sidebar.__Rewire__('MediumFilter', () => <div className='medium-filter' />)
@@ -96,7 +95,7 @@ describe('React components', () => {
 
     it('renders the range filter if the auction is open', () => {
       const wrapper = shallow(
-        <Provider><Sidebar store={initialStore} /></Provider>
+        <Sidebar store={initialStore} />
       )
       wrapper.render().find('.medium-filter').length.should.eql(1)
       wrapper.render().find('.artist-filter').length.should.eql(1)
@@ -106,7 +105,7 @@ describe('React components', () => {
     it('does not render the range filter if the auction is closed', () => {
       const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
       const wrapper = shallow(
-        <Provider><Sidebar store={initialStoreClosedAuction} /></Provider>
+        <Sidebar store={initialStoreClosedAuction} />
       )
       wrapper.render().find('.medium-filter').length.should.eql(1)
       wrapper.render().find('.artist-filter').length.should.eql(1)
@@ -114,7 +113,7 @@ describe('React components', () => {
     })
   })
 
-  describe('ArtistFilter', () => {
+  describe('<ArtistFilter />', () => {
     let aggregatedArtists
 
     beforeEach(() => {
@@ -129,7 +128,7 @@ describe('React components', () => {
       it('contains all of the aggregated artists and checks the artists-all box', () => {
         initialStore.dispatch(actions.updateAggregatedArtists(aggregatedArtists))
         const wrapper = shallow(
-          <Provider><ArtistFilter store={initialStore} /></Provider>
+          <ArtistFilter store={initialStore} />
         )
         const rendered = wrapper.render()
         rendered.find('.artsy-checkbox').length.should.eql(4)
@@ -147,7 +146,7 @@ describe('React components', () => {
         initialStore.dispatch(actions.updateAggregatedArtists(aggregatedArtists))
         initialStore.dispatch(actions.updateArtistId('artist-1'))
         const wrapper = shallow(
-          <Provider><ArtistFilter store={initialStore} /></Provider>
+          <ArtistFilter store={initialStore} />
         )
         const rendered = wrapper.render()
         rendered.find('.artsy-checkbox').length.should.eql(4)
@@ -162,7 +161,7 @@ describe('React components', () => {
     })
   })
 
-  describe('MediumFilter', () => {
+  describe('<MediumFilter />', () => {
     let aggregatedMediums
 
     beforeEach(() => {
@@ -178,7 +177,7 @@ describe('React components', () => {
         initialStore.dispatch(actions.updateInitialMediumMap(aggregatedMediums))
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
         const wrapper = shallow(
-          <Provider><MediumFilter store={initialStore} /></Provider>
+          <MediumFilter store={initialStore} />
         )
         const rendered = wrapper.render()
         rendered.find('.artsy-checkbox').length.should.eql(4)
@@ -197,7 +196,7 @@ describe('React components', () => {
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
         initialStore.dispatch(actions.updateMediumId('painting'))
         const wrapper = shallow(
-          <Provider><MediumFilter store={initialStore} /></Provider>
+          <MediumFilter store={initialStore} />
         )
         const rendered = wrapper.render()
         rendered.find('.artsy-checkbox').length.should.eql(4)
@@ -212,10 +211,10 @@ describe('React components', () => {
     })
   })
 
-  describe('RangeSlider', () => {
+  describe('<RangeSlider />', () => {
     it('renders the range correctly initially', () => {
       const wrapper = shallow(
-        <Provider><RangeSlider store={initialStore} /></Provider>
+        <RangeSlider store={initialStore} />
       )
       const rendered = wrapper.render()
       rendered.find('.auction-range-slider__caption').length.should.eql(1)
@@ -225,7 +224,7 @@ describe('React components', () => {
     it('renders the range correctly for a middle bucket', () => {
       initialStore.dispatch(actions.updateEstimateDisplay(200, 4000))
       const wrapper = shallow(
-        <Provider><RangeSlider store={initialStore} /></Provider>
+        <RangeSlider store={initialStore} />
       )
       const rendered = wrapper.render()
       rendered.find('.auction-range-slider__caption').length.should.eql(1)
@@ -235,7 +234,7 @@ describe('React components', () => {
     it('renders the range correctly for an upper bucket', () => {
       initialStore.dispatch(actions.updateEstimateDisplay(500, 50000))
       const wrapper = shallow(
-        <Provider><RangeSlider store={initialStore} /></Provider>
+        <RangeSlider store={initialStore} />
       )
       const rendered = wrapper.render()
       rendered.find('.auction-range-slider__caption').length.should.eql(1)
@@ -244,10 +243,10 @@ describe('React components', () => {
     })
   })
 
-  describe('FilterSort', () => {
+  describe('<FilterSort />', () => {
     it('selects the correct option', () => {
       const wrapper = shallow(
-        <Provider><FilterSort store={initialStore} /></Provider>
+        <FilterSort store={initialStore} />
       )
       wrapper.render().find('.bordered-pulldown-text').text().should.eql('Lot Number (asc.)')
     })

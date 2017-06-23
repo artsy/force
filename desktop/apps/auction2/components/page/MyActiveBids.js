@@ -5,9 +5,9 @@ import BidStatus from './BidStatus'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export default function MyActiveBids (props) {
-  const { myActiveBids, me } = props
+  const { bidderPositions, me } = props
 
-  if (!myActiveBids.length) {
+  if (!bidderPositions.length) {
     return null
   }
 
@@ -19,9 +19,9 @@ export default function MyActiveBids (props) {
         Your Active Bids
       </h2>
 
-      { myActiveBids
+      { bidderPositions
         .filter(bid => bid.sale_artwork)
-        .map((bid, index) => {
+        .map((bid, key) => {
           const {
             sale_artwork: {
               artwork,
@@ -43,6 +43,7 @@ export default function MyActiveBids (props) {
             <div
               className={b('active-bid')}
               data-artwork_id={id}
+              key={key}
             >
               <div className={b('artwork-container')}>
                 <a href={artwork.href}>
@@ -100,6 +101,6 @@ export default function MyActiveBids (props) {
 }
 
 MyActiveBids.propTypes = {
-  myActiveBids: PropTypes.object,
+  bidderPositions: PropTypes.array,
   me: PropTypes.object
 }

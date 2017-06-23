@@ -1,11 +1,9 @@
-import { fabricate } from 'antigravity'
-import Backbone from 'backbone'
-import Auction from 'desktop/models/auction.coffee'
-import CurrentUser from 'desktop/models/current_user.coffee'
-import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import * as routes from 'desktop/apps/auction2/routes'
-import { __RewireAPI__ as RoutesRewireApi } from '../routes'
+import Backbone from 'backbone'
+import CurrentUser from 'desktop/models/current_user.coffee'
 import sinon from 'sinon'
+import { __RewireAPI__ as RoutesRewireApi } from '../routes'
+import { fabricate } from 'antigravity'
 
 describe('#index', () => {
   let req
@@ -20,9 +18,11 @@ describe('#index', () => {
       user: new CurrentUser(fabricate('user'))
     }
     res = {
+      app: { get: sinon.stub().returns('components/page') },
+      locals: { sd: {} },
       redirect: sinon.stub(),
       render: sinon.stub(),
-      locals: { sd: {} }
+      send: sinon.stub()
     }
     next = sinon.stub()
   })
@@ -52,12 +52,17 @@ describe('#index', () => {
     }
 
     RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
-    routes.index(req, res, next).then(() => {
-      res.render.args[0][1].articles.length.should.eql(0)
-      res.render.args[0][1].auction.get('id').should.eql('foo')
-      res.render.args[0][1].footerItems.should.eql(footerItems)
-      res.render.args[0][1].me.should.eql(auctionQueries.me)
+    RoutesRewireApi.__Rewire__('renderReactLayout', () => '<html />')
+    RoutesRewireApi.__Rewire__('actions', {
+      fetchArtworksByFollowedArtists: () => ({ type: 'GET_ARTWORKS_SUCCESS' }),
+      fetchArtworks: () => ({ type: 'GET_ARTWORKS_SUCCESS' })
     })
+
+    // FIXME: Need to write more robust output test
+    routes.index(req, res, next)
+      .then(() => {
+        res.send.args[0][0].should.eql('<html />')
+      })
   })
 })
 

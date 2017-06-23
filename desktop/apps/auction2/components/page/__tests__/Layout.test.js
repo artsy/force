@@ -9,7 +9,6 @@ import { fabricate } from 'antigravity'
 import { render } from 'enzyme'
 
 import Layout from 'desktop/apps/auction2/components/Layout'
-import MyActiveBids from 'desktop/apps/auction2/components/MyActiveBids'
 
 describe('auction templates', () => {
   let baseData
@@ -299,12 +298,6 @@ describe('auction templates', () => {
         rendered.find('.auction-footer__auction-app-promo-wrapper').length.should.equal(1)
         rendered.find('.auction-footer__auction-app-promo-title').text().should.containEql('Bid from your phone')
       })
-    })
-  })
-
-  describe.only('active bids', () => {
-    it('works', () => {
-
     })
   })
 })

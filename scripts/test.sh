@@ -22,6 +22,7 @@ run () {
     yarn mocha $(find desktop/apps/*/test -name '*.coffee')
     yarn mocha $(find desktop/apps/*/test -name '*.js')
     yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee')
+    yarn mocha $(find desktop/apps/**/__tests__ -name '*.js')
     ;;
   3)
     yarn mocha $(find mobile/test -name '*.coffee')

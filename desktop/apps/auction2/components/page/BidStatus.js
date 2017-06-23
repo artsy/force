@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import BidStatusArrowIcon from '../../../../components/main_layout/public/icons/bid-status-arrow.svg'
+import BidStatusArrowIcon from '../../../../components/bid_status/public/icons/bid-status-arrow.svg'
 import block from 'bem-cn'
 
 export default function BidStatus (props) {
@@ -62,17 +62,19 @@ export default function BidStatus (props) {
 }
 
 BidStatus.propTypes = {
-  messages: {
+  messages: PropTypes.shape({
     losingMessage: PropTypes.string,
     reserveMessage: PropTypes.string,
     winningMessage: PropTypes.string
-  },
+  }),
   bid: PropTypes.object.isRequired,
   saleArtwork: PropTypes.object.isRequired
 }
 
 BidStatus.defaultProps = {
-  losingMessage: 'Outbid',
-  reserveMessage: 'Highest Bid',
-  winningMessage: 'Highest Bid'
+  messages: {
+    losingMessage: 'Outbid',
+    reserveMessage: 'Highest Bid',
+    winningMessage: 'Highest Bid'
+  }
 }
