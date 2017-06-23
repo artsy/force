@@ -1,20 +1,22 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import AddToCalendarView from 'desktop/components/add_to_calendar/index.coffee'
 
 export default class AddToCalendar extends Component {
-  state = {
-    showCalendarOptions: true // TODO: Implement when ready for isomorphic
+  static propTypes = {
+    el: PropTypes.node
   }
 
-  handleMouseOver = () => {
-    this.setState({
-      showCalenderOptions: true
+  componentDidMount () {
+    this.$ = require('jquery')
+
+    this.view = new AddToCalendarView({
+      el: this.props.el || this.$('.auction-callout')
     })
   }
 
-  handleMouseOut = () => {
-    this.setState({
-      showCalenderOptions: false
-    })
+  componentWillUnmount () {
+    this.view.remove()
   }
 
   render () {
@@ -22,8 +24,6 @@ export default class AddToCalendar extends Component {
       <div className='add-to-calendar'>
         <div className='add-to-calendar__wrapper'>
           <a
-            onMouseOver={this.handleMouseOver}
-            onMouseOut={this.handleMouseOut}
             className='add-to-calendar-event-item-date__add-to-calender'
             href='#'
           >

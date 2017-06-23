@@ -1,4 +1,4 @@
-import AddToCalendar from 'desktop/components/add_to_calendar/index.jsx'
+import AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
@@ -23,7 +23,7 @@ export default function Header (props) {
           {auction.upcomingLabel()}
 
           { showAddToCalendar &&
-            <AddToCalendar /> }
+            <AddToCalendarView /> }
 
           {auction.get('live_start_at') &&
             <div className='auction-callout-live-label'>

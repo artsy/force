@@ -3,16 +3,32 @@ import Banner from 'desktop/apps/auction2/components/page/Banner'
 import CommercialFilter from './filter'
 import Footer from 'desktop/apps/auction2/components/page/Footer'
 import Header from 'desktop/apps/auction2/components/page/Header'
+import MyActiveBids from 'desktop/apps/auction2/components/page/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
 import WorksByFollowedArtists from 'desktop/apps/auction2/components/filter/WorksByFollowedArtists'
 import { connect } from 'react-redux'
 
 function Layout (props) {
-  const { articles, auction, displayFollowedArtistsRail } = props
-  const { associated_sale, eligible_sale_artworks_count } = auction.toJSON()
+  const {
+    articles,
+    auction,
+    displayFollowedArtistsRail,
+    me,
+    user
+  } = props
+
+  const {
+    id,
+    associated_sale,
+    eligible_sale_artworks_count,
+    is_open,
+    is_live_open
+  } = auction.toJSON()
+
   const hasSaleArtworks = eligible_sale_artworks_count > 0
   const showFooter = articles.length || !hasSaleArtworks
+  const showMyActiveBids = me && me.bidders.length && is_open && !is_live_open
 
   return (
     <div className='auction-page'>
@@ -27,8 +43,13 @@ function Layout (props) {
             relatedAuction
           /> }
 
-        {/* TODO: Refactor Backbone / Jade view into component */}
-        <div id='my-active-bids' />
+        { showMyActiveBids &&
+          <MyActiveBids
+            bidderPositions={me.lot_standings}
+            saleId={id}
+            user={user}
+          />
+        }
 
         { hasSaleArtworks &&
           <div className='auction-main-page'>
@@ -47,7 +68,9 @@ function Layout (props) {
 Layout.propTypes = {
   articles: PropTypes.object,
   auction: PropTypes.object.isRequired,
-  displayFollowedArtistsRail: PropTypes.bool.isRequired
+  displayFollowedArtistsRail: PropTypes.bool.isRequired,
+  me: PropTypes.object,
+  user: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({

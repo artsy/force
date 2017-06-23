@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import BidStatusArrowIcon from '../../../../components/bid_status/public/icons/bid-status-arrow.svg'
+import BidStatusArrowIcon from './public/icons/bid-status-arrow.svg'
 import block from 'bem-cn'
 
 export default function BidStatus (props) {

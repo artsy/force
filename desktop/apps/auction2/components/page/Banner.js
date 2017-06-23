@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
+import ClockView from 'desktop/components/clock/react'
 
 export default function Banner (props) {
   const {
@@ -50,17 +51,9 @@ export default function Banner (props) {
         </div>
         : <div className='auction-banner'>
           <BackgroundBanner>
-            <div className='auction-clock white-overlay-clock js-auction-clock'>
-
-              {/*
-                Backbone-based view:
-                components/clock/index.coffee
-              */}
-              <div className='clock'>
-                <div className='clock-header' />
-                <ul className='clock-value' />
-              </div>
-            </div>
+            <ClockView
+              model={auction}
+            />
           </BackgroundBanner>
         </div>
       }
