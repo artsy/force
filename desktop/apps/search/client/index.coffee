@@ -68,7 +68,6 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
         @$(".search-result[data-id='#{result.id}'] .search-result-thumbnail-fallback").html resolvedImage(result: artwork)
 
   trackSelectResult: (e) ->
-    e.preventDefault()
     term = $('#main-layout-search-bar-input').val()
     $searchResult = $(e.currentTarget)
     analyticsHooks.trigger 'search-page:item:click',
