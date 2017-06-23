@@ -1,17 +1,17 @@
 import React from 'react'
-import renderLayout from '../render_layout'
+import renderReactLayout from '../render_react_layout'
 
-describe('components/react/utils/render_layout.js', () => {
+describe('components/react/utils/render_react_layout.js', () => {
   afterEach(() => {
-    renderLayout.__ResetDependency__('renderTemplate')
+    renderReactLayout.__ResetDependency__('renderTemplate')
   })
 
   it('renders jade template blocks', () => {
-    renderLayout.__Rewire__('renderTemplate', (options) => {
+    renderReactLayout.__Rewire__('renderTemplate', (options) => {
       return 'jade'
     })
 
-    const output = renderLayout({
+    const output = renderReactLayout({
       blocks: {
         header: 'foo.jade'
       }
@@ -21,15 +21,15 @@ describe('components/react/utils/render_layout.js', () => {
   })
 
   it('renders a stateless functional react component', (done) => {
-    renderLayout.__Rewire__('renderTemplate', (options) => {
+    renderReactLayout.__Rewire__('renderTemplate', (options) => {
       return 'react'
     })
 
-    renderLayout.__Rewire__('renderToString', () => {
+    renderReactLayout.__Rewire__('renderToString', () => {
       done()
     })
 
-    renderLayout({
+    renderReactLayout({
       blocks: {
         body: () => <div />
       }
@@ -38,7 +38,7 @@ describe('components/react/utils/render_layout.js', () => {
 
   it('throws if trying to render a class component', () => {
     (() => // eslint-disable-line
-      renderLayout({
+      renderReactLayout({
         blocks: {
           header: class Foo extends React.Component { render () {} }
         }
@@ -47,11 +47,11 @@ describe('components/react/utils/render_layout.js', () => {
   })
 
   it('renders a string', () => {
-    renderLayout.__Rewire__('renderTemplate', () => {
+    renderReactLayout.__Rewire__('renderTemplate', () => {
       return 'string'
     })
 
-    const output = renderLayout({
+    const output = renderReactLayout({
       blocks: {
         header: 'hello there'
       }

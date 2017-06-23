@@ -1,7 +1,16 @@
 extends index
 
+append locals
+  - assetPackage = data.assetPackage || ''
+  - bodyClass = bodyClass + ' ' + (data.bodyClass || '')
+
 block head
   != header
 
+    
 block body
-  != body
+  script.
+    var __BOOTSTRAP__ = !{JSON.stringify(data)}
+
+  #react-root
+    != body

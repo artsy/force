@@ -1,12 +1,12 @@
 import AuctionReminders from 'desktop/components/auction_reminders/fetch.coffee'
 import Index from './templates/index.jsx'
-import renderLayout from 'desktop/components/react/utils/render_layout'
+import renderReactLayout from 'desktop/components/react/utils/render_react_layout'
 
 export function index (req, res, next) {
-  const layout = renderLayout({
+  const layout = renderReactLayout({
     basePath: res.app.get('views'),
     blocks: {
-      header: 'meta.jade',
+      head: 'meta.jade',
       body: Index
     },
     locals: res.locals
