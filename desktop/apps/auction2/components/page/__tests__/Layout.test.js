@@ -103,7 +103,7 @@ describe('auction templates', () => {
     const rendered = setup({
       me: {
         id: 'user',
-        bidders: null
+        bidders: []
       },
       auction: new Auction(fabricate('sale', {
         name: 'An Auction'
@@ -113,6 +113,53 @@ describe('auction templates', () => {
     rendered.find('.auction-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
     rendered.find('.auction-header-metadata').text().should.containEql('Registration required to bid')
+  })
+
+  it('user with bidder positions', () => {
+    const rendered = setup({
+      me: {
+        id: 'user',
+        bidders: [1],
+        lot_standings: [
+          {
+            'is_leading_bidder': false,
+            'sale_artwork': {
+              'id': 'imhuge-brillo-condensed-soap',
+              'lot_label': '2',
+              'reserve_status': 'no_reserve',
+              'counts': {
+                'bidder_positions': 1
+              },
+              'sale_id': 'juliens-auctions-street-and-contemporary-art-day-sale',
+              'highest_bid': {
+                'display': '$750'
+              },
+              'sale': {
+                'end_at': '2016-10-31T04:28:00+00:00',
+                'is_live_open': false
+              },
+              'artwork': {
+                'href': '/artwork/imhuge-brillo-condensed-soap',
+                'title': 'Brillo Condensed Soap',
+                'date': '2016',
+                'image': {
+                  'url': 'https://d32dm0rphc51dk.cloudfront.net/G5tbqHUjuiGvjwDtCVlsGQ/square.jpg'
+                },
+                'artist': {
+                  'name': 'Imhuge'
+                }
+              }
+            }
+          }
+        ]
+      },
+      auction: new Auction(fabricate('sale', {
+        name: 'An Auction',
+        is_open: true
+      }))
+    })
+
+    rendered.find('.auction-my-active-bids').length.should.equal(1)
   })
 
   it('index, registered to bid but not qualified', () => {
@@ -201,24 +248,6 @@ describe('auction templates', () => {
         rendered.find('.auction-footer__auction-app-promo-wrapper').length.should.eql(0)
       })
     })
-
-    // FIXME: Reenable
-    // describe('not an auction promo', () => {
-    //   it('shows just the promo part of the footer', () => {
-    //     const rendered = setup({
-    //       auction: new Auction(fabricate('sale', {
-    //         name: 'An Auction',
-    //         eligible_sale_artworks_count: 0
-    //       })),
-    //       articles: new Articles([])
-    //     })
-    //
-    //     rendered.find('.auction-footer').length.should.eql(1)
-    //     rendered.find('.auction-footer__auction-app-promo-wrapper').length.should.equal(1)
-    //     rendered.find('.auction-footer__auction-app-promo-title').text().should.containEql('Bid from your phone')
-    //     rendered.find('.auction-footer .article-figure-title').length.should.eql(0)
-    //   })
-    // })
   })
 
   describe('footer', () => {

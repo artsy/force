@@ -109,25 +109,18 @@ export default class MyActiveBids extends Component {
                 </div>
 
                 { sale.is_live_open
-                  ? <a
-                    href={liveAuctionUrl}
-                    className={'avant-garde-button-white ' + b('bid-live-button')}
-                    >
+                  ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
                       Bid Live
                     </a>
                   : <div className={b('bid-status-cell')}>
-                    <BidStatus
-                      bid={bid}
-                      saleArtwork={bid.sale_artwork}
-                        />
-                  </div> }
+                    <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
+                  </div>
+                  }
 
-                <a
-                  href={artwork.href}
-                  className={'avant-garde-button-white ' + b('bid-button')}
-                  >
+                {!sale.is_live_open &&
+                  <a href={artwork.href} className={'avant-garde-button-white ' + b('bid-button')}>
                     Bid
-                </a>
+                  </a> }
               </div>
             )
           })}
