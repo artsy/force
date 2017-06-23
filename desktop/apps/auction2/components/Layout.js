@@ -45,7 +45,7 @@ function Layout (props) {
 
         { showMyActiveBids &&
           <MyActiveBids
-            bidderPositions={me.lot_standings}
+            lotStandings={me.lot_standings}
             saleId={id}
             user={user}
           />

@@ -1,55 +1,54 @@
 import BidStatus from 'desktop/components/bid_status/react'
 import MeQuery from 'desktop/apps/auction2/utils/queries/me'
-import MyActiveBidsView from 'desktop/components/my_active_bids/view.coffee'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn'
 import metaphysics from 'lib/metaphysics.coffee'
+import { data as sd } from 'sharify'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 export default class MyActiveBids extends Component {
   static propTypes = {
-    bidderPositions: PropTypes.array,
+    lotStandings: PropTypes.array,
     saleId: PropTypes.string,
     user: PropTypes.object
   }
 
   state = {
-    bidderPositions: []
+    lotStandings: []
   }
 
   componentWillMount () {
     this.setState({
-      bidderPositions: this.props.bidderPositions
+      lotStandings: this.props.lotStandings
     })
   }
 
   componentDidMount () {
-    this.startPoll()
+    this.pollInterval = setInterval(this.getFreshData, sd.ACTIVE_BIDS_POLL_INTERVAL)
   }
 
   componentWillUnmount () {
-    this.stopPoll()
+    this.clearInterval(this.pollInterval)
   }
 
-  async startPoll () {
+  getFreshData = async () => {
     const { saleId, user } = this.props
 
-    const response = await metaphysics({
+    const { me } = await metaphysics({
       query: MeQuery(saleId),
-      req: user
+      req: {
+        user
+      }
     })
 
-    console.log(response)
-  }
-
-  stopPoll () {
-
+    this.setState({
+      lotStandings: me.lot_standings
+    })
   }
 
   render () {
     const b = block('auction-my-active-bids')
-    const { bidderPositions, user } = this.props
 
     return (
       <div className={b()}>
@@ -57,7 +56,7 @@ export default class MyActiveBids extends Component {
           Your Active Bids
         </h2>
 
-        { bidderPositions
+        { this.state.lotStandings
           .filter(bid => bid.sale_artwork)
           .map((bid, key) => {
             const {
@@ -74,7 +73,7 @@ export default class MyActiveBids extends Component {
             const bidCount = counts.bidder_positions
 
             const liveAuctionUrl = getLiveAuctionUrl(sale_id, {
-              isLoggedIn: Boolean(user)
+              isLoggedIn: Boolean(this.props.user)
             })
 
             return (

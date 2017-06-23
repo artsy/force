@@ -1,5 +1,4 @@
 export default function MeQuery (sale_id, live = true) {
-  console.log(sale_id)
   return `{
     me {
       id
