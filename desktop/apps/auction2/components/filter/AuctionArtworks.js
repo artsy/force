@@ -9,8 +9,10 @@ function AuctionArtworks ({ isFetchingArtworks, isListView, saleArtworks }) {
     ? AuctionListArtwork
     : AuctionGridArtwork
 
+  const listType = isListView ? '--list' : ''
+
   return (
-    <div className='auction-page-artworks'>
+    <div className={`auction-page-artworks${listType}`}>
       {
         saleArtworks.map((saleArtwork) => (
           <DisplayComponent
