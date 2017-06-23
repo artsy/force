@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
-import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
+import renderTemplate from 'desktop/components/react/utils/render_template'
 import { first } from 'underscore'
 
 export default function Footer (props) {
@@ -24,12 +24,22 @@ export default function Footer (props) {
       { showArticles &&
         <div className={b('auction-articles')}>
           { articles.models.map((article, key) => {
-            const ArticleFigure = buildTemplateComponent('desktop/components/article_figure/template.jade', { locals: { article, ...props } })
+            let articleFigureHTML
+
+            // Serverside
+            if (typeof window === 'undefined') {
+              articleFigureHTML = renderTemplate('desktop/components/article_figure/template.jade', { locals: { article, ...props } })
+
+              // Client
+            } else {
+              articleFigureHTML = require('desktop/components/article_figure/template.jade')({ article, ...props })
+            }
 
             return (
-              <div key={key}>
-                <ArticleFigure />
-              </div>
+              <div
+                key={key}
+                dangerouslySetInnerHTML={{ __html: articleFigureHTML }}
+              />
             )
           })}
         </div>

@@ -46,7 +46,7 @@ export async function index (req, res, next) {
       metaphysics({ query: ArticlesQuery(sale._id) }),
 
       // Hydrate store
-      store.dispatch(actions.fetchArtworksByFollowedArtists()),
+      req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
       store.dispatch(actions.fetchArtworks())
     ])
 
@@ -57,7 +57,7 @@ export async function index (req, res, next) {
       const layout = renderReactLayout({
         basePath: res.app.get('views'),
         blocks: {
-          head: 'Meta.jade',
+          head: 'meta.jade',
           body: (props) => <App store={store} {...props} />
         },
         locals: res.locals,

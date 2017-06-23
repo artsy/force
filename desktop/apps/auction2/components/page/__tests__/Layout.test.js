@@ -53,9 +53,7 @@ describe('auction templates', () => {
 
     rendered.find('.auction-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-
-    // FIXME: Reenable my-active bids
-    // rendered.find('.auction-my-active-bids').text().should.not.containEql('Your Active Bids')
+    rendered.find('.auction-my-active-bids').text().should.not.containEql('Your Active Bids')
   })
 
   it('preview auction with no user', () => {

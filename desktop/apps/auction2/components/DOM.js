@@ -12,8 +12,9 @@ export default class DOM extends Component {
   static propTypes = {
     auction: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
+    me: PropTypes.object,
     store: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object
   }
 
   // Backbone views
@@ -43,9 +44,9 @@ export default class DOM extends Component {
    * TODO: Refactor these into React components
    */
   setupBackboneViews () {
-    const { auction, user } = this.props
+    const { auction, me, user } = this.props
     const { id, is_open, is_live_open } = auction.toJSON()
-    const showMyActiveBids = is_open && !is_live_open
+    const showMyActiveBids = me && me.bidders.length && is_open && !is_live_open
 
     this.clockView = new ClockView({
       modelName: 'Auction',

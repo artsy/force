@@ -26,9 +26,8 @@ export default function Registration (props) {
         } else if (numBidders > 0) {
           return (
             <div className='auction-registration-approved'>
-              <span className='icon-check'>
-                Approved to Bid
-              </span>
+              <span className='icon-check' />
+              Approved to Bid
             </div>
           )
         } else if (auction.isRegistrationEnded()) {
@@ -74,6 +73,8 @@ export default function Registration (props) {
         <a href='mailto:specialist@artsy.net'>
           specialist@artsy.net
         </a>
+        <br />
+        +1.646.712.8154
       </div>
     </div>
   )
