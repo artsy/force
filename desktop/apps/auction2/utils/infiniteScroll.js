@@ -7,7 +7,7 @@ const THROTTLE_MS = 200
 export default function infiniteScroll (store) {
   return throttle(() => {
     const threshold = $(window).height() + $(window).scrollTop()
-    const $artworks = $('.auction-page-artworks')
+    const $artworks = $('.auction2-page-artworks')
 
     const shouldFetch =
       $artworks.height() > 0 &&

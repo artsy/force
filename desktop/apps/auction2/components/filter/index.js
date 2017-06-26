@@ -5,11 +5,11 @@ import Sidebar from './Sidebar'
 
 export default function CommercialFilter () {
   return (
-    <div className='auction-commercial-filter'>
-      <div className='auction-commercial-filter__left cf-sidebar'>
+    <div className='auction2-commercial-filter'>
+      <div className='auction2-commercial-filter__left cf-sidebar'>
         <Sidebar />
       </div>
-      <div className='auction-commercial-filter__right cf-right'>
+      <div className='auction2-commercial-filter__right cf-right'>
         <Header />
         <AuctionArtworks />
       </div>

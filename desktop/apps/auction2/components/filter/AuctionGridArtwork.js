@@ -16,19 +16,19 @@ function AuctionGridArtwork ({ isClosed, saleArtwork }) {
   const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')
 
   return (
-    <a className='auction-page-grid-artwork' key={artwork._id} href={`/artwork/${artwork.id}`}>
-      <div className='auction-page-grid-artwork__image-container'>
+    <a className='auction2-page-grid-artwork' key={artwork._id} href={`/artwork/${artwork.id}`}>
+      <div className='auction2-page-grid-artwork__image-container'>
         <div className='vam-outer'>
           <div className='vam-inner'>
-            <div className='auction-page-grid-artwork__image'>
+            <div className='auction2-page-grid-artwork__image'>
               <img src={artworkImage} alt={artwork.title} / >
             </div>
           </div>
         </div>
       </div>
-      <div className='auction-page-grid-artwork__metadata'>
-        <div className='auction-page-grid-artwork__lot-information'>
-          <div className='auction-page-grid-artwork__lot-number'>
+      <div className='auction2-page-grid-artwork__metadata'>
+        <div className='auction2-page-grid-artwork__lot-information'>
+          <div className='auction2-page-grid-artwork__lot-number'>
             Lot {saleArtwork.lot_label}
           </div>
           { !isClosed &&
@@ -36,11 +36,11 @@ function AuctionGridArtwork ({ isClosed, saleArtwork }) {
               saleArtwork={saleArtwork}
             /> }
         </div>
-        <div className='auction-page-grid-artwork__artists'>
+        <div className='auction2-page-grid-artwork__artists'>
           {artistDisplay}
         </div>
         <div
-          className='auction-page-grid-artwork__title'
+          className='auction2-page-grid-artwork__title'
           dangerouslySetInnerHTML={{
             __html: titleAndYear(artwork.title, artwork.date)
           }}

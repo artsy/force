@@ -62,8 +62,8 @@ describe('<MyActiveBids />', () => {
       rendered.find('h2').should.have.lengthOf(1)
       rendered.find('.bid-status').should.have.lengthOf(1)
       rendered.find('.bid-status').text().should.containEql('Outbid')
-      rendered.find('.auction-my-active-bids__bid-button').should.have.lengthOf(1)
-      rendered.find('.auction-my-active-bids__bid-button').text().should.containEql('Bid')
+      rendered.find('.auction2-my-active-bids__bid-button').should.have.lengthOf(1)
+      rendered.find('.auction2-my-active-bids__bid-button').text().should.containEql('Bid')
     })
 
     it('displays a Bid Live button if is_live_open', () => {
@@ -105,8 +105,8 @@ describe('<MyActiveBids />', () => {
 
       rendered.find('h2').should.have.lengthOf(1)
       rendered.find('.bid-status').should.have.lengthOf(0)
-      rendered.find('.auction-my-active-bids__bid-live-button').should.have.lengthOf(1)
-      rendered.find('.auction-my-active-bids__bid-live-button').text().should.containEql('Bid Live')
+      rendered.find('.auction2-my-active-bids__bid-live-button').should.have.lengthOf(1)
+      rendered.find('.auction2-my-active-bids__bid-live-button').text().should.containEql('Bid Live')
     })
   })
 })

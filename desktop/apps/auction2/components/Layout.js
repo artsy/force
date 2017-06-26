@@ -31,7 +31,7 @@ function Layout (props) {
   const showMyActiveBids = me && me.bidders.length && is_open && !is_live_open
 
   return (
-    <div className='auction-page'>
+    <div className='auction2-page'>
       <Banner {...props} />
 
       <div className='main-layout-container responsive-layout-container'>
@@ -52,7 +52,7 @@ function Layout (props) {
         }
 
         { hasSaleArtworks &&
-          <div className='auction-main-page'>
+          <div className='auction2-main-page'>
             { displayFollowedArtistsRail &&
               <WorksByFollowedArtists /> }
             <CommercialFilter />

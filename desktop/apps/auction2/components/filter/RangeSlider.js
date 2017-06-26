@@ -22,10 +22,10 @@ function RangeSlider (props) {
   const isAbsoluteMax = maxEstimate === maxEstimateRangeDisplay
   const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
   return (
-    <div className='auction-range-slider'>
-      <div className='auction-range-slider__metadata'>
-        <div className='auction-range-slider__title'>Price</div>
-        <div className='auction-range-slider__caption'>{
+    <div className='auction2-range-slider'>
+      <div className='auction2-range-slider__metadata'>
+        <div className='auction2-range-slider__title'>Price</div>
+        <div className='auction2-range-slider__caption'>{
           `${formattedMinDisplay} - ${formattedMaxDisplay}${isAbsoluteMax ? '+' : ''}`
         }</div>
       </div>
@@ -38,7 +38,7 @@ function RangeSlider (props) {
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}
         onAfterChange={([min, max]) => updateEstimateRangeAction(min, max)}
       />
-      <div className='auction-range-slider__info'>
+      <div className='auction2-range-slider__info'>
         Based on the estimate for the lot
       </div>
     </div>

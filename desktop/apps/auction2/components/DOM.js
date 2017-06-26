@@ -31,14 +31,14 @@ export default class DOM extends Component {
   addEventListeners () {
     this.$body = this.$('body')
     this.$body.on('click', '.artsy-checkbox', scrollToTop)
-    this.$(window).on('scroll.auction-page-artworks', infiniteScroll(this.props.store))
+    this.$(window).on('scroll.auction2-page-artworks', infiniteScroll(this.props.store))
     this.$registerBtn = this.$body.find('.js-register-button')
     this.$registerBtn.on('click', this.handleRegisterBtnClick)
   }
 
   removeEventListeners () {
     this.$body.off('click')
-    this.$(window).off('scroll.auction-page-artworks')
+    this.$(window).off('scroll.auction2-page-artworks')
     this.$registerBtn.off('click', this.handleRegisterBtnClick)
   }
 

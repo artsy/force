@@ -217,7 +217,7 @@ describe('auction/components/filter/filter.test.js', () => {
         <RangeSlider store={initialStore} />
       )
       const rendered = wrapper.render()
-      rendered.find('.auction-range-slider__caption').length.should.eql(1)
+      rendered.find('.auction2-range-slider__caption').length.should.eql(1)
       const renderedText = rendered.text()
       renderedText.should.containEql('$0 - 50,000+')
     })
@@ -227,7 +227,7 @@ describe('auction/components/filter/filter.test.js', () => {
         <RangeSlider store={initialStore} />
       )
       const rendered = wrapper.render()
-      rendered.find('.auction-range-slider__caption').length.should.eql(1)
+      rendered.find('.auction2-range-slider__caption').length.should.eql(1)
       const renderedText = rendered.text()
       renderedText.should.containEql('$200 - 4,000')
     })
@@ -237,7 +237,7 @@ describe('auction/components/filter/filter.test.js', () => {
         <RangeSlider store={initialStore} />
       )
       const rendered = wrapper.render()
-      rendered.find('.auction-range-slider__caption').length.should.eql(1)
+      rendered.find('.auction2-range-slider__caption').length.should.eql(1)
       const renderedText = rendered.text()
       renderedText.should.containEql('$500 - 50,000+')
     })

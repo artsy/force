@@ -48,7 +48,7 @@ export default class MyActiveBids extends Component {
   }
 
   render () {
-    const b = block('auction-my-active-bids')
+    const b = block('auction2-my-active-bids')
 
     return (
       <div className={b()}>

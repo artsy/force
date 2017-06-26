@@ -13,29 +13,29 @@ function AuctionListArtwork ({ isClosed, saleArtwork }) {
   const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')
 
   const auctionArtworkClasses = classNames(
-    'auction-page-list-artwork',
-    { 'auction-open': isClosed }
+    'auction2-page-list-artwork',
+    { 'auction2-open': isClosed }
   )
 
   return (
     <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
-      <div className='auction-page-list-artwork__image-container'>
-        <div className='auction-page-list-artwork__image'>
+      <div className='auction2-page-list-artwork__image-container'>
+        <div className='auction2-page-list-artwork__image'>
           <img src={artworkImage} alt={artwork.title} />
         </div>
       </div>
-      <div className='auction-page-list-artwork__metadata'>
-        <div className='auction-page-list-artwork__artists'>
+      <div className='auction2-page-list-artwork__metadata'>
+        <div className='auction2-page-list-artwork__artists'>
           {artistDisplay}
         </div>
         <div
-          className='auction-page-list-artwork__title'
+          className='auction2-page-list-artwork__title'
           dangerouslySetInnerHTML={{
             __html: titleAndYear(artwork.title, artwork.date)
           }}
         />
       </div>
-      <div className='auction-page-list-artwork__lot-number'>
+      <div className='auction2-page-list-artwork__lot-number'>
         Lot {saleArtwork.lot_label}
       </div>
       { !isClosed &&

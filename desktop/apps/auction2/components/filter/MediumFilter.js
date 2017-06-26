@@ -21,8 +21,8 @@ function MediumFilter (props) {
   const aggregatedMediumIds = aggregatedMediums.map((agg) => agg.id)
 
   return (
-    <div className='auction-medium-checkboxes'>
-      <div className='auction-medium-checkboxes__title'>Medium</div>
+    <div className='auction2-medium-checkboxes'>
+      <div className='auction2-medium-checkboxes__title'>Medium</div>
       <BasicCheckbox
         key={allMediums.id}
         item={allMediums}

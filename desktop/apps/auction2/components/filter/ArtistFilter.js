@@ -25,11 +25,11 @@ function ArtistFilter (props) {
   }
 
   return (
-    <div className='auction-artist-checkboxes'>
-      <div className='auction-artist-checkboxes__title'>Artists</div>
+    <div className='auction2-artist-checkboxes'>
+      <div className='auction2-artist-checkboxes__title'>Artists</div>
       {
         user &&
-        <div className='auction-artist-checkboxes__artists-you-follow'>
+        <div className='auction2-artist-checkboxes__artists-you-follow'>
           <BasicCheckbox
             key={artistsYouFollow.id}
             item={artistsYouFollow}

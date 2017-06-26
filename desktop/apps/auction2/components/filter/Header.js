@@ -9,7 +9,7 @@ import { toggleListView } from 'desktop/apps/auction2/actions/filter'
 
 function displayButtonClass (buttonType, displayType) {
   return classNames(
-    `auction-artworks-header__${buttonType}`,
+    `auction2-artworks-header__${buttonType}`,
     { active: displayType === buttonType }
   )
 }
@@ -28,17 +28,17 @@ function Header (props) {
     : `${total} Artworks`
 
   return (
-    <div className='auction-artworks-header'>
-      <div className='auction-artworks-header__left'>
-        <div className='auction-artworks-header__total'>
+    <div className='auction2-artworks-header'>
+      <div className='auction2-artworks-header__left'>
+        <div className='auction2-artworks-header__total'>
           { totalLabel }
         </div>
       </div>
-      <div className='auction-artworks-header__right'>
-        <div className='auction-artworks-header__sort'>
+      <div className='auction2-artworks-header__right'>
+        <div className='auction2-artworks-header__sort'>
           <FilterSort />
         </div>
-        <div className='auction-artworks-header__switch'>
+        <div className='auction2-artworks-header__switch'>
           <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
             <Grid />
           </div>

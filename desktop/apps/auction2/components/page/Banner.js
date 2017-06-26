@@ -20,7 +20,7 @@ export default function Banner (props) {
 
     return (
       <div
-        className='auction-banner-live-bg'
+        className='auction2-banner-live-bg'
         style={{ backgroundImage: `url('${imageUrl}')` }}
         alt={name}
       >
@@ -36,10 +36,10 @@ export default function Banner (props) {
   return (
     <div>
       {isLiveOpen
-        ? <div className='auction-banner auction-banner-live-open'>
+        ? <div className='auction2-banner auction2-banner-live-open'>
           <BackgroundBanner />
 
-          <div className='auction-banner-live-details'>
+          <div className='auction2-banner-live-details'>
             <h1>
               Live Bidding Now Open
             </h1>
@@ -49,7 +49,7 @@ export default function Banner (props) {
             </a>
           </div>
         </div>
-        : <div className='auction-banner'>
+        : <div className='auction2-banner'>
           <BackgroundBanner>
             <ClockView
               model={auction}
