@@ -16,6 +16,8 @@
   min-height 300px
 
 .article-sa-footer-left
+  display flex
+  flex-direction column
   position relative
   width 55%
   margin-right 30px
@@ -43,7 +45,6 @@
   align-items center
 
 .article-sa-logos
-  position absolute
   bottom 30px
   &__container
     display flex
@@ -65,6 +66,7 @@
 
 .article-sa-cta-container
   margin-top 20px
+  flex-grow 1
 
 .article-sa-cta
   margin-top 20px
@@ -203,8 +205,9 @@
     .article-sa-footer-left, .article-sa-footer-right
       width 100%
       margin 0px
-    .article-sa-footer-left
-      border-top none
+    .article-sa-footer-right
+      .article-sa-related:last-of-type
+        border-bottom none
     .article-sa-cta-container
       margin-bottom 180px
   @media screen and (max-width: 550px)

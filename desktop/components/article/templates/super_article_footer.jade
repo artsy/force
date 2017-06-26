@@ -23,8 +23,9 @@
             a( href=superArticle.get('super_article').secondary_logo_link )
               img( src=superArticle.get('super_article').secondary_partner_logo )
 
-  .article-sa-footer-right
-    for subArticle in superSubArticles.models
-      a.article-sa-related( href=subArticle.href() )
-        img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
-        .article-sa-related__title= subArticle.get('thumbnail_title')
+  if superSubArticles.length
+    .article-sa-footer-right
+      for subArticle in superSubArticles.models
+        a.article-sa-related( href=subArticle.href() )
+          img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
+          .article-sa-related__title= subArticle.get('thumbnail_title')
