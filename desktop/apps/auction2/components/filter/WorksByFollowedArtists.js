@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import {
   nextPageOfFollowedArtistArtworks,
   previousPageOfFollowedArtistArtworks
-} from 'desktop/apps/auction2/actions'
+} from 'desktop/apps/auction2/actions/filter'
 
 function WorksByFollowedArtists (props) {
   const {
@@ -29,28 +29,28 @@ function WorksByFollowedArtists (props) {
   const isOnlyFollowedArtistsPage = numArtistsYouFollow <= followedArtistRailSize
 
   const leftPageClasses = classNames(
-    'auction-works-by-followed-artists__page-left',
+    'auction2-works-by-followed-artists__page-left',
     { disabled: followedArtistRailPage === 1 }
   )
 
   const rightPageClasses = classNames(
-    'auction-works-by-followed-artists__page-right',
+    'auction2-works-by-followed-artists__page-right',
     { disabled: isOnlyFollowedArtistsPage }
   )
 
   return (
-    <div className='auction-works-by-followed-artists'>
-      <div className='auction-works-by-followed-artists__title'>
+    <div className='auction2-works-by-followed-artists'>
+      <div className='auction2-works-by-followed-artists__title'>
         Works By Artists You Follow
       </div>
-      <div className='auction-works-by-followed-artists__content'>
+      <div className='auction2-works-by-followed-artists__content'>
         <div
           className={leftPageClasses}
           onClick={() => { previousPageOfFollowedArtistArtworksAction() }}
         >
           <ChevronLeft />
         </div>
-        <div className='auction-works-by-followed-artists__artworks'>
+        <div className='auction2-works-by-followed-artists__artworks'>
           {
             displayedSaleArtworks.map((saleArtwork) => (
               <AuctionGridArtwork key={saleArtwork.id} saleArtwork={saleArtwork} />

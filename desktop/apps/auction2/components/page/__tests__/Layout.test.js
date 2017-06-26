@@ -1,44 +1,49 @@
+// import 'jsdom-global/register'
 import Articles from 'desktop/collections/articles.coffee'
 import Auction from 'desktop/models/auction.coffee'
 import React from 'react'
 import auctions, { initialState } from 'desktop/apps/auction2/reducers'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import moment from 'moment'
+import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { fabricate } from 'antigravity'
 import { render } from 'enzyme'
 
 import Layout from 'desktop/apps/auction2/components/Layout'
 
-describe('auction templates', () => {
+describe('<Layout />', () => {
   let baseData
   let store
 
   before(() => {
     baseData = {
-      articles: { models: [ 'a', 'b', 'c' ] },
+      articles: new Articles([]),
       asset: () => {},
       auction: new Auction(fabricate('sale')),
-      displayFollowedArtistsRail: false,
+      showFollowedArtistsRail: false,
       footerItems: footerItems,
       isLiveOpen: false,
       me: null,
-      sd: {},
+      sd: {
+        ARTSY_EDITORIAL_CHANNEL: 'foo'
+      },
       viewHelpers: { getLiveAuctionUrl: () => 'placeholderauctionurl.com' }
     }
-  })
-
-  beforeEach(() => {
-    store = createStore(auctions, {
-      auctionArtworks: initialState
-    })
   })
 
   function setup (data = {}) {
     data = { ...baseData, ...data }
 
+    store = createStore(auctions, {
+      app: data,
+      auctionArtworks: initialState
+    })
+
     const wrapper = render(
-      <Layout store={store} {...data} />
+      <Provider store={store}>
+        <Layout />
+      </Provider>
     )
 
     return wrapper
@@ -51,9 +56,9 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-    rendered.find('.auction-my-active-bids').text().should.not.containEql('Your Active Bids')
+    rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
   })
 
   it('preview auction with no user', () => {
@@ -64,9 +69,9 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-    rendered.find('.auction-my-active-bids').text().should.not.containEql('Your Active Bids')
+    rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
   })
 
   it('live auction, open for pre-bidding', () => {
@@ -78,10 +83,10 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-    rendered.find('.auction-my-active-bids').text().should.not.containEql('Your Active Bids')
-    rendered.find('.auction-callout').text().should.containEql('Live bidding begins')
+    rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
+    rendered.find('.auction2-callout').text().should.containEql('Live bidding begins')
   })
 
   it('live auction, open for live bidding', () => {
@@ -93,10 +98,10 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-    rendered.find('.auction-my-active-bids').text().should.not.containEql('Your Active Bids')
-    rendered.find('.auction-callout').text().should.containEql('Live bidding now open')
+    rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
+    rendered.find('.auction2-callout').text().should.containEql('Live bidding now open')
   })
 
   it('default auction with user', () => {
@@ -110,9 +115,9 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-    rendered.find('.auction-header-metadata').text().should.containEql('Registration required to bid')
+    rendered.find('.auction2-header-metadata').text().should.containEql('Registration required to bid')
   })
 
   it('user with bidder positions', () => {
@@ -159,7 +164,7 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-my-active-bids').length.should.equal(1)
+    rendered.find('.auction2-my-active-bids').length.should.equal(1)
   })
 
   it('index, registered to bid but not qualified', () => {
@@ -175,9 +180,9 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
-    rendered.find('.auction-header-metadata').text().should.containEql('Registration pending')
-    rendered.find('.auction-header-metadata').text().should.containEql('Reviewing submitted information')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-header-metadata').text().should.containEql('Registration pending')
+    rendered.find('.auction2-header-metadata').text().should.containEql('Reviewing submitted information')
   })
 
   it('index, registered to bid and qualified', () => {
@@ -193,8 +198,8 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
-    rendered.find('.auction-header-metadata').text().should.containEql('Approved to Bid')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-header-metadata').text().should.containEql('Approved to Bid')
   })
 
   it('index, registered to bid but auction closed', () => {
@@ -211,9 +216,9 @@ describe('auction templates', () => {
       }))
     })
 
-    rendered.find('.auction-title').text().should.equal('An Auction')
-    rendered.find('.auction-header-metadata').text().should.containEql('')
-    rendered.find('.auction-callout').text().should.equal('Auction Closed')
+    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-header-metadata').text().should.containEql('')
+    rendered.find('.auction2-callout').text().should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {
@@ -228,8 +233,8 @@ describe('auction templates', () => {
         )
       })
 
-      rendered.find('.auction-header-metadata').text().should.containEql('Registration closed')
-      rendered.find('.auction-header-metadata').text().should.containEql('Registration required to bid')
+      rendered.find('.auction2-header-metadata').text().should.containEql('Registration closed')
+      rendered.find('.auction2-header-metadata').text().should.containEql('Registration required to bid')
     })
   })
 
@@ -245,7 +250,7 @@ describe('auction templates', () => {
           articles: new Articles([])
         })
 
-        rendered.find('.auction-footer__auction-app-promo-wrapper').length.should.eql(0)
+        rendered.find('.auction2-footer__auction2-app-promo-wrapper').length.should.eql(0)
       })
     })
   })
@@ -288,7 +293,7 @@ describe('auction templates', () => {
           articles: new Articles([])
         })
 
-        rendered.find('.auction-footer').length.should.eql(0)
+        rendered.find('.auction2-footer').length.should.eql(0)
       })
     })
 
@@ -302,10 +307,10 @@ describe('auction templates', () => {
           articles: new Articles([article])
         })
 
-        rendered.find('.auction-footer .article-figure-title').text().should.equal('The Fight to Own Art')
-        rendered.find('.auction-footer .article-figure-author-section').text().should.containEql('Artsy Editorial')
-        rendered.find('.auction-footer .article-figure-author-section').text().should.containEql('By Abigail C and Anna S')
-        rendered.find('.auction-footer__auction-app-promo-wrapper').length.should.equal(0)
+        rendered.find('.auction2-footer .article-figure-title').text().should.equal('The Fight to Own Art')
+        rendered.find('.auction2-footer .article-figure-author-section').text().should.containEql('Artsy Editorial')
+        rendered.find('.auction2-footer .article-figure-author-section').text().should.containEql('By Abigail C and Anna S')
+        rendered.find('.auction2-footer__auction2-app-promo-wrapper').length.should.equal(0)
       })
     })
 
@@ -319,11 +324,11 @@ describe('auction templates', () => {
           footerItems: footerItems
         })
 
-        rendered.find('.auction-footer .article-figure-title').text().should.equal('The Fight to Own Art')
-        rendered.find('.auction-footer .article-figure-author-section').text().should.containEql('Artsy Editorial')
-        rendered.find('.auction-footer .article-figure-author-section').text().should.containEql('By Abigail C and Anna S')
-        rendered.find('.auction-footer__auction-app-promo-wrapper').length.should.equal(1)
-        rendered.find('.auction-footer__auction-app-promo-title').text().should.containEql('Bid from your phone')
+        rendered.find('.auction2-footer .article-figure-title').text().should.equal('The Fight to Own Art')
+        rendered.find('.auction2-footer .article-figure-author-section').text().should.containEql('Artsy Editorial')
+        rendered.find('.auction2-footer .article-figure-author-section').text().should.containEql('By Abigail C and Anna S')
+        rendered.find('.auction2-footer__auction2-app-promo-wrapper').length.should.equal(1)
+        rendered.find('.auction2-footer__auction2-app-promo-title').text().should.containEql('Bid from your phone')
       })
     })
   })

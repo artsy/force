@@ -22,13 +22,13 @@ export default function BidStatus ({ saleArtwork }) {
   }
 
   return (
-    <div className='auction-bid-status'>
+    <div className='auction2-bid-status'>
       { artwork.is_sold
-        ? <span className='auction-bid-status__bid-label'>
+        ? <span className='auction2-bid-status__bid-label'>
             Sold
           </span>
         : <div>
-          <span className='auction-bid-status__bid-amount'>
+          <span className='auction2-bid-status__bid-amount'>
             {current_bid.display}
           </span>
           <span className=''>
