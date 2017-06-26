@@ -6,10 +6,14 @@ import { connect } from 'react-redux'
 import { first } from 'underscore'
 
 function Footer (props) {
-  const { articles, footerItems, isAuctionPromo } = props
-  const footerItem = first(footerItems)
-  const showArticles = Boolean(articles.length)
-  const showFooterItems = footerItem && !isAuctionPromo
+  const {
+    articles,
+    footerItem,
+    showArticles,
+    showFooterItems,
+    sd
+  } = props
+
   const b = block('auction2-footer')
 
   if (!showArticles) {
@@ -29,11 +33,11 @@ function Footer (props) {
 
             // Serverside
             if (typeof window === 'undefined') {
-              articleFigureHTML = renderTemplate('desktop/components/article_figure/template.jade', { locals: { article, ...props } })
+              articleFigureHTML = renderTemplate('desktop/components/article_figure/template.jade', { locals: { article, sd } })
 
               // Client
             } else {
-              articleFigureHTML = require('desktop/components/article_figure/template.jade')({ article, ...props })
+              articleFigureHTML = require('desktop/components/article_figure/template.jade')({ article, ...sd })
             }
 
             return (
@@ -71,8 +75,10 @@ function Footer (props) {
 
 Footer.propTypes = {
   articles: PropTypes.object,
-  footerItems: PropTypes.array,
-  isAuctionPromo: PropTypes.bool
+  footerItem: PropTypes.object,
+  showArticles: PropTypes.bool,
+  showFooterItems: PropTypes.bool,
+  sd: PropTypes.object.isRequired
 }
 
 Footer.defaultProps = {
@@ -80,11 +86,20 @@ Footer.defaultProps = {
   footerItems: []
 }
 
-const mapStateToProps = (state) => ({
-  articles: state.app.articles,
-  footerItems: state.app.footerItems,
-  isAuctionPromo: state.app.auction.isAuctionPromo()
-})
+const mapStateToProps = (state) => {
+  const { auction, articles, footerItems, sd } = state.app
+  const footerItem = first(footerItems)
+  const showArticles = Boolean(articles.length)
+  const showFooterItems = Boolean(footerItem && !auction.isAuctionPromo())
+
+  return {
+    articles,
+    footerItem,
+    showArticles,
+    showFooterItems,
+    sd
+  }
+}
 
 export default connect(
   mapStateToProps

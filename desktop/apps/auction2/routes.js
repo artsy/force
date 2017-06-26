@@ -47,7 +47,8 @@ export async function index (req, res, next) {
         liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
           isLoggedIn: Boolean(me)
         }),
-        me
+        me,
+        sd: res.locals.sd
       },
       auctionArtworks: u({
         filterParams: {
@@ -62,8 +63,6 @@ export async function index (req, res, next) {
       req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
       store.dispatch(actions.fetchArtworks())
     ])
-
-    console.log(store.getState())
 
     try {
       const layout = renderReactLayout({

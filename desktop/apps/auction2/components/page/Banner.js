@@ -6,33 +6,11 @@ import { connect } from 'react-redux'
 
 function Banner (props) {
   const {
+    BackgroundBanner,
     auction,
     isLiveOpen,
     liveAuctionUrl
   } = props
-
-  const {
-    cover_image,
-    name
-  } = auction.toJSON()
-
-  const BackgroundBanner = ({ children }) => {
-    const imageUrl = get(cover_image, 'cropped.url', '')
-
-    return (
-      <div
-        className='auction2-banner-live-bg'
-        style={{ backgroundImage: `url('${imageUrl}')` }}
-        alt={name}
-      >
-        {children}
-      </div>
-    )
-  }
-
-  BackgroundBanner.propTypes = {
-    children: PropTypes.node
-  }
 
   return (
     <div>
@@ -63,16 +41,46 @@ function Banner (props) {
 }
 
 Banner.propTypes = {
+  BackgroundBanner: PropTypes.func.isRequired,
   auction: PropTypes.object.isRequired,
   isLiveOpen: PropTypes.bool.isRequired,
   liveAuctionUrl: PropTypes.string
 }
 
-const mapStateToProps = (state) => ({
-  auction: state.app.auction,
-  isLiveOpen: state.app.isLiveOpen,
-  liveAuctionUrl: state.app.liveAuctionUrl
-})
+const mapStateToProps = (state) => {
+  const {
+    auction,
+    isLiveOpen,
+    liveAuctionUrl
+  } = state.app
+
+  const { cover_image, name } = auction.toJSON()
+
+  const BackgroundBanner = ({ children }) => {
+    const imageUrl = get(cover_image, 'cropped.url', '')
+
+    return (
+      <div
+        className='auction2-banner-live-bg'
+        style={{ backgroundImage: `url('${imageUrl}')` }}
+        alt={name}
+      >
+        {children}
+      </div>
+    )
+  }
+
+  BackgroundBanner.propTypes = {
+    children: PropTypes.node
+  }
+
+  return {
+    BackgroundBanner,
+    auction,
+    isLiveOpen,
+    liveAuctionUrl
+  }
+}
 
 export default connect(
   mapStateToProps

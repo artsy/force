@@ -11,22 +11,13 @@ import { connect } from 'react-redux'
 
 function Layout (props) {
   const {
-    articles,
-    auction,
-    displayFollowedArtistsRail,
-    me
+    associatedSale,
+    showAssociatedAuctions,
+    showFilter,
+    showFollowedArtistsRail,
+    showMyActiveBids,
+    showFooter
   } = props
-
-  const {
-    associated_sale,
-    eligible_sale_artworks_count,
-    is_open,
-    is_live_open
-  } = auction.toJSON()
-
-  const hasSaleArtworks = eligible_sale_artworks_count > 0
-  const showFooter = articles.length || !hasSaleArtworks
-  const showMyActiveBids = me && me.bidders.length && is_open && !is_live_open
 
   return (
     <div className='auction2-page'>
@@ -35,18 +26,18 @@ function Layout (props) {
       <div className='main-layout-container responsive-layout-container'>
         <Header />
 
-        { associated_sale &&
+        { showAssociatedAuctions &&
           <AuctionBlock
-            sale={associated_sale}
+            sale={associatedSale}
             relatedAuction
           /> }
 
         { showMyActiveBids &&
           <MyActiveBids /> }
 
-        { hasSaleArtworks &&
+        { showFilter &&
           <div className='auction2-main-page'>
-            { displayFollowedArtistsRail &&
+            { showFollowedArtistsRail &&
               <WorksByFollowedArtists /> }
             <CommercialFilter />
           </div> }
@@ -59,18 +50,37 @@ function Layout (props) {
 }
 
 Layout.propTypes = {
-  articles: PropTypes.object,
-  auction: PropTypes.object.isRequired,
-  displayFollowedArtistsRail: PropTypes.bool.isRequired,
-  me: PropTypes.object
+  associatedSale: PropTypes.object,
+  showAssociatedAuctions: PropTypes.bool.isRequired,
+  showFilter: PropTypes.bool.isRequired,
+  showFollowedArtistsRail: PropTypes.bool.isRequired,
+  showMyActiveBids: PropTypes.bool.isRequired,
+  showFooter: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
+  const { articles, auction, me } = state.app
+
+  const {
+    associated_sale,
+    eligible_sale_artworks_count,
+    is_open,
+    is_live_open
+  } = auction.toJSON()
+
+  const showAssociatedAuctions = Boolean(associated_sale)
+  const showFilter = Boolean(eligible_sale_artworks_count > 0)
+  const showFollowedArtistsRail = Boolean(state.auctionArtworks.showFollowedArtistsRail)
+  const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
+  const showFooter = Boolean(articles.length || !showFilter)
+
   return {
-    articles: state.app.articles,
-    auction: state.app.auction,
-    displayFollowedArtistsRail: state.auctionArtworks.displayFollowedArtistsRail,
-    me: state.app.me
+    associatedSale: associated_sale,
+    showAssociatedAuctions,
+    showFilter,
+    showFollowedArtistsRail,
+    showMyActiveBids,
+    showFooter
   }
 }
 

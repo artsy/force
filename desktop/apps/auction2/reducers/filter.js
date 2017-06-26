@@ -8,7 +8,7 @@ export const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],
   allFetched: false,
-  displayFollowedArtistsRail: false,
+  showFollowedArtistsRail: false,
   filterParams: {
     aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
     artist_ids: [],
@@ -151,7 +151,7 @@ export default function auctionArtworkFilter (state = initialState, action) {
     }
     case actions.SHOW_FOLLOWED_ARTISTS_RAIL: {
       return u({
-        displayFollowedArtistsRail: true
+        showFollowedArtistsRail: true
       }, state)
     }
     case actions.UPDATE_ESTIMATE_DISPLAY: {

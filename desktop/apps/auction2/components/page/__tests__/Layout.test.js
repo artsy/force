@@ -1,44 +1,49 @@
+// import 'jsdom-global/register'
 import Articles from 'desktop/collections/articles.coffee'
 import Auction from 'desktop/models/auction.coffee'
 import React from 'react'
 import auctions, { initialState } from 'desktop/apps/auction2/reducers'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import moment from 'moment'
+import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { fabricate } from 'antigravity'
 import { render } from 'enzyme'
 
 import Layout from 'desktop/apps/auction2/components/Layout'
 
-describe('auction templates', () => {
+describe('<Layout />', () => {
   let baseData
   let store
 
   before(() => {
     baseData = {
-      articles: { models: [ 'a', 'b', 'c' ] },
+      articles: new Articles([]),
       asset: () => {},
       auction: new Auction(fabricate('sale')),
-      displayFollowedArtistsRail: false,
+      showFollowedArtistsRail: false,
       footerItems: footerItems,
       isLiveOpen: false,
       me: null,
-      sd: {},
+      sd: {
+        ARTSY_EDITORIAL_CHANNEL: 'foo'
+      },
       viewHelpers: { getLiveAuctionUrl: () => 'placeholderauctionurl.com' }
     }
-  })
-
-  beforeEach(() => {
-    store = createStore(auctions, {
-      auctionArtworks: initialState
-    })
   })
 
   function setup (data = {}) {
     data = { ...baseData, ...data }
 
+    store = createStore(auctions, {
+      app: data,
+      auctionArtworks: initialState
+    })
+
     const wrapper = render(
-      <Layout store={store} {...data} />
+      <Provider store={store}>
+        <Layout />
+      </Provider>
     )
 
     return wrapper

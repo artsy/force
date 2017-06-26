@@ -26,7 +26,9 @@ export default class Clock extends Component {
       model,
       modelName,
       el: this.$('.auction-clock')
-    }).start()
+    })
+
+    this.backboneView.start()
   }
 
   componentWillUnmount () {
