@@ -8,10 +8,14 @@ import auctionReducer from 'desktop/apps/auction2/reducers'
 import configureStore from 'desktop/apps/auction2/utils/configureStore'
 
 // Rehydrate data from Server
-const user = CurrentUser.orNull()
 const bootstrapData = window.__BOOTSTRAP__
 const auctionModel = new Auction(bootstrapData.app.auction)
 const auctionArticles = new Articles(bootstrapData.app.articles)
+
+// TODO: Refactor out Backbone
+bootstrapData.app.user = CurrentUser.orNull()
+bootstrapData.app.auction = auctionModel
+bootstrapData.app.articles = auctionArticles
 
 // Redux store
 const store = configureStore(auctionReducer, {
@@ -19,16 +23,9 @@ const store = configureStore(auctionReducer, {
   auctionArtworks: bootstrapData.auctionArtworks
 })
 
-// TODO: Refactor out Backbone
-// Store model on bootstrap data as we need access to Backbone methods
-bootstrapData.app.user = user
-bootstrapData.app.auction = auctionModel
-bootstrapData.app.articles = auctionArticles
-
 // Start app
 ReactDOM.render(
   <App
-    {...bootstrapData}
     store={store}
   />,
   document.getElementById('react-root')

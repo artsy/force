@@ -4,7 +4,7 @@ import { throttle } from 'underscore'
 
 const THROTTLE_MS = 200
 
-export default function infiniteScroll (store) {
+export default function infiniteScroll (dispatch) {
   return throttle(() => {
     const threshold = $(window).height() + $(window).scrollTop()
     const $artworks = $('.auction2-page-artworks')
@@ -14,7 +14,7 @@ export default function infiniteScroll (store) {
       threshold > $artworks.offset().top + $artworks.height()
 
     if (shouldFetch) {
-      store.dispatch(actions.infiniteScroll())
+      dispatch(actions.infiniteScroll())
     }
   }, THROTTLE_MS)
 }

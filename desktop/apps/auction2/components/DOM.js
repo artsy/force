@@ -35,7 +35,7 @@ class DOM extends Component {
   addEventListeners () {
     this.$body = this.$('body')
     this.$body.on('click', '.artsy-checkbox', scrollToTop)
-    this.$(window).on('scroll.auction2-page-artworks', infiniteScroll(this.context.store))
+    this.$(window).on('scroll.auction2-page-artworks', infiniteScroll(this.context.store.dispatch))
     this.$registerBtn = this.$body.find('.js-register-button')
     this.$registerBtn.on('click', this.handleRegisterBtnClick)
   }
