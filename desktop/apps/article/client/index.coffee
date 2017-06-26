@@ -45,7 +45,7 @@ module.exports = class ArticleIndexView extends Backbone.View
 
     if sd.SCROLL_ARTICLE is 'infinite'
       @setupInfiniteScroll()
-    else unless sd.SUPER_SUB_ARTICLES.length
+    else unless sd.SUPER_ARTICLE
       @setupFooterArticles()
     if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
       @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
