@@ -33,7 +33,6 @@ describe 'EditorialSignupView', ->
       outcome = { outcome: sinon.stub().returns('old_modal'), view: sinon.stub() }
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
-      @inAEArticlePage = sinon.spy @EditorialSignupView::, 'inAEArticlePage'
       sinon.stub(@EditorialSignupView::, 'fetchSignupImages').yields()
       sinon.stub @EditorialSignupView::, 'cycleImages'
       @EditorialSignupView.__set__ 'analyticsHooks', trigger: @trigger = sinon.stub()
@@ -66,6 +65,29 @@ describe 'EditorialSignupView', ->
         CURRENT_PATH: '/articles'
       @view.setupAEMagazinePage()
       $(@view.el).find('#modal-container').html().should.not.containEql 'articles-es-cta--banner modal'
+
+  describe '#inAEArticlePage', ->
+
+    it 'returns true if in article page', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '123'
+        SUPER_ARTICLE: null
+        ARTSY_EDITORIAL_CHANNEL: '123'
+      @view.inAEArticlePage().should.be.true()
+
+    it 'returns false if super article', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '123'
+        SUPER_ARTICLE: {title: 'Super Article'}
+        ARTSY_EDITORIAL_CHANNEL: '123'
+      @view.inAEArticlePage().should.be.false()
+
+    it 'returns false non-editorial article', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '123'
+        SUPER_ARTICLE: {title: 'Super Article'}
+        ARTSY_EDITORIAL_CHANNEL: '1233'
+      @view.inAEArticlePage().should.be.false()
 
   describe '#eligibleToSignUp', ->
 

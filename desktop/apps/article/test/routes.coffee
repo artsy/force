@@ -33,7 +33,7 @@ describe 'Article routes', ->
       )
       @res.redirect.args[0][0].should.equal '/article/bar'
 
-   it 'fetches an article, its related content, and renders it', ->
+    it 'fetches an article, its related content, and renders it', ->
       @req.params.slug = 'bar'
       routes.articleItem = new Article
       routes.article @req, @res
@@ -45,6 +45,31 @@ describe 'Article routes', ->
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
       @res.render.args[0][1].superArticles.first().get('title')
         .should.equal 'Super'
+
+    it 'sets the scroll type to infinite', ->
+      @req.params.slug = 'bar'
+      routes.articleItem = new Article
+      routes.article @req, @res
+      routes.__set__ 'sd', {ARTSY_EDITORIAL_CHANNEL: '123'}
+      Article::fetchWithRelated.args[0][0].success(
+        article: new Article(_.extend {}, fixtures.article,
+          title: 'Foo'
+          slug: 'bar'
+          channel_id: '123'
+        )
+        superArticle: null
+      )
+      @res.locals.sd.SCROLL_ARTICLE.should.equal 'infinite'
+
+    it 'sets the scroll type to static', ->
+      @req.params.slug = 'bar'
+      routes.articleItem = new Article
+      routes.article @req, @res
+      Article::fetchWithRelated.args[0][0].success(
+        article: new Article(_.extend {}, fixtures.article, title: 'Foo', slug: 'bar')
+        superArticle: new Article
+      )
+      @res.locals.sd.SCROLL_ARTICLE.should.equal 'static'
 
   describe '#redirectPost', ->
 
