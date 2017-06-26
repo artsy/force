@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
-import { updateArtistParams } from 'desktop/apps/auction2/actions'
+import { updateArtistParams } from 'desktop/apps/auction2/actions/filter'
 
 function ArtistFilter (props) {
   const {
@@ -25,11 +25,11 @@ function ArtistFilter (props) {
   }
 
   return (
-    <div className='auction-artist-checkboxes'>
-      <div className='auction-artist-checkboxes__title'>Artists</div>
+    <div className='auction2-artist-checkboxes'>
+      <div className='auction2-artist-checkboxes__title'>Artists</div>
       {
         user &&
-        <div className='auction-artist-checkboxes__artists-you-follow'>
+        <div className='auction2-artist-checkboxes__artists-you-follow'>
           <BasicCheckbox
             key={artistsYouFollow.id}
             item={artistsYouFollow}

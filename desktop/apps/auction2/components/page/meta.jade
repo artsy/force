@@ -1,17 +1,17 @@
-- title = auction.get('name') + ' | Artsy'
-- description = auction.mdToHtmlToText('description')
+- title = app.auction.get('name') + ' | Artsy'
+- description = app.auction.mdToHtmlToText('description')
 
 title= title
 meta( property='og:title', content= title )
 meta( name='description', content= description )
 meta( property='og:description', content= description )
 meta( property='twitter:description', content= description )
-meta( property='og:url', content='#{sd.APP_URL}#{auction.href()}' )
-link( rel='canonical', href='#{sd.APP_URL}#{auction.href()}' )
+meta( property='og:url', content='#{sd.APP_URL}#{app.auction.href()}' )
+link( rel='canonical', href='#{sd.APP_URL}#{app.auction.href()}' )
 
 meta( property='og:type', content='website' )
 meta( property='og:event', content='auction' )
-if auction.get('cover_image')
-  meta( property='og:image', content= auction.get('cover_image').cropped.url )
+if app.auction.get('cover_image')
+  meta( property='og:image', content= app.auction.get('cover_image').cropped.url )
 meta( property='twitter:card', content='summary' )
 meta( name='fragment', content='!' )

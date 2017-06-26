@@ -11,71 +11,78 @@ import { connect } from 'react-redux'
 
 function Layout (props) {
   const {
-    articles,
-    auction,
-    displayFollowedArtistsRail,
-    me,
-    user
+    associatedSale,
+    showAssociatedAuctions,
+    showFilter,
+    showFollowedArtistsRail,
+    showMyActiveBids,
+    showFooter
   } = props
 
-  const {
-    id,
-    associated_sale,
-    eligible_sale_artworks_count,
-    is_open,
-    is_live_open
-  } = auction.toJSON()
-
-  const hasSaleArtworks = eligible_sale_artworks_count > 0
-  const showFooter = articles.length || !hasSaleArtworks
-  const showMyActiveBids = me && me.bidders.length && is_open && !is_live_open
-
   return (
-    <div className='auction-page'>
-      <Banner {...props} />
+    <div className='auction2-page'>
+      <Banner />
 
       <div className='main-layout-container responsive-layout-container'>
-        <Header {...props} />
+        <Header />
 
-        { associated_sale &&
+        { showAssociatedAuctions &&
           <AuctionBlock
-            sale={associated_sale}
+            sale={associatedSale}
             relatedAuction
           /> }
 
         { showMyActiveBids &&
-          <MyActiveBids
-            lotStandings={me.lot_standings}
-            saleId={id}
-            user={user}
-          />
-        }
+          <MyActiveBids /> }
 
-        { hasSaleArtworks &&
-          <div className='auction-main-page'>
-            { displayFollowedArtistsRail &&
+        { showFilter &&
+          <div className='auction2-main-page'>
+            { showFollowedArtistsRail &&
               <WorksByFollowedArtists /> }
             <CommercialFilter />
           </div> }
 
         {showFooter &&
-          <Footer {...props} /> }
+          <Footer /> }
       </div>
     </div>
   )
 }
 
 Layout.propTypes = {
-  articles: PropTypes.object,
-  auction: PropTypes.object.isRequired,
-  displayFollowedArtistsRail: PropTypes.bool.isRequired,
-  me: PropTypes.object,
-  user: PropTypes.object
+  associatedSale: PropTypes.object,
+  showAssociatedAuctions: PropTypes.bool.isRequired,
+  showFilter: PropTypes.bool.isRequired,
+  showFollowedArtistsRail: PropTypes.bool.isRequired,
+  showMyActiveBids: PropTypes.bool.isRequired,
+  showFooter: PropTypes.bool.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  displayFollowedArtistsRail: state.auctionArtworks.displayFollowedArtistsRail
-})
+const mapStateToProps = (state) => {
+  const { articles, auction, me } = state.app
+
+  const {
+    associated_sale,
+    eligible_sale_artworks_count,
+    is_open,
+    is_live_open
+  } = auction.toJSON()
+
+  const showAssociatedAuctions = Boolean(associated_sale)
+  const showFilter = Boolean(eligible_sale_artworks_count > 0)
+  const showFollowedArtistsRail = Boolean(state.auctionArtworks.showFollowedArtistsRail)
+  const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
+  const showFooter = Boolean(articles.length || !showFilter)
+
+  return {
+    associatedSale: associated_sale,
+    showAssociatedAuctions,
+    showFilter,
+    showFollowedArtistsRail,
+    showMyActiveBids,
+    showFooter
+  }
+}
 
 export default connect(
   mapStateToProps

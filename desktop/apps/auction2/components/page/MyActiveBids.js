@@ -3,11 +3,13 @@ import MeQuery from 'desktop/apps/auction2/utils/queries/me'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn'
+import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
+import { connect } from 'react-redux'
 import { data as sd } from 'sharify'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
-export default class MyActiveBids extends Component {
+class MyActiveBids extends Component {
   static propTypes = {
     lotStandings: PropTypes.array,
     saleId: PropTypes.string,
@@ -48,7 +50,8 @@ export default class MyActiveBids extends Component {
   }
 
   render () {
-    const b = block('auction-my-active-bids')
+    const b = block('auction2-my-active-bids')
+    const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
 
     return (
       <div className={b()}>
@@ -56,7 +59,7 @@ export default class MyActiveBids extends Component {
           Your Active Bids
         </h2>
 
-        { this.state.lotStandings
+        { lotStandings
           .filter(bid => bid.sale_artwork)
           .map((bid, key) => {
             const {
@@ -128,3 +131,17 @@ export default class MyActiveBids extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  const { app } = state
+
+  return {
+    lotStandings: app.me.lot_standings,
+    saleId: app.auction.get('id'),
+    user: app.user
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(MyActiveBids)

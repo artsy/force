@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import _, { contains } from 'underscore'
 import { connect } from 'react-redux'
-import { updateMediumParams } from 'desktop/apps/auction2/actions'
+import { updateMediumParams } from 'desktop/apps/auction2/actions/filter'
 
 function MediumFilter (props) {
   const {
@@ -21,8 +21,8 @@ function MediumFilter (props) {
   const aggregatedMediumIds = aggregatedMediums.map((agg) => agg.id)
 
   return (
-    <div className='auction-medium-checkboxes'>
-      <div className='auction-medium-checkboxes__title'>Medium</div>
+    <div className='auction2-medium-checkboxes'>
+      <div className='auction2-medium-checkboxes__title'>Medium</div>
       <BasicCheckbox
         key={allMediums.id}
         item={allMediums}

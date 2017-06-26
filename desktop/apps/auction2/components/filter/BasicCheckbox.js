@@ -16,7 +16,7 @@ export default function BasicCheckbox (props) {
   )
 
   return (
-    <div className='auction-basic-checkbox'>
+    <div className='auction2-basic-checkbox'>
       <div className={checkboxClasses} onClick={() => onClick(item.id)}>
         <div className='artsy-checkbox--checkbox'>
           <input

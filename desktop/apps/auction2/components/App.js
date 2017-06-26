@@ -12,8 +12,8 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={this.props.store}>
-        <DOM {...this.props}>
-          <Layout {...this.props} />
+        <DOM>
+          <Layout />
         </DOM>
       </Provider>
     )

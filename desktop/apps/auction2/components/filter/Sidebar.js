@@ -7,8 +7,8 @@ import { connect } from 'react-redux'
 
 function Sidebar ({ isClosed }) {
   return (
-    <div className='auction-artworks-sidebar'>
-      <div className='auction-artworks-sidebar__artist-filter'>
+    <div className='auction2-artworks-sidebar'>
+      <div className='auction2-artworks-sidebar__artist-filter'>
         { !isClosed && <RangeSlider /> }
         <MediumFilter />
         <ArtistFilter />
