@@ -67,8 +67,10 @@ setupEmailSubscriptions = (user, article, cb) ->
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
-  if data.superSubArticles?.length or data.article.get('channel_id') isnt sd.ARTSY_EDITORIAL_CHANNEL
-    'static'
+  if data.superSubArticles?.length or
+    data.article.get('channel_id') isnt sd.ARTSY_EDITORIAL_CHANNEL or
+    data.article.get('is_super_article')
+      'static'
   else
     'infinite'
 

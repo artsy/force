@@ -32,7 +32,8 @@ module.exports = class EditorialSignupView extends Backbone.View
   inAEArticlePage: ->
     sd.ARTICLE? and
     sd.ARTICLE.channel_id is sd.ARTSY_EDITORIAL_CHANNEL and
-    not sd.SUPER_SUB_ARTICLES?.length > 0
+    not sd.SUPER_SUB_ARTICLES?.length > 0 and
+    not sd.ARTICLE.is_super_article
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'
