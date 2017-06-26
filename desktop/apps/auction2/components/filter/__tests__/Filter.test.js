@@ -1,7 +1,7 @@
 import 'babel-core/register'
 import 'coffee-script/register'
 
-import * as actions from 'desktop/apps/auction2/actions'
+import * as actions from 'desktop/apps/auction2/actions/filter'
 import ArtistFilter from 'desktop/apps/auction2/components/filter/ArtistFilter'
 import AuctionGridArtwork from 'desktop/apps/auction2/components/filter/AuctionGridArtwork'
 import AuctionListArtwork from 'desktop/apps/auction2/components/filter/AuctionListArtwork'

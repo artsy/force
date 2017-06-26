@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import _, { contains } from 'underscore'
 import { connect } from 'react-redux'
-import { updateMediumParams } from 'desktop/apps/auction2/actions'
+import { updateMediumParams } from 'desktop/apps/auction2/actions/filter'
 
 function MediumFilter (props) {
   const {

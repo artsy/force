@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions'
+import * as actions from 'desktop/apps/auction2/actions/filter'
 import App from 'desktop/apps/auction2/components/App'
 import Articles from 'desktop/collections/articles.coffee'
 import ArticlesQuery from 'desktop/apps/auction2/utils/queries/articles'

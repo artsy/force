@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { toggleListView } from 'desktop/apps/auction2/actions'
+import { toggleListView } from 'desktop/apps/auction2/actions/filter'
 
 function displayButtonClass (buttonType, displayType) {
   return classNames(

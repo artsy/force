@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
-import { updateArtistParams } from 'desktop/apps/auction2/actions'
+import { updateArtistParams } from 'desktop/apps/auction2/actions/filter'
 
 function ArtistFilter (props) {
   const {
