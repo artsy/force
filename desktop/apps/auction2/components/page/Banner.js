@@ -1,9 +1,10 @@
+import ClockView from 'desktop/components/clock/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
-import ClockView from 'desktop/components/clock/react'
+import { connect } from 'react-redux'
 
-export default function Banner (props) {
+function Banner (props) {
   const {
     auction,
     isLiveOpen,
@@ -66,3 +67,13 @@ Banner.propTypes = {
   isLiveOpen: PropTypes.bool.isRequired,
   liveAuctionUrl: PropTypes.string
 }
+
+const mapStateToProps = (state) => ({
+  auction: state.app.auction,
+  isLiveOpen: state.app.isLiveOpen,
+  liveAuctionUrl: state.app.liveAuctionUrl
+})
+
+export default connect(
+  mapStateToProps
+)(Banner)

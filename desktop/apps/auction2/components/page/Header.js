@@ -2,8 +2,9 @@ import AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
+import { connect } from 'react-redux'
 
-export default function Header (props) {
+function Header (props) {
   const { auction } = props
   const showAddToCalendar = !(auction.isClosed() || auction.isLiveOpen())
 
@@ -56,3 +57,11 @@ export default function Header (props) {
 Header.propTypes = {
   auction: PropTypes.object.isRequired
 }
+
+const mapStateToProps = (state) => ({
+  auction: state.app.auction
+})
+
+export default connect(
+  mapStateToProps
+)(Header)

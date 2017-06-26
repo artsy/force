@@ -19,16 +19,36 @@ export async function index (req, res, next) {
   const saleId = req.params.id
 
   try {
-    const {
-      sale
-    } = await metaphysics({
+    const { sale } = await metaphysics({
       query: SaleQuery(saleId)
     })
 
     res.locals.sd.AUCTION = sale
     fetchUser(req, res)
 
+    const [
+      { me },
+      { articles }
+    ] = await Promise.all([
+      metaphysics({ query: MeQuery(sale.id), req: req }),
+      metaphysics({ query: ArticlesQuery(sale._id) })
+    ])
+
+    // TODO: Refactor out Backbone
+    const auctionModel = new Auction(sale)
+
     const store = configureStore(auctionReducer, {
+      app: {
+        articles: new Articles(articles),
+        auction: auctionModel,
+        footerItems: footerItems,
+        isLiveOpen: auctionModel.isLiveOpen(),
+        isMobile: res.locals.sd.IS_MOBILE,
+        liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
+          isLoggedIn: Boolean(me)
+        }),
+        me
+      },
       auctionArtworks: u({
         filterParams: {
           sale_id: saleId
@@ -38,20 +58,12 @@ export async function index (req, res, next) {
       }, initialState)
     })
 
-    const [
-      { me },
-      { articles }
-    ] = await Promise.all([
-      metaphysics({ query: MeQuery(sale.id), req: req }),
-      metaphysics({ query: ArticlesQuery(sale._id) }),
-
-      // Hydrate store
+    await Promise.all([
       req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
       store.dispatch(actions.fetchArtworks())
     ])
 
-    const auctionModel = new Auction(sale)
-    const auctionArticles = new Articles(articles)
+    console.log(store.getState())
 
     try {
       const layout = renderReactLayout({
@@ -60,19 +72,14 @@ export async function index (req, res, next) {
           head: 'meta.jade',
           body: (props) => <App store={store} {...props} />
         },
-        locals: res.locals,
-        data: {
-          articles: auctionArticles,
+        locals: {
+          ...res.locals,
           assetPackage: 'auctions2',
-          auction: auctionModel,
-          auctionArtworks: store.getState().auctionArtworks,
-          bodyClass: 'body-header-fixed body-no-margins',
-          footerItems: footerItems,
-          isLiveOpen: auctionModel.isLiveOpen(),
-          liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
-            isLoggedIn: Boolean(me)
-          }),
-          me: me
+          bodyClass: 'body-header-fixed body-no-margins'
+        },
+        data: {
+          app: store.getState().app,
+          auctionArtworks: store.getState().auctionArtworks
         }
       })
 

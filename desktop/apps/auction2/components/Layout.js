@@ -14,12 +14,10 @@ function Layout (props) {
     articles,
     auction,
     displayFollowedArtistsRail,
-    me,
-    user
+    me
   } = props
 
   const {
-    id,
     associated_sale,
     eligible_sale_artworks_count,
     is_open,
@@ -32,10 +30,10 @@ function Layout (props) {
 
   return (
     <div className='auction2-page'>
-      <Banner {...props} />
+      <Banner />
 
       <div className='main-layout-container responsive-layout-container'>
-        <Header {...props} />
+        <Header />
 
         { associated_sale &&
           <AuctionBlock
@@ -44,12 +42,7 @@ function Layout (props) {
           /> }
 
         { showMyActiveBids &&
-          <MyActiveBids
-            lotStandings={me.lot_standings}
-            saleId={id}
-            user={user}
-          />
-        }
+          <MyActiveBids /> }
 
         { hasSaleArtworks &&
           <div className='auction2-main-page'>
@@ -59,7 +52,7 @@ function Layout (props) {
           </div> }
 
         {showFooter &&
-          <Footer {...props} /> }
+          <Footer /> }
       </div>
     </div>
   )
@@ -69,13 +62,17 @@ Layout.propTypes = {
   articles: PropTypes.object,
   auction: PropTypes.object.isRequired,
   displayFollowedArtistsRail: PropTypes.bool.isRequired,
-  me: PropTypes.object,
-  user: PropTypes.object
+  me: PropTypes.object
 }
 
-const mapStateToProps = (state) => ({
-  displayFollowedArtistsRail: state.auctionArtworks.displayFollowedArtistsRail
-})
+const mapStateToProps = (state) => {
+  return {
+    articles: state.app.articles,
+    auction: state.app.auction,
+    displayFollowedArtistsRail: state.auctionArtworks.displayFollowedArtistsRail,
+    me: state.app.me
+  }
+}
 
 export default connect(
   mapStateToProps

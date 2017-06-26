@@ -2,13 +2,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import renderTemplate from 'desktop/components/react/utils/render_template'
+import { connect } from 'react-redux'
 import { first } from 'underscore'
 
-export default function Footer (props) {
-  const { articles, auction, footerItems } = props
+function Footer (props) {
+  const { articles, footerItems, isAuctionPromo } = props
   const footerItem = first(footerItems)
   const showArticles = Boolean(articles.length)
-  const showFooterItems = footerItem && !auction.isAuctionPromo()
+  const showFooterItems = footerItem && !isAuctionPromo
   const b = block('auction2-footer')
 
   if (!showArticles) {
@@ -70,11 +71,21 @@ export default function Footer (props) {
 
 Footer.propTypes = {
   articles: PropTypes.object,
-  auction: PropTypes.object,
-  footerItems: PropTypes.array
+  footerItems: PropTypes.array,
+  isAuctionPromo: PropTypes.bool
 }
 
 Footer.defaultProps = {
   articles: {},
   footerItems: []
 }
+
+const mapStateToProps = (state) => ({
+  articles: state.app.articles,
+  footerItems: state.app.footerItems,
+  isAuctionPromo: state.app.auction.isAuctionPromo()
+})
+
+export default connect(
+  mapStateToProps
+)(Footer)

@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn'
 import metaphysics from 'lib/metaphysics.coffee'
+import { connect } from 'react-redux'
 import { data as sd } from 'sharify'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
-export default class MyActiveBids extends Component {
+class MyActiveBids extends Component {
   static propTypes = {
     lotStandings: PropTypes.array,
     saleId: PropTypes.string,
@@ -128,3 +129,17 @@ export default class MyActiveBids extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  const { app } = state
+
+  return {
+    lotStandings: app.me.log_standings,
+    saleId: app.auction.get('id'),
+    user: app.user
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(MyActiveBids)
