@@ -7,8 +7,7 @@ A Redux-oriented React component that listens for changes to the window size and
 ```javascript
 // reducers.js
 import { combineReducers } from 'redux'
-import { composeReducers } from 'components/react/utils/compose_reducers'
-import { responsiveWindowReducer } from 'components/react/responsive_window'
+import { composeReducers, responsiveWindowReducer } from 'components/react/responsive_window'
 
 function myMainReducer(state, action) {
   ...
