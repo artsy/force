@@ -4,14 +4,104 @@ import buildTemplateComponent from 'desktop/components/react/utils/build_templat
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
 
-export default function renderReactLayout (options) {
+/**
+ * Utility for rendering a React-based isomorphic app. Note that Once html has
+ * been sent over the wire it still needs to be rehydrated on the client. See
+ * apps/react_example/client.js for example.
+ *
+ * @example
+ *
+ * // Routes.js
+ *
+ * import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
+ *
+ * export function index (req, res, next) {
+ *   const layout = renderReactLayout({
+ *     basePath: req.app.get('views'),
+ *     blocks: {
+ *       head: 'meta.jade',
+ *       body: AppComponent
+ *     },
+ *     locals: {
+ *       ...res.locals,
+ *       assetPackage: 'react_example',
+ *       bodyClass: 'someCSSClass'
+ *     },
+ *     data: {
+ *       name: 'Leif',
+ *       description: 'hi how are you'
+ *     },
+ *     templates: {
+ *       MyLegacyJadeView: 'some_jade_view.jade'
+ *     }
+ *   })
+ * }
+ *
+ * // Client.js
+ *
+ * import { rehydrateClient } from 'desktop/components/react/utils/render_react_layout'
+ *
+ * const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
+ *
+ * ReactDOM.render(
+ *   <App {...bootstrapData} />, document.getElementById('react-root')
+ * )
+ *
+ * @param  {Object} options Options configuration object
+ * @return {String}         String of html to render
+ */
+export function renderReactLayout (options) {
+  /**
+   * Configuration
+   */
   const {
+    /**
+     * Default path to components / templates / views. Typically corresponds to
+     * value set in `app.set('views', `${__dirname}/components`)`
+     */
     basePath = '',
+
+    /**
+     * Blocks to inject into `react_index.jade` layout. Can be either a React
+     * component, a path to a jade template or a string of html
+     */
     blocks: { head, body } = {},
-    locals = {}, // Typically a spread from `res.locals`, or global state
-    data = {},   // Data relevant to components / subapp
+
+    /**
+     * Typically a spread from res.locals, and if mounting a subapp includes
+     * `assetPackage` and `bodyClass` keys
+     */
+    locals = {},
+
+    /**
+     * Data relevant to components / subapp
+     */
+    data = {},
+
+    /**
+     * Legacy .jade templates to render. Keys in object are converted to
+     * components and injected in as props under `props.templateComponents`.
+     */
     templates = {}
   } = options
+
+  const templateComponents = renderTemplateComponents(
+    templates,
+    basePath,
+    data
+  )
+
+  const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
+    locals: {
+      ...locals,
+      data: {
+        ...data,
+        templateComponents
+      },
+      header: render(head),
+      body: render(body)
+    }
+  })
 
   function render (block) {
     let html = ''
@@ -32,14 +122,10 @@ export default function renderReactLayout (options) {
 
       // Component
     } else if (isReactComponent(block)) {
-      const Component = block // Alias for JSX transpilation
-      const templateComponents = renderTemplateComponents(templates, basePath, data)
+      const Component = block
 
       html = renderToString(
-        <Component
-          {...data}
-          templateComponents={templateComponents}
-        />
+        <Component {...data} templateComponents={templateComponents} />
       )
 
       // String
@@ -60,15 +146,6 @@ export default function renderReactLayout (options) {
     return html
   }
 
-  const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
-    locals: {
-      ...locals,
-      data,
-      header: render(head),
-      body: render(body)
-    }
-  })
-
   return layout
 }
 
@@ -79,26 +156,61 @@ function isJadeTemplate (fileName) {
 }
 
 function isReactComponent (Component) {
-  if (!isFunction(Component)) {
+  if (isFunction(Component)) {
+    return Component
+  } else {
     throw new Error(
       '(components/reaect/utils/render_react_layout.js) ' +
       'Error rendering layout: Invalid React component'
     )
-  } else {
-    return Component
   }
 }
 
 function renderTemplateComponents (templates, basePath, locals) {
   const templateComponents = Object
     .keys(templates)
-    .reduce((componentMap, key) => ({
-      ...componentMap,
-      [key]: buildTemplateComponent(templates[key], {
+    .reduce((componentMap, key) => {
+      const templateComponent = buildTemplateComponent(templates[key], {
         basePath,
         locals
       })
-    }), {})
+
+      return {
+        ...componentMap,
+        [key]: {
+          Component: templateComponent,
+          html: renderTemplate(templates[key], {
+            basePath,
+            locals
+          })
+        }
+      }
+    }, {})
 
   return templateComponents
+}
+
+export function rehydrateClient (bootstrapData) {
+  if (bootstrapData.templateComponents) {
+    const templates = bootstrapData.templateComponents || {}
+
+    const templateComponents = Object
+      .keys(templates)
+      .reduce((componentMap, key) => {
+        const templateComponent = buildTemplateComponent(templates[key].html, {
+          isClient: true
+        })
+
+        return {
+          ...componentMap,
+          [key]: {
+            Component: templateComponent
+          }
+        }
+      }, {})
+
+    bootstrapData.templateComponents = templateComponents
+  }
+
+  return bootstrapData
 }
