@@ -68,3 +68,6 @@ app.use(require('./apps/feature'))
 
 // User profiles
 app.use(require('./apps/user'))
+
+// React Serverside Example
+app.use(require('./apps/react_example'))

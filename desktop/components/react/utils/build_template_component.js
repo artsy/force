@@ -9,12 +9,12 @@ import renderTemplate from './render_template'
  * @return {Component}
  */
 export default function buildTemplateComponent (template, options = {}) {
-  const TemplateComponent = ({ children }) => {
+  const TemplateComponent = ({ children } = {}) => {
     return (
       <div>
         <div
           dangerouslySetInnerHTML={{
-            __html: renderTemplate(template, options)
+            __html: options.isClient ? template : renderTemplate(template, options)
           }}
         />
         {children}
