@@ -1,13 +1,13 @@
 import React from 'react'
-import renderReactLayout from '../render_react_layout'
+import { renderReactLayout, __RewireAPI__ } from '../render_react_layout'
 
 describe('components/react/utils/render_react_layout.js', () => {
   afterEach(() => {
-    renderReactLayout.__ResetDependency__('renderTemplate')
+    __RewireAPI__.__ResetDependency__('renderTemplate')
   })
 
   it('renders jade template blocks', () => {
-    renderReactLayout.__Rewire__('renderTemplate', (options) => {
+    __RewireAPI__.__Rewire__('renderTemplate', (options) => {
       return 'jade'
     })
 
@@ -21,11 +21,11 @@ describe('components/react/utils/render_react_layout.js', () => {
   })
 
   it('renders a stateless functional react component', (done) => {
-    renderReactLayout.__Rewire__('renderTemplate', (options) => {
+    __RewireAPI__.__Rewire__('renderTemplate', (options) => {
       return 'react'
     })
 
-    renderReactLayout.__Rewire__('renderToString', () => {
+    __RewireAPI__.__Rewire__('renderToString', () => {
       done()
     })
 
@@ -47,7 +47,7 @@ describe('components/react/utils/render_react_layout.js', () => {
   })
 
   it('renders a string', () => {
-    renderReactLayout.__Rewire__('renderTemplate', () => {
+    __RewireAPI__.__Rewire__('renderTemplate', () => {
       return 'string'
     })
 
