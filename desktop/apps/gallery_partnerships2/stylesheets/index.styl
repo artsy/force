@@ -14,16 +14,16 @@
   @media screen and (min-width: 1660px)
     margin 0 200px
 
-//.gallery-partnerships2-show-on-mobile
-//  display none
-//  @media screen and (max-width: 768px)
-//    display inherit
-//
-//.gallery-partnerships2-show-on-desktop
-//  display inherit
-//  @media screen and (max-width: 768px)
-//    display none
-//
+.gallery-partnerships2-show-on-mobile
+  display none
+  @media screen and (max-width: 768px)
+    display inherit
+
+.gallery-partnerships2-show-on-desktop
+  display inherit
+  @media screen and (max-width: 768px)
+    display none
+
 .text-center-on-mobile
   text-align inherit
   @media screen and (max-width: 768px)
@@ -181,23 +181,58 @@ background-size-cover()
 .gallery-partnerships2__chat
   min-height 510px
   padding 100px 0
+  @media screen and (max-width: 768px)
+    padding 50px 0
 
   &__video
     width 100%
     height 100%
 
+  &__learn_more
+    @media screen and (max-width: 768px)
+      margin 40px 0
+
   &__content-container
     width 450px
+    garamond-size('l-headline')
+
+    @media screen and (max-width: 768px)
+      width 100%
+      garamond-size('headline')
 
 .gallery-partnerships2__folio
   min-height 557px
   padding 100px 0
+  @media screen and (max-width: 768px)
+    padding 50px 0
 
   &__inner-container
     width 450px
+    garamond-size('l-headline')
+
+    @media screen and (max-width: 768px)
+      width 100%
+      garamond-size('headline')
+
+  &__features
+    @media screen and (max-width: 768px)
+      margin-bottom 30px
+
+  &__image
+    @media screen and (max-width: 960px)
+      width 100%
+    @media screen and (max-width: 768px)
+      margin 30px auto 0
+      width 333px
+      height 255px
+      display block
 
 .gallery-partnerships2__testimonials
   height 420px
+  garamond-size('l-headline')
+  @media screen and (max-width: 768px)
+    height 505px
+    garamond-size('headline')
 
   &__slideshow
     width 695px
@@ -208,15 +243,27 @@ background-size-cover()
     width 695px
     text-align center
     color #999999
+    @media screen and (max-width: 768px)
+      width 100%
+      padding 0 20px
+
+  .mgr-dot
+    color #E5E5E5
+
+  .mgr-dot.is-active
+    color #999
+
 
 .gallery-partnerships2__plans
   min-height 605px
+  padding 50px 20px
 
   &__title
     text-align center
 
   &__table
     border-collapse collapse
+    width 100%
 
     > tbody
       border 1px solid #e5e5e5
@@ -230,6 +277,8 @@ background-size-cover()
           text-align center
           avant-garde-size('body')
           padding-bottom 10px
+          @media screen and (max-width: 768px)
+            padding-top 20px
 
         > td
           width 240px
@@ -255,6 +304,11 @@ background-size-cover()
     aside
       width 556px
       margin 0 auto
+      @media screen and (max-width: 768px)
+        width 100%
+  @media screen and (max-width: 768px)
+    #mktoForm_2001
+      width 100%
 
   &__contact
     text-align center
@@ -262,6 +316,9 @@ background-size-cover()
 
   &__marketo-form
     width 740px
+    @media screen and (max-width: 768px)
+      width 100%
+      padding 0 20px
     margin 0 auto 30px auto
     .mktoOffset, .mktoGutter
       display none
@@ -307,6 +364,8 @@ background-size-cover()
 
     .mktoFormRow
       display flex
+      @media screen and (max-width: 768px)
+        flex-direction column
 
       .mktoFieldDescriptor
         margin-bottom 10px
@@ -319,6 +378,8 @@ background-size-cover()
 
       > .mktoFieldDescriptor:nth-child(2n)
         margin-left 30px
+        @media screen and (max-width: 768px)
+          margin-left 0
 
     .mktoFormRow:nth-child(4n)
       .mktoFormCol:first-child
