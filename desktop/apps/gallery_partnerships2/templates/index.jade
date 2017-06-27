@@ -8,48 +8,59 @@ block head
 
 block body
   .gallery-partnerships2
-    .gallery-partnerships2__header( style="background-image: url(#{header.image});" )
+    .gallery-partnerships2__header.flex.items-center( style="background-image: url(#{header.image});" )
       a(href="/")
         i.icon-logotype
       .gallery-partnerships2__header__content-container
-        .gallery-partnerships2__header__title= header.headline
+        .mb3.garamond-xxl-headline= header.headline
         a.gallery-partnerships2-white-signup-button( href="#" ) Learn More
 
     .gallery-partnerships2__intro
-      .row
-        for item in sections[0].intro
-          .col-xs-12.col-lg-4
-            img.gallery-partnerships2__intro__icon( src=item.image )
-            .gallery-partnerships2__intro__title.garamond-s-headline= item.title
-            .gallery-partnerships2__io__subtitle.garamond-l-body= item.subtitle
+      .responsive-layout-container
+        .main-layout-container
+          .row
+            for item in sections[0].intro
+              .col-xs-12.col-lg-4
+                img( src=item.image )
+                .mt3.mb2.garamond-s-headline= item.title
+                .garamond-l-body= item.subtitle
 
-    .gallery-partnerships2__gallery-logos
+    .gallery-partnerships2__gallery-logos.bg-gray.flex.justify-center.items-center
       for logo in sections[0].active_partner_images
         img(src=logo)
 
-    .gallery-partnerships2__connect-with-collectors
-      .gallery-partnerships2__connect-with-collectors__image
-        img(src=sections[1].background_image)
-      .gallery-partnerships2__connect-with-collectors__content_container
-        .gallery-partnerships2__connect-with-collectors__content_container__wrapper
-          .gallery-partnerships2__connect-with-collectors__title.garamond-l-headline= sections[1].title
-          .gallery-partnerships2__connect-with-collectors__content.garamond-l-body= sections[1].content
-          a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+    .gallery-partnerships2__connect-with-collectors.flex
+      .responsive-layout-container.flex.flex-auto
+        .main-layout-container.flex.flex-auto
+          .row.flex-auto.reverse-on-mobile
+            .col-xs-12.col-lg-6.flex.gallery-partnerships2__connect-with-collectors__notification-container
+              .flex.flex-auto.justify-center
+                img.self-end(src=sections[1].background_image)
+              img.gallery-partnerships2__connect-with-collectors__sub_image(src=sections[1].notification_image)
+            .col-xs-12.col-lg-6.flex.text-center-on-mobile
+              .gallery-partnerships2__connect-with-collectors__content_container.flex.flex-auto.justify-center.items-center
+                .gallery-partnerships2__connect-with-collectors__content_container__wrapper
+                  .garamond-l-headline= sections[1].title
+                  .mt2.mb3.garamond-l-body= sections[1].content
+                  a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+
+    hr
 
     .gallery-partnerships2__stats
-      .gallery-partnerships2-responsive-layout-container
-        .gallery-partnerships2-main-layout-container
+      .responsive-layout-container
+        .main-layout-container
           .row
-            .col-xs-12.col-lg-6.gallery-partnerships2__stats__container
+            .col-xs-12.col-lg-6.flex.items-center.justify-center
              .gallery-partnerships2__stats__inner-container
-               .gallery-partnerships2__stats__title.garamond-l-headline= sections[2].title
+               .mb2.text-center-on-mobile.garamond-l-headline= sections[2].title
                .garamond-l-body
                  for stat in sections[2].stats
-                   .gallery-partnerships2__stats__stat-row
-                     .gallery-partnerships2__stats__icon
-                       img(src=check_mark)
-                     .gallery-partnerships2__stats__stat_item= stat
-               a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+                   .mb2.flex
+                     div
+                       img.mr2(src=check_mark)
+                     div= stat
+               .text-center-on-mobile
+                a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
 
             .col-xs-12.col-lg-6( style="position: relative;" )
               img( src="http://files.artsy.net/images/macbook1x.png" )
@@ -58,3 +69,133 @@ block body
                   for image in sections[2].slideshow
                     .mgr-cell.js-mgr-cell
                       img( src= image )
+
+    hr
+
+    .gallery-partnerships2__chat.flex.flex-auto
+      .responsive-layout-container.flex.flex-auto
+        .main-layout-container.flex.flex-auto
+          .row.flex.flex-auto.reverse-on-mobile
+            .col-xs-12.col-lg-6.flex.flex-auto.items-center.justify-center
+              video.gallery-partnerships2__chat__video(autoplay loop)
+                source(src=sections[3].video type="video/mp4")
+            .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
+              .gallery-partnerships2__chat__content-container
+                .garamond-l-headline= sections[3].title
+                .garamond-l-body.my2= sections[3].content
+                a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+
+    hr
+
+    .gallery-partnerships2__folio.flex.flex-auto.justify-center
+      .responsive-layout-container
+        .main-layout-container
+          .row
+            .col-xs-12.col-lg-6.flex.content-center.items-center
+              .gallery-partnerships2__folio__inner-container
+                .mb2.garamond-l-headline.text-center-on-mobile= sections[4].title
+                .garamond-l-body
+                  for item in sections[4].folio
+                    .mb2.flex
+                      div
+                        img.mr2(src=check_mark)
+                      div= item
+                a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+            .col-xs-12.col-lg-6
+              img(src=sections[4].image)
+
+    .gallery-partnerships2__testimonials.bg-gray.flex.items-center.justify-center
+      .gallery-partnerships2__testimonials__slideshow
+        section.js-partner-testimonials-slideshow( style="position: relative;" )
+          .js-mgr-cells.mb5
+            for testimonial in sections[4].testimonials
+              .js-mgr-cell.gallery-partnerships2__testimonials__slideshow__item
+                .garamond-l-headline.mb5
+                   | “
+                   = testimonial.content
+                   | ”
+                .avant-garde-l-headline= testimonial.partner
+
+          - index = 0
+          nav.mgr-navigation.js-mgr-navigation
+            .mgr-dots
+              for x, i in sections[4].testimonials
+                .mgr-dot.js-mgr-select(
+                class= (index === i ? 'is-active' : undefined)
+                data-index= i
+                ) •
+
+    .gallery-partnerships2__plans.flex.justify-center.items-center
+      .gallery-partnerships2__plans__container
+        .gallery-partnerships2__plans__title.garamond-l-headline.mb5 Plans for every type of gallery
+        .gallery-partnerships2-show-on-desktop
+          table.gallery-partnerships2__plans__table
+            thead
+              tr
+                th
+                th Standard
+                th Preferred
+                th Premium
+            tbody
+              tr
+                td Artsy Content Management System (CMS)
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Unlimited collector messages
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Dedicated Artsy liaison
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Specialty promotion on Artsy Galleries page
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Artsy Folio for iPad and iPhone
+                td
+                td &#9900;
+                td &#9900;
+              tr
+                td Monthly analytics report
+                td
+                td &#9900;
+                td &#9900;
+              tr
+                td Dedicated promotion on Artsy homepage
+                td
+                td
+                td &#9900;
+              tr
+                td Collector inquiry vetting and email reveal
+                td
+                td
+                td &#9900;
+              tr
+                td Upgraded gallery profile page
+                td
+                td
+                td &#9900;
+
+    .gallery-partnerships2__form
+      .partnerships-section-header.apply
+        .gallery-partnerships-apply-form
+          header.gallery-partnerships2__form__header.mb5
+            .garamond-xl-headline.mb5 Join the leading marketplace for art & design
+            aside.garamond-s-headline Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales
+
+          .gallery-partnerships2__form__marketo-form
+            script( src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
+            form#mktoForm_2001
+            script.
+              MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 2001, function () {
+                $('.partnerships-marketo-form-apply-btn').remove()
+              });
+
+          .gallery-partnerships2__form__contact Call us: +1 800 589-1350

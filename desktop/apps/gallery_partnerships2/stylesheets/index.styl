@@ -2,13 +2,8 @@
 @require '../../../components/merry_go_round'
 @require './grid_styles'
 
-.collect-art__svg-icon
-  display inline
-  vertical-align middle
-  margin-right 10px
-
-.gallery-partnerships2-responsive-layout-container
-  .gallery-partnerships2-main-layout-container
+.responsive-layout-container
+  .main-layout-container
     margin 0 auto
     max-width 1250px
   margin 0 20px
@@ -19,20 +14,84 @@
   @media screen and (min-width: 1660px)
     margin 0 200px
 
-.collect-art-show-on-mobile
-  display none
-  @media screen and (max-width: 768px)
-    display inherit
-
-.collect-art-show-on-desktop
-  display inherit
-  @media screen and (max-width: 768px)
-    display none
-
-.collect-art-text-center-on-mobile
+//.gallery-partnerships2-show-on-mobile
+//  display none
+//  @media screen and (max-width: 768px)
+//    display inherit
+//
+//.gallery-partnerships2-show-on-desktop
+//  display inherit
+//  @media screen and (max-width: 768px)
+//    display none
+//
+.text-center-on-mobile
   text-align inherit
   @media screen and (max-width: 768px)
     text-align center
+
+.reverse-on-mobile
+  @media screen and (max-width: 768px)
+    flex-wrap wrap-reverse
+
+// 👇from basscss-flex -----------------------------------
+.flex
+  display flex
+
+.self-center
+  align-self center
+
+.self-end
+  align-self flex-end
+
+.items-center
+  align-items center
+
+.justify-center
+  justify-content center
+
+.content-center
+  align-content center
+
+.flex-auto
+  flex 1 1 auto
+  min-width 0
+  min-height 0
+// 👆from basscss-flex -----------------------------------
+
+// 👇from basscss-margin && basscss-padding --------------
+.my2
+  margin 10px 0
+
+.mr2
+  margin-right 10px
+
+.mb2
+  margin-bottom 10px
+
+.mt3
+  margin-top 20px
+
+.mb3
+  margin-bottom 20px
+
+.mt5
+  margin-top 50px
+
+.mb5
+  margin-bottom 50px
+
+// 👆from basscss-margin && basscss-padding --------------
+
+.bg-gray
+  background-color #f8f8f8
+
+img
+  display inline
+
+.gallery-partnerships2
+  hr
+    margin 0
+    border-top solid 1px #e5e5e5
 
 .gallery-partnerships2-white-signup-button
   avant-garde-size('body')
@@ -50,32 +109,6 @@
   background-color black
   color white
 
-.collect-art-buttons
-  width 270px
-  height 45px
-  box-sizing border-box
-  > i
-    margin-left 0
-
-//.ba__email-signup-button
-//  @extends .avant-garde-button
-//  @extends .collect-art-buttons
-//  padding 0 15px
-//  line-height 45px
-//  margin-right 20px
-//  background-color #ffffff
-//  transition background-color .25s,color .25s
-//  .collect-art__svg-icon
-//    width 23px
-//    height 17px
-//    display inline-block
-//    vertical-align text-bottom
-//  &:hover
-//    .collect-art__svg-icon
-//      background-position 0 17px
-//    color white
-//    background-color #6e1fff
-
 background-size-cover()
   background-position center
   background-repeat no-repeat
@@ -85,8 +118,6 @@ background-size-cover()
   background-size-cover()
   height 630px
   color white
-  display flex
-  align-items center
   position relative
 
   .icon-logotype
@@ -99,82 +130,44 @@ background-size-cover()
     max-width 615px
     text-align center
     margin 0 auto
-  &__title
-    garamond-size('xxl-headline', true)
-    margin-bottom 20px
-  &__signup-buttons
-    display inline-block
-    margin-top 35px
-  &__chevron
-    position absolute
-    bottom 20px
-    left 0
-    width 100%
-    text-align center
-    opacity 0.5
-    i
-      font-size 46px
-      &::before
-        transform rotate(90deg)
-        display inline-block
 
 .gallery-partnerships2__intro
-  padding 100px 160px
+  padding 100px 0
   text-align center
-  img
-    margin 0 auto
-  &__title
-    margin 17px 0 12px
 
 .gallery-partnerships2__gallery-logos
-  text-align center
-  height 130px
-  line-height 130px
-  background-color #f8f8f8
+  min-height 130px
   img
-    display inline-block
-    vertical-align middle
     transform: scale(0.5)
 
 .gallery-partnerships2__connect-with-collectors
-  height 610px
-  display flex
+  min-height 610px
 
-  &__image
-    flex 1
-    display flex
-    justify-content center
-    img
-      align-self flex-end
+  &__notification-container
+    position relative
+
   &__content_container
-    display flex
-    flex 1
     &__wrapper
       width 450px
-      align-self center
-  &__content
-    margin 10px 0 20px
+
+  &__sub_image
+    position absolute
+    top 50%
+    margin-left auto
+    margin-right auto
+    left 0
+    right 0
+    width 482px
+    height 146px
+    display none
 
 .gallery-partnerships2__stats
-  border-top solid 2px #e5e5e5
-  padding-top 100px
+  padding 100px 0
   overflow-x hidden
-  &__container
-    display flex
-  &__title
-    padding-bottom 12px
+
   &__inner-container
     width 450px
-    margin 0 auto
-    align-self center
-  &__stat-row
-    display flex
-    margin-bottom 10px
-  &__icon
-    img
-      display inline
-      vertical-align baseline
-      padding-right 10px
+
   &__slideshow
     width: 678px;
     height: 416px;
@@ -185,142 +178,172 @@ background-size-cover()
       width 667px
       height 416px
 
-//.collect-art-intro
-//  height 800px
-//  display flex
-//  align-items center
-//  justify-content center
-//  position relative
-//  &__desktop-background-image
-//    background-size-cover()
-//    height 800px
-//    width 100%
-//    position absolute
-//    z-index -1
-//    left 0
-//    top 0
-//  &__mobile-background-image
-//    background-size-cover()
-//    height 560px
-//    width 100%
-//    position absolute
-//    z-index -1
-//    left 0
-//    top 0
-//  &__title
-//    garamond-size('xl-headline')
-//    max-width 387px
-//    margin 0 auto
-//    text-align center
-//    margin-bottom 20px
-//  &__subtitle
-//    garamond-size('s-headline')
-//    text-align center
-//  &__stat_container
-//    display flex
-//    margin-top 20px
-//    margin-left auto
-//    margin-right auto
-//    width 750px
-//    height 100px
-//  &__stat
-//    flex 1
-//    display flex
-//    flex-direction column
-//    justify-content center
-//    text-align center
-//    border-right 1px solid gray-lighter-color
-//    &:last-child
-//      border none
-//  &__stat-number
-//    garamond-size('l-headline')
-//  &__desktop-type
-//    avant-garde-size('s-headline')
-//    justify-content center
-//  &__mobile-type
-//    avant-garde-size('s-headline')
-//    justify-content center
-//  &__signup-button-container
-//    margin-top 25px
-//    text-align center
-//
-//.collect-art-benefits
-//  background-color gray-lightest-color
-//  padding-top 50px
-//  overflow-x hidden
-//  &__title
-//    garamond-size('xl-headline')
-//    margin-bottom 35px
-//  &__benefits-container
-//    max-width 365px
-//    margin-top 45px
-//    padding-bottom 45px
-//  &__items
-//    img
-//      display inline-block
-//    margin 0 0 45px
-//    &:last-child
-//      margin-bottom 0
-//  &__info-subtitle
-//    avant-garde-size('m-headline')
-//    margin-bottom 5px
-//  &__info-content
-//    garamond-size('l-body')
-//  &__image-section
-//    position relative
-//    img
-//      position absolute
-//      left 0
-//      bottom 0
-//
-//.collect-art-faqs
-//  padding-top 25px
-//  margin-bottom 30px
-//  &__image-banner
-//    text-align center
-//    img
-//      display inline-block
-//      max-width 100%
-//  &__title
-//    garamond-size('xl-headline')
-//    padding-top 70px
-//    max-width 500px
-//  &__items-container
-//    padding-top 55px
-//  &__item-grid
-//    margin-right 70px
-//  &__item-title
-//    garamond-size('headline')
-//    margin-bottom 12px
-//  &__item-content
-//    garamond-size('l-body')
-//    margin-bottom 55px
-//
-//.collect-art-footer
-//  background-size-cover()
-//  height 390px
-//  position relative
-//  &__desktop-background-image
-//    background-size-cover()
-//    height 390px
-//    width 100%
-//    position absolute
-//    z-index -1
-//  &__mobile-background-image
-//    background-size-cover()
-//    height 390px
-//    width 100%
-//    position absolute
-//    z-index -1
-//  &__title
-//    garamond-size('l-headline')
-//    padding-top 110px
-//    max-width 430px
-//    margin-bottom 27px
-//  .icon-logo
-//    position absolute
-//    bottom 20px
-//    left 20px
-//
-//@require './mobile'
+.gallery-partnerships2__chat
+  min-height 510px
+  padding 100px 0
 
+  &__video
+    width 100%
+    height 100%
+
+  &__content-container
+    width 450px
+
+.gallery-partnerships2__folio
+  min-height 557px
+  padding 100px 0
+
+  &__inner-container
+    width 450px
+
+.gallery-partnerships2__testimonials
+  height 420px
+
+  &__slideshow
+    width 695px
+    nav
+      margin 0 auto
+
+  &__slideshow__item
+    width 695px
+    text-align center
+    color #999999
+
+.gallery-partnerships2__plans
+  min-height 605px
+
+  &__title
+    text-align center
+
+  &__table
+    border-collapse collapse
+
+    > tbody
+      border 1px solid #e5e5e5
+      border-collapse separate
+
+    > thead
+    > tbody
+    > tfoot
+      > tr
+        > th
+          text-align center
+          avant-garde-size('body')
+          padding-bottom 10px
+
+        > td
+          width 240px
+          padding 8px 5px
+          border-top 1px solid #e5e5e5
+          text-align center
+          font-weight bold
+
+        > th:first-child
+        > td:first-child
+          text-align start
+          width 340px
+          font-weight inherit
+
+      > tr:nth-of-type(even)
+        background-color: #f8f8f8
+
+.gallery-partnerships2__form
+  &__header
+    margin-top 60px
+    text-align center
+
+    aside
+      width 556px
+      margin 0 auto
+
+  &__contact
+    text-align center
+    margin-bottom 160px
+
+  &__marketo-form
+    width 740px
+    margin 0 auto 30px auto
+    .mktoOffset, .mktoGutter
+      display none
+    input
+      padding 12px !important
+      border 2px solid gray-lighter-color
+      transition border-color 0.25s
+      font-size 17px !important
+      &:focus
+      &:active
+      &.is-active
+        border-color purple-color
+        outline none
+        transition border-color 0.5s
+    form, input, .mktoFormCol, input, .mktoFieldWrap
+      width 100% !important
+    .mktoButtonRow
+      margin-top 30px !important
+      width 100%
+      text-align center !important
+    .mktoButtonWrap
+      margin 0 !important
+      button
+        padding 15px !important
+        border 0
+        color white
+        background black
+        avant-garde()
+        avant-garde-size('l-headline')
+        width 100%
+        margin-top 10px !important
+        transition background-color 0.3s
+        font-size 13px !important
+        &:hover, &:active
+          background purple-color
+    form
+      margin-top 10px
+
+    label
+      avant-garde()
+      avant-garde-size('s-headline')
+      color black
+
+    .mktoFormRow
+      display flex
+
+      .mktoFieldDescriptor
+        margin-bottom 10px
+
+      .mktoLabel
+        margin-bottom 5px
+
+      .mktoHasWidth
+        width 100% !important
+
+      > .mktoFieldDescriptor:nth-child(2n)
+        margin-left 30px
+
+    .mktoFormRow:nth-child(4n)
+      .mktoFormCol:first-child
+        .mktoFieldWrap
+          @extends .bordered-select
+
+          &:before
+            display none
+          &:after
+            border-top-color black
+            margin-right 7px
+            margin-top 6px
+          select
+            padding 12px 10px 11px
+    .mktoAsterix
+      display none !important
+
+    @keyframes popup
+      0%
+        transform scale(1)
+
+      50%
+        transform scale(1.1)
+
+      100%
+        transform scale(1)
+
+//@require './mobile'
