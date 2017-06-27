@@ -1,3 +1,4 @@
+import DOM from './DOM'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -13,7 +14,7 @@ export default class App extends Component {
   }
 
   handleButtonClick = (event) => {
-    console.warn('Button clicked!', this.props.description)
+    console.warn('React Button clicked!', this.props.description)
   }
 
   render () {
@@ -26,27 +27,37 @@ export default class App extends Component {
     } = this.props
 
     return (
-      <div>
-        <h1>
-          Hello {name}!
-        </h1>
+      <DOM>
+        <div>
+          <strong>
+            React
+          </strong>
+          <hr />
 
-        <p>
-          {description}
-        </p>
+          <h1>
+            Hello {name}!
+          </h1>
 
-        <button onClick={this.handleButtonClick}>
-          Click me!
-        </button>
+          <p>
+            {description}
+          </p>
+
+          <button onClick={this.handleButtonClick}>
+            Click me!
+          </button>
+        </div>
+
+        <br />
 
         <div>
-          <div>
-            Example Jade view:
-          </div>
+          <strong>
+            Jade
+          </strong>
+          <hr />
 
           <MyJadeView.Component />
         </div>
-      </div>
+      </DOM>
     )
   }
 }

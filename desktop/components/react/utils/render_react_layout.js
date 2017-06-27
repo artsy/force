@@ -13,6 +13,8 @@ import { renderToString } from 'react-dom/server'
  *
  * // Routes.js
  *
+ * import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
+ *
  * export function index (req, res, next) {
  *   const layout = renderReactLayout({
  *     basePath: req.app.get('views'),
@@ -37,7 +39,9 @@ import { renderToString } from 'react-dom/server'
  *
  * // Client.js
  *
- * const bootstrapData = window.__BOOTSTRAP__
+ * import { rehydrateClient } from 'desktop/components/react/utils/render_react_layout'
+ *
+ * const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
  *
  * ReactDOM.render(
  *   <App {...bootstrapData} />, document.getElementById('react-root')
@@ -46,7 +50,7 @@ import { renderToString } from 'react-dom/server'
  * @param  {Object} options Options configuration object
  * @return {String}         String of html to render
  */
-export default function renderReactLayout (options) {
+export function renderReactLayout (options) {
   /**
    * Configuration
    */
