@@ -4,45 +4,56 @@
   overflow hidden
   margin-bottom 40px
 
-.auction2-banner-live-bg
-  background center center gray-lightest-color
-  background-size cover
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  &:after
-    content ' '
-    width 100%
-    height 100%
-    background rgba(0,0,0,0.4)
+  +respond-mobile()
+    height 200px
+
+  // Live
+  &__live-bg
+    background center center gray-lightest-color
+    background-size cover
+    position absolute
     top 0
     left 0
-    position absolute
+    width 100%
+    height 100%
 
-.auction2-banner-live-open
-  color white
-  text-align center
-  height 600px
-  h1
-    garamond-size('headline')
-  .avant-garde-button-white
-    background-color white
-    width 400px
-    margin-top 20px
-    padding 17px 0
-    border 0
-    avant-garde-size('l-headline')
-  .auction2-banner-live-bg
-    blur(20px)
-    transform scale(1.05)
     &:after
-      display none
+      content ' '
+      width 100%
+      height 100%
+      background rgba(0,0,0,0.4)
+      top 0
+      left 0
+      position absolute
 
-.auction2-banner-live-details
-  z-index 2
-  position absolute
-  top 50%
-  left 50%
-  transform translate(-50%, -50%)
+  &__live-open
+    color white
+    text-align center
+    height 600px
+
+    +respond-mobile()
+      height 200px
+
+    h1
+      garamond-size('headline')
+
+    .avant-garde-button-white
+      background-color white
+      width 400px
+      margin-top 20px
+      padding 17px 0
+      border 0
+      avant-garde-size('l-headline')
+
+    .live-bg
+      blur(20px)
+      transform scale(1.05)
+      &:after
+        display none
+
+  &__live-details
+    z-index 2
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)

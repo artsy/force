@@ -13,11 +13,11 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={this.props.store}>
-        <ResponsiveWindow>
+        {/* <ResponsiveWindow> */}
           <DOM>
             <Layout />
           </DOM>
-        </ResponsiveWindow>
+        {/* </ResponsiveWindow> */}
       </Provider>
     )
   }

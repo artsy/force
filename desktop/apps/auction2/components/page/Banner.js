@@ -1,24 +1,30 @@
 import ClockView from 'desktop/components/clock/react'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
 
 function Banner (props) {
   const {
-    BackgroundBanner,
     auction,
+    coverImage,
     isLiveOpen,
-    liveAuctionUrl
+    isMobile,
+    liveAuctionUrl,
+    name
   } = props
+
+  const b = block('auction2-banner')
 
   return (
     <div>
       {isLiveOpen
-        ? <div className='auction2-banner auction2-banner-live-open'>
-          <BackgroundBanner />
-
-          <div className='auction2-banner-live-details'>
+        ? <Background
+            coverImage={coverImage}
+            name={name}
+            className={b('live-open')}
+          >
             <h1>
               Live Bidding Now Open
             </h1>
@@ -26,62 +32,73 @@ function Banner (props) {
             <a href={liveAuctionUrl} className='avant-garde-button-white'>
               Enter live auction
             </a>
-          </div>
-        </div>
-        : <div className='auction2-banner'>
-          <BackgroundBanner>
+          </Background>
+        : <Background
+            coverImage={coverImage}
+            name={name}
+            className={b({ isMobile })}
+          >
             <ClockView
               model={auction}
             />
-          </BackgroundBanner>
-        </div>
-      }
+          </Background>
+        }
     </div>
   )
 }
 
 Banner.propTypes = {
-  BackgroundBanner: PropTypes.func.isRequired,
   auction: PropTypes.object.isRequired,
+  coverImage: PropTypes.object.isRequired,
   isLiveOpen: PropTypes.bool.isRequired,
-  liveAuctionUrl: PropTypes.string
+  isMobile: PropTypes.bool.isRequired,
+  liveAuctionUrl: PropTypes.string,
+  name: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
   const {
     auction,
     isLiveOpen,
+    isMobile,
     liveAuctionUrl
   } = state.app
 
   const { cover_image, name } = auction.toJSON()
 
-  const BackgroundBanner = ({ children }) => {
-    const imageUrl = get(cover_image, 'cropped.url', '')
-
-    return (
-      <div
-        className='auction2-banner-live-bg'
-        style={{ backgroundImage: `url('${imageUrl}')` }}
-        alt={name}
-      >
-        {children}
-      </div>
-    )
-  }
-
-  BackgroundBanner.propTypes = {
-    children: PropTypes.node
-  }
-
   return {
-    BackgroundBanner,
     auction,
-    isLiveOpen,
-    liveAuctionUrl
+    coverImage: cover_image,
+    isLiveOpen: false,
+    isMobile,
+    liveAuctionUrl,
+    name
   }
 }
 
 export default connect(
   mapStateToProps
 )(Banner)
+
+// Helpers
+
+function Background ({ children, className, coverImage, name }) {
+  const imageUrl = get(coverImage, 'cropped.url', '')
+
+  return (
+    <div
+      className={className}
+      style={{ backgroundImage: `url('${imageUrl}')` }}
+      alt={name}
+    >
+      {children}
+    </div>
+  )
+}
+
+Background.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  coverImage: PropTypes.object,
+  name: PropTypes.string
+}

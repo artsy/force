@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import u from 'updeep'
 import { composeReducers } from 'desktop/components/react/utils/compose_reducers'
 import { connect } from 'react-redux'
+import { debounce } from 'underscore'
 
 const MOBILE_BREAKPOINT = 640
 
@@ -57,8 +58,13 @@ class ResponsiveWindow extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  onChange: responsiveWindowAction
+const mapDispatchToProps = (dispatch) => {
+  const onChange = debounce(
+    (innerWidth) => dispatch(responsiveWindowAction(innerWidth)), 300)
+
+  return {
+    onChange
+  }
 }
 
 // API

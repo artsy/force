@@ -59,10 +59,11 @@ export async function index (req, res, next) {
       }, initialState)
     })
 
-    await Promise.all([
-      req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
-      store.dispatch(actions.fetchArtworks())
-    ])
+    // FIXME: Uncomment
+    // await Promise.all([
+    //   req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
+    //   store.dispatch(actions.fetchArtworks())
+    // ])
 
     try {
       const layout = renderReactLayout({

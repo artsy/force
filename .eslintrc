@@ -11,6 +11,7 @@
   },
   "rules": {
     "camelcase": 0,
-    "no-new": 0
+    "no-new": 0,
+    "react/jsx-indent": 0
   }
 }

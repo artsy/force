@@ -2,8 +2,8 @@ export const initialState = {
   articles: [],
   auction: {},
   footerItems: [],
-  isLiveOpen: false,
-  isMobile: false,
+  isLiveOpen: undefined,
+  isMobile: undefined,
   liveAuctionUrl: x => x,
   me: {},
   sd: {}
