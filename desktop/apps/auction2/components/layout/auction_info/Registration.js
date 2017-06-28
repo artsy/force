@@ -21,18 +21,18 @@ function Registration (props) {
       {(() => {
         if (isClosed) {
           return null
-        // } else if (!isQualifiedForBidding) {
-        //   return (
-        //     <div className={b('wrapper')}>
-        //       <button className='avant-garde-button-black is-block is-disabled'>
-        //         Registration pending
-        //       </button>
-        //       <div className={b('small', { warning: true })}>
-        //         Reviewing submitted information
-        //       </div>
-        //     </div>
-        //   )
-        } else if (true) {
+        } else if (!isQualifiedForBidding) {
+          return (
+            <div className={b('wrapper')}>
+              <button className='avant-garde-button-black is-block is-disabled'>
+                Registration pending
+              </button>
+              <div className={b('small', { warning: true })}>
+                Reviewing submitted information
+              </div>
+            </div>
+          )
+        } else if (numBidders > 0) {
           return (
             <div className={b('approved')}>
               <span className='icon-check' />

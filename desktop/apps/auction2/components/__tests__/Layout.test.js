@@ -23,6 +23,7 @@ describe('<Layout />', () => {
       showFollowedArtistsRail: false,
       footerItems: footerItems,
       isLiveOpen: false,
+      isMobile: false,
       me: null,
       sd: {
         ARTSY_EDITORIAL_CHANNEL: 'foo'
@@ -55,7 +56,7 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
     rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
   })
@@ -68,7 +69,7 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
     rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
   })
@@ -82,10 +83,10 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
     rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
-    rendered.find('.auction2-callout').text().should.containEql('Live bidding begins')
+    rendered.find('.auction2-auction-info__callout').text().should.containEql('Live bidding begins')
   })
 
   it('live auction, open for live bidding', () => {
@@ -97,10 +98,10 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
     rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
-    rendered.find('.auction2-callout').text().should.containEql('Live bidding now open')
+    rendered.find('.auction2-auction-info__callout').text().should.containEql('Live bidding now open')
   })
 
   it('default auction with user', () => {
@@ -114,9 +115,9 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
     rendered.find('.js-register-button').text().should.equal('Register to bid')
-    rendered.find('.auction2-header-metadata').text().should.containEql('Registration required to bid')
+    rendered.find('.auction2-auction-info__metadata').text().should.containEql('Registration required to bid')
   })
 
   it('user with bidder positions', () => {
@@ -179,9 +180,9 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
-    rendered.find('.auction2-header-metadata').text().should.containEql('Registration pending')
-    rendered.find('.auction2-header-metadata').text().should.containEql('Reviewing submitted information')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__metadata').text().should.containEql('Registration pending')
+    rendered.find('.auction2-auction-info__metadata').text().should.containEql('Reviewing submitted information')
   })
 
   it('index, registered to bid and qualified', () => {
@@ -197,8 +198,8 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
-    rendered.find('.auction2-header-metadata').text().should.containEql('Approved to Bid')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__metadata').text().should.containEql('Approved to Bid')
   })
 
   it('index, registered to bid but auction closed', () => {
@@ -215,9 +216,9 @@ describe('<Layout />', () => {
       }))
     })
 
-    rendered.find('.auction2-title').text().should.equal('An Auction')
-    rendered.find('.auction2-header-metadata').text().should.containEql('')
-    rendered.find('.auction2-callout').text().should.equal('Auction Closed')
+    rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
+    rendered.find('.auction2-auction-info__metadata').text().should.containEql('')
+    rendered.find('.auction2-auction-info__callout').text().should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {
@@ -232,8 +233,8 @@ describe('<Layout />', () => {
         )
       })
 
-      rendered.find('.auction2-header-metadata').text().should.containEql('Registration closed')
-      rendered.find('.auction2-header-metadata').text().should.containEql('Registration required to bid')
+      rendered.find('.auction2-auction-info__metadata').text().should.containEql('Registration closed')
+      rendered.find('.auction2-auction-info__metadata').text().should.containEql('Registration required to bid')
     })
   })
 
