@@ -8,6 +8,9 @@
     align-items center
     border-bottom 1px solid gray-lighter-color
 
+    +respond-mobile()
+      justify-content flex-start
+
     &:last-child
       border-bottom none
       margin-bottom 40px
@@ -15,6 +18,11 @@
     garamond-size('headline')
     padding 20px 0px
     border-top 1px solid gray-lighter-color
+
+    +respond-mobile()
+      font-weight 600
+      garamond-size('s-body')
+      padding-bottom 0
 
   &__artwork-container
     text-align center
@@ -24,17 +32,35 @@
       max-height 100px
       max-width 200px
 
+      +respond-mobile()
+        max-width 130px
+
   &__artwork
     margin-left 20px
     min-width 25%
     max-width 25%
     padding-right 20px
 
+    +respond-mobile()
+      display flex
+      flex-direction column
+      margin-left 16px
+      max-width 100%
+
     > *
       overflow ellipsis
+
+      +respond-mobile()
+        overflow: auto
+
     h3
       garamond-size('l-caption')
       font-weight 600
+
+  +respond-mobile()
+    .bid-status
+      padding-bottom 2px
+      position relative
 
   &__title
     garamond-size('l-caption')
@@ -46,11 +72,32 @@
     garamond-size('l-caption')
     font-style normal
 
+    +respond-mobile()
+      display none
+
   &__current-bid
     width 20%
 
   &__bids-num
     width 10%
+
+  &__current-and-bids
+    +respond-mobile()
+      garamond-size('l-caption')
+      font-style normal
+      width 100%
+
+      &::before
+        display inline-block
+        background-image url(/images/paddle.png)
+        background-repeat no-repeat
+        background-position 2px 6px
+        -webkit-background-size 63%
+        -moz-background-size 63%
+        background-size 63%
+        padding-right 15px
+        height 18px
+        content ''
 
   &__img
     display inline-block

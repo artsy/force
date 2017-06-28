@@ -11,7 +11,7 @@ function Registration (props) {
     isRegistrationEnded,
     numBidders,
     registerUrl,
-    showInfoWindow
+    showContactInfo
   } = props
 
   const b = block('auction2-registration')
@@ -21,18 +21,18 @@ function Registration (props) {
       {(() => {
         if (isClosed) {
           return null
-        } else if (!isQualifiedForBidding) {
-          return (
-            <div className={b('wrapper')}>
-              <button className='avant-garde-button-black is-block is-disabled'>
-                Registration pending
-              </button>
-              <div className={b('small', { warning: true })}>
-                Reviewing submitted information
-              </div>
-            </div>
-          )
-        } else if (numBidders > 0) {
+        // } else if (!isQualifiedForBidding) {
+        //   return (
+        //     <div className={b('wrapper')}>
+        //       <button className='avant-garde-button-black is-block is-disabled'>
+        //         Registration pending
+        //       </button>
+        //       <div className={b('small', { warning: true })}>
+        //         Reviewing submitted information
+        //       </div>
+        //     </div>
+        //   )
+        } else if (true) {
           return (
             <div className={b('approved')}>
               <span className='icon-check' />
@@ -65,7 +65,7 @@ function Registration (props) {
       })()}
 
       {
-        !showInfoWindow && // Mobile only
+        showContactInfo && // Desktop only
           <div>
 
             <div className={b('how-to-bid')}>
@@ -101,21 +101,23 @@ Registration.propTypes = {
   isRegistrationEnded: PropTypes.bool.isRequired,
   numBidders: PropTypes.number.isRequired,
   registerUrl: PropTypes.string.isRequired,
-  showInfoWindow: PropTypes.bool.isRequired
+  showContactInfo: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
-  const { auction, me, showInfoWindow } = state.app
+  const { auction, isMobile, me } = state.app
   const numBidders = get(me, 'bidders.length', 0)
   const isQualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding', true)
+  const showContactInfo = !isMobile
 
   return {
     isClosed: auction.isClosed(),
+    isMobile,
     isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),
     numBidders,
     registerUrl: auction.registerUrl(),
-    showInfoWindow
+    showContactInfo
   }
 }
 

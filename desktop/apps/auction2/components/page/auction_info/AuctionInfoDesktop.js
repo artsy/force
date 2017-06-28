@@ -15,7 +15,7 @@ function HeaderDesktop (props) {
     upcomingLabel
   } = props
 
-  const b = block('auction2-header')
+  const b = block('auction2-auction-info')
 
   return (
     <header className={b()}>

@@ -11,8 +11,9 @@ import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 class MyActiveBids extends Component {
   static propTypes = {
+    isMobile: PropTypes.bool.isRequired,
     lotStandings: PropTypes.array,
-    saleId: PropTypes.string,
+    saleId: PropTypes.string.isRequired,
     user: PropTypes.object
   }
 
@@ -50,8 +51,10 @@ class MyActiveBids extends Component {
   }
 
   render () {
-    const b = block('auction2-my-active-bids')
+    const { isMobile } = this.props
     const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
+
+    const b = block('auction2-my-active-bids')
 
     return (
       <div className={b()}>
@@ -68,6 +71,7 @@ class MyActiveBids extends Component {
                 counts,
                 id,
                 highest_bid,
+                lot_label,
                 sale,
                 sale_id
               }
@@ -90,9 +94,16 @@ class MyActiveBids extends Component {
                     <img className={b('img')} src={artwork.image.url} />
                   </a>
                 </div>
+
                 <div className={b('artwork')}>
+                  { isMobile &&
+                    <BidStatus
+                      bid={bid}
+                      saleArtwork={bid.sale_artwork}
+                    /> }
+
                   <div className={b('lot-number')}>
-                    Lot {artwork.log_label}
+                    Lot {lot_label}
                   </div>
                   <h3>
                     {artwork.artist.name}
@@ -103,27 +114,38 @@ class MyActiveBids extends Component {
                     </em>
                     {artwork.date}
                   </div>
+
+                  { isMobile &&
+                    <div className={b('current-and-bids')}>
+                      {highest_bid.display} {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
+                    </div> }
                 </div>
+
                 <div className={b('current-bid')}>
                   <b>Current Bid: </b> {highest_bid.display}
                 </div>
+
                 <div className={b('bids-num')}>
                   {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
                 </div>
 
-                { sale.is_live_open
-                  ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
-                      Bid Live
-                    </a>
-                  : <div className={b('bid-status-cell')}>
-                    <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
-                  </div>
-                  }
+                { !isMobile &&
+                  <div>
+                    { sale.is_live_open
+                      ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
+                          Bid Live
+                        </a>
+                      : <div className={b('bid-status-cell')}>
+                        <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
+                      </div>
+                      }
 
-                {!sale.is_live_open &&
-                  <a href={artwork.href} className={'avant-garde-button-white ' + b('bid-button')}>
-                    Bid
-                  </a> }
+                    {!sale.is_live_open &&
+                      <a href={artwork.href} className={'avant-garde-button-white ' + b('bid-button')}>
+                        Bid
+                      </a> }
+                  </div>
+                }
               </div>
             )
           })}
@@ -136,6 +158,7 @@ const mapStateToProps = (state) => {
   const { app } = state
 
   return {
+    isMobile: app.isMobile,
     lotStandings: app.me.lot_standings,
     saleId: app.auction.get('id'),
     user: app.user

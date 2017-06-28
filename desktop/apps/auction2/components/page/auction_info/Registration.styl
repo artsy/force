@@ -6,6 +6,7 @@
     +respond-mobile()
       border none
       margin-top 16px
+      padding 0
 
   &__small
     color gray-dark-color
@@ -29,9 +30,12 @@
     padding-left 20px
 
     +respond-mobile()
-      margin-top 20px
+      garamond-size('s-body')
+      margin-top 15px
       padding-left 0
-      text-align center
+
+      .icon-check
+        display none
 
     .icon-check
       color new-green-color

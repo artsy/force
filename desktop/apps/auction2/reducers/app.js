@@ -10,7 +10,7 @@ export const initialState = {
   liveAuctionUrl: x => x,
   me: {},
   sd: {},
-  showInfoWindow: true
+  showInfoWindow: false
 }
 
 export default function appReducer (state = initialState, action = {}) {

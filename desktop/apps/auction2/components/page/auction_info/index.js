@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import HeaderDesktop from './HeaderDesktop'
-import HeaderMobile from './HeaderMobile'
+import AuctionInfoDesktop from './AuctionInfoDesktop'
+import AuctionInfoMobile from './AuctionInfoMobile'
 import { connect } from 'react-redux'
 
-function HeaderContainer ({ isMobile }) {
+function AuctionInfoContainer ({ isMobile }) {
   return isMobile
-    ? <HeaderMobile />
-    : <HeaderDesktop />
+    ? <AuctionInfoMobile />
+    : <AuctionInfoDesktop />
 }
 
-HeaderContainer.propTypes = {
+AuctionInfoContainer.propTypes = {
   isMobile: PropTypes.bool.isRequired
 }
 
@@ -20,4 +20,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(HeaderContainer)
+)(AuctionInfoContainer)
