@@ -1,4 +1,3 @@
-// import 'jsdom-global/register'
 import Articles from 'desktop/collections/articles.coffee'
 import Auction from 'desktop/models/auction.coffee'
 import React from 'react'

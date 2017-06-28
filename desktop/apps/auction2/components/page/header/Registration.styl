@@ -1,0 +1,53 @@
+.auction2-registration
+  &__wrapper
+    padding 20px
+    border 1px solid gray-lighter-color
+
+  &__small
+    padding-top 20px
+    color gray-dark-color
+    text-align center
+
+    &_warning
+      color #f0cc49
+
+  &__preview
+    p
+      garamond-size('l-body')
+      margin-bottom 15px
+    .bordered-input
+      margin-bottom 15px
+
+  &__approved
+    margin-bottom 20px
+    color new-green-color
+    garamond-size('l-body')
+    padding-left 20px
+    .icon-check
+      color new-green-color
+      border-color @color
+      width 23px
+      height @width
+      font-size 9px
+      border-radius @width
+      border 2px solid
+      padding 3px
+      margin-right 8px
+      position relative
+      top -2px
+
+  &__how-to-bid
+    text-decoration none
+    margin 0 0 20px 0
+    display block
+    img
+      display inline-block
+      height 40px
+      margin-right 15px
+      vertical-align middle
+
+  &__wrapper + &__how-to-bid
+    margin-top 30px
+
+  &__how-to-bid, &__question
+    margin-left 20px
