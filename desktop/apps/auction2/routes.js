@@ -11,9 +11,9 @@ import configureStore from 'desktop/apps/auction2/utils/configureStore'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
-import renderReactLayout from 'desktop/components/react/utils/render_react_layout'
 import u from 'updeep'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
+import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
 
 export async function index (req, res, next) {
   const saleId = req.params.id

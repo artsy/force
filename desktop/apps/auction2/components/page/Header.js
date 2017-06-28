@@ -2,6 +2,7 @@ import AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 
 function Header (props) {
@@ -14,31 +15,34 @@ function Header (props) {
     upcomingLabel
   } = props
 
+  const b = block('auction2-header')
+
   return (
-    <header className='auction2-header'>
-      <div className='auction2-header-primary'>
+    <header className={b()}>
+      <div className={b('primary')}>
+
         { isAuctionPromo &&
-          <h4 className='auction2-sub-header'>
+          <h4 className={b('sub-header')}>
             Sale Preview
           </h4> }
 
-        <h1 className='auction2-title'>
+        <h1 className={b('title')}>
           {name}
         </h1>
 
-        <div className='auction2-callout'>
+        <div className={b('callout')}>
           {upcomingLabel}
 
           { showAddToCalendar &&
             <AddToCalendarView /> }
 
           { liveStartAt &&
-            <div className='auction2-callout-live-label'>
-              <span className='auction2-live-label'>
+            <div className={b('callout-live-label')}>
+              <span className={b('live-label')}>
                 Live auction
               </span>
               <span
-                className='auction2-live-tooltip help-tooltip'
+                className={b('live-tooltip').mix('help-tooltip')}
                 data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
                 data-anchor='top-left'
               />
@@ -46,14 +50,14 @@ function Header (props) {
 
         </div>
         <div
-          className='auction2-description'
+          className={b('description')}
           dangerouslySetInnerHTML={{
             __html: description
           }}
         />
       </div>
 
-      <div className='auction2-header-metadata'>
+      <div className={b('metadata')}>
         <Registration {...props} />
       </div>
     </header>

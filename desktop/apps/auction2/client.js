@@ -6,9 +6,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import auctionReducer from 'desktop/apps/auction2/reducers'
 import configureStore from 'desktop/apps/auction2/utils/configureStore'
+import { rehydrateClient } from 'desktop/components/react/utils/render_react_layout'
 
 // Rehydrate data from Server
-const bootstrapData = window.__BOOTSTRAP__
+const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
 const auctionModel = new Auction(bootstrapData.app.auction)
 const auctionArticles = new Articles(bootstrapData.app.articles)
 
