@@ -1,12 +1,12 @@
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import Banner from 'desktop/apps/auction2/components/page/Banner'
-import CommercialFilter from './filter'
+import ArtworkBrowser from './artwork_browser/ArtworkBrowser'
 import Footer from 'desktop/apps/auction2/components/page/Footer'
 import AuctionInfoContainer from 'desktop/apps/auction2/components/page/auction_info'
 import MyActiveBids from 'desktop/apps/auction2/components/page/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
-import WorksByFollowedArtists from 'desktop/apps/auction2/components/filter/WorksByFollowedArtists'
+import WorksByFollowedArtists from 'desktop/apps/auction2/components/artwork_browser/sidebar/WorksByFollowedArtists'
 import { connect } from 'react-redux'
 
 function Layout (props) {
@@ -39,7 +39,7 @@ function Layout (props) {
           <div className='auction2-main-page'>
             { showFollowedArtistsRail &&
               <WorksByFollowedArtists /> }
-            <CommercialFilter />
+            <ArtworkBrowser />
           </div> }
 
         {showFooter &&

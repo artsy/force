@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { get } from 'lodash'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 
-function AuctionListArtwork ({ isClosed, saleArtwork }) {
+function ListArtwork ({ isClosed, saleArtwork }) {
   const artwork = saleArtwork.artwork
   const artists = artwork.artists
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
@@ -46,7 +46,7 @@ function AuctionListArtwork ({ isClosed, saleArtwork }) {
   )
 }
 
-AuctionListArtwork.propTypes = {
+ListArtwork.propTypes = {
   isClosed: PropTypes.bool.isRequired,
   saleArtwork: PropTypes.object.isRequired
 }
@@ -59,4 +59,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(AuctionListArtwork)
+)(ListArtwork)

@@ -2,14 +2,14 @@ import 'babel-core/register'
 import 'coffee-script/register'
 
 import * as actions from 'desktop/apps/auction2/actions/filter'
-import ArtistFilter from 'desktop/apps/auction2/components/filter/ArtistFilter'
-import AuctionGridArtwork from 'desktop/apps/auction2/components/filter/AuctionGridArtwork'
-import AuctionListArtwork from 'desktop/apps/auction2/components/filter/AuctionListArtwork'
-import FilterSort from 'desktop/apps/auction2/components/filter/FilterSort'
-import MediumFilter from 'desktop/apps/auction2/components/filter/MediumFilter'
-import RangeSlider from 'desktop/apps/auction2/components/filter/RangeSlider'
+import ArtistFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/ArtistFilter'
+import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/GridArtwork'
+import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/ListArtwork'
+import FilterSort from 'desktop/apps/auction2/components/artwork_browser/header/FilterSort'
+import MediumFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/MediumFilter'
+import RangeSlider from 'desktop/apps/auction2/components/artwork_browser/sidebar/RangeSlider'
 import React from 'react'
-import Sidebar from 'desktop/apps/auction2/components/filter/Sidebar'
+import Sidebar from 'desktop/apps/auction2/components/filter/sidebar/Sidebar'
 import auctions from 'desktop/apps/auction2/reducers'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
@@ -49,7 +49,7 @@ describe('auction/components/filter/filter.test.js', () => {
 
     it('renders an auction grid artwork component', () => {
       const wrapper = shallow(
-        <AuctionGridArtwork store={initialStore} saleArtwork={saleArtwork} />
+        <GridArtwork store={initialStore} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.containEql('$100')
       wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
@@ -57,7 +57,7 @@ describe('auction/components/filter/filter.test.js', () => {
 
     it('renders an auction list artwork component', () => {
       const wrapper = shallow(
-        <AuctionListArtwork store={initialStore} saleArtwork={saleArtwork} />
+        <ListArtwork store={initialStore} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.containEql('$100')
       wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
@@ -66,7 +66,7 @@ describe('auction/components/filter/filter.test.js', () => {
     it('renders an auction grid artwork component without a bid status if the auction is closed', () => {
       const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
       const wrapper = shallow(
-        <AuctionGridArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
+        <GridArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.not.containEql('$100')
     })
@@ -74,7 +74,7 @@ describe('auction/components/filter/filter.test.js', () => {
     it('renders an auction list artwork component without a bid status if the auction is closed', () => {
       const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
       const wrapper = shallow(
-        <AuctionListArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
+        <ListArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
       )
       wrapper.render().html().should.not.containEql('$100')
     })

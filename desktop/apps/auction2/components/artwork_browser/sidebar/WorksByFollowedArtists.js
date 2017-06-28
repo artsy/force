@@ -1,6 +1,6 @@
-import AuctionGridArtwork from './AuctionGridArtwork'
-import ChevronLeft from '../../../../components/main_layout/public/icons/chevron-left.svg'
-import ChevronRight from '../../../../components/main_layout/public/icons/chevron-right.svg'
+import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/GridArtwork'
+import ChevronLeft from '../../../../../components/main_layout/public/icons/chevron-left.svg'
+import ChevronRight from '../../../../../components/main_layout/public/icons/chevron-right.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
@@ -53,7 +53,7 @@ function WorksByFollowedArtists (props) {
         <div className='auction2-works-by-followed-artists__artworks'>
           {
             displayedSaleArtworks.map((saleArtwork) => (
-              <AuctionGridArtwork key={saleArtwork.id} saleArtwork={saleArtwork} />
+              <GridArtwork key={saleArtwork.id} saleArtwork={saleArtwork} />
             ))
           }
         </div>

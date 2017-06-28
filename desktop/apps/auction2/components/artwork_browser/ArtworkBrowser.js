@@ -1,9 +1,9 @@
-import AuctionArtworks from './AuctionArtworks'
-import Header from './Header'
+import ArtworkDisplay from './display/ArtworkDisplay'
+import Header from './header/Header'
 import React from 'react'
-import Sidebar from './Sidebar'
+import Sidebar from './sidebar/Sidebar'
 
-export default function CommercialFilter () {
+export default function ArtworkBrowser () {
   return (
     <div className='auction2-commercial-filter'>
       <div className='auction2-commercial-filter__left cf-sidebar'>
@@ -11,7 +11,7 @@ export default function CommercialFilter () {
       </div>
       <div className='auction2-commercial-filter__right cf-right'>
         <Header />
-        <AuctionArtworks />
+        <ArtworkDisplay />
       </div>
     </div>
   )

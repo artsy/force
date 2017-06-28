@@ -1,13 +1,13 @@
-import AuctionGridArtwork from './AuctionGridArtwork'
-import AuctionListArtwork from './AuctionListArtwork'
+import GridArtwork from './artwork/GridArtwork'
+import ListArtwork from './artwork/ListArtwork'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 
-function AuctionArtworks ({ isFetchingArtworks, isListView, saleArtworks }) {
+function ArtworkDisplay ({ isFetchingArtworks, isListView, saleArtworks }) {
   const DisplayComponent = isListView
-    ? AuctionListArtwork
-    : AuctionGridArtwork
+    ? ListArtwork
+    : GridArtwork
 
   const listType = isListView ? '--list' : ''
 
@@ -26,7 +26,7 @@ function AuctionArtworks ({ isFetchingArtworks, isListView, saleArtworks }) {
   )
 }
 
-AuctionArtworks.propTypes = {
+ArtworkDisplay.propTypes = {
   isFetchingArtworks: PropTypes.bool.isRequired,
   isListView: PropTypes.bool.isRequired,
   saleArtworks: PropTypes.array.isRequired
@@ -43,4 +43,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(AuctionArtworks)
+)(ArtworkDisplay)
