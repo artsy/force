@@ -3,6 +3,21 @@
 
   +respond-mobile()
     display flex
+    align-items center
+
+    &_expandToFullScreen
+      align-items flex-start
+      background white
+      height 100%
+      left 0
+      padding-left 20px
+      padding-top: 80px
+      position absolute
+      top 0
+      z-index 1
+
+
+  // Left column
 
   &__primary
     float left
@@ -13,13 +28,25 @@
       float none
       width 100%
 
+
+  // Right Column
+
   &__metadata
     float left
     width 25%
 
-      +respond-mobile()
-        width inherit
+    +respond-mobile()
+      float none
+      width inherit
+      cursor pointer
+      padding-right: 6px;
 
+  &__info-button
+    +respond-mobile()
+      font-size 40px
+
+
+  // Main Content
 
   &__sub-header
     avant-garde-size('body', true)
@@ -110,9 +137,3 @@
 
     +respond-mobile()
       text-transform none
-
-  &__info-button
-    +respond-mobile()
-      font-size 40px
-      position relative
-      top 10px

@@ -1,75 +1,93 @@
 import AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component } from 'react'
 import Registration from './Registration'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function HeaderMobile (props) {
-  const {
-    description,
-    isAuctionPromo,
-    liveStartAt,
-    name,
-    showAddToCalendar,
-    upcomingLabel
-  } = props
+class HeaderMobile extends Component {
+  state = {
+    showInfo: false
+  }
 
-  const b = block('auction2-header')
+  handleInfoBtnClick = (event) => {
+    const showInfo = !this.state.showInfo
 
-  return (
-    <header className={b()}>
-      <div className={b('primary')}>
+    this.setState({
+      showInfo
+    })
+  }
 
-        { true /*liveStartAt*/ &&
-          <div className={b('callout-live-label')}>
-            <span className={b('live-label')}>
-              Live auction
-            </span>
+  render () {
+    const {
+      description,
+      isAuctionPromo,
+      liveStartAt,
+      name,
+      showAddToCalendar,
+      upcomingLabel
+    } = this.props
 
-            {/* <span
-              className={b('live-tooltip').mix('help-tooltip')}
-              data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
-              data-anchor='top-left'
-            /> */}
+    const {
+      showInfo
+    } = this.state
 
-          </div> }
+    const b = block('auction2-header')
 
-        <h1 className={b('title')}>
-          {name}
-        </h1>
+    return (
+      <header className={b({ expandToFullScreen: showInfo })}>
+        <div className={b('primary')}>
 
-        <div className={b('callout')}>
-          {upcomingLabel}
-{/*
-          { showAddToCalendar &&
-            <AddToCalendarView /> } */}
+          { true /*liveStartAt*/ &&
+            <div className={b('callout-live-label')}>
+              <span className={b('live-label')}>
+                Live auction
+              </span>
+
+              {/* <span
+                className={b('live-tooltip').mix('help-tooltip')}
+                data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
+                data-anchor='top-left'
+              /> */}
+
+            </div> }
+
+          <h1 className={b('title')}>
+            {name}
+          </h1>
+
+          <div className={b('callout')}>
+            {upcomingLabel}
+  {/*
+            { showAddToCalendar &&
+              <AddToCalendarView /> } */}
+
+          </div>
+
+          { isAuctionPromo &&
+            <h4 className={b('sub-header')}>
+              Sale Preview
+            </h4> }
+
+          {/* <div
+            className={b('description')}
+            dangerouslySetInnerHTML={{
+              __html: description
+            }}
+          /> */}
 
         </div>
 
-        { isAuctionPromo &&
-          <h4 className={b('sub-header')}>
-            Sale Preview
-          </h4> }
+        <div className={b('metadata')} onClick={this.handleInfoBtnClick}>
+          <span
+            className={b('info-button').mix('icon-info-filled')}
+          />
 
-        {/* <div
-          className={b('description')}
-          dangerouslySetInnerHTML={{
-            __html: description
-          }}
-        /> */}
-
-      </div>
-
-      <div className={b('metadata')}>
-        <span
-          className={b('info-button').mix('icon-info-filled')}
-        />
-
-        {/* <Registration {...props} /> */}
-      </div>
-    </header>
-  )
+          {/* <Registration {...props} /> */}
+        </div>
+      </header>
+    )
+  }
 }
 
 HeaderMobile.propTypes = {
