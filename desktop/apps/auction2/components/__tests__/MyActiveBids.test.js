@@ -1,7 +1,7 @@
 import Auction from 'desktop/models/auction.coffee'
 import React from 'react'
 import CurrentUser from 'desktop/models/current_user.coffee'
-import MyActiveBids from 'desktop/apps/auction2/components/page/MyActiveBids'
+import MyActiveBids from 'desktop/apps/auction2/components/layout/MyActiveBids'
 import auctions, { initialState } from 'desktop/apps/auction2/reducers'
 import { createStore } from 'redux'
 import { fabricate } from 'antigravity'

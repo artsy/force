@@ -8,20 +8,20 @@ import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/displa
 import FilterSort from 'desktop/apps/auction2/components/artwork_browser/header/FilterSort'
 import MediumFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/MediumFilter'
 import RangeSlider from 'desktop/apps/auction2/components/artwork_browser/sidebar/RangeSlider'
-import React from 'react'
-import Sidebar from 'desktop/apps/auction2/components/filter/sidebar/Sidebar'
+import Sidebar from 'desktop/apps/auction2/components/artwork_browser/sidebar/Sidebar'
 import auctions from 'desktop/apps/auction2/reducers'
+import React from 'react'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
 
-describe('auction/components/filter/filter.test.js', () => {
+describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
   let initialStore
 
   beforeEach(() => {
     initialStore = createStore(auctions)
   })
 
-  describe('<AuctionArtwork />', () => {
+  describe('<ArtworkDisplay />', () => {
     let saleArtwork
 
     beforeEach(() => {
