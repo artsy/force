@@ -6,12 +6,14 @@ import Auction from 'desktop/models/auction.coffee'
 import MeQuery from 'desktop/apps/auction2/utils/queries/me'
 import React from 'react'
 import SaleQuery from 'desktop/apps/auction2/utils/queries/sale'
-import auctionReducer, { initialState } from 'desktop/apps/auction2/reducers'
+import auctionReducer from 'desktop/apps/auction2/reducers'
 import configureStore from 'desktop/apps/auction2/utils/configureStore'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
 import u from 'updeep'
+import { initialState as appInitialState } from 'desktop/apps/auction2/reducers/app'
+import { initialState as auctionWorksInitialState } from 'desktop/apps/auction2/reducers/filter'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
 
@@ -38,7 +40,7 @@ export async function index (req, res, next) {
     const auctionModel = new Auction(sale)
 
     const store = configureStore(auctionReducer, {
-      app: {
+      app: u({
         articles: new Articles(articles),
         auction: auctionModel,
         footerItems: footerItems,
@@ -47,16 +49,16 @@ export async function index (req, res, next) {
         liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
           isLoggedIn: Boolean(me)
         }),
-        me,
-        sd: res.locals.sd
-      },
+        me
+      }, appInitialState),
+
       auctionArtworks: u({
         filterParams: {
           sale_id: saleId
         },
         isClosed: sale.is_closed,
         user: res.locals.sd.CURRENT_USER
-      }, initialState)
+      }, auctionWorksInitialState)
     })
 
     // FIXME: Uncomment

@@ -10,7 +10,8 @@ function Registration (props) {
     isQualifiedForBidding,
     isRegistrationEnded,
     numBidders,
-    registerUrl
+    registerUrl,
+    showInfoWindow
   } = props
 
   const b = block('auction2-registration')
@@ -63,27 +64,33 @@ function Registration (props) {
         }
       })()}
 
-      <div className={b('how-to-bid')}>
-        <strong>
-          Questions?
-        </strong>
-        <br />
-        <a href='/how-auctions-work'>
-          How to Bid on Artsy
-        </a>
-      </div>
+      {
+        !showInfoWindow &&
+          <div>
 
-      <div className={b('question')}>
-        <strong>
-           Contact us
-        </strong>
-        <br />
-        <a href='mailto:specialist@artsy.net'>
-          specialist@artsy.net
-        </a>
-        <br />
-        +1.646.712.8154
-      </div>
+            <div className={b('how-to-bid')}>
+              <strong>
+                Questions?
+              </strong>
+              <br />
+              <a href='/how-auctions-work'>
+                How to Bid on Artsy
+              </a>
+            </div>
+
+            <div className={b('question')}>
+              <strong>
+                 Contact us
+              </strong>
+              <br />
+              <a href='mailto:specialist@artsy.net'>
+                specialist@artsy.net
+              </a>
+              <br />
+              +1.646.712.8154
+            </div>
+          </div>
+      }
     </div>
   )
 }
@@ -93,11 +100,12 @@ Registration.propTypes = {
   isQualifiedForBidding: PropTypes.bool.isRequired,
   isRegistrationEnded: PropTypes.bool.isRequired,
   numBidders: PropTypes.number.isRequired,
-  registerUrl: PropTypes.string.isRequired
+  registerUrl: PropTypes.string.isRequired,
+  showInfoWindow: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
-  const { auction, me } = state.app
+  const { auction, me, showInfoWindow } = state.app
   const numBidders = get(me, 'bidders.length', 0)
   const isQualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding', true)
 
@@ -106,7 +114,8 @@ const mapStateToProps = (state) => {
     isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),
     numBidders,
-    registerUrl: auction.registerUrl()
+    registerUrl: auction.registerUrl(),
+    showInfoWindow
   }
 }
 
