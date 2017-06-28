@@ -5,7 +5,7 @@ import Registration from './Registration'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function Header (props) {
+function HeaderDesktop (props) {
   const {
     description,
     isAuctionPromo,
@@ -64,10 +64,10 @@ function Header (props) {
   )
 }
 
-Header.propTypes = {
+HeaderDesktop.propTypes = {
   description: PropTypes.string.isRequired,
   isAuctionPromo: PropTypes.bool,
-  liveStartAt: PropTypes.object,
+  liveStartAt: PropTypes.string,
   name: PropTypes.string.isRequired,
   showAddToCalendar: PropTypes.bool.isRequired,
   upcomingLabel: PropTypes.string.isRequired
@@ -88,4 +88,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(Header)
+)(HeaderDesktop)

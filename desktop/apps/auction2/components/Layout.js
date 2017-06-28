@@ -2,7 +2,7 @@ import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import Banner from 'desktop/apps/auction2/components/page/Banner'
 import CommercialFilter from './filter'
 import Footer from 'desktop/apps/auction2/components/page/Footer'
-import Header from 'desktop/apps/auction2/components/page/header/Header'
+import HeaderContainer from 'desktop/apps/auction2/components/page/header'
 import MyActiveBids from 'desktop/apps/auction2/components/page/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -24,7 +24,7 @@ function Layout (props) {
       <Banner />
 
       <div className='main-layout-container responsive-layout-container'>
-        <Header />
+        <HeaderContainer />
 
         { showAssociatedAuctions &&
           <AuctionBlock

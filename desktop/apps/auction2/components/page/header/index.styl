@@ -1,14 +1,25 @@
 .auction2-header
   clearfix()
 
+  +respond-mobile()
+    display flex
+
   &__primary
     float left
     width 75%
     padding-right 30px
 
+    +respond-mobile()
+      float none
+      width 100%
+
   &__metadata
     float left
     width 25%
+
+      +respond-mobile()
+        width inherit
+
 
   &__sub-header
     avant-garde-size('body', true)
@@ -16,6 +27,9 @@
   &__title
     padding-right 30px
     garamond-size('l-headline')
+
+    +respond-mobile()
+      garamond-size('l-body')
 
   &__description
     margin 30px 0
@@ -40,24 +54,40 @@
       block-margins(10px)
 
   &__callout
-    padding 15px 0 12px 0
-    margin 20px 0
-    position relative
     border-bottom 1px solid gray-lighter-color
     border-top 1px solid gray-lighter-color
     garamond-size('l-body')
+    margin 20px 0
+    padding 15px 0 12px 0
+    position relative
 
     .add-to-calendar
       margin-left 30px
+
+    +respond-mobile()
+      border-bottom 0
+      border-top 0
+      garamond-size('s-body')
+      margin 0
+      padding 0
 
   &__callout-live-label
     position absolute
     right 0
     top 15px
 
+    +respond-mobile()
+      avant-garde-size('s-headline')
+      position relative
+      top -5px
+
   &__live-label
     avant-garde-size('body')
     letter-spacing 3px
+
+    +respond-mobile()
+      avant-garde-size('s-headline')
+
 
   &__live-tooltip
     margin-left 10px
@@ -77,3 +107,12 @@
       width 20px
       height @width
       line-height @width - 1px
+
+    +respond-mobile()
+      text-transform none
+
+  &__info-button
+    +respond-mobile()
+      font-size 40px
+      position relative
+      top 10px
