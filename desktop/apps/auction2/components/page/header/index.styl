@@ -14,28 +14,28 @@
       padding-top: 80px
       position absolute
       top 0
-      z-index 970 // To overwrite top mobile nav ¯\_(ツ)_/¯
+      z-index 970 // Index required to overwrite top mobile nav ¯\_(ツ)_/¯
 
     &__info-window-controls
       align-items center
       display flex
       justify-content space-between
+      left 0
+      overlapping-border()
+      padding-bottom 6px
+      padding-left 20px
+      padding-top 10px
       position absolute
       top -1px
       width 100%
-      left 0
-      padding-left 20px
-      padding-top 10px
-      padding-bottom 6px
-      overlapping-border()
 
     &__info-window-title
 
     &__info-window-close-button
-      top: -2px
+      cursor pointer
       font-size 20px
       padding-right 15px
-      cursor pointer
+      top: -2px
 
       .icon-close
         &::before
@@ -48,13 +48,13 @@
 
   &__primary
     float left
-    width 75%
     padding-right 30px
+    width 75%
 
     +respond-mobile()
       float none
-      width 100%
       padding-right 20px
+      width 100%
 
 
   // Right Column
@@ -64,12 +64,12 @@
     width 25%
 
     +respond-mobile()
-      float none
-      width inherit
       cursor pointer
+      float none
       padding-right 6px
       position: absolute
       right 0
+      width inherit
 
       &_expandToFullScreen
         display none
@@ -85,15 +85,15 @@
     avant-garde-size('body', true)
 
   &__title
-    padding-right 30px
     garamond-size('l-headline')
+    padding-right 30px
 
     +respond-mobile()
       garamond-size('l-body')
 
   &__description
-    margin 30px 0
     garamond-size('l-body')
+    margin 30px 0
     > p
       block-margins(15px)
     a
@@ -154,15 +154,15 @@
 
 
   &__live-tooltip
-    margin-left 10px
     garamond-size('s-body')
-    top -3px
+    margin-left 10px
     margin-left 14px
+    top -3px
 
     &:hover::before
-      color white
       background gray-darker-color
       border 0
+      color white
 
     &::before
       background transparent

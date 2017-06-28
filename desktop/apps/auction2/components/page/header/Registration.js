@@ -65,7 +65,7 @@ function Registration (props) {
       })()}
 
       {
-        !showInfoWindow &&
+        !showInfoWindow && // Mobile only
           <div>
 
             <div className={b('how-to-bid')}>

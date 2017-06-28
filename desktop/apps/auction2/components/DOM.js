@@ -20,6 +20,9 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount () {
+    const FastClick = require('fastclick')
+    FastClick(document.body)
+
     this.$ = require('jquery')
     this.addEventListeners()
     this.maybeShowRegistration()

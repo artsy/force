@@ -75,7 +75,7 @@ function HeaderMobile (props) {
             />
             <div>
               <div className='chevron-nav-list'>
-                <a href='#' className=''>
+                <a href='/how-auctions-work' className=''>
                   Auctions FAQ
                 </a>
                 <a href='#' className=''>
