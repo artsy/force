@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export default function BidStatus ({ saleArtwork }) {
+export default function BidStatus ({ artworkItem }) {
   const {
     artwork,
     counts = {},
     current_bid
-  } = saleArtwork
+  } = artworkItem
 
   const {
     bidder_positions
@@ -41,5 +41,5 @@ export default function BidStatus ({ saleArtwork }) {
 }
 
 BidStatus.propTypes = {
-  saleArtwork: PropTypes.object.isRequired
+  artworkItem: PropTypes.object.isRequired
 }

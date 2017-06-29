@@ -1,3 +1,4 @@
+import Grid from 'desktop/components/react/grid/Grid'
 import GridArtwork from './artwork/GridArtwork'
 import ListArtwork from './artwork/ListArtwork'
 import PropTypes from 'prop-types'
@@ -11,19 +12,22 @@ function ArtworkDisplay ({ isFetchingArtworks, isListView, saleArtworks }) {
 
   const listType = isListView ? '--list' : ''
 
-  console.log(saleArtworks);
+  const DC = (props) =>
+    <div>
+      <img
+        src={props.artwork.artwork.images[0].image_url}
+        style={{
+          width: '100%'
+        }}
+      />
+    </div>
 
   return (
-    <div className={`auction2-page-artworks${listType}`}>
-      {
-        saleArtworks.map((saleArtwork) => (
-          <DisplayComponent
-            key={saleArtwork.id}
-            saleArtwork={saleArtwork}
-          />
-        ))
-      }
-      { isFetchingArtworks && <div className='loading-spinner' /> }
+    <div>
+      <Grid
+        DisplayComponent={DC}
+        artworks={saleArtworks}
+      />
     </div>
   )
 }
@@ -46,3 +50,15 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(ArtworkDisplay)
+
+// {/* <div className={`auction2-page-artworks${listType}`}>
+//   {
+//     saleArtworks.map((saleArtwork) => (
+//       <DisplayComponent
+//         key={saleArtwork.id}
+//         artwork={saleArtwork}
+//       />
+//     ))
+//   }
+//   { isFetchingArtworks && <div className='loading-spinner' /> }
+// </div> */}

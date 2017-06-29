@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { get } from 'lodash'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 
-function GridArtwork ({ isClosed, saleArtwork }) {
-  const artwork = saleArtwork.artwork
+function GridArtwork (props) {
+  const artwork = props.artwork.artwork
   const artists = artwork.artists
 
   const artistDisplay = artists && artists.length > 0
@@ -29,11 +29,11 @@ function GridArtwork ({ isClosed, saleArtwork }) {
       <div className='auction2-page-grid-artwork__metadata'>
         <div className='auction2-page-grid-artwork__lot-information'>
           <div className='auction2-page-grid-artwork__lot-number'>
-            Lot {saleArtwork.lot_label}
+            Lot {props.artwork.lot_label}
           </div>
-          { !isClosed &&
+          { !props.isClosed &&
             <BidStatus
-              saleArtwork={saleArtwork}
+              artworkItem={props.artwork}
             /> }
         </div>
         <div className='auction2-page-grid-artwork__artists'>
@@ -52,7 +52,7 @@ function GridArtwork ({ isClosed, saleArtwork }) {
 
 GridArtwork.propTypes = {
   isClosed: PropTypes.bool.isRequired,
-  saleArtwork: PropTypes.object.isRequired
+  artwork: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {

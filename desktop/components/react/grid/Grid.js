@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import get from 'lodash.get'
 
 /**
  * Temporary adaptation from Reaction Force:
@@ -7,14 +8,14 @@ import React, { Component } from 'react'
  */
 export default class Grid extends Component {
   static propTypes = {
-    ArtworkBrick: PropTypes.func.isRequired,
+    DisplayComponent: PropTypes.func.isRequired,
     artworks: PropTypes.array,
     columns: PropTypes.number,
     columnMargin: PropTypes.number,
     rowMargin: PropTypes.number
   }
 
-  static propTypes = {
+  static defaultProps = {
     artworks: [],
     columns: 3,
     columnMargin: 10,
@@ -33,7 +34,7 @@ export default class Grid extends Component {
     }
 
     artworks.forEach(artwork => {
-      if (artwork.image) {
+      if (artwork.artwork.images) {
         // Find section with lowest *inverted* aspect ratio sum, which is the
         // shortest column.
         let lowestRatioSum = Number.MAX_VALUE
@@ -52,8 +53,10 @@ export default class Grid extends Component {
           const section = grid[sectionIndex]
           section.push(artwork)
 
+          const artworkImage = get(artwork, 'artwork.images.0')
+
           // Keep track of total section aspect ratio
-          const aspectRatio = artwork.image.aspect_ratio || 1 // Ensure we never divide by null/0
+          const aspectRatio = artworkImage.aspect_ratio || 1 // Ensure we never divide by null/0
 
           // Invert the aspect ratio so that a lower value means a shorter section.
           gridRatioSums[sectionIndex] += 1 / aspectRatio
@@ -66,6 +69,7 @@ export default class Grid extends Component {
 
   renderItems () {
     const {
+      DisplayComponent,
       artworks,
       columns,
       columnMargin,
@@ -81,10 +85,8 @@ export default class Grid extends Component {
       for (let j = 0; j < grid[i].length; j++) {
         const artwork = grid[i][j]
 
-        const Artwork = (props) => <div {...props}>Artwork!</div>
-
         artworkComponents.push(
-          <Artwork
+          <DisplayComponent
             artwork={artwork}
             key={'artwork-' + j + '-' + artwork.__id}
           />
@@ -95,6 +97,7 @@ export default class Grid extends Component {
         if (j < grid[i].length - 1) {
           artworkComponents.push(
             <div
+              className='grid-item'
               style={{
                 height: columnMargin
               }}
@@ -123,11 +126,13 @@ export default class Grid extends Component {
   }
 
   render () {
-    const { ArtworkBrick, artworks, columns } = this.props
-
     return (
-      <div>
-        hey!
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+      }}>
+        {this.renderItems()}
       </div>
     )
   }

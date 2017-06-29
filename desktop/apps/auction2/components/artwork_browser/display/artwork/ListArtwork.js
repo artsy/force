@@ -6,15 +6,15 @@ import { connect } from 'react-redux'
 import { get } from 'lodash'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 
-function ListArtwork ({ isClosed, saleArtwork }) {
-  const artwork = saleArtwork.artwork
+function ListArtwork (props) {
+  const artwork = props.artwork.artwork
   const artists = artwork.artists
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
   const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')
 
   const auctionArtworkClasses = classNames(
     'auction2-page-list-artwork',
-    { 'auction2-open': isClosed }
+    { 'auction2-open': props.isClosed }
   )
 
   return (
@@ -36,11 +36,11 @@ function ListArtwork ({ isClosed, saleArtwork }) {
         />
       </div>
       <div className='auction2-page-list-artwork__lot-number'>
-        Lot {saleArtwork.lot_label}
+        Lot {artwork.lot_label}
       </div>
-      { !isClosed &&
+      { !props.isClosed &&
         <BidStatus
-          saleArtwork={saleArtwork}
+          artworkItem={props.artwork}
         /> }
     </a>
   )
@@ -48,7 +48,7 @@ function ListArtwork ({ isClosed, saleArtwork }) {
 
 ListArtwork.propTypes = {
   isClosed: PropTypes.bool.isRequired,
-  saleArtwork: PropTypes.object.isRequired
+  artwork: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
