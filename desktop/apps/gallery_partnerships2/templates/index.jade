@@ -13,7 +13,7 @@ block body
         i.icon-logotype
       .gallery-partnerships2__header__content-container
         .mb3.garamond-xxl-headline= header.headline
-        a.gallery-partnerships2-white-signup-button( href="#" ) Learn More
+        a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
     .gallery-partnerships2__intro
       .responsive-layout-container
@@ -42,7 +42,7 @@ block body
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
                   .garamond-l-headline= sections[1].title
                   .mt2.mb3.garamond-l-body= sections[1].content
-                  a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
     hr
 
@@ -60,7 +60,7 @@ block body
                        img.mr2(src=check_mark)
                      div= stat
                .text-center-on-mobile
-                a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+                a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
             .col-xs-12.col-lg-6( style="position: relative;" )
               img( src="http://files.artsy.net/images/macbook1x.png" )
@@ -83,7 +83,7 @@ block body
               .gallery-partnerships2__chat__content-container
                 div= sections[3].title
                 .garamond-l-body.my2= sections[3].content
-                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
     hr
 
@@ -101,7 +101,7 @@ block body
                         img.mr2(src=check_mark)
                       div= item
                 .text-center-on-mobile
-                  a.gallery-partnerships2-black-signup-button( href="#" ) Learn More
+                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
             .col-xs-12.col-lg-6
               img.gallery-partnerships2__folio__image(src=sections[4].image)
 
@@ -228,7 +228,7 @@ block body
 
     hr
 
-    .gallery-partnerships2__form
+    #gallery-partnership2-form.gallery-partnerships2__form
       .partnerships-section-header.apply
         .gallery-partnerships-apply-form
           header.gallery-partnerships2__form__header.mb5

@@ -23,3 +23,7 @@ module.exports.init = ->
     $('.gallery-partnerships2__connect-with-collectors__sub_image').css(display: 'none') if direction == 'down'
   ),
     offset: '-50%'
+
+  $('.js-gallery-partnerships2-button').click (event) ->
+    event.preventDefault()
+    $('html, body').animate({ scrollTop: $('#gallery-partnership2-form').offset().top }, 500)
