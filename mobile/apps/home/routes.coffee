@@ -3,7 +3,7 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 query = """
   query {
     home_page {
-      hero_units(platform: MOBILE) {
+      hero_units(platform: MARTSY) {
         mode
         heading
         title
