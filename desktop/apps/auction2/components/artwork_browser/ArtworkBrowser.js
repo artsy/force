@@ -16,7 +16,7 @@ function ArtworkBrowser ({ isMobile }) {
             <Header />
             <ArtworkDisplay />
           </div>
-        : <div>
+        : <div className={b('container')}>
             <div className={b('left').mix('cf-sidebar')}>
               <Sidebar />
             </div>

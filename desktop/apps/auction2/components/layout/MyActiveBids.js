@@ -1,3 +1,4 @@
+import ArtworkBlock from 'desktop/apps/auction2/components/shared/ArtworkBlock'
 import BidStatus from 'desktop/components/bid_status/react'
 import MeQuery from 'desktop/apps/auction2/utils/queries/me'
 import PropTypes from 'prop-types'
@@ -7,11 +8,9 @@ import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
 import { connect } from 'react-redux'
 import { data as sd } from 'sharify'
-import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
 class MyActiveBids extends Component {
   static propTypes = {
-    isMobile: PropTypes.bool.isRequired,
     lotStandings: PropTypes.array,
     saleId: PropTypes.string.isRequired,
     user: PropTypes.object
@@ -51,7 +50,6 @@ class MyActiveBids extends Component {
   }
 
   render () {
-    const { isMobile } = this.props
     const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
 
     const b = block('auction2-my-active-bids')
@@ -65,88 +63,13 @@ class MyActiveBids extends Component {
         { lotStandings
           .filter(bid => bid.sale_artwork)
           .map((bid, key) => {
-            const {
-              sale_artwork: {
-                artwork,
-                counts,
-                id,
-                highest_bid,
-                lot_label,
-                sale,
-                sale_id
-              }
-            } = bid
-
-            const bidCount = counts.bidder_positions
-
-            const liveAuctionUrl = getLiveAuctionUrl(sale_id, {
-              isLoggedIn: Boolean(this.props.user)
-            })
-
             return (
-              <div
-                className={b('active-bid')}
-                data-artwork_id={id}
+              <ArtworkBlock
+                {...bid.sale_artwork}
+                BidStatus={BidStatus}
+                bid={bid}
                 key={key}
-              >
-                <div className={b('artwork-container')}>
-                  <a href={artwork.href}>
-                    <img className={b('img')} src={artwork.image.url} />
-                  </a>
-                </div>
-
-                <div className={b('artwork')}>
-                  { isMobile &&
-                    <BidStatus
-                      bid={bid}
-                      saleArtwork={bid.sale_artwork}
-                    /> }
-
-                  <div className={b('lot-number')}>
-                    Lot {lot_label}
-                  </div>
-                  <h3>
-                    {artwork.artist.name}
-                  </h3>
-                  <div className={b('title')}>
-                    <em>
-                      {artwork.title}, &nbsp;
-                    </em>
-                    {artwork.date}
-                  </div>
-
-                  { isMobile &&
-                    <div className={b('current-and-bids')}>
-                      {highest_bid.display} {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
-                    </div> }
-                </div>
-
-                <div className={b('current-bid')}>
-                  <b>Current Bid: </b> {highest_bid.display}
-                </div>
-
-                <div className={b('bids-num')}>
-                  {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
-                </div>
-
-                { !isMobile &&
-                  <div>
-                    { sale.is_live_open
-                      ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
-                          Bid Live
-                        </a>
-                      : <div className={b('bid-status-cell')}>
-                        <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
-                      </div>
-                      }
-
-                    {!sale.is_live_open &&
-                      <a href={artwork.href} className={'avant-garde-button-white ' + b('bid-button')}>
-                        Bid
-                      </a> }
-                  </div>
-                }
-              </div>
+              />
             )
           })}
       </div>
@@ -158,7 +81,6 @@ const mapStateToProps = (state) => {
   const { app } = state
 
   return {
-    isMobile: app.isMobile,
     lotStandings: app.me.lot_standings,
     saleId: app.auction.get('id'),
     user: app.user
