@@ -120,6 +120,15 @@ background-size-cover()
   color white
   position relative
 
+  @media screen and (max-width: 768px)
+    height 460px
+    background-position 14%
+
+  &__headline
+    garamond-size('xxl-headline')
+    @media screen and (max-width: 768px)
+      garamond-size('l-headline')
+
   .icon-logotype
     color white
     font-size 35px
@@ -132,16 +141,38 @@ background-size-cover()
     margin 0 auto
 
 .gallery-partnerships2__intro
-  padding 100px 0
+  padding 100px 0 50px
   text-align center
+  @media screen and (max-width: 768px)
+    padding 50px 0 0
+
+  &__headline
+    garamond-size('s-headline')
+    @media screen and (max-width: 768px)
+      garamond-size('l-body')
+
+  &__subtitle
+    garamond-size('l-body')
+    @media screen and (max-width: 768px)
+      garamond-size('s-body')
 
 .gallery-partnerships2__gallery-logos
   min-height 130px
+  @media screen and (max-width: 768px)
+    flex-direction column
+    padding 15px 25px
   img
-    transform: scale(0.5)
+    zoom 50%
 
 .gallery-partnerships2__connect-with-collectors
   min-height 610px
+  @media screen and (max-width: 768px)
+    padding-top 40px
+
+  &__headline
+    garamond-size('l-headline')
+    @media screen and (max-width: 768px)
+      garamond-size('headline')
 
   &__notification-container
     position relative
@@ -149,6 +180,11 @@ background-size-cover()
   &__content_container
     &__wrapper
       width 450px
+
+  @media screen and (max-width: 768px)
+    &__image
+      width 100%
+      padding 50px 30px 0
 
   &__sub_image
     position absolute
@@ -160,23 +196,56 @@ background-size-cover()
     width 482px
     height 146px
     display none
+    @media screen and (max-width: 768px)
+      width 100%
+      height inherit
 
 .gallery-partnerships2__stats
   padding 100px 0
   overflow-x hidden
+  @media screen and (max-width: 768px)
+    padding 50px 0
+
+  &__headline
+    garamond-size('l-headline')
+    @media screen and (max-width: 768px)
+      garamond-size('headline')
+      padding-bottom 20px
 
   &__inner-container
     width 450px
 
+  &__button
+    padding 30px 0 40px
+
+  &__frame
+    @media screen and (max-width: 768px)
+      width 100%
+
   &__slideshow
-    width: 678px;
-    height: 416px;
-    position: absolute;
-    top: 40px;
-    left: 112px;
+    width 678px
+    height 416px
+    position absolute
+    top 40px
+    left 112px
     img
       width 667px
       height 416px
+
+    @media screen and (max-width: 768px)
+      width 76.2%
+      height 76%
+      top 7.6%
+      left 12%
+
+      .mgr-cells
+      .flickity-viewport
+        height 100%
+
+      .mgr-cell
+      img
+        width 100%
+        height 100%
 
 .gallery-partnerships2__chat
   min-height 510px

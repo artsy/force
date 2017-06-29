@@ -12,7 +12,7 @@ block body
       a(href="/")
         i.icon-logotype
       .gallery-partnerships2__header__content-container
-        .mb3.garamond-xxl-headline= header.headline
+        .gallery-partnerships2__header__headline.mb3= header.headline
         a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
     .gallery-partnerships2__intro
@@ -20,14 +20,18 @@ block body
         .main-layout-container
           .row
             for item in sections[0].intro
-              .col-xs-12.col-lg-4
+              .col-xs-12.col-lg-4.mb5
                 img( src=item.image )
-                .mt3.mb2.garamond-s-headline= item.title
-                .garamond-l-body= item.subtitle
+                .gallery-partnerships2__intro__headline.mt3.mb2.garamond-s-headline= item.title
+                .gallery-partnerships2__intro__subtitle.garamond-l-body= item.subtitle
 
-    .gallery-partnerships2__gallery-logos.bg-gray.flex.justify-center.items-center
-      for logo in sections[0].active_partner_images
-        img(src=logo)
+    .gallery-partnerships2__gallery-logos.bg-gray.flex
+      .responsive-layout-container.flex.flex-auto
+        .main-layout-container.flex.flex-auto
+          .row.flex-auto
+            for image in sections[0].active_partner_images
+              .flex-auto.flex.justify-center.items-center
+                img(src=image)
 
     .gallery-partnerships2__connect-with-collectors.flex
       .responsive-layout-container.flex.flex-auto
@@ -35,12 +39,12 @@ block body
           .row.flex-auto.reverse-on-mobile
             .col-xs-12.col-lg-6.flex.gallery-partnerships2__connect-with-collectors__notification-container
               .flex.flex-auto.justify-center
-                img.self-end(src=sections[1].background_image)
+                img.gallery-partnerships2__connect-with-collectors__image.self-end(src=sections[1].background_image)
               img.gallery-partnerships2__connect-with-collectors__sub_image(src=sections[1].notification_image)
             .col-xs-12.col-lg-6.flex.text-center-on-mobile
               .gallery-partnerships2__connect-with-collectors__content_container.flex.flex-auto.justify-center.items-center
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
-                  .garamond-l-headline= sections[1].title
+                  .gallery-partnerships2__connect-with-collectors__headline= sections[1].title
                   .mt2.mb3.garamond-l-body= sections[1].content
                   a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
@@ -52,18 +56,18 @@ block body
           .row
             .col-xs-12.col-lg-6.flex.items-center.justify-center
              .gallery-partnerships2__stats__inner-container
-               .mb2.text-center-on-mobile.garamond-l-headline= sections[2].title
+               .mb2.text-center-on-mobile.gallery-partnerships2__stats__headline= sections[2].title
                .garamond-l-body
                  for stat in sections[2].stats
                    .mb2.flex
                      div
                        img.mr2(src=check_mark)
                      div= stat
-               .text-center-on-mobile
-                a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+               .text-center-on-mobile.gallery-partnerships2__stats__button
+                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
 
             .col-xs-12.col-lg-6( style="position: relative;" )
-              img( src="http://files.artsy.net/images/macbook1x.png" )
+              img.gallery-partnerships2__stats__frame( src="http://files.artsy.net/images/macbook1x.png" )
               section.js-partner-stats-slideshow.gallery-partnerships2__stats__slideshow
                 .mgr-cells.js-mgr-cells
                   for image in sections[2].slideshow
