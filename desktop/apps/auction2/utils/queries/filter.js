@@ -43,6 +43,7 @@ export const filterQuery = `
           display
         }
         artwork {
+          __id
           _id
           id
           date

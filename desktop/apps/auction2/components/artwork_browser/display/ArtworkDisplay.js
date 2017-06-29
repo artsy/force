@@ -15,18 +15,20 @@ function ArtworkDisplay ({ isFetchingArtworks, isListView, saleArtworks }) {
   const DC = (props) =>
     <div>
       <img
-        src={props.artwork.artwork.images[0].image_url}
+        src={props.artwork.images[0].image_url}
         style={{
           width: '100%'
         }}
       />
     </div>
 
+  const artworks = saleArtworks.map(saleArtwork => saleArtwork.artwork)
+
   return (
     <div>
       <Grid
         DisplayComponent={DC}
-        artworks={saleArtworks}
+        artworks={artworks}
       />
     </div>
   )
