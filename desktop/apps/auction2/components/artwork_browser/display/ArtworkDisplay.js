@@ -1,8 +1,9 @@
-import Grid from 'desktop/components/react/grid/Grid'
+import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import GridArtwork from './artwork/GridArtwork'
 import ListArtwork from './artwork/ListArtwork'
 import PropTypes from 'prop-types'
 import React from 'react'
+import get from 'lodash.get'
 import { connect } from 'react-redux'
 
 function ArtworkDisplay ({ isFetchingArtworks, isListView, saleArtworks }) {
@@ -11,24 +12,27 @@ function ArtworkDisplay ({ isFetchingArtworks, isListView, saleArtworks }) {
     : GridArtwork
 
   const listType = isListView ? '--list' : ''
-
-  const DC = (props) =>
-    <div>
-      <img
-        src={props.artwork.images[0].image_url}
-        style={{
-          width: '100%'
-        }}
-      />
-    </div>
-
   const artworks = saleArtworks.map(saleArtwork => saleArtwork.artwork)
 
   return (
     <div>
-      <Grid
-        DisplayComponent={DC}
-        artworks={artworks}
+      <MasonryGrid
+        items={artworks}
+        getAspectRatio={(artwork) => {
+          return get(artwork, 'images.0.aspect_ratio', false)
+        }}
+        getDisplayComponent={(artwork) => {
+          const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')
+
+          return (
+            <img
+              src={artworkImage}
+              style={{
+                width: '100%'
+              }}
+            />
+          )
+        }}
       />
     </div>
   )
