@@ -8,7 +8,6 @@ mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
 
 require '../analytics/main_layout.js'
-require '../analytics/before_ready.js'
 
 $ -> analytics.ready ->
 
