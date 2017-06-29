@@ -58,21 +58,22 @@ function ArtworkBlock (props) {
           {artwork.date}
         </div>
 
-        { isMobile &&
+        { isMobile && highest_bid &&
           <div className={b('current-and-bids')}>
             {highest_bid.display} {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
           </div> }
       </div>
 
-      <div className={b('current-bid')}>
-        <b>Current Bid: </b> {highest_bid.display}
-      </div>
+      { highest_bid &&
+        <div className={b('current-bid')}>
+          <b>Current Bid: </b> {highest_bid.display}
+        </div> }
 
       <div className={b('bids-num')}>
         {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
       </div>
 
-      { !isMobile &&
+      { !isMobile && sale &&
         <div>
           { sale.is_live_open
             ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
@@ -100,9 +101,9 @@ ArtworkBlock.propTypes = {
   counts: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  highest_bid: PropTypes.object.isRequired,
+  highest_bid: PropTypes.object,
   lot_label: PropTypes.string.isRequired,
-  sale: PropTypes.object.isRequired,
+  sale: PropTypes.object,
   sale_id: PropTypes.string.isRequired,
   user: PropTypes.object
 }

@@ -50,6 +50,9 @@ export const filterQuery = `
           href
           title
           is_sold
+          image {
+            url
+          }
           images {
             aspect_ratio,
             id
@@ -58,6 +61,10 @@ export const filterQuery = `
             placeholder: resized(width: 30, height: 30, version: "tall") {
               image_url: url
             }
+          }
+
+          artist {
+            name
           }
           artists {
             id

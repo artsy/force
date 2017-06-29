@@ -1,3 +1,4 @@
+import ArtworkBlock from 'desktop/apps/auction2/components/shared/ArtworkBlock'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import GridArtworkDesktop from './artwork/GridArtworkDesktop'
 import ListArtworkDesktop from './artwork/ListArtworkDesktop'
@@ -10,20 +11,23 @@ function ArtworkDisplay ({
   isFetchingArtworks,
   isListView,
   isMobile,
-  saleArtworks
+  saleArtworks,
+  saleId
 }) {
   const listType = isListView ? '--list' : ''
 
   return (
     <div className={`auction2-page-artworks${listType}`}>
       {(() => {
-        if (isMobile) {
+        if (isMobile) { // eslint-disable-line
+
+          // ListView
           if (isListView) {
-            return saleArtworks.map((saleArtwork) => {
+            return saleArtworks.map((saleArtwork, key) => {
               return (
-                <ListArtworkDesktop
-                  key={saleArtwork.id}
-                  artwork={saleArtwork}
+                <ArtworkBlock
+                  {...{ ...saleArtwork, sale_id: saleId }}
+                  key={key}
                 />
               )
             })
@@ -47,6 +51,7 @@ function ArtworkDisplay ({
               />
             )
           }
+
           // Desktop
         } else {
           const DisplayComponent = isListView
@@ -76,7 +81,8 @@ ArtworkDisplay.propTypes = {
   isFetchingArtworks: PropTypes.bool.isRequired,
   isListView: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  saleArtworks: PropTypes.array.isRequired
+  saleArtworks: PropTypes.array.isRequired,
+  saleId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -85,7 +91,8 @@ const mapStateToProps = (state) => {
     isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
     isListView: state.auctionArtworks.isListView,
     isMobile: state.app.isMobile,
-    saleArtworks: state.auctionArtworks.saleArtworks
+    saleArtworks: state.auctionArtworks.saleArtworks,
+    saleId: state.app.auction.get('id')
   }
 }
 
