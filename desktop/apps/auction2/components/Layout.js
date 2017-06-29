@@ -59,7 +59,7 @@ Layout.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { articles, auction, me } = state.app
+  const { articles, auction, me, isMobile } = state.app
 
   const {
     associated_sale,
@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
 
   const showAssociatedAuctions = Boolean(associated_sale)
   const showFilter = Boolean(eligible_sale_artworks_count > 0)
-  const showFollowedArtistsRail = Boolean(state.auctionArtworks.showFollowedArtistsRail)
+  const showFollowedArtistsRail = Boolean(!isMobile && state.auctionArtworks.showFollowedArtistsRail)
   const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
   const showFooter = Boolean(articles.length || !showFilter)
 

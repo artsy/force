@@ -11,6 +11,8 @@ function ArtworkDisplay ({ isFetchingArtworks, isListView, saleArtworks }) {
 
   const listType = isListView ? '--list' : ''
 
+  console.log(saleArtworks);
+
   return (
     <div className={`auction2-page-artworks${listType}`}>
       {
