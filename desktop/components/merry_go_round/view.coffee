@@ -69,6 +69,8 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     else @$el.addClass 'no-scroll'
 
   render: =>
+    return unless @template
+
     @$el.html @template
       isTouch: isTouchDevice()
       length: @flickity.cells.length

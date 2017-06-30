@@ -50,6 +50,7 @@ app.use(require('./apps/rss'))
 app.use(require('./apps/dev'))
 app.use(require('./apps/article'))
 app.use(require('./apps/artsy_primer'))
+app.use(require('./apps/gallery_partnerships2'))
 
 // Non-profile dynamic vanity url apps
 app.use(require('./apps/galleries_institutions'))
