@@ -221,6 +221,8 @@ background-size-cover()
   &__frame
     @media screen and (max-width: 768px)
       width 100%
+      z-index 100000
+      position relative
 
   &__slideshow
     width 678px
@@ -233,10 +235,10 @@ background-size-cover()
       height 416px
 
     @media screen and (max-width: 768px)
-      width 76.2%
-      height 76%
-      top 7.6%
-      left 12%
+      width 76.5%
+      height 76.1%
+      top 7.4%
+      left 11.8%
 
       .mgr-cells
       .flickity-viewport
@@ -246,6 +248,7 @@ background-size-cover()
       img
         width 100%
         height 100%
+        z-index 1
 
 .gallery-partnerships2__chat
   min-height 510px
