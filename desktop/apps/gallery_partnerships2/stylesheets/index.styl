@@ -291,25 +291,28 @@ background-size-cover()
       margin-bottom 30px
 
   &__image
-    @media screen and (max-width: 960px)
-      width 100%
+    width 100%
     @media screen and (max-width: 768px)
-      margin 30px auto 0
-      width 333px
-      height 255px
+      margin 45px auto 0
       display block
 
 .gallery-partnerships2__testimonials
-  height 420px
+  padding 40px 0
+  height inherit
   garamond-size('l-headline')
   @media screen and (max-width: 768px)
-    height 505px
     garamond-size('headline')
 
   &__slideshow
     width 695px
     nav
       margin 0 auto
+
+    @media screen and (max-width: 768px)
+      padding 30px 0
+      .flickity-slider
+        display flex
+        align-items center
 
   &__slideshow__item
     width 695px
@@ -318,6 +321,9 @@ background-size-cover()
     @media screen and (max-width: 768px)
       width 100%
       padding 0 20px
+      &__author
+        avant-garde-size('l-headline', true)
+        text-transform inherit
 
   .mgr-dot
     color #E5E5E5
@@ -332,6 +338,9 @@ background-size-cover()
 
   &__title
     text-align center
+    garamond-size('l-headline')
+    @media screen and (max-width: 768px)
+      garamond-size('headline')
 
   &__table
     border-collapse collapse
@@ -369,6 +378,8 @@ background-size-cover()
         background-color: #f8f8f8
 
 .gallery-partnerships2__form
+  @media screen and (max-width: 768px)
+    padding 0 20px
   &__header
     margin-top 60px
     text-align center
@@ -376,11 +387,18 @@ background-size-cover()
     aside
       width 556px
       margin 0 auto
+      garamond-size('s-headline')
       @media screen and (max-width: 768px)
         width 100%
+        garamond-size('l-body')
   @media screen and (max-width: 768px)
     #mktoForm_2001
       width 100%
+
+  &__title
+    garamond-size('l-headline')
+    @media screen and (max-width: 768px)
+      garamond-size('headline')
 
   &__contact
     text-align center
@@ -390,7 +408,6 @@ background-size-cover()
     width 740px
     @media screen and (max-width: 768px)
       width 100%
-      padding 0 20px
     margin 0 auto 30px auto
     .mktoOffset, .mktoGutter
       display none
@@ -405,6 +422,9 @@ background-size-cover()
         border-color purple-color
         outline none
         transition border-color 0.5s
+    .mktoForm
+      @media screen and (max-width: 768px)
+        padding 0
     form, input, .mktoFormCol, input, .mktoFieldWrap
       width 100% !important
     .mktoButtonRow
@@ -426,6 +446,14 @@ background-size-cover()
         font-size 13px !important
         &:hover, &:active
           background purple-color
+
+    .mktoField
+      @media screen and (max-width: 768px)
+        height 43px !important
+    select.mktoField
+      @media screen and (max-width: 768px)
+        padding-top 10px !important
+
     form
       margin-top 10px
 

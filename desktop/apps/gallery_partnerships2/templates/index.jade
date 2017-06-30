@@ -80,7 +80,7 @@ block body
       .responsive-layout-container.flex.flex-auto
         .main-layout-container.flex.flex-auto
           .row.flex.flex-auto.reverse-on-mobile
-            .col-xs-12.col-lg-6.flex.flex-auto.items-center.justify-center
+            .col-xs-12.col-lg-6.items-center.justify-center
               video.gallery-partnerships2__chat__video(autoplay loop)
                 source(src=sections[3].video type="video/mp4")
             .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
@@ -105,7 +105,7 @@ block body
                         img.mr2(src=check_mark)
                       div= item
                 .text-center-on-mobile
-                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                  a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
             .col-xs-12.col-lg-6
               img.gallery-partnerships2__folio__image(src=sections[4].image)
 
@@ -119,7 +119,7 @@ block body
                    | “
                    = testimonial.content
                    | ”
-                .avant-garde-l-headline= testimonial.partner
+                .gallery-partnerships2__testimonials__slideshow__item__author= testimonial.partner
 
           - index = 0
           nav.mgr-navigation.js-mgr-navigation
@@ -132,7 +132,7 @@ block body
 
     .gallery-partnerships2__plans.flex.justify-center.items-center
       .gallery-partnerships2__plans__container
-        .gallery-partnerships2__plans__title.garamond-l-headline.mb5 Plans for every type of gallery
+        .gallery-partnerships2__plans__title.mb3 Plans for every type of gallery
         .gallery-partnerships2-show-on-desktop
           table.gallery-partnerships2__plans__table
             thead
@@ -236,8 +236,8 @@ block body
       .partnerships-section-header.apply
         .gallery-partnerships-apply-form
           header.gallery-partnerships2__form__header.mb5
-            .garamond-xl-headline.mb5 Join the leading marketplace for art & design
-            aside.garamond-s-headline Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales
+            .gallery-partnerships2__form__title.mb5 Join the leading marketplace for art & design
+            aside Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales
 
           .gallery-partnerships2__form__marketo-form
             script( src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
