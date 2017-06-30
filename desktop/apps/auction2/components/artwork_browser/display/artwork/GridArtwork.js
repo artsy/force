@@ -6,7 +6,7 @@ import { get } from 'lodash'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 
 function GridArtwork (props) {
-  const artwork = props.artwork.artwork
+  const { artwork, isMobile } = props
   const artists = artwork.artists
 
   const artistDisplay = artists && artists.length > 0
@@ -52,12 +52,14 @@ function GridArtwork (props) {
 
 GridArtwork.propTypes = {
   isClosed: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired,
   artwork: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    isClosed: state.auctionArtworks.isClosed
+    isClosed: state.auctionArtworks.isClosed,
+    isMobile: state.app.isMobile
   }
 }
 

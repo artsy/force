@@ -13,7 +13,7 @@ function ArtworkBrowser ({ isMobile }) {
     <div className={b()}>
       { isMobile
         ? <div>
-            <Header />
+            {/* <Header /> */}
             <ArtworkDisplay />
           </div>
         : <div className={b('container')}>

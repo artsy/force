@@ -1,7 +1,7 @@
 import ArtworkBlock from 'desktop/apps/auction2/components/shared/ArtworkBlock'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
-import GridArtworkDesktop from './artwork/GridArtworkDesktop'
-import ListArtworkDesktop from './artwork/ListArtworkDesktop'
+import GridArtwork from './artwork/GridArtwork'
+import ListArtwork from './artwork/ListArtwork'
 import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
@@ -25,8 +25,8 @@ function ArtworkDisplay ({
           if (isListView) {
             return saleArtworks.map((saleArtwork, key) => {
               return (
-                <ArtworkBlock
-                  {...{ ...saleArtwork, sale_id: saleId }}
+                <ListArtwork
+                  artwork={saleArtwork}
                   key={key}
                 />
               )
@@ -43,7 +43,7 @@ function ArtworkDisplay ({
                 }}
                 getDisplayComponent={(artwork) => {
                   return (
-                    <GridArtworkDesktop
+                    <GridArtwork
                       artwork={artwork}
                     />
                   )
@@ -55,8 +55,8 @@ function ArtworkDisplay ({
           // Desktop
         } else {
           const DisplayComponent = isListView
-            ? ListArtworkDesktop
-            : GridArtworkDesktop
+            ? ListArtwork
+            : GridArtwork
 
           return (
             <div>
