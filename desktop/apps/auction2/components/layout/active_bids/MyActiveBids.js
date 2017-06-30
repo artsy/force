@@ -1,4 +1,4 @@
-import ArtworkBlock from 'desktop/apps/auction2/components/shared/ArtworkBlock'
+import ActiveBidItem from 'desktop/apps/auction2/components/layout/active_bids/ActiveBidItem'
 import BidStatus from 'desktop/components/bid_status/react'
 import MeQuery from 'desktop/apps/auction2/utils/queries/me'
 import PropTypes from 'prop-types'
@@ -51,7 +51,6 @@ class MyActiveBids extends Component {
 
   render () {
     const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
-
     const b = block('auction2-my-active-bids')
 
     return (
@@ -64,7 +63,7 @@ class MyActiveBids extends Component {
           .filter(bid => bid.sale_artwork)
           .map((bid, key) => {
             return (
-              <ArtworkBlock
+              <ActiveBidItem
                 {...bid.sale_artwork}
                 BidStatus={BidStatus}
                 bid={bid}

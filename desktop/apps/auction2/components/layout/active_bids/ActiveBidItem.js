@@ -4,7 +4,7 @@ import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 
-function ArtworkBlock (props) {
+function ActiveBidItem (props) {
   const {
     BidStatus,
     artwork,
@@ -25,13 +25,10 @@ function ArtworkBlock (props) {
     isLoggedIn: Boolean(user)
   })
 
-  const b = block('auction2-artwork-block')
+  const b = block('auction2-active-bid-item')
 
   return (
-    <div
-      className={b()}
-      data-artwork_id={id}
-    >
+    <div className={b()} data-artwork_id={id}>
       <div className={b('artwork-container')}>
         <a href={artwork.href}>
           <img className={b('img')} src={artwork.image.url} />
@@ -73,28 +70,26 @@ function ArtworkBlock (props) {
         {`(${bidCount} Bid${bidCount > 1 ? 's' : ''})`}
       </div>
 
-      { !isMobile && sale &&
-        <div>
-          { sale.is_live_open
-            ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
-                Bid Live
-              </a>
-            : <div className={b('bid-status-cell')}>
-              <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
-            </div>
-            }
+      {/*  TODO: Clean this up */}
 
-          {!sale.is_live_open &&
-            <a href={artwork.href} className={'avant-garde-button-white ' + b('bid-button')}>
-              Bid
-            </a> }
+      { !isMobile && sale.is_live_open
+        ? <a href={liveAuctionUrl} className={'avant-garde-button-white ' + b('bid-live-button')}>
+            Bid Live
+          </a>
+        : !isMobile && <div className={b('bid-status-cell')}>
+          <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
         </div>
-      }
+        }
+
+      { !isMobile && !sale.is_live_open &&
+        <a href={artwork.href} className={'avant-garde-button-white ' + b('bid-button')}>
+          Bid
+        </a> }
     </div>
   )
 }
 
-ArtworkBlock.propTypes = {
+ActiveBidItem.propTypes = {
   BidStatus: PropTypes.func,
   artwork: PropTypes.object.isRequired,
   bid: PropTypes.object,
@@ -115,4 +110,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(ArtworkBlock)
+)(ActiveBidItem)

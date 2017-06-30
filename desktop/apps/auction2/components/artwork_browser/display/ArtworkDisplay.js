@@ -1,16 +1,19 @@
-import ArtworkBlock from 'desktop/apps/auction2/components/shared/ArtworkBlock'
+import BidStatus from 'desktop/apps/auction2/components/artwork_browser/display/artwork/BidStatus'
+import MasonryArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/MasonryArtwork'
+import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/GridArtwork'
+import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/ListArtwork'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
-import GridArtwork from './artwork/GridArtwork'
-import ListArtwork from './artwork/ListArtwork'
 import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
+import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 import { connect } from 'react-redux'
 
 function ArtworkDisplay ({
   isFetchingArtworks,
   isListView,
   isMobile,
+  isClosed,
   saleArtworks,
   saleId
 }) {
@@ -43,9 +46,7 @@ function ArtworkDisplay ({
                 }}
                 getDisplayComponent={(artwork) => {
                   return (
-                    <GridArtwork
-                      artwork={artwork}
-                    />
+                    <MasonryArtwork artwork={artwork} />
                   )
                 }}
               />
@@ -81,6 +82,7 @@ ArtworkDisplay.propTypes = {
   isFetchingArtworks: PropTypes.bool.isRequired,
   isListView: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
+  isClosed: PropTypes.bool.isRequired,
   saleArtworks: PropTypes.array.isRequired,
   saleId: PropTypes.string.isRequired
 }
@@ -91,6 +93,7 @@ const mapStateToProps = (state) => {
     isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
     isListView: state.auctionArtworks.isListView,
     isMobile: state.app.isMobile,
+    isClosed: state.app.auction.isClosed(),
     saleArtworks: state.auctionArtworks.saleArtworks,
     saleId: state.app.auction.get('id')
   }
