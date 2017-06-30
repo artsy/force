@@ -37,7 +37,7 @@ module.exports.index = (req, res, next) ->
       slug: 'artist'
       copy: "Be the first to know when works by #{artist.get('name')} are available."
       image: artist.get('image_urls')?.square
-      link: "https://app.adjust.com/r0hk13"
+      link: "https://itunes.apple.com/app/id703796080?mt=8"
     res.locals.sd.SHOULD_DISPLAY_APP_BANNER = shouldDisplayAppBanner(req)
     res.locals.sd.ARTIST = artistData
     res.locals.sd.ARTWORKS = artworks
