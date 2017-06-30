@@ -2,13 +2,13 @@ AppBanner = require '../app_banner/app_banner.coffee'
 { USER_AGENT, APP_BANNER_MODAL } = require('sharify').data
 
 class ArtistAppBanner extends AppBanner
-    template: ->
-      $ require('./index.jade') { modal: APP_BANNER_MODAL }
+  template: ->
+    $ require('./index.jade') { modal: APP_BANNER_MODAL }
 
-    @shouldDisplay: ->
-      USER_AGENT?.match(/iPhone/i)? and
-      not @hasDismissed() and
-      not @isEigen()
+  @shouldDisplay: ->
+    USER_AGENT?.match(/iPhone/i)? and
+    not @hasDismissed() and
+    not @isEigen()
 
 module.exports = ->
   return unless ArtistAppBanner.shouldDisplay()
@@ -23,3 +23,7 @@ module.exports = ->
     e.preventDefault()
     $(loginClass).show()
     banner.remove()
+
+  $el.find('.artist-app-banner-button').on 'click', (e) ->
+    $img = $('<img src="https://app.adjust.com/r0hk13" />')
+    $el.append($img)
