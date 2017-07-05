@@ -13,7 +13,11 @@ block body
         i.icon-logotype
       .gallery-partnerships2__header__content-container
         .gallery-partnerships2__header__headline.mb3= header.headline
-        a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+        a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button(
+          href="#gallery-partnership2-form"
+          data-label='Learn More'
+          data-section="header: Reach a new audience of global collectors"
+        ) Learn More
 
     .gallery-partnerships2__intro
       .responsive-layout-container
@@ -46,7 +50,11 @@ block body
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
                   .gallery-partnerships2__connect-with-collectors__headline= sections[1].title
                   .mt2.mb3.garamond-l-body= sections[1].content
-                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                    href="#gallery-partnership2-form"
+                    data-label='Learn More'
+                    data-section="Connect with collectors"
+                  ) Learn More
 
     hr
 
@@ -64,7 +72,11 @@ block body
                        img.mr2(src=check_mark)
                      div= stat
                .text-center-on-mobile.gallery-partnerships2__stats__button
-                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                    href="#gallery-partnership2-form"
+                    data-label='Learn More'
+                    data-section="Grow your gallery presense"
+                  ) Learn More
 
             .col-xs-12.col-lg-6( style="position: relative;" )
               img.gallery-partnerships2__stats__frame( src="http://files.artsy.net/images/macbook-transparent1x.png" )
@@ -87,7 +99,11 @@ block body
               .gallery-partnerships2__chat__content-container
                 div= sections[3].title
                 .garamond-l-body.my2= sections[3].content
-                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                  href="#gallery-partnership2-form"
+                  data-label='Learn More'
+                  data-section="Access everything you need"
+                ) Learn More
 
     hr
 
@@ -105,7 +121,11 @@ block body
                         img.mr2(src=check_mark)
                       div= item
                 .text-center-on-mobile
-                  a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                  a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button(
+                    href="#gallery-partnership2-form"
+                    data-label='Learn More'
+                    data-section="Carry your gallery with you"
+                  ) Learn More
             .col-xs-12.col-lg-6
               img.gallery-partnerships2__folio__image(src=sections[4].image)
 
