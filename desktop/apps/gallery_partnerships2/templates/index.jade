@@ -107,25 +107,26 @@ block body
 
     hr
 
-    .gallery-partnerships2__folio.flex.flex-auto.justify-center
+    .gallery-partnerships2__folio
       .responsive-layout-container
         .main-layout-container
           .row
-            .col-xs-12.col-lg-6.flex.content-center.items-center
-              .gallery-partnerships2__folio__inner-container
-                .mb2.text-center-on-mobile= sections[4].title
-                .gallery-partnerships2__folio__features.garamond-l-body
-                  for item in sections[4].folio
-                    .mb2.flex
-                      div
-                        img.mr2(src=check_mark)
-                      div= item
-                .text-center-on-mobile
-                  a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button(
-                    href="#gallery-partnership2-form"
-                    data-label='Learn More'
-                    data-section="Carry your gallery with you"
-                  ) Learn More
+            .col-xs-12.col-lg-6
+              .flex.justify-center.items-center( style= 'height: 100%' )
+                .gallery-partnerships2__folio__inner-container
+                  .mb2.text-center-on-mobile= sections[4].title
+                  .gallery-partnerships2__folio__features.garamond-l-body
+                    for item in sections[4].folio
+                      .mb2.flex
+                        div
+                          img.mr2(src=check_mark)
+                        div= item
+                  .text-center-on-mobile
+                    a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button(
+                      href="#gallery-partnership2-form"
+                      data-label='Learn More'
+                      data-section="Carry your gallery with you"
+                    ) Learn More
             .col-xs-12.col-lg-6
               img.gallery-partnerships2__folio__image(src=sections[4].image)
 
