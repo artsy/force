@@ -7,7 +7,7 @@ Backbone = require 'backbone'
 Notifications = require '../../../../collections/notifications.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
 Artist = require '../../../../models/artist.coffee'
-NotificationsView = benv.requireWithJadeify require.resolve('../../client/view'), [
+NotificationsView = benv.requireWithJadeify require.resolve('../../client/mobile'), [
   'template'
   'artworkColumnsTemplate'
   'emptyTemplate'
@@ -32,7 +32,7 @@ describe 'NotificationsView', ->
 
   describe 'without artist_id', ->
     beforeEach (done) ->
-      benv.render require.resolve('../../templates/index.jade'), { sd: {} }, =>
+      benv.render require.resolve('../../templates/mobile/index.jade'), { sd: {} }, =>
         @view = new NotificationsView el: $('body')
         done()
 
@@ -60,7 +60,7 @@ describe 'NotificationsView', ->
 
   describe 'with artist_id', ->
     beforeEach (done) ->
-      benv.render require.resolve('../../templates/index.jade'), { sd: {} }, =>
+      benv.render require.resolve('../../templates/mobile/index.jade'), { sd: {} }, =>
         sinon.stub(NotificationsView::, 'params').returns artist_id: 'emile-ajar'
         @view = new NotificationsView el: $('body')
         done()
