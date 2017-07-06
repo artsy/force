@@ -49,6 +49,7 @@ app.use(require('./apps/sitemaps'))
 app.use(require('./apps/rss'))
 app.use(require('./apps/dev'))
 app.use(require('./apps/article'))
+app.use(require('./apps/article2'))
 app.use(require('./apps/artsy_primer'))
 app.use(require('./apps/gallery_partnerships2'))
 
