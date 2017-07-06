@@ -1,27 +1,13 @@
 unless auction.isAuctionPromo()
   .auction-preview-registration
     if auction.isPreview()
-      if user
-        if user.get('registered_to_bid')
-          a.avant-garde-box-button.avant-garde-box-button-black.avant-garde-box-button-green
-            | You are registered to bid
-        else
-          p Register now to bid in the auction when it opens.
-          a.avant-garde-box-button.avant-garde-box-button-black( href= auction.registerUrl(sd.CURRENT_PATH) )
-            | Register to Bid
+      if user && user.get('registered_to_bid')
+        a.avant-garde-box-button.avant-garde-box-button-black.avant-garde-box-button-green
+          | You are registered to bid
       else
-        .auction-preview-sidebar-label
-          | Opening Soon
-        .auction-preview-sidebar-text
-          | Receive an email invitation when the auction begins on Artsy
-        form.auction-preview-sidebar-email(
-          action="/auction/#{auction.get('id')}/subscribe" method='post'
-        )
-          label.avant-garde-form-label( for='email' ) Email
-          input.bordered-input( name='email' type='email' required)
-          button.avant-garde-box-button.avant-garde-box-button-black(
-            type='submit'
-          ) Notify Me
+        p Register now to bid in the auction when it opens.
+        a.avant-garde-box-button.avant-garde-box-button-black( href= auction.registerUrl(sd.CURRENT_PATH) )
+          | Register to Bid
     else if auction.isClosed()
       a.avant-garde-box-button.avant-garde-box-button-black.avant-garde-box-button-disabled
         | Online Bidding Closed

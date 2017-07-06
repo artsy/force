@@ -7,4 +7,3 @@ app.set 'view engine', 'jade'
 
 app.get '/auction/:id', routes.index
 app.get '/auction/:id/confirm-registration', routes.index
-app.post '/auction/:id/subscribe', routes.subscribe
