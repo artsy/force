@@ -8,36 +8,7 @@ append locals
   - bodyClass = bodyClass + ' body-infinite-scroll'
 
 block body
-  #notifications-page.main-layout-container
-    #notifications-header
-      h1 Works by Artists You Follow
-    #notifications-filter
-      .notifications-sub-header Artists You Follow
-      .artsy-checkbox
-        .artsy-checkbox--checkbox
-          input( type='checkbox', id='for-sale' )
-          label( for='for-sale' )
-        label.artsy-checkbox--label( for='for-sale' ) Only For Sale
-      if sd.FOLLOWING
-        .notifications-artist-list
-          for artist in sd.FOLLOWING.models
-            - var artist = artist.get('artist')
-            include filter_artist
-      .notifications-search-header Follow More Artists
-      #notifications-search-container.autocomplete-input-container.is-block
-        input#notifications-search.bordered-input(
-          type='text', placeholder='Search Artists', autofocus=autofocus
-        )
-        .autocomplete-loading-indicator: .loading-spinner-small
-
-    //- Rendered client-side
-    #notifications-works
-      .notifications-works-sub-header Recently Added Works
-      #notifications-pins
-      #notifications-feed
-      .notifications-feed-spinner: .loading-spinner
-    #notifications-artist-works
-      .notifications-artist-sub-header
-      #notifications-artist-feed
-    #notifications-empty
-    #notifications-spinner: .loading-spinner
+  if sd.IS_MOBILE
+    include ./mobile/index
+  else
+    include ./desktop

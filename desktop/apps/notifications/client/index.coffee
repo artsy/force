@@ -12,6 +12,7 @@ ArtistWorksView = require './artist_works.coffee'
 UrlUpdater = require './url_updater.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
 Cookies = require '../../../components/cookies/index.coffee'
+MobileNotificationsView = require './mobile.coffee'
 emptyTemplate = -> require('../templates/empty.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
@@ -78,5 +79,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @jump.scrollToPosition 0
 
 module.exports.init = ->
-  new NotificationsView el: $('body')
-  scrollFrame '#notifications-feed a' unless sd.EIGEN
+  if sd.IS_MOBILE
+    new MobileNotificationsView el: $('body')
+  else
+    new NotificationsView el: $('body')
+    scrollFrame '#notifications-feed a' unless sd.EIGEN
