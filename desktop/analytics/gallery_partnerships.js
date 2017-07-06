@@ -7,8 +7,9 @@
     analytics.track('Click', {
       type: 'button',
       label: $button.data('label'),
+      flow: 'partnership application',
       context_module: $button.data('section'),
-      destination_path: $button.attr('href')
+      destination_path: null
     })
   })
 })()
