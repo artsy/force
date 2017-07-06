@@ -26,7 +26,7 @@ mixin fullscreen(article)
   figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
     if article.get('hero_section').background_url
       .article-fullscreen__overlay
-      video.article-fullscreen__video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
+      video.article-fullscreen__video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true muted playsinline)
     else if article.get('hero_section').background_image_url
       .article-fullscreen__overlay
       img.article-fullscreen__image(

@@ -1,0 +1,83 @@
+{
+  "check_mark": "http://files.artsy.net/images/bullet.svg",
+  "header": {
+    "headline": "Reach a new audience of global collectors",
+    "image": "http://files.artsy.net/images/background1x.png"
+  },
+  "sections": [
+    {
+      "intro": [
+        {
+          "image": "http://files.artsy.net/images/collector-introductions.svg",
+          "title": "Collector Introductions",
+          "subtitle": "Build relationships with new and seasoned collectors around the world"
+        },
+        {
+          "image": "http://files.artsy.net/images/brand-exposure.svg",
+          "title": "Brand Exposure",
+          "subtitle": "Promote your works and artists to the largest online art audience"
+        },
+        {
+          "image": "http://files.artsy.net/images/no-commission.svg",
+          "title": "0% Commission",
+          "subtitle": "Faciliate sales in one place with ease—Artsy takes no commission"
+        }
+      ],
+      "active_partner_images": [
+        "http://files.artsy.net/images/gagosian-logo2x.png",
+        "http://files.artsy.net/images/dansk-logo2x.png",
+        "http://files.artsy.net/images/david-gill-logo2x.png",
+        "http://files.artsy.net/images/fraenkel-logo2x.png",
+        "http://files.artsy.net/images/simon-lee-logo2x.png",
+        "http://files.artsy.net/images/spruth-magers-logo2x.png"
+      ]
+    },
+    {
+      "title": "Connect with the right collectors in minutes",
+      "content": "Simply list your inventory on Artsy and qualified collectors will start receiving personalized notifications about your gallery. The Artsy network becomes your network—engaged, informed, and ready to inquire.",
+      "background_image": "http://files.artsy.net/images/iphone1x.png",
+      "notification_image": "http://files.artsy.net/images/iphone-notification1x.png"
+    },
+    {
+      "title": "Grow your gallery presence on a global scale",
+      "stats": [
+        "Nearly 2.5 million visitors each month",
+        "Top ranking art marketplace on Google",
+        "Visitors from over 190 countries"
+      ],
+      "slideshow": [
+        "http://files.artsy.net/images/laptop-slideshow-12x.png",
+        "http://files.artsy.net/images/laptop-slideshow-22x.png",
+        "http://files.artsy.net/images/laptop-slideshow-32x.png"
+      ]
+    },
+    {
+      "video": "http://files.artsy.net/videos/chat-ui.mp4",
+      "title": "Access everything you need to sell in one place",
+      "content": "Manage inquiries, review collector profiles, process payments and more—all in one place with Artsy’s easy-to-use content management system and messaging tools."
+    },
+    {
+      "title": "Carry your gallery with you, wherever you go",
+      "folio": [
+        "Artsy Folio syncs with your inventory seamlessly",
+        "Create albums to curate and share groups of works",
+        "Send one-touch emails with complete work details"
+      ],
+      "image": "http://files.artsy.net/images/folio1x.png",
+      "testimonials": [
+        {
+          "content": "Artsy has increasingly brought us inquiries and introduced us to qualified collectors worldwide, resulting in substantial sales.",
+          "partner": "Jonathan Novak, Jonathan Novak Gallery"
+        },
+        {
+          "content": "The combination of Artsy’s stellar SEO on Google and access to the art collecting crowd has opened me up to numerous opportunities that I did not previously have on my other methods of promotion.",
+          "partner": "Connor Remes, MSP Modern"
+        }
+      ]
+    },
+    {
+      "title": "Join the leading marketplace for art & design",
+      "content": "Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales"
+    }
+  ]
+}

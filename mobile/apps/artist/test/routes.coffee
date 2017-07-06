@@ -27,7 +27,7 @@ describe '#index', ->
         name: 'Oliver'
         image_urls:
           square: ''
-        link: 'https://app.adjust.com/ue4nzl'
+        link: 'https://itunes.apple.com/app/id703796080?mt=8'
       )
       .onCall 1
       .returns Promise.resolve []

@@ -1,0 +1,250 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'gallery_partnerships2'
+
+block head
+  include meta
+
+block body
+  .gallery-partnerships2
+    .gallery-partnerships2__header.flex.items-center( style="background-image: url(#{header.image});" )
+      a(href="/")
+        i.icon-logotype
+      .gallery-partnerships2__header__content-container
+        .gallery-partnerships2__header__headline.mb3= header.headline
+        a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+
+    .gallery-partnerships2__intro
+      .responsive-layout-container
+        .main-layout-container
+          .row
+            for item in sections[0].intro
+              .col-xs-12.col-lg-4.mb5
+                img( src=item.image )
+                .gallery-partnerships2__intro__headline.mt3.mb2.garamond-s-headline= item.title
+                .gallery-partnerships2__intro__subtitle.garamond-l-body= item.subtitle
+
+    .gallery-partnerships2__gallery-logos.bg-gray.flex
+      .responsive-layout-container.flex.flex-auto
+        .main-layout-container.flex.flex-auto
+          .row.flex-auto
+            for image in sections[0].active_partner_images
+              .flex-auto.flex.justify-center.items-center
+                img(src=image)
+
+    .gallery-partnerships2__connect-with-collectors.flex
+      .responsive-layout-container.flex.flex-auto
+        .main-layout-container.flex.flex-auto
+          .row.flex-auto.reverse-on-mobile
+            .col-xs-12.col-lg-6.flex.gallery-partnerships2__connect-with-collectors__notification-container
+              .flex.flex-auto.justify-center
+                img.gallery-partnerships2__connect-with-collectors__image.self-end(src=sections[1].background_image)
+              img.gallery-partnerships2__connect-with-collectors__sub_image(src=sections[1].notification_image)
+            .col-xs-12.col-lg-6.flex.text-center-on-mobile
+              .gallery-partnerships2__connect-with-collectors__content_container.flex.flex-auto.justify-center.items-center
+                .gallery-partnerships2__connect-with-collectors__content_container__wrapper
+                  .gallery-partnerships2__connect-with-collectors__headline= sections[1].title
+                  .mt2.mb3.garamond-l-body= sections[1].content
+                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+
+    hr
+
+    .gallery-partnerships2__stats
+      .responsive-layout-container
+        .main-layout-container
+          .row
+            .col-xs-12.col-lg-6.flex.items-center.justify-center
+             .gallery-partnerships2__stats__inner-container
+               .mb2.text-center-on-mobile.gallery-partnerships2__stats__headline= sections[2].title
+               .garamond-l-body
+                 for stat in sections[2].stats
+                   .mb2.flex
+                     div
+                       img.mr2(src=check_mark)
+                     div= stat
+               .text-center-on-mobile.gallery-partnerships2__stats__button
+                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+
+            .col-xs-12.col-lg-6( style="position: relative;" )
+              img.gallery-partnerships2__stats__frame( src="http://files.artsy.net/images/macbook-transparent1x.png" )
+              section.js-partner-stats-slideshow.gallery-partnerships2__stats__slideshow
+                .mgr-cells.js-mgr-cells
+                  for image in sections[2].slideshow
+                    .mgr-cell.js-mgr-cell
+                      img( src= image )
+
+    hr
+
+    .gallery-partnerships2__chat.flex.flex-auto
+      .responsive-layout-container.flex.flex-auto
+        .main-layout-container.flex.flex-auto
+          .row.flex.flex-auto.reverse-on-mobile
+            .col-xs-12.col-lg-6.items-center.justify-center
+              video.gallery-partnerships2__chat__video(autoplay loop)
+                source(src=sections[3].video type="video/mp4")
+            .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
+              .gallery-partnerships2__chat__content-container
+                div= sections[3].title
+                .garamond-l-body.my2= sections[3].content
+                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+
+    hr
+
+    .gallery-partnerships2__folio.flex.flex-auto.justify-center
+      .responsive-layout-container
+        .main-layout-container
+          .row
+            .col-xs-12.col-lg-6.flex.content-center.items-center
+              .gallery-partnerships2__folio__inner-container
+                .mb2.text-center-on-mobile= sections[4].title
+                .gallery-partnerships2__folio__features.garamond-l-body
+                  for item in sections[4].folio
+                    .mb2.flex
+                      div
+                        img.mr2(src=check_mark)
+                      div= item
+                .text-center-on-mobile
+                  a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+            .col-xs-12.col-lg-6
+              img.gallery-partnerships2__folio__image(src=sections[4].image)
+
+    .gallery-partnerships2__testimonials.bg-gray.flex.items-center.justify-center
+      .gallery-partnerships2__testimonials__slideshow
+        section.js-partner-testimonials-slideshow( style="position: relative;" )
+          .js-mgr-cells.mb5
+            for testimonial in sections[4].testimonials
+              .js-mgr-cell.gallery-partnerships2__testimonials__slideshow__item
+                .mb5
+                   | “
+                   = testimonial.content
+                   | ”
+                .gallery-partnerships2__testimonials__slideshow__item__author= testimonial.partner
+
+          - index = 0
+          nav.mgr-navigation.js-mgr-navigation
+            .mgr-dots
+              for x, i in sections[4].testimonials
+                .mgr-dot.js-mgr-select(
+                class= (index === i ? 'is-active' : undefined)
+                data-index= i
+                ) •
+
+    .gallery-partnerships2__plans.flex.justify-center.items-center
+      .gallery-partnerships2__plans__container
+        .gallery-partnerships2__plans__title.mb3 Plans for every type of gallery
+        .gallery-partnerships2-show-on-desktop
+          table.gallery-partnerships2__plans__table
+            thead
+              tr
+                th
+                th Standard
+                th Preferred
+                th Premium
+            tbody
+              tr
+                td Artsy Content Management System (CMS)
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Unlimited collector messages
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Dedicated Artsy liaison
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Specialty promotion on Artsy Galleries page
+                td &#9900;
+                td &#9900;
+                td &#9900;
+              tr
+                td Artsy Folio for iPad and iPhone
+                td
+                td &#9900;
+                td &#9900;
+              tr
+                td Monthly analytics report
+                td
+                td &#9900;
+                td &#9900;
+              tr
+                td Dedicated promotion on Artsy homepage
+                td
+                td
+                td &#9900;
+              tr
+                td Collector inquiry vetting and email reveal
+                td
+                td
+                td &#9900;
+              tr
+                td Upgraded gallery profile page
+                td
+                td
+                td &#9900;
+
+        .gallery-partnerships2-show-on-mobile
+          table.gallery-partnerships2__plans__table
+            thead
+              tr
+                th Standard
+
+            tbody
+              tr
+                td Artsy Content Management System (CMS)
+              tr
+                td Unlimited collector messages
+              tr
+                td Dedicated Artsy liaison
+              tr
+                td Promotion on Artsy Galleries page
+
+            thead
+              tr
+                th Preferred
+
+            tbody
+              tr
+                td + Everything in Standard
+              tr
+                td Artsy Folio for iPad and iPhone
+              tr
+                td Monthly analytics report
+
+            thead
+              tr
+                th Premium
+
+            tbody
+              tr
+                td + Everything in Standard
+              tr
+                td Dedicated promotion on Artsy homepage
+              tr
+                td Collector inquiry vetting and email reveal
+              tr
+                td Upgraded gallery profile page
+
+    hr
+
+    #gallery-partnership2-form.gallery-partnerships2__form
+      .partnerships-section-header.apply
+        .gallery-partnerships-apply-form
+          header.gallery-partnerships2__form__header.mb5
+            .gallery-partnerships2__form__title.mb5 Join the leading marketplace for art & design
+            aside Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales
+
+          .gallery-partnerships2__form__marketo-form
+            script( src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
+            form#mktoForm_2001
+            script.
+              MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 2001, function () {
+                $('.partnerships-marketo-form-apply-btn').remove()
+              });
+
+          .gallery-partnerships2__form__contact Call us: +1 800 589-1350
