@@ -59,15 +59,6 @@ describe '/auction routes', ->
             .containEql "/foobar-auction"
           done()
 
-    describe '#subscribe', ->
-      it 'subscribes to mailchimp', ->
-        @req.params.id = 'foo-auction'
-        @req.body.email = 'foo@bar.com'
-        @request.end.yields null, ok: true, {}
-        routes.subscribe @req, @res, @next
-        @request.send.args[0][0].email.email.should.equal 'foo@bar.com'
-        @request.send.args[0][0].merge_vars['AUCTION_foo-auction'].should.equal true
-
   describe 'with user', ->
     describe '#index', ->
       beforeEach ->

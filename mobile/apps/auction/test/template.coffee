@@ -71,6 +71,32 @@ describe 'auction templates', ->
         $('.auction-preview-registration').should.have.lengthOf 1
         $('.auction-artwork-list-item').should.have.lengthOf 0
 
+  describe 'default auction - preview without user', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+
+        data = _.extend {}, @baseData,
+          user: null,
+          auction: @auction = new Auction fabricate('sale',
+            name: 'An Auction'
+            start_at: moment().add(2, 'days').format()
+            end_at: moment().add(4, 'days').format()
+            auction_state: 'preview'
+          )
+
+        benv.render resolve(__dirname, '../templates/index.jade'), data, =>
+          done()
+
+    after ->
+      benv.teardown()
+
+    describe 'without user', ->
+      it 'renders the register to bid button', ->
+        $('.auction-title').text().should.equal 'An Auction'
+        $('.auction-preview-registration').should.have.lengthOf 1
+        $('.auction-preview-sidebar-label').should.have.lengthOf 0
+
   describe 'auction promo', ->
     before (done) ->
       benv.setup =>
