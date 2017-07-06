@@ -17,7 +17,7 @@ section.js-my-carousel
 
   - length = images.length
   nav.mgr-navigation.js-mgr-navigation
-    include ../../../components/merry_go_round/templates/navigation
+    include ../../../components/merry_go_round/templates/bottom_navigation
 ```
 
 ```coffeescript

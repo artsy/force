@@ -128,6 +128,7 @@ background-size-cover()
     garamond-size('xxl-headline')
     @media screen and (max-width: 768px)
       garamond-size('l-headline')
+      margin 0 20px 20px 20px
 
   .icon-logotype
     color white
@@ -175,7 +176,10 @@ background-size-cover()
       garamond-size('headline')
 
   &__notification-container
+    height 610px
     position relative
+    @media screen and (max-width: 768px)
+      height inherit
 
   &__content_container
     &__wrapper
@@ -258,7 +262,6 @@ background-size-cover()
 
   &__video
     width 100%
-    height 100%
 
   &__learn_more
     @media screen and (max-width: 768px)

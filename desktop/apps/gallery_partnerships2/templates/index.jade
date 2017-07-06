@@ -13,7 +13,11 @@ block body
         i.icon-logotype
       .gallery-partnerships2__header__content-container
         .gallery-partnerships2__header__headline.mb3= header.headline
-        a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+        a.gallery-partnerships2-white-signup-button.js-gallery-partnerships2-button(
+          href="#gallery-partnership2-form"
+          data-label='Learn More'
+          data-section="Banner"
+        ) Learn More
 
     .gallery-partnerships2__intro
       .responsive-layout-container
@@ -46,7 +50,11 @@ block body
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
                   .gallery-partnerships2__connect-with-collectors__headline= sections[1].title
                   .mt2.mb3.garamond-l-body= sections[1].content
-                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                    href="#gallery-partnership2-form"
+                    data-label='Learn More'
+                    data-section="Connect with the right collectors"
+                  ) Learn More
 
     hr
 
@@ -64,7 +72,11 @@ block body
                        img.mr2(src=check_mark)
                      div= stat
                .text-center-on-mobile.gallery-partnerships2__stats__button
-                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                    href="#gallery-partnership2-form"
+                    data-label='Learn More'
+                    data-section="Grow your gallery presense"
+                  ) Learn More
 
             .col-xs-12.col-lg-6( style="position: relative;" )
               img.gallery-partnerships2__stats__frame( src="http://files.artsy.net/images/macbook-transparent1x.png" )
@@ -81,31 +93,40 @@ block body
         .main-layout-container.flex.flex-auto
           .row.flex.flex-auto.reverse-on-mobile
             .col-xs-12.col-lg-6.items-center.justify-center
-              video.gallery-partnerships2__chat__video(autoplay loop)
+              video.gallery-partnerships2__chat__video(autoplay loop playsinline muted)
                 source(src=sections[3].video type="video/mp4")
             .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
               .gallery-partnerships2__chat__content-container
                 div= sections[3].title
                 .garamond-l-body.my2= sections[3].content
-                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+                a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                  href="#gallery-partnership2-form"
+                  data-label='Learn More'
+                  data-section="Access everything you need to sell in one place"
+                ) Learn More
 
     hr
 
-    .gallery-partnerships2__folio.flex.flex-auto.justify-center
+    .gallery-partnerships2__folio
       .responsive-layout-container
         .main-layout-container
           .row
-            .col-xs-12.col-lg-6.flex.content-center.items-center
-              .gallery-partnerships2__folio__inner-container
-                .mb2.text-center-on-mobile= sections[4].title
-                .gallery-partnerships2__folio__features.garamond-l-body
-                  for item in sections[4].folio
-                    .mb2.flex
-                      div
-                        img.mr2(src=check_mark)
-                      div= item
-                .text-center-on-mobile
-                  a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button( href="#gallery-partnership2-form" ) Learn More
+            .col-xs-12.col-lg-6
+              .flex.justify-center.items-center( style= 'height: 100%' )
+                .gallery-partnerships2__folio__inner-container
+                  .mb2.text-center-on-mobile= sections[4].title
+                  .gallery-partnerships2__folio__features.garamond-l-body
+                    for item in sections[4].folio
+                      .mb2.flex
+                        div
+                          img.mr2(src=check_mark)
+                        div= item
+                  .text-center-on-mobile
+                    a.gallery-partnerships2-black-signup-button.gallery-partnerships2__folio__button.js-gallery-partnerships2-button(
+                      href="#gallery-partnership2-form"
+                      data-label='Learn More'
+                      data-section="Carry your gallery with you"
+                    ) Learn More
             .col-xs-12.col-lg-6
               img.gallery-partnerships2__folio__image(src=sections[4].image)
 
@@ -158,7 +179,7 @@ block body
                 td &#9900;
                 td &#9900;
               tr
-                td Specialty promotion on Artsy Galleries page
+                td Promotion on Artsy Galleries page
                 td &#9900;
                 td &#9900;
                 td &#9900;
@@ -237,7 +258,7 @@ block body
         .gallery-partnerships-apply-form
           header.gallery-partnerships2__form__header.mb5
             .gallery-partnerships2__form__title.mb5 Join the leading marketplace for art & design
-            aside Learn more about Artsy’s all-in-one offering for galleries to expand your global reach and drive online sales
+            aside Artsy helps your gallery expand its reach and drive sales online
 
           .gallery-partnerships2__form__marketo-form
             script( src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
