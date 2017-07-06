@@ -53,18 +53,3 @@ module.exports.index = (req, res, next) ->
         saleArtworks: saleArtworks
       }, nav()
   return promise
-
-module.exports.subscribe = (req, res, next) ->
-  request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
-    .send(
-      apikey: MAILCHIMP_KEY
-      id: MAILCHIMP_AUCTION_LIST_ID
-      email: email: req.body.email
-      merge_vars: "AUCTION_#{req.params.id}": true
-      double_optin: false
-      send_welcome: false
-    ).end (err, response) ->
-      if response.ok or response.body?.error.match('already subscribed')
-        res.render 'subscribed', auctionId: req.params.id, email: req.body.email
-      else
-        return next err or new Error response.body.error

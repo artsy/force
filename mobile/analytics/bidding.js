@@ -18,21 +18,6 @@ if (AUCTION_ID) USER_AUCTION.auction_slug = AUCTION_ID;
 // Events from https://trello.com/c/nqmq1yjL/264-web-send-data-to-segment
 // -----------------------------------------------------------------------------
 
-// Notify me auction form opened
-$(".auction-preview-sidebar-email input").focus(function() {
-  analytics.track('Notify me auction form opened', { nonInteraction: 1 });
-});
-
-// Notify me form submitted on the auction registration page
-$(document).on('click', '.auction-preview-sidebar-email .avant-garde-box-button-black', function() {
-  analytics.track(
-    'Notify me form submitted on the auction registration page', USER_AUCTION);
-});
-analytics.trackLink(
-  $('#auction-page [href*=sign_up]')[0],
-  'Notify me form submitted on the auction registration page'
-);
-
 // Clicked “Register to bid” on the auction feature page
 // There is no "Register" button on /auction/:id like Force
 
