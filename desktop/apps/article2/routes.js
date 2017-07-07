@@ -4,11 +4,8 @@ import positronql from 'desktop/lib/positronql.coffee'
 import ArticleQuery from './queries/article'
 
 export async function index (req, res, next) {
-  console.log(req.params.slug)
-  console.log(ArticleQuery(req.params.slug))
-  const { articles } = await positronql({ query: ArticleQuery(req.params.slug) })
-  console.log(articles)
-
+  const { article } = await positronql({ query: ArticleQuery(req.params.slug) })
+  console.log(article)
   const layout = renderReactLayout({
     basePath: req.app.get('views'),
     blocks: {
@@ -20,7 +17,7 @@ export async function index (req, res, next) {
       assetPackage: 'article2'
     },
     data: {
-      article: articles
+      article: {}
     }
   })
   res.send(layout)

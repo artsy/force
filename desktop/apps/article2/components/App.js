@@ -14,7 +14,7 @@ export default class App extends Component {
       switch (section.type) {
         case 'image_collection': {
           return (
-            <Artwork artwork={section.images[1]} />
+            <Artwork artwork={section.images[0]} />
           )
         }
         case 'image_set': {
