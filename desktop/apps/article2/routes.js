@@ -4,22 +4,27 @@ import positronql from 'desktop/lib/positronql.coffee'
 import ArticleQuery from './queries/article'
 
 export async function index (req, res, next) {
-  const data = await positronql({ query: ArticleQuery(req.params.slug) })
-  const article = data.articles[0]
-  console.log(article)
-  const layout = renderReactLayout({
-    basePath: req.app.get('views'),
-    blocks: {
-      head: 'meta.jade',
-      body: App
-    },
-    locals: {
-      ...res.locals,
-      assetPackage: 'article2'
-    },
-    data: {
-      article: {}
-    }
-  })
-  res.send(layout)
+  const articleId = req.params.slug
+  try {
+    const data = await positronql({ query: ArticleQuery(articleId) })
+    const article = data.articles[0]
+    const layout = renderReactLayout({
+      basePath: res.app.get('views'),
+      blocks: {
+        head: 'meta.jade',
+        body: App
+      },
+      locals: {
+        ...res.locals,
+        assetPackage: 'article2',
+        bodyClass: 'body-no-header body-no-margins'
+      },
+      data: {
+        article: article
+      }
+    })
+    res.send(layout)
+  } catch (error) {
+    next(error)
+  }
 }

@@ -18,6 +18,7 @@ module.exports =
   ARTSY_SECRET: null
   BIDDER_H1_COPY: 'Please enter your credit card details'
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
+  CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
   CMS_URL: 'https://cms.artsy.net'
   CONSIGNMENTS_APP_URL: null
   CONVECTION_APP_URL: null

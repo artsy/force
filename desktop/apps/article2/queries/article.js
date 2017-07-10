@@ -2,6 +2,8 @@ export default function ArticleQuery (id) {
   return `
     {
       articles(published: true, id: "${id}" ) {
+        title
+        description
         hero_section {
           ...Image
           ...on Video {
