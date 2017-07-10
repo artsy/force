@@ -4,6 +4,15 @@ export default function ArticleQuery (id) {
       articles(published: true, id: "${id}" ) {
         title
         description
+        published_at
+        contributing_authors {
+          name
+          id
+        }
+        vertical {
+          name
+          id
+        }
         hero_section {
           ...Image
           ...on Video {
