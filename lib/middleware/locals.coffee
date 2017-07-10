@@ -49,5 +49,6 @@ module.exports = (req, res, next) ->
     (ua.match(/BB10/i)) ||
     (ua.match(/BlackBerry/i))
   )
+  res.locals.sd.HOME_PERSONALIZATION = req.query?.home_personalization
 
   next()
