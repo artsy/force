@@ -1,5 +1,5 @@
-- title = 'Article 2'
-- description = 'Article 2 Page'
+- title = article.title || ''
+- description = article.description || ''
 
 title= title
 meta( property='og:title', content= title )
@@ -8,6 +8,8 @@ meta( property='og:description', content= description )
 meta( property='twitter:description', content= description )
 
 meta( property='og:type', content='website' )
-meta( property='og:event', content='auction' )
 meta( property='twitter:card', content='summary' )
 meta( name='fragment', content='!' )
+
+//- Unica Font
+link( rel='stylesheet' href='https://d1s2w0upia4e9w.cloudfront.net/fonts/unica-stylesheet.css' type='text/css')

@@ -1,10 +1,18 @@
 export default function ArticleQuery (id) {
   return `
     {
-      articles(published: true, id: ${id} ) {
-        contributing_authors {
-          id
-          name
+      articles(published: true, id: "${id}" ) {
+        hero_section {
+          ...Image
+          ...on Video {
+            caption
+          }
+          ...on Fullscreen {
+            type
+            title
+            background_image_url
+            background_url
+          }
         }
         sections {
           ... on Text {
@@ -37,7 +45,7 @@ export default function ArticleQuery (id) {
         }
       }
     }
-    
+
     fragment Image on Image {
       url
       caption
@@ -45,7 +53,7 @@ export default function ArticleQuery (id) {
       width
       height
     }
-    
+
     fragment Artwork on Artwork {
       type
       id
