@@ -14,7 +14,6 @@ activatePulldowns = require '../../hover_pulldown/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
-splitTest = require '../../split_test/index.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 
 module.exports = class HeaderView extends Backbone.View
@@ -38,8 +37,6 @@ module.exports = class HeaderView extends Backbone.View
       autoselect: true
       mode: 'suggest'
       limit: 7
-
-    splitTest('highlight_header_search').view()
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
@@ -133,7 +130,7 @@ module.exports = class HeaderView extends Backbone.View
       new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
 
   highlightSearch: (e) ->
-    if $('.html-highlight-header-search-split-test #main-layout-search-bar-input').is(':focus')
+    if $('#main-layout-search-bar-input').is(':focus')
       $('#main-layout-search-bar-container').addClass('focused')
 
   unhighlightSearch: (e) ->

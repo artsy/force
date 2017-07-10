@@ -8,7 +8,7 @@
 @require '../../eggs/invert'
 @require '../../eggs/bounce'
 
-search-bar-input-placeholder-white()
+search-bar-input-placeholder()
   color white
 
 .body-header-fixed
@@ -22,9 +22,36 @@ search-bar-input-placeholder-white()
     &.force-position-absolute
       position absolute
 
+// same as fixed header but with no annoying 10px extra margin
+.body-header-fixed-no-margin
+  @extend .body-header-fixed
+  #main-layout-container
+    margin-top main-header-height !important
+
 html[data-useragent*="iPad"]
   .body-header-fixed #main-layout-header
     position absolute
+
+#main-layout-search-bar-container
+  border-color #e5e5e5
+  background-color #f0f0f0 !important
+  &:hover
+    border 1px solid black
+
+#main-layout-header
+  #main-layout-search-bar-container.focused
+    &:hover
+      border-color #6e00ff !important
+
+#main-layout-header
+  #main-layout-search-bar-container.focused
+    border-color #6e00ff !important
+
+  #main-layout-search-bar-input
+    &::placeholder
+      color #666 !important
+#main-layout-search-bar-icon
+  color #666
 
 // Pages like checkout or onboarding remove options from the header to heavily
 // focus on the task at hand.
@@ -47,27 +74,27 @@ html[data-useragent*="iPad"]
   #main-layout-container
     margin-top 0 !important
 
-// same as fixed header but with no annoying 10px extra margin
-.body-header-fixed-no-margin
-  @extend .body-header-fixed
-  #main-layout-container
-    margin-top main-header-height !important
-
 // View in room and home page hero units will sit underneath a transparent
 // header.
 @media(min-width: nav-bar-break)
   .body-transparent-header-white
   .body-transparent-header
     #main-layout-header
-      background transparent
+      background white
 
 .body-transparent-header
   #main-layout-header
     border-color rgba(black, 0.1)
     *:not(.tt-suggestion):not(.tt-dropdown-menu):not(.hover-pulldown-menu *)
       border-color rgba(black, 0.1)
+    #main-layout-search-bar-icon
+      color #666
     #main-layout-search-bar-container
-      border-color black
+      border-color #e5e5e5
+      #main-layout-search-bar-input
+        background-color #f0f0f0 !important
+        &::placeholder
+          color #666
 .body-hide-header
   #main-layout-header
     display none
@@ -77,20 +104,50 @@ html[data-useragent*="iPad"]
 @media(min-width: nav-bar-break)
   .body-transparent-header-white
     #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, #main-layout-header-home-logo
-    #main-layout-search-bar-icon, #main-layout-search-bar-input
-      color white
+    #main-layout-search-bar-icon, #main-layout-search-bar-input, span.mlh-top-nav-link, span.mlh-top-nav-link:before
+      color black
+    #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, span.mlh-top-nav-link
+      &:hover
+        color #6e00ff
+    .hover-pulldown-menu a
+      color white !important
+    .hover-pulldown:not(.mlh-hamburger):not(.mlh-notification):not(.artist-page-cta-overlay__feed__pulldown):before
+      border-top-color black
+    .mlh-notification, .mlh-user-name
+      border-left: 1px solid rgba(0,0,0,0.102) !important
+      svg
+        fill black
+        width 25px
+        height 25px
+    #main-layout-search-bar-icon
+      color #666
     #main-layout-search-bar-input
-      placeholder(search-bar-input-placeholder-white)
+      color #000
+      &::placeholder
+        color #666
     #main-layout-header
       border-color rgba(white, 0.3)
       *:not(.tt-suggestion):not(.tt-dropdown-menu)
         border-color rgba(white, 0.3)
       #main-layout-search-bar-container
-        border-color white
+        background-color #f0f0f0
+        border-color #e5e5e5
+        &:hover
+          border-color black !important
+
+    #main-layout-header
+      #main-layout-search-bar-container.focused
+        &:hover
+          border-color #6e00ff !important
+
+    #main-layout-header
+      #main-layout-search-bar-container.focused
+        border-color #6e00ff !important
+
     #main-layout-search-bar-container.is-loading .loading-spinner-small
-      background white
+      background black
     #main-layout-header-home-logo::after
-      border-color white
+      border-color #666
 
 // A page that infinite scrolls will hide the footer
 .body-infinite-scroll
