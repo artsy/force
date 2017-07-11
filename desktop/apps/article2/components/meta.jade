@@ -1,0 +1,15 @@
+- title = article.title || ''
+- description = article.description || ''
+
+title= title
+meta( property='og:title', content= title )
+meta( name='description', content= description )
+meta( property='og:description', content= description )
+meta( property='twitter:description', content= description )
+
+meta( property='og:type', content='website' )
+meta( property='twitter:card', content='summary' )
+meta( name='fragment', content='!' )
+
+//- Unica Font
+link( rel='stylesheet' type='text/css' href="#{sd.CDN_URL + '/fonts/unica-stylesheet.css'}")
