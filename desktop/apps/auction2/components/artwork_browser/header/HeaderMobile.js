@@ -2,9 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
+import { toggleListView } from 'desktop/apps/auction2/actions/filter'
 
 function HeaderMobile (props) {
-  const { total } = props
+  const { total, isListView, toggleListViewAction } = props
 
   const b = block('auction2-artworks-header-mobile')
 
@@ -15,6 +16,12 @@ function HeaderMobile (props) {
           {total}
         </em>
       </div>
+
+      {/*  FIXME: Remove */}
+      <div onClick={() => toggleListViewAction(!isListView)}>
+        Toggle {isListView}
+      </div>
+
       <div>
         <div>
           Sort by:
@@ -45,6 +52,11 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  toggleListViewAction: toggleListView
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(HeaderMobile)

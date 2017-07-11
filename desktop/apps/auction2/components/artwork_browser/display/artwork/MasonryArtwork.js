@@ -6,16 +6,6 @@ import get from 'lodash.get'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 import { connect } from 'react-redux'
 
-const propTypes = {
-  artwork: PropTypes.object.isRequired,
-  date: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  isClosed: PropTypes.bool.isRequired,
-  lotLabel: PropTypes.string.isRequired,
-  artistDisplay: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
-}
-
 function MasonryArtwork (props) {
   const {
     artwork,
@@ -55,7 +45,15 @@ function MasonryArtwork (props) {
   )
 }
 
-MasonryArtwork.propTypes = propTypes
+MasonryArtwork.propTypes = {
+  artwork: PropTypes.object.isRequired,
+  date: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  isClosed: PropTypes.bool.isRequired,
+  lotLabel: PropTypes.string.isRequired,
+  artistDisplay: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+}
 
 const mapStateToProps = (state, props) => {
   const { artwork } = props

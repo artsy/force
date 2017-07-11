@@ -8,53 +8,107 @@ import { connect } from 'react-redux'
 import { get } from 'lodash'
 
 function ListArtwork (props) {
-  const artwork = props.artwork.artwork
-  const artists = artwork.artists
-  const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
-  const artworkImage = get(artwork, 'image.resized.url', '/images/missing_image.png')
+  const {
+    artwork,
+    artistDisplay,
+    date,
+    image,
+    isClosed,
+    isMobile,
+    lotLabel,
+    title
+  } = props
 
   const b = block('auction2-page-list-artwork')
-  const auctionArtworkClasses = classNames(b(), { 'auction2-open': props.isClosed })
+  const auctionArtworkClasses = classNames(b(), { 'auction2-open': isClosed })
 
   return (
-    <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
-      <div className={b('image-container')}>
-        <div className={b('image')}>
-          <img src={artworkImage} alt={artwork.title} />
-        </div>
-      </div>
-      <div className={b('metadata')}>
-        <div className={b('artists')}>
-          {artistDisplay}
-        </div>
-        <div
-          className={b('title')}
-          dangerouslySetInnerHTML={{
-            __html: titleAndYear(artwork.title, artwork.date)
-          }}
-        />
-      </div>
-      <div className={b('lot-number')}>
-        Lot {artwork.lot_label}
-      </div>
-      { !props.isClosed &&
-        <BidStatus
-          artworkItem={props.artwork}
-        /> }
-    </a>
+    isMobile
+      ? <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
+          <div className={b('image-container')}>
+            <div className={b('image')}>
+              <img src={image} alt={title} />
+            </div>
+          </div>
+
+          <div className={b('metadata')}>
+            <div className={b('lot-number')}>
+              Lot {lotLabel}
+            </div>
+
+            <div className={b('artists')}>
+              {artistDisplay}
+            </div>
+            <div
+              className={b('title')}
+              dangerouslySetInnerHTML={{
+                __html: titleAndYear(title, date)
+              }}
+            />
+
+          { !isClosed &&
+            <BidStatus
+              artworkItem={props.artwork}
+            /> }
+          </div>
+        </a>
+
+        // Desktop
+      : <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
+          <div className={b('image-container')}>
+            <div className={b('image')}>
+              <img src={image} alt={artwork.title} />
+            </div>
+          </div>
+          <div className={b('metadata')}>
+            <div className={b('artists')}>
+              {artistDisplay}
+            </div>
+            <div
+              className={b('title')}
+              dangerouslySetInnerHTML={{
+                __html: titleAndYear(title, date)
+              }}
+            />
+          </div>
+          <div className={b('lot-number')}>
+            Lot {artwork.lot_label}
+          </div>
+          { !props.isClosed &&
+            <BidStatus
+              artworkItem={props.artwork}
+            /> }
+        </a>
   )
 }
 
 ListArtwork.propTypes = {
+  artwork: PropTypes.object.isRequired,
+  date: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  artwork: PropTypes.object.isRequired
+  lotLabel: PropTypes.string.isRequired,
+  artistDisplay: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const { artwork } = props
+  const image = get(artwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
+  const { artists } = artwork.artwork
+  const artistDisplay = artists && artists.length > 0
+    ? artists.map((aa) => aa.name).join(', ')
+    : null
+
   return {
-    isClosed: state.auctionArtworks.isClosed,
-    isMobile: state.app.isMobile
+    date: artwork.artwork.date,
+    image,
+    isClosed: state.app.auction.isClosed(),
+    isMobile: state.app.isMobile,
+    lotLabel: artwork.lot_label,
+    artistDisplay,
+    title: artwork.artwork.title
   }
 }
 

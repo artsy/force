@@ -33,7 +33,7 @@ export const initialState = {
   isClosed: get(sd, 'AUCTION.is_closed', false),
   isFetchingArtworks: false,
   isLastFollowedArtistsPage: false,
-  isListView: false,
+  isListView: true,
   maxEstimateRangeDisplay: 50000,
   minEstimateRangeDisplay: 0,
   numArtistsYouFollow: 0,

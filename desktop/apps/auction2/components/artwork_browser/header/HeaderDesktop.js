@@ -44,7 +44,7 @@ function Header (props) {
 Header.propTypes = {
   displayType: PropTypes.string.isRequired,
   toggleListViewAction: PropTypes.func.isRequired,
-  totalLabel: PropTypes.number.isRequired
+  totalLabel: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {

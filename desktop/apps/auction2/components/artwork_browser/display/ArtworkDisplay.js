@@ -22,8 +22,7 @@ function ArtworkDisplay ({
   return (
     <div className={`auction2-page-artworks${listType}`}>
       {(() => {
-        if (isMobile) { // eslint-disable-line
-
+        if (isMobile) {
           // ListView
           if (isListView) {
             return saleArtworks.map((saleArtwork, key) => {
@@ -55,9 +54,7 @@ function ArtworkDisplay ({
 
           // Desktop
         } else {
-          const DisplayComponent = isListView
-            ? ListArtwork
-            : GridArtwork
+          const DisplayComponent = isListView ? ListArtwork : GridArtwork
 
           return (
             <div>
