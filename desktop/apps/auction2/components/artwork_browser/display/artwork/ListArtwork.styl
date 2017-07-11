@@ -12,7 +12,7 @@
   color gray-darker-color
 
   +respond-mobile()
-    flex-direction column
+    flex-direction row
     height 124px
 
   a
@@ -21,10 +21,19 @@
   &__image-container
     min-width 200px
 
+    +respond-mobile()
+      width: 30%
+
+
   &__image > img
     max-height 100px
     max-width 200px
     margin auto
+
+    +respond-mobile()
+      padding-right 20px
+      width 100px
+      height auto
 
   &__metadata
     overflow hidden
@@ -35,13 +44,20 @@
     padding-right 20px
 
     > *
-      overflow ellipsis
+      +respond-desktop()
+        overflow ellipsis
+
+    +respond-mobile()
+      margin-left 0
+      width 80%
+      white-space normal
 
   &__artists
     font-weight 600
 
   &__lot-number
-    width 10%
+    +respond-desktop()
+      width 10%
     avant-garde()
     font-size 11px
     margin-bottom 0px
@@ -51,11 +67,15 @@
 
   .auction2-bid-status
     text-align left
-    width 23%
+
+    +respond-desktop()
+      width 23%
 
 .auction2-page-list-artwork.auction2-open
   .auction2-page-list-artwork__metadata
-    width 45%
+    +respond-desktop()
+      width 45%
 
   .auction2-page-list-artwork__lot-number
-    width 25%
+    +respond-desktop()
+      width 25%

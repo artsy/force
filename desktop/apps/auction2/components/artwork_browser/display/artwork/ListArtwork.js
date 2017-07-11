@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
+import { truncate } from 'underscore.string'
 
 function ListArtwork (props) {
   const {
@@ -25,10 +26,8 @@ function ListArtwork (props) {
   return (
     isMobile
       ? <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
-          <div className={b('image-container')}>
-            <div className={b('image')}>
-              <img src={image} alt={title} />
-            </div>
+          <div className={b('image')}>
+            <img src={image} alt={title} />
           </div>
 
           <div className={b('metadata')}>
@@ -42,7 +41,7 @@ function ListArtwork (props) {
             <div
               className={b('title')}
               dangerouslySetInnerHTML={{
-                __html: titleAndYear(title, date)
+                __html: titleAndYear(truncate(title, 30), date)
               }}
             />
 
