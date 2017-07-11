@@ -43,12 +43,9 @@ function MasonryArtwork (props) {
         {artistDisplay}
       </div>
 
-      <div
-        className=''
-        dangerouslySetInnerHTML={{
-          __html: titleAndYear(title, date)
-        }}
-      />
+      <div dangerouslySetInnerHTML={{
+        __html: titleAndYear(title, date)
+      }} />
 
       { !isClosed &&
         <BidStatus

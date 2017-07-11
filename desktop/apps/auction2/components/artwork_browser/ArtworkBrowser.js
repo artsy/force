@@ -1,5 +1,6 @@
 import ArtworkDisplay from './display/ArtworkDisplay'
-import Header from './header/Header'
+import HeaderDesktop from './header/HeaderDesktop'
+import HeaderMobile from './header/HeaderMobile'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Sidebar from './sidebar/Sidebar'
@@ -13,7 +14,7 @@ function ArtworkBrowser ({ isMobile }) {
     <div className={b()}>
       { isMobile
         ? <div>
-            {/* <Header /> */}
+            <HeaderMobile />
             <ArtworkDisplay />
           </div>
         : <div className={b('container')}>
@@ -21,7 +22,7 @@ function ArtworkBrowser ({ isMobile }) {
               <Sidebar />
             </div>
             <div className={b('right').mix('cf-right')}>
-              <Header />
+              <HeaderDesktop />
               <ArtworkDisplay />
             </div>
           </div> }

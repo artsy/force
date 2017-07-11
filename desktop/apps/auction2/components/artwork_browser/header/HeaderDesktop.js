@@ -3,42 +3,32 @@ import Grid from '../../../../../components/main_layout/public/icons/grid.svg'
 import List from '../../../../../components/main_layout/public/icons/list.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { toggleListView } from 'desktop/apps/auction2/actions/filter'
 
-function displayButtonClass (buttonType, displayType) {
-  return classNames(
-    `auction2-artworks-header__${buttonType}`,
-    { active: displayType === buttonType }
-  )
-}
-
 function Header (props) {
   const {
-    isFetchingArtworks,
-    isListView,
     toggleListViewAction,
-    total
+    totalLabel,
+    displayType
   } = props
 
-  const displayType = isListView ? 'list' : 'grid'
-  const totalLabel = isFetchingArtworks
-    ? 'Loading results.'
-    : `${total} Artworks`
+  const b = block('auction2-artworks-header-desktop')
 
   return (
-    <div className='auction2-artworks-header'>
-      <div className='auction2-artworks-header__left'>
-        <div className='auction2-artworks-header__total'>
+    <div className={b()}>
+      <div className={b('left')}>
+        <div className={b('total')}>
           { totalLabel }
         </div>
       </div>
-      <div className='auction2-artworks-header__right'>
-        <div className='auction2-artworks-header__sort'>
+      <div className={b('right')}>
+        <div className={b('sort')}>
           <FilterSort />
         </div>
-        <div className='auction2-artworks-header__switch'>
+        <div className={b('switch')}>
           <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
             <Grid />
           </div>
@@ -52,17 +42,27 @@ function Header (props) {
 }
 
 Header.propTypes = {
-  isFetchingArtworks: PropTypes.bool.isRequired,
-  isListView: PropTypes.bool.isRequired,
+  displayType: PropTypes.string.isRequired,
   toggleListViewAction: PropTypes.func.isRequired,
-  total: PropTypes.number.isRequired
+  totalLabel: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => {
+  const {
+    isFetchingArtworks,
+    isListView,
+    total
+  } = state.auctionArtworks
+
+  const displayType = isListView ? 'list' : 'grid'
+
+  const totalLabel = isFetchingArtworks
+    ? 'Loading results.'
+    : `${total} Artworks`
+
   return {
-    isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
-    isListView: state.auctionArtworks.isListView,
-    total: state.auctionArtworks.total
+    displayType,
+    totalLabel
   }
 }
 
@@ -74,3 +74,12 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Header)
+
+// Helpers
+
+function displayButtonClass (buttonType, displayType) {
+  return classNames(
+    `auction2-artworks-header__${buttonType}`,
+    { active: displayType === buttonType }
+  )
+}
