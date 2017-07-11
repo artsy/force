@@ -57,6 +57,8 @@ export const filterQuery = `
             aspect_ratio,
             id
             image_url: url(version: "large")
+            image_large: url(version: "large")
+            image_medium: url(version: "medium")
             image_versions: versions
             placeholder: resized(width: 30, height: 30, version: "tall") {
               image_url: url
