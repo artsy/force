@@ -14,10 +14,10 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports =
-  highlight_header_search:
-    key: 'highlight_header_search'
-    outcomes:
-      default: 50
-      highlighted: 50
-    edge: 'highlighted'
+module.exports = {}
+  # home_personalization:
+  #   key: 'home_personalization'
+  #   outcomes:
+  #     default: 50
+  #     no_hero: 50
+  #   edge: 'no_hero'

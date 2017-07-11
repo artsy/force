@@ -8,22 +8,23 @@ append locals
   - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header' + (heroUnits.length && heroUnits[0].mode.match('LIGHT') ? '-white' : '')
 
 block body
-  include hero_units
-  #home-foreground
-    #home-hero-units-controls( data-length= heroUnits.length )
-      ul#home-hero-unit-dots
-        for x, i in heroUnits
-          li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
+  div(class= "ab-testing-home-personalization-#{sd.HOME_PERSONALIZATION}" )
+    include hero_units
+    #home-foreground
+      #home-hero-units-controls( data-length= heroUnits.length )
+        ul#home-hero-unit-dots
+          for x, i in heroUnits
+            li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
 
-    #home-layout-container.responsive-layout-container
-      .main-layout-container: #home-body
-        include featured_links
-        unless user
-          include browse
-    include rails
-    #home-layout-container.responsive-layout-container
-      .main-layout-container: #home-body
-        include featured_shows
-        include featured_articles
+      #home-layout-container.responsive-layout-container
+        .main-layout-container: #home-body
+          include featured_links
+          unless user
+            include browse
+      include rails
+      #home-layout-container.responsive-layout-container
+        .main-layout-container: #home-body
+          include featured_shows
+          include featured_articles
 
   include ../../../components/main_layout/templates/json_ld
