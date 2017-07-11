@@ -20,7 +20,7 @@ export async function index (req, res, next) {
         bodyClass: 'body-no-header body-no-margins'
       },
       data: {
-        article: article
+        article
       }
     })
     res.send(layout)

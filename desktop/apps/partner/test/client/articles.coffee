@@ -18,6 +18,7 @@ describe 'ArticlesAdapter', ->
         sd: ARTSY_EDITORIAL_CHANNEL: '123'
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
+      $.fn.fillwidthLite = sinon.stub()
       @ArticlesAdapter = benv.requireWithJadeify(
         (resolve __dirname, '../../client/articles'), ['articleTemplate', 'jsonldTemplate']
       )
