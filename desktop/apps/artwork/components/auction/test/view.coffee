@@ -176,8 +176,10 @@ describe 'auction', ->
           @data.me = {}
           view = new @ArtworkAuctionView data: @data
           view.render()
-          view.$('.js-artwork-auction-max-bid').length.should.equal 1
+          view.$('.artwork-auction__bid-form__max-bid').length.should.equal 1
           view.$('.artwork-auction__bid-form__select').length.should.equal 1
+          view.$('.js-artwork-auction-max-bid').length.should.equal 1
+
 
       describe 'post-bid messages', ->
         beforeEach ->
