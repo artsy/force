@@ -23,8 +23,14 @@ function ArtworkDisplay ({
     <div className={`auction2-page-artworks${listType}`}>
       {(() => {
         if (isMobile) {
-          // ListView
-          if (isListView) {
+          if (isFetchingArtworks) {
+            // FIXME
+            return (
+              <div className='loading-spinner' />
+            )
+
+            // ListView
+          } else if (isListView) {
             return saleArtworks.map((saleArtwork, key) => {
               return (
                 <ListArtwork

@@ -34,7 +34,9 @@ function FilterSort (props) {
                 href='#'
                 className={selected ? 'borderd-pulldown-active' : ''}
                 key={sort}
-                onClick={() => updateSortAction(sort)}
+                onClick={(event) => {
+                  updateSortAction(sort)
+                }}
               >{sortName}</a>
             })
           }

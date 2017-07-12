@@ -33,7 +33,7 @@ export const initialState = {
   isClosed: get(sd, 'AUCTION.is_closed', false),
   isFetchingArtworks: false,
   isLastFollowedArtistsPage: false,
-  isListView: true,
+  isListView: false,
   maxEstimateRangeDisplay: 50000,
   minEstimateRangeDisplay: 0,
   numArtistsYouFollow: 0,
@@ -41,10 +41,10 @@ export const initialState = {
   saleArtworksByFollowedArtists: [],
   saleArtworksByFollowedArtistsTotal: 0,
   sortMap: {
-    'bidder_positions_count': 'Number of Bids (asc.)',
-    'position': 'Lot Number (asc.)',
-    '-position': 'Lot Number (desc.)',
-    '-bidder_positions_count': 'Number of Bids (desc.)',
+    'bidder_positions_count': 'Number of Bids - asc',
+    'position': 'Lot Number - asc',
+    '-position': 'Lot Number - desc',
+    '-bidder_positions_count': 'Number of Bids - desc',
     '-searchable_estimate': 'Most Expensive',
     'searchable_estimate': 'Least Expensive'
   },

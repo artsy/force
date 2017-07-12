@@ -32,6 +32,7 @@ function HeaderMobile (props) {
         <div>
           Sort by:
           <select
+            dir='rtl'
             className={b('sort')}
             onChange={(event) => updateSortAction(event.target.value)}
           >
