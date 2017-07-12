@@ -7,7 +7,7 @@ export async function index (req, res, next) {
   const articleId = req.params.slug
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
-    const article = data.articles[0]
+    const article = data.article
     const layout = renderReactLayout({
       basePath: res.app.get('views'),
       blocks: {
