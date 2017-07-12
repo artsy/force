@@ -28,7 +28,7 @@ describe('#index', () => {
 
   it('renders the index with the correct variables', (done) => {
     const data = {
-      articles: [fixtures.article]
+      article: fixtures.article
     }
     RoutesRewireApi.__Rewire__(
       'positronql',

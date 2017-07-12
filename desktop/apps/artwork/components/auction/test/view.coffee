@@ -171,6 +171,14 @@ describe 'auction', ->
           view.$('.js-artwork-auction-bid').attr('action')
             .should.equal "/artwork/#{@data.artwork.id}"
 
+        it 'renders a bid amount dropdown', ->
+          @data.accounting = accounting
+          @data.me = {}
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('.js-artwork-auction-max-bid').length.should.equal 1
+          view.$('.artwork-auction__bid-form__select').length.should.equal 1
+
       describe 'post-bid messages', ->
         beforeEach ->
           @data = Object.assign(@data, {

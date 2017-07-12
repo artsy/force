@@ -1,7 +1,7 @@
 export default function ArticleQuery (id) {
   return `
     {
-      articles(published: true, id: "${id}" ) {
+      article(id: "${id}" ) {
         title
         description
         published_at
