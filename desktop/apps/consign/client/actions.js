@@ -2,7 +2,7 @@ import request from 'superagent'
 import gemup from 'gemup'
 import stepsConfig from './steps_config'
 import { data as sd } from 'sharify'
-import { fetchToken } from '../helpers'
+import { fetchToken, formattedLocation } from '../helpers'
 import { find } from 'underscore'
 import { push } from 'react-router-redux'
 
@@ -55,10 +55,15 @@ export function addImageToUploadedImages (fileName, src) {
   }
 }
 
-export function chooseArtistAndAdvance (value) {
+export function chooseArtist (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
     dispatch(updateArtistName(value.name))
+  }
+}
+
+export function chooseArtistAdvance () {
+  return (dispatch) => {
     dispatch(push(stepsConfig.describeWork.path))
   }
 }
@@ -139,6 +144,7 @@ export function completeSubmission () {
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
+      dispatch(stopLoading())
       dispatch(push(stepsConfig.thankYou.submissionPath.replace(':id', submissionResponse.body.id)))
     } catch (err) {
       dispatch(stopLoading())
@@ -616,9 +622,9 @@ export function updateLocationFromSubmissionAndFreeze (city, state, country) {
         }
       }
     } = getState()
-    const formattedLocation = [location_city, location_state, location_country].filter((item) => item).join(', ')
+    const location = formattedLocation(location_city, location_state, location_country)
 
-    dispatch(updateLocationAutocompleteValue(formattedLocation))
+    dispatch(updateLocationAutocompleteValue(location))
     dispatch(freezeLocationInput())
   }
 }

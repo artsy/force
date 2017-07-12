@@ -12,3 +12,7 @@ export async function fetchToken (accessToken) {
               .send({ client_application_id: sd.CONVECTION_APP_ID })
   return token
 }
+
+export function formattedLocation (city, state, country) {
+  return [city, state, country].filter(Boolean).join(', ')
+}
