@@ -28,25 +28,21 @@ function HeaderMobile (props) {
         </em>
       </div>
 
-      <div>
-        <div>
-          Sort by:
-          <select
-            dir='rtl'
-            className={b('sort')}
-            onChange={(event) => updateSortAction(event.target.value)}
-          >
-            {
-              _.map(sortMap, (sortName, sort) => {
-                return (
-                  <option value={sort} key={sort}>
-                    {sortName}
-                  </option>
-                )
-              })
-            }
-          </select>
-        </div>
+      <div className={b('sort')}>
+        <select
+          dir='rtl'
+          onChange={(event) => updateSortAction(event.target.value)}
+        >
+          {
+            _.map(sortMap, (sortName, sort) => {
+              return (
+                <option value={sort} key={sort}>
+                  {sortName}
+                </option>
+              )
+            })
+          }
+        </select>
       </div>
     </header>
   )
