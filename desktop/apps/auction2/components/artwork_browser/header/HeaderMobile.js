@@ -1,11 +1,22 @@
+import _ from 'underscore'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { toggleListView } from 'desktop/apps/auction2/actions/filter'
+import { toggleListView, updateSort } from 'desktop/apps/auction2/actions/filter'
+
+const propTypes = {
+  sortMap: PropTypes.object.isRequired,
+  totalLabel: PropTypes.string.isRequired,
+  updateSortAction: PropTypes.func.isRequired
+}
 
 function HeaderMobile (props) {
-  const { total, isListView, toggleListViewAction } = props
+  const {
+    sortMap,
+    totalLabel,
+    updateSortAction
+  } = props
 
   const b = block('auction2-artworks-header-mobile')
 
@@ -13,25 +24,26 @@ function HeaderMobile (props) {
     <header className={b()}>
       <div className={b('total')}>
         <em>
-          {total}
+          {totalLabel}
         </em>
-      </div>
-
-      {/*  FIXME: Remove */}
-      <div onClick={() => toggleListViewAction(!isListView)}>
-        Toggle {isListView}
       </div>
 
       <div>
         <div>
           Sort by:
-          <select dir='rtl' className={b('sort')}>
-            <option value='default'>Default</option>
-            <option value='name_asc'>Artists A–Z</option>
-            <option value='bids_desc'>Most Bids</option>
-            <option value='bids_asc'>Least Bids</option>
-            <option value='amount_desc'>Highest Bid</option>
-            <option value='amount_asc'>Lowest Bid</option>
+          <select
+            className={b('sort')}
+            onChange={(event) => updateSortAction(event.target.value)}
+          >
+            {
+              _.map(sortMap, (sortName, sort) => {
+                return (
+                  <option value={sort} key={sort}>
+                    {sortName}
+                  </option>
+                )
+              })
+            }
           </select>
         </div>
       </div>
@@ -39,22 +51,41 @@ function HeaderMobile (props) {
   )
 }
 
-HeaderMobile.propTypes = {
-  total: PropTypes.string.isRequired
-}
-
 const mapStateToProps = (state) => {
-  const { isListView, total } = state.auctionArtworks
+  const {
+    filterParams,
+    isFetchingArtworks,
+    sortMap,
+    total
+  } = state.auctionArtworks
+
+  const selectedSort = filterParams.sort
+
+  const totalLabel = isFetchingArtworks
+    ? 'Loading...'
+    : `${total} Lots`
 
   return {
-    isListView,
-    total: `${total} Lots`
+    filterParams,
+    selectedSort,
+    sortMap: { default: 'Default', ...sortMap },
+    totalLabel
   }
 }
 
-const mapDispatchToProps = {
-  toggleListViewAction: toggleListView
-}
+const mapDispatchToProps = (dispatch) => ({
+  updateSortAction: (sortValue) => {
+    if (sortValue === 'default') {
+      dispatch(toggleListView(false))
+      dispatch(updateSort('position')) // default
+    } else {
+      dispatch(toggleListView(true))
+      dispatch(updateSort(sortValue))
+    }
+  }
+})
+
+HeaderMobile.propTypes = propTypes
 
 export default connect(
   mapStateToProps,

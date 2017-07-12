@@ -42,9 +42,9 @@ export const initialState = {
   saleArtworksByFollowedArtistsTotal: 0,
   sortMap: {
     'bidder_positions_count': 'Number of Bids (asc.)',
-    '-bidder_positions_count': 'Number of Bids (desc.)',
     'position': 'Lot Number (asc.)',
     '-position': 'Lot Number (desc.)',
+    '-bidder_positions_count': 'Number of Bids (desc.)',
     '-searchable_estimate': 'Most Expensive',
     'searchable_estimate': 'Least Expensive'
   },
