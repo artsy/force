@@ -6,7 +6,8 @@ import { connect } from 'react-redux'
 import { get } from 'lodash'
 import {
   clearArtistSuggestions,
-  chooseArtistAndAdvance,
+  chooseArtist,
+  chooseArtistAdvance,
   fetchArtistSuggestions,
   showNotConsigningMessage,
   updateArtistAutocompleteValue
@@ -32,7 +33,8 @@ function ChooseArtist (props) {
     artistAutocompleteValue,
     artistName,
     clearArtistSuggestionsAction,
-    chooseArtistAndAdvanceAction,
+    chooseArtistAction,
+    chooseArtistAdvanceAction,
     fetchArtistSuggestionsAction,
     notConsigningArtist,
     showNotConsigningMessageAction,
@@ -66,7 +68,7 @@ function ChooseArtist (props) {
             suggestions={artistAutocompleteSuggestions}
             onSuggestionsFetchRequested={fetchArtistSuggestionsAction}
             onSuggestionsClearRequested={clearArtistSuggestionsAction}
-            onSuggestionSelected={chooseArtistAndAdvanceAction}
+            onSuggestionSelected={chooseArtistAction}
             getSuggestionValue={getSuggestionValue}
             renderInputComponent={renderInputComponent}
             renderSuggestion={renderSuggestion}
@@ -75,7 +77,7 @@ function ChooseArtist (props) {
         </div>
         <div
           className={b('next-button').mix('avant-garde-button-black')}
-          onClick={artistAutocompleteValue === artistName ? chooseArtistAndAdvanceAction : showNotConsigningMessageAction}
+          onClick={artistAutocompleteValue === artistName ? chooseArtistAdvanceAction : showNotConsigningMessageAction}
           disabled={!nextEnabled}
         >
           Next
@@ -95,14 +97,18 @@ const mapStateToProps = (state) => {
   return {
     artistAutocompleteSuggestions: state.submissionFlow.artistAutocompleteSuggestions,
     artistAutocompleteValue: state.submissionFlow.artistAutocompleteValue,
+    artistName: state.submissionFlow.artistName,
     notConsigningArtist: state.submissionFlow.notConsigningArtist
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    chooseArtistAndAdvanceAction (event, { suggestion, suggestionValue }) {
-      dispatch(chooseArtistAndAdvance(suggestion))
+    chooseArtistAction (event, { suggestion, suggestionValue }) {
+      dispatch(chooseArtist(suggestion))
+    },
+    chooseArtistAdvanceAction () {
+      dispatch(chooseArtistAdvance())
     },
     clearArtistSuggestionsAction () {
       dispatch(clearArtistSuggestions())

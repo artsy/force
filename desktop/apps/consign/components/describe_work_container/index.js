@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import { formattedLocation } from '../../helpers'
 import { makeDescribeWorkDesktop } from '../describe_work_desktop'
 import { makeDescribeWorkMobile } from '../describe_work_mobile'
 import { isEmpty, pick } from 'underscore'
 
 function DescribeWorkContainer (props) {
   const { isMobile, submission } = props
-  const populatedSubmission = isEmpty(submission) ? { signature: true, authenticity_certificate: true } : submission
+  const location = formattedLocation(submission.location_city, submission.location_state, submission.location_country)
+  const populatedSubmission = isEmpty(submission)
+    ? { signature: true, authenticity_certificate: true }
+    : { ...submission, location }
   const relevantInputs = pick(
     populatedSubmission,
     'artist_id',
@@ -20,6 +24,7 @@ function DescribeWorkContainer (props) {
     'edition_size',
     'height',
     'id',
+    'location',
     'medium',
     'provenance',
     'signature',

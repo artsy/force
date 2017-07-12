@@ -195,6 +195,40 @@ moment = require 'moment'
         }
       ]
       layout: 'overflow_fillwidth'
+    },
+    {
+      type: 'image_set'
+      images: [
+        {
+          "type": "artwork",
+          "id": "552b9dcd72616935a4261a00",
+          "slug": "vivian-maier-untitled-august-22-1956-chicago",
+          "date": "1956",
+          "title": "Untitled , August 22, 1956, Chicago",
+          "image": "https://d32dm0rphc51dk.cloudfront.net/VlKV_vHkiKPEP-q_cLkTbg/larger.jpg",
+          "partner": {
+          "name": "Galleri Tom Christoffersen",
+          "slug": "galleri-tom-christoffersen"
+          },
+          "artists": [
+            {
+            "name": "Vivian Maier",
+            "slug": "vivian-maier"
+            }
+          ],
+          "artist": {
+            "name": "Vivian Maier",
+            "slug": "vivian-maier"
+          },
+          "width": 1100,
+          "height": 1100
+        },
+        {
+          type: 'image'
+          url: 'http://img.jpg'
+          caption: '<p>Courtesy of Guggenheim.</p>'
+        }
+      ]
     }
   ]
   featured_artist_ids: ['5086df098523e60002000012']
@@ -205,7 +239,11 @@ moment = require 'moment'
   super_article: {
     related_articles: ['5086df098523e60002000012']
   }
-  hero_section: {}
+  hero_section: {
+    type: "fullscreen",
+    background_url: null,
+    background_image_url: "https://artsy-media-uploads.s3.amazonaws.com/3d8FtQB9pRG7P8I0KxfAdQ%2FPErnesto+Neto+PedraGiboLagoDuaBuse%CC%81+22%28StonePythonDuaBuse%CC%81Lake%29%2C+2016.jpg"
+  }
   channel_id: '5086df098523e60002000011'
 
 @searchResult =

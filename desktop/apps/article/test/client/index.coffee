@@ -129,7 +129,13 @@ describe 'ArticleIndexView', ->
       @view.params.get('is_super_article').should.be.false()
 
     it 'renders the next page on #render', ->
-      articles = [_.extend {}, fixtures.article, { id: '343', sections: [{ type: 'text', body: 'FooLa' }] } ]
+      articles = [ _.extend {}, fixtures.article,
+        {
+          id: '343'
+          sections: [{ type: 'text', body: 'FooLa' }]
+          hero_section: {}
+        }
+      ]
       @view.render(@view.collection, results: articles )
       $('.article-container').length.should.equal 2
 
