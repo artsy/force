@@ -9,9 +9,6 @@ export const initialState = {
 }
 
 export default combineReducers({
-  app: composeReducers(
-    app,
-    responsiveWindowReducer
-  ),
+  app: composeReducers(app, responsiveWindowReducer),
   auctionArtworks: filter
 })

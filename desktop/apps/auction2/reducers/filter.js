@@ -43,8 +43,8 @@ export const initialState = {
   sortMap: {
     'position': 'Lot Number Asc',
     '-position': 'Lot Number Desc',
-    'bidder_positions_count': 'Most Bids',
-    '-bidder_positions_count': 'Least Bids',
+    '-bidder_positions_count': 'Most Bids',
+    'bidder_positions_count': 'Least Bids',
     '-searchable_estimate': 'Most Expensive',
     'searchable_estimate': 'Least Expensive'
   },

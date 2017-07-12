@@ -15,6 +15,7 @@ function Layout (props) {
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
+    showInfoWindow,
     showMyActiveBids,
     showFooter
   } = props
@@ -35,7 +36,7 @@ function Layout (props) {
         { showMyActiveBids &&
           <MyActiveBids /> }
 
-        { showFilter &&
+        { showFilter && !showInfoWindow &&
           <div className='auction2-main-page'>
             { showFollowedArtistsRail &&
               <WorksByFollowedArtists /> }
@@ -54,12 +55,13 @@ Layout.propTypes = {
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
   showFollowedArtistsRail: PropTypes.bool.isRequired,
+  showInfoWindow: PropTypes.bool.isRequired,
   showMyActiveBids: PropTypes.bool.isRequired,
   showFooter: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
-  const { articles, auction, me, isMobile } = state.app
+  const { articles, auction, me, isMobile, showInfoWindow } = state.app
 
   const {
     associated_sale,
@@ -79,6 +81,7 @@ const mapStateToProps = (state) => {
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
+    showInfoWindow,
     showMyActiveBids,
     showFooter
   }
