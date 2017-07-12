@@ -15,17 +15,16 @@ if showAuctionForm
     .artwork-auction__bid-form__errors.form-errors( class='js-form-errors' )
 
     //- Rendered client-side
-    if user && bidderStatus === 'qualified-to-bid'
-      .artwork-auction__bid-form__max-bid
-        if me && me.lot_standing
-          +bidStatus(me.lot_standing, sale_artwork, {winningMessage: 'Highest Bidder', reserveMessage: 'Highest bidder, Reserve not met'})
-
-        else
-          .artwork-auction__bid-form__max-bid-label Set your max bid
-        span.help-tooltip(
-          data-message='Set the maximum amount you would like Artsy to bid up to on your behalf'
-          data-anchor='top-right'
-        )
+    .artwork-auction__bid-form__max-bid
+      if me && me.lot_standing
+        +bidStatus(me.lot_standing, sale_artwork, {winningMessage: 'Highest Bidder', reserveMessage: 'Highest bidder, Reserve not met'})
+      else
+        .artwork-auction__bid-form__max-bid-label Set your max bid
+      
+      span.help-tooltip(
+        data-message='Set the maximum amount you would like Artsy to bid up to on your behalf'
+        data-anchor='top-right'
+      )
 
     label.bordered-select.artwork-auction__bid-form__select
       select( name='bid' required ).js-artwork-auction-max-bid
