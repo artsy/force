@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.1.47":
-  version "0.1.47"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.47.tgz#81e57903f82ac44749bd243c12e353a4fd1ff55f"
+"@artsy/reaction-force@^0.1.48":
+  version "0.1.48"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.48.tgz#d5544a89866bcaa585e58e6bb5b25017ceff40c6"
   dependencies:
     "@storybook/addon-options" "^3.1.2"
     "@storybook/react" "^3.1.3"
