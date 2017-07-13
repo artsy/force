@@ -110,8 +110,10 @@ const mapStateToProps = (state) => {
   const isQualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding', true)
   const showContactInfo = !isMobile
 
+  if (typeof window !== 'undefined') window.auction = auction
+
   return {
-    isClosed: auction.isClosed(),
+    isClosed: auction.isClosed() || auction.get('clockState') === 'closed',
     isMobile,
     isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),
