@@ -535,7 +535,13 @@ artsy-passport@^2.0.3:
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-artsy-xapp@^1.0.4, "artsy-xapp@git://github.com/artsy/artsy-xapp.git":
+artsy-xapp@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/artsy-xapp/-/artsy-xapp-1.0.4.tgz#13cc772122d1f8b8aeef6ad6555a792dffa9c3aa"
+  dependencies:
+    superagent "^1.2.0"
+
+"artsy-xapp@git://github.com/artsy/artsy-xapp.git":
   version "1.0.4"
   resolved "git://github.com/artsy/artsy-xapp.git#cbc3db68469054ab13bfbffe68edda422a0972bb"
   dependencies:
