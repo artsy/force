@@ -150,6 +150,40 @@ describe 'Artwork metadata templates', ->
         $ = cheerio.load(html)
         $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Offered by'
 
+    describe 'auction house - not for sale', ->
+      beforeEach ->
+        @artwork.is_for_sale = false
+        @artwork.partner.type = 'Auction House'
+        @artwork.partner.name = 'Phillips'
+
+      it 'should display Gallery header', ->
+        html = render('partner')(
+          artwork: @artwork
+          sd: {}
+          asset: (->)
+        )
+
+        $ = cheerio.load(html)
+        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Auction House'
+        $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
+
+    describe 'auction house - for sale', ->
+      beforeEach ->
+        @artwork.is_for_sale = true
+        @artwork.partner.type = 'Auction House'
+        @artwork.partner.name = 'Phillips'
+
+      it 'should display Offered by when work is for sale', ->
+        html = render('partner')(
+          artwork: @artwork
+          sd: {}
+          asset: (->)
+        )
+
+        $ = cheerio.load(html)
+        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Offered by'
+        $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
+
     describe 'collecting institution', ->
       beforeEach ->
         @artwork.is_for_sale = true
@@ -207,21 +241,6 @@ describe 'Artwork metadata templates', ->
       it 'should link to partner\'s page', ->
         $ = cheerio.load(@html)
         $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Institution'
-
-    describe 'auction - partner', ->
-      before ->
-        @artwork.partner.type = 'Auction'
-        @artwork.partner.href = '/spring-slash-break-benefit-auction-2016'
-
-        @html = render('partner')(
-          artwork: @artwork
-          sd: {}
-          asset: (->)
-        )
-
-      it 'should include auction in the url', ->
-        $ = cheerio.load(@html)
-        $('.artwork-partner-link').attr('href').should.equal '/auction/spring-slash-break-benefit-auction-2016'
 
   describe 'auction artwork estimated value', ->
     before ->
