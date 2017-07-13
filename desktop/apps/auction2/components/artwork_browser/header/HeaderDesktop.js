@@ -79,7 +79,7 @@ export default connect(
 
 function displayButtonClass (buttonType, displayType) {
   return classNames(
-    `auction2-artworks-header__${buttonType}`,
+    `auction2-artworks-header-desktop__${buttonType}`,
     { active: displayType === buttonType }
   )
 }

@@ -1,4 +1,4 @@
-import ArtworkDisplay from './display/ArtworkDisplay'
+import ArtworkDisplay from './main/ArtworkDisplay'
 import HeaderDesktop from './header/HeaderDesktop'
 import HeaderMobile from './header/HeaderMobile'
 import PropTypes from 'prop-types'

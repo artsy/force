@@ -1,4 +1,4 @@
-import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/GridArtwork'
+import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
 import ChevronLeft from '../../../../../components/main_layout/public/icons/chevron-left.svg'
 import ChevronRight from '../../../../../components/main_layout/public/icons/chevron-right.svg'
 import PropTypes from 'prop-types'

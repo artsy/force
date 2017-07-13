@@ -80,7 +80,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  infiniteScroll: () => infiniteScroll(dispatch)
+  infiniteScroll: () => infiniteScroll(dispatch)()
 })
 
 export default connect(

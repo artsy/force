@@ -9,9 +9,8 @@ export default function infiniteScroll (dispatch) {
     const threshold = $(window).height() + $(window).scrollTop()
     const $artworks = $('.auction2-page-artworks')
 
-    const shouldFetch =
-      $artworks.height() > 0 &&
-      threshold > $artworks.offset().top + $artworks.height()
+    const shouldFetch = $artworks.height() > 0 &&
+                        threshold >= $artworks.offset().top + $artworks.height()
 
     if (shouldFetch) {
       dispatch(actions.infiniteScroll())

@@ -1,12 +1,11 @@
-import BidStatus from 'desktop/apps/auction2/components/artwork_browser/display/artwork/BidStatus'
-import MasonryArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/MasonryArtwork'
-import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/GridArtwork'
-import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/display/artwork/ListArtwork'
+import Jump from 'desktop/components/jump/react'
+import MasonryArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/MasonryArtwork'
+import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
+import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/ListArtwork'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
-import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 import { connect } from 'react-redux'
 
 function ArtworkDisplay ({
@@ -70,6 +69,12 @@ function ArtworkDisplay ({
                   artwork={saleArtwork}
                 />
               ))}
+
+              <Jump
+                direction='bottom'
+                element='.auction-artworks-header-desktop'
+                offset='.mlh-navbar'
+              />
 
               { isFetchingArtworks &&
                 <div className='loading-spinner' /> }

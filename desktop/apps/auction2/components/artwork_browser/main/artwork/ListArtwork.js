@@ -98,7 +98,7 @@ const mapStateToProps = (state, props) => {
   const { artists } = artwork.artwork
   const artistDisplay = artists && artists.length > 0
     ? artists.map((aa) => aa.name).join(', ')
-    : null
+    : ''
 
   return {
     date: artwork.artwork.date,

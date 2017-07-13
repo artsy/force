@@ -1,12 +1,12 @@
+import BidStatus from './BidStatus'
 import PropTypes from 'prop-types'
 import React from 'react'
-import BidStatus from './BidStatus'
 import block from 'bem-cn'
-import get from 'lodash.get'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 
-function MasonryArtwork (props) {
+function GridArtwork (props) {
   const {
     artwork,
     artistDisplay,
@@ -17,35 +17,44 @@ function MasonryArtwork (props) {
     title
   } = props
 
-  const b = block('auction2-page-masonry-artwork')
+  const b = block('auction2-page-grid-artwork')
 
   return (
-    <a href={`/artwork/${artwork.id}`} className={b()}>
-      <div>
-        <img className={b('image')} src={image} alt={title} />
+    <a className={b()} key={artwork._id} href={`/artwork/${artwork.id}`}>
+      <div className={b('image-container')}>
+        <div className='vam-outer'>
+          <div className='vam-inner'>
+            <div className={b('image')}>
+              <img src={image} alt={title} / >
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className={b('lot-label')}>
-        Lot {lotLabel}
+      <div className={b('metadata')}>
+        <div className={b('lot-information')}>
+          <div className={b('lot-number')}>
+            Lot {lotLabel}
+          </div>
+          { !isClosed &&
+            <BidStatus
+              artworkItem={artwork}
+            /> }
+        </div>
+        <div className={b('artists')}>
+          {artistDisplay}
+        </div>
+        <div
+          className={b('title')}
+          dangerouslySetInnerHTML={{
+            __html: titleAndYear(title, date)
+          }}
+        />
       </div>
-
-      <div className={b('artists')}>
-        {artistDisplay}
-      </div>
-
-      <div dangerouslySetInnerHTML={{
-        __html: titleAndYear(title, date)
-      }} />
-
-      { !isClosed &&
-        <BidStatus
-          artworkItem={artwork}
-        /> }
     </a>
   )
 }
 
-MasonryArtwork.propTypes = {
+GridArtwork.propTypes = {
   artwork: PropTypes.object.isRequired,
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
@@ -55,13 +64,14 @@ MasonryArtwork.propTypes = {
   title: PropTypes.string.isRequired
 }
 
+// TODO: Unify this selector across artwork types
 const mapStateToProps = (state, props) => {
   const { artwork } = props
   const image = get(artwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
   const { artists } = artwork.artwork
   const artistDisplay = artists && artists.length > 0
     ? artists.map((aa) => aa.name).join(', ')
-    : null
+    : ''
 
   return {
     date: artwork.artwork.date,
@@ -75,4 +85,4 @@ const mapStateToProps = (state, props) => {
 
 export default connect(
   mapStateToProps
-)(MasonryArtwork)
+)(GridArtwork)
