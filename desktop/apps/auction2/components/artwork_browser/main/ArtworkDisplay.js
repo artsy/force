@@ -2,6 +2,7 @@ import Jump from 'desktop/components/jump/react'
 import MasonryArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/MasonryArtwork'
 import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
 import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/ListArtwork'
+import LoadingSpinner from 'desktop/apps/auction2/components/artwork_browser/main/artwork/LoadingSpinner'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -22,38 +23,39 @@ function ArtworkDisplay ({
     <div className={`auction2-page-artworks${listType}`}>
       {(() => {
         if (isMobile) {
-          if (isFetchingArtworks) {
-            // FIXME
+          if (isListView) {
             return (
-              <div className='loading-spinner' />
-            )
+              <div>
+                { saleArtworks.map((saleArtwork, key) => (
+                  <ListArtwork
+                    artwork={saleArtwork}
+                    key={key}
+                  />
+                ))}
 
-            // ListView
-          } else if (isListView) {
-            return saleArtworks.map((saleArtwork, key) => {
-              return (
-                <ListArtwork
-                  artwork={saleArtwork}
-                  key={key}
-                />
-              )
-            })
+                <LoadingSpinner />
+              </div>
+            )
 
             // GridView
           } else {
             return (
-              <MasonryGrid
-                columnCount={2}
-                items={saleArtworks}
-                getAspectRatio={(artwork) => {
-                  return get(artwork, 'artwork.images.0.aspect_ratio')
-                }}
-                getDisplayComponent={(artwork) => {
-                  return (
-                    <MasonryArtwork artwork={artwork} />
-                  )
-                }}
-              />
+              <div>
+                <MasonryGrid
+                  columnCount={2}
+                  items={saleArtworks}
+                  getAspectRatio={(artwork) => {
+                    return get(artwork, 'artwork.images.0.aspect_ratio')
+                  }}
+                  getDisplayComponent={(artwork) => {
+                    return (
+                      <MasonryArtwork artwork={artwork} />
+                    )
+                  }}
+                />
+
+                <LoadingSpinner />
+              </div>
             )
           }
 
@@ -76,8 +78,7 @@ function ArtworkDisplay ({
                 offset='.mlh-navbar'
               />
 
-              { isFetchingArtworks &&
-                <div className='loading-spinner' /> }
+              <LoadingSpinner />
             </div>
           )
         }

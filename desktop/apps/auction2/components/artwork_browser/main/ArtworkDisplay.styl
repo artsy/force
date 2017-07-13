@@ -1,19 +1,20 @@
 .auction2-page-artworks
   clearfix()
   padding-top 0
+  height: 100%
 
   &--list
+    height 100%
+
     +respond-desktop()
       padding-top 30px
-
-    +respond-mobile()
-      height 110%
 
     .loading-spinner
       position relative
 
       +respond-mobile()
         margin-top: 30px
+        margin-bottom: 40px
 
   .loading-spinner
     clear both
