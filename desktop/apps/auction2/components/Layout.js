@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
     is_live_open
   } = auction.toJSON()
 
-  const showAssociatedAuctions = Boolean(associated_sale)
+  const showAssociatedAuctions = Boolean(!isMobile && associated_sale)
   const showFilter = Boolean(eligible_sale_artworks_count > 0)
   const showFollowedArtistsRail = Boolean(!isMobile && state.auctionArtworks.showFollowedArtistsRail)
   const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)

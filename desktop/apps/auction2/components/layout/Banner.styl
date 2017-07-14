@@ -3,13 +3,15 @@
   position relative
   overflow hidden
   margin-bottom 40px
+  background-size cover
+  background-position center
+
+  &_isClosed
+    background-color rgba(0, 0, 0, 0.6)
+    background-blend-mode multiply
 
   +respond-mobile()
     height 200px
-
-    &_isMobile
-      background-size cover
-      background-position center
 
   // Live
   &__live-bg

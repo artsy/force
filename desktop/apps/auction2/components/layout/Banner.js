@@ -9,6 +9,7 @@ function Banner (props) {
   const {
     auction,
     coverImage,
+    isClosed,
     isLiveOpen,
     isMobile,
     liveAuctionUrl,
@@ -23,7 +24,7 @@ function Banner (props) {
         ? <Background
             coverImage={coverImage}
             name={name}
-            className={b('live-open')}
+            className={b('live-open', { isClosed })}
           >
             <h1>
               Live Bidding Now Open
@@ -36,7 +37,7 @@ function Banner (props) {
         : <Background
             coverImage={coverImage}
             name={name}
-            className={b({ isMobile })}
+            className={b({ isMobile, isClosed })}
           >
             <ClockView
               model={auction}
@@ -50,6 +51,7 @@ function Banner (props) {
 Banner.propTypes = {
   auction: PropTypes.object.isRequired,
   coverImage: PropTypes.object.isRequired,
+  isClosed: PropTypes.bool.isRequired,
   isLiveOpen: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
   liveAuctionUrl: PropTypes.string,
@@ -69,7 +71,8 @@ const mapStateToProps = (state) => {
   return {
     auction,
     coverImage: cover_image,
-    isLiveOpen: false,
+    isClosed: state.auctionArtworks.isClosed,
+    isLiveOpen,
     isMobile,
     liveAuctionUrl,
     name
