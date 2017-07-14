@@ -33,6 +33,12 @@
   @media screen and (max-width: 768px)
     flex-wrap wrap-reverse
 
+.max-width-on-mobile
+  @media screen and (max-width: 768px)
+    max-width 450px
+    margin-left auto
+    margin-right auto
+
 // 👇from basscss-flex -----------------------------------
 .flex
   display flex
@@ -116,7 +122,7 @@ background-size-cover()
 
 .gallery-partnerships2__header
   background-size-cover()
-  height 630px
+  height 500px
   color white
   position relative
 
@@ -126,7 +132,9 @@ background-size-cover()
 
   &__headline
     garamond-size('xxl-headline')
-    @media screen and (max-width: 768px)
+    @media screen and (max-width: 960px)
+      garamond-size('xxl-headline')
+    @media screen and (max-width: 600px)
       garamond-size('l-headline')
       margin 0 20px 20px 20px
 
@@ -140,6 +148,8 @@ background-size-cover()
     max-width 615px
     text-align center
     margin 0 auto
+    @media screen and (max-width: 600px)
+      max-width 475px
 
 .gallery-partnerships2__intro
   padding 100px 0 50px
@@ -185,10 +195,14 @@ background-size-cover()
     &__wrapper
       width 450px
 
-  @media screen and (max-width: 768px)
-    &__image
-      width 100%
-      padding 50px 30px 0
+  &__image
+    width 100%
+    max-width 410px
+    @media screen and (max-width: 960px)
+      max-width 318px
+    @media screen and (max-width: 768px)
+      max-width 280px
+      padding 50px 0px 0
 
   &__sub_image
     position absolute
@@ -197,12 +211,17 @@ background-size-cover()
     margin-right auto
     left 0
     right 0
-    width 482px
+    width 100%
+    max-width 450px
     height 146px
     display none
+    @media screen and (max-width: 960px)
+      max-width 375px
+      height 114px
     @media screen and (max-width: 768px)
-      width 100%
+      max-width 330px
       height inherit
+      height 100px
 
 .gallery-partnerships2__stats
   padding 100px 0
@@ -220,7 +239,7 @@ background-size-cover()
     width 450px
 
   &__button
-    padding 30px 0 40px
+    padding 20px 0 40px
 
   &__frame
     @media screen and (max-width: 768px)
@@ -262,17 +281,24 @@ background-size-cover()
 
   &__video
     width 100%
+    max-width 420px
+    @media screen and (max-width: 960px)
+      max-width 325px
+    @media screen and (max-width: 768px)
+      max-width 340px
 
   &__learn_more
     @media screen and (max-width: 768px)
       margin 40px 0
 
   &__content-container
-    width 450px
+    width 100%
+    max-width 420px
     garamond-size('l-headline')
-
+    @media screen and (max-width: 960px)
+      max-width 325px
     @media screen and (max-width: 768px)
-      width 100%
+      max-width 340px
       garamond-size('headline')
 
 .gallery-partnerships2__folio
@@ -325,7 +351,6 @@ background-size-cover()
       width 100%
       padding 0 20px
       &__author
-        avant-garde-size('l-headline', true)
         text-transform inherit
 
   .mgr-dot
@@ -451,6 +476,7 @@ background-size-cover()
           background purple-color
 
     .mktoField
+      border-radius 0
       @media screen and (max-width: 768px)
         height 43px !important
     select.mktoField
@@ -509,5 +535,3 @@ background-size-cover()
 
       100%
         transform scale(1)
-
-//@require './mobile'
