@@ -33,5 +33,7 @@ unless artwork.is_in_auction
             data-partner_id= partner._id
             data-artwork_id= artwork._id
             data-artist_ids= artistIds
+            data-user_id=(sd.CURRENT_USER && sd.CURRENT_USER.id )
+            data-context='show phone number'
           )
             | Inquire via phone
