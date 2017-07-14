@@ -169,11 +169,15 @@ background-size-cover()
 
 .gallery-partnerships2__gallery-logos
   min-height 130px
+  @media screen and (min-width: 769px)
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
+      height 130px
+
   @media screen and (max-width: 768px)
     flex-direction column
     padding 15px 25px
   img
-    zoom 50%
+    transform scale(0.5)
 
 .gallery-partnerships2__connect-with-collectors
   min-height 610px
