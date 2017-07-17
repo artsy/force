@@ -13,7 +13,7 @@ describe('auction/components/layout/auction_info/Registration.test', () => {
         }
       })
 
-      wrapper.find(Registration).find('.auctino2-registration__wrapper').length.should.equal(0)
+      wrapper.find('.auctino2-registration__wrapper').length.should.equal(0)
     })
 
     it('returns Registration Pending when not qualified for bidding', () => {

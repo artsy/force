@@ -15,7 +15,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      component.wrapper.find(AuctionInfoDesktop).text().should.containEql('Sale Preview')
+      component.wrapper.text().should.containEql('Sale Preview')
 
       component = renderTestComponent({
         Component: AuctionInfoDesktop,
@@ -24,7 +24,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      component.wrapper.find(AuctionInfoDesktop).text().should.not.containEql('Sale Preview')
+      component.wrapper.text().should.not.containEql('Sale Preview')
     })
 
     it('renders name and upcoming label', () => {
@@ -36,8 +36,8 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      wrapper.find(AuctionInfoDesktop).text().should.containEql('Foo')
-      wrapper.find(AuctionInfoDesktop).text().should.containEql('Bar')
+      wrapper.text().should.containEql('Foo')
+      wrapper.text().should.containEql('Bar')
     })
 
     it('renders AddToCalendarView if showAddToCalendar is true', () => {
@@ -48,7 +48,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      component.wrapper.find(AuctionInfoDesktop).find(AddToCalendarView).length.should.eql(1)
+      component.wrapper.find(AddToCalendarView).length.should.eql(1)
 
       component = renderTestComponent({
         Component: AuctionInfoDesktop,
@@ -57,7 +57,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      component.wrapper.find(AuctionInfoDesktop).find(AddToCalendarView).length.should.eql(0)
+      component.wrapper.find(AddToCalendarView).length.should.eql(0)
     })
 
     it('renders Live Auction if liveStartAt exists', () => {
@@ -68,7 +68,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      wrapper.find(AuctionInfoDesktop).text().should.containEql('Live auction')
+      wrapper.text().should.containEql('Live auction')
     })
 
     it('renders a description', () => {
@@ -79,7 +79,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         }
       })
 
-      wrapper.find(AuctionInfoDesktop).text().should.containEql('hello description')
+      wrapper.text().should.containEql('hello description')
     })
 
     it('renders a Registration metadata component', () => {
@@ -87,7 +87,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         Component: AuctionInfoDesktop
       })
 
-      wrapper.find(AuctionInfoDesktop).find(Registration).length.should.eql(1)
+      wrapper.find(Registration).length.should.eql(1)
     })
   })
 })
