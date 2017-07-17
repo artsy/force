@@ -190,6 +190,7 @@ function renderTemplateComponents (templates, basePath, locals) {
   return templateComponents
 }
 
+// TODO: Refactor this into method above
 export function rehydrateClient (bootstrapData) {
   if (bootstrapData.templateComponents) {
     const templates = bootstrapData.templateComponents || {}
