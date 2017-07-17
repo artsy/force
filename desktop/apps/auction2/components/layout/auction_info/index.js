@@ -21,3 +21,5 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps
 )(AuctionInfoContainer)
+
+export const test = { AuctionInfoContainer }

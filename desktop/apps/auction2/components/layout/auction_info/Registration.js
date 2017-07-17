@@ -127,6 +127,4 @@ export default connect(
 
 // Helpers
 
-export const test = {
-  Registration
-}
+export const test = { Registration }

@@ -5,7 +5,7 @@ import Registration from './Registration'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function HeaderMobile (props) {
+function AuctionInfoMobile (props) {
   const {
     description,
     isAuctionPromo,
@@ -105,7 +105,7 @@ function HeaderMobile (props) {
   )
 }
 
-HeaderMobile.propTypes = {
+AuctionInfoMobile.propTypes = {
   description: PropTypes.string.isRequired,
   isAuctionPromo: PropTypes.bool,
   liveStartAt: PropTypes.string,
@@ -141,4 +141,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HeaderMobile)
+)(AuctionInfoMobile)
+
+export const test = { AuctionInfoMobile }
