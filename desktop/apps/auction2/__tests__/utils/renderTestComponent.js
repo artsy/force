@@ -26,9 +26,11 @@ export default function renderTestComponent ({ Component, data = {}, props = {},
 
   let renderMode
   switch (options.renderMode) {
+    // Full DOM
     case 'mount':
       renderMode = mount
       break
+    // Static HTML
     case 'render':
       renderMode = render
       break

@@ -105,3 +105,5 @@ Background.propTypes = {
   coverImage: PropTypes.object,
   name: PropTypes.string
 }
+
+export const test = { Banner }
