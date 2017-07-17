@@ -17,8 +17,11 @@ function Layout (props) {
     showFollowedArtistsRail,
     showInfoWindow,
     showMyActiveBids,
-    showFooter
+    showFooter,
+    // state
   } = props
+
+  // console.log(JSON.stringify(state));
 
   return (
     <div className='auction2-page'>
@@ -83,7 +86,8 @@ const mapStateToProps = (state) => {
     showFollowedArtistsRail,
     showInfoWindow,
     showMyActiveBids,
-    showFooter
+    showFooter,
+    state
   }
 }
 
