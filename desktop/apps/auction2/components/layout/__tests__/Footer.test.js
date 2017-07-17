@@ -1,5 +1,82 @@
-describe('auction/components/layout/Footer.test', () => {
-  it('works', () => {
+import Articles from 'desktop/collections/articles.coffee'
+import footerItems from 'desktop/apps/auction2/utils/footerItems'
+import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
+import { test } from 'desktop/apps/auction2/components/layout/Footer'
 
+const { Footer } = test
+
+describe('auction/components/layout/Footer.test', () => {
+  describe('<Footer />', () => {
+    let article
+
+    beforeEach(() => {
+      article = {
+        slug: 'artsy-editorial-fight-art',
+        thumbnail_title: 'The Fight to Own Art',
+        thumbnail_image: {
+          url: 'https://artsy-media-uploads.s3.amazonaws.com/e6rsZcv5h7zCL7gU_4cjXw%2Frose.jpg'
+        },
+        'tier': 1,
+        'published_at': '2017-01-26T00:26:57.928Z',
+        'channel_id': '5759e3efb5989e6f98f77993',
+        'author': {
+          'id': '54cfdab872616972546e0400',
+          'name': 'Artsy Editorial'
+        },
+        'contributing_authors': [
+          {
+            'id': 'abc124',
+            'name': 'Abigail C'
+          },
+          {
+            'id': 'def456',
+            'name': 'Anna S'
+          }
+        ]
+      }
+    })
+
+    it('no articles', () => {
+      const { wrapper } = renderTestComponent({
+        Component: Footer,
+        data: {
+          app: {
+            articles: []
+          }
+        }
+      })
+
+      wrapper.find('.auction2-footer').length.should.eql(0)
+    })
+
+    describe('articles, not auction promo', () => {
+      it('shows the articles and the extra footer item', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Footer,
+          data: {
+            app: {
+              articles: [article]
+            }
+          },
+          props: {
+            articles: new Articles([article]),
+            showArticles: true,
+            showFooterItems: true,
+            footerItem: footerItems[0],
+            sd: {
+              sd: {
+                ARTSY_EDITORIAL_CHANNEL: 'foo'
+              }
+            }
+          }
+        })
+
+        wrapper.html().should.containEql('The Fight to Own Art')
+        wrapper.html().should.containEql('Artsy Editorial')
+        wrapper.html().should.containEql('By Abigail C and Anna S')
+        wrapper.find('.auction2-footer__auction2-app-promo-wrapper').length.should.equal(1)
+        wrapper.html().should.containEql('Bid from your phone')
+      })
+    })
   })
 })

@@ -104,3 +104,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(Footer)
+
+// Helpers
+
+export const test = { Footer }
