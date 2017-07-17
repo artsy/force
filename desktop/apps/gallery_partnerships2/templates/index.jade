@@ -49,7 +49,7 @@ block body
               .gallery-partnerships2__connect-with-collectors__content_container.flex.flex-auto.justify-center.items-center
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
                   .gallery-partnerships2__connect-with-collectors__headline= sections[1].title
-                  .mt2.mb3.garamond-l-body= sections[1].content
+                  .mt3.mb3.garamond-l-body= sections[1].content
                   a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
                     href="#gallery-partnership2-form"
                     data-label='Learn More'
@@ -78,7 +78,7 @@ block body
                     data-section="Grow your gallery presense"
                   ) Learn More
 
-            .col-xs-12.col-lg-6( style="position: relative;" )
+            .col-xs-12.col-lg-6.max-width-on-mobile( style="position: relative;" )
               img.gallery-partnerships2__stats__frame( src="http://files.artsy.net/images/macbook-transparent1x.png" )
               section.js-partner-stats-slideshow.gallery-partnerships2__stats__slideshow
                 .mgr-cells.js-mgr-cells
@@ -92,7 +92,7 @@ block body
       .responsive-layout-container.flex.flex-auto
         .main-layout-container.flex.flex-auto
           .row.flex.flex-auto.reverse-on-mobile
-            .col-xs-12.col-lg-6.items-center.justify-center
+            .col-xs-12.col-lg-6.items-center.justify-center.flex
               video.gallery-partnerships2__chat__video(autoplay loop playsinline muted)
                 source(src=sections[3].video type="video/mp4")
             .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
@@ -113,7 +113,7 @@ block body
           .row
             .col-xs-12.col-lg-6
               .flex.justify-center.items-center( style= 'height: 100%' )
-                .gallery-partnerships2__folio__inner-container
+                .gallery-partnerships2__folio__inner-container.max-width-on-mobile
                   .mb2.text-center-on-mobile= sections[4].title
                   .gallery-partnerships2__folio__features.garamond-l-body
                     for item in sections[4].folio
@@ -128,7 +128,7 @@ block body
                       data-section="Carry your gallery with you"
                     ) Learn More
             .col-xs-12.col-lg-6
-              img.gallery-partnerships2__folio__image(src=sections[4].image)
+              img.gallery-partnerships2__folio__image.max-width-on-mobile(src=sections[4].image)
 
     .gallery-partnerships2__testimonials.bg-gray.flex.items-center.justify-center
       .gallery-partnerships2__testimonials__slideshow
@@ -140,7 +140,7 @@ block body
                    | “
                    = testimonial.content
                    | ”
-                .gallery-partnerships2__testimonials__slideshow__item__author= testimonial.partner
+                .gallery-partnerships2__testimonials__slideshow__item__author.garamond-l-body= testimonial.partner
 
           - index = 0
           nav.mgr-navigation.js-mgr-navigation
