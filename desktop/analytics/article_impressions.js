@@ -78,32 +78,6 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
             id: 'image_set:' + articleId + ':' + $(this).data('index')
           }
 
-        // TOC
-        } else if (classList.contains('article-section-toc')) {
-          return {
-            article_id: articleId,
-            destination_path: null,
-            impression_type: 'toc',
-            context_type: 'article_fixed',
-            id: 'toc:' + articleId
-          }
-        } else if (classList.contains('article-sa-related')) {
-          return {
-            article_id: articleId,
-            destination_path: null,
-            impression_type: 'toc',
-            context_type: 'article_fixed',
-            id: 'toc:' + articleId
-          }
-        } else if (classList.contains('visible')) {
-          return {
-            article_id: articleId,
-            destination_path: null,
-            impression_type: 'toc',
-            context_type: 'article_fixed',
-            id: 'toc:' + articleId
-          }
-
         // Related Article
         } else if (classList.contains('article-related-widget')) {
           var related = $(this).find('a')
