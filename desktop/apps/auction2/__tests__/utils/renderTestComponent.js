@@ -5,16 +5,14 @@ import CurrentUser from 'desktop/models/current_user.coffee'
 import React from 'react'
 import bootstrap from 'desktop/apps/auction2/__tests__/fixtures/auction'
 import auctions from 'desktop/apps/auction2/reducers'
+import merge from 'lodash.merge'
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import { mount, render, shallow } from 'enzyme'
 
 export default function renderTestComponent ({ Component, data = {}, props = {}, options = {} }) {
-  const reduxData = {
-    ...bootstrap,
-    ...data
-  }
-
+  const reduxData = merge(bootstrap, data)
   const auctionModel = new Auction(reduxData.app.auction)
   const auctionArticles = new Articles(reduxData.app.articles)
 
@@ -22,7 +20,7 @@ export default function renderTestComponent ({ Component, data = {}, props = {},
   reduxData.app.auction = auctionModel
   reduxData.app.articles = auctionArticles
 
-  const store = createStore(auctions, reduxData)
+  const store = createStore(auctions, reduxData, applyMiddleware(thunk))
 
   let renderMode
   switch (options.renderMode) {

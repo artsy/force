@@ -1,6 +1,7 @@
 import _ from 'underscore'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { updateSort } from 'desktop/apps/auction2/actions/filter'
 
@@ -16,9 +17,11 @@ function FilterSort (props) {
   const itemIndex = Object.keys(sortMap).indexOf(selectedSort)
   const optionsOffset = (itemIndex) * itemHeight
 
+  const b = block('auction2-filter-sort')
+
   return (
-    <div className='auction2-filter-sort'>
-      <span className='auction2-filter-sort__label bordered-pulldown-label'>Sort by:</span>
+    <div className={b()}>
+      <span className={b('label').mix('bordered-pulldown-label')}>Sort by:</span>
       <div className='bordered-pulldown'>
         <a className='bordered-pulldown-toggle' href='#'>
           <span className='bordered-pulldown-text'>{ sortMap[selectedSort] }</span>
