@@ -118,7 +118,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
   };
 
   var trackImpressions = function() {
-    // Find signups, cta, share buttons, artist follow, toc, and image sets
+    // Find signups, cta, share buttons, artist follow, and image sets
     var itemSelectors = '.articles-es-cta,' +
                         '.article-section-image-set,' +
                         '.article-section-toc,' +

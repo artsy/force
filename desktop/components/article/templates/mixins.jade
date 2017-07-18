@@ -72,13 +72,6 @@ mixin pullquote(section)
   .article-section-callout
     .article-section-callout__pullquote= section.text
 
-mixin toc(section)
-  .article-section-toc-header Table Of Contents
-  .article-section-toc-links
-    each link in section.links
-      .article-section-toc-link
-        a(href="##{link.value}")= link.name
-
 mixin imageSet(section)
   .article-section-image-set__images
     for item, i in section.images.slice(0,3)
