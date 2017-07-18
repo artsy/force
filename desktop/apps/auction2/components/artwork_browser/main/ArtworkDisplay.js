@@ -111,3 +111,5 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(ArtworkDisplay)
+
+export const test = { ArtworkDisplay }
