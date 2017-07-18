@@ -72,6 +72,7 @@
 
 .artwork-favorites-container
   display inline-block
+
 .artwork-header-module__share-button
   display inline-block
   .circle-border-icon-button
@@ -85,6 +86,10 @@
 
 .artwork-header-module__favorite
   text-decoration none
+  svg
+    fill #000
   &[data-state='saved']
     border-color #6a00cc
     color #6a00cc
+    svg
+      fill #6a00cc

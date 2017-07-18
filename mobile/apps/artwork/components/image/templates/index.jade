@@ -18,5 +18,10 @@
       .artwork-header-module
         .artwork-header-module__share-button
         .artwork-favorites-container
-          a.artwork-header-module__favorite( data-action='save' data-state='unsaved')
-            i.icon-heart
+          - console.log(artwork.is_in_auction)
+          if artwork.auction && artwork.auction.auction_state == 'open'
+            a.artwork-header-module__favorite(data-action='save' data-state='unsaved')
+              include ../../../../../../desktop/components/main_layout/public/icons/bell.svg
+          else
+            a.artwork-header-module__favorite( data-action='save' data-state='unsaved')
+              i.icon-heart

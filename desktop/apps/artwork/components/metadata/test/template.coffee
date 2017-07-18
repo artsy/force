@@ -6,7 +6,8 @@ fs = require 'fs'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 helpers = require '../helpers.coffee'
-inquireableArtwork = require '../../../test/fixtures/inquireable_artwork.json'
+inAuctionArtwork = require '../../../test/fixtures/in_auction_artwork.json'
+
 render = (templateName) ->
   filename = path.resolve __dirname, "../index.jade"
   jade.compile(
@@ -15,10 +16,10 @@ render = (templateName) ->
   )
 
 renderArtwork = (artworkOptions = {}, sdOptions = {}) ->
-  artwork = _.clone inquireableArtwork.data.artwork
+  artwork = _.clone inAuctionArtwork.artwork
   _.extend artwork, artworkOptions
   sd = _.extend { CLIENT: artwork: artwork }, sdOptions
-
+  console.log artwork
   html = render('index')(
     artwork: artwork
     sd: sd
@@ -28,15 +29,7 @@ renderArtwork = (artworkOptions = {}, sdOptions = {}) ->
         contacts: sinon.stub()
         location: sinon.stub()
         artistIds: sinon.stub()
-      commercial:
-        isWithConsignableArtists: sinon.stub()
   )
 
-describe 'Commercial template', ->
-
-  it 'name and password display for prequalified work', ->
-    html = renderArtwork { partner: is_pre_qualify: true }
-    $ = cheerio.load(html)
-    $('input[name=email]').length.should.eql 1
-
-
+################## need to stub locations
+# (this isn't a working spec and i should delete it probably)
