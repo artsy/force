@@ -18,14 +18,6 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       context_type: 'article_sticky',
       service: $(this).attr('data-service')
     })
-  }).on('click', '.article-section-toc-link a', function () {
-    var articleId = $(this).closest('.article-container').data('id')
-    analytics.track('Clicked article impression', {
-      article_id: articleId,
-      destination_path: null,
-      impression_type: 'toc',
-      context_type: 'article_fixed'
-    })
   }).on('click', '.article-section-image-set', function () {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Clicked article impression', {
