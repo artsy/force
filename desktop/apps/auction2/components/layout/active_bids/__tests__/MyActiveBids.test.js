@@ -1,11 +1,9 @@
 import Auction from 'desktop/models/auction.coffee'
-import React from 'react'
 import CurrentUser from 'desktop/models/current_user.coffee'
 import MyActiveBids from 'desktop/apps/auction2/components/layout/active_bids/MyActiveBids'
-import auctions, { initialState } from 'desktop/apps/auction2/reducers'
-import { createStore } from 'redux'
+import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
+import { initialState } from 'desktop/apps/auction2/reducers'
 import { fabricate } from 'antigravity'
-import { render } from 'enzyme'
 
 describe('<MyActiveBids />', () => {
   let baseData
@@ -21,23 +19,23 @@ describe('<MyActiveBids />', () => {
   })
 
   function setup (data = {}) {
-    data = { ...baseData, ...data }
-
-    const store = createStore(auctions, {
-      app: data,
-      auctionArtworks: initialState
+    const { wrapper } = renderTestComponent({
+      Component: MyActiveBids,
+      data: {
+        app: {
+          ...baseData,
+          ...data
+        },
+        auctionArtworks: initialState
+      }
     })
-
-    const wrapper = render(
-      <MyActiveBids store={store} />
-    )
 
     return wrapper
   }
 
   describe('my_active_bids', () => {
     it('displays an outbid bid status', () => {
-      const rendered = setup({
+      const wrapper = setup({
         me: {
           lot_standings: [
             {
@@ -74,15 +72,15 @@ describe('<MyActiveBids />', () => {
         user: new CurrentUser({ id: 'user' })
       })
 
-      rendered.find('h2').should.have.lengthOf(1)
-      rendered.find('.bid-status').should.have.lengthOf(1)
-      rendered.find('.bid-status').text().should.containEql('Outbid')
-      rendered.find('.auction2-my-active-bids__bid-button').should.have.lengthOf(1)
-      rendered.find('.auction2-my-active-bids__bid-button').text().should.containEql('Bid')
+      wrapper.find('h2').should.have.lengthOf(1)
+      wrapper.find('.bid-status').should.have.lengthOf(1)
+      wrapper.find('.bid-status').text().should.containEql('Outbid')
+      wrapper.find('.auction2-active-bid-item__bid-button').should.have.lengthOf(1)
+      wrapper.find('.auction2-active-bid-item__bid-button').text().should.containEql('Bid')
     })
 
     it('displays a Bid Live button if is_live_open', () => {
-      const rendered = setup({
+      const wrapper = setup({
         me: {
           lot_standings: [
             {
@@ -120,10 +118,10 @@ describe('<MyActiveBids />', () => {
         user: new CurrentUser({ id: 'user' })
       })
 
-      rendered.find('h2').should.have.lengthOf(1)
-      rendered.find('.bid-status').should.have.lengthOf(0)
-      rendered.find('.auction2-my-active-bids__bid-live-button').should.have.lengthOf(1)
-      rendered.find('.auction2-my-active-bids__bid-live-button').text().should.containEql('Bid Live')
+      wrapper.find('h2').should.have.lengthOf(1)
+      wrapper.find('.bid-status').should.have.lengthOf(0)
+      wrapper.find('.auction2-active-bid-item__bid-live-button').should.have.lengthOf(1)
+      wrapper.find('.auction2-active-bid-item__bid-live-button').text().should.containEql('Bid Live')
     })
   })
 })
