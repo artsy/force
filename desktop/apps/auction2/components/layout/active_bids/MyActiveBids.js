@@ -53,6 +53,10 @@ class MyActiveBids extends Component {
     const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
     const b = block('auction2-my-active-bids')
 
+    if (!lotStandings.length) {
+      return null
+    }
+
     return (
       <div className={b()}>
         <h2>

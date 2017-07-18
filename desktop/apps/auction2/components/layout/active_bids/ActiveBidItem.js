@@ -63,7 +63,7 @@ function ActiveBidItem (props) {
 
       { highest_bid &&
         <div className={b('current-bid')}>
-          <b>Current Bid: </b> {highest_bid.display}
+          <b>Current Bid:</b> {highest_bid.display}
         </div> }
 
       <div className={b('bids-num')}>
@@ -111,3 +111,5 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps
 )(ActiveBidItem)
+
+export const test = { ActiveBidItem }

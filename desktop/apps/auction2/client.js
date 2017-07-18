@@ -24,6 +24,8 @@ const store = configureStore(auctionReducer, {
   auctionArtworks: bootstrapData.auctionArtworks
 })
 
+window.store = store
+
 // Start app
 ReactDOM.render(
   <App

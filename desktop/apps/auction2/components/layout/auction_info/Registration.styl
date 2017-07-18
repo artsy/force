@@ -29,8 +29,10 @@
   &__approved
     color new-green-color
     garamond-size('l-body')
-    margin-bottom 20px
-    padding-left 20px
+
+    +respond-desktop()
+      margin-bottom 20px
+      padding-left 20px
 
     +respond-mobile()
       garamond-size('s-body')
