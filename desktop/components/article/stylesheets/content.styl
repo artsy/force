@@ -7,6 +7,8 @@ body-width = 580px
 gutter-size = 30px
 column-width = 580px
 fixed-share-padding = 89px
+text-margin-full = 20px
+text-margin-half = 10px
 
 body.body-article
   #main-layout-container.responsive-layout-container
@@ -46,54 +48,14 @@ body.body-article
 .article-section-text
   margin auto
 
-.article-section-toc
-  margin auto
-  max-width body-width
-  .article-section-toc-header
-    avant-garde-size('body')
-    border-bottom 1px solid gray-color
-    padding-bottom 20px
-  .article-section-toc-links
-    padding 20px 0px
-    border-bottom 1px solid gray-color
-  .article-section-toc-links:after
-    content ""
-    display table
-    clear both
-  .article-section-toc-link
-    padding 10px 15px
-    min-width 140px
-    width 33.33%
-    float left
-    min-width 140px
-    box-sizing border-box
-    @media screen and (max-width 600px)
-      width 50%
-      padding 0 20px 5px 0
-      &:nth-child(2n)
-        padding-right 0
-
-  .article-section-toc-link:nth-child(3n + 4), .article-section-toc-link:first-child
-    padding-left 0px
-  .article-section-toc-link:nth-child(3n + 3)
-    padding-right 0px
-  a
-    text-decoration none
-    garamond-size('s-body')
-    &:hover
-      color purple-color
-
 .article-lead-paragraph, .article-section-text
   font-size 20px
   line-height 27px
   @media screen and (min-width 620px)
     width body-width
-  a:not(.is-jump-link):not(.artist-follow)
+  a:not(.artist-follow)
     text-decoration none
     fine-faux-underline()
-  a.is-jump-link
-    cursor text
-    padding-top 50px
   a.artist-follow
     cursor pointer
     garamond-size('l-body')
@@ -101,26 +63,30 @@ body.body-article
     @media screen and (max-width 550px)
       garamond-size('s-body')
   p
-    margin-bottom 1em
+    padding-top 1em
+    padding-bottom 1em
+    &:first-child
+      padding-top 0
     &:last-child
-      margin-bottom 0
-    @media screen and (max-width 550px)
-      margin-top 1em
+      padding-bottom 0
   h2
     font-size 28px
     line-height 1.2em
-    min-height 1em
+    margin-top text-margin-half
+    margin-bottom 0
     @media screen and (max-width 550px)
       garamond-size('s-headline')
   h3
     avant-garde()
     font-size 13px
+    margin-top text-margin-full
+    margin-bottom 0
   h3 a
     text-decoration none
     medium-faux-underline()
     padding-bottom 3px
   li
-    margin-bottom 10px
+    margin-bottom text-margin-half
   ul li
     list-style disc outside
   ol li
@@ -252,6 +218,11 @@ body.body-article
 .article-section-container
   margin (gutter-size * 1.5) auto
   &.responsive-layout-container
+    &[data-section-type="text"]
+      padding-top 1em
+      padding-bottom 1em
+      margin-top 0em
+      margin-bottom 0em
     &[data-section-type="callout"]
       max-width 1250px
     &[data-section-type="artworks"]

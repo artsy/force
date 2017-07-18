@@ -66,6 +66,7 @@
       margin-bottom 10px
     li:last-child
       margin-right 0
+      margin-bottom 0
 
   &[data-layout='column_width']
     max-width 580px
@@ -73,6 +74,8 @@
       flex-direction column
       li
         margin-bottom 30px
+        &:last-child
+          margin-bottom 0
 
   @media screen and (max-width 900px)
     &[data-layout="overflow_fillwidth"] figcaption
