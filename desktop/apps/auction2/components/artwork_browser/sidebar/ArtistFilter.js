@@ -8,21 +8,15 @@ import { updateArtistParams } from 'desktop/apps/auction2/actions/filter'
 function ArtistFilter (props) {
   const {
     aggregatedArtists,
-    filterParams,
+    allArtists,
+    allArtistsSelected,
+    artistIds,
+    artistsYouFollow,
+    includeArtworksByFollowedArtists,
     numArtistsYouFollow,
     updateArtistParamsAction,
     user
   } = props
-
-  const artistIds = filterParams.artist_ids
-  const allArtists = { id: 'artists-all', name: 'All' }
-  const allArtistsSelected = artistIds.length === 0 && !filterParams.include_artworks_by_followed_artists
-  const countDisplay = numArtistsYouFollow > 0 ? numArtistsYouFollow : undefined
-  const artistsYouFollow = {
-    id: 'artists-you-follow',
-    count: countDisplay,
-    name: 'Artists You Follow'
-  }
 
   return (
     <div className='auction2-artist-checkboxes'>
@@ -34,7 +28,7 @@ function ArtistFilter (props) {
             key={artistsYouFollow.id}
             item={artistsYouFollow}
             onClick={updateArtistParamsAction}
-            checked={filterParams.include_artworks_by_followed_artists}
+            checked={includeArtworksByFollowedArtists}
             disabled={numArtistsYouFollow === 0}
           />
         </div>
@@ -57,18 +51,43 @@ function ArtistFilter (props) {
 
 ArtistFilter.propTypes = {
   aggregatedArtists: PropTypes.array.isRequired,
-  filterParams: PropTypes.object.isRequired,
+  allArtists: PropTypes.object.isRequired,
+  allArtistsSelected: PropTypes.bool.isRequired,
+  artistIds: PropTypes.array.isRequired,
+  artistsYouFollow: PropTypes.object.isRequired,
+  includeArtworksByFollowedArtists: PropTypes.bool.isRequired,
   numArtistsYouFollow: PropTypes.number.isRequired,
   updateArtistParamsAction: PropTypes.func.isRequired,
   user: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
+  const {
+    aggregatedArtists,
+    filterParams,
+    numArtistsYouFollow,
+    user
+  } = state.auctionArtworks
+
+  const artistIds = filterParams.artist_ids
+  const includeArtworksByFollowedArtists = filterParams.include_artworks_by_followed_artists
+  const allArtists = { id: 'artists-all', name: 'All' }
+  const allArtistsSelected = artistIds.length === 0 && !filterParams.include_artworks_by_followed_artists
+  const countDisplay = numArtistsYouFollow > 0 ? numArtistsYouFollow : undefined
+  const artistsYouFollow = {
+    id: 'artists-you-follow',
+    count: countDisplay,
+    name: 'Artists You Follow'
+  }
+
   return {
-    aggregatedArtists: state.auctionArtworks.aggregatedArtists,
-    filterParams: state.auctionArtworks.filterParams,
-    numArtistsYouFollow: state.auctionArtworks.numArtistsYouFollow,
-    user: state.auctionArtworks.user
+    aggregatedArtists,
+    allArtists,
+    allArtistsSelected,
+    artistIds,
+    artistsYouFollow,
+    includeArtworksByFollowedArtists,
+    user
   }
 }
 
