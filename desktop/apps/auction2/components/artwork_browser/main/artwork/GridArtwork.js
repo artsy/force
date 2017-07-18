@@ -86,3 +86,5 @@ const mapStateToProps = (state, props) => {
 export default connect(
   mapStateToProps
 )(GridArtwork)
+
+export const test = { GridArtwork }

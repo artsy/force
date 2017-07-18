@@ -1,35 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
+import { connect } from 'react-redux'
 
-export default function BidStatus ({ artworkItem }) {
+function BidStatus (props) {
   const {
-    artwork,
-    counts = {},
-    current_bid
-  } = artworkItem
+    isSold,
+    currentBidDisplay,
+    bidLabel
+  } = props
 
-  const {
-    bidder_positions
-  } = counts
-
-  let bidLabel
-
-  if (counts && bidder_positions) {
-    const bidOrBids = bidder_positions > 1 ? 'Bids' : 'Bid'
-    bidLabel = `(${bidder_positions} ${bidOrBids})`
-  } else {
-    bidLabel = ''
-  }
+  const b = block('auction2-bid-status')
 
   return (
-    <div className='auction2-bid-status'>
-      { artwork.is_sold
-        ? <span className='auction2-bid-status__bid-label'>
+    <div className={b()}>
+      { isSold
+        ? <span className={b('bid-label')}>
             Sold
           </span>
         : <div>
-          <span className='auction2-bid-status__bid-amount'>
-            {current_bid.display}
+          <span className={b('bid-amount')}>
+            {currentBidDisplay}
           </span>
           <span className=''>
             {bidLabel}
@@ -41,5 +32,40 @@ export default function BidStatus ({ artworkItem }) {
 }
 
 BidStatus.propTypes = {
-  artworkItem: PropTypes.object.isRequired
+  isSold: PropTypes.bool.isRequired,
+  currentBidDisplay: PropTypes.string.isRequired,
+  bidLabel: PropTypes.string.isRequired
 }
+
+const mapStateToProps = (state, props) => {
+  const {
+    artworkItem: {
+      artwork,
+      counts = {},
+      current_bid
+    }
+  } = props
+
+  const { bidder_positions } = counts
+
+  let bidLabel
+
+  if (counts && bidder_positions) {
+    const bidOrBids = bidder_positions > 1 ? 'Bids' : 'Bid'
+    bidLabel = `(${bidder_positions} ${bidOrBids})`
+  } else {
+    bidLabel = ''
+  }
+
+  return {
+    isSold: artwork.is_sold,
+    currentBidDisplay: current_bid.display,
+    bidLabel
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(BidStatus)
+
+export const test = { BidStatus }
