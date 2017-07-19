@@ -9,9 +9,10 @@ import merge from 'lodash.merge'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
+import { isEmpty } from 'underscore'
 import { mount, render, shallow } from 'enzyme'
 
-export default function renderTestComponent ({ Component, data = {}, props = {}, options = {} }) {
+export default function renderTestComponent ({ Component, data = {}, props = {}, options = {}, store = {} }) {
   const reduxData = merge(bootstrap, data)
   const auctionModel = new Auction(reduxData.app.auction)
   const auctionArticles = new Articles(reduxData.app.articles)
@@ -20,7 +21,7 @@ export default function renderTestComponent ({ Component, data = {}, props = {},
   reduxData.app.auction = auctionModel
   reduxData.app.articles = auctionArticles
 
-  const store = createStore(auctions, reduxData, applyMiddleware(thunk))
+  store = !isEmpty(store) ? store : createStore(auctions, reduxData, applyMiddleware(thunk))
 
   let renderMode
   switch (options.renderMode) {

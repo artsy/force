@@ -1,6 +1,3 @@
-import 'babel-core/register'
-import 'coffee-script/register'
-
 import * as actions from 'desktop/apps/auction2/actions/filter'
 import ArtistFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/ArtistFilter'
 import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
@@ -11,22 +8,18 @@ import RangeSlider from 'desktop/apps/auction2/components/artwork_browser/sideba
 import Sidebar from 'desktop/apps/auction2/components/artwork_browser/sidebar/Sidebar'
 import auctions from 'desktop/apps/auction2/reducers'
 import React from 'react'
+import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
 
 describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
-  let initialStore
-
-  beforeEach(() => {
-    initialStore = createStore(auctions)
-  })
-
   describe('<ArtworkDisplay />', () => {
     let saleArtwork
 
     beforeEach(() => {
       saleArtwork = {
         lot_label: '2',
+        isClosed: true,
         current_bid: {
           display: '$100'
         },
@@ -48,35 +41,59 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
     })
 
     it('renders an auction grid artwork component', () => {
-      const wrapper = shallow(
-        <GridArtwork store={initialStore} saleArtwork={saleArtwork} />
-      )
-      wrapper.render().html().should.containEql('$100')
-      wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
+      const { wrapper } = renderTestComponent({
+        Component: GridArtwork,
+        props: {
+          artwork: saleArtwork
+        }
+      })
+
+      wrapper.html().should.containEql('$100')
+      wrapper.html().should.containEql('<em>My Artwork</em>, 2002')
     })
 
     it('renders an auction list artwork component', () => {
-      const wrapper = shallow(
-        <ListArtwork store={initialStore} saleArtwork={saleArtwork} />
-      )
-      wrapper.render().html().should.containEql('$100')
-      wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
+      const { wrapper } = renderTestComponent({
+        Component: ListArtwork,
+        props: {
+          artwork: saleArtwork
+        }
+      })
+
+      wrapper.html().should.containEql('$100')
+      wrapper.html().should.containEql('<em>My Artwork</em>, 2002')
     })
 
     it('renders an auction grid artwork component without a bid status if the auction is closed', () => {
-      const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
-      const wrapper = shallow(
-        <GridArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
-      )
-      wrapper.render().html().should.not.containEql('$100')
+      const { wrapper } = renderTestComponent({
+        Component: GridArtwork,
+        data: {
+          auctionArtworks: {
+            isClosed: true
+          }
+        },
+        props: {
+          artwork: saleArtwork
+        }
+      })
+
+      wrapper.html().should.not.containEql('$100')
     })
 
     it('renders an auction list artwork component without a bid status if the auction is closed', () => {
-      const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
-      const wrapper = shallow(
-        <ListArtwork store={initialStoreClosedAuction} saleArtwork={saleArtwork} />
-      )
-      wrapper.render().html().should.not.containEql('$100')
+      const { wrapper } = renderTestComponent({
+        Component: ListArtwork,
+        data: {
+          auctionArtworks: {
+            isClosed: true
+          }
+        },
+        props: {
+          artwork: saleArtwork
+        }
+      })
+
+      wrapper.html().should.not.containEql('$100')
     })
   })
 
@@ -94,22 +111,33 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
     })
 
     it('renders the range filter if the auction is open', () => {
-      const wrapper = shallow(
-        <Sidebar store={initialStore} />
-      )
-      wrapper.render().find('.medium-filter').length.should.eql(1)
-      wrapper.render().find('.artist-filter').length.should.eql(1)
-      wrapper.render().find('.range-slider').length.should.eql(1)
+      const { wrapper } = renderTestComponent({
+        Component: Sidebar,
+        data: {
+          auctionArtworks: {
+            isClosed: false
+          }
+        }
+      })
+
+      wrapper.find('.medium-filter').length.should.eql(1)
+      wrapper.find('.artist-filter').length.should.eql(1)
+      wrapper.find('.range-slider').length.should.eql(1)
     })
 
     it('does not render the range filter if the auction is closed', () => {
-      const initialStoreClosedAuction = createStore(auctions, { auctionArtworks: { isClosed: true } })
-      const wrapper = shallow(
-        <Sidebar store={initialStoreClosedAuction} />
-      )
-      wrapper.render().find('.medium-filter').length.should.eql(1)
-      wrapper.render().find('.artist-filter').length.should.eql(1)
-      wrapper.render().find('.range-slider').length.should.eql(0)
+      const { wrapper } = renderTestComponent({
+        Component: Sidebar,
+        data: {
+          auctionArtworks: {
+            isClosed: true
+          }
+        }
+      })
+
+      wrapper.find('.medium-filter').length.should.eql(1)
+      wrapper.find('.artist-filter').length.should.eql(1)
+      wrapper.find('.range-slider').length.should.eql(0)
     })
   })
 
@@ -126,37 +154,43 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
 
     describe('no artists selected', () => {
       it('contains all of the aggregated artists and checks the artists-all box', () => {
+        const initialStore = createStore(auctions)
         initialStore.dispatch(actions.updateAggregatedArtists(aggregatedArtists))
-        const wrapper = shallow(
-          <ArtistFilter store={initialStore} />
-        )
-        const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(4)
-        const renderedText = rendered.text()
+
+        const { wrapper } = renderTestComponent({
+          Component: Sidebar,
+          store: initialStore
+        })
+
+        wrapper.find('.artsy-checkbox').length.should.eql(5)
+        const renderedText = wrapper.text()
         renderedText.should.containEql('All')
         renderedText.should.containEql('Artist 1(23)')
         renderedText.should.containEql('Artist 2(44)')
         renderedText.should.containEql('Artist 3(57)')
-        rendered.find('input[value="artists-all"]:checked').length.should.eql(1)
+        wrapper.find('input[value="artists-all"]').props().checked.should.eql(true)
       })
     })
 
     describe('some artists selected', () => {
       it('checks the correct artist boxes', () => {
+        const initialStore = createStore(auctions)
         initialStore.dispatch(actions.updateAggregatedArtists(aggregatedArtists))
         initialStore.dispatch(actions.updateArtistId('artist-1'))
-        const wrapper = shallow(
-          <ArtistFilter store={initialStore} />
-        )
-        const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(4)
-        const renderedText = rendered.text()
+
+        const { wrapper } = renderTestComponent({
+          Component: ArtistFilter,
+          store: initialStore
+        })
+
+        wrapper.find('.artsy-checkbox').length.should.eql(4)
+        const renderedText = wrapper.text()
         renderedText.should.containEql('All')
         renderedText.should.containEql('Artist 1(23)')
         renderedText.should.containEql('Artist 2(44)')
         renderedText.should.containEql('Artist 3(57)')
-        rendered.find('input[value="artists-all"]:checked').length.should.eql(0)
-        rendered.find('input[value="artist-1"]:checked').length.should.eql(1)
+        wrapper.find('input[value="artists-all"]').props().checked.should.eql(false)
+        wrapper.find('input[value="artist-1"]').props().checked.should.eql(true)
       })
     })
   })
@@ -174,81 +208,92 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
 
     describe('no mediums selected', () => {
       it('checks the mediums-all box', () => {
+        const initialStore = createStore(auctions)
         initialStore.dispatch(actions.updateInitialMediumMap(aggregatedMediums))
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
-        const wrapper = shallow(
-          <MediumFilter store={initialStore} />
-        )
-        const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(4)
-        const renderedText = rendered.text()
+
+        const { wrapper } = renderTestComponent({
+          Component: MediumFilter,
+          store: initialStore
+        })
+
+        wrapper.find('.artsy-checkbox').length.should.eql(4)
+        const renderedText = wrapper.text()
         renderedText.should.containEql('All')
         renderedText.should.containEql('Painting(23)')
         renderedText.should.containEql('Works on Paper(44)')
         renderedText.should.containEql('Design(57)')
-        rendered.find('input[value="mediums-all"]:checked').length.should.eql(1)
+        wrapper.find('input[value="mediums-all"]').props().checked.should.eql(true)
       })
     })
 
     describe('some mediums selected', () => {
       it('checks the correct medium boxes', () => {
+        const initialStore = createStore(auctions)
         initialStore.dispatch(actions.updateInitialMediumMap(aggregatedMediums))
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
         initialStore.dispatch(actions.updateMediumId('painting'))
-        const wrapper = shallow(
-          <MediumFilter store={initialStore} />
-        )
-        const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(4)
-        const renderedText = rendered.text()
+
+        const { wrapper } = renderTestComponent({
+          Component: MediumFilter,
+          store: initialStore
+        })
+
+        wrapper.find('.artsy-checkbox').length.should.eql(4)
+        const renderedText = wrapper.text()
         renderedText.should.containEql('All')
         renderedText.should.containEql('Painting(23)')
         renderedText.should.containEql('Works on Paper(44)')
         renderedText.should.containEql('Design(57)')
-        rendered.find('input[value="mediums-all"]:checked').length.should.eql(0)
-        rendered.find('input[value="painting"]:checked').length.should.eql(1)
+        wrapper.find('input[value="mediums-all"]').props().checked.should.eql(false)
+        wrapper.find('input[value="painting"]').props().checked.should.eql(true)
       })
     })
   })
 
   describe('<RangeSlider />', () => {
     it('renders the range correctly initially', () => {
-      const wrapper = shallow(
-        <RangeSlider store={initialStore} />
-      )
-      const rendered = wrapper.render()
-      rendered.find('.auction2-range-slider__caption').length.should.eql(1)
-      const renderedText = rendered.text()
-      renderedText.should.containEql('$0 - 50,000+')
+      const { wrapper } = renderTestComponent({
+        Component: RangeSlider
+      })
+
+      wrapper.find('.auction2-range-slider__caption').length.should.eql(1)
+      wrapper.text().should.containEql('$0 - 50,000+')
     })
+
     it('renders the range correctly for a middle bucket', () => {
+      const initialStore = createStore(auctions)
       initialStore.dispatch(actions.updateEstimateDisplay(200, 4000))
-      const wrapper = shallow(
-        <RangeSlider store={initialStore} />
-      )
-      const rendered = wrapper.render()
-      rendered.find('.auction2-range-slider__caption').length.should.eql(1)
-      const renderedText = rendered.text()
-      renderedText.should.containEql('$200 - 4,000')
+
+      const { wrapper } = renderTestComponent({
+        Component: RangeSlider,
+        store: initialStore
+      })
+
+      wrapper.find('.auction2-range-slider__caption').length.should.eql(1)
+      wrapper.text().should.containEql('$200 - 4,000')
     })
     it('renders the range correctly for an upper bucket', () => {
+      const initialStore = createStore(auctions)
       initialStore.dispatch(actions.updateEstimateDisplay(500, 50000))
-      const wrapper = shallow(
-        <RangeSlider store={initialStore} />
-      )
-      const rendered = wrapper.render()
-      rendered.find('.auction2-range-slider__caption').length.should.eql(1)
-      const renderedText = rendered.text()
-      renderedText.should.containEql('$500 - 50,000+')
+
+      const { wrapper } = renderTestComponent({
+        Component: RangeSlider,
+        store: initialStore
+      })
+
+      wrapper.find('.auction2-range-slider__caption').length.should.eql(1)
+      wrapper.text().should.containEql('$500 - 50,000+')
     })
   })
 
   describe('<FilterSort />', () => {
     it('selects the correct option', () => {
-      const wrapper = shallow(
-        <FilterSort store={initialStore} />
-      )
-      wrapper.render().find('.bordered-pulldown-text').text().should.eql('Lot Number (asc.)')
+      const { wrapper } = renderTestComponent({
+        Component: FilterSort
+      })
+
+      wrapper.find('.bordered-pulldown-text').text().should.eql('Lot Number Asc')
     })
   })
 })

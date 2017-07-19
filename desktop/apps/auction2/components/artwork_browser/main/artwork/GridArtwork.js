@@ -76,7 +76,7 @@ const mapStateToProps = (state, props) => {
   return {
     date: artwork.artwork.date,
     image,
-    isClosed: state.app.auction.isClosed(),
+    isClosed: state.auctionArtworks.isClosed || state.app.auction.isClosed(),
     lotLabel: artwork.lot_label,
     artistDisplay,
     title: artwork.artwork.title
