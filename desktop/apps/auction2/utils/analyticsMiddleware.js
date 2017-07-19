@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/filter'
+import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
 import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
 import { isEqual } from 'underscore'
 
@@ -22,7 +22,7 @@ const analyticsMiddleware = store => next => action => {
     }
     case actions.UPDATE_ESTIMATE_RANGE: {
       trackParamChange({
-        price: nextState.auctionArtworks.filterParams.estimate_range
+        price: nextState.artworkBrowser.filterParams.estimate_range
       }, nextState)
       return result
     }
@@ -39,7 +39,7 @@ function trackableArtistIds (changed, filterParams) {
 }
 
 function trackParamChange (changed, newState) {
-  const { filterParams } = newState.auctionArtworks
+  const { filterParams } = newState.artworkBrowser
   analyticsHooks.trigger(
     'auction:artworks:params:change',
     {

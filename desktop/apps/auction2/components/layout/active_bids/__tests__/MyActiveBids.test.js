@@ -26,7 +26,7 @@ describe('apps/auction2/components/layout/active_bids/MyActiveBids', () => {
           ...baseData,
           ...data
         },
-        auctionArtworks: initialState
+        artworkBrowser: initialState
       }
     })
 

@@ -2,12 +2,12 @@ import React from 'react'
 import buildTemplateComponent from '../buildTemplateComponent'
 import { render } from 'enzyme'
 
-describe('components/react/utils/buildTemplateComponent.jsx', () => {
-  before(() => {
+describe('components/react/utils/buildTemplateComponent.js', () => {
+  beforeEach(() => {
     buildTemplateComponent.__Rewire__('renderTemplate', (html) => html)
   })
 
-  after(() => {
+  afterEach(() => {
     buildTemplateComponent.__ResetDependency__('renderTemplate')
   })
 

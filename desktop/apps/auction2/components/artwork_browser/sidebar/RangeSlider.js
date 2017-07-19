@@ -3,7 +3,7 @@ import React from 'react'
 import { Range } from 'rc-slider'
 import { connect } from 'react-redux'
 import { formatMoney } from 'accounting'
-import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction2/actions/filter'
+import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction2/actions/artworkBrowser'
 
 function RangeSlider (props) {
   const {
@@ -56,7 +56,7 @@ RangeSlider.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    auctionArtworks: {
+    artworkBrowser: {
       filterParams,
       maxEstimateRangeDisplay,
       minEstimateRangeDisplay,

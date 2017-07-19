@@ -44,12 +44,12 @@ describe('auction/components/artwork_browser/header/HeaderDesktop.test', () => {
       const { store } = wrapper.props()
 
       wrapper.find('.auction2-artworks-header-desktop__list').simulate('click')
-      store.getState().auctionArtworks.isListView.should.eql(true)
+      store.getState().artworkBrowser.isListView.should.eql(true)
       wrapper.find('.auction2-artworks-header-desktop__list .active').length.should.eql(1)
       wrapper.find('.auction2-artworks-header-desktop__grid .active').length.should.eql(0)
 
       wrapper.find('.auction2-artworks-header-desktop__grid').simulate('click')
-      store.getState().auctionArtworks.isListView.should.eql(false)
+      store.getState().artworkBrowser.isListView.should.eql(false)
       wrapper.find('.auction2-artworks-header-desktop__list .active').length.should.eql(0)
       wrapper.find('.auction2-artworks-header-desktop__grid .active').length.should.eql(1)
     })

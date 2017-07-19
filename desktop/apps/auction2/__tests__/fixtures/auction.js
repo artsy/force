@@ -57,7 +57,7 @@ export default {
     },
     "showInfoWindow": false
   },
-  "auctionArtworks": {
+  "artworkBrowser": {
     "aggregatedArtists": [
       {
         "id": "alvar-aalto",

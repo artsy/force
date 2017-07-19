@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
-import { updateArtistParams } from 'desktop/apps/auction2/actions/filter'
+import { updateArtistParams } from 'desktop/apps/auction2/actions/artworkBrowser'
 
 function ArtistFilter (props) {
   const {
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
     filterParams,
     numArtistsYouFollow,
     user
-  } = state.auctionArtworks
+  } = state.artworkBrowser
 
   const artistIds = filterParams.artist_ids
   const includeArtworksByFollowedArtists = filterParams.include_artworks_by_followed_artists

@@ -15,7 +15,7 @@ LoadingSpinner.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  isFetchingArtworks: state.auctionArtworks.isFetchingArtworks
+  isFetchingArtworks: state.artworkBrowser.isFetchingArtworks
 })
 
 export default connect(

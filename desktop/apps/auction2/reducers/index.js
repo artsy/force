@@ -1,5 +1,5 @@
 import app, { initialState as appInitialState } from 'desktop/apps/auction2/reducers/app'
-import filter, { initialState as filterInitialState } from 'desktop/apps/auction2/reducers/filter'
+import filter, { initialState as filterInitialState } from 'desktop/apps/auction2/reducers/artworkBrowser'
 import { combineReducers } from 'redux'
 import { composeReducers, responsiveWindowReducer } from 'desktop/components/react/responsive_window'
 
@@ -10,5 +10,5 @@ export const initialState = {
 
 export default combineReducers({
   app: composeReducers(app, responsiveWindowReducer),
-  auctionArtworks: filter
+  artworkBrowser: filter
 })

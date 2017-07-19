@@ -56,7 +56,7 @@ export function getArtworksSuccess () {
 export function fetchArtworks () {
   return async (dispatch, getState) => {
     const {
-      auctionArtworks: {
+      artworkBrowser: {
         filterParams,
         user
       }
@@ -102,7 +102,7 @@ export function fetchArtworks () {
 export function fetchArtworksByFollowedArtists () {
   return async (dispatch, getState) => {
     const {
-      auctionArtworks: {
+      artworkBrowser: {
         followedArtistRailMax,
         followedArtistRailPage,
         filterParams,
@@ -139,7 +139,7 @@ export function fetchArtworksByFollowedArtists () {
 export function fetchMoreArtworks () {
   return async (dispatch, getState) => {
     const {
-      auctionArtworks: {
+      artworkBrowser: {
         filterParams,
         user
       }
@@ -167,7 +167,7 @@ export function fetchMoreArtworks () {
 export function infiniteScroll () {
   return (dispatch, getState) => {
     const {
-      auctionArtworks: {
+      artworkBrowser: {
         allFetched,
         isFetchingArtworks
       }
@@ -202,7 +202,7 @@ export function previousPageOfFollowedArtistArtworks () {
 export function resetArtworks () {
   return (dispatch, getState) => {
     const {
-      auctionArtworks: {
+      artworkBrowser: {
         isFetchingArtworks
       }
     } = getState()

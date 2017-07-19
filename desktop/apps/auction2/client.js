@@ -21,7 +21,7 @@ bootstrapData.app.articles = auctionArticles
 // Redux store
 const store = configureStore(auctionReducer, {
   app: bootstrapData.app,
-  auctionArtworks: bootstrapData.auctionArtworks
+  artworkBrowser: bootstrapData.artworkBrowser
 })
 
 // Start app

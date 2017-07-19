@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/filter'
+import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
 import $ from 'jquery'
 import { throttle } from 'underscore'
 

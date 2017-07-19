@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { toggleListView, updateSort } from 'desktop/apps/auction2/actions/filter'
+import { toggleListView, updateSort } from 'desktop/apps/auction2/actions/artworkBrowser'
 
 const propTypes = {
   sortMap: PropTypes.object.isRequired,
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
     isFetchingArtworks,
     sortMap,
     total
-  } = state.auctionArtworks
+  } = state.artworkBrowser
 
   const selectedSort = filterParams.sort
 

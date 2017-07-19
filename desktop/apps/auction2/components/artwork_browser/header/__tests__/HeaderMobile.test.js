@@ -1,7 +1,7 @@
 import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
 import HeaderMobile from 'desktop/apps/auction2/components/artwork_browser/header/HeaderMobile'
 import sinon from 'sinon'
-import { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/auction2/actions/filter'
+import { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/auction2/actions/artworkBrowser'
 
 describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
   describe('<HeaderMobile />', () => {
@@ -56,7 +56,7 @@ describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
         }
       })
 
-      store.getState().auctionArtworks.filterParams.sort.should.eql(updateSort)
+      store.getState().artworkBrowser.filterParams.sort.should.eql(updateSort)
     })
   })
 })

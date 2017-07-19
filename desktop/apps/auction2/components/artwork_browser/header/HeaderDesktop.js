@@ -6,7 +6,7 @@ import React from 'react'
 import block from 'bem-cn'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { toggleListView } from 'desktop/apps/auction2/actions/filter'
+import { toggleListView } from 'desktop/apps/auction2/actions/artworkBrowser'
 
 function Header (props) {
   const {
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
     isFetchingArtworks,
     isListView,
     total
-  } = state.auctionArtworks
+  } = state.artworkBrowser
 
   const displayType = isListView ? 'list' : 'grid'
 

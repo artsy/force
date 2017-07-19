@@ -23,7 +23,7 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    isClosed: state.auctionArtworks.isClosed
+    isClosed: state.artworkBrowser.isClosed
   }
 }
 

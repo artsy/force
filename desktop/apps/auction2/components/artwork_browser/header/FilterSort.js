@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { updateSort } from 'desktop/apps/auction2/actions/filter'
+import { updateSort } from 'desktop/apps/auction2/actions/artworkBrowser'
 
 function FilterSort (props) {
   const {
@@ -58,8 +58,8 @@ FilterSort.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    sortMap: state.auctionArtworks.sortMap,
-    filterParams: state.auctionArtworks.filterParams
+    sortMap: state.artworkBrowser.sortMap,
+    filterParams: state.artworkBrowser.filterParams
   }
 }
 

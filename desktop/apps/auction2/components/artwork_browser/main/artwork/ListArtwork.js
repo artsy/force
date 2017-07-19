@@ -103,7 +103,7 @@ const mapStateToProps = (state, props) => {
   return {
     date: artwork.artwork.date,
     image,
-    isClosed: state.auctionArtworks.isClosed || state.app.auction.isClosed(),
+    isClosed: state.artworkBrowser.isClosed || state.app.auction.isClosed(),
     isMobile: state.app.isMobile,
     lotLabel: artwork.lot_label,
     artistDisplay,

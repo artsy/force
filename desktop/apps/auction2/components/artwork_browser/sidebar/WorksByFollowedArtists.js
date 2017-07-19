@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import {
   nextPageOfFollowedArtistArtworks,
   previousPageOfFollowedArtistArtworks
-} from 'desktop/apps/auction2/actions/filter'
+} from 'desktop/apps/auction2/actions/artworkBrowser'
 
 function WorksByFollowedArtists (props) {
   const {
@@ -70,7 +70,7 @@ WorksByFollowedArtists.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    auctionArtworks: {
+    artworkBrowser: {
       followedArtistRailPage,
       followedArtistRailSize,
       numArtistsYouFollow,

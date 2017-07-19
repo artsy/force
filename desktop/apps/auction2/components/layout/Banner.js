@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   return {
     auction,
     coverImage: cover_image,
-    isClosed: state.auctionArtworks.isClosed,
+    isClosed: state.artworkBrowser.isClosed,
     isLiveOpen,
     isMobile,
     liveAuctionUrl,

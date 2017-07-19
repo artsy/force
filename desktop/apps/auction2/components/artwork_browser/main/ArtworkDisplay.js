@@ -98,12 +98,12 @@ ArtworkDisplay.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    allFetched: state.auctionArtworks.allFetched,
-    isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
-    isListView: state.auctionArtworks.isListView,
+    allFetched: state.artworkBrowser.allFetched,
+    isFetchingArtworks: state.artworkBrowser.isFetchingArtworks,
+    isListView: state.artworkBrowser.isListView,
     isMobile: state.app.isMobile,
     isClosed: state.app.auction.isClosed(),
-    saleArtworks: state.auctionArtworks.saleArtworks,
+    saleArtworks: state.artworkBrowser.saleArtworks,
     saleId: state.app.auction.get('id')
   }
 }

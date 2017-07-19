@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/filter'
+import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
 import ArtistFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/ArtistFilter'
 import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
 import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/ListArtwork'
@@ -67,7 +67,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       const { wrapper } = renderTestComponent({
         Component: GridArtwork,
         data: {
-          auctionArtworks: {
+          artworkBrowser: {
             isClosed: true
           }
         },
@@ -83,7 +83,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       const { wrapper } = renderTestComponent({
         Component: ListArtwork,
         data: {
-          auctionArtworks: {
+          artworkBrowser: {
             isClosed: true
           }
         },
@@ -113,7 +113,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       const { wrapper } = renderTestComponent({
         Component: Sidebar,
         data: {
-          auctionArtworks: {
+          artworkBrowser: {
             isClosed: false
           }
         }
@@ -128,7 +128,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       const { wrapper } = renderTestComponent({
         Component: Sidebar,
         data: {
-          auctionArtworks: {
+          artworkBrowser: {
             isClosed: true
           }
         }

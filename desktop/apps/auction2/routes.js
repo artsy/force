@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/filter'
+import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
 import App from 'desktop/apps/auction2/components/App'
 import Articles from 'desktop/collections/articles.coffee'
 import ArticlesQuery from 'desktop/apps/auction2/utils/queries/articles'
@@ -13,7 +13,7 @@ import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
 import u from 'updeep'
 import { initialState as appInitialState } from 'desktop/apps/auction2/reducers/app'
-import { initialState as auctionWorksInitialState } from 'desktop/apps/auction2/reducers/filter'
+import { initialState as auctionWorksInitialState } from 'desktop/apps/auction2/reducers/artworkBrowser'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 
@@ -52,7 +52,7 @@ export async function index (req, res, next) {
         me
       }, appInitialState),
 
-      auctionArtworks: u({
+      artworkBrowser: u({
         filterParams: {
           sale_id: saleId
         },
@@ -81,7 +81,7 @@ export async function index (req, res, next) {
         },
         data: {
           app: store.getState().app,
-          auctionArtworks: store.getState().auctionArtworks
+          artworkBrowser: store.getState().artworkBrowser
         }
       })
 
