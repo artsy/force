@@ -116,7 +116,7 @@ img
   color white
 
 background-size-cover()
-  background-position center
+  background-position top
   background-repeat no-repeat
   background-size cover
 
@@ -169,29 +169,32 @@ background-size-cover()
 
 .gallery-partnerships2__gallery-logos
   min-height 130px
-  @media screen and (min-width: 769px)
-    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
-      height 130px
 
   @media screen and (max-width: 768px)
     flex-direction column
     padding 15px 25px
   img
-    transform scale(0.5)
+    zoom 50%
 
 .gallery-partnerships2__connect-with-collectors
   min-height 610px
+  @media screen and (max-width: 960px)
+    min-height 490px
   @media screen and (max-width: 768px)
     padding-top 40px
 
   &__headline
     garamond-size('l-headline')
+    margin-bottom 10px
     @media screen and (max-width: 768px)
+      margin-bottom 30px
       garamond-size('headline')
 
   &__notification-container
     height 610px
     position relative
+    @media screen and (max-width: 960px)
+      height 490px
     @media screen and (max-width: 768px)
       height inherit
 
@@ -218,15 +221,15 @@ background-size-cover()
     right 0
     width 100%
     max-width 450px
-    height 146px
+    height 100%
+    max-height 146px
     display none
     @media screen and (max-width: 960px)
       max-width 375px
-      height 114px
+      max-height 114px
     @media screen and (max-width: 768px)
       max-width 330px
-      height inherit
-      height 100px
+      max-height 100px
 
 .gallery-partnerships2__stats
   padding 100px 0
@@ -236,6 +239,7 @@ background-size-cover()
 
   &__headline
     garamond-size('l-headline')
+    margin-bottom 10px
     @media screen and (max-width: 768px)
       garamond-size('headline')
       padding-bottom 20px
@@ -257,7 +261,8 @@ background-size-cover()
     height 416px
     position absolute
     top 40px
-    left 112px
+    left 111px
+    z-index -1
     img
       width 667px
       height 416px
@@ -277,6 +282,8 @@ background-size-cover()
         width 100%
         height 100%
         z-index 1
+      .mgr-cell:not(.is-selected)
+        visibility hidden
 
 .gallery-partnerships2__chat
   min-height 510px
@@ -306,6 +313,11 @@ background-size-cover()
       max-width 340px
       garamond-size('headline')
 
+  &__title
+    margin 10px 0
+    @media screen and (max-width: 768px)
+      margin 30px 0 10px
+
 .gallery-partnerships2__folio
   min-height 557px
   padding 100px 0
@@ -323,6 +335,11 @@ background-size-cover()
   &__features
     @media screen and (max-width: 768px)
       margin-bottom 30px
+      margin-top 20px
+
+  @media screen and (max-width: 960px)
+    &__image-container
+      align-self center
 
   &__image
     width 100%
@@ -357,6 +374,13 @@ background-size-cover()
       padding 0 20px
       &__author
         text-transform inherit
+
+  // .flickity-slider
+  //   display flex
+
+  &__slideshow__item.js-mgr-cell.is-selected
+    top 50%
+    transform translateY(-50%)
 
   .mgr-dot
     color #E5E5E5
@@ -416,9 +440,12 @@ background-size-cover()
   &__header
     margin-top 60px
     text-align center
+    margin-bottom 50px
+    @media screen and (max-width: 768px)
+      margin-bottom 40px
 
     aside
-      width 556px
+      width 610px
       margin 0 auto
       garamond-size('s-headline')
       @media screen and (max-width: 768px)
@@ -429,13 +456,17 @@ background-size-cover()
       width 100%
 
   &__title
-    garamond-size('l-headline')
+    garamond-size('xl-headline')
+    margin-bottom 50px
     @media screen and (max-width: 768px)
       garamond-size('headline')
+      margin-bottom 40px
 
   &__contact
     text-align center
-    margin-bottom 160px
+    padding-bottom 160px
+    @media screen and (max-width: 768px)
+      padding-bottom 90px
 
   &__marketo-form
     width 740px
@@ -495,6 +526,8 @@ background-size-cover()
       avant-garde()
       avant-garde-size('s-headline')
       color black
+    label.mktoLabel
+      font-weight normal !important
 
     .mktoFormRow
       display flex

@@ -49,7 +49,7 @@ block body
               .gallery-partnerships2__connect-with-collectors__content_container.flex.flex-auto.justify-center.items-center
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
                   .gallery-partnerships2__connect-with-collectors__headline= sections[1].title
-                  .mt3.mb3.garamond-l-body= sections[1].content
+                  .mb3.garamond-l-body= sections[1].content
                   a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
                     href="#gallery-partnership2-form"
                     data-label='Learn More'
@@ -63,16 +63,16 @@ block body
         .main-layout-container
           .row
             .col-xs-12.col-lg-6.flex.items-center.justify-center
-             .gallery-partnerships2__stats__inner-container
-               .mb2.text-center-on-mobile.gallery-partnerships2__stats__headline= sections[2].title
-               .garamond-l-body
+              .gallery-partnerships2__stats__inner-container
+                .text-center-on-mobile.gallery-partnerships2__stats__headline= sections[2].title
+                .garamond-l-body
                  for stat in sections[2].stats
                    .mb2.flex
                      div
                        img.mr2(src=check_mark)
                      div= stat
-               .text-center-on-mobile.gallery-partnerships2__stats__button
-                 a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
+                .text-center-on-mobile.gallery-partnerships2__stats__button
+                  a.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
                     href="#gallery-partnership2-form"
                     data-label='Learn More'
                     data-section="Grow your gallery presense"
@@ -95,10 +95,11 @@ block body
             .col-xs-12.col-lg-6.items-center.justify-center.flex
               video.gallery-partnerships2__chat__video(autoplay loop playsinline muted)
                 source(src=sections[3].video type="video/mp4")
+                img(src='http://files.artsy.net/images/chat_image2x.png')
             .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
               .gallery-partnerships2__chat__content-container
                 div= sections[3].title
-                .garamond-l-body.my2= sections[3].content
+                .gallery-partnerships2__chat__title.garamond-l-body= sections[3].content
                 a.gallery-partnerships2__chat__learn_more.gallery-partnerships2-black-signup-button.js-gallery-partnerships2-button(
                   href="#gallery-partnership2-form"
                   data-label='Learn More'
@@ -127,7 +128,7 @@ block body
                       data-label='Learn More'
                       data-section="Carry your gallery with you"
                     ) Learn More
-            .col-xs-12.col-lg-6
+            .gallery-partnerships2__folio__image-container.col-xs-12.col-lg-6
               img.gallery-partnerships2__folio__image.max-width-on-mobile(src=sections[4].image)
 
     .gallery-partnerships2__testimonials.bg-gray.flex.items-center.justify-center
@@ -256,8 +257,8 @@ block body
     #gallery-partnership2-form.gallery-partnerships2__form
       .partnerships-section-header.apply
         .gallery-partnerships-apply-form
-          header.gallery-partnerships2__form__header.mb5
-            .gallery-partnerships2__form__title.mb5 Join the leading marketplace for art & design
+          header.gallery-partnerships2__form__header
+            .gallery-partnerships2__form__title Join the leading marketplace for art & design
             aside Artsy helps your gallery expand its reach and drive sales online
 
           .gallery-partnerships2__form__marketo-form
