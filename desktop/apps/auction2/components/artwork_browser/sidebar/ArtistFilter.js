@@ -42,7 +42,15 @@ function ArtistFilter (props) {
       {
         aggregatedArtists.map((agg) => {
           const artistSelected = contains(artistIds, agg.id)
-          return <BasicCheckbox key={agg.id} item={agg} onClick={updateArtistParamsAction} checked={artistSelected} />
+
+          return (
+            <BasicCheckbox
+              key={agg.id}
+              item={agg}
+              onClick={updateArtistParamsAction}
+              checked={artistSelected}
+            />
+          )
         })
       }
     </div>
@@ -99,3 +107,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ArtistFilter)
+
+export const test = { ArtistFilter }

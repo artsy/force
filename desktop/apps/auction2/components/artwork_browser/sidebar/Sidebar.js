@@ -1,7 +1,7 @@
-import ArtistFilter from './ArtistFilter'
-import MediumFilter from './MediumFilter'
+import ArtistFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/ArtistFilter'
+import MediumFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/MediumFilter'
+import RangeSlider from 'desktop/apps/auction2/components/artwork_browser/sidebar/RangeSlider'
 import PropTypes from 'prop-types'
-import RangeSlider from './RangeSlider'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -30,3 +30,5 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
 )(Sidebar)
+
+export const test = { Sidebar }

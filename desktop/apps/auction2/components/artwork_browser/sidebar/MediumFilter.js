@@ -86,3 +86,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MediumFilter)
+
+export const test = { MediumFilter }

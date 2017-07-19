@@ -101,3 +101,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WorksByFollowedArtists)
+
+export const test = { WorksByFollowedArtists }
