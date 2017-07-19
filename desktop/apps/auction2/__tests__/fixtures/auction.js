@@ -23,9 +23,9 @@ export default {
       "is_closed": false,
       "is_live_open": false,
       "is_open": true,
-      "live_start_at": "2017-07-18T17:00:00+00:00",
+      "live_start_at": "2025-07-18T17:00:00+00:00",
       "name": "Wright: Art + Design",
-      "registration_ends_at": "2017-07-17T17:00:00+00:00",
+      "registration_ends_at": "2025-07-17T17:00:00+00:00",
       "start_at": "2017-07-03T18:30:00+00:00",
       "status": "open",
       "symbol": "$"

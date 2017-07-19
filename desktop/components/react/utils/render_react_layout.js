@@ -51,37 +51,11 @@ import { renderToString } from 'react-dom/server'
  * @return {String}         String of html to render
  */
 export function renderReactLayout (options) {
-  /**
-   * Configuration
-   */
   const {
-    /**
-     * Default path to components / templates / views. Typically corresponds to
-     * value set in `app.set('views', `${__dirname}/components`)`
-     */
     basePath = '',
-
-    /**
-     * Blocks to inject into `react_index.jade` layout. Can be either a React
-     * component, a path to a jade template or a string of html
-     */
     blocks: { head, body } = {},
-
-    /**
-     * Typically a spread from res.locals, and if mounting a subapp includes
-     * `assetPackage` and `bodyClass` keys
-     */
     locals = {},
-
-    /**
-     * Data relevant to components / subapp
-     */
     data = {},
-
-    /**
-     * Legacy .jade templates to render. Keys in object are converted to
-     * components and injected in as props under `props.templateComponents`.
-     */
     templates = {}
   } = options
 

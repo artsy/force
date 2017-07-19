@@ -1,4 +1,3 @@
-$ = require 'jquery'
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
