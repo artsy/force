@@ -15,7 +15,7 @@ import u from 'updeep'
 import { initialState as appInitialState } from 'desktop/apps/auction2/reducers/app'
 import { initialState as auctionWorksInitialState } from 'desktop/apps/auction2/reducers/filter'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
-import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
+import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 
 export async function index (req, res, next) {
   const saleId = req.params.id

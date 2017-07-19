@@ -6,7 +6,7 @@
  * @example
  *
  * import { combineReducers } from 'redux'
- * import { composeReducers } from 'components/react/utils/compose_reducers'
+ * import { composeReducers } from 'components/react/utils/composeReducers'
  *
  * function reducerA(state, action) { ... }
  * function reducerB(state, action) { ... }

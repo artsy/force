@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import u from 'updeep'
-import { composeReducers } from 'desktop/components/react/utils/compose_reducers'
+import { composeReducers } from 'desktop/components/react/utils/composeReducers'
 import { connect } from 'react-redux'
 import { debounce } from 'underscore'
 

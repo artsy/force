@@ -1,7 +1,7 @@
 import React from 'react'
-import { renderReactLayout, __RewireAPI__ } from '../render_react_layout'
+import { renderReactLayout, __RewireAPI__ } from '../renderReactLayout'
 
-describe('components/react/utils/render_react_layout.js', () => {
+describe('components/react/utils/renderReactLayout.js', () => {
   afterEach(() => {
     __RewireAPI__.__ResetDependency__('renderTemplate')
   })

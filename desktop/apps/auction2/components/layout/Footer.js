@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
-import renderTemplate from 'desktop/components/react/utils/render_template'
+import renderTemplate from 'desktop/components/react/utils/renderTemplate'
 import { connect } from 'react-redux'
 import { first } from 'underscore'
 

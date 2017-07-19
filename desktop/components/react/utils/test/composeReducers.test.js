@@ -1,7 +1,7 @@
-import { composeReducers } from '../compose_reducers'
+import { composeReducers } from '../composeReducers'
 import u from 'updeep'
 
-describe('components/react/utils/compose_reducers.js', () => {
+describe('components/react/utils/composeReducers.js', () => {
   it('composes multiple reducer fns together', () => {
     const initialState = {
       firstName: '',

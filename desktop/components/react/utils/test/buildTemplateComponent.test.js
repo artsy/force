@@ -1,8 +1,8 @@
 import React from 'react'
-import buildTemplateComponent from '../build_template_component'
+import buildTemplateComponent from '../buildTemplateComponent'
 import { render } from 'enzyme'
 
-describe('components/react/utils/build_template_component.jsx', () => {
+describe('components/react/utils/buildTemplateComponent.jsx', () => {
   before(() => {
     buildTemplateComponent.__Rewire__('renderTemplate', (html) => html)
   })

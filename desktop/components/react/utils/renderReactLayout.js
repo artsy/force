@@ -1,6 +1,6 @@
 import React from 'react'
-import renderTemplate from 'desktop/components/react/utils/render_template'
-import buildTemplateComponent from 'desktop/components/react/utils/build_template_component'
+import renderTemplate from 'desktop/components/react/utils/renderTemplate'
+import buildTemplateComponent from 'desktop/components/react/utils/buildTemplateComponent'
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
 
@@ -13,7 +13,7 @@ import { renderToString } from 'react-dom/server'
  *
  * // Routes.js
  *
- * import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
+ * import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
  *
  * export function index (req, res, next) {
  *   const layout = renderReactLayout({
@@ -39,7 +39,7 @@ import { renderToString } from 'react-dom/server'
  *
  * // Client.js
  *
- * import { rehydrateClient } from 'desktop/components/react/utils/render_react_layout'
+ * import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
  *
  * const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
  *
@@ -110,7 +110,7 @@ export function renderReactLayout (options) {
     } else {
       if (process.env.NODE_ENV === 'development') {
         throw new Error(
-          '(components/reaect/utils/render_react_layout.js) ' +
+          '(components/reaect/utils/renderReactLayout.js) ' +
           'Error rendering layout: `block` must be a Jade template, React ' +
           'component or string'
         )
@@ -134,7 +134,7 @@ function isReactComponent (Component) {
     return Component
   } else {
     throw new Error(
-      '(components/reaect/utils/render_react_layout.js) ' +
+      '(components/reaect/utils/renderReactLayout.js) ' +
       'Error rendering layout: Invalid React component'
     )
   }

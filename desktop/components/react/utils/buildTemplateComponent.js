@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import renderTemplate from './render_template'
+import renderTemplate from './renderTemplate'
 
 /**
  * Takes a string of html and returns a Component
