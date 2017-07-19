@@ -7,20 +7,17 @@ import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction
 
 function RangeSlider (props) {
   const {
-    filterParams,
-    minEstimateRangeDisplay,
+    formattedMaxDisplay,
+    formattedMinDisplay,
+    isAbsoluteMax,
+    maxEstimate,
     maxEstimateRangeDisplay,
-    symbol,
-    updateEstimateRangeAction,
-    updateEstimateDisplayAction
+    minEstimate,
+    minEstimateRangeDisplay,
+    updateEstimateDisplayAction,
+    updateEstimateRangeAction
   } = props
 
-  const minEstimate = filterParams.ranges.estimate_range.min
-  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol, precision: 0 })
-
-  const maxEstimate = filterParams.ranges.estimate_range.max
-  const isAbsoluteMax = maxEstimate === maxEstimateRangeDisplay
-  const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
   return (
     <div className='auction2-range-slider'>
       <div className='auction2-range-slider__metadata'>
@@ -46,20 +43,41 @@ function RangeSlider (props) {
 }
 
 RangeSlider.propTypes = {
-  filterParams: PropTypes.object.isRequired,
+  formattedMaxDisplay: PropTypes.string.isRequired,
+  formattedMinDisplay: PropTypes.string.isRequired,
+  isAbsoluteMax: PropTypes.bool.isRequired,
+  maxEstimate: PropTypes.number.isRequired,
+  minEstimate: PropTypes.number.isRequired,
   minEstimateRangeDisplay: PropTypes.number.isRequired,
   maxEstimateRangeDisplay: PropTypes.number.isRequired,
-  symbol: PropTypes.string.isRequired,
-  updateEstimateRangeAction: PropTypes.func.isRequired,
-  updateEstimateDisplayAction: PropTypes.func.isRequired
+  updateEstimateDisplayAction: PropTypes.func.isRequired,
+  updateEstimateRangeAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
+  const {
+    auctionArtworks: {
+      filterParams,
+      maxEstimateRangeDisplay,
+      minEstimateRangeDisplay,
+      symbol
+    }
+  } = state
+
+  const minEstimate = filterParams.ranges.estimate_range.min
+  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol, precision: 0 })
+  const maxEstimate = filterParams.ranges.estimate_range.max
+  const isAbsoluteMax = maxEstimate === maxEstimateRangeDisplay
+  const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
+
   return {
-    filterParams: state.auctionArtworks.filterParams,
-    minEstimateRangeDisplay: state.auctionArtworks.minEstimateRangeDisplay,
-    maxEstimateRangeDisplay: state.auctionArtworks.maxEstimateRangeDisplay,
-    symbol: state.auctionArtworks.symbol
+    formattedMaxDisplay,
+    formattedMinDisplay,
+    isAbsoluteMax,
+    maxEstimate,
+    maxEstimateRangeDisplay,
+    minEstimate,
+    minEstimateRangeDisplay
   }
 }
 

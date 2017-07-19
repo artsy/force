@@ -56,7 +56,7 @@ ArtistFilter.propTypes = {
   artistIds: PropTypes.array.isRequired,
   artistsYouFollow: PropTypes.object.isRequired,
   includeArtworksByFollowedArtists: PropTypes.bool.isRequired,
-  numArtistsYouFollow: PropTypes.number.isRequired,
+  numArtistsYouFollow: PropTypes.number,
   updateArtistParamsAction: PropTypes.func.isRequired,
   user: PropTypes.object
 }

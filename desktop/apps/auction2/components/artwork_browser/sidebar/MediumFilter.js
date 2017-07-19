@@ -8,17 +8,12 @@ import { updateMediumParams } from 'desktop/apps/auction2/actions/filter'
 function MediumFilter (props) {
   const {
     aggregatedMediums,
-    filterParams,
-    initialMediumMap,
-    updateMediumParamsAction
+    allMediums,
+    mediumIds,
+    updateMediumParamsAction,
+    allMediumsSelected,
+    initialMediumMap
   } = props
-
-  const mediumIds = filterParams.gene_ids
-  const allMediums = { id: 'mediums-all', name: 'All' }
-  const allMediumsSelected = mediumIds.length === 0
-
-  // FIXME: Is this needed somehow?
-  const aggregatedMediumIds = aggregatedMediums.map((agg) => agg.id)
 
   return (
     <div className='auction2-medium-checkboxes'>
@@ -54,16 +49,32 @@ function MediumFilter (props) {
 
 MediumFilter.propTypes = {
   aggregatedMediums: PropTypes.array.isRequired,
-  filterParams: PropTypes.object.isRequired,
+  allMediums: PropTypes.object.isRequired,
+  allMediumsSelected: PropTypes.bool.isRequired,
   initialMediumMap: PropTypes.array.isRequired,
+  mediumIds: PropTypes.array.isRequired,
   updateMediumParamsAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
+  const {
+    auctionArtworks: {
+      aggregatedMediums,
+      filterParams,
+      initialMediumMap
+    }
+  } = state
+
+  const mediumIds = filterParams.gene_ids
+  const allMediums = { id: 'mediums-all', name: 'All' }
+  const allMediumsSelected = mediumIds.length === 0
+
   return {
-    aggregatedMediums: state.auctionArtworks.aggregatedMediums,
-    filterParams: state.auctionArtworks.filterParams,
-    initialMediumMap: state.auctionArtworks.initialMediumMap
+    aggregatedMediums,
+    allMediums,
+    mediumIds,
+    allMediumsSelected,
+    initialMediumMap
   }
 }
 

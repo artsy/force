@@ -14,19 +14,11 @@ import {
 function WorksByFollowedArtists (props) {
   const {
     followedArtistRailPage,
-    followedArtistRailSize,
-    nextPageOfFollowedArtistArtworksAction,
-    numArtistsYouFollow,
+    isOnlyFollowedArtistsPage,
+    displayedSaleArtworks,
     previousPageOfFollowedArtistArtworksAction,
-    saleArtworksByFollowedArtists
+    nextPageOfFollowedArtistArtworksAction
   } = props
-
-  const initialSlice = (followedArtistRailPage - 1) * followedArtistRailSize
-  const displayedSaleArtworks = saleArtworksByFollowedArtists.slice(
-    initialSlice,
-    initialSlice + followedArtistRailSize
-  )
-  const isOnlyFollowedArtistsPage = numArtistsYouFollow <= followedArtistRailSize
 
   const leftPageClasses = classNames(
     'auction2-works-by-followed-artists__page-left',
@@ -70,19 +62,33 @@ function WorksByFollowedArtists (props) {
 
 WorksByFollowedArtists.propTypes = {
   followedArtistRailPage: PropTypes.string.isRequired,
-  followedArtistRailSize: PropTypes.number.isRequired,
+  isOnlyFollowedArtistsPage: PropTypes.bool.isRequired,
+  displayedSaleArtworks: PropTypes.array.isRequired,
   nextPageOfFollowedArtistArtworksAction: PropTypes.func.isRequired,
-  numArtistsYouFollow: PropTypes.number.isRequired,
-  previousPageOfFollowedArtistArtworksAction: PropTypes.func.isRequired,
-  saleArtworksByFollowedArtists: PropTypes.array.isRequired
+  previousPageOfFollowedArtistArtworksAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
+  const {
+    auctionArtworks: {
+      followedArtistRailPage,
+      followedArtistRailSize,
+      numArtistsYouFollow,
+      saleArtworksByFollowedArtists
+    }
+  } = state
+
+  const initialSlice = (followedArtistRailPage - 1) * followedArtistRailSize
+  const displayedSaleArtworks = saleArtworksByFollowedArtists.slice(
+    initialSlice,
+    initialSlice + followedArtistRailSize
+  )
+  const isOnlyFollowedArtistsPage = numArtistsYouFollow <= followedArtistRailSize
+
   return {
-    followedArtistRailPage: state.auctionArtworks.followedArtistRailPage,
-    followedArtistRailSize: state.auctionArtworks.followedArtistRailSize,
-    numArtistsYouFollow: state.auctionArtworks.numArtistsYouFollow,
-    saleArtworksByFollowedArtists: state.auctionArtworks.saleArtworksByFollowedArtists
+    followedArtistRailPage,
+    isOnlyFollowedArtistsPage,
+    displayedSaleArtworks
   }
 }
 
