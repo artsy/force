@@ -41,7 +41,7 @@ describe 'openFeedbackModal', ->
     $('[data-answer="press"]').click()
     html = $('body').html()
     html.should.containEql 'For questions about press contact: <a href="mailto:press@artsy.net">press@artsy.net</a>'
-    html.should.containEql 'For pitches and story ideas contact: <a href="mailto:storyideas@artsy.net">storyideas@artsy.net</a>'
+    html.should.containEql 'For pitches and story ideas contact: <a href="mailto:pitches@artsy.net">pitches@artsy.net</a>'
 
   it 'opens the artist FAQ', (done) ->
     openMultiPageModal.called.should.be.false()
