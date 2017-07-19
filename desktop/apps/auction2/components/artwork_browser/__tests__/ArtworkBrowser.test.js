@@ -10,7 +10,6 @@ import auctions from 'desktop/apps/auction2/reducers'
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
 import { createStore } from 'redux'
-import { shallow } from 'enzyme'
 
 describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
   describe('<ArtworkDisplay />', () => {

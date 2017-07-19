@@ -4,6 +4,7 @@ import React from 'react'
 import auctions, { initialState } from 'desktop/apps/auction2/reducers'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import moment from 'moment'
+import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { fabricate } from 'antigravity'
@@ -33,46 +34,15 @@ describe('<Layout />', () => {
     }
   })
 
-  function setup (data = {}) {
-    data = { ...baseData, ...data }
-
-    data.auction.set('cover_image', {
-      cropped: {
-        url: 'foo.jpg'
-      }
+  it.only('default auction with no user', () => {
+    const { wrapper } = renderTestComponent({
+      Component: Layout
     })
 
-    data.auction.isRegistrationEnded = () => true
-
-    store = createStore(auctions, {
-      app: data,
-      auctionArtworks: initialState
-    })
-
-    const wrapper = render(
-      <Provider store={store}>
-        <Layout />
-      </Provider>
-    )
-
-    return wrapper
-  }
-
-  it('works', () => {
-
+    wrapper.find('.auction2-auction-info__title').text().should.equal('An Auction')
+    wrapper.find('.js-register-button').text().should.equal('Register to bid')
+    wrapper.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
   })
-
-  // it('default auction with no user', () => {
-  //   const rendered = setup({
-  //     auction: new Auction(fabricate('sale', {
-  //       name: 'An Auction'
-  //     }))
-  //   })
-  //
-  //   rendered.find('.auction2-auction-info__title').text().should.equal('An Auction')
-  //   rendered.find('.js-register-button').text().should.equal('Register to bid')
-  //   rendered.find('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
-  // })
   //
   // it('preview auction with no user', () => {
   //   const rendered = setup({

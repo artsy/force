@@ -5,7 +5,7 @@ import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTes
 import { initialState } from 'desktop/apps/auction2/reducers'
 import { fabricate } from 'antigravity'
 
-describe('<MyActiveBids />', () => {
+describe('apps/auction2/components/layout/active_bids/MyActiveBids', () => {
   let baseData
 
   before(() => {
@@ -33,9 +33,10 @@ describe('<MyActiveBids />', () => {
     return wrapper
   }
 
-  describe('my_active_bids', () => {
+  describe('<MyActiveBids />', () => {
     it('displays an outbid bid status', () => {
       const wrapper = setup({
+        isMobile: false,
         me: {
           lot_standings: [
             {
@@ -72,15 +73,16 @@ describe('<MyActiveBids />', () => {
         user: new CurrentUser({ id: 'user' })
       })
 
-      wrapper.find('h2').should.have.lengthOf(1)
-      wrapper.find('.bid-status').should.have.lengthOf(1)
+      wrapper.find('h2').length.should.eql(1)
+      wrapper.find('.bid-status').length.should.eql(1)
       wrapper.find('.bid-status').text().should.containEql('Outbid')
-      wrapper.find('.auction2-active-bid-item__bid-button').should.have.lengthOf(1)
+      wrapper.find('.auction2-active-bid-item__bid-button').length.should.eql(1)
       wrapper.find('.auction2-active-bid-item__bid-button').text().should.containEql('Bid')
     })
 
     it('displays a Bid Live button if is_live_open', () => {
       const wrapper = setup({
+        isMobile: false,
         me: {
           lot_standings: [
             {
@@ -118,9 +120,9 @@ describe('<MyActiveBids />', () => {
         user: new CurrentUser({ id: 'user' })
       })
 
-      wrapper.find('h2').should.have.lengthOf(1)
-      wrapper.find('.bid-status').should.have.lengthOf(0)
-      wrapper.find('.auction2-active-bid-item__bid-live-button').should.have.lengthOf(1)
+      wrapper.find('h2').length.should.eql(1)
+      wrapper.find('.bid-status').length.should.eql(0)
+      wrapper.find('.auction2-active-bid-item__bid-live-button').length.should.eql(1)
       wrapper.find('.auction2-active-bid-item__bid-live-button').text().should.containEql('Bid Live')
     })
   })

@@ -1,12 +1,24 @@
+import React from 'react'
 import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import AuctionInfoDesktop from 'desktop/apps/auction2/components/layout/auction_info/AuctionInfoDesktop'
-import AuctionInfoMobile from 'desktop/apps/auction2/components/layout/auction_info/AuctionInfoMobile'
-import { test } from 'desktop/apps/auction2/components/layout/auction_info/index'
+import { test, __RewireAPI__ } from 'desktop/apps/auction2/components/layout/auction_info/index'
 
 const { AuctionInfoContainer } = test
 
 describe('auction/components/layout/auction_info/AuctionInfoContainer.test', () => {
   describe('<AuctionInfoContainer />', () => {
+    const AuctionInfoDesktop = () => <div />
+    const AuctionInfoMobile = () => <div />
+
+    beforeEach(() => {
+      __RewireAPI__.__Rewire__('AuctionInfoDesktop', AuctionInfoDesktop)
+      __RewireAPI__.__Rewire__('AuctionInfoMobile', AuctionInfoMobile)
+    })
+
+    afterEach(() => {
+      __RewireAPI__.__Rewire__('AuctionInfoDesktop', AuctionInfoDesktop)
+      __RewireAPI__.__Rewire__('AuctionInfoMobile', AuctionInfoMobile)
+    })
+
     it('renders mobile mode if isMobile', () => {
       const { wrapper } = renderTestComponent({
         Component: AuctionInfoContainer,

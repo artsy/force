@@ -7,12 +7,14 @@ const { ArtworkDisplay } = test
 
 describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
   describe('<ArtworkDisplay />', () => {
+    const Jump = () => <div />
     const MasonryArtwork = () => <div />
     const GridArtwork = () => <div />
     const ListArtwork = () => <div />
     const MasonryGrid = () => <div />
 
     beforeEach(() => {
+      __RewireAPI__.__Rewire__('Jump', Jump)
       __RewireAPI__.__Rewire__('MasonryArtwork', MasonryArtwork)
       __RewireAPI__.__Rewire__('GridArtwork', GridArtwork)
       __RewireAPI__.__Rewire__('ListArtwork', ListArtwork)
@@ -20,6 +22,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
     })
 
     afterEach(() => {
+      __RewireAPI__.__ResetDependency__('Jump')
       __RewireAPI__.__ResetDependency__('MasonryArtwork')
       __RewireAPI__.__ResetDependency__('GridArtwork')
       __RewireAPI__.__ResetDependency__('ListArtwork')
