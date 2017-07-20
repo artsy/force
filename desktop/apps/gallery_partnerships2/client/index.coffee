@@ -31,6 +31,11 @@ module.exports.init = ->
   ),
     offset: '-50%'
 
+  $('.gallery-partnerships2__chat__video').waypoint ((direction) ->
+    $('.gallery-partnerships2__chat__video').get(0).play() if direction == 'down'
+  ),
+    offset: '50%'
+
   $('.js-gallery-partnerships2-button').click (event) ->
     event.preventDefault()
     $('html, body').animate({ scrollTop: $('#gallery-partnership2-form').offset().top }, 500)
