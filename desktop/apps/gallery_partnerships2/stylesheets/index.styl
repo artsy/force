@@ -173,8 +173,12 @@ background-size-cover()
   @media screen and (max-width: 768px)
     flex-direction column
     padding 15px 25px
-  img
-    zoom 50%
+  &__logo
+    min-height 130px
+    img
+      transform scale(0.5)
+    @media screen and (max-width: 768px)
+      min-height inherit
 
 .gallery-partnerships2__connect-with-collectors
   min-height 610px
