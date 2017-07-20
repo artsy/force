@@ -77,11 +77,12 @@ export async function index (req, res, next) {
         locals: {
           ...res.locals,
           assetPackage: 'auctions2',
-          bodyClass: 'body-header-fixed body-no-margins'
+          bodyClass: 'auctions2-body body-header-fixed body-no-margins'
         },
         data: {
           app: store.getState().app,
-          artworkBrowser: store.getState().artworkBrowser
+          artworkBrowser: store.getState().artworkBrowser,
+          sd: res.locals.sd
         }
       })
 

@@ -12,6 +12,7 @@ import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayou
 const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
 const auctionModel = new Auction(bootstrapData.app.auction)
 const auctionArticles = new Articles(bootstrapData.app.articles)
+const { templateComponents } = bootstrapData
 
 // TODO: Refactor out Backbone
 bootstrapData.app.user = CurrentUser.orNull()
@@ -28,6 +29,7 @@ const store = configureStore(auctionReducer, {
 ReactDOM.render(
   <App
     store={store}
+    templateComponents={templateComponents}
   />,
   document.getElementById('react-root')
 )
