@@ -37,16 +37,23 @@ class MyActiveBids extends Component {
   getFreshData = async () => {
     const { saleId, user } = this.props
 
-    const { me } = await metaphysics({
-      query: MeQuery(saleId),
-      req: {
-        user
-      }
-    })
+    try {
+      const { me } = await metaphysics({
+        query: MeQuery(saleId),
+        req: {
+          user
+        }
+      })
 
-    this.setState({
-      lotStandings: me.lot_standings
-    })
+      this.setState({
+        lotStandings: me.lot_standings
+      })
+    } catch (error) {
+      console.error(
+        'auction2/components/layout/active_bids/MyActiveBids.js',
+        'Error fetching active bid: ', error
+      )
+    }
   }
 
   render () {
