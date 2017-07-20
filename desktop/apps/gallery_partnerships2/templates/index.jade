@@ -95,7 +95,7 @@ block body
             .col-xs-12.col-lg-6.items-center.justify-center.flex
               video.gallery-partnerships2__chat__video(autoplay loop playsinline muted)
                 source(src=sections[3].video type="video/mp4")
-                img(src='http://files.artsy.net/images/chat_image2x.png')
+              img.gallery-partnerships2__chat__fallback_image(src='http://files.artsy.net/images/chat_image2x.png')
             .col-xs-12.col-lg-6.flex.flex-auto.justify-center.items-center.text-center-on-mobile
               .gallery-partnerships2__chat__content-container
                 div= sections[3].title
