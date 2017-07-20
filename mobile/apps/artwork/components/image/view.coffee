@@ -9,7 +9,7 @@ analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtworkImageView extends Backbone.View
   events:
-    'click .artwork-header-module__favorite': 'savedArtwork'
+    'click .artwork-header-module__favorite-button': 'savedArtwork'
     'click .artwork-image': 'initZoom'
     'pinchOut .artwork-image': 'initZoom'
 
@@ -32,7 +32,7 @@ module.exports = class ArtworkImageView extends Backbone.View
       @user.savedArtwork @artwork.id,
         success: (saved) =>
           if saved
-            @$('.artwork-header-module__favorite').attr
+            @$('.artwork-header-module__favorite-button').attr
               'data-state': 'saved'
               'data-action': 'remove'
     else
@@ -42,9 +42,10 @@ module.exports = class ArtworkImageView extends Backbone.View
       )
 
   savedArtwork: (e) ->
+    console.log('clickkk')
     if @user
       e.preventDefault()
-      $saveButton = @$('.artwork-header-module__favorite')
+      $saveButton = @$('.artwork-header-module__favorite-button')
       action = $saveButton.attr('data-action')
       @user["#{action}Artwork"](@artwork.id)
 

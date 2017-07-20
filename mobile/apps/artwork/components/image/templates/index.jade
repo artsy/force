@@ -16,12 +16,13 @@
             | , #{artwork.date}
 
       .artwork-header-module
-        .artwork-header-module__share-button
-        .artwork-favorites-container
-          - console.log(artwork.is_in_auction)
-          if artwork.auction && artwork.auction.auction_state == 'open'
-            a.artwork-header-module__favorite(data-action='save' data-state='unsaved')
+        .artwork-header-module__share-container
+          .artwork-header-module__share-button
+        .artwork-header-module__favorites-container
+          //- if artwork.auction && artwork.auction.auction_state == 'open'
+          if artwork.auction
+            a.artwork-header-module__favorite-button( data-action='save' data-state='unsaved')
               include ../../../../../../desktop/components/main_layout/public/icons/bell.svg
           else
-            a.artwork-header-module__favorite( data-action='save' data-state='unsaved')
+            a.artwork-header-module__favorite-button.circle-border-icon-button( data-action='save' data-state='unsaved')
               i.icon-heart
