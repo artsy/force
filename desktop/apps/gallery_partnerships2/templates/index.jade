@@ -41,10 +41,11 @@ block body
       .responsive-layout-container.flex.flex-auto
         .main-layout-container.flex.flex-auto
           .row.flex-auto.reverse-on-mobile
-            .col-xs-12.col-lg-6.flex.gallery-partnerships2__connect-with-collectors__notification-container
-              .flex.flex-auto.justify-center
-                img.gallery-partnerships2__connect-with-collectors__image.self-end(src=sections[1].background_image)
-              img.gallery-partnerships2__connect-with-collectors__sub_image(src=sections[1].notification_image)
+            .col-xs-12.col-lg-6.flex.justify-center.gallery-partnerships2__connect-with-collectors__notification-container
+              .gallery-partnerships2__connect-with-collectors__notification-inner-container.flex-auto.self-end
+                img.gallery-partnerships2__connect-with-collectors__image.flex(src=sections[1].background_image)
+                .flex.justify-center.items-center.gallery-partnerships2__connect-with-collectors__sub_image_continer
+                  img.gallery-partnerships2__connect-with-collectors__sub_image(src=sections[1].notification_image)
             .col-xs-12.col-lg-6.flex.text-center-on-mobile
               .gallery-partnerships2__connect-with-collectors__content_container.flex.flex-auto.justify-center.items-center
                 .gallery-partnerships2__connect-with-collectors__content_container__wrapper
