@@ -18,6 +18,7 @@ describe('<Layout />', () => {
   it('default auction with no user', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           auction: {
@@ -35,6 +36,7 @@ describe('<Layout />', () => {
   it('preview auction with no user', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           auction: {
@@ -59,6 +61,7 @@ describe('<Layout />', () => {
   it('live auction, open for pre-bidding', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           auction: {
@@ -80,6 +83,7 @@ describe('<Layout />', () => {
   it('live auction, open for live bidding', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           auction: {
@@ -100,6 +104,7 @@ describe('<Layout />', () => {
   it('default auction with user', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           me: {
@@ -121,6 +126,7 @@ describe('<Layout />', () => {
   it('user with bidder positions', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           me: {
@@ -173,6 +179,7 @@ describe('<Layout />', () => {
   it('index, registered to bid but not qualified', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           me: {
@@ -196,6 +203,7 @@ describe('<Layout />', () => {
   it('index, registered to bid and qualified', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           me: {
@@ -218,6 +226,7 @@ describe('<Layout />', () => {
   it('index, registered to bid but auction closed', () => {
     const { wrapper } = renderTestComponent({
       Component: Layout,
+      options: { renderMode: 'render' },
       data: {
         app: {
           me: {
@@ -242,6 +251,7 @@ describe('<Layout />', () => {
     it('renders registration closed', () => {
       const { wrapper } = renderTestComponent({
         Component: Layout,
+        options: { renderMode: 'render' },
         data: {
           app: {
             auction: {
@@ -263,6 +273,7 @@ describe('<Layout />', () => {
       it('does not show the footer at all', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
+          options: { renderMode: 'render' },
           data: {
             app: {
               auction: {
@@ -318,6 +329,7 @@ describe('<Layout />', () => {
       it('does not show the footer at all', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
+          options: { renderMode: 'render' },
           data: {
             app: {
               auction: {
@@ -341,6 +353,7 @@ describe('<Layout />', () => {
       it('shows the footer but not the extra footer item', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
+          options: { renderMode: 'render' },
           data: {
             app: {
               auction: {
@@ -348,6 +361,7 @@ describe('<Layout />', () => {
                 sale_type: 'auction promo'
               },
               articles: [article],
+              isMobile: false,
               sd: {
                 sd: {
                   ARTSY_EDITORIAL_CHANNEL: 'foo'
@@ -368,13 +382,15 @@ describe('<Layout />', () => {
       it('shows the articles and the extra footer item', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
+          options: { renderMode: 'render' },
           data: {
             app: {
               auction: {
                 name: 'An Auction'
               },
               articles: [article],
-              footerItems: footerItems,
+              footerItems,
+              isMobile: false,
               sd: {
                 sd: {
                   ARTSY_EDITORIAL_CHANNEL: 'foo'
