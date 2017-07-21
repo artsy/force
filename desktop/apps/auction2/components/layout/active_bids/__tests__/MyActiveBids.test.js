@@ -21,6 +21,9 @@ describe('apps/auction2/components/layout/active_bids/MyActiveBids', () => {
   function setup (data = {}) {
     const { wrapper } = renderTestComponent({
       Component: MyActiveBids,
+      options: {
+        renderMode: 'render'
+      },
       data: {
         app: {
           ...baseData,

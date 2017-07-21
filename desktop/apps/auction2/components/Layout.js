@@ -74,7 +74,7 @@ const mapStateToProps = (state) => {
   const showFilter = Boolean(eligible_sale_artworks_count > 0)
   const showFollowedArtistsRail = Boolean(!isMobile && state.artworkBrowser.showFollowedArtistsRail)
   const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
-  const showFooter = Boolean(articles.length || !showFilter)
+  const showFooter = Boolean(!isMobile && articles.length || !showFilter)
 
   return {
     associatedSale: associated_sale,
