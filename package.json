@@ -17,7 +17,7 @@
     "test": "sh scripts/test.sh"
   },
   "dependencies": {
-    "@artsy/reaction-force": "^0.2.3",
+    "@artsy/reaction-force": "^0.2.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
@@ -109,6 +109,7 @@
     "react-redux": "^5.0.2",
     "react-router": "^4.1.1",
     "react-router-redux": "^4.0.8",
+    "react-sizeme": "^2.3.4",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
     "redux-form": "^6.7.0",

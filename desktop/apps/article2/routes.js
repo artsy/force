@@ -8,6 +8,10 @@ export async function index (req, res, next) {
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
+    if (articleId !== article.slug) {
+      return res.redirect(`/article2/${article.slug}`)
+    }
+    // TODO: Redirects for partner (make the url in Writer) and channel and fair (should preview a classic)
     const layout = renderReactLayout({
       basePath: res.app.get('views'),
       blocks: {
@@ -17,7 +21,7 @@ export async function index (req, res, next) {
       locals: {
         ...res.locals,
         assetPackage: 'article2',
-        bodyClass: 'body-no-header body-no-margins'
+        bodyClass: 'body-no-margins'
       },
       data: {
         article

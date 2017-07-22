@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.2.3.tgz#1f0eebd9747c263cd852457807d72e6c22ed1065"
+"@artsy/reaction-force@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.2.1.tgz#fb373b1816ec752d2f69527f7040a9eea0b43f81"
   dependencies:
     "@storybook/addon-options" "^3.1.2"
     "@storybook/react" "^3.1.3"
@@ -7236,6 +7236,14 @@ react-simple-di@^1.2.0:
 react-sizeme@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.3.2.tgz#3ad87541e96371403a1d3468d885164b98452862"
+  dependencies:
+    element-resize-detector "^1.1.12"
+    invariant "^2.2.2"
+    lodash "^4.17.4"
+
+react-sizeme@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.3.4.tgz#dd662ff43d65e7bd37992a2bb86e7d7df8a67836"
   dependencies:
     element-resize-detector "^1.1.12"
     invariant "^2.2.2"

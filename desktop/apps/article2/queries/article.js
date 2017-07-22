@@ -5,6 +5,8 @@ export default function ArticleQuery (id) {
         title
         description
         published_at
+        slug
+        layout
         contributing_authors {
           name
           id
@@ -15,9 +17,7 @@ export default function ArticleQuery (id) {
         }
         hero_section {
           ...Image
-          ...on Video {
-            caption
-          }
+          ...Video
           ...on Fullscreen {
             type
             title
@@ -27,13 +27,16 @@ export default function ArticleQuery (id) {
         sections {
           ... on Text {
             type
+            body
           }
           ... on Embed {
             type
+            url
+            height
+            mobile_height
+            layout
           }
-          ... on Video {
-            type
-          }
+          ...Video
           ... on Callout {
             type
           }
@@ -47,6 +50,8 @@ export default function ArticleQuery (id) {
           }
           ... on ImageSet {
             type
+            title
+            layout
             images {
               ...Image
               ...Artwork
@@ -62,6 +67,15 @@ export default function ArticleQuery (id) {
       type
       width
       height
+    }
+
+    fragment Video on Video {
+      caption
+      type
+      url
+      cover_image_url
+      layout
+      background_color
     }
 
     fragment Artwork on Artwork {

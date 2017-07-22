@@ -1,84 +1,52 @@
-import _ from 'underscore'
 import components from '@artsy/reaction-force/dist/components/publishing/index'
-import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
+import Sections from 'desktop/apps/article2/components/Sections'
+import styled from 'styled-components'
+import FeatureLayout from 'desktop/apps/article2/components/layouts/FeatureLayout'
+import StandardLayout from 'desktop/apps/article2/components/layouts/StandardLayout'
 
-const { ImagesetPreview, Artwork, Image, FeatureHeader } = components
+const { Header } = components
 
-export default class App extends Component {
+const HeaderContainer = styled.div`
+  margin: 20px;
+`
+
+export default class App extends React.Component {
   static propTypes = {
     article: PropTypes.object
   }
 
-  renderSections (sections) {
-    const renderedSections = sections.map((section) => {
-      switch (section.type) {
-        case 'image_collection':
-          const images = section.images.map((image) => {
-            if (image.type === 'image') {
-              return (
-                <div style={{ width: '50%', margin: 'auto' }}>
-                  <Image image={image} />
-                </div>
-              )
-            } else if (image.type === 'artwork') {
-              return (
-                <div style={{ width: '50%', margin: 'auto' }}>
-                  <Artwork linked artwork={image} />
-                </div>
-              )
-            }
-          })
-          return images
-        case 'image_set':
-          return (
-            <div style={{ width: '50%', margin: 'auto' }}>
-              <ImagesetPreview images={section.images} />
-            </div>
-          )
-        default:
-          return false
-      }
-    })
-    return renderedSections
+  renderHeader (article) {
+    return (
+      <HeaderContainer>
+        <Header article={article} />
+      </HeaderContainer>
+    )
   }
 
-  renderHeader (article) {
-    if (article.hero_section) {
-      const header = article.hero_section
-      // TODO: Put together this data elsewhere
-      const tempHeader = _.extend({}, header, {
-        layout: 'full',
-        url: header.background_url || header.background_image_url,
-        author: article.contributing_authors[0].name,
-        date: moment(article.published_at).local().format('MMM Do, YYYY h:mm a'),
-        vertical: article.vertical && article.vertical.name
-      })
+  renderLayout () {
+    const article = this.props.article
+    if (article.layout === 'feature') {
       return (
-        <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
-          <FeatureHeader header={tempHeader} />
-        </div>
+        <FeatureLayout>
+          <Sections article={article} />
+        </FeatureLayout>
       )
     } else {
       return (
-        <div>
-          {article.title}
-        </div>
+        <StandardLayout>
+          <Sections article={article} />
+        </StandardLayout>
       )
     }
   }
 
   render () {
-    const { article } = this.props
     return (
       <div>
-        <div style={{ width: '100%' }}>
-          {this.renderHeader(article)}
-          <div style={{ margin: '20px' }}>
-            {this.renderSections(article.sections)}
-          </div>
-        </div>
+        {/* {this.renderHeader()} */}
+        {this.renderLayout()}
       </div>
     )
   }
