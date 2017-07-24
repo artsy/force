@@ -20,7 +20,7 @@ function AuctionInfoMobile (props) {
   const b = block('auction2-auction-info')
 
   return (
-    <header className={b({ expandToFullScreen: showInfoWindow })}>
+    <div className={b({ expandToFullScreen: showInfoWindow })}>
       <div className={b('container')}>
         <div className={b('primary')}>
 
@@ -101,7 +101,7 @@ function AuctionInfoMobile (props) {
 
       { !showInfoWindow &&
         <Registration /> }
-    </header>
+    </div>
   )
 }
 
