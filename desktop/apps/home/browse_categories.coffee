@@ -4,5 +4,5 @@ module.exports =
   'sculpture': 'Sculpture'
   'prints': 'Prints & Multiples'
   'work-on-paper': 'Works on Paper'
-  'film-and-video': 'Film & Video'
+  'film-slash-video': 'Film & Video'
   'design': 'Design'
