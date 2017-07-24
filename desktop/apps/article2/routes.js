@@ -1,5 +1,5 @@
 import App from 'desktop/apps/article2/components/App'
-import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
+import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 import positronql from 'desktop/lib/positronql.coffee'
 import ArticleQuery from './queries/article'
 

@@ -24,7 +24,7 @@ module.exports = ->
   setupJquery()
   setupReferrerTracking()
   syncAuth()
-  setupAuctionReminder()
+  setupAuctionReminder() unless sd.IS_MOBILE
   listenForInvert()
   listenForBounce()
   confirmation.check()

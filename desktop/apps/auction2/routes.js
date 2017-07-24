@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/filter'
+import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
 import App from 'desktop/apps/auction2/components/App'
 import Articles from 'desktop/collections/articles.coffee'
 import ArticlesQuery from 'desktop/apps/auction2/utils/queries/articles'
@@ -6,14 +6,16 @@ import Auction from 'desktop/models/auction.coffee'
 import MeQuery from 'desktop/apps/auction2/utils/queries/me'
 import React from 'react'
 import SaleQuery from 'desktop/apps/auction2/utils/queries/sale'
-import auctionReducer, { initialState } from 'desktop/apps/auction2/reducers'
+import auctionReducer from 'desktop/apps/auction2/reducers'
 import configureStore from 'desktop/apps/auction2/utils/configureStore'
 import footerItems from 'desktop/apps/auction2/utils/footerItems'
 import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
-import renderReactLayout from 'desktop/components/react/utils/render_react_layout'
 import u from 'updeep'
+import { initialState as appInitialState } from 'desktop/apps/auction2/reducers/app'
+import { initialState as auctionWorksInitialState } from 'desktop/apps/auction2/reducers/artworkBrowser'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
+import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 
 export async function index (req, res, next) {
   const saleId = req.params.id
@@ -38,7 +40,7 @@ export async function index (req, res, next) {
     const auctionModel = new Auction(sale)
 
     const store = configureStore(auctionReducer, {
-      app: {
+      app: u({
         articles: new Articles(articles),
         auction: auctionModel,
         footerItems: footerItems,
@@ -47,18 +49,19 @@ export async function index (req, res, next) {
         liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
           isLoggedIn: Boolean(me)
         }),
-        me,
-        sd: res.locals.sd
-      },
-      auctionArtworks: u({
+        me
+      }, appInitialState),
+
+      artworkBrowser: u({
         filterParams: {
           sale_id: saleId
         },
         isClosed: sale.is_closed,
         user: res.locals.sd.CURRENT_USER
-      }, initialState)
+      }, auctionWorksInitialState)
     })
 
+    // Hydrate store
     await Promise.all([
       req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
       store.dispatch(actions.fetchArtworks())
@@ -74,11 +77,12 @@ export async function index (req, res, next) {
         locals: {
           ...res.locals,
           assetPackage: 'auctions2',
-          bodyClass: 'body-header-fixed body-no-margins'
+          bodyClass: 'auctions2-body body-header-fixed body-no-margins'
         },
         data: {
           app: store.getState().app,
-          auctionArtworks: store.getState().auctionArtworks
+          artworkBrowser: store.getState().artworkBrowser,
+          sd: res.locals.sd
         }
       })
 

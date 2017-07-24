@@ -17,12 +17,13 @@ run () {
     yarn mocha $(find desktop/components/*/test -name '*.js')
     yarn mocha $(find desktop/components/**/*/test -name '*.coffee')
     yarn mocha $(find desktop/components/**/*/test -name '*.js')
+    yarn mocha $(find desktop/components -name '*.test.js')
     ;;
   2)
     yarn mocha $(find desktop/apps/*/test -name '*.coffee')
     yarn mocha $(find desktop/apps/*/test -name '*.js')
     yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee')
-    yarn mocha $(find desktop/apps/**/__tests__ -name '*.js')
+    yarn mocha $(find desktop/apps -name '*.test.js')
     ;;
   3)
     yarn mocha $(find mobile/test -name '*.coffee')

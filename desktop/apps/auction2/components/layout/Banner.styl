@@ -1,0 +1,50 @@
+.auction2-banner
+  height 240px
+  position relative
+  overflow hidden
+  margin-bottom 40px
+  background-size cover
+  background-position center
+
+  &_isClosed, &_isLiveOpen
+    background-color rgba(0, 0, 0, 0.4)
+    background-blend-mode multiply
+
+  +respond-mobile()
+    height 200px
+
+  &_isLiveOpen
+    color white
+    text-align center
+    height 600px
+
+    +respond-mobile()
+      height 200px
+
+    h1
+      garamond-size('headline')
+
+      +respond-mobile()
+        garamond-size('s-headline')
+
+
+    .avant-garde-button-white
+      background-color white
+      width 400px
+      margin-top 20px
+      padding 17px 0
+      border 0
+      avant-garde-size('l-headline')
+
+      +respond-mobile()
+        padding 10px
+        width 90%
+        avant-garde-size('s-headline')
+
+  &__live-details
+    z-index 2
+    position absolute
+    width 70%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)

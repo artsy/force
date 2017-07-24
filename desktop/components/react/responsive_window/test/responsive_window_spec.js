@@ -18,7 +18,7 @@ describe('components/react/responsive_window_spec.js', () => {
     store.getState().isMobile.should.eql(true)
   })
 
-  describe('<ResponsiveWindow />', () => {
+  describe('<ResponsiveWindow />', (done) => {
     it('triggers store dispatch on mount', () => {
       const store = createStore(responsiveWindowReducer)
       store.dispatch = sinon.spy()
@@ -30,8 +30,12 @@ describe('components/react/responsive_window_spec.js', () => {
         </ResponsiveWindow>
       )
 
-      ResponsiveWindow.prototype.componentDidMount.calledOnce.should.eql(true)
-      store.dispatch.calledOnce.should.eql(true)
+      // Debounce
+      setTimeout(() => {
+        ResponsiveWindow.prototype.componentDidMount.calledOnce.should.eql(true)
+        store.dispatch.calledOnce.should.eql(true)
+        done()
+      }, 0)
     })
   })
 })

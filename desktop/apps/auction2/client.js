@@ -6,11 +6,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import auctionReducer from 'desktop/apps/auction2/reducers'
 import configureStore from 'desktop/apps/auction2/utils/configureStore'
+import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
 
 // Rehydrate data from Server
-const bootstrapData = window.__BOOTSTRAP__
+const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
 const auctionModel = new Auction(bootstrapData.app.auction)
 const auctionArticles = new Articles(bootstrapData.app.articles)
+const { templateComponents } = bootstrapData
 
 // TODO: Refactor out Backbone
 bootstrapData.app.user = CurrentUser.orNull()
@@ -20,13 +22,14 @@ bootstrapData.app.articles = auctionArticles
 // Redux store
 const store = configureStore(auctionReducer, {
   app: bootstrapData.app,
-  auctionArtworks: bootstrapData.auctionArtworks
+  artworkBrowser: bootstrapData.artworkBrowser
 })
 
 // Start app
 ReactDOM.render(
   <App
     store={store}
+    templateComponents={templateComponents}
   />,
   document.getElementById('react-root')
 )

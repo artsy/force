@@ -1,0 +1,26 @@
+@require '../../../components/stylus_lib'
+
+.auction2-my-active-bids
+  &__active-bid
+    display flex
+    justify-content space-between
+    height 130px
+    align-items center
+    border-bottom 1px solid gray-lighter-color
+
+    +respond-mobile()
+      justify-content flex-start
+
+    &:last-child
+      border-bottom none
+      margin-bottom 40px
+  h2
+    garamond-size('headline')
+    padding 20px 0px
+    border-top 1px solid gray-lighter-color
+
+    +respond-mobile()
+      font-weight 600
+      garamond-size('s-body')
+      padding-bottom 20px
+      margin-top: 20px

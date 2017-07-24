@@ -1,12 +1,12 @@
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
-import Banner from 'desktop/apps/auction2/components/page/Banner'
-import CommercialFilter from './filter'
-import Footer from 'desktop/apps/auction2/components/page/Footer'
-import Header from 'desktop/apps/auction2/components/page/Header'
-import MyActiveBids from 'desktop/apps/auction2/components/page/MyActiveBids'
+import Banner from 'desktop/apps/auction2/components/layout/Banner'
+import ArtworkBrowser from 'desktop/apps/auction2/components/artwork_browser/ArtworkBrowser'
+import Footer from 'desktop/apps/auction2/components/layout/Footer'
+import AuctionInfoContainer from 'desktop/apps/auction2/components/layout/auction_info'
+import MyActiveBids from 'desktop/apps/auction2/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
-import WorksByFollowedArtists from 'desktop/apps/auction2/components/filter/WorksByFollowedArtists'
+import WorksByFollowedArtists from 'desktop/apps/auction2/components/artwork_browser/sidebar/WorksByFollowedArtists'
 import { connect } from 'react-redux'
 
 function Layout (props) {
@@ -15,6 +15,7 @@ function Layout (props) {
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
+    showInfoWindow,
     showMyActiveBids,
     showFooter
   } = props
@@ -24,7 +25,7 @@ function Layout (props) {
       <Banner />
 
       <div className='main-layout-container responsive-layout-container'>
-        <Header />
+        <AuctionInfoContainer />
 
         { showAssociatedAuctions &&
           <AuctionBlock
@@ -35,11 +36,11 @@ function Layout (props) {
         { showMyActiveBids &&
           <MyActiveBids /> }
 
-        { showFilter &&
+        { showFilter && !showInfoWindow &&
           <div className='auction2-main-page'>
             { showFollowedArtistsRail &&
               <WorksByFollowedArtists /> }
-            <CommercialFilter />
+            <ArtworkBrowser />
           </div> }
 
         {showFooter &&
@@ -54,12 +55,13 @@ Layout.propTypes = {
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
   showFollowedArtistsRail: PropTypes.bool.isRequired,
+  showInfoWindow: PropTypes.bool.isRequired,
   showMyActiveBids: PropTypes.bool.isRequired,
   showFooter: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
-  const { articles, auction, me } = state.app
+  const { articles, auction, me, isMobile, showInfoWindow } = state.app
 
   const {
     associated_sale,
@@ -68,17 +70,18 @@ const mapStateToProps = (state) => {
     is_live_open
   } = auction.toJSON()
 
-  const showAssociatedAuctions = Boolean(associated_sale)
+  const showAssociatedAuctions = Boolean(!isMobile && associated_sale)
   const showFilter = Boolean(eligible_sale_artworks_count > 0)
-  const showFollowedArtistsRail = Boolean(state.auctionArtworks.showFollowedArtistsRail)
+  const showFollowedArtistsRail = Boolean(!isMobile && state.artworkBrowser.showFollowedArtistsRail)
   const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
-  const showFooter = Boolean(articles.length || !showFilter)
+  const showFooter = Boolean(!isMobile && articles.length || !showFilter)
 
   return {
     associatedSale: associated_sale,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
+    showInfoWindow,
     showMyActiveBids,
     showFooter
   }

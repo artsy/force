@@ -1,7 +1,7 @@
 import * as actions from './actions'
 import u from 'updeep'
 import { combineReducers } from 'redux'
-import { composeReducers } from '../../../components/react/utils/compose_reducers'
+import { composeReducers } from '../../../components/react/utils/composeReducers'
 import { data as sd } from 'sharify'
 import { contains } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
