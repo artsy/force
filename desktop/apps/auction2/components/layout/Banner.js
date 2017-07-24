@@ -19,38 +19,35 @@ function Banner (props) {
   const b = block('auction2-banner')
 
   return (
-    <div>
-      {isLiveOpen
-        ? <Background
-            coverImage={coverImage}
-            name={name}
-            className={b('live-open', { isClosed })}
-          >
-            <h1>
-              Live Bidding Now Open
-            </h1>
+    <div className={b({ isClosed, isMobile, isLiveOpen })} style={{ backgroundImage: `url('${coverImage}')` }} alt={name}>
+      {(() => {
+        if (isLiveOpen) {
+          return (
+            <div className={b('live-details')}>
+              <h1>
+                Live Bidding Now Open
+              </h1>
 
-            <a href={liveAuctionUrl} className='avant-garde-button-white'>
-              Enter live auction
-            </a>
-          </Background>
-        : <Background
-            coverImage={coverImage}
-            name={name}
-            className={b({ isMobile, isClosed })}
-          >
+              <a href={liveAuctionUrl} className='avant-garde-button-white'>
+                Enter live auction
+              </a>
+            </div>
+          )
+        } else {
+          return (
             <ClockView
               model={auction}
             />
-          </Background>
+          )
         }
+      })()}
     </div>
   )
 }
 
 Banner.propTypes = {
   auction: PropTypes.object.isRequired,
-  coverImage: PropTypes.object.isRequired,
+  coverImage: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
   isLiveOpen: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
@@ -67,10 +64,11 @@ const mapStateToProps = (state) => {
   } = state.app
 
   const { cover_image, name } = auction.toJSON()
+  const coverImage = get(cover_image, 'cropped.url', '')
 
   return {
     auction,
-    coverImage: cover_image,
+    coverImage,
     isClosed: state.artworkBrowser.isClosed,
     isLiveOpen,
     isMobile,
@@ -82,28 +80,5 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(Banner)
-
-// Helpers
-
-function Background ({ children, className, coverImage, name }) {
-  const imageUrl = get(coverImage, 'cropped.url', '')
-
-  return (
-    <div
-      className={className}
-      style={{ backgroundImage: `url('${imageUrl}')` }}
-      alt={name}
-    >
-      {children}
-    </div>
-  )
-}
-
-Background.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  coverImage: PropTypes.object,
-  name: PropTypes.string
-}
 
 export const test = { Banner }
