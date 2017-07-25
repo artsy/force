@@ -2,7 +2,7 @@ import Jump from 'desktop/components/jump/react'
 import MasonryArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/MasonryArtwork'
 import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
 import ListArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/ListArtwork'
-import LoadingSpinner from 'desktop/apps/auction2/components/artwork_browser/main/artwork/LoadingSpinner'
+import LoadingSpinner from 'desktop/apps/auction2/components/artwork_browser/main/LoadingSpinner'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -15,12 +15,16 @@ function ArtworkDisplay ({
   isMobile,
   isClosed,
   saleArtworks,
-  saleId
+  saleId,
+  showFullScreenSpinner
 }) {
   const listType = isListView ? '--list' : ''
 
   return (
     <div className={`auction2-page-artworks${listType}`}>
+      { showFullScreenSpinner &&
+        <LoadingSpinner fullscreen /> }
+
       {(() => {
         if (isMobile) {
           if (isListView) {
@@ -93,18 +97,34 @@ ArtworkDisplay.propTypes = {
   isMobile: PropTypes.bool.isRequired,
   isClosed: PropTypes.bool.isRequired,
   saleArtworks: PropTypes.array.isRequired,
-  saleId: PropTypes.string.isRequired
+  saleId: PropTypes.string.isRequired,
+  showFullScreenSpinner: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
+  const { isMobile } = state.app
+  let showFullScreenSpinner = false
+
+  if (isMobile) {
+    if (typeof window !== 'undefined') {
+      const scrollTop = window.scrollY
+      const windowHeight = window.innerHeight
+
+      if (scrollTop < windowHeight) {
+        showFullScreenSpinner = true
+      }
+    }
+  }
+
   return {
     allFetched: state.artworkBrowser.allFetched,
     isFetchingArtworks: state.artworkBrowser.isFetchingArtworks,
     isListView: state.artworkBrowser.isListView,
-    isMobile: state.app.isMobile,
+    isMobile,
     isClosed: state.app.auction.isClosed(),
     saleArtworks: state.artworkBrowser.saleArtworks,
-    saleId: state.app.auction.get('id')
+    saleId: state.app.auction.get('id'),
+    showFullScreenSpinner
   }
 }
 

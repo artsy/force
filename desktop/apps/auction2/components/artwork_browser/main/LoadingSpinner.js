@@ -1,17 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function LoadingSpinner ({ isFetchingArtworks }) {
+function LoadingSpinner ({ fullscreen, isFetchingArtworks }) {
+  const b = block('loading-spinner-component')
+
   return (
-    isFetchingArtworks && (
-      <div className='loading-spinner' />
-    )
+    <div className={b({ fullscreen })}>
+      { !isFetchingArtworks &&
+        <div className='loading-spinner' /> }
+    </div>
   )
 }
 
 LoadingSpinner.propTypes = {
+  fullscreen: PropTypes.bool,
   isFetchingArtworks: PropTypes.bool.isRequired
+}
+
+LoadingSpinner.defaultProps = {
+  fullscreen: false
 }
 
 const mapStateToProps = (state) => ({

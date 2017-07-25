@@ -4,7 +4,8 @@ import AddToCalendarView from 'desktop/components/add_to_calendar/index.coffee'
 
 export default class AddToCalendar extends Component {
   static propTypes = {
-    el: PropTypes.node
+    el: PropTypes.node,
+    event: PropTypes.object.isRequired
   }
 
   componentDidMount () {
@@ -20,6 +21,8 @@ export default class AddToCalendar extends Component {
   }
 
   render () {
+    const { event } = this.props
+
     return (
       <div className='add-to-calendar'>
         <div className='add-to-calendar__wrapper'>
@@ -33,16 +36,16 @@ export default class AddToCalendar extends Component {
           <div className='add-to-calendar-event-calendar-wrapper'>
             <div className='add-to-calendar-event-arrow-up' />
             <div className='add-to-calendar-event-calendar-container'>
-              <a className='outlook'>
+              <a className='outlook' href={event.icsCalendarUrl()}>
                 Outlook
               </a>
-              <a className='google'>
+              <a className='google' href={event.googleCalendarUrl()} target='_blank'>
                 Google
               </a>
-              <a className='yahoo'>
+              <a className='yahoo' href={event.yahooCalendarUrl()} target='_blank'>
                 Yahoo!
               </a>
-              <a className='ical'>
+              <a className='ical' href={event.icsCalendarUrl()}>
                 iCal
               </a>
             </div>

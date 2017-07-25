@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 function AuctionInfoDesktop (props) {
   const {
     description,
+    event,
     isAuctionPromo,
     liveStartAt,
     name,
@@ -34,7 +35,9 @@ function AuctionInfoDesktop (props) {
           {upcomingLabel}
 
           { showAddToCalendar &&
-            <AddToCalendarView /> }
+            <AddToCalendarView
+              event={event}
+            /> }
 
           { liveStartAt &&
             <div className={b('callout-live-label')}>
@@ -66,6 +69,7 @@ function AuctionInfoDesktop (props) {
 
 AuctionInfoDesktop.propTypes = {
   description: PropTypes.string.isRequired,
+  event: PropTypes.object.isRequired,
   isAuctionPromo: PropTypes.bool,
   liveStartAt: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -78,6 +82,7 @@ const mapStateToProps = (state) => {
 
   return {
     description: auction.mdToHtml('description'),
+    event: auction.event(),
     isAuctionPromo: auction.isAuctionPromo(),
     liveStartAt: auction.get('live_start_at'),
     name: auction.get('name'),
