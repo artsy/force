@@ -13,9 +13,15 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   height clock-height
   text-align left
 
+  +respond-mobile()
+    height 50px
+
 .clock-header
   font-size header-font-size
   line-height 1
+
+  +respond-mobile()
+    font-size 8px
 
 .clock-value
   avant-garde()
@@ -27,6 +33,9 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
     display inline-block
     vertical-align top
     inline-block-margins(3px)
+
+    +respond-mobile()
+      margin -7px -3px
 
     small
       display block
@@ -46,6 +55,9 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   // Often overwritten unintentionally
   text-transform uppercase !important
 
+  +respond-mobile()
+    avant-garde-size('l-headline')
+
 .white-overlay-clock
   color white
   left 50%
@@ -54,20 +66,36 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   position absolute
   transform translate(-50%, -50%)
   z-index 1
+
   .clock-header.clock-closed
     avant-garde-size('xl-headline')
     color white
     border 0
     letter-spacing 2px
+
+    +respond-mobile()
+      avant-garde-size('l-headline')
+
   .clock
     text-align center
+
   .clock-header
     margin-bottom 5px
     avant-garde-size('s-headline')
+
+    +respond-mobile()
+      font-size 8px
+      margin-bottom 2px
+
   .clock-days, .clock-hours, .clock-minutes, .clock-seconds
-    avant-garde-size('xl-headline')
+    avant-garde-size('l-headline')
     margin 0 12px
     small
       avant-garde-size('s-headline')
       color white
       margin-top 5px
+
+      +respond-mobile()
+        font-size 8px
+        margin-top 2px
+        margin-bottom 2px

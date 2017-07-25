@@ -1,5 +1,5 @@
 import App from 'desktop/apps/react_example/components/App'
-import { renderReactLayout } from 'desktop/components/react/utils/render_react_layout'
+import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 
 export function index (req, res, next) {
   const layout = renderReactLayout({

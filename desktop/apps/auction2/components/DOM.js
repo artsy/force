@@ -10,11 +10,8 @@ class DOM extends Component {
   static propTypes = {
     auction: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
+    infiniteScroll: PropTypes.func.isRequired,
     user: PropTypes.object
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
   }
 
   // Selectors
@@ -23,6 +20,9 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount () {
+    const FastClick = require('fastclick')
+    FastClick(document.body)
+
     this.$ = require('jquery')
     this.addEventListeners()
     this.maybeShowRegistration()
@@ -35,7 +35,7 @@ class DOM extends Component {
   addEventListeners () {
     this.$body = this.$('body')
     this.$body.on('click', '.artsy-checkbox', scrollToTop)
-    this.$(window).on('scroll.auction2-page-artworks', infiniteScroll(this.context.store.dispatch))
+    this.$(window).on('scroll.auction2-page-artworks', this.props.infiniteScroll)
     this.$registerBtn = this.$body.find('.js-register-button')
     this.$registerBtn.on('click', this.handleRegisterBtnClick)
   }
@@ -79,6 +79,11 @@ const mapStateToProps = (state) => ({
   user: state.app.user
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  infiniteScroll: () => infiniteScroll(dispatch)()
+})
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(DOM)

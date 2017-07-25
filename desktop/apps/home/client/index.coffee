@@ -10,7 +10,6 @@ JumpView = require '../../../components/jump/view.coffee'
 setupHomePageModules = require './setup_home_page_modules.coffee'
 maybeShowBubble = require '../components/new_for_you/index.coffee'
 setupArtistsToFollow = require '../components/artists_to_follow/index.coffee'
-splitTest = require '../../../components/split_test/index.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: ->
@@ -20,8 +19,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     # Render Featured Sections
     @setupHeroUnits()
-
-    splitTest('home_personalization').view()
 
   setupHeroUnits: ->
     new HeroUnitView

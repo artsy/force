@@ -189,3 +189,16 @@ module.exports = class Sale extends Backbone.Model
       "Auction opens #{@zone(@get('start_at')).format(timeFormat)}"
     else
       "Bidding closes #{@zone(@get('end_at')).format(timeFormat)}"
+
+  upcomingDateTime: ->
+    timeFormat = 'MMM D h:mm A z'
+    if @isClosed()
+      "Auction Closed"
+    else if @get('live_start_at') and not @isLiveOpen()
+      "#{@zone(@get('live_start_at')).format(timeFormat)}"
+    else if @get('live_start_at')
+      "Live bidding now open"
+    else if @isPreviewState()
+      "#{@zone(@get('start_at')).format(timeFormat)}"
+    else
+      "#{@zone(@get('end_at')).format(timeFormat)}"

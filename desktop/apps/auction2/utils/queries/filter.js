@@ -43,19 +43,30 @@ export const filterQuery = `
           display
         }
         artwork {
+          __id
           _id
           id
           date
           href
           title
           is_sold
+          image {
+            url
+          }
           images {
+            aspect_ratio,
             id
-            image_url: url(version: ["tall"])
+            image_url: url(version: "large")
+            image_large: url(version: "large")
+            image_medium: url(version: "medium")
             image_versions: versions
             placeholder: resized(width: 30, height: 30, version: "tall") {
               image_url: url
             }
+          }
+
+          artist {
+            name
           }
           artists {
             id

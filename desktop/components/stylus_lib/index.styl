@@ -10,19 +10,19 @@
 @require './typography'
 
 // Widths
-nav-bar-break = 550px
 content-margin-top = 10px
-home-logo-size = 52px
-default-max-page-width = 1250px
-main-header-height = 53px
-welcome-header-height = 85px
-layout-side-margin = 55px
-golden-ratio-small-percent = 38%
-feed-max-width = 1084px
-default-modal-padding = 30px
 default-icon-font-size = 32px
+default-max-page-width = 1250px
+default-modal-padding = 30px
+feed-max-width = 1084px
+golden-ratio-small-percent = 38%
 gutter = 30px
+home-logo-size = 52px
+layout-side-margin = 55px
+main-header-height = 53px
+nav-bar-break = 550px
 responsive-mobile-width = 640px
+welcome-header-height = 85px
 
 // Colors
 json('../../../node_modules/artsy-ezel-components/stylus_lib/colors.json')
@@ -31,14 +31,14 @@ new-red-color = #F4645C
 new-yellow-color = #f1af1b
 
 // Z-indexes
-zindex-hover-pulldown = 800
-zindex-jump = 950
-zindex-primary-nav = 970
-zindex-filter-fixed-header = 980
 zindex-deepzoom = 1000
-zindex-iframepopover = 1050
-zindex-modal = 1070
+zindex-filter-fixed-header = 980
 zindex-flash = 1080
+zindex-hover-pulldown = 800
+zindex-iframepopover = 1050
+zindex-jump = 950
+zindex-modal = 1070
+zindex-primary-nav = 970
 
 // Utilities
 force-hardware-acceleration()
@@ -247,7 +247,6 @@ break-word()
   hyphens auto
 
 //http://stackoverflow.com/questions/20233416/prevent-text-to-line-break-if-overflow
-
 ellipsis()
   width 100%
   text-overflow ellipsis
@@ -258,3 +257,11 @@ blur(radius)
   vendor('filter', 'blur(%s)' % radius, only: webkit moz ms official)
   if support-for-ie
     filter '"progid:DXImageTransform.Microsoft.Blur(PixelRadius=%d)"' % radius
+
+respond-desktop($width = responsive-mobile-width)
+  @media screen and (min-width: $width)
+    {block}
+
+respond-mobile($width = responsive-mobile-width - 1)
+  @media screen and (max-width: $width)
+    {block}

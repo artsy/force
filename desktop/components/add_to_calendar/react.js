@@ -11,7 +11,7 @@ export default class AddToCalendar extends Component {
     this.$ = require('jquery')
 
     this.view = new AddToCalendarView({
-      el: this.props.el || this.$('.auction-callout')
+      el: this.props.el || this.$('.auction2-auction-info__callout')
     })
   }
 

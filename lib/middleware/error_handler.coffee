@@ -7,6 +7,7 @@ module.exports = (err, req, res, next) ->
     '../../desktop/components/error_handler/index.jade'
   )
   isNotProduction = NODE_ENV isnt 'production'
+  console.log err if isNotProduction
   code = 504 if req.timedout
   code ||= err.status || 500
   message = err.message || err.text || err.toString() if isNotProduction

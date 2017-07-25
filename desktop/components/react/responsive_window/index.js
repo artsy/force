@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import u from 'updeep'
+import { composeReducers } from 'desktop/components/react/utils/composeReducers'
 import { connect } from 'react-redux'
+import { debounce } from 'underscore'
 
 const MOBILE_BREAKPOINT = 640
 
 // Actions
 const RESIZE_WINDOW = 'RESIZE_WINDOW'
 
-export const responsiveWindowAction = (windowSize) => ({
+const responsiveWindowAction = (windowSize) => ({
   type: RESIZE_WINDOW,
   payload: {
     windowSize
@@ -16,7 +18,7 @@ export const responsiveWindowAction = (windowSize) => ({
 })
 
 // Reducer
-export function responsiveWindowReducer (state, action) {
+function responsiveWindowReducer (state, action) {
   switch (action.type) {
     case RESIZE_WINDOW: {
       return u({
@@ -56,8 +58,20 @@ class ResponsiveWindow extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  onChange: responsiveWindowAction
+const mapDispatchToProps = (dispatch) => {
+  const onChange = debounce(
+    (innerWidth) => dispatch(responsiveWindowAction(innerWidth)), 300)
+
+  return {
+    onChange
+  }
+}
+
+// API
+export {
+  composeReducers,
+  responsiveWindowAction,
+  responsiveWindowReducer
 }
 
 export default connect(

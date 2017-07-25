@@ -1,0 +1,81 @@
+.auction2-page-list-artwork
+  padding-left 10px
+  text-decoration none
+  display flex
+  justify-content flex-start
+  align-items center
+  height 140px
+  text-align left
+  width 100%
+  border-bottom 1px solid gray-lighter-color
+  garamond-size('s-body')
+  color gray-darker-color
+
+  +respond-mobile()
+    flex-direction row
+    height 124px
+
+  a
+    text-decoration none
+
+  &__image-container
+    min-width 200px
+
+    +respond-mobile()
+      width: 30%
+
+
+  &__image > img
+    max-height 100px
+    max-width 200px
+    margin auto
+
+    +respond-mobile()
+      padding-right 20px
+      width 100px
+      height auto
+
+  &__metadata
+    overflow hidden
+    width 65%
+    margin-left 10%
+    text-align left
+    font-size 15px
+    padding-right 20px
+
+    > *
+      +respond-desktop()
+        overflow ellipsis
+
+    +respond-mobile()
+      margin-left 0
+      width 80%
+      white-space normal
+
+  &__artists
+    font-weight 600
+
+  &__lot-number
+    +respond-desktop()
+      width 10%
+    avant-garde()
+    font-size 11px
+    margin-bottom 0px
+    text-align left
+    position relative
+    top 1px
+
+  .auction2-bid-status
+    text-align left
+
+    +respond-desktop()
+      width 23%
+
+.auction2-page-list-artwork.auction2-open
+  .auction2-page-list-artwork__metadata
+    +respond-desktop()
+      width 45%
+
+  .auction2-page-list-artwork__lot-number
+    +respond-desktop()
+      width 25%
