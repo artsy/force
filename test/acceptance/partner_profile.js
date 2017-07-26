@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
+import { setup, teardown, stubAuctionReminder } from './helpers'
 import { server as antigravity } from 'antigravity'
 
 describe('Partner profile page', () => {
@@ -7,6 +7,7 @@ describe('Partner profile page', () => {
 
   before(async () => {
     ({ gravity, browser } = await setup())
+    stubAuctionReminder()
     gravity.use(antigravity)
     await browser.useragent('iPhone')
   })

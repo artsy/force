@@ -1,11 +1,12 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
+import { setup, teardown, stubAuctionReminder } from './helpers'
 
 describe('Bidding flow', () => {
   let metaphysics, browser
 
   before(async () => {
     ({ metaphysics, browser } = await setup())
+    stubAuctionReminder()
     metaphysics.post('/', (req, res, next) => {
       if (req.body.query.includes('me {')) {
         res.send(require('./fixtures/metaphysics/bidding.json'))
@@ -25,7 +26,7 @@ describe('Bidding flow', () => {
 
   after(teardown)
 
-  xit('can see the bid dropdown from auction to artwork page', async () => {
+  it('can see the bid dropdown from auction to artwork page', async () => {
     await browser.page('/auction/rago-auctions-19th-slash-20th-c-american-slash-european-art')
     await browser.login()
     await browser.el('[href*="/artwork/jean-dupas-untitled"]')
