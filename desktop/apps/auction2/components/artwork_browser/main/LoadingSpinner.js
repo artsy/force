@@ -8,7 +8,7 @@ function LoadingSpinner ({ fullscreen, isFetchingArtworks }) {
 
   return (
     <div className={b({ fullscreen })}>
-      { !isFetchingArtworks &&
+      { isFetchingArtworks &&
         <div className='loading-spinner' /> }
     </div>
   )
