@@ -37,7 +37,7 @@ describe 'article show template', ->
         contributing_authors: []
         hero_section:
           type: 'fullscreen'
-          background_url: 'http://video.mp4'
+          url: 'http://video.mp4'
       footerArticles: new Articles
       crop: (url) -> url
       resize: (u) -> u
@@ -54,7 +54,7 @@ describe 'article show template', ->
         contributing_authors: []
         hero_section:
           type: 'fullscreen'
-          background_image_url: 'http://image.jpg'
+          url: 'http://image.jpg'
       footerArticles: new Articles
       crop: (url) -> url
       resize: (u) -> u
