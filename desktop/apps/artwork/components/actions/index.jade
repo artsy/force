@@ -1,6 +1,6 @@
 .artwork-actions
-  if artwork.is_in_auction
-    a.artwork-action.artwork-action--save.black-tooltip(
+  if artwork.sale && !artwork.sale.is_closed
+    a.artwork-action.artwork-action--save.black-tooltip.artwork-action--watch-lot(
       data-message='Watch Lot'
       class='js-artwork-save'
     ): include ../../../../components/main_layout/public/icons/bell.svg
