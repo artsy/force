@@ -25,7 +25,7 @@ describe 'ArtworkCommercialView', ->
 
   describe 'an ecommerce work', ->
     beforeEach ->
-      @view = new ArtworkCommercialView require './fixtures/acquireable.json'
+      @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork.json'
       @view.render()
 
     describe '#render', ->
@@ -56,7 +56,7 @@ describe 'ArtworkCommercialView', ->
 
       ArtworkCommercialView.__set__ 'openInquiryQuestionnaireFor', @questionnaire
 
-      @view = new ArtworkCommercialView require './fixtures/inquireable.json'
+      @view = new ArtworkCommercialView require '../../../test/fixtures/inquireable_artwork.json'
       @view.render()
 
     describe '#render', ->
@@ -105,7 +105,7 @@ describe 'ArtworkCommercialView', ->
 
     describe 'fair is open', ->
       beforeEach ->
-        fixture = extend {}, require './fixtures/inquireable.json'
+        fixture = extend {}, require '../../../test/fixtures/inquireable_artwork.json'
         tomorrow = new Date (new Date()).getTime() + (24*60*60*1000)
         fixture.data.artwork.fair = id: 'foo-fair', name: 'Foo Fair 2016', end_at: tomorrow.toISOString()
         @view = new ArtworkCommercialView fixture
@@ -128,7 +128,7 @@ describe 'ArtworkCommercialView', ->
 
     describe 'fair is closed', ->
       beforeEach ->
-        fixture = extend {}, require './fixtures/inquireable.json'
+        fixture = extend {}, require '../../../test/fixtures/inquireable_artwork.json'
         yesterday = new Date (new Date()).getTime() - (24*60*60*1000)
         fixture.data.artwork.fair = id: 'foo-fair', name: 'Foo Fair 2016', end_at: yesterday.toISOString()
         @view = new ArtworkCommercialView fixture
