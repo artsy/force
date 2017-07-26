@@ -19,8 +19,7 @@
         .artwork-header-module__share-container
           .artwork-header-module__share-button
         .artwork-header-module__favorites-container
-          //- if artwork.auction && artwork.auction.auction_state == 'open'
-          if artwork.auction
+          if artwork.auction && artwork.auction.auction_state == 'open'
             a.artwork-header-module__favorite-button( data-action='save' data-state='unsaved')
               include ../../../../../../desktop/components/main_layout/public/icons/bell.svg
           else
