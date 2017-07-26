@@ -89,16 +89,20 @@
     flex 1 1 auto
     width 32px
     text-align center
-    .artwork-header-module__favorite-button
-      text-decoration none
-      display: inline-block
-      height: 100%
+  &__favorite-button
+    text-decoration none
+    display: inline-block
+    height: 100%
+    &[data-state='saved']
+      border-color #6a00cc
+      color #6a00cc
       svg
-        height 100%
-        fill #000
-      &[data-state='saved']
-        border-color #6a00cc
-        color #6a00cc
-        svg
-          fill #6a00cc
-  
+        fill #6a00cc
+  &__watch-button
+    @extend .artwork-header-module__favorite-button
+    position relative
+    top 2px
+    height 25px
+    svg
+      height 100%
+      fill #000
