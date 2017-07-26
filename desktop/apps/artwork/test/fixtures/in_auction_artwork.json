@@ -1,0 +1,40 @@
+{
+  "artwork": {
+    "id": "peter-alexander-wedge-with-puff",
+    "is_in_auction": true,
+    "sale": {
+      "id": "los-angeles-modern-auctions-march-2015",
+      "name": "Los Angeles Modern Auctions - March 2015",
+      "is_open": true,
+      "is_preview": false,
+      "is_closed": false,
+      "is_auction": true,
+      "is_auction_promo": false,
+      "is_with_buyers_premium": true
+    },
+    "artists": [{
+      "id": "abcde",
+      "name": "Professor Paint",
+      "href": "internet.com"
+    }],
+    "dimensions": {
+      "in": "1 x 1",
+      "cm": "25.4 x 25.4"
+    },
+    "sale_artwork": {
+      "id": "peter-alexander-wedge-with-puff",
+      "reserve_status": "reserve_met",
+      "reserve_message": "Reserve met",
+      "estimate": "$7,000–$9,000",
+      "current_bid": { "amount": "$55,000" },
+      "counts": { "bidder_positions": 19 },
+      "symbol": "$",
+      "bid_increments": [100, 200],
+      "minimum_next_bid": {
+        "amount": "$60,000",
+        "cents": 6000000
+      }
+    }
+  }
+}
+

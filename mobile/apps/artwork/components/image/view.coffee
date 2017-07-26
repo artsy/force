@@ -9,7 +9,8 @@ analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtworkImageView extends Backbone.View
   events:
-    'click .artwork-header-module__favorite': 'savedArtwork'
+    'click .artwork-header-module__favorite-button': 'savedArtwork'
+    'click .artwork-header-module__watch-button': 'watchArtwork'
     'click .artwork-image': 'initZoom'
     'pinchOut .artwork-image': 'initZoom'
 
@@ -32,19 +33,19 @@ module.exports = class ArtworkImageView extends Backbone.View
       @user.savedArtwork @artwork.id,
         success: (saved) =>
           if saved
-            @$('.artwork-header-module__favorite').attr
+            @$('.artwork-header-module__favorite-button, .artwork-header-module__watch-button').attr
               'data-state': 'saved'
               'data-action': 'remove'
     else
-      @$('.artwork-header-module__favorite').attr("href", "/sign_up?action=artwork-save&redirect-to=#{window.location}")
-      @$('.artwork-header-module__favorite').click( (e) ->
+      @$('.artwork-header-module__favorites-container a').attr("href", "/sign_up?action=artwork-save&redirect-to=#{window.location}")
+      @$('.artwork-header-module__favorites-container').click( (e) ->
         analyticsHooks.trigger 'save:sign-up'
       )
 
   savedArtwork: (e) ->
     if @user
       e.preventDefault()
-      $saveButton = @$('.artwork-header-module__favorite')
+      $saveButton = @$('.artwork-header-module__favorite-button')
       action = $saveButton.attr('data-action')
       @user["#{action}Artwork"](@artwork.id)
 
@@ -55,6 +56,23 @@ module.exports = class ArtworkImageView extends Backbone.View
       }
 
       $saveButton.attr
+        'data-state': (if action is 'save' then 'saved' else 'unsaved')
+        'data-action': (if action is 'save' then 'remove' else 'save')
+
+  watchArtwork: (e) ->
+    if @user
+      e.preventDefault()
+      $watchButton = @$('.artwork-header-module__watch-button')
+      action = $watchButton.attr('data-action')
+      @user["#{action}Artwork"](@artwork.id)
+
+      analyticsHooks.trigger "save:#{action}-artwork", {
+        entity_id: @artwork._id
+        entity_slug: @artwork.id
+        context_module: 'Artwork page'
+      }
+
+      $watchButton.attr
         'data-state': (if action is 'save' then 'saved' else 'unsaved')
         'data-action': (if action is 'save' then 'remove' else 'save')
 

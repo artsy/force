@@ -57,7 +57,8 @@ artwork-action = {
     background-color gray-darker-color
     border-color @background-color
     color white
-
+    svg
+      fill white
   > i
     position absolute
     top 50%
@@ -70,6 +71,8 @@ artwork-action = {
     &[data-state='saved']
       background-color purple-color
       border-color @background-color
+      svg
+        fill white
       > i
         color white
       &:after
@@ -82,3 +85,11 @@ artwork-action = {
           border-color @background-color
           &:after
             content 'Saved'
+    svg
+      fill #000
+      width 24px
+      height 24px
+      position absolute
+      top 10px
+      right 10px
+
