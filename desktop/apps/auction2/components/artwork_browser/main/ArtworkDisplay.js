@@ -18,8 +18,7 @@ class ArtworkDisplay extends Component {
   }
 
   state = {
-    isMounted: false,
-    showFullScreenSpinner: false
+    isMounted: false
   }
 
   componentDidMount () {
@@ -118,16 +117,16 @@ class ArtworkDisplay extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isMobile } = state.app
+  const { auction, isMobile } = state.app
 
   return {
     allFetched: state.artworkBrowser.allFetched,
     isFetchingArtworks: state.artworkBrowser.isFetchingArtworks,
     isListView: state.artworkBrowser.isListView,
     isMobile,
-    isClosed: state.app.auction.isClosed(),
+    isClosed: auction.isClosed(),
     saleArtworks: state.artworkBrowser.saleArtworks,
-    saleId: state.app.auction.get('id')
+    saleId: auction.get('id')
   }
 }
 
