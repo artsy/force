@@ -19,7 +19,14 @@ function Banner (props) {
   const b = block('auction2-banner')
 
   return (
-    <div className={b({ isClosed, isMobile, isLiveOpen })} style={{ backgroundImage: `url('${coverImage}')` }} alt={name}>
+    <div
+      className={b({ isClosed, isMobile, isLiveOpen })}
+      alt={name}
+    >
+      <div
+        className={b('background-image', { isClosed, isLiveOpen })}
+        style={{ backgroundImage: `url('${coverImage}')` }}
+      />
       {(() => {
         if (isLiveOpen) {
           return (

@@ -3,15 +3,23 @@
   position relative
   overflow hidden
   margin-bottom 40px
-  background-size cover
-  background-position center
-
-  &_isClosed, &_isLiveOpen
-    background-color rgba(0, 0, 0, 0.4)
-    background-blend-mode multiply
 
   +respond-mobile()
     height 200px
+
+  &__background-image
+    background-size cover
+    background-position center
+    background-color rgba(0, 0, 0, 0.4)
+    background-blend-mode multiply
+    height 240px
+
+    &_isLiveOpen
+      height 600px
+      blur(20px)
+      transform scale(1.05)
+      background-color rgba(0, 0, 0, 0.0)
+      background-blend-mode none
 
   &_isLiveOpen
     color white
@@ -26,7 +34,6 @@
 
       +respond-mobile()
         garamond-size('s-headline')
-
 
     .avant-garde-button-white
       background-color white
