@@ -60,7 +60,7 @@ module.exports =
   IP_BLACKLIST: ''
   LINKEDIN_KEY: null
   LINKEDIN_SECRET: null
-  MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Sign Up to Discover and Collect Works from Art Basel","image":"https://d32dm0rphc51dk.cloudfront.net/SJaRT2vCFzshOvN9PpiiUA/large.jpg","photoCredit":"Image courtesy of Richard Gray Gallery"}]'
+  MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Discover and Buy Works from Seattle Art Fair 2017","image":"http://files.artsy.net/images/seattle-art-fair-modal.jpg","photoCredit":"Sarah Cain, waves, 2016; Courtesy of the artist and Galerie Lelong & Co., New York"}]'
   MAX_POLLS_FOR_MAX_BIDS: 20
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: null

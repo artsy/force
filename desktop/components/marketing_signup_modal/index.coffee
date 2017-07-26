@@ -52,9 +52,9 @@ module.exports = class MarketingSignupModal extends Backbone.View
   initialize: ->
     slug = qs.parse(location.search.replace /^\?/, '')?['m-id']
 
-    # This is just for the Art Basel Fair campaign and should be removed after
+    # This is just for the Seattle Art Fair campaign and should be removed after
     # the fair closes.
-    slug = 'ca3' if !slug and sd.CURRENT_PATH is '/art-basel-2017'
+    slug = 'ca3' if !slug and sd.CURRENT_PATH is '/seattle-art-fair-2017'
 
     modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
     @inner = new MarketingSignupModalInner

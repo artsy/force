@@ -4,9 +4,9 @@ module.exports = (req, res, next) ->
   sd = res.locals.sd
   slug = req.query['m-id']
 
-  # This is just for the Art Basel Fair campaign and should be removed after
+  # This is just for the Seattle Art Fair campaign and should be removed after
   # the fair closes.
-  slug = 'ca3' if !slug and sd.CURRENT_PATH is '/art-basel-2017'
+  slug = 'ca3' if !slug and sd.CURRENT_PATH is '/seattle-art-fair-2017'
 
   modalData = _.findWhere(sd.MOBILE_MARKETING_SIGNUP_MODALS, { slug: slug })
 
