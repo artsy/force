@@ -1,7 +1,6 @@
 .auction2-BidStatus
+  garamond-size('l-caption')
   position relative
-  font-size 14px
-  font-weight 600
 
   &__bid-label
     display inline-block
@@ -10,6 +9,7 @@
     padding-right 5px
 
     &:before
+      content ''
       display inline-block
       background-image url('/images/paddle.png')
       background-repeat no-repeat
@@ -17,4 +17,5 @@
       background-size 63%
       padding-right 15px
       height 17px
-      content ''
+      position relative
+      top 2px

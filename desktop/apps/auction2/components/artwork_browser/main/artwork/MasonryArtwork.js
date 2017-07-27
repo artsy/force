@@ -25,7 +25,7 @@ function MasonryArtwork (props) {
         <img className={b('image')} src={image} alt={title} />
       </div>
 
-      <div className={b('lot-label')}>
+      <div className={b('lot-number')}>
         Lot {lotLabel}
       </div>
 
@@ -33,14 +33,19 @@ function MasonryArtwork (props) {
         {artistDisplay}
       </div>
 
-      <div dangerouslySetInnerHTML={{
-        __html: titleAndYear(title, date)
-      }} />
+      <div
+        className={b('title')}
+        dangerouslySetInnerHTML={{
+          __html: titleAndYear(title, date)
+        }}
+      />
 
       { !isClosed &&
-        <BidStatus
-          artworkItem={artwork}
-        /> }
+        <div className={b('bid-status')}>
+          <BidStatus
+            artworkItem={artwork}
+          />
+        </div> }
     </a>
   )
 }

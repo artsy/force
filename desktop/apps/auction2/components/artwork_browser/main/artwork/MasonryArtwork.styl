@@ -10,9 +10,23 @@
     margin-bottom 15px
     width 100%
 
-  &__lot-label, &__artists
+  &__lot-number, &__artists
     font-weight 600
 
-  &__lot-label
+  &__lot-number
     avant-garde()
-    font-size 11px
+    font-size 10px
+    margin-bottom 2px
+    text-align left
+    position relative
+
+  &__bid-status
+    position relative
+    top -2px
+
+  &__artists, &__title, &__bid-status
+    +respond-mobile()
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+      garamond-size('l-caption')
