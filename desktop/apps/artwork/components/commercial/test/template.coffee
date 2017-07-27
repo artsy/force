@@ -6,8 +6,7 @@ fs = require 'fs'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 helpers = require '../helpers.coffee'
-inquireableArtwork = require './fixtures/inquireable.json'
-
+inquireableArtwork = require '../../../test/fixtures/inquireable_artwork.json'
 render = (templateName) ->
   filename = path.resolve __dirname, "../index.jade"
   jade.compile(
