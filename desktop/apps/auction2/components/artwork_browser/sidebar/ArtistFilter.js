@@ -101,6 +101,7 @@ const mapStateToProps = (state) => {
     artistIds,
     artistsYouFollow,
     includeArtworksByFollowedArtists,
+    numArtistsYouFollow,
     user
   }
 }

@@ -45,7 +45,7 @@ class ArtworkDisplay extends Component {
       showFullScreenSpinner = window.scrollY < window.innerHeight
     }
 
-    const b = block(`auction2-page-ArtworkDisplay`)
+    const b = block('auction2-page-ArtworkDisplay')
 
     return (
       <div className={b()}>
@@ -105,8 +105,9 @@ class ArtworkDisplay extends Component {
                   ))}
 
                   <Jump
+                    threshold={typeof window !== 'undefined' && window.innerHeight * 2}
                     direction='bottom'
-                    element='.auction-artworks-header-desktop'
+                    element='.auction2-artworks-HeaderDesktop'
                     offset='.mlh-navbar'
                   />
 
