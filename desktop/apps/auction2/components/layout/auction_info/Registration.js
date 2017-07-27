@@ -14,7 +14,7 @@ function Registration (props) {
     showContactInfo
   } = props
 
-  const b = block('auction2-registration')
+  const b = block('auction2-Registration')
 
   return (
     <div className={b()}>

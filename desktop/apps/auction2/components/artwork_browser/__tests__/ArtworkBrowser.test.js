@@ -256,7 +256,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
         Component: RangeSlider
       })
 
-      wrapper.find('.auction2-range-slider__caption').length.should.eql(1)
+      wrapper.find('.auction2-RangeSlider__caption').length.should.eql(1)
       wrapper.text().should.containEql('$0 - 50,000+')
     })
 
@@ -269,7 +269,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
         store: initialStore
       })
 
-      wrapper.find('.auction2-range-slider__caption').length.should.eql(1)
+      wrapper.find('.auction2-RangeSlider__caption').length.should.eql(1)
       wrapper.text().should.containEql('$200 - 4,000')
     })
     it('renders the range correctly for an upper bucket', () => {
@@ -281,7 +281,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
         store: initialStore
       })
 
-      wrapper.find('.auction2-range-slider__caption').length.should.eql(1)
+      wrapper.find('.auction2-RangeSlider__caption').length.should.eql(1)
       wrapper.text().should.containEql('$500 - 50,000+')
     })
   })

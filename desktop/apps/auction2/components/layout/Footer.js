@@ -14,7 +14,7 @@ function Footer (props) {
     sd
   } = props
 
-  const b = block('auction2-footer')
+  const b = block('auction2-Footer')
 
   if (!showArticles) {
     return null

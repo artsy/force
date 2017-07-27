@@ -3,6 +3,7 @@ import ChevronLeft from '../../../../../components/main_layout/public/icons/chev
 import ChevronRight from '../../../../../components/main_layout/public/icons/chevron-right.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 
@@ -20,29 +21,31 @@ function WorksByFollowedArtists (props) {
     nextPageOfFollowedArtistArtworksAction
   } = props
 
+  const b = block('auction2-WorksByFollowedArtists')
+
   const leftPageClasses = classNames(
-    'auction2-works-by-followed-artists__page-left',
+    String(b('page-left')),
     { disabled: followedArtistRailPage === 1 }
   )
 
   const rightPageClasses = classNames(
-    'auction2-works-by-followed-artists__page-right',
+    String(b('page-right')),
     { disabled: isOnlyFollowedArtistsPage }
   )
 
   return (
-    <div className='auction2-works-by-followed-artists'>
-      <div className='auction2-works-by-followed-artists__title'>
+    <div className={b()}>
+      <div className={b('title')}>
         Works By Artists You Follow
       </div>
-      <div className='auction2-works-by-followed-artists__content'>
+      <div className={b('content')}>
         <div
           className={leftPageClasses}
           onClick={() => { previousPageOfFollowedArtistArtworksAction() }}
         >
           <ChevronLeft />
         </div>
-        <div className='auction2-works-by-followed-artists__artworks'>
+        <div className={b('artworks')}>
           {
             displayedSaleArtworks.map((saleArtwork) => (
               <GridArtwork key={saleArtwork.id} saleArtwork={saleArtwork} />

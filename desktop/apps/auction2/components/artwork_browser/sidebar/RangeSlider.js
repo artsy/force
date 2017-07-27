@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import { Range } from 'rc-slider'
 import { connect } from 'react-redux'
 import { formatMoney } from 'accounting'
@@ -18,13 +19,20 @@ function RangeSlider (props) {
     updateEstimateRangeAction
   } = props
 
+  const b = block('auction2-RangeSlider')
+
   return (
-    <div className='auction2-range-slider'>
-      <div className='auction2-range-slider__metadata'>
-        <div className='auction2-range-slider__title'>Price</div>
-        <div className='auction2-range-slider__caption'>{
-          `${formattedMinDisplay} - ${formattedMaxDisplay}${isAbsoluteMax ? '+' : ''}`
-        }</div>
+    <div className={b()}>
+      <div className={b('metadata')}>
+        <div className={b('title')}>
+          Price
+        </div>
+
+        <div className={b('caption')}>
+          {
+            `${formattedMinDisplay} - ${formattedMaxDisplay}${isAbsoluteMax ? '+' : ''}`
+          }
+      </div>
       </div>
       <Range
         allowCross={false}
@@ -35,7 +43,7 @@ function RangeSlider (props) {
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}
         onAfterChange={([min, max]) => updateEstimateRangeAction(min, max)}
       />
-      <div className='auction2-range-slider__info'>
+      <div className={b('info')}>
         Based on the estimate for the lot
       </div>
     </div>

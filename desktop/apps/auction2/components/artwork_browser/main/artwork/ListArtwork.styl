@@ -1,4 +1,4 @@
-.auction2-page-list-artwork
+.auction2-page-ListArtwork
   padding-left 10px
   text-decoration none
   display flex
@@ -19,11 +19,10 @@
     text-decoration none
 
   &__image-container
-    min-width 200px
+    width 30%
 
-    +respond-mobile()
-      width: 30%
-
+    +respond-desktop()
+      min-width 200px
 
   &__image > img
     max-height 100px
@@ -37,11 +36,13 @@
 
   &__metadata
     overflow hidden
-    width 65%
     margin-left 10%
     text-align left
     font-size 15px
     padding-right 20px
+
+    +respond-desktop()
+      width 30%
 
     > *
       +respond-desktop()
@@ -55,15 +56,30 @@
   &__artists
     font-weight 600
 
+  &__artists, &__title, &__bid-status
+    +respond-mobile()
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+      garamond-size('l-caption')
+
+  &__bid-status
+    position relative
+    top -2px
+
   &__lot-number
-    +respond-desktop()
-      width 10%
     avant-garde()
     font-size 11px
     margin-bottom 0px
     text-align left
     position relative
-    top 1px
+
+    +respond-desktop()
+      width 10%
+
+    +respond-mobile()
+      font-size 10px
+      margin-bottom 2px
 
   .auction2-bid-status
     text-align left
