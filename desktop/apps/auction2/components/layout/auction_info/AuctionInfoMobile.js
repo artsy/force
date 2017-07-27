@@ -1,4 +1,5 @@
 import * as appActions from 'desktop/apps/auction2/actions/app'
+import InfoIcon from '../../../../../components/main_layout/public/icons/info-2.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
@@ -95,7 +96,9 @@ function AuctionInfoMobile (props) {
           className={b('metadata', { expandToFullScreen: showInfoWindow })}
           onClick={() => showInfoWindowAction(!showInfoWindow)}
         >
-          <span className={b('info-button').mix('icon-info-filled')} />
+          <span className={b('info-button')}>
+            <InfoIcon />
+          </span>
         </div>
       </div>
 
