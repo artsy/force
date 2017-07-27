@@ -21,8 +21,7 @@ export default function ArticleQuery (id) {
           ...on Fullscreen {
             type
             title
-            background_image_url
-            background_url
+            url
           }
         }
         sections {

@@ -24,13 +24,14 @@ mixin video(video)
 
 mixin fullscreen(article)
   figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
-    if article.get('hero_section').background_url
+    - var url = article.get('hero_section').url
+    if url && url.indexOf('mp4') > -1
       .article-fullscreen__overlay
-      video.article-fullscreen__video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true muted playsinline)
-    else if article.get('hero_section').background_image_url
+      video.article-fullscreen__video-player( src=url, autoplay=true, controls=false, loop=true muted playsinline)
+    else
       .article-fullscreen__overlay
       img.article-fullscreen__image(
-        src=resize(article.get('hero_section').background_image_url, { height: 1250, width: 1250 })
+        src=resize(url, { height: 1250, width: 1250 })
       )
 
     .main-layout-container.article-fullscreen__container

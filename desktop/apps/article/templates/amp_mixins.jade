@@ -3,11 +3,11 @@ mixin amp_hero_section(hero)
     when 'image'
       +amp_hero_image(hero.url, hero.caption)
     when 'fullscreen'
-      if hero.background_url
+      if hero.url && hero.url.indexOf('mp4') > -1
         .amp-article__video-container
-          amp-video(src=hero.background_url width="400" height="300" autoplay loop)
+          amp-video(src=hero.url width="400" height="300" autoplay loop)
       else
-        +amp_hero_image(hero.background_image_url, null)
+        +amp_hero_image(hero.url, null)
     when 'video'
       +amp_video(hero)
 
