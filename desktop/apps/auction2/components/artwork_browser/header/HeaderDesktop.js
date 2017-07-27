@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { toggleListView } from 'desktop/apps/auction2/actions/artworkBrowser'
 
-function Header (props) {
+function HeaderDesktop (props) {
   const {
     toggleListViewAction,
     totalLabel,
@@ -16,6 +16,13 @@ function Header (props) {
   } = props
 
   const b = block('auction2-artworks-HeaderDesktop')
+
+  const displayButtonClass = (buttonType, displayType) => {
+    return classNames(
+      String(b(buttonType)),
+      { active: displayType === buttonType }
+    )
+  }
 
   return (
     <div className={b()}>
@@ -41,7 +48,7 @@ function Header (props) {
   )
 }
 
-Header.propTypes = {
+HeaderDesktop.propTypes = {
   displayType: PropTypes.string.isRequired,
   toggleListViewAction: PropTypes.func.isRequired,
   totalLabel: PropTypes.string.isRequired
@@ -73,13 +80,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header)
+)(HeaderDesktop)
 
 // Helpers
-
-function displayButtonClass (buttonType, displayType) {
-  return classNames(
-    `auction2-artworks-header-desktop__${buttonType}`,
-    { active: displayType === buttonType }
-  )
-}

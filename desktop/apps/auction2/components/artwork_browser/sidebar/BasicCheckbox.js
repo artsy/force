@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import classNames from 'classnames'
 
 export default function BasicCheckbox (props) {
@@ -10,13 +11,15 @@ export default function BasicCheckbox (props) {
     onClick
   } = props
 
+  const b = block('auction2-BasicCheckbox')
+
   const checkboxClasses = classNames(
     'artsy-checkbox',
     { disabled }
   )
 
   return (
-    <div className='auction2-basic-checkbox'>
+    <div className={b()}>
       <div className={checkboxClasses} onClick={() => onClick(item.id)}>
         <div className='artsy-checkbox--checkbox'>
           <input

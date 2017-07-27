@@ -58,7 +58,7 @@ class MyActiveBids extends Component {
 
   render () {
     const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
-    const b = block('auction2-my-active-bids')
+    const b = block('auction2-MyActiveBids')
 
     if (!lotStandings.length) {
       return null

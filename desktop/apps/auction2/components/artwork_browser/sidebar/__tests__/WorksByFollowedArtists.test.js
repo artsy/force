@@ -43,7 +43,7 @@ describe('auction/components/artwork_browser/sidebar/WorksByFollowedArtists.test
         }
       })
 
-      wrapper.find('.auction2-works-by-followed-artists__page-left .disabled').length.should.eql(1)
+      wrapper.find('.auction2-WorksByFollowedArtists__page-left .disabled').length.should.eql(1)
     })
 
     it('disables next button clicks', () => {
@@ -55,7 +55,7 @@ describe('auction/components/artwork_browser/sidebar/WorksByFollowedArtists.test
         }
       })
 
-      wrapper.find('.auction2-works-by-followed-artists__page-right .disabled').length.should.eql(1)
+      wrapper.find('.auction2-WorksByFollowedArtists__page-right .disabled').length.should.eql(1)
     })
 
     it('triggers a previousPageAction onClick', () => {
@@ -67,7 +67,7 @@ describe('auction/components/artwork_browser/sidebar/WorksByFollowedArtists.test
         }
       })
 
-      wrapper.find('.auction2-works-by-followed-artists__page-left').simulate('click')
+      wrapper.find('.auction2-WorksByFollowedArtists__page-left').simulate('click')
       prevSpy.called.should.eql(true)
     })
 
@@ -80,7 +80,7 @@ describe('auction/components/artwork_browser/sidebar/WorksByFollowedArtists.test
         }
       })
 
-      wrapper.find('.auction2-works-by-followed-artists__page-right').simulate('click')
+      wrapper.find('.auction2-WorksByFollowedArtists__page-right').simulate('click')
       nextSpy.called.should.eql(true)
     })
 

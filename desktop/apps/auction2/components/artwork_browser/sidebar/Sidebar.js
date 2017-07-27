@@ -3,12 +3,15 @@ import MediumFilter from 'desktop/apps/auction2/components/artwork_browser/sideb
 import RangeSlider from 'desktop/apps/auction2/components/artwork_browser/sidebar/RangeSlider'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 
 function Sidebar ({ isClosed }) {
+  const b = block('Sidebar')
+
   return (
-    <div className='auction2-artworks-sidebar'>
-      <div className='auction2-artworks-sidebar__artist-filter'>
+    <div className={b()}>
+      <div className={b('artist-filter')}>
         { !isClosed && <RangeSlider /> }
         <MediumFilter />
         <ArtistFilter />

@@ -6,6 +6,7 @@ import LoadingSpinner from 'desktop/apps/auction2/components/artwork_browser/mai
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import block from 'bem-cn'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
 
@@ -44,73 +45,77 @@ class ArtworkDisplay extends Component {
       showFullScreenSpinner = window.scrollY < window.innerHeight
     }
 
-    return (
-      <div className={`auction2-page-artworks${listType}`}>
-        { showFullScreenSpinner &&
-          <LoadingSpinner fullscreen /> }
+    const b = block(`auction2-page-ArtworkDisplay`)
 
-        {(() => {
-          if (isMobile) {
-            if (isListView) {
+    return (
+      <div className={b()}>
+        <div className={b(`artworks${listType}`)}>
+          { showFullScreenSpinner &&
+            <LoadingSpinner fullscreen /> }
+
+          {(() => {
+            if (isMobile) {
+              if (isListView) {
+                return (
+                  <div>
+                    { saleArtworks.map((saleArtwork, key) => (
+                      <ListArtwork
+                        artwork={saleArtwork}
+                        key={key}
+                      />
+                    ))}
+
+                    <LoadingSpinner />
+                  </div>
+                )
+
+                // GridView
+              } else {
+                return (
+                  <div>
+                    <MasonryGrid
+                      columnCount={2}
+                      items={saleArtworks}
+                      getAspectRatio={(artwork) => {
+                        return get(artwork, 'artwork.images.0.aspect_ratio')
+                      }}
+                      getDisplayComponent={(artwork) => {
+                        return (
+                          <MasonryArtwork artwork={artwork} />
+                        )
+                      }}
+                    />
+
+                    <LoadingSpinner />
+                  </div>
+                )
+              }
+
+              // Desktop
+            } else {
+              const DisplayComponent = isListView ? ListArtwork : GridArtwork
+
               return (
                 <div>
-                  { saleArtworks.map((saleArtwork, key) => (
-                    <ListArtwork
+                  { saleArtworks.map((saleArtwork) => (
+                    <DisplayComponent
+                      key={saleArtwork.id}
                       artwork={saleArtwork}
-                      key={key}
                     />
                   ))}
 
-                  <LoadingSpinner />
-                </div>
-              )
-
-              // GridView
-            } else {
-              return (
-                <div>
-                  <MasonryGrid
-                    columnCount={2}
-                    items={saleArtworks}
-                    getAspectRatio={(artwork) => {
-                      return get(artwork, 'artwork.images.0.aspect_ratio')
-                    }}
-                    getDisplayComponent={(artwork) => {
-                      return (
-                        <MasonryArtwork artwork={artwork} />
-                      )
-                    }}
+                  <Jump
+                    direction='bottom'
+                    element='.auction-artworks-header-desktop'
+                    offset='.mlh-navbar'
                   />
 
                   <LoadingSpinner />
                 </div>
               )
             }
-
-            // Desktop
-          } else {
-            const DisplayComponent = isListView ? ListArtwork : GridArtwork
-
-            return (
-              <div>
-                { saleArtworks.map((saleArtwork) => (
-                  <DisplayComponent
-                    key={saleArtwork.id}
-                    artwork={saleArtwork}
-                  />
-                ))}
-
-                <Jump
-                  direction='bottom'
-                  element='.auction-artworks-header-desktop'
-                  offset='.mlh-navbar'
-                />
-
-                <LoadingSpinner />
-              </div>
-            )
-          }
-        })()}
+          })()}
+        </div>
       </div>
     )
   }

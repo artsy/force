@@ -20,8 +20,8 @@ function ListArtwork (props) {
     title
   } = props
 
-  const b = block('auction2-page-list-artwork')
-  const auctionArtworkClasses = classNames(b(), { 'auction2-open': isClosed })
+  const b = block('auction2-page-ListArtwork')
+  const auctionArtworkClasses = classNames(String(b()), { 'auction2-open': isClosed })
 
   return (
     isMobile
