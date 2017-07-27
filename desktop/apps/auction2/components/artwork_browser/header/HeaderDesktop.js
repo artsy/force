@@ -15,7 +15,7 @@ function Header (props) {
     displayType
   } = props
 
-  const b = block('auction2-artworks-header-desktop')
+  const b = block('auction2-artworks-HeaderDesktop')
 
   return (
     <div className={b()}>
