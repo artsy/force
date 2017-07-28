@@ -3,10 +3,24 @@ export default function ArticleQuery (id) {
     {
       article(id: "${id}" ) {
         title
+        search_title
+        social_title
         description
+        search_description
+        social_description
+        thumbnail_image
+        social_image
         published_at
         slug
         layout
+        featured
+        email_metadata {
+          headline
+          author
+          credit_line
+          credit_url
+          image_url
+        }
         contributing_authors {
           name
           id

@@ -21,6 +21,7 @@ export function renderReactLayout (options) {
     locals = {},
     data = {},
     templates = {}
+    // styledComponent = false
   } = options
 
   const templateComponents = renderTemplateComponents(

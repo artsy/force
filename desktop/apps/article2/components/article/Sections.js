@@ -1,17 +1,21 @@
 import components from '@artsy/reaction-force/dist/components/publishing/index'
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import SectionContainer from 'desktop/apps/article2/components/SectionContainer'
+import SectionContainer from 'desktop/apps/article2/components/article/SectionContainer'
 import styled from 'styled-components'
-const { Authors, Embed, ImagesetPreview, ImageCollection, Video } = components
+const { Authors, Embed, Header, ImagesetPreview, ImageCollection, Video } = components
 
 const StyledSections = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: ${props => props.layout === 'standard' ? 'auto' : '100%'};
+  margin-top: ${props => props.layout === 'standard' ? '60px' : '80px'};
+  max-width: ${props => props.layout === 'standard' ? '780px' : 'auto'};
   @media (max-width: 600px) {
     width: 100%;
+    max-width: 100%;
+    padding: 0px;
   }
 `
 
@@ -28,8 +32,10 @@ export default class Sections extends React.Component {
   }
 
   render () {
+    const header = this.props.article.layout === 'standard' ? <Header article={this.props.article} /> : false
     return (
       <StyledSections layout={this.props.article.layout}>
+        {header}
         {this.renderSections()}
         {this.renderAuthors()}
       </StyledSections>

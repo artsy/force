@@ -25,8 +25,10 @@ export async function index (req, res, next) {
       },
       data: {
         article
-      }
+      },
+      styledComponent: true
     })
+
     res.send(layout)
   } catch (error) {
     next(error)
