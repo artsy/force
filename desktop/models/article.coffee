@@ -3,6 +3,7 @@ _s = require 'underscore.string'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
+momentTimezone = require 'moment-timezone'
 { POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
 request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
@@ -129,7 +130,10 @@ module.exports = class Article extends Backbone.Model
     crop @get(attr), args...
 
   date: (attr) ->
-    moment(@get(attr)).local()
+    if @get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
+      momentTimezone(@get(attr)).tz('America/New_York')
+    else
+      moment(@get(attr)).local()
 
   strip: (attr) ->
     stripTags(@get attr)
