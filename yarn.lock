@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.2.1":
+"@artsy/reaction-force@^0.2.x":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.2.1.tgz#fb373b1816ec752d2f69527f7040a9eea0b43f81"
   dependencies:
