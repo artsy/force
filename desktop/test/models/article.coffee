@@ -7,10 +7,12 @@ Article = rewire '../../models/article'
 Articles = require '../../collections/articles'
 sinon = require 'sinon'
 fixtures = require '../helpers/fixtures'
+moment = require 'moment'
+momentTimezone = require 'moment-timezone'
 
 describe "Article", ->
   beforeEach ->
-    Article.__set__ 'sd', { EOY_2016_ARTICLE: '1234' }
+    Article.__set__ 'sd', { EOY_2016_ARTICLE: '1234', ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993' }
     sinon.stub Backbone, 'sync'
       .returns Q.defer()
     @article = new Article
@@ -237,6 +239,16 @@ describe "Article", ->
       @article.set 'tracking_tags', ['Evergreen', 'Interviews']
       @article.set 'vertical', { name: 'Culture', id: '123' }
       @article.toJSONLD().keywords.should.eql [ 'Venice', 'Technology', 'Culture', 'Evergreen', 'Interviews' ]
+
+  describe 'date', ->
+    it 'returns NY time for editorial articles', ->
+      @article.set 'channel_id', '5759e3efb5989e6f98f77993'
+      @article.set 'date', momentTimezone().tz('America/New_York')
+      @article.date('published_at').format('MMM Do, YYYY h:mm a').should.eql  momentTimezone().tz('America/New_York').format('MMM Do, YYYY h:mm a')
+
+    it 'returns local time for non-editorial articles', ->
+      @article.set 'date', momentTimezone().tz('America/New_York')
+      @article.date('published_at').format('MMM Do, YYYY h:mm a').should.eql  moment().local().format('MMM Do, YYYY h:mm a')
 
   describe 'getParselySection', ->
 
