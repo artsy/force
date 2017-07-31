@@ -66,7 +66,7 @@ export function renderReactLayout (options) {
     data
   )
 
-  const { bodyHTML, styledComponentCSS } = render(body)
+  const { bodyHTML, css } = render(body)
   const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
     locals: {
       ...locals,
@@ -76,13 +76,13 @@ export function renderReactLayout (options) {
       },
       header: render(head).html,
       body: bodyHTML,
-      styledComponentCSS
+      css
     }
   })
 
   function render (block) {
     let html = ''
-    let styledComponentCSS = ''
+    let css = ''
 
     if (!block) {
       return html
@@ -105,7 +105,7 @@ export function renderReactLayout (options) {
       html = renderToString(
         sheet.collectStyles(<Component {...data} templateComponents={templateComponents} />)
       )
-      styledComponentCSS = sheet.getStyleTags()
+      css = sheet.getStyleTags()
 
       // String
     } else if (isString(block)) {
@@ -121,7 +121,7 @@ export function renderReactLayout (options) {
         )
       }
     }
-    return { html, styledComponentCSS }
+    return { html, css }
   }
 
   return layout

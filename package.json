@@ -139,6 +139,7 @@
     "annyang": "git://github.com/mzikherman/annyang.git",
     "antigravity": "git://github.com/artsy/antigravity.git",
     "artsy-gemini-upload": "0.0.6",
+    "babel-plugin-styled-components": "^1.1.7",
     "background-check": "git://github.com/kennethcachia/background-check",
     "benv": "^3.3.0",
     "blueimp-file-upload": "9.9.0",
