@@ -1,18 +1,28 @@
-.auction2-banner
-  height 240px
+height-desktop = 240px
+height-mobile = 150px
+
+.auction2-Banner
+  height height-desktop
   position relative
   overflow hidden
-  margin-bottom 40px
+  background-color gray-lighter-color
+
+  +respond-desktop()
+    margin-bottom 40px
 
   +respond-mobile()
-    height 200px
+    height height-mobile
+    margin-bottom 21px
 
   &__background-image
     background-size cover
     background-position center
     background-color rgba(0, 0, 0, 0.4)
     background-blend-mode multiply
-    height 240px
+    height height-desktop
+
+    +respond-mobile()
+      height height-mobile
 
     &_isLiveOpen
       height 600px

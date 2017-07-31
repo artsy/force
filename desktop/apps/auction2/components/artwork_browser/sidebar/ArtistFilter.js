@@ -1,6 +1,7 @@
 import BasicCheckbox from './BasicCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
 import { updateArtistParams } from 'desktop/apps/auction2/actions/artworkBrowser'
@@ -18,12 +19,17 @@ function ArtistFilter (props) {
     user
   } = props
 
+  const b = block('auction2-ArtistFilter')
+
   return (
-    <div className='auction2-artist-checkboxes'>
-      <div className='auction2-artist-checkboxes__title'>Artists</div>
+    <div className={b()}>
+      <div className={b('title')}>
+        Artists
+      </div>
+
       {
         user &&
-        <div className='auction2-artist-checkboxes__artists-you-follow'>
+        <div className={b('artists-you-follow')}>
           <BasicCheckbox
             key={artistsYouFollow.id}
             item={artistsYouFollow}
@@ -95,6 +101,7 @@ const mapStateToProps = (state) => {
     artistIds,
     artistsYouFollow,
     includeArtworksByFollowedArtists,
+    numArtistsYouFollow,
     user
   }
 }

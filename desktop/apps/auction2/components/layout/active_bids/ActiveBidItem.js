@@ -25,7 +25,7 @@ function ActiveBidItem (props) {
     isLoggedIn: Boolean(user)
   })
 
-  const b = block('auction2-active-bid-item')
+  const b = block('auction2-ActiveBidItem')
 
   return (
     <div className={b()} data-artwork_id={id}>

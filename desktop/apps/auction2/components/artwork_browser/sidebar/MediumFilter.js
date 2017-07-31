@@ -2,6 +2,7 @@ import BasicCheckbox from './BasicCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
 import _, { contains } from 'underscore'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { updateMediumParams } from 'desktop/apps/auction2/actions/artworkBrowser'
 
@@ -15,15 +16,21 @@ function MediumFilter (props) {
     initialMediumMap
   } = props
 
+  const b = block('auction2-MediumFilter')
+
   return (
-    <div className='auction2-medium-checkboxes'>
-      <div className='auction2-medium-checkboxes__title'>Medium</div>
+    <div className={b()}>
+      <div className={b('title')}>
+        Medium
+      </div>
+
       <BasicCheckbox
         key={allMediums.id}
         item={allMediums}
         onClick={updateMediumParamsAction}
         checked={allMediumsSelected}
       />
+
       {
         _.map(initialMediumMap, (initialAgg) => {
           const mediumSelected = contains(mediumIds, initialAgg.id)

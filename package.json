@@ -4,7 +4,8 @@
   "private": true,
   "engines": {
     "node": "6.x.x",
-    "npm": "4.x.x"
+    "npm": "4.x.x",
+    "yarn": "0.27.x"
   },
   "scripts": {
     "acceptance": "sh scripts/acceptance.sh",

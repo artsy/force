@@ -6,7 +6,8 @@ module.exports = (req, res, next) ->
 
   # This is just for the Seattle Art Fair campaign and should be removed after
   # the fair closes.
-  slug = 'ca3' if !slug and sd.CURRENT_PATH is '/seattle-art-fair-2017'
+  # (commenting this out for now because the facebook sign up is throwing an error)
+  # slug = 'ca3' if !slug and sd.CURRENT_PATH is '/seattle-art-fair-2017'
 
   modalData = _.findWhere(sd.MOBILE_MARKETING_SIGNUP_MODALS, { slug: slug })
 

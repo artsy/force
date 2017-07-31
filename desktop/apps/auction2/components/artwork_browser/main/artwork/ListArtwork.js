@@ -6,7 +6,6 @@ import classNames from 'classnames'
 import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import { truncate } from 'underscore.string'
 
 function ListArtwork (props) {
   const {
@@ -20,8 +19,8 @@ function ListArtwork (props) {
     title
   } = props
 
-  const b = block('auction2-page-list-artwork')
-  const auctionArtworkClasses = classNames(b(), { 'auction2-open': isClosed })
+  const b = block('auction2-page-ListArtwork')
+  const auctionArtworkClasses = classNames(String(b()), { 'auction2-open': isClosed })
 
   return (
     isMobile
@@ -41,14 +40,16 @@ function ListArtwork (props) {
             <div
               className={b('title')}
               dangerouslySetInnerHTML={{
-                __html: titleAndYear(truncate(title, 30), date)
+                __html: titleAndYear(title, date)
               }}
             />
 
           { !isClosed &&
-            <BidStatus
-              artworkItem={props.artwork}
-            /> }
+            <div className={b('bid-status')}>
+              <BidStatus
+                artworkItem={props.artwork}
+              />
+            </div> }
           </div>
         </a>
 
@@ -74,9 +75,11 @@ function ListArtwork (props) {
             Lot {artwork.lot_label}
           </div>
           { !props.isClosed &&
-            <BidStatus
-              artworkItem={props.artwork}
-            /> }
+            <div className={b('bid-status')}>
+              <BidStatus
+                artworkItem={props.artwork}
+              />
+            </div> }
         </a>
   )
 }

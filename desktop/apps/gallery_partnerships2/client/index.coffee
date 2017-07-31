@@ -9,7 +9,7 @@ module.exports.init = ->
     $('.gallery-partnerships2__chat__fallback_image').show()
 
   initCarousel $('.js-partner-stats-slideshow'), { autoPlay: 2500, wrapAround: true, draggable: false }
-  initCarousel $('.js-partner-testimonials-slideshow'), { autoPlay: 3000, wrapAround: true, prevNextButtons: false }
+  initCarousel $('.js-partner-testimonials-slideshow'), { autoPlay: 8000, wrapAround: true, prevNextButtons: false }
 
   $('.gallery-partnerships2__connect-with-collectors__image').waypoint ((direction) ->
     $('.gallery-partnerships2__connect-with-collectors__sub_image').css(display: 'inline', animation: 'popup 0.2s') if direction == 'down'

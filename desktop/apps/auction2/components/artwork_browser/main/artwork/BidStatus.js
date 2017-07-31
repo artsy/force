@@ -10,7 +10,7 @@ function BidStatus (props) {
     bidLabel
   } = props
 
-  const b = block('auction2-bid-status')
+  const b = block('auction2-BidStatus')
 
   return (
     <div className={b()}>

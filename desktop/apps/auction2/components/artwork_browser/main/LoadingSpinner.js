@@ -4,7 +4,7 @@ import block from 'bem-cn'
 import { connect } from 'react-redux'
 
 function LoadingSpinner ({ fullscreen, isFetchingArtworks }) {
-  const b = block('loading-spinner-component')
+  const b = block('auction2-LoadingSpinner')
 
   return (
     <div className={b({ fullscreen })}>
