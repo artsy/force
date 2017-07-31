@@ -19,6 +19,10 @@ meta( property="fb:pages" content="342443413406")
 script( type="text/javascript" )
   include ../../../../node_modules/scroll-frame/scroll-frame-head.js
 
+//- Don't include fonts if Reflection is requesting it
+if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
+  link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/force-webfonts.css')
+
 //- Criteo marketing tag... no Segment integration (  ._.)
 script(type='text/javascript', src='//static.criteo.net/js/ld/ld.js', async='true')
 
