@@ -52,10 +52,8 @@ module.exports = class MarketingSignupModal extends Backbone.View
   initialize: ->
     slug = qs.parse(location.search.replace /^\?/, '')?['m-id']
 
-    # This is just for the Seattle Art Fair campaign and should be removed after
-    # the fair closes.
-    # (commenting this out for now because the facebook sign up is throwing an error)
-    # slug = 'ca3' if !slug and sd.CURRENT_PATH is '/seattle-art-fair-2017'
+    # Launches marketing signup modal for targeted url
+    slug = 'ca3' if !slug and sd.CURRENT_PATH is sd.TARGET_CAMPAIGN_URL
 
     modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
     @inner = new MarketingSignupModalInner

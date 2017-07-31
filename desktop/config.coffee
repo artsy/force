@@ -97,6 +97,7 @@ module.exports =
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$'
+  TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null
   TWILIO_NUMBER: null
