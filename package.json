@@ -121,6 +121,7 @@
     "serve-favicon": "^2.3.0",
     "sharify": "^0.1.6",
     "standard": "^9.0.0",
+    "styled-components": "^2.1.1",
     "stylus": "^0.54.5",
     "superagent": "^2.3.0",
     "twilio": "^2.5.1",

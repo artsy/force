@@ -1,6 +1,7 @@
 import DOM from './DOM'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import styled from 'styled-components'
 
 export default class App extends Component {
   static propTypes = {
@@ -38,9 +39,9 @@ export default class App extends Component {
             Hello {name}!
           </h1>
 
-          <p>
+          <StyledParagraph>
             {description}
-          </p>
+          </StyledParagraph>
 
           <button onClick={this.handleButtonClick}>
             Click me!
@@ -61,3 +62,7 @@ export default class App extends Component {
     )
   }
 }
+
+const StyledParagraph = styled.p`
+  color: red;
+`
