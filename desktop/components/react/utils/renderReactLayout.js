@@ -3,6 +3,7 @@ import renderTemplate from 'desktop/components/react/utils/renderTemplate'
 import buildTemplateComponent from 'desktop/components/react/utils/buildTemplateComponent'
 import { isFunction, isString } from 'underscore'
 import { renderToString } from 'react-dom/server'
+import { ServerStyleSheet } from 'styled-components'
 
 /**
  * Utility for rendering a React-based isomorphic app. Note that Once html has
@@ -65,6 +66,7 @@ export function renderReactLayout (options) {
     data
   )
 
+  const { bodyHTML, css } = render(body)
   const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
     locals: {
       ...locals,
@@ -72,13 +74,15 @@ export function renderReactLayout (options) {
         ...data,
         templateComponents
       },
-      header: render(head),
-      body: render(body)
+      header: render(head).html,
+      body: bodyHTML,
+      css
     }
   })
 
   function render (block) {
     let html = ''
+    let css = ''
 
     if (!block) {
       return html
@@ -97,10 +101,11 @@ export function renderReactLayout (options) {
       // Component
     } else if (isReactComponent(block)) {
       const Component = block
-
+      const sheet = new ServerStyleSheet()
       html = renderToString(
-        <Component {...data} templateComponents={templateComponents} />
+        sheet.collectStyles(<Component {...data} templateComponents={templateComponents} />)
       )
+      css = sheet.getStyleTags()
 
       // String
     } else if (isString(block)) {
@@ -116,8 +121,7 @@ export function renderReactLayout (options) {
         )
       }
     }
-
-    return html
+    return { html, css }
   }
 
   return layout

@@ -1,4 +1,5 @@
-import 'jsdom-global/register'
+import jsdom from 'jsdom-global'
+const cleanup = jsdom()
 import React from 'react'
 import ResponsiveWindow, { responsiveWindowAction, responsiveWindowReducer } from '../index'
 import sinon from 'sinon'
@@ -6,6 +7,11 @@ import { createStore } from 'redux'
 import { mount } from 'enzyme'
 
 describe('components/react/responsive_window_spec.js', () => {
+  after((done) => {
+    cleanup()
+    done()
+  })
+
   it('when desktop, isMobile is false', () => {
     const store = createStore(responsiveWindowReducer)
     store.dispatch(responsiveWindowAction(1000))

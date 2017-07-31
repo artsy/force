@@ -1,5 +1,6 @@
 import React from 'react'
 import { renderReactLayout, __RewireAPI__ } from '../renderReactLayout'
+import styled from 'styled-components'
 
 describe('components/react/utils/renderReactLayout.js', () => {
   afterEach(() => {
@@ -26,6 +27,7 @@ describe('components/react/utils/renderReactLayout.js', () => {
     })
 
     __RewireAPI__.__Rewire__('renderToString', () => {
+      __RewireAPI__.__ResetDependency__('renderToString')
       done()
     })
 
@@ -34,6 +36,23 @@ describe('components/react/utils/renderReactLayout.js', () => {
         body: () => <div />
       }
     })
+  })
+
+  it('injects styled component styles to template head', () => {
+    const StyledDiv = styled.div`
+      color: red;
+    `
+
+    const output = renderReactLayout({
+      blocks: {
+        body: () => <StyledDiv />
+      },
+      locals: {
+        asset: () => {},
+        sd: {}
+      }
+    })
+    output.should.containEql('color: red;')
   })
 
   it('throws if trying to render a class component', () => {
