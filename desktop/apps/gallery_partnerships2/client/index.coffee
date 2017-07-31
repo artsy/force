@@ -1,4 +1,4 @@
-initCarousel = require '../../../components/merry_go_round/index.coffee'
+initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
 sd = require('sharify').data
 
 module.exports.init = ->

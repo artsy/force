@@ -5,7 +5,7 @@
   var $document = $(document)
   $document
     .on('click', '.analytics-artwork-show-phone-number', function () {
-      analytics.track("Clicked 'Show phone number'", $(this).data())
+      analytics.track("Clicked 'Show phone number'", _.omit($(this).data(), 'partner'))
     })
     .on('click', '.analytics-artwork-download', function () {
       analytics.track('Downloaded lo-res image')
