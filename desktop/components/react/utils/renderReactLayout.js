@@ -121,7 +121,6 @@ export function renderReactLayout (options) {
         )
       }
     }
-
     return { html, styledComponentCSS }
   }
 
