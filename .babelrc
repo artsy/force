@@ -12,5 +12,14 @@
       "root": ["./"]
     }],
     "transform-class-properties"
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["styled-components", {
+          "ssr": true
+        }]
+      ]
+    }
+  }
 }
