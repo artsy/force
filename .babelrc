@@ -11,9 +11,6 @@
     ["module-resolver", {
       "root": ["./"]
     }],
-    "transform-class-properties",
-    ["styled-components", {
-      "ssr": true
-    }]
+    "transform-class-properties"
   ]
 }
