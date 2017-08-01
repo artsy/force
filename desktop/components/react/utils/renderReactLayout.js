@@ -7,46 +7,9 @@ import { ServerStyleSheet } from 'styled-components'
 
 /**
  * Utility for rendering a React-based isomorphic app. Note that Once html has
- * been sent over the wire it still needs to be rehydrated on the client. See
- * apps/react_example/client.js for example.
+ * been sent over the wire it still needs to be rehydrated on the client.
  *
- * @example
- *
- * // Routes.js
- *
- * import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
- *
- * export function index (req, res, next) {
- *   const layout = renderReactLayout({
- *     basePath: req.app.get('views'),
- *     blocks: {
- *       head: 'meta.jade',
- *       body: AppComponent
- *     },
- *     locals: {
- *       ...res.locals,
- *       assetPackage: 'react_example',
- *       bodyClass: 'someCSSClass'
- *     },
- *     data: {
- *       name: 'Leif',
- *       description: 'hi how are you'
- *     },
- *     templates: {
- *       MyLegacyJadeView: 'some_jade_view.jade'
- *     }
- *   })
- * }
- *
- * // Client.js
- *
- * import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
- *
- * const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
- *
- * ReactDOM.render(
- *   <App {...bootstrapData} />, document.getElementById('react-root')
- * )
+ * See: https://github.com/artsy/force/tree/master/desktop/apps/react_example
  *
  * @param  {Object} options Options configuration object
  * @return {String}         String of html to render
@@ -66,7 +29,9 @@ export function renderReactLayout (options) {
     data
   )
 
-  const { bodyHTML, css } = render(body)
+  const { html: headHTML } = render(head)
+  const { html: bodyHTML, css } = render(body)
+
   const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
     locals: {
       ...locals,
@@ -74,7 +39,7 @@ export function renderReactLayout (options) {
         ...data,
         templateComponents
       },
-      header: render(head).html,
+      header: headHTML,
       body: bodyHTML,
       css
     }
@@ -102,9 +67,16 @@ export function renderReactLayout (options) {
     } else if (isReactComponent(block)) {
       const Component = block
       const sheet = new ServerStyleSheet()
+
       html = renderToString(
-        sheet.collectStyles(<Component {...data} templateComponents={templateComponents} />)
+        sheet.collectStyles(
+          <Component
+            {...data}
+            templateComponents={templateComponents}
+          />
+        )
       )
+
       css = sheet.getStyleTags()
 
       // String
@@ -121,7 +93,11 @@ export function renderReactLayout (options) {
         )
       }
     }
-    return { html, css }
+
+    return {
+      html,
+      css
+    }
   }
 
   return layout
