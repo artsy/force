@@ -10,8 +10,8 @@ app.set 'view engine', 'jade'
 page = new JSONPage
   name: 'gallery-partnerships2',
   paths:
-    show: '/gallery-partnerships2'
-    edit: '/gallery-partnerships2/edit'
+    show: '/gallery-partnerships'
+    edit: '/gallery-partnerships/edit'
 
 { data, edit, upload } = require('../../components/json_page/routes')(page)
 
