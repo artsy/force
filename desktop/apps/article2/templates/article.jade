@@ -1,0 +1,27 @@
+extends ../../../components/fair_layout/templates/conditional
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'article'
+  - bodyClass = bodyClass + ' ' + article.getBodyClass({})
+
+block body
+
+  //- Render channel nav if article is in a team channel
+  - var showClass = ''
+  if channel && channel.isTeam()
+    - showClass = 'is-team-channel'
+    include ../../../components/channel_nav/index
+
+  #articles-show(class=showClass)
+
+    //- Article body
+    #articles-body-container
+      include ../../../components/article/templates/index
+
+  section#articles-footer.responsive-layout-container
+    //- Rendered on client
+
+  include ../../../components/main_layout/templates/json_ld

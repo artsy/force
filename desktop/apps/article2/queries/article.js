@@ -14,6 +14,9 @@ export default function ArticleQuery (id) {
         slug
         layout
         featured
+        channel_id
+        partner_channel_id
+        indexable
         email_metadata {
           headline
           author
