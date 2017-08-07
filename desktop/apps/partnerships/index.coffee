@@ -16,7 +16,7 @@ app.set 'view engine', 'jade'
 app.get '/partnership-opportunities', routes.mktoABTest
 
 # JSON Page routes
-for subject in ['gallery', 'auction', 'institution']
+for subject in ['auction', 'institution']
   page = new JSONPage
     name: "#{subject}-partnerships"
     paths:

@@ -11,6 +11,7 @@ module.exports = class PartnershipsRouter extends Backbone.Router
     'institution-partnerships/:slug': 'toSection'
     'auction-partnerships': 'toTop'
     'auction-partnerships/:slug': 'toSection'
+    'apply/:slug': 'toApply'
 
   initialize: ->
     @$window = $(window)
@@ -29,3 +30,6 @@ module.exports = class PartnershipsRouter extends Backbone.Router
     $nav = $ '.partnerships-section-nav'
     selector = "##{slug}"
     @jump.scrollToPosition $(selector)?.offset()?.top - $nav.outerHeight() / 2
+
+  toApply: ->
+    @toSection('apply')

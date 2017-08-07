@@ -5,11 +5,12 @@
   h3= section.heading
   p.preamble= section.preamble
 
-.gallery-partnerships-section-content
-  .browser-images-container
-    .browser-frame
-      img( src=section.images[0].src )
-    ul.browser-images.access-images
-      for image, i in section.images.slice(1)
-        li.browser-image.access-image( class=(i === 0 ? 'is-active' : undefined) )
-          img( src=image.src )
+if section.images
+  .gallery-partnerships-section-content
+    .browser-images-container
+      .browser-frame
+        img( src=section.images[0].src )
+      ul.browser-images.access-images
+        for image, i in section.images.slice(1)
+          li.browser-image.access-image( class=(i === 0 ? 'is-active' : undefined) )
+            img( src=image.src )
