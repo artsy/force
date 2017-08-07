@@ -21,13 +21,11 @@ routes =
   '''
   /auction-partnerships
   /institution-partnerships
-  /gallery-partnerships
   ''': require('../apps/partnerships/client/index.coffee').init
 
   '''
   /auction-partnerships/edit
   /institution-partnerships/edit
-  /gallery-partnerships/edit
   ''': require('../apps/partnerships/client/edit.coffee').init
 
   '''
