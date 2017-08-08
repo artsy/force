@@ -7,13 +7,17 @@ const { ArtworkDisplay } = test
 
 describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
   describe('<ArtworkDisplay />', () => {
+    const InfiniteScroll = ({ children }) => <div>{children}</div> // eslint-disable-line
     const Jump = () => <div />
     const MasonryArtwork = () => <div />
     const GridArtwork = () => <div />
     const ListArtwork = () => <div />
     const MasonryGrid = () => <div />
 
+    const infiniteScrollAction = x => x
+
     beforeEach(() => {
+      __RewireAPI__.__Rewire__('InfiniteScroll', InfiniteScroll)
       __RewireAPI__.__Rewire__('Jump', Jump)
       __RewireAPI__.__Rewire__('MasonryArtwork', MasonryArtwork)
       __RewireAPI__.__Rewire__('GridArtwork', GridArtwork)
@@ -22,6 +26,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
     })
 
     afterEach(() => {
+      __RewireAPI__.__ResetDependency__('InfiniteScroll')
       __RewireAPI__.__ResetDependency__('Jump')
       __RewireAPI__.__ResetDependency__('MasonryArtwork')
       __RewireAPI__.__ResetDependency__('GridArtwork')
@@ -33,6 +38,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtworkDisplay,
         props: {
+          infiniteScrollAction,
           isMobile: true,
           isListView: true,
           saleArtworks: [1, 2, 3]
@@ -46,6 +52,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtworkDisplay,
         props: {
+          infiniteScrollAction,
           isMobile: true,
           isListView: false,
           saleArtworks: [1, 2, 3]
@@ -59,6 +66,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtworkDisplay,
         props: {
+          infiniteScrollAction,
           isMobile: false,
           isListView: true,
           saleArtworks: [1, 2, 3]
@@ -72,6 +80,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtworkDisplay,
         props: {
+          infiniteScrollAction,
           isMobile: false,
           isListView: false,
           saleArtworks: [1, 2, 3]
@@ -85,6 +94,7 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtworkDisplay,
         props: {
+          infiniteScrollAction,
           isMobile: true,
           isListView: true,
           saleArtworks: [1, 2, 3]

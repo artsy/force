@@ -1,3 +1,4 @@
+import InfiniteScroll from 'desktop/components/react/infinite_scroll/InfiniteScroll'
 import Jump from 'desktop/components/jump/react'
 import MasonryArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/MasonryArtwork'
 import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
@@ -8,10 +9,12 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn'
 import get from 'lodash.get'
+import { infiniteScroll } from 'desktop/apps/auction2/actions/artworkBrowser'
 import { connect } from 'react-redux'
 
 class ArtworkDisplay extends Component {
   static propTypes = {
+    infiniteScrollAction: PropTypes.func.isRequired,
     isFetchingArtworks: PropTypes.bool.isRequired,
     isListView: PropTypes.bool.isRequired,
     isMobile: PropTypes.bool.isRequired,
@@ -30,6 +33,7 @@ class ArtworkDisplay extends Component {
 
   render () {
     const {
+      infiniteScrollAction,
       isFetchingArtworks,
       isListView,
       isMobile,
@@ -48,76 +52,81 @@ class ArtworkDisplay extends Component {
     const b = block('auction2-page-ArtworkDisplay')
 
     return (
-      <div className={b()}>
-        <div className={b(`artworks${listType}`)}>
-          { showFullScreenSpinner &&
-            <LoadingSpinner fullscreen /> }
+      <InfiniteScroll
+        triggerElement='.auction2-page-ArtworkDisplay, .auction2-page-ArtworkDisplay__artworks--list'
+        onTrigger={infiniteScrollAction}
+      >
+        <div className={b()}>
+          <div className={b(`artworks${listType}`)}>
+            { showFullScreenSpinner &&
+              <LoadingSpinner fullscreen /> }
 
-          {(() => {
-            if (isMobile) {
-              if (isListView) {
+            {(() => {
+              if (isMobile) {
+                if (isListView) {
+                  return (
+                    <div>
+                      { saleArtworks.map((saleArtwork, key) => (
+                        <ListArtwork
+                          artwork={saleArtwork}
+                          key={key}
+                        />
+                      ))}
+
+                      <LoadingSpinner />
+                    </div>
+                  )
+
+                  // GridView
+                } else {
+                  return (
+                    <div>
+                      <MasonryGrid
+                        columnCount={2}
+                        items={saleArtworks}
+                        getAspectRatio={(artwork) => {
+                          return get(artwork, 'artwork.images.0.aspect_ratio')
+                        }}
+                        getDisplayComponent={(artwork) => {
+                          return (
+                            <MasonryArtwork artwork={artwork} />
+                          )
+                        }}
+                      />
+
+                      <LoadingSpinner />
+                    </div>
+                  )
+                }
+
+                // Desktop
+              } else {
+                const DisplayComponent = isListView ? ListArtwork : GridArtwork
+
                 return (
                   <div>
-                    { saleArtworks.map((saleArtwork, key) => (
-                      <ListArtwork
+                    { saleArtworks.map((saleArtwork) => (
+                      <DisplayComponent
+                        key={saleArtwork.id}
                         artwork={saleArtwork}
-                        key={key}
                       />
                     ))}
 
-                    <LoadingSpinner />
-                  </div>
-                )
-
-                // GridView
-              } else {
-                return (
-                  <div>
-                    <MasonryGrid
-                      columnCount={2}
-                      items={saleArtworks}
-                      getAspectRatio={(artwork) => {
-                        return get(artwork, 'artwork.images.0.aspect_ratio')
-                      }}
-                      getDisplayComponent={(artwork) => {
-                        return (
-                          <MasonryArtwork artwork={artwork} />
-                        )
-                      }}
+                    <Jump
+                      threshold={typeof window !== 'undefined' && window.innerHeight * 2}
+                      direction='bottom'
+                      element='.auction2-artworks-HeaderDesktop'
+                      offset='.mlh-navbar'
                     />
 
                     <LoadingSpinner />
                   </div>
                 )
               }
-
-              // Desktop
-            } else {
-              const DisplayComponent = isListView ? ListArtwork : GridArtwork
-
-              return (
-                <div>
-                  { saleArtworks.map((saleArtwork) => (
-                    <DisplayComponent
-                      key={saleArtwork.id}
-                      artwork={saleArtwork}
-                    />
-                  ))}
-
-                  <Jump
-                    threshold={typeof window !== 'undefined' && window.innerHeight * 2}
-                    direction='bottom'
-                    element='.auction2-artworks-HeaderDesktop'
-                    offset='.mlh-navbar'
-                  />
-
-                  <LoadingSpinner />
-                </div>
-              )
-            }
-          })()}
+            })()}
+          </div>
         </div>
-      </div>
+      </InfiniteScroll>
     )
   }
 }
@@ -136,8 +145,13 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  infiniteScrollAction: infiniteScroll
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(ArtworkDisplay)
 
 export const test = { ArtworkDisplay }
