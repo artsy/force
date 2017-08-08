@@ -1,6 +1,5 @@
 import ConfirmRegistrationModal from 'desktop/components/credit_card/client/confirm_registration.coffee'
 import PropTypes from 'prop-types'
-import infiniteScroll from 'desktop/apps/auction2/utils/infiniteScroll'
 import mediator from 'desktop/lib/mediator.coffee'
 import scrollToTop from 'desktop/apps/auction2/utils/scrollToTop'
 import { Component } from 'react'
@@ -10,7 +9,6 @@ class DOM extends Component {
   static propTypes = {
     auction: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-    infiniteScroll: PropTypes.func.isRequired,
     user: PropTypes.object
   }
 
@@ -35,14 +33,12 @@ class DOM extends Component {
   addEventListeners () {
     this.$body = this.$('body')
     this.$body.on('click', '.artsy-checkbox', scrollToTop)
-    this.$(window).on('scroll.auction2-page-artworks', this.props.infiniteScroll)
     this.$registerBtn = this.$body.find('.js-register-button')
     this.$registerBtn.on('click', this.handleRegisterBtnClick)
   }
 
   removeEventListeners () {
     this.$body.off('click')
-    this.$(window).off('scroll.auction2-page-artworks')
     this.$registerBtn.off('click', this.handleRegisterBtnClick)
   }
 
@@ -79,11 +75,6 @@ const mapStateToProps = (state) => ({
   user: state.app.user
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  infiniteScroll: () => infiniteScroll(dispatch)()
-})
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(DOM)

@@ -14,6 +14,10 @@ export default class Clock extends Component {
     modelName: 'Auction'
   }
 
+  state = {
+    isMounted: false
+  }
+
   componentDidMount () {
     this.$ = require('jquery')
 
@@ -22,13 +26,19 @@ export default class Clock extends Component {
       modelName
     } = this.props
 
-    this.backboneView = new ClockView({
-      model,
-      modelName,
-      el: this.$('.auction-clock')
-    })
+    this.setState(() => {
+      this.backboneView = new ClockView({
+        el: this.$('.auction-clock'),
+        model,
+        modelName
+      })
 
-    this.backboneView.start()
+      this.backboneView.start()
+
+      return {
+        isMounted: true
+      }
+    })
   }
 
   componentWillUnmount () {
@@ -38,10 +48,11 @@ export default class Clock extends Component {
   render () {
     return (
       <div className={this.props.className}>
-        <div className='clock'>
-          <div className='clock-header' />
-          <ul className='clock-value' />
-        </div>
+        { this.state.isMounted &&
+          <div className='clock'>
+            <div className='clock-header' />
+            <ul className='clock-value' />
+          </div> }
       </div>
     )
   }

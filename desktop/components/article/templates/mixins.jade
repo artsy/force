@@ -19,8 +19,8 @@ mixin video(video)
           .article-video-play-button-caret
     .article-video
       != embed(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
-      if video.caption
-        figcaption!= video.caption
+    if video.caption
+      figcaption!= video.caption
 
 mixin fullscreen(article)
   figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )

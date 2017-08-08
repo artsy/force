@@ -8,11 +8,21 @@ export default class AddToCalendar extends Component {
     event: PropTypes.object.isRequired
   }
 
+  state = {
+    isMounted: false
+  }
+
   componentDidMount () {
     this.$ = require('jquery')
 
-    this.view = new AddToCalendarView({
-      el: this.props.el || this.$('.auction2-auction-info__callout')
+    this.setState(() => {
+      this.view = new AddToCalendarView({
+        el: this.props.el || this.$('.auction2-AuctionInfo__callout')
+      })
+
+      return {
+        isMounted: true
+      }
     })
   }
 
@@ -33,23 +43,24 @@ export default class AddToCalendar extends Component {
             + Add to Calendar
           </a>
 
-          <div className='add-to-calendar-event-calendar-wrapper'>
-            <div className='add-to-calendar-event-arrow-up' />
-            <div className='add-to-calendar-event-calendar-container'>
-              <a className='outlook' href={event.icsCalendarUrl()}>
-                Outlook
-              </a>
-              <a className='google' href={event.googleCalendarUrl()} target='_blank'>
-                Google
-              </a>
-              <a className='yahoo' href={event.yahooCalendarUrl()} target='_blank'>
-                Yahoo!
-              </a>
-              <a className='ical' href={event.icsCalendarUrl()}>
-                iCal
-              </a>
-            </div>
-          </div>
+          { this.state.isMounted &&
+            <div className='add-to-calendar-event-calendar-wrapper'>
+              <div className='add-to-calendar-event-arrow-up' />
+              <div className='add-to-calendar-event-calendar-container'>
+                <a className='outlook' href={event.icsCalendarUrl()}>
+                  Outlook
+                </a>
+                <a className='google' href={event.googleCalendarUrl()} target='_blank'>
+                  Google
+                </a>
+                <a className='yahoo' href={event.yahooCalendarUrl()} target='_blank'>
+                  Yahoo!
+                </a>
+                <a className='ical' href={event.icsCalendarUrl()}>
+                  iCal
+                </a>
+              </div>
+            </div> }
         </div>
       </div>
     )
