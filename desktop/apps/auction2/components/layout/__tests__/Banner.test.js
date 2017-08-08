@@ -31,7 +31,7 @@ describe('auction/components/layout/Banner.test', () => {
         }
       })
 
-      wrapper.find('.clock').length.should.eql(1)
+      wrapper.find('.auction-clock').length.should.eql(1)
     })
   })
 })

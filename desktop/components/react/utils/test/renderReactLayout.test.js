@@ -1,11 +1,17 @@
 import React from 'react'
-import StyleSheet from 'styled-components/lib/models/StyleSheet'
-import styled from 'styled-components'
 import { renderReactLayout, __RewireAPI__ } from '../renderReactLayout'
 
-describe('components/react/utils/renderReactLayout.js', () => {
+describe.only('components/react/utils/renderReactLayout.js', () => {
+  beforeEach(() => {
+    __RewireAPI__.__Rewire__('ServerStyleSheet', class ServerStyleSheet {
+      collectStyles () {}
+      getStyleTags () {}
+    })
+  })
+
   afterEach(() => {
     __RewireAPI__.__ResetDependency__('renderTemplate')
+    __RewireAPI__.__ResetDependency__('ServerStyleSheet')
   })
 
   it('renders jade template blocks', () => {
