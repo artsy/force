@@ -79,4 +79,3 @@ describe('#submissionFlowWithFetch', () => {
     res.locals.sd.SUBMISSION_ARTIST_NAME.should.eql('Andy Warhol')
   })
 })
-
