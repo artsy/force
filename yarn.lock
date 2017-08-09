@@ -7376,14 +7376,6 @@ react-sizeme@^2.3.2:
     invariant "^2.2.2"
     lodash "^4.17.4"
 
-react-sizeme@^2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.3.4.tgz#dd662ff43d65e7bd37992a2bb86e7d7df8a67836"
-  dependencies:
-    element-resize-detector "^1.1.12"
-    invariant "^2.2.2"
-    lodash "^4.17.4"
-
 react-split-pane@^0.1.65:
   version "0.1.65"
   resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.65.tgz#37c0b5ea5c960827e7f3621d0a114b0f8c9c8918"

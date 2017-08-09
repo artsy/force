@@ -109,7 +109,6 @@
     "react-redux": "^5.0.2",
     "react-router": "^4.1.1",
     "react-router-redux": "^4.0.8",
-    "react-sizeme": "^2.3.4",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
     "redux-form": "^6.7.0",
