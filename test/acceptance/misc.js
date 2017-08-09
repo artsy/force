@@ -1,11 +1,12 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
+import { setup, teardown, stubAuctionReminder } from './helpers'
 
 describe('Page', () => {
   let gravity, browser
 
   before(async () => {
     ({ gravity, browser } = await setup())
+    stubAuctionReminder()
     gravity.get('/api/v1/page/:id', (req, res) => {
       res.send(require('./fixtures/gravity/page'))
     })

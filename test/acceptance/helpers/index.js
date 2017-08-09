@@ -162,3 +162,8 @@ const startApp = (port) =>
       else resolve(app)
     }))
   })
+
+export const stubAuctionReminder = () =>
+    gravity.get('/api/v1/sales', (req, res) => {
+      res.send([])
+    })
