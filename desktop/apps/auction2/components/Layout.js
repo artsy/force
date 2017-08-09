@@ -36,10 +36,11 @@ function Layout (props) {
         { showMyActiveBids &&
           <MyActiveBids /> }
 
+        { showFollowedArtistsRail &&
+          <WorksByFollowedArtists /> }
+
         { showFilter && !showInfoWindow &&
           <div className='auction2-main-page'>
-            { showFollowedArtistsRail &&
-              <WorksByFollowedArtists /> }
             <ArtworkBrowser />
           </div> }
 

@@ -8,7 +8,7 @@ import { get } from 'lodash'
 
 function GridArtwork (props) {
   const {
-    artwork,
+    saleArtwork,
     artistDisplay,
     date,
     image,
@@ -20,7 +20,7 @@ function GridArtwork (props) {
   const b = block('auction2-page-GridArtwork')
 
   return (
-    <a className={b()} key={artwork._id} href={`/artwork/${artwork.id}`}>
+    <a className={b()} key={saleArtwork._id} href={`/artwork/${saleArtwork.id}`}>
       <div className={b('image-container')}>
         <div className='vam-outer'>
           <div className='vam-inner'>
@@ -37,7 +37,7 @@ function GridArtwork (props) {
           </div>
           { !isClosed &&
             <BidStatus
-              artworkItem={artwork}
+              artworkItem={saleArtwork}
             /> }
         </div>
         <div className={b('artists')}>
@@ -55,7 +55,7 @@ function GridArtwork (props) {
 }
 
 GridArtwork.propTypes = {
-  artwork: PropTypes.object.isRequired,
+  saleArtwork: PropTypes.object.isRequired,
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
@@ -66,20 +66,20 @@ GridArtwork.propTypes = {
 
 // TODO: Unify this selector across artwork types
 const mapStateToProps = (state, props) => {
-  const { artwork } = props
-  const image = get(artwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
-  const { artists } = artwork.artwork
+  const { saleArtwork } = props
+  const image = get(saleArtwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
+  const { artists } = saleArtwork.artwork
   const artistDisplay = artists && artists.length > 0
     ? artists.map((aa) => aa.name).join(', ')
     : ''
 
   return {
-    date: artwork.artwork.date,
+    date: saleArtwork.artwork.date,
     image,
     isClosed: state.artworkBrowser.isClosed || state.app.auction.isClosed(),
-    lotLabel: artwork.lot_label,
+    lotLabel: saleArtwork.lot_label,
     artistDisplay,
-    title: artwork.artwork.title
+    title: saleArtwork.artwork.title
   }
 }
 
