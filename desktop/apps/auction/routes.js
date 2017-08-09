@@ -76,7 +76,7 @@ export async function index (req, res, next) {
         },
         locals: {
           ...res.locals,
-          assetPackage: 'auctions2',
+          assetPackage: 'auctions',
           bodyClass: 'auctions2-body body-header-fixed body-no-margins'
         },
         data: {
