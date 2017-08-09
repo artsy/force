@@ -1,13 +1,11 @@
 import 'babel-core/register'
 import express from 'express'
-import reactRenderer from 'express-react-views'
 import reloadable, { isDevelopment } from 'desktop/lib/reloadable'
 
 const app = module.exports = express()
 
 app.set('view engine', 'jade')
-app.set('views', `${__dirname}/templates`)
-app.engine('jsx', reactRenderer.createEngine({ transformViews: false }))
+app.set('views', `${__dirname}/components/layout`)
 
 if (isDevelopment) {
   reloadable(app, (req, res, next) => {

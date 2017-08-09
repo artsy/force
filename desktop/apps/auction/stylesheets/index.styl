@@ -9,24 +9,42 @@
 @require '../../../components/jump'
 @require '../../../components/stylus_lib'
 @require '../../../components/commercial_filter/stylesheets'
-@require '../components/artist_filter/index'
-@require '../components/auction_artworks/index'
-@require '../components/auction_grid_artwork/index'
-@require '../components/auction_list_artwork/index'
-@require '../components/basic_checkbox/index'
-@require '../components/bid_status/index'
-@require '../components/commercial_filter/index'
-@require '../components/header/index'
-@require '../components/medium_filter/index'
-@require '../components/range_slider/index'
-@require '../components/works_by_followed_artists/index'
-@require './banner'
-@require './footer'
-@require './header'
-@require './my_active_bids'
-@require './registration_component'
 
-.auction-page
+@require '../components/artwork_browser/main/artwork/BidStatus'
+@require '../components/artwork_browser/main/artwork/GridArtwork'
+@require '../components/artwork_browser/main/artwork/ListArtwork'
+@require '../components/artwork_browser/main/artwork/MasonryArtwork'
+@require '../components/artwork_browser/main/ArtworkDisplay'
+@require '../components/artwork_browser/main/LoadingSpinner'
+@require '../components/artwork_browser/sidebar/ArtistFilter'
+@require '../components/artwork_browser/sidebar/BasicCheckbox'
+@require '../components/artwork_browser/sidebar/MediumFilter'
+@require '../components/artwork_browser/sidebar/RangeSlider'
+@require '../components/artwork_browser/sidebar/WorksByFollowedArtists'
+@require '../components/artwork_browser/header/HeaderDesktop'
+@require '../components/artwork_browser/header/HeaderMobile'
+@require '../components/artwork_browser/ArtworkBrowser'
+
+@require '../components/layout/auction_info/AuctionInfo'
+@require '../components/layout/auction_info/Registration'
+@require '../components/layout/Banner'
+@require '../components/layout/Footer'
+@require '../components/layout/active_bids/MyActiveBids'
+@require '../components/layout/active_bids/ActiveBidItem'
+
+.auctions2-body
+  @media (max-width: responsive-mobile-width)
+    #main-layout-header
+      display block
+
+    #main-layout-footer
+      display block
+
+    #recently-viewed-artworks
+      display none
+
+
+.auction2-page
   clearfix()
 
   .responsive-layout-container
@@ -38,7 +56,7 @@
       width 24%
       max-width 265px
 
-  .auction-page-section
+  .auction2-page-section
     block-margins(30px)
     padding 60px 0
     border-top 1px solid gray-lighter-color
