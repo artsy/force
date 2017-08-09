@@ -20,7 +20,7 @@ describe('auction/components/artwork_browser/main/artwork/ListArtwork.test', () 
       const { wrapper } = renderTestComponent({
         Component: MasonryArtwork,
         props: {
-          artwork: { _id: 'foo', id: 'bar' },
+          saleArtwork: { _id: 'foo', id: 'bar' },
           isClosed: true
         }
       })
@@ -32,7 +32,7 @@ describe('auction/components/artwork_browser/main/artwork/ListArtwork.test', () 
       const { wrapper } = renderTestComponent({
         Component: MasonryArtwork,
         props: {
-          artwork: { _id: 'foo', id: 'bar' },
+          saleArtwork: { _id: 'foo', id: 'bar' },
           isClosed: false
         }
       })

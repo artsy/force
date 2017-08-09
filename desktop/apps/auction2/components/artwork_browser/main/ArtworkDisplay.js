@@ -68,7 +68,7 @@ class ArtworkDisplay extends Component {
                     <div>
                       { saleArtworks.map((saleArtwork, key) => (
                         <ListArtwork
-                          artwork={saleArtwork}
+                          saleArtwork={saleArtwork}
                           key={key}
                         />
                       ))}
@@ -84,12 +84,14 @@ class ArtworkDisplay extends Component {
                       <MasonryGrid
                         columnCount={2}
                         items={saleArtworks}
-                        getAspectRatio={(artwork) => {
-                          return get(artwork, 'artwork.images.0.aspect_ratio')
+                        getAspectRatio={(saleArtwork) => {
+                          return get(saleArtwork, 'artwork.images.0.aspect_ratio')
                         }}
-                        getDisplayComponent={(artwork) => {
+                        getDisplayComponent={(saleArtwork) => {
                           return (
-                            <MasonryArtwork artwork={artwork} />
+                            <MasonryArtwork
+                              saleArtwork={saleArtwork}
+                            />
                           )
                         }}
                       />
@@ -108,12 +110,12 @@ class ArtworkDisplay extends Component {
                     { saleArtworks.map((saleArtwork) => (
                       <DisplayComponent
                         key={saleArtwork.id}
-                        artwork={saleArtwork}
+                        saleArtwork={saleArtwork}
                       />
                     ))}
 
                     <Jump
-                      threshold={typeof window !== 'undefined' && window.innerHeight * 2}
+                      threshold={typeof window !== 'undefined' ? window.innerHeight * 2 : 0}
                       direction='bottom'
                       element='.auction2-artworks-HeaderDesktop'
                       offset='.mlh-navbar'

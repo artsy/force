@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 function MasonryArtwork (props) {
   const {
-    artwork,
+    saleArtwork,
     artistDisplay,
     date,
     image,
@@ -20,7 +20,7 @@ function MasonryArtwork (props) {
   const b = block('auction2-page-MasonryArtwork')
 
   return (
-    <a href={`/artwork/${artwork.id}`} className={b()}>
+    <a href={`/artwork/${saleArtwork.id}`} className={b()}>
       <div>
         <img className={b('image')} src={image} alt={title} />
       </div>
@@ -43,7 +43,7 @@ function MasonryArtwork (props) {
       { !isClosed &&
         <div className={b('bid-status')}>
           <BidStatus
-            artworkItem={artwork}
+            artworkItem={saleArtwork}
           />
         </div> }
     </a>
@@ -51,7 +51,7 @@ function MasonryArtwork (props) {
 }
 
 MasonryArtwork.propTypes = {
-  artwork: PropTypes.object.isRequired,
+  saleArtwork: PropTypes.object.isRequired,
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
@@ -61,20 +61,20 @@ MasonryArtwork.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const { artwork } = props
-  const image = get(artwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
-  const { artists } = artwork.artwork
+  const { saleArtwork } = props
+  const image = get(saleArtwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
+  const { artists } = saleArtwork.artwork
   const artistDisplay = artists && artists.length > 0
     ? artists.map((aa) => aa.name).join(', ')
     : ''
 
   return {
-    date: artwork.artwork.date,
+    date: saleArtwork.artwork.date,
     image,
     isClosed: state.app.auction.isClosed(),
-    lotLabel: artwork.lot_label,
+    lotLabel: saleArtwork.lot_label,
     artistDisplay,
-    title: artwork.artwork.title
+    title: saleArtwork.artwork.title
   }
 }
 

@@ -43,7 +43,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       const { wrapper } = renderTestComponent({
         Component: GridArtwork,
         props: {
-          artwork: saleArtwork
+          saleArtwork
         }
       })
 
@@ -55,7 +55,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       const { wrapper } = renderTestComponent({
         Component: ListArtwork,
         props: {
-          artwork: saleArtwork
+          saleArtwork
         }
       })
 
@@ -72,7 +72,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
           }
         },
         props: {
-          artwork: saleArtwork
+          saleArtwork
         }
       })
 
@@ -88,7 +88,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
           }
         },
         props: {
-          artwork: saleArtwork
+          saleArtwork
         }
       })
 

@@ -32,7 +32,7 @@ export const worksByFollowedArtists = `
           is_sold
           images {
             id
-            image_url: url(version: ["tall"])
+            image_medium: url(version: "medium")
             image_versions: versions
             placeholder: resized(width: 30, height: 30, version: "tall") {
               image_url: url

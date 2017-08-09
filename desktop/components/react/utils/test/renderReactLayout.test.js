@@ -1,7 +1,7 @@
 import React from 'react'
 import { renderReactLayout, __RewireAPI__ } from '../renderReactLayout'
 
-describe.only('components/react/utils/renderReactLayout.js', () => {
+describe('components/react/utils/renderReactLayout.js', () => {
   beforeEach(() => {
     __RewireAPI__.__Rewire__('ServerStyleSheet', class ServerStyleSheet {
       collectStyles () {}
