@@ -24,6 +24,10 @@ export const START_LOADING = 'START_LOADING'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
 export const STOP_LOADING = 'STOP_LOADING'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
+export const SUBMISSION_CREATED = 'SUBMISSION_CREATED'
+export const SUBMISSION_COMPLETED = 'SUBMISSION_COMPLETED'
+export const SUBMISSION_ERROR = 'SUBMISSION_ERROR'
+export const SUBMIT_ARTIST = 'SUBMIT_ARTIST'
 export const UNFREEZE_LOCATION_INPUT = 'UNFREEZE_LOCATION_INPUT'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
@@ -64,6 +68,7 @@ export function chooseArtist (value) {
 
 export function chooseArtistAdvance () {
   return (dispatch) => {
+    dispatch(submitArtist())
     dispatch(push(stepsConfig.describeWork.path))
   }
 }
@@ -144,6 +149,7 @@ export function completeSubmission () {
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
+      dispatch(submissionCompleted())
       dispatch(stopLoading())
       dispatch(push(stepsConfig.thankYou.submissionPath.replace(':id', submissionResponse.body.id)))
     } catch (err) {
@@ -180,7 +186,7 @@ export function createSubmission () {
                            .set('Authorization', `Bearer ${token}`)
                            .send(inputs)
       }
-
+      dispatch(submissionCreated(submissionBody.body.id))
       dispatch(updateSubmission(submissionBody.body)) // update state to reflect current submission
       dispatch(stopLoading())
       dispatch(push(stepsConfig.describeWork.submissionPath.replace(':id', submissionBody.body.id)))
@@ -299,7 +305,7 @@ export function ignoreRedirectOnAuth () {
   }
 }
 
-export function logIn (values) {
+export function logIn (values, accountCreated = false) {
   return async (dispatch, getState) => {
     try {
       const {
@@ -320,11 +326,15 @@ export function logIn (values) {
                       .set('X-Requested-With', 'XMLHttpRequest')
                       .send(options)
 
-      dispatch(updateUser(user.body.user))
+      dispatch(updateUser(user.body.user, accountCreated))
       redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
     } catch (err) {
-      dispatch(updateError(err.response.body.error))
+      const errorMessage = err.response && err.response.body && err.response.body.error
+      dispatch(updateError(errorMessage))
+      console.error(
+        '(consignments/client/actions.js @ logIn) Error:', err
+      )
     }
   }
 }
@@ -416,10 +426,13 @@ export function signUp (values) {
               .set('Accept', 'application/json')
               .set('X-Requested-With', 'XMLHttpRequest')
               .send(options)
-
-      dispatch(logIn(values))
+      dispatch(logIn(values, true))
     } catch (err) {
-      dispatch(updateError(err.response.body.error))
+      const errorMessage = err.response && err.response.body && err.response.body.error
+      dispatch(updateError(errorMessage))
+      console.error(
+        '(consignments/client/actions.js @ signUp) Error:', err
+      )
     }
   }
 }
@@ -439,6 +452,12 @@ export function stopProcessingImage (fileName) {
     payload: {
       fileName
     }
+  }
+}
+
+export function submitArtist () {
+  return {
+    type: SUBMIT_ARTIST
   }
 }
 
@@ -467,6 +486,27 @@ export function startLoading () {
 export function stopLoading () {
   return {
     type: STOP_LOADING
+  }
+}
+
+export function submissionCreated (submissionId) {
+  return {
+    type: SUBMISSION_CREATED,
+    payload: {
+      submissionId
+    }
+  }
+}
+
+export function submissionCompleted () {
+  return {
+    type: SUBMISSION_COMPLETED
+  }
+}
+
+export function submissionError () {
+  return {
+    type: SUBMISSION_ERROR
   }
 }
 
@@ -678,11 +718,12 @@ export function updateSubmission (submission) {
   }
 }
 
-export function updateUser (user) {
+export function updateUser (user, accountCreated) {
   return {
     type: UPDATE_USER,
     payload: {
-      user
+      user,
+      accountCreated
     }
   }
 }

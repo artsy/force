@@ -1,3 +1,4 @@
+import analyticsMiddleware from './analytics_middleware'
 import ResponsiveWindow from '../../../components/react/responsive_window'
 import React from 'react'
 import SubmissionFlow from '../components/submission_flow'
@@ -25,16 +26,23 @@ import { routerMiddleware } from 'react-router-redux'
 function setupSubmissionFlow () {
   // load google maps for autocomplete
   geo.loadGoogleMaps()
-
-  const loggerMiddleware = createLogger()
   const history = createHistory()
+
+  const middleware = []
+
+  middleware.push(thunkMiddleware) // lets us dispatch() functions
+  middleware.push(routerMiddleware(history))
+  middleware.push(analyticsMiddleware) // middleware to help us track previous and future states
+
+  if (sd.NODE_ENV === 'development' || sd.NODE_ENV === 'staging') {
+    middleware.push(createLogger({ // middleware that logs actions
+      collapsed: true
+    }))
+  }
+
   const store = createStore(
     reducers,
-    applyMiddleware(
-      thunkMiddleware, // lets us dispatch() functions
-      routerMiddleware(history),
-      loggerMiddleware // middleware that logs actions
-    )
+    applyMiddleware(...middleware)
   )
 
   const determineSteps = () => {

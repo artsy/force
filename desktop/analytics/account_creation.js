@@ -11,7 +11,7 @@ const getUrlParameter = name => {
 
 const getAcquisitionInitiative = () => getUrlParameter('m-id') || getUrlParameter('acquisition_initiative')
 
-const trackAccountCreation = options => {
+export const trackAccountCreation = options => {
   analytics.track('Created account', _.pick(options, 'acquisition_initiative', 'signup_service', 'user_id', 'context'))
   analytics.identify(options.user_id, _.pick(options, 'email'), {
     integrations: {
@@ -119,3 +119,22 @@ analyticsHooks.on('mediator:open:auth', function (options) {
 })
 
 $('#auth-footer [href*=sign_up]').click(trackViewSignup)
+
+// Created account via consignments submission page
+analyticsHooks.on('consignment:account:created', function (options) {
+  if (options.accountCreated) {
+    trackAccountCreation({
+      signup_service: 'email',
+      user_id: options.id,
+      context: 'consignments',
+      email: options.email
+    })
+  } else {
+    analytics.identify(options.user_id, options.email, {
+      integrations: {
+        'All': false,
+        'Marketo': true
+      }
+    })
+  }
+})

@@ -1,6 +1,13 @@
+import { submissionError } from './actions'
+
 export const numberWarning = value => value && isNaN(Number(value)) && 'Must be a number'
 
-export const scrollToError = (errors, dispatch) => {
+export const dispatchAndScrollToError = (errors, dispatch) => {
+  dispatch(submissionError())
+  scrollToError(errors)
+}
+
+export const scrollToError = (errors) => {
   const scrollBuffer = 5
   const firstError = Object.keys(errors)[0]
   const firstErrorElement = document.getElementsByName(firstError)[0]

@@ -122,3 +122,36 @@ analyticsHooks.on('auction:artworks:params:change', function (data) {
     changed: data.changed
   })
 })
+
+// consignments
+analyticsHooks.on('consignment:artist:confirmed', function (data) {
+  analytics.track('consignment_artist_confirmed', {
+    artist_id: data.artistId
+  })
+})
+
+analyticsHooks.on('consignment:submitted', function (data) {
+  analytics.track('consignment_submitted', {
+    artist_id: data.artistId,
+    submission_id: data.submissionId
+  })
+})
+
+analyticsHooks.on('consignment:completed', function (data) {
+  analytics.track('consignment_asset_uploaded', {
+    artist_id: data.artistId,
+    submission_id: data.submissionId,
+    asset_ids: data.assetIds
+  })
+})
+
+// analyticsHooks.on('consignment:submission:failed', function (data) {
+//   analytics.track('Commercial filter params changed', {
+//     sale_id: AUCTION_ID,
+//     auction_slug: sd.AUCTION.slug,
+//     user_id: USER_ID,
+//     current: data.current,
+//     changed: data.changed
+//   })
+// })
+
