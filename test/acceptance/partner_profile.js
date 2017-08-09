@@ -26,8 +26,6 @@ describe('Partner profile page', () => {
 
   it('does not show contact information for non-active partner', async () => {
     const $ = await browser.page('/gagosian-gallery/contact')
-    
-    
     $.html().should.containEql('Sorry, the page you were looking for doesn&#x2019;t exist at this URL.')
   })
 

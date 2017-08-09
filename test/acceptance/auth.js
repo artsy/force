@@ -14,10 +14,11 @@ describe('Authentication', () => {
 
   after(teardown)
 
-  it('logs in', async () => {
+  it('logs in', async (done) => {
     await browser.page('/terms')
     await browser.login()
     const html = await browser.el('.main-layout-header-user')
     html.should.containEql('Craig Spaeth')
+    done()
   })
 })
