@@ -1,11 +1,12 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
+import { setup, teardown, stubAuctionReminder } from './helpers'
 
 describe('Artwork page', () => {
   let metaphysics, browser
 
   before(async () => {
     ({ metaphysics, browser } = await setup())
+    stubAuctionReminder()
     metaphysics.post('/', (req, res) => {
       res.send(require('./fixtures/metaphysics/artwork'))
     })

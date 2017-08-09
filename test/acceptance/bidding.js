@@ -1,11 +1,12 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
+import { setup, teardown, stubAuctionReminder } from './helpers'
 
 describe('Bidding flow', () => {
   let metaphysics, browser
 
   before(async () => {
     ({ metaphysics, browser } = await setup())
+    stubAuctionReminder()
     metaphysics.post('/', (req, res, next) => {
       if (req.body.query.includes('me {')) {
         res.send(require('./fixtures/metaphysics/bidding.json'))

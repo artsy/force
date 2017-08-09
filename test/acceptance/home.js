@@ -1,11 +1,12 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
+import { setup, teardown, stubAuctionReminder } from './helpers'
 
 describe('Home page', () => {
   let gravity, positron, metaphysics, browser
 
   before(async () => {
     ({ gravity, positron, metaphysics, browser } = await setup())
+    stubAuctionReminder()
     gravity.get('/api/v1/set/529939e2275b245e290004a0/items', (req, res) => {
       res.send(require('./fixtures/gravity/home'))
     })
