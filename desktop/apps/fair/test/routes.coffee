@@ -3,6 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
+moment = require 'moment'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Fair = require '../../../models/fair.coffee'
@@ -260,6 +261,47 @@ describe '#fetchFairByOrganizerYear', ->
     routes.fetchFairByOrganizerYear @req, @res, @next
     Backbone.sync.args[0][2].success @fairs
     @next.called.should.be.ok()
+
+describe '#fetchFairByOrganizerYear with redirect', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
+    profile = new Profile _.extend fabricate('fair_organizer_profile'), owner:fabricate('fair_organizer')
+
+    today = moment().utc()
+
+    @fairs = [
+      fabricate('fair', start_at: new Date("2-2-2014"), id: 'the-armory-show-2014', default_profile_id: 'the-armory-show-2014'),
+      fabricate('fair', start_at: new Date("2-2-2015"), id: 'the-armory-show-2015', default_profile_id: 'the-armory-show-2015'),
+      fabricate('fair', start_at: new Date("2-2-2016"), id: 'the-armory-show-2016', default_profile_id: 'the-armory-show-2016')
+      fabricate('fair', autopublish_artworks_at: today.format(), start_at: today.add(7, 'days'), end_at: today.add(14, 'days'), id: "the-armory-show-#{today.year()}", default_profile_id: "the-armory-show-#{today.year()}")
+    ]
+
+    @req = { params: { id: "the-armory-show-#{today.year()}"} }
+    @res = { redirect: sinon.stub(), locals: { sd: { MEDIUM: 'search' }, profile: profile } }
+    @next = sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'finds current running fair if there is one', ->
+    @req = { params: { id: 'the-armory-show-2016' } }
+    routes.fetchFairByOrganizerYear @req, @res, @next
+
+    Backbone.sync.args[0][2].success @fairs
+    @res.redirect.called.should.be.ok()
+    @res.redirect.args[0][0].should.equal '/the-armory-show-2017'
+
+  it 'finds requested fair by id not from search', ->
+    @req = { params: { id: 'the-armory-show-2016' } }
+    @res.locals.sd.MEDIUM = ''
+    routes.fetchFairByOrganizerYear @req, @res, @next
+
+    Backbone.sync.args[0][2].success @fairs
+    @res.redirect.called.should.not.be.ok()
+    @next.called.should.not.be.ok()
+    Backbone.sync.args[1][1].attributes.id.should.equal 'the-armory-show-2016'
 
 #
 # Microsite middleware test

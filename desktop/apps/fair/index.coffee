@@ -22,7 +22,7 @@ getFairByOrganizerYear = [
 ]
 
 app.use routes.microsite
-app.get '/:id', getFairData, routes.overview
+app.get '/:id', getFairByOrganizerYear, routes.overview
 app.get '/:id/:year([0-9]{4})', getFairByOrganizerYear, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
 app.get '/:id/articles', getFairData, routes.fairArticles

@@ -183,20 +183,32 @@ InfoMenu = require '../../components/info_menu/index.coffee'
 @fetchFairByOrganizerYear = (req, res, next) ->
   profile = res.locals.profile
 
-  return next() unless profile?.isFairOrganizer()
+  if profile?.isFairOrganizer()
+    fairOrgId = profile.related().owner.id
+  else
+    fairOrgId = profile.related().owner?.get('organizer')?.profile_id
+
+  return next() unless fairOrgId
 
   fairOrg = profile.related().owner
 
-  # Get all fairs for the requested fair organizer
-  pastFairs = new Fairs
-  pastFairs.fetch
+  fairs = new Fairs
+  fairs.fetch
     cache: true
     data:
-      fair_organizer_id: fairOrg.id
+      fair_organizer_id: fairOrgId
+      sort: 'start_at'
     success: ->
-      # find the fair whose year matches the requested year
-      fair = pastFairs.find (fair) ->
-        fair.formatYear() is parseInt req.params.year
+      # checks for a current fair
+      current = fairs.find (fair) ->
+        moment().utc().isBetween fair.get('autopublish_artworks_at'), fair.get('end_at')
+
+      # redirects to current fair if there is one running and it comes from search
+      return res.redirect(current.href()) if current && res.locals.sd.MEDIUM is 'search'
+
+      # find the fair whose year matches the requested year or by fair id
+      fair = fairs.find (fair) ->
+        (fair.formatYear() is parseInt req.params.year) || (fair.id is req.params.id)
 
       return next() unless fair
 
