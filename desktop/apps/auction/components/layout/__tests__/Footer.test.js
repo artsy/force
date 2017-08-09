@@ -46,7 +46,7 @@ describe('auction/components/layout/Footer.test', () => {
         }
       })
 
-      wrapper.find('.auction2-Footer').length.should.eql(0)
+      wrapper.find('.auction-Footer').length.should.eql(0)
     })
 
     describe('articles, not auction promo', () => {
@@ -74,7 +74,7 @@ describe('auction/components/layout/Footer.test', () => {
         wrapper.html().should.containEql('The Fight to Own Art')
         wrapper.html().should.containEql('Artsy Editorial')
         wrapper.html().should.containEql('By Abigail C and Anna S')
-        wrapper.find('.auction2-Footer__auction2-app-promo-wrapper').length.should.equal(1)
+        wrapper.find('.auction-Footer__auction-app-promo-wrapper').length.should.equal(1)
         wrapper.html().should.containEql('Bid from your phone')
       })
     })

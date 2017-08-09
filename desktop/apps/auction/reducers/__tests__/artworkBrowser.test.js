@@ -5,7 +5,7 @@ import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
 import { __RewireAPI__ as ActionsRewireApi } from 'desktop/apps/auction/actions/artworkBrowser' // eslint-disable-line
 import sinon from 'sinon'
 
-describe('auction2/actions/artworkBrowser.test.js', () => {
+describe('auction/actions/artworkBrowser.test.js', () => {
   it('returns the initial state', () => {
     const {
       artworkBrowser: {

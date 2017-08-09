@@ -29,7 +29,7 @@ describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
         props
       })
 
-      wrapper.find('.auction2-ArtistFilter__artists-you-follow').length.should.eql(0)
+      wrapper.find('.auction-ArtistFilter__artists-you-follow').length.should.eql(0)
     })
 
     it('renders an works by artists you follow checkbox if user', () => {
@@ -41,7 +41,7 @@ describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
         }
       })
 
-      wrapper.find('.auction2-ArtistFilter__artists-you-follow').length.should.eql(1)
+      wrapper.find('.auction-ArtistFilter__artists-you-follow').length.should.eql(1)
     })
 
     it('renders an Artists basic checkbox', () => {

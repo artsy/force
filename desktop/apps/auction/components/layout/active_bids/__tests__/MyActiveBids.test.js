@@ -79,8 +79,8 @@ describe('apps/auction/components/layout/active_bids/MyActiveBids', () => {
       wrapper.find('h2').length.should.eql(1)
       wrapper.find('.bid-status').length.should.eql(1)
       wrapper.find('.bid-status').text().should.containEql('Outbid')
-      wrapper.find('.auction2-ActiveBidItem__bid-button').length.should.eql(1)
-      wrapper.find('.auction2-ActiveBidItem__bid-button').text().should.containEql('Bid')
+      wrapper.find('.auction-ActiveBidItem__bid-button').length.should.eql(1)
+      wrapper.find('.auction-ActiveBidItem__bid-button').text().should.containEql('Bid')
     })
 
     it('displays a Bid Live button if is_live_open', () => {
@@ -125,8 +125,8 @@ describe('apps/auction/components/layout/active_bids/MyActiveBids', () => {
 
       wrapper.find('h2').length.should.eql(1)
       wrapper.find('.bid-status').length.should.eql(0)
-      wrapper.find('.auction2-ActiveBidItem__bid-live-button').length.should.eql(1)
-      wrapper.find('.auction2-ActiveBidItem__bid-live-button').text().should.containEql('Bid Live')
+      wrapper.find('.auction-ActiveBidItem__bid-live-button').length.should.eql(1)
+      wrapper.find('.auction-ActiveBidItem__bid-live-button').text().should.containEql('Bid Live')
     })
   })
 })

@@ -82,8 +82,8 @@ describe('auction/components/layout/active_bids/ActiveBidItem.test', () => {
         }
       })
 
-      wrapper.find('.auction2-ActiveBidItem__current-bid').length.should.eql(1)
-      wrapper.find('.auction2-ActiveBidItem__current-bid').text().should.containEql(`Current Bid: ${bid.sale_artwork.highest_bid.display}`)
+      wrapper.find('.auction-ActiveBidItem__current-bid').length.should.eql(1)
+      wrapper.find('.auction-ActiveBidItem__current-bid').text().should.containEql(`Current Bid: ${bid.sale_artwork.highest_bid.display}`)
     })
 
     it('renders a mobile highest bid', () => {
@@ -97,8 +97,8 @@ describe('auction/components/layout/active_bids/ActiveBidItem.test', () => {
         }
       })
 
-      wrapper.find('.auction2-ActiveBidItem__current-and-bids').length.should.eql(1)
-      wrapper.find('.auction2-ActiveBidItem__current-bid').text().should.containEql(bid.sale_artwork.highest_bid.display)
+      wrapper.find('.auction-ActiveBidItem__current-and-bids').length.should.eql(1)
+      wrapper.find('.auction-ActiveBidItem__current-bid').text().should.containEql(bid.sale_artwork.highest_bid.display)
     })
 
     it('renders a bid live button', () => {

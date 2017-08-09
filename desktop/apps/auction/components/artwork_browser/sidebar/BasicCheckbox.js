@@ -11,7 +11,7 @@ export default function BasicCheckbox (props) {
     onClick
   } = props
 
-  const b = block('auction2-BasicCheckbox')
+  const b = block('auction-BasicCheckbox')
 
   const checkboxClasses = classNames(
     'artsy-checkbox',

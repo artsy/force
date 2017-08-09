@@ -50,7 +50,7 @@ class MyActiveBids extends Component {
       })
     } catch (error) {
       console.error(
-        'auction2/components/layout/active_bids/MyActiveBids.js',
+        'auction/components/layout/active_bids/MyActiveBids.js',
         'Error fetching active bid: ', error
       )
     }
@@ -58,7 +58,7 @@ class MyActiveBids extends Component {
 
   render () {
     const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
-    const b = block('auction2-MyActiveBids')
+    const b = block('auction-MyActiveBids')
 
     if (!lotStandings.length) {
       return null

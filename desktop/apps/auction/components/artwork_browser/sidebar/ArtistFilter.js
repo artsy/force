@@ -19,7 +19,7 @@ function ArtistFilter (props) {
     user
   } = props
 
-  const b = block('auction2-ArtistFilter')
+  const b = block('auction-ArtistFilter')
 
   return (
     <div className={b()}>

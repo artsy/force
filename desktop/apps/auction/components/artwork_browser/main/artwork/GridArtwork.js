@@ -17,7 +17,7 @@ function GridArtwork (props) {
     title
   } = props
 
-  const b = block('auction2-page-GridArtwork')
+  const b = block('auction-page-GridArtwork')
 
   return (
     <a className={b()} key={saleArtwork._id} href={`/artwork/${saleArtwork.id}`}>

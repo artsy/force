@@ -17,7 +17,7 @@ function MasonryArtwork (props) {
     title
   } = props
 
-  const b = block('auction2-page-MasonryArtwork')
+  const b = block('auction-page-MasonryArtwork')
 
   return (
     <a href={`/artwork/${saleArtwork.id}`} className={b()}>

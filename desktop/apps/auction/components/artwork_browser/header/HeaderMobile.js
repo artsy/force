@@ -18,7 +18,7 @@ function HeaderMobile (props) {
     updateSortAction
   } = props
 
-  const b = block('auction2-artworks-HeaderMobile')
+  const b = block('auction-artworks-HeaderMobile')
 
   return (
     <header className={b()}>

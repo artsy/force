@@ -14,7 +14,7 @@ function Footer (props) {
     sd
   } = props
 
-  const b = block('auction2-Footer')
+  const b = block('auction-Footer')
 
   if (!showArticles) {
     return null
@@ -23,11 +23,11 @@ function Footer (props) {
   return (
     <footer
       className={b({without: false})
-        .mix('auction2-page-section')
+        .mix('auction-page-section')
         .mix(articles.length ? 'has-articles' : 'has-no-articles')}
     >
       { showArticles &&
-        <div className={b('auction2-articles')}>
+        <div className={b('auction-articles')}>
           { articles.models.map((article, key) => {
             let articleFigureHTML
 
@@ -51,19 +51,19 @@ function Footer (props) {
       }
 
       { showFooterItems &&
-        <div className={b('auction2-app-promo-wrapper')}>
-          <a className={b('auction2-app-promo')}>
-            <div className={b('auction2-app-promo-image')}>
+        <div className={b('auction-app-promo-wrapper')}>
+          <a className={b('auction-app-promo')}>
+            <div className={b('auction-app-promo-image')}>
               <img
                 src={footerItem.src}
                 alt={footerItem.alt}
               />
             </div>
-            <div className={b('auction2-app-promo-metadata')}>
-              <div className={b('auction2-app-promo-title')}>
+            <div className={b('auction-app-promo-metadata')}>
+              <div className={b('auction-app-promo-title')}>
                 {footerItem.title}
               </div>
-              <div className={b('auction2-app-promo-subtitle')}>
+              <div className={b('auction-app-promo-subtitle')}>
                 {footerItem.subtitle}
               </div>
             </div>

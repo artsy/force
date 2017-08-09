@@ -17,7 +17,7 @@ function FilterSort (props) {
   const itemIndex = Object.keys(sortMap).indexOf(selectedSort)
   const optionsOffset = (itemIndex) * itemHeight
 
-  const b = block('auction2-FilterSort')
+  const b = block('auction-FilterSort')
 
   return (
     <div className={b()}>

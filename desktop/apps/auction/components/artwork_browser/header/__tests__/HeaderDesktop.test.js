@@ -17,7 +17,7 @@ describe('auction/components/artwork_browser/header/HeaderDesktop.test', () => {
         Component: HeaderDesktop
       })
 
-      wrapper.find('.auction2-artworks-HeaderDesktop__grid').length.should.eql(1)
+      wrapper.find('.auction-artworks-HeaderDesktop__grid').length.should.eql(1)
     })
 
     it('renders a default grid icon', () => {
@@ -25,7 +25,7 @@ describe('auction/components/artwork_browser/header/HeaderDesktop.test', () => {
         Component: HeaderDesktop
       })
 
-      wrapper.find('.auction2-artworks-HeaderDesktop__grid .active').length.should.eql(1)
+      wrapper.find('.auction-artworks-HeaderDesktop__grid .active').length.should.eql(1)
     })
 
     it('renders a list icon', () => {
@@ -33,7 +33,7 @@ describe('auction/components/artwork_browser/header/HeaderDesktop.test', () => {
         Component: HeaderDesktop
       })
 
-      wrapper.find('.auction2-artworks-HeaderDesktop__list').length.should.eql(1)
+      wrapper.find('.auction-artworks-HeaderDesktop__list').length.should.eql(1)
     })
 
     it('toggles a sort on click', () => {
@@ -43,15 +43,15 @@ describe('auction/components/artwork_browser/header/HeaderDesktop.test', () => {
 
       const { store } = wrapper.props()
 
-      wrapper.find('.auction2-artworks-HeaderDesktop__list').simulate('click')
+      wrapper.find('.auction-artworks-HeaderDesktop__list').simulate('click')
       store.getState().artworkBrowser.isListView.should.eql(true)
-      wrapper.find('.auction2-artworks-HeaderDesktop__list .active').length.should.eql(1)
-      wrapper.find('.auction2-artworks-HeaderDesktop__grid .active').length.should.eql(0)
+      wrapper.find('.auction-artworks-HeaderDesktop__list .active').length.should.eql(1)
+      wrapper.find('.auction-artworks-HeaderDesktop__grid .active').length.should.eql(0)
 
-      wrapper.find('.auction2-artworks-HeaderDesktop__grid').simulate('click')
+      wrapper.find('.auction-artworks-HeaderDesktop__grid').simulate('click')
       store.getState().artworkBrowser.isListView.should.eql(false)
-      wrapper.find('.auction2-artworks-HeaderDesktop__list .active').length.should.eql(0)
-      wrapper.find('.auction2-artworks-HeaderDesktop__grid .active').length.should.eql(1)
+      wrapper.find('.auction-artworks-HeaderDesktop__list .active').length.should.eql(0)
+      wrapper.find('.auction-artworks-HeaderDesktop__grid .active').length.should.eql(1)
     })
   })
 })

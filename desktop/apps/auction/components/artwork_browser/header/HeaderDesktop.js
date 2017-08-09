@@ -15,7 +15,7 @@ function HeaderDesktop (props) {
     displayType
   } = props
 
-  const b = block('auction2-artworks-HeaderDesktop')
+  const b = block('auction-artworks-HeaderDesktop')
 
   const displayButtonClass = (buttonType, displayType) => {
     return classNames(

@@ -8,7 +8,7 @@ import block from 'bem-cn'
 import { connect } from 'react-redux'
 
 function ArtworkBrowser ({ isMobile }) {
-  const b = block('auction2-ArtworkBrowser')
+  const b = block('auction-ArtworkBrowser')
 
   return (
     <div className={b()}>

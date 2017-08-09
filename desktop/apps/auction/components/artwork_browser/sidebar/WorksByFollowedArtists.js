@@ -21,7 +21,7 @@ function WorksByFollowedArtists (props) {
     nextPageOfFollowedArtistArtworksAction
   } = props
 
-  const b = block('auction2-WorksByFollowedArtists')
+  const b = block('auction-WorksByFollowedArtists')
 
   const leftPageClasses = classNames(
     String(b('page-left')),

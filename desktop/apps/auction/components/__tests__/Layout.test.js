@@ -28,9 +28,9 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').html().should.containEql('An Auction')
-    wrapper.find('.auction2-Registration').html().should.containEql('Register to bid')
-    wrapper.find('.auction2-MyActiveBids').length.should.eql(0)
+    wrapper.find('.auction-AuctionInfo__title').html().should.containEql('An Auction')
+    wrapper.find('.auction-Registration').html().should.containEql('Register to bid')
+    wrapper.find('.auction-MyActiveBids').length.should.eql(0)
   })
 
   it('preview auction with no user', () => {
@@ -53,9 +53,9 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').html().should.containEql('An Auction')
-    wrapper.find('.auction2-Registration').html().should.containEql('Register to bid')
-    wrapper.find('.auction2-MyActiveBids').length.should.eql(0)
+    wrapper.find('.auction-AuctionInfo__title').html().should.containEql('An Auction')
+    wrapper.find('.auction-Registration').html().should.containEql('Register to bid')
+    wrapper.find('.auction-MyActiveBids').length.should.eql(0)
   })
 
   it('live auction, open for pre-bidding', () => {
@@ -74,10 +74,10 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction2-Registration').html().should.containEql('Register to bid')
-    wrapper.find('.auction2-MyActiveBids').length.should.eql(0)
-    wrapper.find('.auction2-AuctionInfo__callout').text().should.containEql('Live bidding begins')
+    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
+    wrapper.find('.auction-Registration').html().should.containEql('Register to bid')
+    wrapper.find('.auction-MyActiveBids').length.should.eql(0)
+    wrapper.find('.auction-AuctionInfo__callout').text().should.containEql('Live bidding begins')
   })
 
   it('live auction, open for live bidding', () => {
@@ -95,10 +95,10 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').text().should.equal('An Auction')
+    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
     wrapper.find('.js-register-button').text().should.equal('Register to bid')
-    wrapper.find('.auction2-MyActiveBids').length.should.eql(0)
-    wrapper.find('.auction2-AuctionInfo__callout').text().should.containEql('Live bidding now open')
+    wrapper.find('.auction-MyActiveBids').length.should.eql(0)
+    wrapper.find('.auction-AuctionInfo__callout').text().should.containEql('Live bidding now open')
   })
 
   it('default auction with user', () => {
@@ -118,9 +118,9 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').text().should.equal('An Auction')
+    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
     wrapper.find('.js-register-button').text().should.equal('Register to bid')
-    wrapper.find('.auction2-Registration__small').text().should.containEql('Registration required to bid')
+    wrapper.find('.auction-Registration__small').text().should.containEql('Registration required to bid')
   })
 
   it('user with bidder positions', () => {
@@ -173,7 +173,7 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-MyActiveBids').length.should.equal(1)
+    wrapper.find('.auction-MyActiveBids').length.should.equal(1)
   })
 
   it('index, registered to bid but not qualified', () => {
@@ -195,9 +195,9 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction2-Registration').html().should.containEql('Registration pending')
-    wrapper.find('.auction2-Registration').html().should.containEql('Reviewing submitted information')
+    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
+    wrapper.find('.auction-Registration').html().should.containEql('Registration pending')
+    wrapper.find('.auction-Registration').html().should.containEql('Reviewing submitted information')
   })
 
   it('index, registered to bid and qualified', () => {
@@ -219,8 +219,8 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction2-Registration').html().should.containEql('Approved to Bid')
+    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
+    wrapper.find('.auction-Registration').html().should.containEql('Approved to Bid')
   })
 
   it('index, registered to bid but auction closed', () => {
@@ -243,8 +243,8 @@ describe('<Layout />', () => {
       }
     })
 
-    wrapper.find('.auction2-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction2-AuctionInfo__callout').text().should.equal('Auction Closed')
+    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
+    wrapper.find('.auction-AuctionInfo__callout').text().should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {
@@ -263,8 +263,8 @@ describe('<Layout />', () => {
         }
       })
 
-      wrapper.find('.auction2-Registration').html().should.containEql('Registration closed')
-      wrapper.find('.auction2-Registration__small').html().should.containEql('Registration required to bid')
+      wrapper.find('.auction-Registration').html().should.containEql('Registration closed')
+      wrapper.find('.auction-Registration__small').html().should.containEql('Registration required to bid')
     })
   })
 
@@ -291,7 +291,7 @@ describe('<Layout />', () => {
           }
         })
 
-        wrapper.find('.auction2-Footer__auction2-app-promo-wrapper').length.should.eql(0)
+        wrapper.find('.auction-Footer__auction-app-promo-wrapper').length.should.eql(0)
       })
     })
   })
@@ -345,7 +345,7 @@ describe('<Layout />', () => {
           }
         })
 
-        wrapper.find('.auction2-Footer').length.should.eql(0)
+        wrapper.find('.auction-Footer').length.should.eql(0)
       })
     })
 
@@ -371,10 +371,10 @@ describe('<Layout />', () => {
           }
         })
 
-        wrapper.find('.auction2-Footer').html().should.containEql('The Fight to Own Art')
-        wrapper.find('.auction2-Footer').html().should.containEql('Artsy Editorial')
-        wrapper.find('.auction2-Footer').html().should.containEql('By Abigail C and Anna S')
-        wrapper.find('.auction2-Footer__auction2-app-promo-wrapper').length.should.equal(0)
+        wrapper.find('.auction-Footer').html().should.containEql('The Fight to Own Art')
+        wrapper.find('.auction-Footer').html().should.containEql('Artsy Editorial')
+        wrapper.find('.auction-Footer').html().should.containEql('By Abigail C and Anna S')
+        wrapper.find('.auction-Footer__auction-app-promo-wrapper').length.should.equal(0)
       })
     })
 
@@ -400,10 +400,10 @@ describe('<Layout />', () => {
           }
         })
 
-        wrapper.find('.auction2-Footer').html().should.containEql('The Fight to Own Art')
-        wrapper.find('.auction2-Footer').html().should.containEql('Artsy Editorial')
-        wrapper.find('.auction2-Footer').html().should.containEql('By Abigail C and Anna S')
-        wrapper.find('.auction2-Footer').html().should.containEql('Bid from your phone')
+        wrapper.find('.auction-Footer').html().should.containEql('The Fight to Own Art')
+        wrapper.find('.auction-Footer').html().should.containEql('Artsy Editorial')
+        wrapper.find('.auction-Footer').html().should.containEql('By Abigail C and Anna S')
+        wrapper.find('.auction-Footer').html().should.containEql('Bid from your phone')
       })
     })
   })

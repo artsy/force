@@ -49,11 +49,11 @@ class ArtworkDisplay extends Component {
       showFullScreenSpinner = window.scrollY < window.innerHeight
     }
 
-    const b = block('auction2-page-ArtworkDisplay')
+    const b = block('auction-page-ArtworkDisplay')
 
     return (
       <InfiniteScroll
-        triggerElement='.auction2-page-ArtworkDisplay, .auction2-page-ArtworkDisplay__artworks--list'
+        triggerElement='.auction-page-ArtworkDisplay, .auction-page-ArtworkDisplay__artworks--list'
         onTrigger={infiniteScrollAction}
       >
         <div className={b()}>
@@ -117,7 +117,7 @@ class ArtworkDisplay extends Component {
                     <Jump
                       threshold={typeof window !== 'undefined' ? window.innerHeight * 2 : 0}
                       direction='bottom'
-                      element='.auction2-artworks-HeaderDesktop'
+                      element='.auction-artworks-HeaderDesktop'
                       offset='.mlh-navbar'
                     />
 

@@ -16,7 +16,7 @@ function MediumFilter (props) {
     initialMediumMap
   } = props
 
-  const b = block('auction2-MediumFilter')
+  const b = block('auction-MediumFilter')
 
   return (
     <div className={b()}>

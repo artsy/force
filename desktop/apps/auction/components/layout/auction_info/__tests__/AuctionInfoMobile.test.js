@@ -98,7 +98,7 @@ describe('auction/components/layout/auction_info/AuctionInfoMobile.test', () => 
 
       wrapper.props().store.getState().app.showInfoWindow.should.eql(false)
       window.scrollTo = sinon.spy()
-      wrapper.find('.auction2-AuctionInfo__metadata').simulate('click')
+      wrapper.find('.auction-AuctionInfo__metadata').simulate('click')
       window.scrollTo.called.should.eql(true)
       wrapper.props().store.getState().app.showInfoWindow.should.eql(true)
     })

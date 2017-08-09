@@ -18,7 +18,7 @@ function AuctionInfoMobile (props) {
     upcomingLabel
   } = props
 
-  const b = block('auction2-AuctionInfo')
+  const b = block('auction-AuctionInfo')
 
   return (
     <div className={b({ expandToFullScreen: showInfoWindow })}>

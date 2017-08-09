@@ -16,7 +16,7 @@ function Banner (props) {
     name
   } = props
 
-  const b = block('auction2-Banner')
+  const b = block('auction-Banner')
 
   return (
     <div

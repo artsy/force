@@ -21,7 +21,7 @@ function Layout (props) {
   } = props
 
   return (
-    <div className='auction2-page'>
+    <div className='auction-page'>
       <Banner />
 
       <div className='main-layout-container responsive-layout-container'>
@@ -40,7 +40,7 @@ function Layout (props) {
           <WorksByFollowedArtists /> }
 
         { showFilter && !showInfoWindow &&
-          <div className='auction2-main-page'>
+          <div className='auction-main-page'>
             <ArtworkBrowser />
           </div> }
 

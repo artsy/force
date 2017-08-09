@@ -19,7 +19,7 @@ function RangeSlider (props) {
     updateEstimateRangeAction
   } = props
 
-  const b = block('auction2-RangeSlider')
+  const b = block('auction-RangeSlider')
 
   return (
     <div className={b()}>
