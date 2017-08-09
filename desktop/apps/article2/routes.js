@@ -53,7 +53,7 @@ async function classic (req, res, next) {
         return res.redirect(`/article2/${data.article.get('slug')}`)
       }
       if (data.partner) {
-        return res.redirect(`/${data.partner.get('default_profile_id')}/article2/${data.article.get('slug')}`)
+        return res.redirect(`/${data.partner.get('default_profile_id')}/article/${data.article.get('slug')}`)
       }
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
