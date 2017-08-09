@@ -5,7 +5,9 @@ import { composeReducers } from 'desktop/components/react/utils/composeReducers'
 import { connect } from 'react-redux'
 import { debounce } from 'underscore'
 
-const MOBILE_BREAKPOINT = 640
+// Set responsive-breakpoint width. Must match value found at
+// desktop/components/stylus_lib/index.styl#25 (responsive-mobile-width - 1).
+const MOBILE_BREAKPOINT = 767
 
 // Actions
 const RESIZE_WINDOW = 'RESIZE_WINDOW'
