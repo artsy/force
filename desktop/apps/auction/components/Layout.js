@@ -1,12 +1,12 @@
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
-import Banner from 'desktop/apps/auction2/components/layout/Banner'
-import ArtworkBrowser from 'desktop/apps/auction2/components/artwork_browser/ArtworkBrowser'
-import Footer from 'desktop/apps/auction2/components/layout/Footer'
-import AuctionInfoContainer from 'desktop/apps/auction2/components/layout/auction_info'
-import MyActiveBids from 'desktop/apps/auction2/components/layout/active_bids/MyActiveBids'
+import Banner from 'desktop/apps/auction/components/layout/Banner'
+import ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
+import Footer from 'desktop/apps/auction/components/layout/Footer'
+import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
+import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
-import WorksByFollowedArtists from 'desktop/apps/auction2/components/artwork_browser/sidebar/WorksByFollowedArtists'
+import WorksByFollowedArtists from 'desktop/apps/auction/components/artwork_browser/sidebar/WorksByFollowedArtists'
 import { connect } from 'react-redux'
 
 function Layout (props) {

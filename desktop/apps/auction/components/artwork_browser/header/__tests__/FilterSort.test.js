@@ -1,6 +1,6 @@
-import * as filterActions from 'desktop/apps/auction2/actions/artworkBrowser'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import FilterSort from 'desktop/apps/auction2/components/artwork_browser/header/FilterSort'
+import * as filterActions from 'desktop/apps/auction/actions/artworkBrowser'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import FilterSort from 'desktop/apps/auction/components/artwork_browser/header/FilterSort'
 
 describe('auction/components/artwork_browser/header/FilterSort.test', () => {
   describe('<FilterSort />', () => {

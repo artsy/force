@@ -1,11 +1,11 @@
 import Auction from 'desktop/models/auction.coffee'
 import CurrentUser from 'desktop/models/current_user.coffee'
-import MyActiveBids from 'desktop/apps/auction2/components/layout/active_bids/MyActiveBids'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { initialState } from 'desktop/apps/auction2/reducers'
+import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { initialState } from 'desktop/apps/auction/reducers'
 import { fabricate } from 'antigravity'
 
-describe('apps/auction2/components/layout/active_bids/MyActiveBids', () => {
+describe('apps/auction/components/layout/active_bids/MyActiveBids', () => {
   let baseData
 
   before(() => {

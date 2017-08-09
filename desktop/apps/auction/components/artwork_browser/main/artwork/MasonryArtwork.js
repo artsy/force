@@ -3,7 +3,7 @@ import React from 'react'
 import BidStatus from './BidStatus'
 import block from 'bem-cn'
 import get from 'lodash.get'
-import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
+import titleAndYear from 'desktop/apps/auction/utils/titleAndYear'
 import { connect } from 'react-redux'
 
 function MasonryArtwork (props) {

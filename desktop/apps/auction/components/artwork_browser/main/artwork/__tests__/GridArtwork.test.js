@@ -1,6 +1,6 @@
 import React from 'react'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork'
 
 const { GridArtwork } = test
 

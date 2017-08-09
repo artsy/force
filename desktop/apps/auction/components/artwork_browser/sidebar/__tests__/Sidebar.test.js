@@ -1,8 +1,8 @@
-import ArtistFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/ArtistFilter'
-import MediumFilter from 'desktop/apps/auction2/components/artwork_browser/sidebar/MediumFilter'
-import RangeSlider from 'desktop/apps/auction2/components/artwork_browser/sidebar/RangeSlider'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction2/components/artwork_browser/sidebar/Sidebar'
+import ArtistFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/ArtistFilter'
+import MediumFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/MediumFilter'
+import RangeSlider from 'desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test } from 'desktop/apps/auction/components/artwork_browser/sidebar/Sidebar'
 
 const { Sidebar } = test
 

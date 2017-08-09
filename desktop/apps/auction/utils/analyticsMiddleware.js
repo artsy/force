@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
+import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
 import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
 import { isEqual } from 'underscore'
 

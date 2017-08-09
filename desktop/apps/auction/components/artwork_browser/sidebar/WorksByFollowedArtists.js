@@ -1,4 +1,4 @@
-import GridArtwork from 'desktop/apps/auction2/components/artwork_browser/main/artwork/GridArtwork'
+import GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork'
 import ChevronLeft from '../../../../../components/main_layout/public/icons/chevron-left.svg'
 import ChevronRight from '../../../../../components/main_layout/public/icons/chevron-right.svg'
 import PropTypes from 'prop-types'
@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import {
   nextPageOfFollowedArtistArtworks,
   previousPageOfFollowedArtistArtworks
-} from 'desktop/apps/auction2/actions/artworkBrowser'
+} from 'desktop/apps/auction/actions/artworkBrowser'
 
 function WorksByFollowedArtists (props) {
   const {

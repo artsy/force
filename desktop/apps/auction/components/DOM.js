@@ -1,7 +1,7 @@
 import ConfirmRegistrationModal from 'desktop/components/credit_card/client/confirm_registration.coffee'
 import PropTypes from 'prop-types'
 import mediator from 'desktop/lib/mediator.coffee'
-import scrollToTop from 'desktop/apps/auction2/utils/scrollToTop'
+import scrollToTop from 'desktop/apps/auction/utils/scrollToTop'
 import { Component } from 'react'
 import { connect } from 'react-redux'
 

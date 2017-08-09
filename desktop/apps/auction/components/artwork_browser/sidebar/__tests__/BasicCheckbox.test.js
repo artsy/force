@@ -1,5 +1,5 @@
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import BasicCheckbox from 'desktop/apps/auction2/components/artwork_browser/sidebar/BasicCheckbox'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import BasicCheckbox from 'desktop/apps/auction/components/artwork_browser/sidebar/BasicCheckbox'
 import sinon from 'sinon'
 
 describe('auction/components/artwork_browser/sidebar/BasicCheckbox.test', () => {

@@ -2,7 +2,7 @@ import BidStatus from './BidStatus'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
-import titleAndYear from 'desktop/apps/auction2/utils/titleAndYear'
+import titleAndYear from 'desktop/apps/auction/utils/titleAndYear'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction2/components/layout/auction_info/index'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test, __RewireAPI__ } from 'desktop/apps/auction/components/layout/auction_info/index'
 
 const { AuctionInfoContainer } = test
 

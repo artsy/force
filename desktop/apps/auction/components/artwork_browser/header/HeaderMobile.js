@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { toggleListView, updateSort } from 'desktop/apps/auction2/actions/artworkBrowser'
+import { toggleListView, updateSort } from 'desktop/apps/auction/actions/artworkBrowser'
 
 const propTypes = {
   sortMap: PropTypes.object.isRequired,

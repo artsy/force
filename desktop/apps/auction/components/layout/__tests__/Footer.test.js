@@ -1,7 +1,7 @@
 import Articles from 'desktop/collections/articles.coffee'
-import footerItems from 'desktop/apps/auction2/utils/footerItems'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction2/components/layout/Footer'
+import footerItems from 'desktop/apps/auction/utils/footerItems'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test } from 'desktop/apps/auction/components/layout/Footer'
 
 const { Footer } = test
 

@@ -1,4 +1,4 @@
-import * as appActions from 'desktop/apps/auction2/actions/app'
+import * as appActions from 'desktop/apps/auction/actions/app'
 import InfoIcon from '../../../../../components/main_layout/public/icons/info-2.svg'
 import PropTypes from 'prop-types'
 import React from 'react'

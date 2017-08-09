@@ -1,6 +1,6 @@
-import ActiveBidItem from 'desktop/apps/auction2/components/layout/active_bids/ActiveBidItem'
+import ActiveBidItem from 'desktop/apps/auction/components/layout/active_bids/ActiveBidItem'
 import BidStatus from 'desktop/components/bid_status/react'
-import MeQuery from 'desktop/apps/auction2/utils/queries/me'
+import MeQuery from 'desktop/apps/auction/utils/queries/me'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn'

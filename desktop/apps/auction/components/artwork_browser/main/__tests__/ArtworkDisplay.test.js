@@ -1,7 +1,7 @@
 import React from 'react'
-import LoadingSpinner from 'desktop/apps/auction2/components/artwork_browser/main/LoadingSpinner'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction2/components/artwork_browser/main/ArtworkDisplay'
+import LoadingSpinner from 'desktop/apps/auction/components/artwork_browser/main/LoadingSpinner'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/main/ArtworkDisplay'
 
 const { ArtworkDisplay } = test
 

@@ -1,4 +1,4 @@
-import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
+import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
 import get from 'lodash.get'
 import u from 'updeep'
 import { contains } from 'underscore'

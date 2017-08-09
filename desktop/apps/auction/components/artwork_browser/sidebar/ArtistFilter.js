@@ -4,7 +4,7 @@ import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
-import { updateArtistParams } from 'desktop/apps/auction2/actions/artworkBrowser'
+import { updateArtistParams } from 'desktop/apps/auction/actions/artworkBrowser'
 
 function ArtistFilter (props) {
   const {

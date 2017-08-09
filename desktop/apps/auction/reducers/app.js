@@ -1,4 +1,4 @@
-import * as types from 'desktop/apps/auction2/actions/app'
+import * as types from 'desktop/apps/auction/actions/app'
 import u from 'updeep'
 
 export const initialState = {

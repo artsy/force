@@ -4,7 +4,7 @@ import block from 'bem-cn'
 import { Range } from 'rc-slider'
 import { connect } from 'react-redux'
 import { formatMoney } from 'accounting'
-import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction2/actions/artworkBrowser'
+import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction/actions/artworkBrowser'
 
 function RangeSlider (props) {
   const {

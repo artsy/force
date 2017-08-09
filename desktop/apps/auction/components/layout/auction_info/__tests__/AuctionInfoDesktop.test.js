@@ -1,7 +1,7 @@
 import React from 'react'
-import Registration from 'desktop/apps/auction2/components/layout/auction_info/Registration'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction2/components/layout/auction_info/AuctionInfoDesktop'
+import Registration from 'desktop/apps/auction/components/layout/auction_info/Registration'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test, __RewireAPI__ } from 'desktop/apps/auction/components/layout/auction_info/AuctionInfoDesktop'
 
 const { AuctionInfoDesktop } = test
 

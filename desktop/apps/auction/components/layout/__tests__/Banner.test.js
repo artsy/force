@@ -1,5 +1,5 @@
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction2/components/layout/Banner'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test } from 'desktop/apps/auction/components/layout/Banner'
 
 const { Banner } = test
 

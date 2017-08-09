@@ -1,4 +1,4 @@
-import * as routes from 'desktop/apps/auction2/routes'
+import * as routes from 'desktop/apps/auction/routes'
 import Backbone from 'backbone'
 import CurrentUser from 'desktop/models/current_user.coffee'
 import sinon from 'sinon'

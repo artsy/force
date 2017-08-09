@@ -1,4 +1,4 @@
-import analyticsMiddleware from 'desktop/apps/auction2/utils/analyticsMiddleware'
+import analyticsMiddleware from 'desktop/apps/auction/utils/analyticsMiddleware'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { contains } from 'underscore'

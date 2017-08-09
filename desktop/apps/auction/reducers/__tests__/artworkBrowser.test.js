@@ -1,8 +1,8 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import auctions from 'desktop/apps/auction2/reducers'
-import * as actions from 'desktop/apps/auction2/actions/artworkBrowser'
-import { __RewireAPI__ as ActionsRewireApi } from 'desktop/apps/auction2/actions/artworkBrowser' // eslint-disable-line
+import auctions from 'desktop/apps/auction/reducers'
+import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
+import { __RewireAPI__ as ActionsRewireApi } from 'desktop/apps/auction/actions/artworkBrowser' // eslint-disable-line
 import sinon from 'sinon'
 
 describe('auction2/actions/artworkBrowser.test.js', () => {

@@ -1,6 +1,6 @@
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import FilterSort from 'desktop/apps/auction2/components/artwork_browser/header/FilterSort'
-import HeaderDesktop from 'desktop/apps/auction2/components/artwork_browser/header/HeaderDesktop'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import FilterSort from 'desktop/apps/auction/components/artwork_browser/header/FilterSort'
+import HeaderDesktop from 'desktop/apps/auction/components/artwork_browser/header/HeaderDesktop'
 
 describe('auction/components/artwork_browser/header/HeaderDesktop.test', () => {
   describe('<HeaderDesktop />', () => {

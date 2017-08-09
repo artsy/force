@@ -1,5 +1,5 @@
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction2/components/artwork_browser/main/artwork/BidStatus'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test } from 'desktop/apps/auction/components/artwork_browser/main/artwork/BidStatus'
 
 const { BidStatus } = test
 

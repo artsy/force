@@ -1,6 +1,6 @@
-import AuctionInfoMobileWrapper, { test } from 'desktop/apps/auction2/components/layout/auction_info/AuctionInfoMobile'
-import Registration from 'desktop/apps/auction2/components/layout/auction_info/Registration'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
+import AuctionInfoMobileWrapper, { test } from 'desktop/apps/auction/components/layout/auction_info/AuctionInfoMobile'
+import Registration from 'desktop/apps/auction/components/layout/auction_info/Registration'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 import sinon from 'sinon'
 
 const { AuctionInfoMobile } = test

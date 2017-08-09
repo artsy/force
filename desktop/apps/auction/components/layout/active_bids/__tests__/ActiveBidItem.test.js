@@ -1,6 +1,6 @@
 import React from 'react'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction2/components/layout/active_bids/ActiveBidItem'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { test } from 'desktop/apps/auction/components/layout/active_bids/ActiveBidItem'
 
 const { ActiveBidItem } = test
 

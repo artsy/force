@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { updateSort } from 'desktop/apps/auction2/actions/artworkBrowser'
+import { updateSort } from 'desktop/apps/auction/actions/artworkBrowser'
 
 function FilterSort (props) {
   const {

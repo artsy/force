@@ -4,7 +4,7 @@ import React from 'react'
 import _, { contains } from 'underscore'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { updateMediumParams } from 'desktop/apps/auction2/actions/artworkBrowser'
+import { updateMediumParams } from 'desktop/apps/auction/actions/artworkBrowser'
 
 function MediumFilter (props) {
   const {

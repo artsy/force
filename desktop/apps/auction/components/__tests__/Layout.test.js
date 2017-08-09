@@ -1,10 +1,10 @@
 import Articles from 'desktop/collections/articles.coffee'
 import React from 'react'
-import footerItems from 'desktop/apps/auction2/utils/footerItems'
+import footerItems from 'desktop/apps/auction/utils/footerItems'
 import moment from 'moment'
-import renderTestComponent from 'desktop/apps/auction2/__tests__/utils/renderTestComponent'
+import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 
-import Layout from 'desktop/apps/auction2/components/Layout'
+import Layout from 'desktop/apps/auction/components/Layout'
 
 describe('<Layout />', () => {
   beforeEach(() => {

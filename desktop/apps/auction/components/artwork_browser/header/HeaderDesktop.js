@@ -6,7 +6,7 @@ import React from 'react'
 import block from 'bem-cn'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { toggleListView } from 'desktop/apps/auction2/actions/artworkBrowser'
+import { toggleListView } from 'desktop/apps/auction/actions/artworkBrowser'
 
 function HeaderDesktop (props) {
   const {
