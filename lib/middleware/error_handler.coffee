@@ -6,10 +6,10 @@ module.exports = (err, req, res, next) ->
     __dirname,
     '../../desktop/components/error_handler/index.jade'
   )
-  isNotProduction = NODE_ENV isnt 'production'
-  console.log err if isNotProduction
+  isDevelopment = NODE_ENV is 'development'
+  console.log err if isDevelopment
   code = 504 if req.timedout
   code ||= err.status || 500
-  message = err.message || err.text || err.toString() if isNotProduction
-  detail = err.stack if isNotProduction
+  message = err.message || err.text || err.toString() if isDevelopment
+  detail = err.stack if isDevelopment
   res.status(code).render(file, { message, detail, code })
