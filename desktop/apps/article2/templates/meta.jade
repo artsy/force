@@ -12,8 +12,8 @@
 title= title
 meta( name='description', content= search_description )
 link( rel='canonical' href=url )
-//- if article.hasAMP()
-//-   link(rel='amphtml' href=(sd.APP_URL + '/article/' + article.slug + '/amp'))
+if article.featured && article.published
+  link(rel='amphtml' href=(sd.APP_URL + '/article/' + article.slug + '/amp'))
 
 //- OG
 meta( property='og:title', content= social_title )
@@ -38,7 +38,7 @@ meta( name='twitter:title' content=social_title)
 
 //- Keywords
 if article.keywords && article.keywords.length
-  keywords = article.keywords.join(', ')
+  - keywords = article.keywords.join(', ')
   meta( property='news_keywords', content=keywords )
   meta( name='keywords', content=keywords )
   meta( property='article:tag', content=keywords )
@@ -57,8 +57,8 @@ if article.published && article.email_metadata
     meta( name='sailthru.credit_line' content=email.credit_line)
   if email.image_url
     - var src = email.image_url
-    //- meta( name='sailthru.image.full' content=crop(src, { width: 1200, height: 706 } ))
-    //- meta( name='sailthru.image.thumb' content=crop(src, { width: 900, height: 530 } ))
+    meta( name='sailthru.image.full' content=crop(src, { width: 1200, height: 706 } ))
+    meta( name='sailthru.image.thumb' content=crop(src, { width: 900, height: 530 } ))
   - var sailthru_keywords = ['article']
   if article.featured === true
     - sailthru_keywords = sailthru_keywords.concat(['magazine'])
@@ -75,8 +75,6 @@ if article.contributing_authors && article.contributing_authors.length
 //- Unica Font
 link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")
 
-meta( name='fragment', content='!' )
-meta( name='cre', content='Artsy' )
-
+//- No Index
 if !article.indexable
   meta( name='robots', content='noindex' )

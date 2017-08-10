@@ -29,7 +29,8 @@ export async function index (req, res, next) {
       locals: {
         ...res.locals,
         assetPackage: 'article2',
-        bodyClass: 'body-no-margins'
+        bodyClass: 'body-no-margins',
+        crop: crop
       },
       data: {
         article

@@ -1,10 +1,10 @@
 extends ../../../components/fair_layout/templates/conditional
 
 block head
-  include meta
+  include classic_meta
 
 append locals
-  - assetPackage = 'article'
+  - assetPackage = 'article2'
   - bodyClass = bodyClass + ' ' + article.getBodyClass({})
 
 block body

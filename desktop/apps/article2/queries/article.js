@@ -17,6 +17,8 @@ export default function ArticleQuery (id) {
         channel_id
         partner_channel_id
         indexable
+        keywords
+        published
         email_metadata {
           headline
           author
