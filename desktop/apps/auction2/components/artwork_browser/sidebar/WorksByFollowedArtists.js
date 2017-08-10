@@ -47,14 +47,19 @@ function WorksByFollowedArtists (props) {
         </div>
         <div className={b('artworks')}>
           {
-            displayedSaleArtworks.map((saleArtwork) => (
-              <GridArtwork key={saleArtwork.id} saleArtwork={saleArtwork} />
-            ))
+            displayedSaleArtworks.map((saleArtwork, key) => {
+              return (
+                <GridArtwork
+                  saleArtwork={saleArtwork}
+                  key={key}
+                />
+              )
+            })
           }
         </div>
         <div
           className={rightPageClasses}
-          onClick={() => { nextPageOfFollowedArtistArtworksAction() }}
+          onClick={() => nextPageOfFollowedArtistArtworksAction()}
         >
           <ChevronRight />
         </div>
@@ -64,7 +69,7 @@ function WorksByFollowedArtists (props) {
 }
 
 WorksByFollowedArtists.propTypes = {
-  followedArtistRailPage: PropTypes.string.isRequired,
+  followedArtistRailPage: PropTypes.number.isRequired,
   isOnlyFollowedArtistsPage: PropTypes.bool.isRequired,
   displayedSaleArtworks: PropTypes.array.isRequired,
   nextPageOfFollowedArtistArtworksAction: PropTypes.func.isRequired,

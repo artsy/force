@@ -9,7 +9,7 @@ import { get } from 'lodash'
 
 function ListArtwork (props) {
   const {
-    artwork,
+    saleArtwork,
     artistDisplay,
     date,
     image,
@@ -24,7 +24,7 @@ function ListArtwork (props) {
 
   return (
     isMobile
-      ? <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
+      ? <a className={auctionArtworkClasses} key={saleArtwork._id} href={`/artwork/${saleArtwork.id}`}>
           <div className={b('image')}>
             <img src={image} alt={title} />
           </div>
@@ -47,17 +47,17 @@ function ListArtwork (props) {
           { !isClosed &&
             <div className={b('bid-status')}>
               <BidStatus
-                artworkItem={props.artwork}
+                artworkItem={saleArtwork}
               />
             </div> }
           </div>
         </a>
 
         // Desktop
-      : <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
+      : <a className={auctionArtworkClasses} key={saleArtwork._id} href={`/artwork/${saleArtwork.id}`}>
           <div className={b('image-container')}>
             <div className={b('image')}>
-              <img src={image} alt={artwork.title} />
+              <img src={image} alt={saleArtwork.title} />
             </div>
           </div>
           <div className={b('metadata')}>
@@ -72,12 +72,12 @@ function ListArtwork (props) {
             />
           </div>
           <div className={b('lot-number')}>
-            Lot {artwork.lot_label}
+            Lot {saleArtwork.lot_label}
           </div>
           { !props.isClosed &&
             <div className={b('bid-status')}>
               <BidStatus
-                artworkItem={props.artwork}
+                artworkItem={saleArtwork}
               />
             </div> }
         </a>
@@ -85,7 +85,7 @@ function ListArtwork (props) {
 }
 
 ListArtwork.propTypes = {
-  artwork: PropTypes.object.isRequired,
+  saleArtwork: PropTypes.object.isRequired,
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
@@ -96,21 +96,21 @@ ListArtwork.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const { artwork } = props
-  const image = get(artwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
-  const { artists } = artwork.artwork
+  const { saleArtwork } = props
+  const image = get(saleArtwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
+  const { artists } = saleArtwork.artwork
   const artistDisplay = artists && artists.length > 0
     ? artists.map((aa) => aa.name).join(', ')
     : ''
 
   return {
-    date: artwork.artwork.date,
+    date: saleArtwork.artwork.date,
     image,
     isClosed: state.artworkBrowser.isClosed || state.app.auction.isClosed(),
     isMobile: state.app.isMobile,
-    lotLabel: artwork.lot_label,
+    lotLabel: saleArtwork.lot_label,
     artistDisplay,
-    title: artwork.artwork.title
+    title: saleArtwork.artwork.title
   }
 }
 

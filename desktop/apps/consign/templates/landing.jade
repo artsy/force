@@ -94,40 +94,40 @@ block body
                 h4.consignments-in-demand__artists__artist__name
                   = artist.get('name')
 
-      //- Upcoming sales, desktop version
-      section.consignments-section.consignments-upcoming-sales.consignments-upcoming-sales--desktop(
-        style='background-image: url(#{sections.upcoming_sales.image.src});'
-      )
-        .consignments-section__content.consignments-upcoming-sales__content
-          .consignments-section__about
-            h3.consignments-section__about__headline
-              = sections.upcoming_sales.headline
-          .consignments-upcoming-sales__sales
-            for sale in sales
-              .consignments-upcoming-sales__sales__sale
-                h5= moment(sale.start_at).format('MMM D')
-                p= sale.name
+      if sales && sales.length > 0
+        //- Upcoming sales, desktop version
+        section.consignments-section.consignments-upcoming-sales.consignments-upcoming-sales--desktop(
+          style='background-image: url(#{sections.upcoming_sales.image.src});'
+        )
+          .consignments-section__content.consignments-upcoming-sales__content
+            .consignments-section__about
+              h3.consignments-section__about__headline
+                = sections.upcoming_sales.headline
+            .consignments-upcoming-sales__sales
+              for sale in sales
+                .consignments-upcoming-sales__sales__sale
+                  h5= moment(sale.start_at).format('MMM D')
+                  p= sale.name
+              .consignments-upcoming-sales__sales__button
+                a.avant-garde-button-black.consignments-section__consign-button( href=submissionPath )
+                    = sections.upcoming_sales.button_cta
+
+        //- Upcoming sales, mobile version
+        section.consignments-section.consignments-upcoming-sales.consignments-upcoming-sales--mobile(
+          style='background-image: url(#{sections.upcoming_sales.mobile_image.src});'
+        )
+          .consignments-section__content.consignments-upcoming-sales__content
+            .consignments-section__about
+              h3.consignments-section__about__headline
+                = sections.upcoming_sales.headline
             .consignments-upcoming-sales__sales__button
               a.avant-garde-button-black.consignments-section__consign-button( href=submissionPath )
-                  = sections.upcoming_sales.button_cta
-
-      //- Upcoming sales, mobile version
-      section.consignments-section.consignments-upcoming-sales.consignments-upcoming-sales--mobile(
-        style='background-image: url(#{sections.upcoming_sales.mobile_image.src});'
-      )
-        .consignments-section__content.consignments-upcoming-sales__content
-          .consignments-section__about
-            h3.consignments-section__about__headline
-              = sections.upcoming_sales.headline
-          .consignments-upcoming-sales__sales__button
-            a.avant-garde-button-black.consignments-section__consign-button( href=submissionPath )
-              = sections.upcoming_sales.button_cta
-          .consignments-upcoming-sales__sales
-            for sale in sales
-              .consignments-upcoming-sales__sales__sale
-                h5= moment(sale.start_at).format('MMM D')
-                p= sale.name
-
+                = sections.upcoming_sales.button_cta
+            .consignments-upcoming-sales__sales
+              for sale in sales
+                .consignments-upcoming-sales__sales__sale
+                  h5= moment(sale.start_at).format('MMM D')
+                  p= sale.name
 
       //- Questions
       section.consignments-section.consignments-section__questions
