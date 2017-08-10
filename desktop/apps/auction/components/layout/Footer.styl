@@ -1,0 +1,50 @@
+.auction-Footer
+  display table
+  width 100%
+  margin 60px 0
+
+  &__auction-articles,
+  &__auction-app-promo-wrapper
+    display table-cell
+    width 50%
+    height 100%
+    vertical-align middle
+
+  &__auction-articles
+    padding-right 20px
+    &:empty
+      display none
+    > .article-figure
+      margin 20px 0
+      .article-figure-figcaption
+        padding-right 30px
+
+  &__auction-app-promo
+    display table
+    width 75%
+    margin 0 auto
+    text-decoration none
+  &__auction-app-promo-image
+  &__auction-app-promo-metadata
+    display table-cell
+    height 100%
+    vertical-align middle
+  &__auction-app-promo-image
+    > img
+      max-width 100%
+      height auto
+  &__auction-app-promo-metadata
+    padding 0 20px
+    garamond-size('headline')
+  &__auction-app-promo-subtitle
+    font-style italic
+
+.has-articles
+  .auction-footer__auction-app-promo-wrapper
+    padding-left 20px
+    border-left 1px solid gray-lighter-color
+.has-no-articles
+  .auction-footer__auction-app-promo-image > img
+    margin auto
+  .auction-footer__auction-app-promo-wrapper
+    text-align center

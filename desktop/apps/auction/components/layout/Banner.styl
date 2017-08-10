@@ -1,0 +1,67 @@
+height-desktop = 240px
+height-mobile = 150px
+
+.auction-Banner
+  height height-desktop
+  position relative
+  overflow hidden
+  background-color gray-lighter-color
+
+  +respond-desktop()
+    margin-bottom 40px
+
+  +respond-mobile()
+    height height-mobile
+    margin-bottom 21px
+
+  &__background-image
+    background-size cover
+    background-position center
+    background-color rgba(0, 0, 0, 0.4)
+    background-blend-mode multiply
+    height height-desktop
+
+    +respond-mobile()
+      height height-mobile
+
+    &_isLiveOpen
+      height 600px
+      blur(20px)
+      transform scale(1.05)
+      background-color rgba(0, 0, 0, 0.0)
+      background-blend-mode none
+
+  &_isLiveOpen
+    color white
+    text-align center
+    height 600px
+
+    +respond-mobile()
+      height 200px
+
+    h1
+      garamond-size('headline')
+
+      +respond-mobile()
+        garamond-size('s-headline')
+
+    .avant-garde-button-white
+      background-color white
+      width 400px
+      margin-top 20px
+      padding 17px 0
+      border 0
+      avant-garde-size('l-headline')
+
+      +respond-mobile()
+        padding 10px
+        width 90%
+        avant-garde-size('s-headline')
+
+  &__live-details
+    z-index 2
+    position absolute
+    width 70%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
