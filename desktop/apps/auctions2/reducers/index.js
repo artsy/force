@@ -1,4 +1,4 @@
-import app, { initialState as appInitialState } from 'desktop/apps/auctions2/reducers/app'
+import app, { initialState as appInitialState } from 'desktop/apps/auctions2/reducers/appReducer'
 import { combineReducers } from 'redux'
 import { composeReducers, responsiveWindowReducer } from 'desktop/components/react/responsive_window'
 

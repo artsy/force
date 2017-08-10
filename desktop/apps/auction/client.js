@@ -5,7 +5,7 @@ import CurrentUser from 'desktop/models/current_user.coffee'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import auctionReducer from 'desktop/apps/auction/reducers'
-import configureStore from 'desktop/components/apps/utils/configureStore'
+import configureStore from 'desktop/components/react/utils/configureStore'
 import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
 
 export default () => {

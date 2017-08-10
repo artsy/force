@@ -1,15 +1,17 @@
-import * as types from 'desktop/apps/auction/actions/app'
+import * as types from 'desktop/apps/auctions2/actions/appActions'
 import u from 'updeep'
 
 export const initialState = {
-  isMobile: undefined
+  isMobile: false
 }
 
 export default function appReducer (state = initialState, action = {}) {
   switch (action.type) {
-    case types.SHOW_INFO_WINDOW: {
+    case types.TEST_ACTION: {
+      console.log('Hello test action!')
+
       return u({
-        showInfoWindow: action.payload.showInfoWindow
+        foo: 'bar!'
       }, state)
     }
   }
