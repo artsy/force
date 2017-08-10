@@ -7,7 +7,7 @@ import MeQuery from 'desktop/apps/auction/utils/queries/me'
 import React from 'react'
 import SaleQuery from 'desktop/apps/auction/utils/queries/sale'
 import auctionReducer from 'desktop/apps/auction/reducers'
-import configureStore from 'desktop/apps/auction/utils/configureStore'
+import configureStore from 'desktop/components/react/utils/configureStore'
 import footerItems from 'desktop/apps/auction/utils/footerItems'
 import get from 'lodash.get'
 import metaphysics from 'lib/metaphysics.coffee'
@@ -77,7 +77,7 @@ export async function index (req, res, next) {
         locals: {
           ...res.locals,
           assetPackage: 'auctions',
-          bodyClass: 'auctions2-body body-header-fixed body-no-margins'
+          bodyClass: 'auctions-body body-header-fixed body-no-margins'
         },
         data: {
           app: store.getState().app,
