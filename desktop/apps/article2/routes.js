@@ -14,11 +14,11 @@ export async function index (req, res, next) {
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
-    if (articleId !== article.slug) {
-      return res.redirect(`/article2/${article.slug}`)
-    }
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
+    }
+    if (articleId !== article.slug) {
+      return res.redirect(`/article2/${article.slug}`)
     }
     const layout = renderReactLayout({
       basePath: res.app.get('views'),
@@ -68,7 +68,7 @@ async function classic (req, res, next) {
   })
 }
 
-export function ampArticle (req, res, next) {
+export function amp (req, res, next) {
   const article = new Article({id: req.params.slug})
   article.fetchWithRelated({
     error: res.backboneError,
