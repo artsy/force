@@ -10,8 +10,6 @@ export default class App extends React.Component {
   }
 
   render () {
-    return (
-      <Article article={this.props.article} />
-    )
+    return <Article article={this.props.article} />
   }
 }
