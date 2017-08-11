@@ -118,7 +118,7 @@ describe('Article Routes', () => {
       done()
     })
 
-    it('skips if it has an artwork or image section', (done) => {
+    it('skips if image/artwork sections exist (amp requires image dimensions)', (done) => {
       const data = {
         article: new Article(_.extend({}, fixtures.article, {
           slug: 'foobar',

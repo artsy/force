@@ -19,6 +19,7 @@ export default function ArticleQuery (id) {
         indexable
         keywords
         published
+        postscript
         email_metadata {
           headline
           author
