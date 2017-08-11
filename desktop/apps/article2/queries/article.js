@@ -3,8 +3,30 @@ export default function ArticleQuery (id) {
     {
       article(id: "${id}" ) {
         title
+        search_title
+        social_title
         description
+        search_description
+        social_description
+        thumbnail_image
+        social_image
         published_at
+        slug
+        layout
+        featured
+        channel_id
+        partner_channel_id
+        indexable
+        keywords
+        published
+        postscript
+        email_metadata {
+          headline
+          author
+          credit_line
+          credit_url
+          image_url
+        }
         contributing_authors {
           name
           id
@@ -15,9 +37,7 @@ export default function ArticleQuery (id) {
         }
         hero_section {
           ...Image
-          ...on Video {
-            caption
-          }
+          ...Video
           ...on Fullscreen {
             type
             title
@@ -27,13 +47,16 @@ export default function ArticleQuery (id) {
         sections {
           ... on Text {
             type
+            body
           }
           ... on Embed {
             type
+            url
+            height
+            mobile_height
+            layout
           }
-          ... on Video {
-            type
-          }
+          ...Video
           ... on Callout {
             type
           }
@@ -47,6 +70,8 @@ export default function ArticleQuery (id) {
           }
           ... on ImageSet {
             type
+            title
+            layout
             images {
               ...Image
               ...Artwork
@@ -62,6 +87,15 @@ export default function ArticleQuery (id) {
       type
       width
       height
+    }
+
+    fragment Video on Video {
+      caption
+      type
+      url
+      cover_image_url
+      layout
+      background_color
     }
 
     fragment Artwork on Artwork {

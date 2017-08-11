@@ -5,7 +5,7 @@ import reloadable, { isDevelopment } from 'desktop/lib/reloadable'
 const app = module.exports = express()
 
 app.set('view engine', 'jade')
-app.set('views', `${__dirname}/components`)
+app.set('views', `${__dirname}/templates`)
 
 if (isDevelopment) {
   reloadable(app, (req, res, next) => {
