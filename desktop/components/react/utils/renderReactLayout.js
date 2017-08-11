@@ -146,7 +146,7 @@ function renderTemplateComponents (templates, basePath, locals) {
 
 // TODO: Refactor this into method above
 export function rehydrateClient (bootstrapData) {
-  if (bootstrapData.templateComponents) {
+  if (bootstrapData && bootstrapData.templateComponents) {
     const templates = bootstrapData.templateComponents || {}
 
     const templateComponents = Object

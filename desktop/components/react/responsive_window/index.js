@@ -45,7 +45,7 @@ class ResponsiveWindow extends Component {
     // avoiding race conditions. Could possibly be fixed in React 16.
     setTimeout(() => {
       this.props.onChange(window.innerWidth)
-    }, 1)
+    }, 50)
   }
 
   componentWillUnmount () {

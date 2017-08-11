@@ -108,6 +108,14 @@ describe 'Artwork Item template', ->
       $('.artwork-item-partner a').text().should.equal @artwork.partnerName()
       $('.artwork-item-partner a').attr('href').should.equal @artwork.partnerLink()
 
+    it 'shows the price if the partner is an institution and the work is forsale', ->
+      @artwork.get('partner').type = 'Institution'
+      @artwork.set sale_message: "$5,200", forsale: true
+      $ = cheerio.load render('artwork')
+        artwork: @artwork
+        sd: {}
+      $('.artwork-item-sale-price').text().should.equal '$5,200'
+
     it 'displays a sale message', ->
       @artwork.set
         sale_message: "$5,200"
