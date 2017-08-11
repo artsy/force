@@ -6,6 +6,10 @@ routes =
   /auctions/reminders
   ''': require('../apps/auctions/client/index.coffee').init
 
+  '''
+  /auctions2
+  ''': require('../apps/auctions2/client.js').default
+
   # TODO: refactor to check paths in order.
   # Discussion here: https://github.com/artsy/force/pull/1126
   '''
