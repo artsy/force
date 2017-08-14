@@ -7,7 +7,6 @@ import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayou
 
 export default () => {
   const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
-
   const store = configureStore(auctionsReducer, {
     app: bootstrapData.app
   })
