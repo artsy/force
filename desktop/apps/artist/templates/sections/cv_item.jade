@@ -1,9 +1,17 @@
-mixin showItem(show, trailingText)
+mixin showItem(show)
   .artist-cv-link
     .artist-cv-link__date= showHelpers.date(show.start_at).year()
     .artist-cv-link__text
-      if trailingText
-        = trailingText + ", "
+      if !show.fair && show.partner && show.partner.name
+        .artist-cv-link__text__partner-name
+          if show.partner.is_linkable && show.partner.href
+            a(href= show.partner.href)
+              = show.partner.name
+          else
+            = show.partner.name
+          | ,&nbsp;
+      if showHelpers.showOrFairLocation(show)
+        = showHelpers.showOrFairLocation(show) + ", "
       .artist-cv-link__text__show-name
         if show.href
           a(href= show.href)= show.name
