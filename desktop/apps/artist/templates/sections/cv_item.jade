@@ -2,9 +2,10 @@ mixin showItem(show, trailingText)
   .artist-cv-link
     .artist-cv-link__date= showHelpers.date(show.start_at).year()
     .artist-cv-link__text
-      if show.href
-        a(href= show.href)= show.name
-      else
-        = show.name
       if trailingText
-        = ", " + trailingText
+        = trailingText + ", "
+      .artist-cv-link__text__show-name
+        if show.href
+          a(href= show.href)= show.name
+        else
+          = show.name

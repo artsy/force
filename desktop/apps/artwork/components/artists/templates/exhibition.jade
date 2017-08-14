@@ -2,12 +2,13 @@ mixin showItem(show, trailingText)
   .artwork-artist__content__exhibition-highlights__item
     .artwork-artist__content__exhibition-highlights__item__date= helpers.artists.showHelpers.date(show.start_at).year()
     .artwork-artist__exhibition-highlights__item__text
-      if show.href
-        a(href= show.href)= show.name
-      else
-        = show.name
       if trailingText
-        | #{!!show.name ? ', ' : ''}#{trailingText}
+        = trailingText + ", "
+      .artwork-artist__exhibition-highlights__item__text__show-name
+        if show.href
+          a(href= show.href)= show.name
+        else
+          = show.name
 
 - var shows = helpers.artists.groupBy(artist.exhibition_highlights.slice(0,15), 'kind')
 if shows.solo && shows.solo.length
