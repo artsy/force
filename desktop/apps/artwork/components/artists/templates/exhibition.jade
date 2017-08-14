@@ -12,13 +12,13 @@ mixin showItem(show, trailingText)
 - var shows = helpers.artists.groupBy(artist.exhibition_highlights.slice(0,15), 'kind')
 if shows.solo && shows.solo.length
   .artwork-artist-header-cell-section
-    h2 Solo Shows on Artsy
+    h2 Solo Shows
     for show in helpers.artists.sortExhibitions(shows.solo)
       +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
 
 if shows.group && shows.group.length
   .artwork-artist-header-cell-section
-    h2 Group Shows on Artsy
+    h2 Group Shows
     for show in helpers.artists.sortExhibitions(shows.group)
       +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
 
