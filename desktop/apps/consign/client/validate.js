@@ -3,7 +3,7 @@ import { submissionError } from './actions'
 export const numberWarning = value => value && isNaN(Number(value)) && 'Must be a number'
 
 export const dispatchAndScrollToError = (errors, dispatch) => {
-  dispatch(submissionError())
+  dispatch(submissionError('validation'))
   scrollToError(errors)
 }
 

@@ -35,6 +35,7 @@ $ -> analytics.ready ->
   require '../analytics/auction_reminder.js'
   require '../analytics/bidding.js'
   require '../analytics/collect.js'
+  require '../analytics/consignments.js'
   require '../analytics/criteo.js'
   require '../analytics/notifications.js'
   require '../analytics/artists.js'

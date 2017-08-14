@@ -53,6 +53,14 @@ function setupSubmissionFlow () {
     }
   }
 
+  // track pageviews when react-router updates the url
+  history.listen((ev) => {
+    window.analytics.page(
+      { path: ev.pathname },
+      { integrations: { 'Marketo': false } }
+    )
+  })
+
   render(
     <Provider store={store}>
       <ResponsiveWindow>

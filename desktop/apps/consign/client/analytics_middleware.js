@@ -21,37 +21,41 @@ const analyticsMiddleware = store => next => action => {
       return result
     }
     case actions.SUBMISSION_CREATED: {
-      const artistId = nextState.submissionFlow.inputs.artist_id
       analyticsHooks.trigger(
         'consignment:submitted',
         {
-          artistId,
           submissionId: action.payload.submissionId
         }
       )
       return result
     }
     case actions.SUBMISSION_COMPLETED: {
-      const artistId = nextState.submissionFlow.inputs.artist_id
-      const submissionId = nextState.submissionFlow.inputs.submission.id
+      const submissionId = nextState.submissionFlow.submission.id
+      const assetIds = nextState.submissionFlow.assetIds
       analyticsHooks.trigger(
         'consignment:completed',
         {
-          artist_id: artistId,
-          submission_id: submissionId,
-          asset_ids: ['TODO']
+          submissionId,
+          assetIds
         }
       )
       return result
     }
     case actions.SUBMISSION_ERROR: {
+      let errors
+
+      const { errorType } = action.payload
+      if (errorType === 'validation') {
+        errors = nextState.form.describeWork.syncErrors
+      } else if (errorType === 'convection_create') {
+        errors = 'Error creating submission'
+      } else if (errorType === 'convection_complete_submission') {
+        errors = 'Error completing submission'
+      }
+
       analyticsHooks.trigger(
-        'consignment_failed_to_submit',
-        {
-          artist_id: 'TODO',
-          submission_id: 'TODO',
-          error: 'TODO'
-        }
+        'consignment:submission:error',
+        { type: errorType, errors }
       )
       return result
     }

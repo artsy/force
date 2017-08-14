@@ -1,5 +1,6 @@
 import request from 'superagent'
 import gemup from 'gemup'
+import get from 'lodash.get'
 import stepsConfig from './steps_config'
 import { data as sd } from 'sharify'
 import { fetchToken, formattedLocation } from '../helpers'
@@ -7,6 +8,7 @@ import { find } from 'underscore'
 import { push } from 'react-router-redux'
 
 // Action types
+export const ADD_ASSET_ID = 'ADD_ASSET_ID'
 export const ADD_IMAGE_TO_UPLOADED_IMAGES = 'ADD_IMAGE_TO_UPLOADED_IMAGES'
 export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
@@ -49,6 +51,15 @@ export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 export const UPDATE_USER = 'UPDATE_USER'
 
 // Action creators
+export function addAssetId (assetId) {
+  return {
+    type: ADD_ASSET_ID,
+    payload: {
+      assetId
+    }
+  }
+}
+
 export function addImageToUploadedImages (fileName, src) {
   return {
     type: ADD_IMAGE_TO_UPLOADED_IMAGES,
@@ -154,6 +165,7 @@ export function completeSubmission () {
       dispatch(push(stepsConfig.thankYou.submissionPath.replace(':id', submissionResponse.body.id)))
     } catch (err) {
       dispatch(stopLoading())
+      dispatch(submissionError('convection_complete_submission'))
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
         '(consignments/client/actions.js @ completeSubmission) Error:', err
@@ -193,6 +205,7 @@ export function createSubmission () {
       dispatch(push(stepsConfig.uploadPhotos.submissionPath.replace(':id', submissionBody.body.id)))
     } catch (err) {
       dispatch(stopLoading())
+      dispatch(submissionError('convection_create'))
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
         '(consignments/client/actions.js @ createSubmission) Error:', err
@@ -330,7 +343,7 @@ export function logIn (values, accountCreated = false) {
       redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
     } catch (err) {
-      const errorMessage = err.response && err.response.body && err.response.body.error
+      const errorMessage = get(err, 'response.body.error', false)
       dispatch(updateError(errorMessage))
       console.error(
         '(consignments/client/actions.js @ logIn) Error:', err
@@ -428,7 +441,7 @@ export function signUp (values) {
               .send(options)
       dispatch(logIn(values, true))
     } catch (err) {
-      const errorMessage = err.response && err.response.body && err.response.body.error
+      const errorMessage = get(err, 'response.body.error', false)
       dispatch(updateError(errorMessage))
       console.error(
         '(consignments/client/actions.js @ signUp) Error:', err
@@ -504,9 +517,12 @@ export function submissionCompleted () {
   }
 }
 
-export function submissionError () {
+export function submissionError (errorType) {
   return {
-    type: SUBMISSION_ERROR
+    type: SUBMISSION_ERROR,
+    payload: {
+      errorType
+    }
   }
 }
 
@@ -738,12 +754,14 @@ export function uploadImageToConvection (geminiToken, fileName) {
         submission_id: submissionId,
         gemini_token: geminiToken
       }
-      await request
+      const assetResponse = await request
         .post(`${sd.CONVECTION_APP_URL}/api/assets`)
         .set('Authorization', `Bearer ${token}`)
         .send(inputs)
+      const assetId = assetResponse.body.id
 
       dispatch(stopProcessingImage(fileName))
+      dispatch(addAssetId(assetId))
     } catch (err) {
       dispatch(errorOnImage(fileName))
       console.error(
