@@ -1,9 +1,17 @@
-mixin showItem(show, trailingText)
+mixin showItem(show)
   .artwork-artist__content__exhibition-highlights__item
     .artwork-artist__content__exhibition-highlights__item__date= helpers.artists.showHelpers.date(show.start_at).year()
     .artwork-artist__exhibition-highlights__item__text
-      if trailingText
-        = trailingText + ", "
+      if !show.fair && show.partner && show.partner.name
+        .artwork-artist__exhibition-highlights__item__text__partner-name
+          if show.partner.is_linkable && show.partner.href
+            a(href= show.partner.href)
+              = show.partner.name
+          else
+            = show.partner.name
+          | ,&nbsp;
+      if helpers.artists.showHelpers.showOrFairLocation(show)
+        = helpers.artists.showHelpers.showOrFairLocation(show) + ", "
       .artwork-artist__exhibition-highlights__item__text__show-name
         if show.href
           a(href= show.href)= show.name
@@ -15,19 +23,19 @@ if shows.solo && shows.solo.length
   .artwork-artist-header-cell-section
     h2 Solo Shows
     for show in helpers.artists.sortExhibitions(shows.solo)
-      +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
+      +showItem(show)
 
 if shows.group && shows.group.length
   .artwork-artist-header-cell-section
     h2 Group Shows
     for show in helpers.artists.sortExhibitions(shows.group)
-      +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
+      +showItem(show)
 
 if shows.fair && shows.fair.length
   .artwork-artist-header-cell-section
     h2 Fair History on Artsy
     for show in helpers.artists.sortExhibitions(shows.fair)
-      +showItem(show, helpers.artists.showHelpers.showOrFairLocation(show))
+      +showItem(show)
 
 if artist.exhibition_highlights.length > 15
   a.artwork-artist__content__exhibition-highlights__cv(href=artist.href + '/cv')

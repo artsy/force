@@ -3,7 +3,7 @@ include ./cv_item
 if shows.highlights && shows.highlights.length
   h2 Exhibition Highlights
   each show in shows.highlights
-    +showItem(show, show.fair ? showHelpers.showOrFairLocation(show) : showHelpers.partnerNameAndLocation(show))
+    +showItem(show)
 
   .exibition-highlights-see-more
     button.avant-garde-button-white.is-small

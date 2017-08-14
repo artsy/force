@@ -2,16 +2,16 @@ if solo_shows && solo_shows.length
   .bisected-header-cell-section
     h2 Solo Shows
     for show in solo_shows
-      +showItem(show, showHelpers.partnerNameAndLocation(show))
+      +showItem(show)
 
 if group_shows && group_shows.length
   .bisected-header-cell-section
     h2 Group Shows
     for show in group_shows
-      +showItem(show, showHelpers.partnerNameAndLocation(show))
+      +showItem(show)
 
 if fair_booths && fair_booths.length
   .bisected-header-cell-section
     h2 Fair History on Artsy
     for show in fair_booths
-      +showItem(show, showHelpers.showOrFairLocation(show))
+      +showItem(show)
