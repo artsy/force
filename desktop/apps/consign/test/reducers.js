@@ -109,7 +109,7 @@ describe('Reducers', () => {
           const expectedActions = [
             {
               type: 'UPDATE_USER',
-              payload: { user: { id: 'sarah' } }
+              payload: { user: { id: 'sarah' }, accountCreated: false }
             },
             {
               type: '@@router/CALL_HISTORY_METHOD',
@@ -134,7 +134,7 @@ describe('Reducers', () => {
           const expectedActions = [
             {
               type: 'UPDATE_USER',
-              payload: { user: { id: 'sarah' } }
+              payload: { user: { id: 'sarah' }, accountCreated: false }
             },
             { type: 'CLEAR_ERROR' }
           ]
@@ -212,7 +212,7 @@ describe('Reducers', () => {
           const expectedActions = [
             {
               type: 'UPDATE_USER',
-              payload: { user: { id: 'sarah' } }
+              payload: { user: { id: 'sarah' }, accountCreated: true }
             },
             {
               type: '@@router/CALL_HISTORY_METHOD',
@@ -491,7 +491,8 @@ describe('Reducers', () => {
             {
               type: 'STOP_PROCESSING_IMAGE',
               payload: { fileName: 'astronaut.jpg' }
-            }
+            },
+            { type: 'ADD_ASSET_ID', payload: { assetId: undefined } }
           ]
           store.dispatch(actions.uploadImageToConvection('gemini-token', 'astronaut.jpg')).then(() => {
             store.getActions().should.eql(expectedActions)
