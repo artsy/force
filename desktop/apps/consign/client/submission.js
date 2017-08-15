@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import geo from '../../../components/geo/index.coffee'
 import reducers from './reducers'
 import createHistory from 'history/createBrowserHistory'
@@ -7,7 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import { render } from 'react-dom'
 import { routerMiddleware } from 'react-router-redux'
-import App from './app'
+import App from '../components/app'
 
 function setupSubmissionFlow () {
   // load google maps for autocomplete
@@ -24,9 +25,12 @@ function setupSubmissionFlow () {
     )
   )
 
-  render(
-    <App store={store} />,
-    document.getElementById('consignments-submission__flow')
+  render((
+    <BrowserRouter>
+      <App store={store} />
+    </BrowserRouter>
+  ),
+  document.getElementById('consignments-submission__flow')
   )
 }
 

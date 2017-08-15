@@ -1,10 +1,10 @@
 import React from 'react'
-import ResponsiveWindow from '../../../components/react/responsive_window'
-import SubmissionFlow from '../components/submission_flow'
+import ResponsiveWindow from 'desktop/components/react/responsive_window'
+import SubmissionFlow from 'desktop/apps/consign/components/submission_flow'
 import { Provider } from 'react-redux'
-import { Redirect, Router, Route, Switch } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router'
 import { data as sd } from 'sharify'
-import stepsConfig from './steps_config'
+import stepsConfig from '../../client/steps_config'
 import {
   ignoreRedirectOnAuth,
   updateAuthFormStateAndClearError,
@@ -12,10 +12,11 @@ import {
   updateLocationFromSubmissionAndFreeze,
   updateStepsWithUser,
   updateStepsWithoutUser
-} from './actions'
+} from '../../client/actions'
 
-export default function App () {
-  const store = this.props.store
+export default function App (props) {
+  const store = props.store
+
   const determineSteps = () => {
     if (sd.CURRENT_USER) {
       store.dispatch(updateStepsWithUser())
@@ -27,18 +28,19 @@ export default function App () {
   return (
     <Provider store={store}>
       <ResponsiveWindow>
-        <Router history={history}>
           <Switch>
             <Route
               exact path='/consign/submission'
               render={() => {
-                if (sd.CURRENT_USER) {
+                /* if (sd.CURRENT_USER) {
                   store.dispatch(updateStepsWithUser())
                   return <Redirect to={stepsConfig.chooseArtist.path} />
                 } else {
                   store.dispatch(updateStepsWithoutUser())
                   return <Redirect to={stepsConfig.createAccount.path} />
-                }
+                } */
+                store.dispatch(updateStepsWithUser())
+                return <SubmissionFlow />
               }}
             />
             <Route
@@ -93,7 +95,6 @@ export default function App () {
             />
             <Route path={stepsConfig.thankYou.submissionPath} component={stepsConfig.thankYou.component} />
           </Switch>
-        </Router>
       </ResponsiveWindow>
     </Provider>
   )

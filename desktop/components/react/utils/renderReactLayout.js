@@ -20,6 +20,7 @@ export function renderReactLayout (options) {
     blocks: { head, body } = {},
     locals = {},
     data = {},
+    mainLayout = 'desktop/components/main_layout/templates/react_index.jade',
     templates = {}
   } = options
 
@@ -32,7 +33,7 @@ export function renderReactLayout (options) {
   const { html: headHTML } = render(head)
   const { html: bodyHTML, css } = render(body)
 
-  const layout = renderTemplate('desktop/components/main_layout/templates/react_index.jade', {
+  const layout = renderTemplate(mainLayout, {
     locals: {
       ...locals,
       data: {

@@ -1,8 +1,9 @@
 import React from 'react'
+import { StaticRouter } from 'react-router'
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
-import App from 'desktop/apps/consign/components/App'
+import App from 'desktop/apps/consign/components/app'
 import metaphysics from 'lib/metaphysics.coffee'
 import request from 'superagent'
 import { extend } from 'underscore'
@@ -45,24 +46,30 @@ export const landingPage = async (req, res, next) => {
 }
 
 export const submissionFlow = async (req, res, next) => {
-  // res.render('submission_flow', { user: req.user })
   const store = configureStore(reducers, {
-    app: appInitialState
+    submissionFlow: appInitialState
   })
+  const context = {}
 
   const layout = renderReactLayout({
     basePath: res.app.get('views'),
+    mainLayout: 'desktop/apps/consign/templates/layout.jade',
     blocks: {
       head: 'meta.jade',
-      body: props => <App store={store} {...props} />
+      body: props => (
+        <StaticRouter
+          location={req.url}
+          context={context}>
+          <App store={store} {...props} />
+        </StaticRouter>
+      )
     },
     locals: {
       ...res.locals,
-      assetPackage: 'consign',
-      bodyClass: 'consignments-submission-body body-header-fixed body-no-margins'
+      assetPackage: 'misc',
+      bodyClass: 'consignments-submission-body minimal-header body-header-fixed'
     },
     data: {
-      app: store.getState().app
     }
   })
 
