@@ -22,7 +22,7 @@ export function currentAuctions () {
       registration_ends_at
       live_start_at
       cover_image {
-        cropped(width: 225 height: 160 version: "medium") {
+        cropped(width: 180 height: 130 version: "medium") {
           url
         }
       }

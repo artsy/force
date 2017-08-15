@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import AuctionsBlock from 'desktop/apps/auctions2/components/auctions_block'
+import AuctionsBlock from 'desktop/apps/auctions2/components/auctions_block/AuctionsBlock'
 import { filter, reject } from 'underscore'
 
 function Layout ({ isMobile, auctions }) {
-  console.log(auctions)
   const liveAuctions = filter(auctions, function(auction){ return auction.live_start_at ? true : false });
   const onlineAuctions = reject(auctions, function(auction){ return auction.live_start_at ? true : false });
   return (
@@ -19,13 +18,11 @@ function Layout ({ isMobile, auctions }) {
           {liveAuctions.length ?
             <AuctionsBlock
               auctions={liveAuctions}
-              live={true}
-              title="Ongoing Live Auctions" />
+              live={true} />
           : false }
           {onlineAuctions.length ?
             <AuctionsBlock
-              auctions={onlineAuctions}
-              title="Ongoing Timed Auctions" />
+              auctions={onlineAuctions} />
           : false }
           </div> }
     </div>

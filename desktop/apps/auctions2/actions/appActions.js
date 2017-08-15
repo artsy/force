@@ -26,7 +26,7 @@ export function getAuctionsSuccess (auctions) {
   }
 }
 
-export function fetchLiveAuctions() {
+export function getCurrentAuctions() {
   return async (dispatch) => {
     try {
       dispatch(getAuctionsRequest())

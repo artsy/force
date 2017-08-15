@@ -12,7 +12,7 @@ export async function index (req, res, next) {
   })
 
   try {
-    await store.dispatch(actions.fetchLiveAuctions())
+    await store.dispatch(actions.getCurrentAuctions())
 
     const layout = renderReactLayout({
       basePath: res.app.get('views'),
