@@ -1,72 +1,84 @@
-import React from 'react'
 import moment from 'moment'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 function liveDate(auction) {
-  let date
   if (moment(auction.registration_ends_at) > moment()) {
-    date = formattedDate(auction.registration_ends_at, false, true)
+    return formattedDate(auction.registration_ends_at, false, true)
   } else if (moment(auction.live_start_at) > moment()) {
-    date = formattedDate(auction.live_start_at)
+    return formattedDate(auction.live_start_at)
   } else if (moment(auction.end_at) > moment()) {
-    date = 'In Progress'
+    return 'In Progress'
   }
-  return date
 }
 
 function timedDate(auction) {
-  let date
   if (moment(auction.start_at) > moment()) {
-    date = formattedDate(auction.start_at)
+    return formattedDate(auction.start_at)
   } else {
-    date = formattedDate(auction.end_at, true)
+    return formattedDate(auction.end_at, true)
   }
-  return date
 }
 
 function formattedDate(date, isStarted, isRegister) {
-    let formattedDate
-    if (isStarted) {
-      formattedDate = moment(date).fromNow().replace('in ', '') + ' left'
-    } else if (isRegister) {
-      if (moment().diff(moment(date), 'hours') > -24) {
-        formattedDate = 'Register by ' + moment(date).format('ha')
-      } else {
-        formattedDate = 'Register by ' + moment(date).format('MMM D, ha')
-      }
+  if (isStarted) {
+    return moment(date).fromNow().replace('in ', '') + ' left'
+  } else if (isRegister) {
+    if (moment().diff(moment(date), 'hours') > -24) {
+      return 'Register by ' + moment(date).format('ha')
     } else {
-      formattedDate = 'Live ' + moment(date).fromNow()
+      return 'Register by ' + moment(date).format('MMM D, ha')
     }
-    return formattedDate
+  } else {
+    return  'Live ' + moment(date).fromNow()
+  }
 }
 
-function AuctionsBlock (props) {
+function AuctionsItem(auction, live, key) {
+  const color = '#666' // TODO - AVG COLOR
   return (
-    <div className='auctions-block'>
-      <div className='auctions-block__title'>
-        {props.live ? 'Ongoing Live Auctions'  : 'Ongoing Timed Auctions'}
+    <a
+      key={live ? 'live-' + key : 'timed-' + key}
+      href={auction.id}
+      className='auctions-block__item'
+      style={{backgroundColor: color}}>
+      <div className='auctions-block__item-header'>
+        {live ? <div className='live' style={{color: color}}>Live</div> : false}
+        {auction.name}
       </div>
-      <div className='auctions-block__items'>
-        { props.auctions.map((auction, key) => (
-          <a
-            key={key}
-            href={auction.id}
-            className='auctions-block__item'>
-            <div className='auctions-block__item-header'>
-              {props.live ? <div className='live'>Live</div>  : false}
-              {auction.name}
-            </div>
-            <div className='auctions-block__item-body'>
-              <img src={auction.cover_image ? auction.cover_image.cropped.url : false} />
-              <div className='date'>
-                {props.live ? liveDate(auction) : timedDate(auction)}
-              </div>
-            </div>
-          </a>
-        ))}
+      <div className='auctions-block__item-body'>
+        {auction.cover_image ? <img src={auction.cover_image.cropped.url} /> : false}
+        <div className='date'>
+          {live ? liveDate(auction) : timedDate(auction)}
+        </div>
       </div>
-    </div>
+    </a>
   )
+}
+
+function AuctionsBlock({auctions, live, isFetchingAuctions}) {
+  if (isFetchingAuctions) {
+    return <div className='auctions-block loading'></div>
+  } else {
+    return (
+      <div className='auctions-block'>
+        <div className='auctions-block__title'>
+          {live ? 'Ongoing Live Auctions'  : 'Ongoing Timed Auctions'}
+        </div>
+        <div className='auctions-block__list'>
+          {auctions.map((auction, key) => (
+            AuctionsItem(auction, live, key)
+          ))}
+        </div>
+      </div>
+    )
+  }
 }
 
 export default AuctionsBlock
 
+AuctionsBlock.propTypes = {
+  auctions: PropTypes.array.isRequired,
+  live: PropTypes.bool,
+  isFetchingAuctions: PropTypes.bool
+}

@@ -1,14 +1,22 @@
-import * as actions from 'desktop/apps/auctions2/actions/appActions'
-import auctions from 'desktop/apps/auctions2/reducers'
 import AuctionsBlock from 'desktop/apps/auctions2/components/auctions_block/AuctionsBlock'
 import fixtures from 'desktop/apps/auctions2/__tests__/fixtures/auctions_data.json'
 import moment from 'moment'
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { createStore } from 'redux'
 
 describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
   describe('<AuctionsBlock />', () => {
+
+    it('renders an auction item', () => {
+      const { wrapper } = renderTestComponent({
+        Component: AuctionsBlock,
+        props: {
+          auctions: [fixtures.currentAuctions[0]]
+        }
+      })
+      wrapper.html().should.containEql('<a href="heritage-auctions-the-future-is-now"')
+      wrapper.html().should.containEql('Heritage Auctions: The Future is Now')
+    })
 
     describe('Rendering: live', () => {
 
@@ -31,11 +39,12 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
             live: true,
           }
         })
-        wrapper.html().should.containEql('<div class="live">Live</div>')
+        wrapper.html().should.containEql('<div class="live"')
       })
     })
 
     describe('Rendering: timed', () => {
+
       it('renders the title', () => {
         const { wrapper } = renderTestComponent({
           Component: AuctionsBlock,
@@ -53,7 +62,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
             auctions: [fixtures.currentAuctions[0]]
           }
         })
-        wrapper.html().should.not.containEql('<div class="live">Live</div>')
+        wrapper.html().should.not.containEql('<div class="live"')
       })
     })
 
@@ -78,7 +87,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
         const { wrapper } = renderTestComponent({
           Component: AuctionsBlock,
           props: {
-            auctions: [ fixtures.currentAuctions[0] ],
+            auctions: [fixtures.currentAuctions[0]],
             live: true
           }
         })
@@ -91,7 +100,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
         const { wrapper } = renderTestComponent({
           Component: AuctionsBlock,
           props: {
-            auctions: [ fixtures.currentAuctions[0] ],
+            auctions: [fixtures.currentAuctions[0]],
             live: true
           }
         })
@@ -104,7 +113,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
         const { wrapper } = renderTestComponent({
           Component: AuctionsBlock,
           props: {
-            auctions: [ fixtures.currentAuctions[0] ],
+            auctions: [fixtures.currentAuctions[0]],
             live: true
           }
         })
@@ -117,7 +126,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
         const { wrapper } = renderTestComponent({
           Component: AuctionsBlock,
           props: {
-            auctions: [ fixtures.currentAuctions[0] ],
+            auctions: [fixtures.currentAuctions[0]],
             live: true
           }
         })
@@ -129,7 +138,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
         const { wrapper } = renderTestComponent({
           Component: AuctionsBlock,
           props: {
-            auctions: [ fixtures.currentAuctions[0] ]
+            auctions: [fixtures.currentAuctions[0]]
           }
         })
         wrapper.html().should.containEql('Live in 4 days')

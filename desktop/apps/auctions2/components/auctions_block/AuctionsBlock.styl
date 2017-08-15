@@ -1,39 +1,37 @@
 .auctions-block
-  max-width 1125px
-  margin 0 auto
+  &:last-child
+    border-top 1px solid gray-lighter-color
   &__title
-    garamond-size('l-headline')
-  &__items
+    garamond-size headline
+    padding 15px 0
+  &__list
     display flex
-    padding 40px 0
+    padding-bottom 65px
   &__item
     width 210px
     min-height 260px
     margin-right 20px
-    text-decoration none
-    color white
-    padding 12px 15px
-    background gray-color
-    garamond-size('s-body')
-    line-height 23px
     display flex
     flex-direction column
     justify-content space-between
+    padding 12px 15px
+    garamond-size s-body
+    line-height 23px
+    text-decoration none
+    color white
     img
       padding 10px 0
       width 100%
     &last-child
       margin-right 0
   &__item-header
-    font-weight 600
     .live
       padding 2px 8px
-      color gray-color
-      background white
-      border-radius 3px
-      avant-garde-size('s-headline')
       margin-left 10px
       float right
+      border-radius 3px
+      avant-garde-size s-headline
+      background white
   &__item-body
     .date
-      avant-garde-size('s-headline')
+      avant-garde-size s-headline

@@ -2,11 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import AuctionsBlock from 'desktop/apps/auctions2/components/auctions_block/AuctionsBlock'
-import { filter, reject } from 'underscore'
 
 function Layout ({ isMobile, auctions }) {
-  const liveAuctions = filter(auctions, function(auction){ return auction.live_start_at ? true : false });
-  const onlineAuctions = reject(auctions, function(auction){ return auction.live_start_at ? true : false });
   return (
     <div>
       {isMobile
@@ -14,15 +11,16 @@ function Layout ({ isMobile, auctions }) {
             Hello Mobile!
           </div>
         : <div>
-            Hello Desktop!
-          {liveAuctions.length ?
+          {auctions.live.length ?
             <AuctionsBlock
-              auctions={liveAuctions}
+              key='auctions-block-live'
+              auctions={auctions.live}
               live={true} />
           : false }
-          {onlineAuctions.length ?
+          {auctions.timed.length ?
             <AuctionsBlock
-              auctions={onlineAuctions} />
+              key='auctions-block-timed'
+              auctions={auctions.timed} />
           : false }
           </div> }
     </div>
@@ -31,7 +29,7 @@ function Layout ({ isMobile, auctions }) {
 
 Layout.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-  auctions: PropTypes.array
+  auctions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
