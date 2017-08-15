@@ -13,7 +13,7 @@ const chooseArtistStep = 'chooseArtist'
 const describeWorkStep = 'describeWork'
 const uploadPhotosStep = 'uploadPhotos'
 
-const initialState = {
+export const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
   artistName: sd.SUBMISSION_ARTIST_NAME || '',

@@ -1,10 +1,16 @@
+import React from 'react'
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
+import App from 'desktop/apps/consign/components/App'
 import metaphysics from 'lib/metaphysics.coffee'
 import request from 'superagent'
 import { extend } from 'underscore'
 import { fetchToken } from './helpers'
+import { ArtistQuery, RecentlySoldQuery, SalesQuery } from './queries'
+import configureStore from 'desktop/components/react/utils/configureStore'
+import reducers, { initialState as appInitialState } from './client/reducers'
+import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 
 const landing = new JSONPage({ name: 'consignments-landing' })
 
@@ -39,7 +45,28 @@ export const landingPage = async (req, res, next) => {
 }
 
 export const submissionFlow = async (req, res, next) => {
-  res.render('submission_flow', { user: req.user })
+  // res.render('submission_flow', { user: req.user })
+  const store = configureStore(reducers, {
+    app: appInitialState
+  })
+
+  const layout = renderReactLayout({
+    basePath: res.app.get('views'),
+    blocks: {
+      head: 'meta.jade',
+      body: props => <App store={store} {...props} />
+    },
+    locals: {
+      ...res.locals,
+      assetPackage: 'consign',
+      bodyClass: 'consignments-submission-body body-header-fixed body-no-margins'
+    },
+    data: {
+      app: store.getState().app
+    }
+  })
+
+  res.send(layout)
 }
 
 export const redirectToSubmissionFlow = async (req, res, next) => {
@@ -66,60 +93,3 @@ export const submissionFlowWithFetch = async (req, res, next) => {
   }
 }
 
-function ArtistQuery (artistId) {
-  return `{
-    artist(id: "${artistId}") {
-      id
-      name
-    }
-  }`
-}
-
-function RecentlySoldQuery (id) {
-  return `
-    {
-      ordered_set(id: "${id}") {
-        id
-        name
-        artworks: items {
-          ... on ArtworkItem {
-            id
-            title
-            date
-            artists(shallow: true) {
-              name
-            }
-            partner(shallow: true) {
-              name
-            }
-            image {
-              placeholder
-              thumb: resized(height: 170, version: ["large", "larger"]) {
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-    }
-  `
-}
-
-function SalesQuery () {
-  return `{
-    sales(live: true, published: true, is_auction: true, size: 3) {
-      _id
-      auction_state
-      end_at
-      id
-      is_auction
-      is_closed
-      is_live_open
-      is_open
-      live_start_at
-      name
-      start_at
-    }
-  }`
-}
