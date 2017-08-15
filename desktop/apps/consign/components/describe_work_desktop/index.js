@@ -5,7 +5,7 @@ import block from 'bem-cn'
 import { Field, formValueSelector, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
-import { numberWarning, scrollToError, validate } from '../../client/validate'
+import { dispatchAndScrollToError, numberWarning, validate } from '../../client/validate'
 import { renderCheckboxInput } from '../checkbox_input'
 import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
@@ -208,7 +208,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
       form: 'describeWork', // a unique identifier for this form
       validate,
       initialValues,
-      onSubmitFail: scrollToError
+      onSubmitFail: dispatchAndScrollToError
     }),
     connect(
       mapStateToProps,

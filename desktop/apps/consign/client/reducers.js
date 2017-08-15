@@ -17,6 +17,7 @@ export const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
   artistName: sd.SUBMISSION_ARTIST_NAME || '',
+  assetIds: [],
   authFormState: 'signUp',
   categoryOptions: [
     'Painting',
@@ -78,6 +79,11 @@ export const initialState = {
 
 function submissionFlow (state = initialState, action) {
   switch (action.type) {
+    case actions.ADD_ASSET_ID: {
+      return u({
+        assetIds: state.assetIds.concat(action.payload.assetId)
+      }, state)
+    }
     case actions.ADD_IMAGE_TO_UPLOADED_IMAGES: {
       const newImage = {
         fileName: action.payload.fileName,
