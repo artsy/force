@@ -13,7 +13,10 @@ describe 'ImageSetView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      benv.expose
+        $: benv.require('jquery')
+        jQuery: benv.require('jquery')
+        _s: benv.require('underscore.string')
       Backbone.$ = $
       $.fn.imagesLoaded = ->
       @ImageSetView = benv.requireWithJadeify(
@@ -51,6 +54,7 @@ describe 'ImageSetView', ->
         items: @collection
         user: @user
         startIndex: 0
+        _s: _s
       @view.carousel = @flickity
       done()
 

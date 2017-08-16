@@ -11,7 +11,7 @@
               a.entity-follow.artist-follow(data-id=item.artist.slug)
 
           - var image = resize( (item.image || item.url || ''), { height: 900 } )
-          img.image-set-modal__image(src=image alt=_s.stripTags(item.caption ? item.caption : item.title) )
+          img.image-set-modal__image(src=image alt=_s.stripTags(item.type === 'image' ? item.caption : item.title) )
 
           .image-set-modal__metadata
             .image-set-modal__pagination= (i + 1) + "/" + length
