@@ -25,7 +25,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [],
-            live: true,
+            liveIntegration: true,
           }
         })
         wrapper.html().should.containEql('Ongoing Live Auctions')
@@ -36,7 +36,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [fixtures.currentAuctions[0]],
-            live: true,
+            liveIntegration: true,
           }
         })
         wrapper.html().should.containEql('<div class="live"')
@@ -75,7 +75,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [ fixtures.currentAuctions[0] ],
-            live: true
+            liveIntegration: true
           }
         })
         wrapper.html().should.containEql('Register by ' + moment(fixtures.currentAuctions[0].registration_ends_at).format('ha'))
@@ -88,7 +88,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [fixtures.currentAuctions[0]],
-            live: true
+            liveIntegration: true
           }
         })
         wrapper.html().should.containEql('Register by ' + moment(fixtures.currentAuctions[0].registration_ends_at).format('MMM D, ha'))
@@ -101,7 +101,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [fixtures.currentAuctions[0]],
-            live: true
+            liveIntegration: true
           }
         })
         wrapper.html().should.containEql('Live in 20 minutes')
@@ -114,7 +114,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [fixtures.currentAuctions[0]],
-            live: true
+            liveIntegration: true
           }
         })
         wrapper.html().should.containEql('Live in 20 hours')
@@ -127,7 +127,7 @@ describe('auctions2/components/auctions_block/AuctionsBlock.test.js', () => {
           Component: AuctionsBlock,
           props: {
             auctions: [fixtures.currentAuctions[0]],
-            live: true
+            liveIntegration: true
           }
         })
         wrapper.html().should.containEql('In Progress')

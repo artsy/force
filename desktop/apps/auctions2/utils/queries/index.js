@@ -16,7 +16,6 @@ export function currentAuctions () {
       name
       is_open
       is_live_open
-      end_at
       start_at
       registration_ends_at
       live_start_at

@@ -1,7 +1,7 @@
+import AuctionsBlock from 'desktop/apps/auctions2/components/auctions_block/AuctionsBlock'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import AuctionsBlock from 'desktop/apps/auctions2/components/auctions_block/AuctionsBlock'
 
 function Layout ({ isMobile, auctions }) {
   return (
@@ -11,17 +11,15 @@ function Layout ({ isMobile, auctions }) {
             Hello Mobile!
           </div>
         : <div>
-          {auctions.live.length ?
+          {auctions.liveIntegration.length &&
             <AuctionsBlock
-              key='auctions-block-live'
-              auctions={auctions.live}
-              live={true} />
-          : false }
-          {auctions.timed.length ?
+              key='auctions-block-liveIntegration'
+              auctions={auctions.liveIntegration}
+              liveIntegration={true} /> }
+          {auctions.timed.length &&
             <AuctionsBlock
               key='auctions-block-timed'
-              auctions={auctions.timed} />
-          : false }
+              auctions={auctions.timed} /> }
           </div> }
     </div>
   )
