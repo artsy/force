@@ -28,13 +28,20 @@ export async function index (req, res, next) {
     res.locals.sd.AUCTION = sale
     fetchUser(req, res)
 
-    const [
-      { me },
-      { articles }
-    ] = await Promise.all([
-      metaphysics({ query: MeQuery(sale.id), req: req }),
-      metaphysics({ query: ArticlesQuery(sale._id) })
-    ])
+    const { me } = await metaphysics({
+      query: MeQuery(sale.id),
+      req: req
+    })
+
+    let articles = []
+
+    try {
+      ({ articles } = await metaphysics({
+        query: ArticlesQuery(sale._id)
+      }))
+    } catch (error) {
+      console.error('(apps/auction/routes.js) Error fetching Articles', error)
+    }
 
     // TODO: Refactor out Backbone
     const auctionModel = new Auction(sale)
