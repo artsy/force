@@ -1,5 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import GeneFamily from './GeneFamily'
+
+const propTypes = {
+  geneFamilies: PropTypes.array.isRequired
+}
 
 const GeneFamilies = ({ geneFamilies }) => {
   return (
@@ -10,5 +15,7 @@ const GeneFamilies = ({ geneFamilies }) => {
     </div>
   )
 }
+
+GeneFamilies.propTypes = propTypes
 
 export default GeneFamilies

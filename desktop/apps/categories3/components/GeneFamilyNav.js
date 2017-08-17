@@ -1,4 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
+const propTypes = {
+  geneFamilies: PropTypes.array.isRequired
+}
 
 const GeneFamilyNav = ({ geneFamilies }) => {
   return (
@@ -7,5 +12,7 @@ const GeneFamilyNav = ({ geneFamilies }) => {
     </ul>
   )
 }
+
+GeneFamilyNav.propTypes = propTypes
 
 export default GeneFamilyNav

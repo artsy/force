@@ -2,6 +2,11 @@ import React from 'react'
 import TAGPIntro from './TAGPIntro'
 import GeneFamilies from './GeneFamilies'
 
+import PropTypes from 'prop-types'
+
+const propTypes = {
+  geneFamilies: PropTypes.array.isRequired
+}
 const TAGPContent = ({ geneFamilies }) => {
   return (
     <div>
@@ -10,5 +15,7 @@ const TAGPContent = ({ geneFamilies }) => {
     </div>
   )
 }
+
+TAGPContent.propTypes = propTypes
 
 export default TAGPContent
