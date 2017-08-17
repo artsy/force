@@ -29,7 +29,7 @@ const GeneList = styled.ul`
 const GeneFamily = ({ id, name, genes }) => {
   const sortedGenes = alphabetizeGenes(genes)
   return (
-    <div>
+    <div id={id}>
       <GeneFamilyName>
         {name}
       </GeneFamilyName>

@@ -36,6 +36,7 @@ const GeneFamilyItem = styled.li`margin-bottom: 1em;`
 
 const GeneFamilyLink = styled.a`
   transition: color 0.125s;
+  text-decoration: none;
 
   &:hover {
     color: #6e1fff;
@@ -48,7 +49,7 @@ const GeneFamilyNav = ({ geneFamilies }) => {
       <GeneFamilyList>
         {geneFamilies.map(geneFamily =>
           <GeneFamilyItem key={geneFamily.id}>
-            <GeneFamilyLink>
+            <GeneFamilyLink href={`#${geneFamily.id}`}>
               {geneFamily.name}
             </GeneFamilyLink>
           </GeneFamilyItem>
