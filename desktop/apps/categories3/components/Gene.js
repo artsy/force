@@ -7,10 +7,12 @@ const propTypes = {
   name: PropTypes.string.isRequired
 }
 
-const GeneLI = styled.li`
-  line-height: 2em;
+const GeneItem = styled.li`
+  font-size: 20px;
+  line-height: 1.33em;
+  margin-bottom: 0.66em;
 `
-const GeneA = styled.a`
+const GeneLink = styled.a`
   text-decoration: none;
 
   &:hover {
@@ -19,11 +21,11 @@ const GeneA = styled.a`
 `
 const Gene = ({ id, name }) => {
   return (
-    <GeneLI>
-      <GeneA href='#'>
+    <GeneItem>
+      <GeneLink href={`/gene/${id}`}>
         {name}
-      </GeneA>
-    </GeneLI>
+      </GeneLink>
+    </GeneItem>
   )
 }
 

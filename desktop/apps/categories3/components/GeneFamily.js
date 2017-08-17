@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
 import Gene from './Gene'
 
 const propTypes = {
@@ -8,15 +10,30 @@ const propTypes = {
   genes: PropTypes.array.isRequired
 }
 
+const GeneFamilyName = styled.h2`
+  font-size: 37px;
+  line-height: 1.2em;
+`
+
+const GeneList = styled.ul`
+  margin: 1.5em 0;
+  column-count: 1;
+
+  @media (min-width: 768px) {
+    column-count: 3;
+    column-gap: 2em;
+  }
+`
+
 const GeneFamily = ({ id, name, genes }) => {
   return (
     <div>
-      <h2>
+      <GeneFamilyName>
         {name}
-      </h2>
-      <ul>
+      </GeneFamilyName>
+      <GeneList>
         {genes.map(gene => <Gene key={gene.id} {...gene} />)}
-      </ul>
+      </GeneList>
     </div>
   )
 }
