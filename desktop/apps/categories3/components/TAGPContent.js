@@ -6,7 +6,6 @@ import TAGPIntro from './TAGPIntro'
 import GeneFamilies from './GeneFamilies'
 
 const ResponsiveContent = styled.main`
-  background: orange;
   width: 100%;
 
   @media (min-width: 768px) {

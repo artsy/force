@@ -13,6 +13,7 @@ const ResponsiveSidebar = styled.aside`
     display: block;
     width: 24%;
     overflow: hidden;
+    padding-top: 0.5em;
   }
 `
 

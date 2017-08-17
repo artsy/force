@@ -6,9 +6,9 @@ import GeneFamilyNav from './GeneFamilyNav'
 import TAGPContent from './TAGPContent'
 
 const Layout = styled.div`
-  background: yellow;
   display: flex;
   justify-content: space-between;
+  padding-top: 40px;
 `
 class App extends Component {
   static propTypes = {
