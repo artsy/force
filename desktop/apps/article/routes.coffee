@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
@@ -40,6 +41,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
             embed: embed
             crop: crop
             lushSignup: true
+            _s: _s
       return
 
 @ampArticle = (req, res, next) ->
@@ -56,6 +58,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         resize: resize
         crop: crop
         embed: embed
+        _s: _s
 
 setupEmailSubscriptions = (user, article, cb) ->
   return cb({ editorial: false }) unless user?.email

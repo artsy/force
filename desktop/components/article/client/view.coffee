@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
@@ -103,6 +104,8 @@ module.exports = class ArticleView extends Backbone.View
     @artists = []
     @$('.artist-follow').each (i, artist) =>
       @artists.push id: $(artist).data('id')
+      screenReaderText = 'Follow ' + $(artist).data('id').replace(/-/g, ' ')
+      $(artist).html('<span class="screen-reader-text">' + screenReaderText + '</span>')
     @followButtons = @artists.map (artist) =>
       artist = new Artist id: artist.id
       new FollowButton
@@ -140,6 +143,7 @@ module.exports = class ArticleView extends Backbone.View
       items: section.images
       user: @user
       startIndex: startIndex
+      _s: _s
     @modal = modalize imageSet,
       dimensions: width: '100vw', height: '100vh'
     @modal.view.$el.addClass 'image-set-container'

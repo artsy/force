@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
 Articles = require '../../../collections/articles.coffee'
@@ -41,6 +42,7 @@ module.exports = class ArticlesAdapter
           resize: resize
           embed: embed
           moment: moment
+          _s: _s
         @el.append("<div class='article-footer'></div>")
         @el.append jsonldTemplate
           jsonLD: stringifyJSONForWeb article.toJSONLD()

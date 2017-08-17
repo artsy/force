@@ -16,16 +16,19 @@
         .article-sa-primary-logo
           if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
             a( href=superArticle.get('super_article').partner_logo_link )
-              img( src=superArticle.get('super_article').partner_logo )
+              img( src=superArticle.get('super_article').partner_logo  alt='Partner logo')
         if superArticle.get('super_article').secondary_partner_logo && superArticle.get('super_article').secondary_logo_link
           .article-sa-plus.icon-close
           .article-sa-secondary-logo
             a( href=superArticle.get('super_article').secondary_logo_link )
-              img( src=superArticle.get('super_article').secondary_partner_logo )
+              img( src=superArticle.get('super_article').secondary_partner_logo alt='Partner logo')
 
   if superSubArticles.length
     .article-sa-footer-right
       for subArticle in superSubArticles.models
         a.article-sa-related( href=subArticle.href() )
-          img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
+          img.article-sa-related__image(
+            src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 })
+            alt=subArticle.get('title')
+          )
           .article-sa-related__title= subArticle.get('thumbnail_title')

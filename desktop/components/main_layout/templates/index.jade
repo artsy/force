@@ -2,14 +2,14 @@
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
   - defaultOptions = {modal: true, flash: true, stripe: true, sailthru: true, marketo: true, quantcast: true}
-  
-- options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
+  - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 doctype html
 html(
   data-useragent=userAgent
   data-user-type=sd.CURRENT_USER && sd.CURRENT_USER.type
   data-lab-features=sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.join(',')
+  lang="en"
 )
   head
     include head
@@ -21,26 +21,24 @@ html(
       link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
   body( class=bodyClass )
-    
     //- Global component mixins
     include ../../modal/template
     include ../../flash/template
 
     //- Header, body block, footer
     include ../header/templates/index
-    
+
     #main-layout-container.responsive-layout-container
       block body
-        
+
     #scroll-frame-spinner: .loading-spinner
     include ../footer/template
 
     //- Javascripts
     #scripts
       include scripts
-      
+
       script( src= asset('/assets/main_layout.js') )
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
       block scripts
-        

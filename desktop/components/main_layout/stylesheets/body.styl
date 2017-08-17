@@ -11,6 +11,14 @@
 search-bar-input-placeholder()
   color white
 
+.screen-reader-text // hide text only for screen-readers
+  position absolute
+  left 10000px
+  top auto
+  width 1px
+  height 1px
+  overflow hidden
+
 .body-header-fixed
   #main-layout-container
     margin-top (main-header-height + content-margin-top)
