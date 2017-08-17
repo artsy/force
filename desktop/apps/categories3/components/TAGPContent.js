@@ -1,18 +1,23 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
 import TAGPIntro from './TAGPIntro'
 import GeneFamilies from './GeneFamilies'
 
-import PropTypes from 'prop-types'
-
+const Main = styled.main`
+  background: orange;
+  width: 74%;
+`
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired
 }
 const TAGPContent = ({ geneFamilies }) => {
   return (
-    <div>
+    <Main>
       <TAGPIntro />
       <GeneFamilies geneFamilies={geneFamilies} />
-    </div>
+    </Main>
   )
 }
 
