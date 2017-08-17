@@ -1,7 +1,19 @@
 module.exports = """
   query {
     home_page {
-      artwork_modules(max_rails: 6) {
+      artwork_modules(
+        max_rails: 6,
+        order: [
+          ACTIVE_BIDS,
+          RECOMMENDED_WORKS,
+          FOLLOWED_ARTISTS,
+          RELATED_ARTISTS,
+          FOLLOWED_GALLERIES,
+          SAVED_WORKS,
+          LIVE_AUCTIONS,
+          CURRENT_FAIRS,
+          FOLLOWED_GENES,
+          GENERIC_GENES]) {
         key
         params {
           id

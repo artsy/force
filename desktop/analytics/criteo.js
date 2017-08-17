@@ -114,14 +114,5 @@ if (pathSplit[1] === 'auctions') {
       { event: 'setEmail', email: userEmail },
       { event: 'viewHome' }
     )
-  } else if (pathSplit[1] === 'artist' && !pathSplit[3]) {
-    // https://www.artsy.net/artist/:artist_id - (ARTWORKS viewList)
-    //              0          1         2
-    window.criteo_q.push(
-      { event: 'setAccount', account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
-      { event: 'setSiteType', type: 'd' },
-      { event: 'setEmail', email: userEmail },
-      { event: 'viewList', item: _.pluck(sd.ARTIST._artworks, '_id') }
-    )
   }
 }

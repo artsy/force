@@ -1,5 +1,5 @@
 .artwork-artist-header-cell-section
-  h2 Exhibition Highlights On Artsy
+  h2 Exhibition Highlights
 
   for show in helpers.artists.sortExhibitions(artist.exhibition_highlights.slice(0,5))
-    +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
+    +showItem(show)

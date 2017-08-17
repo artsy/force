@@ -8,6 +8,8 @@ module.exports =
       }
       ... on Partner {
         name
+        is_linkable
+        href
       }
     }
     city

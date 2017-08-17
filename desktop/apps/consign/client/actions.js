@@ -1,5 +1,6 @@
 import request from 'superagent'
 import gemup from 'gemup'
+import get from 'lodash.get'
 import stepsConfig from './steps_config'
 import { data as sd } from 'sharify'
 import { fetchToken, formattedLocation } from '../helpers'
@@ -7,6 +8,7 @@ import { find } from 'underscore'
 import { push } from 'react-router-redux'
 
 // Action types
+export const ADD_ASSET_ID = 'ADD_ASSET_ID'
 export const ADD_IMAGE_TO_UPLOADED_IMAGES = 'ADD_IMAGE_TO_UPLOADED_IMAGES'
 export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
@@ -24,6 +26,10 @@ export const START_LOADING = 'START_LOADING'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
 export const STOP_LOADING = 'STOP_LOADING'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
+export const SUBMISSION_CREATED = 'SUBMISSION_CREATED'
+export const SUBMISSION_COMPLETED = 'SUBMISSION_COMPLETED'
+export const SUBMISSION_ERROR = 'SUBMISSION_ERROR'
+export const SUBMIT_ARTIST = 'SUBMIT_ARTIST'
 export const UNFREEZE_LOCATION_INPUT = 'UNFREEZE_LOCATION_INPUT'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
@@ -45,6 +51,15 @@ export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 export const UPDATE_USER = 'UPDATE_USER'
 
 // Action creators
+export function addAssetId (assetId) {
+  return {
+    type: ADD_ASSET_ID,
+    payload: {
+      assetId
+    }
+  }
+}
+
 export function addImageToUploadedImages (fileName, src) {
   return {
     type: ADD_IMAGE_TO_UPLOADED_IMAGES,
@@ -64,6 +79,7 @@ export function chooseArtist (value) {
 
 export function chooseArtistAdvance () {
   return (dispatch) => {
+    dispatch(submitArtist())
     dispatch(push(stepsConfig.describeWork.path))
   }
 }
@@ -144,10 +160,12 @@ export function completeSubmission () {
                           .send({ state: 'submitted' })
 
       dispatch(updateSubmission(submissionResponse.body))
+      dispatch(submissionCompleted())
       dispatch(stopLoading())
       dispatch(push(stepsConfig.thankYou.submissionPath.replace(':id', submissionResponse.body.id)))
     } catch (err) {
       dispatch(stopLoading())
+      dispatch(submissionError('convection_complete_submission'))
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
         '(consignments/client/actions.js @ completeSubmission) Error:', err
@@ -180,13 +198,14 @@ export function createSubmission () {
                            .set('Authorization', `Bearer ${token}`)
                            .send(inputs)
       }
-
+      dispatch(submissionCreated(submissionBody.body.id))
       dispatch(updateSubmission(submissionBody.body)) // update state to reflect current submission
       dispatch(stopLoading())
       dispatch(push(stepsConfig.describeWork.submissionPath.replace(':id', submissionBody.body.id)))
       dispatch(push(stepsConfig.uploadPhotos.submissionPath.replace(':id', submissionBody.body.id)))
     } catch (err) {
       dispatch(stopLoading())
+      dispatch(submissionError('convection_create'))
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
         '(consignments/client/actions.js @ createSubmission) Error:', err
@@ -299,7 +318,7 @@ export function ignoreRedirectOnAuth () {
   }
 }
 
-export function logIn (values) {
+export function logIn (values, accountCreated = false) {
   return async (dispatch, getState) => {
     try {
       const {
@@ -320,11 +339,15 @@ export function logIn (values) {
                       .set('X-Requested-With', 'XMLHttpRequest')
                       .send(options)
 
-      dispatch(updateUser(user.body.user))
+      dispatch(updateUser(user.body.user, accountCreated))
       redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
     } catch (err) {
-      dispatch(updateError(err.response.body.error))
+      const errorMessage = get(err, 'response.body.error', false)
+      dispatch(updateError(errorMessage))
+      console.error(
+        '(consignments/client/actions.js @ logIn) Error:', err
+      )
     }
   }
 }
@@ -416,10 +439,13 @@ export function signUp (values) {
               .set('Accept', 'application/json')
               .set('X-Requested-With', 'XMLHttpRequest')
               .send(options)
-
-      dispatch(logIn(values))
+      dispatch(logIn(values, true))
     } catch (err) {
-      dispatch(updateError(err.response.body.error))
+      const errorMessage = get(err, 'response.body.error', false)
+      dispatch(updateError(errorMessage))
+      console.error(
+        '(consignments/client/actions.js @ signUp) Error:', err
+      )
     }
   }
 }
@@ -439,6 +465,12 @@ export function stopProcessingImage (fileName) {
     payload: {
       fileName
     }
+  }
+}
+
+export function submitArtist () {
+  return {
+    type: SUBMIT_ARTIST
   }
 }
 
@@ -467,6 +499,30 @@ export function startLoading () {
 export function stopLoading () {
   return {
     type: STOP_LOADING
+  }
+}
+
+export function submissionCreated (submissionId) {
+  return {
+    type: SUBMISSION_CREATED,
+    payload: {
+      submissionId
+    }
+  }
+}
+
+export function submissionCompleted () {
+  return {
+    type: SUBMISSION_COMPLETED
+  }
+}
+
+export function submissionError (errorType) {
+  return {
+    type: SUBMISSION_ERROR,
+    payload: {
+      errorType
+    }
   }
 }
 
@@ -678,11 +734,12 @@ export function updateSubmission (submission) {
   }
 }
 
-export function updateUser (user) {
+export function updateUser (user, accountCreated) {
   return {
     type: UPDATE_USER,
     payload: {
-      user
+      user,
+      accountCreated
     }
   }
 }
@@ -697,12 +754,14 @@ export function uploadImageToConvection (geminiToken, fileName) {
         submission_id: submissionId,
         gemini_token: geminiToken
       }
-      await request
+      const assetResponse = await request
         .post(`${sd.CONVECTION_APP_URL}/api/assets`)
         .set('Authorization', `Bearer ${token}`)
         .send(inputs)
+      const assetId = assetResponse.body.id
 
       dispatch(stopProcessingImage(fileName))
+      dispatch(addAssetId(assetId))
     } catch (err) {
       dispatch(errorOnImage(fileName))
       console.error(
