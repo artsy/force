@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import Gene from './Gene'
+import { alphabetizeGenes } from '../helpers/utils.js'
 
 const propTypes = {
   id: PropTypes.string.isRequired,
@@ -26,13 +27,14 @@ const GeneList = styled.ul`
 `
 
 const GeneFamily = ({ id, name, genes }) => {
+  const sortedGenes = alphabetizeGenes(genes)
   return (
     <div>
       <GeneFamilyName>
         {name}
       </GeneFamilyName>
       <GeneList>
-        {genes.map(gene => <Gene key={gene.id} {...gene} />)}
+        {sortedGenes.map(gene => <Gene key={gene.id} {...gene} />)}
       </GeneList>
     </div>
   )
