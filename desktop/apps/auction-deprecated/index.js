@@ -1,18 +1,14 @@
 import 'babel-core/register'
+import * as routes from './routes'
 import express from 'express'
-import reactRenderer from 'express-react-views'
-import reloadable, { isDevelopment } from 'desktop/lib/reloadable'
 
 const app = module.exports = express()
 
 app.set('view engine', 'jade')
 app.set('views', `${__dirname}/templates`)
-app.engine('jsx', reactRenderer.createEngine({ transformViews: false }))
 
-if (isDevelopment) {
-  reloadable(app, (req, res, next) => {
-    require('./server')(req, res, next)
-  })
-} else {
-  app.use(require('./server'))
-}
+app.get('/sale/:id', routes.index)
+app.get('/sale/:id/confirm-registration', routes.index)
+
+app.get('/auction/:id', routes.index)
+app.get('/auction/:id/confirm-registration', routes.redirectLive, routes.index)
