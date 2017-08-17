@@ -6,19 +6,25 @@ const propTypes = {
   geneFamilies: PropTypes.array.isRequired
 }
 
-const Sidebar = styled.aside`
-  width: 24%;
-  background: pink'
+const ResponsiveSidebar = styled.aside`
+  background: pink;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+    width: 24%;
+    overflow: hidden;
+  }
 `
 
 const GeneFamilyList = styled.ul`
   position: fixed;
   width: inherit;
   padding-right: 2em;
-  `
+`
 const GeneFamilyNav = ({ geneFamilies }) => {
   return (
-    <Sidebar>
+    <ResponsiveSidebar>
       <GeneFamilyList>
         {geneFamilies.map(geneFamily =>
           <li key={geneFamily.id}>
@@ -26,7 +32,7 @@ const GeneFamilyNav = ({ geneFamilies }) => {
           </li>
         )}
       </GeneFamilyList>
-    </Sidebar>
+    </ResponsiveSidebar>
   )
 }
 

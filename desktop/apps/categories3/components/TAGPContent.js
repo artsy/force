@@ -5,19 +5,23 @@ import styled from 'styled-components'
 import TAGPIntro from './TAGPIntro'
 import GeneFamilies from './GeneFamilies'
 
-const Main = styled.main`
+const ResponsiveContent = styled.main`
   background: orange;
-  width: 74%;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 74%;
+  }
 `
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired
 }
 const TAGPContent = ({ geneFamilies }) => {
   return (
-    <Main>
+    <ResponsiveContent>
       <TAGPIntro />
       <GeneFamilies geneFamilies={geneFamilies} />
-    </Main>
+    </ResponsiveContent>
   )
 }
 
