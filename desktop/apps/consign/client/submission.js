@@ -1,11 +1,12 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router'
 import geo from '../../../components/geo/index.coffee'
 import reducers from './reducers'
 import createHistory from 'history/createBrowserHistory'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
 import { render } from 'react-dom'
 import { routerMiddleware } from 'react-router-redux'
 import App from '../components/app'
@@ -36,15 +37,21 @@ function setupSubmissionFlow () {
     }))
   }
 
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
   const store = createStore(
     reducers,
-    applyMiddleware(...middleware)
+    composeEnhancers(
+      applyMiddleware(...middleware)
+    )
   )
 
   render((
-    <BrowserRouter>
-      <App store={store} />
-    </BrowserRouter>
+    <Provider store={store}>
+      <Router history={history}>
+        <App store={store} />
+      </Router>
+    </Provider>
   ),
   document.getElementById('consignments-submission__flow')
   )

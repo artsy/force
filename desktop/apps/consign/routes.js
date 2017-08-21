@@ -1,5 +1,6 @@
 import React from 'react'
 import { StaticRouter } from 'react-router'
+import { Provider } from 'react-redux'
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
@@ -57,11 +58,13 @@ export const submissionFlow = async (req, res, next) => {
     blocks: {
       head: 'meta.jade',
       body: props => (
-        <StaticRouter
-          location={req.url}
-          context={context}>
-          <App store={store} {...props} />
-        </StaticRouter>
+        <Provider store={store}>
+          <StaticRouter
+            location={req.url}
+            context={context}>
+            <App store={store} {...props} />
+          </StaticRouter>
+        </Provider>
       )
     },
     locals: {

@@ -2,6 +2,7 @@ import Autosuggest from 'react-autosuggest'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 import {

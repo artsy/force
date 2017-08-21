@@ -1,7 +1,7 @@
 import React from 'react'
 import ResponsiveWindow from 'desktop/components/react/responsive_window'
 import SubmissionFlow from 'desktop/apps/consign/components/submission_flow'
-import { Provider } from 'react-redux'
+
 import { Redirect, Route, Switch } from 'react-router'
 import { data as sd } from 'sharify'
 import stepsConfig from '../../client/steps_config'
@@ -26,21 +26,18 @@ export default function App (props) {
   }
 
   return (
-    <Provider store={store}>
       <ResponsiveWindow>
           <Switch>
             <Route
               exact path='/consign/submission'
               render={() => {
-                /* if (sd.CURRENT_USER) {
+                if (sd.CURRENT_USER) {
                   store.dispatch(updateStepsWithUser())
                   return <Redirect to={stepsConfig.chooseArtist.path} />
                 } else {
                   store.dispatch(updateStepsWithoutUser())
                   return <Redirect to={stepsConfig.createAccount.path} />
-                } */
-                store.dispatch(updateStepsWithUser())
-                return <SubmissionFlow />
+                }
               }}
             />
             <Route
@@ -96,6 +93,5 @@ export default function App (props) {
             <Route path={stepsConfig.thankYou.submissionPath} component={stepsConfig.thankYou.component} />
           </Switch>
       </ResponsiveWindow>
-    </Provider>
   )
 }
