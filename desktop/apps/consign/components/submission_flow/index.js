@@ -4,6 +4,8 @@ import StepMarker from '../step_marker'
 import block from 'bem-cn'
 import stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+
 import {
   resizeWindow
 } from '../../client/actions'

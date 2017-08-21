@@ -21,6 +21,7 @@ app.get(landing.paths.show, routes.landingPage)
 app.get(landing.paths.show + '/data', adminOnly, data)
 app.get(landing.paths.edit, adminOnly, edit)
 app.post(landing.paths.edit, adminOnly, upload)
+
 app.get('/consign/submission/:id/describe-your-work', routes.submissionFlowWithFetch)
 app.get('/consign/submission/:id/upload-photos', routes.submissionFlowWithFetch)
 app.get('/consign/submission/:id/thank-you', routes.submissionFlowWithId)

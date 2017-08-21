@@ -5,7 +5,7 @@ import { composeReducers } from '../../../components/react/utils/composeReducers
 import { data as sd } from 'sharify'
 import { contains } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
-import { responsiveWindowReducer } from '../../../components/react/responsive_window'
+import { responsiveWindowReducer } from 'desktop/components/react/responsive_window'
 import { routerReducer } from 'react-router-redux'
 
 const createAccountStep = 'createAccount'
@@ -13,7 +13,7 @@ const chooseArtistStep = 'chooseArtist'
 const describeWorkStep = 'describeWork'
 const uploadPhotosStep = 'uploadPhotos'
 
-const initialState = {
+export const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
   artistName: sd.SUBMISSION_ARTIST_NAME || '',

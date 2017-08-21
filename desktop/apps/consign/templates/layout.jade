@@ -1,0 +1,24 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+append locals
+  - assetPackage = locals.assetPackage || ''
+  - bodyClass = bodyClass + ' ' + (locals.bodyClass || '')
+
+block head
+  != header
+  != css
+
+block body
+  script.
+    var __BOOTSTRAP__ = !{JSON.stringify(data)}
+
+  .consignments-submission.responsive-layout-container
+    #consignments-submission__flow
+      != body
+  .consignments-submission__footer
+    .consignments-submission__footer-contents
+      .consignments-submission__footer-contents--title
+        | Consignments submission
+      .consignments-submission__footer-contents--contact
+        | If you have any questions feel free to email us at&nbsp;
+        a( href='mailto:consign@artsy.net' ) consign@artsy.net

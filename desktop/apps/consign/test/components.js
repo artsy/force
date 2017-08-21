@@ -7,7 +7,7 @@ import UploadPhoto from '../components/upload_photo'
 import UploadedImage from '../components/uploaded_image'
 import React from 'react'
 import reducers from '../client/reducers'
-import { responsiveWindowAction } from '../../../components/react/responsive_window'
+import { responsiveWindowAction } from 'desktop/components/react/responsive_window'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
 
