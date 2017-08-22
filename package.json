@@ -17,7 +17,6 @@
     "test": "sh scripts/test.sh"
   },
   "dependencies": {
-    "@artsy/express-reloadable": "^1.0.3",
     "@artsy/reaction-force": "^0.3.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
