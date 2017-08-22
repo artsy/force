@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@artsy/express-reloadable@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.0.3.tgz#ba5ef5160c50dcc25b32ffab078e2a64eecb32a2"
-  dependencies:
-    chokidar "^1.7.0"
-
 "@artsy/reaction-force@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.3.1.tgz#fbbd92bd3c324afc6a32d96aba8f39be5173ae63"
