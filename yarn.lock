@@ -3797,6 +3797,12 @@ express-react-views@^0.10.2:
     lodash.escaperegexp "^4.1.1"
     object-assign "^4.0.1"
 
+express-request-id@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/express-request-id/-/express-request-id-1.4.0.tgz#277b2c0949803e68104c9d45c3e68934f96bf5a2"
+  dependencies:
+    uuid "^3.0.1"
+
 express@*, express@^4.12.3, express@^4.13.3, express@^4.15.2, express@^4.15.3:
   version "4.15.3"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.3.tgz#bab65d0f03aa80c358408972fc700f916944b662"

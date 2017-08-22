@@ -26,6 +26,7 @@ sd = require('sharify').data
       artist_id: req.params.id
       includeBlurb: (tab is '')
       includeJSONLD: includeJSONLD
+    req: req
 
   return if metaphysics.debug req, res, send
 
@@ -78,8 +79,7 @@ sd = require('sharify').data
           query: payoffQuery,
           variables:
             artist_id: req.params.id
-          req: user: user
-
+          req: user: user, id: req.id
         req.user.followArtist req.params.id,
           error: res.backboneError
           success: ->

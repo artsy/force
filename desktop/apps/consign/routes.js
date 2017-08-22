@@ -20,8 +20,8 @@ export const landingPage = async (req, res, next) => {
     inDemand.id = in_demand.set.id
 
     await inDemand.fetch({ cache: true })
-    const { ordered_set: recentlySold } = await metaphysics({ query: RecentlySoldQuery(recently_sold.set.id) })
-    const { sales } = await metaphysics({ query: SalesQuery() })
+    const { ordered_set: recentlySold } = await metaphysics({ query: RecentlySoldQuery(recently_sold.set.id), req })
+    const { sales } = await metaphysics({ query: SalesQuery(), req })
 
     res.locals.sd.RECENTLY_SOLD = recentlySold.artworks
     res.locals.sd.IN_DEMAND = inDemand.toJSON()
@@ -57,7 +57,7 @@ export const submissionFlowWithFetch = async (req, res, next) => {
     const submission = await request
                               .get(`${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`)
                               .set('Authorization', `Bearer ${token}`)
-    const { artist: { name } } = await metaphysics({ query: ArtistQuery(submission.body.artist_id) })
+    const { artist: { name } } = await metaphysics({ query: ArtistQuery(submission.body.artist_id), req })
     res.locals.sd.SUBMISSION = submission.body
     res.locals.sd.SUBMISSION_ARTIST_NAME = name
     res.render('submission_flow', { user: req.user })

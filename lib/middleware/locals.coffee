@@ -42,6 +42,7 @@ module.exports = (req, res, next) ->
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
   res.locals.sd.NOTIFICATION_COUNT = req.cookies?['notification-count']
   res.locals.sd.USER_AGENT = res.locals.userAgent = ua
+  res.locals.sd.REQUEST_ID = req.id
   res.locals.sd.IS_MOBILE = Boolean(
     (ua.match(/iPhone/i) && !ua.match(/iPad/i)) ||
     (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
