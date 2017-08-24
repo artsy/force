@@ -6,21 +6,17 @@ import { connect } from 'react-redux'
 function Layout ({ isMobile, auctions }) {
   return (
     <div>
-      {isMobile
-        ? <div>
-            Hello Mobile!
-          </div>
-        : <div>
-          {auctions.liveIntegration.length &&
-            <AuctionsBlock
-              key='auctions-block-liveIntegration'
-              auctions={auctions.liveIntegration}
-              liveIntegration={true} /> }
-          {auctions.timed.length &&
-            <AuctionsBlock
-              key='auctions-block-timed'
-              auctions={auctions.timed} /> }
-          </div> }
+      {auctions.liveIntegration.length &&
+        <AuctionsBlock
+          key='auctions-block-liveIntegration'
+          auctions={auctions.liveIntegration}
+          liveIntegration
+          isMobile={isMobile} /> }
+      {auctions.timed.length &&
+        <AuctionsBlock
+          key='auctions-block-timed'
+          auctions={auctions.timed}
+          isMobile={isMobile} /> }
     </div>
   )
 }

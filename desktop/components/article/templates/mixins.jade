@@ -32,6 +32,7 @@ mixin fullscreen(article)
       .article-fullscreen__overlay
       img.article-fullscreen__image(
         src=resize(url, { height: 1250, width: 1250 })
+        alt=article.get('title')
       )
 
     .main-layout-container.article-fullscreen__container
@@ -63,7 +64,7 @@ mixin superArticleLogos(article)
         .article-sa-plus.icon-close
         .article-sa-primary-logo
           a( href=article.get('super_article').partner_logo_link )
-            img( src=article.get('super_article').partner_fullscreen_header_logo )
+            img( src=article.get('super_article').partner_fullscreen_header_logo alt='partner logo')
 
 mixin callout(section)
   .article-section-callout(data-id=section.article)
@@ -78,7 +79,7 @@ mixin imageSet(section)
     for item, i in section.images.slice(0,3)
       .article-section-image-set__image-container.hoverable-image-link( data-index=i )
         - var image = resize( (item.image || item.url || ''), {height: 150} )
-        img.hoverable-image(src=image)
+        img.hoverable-image( src=image alt=_s.stripTags(item.type === 'image' ? item.caption : item.title) )
   .article-section-image-set__remaining
     .article-section-image-set__icon(data-total="#{section.images.length}" class=section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
@@ -109,14 +110,14 @@ mixin imageCollection(images)
 mixin image(image)
   li
     figure
-      img( src=resize(image.url, { width: 1100 }) )
+      img( src=resize(image.url, { width: 1100 }) alt=_s.stripTags(image.caption || '') )
       if image.caption
         figcaption!= image.caption
 
 mixin printArtistName(artist)
   if artist.slug
     a(href='/artist/' + artist.slug )= artist.name
-  else
+  else if artist.name
     |= artist.name
 
 mixin artwork(artwork)
@@ -125,7 +126,7 @@ mixin artwork(artwork)
       .artwork-item-image-container
         a.artwork-item-image-link( href='/artwork/' + artwork.slug )
           .artwork-item-image
-            img( src=artwork.image )
+            img( src=artwork.image alt=artwork.title )
       +artwork_caption(artwork)
 
 mixin artwork_caption(artwork)

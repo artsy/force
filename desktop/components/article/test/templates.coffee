@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 cheerio = require 'cheerio'
 path = require 'path'
 jade = require 'jade'
@@ -62,7 +63,8 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
-    html.should.containEql '<img src="http://image.jpg" class="article-fullscreen__image"/>'
+    html.should.containEql '<img src="http://image.jpg"'
+    html.should.containEql 'class="article-fullscreen__image"'
 
   it 'superSubArticles can render fullscreen header and SA menu with correct classes', ->
     html = render('index')
@@ -85,9 +87,10 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
-    html.should.containEql '<img src="http://image.jpg" class="article-fullscreen__image"/>'
+    html.should.containEql '<img src="http://image.jpg"'
+    html.should.containEql 'class="article-fullscreen__image"'
     html.should.containEql 'article-sa-sticky-header'
-    html.should.containEql '<a href="http://logo.com"><img src="http://fullscreen-logo.jpg"/></a>'
+    html.should.containEql '<a href="http://logo.com"><img src="http://fullscreen-logo.jpg"'
     html.should.not.containEql 'visible no-transition'
 
   it 'super articles have markdown-supported footers', ->
@@ -325,6 +328,7 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
+      _s: _s
     html.should.containEql '/artwork/govinda-sah-azad-in-between-1'
     html.should.containEql '/artwork/govinda-sah-azad-in-between-2'
     html.should.containEql 'October Gallery'
@@ -376,6 +380,7 @@ describe 'article show template', ->
       moment: moment
       sd: {}
       asset: ->
+      _s: _s
     html.should.containEql '/artwork/govinda-sah-azad-in-between-1'
     html.should.containEql 'http://artsy.net/image.jpg'
     html.should.containEql '/october-gallery'

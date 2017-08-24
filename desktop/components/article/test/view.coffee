@@ -18,6 +18,7 @@ describe 'ArticleView', ->
       benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
+        _s: benv.require('underscore.string')
       Backbone.$ = $
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
@@ -149,6 +150,7 @@ describe 'ArticleView', ->
         moment: sinon.stub()
         resize: sinon.stub()
         crop: sinon.stub()
+        _s: _s
       }
 
   after ->
@@ -164,6 +166,7 @@ describe 'ArticleView', ->
       @view = new @ArticleView
         el: $('body')
         article: @article
+        _s: _s
       done()
 
   afterEach ->

@@ -15,6 +15,7 @@ describe 'ArticlesAdapter', ->
     benv.setup =>
       benv.expose
         $: benv.require 'jquery'
+        _s: benv.require 'underscore.string'
         sd: ARTSY_EDITORIAL_CHANNEL: '123'
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()

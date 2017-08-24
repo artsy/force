@@ -35,13 +35,13 @@ describe 'Main layout template', ->
     render('../templates/index.jade')(
       sd: {}
       asset: ((p) -> p)
-    ).should.containEql '<html>'
+    ).should.containEql '<html'
 
   it 'can render the page when attrs are missing from CURRENT_USER', ->
     render('../templates/index.jade')(
       sd: CURRENT_USER: {}
       asset: ((p) -> p)
-    ).should.containEql '<html>'
+    ).should.containEql '<html'
 
 describe 'Head template', ->
   describe 'IS_RESPONSIVE', ->

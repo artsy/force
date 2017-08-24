@@ -1,4 +1,5 @@
 .auctions-block
+  margin 0 20px
   &:last-child
     border-top 1px solid gray-lighter-color
   &__title
@@ -24,7 +25,7 @@
       width 100%
     &last-child
       margin-right 0
-  &__item-header
+  &__item-upper
     .live
       padding 2px 8px
       margin-left 10px
@@ -33,5 +34,32 @@
       avant-garde-size s-headline
       background white
   &__item-body
-    .date
-      avant-garde-size s-headline
+    display flex
+    flex-direction column
+    justify-content space-between
+    height 100%
+  .date
+    avant-garde-size s-headline
+
++respond-mobile()
+  .auctions-block
+    &__title
+      garamond-size s-headline
+    &__list
+      flex-direction column
+    &__item
+      width 100%
+      margin-bottom 10px
+      min-height 115px
+      flex-direction row
+    &__image
+      width 85px
+      height 85px
+      background-size cover
+      background-position 50%
+      margin-right 20px
+    &__item-body
+      flex 1
+      height 85px
+      img
+        display none

@@ -17,6 +17,7 @@
     "test": "sh scripts/test.sh"
   },
   "dependencies": {
+    "@artsy/express-reloadable": "^1.0.3",
     "@artsy/reaction-force": "^0.3.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
@@ -127,7 +128,7 @@
     "twilio": "^2.5.1",
     "ua-parser": "^0.3.5",
     "ua-parser-js": "^0.7.12",
-    "uglify-js": "^2.8.22",
+    "uglify-js": "^3.0.28",
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
     "updeep": "^1.0.0",
