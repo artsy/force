@@ -16,7 +16,6 @@ import { initialState as appInitialState } from 'desktop/apps/auction/reducers/a
 import { initialState as auctionWorksInitialState } from 'desktop/apps/auction/reducers/artworkBrowser'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 import { renderLayout } from '@artsy/stitch'
-// import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
 
 export async function index (req, res, next) {
   const saleId = req.params.id

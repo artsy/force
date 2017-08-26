@@ -4,7 +4,7 @@ import React from 'react'
 import auctionsReducer from 'desktop/apps/auctions2/reducers'
 import configureStore from 'desktop/components/react/utils/configureStore'
 import { initialState as appInitialState } from 'desktop/apps/auctions2/reducers/appReducer'
-import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
+import { renderLayout } from '@artsy/stitch'
 
 export async function index (req, res, next) {
   const store = configureStore(auctionsReducer, {
@@ -14,8 +14,9 @@ export async function index (req, res, next) {
   try {
     await store.dispatch(actions.getCurrentAuctions())
 
-    const layout = renderReactLayout({
+    const layout = await renderLayout({
       basePath: res.app.get('views'),
+      layout: '../../../components/main_layout/templates/react_index.jade',
       blocks: {
         head: 'meta.jade',
         body: (props) => <App store={store} {...props} />

@@ -5,9 +5,9 @@ import Article from 'desktop/models/article.coffee'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
-import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
+import { data as sd } from 'sharify'
+import { renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
-const sd = require('sharify').data
 
 export async function index (req, res, next) {
   const articleId = req.params.slug
@@ -20,8 +20,9 @@ export async function index (req, res, next) {
     if (articleId !== article.slug) {
       return res.redirect(`/article2/${article.slug}`)
     }
-    const layout = renderReactLayout({
+    const layout = await renderLayout({
       basePath: res.app.get('views'),
+      layout: '../../../components/main_layout/templates/react_index.jade',
       blocks: {
         head: 'meta.jade',
         body: App
