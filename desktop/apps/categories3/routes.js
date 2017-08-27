@@ -14,13 +14,9 @@ export const index = async (req, res, next) => {
 
     const layout = await renderLayout({
       basePath: req.app.get('views'),
-      // config: {
-      //   componentRenderer: (Component) => {
-      //     const sheet = new ServerStyleSheet()
-      //     const html = ReactDOM.renderToString(sheet.collectStyles(Component))
-      //     return html
-      //   }
-      // },
+      config: {
+        styledComponents: true
+      },
       layout: '../../../components/main_layout/templates/react_index.jade',
       blocks: {
         head: 'meta.jade',
