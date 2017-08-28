@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import colors from '@artsy/reaction-force/dist/assets/colors'
+
 const propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
@@ -16,7 +18,7 @@ const GeneLink = styled.a`
   text-decoration: none;
 
   &:hover {
-    color: purple;
+    color: ${colors.purpleRegular};
   }
 `
 const Gene = ({ id, name }) => {

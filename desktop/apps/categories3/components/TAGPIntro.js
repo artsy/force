@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { secondary } from '@artsy/reaction-force/dist/assets/fonts'
+
 const Headline = styled.h1`
   font-size: 50px;
   line-height 1em;
 `
 
 const Description = styled.p`
-  font-family: 'Adobe Garamond W08', 'adobe-garamond-pro',
-    'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif';
+  ${secondary.style}
   font-size: 25px;
   line-height: 1.4em;
   margin: 35px 0;

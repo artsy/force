@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import colors from '@artsy/reaction-force/dist/assets/colors'
+import { primary } from '@artsy/reaction-force/dist/assets/fonts'
+
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired
 }
@@ -22,12 +25,7 @@ const GeneFamilyList = styled.ul`
   width: inherit;
   padding-right: 2em;
 
-  font-family: 'ITC Avant Garde Gothic W04', 'AvantGardeGothicITCW01D 731075',
-    'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif';
-  font-smoothing: antialiased;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-
+  ${primary.style}
   font-size: 13px;
   line-height: 1.33em;
 `
@@ -39,7 +37,7 @@ const GeneFamilyLink = styled.a`
   text-decoration: none;
 
   &:hover {
-    color: #6e1fff;
+    color: ${colors.purpleRegular};
   }
 `
 
