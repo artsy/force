@@ -9,7 +9,7 @@ let req
 let res
 let next
 let geneFamiliesQuery
-let renderReactLayout
+let renderLayout
 
 describe('#index', () => {
   beforeEach(() => {
@@ -42,8 +42,8 @@ describe('#index', () => {
       sinon.stub().returns(Promise.resolve(geneFamiliesQuery))
     )
 
-    renderReactLayout = sinon.stub()
-    RoutesRewireApi.__Rewire__('renderReactLayout', renderReactLayout)
+    renderLayout = sinon.stub()
+    RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
   })
 
   afterEach(() => {
@@ -52,15 +52,15 @@ describe('#index', () => {
 
   it('renders the categories app', () => {
     index(req, res, next).then(() => {
-      renderReactLayout.args[0][0].blocks.body.should.equal(App)
-      renderReactLayout.args[0][0].locals.assetPackage.should.equal(
+      renderLayout.args[0][0].blocks.body.should.equal(App)
+      renderLayout.args[0][0].locals.assetPackage.should.equal(
         'categories3'
       )
     })
   })
   it('passes the correct variables', () => {
     index(req, res, next).then(() => {
-      renderReactLayout.args[0][0].data.geneFamilies.should.equal(
+      renderLayout.args[0][0].data.geneFamilies.should.equal(
         geneFamiliesQuery.gene_families
       )
     })
