@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import Gene from './Gene'
-import { alphabetizeGenes } from '../helpers/utils.js'
+import alphabetizeGenes from '../helpers/alphabetizeGenes'
 
 const propTypes = {
   id: PropTypes.string.isRequired,
