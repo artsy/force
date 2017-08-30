@@ -30,29 +30,27 @@ describe('Article Routes', () => {
   })
 
   describe('#index', () => {
-    // FIXME: Test keeps failing but Positron endpoint is down! (CP)
-
-    // it('renders the index with the correct variables', (done) => {
-    //   const data = {
-    //     article: _.extend({}, fixtures.article, {
-    //       slug: 'foobar',
-    //       channel_id: '123'
-    //     })
-    //   }
-    //   RoutesRewireApi.__Rewire__(
-    //     'positronql',
-    //     sinon.stub().returns(Promise.resolve(data))
-    //   )
-    //   const renderReactLayout = sinon.stub()
-    //   RoutesRewireApi.__Rewire__('renderReactLayout', renderReactLayout)
-    //   RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
-    //   index(req, res, next)
-    //     .then(() => {
-    //       renderReactLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
-    //       renderReactLayout.args[0][0].locals.assetPackage.should.equal('article2')
-    //       done()
-    //     })
-    // })
+    it('renders the index with the correct variables', (done) => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123'
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
+      index(req, res, next)
+        .then(() => {
+          renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
+          renderLayout.args[0][0].locals.assetPackage.should.equal('article2')
+          done()
+        })
+    })
 
     it('redirects to the correct slug if it does not match', (done) => {
       const data = {
