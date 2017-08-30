@@ -5,6 +5,11 @@ import styled from 'styled-components'
 import TAGPIntro from './TAGPIntro'
 import GeneFamilies from './GeneFamilies'
 
+const propTypes = {
+  geneFamilies: PropTypes.array.isRequired,
+  allFeaturedGenesByFamily: PropTypes.array.isRequired
+}
+
 const ResponsiveContent = styled.main`
   width: 100%;
 
@@ -12,14 +17,11 @@ const ResponsiveContent = styled.main`
     width: 74%;
   }
 `
-const propTypes = {
-  geneFamilies: PropTypes.array.isRequired
-}
-const TAGPContent = ({ geneFamilies }) => {
+const TAGPContent = ({ geneFamilies, allFeaturedGenesByFamily }) => {
   return (
     <ResponsiveContent>
       <TAGPIntro />
-      <GeneFamilies geneFamilies={geneFamilies} />
+      <GeneFamilies geneFamilies={geneFamilies} allFeaturedGenesByFamily={allFeaturedGenesByFamily} />
     </ResponsiveContent>
   )
 }

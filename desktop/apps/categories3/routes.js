@@ -1,15 +1,16 @@
 import App from './components/App'
 import GeneFamiliesQuery from './queries/geneFamilies'
-import ReactDOM from 'react-dom/server'
+import FeaturedGenesQuery from './queries/featuredGenes'
 import metaphysics from 'lib/metaphysics.coffee'
-import { ServerStyleSheet } from 'styled-components'
 import { renderLayout } from '@artsy/stitch'
 
 export const index = async (req, res, next) => {
   try {
     const { gene_families: geneFamilies } = await metaphysics({
-      query: GeneFamiliesQuery(),
-      req: req
+      query: GeneFamiliesQuery()
+    })
+    const { gene_families: allFeaturedGenesByFamily } = await metaphysics({
+      query: FeaturedGenesQuery()
     })
 
     const layout = await renderLayout({
@@ -27,7 +28,8 @@ export const index = async (req, res, next) => {
         assetPackage: 'categories3'
       },
       data: {
-        geneFamilies
+        geneFamilies,
+        allFeaturedGenesByFamily
       }
     })
 

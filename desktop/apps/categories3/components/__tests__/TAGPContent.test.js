@@ -5,6 +5,7 @@ import TAGPContent from '../TAGPContent'
 describe('TAGPContent', () => {
   let component
   let geneFamilies
+  let allFeaturedGenesByFamily
 
   beforeEach(() => {
     geneFamilies = [
@@ -23,7 +24,26 @@ describe('TAGPContent', () => {
         ]
       }
     ]
-    component = shallow(<TAGPContent geneFamilies={geneFamilies} />)
+    allFeaturedGenesByFamily = [
+      {
+        name: 'Materials',
+        genes: [
+          /* … */
+        ]
+      },
+      {
+        name: 'Styles',
+        genes: [
+          /* … */
+        ]
+      }
+    ]
+    component = shallow(
+      <TAGPContent
+        geneFamilies={geneFamilies}
+        allFeaturedGenesByFamily={allFeaturedGenesByFamily}
+      />
+    )
   })
 
   it('renders the intro to TAGP', () => {

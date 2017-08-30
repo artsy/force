@@ -5,6 +5,7 @@ import App from '../App'
 describe('Categories App', () => {
   let app
   let geneFamilies
+  let allFeaturedGenesByFamily
 
   beforeEach(() => {
     geneFamilies = [
@@ -23,7 +24,23 @@ describe('Categories App', () => {
         ]
       }
     ]
-    app = shallow(<App geneFamilies={geneFamilies} />)
+
+    allFeaturedGenesByFamily = [
+      {
+        name: 'Materials',
+        genes: [
+          /* … */
+        ]
+      },
+      {
+        name: 'Styles',
+        genes: [
+          /* … */
+        ]
+      }
+    ]
+
+    app = shallow(<App geneFamilies={geneFamilies} allFeaturedGenesByFamily={allFeaturedGenesByFamily} />)
   })
 
   it('renders navigation', () => {

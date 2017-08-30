@@ -12,15 +12,19 @@ const Layout = styled.div`
 `
 class App extends Component {
   static propTypes = {
-    geneFamilies: PropTypes.array.isRequired
+    geneFamilies: PropTypes.array.isRequired,
+    allFeaturedGenesByFamily: PropTypes.array.isRequired
   }
 
-  render() {
-    const { geneFamilies } = this.props
+  render () {
+    const { geneFamilies, allFeaturedGenesByFamily } = this.props
     return (
       <Layout>
         <GeneFamilyNav geneFamilies={geneFamilies} />
-        <TAGPContent geneFamilies={geneFamilies} />
+        <TAGPContent
+          geneFamilies={geneFamilies}
+          allFeaturedGenesByFamily={allFeaturedGenesByFamily}
+        />
       </Layout>
     )
   }
