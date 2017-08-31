@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import colors from '@artsy/reaction-force/dist/assets/colors'
 import { primary } from '@artsy/reaction-force/dist/assets/fonts'
+import { frameAnimator } from '../utils'
 
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired
@@ -41,20 +42,49 @@ const GeneFamilyLink = styled.a`
   }
 `
 
-const GeneFamilyNav = ({ geneFamilies }) => {
-  return (
-    <ResponsiveSidebar>
-      <GeneFamilyList>
-        {geneFamilies.map(geneFamily =>
-          <GeneFamilyItem key={geneFamily.id}>
-            <GeneFamilyLink href={`#${geneFamily.id}`}>
-              {geneFamily.name}
-            </GeneFamilyLink>
-          </GeneFamilyItem>
-        )}
-      </GeneFamilyList>
-    </ResponsiveSidebar>
-  )
+class GeneFamilyNav extends React.Component {
+  constructor (props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick (e) {
+    e.preventDefault()
+    const id = e.target.hash
+    const section = document.querySelector(id)
+    const topBuffer = 90
+    const scroller = frameAnimator(
+      {
+        duration: 600,
+        startValue: window.scrollY,
+        endValue: section.offsetTop - topBuffer
+      },
+      val => {
+        window.scrollTo(0, val)
+      }
+    )
+    window.requestAnimationFrame(scroller)
+  }
+
+  render () {
+    const { geneFamilies } = this.props
+    return (
+      <ResponsiveSidebar>
+        <GeneFamilyList>
+          {geneFamilies.map(geneFamily => (
+            <GeneFamilyItem key={geneFamily.id}>
+              <GeneFamilyLink
+                href={`#${geneFamily.id}`}
+                onClick={this.handleClick}
+              >
+                {geneFamily.name}
+              </GeneFamilyLink>
+            </GeneFamilyItem>
+          ))}
+        </GeneFamilyList>
+      </ResponsiveSidebar>
+    )
+  }
 }
 
 GeneFamilyNav.propTypes = propTypes
