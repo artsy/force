@@ -14,9 +14,7 @@ export default class App extends React.Component {
     if (this.props.article.layout === 'standard') {
       return <InfiniteScrollArticle article={this.props.article} relatedArticles={this.props.relatedArticles} />
     } else {
-      return (
-        <Article article={this.props.article} />
-      )
+      return <Article article={this.props.article} />
     }
   }
 }
