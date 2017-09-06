@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.4.0.tgz#1439a4be8aa202d99d35a0ece44288280ea93412"
+"@artsy/reaction-force@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.5.1.tgz#1a0607d40846ac02573159d067d21385edfff56f"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.0"
@@ -29,6 +29,7 @@
     moment-timezone "^0.5.13"
     numeral "^2.0.4"
     prop-types "^15.5.10"
+    qs "^6.5.0"
     react "^15.5.4"
     react-markdown "^2.5.0"
     react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
@@ -2546,6 +2547,10 @@ consolidate@^0.14.5:
   resolved "https://registry.yarnpkg.com/consolidate/-/consolidate-0.14.5.tgz#5a25047bc76f73072667c8cb52c989888f494c63"
   dependencies:
     bluebird "^3.1.1"
+
+consolidated-events@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/consolidated-events/-/consolidated-events-1.1.1.tgz#25395465b35e531395418b7bbecb5ecaf198d179"
 
 constantinople@~3.0.1:
   version "3.0.2"
@@ -7054,7 +7059,7 @@ prop-types@15.5.8:
   dependencies:
     fbjs "^0.8.9"
 
-prop-types@^15.5.1, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@~15.5.7:
+prop-types@^15.0.0, prop-types@^15.5.1, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@~15.5.7:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -7137,6 +7142,10 @@ qs@5.2.0:
 qs@6.4.0, qs@^6.0.2, qs@^6.1.0, qs@^6.3.0, qs@^6.4.0, qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+
+qs@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.0.tgz#8d04954d364def3efc55b5a0793e1e2c8b1e6e49"
 
 qs@~6.2.0:
   version "6.2.3"
@@ -7531,6 +7540,13 @@ react-url-query@^1.1.4:
     loose-envify "^1.2.0"
     prop-types "^15.5.9"
     query-string "^4.2.3"
+
+react-waypoint@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-waypoint/-/react-waypoint-7.1.0.tgz#874628fd06ed61570ffba213e7dcd4212b101bbb"
+  dependencies:
+    consolidated-events "^1.1.0"
+    prop-types "^15.0.0"
 
 react@^15.4.2, react@^15.5.4:
   version "15.5.4"
@@ -9047,7 +9063,7 @@ uglify-js@2.x.x:
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
 
-uglify-js@^2.8.29:
+uglify-js@^2.4.19, uglify-js@^2.8.29:
   version "2.8.29"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.29.tgz#29c5733148057bb4e1f75df35b7a9cb72e6a59dd"
   dependencies:

@@ -1,7 +1,7 @@
-export default function ArticleQuery (id) {
+export default (offset, limit, channel) => {
   return `
     {
-      article(id: "${id}" ) {
+      articles(published: true, channel_id: "${channel}" limit: ${limit}, offset: ${offset}, featured: true, sort: "-published_at") {
         id
         title
         search_title
@@ -79,11 +79,6 @@ export default function ArticleQuery (id) {
             }
           }
         }
-      }
-      relatedArticles: articles(published: true, limit: 3) {
-        thumbnail_title
-        slug
-        thumbnail_image
       }
     }
 
