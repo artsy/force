@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import components from '@artsy/reaction-force/dist/components/publishing/index'
+import colors from '@artsy/reaction-force/dist/assets/colors'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
 import _ from 'underscore'
@@ -47,14 +48,18 @@ export default class InfiniteScrollArticle extends React.Component {
     if (!this.state.isLoading) {
       return <Waypoint onEnter={this.fetchNextArticles} threshold={2.0} />
     } else if (!this.state.error) {
-      return <LoadingSpinner className='loading-spinner' />
+      return (
+        <LoadingSpinner>
+          <div className='loading-spinner' />
+        </LoadingSpinner>
+      )
     }
   }
 
   renderContent = () => {
-    return _.flatten(_.map(this.state.articles, (article) => {
+    return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
-        <div>
+        <div key={`article-${i}`}>
           <Article article={article} relatedArticles={this.props.relatedArticles} />
           <Break />
         </div>
@@ -74,10 +79,10 @@ export default class InfiniteScrollArticle extends React.Component {
 
 const LoadingSpinner = styled.div`
   position: relative;
-  margin-bottom: 100px;
+  padding: 100px;
 `
 const Break = styled.div`
-  border: 1px solid #e5e5e5;
+  border: 1px solid ${colors.grayRegular};
   height: 2px;
   width: 100%;
 `

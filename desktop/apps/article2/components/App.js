@@ -15,9 +15,7 @@ export default class App extends React.Component {
       return <InfiniteScrollArticle article={this.props.article} relatedArticles={this.props.relatedArticles} />
     } else {
       return (
-        <div id='article-root'>
-          <Article article={this.props.article} />
-        </div>
+        <Article article={this.props.article} />
       )
     }
   }
