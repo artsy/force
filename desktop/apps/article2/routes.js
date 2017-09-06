@@ -15,6 +15,7 @@ export async function index (req, res, next) {
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
+    const relatedArticles = data.relatedArticles
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
@@ -41,7 +42,8 @@ export async function index (req, res, next) {
         crop: crop
       },
       data: {
-        article
+        article,
+        relatedArticles
       }
     })
 

@@ -1,16 +1,11 @@
 import articleBody from 'desktop/apps/article2/queries/articleBody'
 import sectionFragments from 'desktop/apps/article2/queries/sectionFragments'
 
-export default function ArticleQuery (id) {
+export default (offset, limit, channel) => {
   return `
     {
-      article(id: "${id}" ) {
+      articles(published: true, channel_id: "${channel}" limit: ${limit}, offset: ${offset}, featured: true, sort: "-published_at") {
         ${articleBody}
-      }
-      relatedArticles: articles(published: true, limit: 3) {
-        thumbnail_title
-        slug
-        thumbnail_image
       }
     }
     ${sectionFragments}
