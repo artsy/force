@@ -10,6 +10,7 @@ module.exports.auction_artworks = """
         eligible_sale_artworks_count
         end_at
         href
+        is_closed
         is_live_open
         is_preview
         live_start_at
