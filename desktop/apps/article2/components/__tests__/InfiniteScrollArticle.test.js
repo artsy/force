@@ -1,4 +1,4 @@
-import StandardArticle from 'desktop/apps/article2/components/StandardArticle'
+import InfiniteScrollArticle from 'desktop/apps/article2/components/InfiniteScrollArticle'
 
 describe('<StandardArticle />', () => {
   it('renders the initial article', () => {

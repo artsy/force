@@ -9,7 +9,7 @@ import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
 const { Article } = components
 
-export default class StandardArticle extends React.Component {
+export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     relatedArticles: PropTypes.array
@@ -64,17 +64,14 @@ export default class StandardArticle extends React.Component {
 
   render () {
     return (
-      <AppContainer id='article-root'>
+      <div id='article-root'>
         {this.renderContent()}
         {this.renderWaypoint()}
-      </AppContainer>
+      </div>
     )
   }
 }
 
-const AppContainer = styled.div`
-  margin-top: 100px;
-`
 const LoadingSpinner = styled.div`
   position: relative;
   margin-bottom: 100px;
