@@ -15,7 +15,7 @@ import u from 'updeep'
 import { initialState as appInitialState } from 'desktop/apps/auction/reducers/app'
 import { initialState as auctionWorksInitialState } from 'desktop/apps/auction/reducers/artworkBrowser'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
-import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
+import { renderLayout } from '@artsy/stitch'
 
 export async function index (req, res, next) {
   const saleId = req.params.id
@@ -75,8 +75,9 @@ export async function index (req, res, next) {
     ])
 
     try {
-      const layout = renderReactLayout({
+      const layout = await renderLayout({
         basePath: res.app.get('views'),
+        layout: '../../../../components/main_layout/templates/react_index.jade',
         blocks: {
           head: 'meta.jade',
           body: (props) => <App store={store} {...props} />

@@ -5,6 +5,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import * as _ from 'underscore'
 const { Article } = components
+import InfiniteScrollArticle from '../InfiniteScrollArticle'
 
 describe('<App />', () => {
   it('renders a standard article', () => {
@@ -17,7 +18,7 @@ describe('<App />', () => {
       contributing_authors: [{name: 'Kana'}]
     })
     const rendered = shallow(<App article={article} />)
-    rendered.find(Article).length.should.equal(1)
+    rendered.find(InfiniteScrollArticle).length.should.equal(1)
     rendered.html().should.containEql('standard_layout')
   })
 

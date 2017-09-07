@@ -6,13 +6,12 @@ module.exports = (artworks, heights = [0, 0, 0]) ->
   ]
 
   valid = ({ image }) ->
-    image.thumb.height?
+    image?.thumb?.height?
 
   artworks.map (artwork) ->
     if valid artwork
       i = heights.indexOf min heights
       heights[i] += artwork.image.thumb.height
       columns[i].push artwork
-    else
 
   { columns, heights }

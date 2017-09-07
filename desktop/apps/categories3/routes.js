@@ -1,17 +1,24 @@
 import App from './components/App'
-import { renderReactLayout } from 'desktop/components/react/utils/renderReactLayout'
-import metaphysics from 'lib/metaphysics.coffee'
 import GeneFamiliesQuery from './queries/geneFamilies'
+import FeaturedGenesQuery from './queries/featuredGenes'
+import metaphysics from 'lib/metaphysics.coffee'
+import { renderLayout } from '@artsy/stitch'
 
 export const index = async (req, res, next) => {
   try {
     const { gene_families: geneFamilies } = await metaphysics({
-      query: GeneFamiliesQuery(),
-      req: req
+      query: GeneFamiliesQuery()
+    })
+    const { gene_families: allFeaturedGenesByFamily } = await metaphysics({
+      query: FeaturedGenesQuery()
     })
 
-    const layout = renderReactLayout({
+    const layout = await renderLayout({
       basePath: req.app.get('views'),
+      config: {
+        styledComponents: true
+      },
+      layout: '../../../components/main_layout/templates/react_index.jade',
       blocks: {
         head: 'meta.jade',
         body: App
@@ -21,7 +28,8 @@ export const index = async (req, res, next) => {
         assetPackage: 'categories3'
       },
       data: {
-        geneFamilies
+        geneFamilies,
+        allFeaturedGenesByFamily
       }
     })
 

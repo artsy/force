@@ -41,13 +41,13 @@ describe('Article Routes', () => {
         'positronql',
         sinon.stub().returns(Promise.resolve(data))
       )
-      const renderReactLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderReactLayout', renderReactLayout)
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
       RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
       index(req, res, next)
         .then(() => {
-          renderReactLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
-          renderReactLayout.args[0][0].locals.assetPackage.should.equal('article2')
+          renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
+          renderLayout.args[0][0].locals.assetPackage.should.equal('article2')
           done()
         })
     })

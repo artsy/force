@@ -36,7 +36,8 @@ describe 'metaphysics', ->
       '
     .then =>
       @request.set.args.should.eql [
-        ['Accept', 'application/json']
+        ['Accept', 'application/json'],
+        ['X-Request-Id', 'implement-me']
       ]
       @request.get.called.should.be.false()
       @request.post.args[0][0].should.equal 'https://metaphysics.test'
@@ -135,11 +136,24 @@ describe 'metaphysics', ->
     it 'optionally accepts a req object, from which it extracts the user access token', ->
       @request.end.yields null, ok: true, body: data: {}
 
-      metaphysics req: user: @user
+      metaphysics req: user: @user, id: 'foo'
         .then =>
           @request.set.args
             .should.eql [
               ['Accept', 'application/json']
+              ['X-Request-Id', 'foo']
               ['X-ACCESS-TOKEN': 'xxx']
               ['X-USER-ID': '007']
+            ]
+
+  describe 'request id', ->
+    it 'optionally accepts a req object, from which it extracts the request id', ->
+      @request.end.yields null, ok: true, body: data: {}
+
+      metaphysics req: id: 'foo'
+        .then =>
+          @request.set.args
+            .should.eql [
+              ['Accept', 'application/json']
+              ['X-Request-Id', 'foo']
             ]
