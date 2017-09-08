@@ -7,9 +7,13 @@ html( data-useragent=userAgent )
   head
     block head
     include head
+
+    link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/force-webfonts.css?a=b')
     link( type='text/css', rel='stylesheet', href=asset('/assets/fairs.css') )
+
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset("/assets/#{assetPackage}.css") )
+
   body( class= bodyClass )
     include ../../modal/template
     include ../../flash/template
