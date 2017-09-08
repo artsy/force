@@ -27,6 +27,7 @@ render = (templateName) ->
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
     MOBILE_URL: 'http://localhost:5000'
+    WEBFONT_URL: 'http://webfonts.artsy.net/'
     NODE_ENV: 'test'
   jade.compile(
     fs.readFileSync(filename),
@@ -46,6 +47,7 @@ describe 'Fair', ->
         PROFILE: fabricate 'fair_profile'
         FAIR: fabricate 'fair', filter_genes: []
         FACEBOOK_APP_NAMESPACE: 'namespace'
+        WEBFONT_URL: 'http://webfonts.artsy.net/'
       fair = new Fair (sd.FAIR)
       profile = new Profile (sd.PROFILE)
       template = render('index')
