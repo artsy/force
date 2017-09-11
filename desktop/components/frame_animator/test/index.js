@@ -1,6 +1,6 @@
 import 'jsdom-global/register'
 import sinon from 'sinon'
-import { FrameAnimator } from './utils'
+import FrameAnimator from '..'
 
 describe('FrameAnimator', () => {
   beforeEach(() => {
