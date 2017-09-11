@@ -42,6 +42,8 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
         message: "Starting Personalize #{@state.currentStepLabel()}"
         label: "User:#{@user.id}"
 
+      # This is the part responsible for creating a new view based on what step
+      # the user is on. We could instantiate our react view/component conditionally.
       @view = new views["#{_s.classify(step)}View"] state: @state, user: @user
       @$el.html @view.render().$el
 
