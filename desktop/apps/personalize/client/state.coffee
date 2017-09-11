@@ -24,9 +24,12 @@ attributeMap =
 module.exports = class PersonalizeState extends Backbone.Model
   defaults:
     levels: ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
+    # The initial start of the onboarding steps are hardcoded here.
     current_step: 'collect'
     current_level: 2 # Interested in starting
     __steps__:
+      # I think we could create a new array with our steps here
+      # new_0: ['user_intent', 'artists', 'categories', 'price_range']
       new_1: ['collect', 'categories', 'favorites', 'artists']
       new_2: ['collect', 'price_range', 'categories', 'favorites', 'artists']
       new_3: ['collect', 'price_range', 'bookmarks', 'artists']
@@ -35,6 +38,9 @@ module.exports = class PersonalizeState extends Backbone.Model
       existing_3: ['collect', 'price_range', 'bookmarks', 'artists']
 
   initialize: (options = {}) ->
+    # maybe on initialization we change some of the defaults on the state
+    # if it's the test group i.e. the current_step to user_intent and
+    # current_level to be 0.
     { @user } = options
     @listenTo this, 'transition:next', @next
     @resetSteps()
