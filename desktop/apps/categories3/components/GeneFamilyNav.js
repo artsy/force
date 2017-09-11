@@ -5,7 +5,7 @@ import Scrollspy from 'react-scrollspy'
 
 import colors from '@artsy/reaction-force/dist/assets/colors'
 import { primary } from '@artsy/reaction-force/dist/assets/fonts'
-import { frameAnimator } from '../utils'
+import FrameAnimator from 'desktop/components/frame_animator'
 
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired
@@ -59,17 +59,17 @@ class GeneFamilyNav extends React.Component {
     const id = e.target.hash
     const section = document.querySelector(id)
     const topBuffer = 90
-    const scroller = frameAnimator(
+    const scroller = new FrameAnimator(
+      val => {
+        window.scrollTo(0, val)
+      },
       {
         duration: 600,
         startValue: window.scrollY,
         endValue: section.offsetTop - topBuffer
-      },
-      val => {
-        window.scrollTo(0, val)
       }
     )
-    window.requestAnimationFrame(scroller)
+    scroller.start()
   }
 
   render () {
