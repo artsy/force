@@ -36,7 +36,7 @@ export default `
   hero_section {
     ...Image
     ...Video
-    ...on Fullscreen {
+    ...on FeatureHeader {
       type
       title
       url
