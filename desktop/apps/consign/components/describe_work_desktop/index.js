@@ -18,7 +18,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
       artistName,
       categoryOptions,
       error,
-      loading,
+      isLoading,
       handleSubmit,
       hasEditionValue,
       submitDescribeWorkAction
@@ -164,7 +164,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
             type='submit'
           >
             {
-              loading ? <div className='loading-spinner-white' /> : 'Submit'
+              isLoading ? <div className='loading-spinner-white' /> : 'Submit'
             }
           </button>
           {
@@ -182,7 +182,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
       artistName: state.submissionFlow.artistName,
       categoryOptions: state.submissionFlow.categoryOptions,
       error: state.submissionFlow.error,
-      loading: state.submissionFlow.loading,
+      isLoading: state.submissionFlow.isLoading,
       hasEditionValue,
       locationAutocompleteFrozen: state.submissionFlow.locationAutocompleteFrozen,
       locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
@@ -197,7 +197,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
     artistName: PropTypes.string.isRequired,
     categoryOptions: PropTypes.array.isRequired,
     error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     hasEditionValue: PropTypes.bool,
     submitDescribeWorkAction: PropTypes.func.isRequired

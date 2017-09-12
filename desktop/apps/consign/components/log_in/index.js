@@ -29,9 +29,8 @@ function LogIn (props) {
   const {
     error,
     handleSubmit,
+    isLoading,
     logInAction,
-    invalid,
-    pristine,
     updateAuthFormStateAndClearErrorAction
   } = props
 
@@ -69,10 +68,11 @@ function LogIn (props) {
         </div>
         <button
           className={b('log-in-button').mix('avant-garde-button-black')}
-          disabled={pristine || invalid}
           type='submit'
         >
-          Log In
+          {
+            isLoading ? <div className='loading-spinner-white' /> : 'Log In'
+          }
         </button>
         {
           error && <div className={b('error')}>{error}</div>
@@ -94,7 +94,8 @@ function LogIn (props) {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.submissionFlow.error
+    error: state.submissionFlow.error,
+    isLoading: state.submissionFlow.isLoading
   }
 }
 
@@ -106,9 +107,8 @@ const mapDispatchToProps = {
 LogIn.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  invalid: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired,
   logInAction: PropTypes.func.isRequired,
-  pristine: PropTypes.bool,
   updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
 }
 

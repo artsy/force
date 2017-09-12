@@ -12,7 +12,7 @@ function UploadPhoto (props) {
     error,
     hideCheckbox,
     isMobile,
-    loading,
+    isLoading,
     processingImages,
     selectPhotoAction,
     skipPhotoSubmission,
@@ -82,7 +82,7 @@ function UploadPhoto (props) {
           disabled={!nextEnabled}
         >
           {
-            loading ? <div className='loading-spinner-white' /> : 'Submit'
+            isLoading ? <div className='loading-spinner-white' /> : 'Submit'
           }
         </div>
         {
@@ -97,7 +97,7 @@ const mapStateToProps = (state) => {
   return {
     error: state.submissionFlow.error,
     isMobile: state.submissionFlow.isMobile,
-    loading: state.submissionFlow.loading,
+    isLoading: state.submissionFlow.isLoading,
     processingImages: state.submissionFlow.processingImages,
     skipPhotoSubmission: state.submissionFlow.skipPhotoSubmission,
     uploadedImages: state.submissionFlow.uploadedImages
@@ -119,7 +119,7 @@ UploadPhoto.propTypes = {
   error: PropTypes.string,
   hideCheckbox: PropTypes.bool,
   isMobile: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   processingImages: PropTypes.array.isRequired,
   selectPhotoAction: PropTypes.func.isRequired,
   skipPhotoSubmission: PropTypes.bool.isRequired,
