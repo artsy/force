@@ -107,4 +107,36 @@ describe('FrameAnimator', () => {
 
     callback.args.should.match([[0], [1]])
   })
+
+  describe('easing function', () => {
+    let easingFunctions
+
+    beforeEach(() => {
+      easingFunctions = {
+        sinInOut: sinon.spy(),
+        cubicInOut: sinon.spy()
+      }
+      FrameAnimator.__Rewire__('easingFunctions', easingFunctions)
+    })
+
+    afterEach(() => {
+      FrameAnimator.__ResetDependency__('easingFunctions')
+    })
+
+    it('defaults to cubicInOut', () => {
+      const callback = sinon.spy()
+      const animator = new FrameAnimator(callback)
+      animator._animatorFunction(0)
+      easingFunctions.cubicInOut.callCount.should.equal(1)
+    })
+
+    it('can be configured by supplying a function name', () => {
+      const callback = sinon.spy()
+      const animator = new FrameAnimator(callback, {
+        easing: 'sinInOut'
+      })
+      animator._animatorFunction(0)
+      easingFunctions.sinInOut.callCount.should.equal(1)
+    })
+  })
 })
