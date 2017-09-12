@@ -29,7 +29,7 @@ function SignUp (props) {
   const {
     error,
     handleSubmit,
-    loading,
+    isLoading,
     signUpAction,
     updateAuthFormStateAndClearErrorAction
   } = props
@@ -76,7 +76,7 @@ function SignUp (props) {
           type='submit'
         >
           {
-            loading ? <div className='loading-spinner-white' /> : 'Submit'
+            isLoading ? <div className='loading-spinner-white' /> : 'Submit'
           }
         </button>
         {
@@ -90,7 +90,7 @@ function SignUp (props) {
 const mapStateToProps = (state) => {
   return {
     error: state.submissionFlow.error,
-    loading: state.submissionFlow.loading
+    isLoading: state.submissionFlow.isLoading
   }
 }
 
@@ -102,7 +102,7 @@ const mapDispatchToProps = {
 SignUp.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   signUpAction: PropTypes.func.isRequired,
   updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
 }

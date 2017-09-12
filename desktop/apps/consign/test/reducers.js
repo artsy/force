@@ -107,7 +107,7 @@ describe('Reducers', () => {
 
         it('calls the correct actions', () => {
           const expectedActions = [
-            { type: 'START_LOADING' },
+            { type: 'SHOW_LOADER' },
             {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' }, accountCreated: false }
@@ -120,7 +120,7 @@ describe('Reducers', () => {
               }
             },
             { type: 'CLEAR_ERROR' },
-            { type: 'STOP_LOADING' }
+            { type: 'HIDE_LOADER' }
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
@@ -134,13 +134,13 @@ describe('Reducers', () => {
             }
           })
           const expectedActions = [
-            { type: 'START_LOADING' },
+            { type: 'SHOW_LOADER' },
             {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' }, accountCreated: false }
             },
             { type: 'CLEAR_ERROR' },
-            { type: 'STOP_LOADING' }
+            { type: 'HIDE_LOADER' }
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
@@ -214,8 +214,8 @@ describe('Reducers', () => {
 
         it('calls the correct actions', () => {
           const expectedActions = [
-            { type: 'START_LOADING' },
-            { type: 'START_LOADING' },
+            { type: 'SHOW_LOADER' },
+            { type: 'SHOW_LOADER' },
             {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' }, accountCreated: true }
@@ -228,7 +228,7 @@ describe('Reducers', () => {
               }
             },
             { type: 'CLEAR_ERROR' },
-            { type: 'STOP_LOADING' }
+            { type: 'HIDE_LOADER' }
           ]
           store.dispatch(actions.signUp({ name: 'Sarah', email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
