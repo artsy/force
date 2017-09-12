@@ -321,6 +321,8 @@ export function ignoreRedirectOnAuth () {
 export function logIn (values, accountCreated = false) {
   return async (dispatch, getState) => {
     try {
+      dispatch(startLoading())
+
       const {
         submissionFlow: {
           redirectOnAuth
@@ -342,9 +344,11 @@ export function logIn (values, accountCreated = false) {
       dispatch(updateUser(user.body.user, accountCreated))
       redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
+      dispatch(stopLoading())
     } catch (err) {
       const errorMessage = get(err, 'response.body.error', false)
       dispatch(updateError(errorMessage))
+      dispatch(stopLoading())
       console.error(
         '(consignments/client/actions.js @ logIn) Error:', err
       )
@@ -427,6 +431,8 @@ export function showResetPasswordSuccessMessage () {
 export function signUp (values) {
   return async (dispatch, getState) => {
     try {
+      dispatch(startLoading())
+
       const options = {
         email: values.email,
         name: values.name,
@@ -443,6 +449,7 @@ export function signUp (values) {
     } catch (err) {
       const errorMessage = get(err, 'response.body.error', false)
       dispatch(updateError(errorMessage))
+      dispatch(stopLoading())
       console.error(
         '(consignments/client/actions.js @ signUp) Error:', err
       )
