@@ -7,7 +7,7 @@ export default function ArticleQuery (id) {
       article(id: "${id}" ) {
         ${articleBody}
       }
-      relatedArticles: articles(published: true, limit: 3) {
+      relatedArticles: articles(published: true, limit: 4, sort: "-published_at", featured: true) {
         thumbnail_title
         slug
         thumbnail_image
