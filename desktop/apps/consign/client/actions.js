@@ -16,15 +16,15 @@ export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
 export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const ERROR_ON_IMAGE = 'ERROR_ON_IMAGE'
 export const FREEZE_LOCATION_INPUT = 'FREEZE_LOCATION_INPUT'
+export const HIDE_LOADER = 'HIDE_LOADER'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const IGNORE_REDIRECT_ON_AUTH = 'IGNORE_REDIRECT_ON_AUTH'
 export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
 export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
+export const SHOW_LOADER = 'SHOW_LOADER'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
 export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE = 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
-export const START_LOADING = 'START_LOADING'
 export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
-export const STOP_LOADING = 'STOP_LOADING'
 export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
 export const SUBMISSION_CREATED = 'SUBMISSION_CREATED'
 export const SUBMISSION_COMPLETED = 'SUBMISSION_COMPLETED'
@@ -161,10 +161,10 @@ export function completeSubmission () {
 
       dispatch(updateSubmission(submissionResponse.body))
       dispatch(submissionCompleted())
-      dispatch(stopLoading())
+      dispatch(hideLoader())
       dispatch(push(stepsConfig.thankYou.submissionPath.replace(':id', submissionResponse.body.id)))
     } catch (err) {
-      dispatch(stopLoading())
+      dispatch(hideLoader())
       dispatch(submissionError('convection_complete_submission'))
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
@@ -200,11 +200,11 @@ export function createSubmission () {
       }
       dispatch(submissionCreated(submissionBody.body.id))
       dispatch(updateSubmission(submissionBody.body)) // update state to reflect current submission
-      dispatch(stopLoading())
+      dispatch(hideLoader())
       dispatch(push(stepsConfig.describeWork.submissionPath.replace(':id', submissionBody.body.id)))
       dispatch(push(stepsConfig.uploadPhotos.submissionPath.replace(':id', submissionBody.body.id)))
     } catch (err) {
-      dispatch(stopLoading())
+      dispatch(hideLoader())
       dispatch(submissionError('convection_create'))
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
@@ -321,6 +321,8 @@ export function ignoreRedirectOnAuth () {
 export function logIn (values, accountCreated = false) {
   return async (dispatch, getState) => {
     try {
+      dispatch(showLoader())
+
       const {
         submissionFlow: {
           redirectOnAuth
@@ -342,9 +344,11 @@ export function logIn (values, accountCreated = false) {
       dispatch(updateUser(user.body.user, accountCreated))
       redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
       dispatch(clearError())
+      dispatch(hideLoader())
     } catch (err) {
       const errorMessage = get(err, 'response.body.error', false)
       dispatch(updateError(errorMessage))
+      dispatch(hideLoader())
       console.error(
         '(consignments/client/actions.js @ logIn) Error:', err
       )
@@ -427,6 +431,8 @@ export function showResetPasswordSuccessMessage () {
 export function signUp (values) {
   return async (dispatch, getState) => {
     try {
+      dispatch(showLoader())
+
       const options = {
         email: values.email,
         name: values.name,
@@ -443,6 +449,7 @@ export function signUp (values) {
     } catch (err) {
       const errorMessage = get(err, 'response.body.error', false)
       dispatch(updateError(errorMessage))
+      dispatch(hideLoader())
       console.error(
         '(consignments/client/actions.js @ signUp) Error:', err
       )
@@ -477,7 +484,7 @@ export function submitArtist () {
 export function submitDescribeWork (values) {
   return (dispatch) => {
     dispatch(clearError())
-    dispatch(startLoading())
+    dispatch(showLoader())
     dispatch(updateInputs(values)) // update the inputs
     dispatch(scrubLocation())
     dispatch(createSubmission()) // create the submission in convection
@@ -490,15 +497,15 @@ export function selectPhoto (file) {
   }
 }
 
-export function startLoading () {
+export function showLoader () {
   return {
-    type: START_LOADING
+    type: SHOW_LOADER
   }
 }
 
-export function stopLoading () {
+export function hideLoader () {
   return {
-    type: STOP_LOADING
+    type: HIDE_LOADER
   }
 }
 
@@ -528,11 +535,11 @@ export function submissionError (errorType) {
 
 export function submitPhoto () {
   return async (dispatch, getState) => {
-    dispatch(startLoading())
+    dispatch(showLoader())
     try {
       dispatch(completeSubmission())
     } catch (err) {
-      dispatch(stopLoading())
+      dispatch(hideLoader())
       dispatch(updateError('Unable to submit at this time.'))
       console.error(
         '(consignments/client/actions.js @ submitPhoto) Error:', err

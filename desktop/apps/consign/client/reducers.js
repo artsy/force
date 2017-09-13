@@ -60,7 +60,7 @@ const initialState = {
     year: ''
   },
   isMobile: false,
-  loading: false,
+  isLoading: false,
   locationAutocompleteFrozen: false,
   locationAutocompleteSuggestions: [],
   locationAutocompleteValue: '',
@@ -132,6 +132,11 @@ function submissionFlow (state = initialState, action) {
         locationAutocompleteFrozen: true
       }, state)
     }
+    case actions.HIDE_LOADER: {
+      return u({
+        isLoading: false
+      }, state)
+    }
     case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: false
@@ -157,6 +162,11 @@ function submissionFlow (state = initialState, action) {
         uploadedImages: u.reject((ff) => ff.fileName === fileName)
       }, state)
     }
+    case actions.SHOW_LOADER: {
+      return u({
+        isLoading: true
+      }, state)
+    }
     case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
       return u({
         notConsigningArtist: true
@@ -167,11 +177,6 @@ function submissionFlow (state = initialState, action) {
         resetPasswordSuccess: true
       }, state)
     }
-    case actions.START_LOADING: {
-      return u({
-        loading: true
-      }, state)
-    }
     case actions.START_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName
       if (!contains(state.processingImages, fileName)) {
@@ -180,11 +185,6 @@ function submissionFlow (state = initialState, action) {
         }, state)
       }
       return state
-    }
-    case actions.STOP_LOADING: {
-      return u({
-        loading: false
-      }, state)
     }
     case actions.STOP_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName

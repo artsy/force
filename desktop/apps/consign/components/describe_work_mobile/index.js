@@ -21,7 +21,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
       categoryOptions,
       error,
       hasEditionValue,
-      loading,
+      isLoading,
       handleSubmit,
       submitDescribeWorkAction
     } = props
@@ -171,7 +171,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
             type='submit'
           >
             {
-              loading ? <div className='loading-spinner-white' /> : 'Submit'
+              isLoading ? <div className='loading-spinner-white' /> : 'Submit'
             }
           </button>
           {
@@ -191,7 +191,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
       categoryOptions: state.submissionFlow.categoryOptions,
       error: state.submissionFlow.error,
       isMobile: state.submissionFlow.isMobile,
-      loading: state.submissionFlow.loading,
+      isLoading: state.submissionFlow.isLoading,
       hasEditionValue,
       locationAutocompleteFrozen: state.submissionFlow.locationAutocompleteFrozen,
       locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
@@ -207,7 +207,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
     categoryOptions: PropTypes.array.isRequired,
     error: PropTypes.string,
     hasEditionValue: PropTypes.bool,
-    loading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     submitDescribeWorkAction: PropTypes.func.isRequired
   }

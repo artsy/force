@@ -107,6 +107,7 @@ describe('Reducers', () => {
 
         it('calls the correct actions', () => {
           const expectedActions = [
+            { type: 'SHOW_LOADER' },
             {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' }, accountCreated: false }
@@ -118,7 +119,8 @@ describe('Reducers', () => {
                 args: [ '/consign/submission/choose-artist' ]
               }
             },
-            { type: 'CLEAR_ERROR' }
+            { type: 'CLEAR_ERROR' },
+            { type: 'HIDE_LOADER' }
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
@@ -132,11 +134,13 @@ describe('Reducers', () => {
             }
           })
           const expectedActions = [
+            { type: 'SHOW_LOADER' },
             {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' }, accountCreated: false }
             },
-            { type: 'CLEAR_ERROR' }
+            { type: 'CLEAR_ERROR' },
+            { type: 'HIDE_LOADER' }
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
@@ -210,6 +214,8 @@ describe('Reducers', () => {
 
         it('calls the correct actions', () => {
           const expectedActions = [
+            { type: 'SHOW_LOADER' },
+            { type: 'SHOW_LOADER' },
             {
               type: 'UPDATE_USER',
               payload: { user: { id: 'sarah' }, accountCreated: true }
@@ -221,7 +227,8 @@ describe('Reducers', () => {
                 args: [ '/consign/submission/choose-artist' ]
               }
             },
-            { type: 'CLEAR_ERROR' }
+            { type: 'CLEAR_ERROR' },
+            { type: 'HIDE_LOADER' }
           ]
           store.dispatch(actions.signUp({ name: 'Sarah', email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)

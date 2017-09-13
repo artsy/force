@@ -29,9 +29,8 @@ function SignUp (props) {
   const {
     error,
     handleSubmit,
+    isLoading,
     signUpAction,
-    invalid,
-    pristine,
     updateAuthFormStateAndClearErrorAction
   } = props
 
@@ -74,10 +73,11 @@ function SignUp (props) {
         </div>
         <button
           className={b('sign-up-button').mix('avant-garde-button-black')}
-          disabled={pristine || invalid}
           type='submit'
         >
-          Submit
+          {
+            isLoading ? <div className='loading-spinner-white' /> : 'Submit'
+          }
         </button>
         {
           error && <div className={b('error')}>{error}</div>
@@ -89,7 +89,8 @@ function SignUp (props) {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.submissionFlow.error
+    error: state.submissionFlow.error,
+    isLoading: state.submissionFlow.isLoading
   }
 }
 
@@ -101,9 +102,8 @@ const mapDispatchToProps = {
 SignUp.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  invalid: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired,
   signUpAction: PropTypes.func.isRequired,
-  pristine: PropTypes.bool,
   updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
 }
 
