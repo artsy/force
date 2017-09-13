@@ -11,6 +11,10 @@ const propTypes = {
   geneFamilies: PropTypes.array.isRequired
 }
 
+// amount by which to adjust scrolling & spying,
+// in order to account for header and whitespace
+const TOP_BUFFER = 90
+
 const ResponsiveSidebar = styled.aside`
   display: none;
 
@@ -49,16 +53,10 @@ const GeneFamilyLink = styled.a`
 `
 
 class GeneFamilyNav extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick (e) {
+  handleClick = e => {
     e.preventDefault()
     const id = e.target.hash
     const section = document.querySelector(id)
-    const topBuffer = 90
     const scroller = new FrameAnimator(
       val => {
         window.scrollTo(0, val)
@@ -66,7 +64,7 @@ class GeneFamilyNav extends React.Component {
       {
         duration: 600,
         startValue: window.scrollY,
-        endValue: section.offsetTop - topBuffer
+        endValue: section.offsetTop - TOP_BUFFER
       }
     )
     scroller.start()
@@ -79,7 +77,7 @@ class GeneFamilyNav extends React.Component {
         <GeneFamilyList
           items={geneFamilies.map(f => f.id)}
           currentClassName='is-current'
-          offset={-90}
+          offset={-1 * TOP_BUFFER}
         >
           {geneFamilies.map(geneFamily => (
             <GeneFamilyItem key={geneFamily.id}>
