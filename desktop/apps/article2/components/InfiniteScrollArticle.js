@@ -28,13 +28,9 @@ export default class InfiniteScrollArticle extends React.Component {
   fetchNextArticles = async () => {
     this.setState({ isLoading: true })
     try {
-      const data = await positronql({ query: articlesQuery(this.state.offset, 3, sd.ARTSY_EDITORIAL_CHANNEL) })
-      // Omit original article from infinite scroll
-      const articles = _.filter(data.articles, (article) => {
-        return article.id !== this.props.article.id
-      })
+      const data = await positronql({ query: articlesQuery(this.state.offset, 3, sd.ARTSY_EDITORIAL_CHANNEL, this.props.article.id) })
       this.setState({
-        articles: this.state.articles.concat(articles),
+        articles: this.state.articles.concat(data.articles),
         isLoading: false,
         offset: this.state.offset + 3
       })
