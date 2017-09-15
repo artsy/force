@@ -8,12 +8,11 @@ import _ from 'underscore'
 import articlesQuery from '../queries/articles.js'
 import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
-const { Article } = components
+const { Article, RelatedArticlesCanvas } = components
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
-    article: PropTypes.object,
-    relatedArticles: PropTypes.array
+    article: PropTypes.object
   }
 
   constructor (props) {
@@ -29,13 +28,9 @@ export default class InfiniteScrollArticle extends React.Component {
   fetchNextArticles = async () => {
     this.setState({ isLoading: true })
     try {
-      const data = await positronql({ query: articlesQuery(this.state.offset, 3, sd.ARTSY_EDITORIAL_CHANNEL) })
-      // Omit original article from infinite scroll
-      const articles = _.filter(data.articles, (article) => {
-        return article.id !== this.props.article.id
-      })
+      const data = await positronql({ query: articlesQuery(this.state.offset, 3, sd.ARTSY_EDITORIAL_CHANNEL, this.props.article.id) })
       this.setState({
-        articles: this.state.articles.concat(articles),
+        articles: this.state.articles.concat(data.articles),
         isLoading: false,
         offset: this.state.offset + 3
       })
@@ -60,7 +55,9 @@ export default class InfiniteScrollArticle extends React.Component {
     return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
         <div key={`article-${i}`}>
-          <Article article={article} relatedArticles={this.props.relatedArticles} />
+          <Article article={article} relatedArticles={article.relatedArticlesPanel} />
+          <Break />
+          <RelatedArticlesCanvas vertical={article.vertical} articles={article.relatedArticlesCanvas} />
           <Break />
         </div>
       )
@@ -82,7 +79,6 @@ const LoadingSpinner = styled.div`
   padding: 100px;
 `
 const Break = styled.div`
-  border: 1px solid ${colors.grayRegular};
-  height: 2px;
+  border-top: 1px solid ${colors.grayRegular};
   width: 100%;
 `

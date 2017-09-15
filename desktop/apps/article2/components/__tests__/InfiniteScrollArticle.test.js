@@ -5,7 +5,7 @@ import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import { shallow } from 'enzyme'
 import React from 'react'
 import components from '@artsy/reaction-force/dist/components/publishing/index'
-const { Article } = components
+const { Article, RelatedArticlesCanvas } = components
 
 describe('<StandardArticle />', () => {
   it('renders the initial article', () => {
@@ -47,28 +47,18 @@ describe('<StandardArticle />', () => {
     rendered.find(Article).length.should.equal(2)
   })
 
-  it('omits the initial article from infinite scroll', async () => {
+  it('renders the RelatedArticlesCanvas', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
         name: 'Art Market'
       },
-      published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{name: 'Kana'}],
-      id: '123'
+      relatedArticlesCanvas: [
+        fixtures.article
+      ]
     })
-    const data = {
-      articles: [_.extend({}, fixtures.article, {
-        id: '123'
-      })]
-    }
-    RoutesRewireApi.__Rewire__(
-      'positronql',
-      sinon.stub().returns(Promise.resolve(data))
-    )
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
-    await rendered.instance().fetchNextArticles()
-    rendered.update()
-    rendered.find(Article).length.should.equal(1)
+    rendered.find(RelatedArticlesCanvas).length.should.equal(1)
   })
 })
