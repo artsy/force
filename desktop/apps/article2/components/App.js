@@ -6,13 +6,12 @@ const { Article } = components
 
 export default class App extends React.Component {
   static propTypes = {
-    article: PropTypes.object,
-    relatedArticles: PropTypes.array
+    article: PropTypes.object
   }
 
   render () {
     if (this.props.article.layout === 'standard') {
-      return <InfiniteScrollArticle article={this.props.article} relatedArticles={this.props.relatedArticles} />
+      return <InfiniteScrollArticle article={this.props.article} />
     } else {
       return <Article article={this.props.article} />
     }
