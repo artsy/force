@@ -13,7 +13,7 @@ module.exports.index = (req, res) ->
   sales = new Sales
   sales.fetch
     cache: true
-    data: is_auction: true, published: true, size: 20, sort: '-timely_at,name'
+    data: is_auction: true, published: true, size: 100, sort: '-timely_at,name'
     success: (collection, response, options) ->
       # Fetch artworks for the sale
       Q.allSettled(sales.map (sale) ->

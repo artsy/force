@@ -26,7 +26,7 @@ describe 'Auctions routes', ->
     it 'fetches the relevant auction data and renders the index template', (done) ->
       routes.index {}, @res
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales'
-      Backbone.sync.args[0][2].data.should.eql is_auction: true, published: true, size: 20, sort: '-timely_at,name'
+      Backbone.sync.args[0][2].data.should.eql is_auction: true, published: true, size: 100, sort: '-timely_at,name'
       Backbone.sync.args[0][2].success(@sales)
       Backbone.sync.callCount.should.equal 5
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/invalid-sale/sale_artworks'
@@ -56,7 +56,7 @@ describe 'Auctions routes', ->
     it 'sorts the open auctions by live_start_at or end_at', (done) ->
       routes.index {}, @res
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales'
-      Backbone.sync.args[0][2].data.should.eql is_auction: true, published: true, size: 20, sort: '-timely_at,name'
+      Backbone.sync.args[0][2].data.should.eql is_auction: true, published: true, size: 100, sort: '-timely_at,name'
       Backbone.sync.args[0][2].success(@sales)
       Backbone.sync.callCount.should.equal 5
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/invalid-sale/sale_artworks'
