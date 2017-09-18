@@ -105,6 +105,6 @@ if (location.pathname.match(/artwork\/.*\/bid/))
   analytics.track("Showed 'Confirm bid on artwork page'", { nonInteraction: 1 });
 
 // Trigged login for bid registrations
-if (location.pathname.includes('/log_in') && location.search.includes("?redirect_uri=/auction-registration/")) {
+if ((location.pathname.indexOf('/log_in') !== -1) && (location.search.indexOf('?redirect_uri=/auction-registration/') !== -1)) {
   analytics.track('Trigged login form via register to bid button')
 }
