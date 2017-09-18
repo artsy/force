@@ -159,6 +159,11 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
               <Field name='location' component={LocationAutocomplete} />
             </div>
           </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='phone' component={renderTextInput} label={'Mobile Number*'} item={'phone'} />
+            </div>
+          </div>
           <button
             className={b('next-button').mix('avant-garde-button-black')}
             type='submit'

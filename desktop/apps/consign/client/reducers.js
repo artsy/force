@@ -53,6 +53,7 @@ const initialState = {
     location_state: '',
     location_country: '',
     medium: '',
+    phone: '',
     provenance: '',
     signature: false,
     title: '',
