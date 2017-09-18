@@ -10,6 +10,7 @@ NODE_ENV=production browserify \
   -p prundupify \
   -g [ envify --NODE_ENV production ] \
   -p bundle-collapser/plugin \
+  -r babel-polyfill \
   -t babelify \
   -t caching-coffeeify \
   -t jadeify \
