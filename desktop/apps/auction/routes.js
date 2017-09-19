@@ -28,8 +28,6 @@ export async function index (req, res, next) {
     res.locals.sd.AUCTION = sale
     fetchUser(req, res)
 
-    console.log('me query!', MeQuery(sale.id))
-
     const { me } = await metaphysics({
       query: MeQuery(sale.id),
       req: req

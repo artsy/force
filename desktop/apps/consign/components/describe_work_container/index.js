@@ -10,8 +10,8 @@ function DescribeWorkContainer (props) {
   const { isMobile, phone, submission } = props
   const location = formattedLocation(submission.location_city, submission.location_state, submission.location_country)
   const populatedSubmission = isEmpty(submission)
-    ? { signature: true, authenticity_certificate: true, phone: phone }
-    : { ...submission, location }
+    ? { signature: true, authenticity_certificate: true, phone }
+    : { ...submission, location, phone }
   const relevantInputs = pick(
     populatedSubmission,
     'artist_id',

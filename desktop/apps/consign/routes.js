@@ -53,13 +53,15 @@ export const submissionFlowWithId = async (req, res, next) => {
 
 export const submissionFlowWithFetch = async (req, res, next) => {
   try {
-    const token = await fetchToken(req.user.get('accessToken'))
-    const submission = await request
-                              .get(`${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`)
-                              .set('Authorization', `Bearer ${token}`)
-    const { artist: { name } } = await metaphysics({ query: ArtistQuery(submission.body.artist_id), req })
-    res.locals.sd.SUBMISSION = submission.body
-    res.locals.sd.SUBMISSION_ARTIST_NAME = name
+    if (req.user) {
+      const token = await fetchToken(req.user.get('accessToken'))
+      const submission = await request
+                                .get(`${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`)
+                                .set('Authorization', `Bearer ${token}`)
+      const { artist: { name } } = await metaphysics({ query: ArtistQuery(submission.body.artist_id), req })
+      res.locals.sd.SUBMISSION = submission.body
+      res.locals.sd.SUBMISSION_ARTIST_NAME = name
+    }
     res.render('submission_flow', { user: req.user })
   } catch (e) {
     next(e)

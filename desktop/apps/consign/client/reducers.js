@@ -309,6 +309,13 @@ function submissionFlow (state = initialState, action) {
         user: action.payload.user
       }, state)
     }
+    case actions.UPDATE_USER_PHONE: {
+      return u({
+        user: {
+          phone: action.payload.newPhone
+        }
+      }, state)
+    }
     default: return state
   }
 }

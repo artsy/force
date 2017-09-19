@@ -153,7 +153,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
               />
             </div>
           </div>
-          <div className={b('row')}>
+          <div className={b('row', {'border-bottom': true})}>
             <div className={b('row-item')}>
               <div className={b('instructions')}>What city is the work located in?*</div>
               <Field name='location' component={LocationAutocomplete} />
