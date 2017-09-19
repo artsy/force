@@ -312,7 +312,7 @@ function submissionFlow (state = initialState, action) {
     case actions.UPDATE_USER_PHONE: {
       return u({
         user: {
-          phone: action.payload.newPhone
+          phone: action.payload.phone
         }
       }, state)
     }

@@ -761,11 +761,11 @@ export function updateUser (user, accountCreated) {
   }
 }
 
-export function updateUserPhone (newPhone) {
+export function updateUserPhone (phone) {
   return {
     type: UPDATE_USER_PHONE,
     payload: {
-      newPhone
+      phone
     }
   }
 }

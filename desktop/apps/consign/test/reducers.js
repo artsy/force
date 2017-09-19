@@ -165,7 +165,7 @@ describe('Reducers', () => {
           const expectedActions = [
             {
               type: 'UPDATE_USER_PHONE',
-              payload: { newPhone: '6073490948' }
+              payload: { phone: '6073490948' }
             },
             {
               type: 'SUBMISSION_CREATED',
