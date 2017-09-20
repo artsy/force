@@ -53,6 +53,7 @@ const initialState = {
     location_state: '',
     location_country: '',
     medium: '',
+    phone: '',
     provenance: '',
     signature: false,
     title: '',
@@ -306,6 +307,13 @@ function submissionFlow (state = initialState, action) {
     case actions.UPDATE_USER: {
       return u({
         user: action.payload.user
+      }, state)
+    }
+    case actions.UPDATE_USER_PHONE: {
+      return u({
+        user: {
+          phone: action.payload.phone
+        }
       }, state)
     }
     default: return state

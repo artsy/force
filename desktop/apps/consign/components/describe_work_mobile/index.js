@@ -160,10 +160,15 @@ export function makeDescribeWorkMobile (initialValues = {}) {
               />
             </div>
           </div>
-          <div className={b('row')}>
+          <div className={b('row', {'border-bottom': true})}>
             <div className={b('row-item')}>
               <div className={b('instructions')}>What city is the work located in?*</div>
               <Field name='location' component={LocationAutocomplete} />
+            </div>
+          </div>
+          <div className={b('row')}>
+            <div className={b('row-item')}>
+              <Field name='phone' component={renderTextInput} label={'Mobile Number*'} item={'phone'} />
             </div>
           </div>
           <button

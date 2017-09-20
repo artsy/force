@@ -26,9 +26,13 @@
 @require '../components/uploaded_image/index'
 
 .consignments-submission-body
+  #main-layout-header
+    overflow hidden
+
   @media (max-width: responsive-mobile-width)
     #main-layout-header
       height 53px
+      overflow hidden
       #main-header-search-form, #main-header-search-button
         display none
 
