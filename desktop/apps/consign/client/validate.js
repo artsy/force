@@ -26,6 +26,7 @@ export function validate (values) {
     height,
     location,
     medium,
+    phone,
     title,
     width,
     year
@@ -37,6 +38,7 @@ export function validate (values) {
   if (!title) errors.title = 'Required'
   if (!year) errors.year = 'Required'
   if (!medium) errors.medium = 'Required'
+  if (!phone) errors.phone = 'Required'
   if (!height || numberWarning(height)) errors.height = 'Required'
   if (!width || numberWarning(width)) errors.width = 'Required'
   if (numberWarning(depth)) errors.depth = 'Required'

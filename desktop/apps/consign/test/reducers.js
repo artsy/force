@@ -33,6 +33,22 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#updateUserPhone', () => {
+        it('updates to the new phone number if no phone exists', () => {
+          const withUser = reducers(initialResponse, actions.updateUser({ phone: '' }))
+          const newPhone = '1234567'
+          const updatedPhone = reducers(withUser, actions.updateUserPhone(newPhone))
+          updatedPhone.submissionFlow.user.phone.should.eql(newPhone)
+        })
+
+        it('updates to the new phone number if one already exists', () => {
+          const withUser = reducers(initialResponse, actions.updateUser({ phone: '987654' }))
+          const newPhone = '1234567'
+          const updatedPhone = reducers(withUser, actions.updateUserPhone(newPhone))
+          updatedPhone.submissionFlow.user.phone.should.eql(newPhone)
+        })
+      })
+
       describe('#fetchArtistSuggestions', () => {
         let store
 
@@ -55,7 +71,7 @@ describe('Reducers', () => {
           ActionsRewireApi.__Rewire__('sd', { CURRENT_USER: { accessToken: 'foo' } })
         })
 
-        it('calls the correct actions', () => {
+        it('calls the correct actions', (done) => {
           const expectedActions = [
             {
               type: 'UPDATE_ARTIST_SUGGESTIONS',
@@ -70,7 +86,140 @@ describe('Reducers', () => {
           ]
           store.dispatch(actions.fetchArtistSuggestions()).then(() => {
             store.getActions().should.eql(expectedActions)
+            done()
+          }).catch((err) => done(err))
+        })
+      })
+
+      describe('#createSubmission', () => {
+        let store
+        let request
+
+        beforeEach(() => {
+          benv.setup(() => {
+            sinon.stub(global, 'btoa')
           })
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+
+          store = mockStore({
+            submissionFlow: {
+              user: { accessToken: 'foo', phone: '12345' },
+              submission: {},
+              inputs: { phone: '12345' }
+            }
+          })
+          request = sinon.stub()
+          request.post = sinon.stub().returns(request)
+          request.set = sinon.stub().returns(request)
+          request.send = sinon.stub().returns({ body: { id: 'sub1' } })
+
+          global.window = { btoa: sinon.stub() }
+          ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('fetchToken', sinon.stub().returns('fooToken'))
+          ActionsRewireApi.__Rewire__('sd', { CURRENT_USER: { accessToken: 'foo' }, CONVECTION_APP_ID: 'myapp' })
+        })
+
+        afterEach(() => {
+          benv.teardown()
+          global.btoa.restore()
+          ActionsRewireApi.__ResetDependency__('request')
+          ActionsRewireApi.__ResetDependency__('fetchToken')
+          ActionsRewireApi.__ResetDependency__('sd')
+        })
+
+        it('sends the correct actions on success without updating phone', (done) => {
+          const expectedActions = [
+            {
+              type: 'SUBMISSION_CREATED',
+              payload: { submissionId: 'sub1' }
+            },
+            {
+              type: 'UPDATE_SUBMISSION',
+              payload: { submission: { id: 'sub1' } }
+            },
+            { type: 'HIDE_LOADER' },
+            {
+              type: '@@router/CALL_HISTORY_METHOD',
+              payload: {
+                method: 'push',
+                args: [ '/consign/submission/sub1/describe-your-work' ]
+              }
+            },
+            {
+              type: '@@router/CALL_HISTORY_METHOD',
+              payload: {
+                method: 'push',
+                args: [ '/consign/submission/sub1/upload-photos' ]
+              }
+            }
+          ]
+          store.dispatch(actions.createSubmission()).then(() => {
+            store.getActions().should.eql(expectedActions)
+            done()
+          }).catch((err) => done(err))
+        })
+
+        it('sends the correct actions on success while also updating the phone', (done) => {
+          store.dispatch(actions.updateUserPhone('6073490948'))
+          const expectedActions = [
+            {
+              type: 'UPDATE_USER_PHONE',
+              payload: { phone: '6073490948' }
+            },
+            {
+              type: 'SUBMISSION_CREATED',
+              payload: { submissionId: 'sub1' }
+            },
+            {
+              type: 'UPDATE_SUBMISSION',
+              payload: { submission: { id: 'sub1' } }
+            },
+            { type: 'HIDE_LOADER' },
+            {
+              type: '@@router/CALL_HISTORY_METHOD',
+              payload: {
+                method: 'push',
+                args: [ '/consign/submission/sub1/describe-your-work' ]
+              }
+            },
+            {
+              type: '@@router/CALL_HISTORY_METHOD',
+              payload: {
+                method: 'push',
+                args: [ '/consign/submission/sub1/upload-photos' ]
+              }
+            }
+          ]
+          store.dispatch(actions.createSubmission()).then(() => {
+            store.getActions().should.eql(expectedActions)
+            done()
+          }).catch((err) => done(err))
+        })
+
+        it('sends the correct actions on error', (done) => {
+          const expectedActions = [
+            {
+              type: 'HIDE_LOADER'
+            },
+            {
+              type: 'SUBMISSION_ERROR',
+              payload: {
+                errorType: 'convection_create'
+              }
+            },
+            {
+              type: 'UPDATE_ERROR',
+              payload: {
+                error: 'Unable to submit at this time.'
+              }
+            }
+          ]
+          request.send = sinon.stub().returns('TypeError')
+          store.dispatch(actions.createSubmission()).then(() => {
+            store.getActions().should.eql(expectedActions)
+            done()
+          }).catch((err) => done(err))
         })
       })
 
@@ -105,7 +254,7 @@ describe('Reducers', () => {
           ActionsRewireApi.__ResetDependency__('sd')
         })
 
-        it('calls the correct actions', () => {
+        it('calls the correct actions', (done) => {
           const expectedActions = [
             { type: 'SHOW_LOADER' },
             {
@@ -124,10 +273,11 @@ describe('Reducers', () => {
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
 
-        it('ignores redirect correctly', () => {
+        it('ignores redirect correctly', (done) => {
           store = mockStore({
             submissionFlow: {
               redirectOnAuth: false
@@ -144,7 +294,8 @@ describe('Reducers', () => {
           ]
           store.dispatch(actions.logIn({ email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
       })
 
@@ -171,14 +322,15 @@ describe('Reducers', () => {
           ActionsRewireApi.__ResetDependency__('sd')
         })
 
-        it('calls the correct actions', () => {
+        it('calls the correct actions', (done) => {
           const expectedActions = [
             { type: 'CLEAR_ERROR' },
             { type: 'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE' }
           ]
           store.dispatch(actions.resetPassword({ email: 'sarah@sarah.com' })).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
       })
 
@@ -212,7 +364,7 @@ describe('Reducers', () => {
           ActionsRewireApi.__ResetDependency__('sd')
         })
 
-        it('calls the correct actions', () => {
+        it('calls the correct actions', (done) => {
           const expectedActions = [
             { type: 'SHOW_LOADER' },
             { type: 'SHOW_LOADER' },
@@ -232,7 +384,8 @@ describe('Reducers', () => {
           ]
           store.dispatch(actions.signUp({ name: 'Sarah', email: 'sarah@sarah.com', password: '1234' })).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
       })
 
@@ -440,7 +593,7 @@ describe('Reducers', () => {
           store = mockStore(initialResponse)
         })
 
-        it('errors if the image is not the right type', () => {
+        it('errors if the image is not the right type', (done) => {
           const expectedActions = [
             {
               type: 'ADD_IMAGE_TO_UPLOADED_IMAGES',
@@ -453,7 +606,8 @@ describe('Reducers', () => {
           ]
           store.dispatch(actions.handleImageUpload({ type: 'pdf', name: 'hello.pdf' })).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
       })
 
@@ -493,7 +647,7 @@ describe('Reducers', () => {
           ActionsRewireApi.__ResetDependency__('sd')
         })
 
-        it('stops processing the image if it succeeds', () => {
+        it('stops processing the image if it succeeds', (done) => {
           const expectedActions = [
             {
               type: 'STOP_PROCESSING_IMAGE',
@@ -503,10 +657,11 @@ describe('Reducers', () => {
           ]
           store.dispatch(actions.uploadImageToConvection('gemini-token', 'astronaut.jpg')).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
 
-        it('updates the error if it does not succeed', () => {
+        it('updates the error if it does not succeed', (done) => {
           request.post = sinon.stub().returns('TypeError')
           const expectedActions = [
             {
@@ -517,7 +672,8 @@ describe('Reducers', () => {
           const filePath = 'http://s3.com/abcdefg%2Fastronaut.jpg'
           store.dispatch(actions.uploadImageToConvection(filePath, 'astronaut.jpg')).then(() => {
             store.getActions().should.eql(expectedActions)
-          })
+            done()
+          }).catch((err) => done(err))
         })
       })
     })

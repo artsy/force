@@ -7,11 +7,11 @@ import { makeDescribeWorkMobile } from '../describe_work_mobile'
 import { isEmpty, pick } from 'underscore'
 
 function DescribeWorkContainer (props) {
-  const { isMobile, submission } = props
+  const { isMobile, phone, submission } = props
   const location = formattedLocation(submission.location_city, submission.location_state, submission.location_country)
   const populatedSubmission = isEmpty(submission)
-    ? { signature: true, authenticity_certificate: true }
-    : { ...submission, location }
+    ? { signature: true, authenticity_certificate: true, phone }
+    : { ...submission, location, phone }
   const relevantInputs = pick(
     populatedSubmission,
     'artist_id',
@@ -26,6 +26,7 @@ function DescribeWorkContainer (props) {
     'id',
     'location',
     'medium',
+    'phone',
     'provenance',
     'signature',
     'title',
@@ -43,6 +44,7 @@ function DescribeWorkContainer (props) {
 const mapStateToProps = (state) => {
   return {
     isMobile: state.submissionFlow.isMobile,
+    phone: state.submissionFlow.user.phone,
     submission: state.submissionFlow.submission
   }
 }
@@ -53,5 +55,6 @@ export default connect(
 
 DescribeWorkContainer.propTypes = {
   isMobile: PropTypes.bool.isRequired,
+  phone: PropTypes.string,
   submission: PropTypes.object
 }

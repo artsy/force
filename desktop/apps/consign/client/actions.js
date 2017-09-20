@@ -49,6 +49,7 @@ export const UPDATE_STEPS_WITH_USER = 'UPDATE_STEPS_WITH_USER'
 export const UPDATE_STEPS_WITHOUT_USER = 'UPDATE_STEPS_WITHOUT_USER'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_USER_PHONE = 'UPDATE_USER_PHONE'
 
 // Action creators
 export function addAssetId (assetId) {
@@ -185,7 +186,6 @@ export function createSubmission () {
         }
       } = getState()
       const token = await fetchToken(user.accessToken)
-
       let submissionBody
       if (submission.id) {
         submissionBody = await request
@@ -198,6 +198,16 @@ export function createSubmission () {
                            .set('Authorization', `Bearer ${token}`)
                            .send(inputs)
       }
+      let userBody
+      // update the user's phone number if it has been changed
+      if (user.phone !== inputs.phone) {
+        userBody = await request
+                           .put(`${sd.API_URL}/api/v1/me`)
+                           .set('X-ACCESS-TOKEN', user.accessToken)
+                           .send({ phone: inputs.phone })
+        dispatch(updateUserPhone(userBody.body.phone))
+      }
+
       dispatch(submissionCreated(submissionBody.body.id))
       dispatch(updateSubmission(submissionBody.body)) // update state to reflect current submission
       dispatch(hideLoader())
@@ -747,6 +757,15 @@ export function updateUser (user, accountCreated) {
     payload: {
       user,
       accountCreated
+    }
+  }
+}
+
+export function updateUserPhone (phone) {
+  return {
+    type: UPDATE_USER_PHONE,
+    payload: {
+      phone
     }
   }
 }
