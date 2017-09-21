@@ -28,6 +28,11 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.jade$/,
+        exclude: /node_modules/,
+        loader: 'pug-loader'
       }
     ]
   },
@@ -48,7 +53,7 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin('commons.chunk')
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.jade'],
     modules: [
       'node_modules'
     ]

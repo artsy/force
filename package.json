@@ -103,6 +103,7 @@
     "popover": "^2.4.0",
     "prop-types": "^15.5.8",
     "prundupify": "^1.0.0",
+    "pug": "^2.0.0-rc.4",
     "qs": "^6.3.0",
     "query-string": "^5.0.1",
     "raven": "^1.2.1",
