@@ -116,6 +116,46 @@ describe 'article show template', ->
       markdown: markdown
     html.should.containEql '<a href="http://artsy.net">Link</a>'
 
+  it 'super articles display a footer_title', ->
+    html = render('index')
+      article: new Article
+        title: 'Super Article Title'
+        sections: []
+        contributing_authors: []
+        is_super_article: true
+      footerArticles: new Articles
+      superArticle: new Article
+        super_article:
+          footer_title: 'Footer Title'
+      superSubArticles: new Articles
+      crop: ->
+      resize: ->
+      moment: moment
+      sd: {}
+      asset: ->
+      markdown: markdown
+    html.should.containEql 'Footer Title'
+
+  it 'super articles fallback on the title when there is no footer_title', ->
+    html = render('index')
+      article: new Article
+        title: 'Super Article Title'
+        sections: []
+        contributing_authors: []
+        is_super_article: true
+      footerArticles: new Articles
+      superArticle: new Article
+        super_article:
+          footer_title: ''
+      superSubArticles: new Articles
+      crop: ->
+      resize: ->
+      moment: moment
+      sd: {}
+      asset: ->
+      markdown: markdown
+    html.should.containEql 'Super Article Title'
+
   it 'can optionally exclude share buttons', ->
     html = render('index')
       article: new Article
