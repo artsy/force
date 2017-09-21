@@ -1,6 +1,7 @@
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const WebpackNotifierPlugin = require('webpack-notifier')
+const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -10,12 +11,8 @@ const {
 } = process.env
 
 const config = {
-  devtool: 'eval',
-  entry: {
-    app: [
-      './desktop/webpack/index.js'
-    ]
-  },
+  devtool: 'cheap-module-eval-source-map',
+  entry: getEntrypoints(),
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public/assets'),
@@ -25,14 +22,28 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.coffee$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'coffee-loader'
       },
       {
         test: /\.jade$/,
         exclude: /node_modules/,
-        loader: 'pug-loader'
+        loader: 'jade-loader'
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          }
+        }]
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },
@@ -40,7 +51,8 @@ const config = {
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`]
-      }
+      },
+      clearConsole: false
     }),
     new ProgressBarPlugin(),
     new WebpackNotifierPlugin(),
@@ -53,7 +65,7 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin('commons.chunk')
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.jade'],
+    extensions: ['.js', '.jsx', '.json', '.jade', '.coffee'],
     modules: [
       'node_modules'
     ]
@@ -66,7 +78,7 @@ const isProduction = NODE_ENV === 'production'
 const isDeploy = isStaging || isProduction
 
 if (isDevelopment) {
-  config.entry.app.push('webpack-hot-middleware/client')
+  // config.entry.app.push('webpack-hot-middleware/client')
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 
   // Staging
@@ -84,3 +96,47 @@ if (isDevelopment) {
 }
 
 module.exports = config
+
+// Helpers
+
+function getEntrypoints () {
+  return {
+    ...findAssets('desktop/assets'),
+    ...findAssets('mobile/assets')
+  }
+}
+
+function findAssets (basePath) {
+  const files = fs.readdirSync(path.join(process.cwd(), basePath))
+
+  // Filter out .styl files
+  const validAssets = (file) => {
+    const whitelist = [
+      '.js',
+      '.coffee'
+    ]
+
+    const isValid = whitelist.some(extension => extension === path.extname(file))
+    return isValid
+  }
+
+  /**
+   * Construct key/value pairs representing Webpack compilation output; e.g.,
+   * { desktop: [ path/to/desktop.js ] }
+   */
+  const assets = files
+    .filter(validAssets)
+    // .filter((f, i) => i < 2)
+    .reduce((assetMap, file, index) => {
+      const fileName = path.basename(file, path.extname(file))
+
+      return {
+        ...assetMap,
+        [fileName]: [
+          path.resolve(basePath, file)
+        ]
+      }
+    }, {})
+
+  return assets
+}

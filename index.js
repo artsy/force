@@ -20,7 +20,7 @@ cache.setup(() => {
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
     if (module === require.main) {
-      app.listen(PORT, () => console.log(`Force listening on port ${PORT}`))
+      app.listen(PORT, () => console.log(`\n\n  [Force] Booting on port ${PORT}... \n`))
     }
   })
 })
