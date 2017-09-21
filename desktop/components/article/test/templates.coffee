@@ -156,6 +156,25 @@ describe 'article show template', ->
       markdown: markdown
     html.should.containEql 'Super Article Title'
 
+  it 'super articles show nav when they do not have a fullscreen hero', ->
+    html = render('index')
+      article: new Article
+        title: 'Super Article Title'
+        sections: []
+        contributing_authors: []
+        is_super_article: true
+      footerArticles: new Articles
+      superArticle: new Article
+        super_article: {}
+      superSubArticles: new Articles
+      crop: ->
+      resize: ->
+      moment: moment
+      sd: {}
+      asset: ->
+      markdown: markdown
+    html.should.containEql 'visible no-transition'
+
   it 'can optionally exclude share buttons', ->
     html = render('index')
       article: new Article
