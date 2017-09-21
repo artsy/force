@@ -30,7 +30,4 @@ module.exports = {
       'node_modules'
     ]
   }
-  // node: {
-  //   fs: 'empty'
-  // }
 }
