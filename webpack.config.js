@@ -16,7 +16,7 @@ const config = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public/assets'),
-    publicPath: '/public/assets',
+    publicPath: '/assets',
     sourceMapFilename: '[name].js.map'
   },
   module: {
@@ -62,9 +62,18 @@ const config = {
       }
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('commons.chunk')
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery',
+      'window.jQuery': 'jquery'
+    }),
+    // new webpack.optimize.CommonsChunkPlugin('commons.chunk')
   ],
   resolve: {
+    alias: {
+      'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+      'waypoints': 'waypoints/lib/jquery.waypoints.js'
+    },
     extensions: ['.js', '.jsx', '.json', '.jade', '.coffee'],
     modules: [
       'node_modules'
@@ -87,11 +96,11 @@ if (isDevelopment) {
 
   // Prod
   if (isProduction) {
-    config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true
-      })
-    )
+    // config.plugins.push(
+    //   new webpack.optimize.UglifyJsPlugin({
+    //     sourceMap: true
+    //   })
+    // )
   }
 }
 

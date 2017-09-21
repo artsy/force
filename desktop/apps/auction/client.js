@@ -8,6 +8,7 @@ import auctionReducer from 'desktop/apps/auction/reducers'
 import configureStore from 'desktop/components/react/utils/configureStore'
 import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
 
+console.log('hi!')
 export default () => {
   // Rehydrate data from Server
   const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
