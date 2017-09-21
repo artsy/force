@@ -4,7 +4,10 @@ const WebpackNotifierPlugin = require('webpack-notifier')
 const path = require('path')
 const webpack = require('webpack')
 
-const { NODE_ENV } = process.env
+const {
+  NODE_ENV,
+  PORT
+} = process.env
 
 const config = {
   devtool: 'eval',
@@ -29,7 +32,11 @@ const config = {
     ]
   },
   plugins: [
-    new FriendlyErrorsWebpackPlugin(),
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [`[Force] Listening on http://localhost:${PORT} \n`]
+      }
+    }),
     new ProgressBarPlugin(),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
