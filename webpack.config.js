@@ -4,11 +4,11 @@ const WebpackNotifierPlugin = require('webpack-notifier')
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-
-const {
-  NODE_ENV,
-  PORT
-} = process.env
+const { NODE_ENV, PORT } = process.env
+const isDevelopment = NODE_ENV === 'development'
+const isStaging = NODE_ENV === 'staging'
+const isProduction = NODE_ENV === 'production'
+const isDeploy = isStaging || isProduction
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
@@ -67,7 +67,11 @@ const config = {
       'jQuery': 'jquery',
       'window.jQuery': 'jquery'
     }),
-    // new webpack.optimize.CommonsChunkPlugin('commons.chunk')
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js',
+      minChunks: 2
+    })
   ],
   resolve: {
     alias: {
@@ -81,13 +85,7 @@ const config = {
   }
 }
 
-const isDevelopment = NODE_ENV === 'development'
-const isStaging = NODE_ENV === 'staging'
-const isProduction = NODE_ENV === 'production'
-const isDeploy = isStaging || isProduction
-
 if (isDevelopment) {
-  // config.entry.app.push('webpack-hot-middleware/client')
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 
   // Staging
@@ -96,15 +94,13 @@ if (isDevelopment) {
 
   // Prod
   if (isProduction) {
-    // config.plugins.push(
-    //   new webpack.optimize.UglifyJsPlugin({
-    //     sourceMap: true
-    //   })
-    // )
+    config.plugins.push(
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true
+      })
+    )
   }
 }
-
-module.exports = config
 
 // Helpers
 
@@ -130,22 +126,35 @@ function findAssets (basePath) {
   }
 
   /**
-   * Construct key/value pairs representing Webpack compilation output; e.g.,
-   * { desktop: [ path/to/desktop.js ] }
+   * Construct key/value pairs representing Webpack compilation entrypoints; e.g.,
+   * {
+   *   mobile: [ path/to/mobile.js ],
+   *   desktop: [ path/to/desktop.js ]
+   * }
    */
   const assets = files
     .filter(validAssets)
-    // .filter((f, i) => i < 2)
     .reduce((assetMap, file, index) => {
       const fileName = path.basename(file, path.extname(file))
+      const asset = {
+        [fileName]: [
+          path.join(__dirname, basePath, file)
+        ]
+      }
+
+      if (isDevelopment) {
+        asset[fileName].push(
+          'webpack-hot-middleware/client'
+        )
+      }
 
       return {
         ...assetMap,
-        [fileName]: [
-          path.resolve(basePath, file)
-        ]
+        ...asset
       }
     }, {})
 
   return assets
 }
+
+module.exports = config
