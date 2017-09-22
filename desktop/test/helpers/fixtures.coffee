@@ -237,6 +237,7 @@ moment = require 'moment'
   section_ids: []
   is_super_article: false
   super_article: {
+    footer_title: 'Footer Title'
     related_articles: ['5086df098523e60002000012']
   }
   hero_section: {

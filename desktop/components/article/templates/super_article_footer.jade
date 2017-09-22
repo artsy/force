@@ -1,6 +1,8 @@
+- footerTitle = superArticle.get('super_article').footer_title || superArticle.get('title')
+
 .article-sa-footer
   .article-sa-footer-left
-    a.article-sa-title( href=superArticle.href() )= superArticle.get('title')
+    a.article-sa-title( href=superArticle.href() )= footerTitle
 
     if superArticle.get('super_article').footer_blurb
       .article-sa-footer-blurb!= markdown(superArticle.get('super_article').footer_blurb)

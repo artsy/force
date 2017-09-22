@@ -1,6 +1,8 @@
 - menuIsVisible = 'visible no-transition'
+- hasFullscreenHero = article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
+- fullscreenSuperArticle = article.get('is_super_article') && hasFullscreenHero
 
-if article.get('is_super_article') || article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
+if fullscreenSuperArticle || hasFullscreenHero
   - menuIsVisible = ''
 
 .article-sa-sticky-header( class=(menuIsVisible) )
