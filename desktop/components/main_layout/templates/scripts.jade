@@ -121,9 +121,8 @@ script( src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" )
 if options.stripe
   script( type="text/javascript", src="https://js.stripe.com/v2/" )
 
-//- Common bundle generated from factor-bundle
-if sd.NODE_ENV !== 'development'
-  script( src=asset("/assets/common.js") )
+//- Common bundle
+script( src=asset("/assets/common.js") )
 
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'

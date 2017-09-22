@@ -51,8 +51,7 @@ const config = {
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`]
-      },
-      clearConsole: false
+      }
     }),
     new ProgressBarPlugin(),
     new WebpackNotifierPlugin(),
@@ -68,8 +67,7 @@ const config = {
       'window.jQuery': 'jquery'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.js',
+      name: 'common',
       minChunks: 2
     })
   ],
@@ -126,11 +124,8 @@ function findAssets (basePath) {
   }
 
   /**
-   * Construct key/value pairs representing Webpack compilation entrypoints; e.g.,
-   * {
-   *   mobile: [ path/to/mobile.js ],
-   *   desktop: [ path/to/desktop.js ]
-   * }
+   * Construct key/value pairs representing Webpack entrypoints; e.g.,
+   * { desktop: [ path/to/desktop.js ] }
    */
   const assets = files
     .filter(validAssets)
@@ -144,7 +139,7 @@ function findAssets (basePath) {
 
       if (isDevelopment) {
         asset[fileName].push(
-          'webpack-hot-middleware/client'
+          'webpack-hot-middleware/client?reload=true'
         )
       }
 
