@@ -34,7 +34,3 @@ export default () => {
     document.getElementById('react-root')
   )
 }
-
-if (module.hot) {
-  module.hot.accept()
-}

@@ -12,7 +12,13 @@ const isDeploy = isStaging || isProduction
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
-  entry: getEntrypoints(),
+  entry: {
+    webpack: [
+      'webpack-hot-middleware/client?reload=true',
+      './desktop/apps/webpack/client.js'
+    ],
+    ...getEntrypoints()
+  },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public/assets'),
@@ -34,12 +40,28 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: true,
+              env: {
+                development: {
+                  presets: ['react-hmre'],
+                  plugins: [
+                    ['react-transform', {
+                      transforms: [{
+                        transform: 'react-transform-hmr',
+                        imports: ['react'],
+                        locals: ['module']
+                      }]
+                    }]
+                  ]
+                }
+              }
+            }
           }
-        }]
+        ]
       },
       {
         test: /\.json$/,
@@ -129,7 +151,7 @@ function findAssets (basePath) {
    */
   const assets = files
     .filter(validAssets)
-    .reduce((assetMap, file, index) => {
+    .reduce((assetMap, file) => {
       const fileName = path.basename(file, path.extname(file))
       const asset = {
         [fileName]: [
@@ -138,7 +160,7 @@ function findAssets (basePath) {
       }
 
       if (isDevelopment) {
-        asset[fileName].push(
+        asset[fileName].unshift(
           'webpack-hot-middleware/client?reload=true'
         )
       }
