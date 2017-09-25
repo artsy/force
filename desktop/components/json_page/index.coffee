@@ -26,14 +26,7 @@ module.exports = class JSONPage
         callback? err
 
       request
-        # .get "http://#{@bucket}.s3.amazonaws.com#{@path()}"
-
-        # This is using the http-server library to serve the json file I have
-        # in the test folder of the marketing_signup_modal app. I find it helpful
-        # to use fixture data when you haven't actually uploaded the json file to s3 yet.
-        # We will need to remove it and uncomment line 29 when the json data is actually
-        # uploaded. https://github.com/indexzero/http-server
-        .get "http://10.12.7.97:8080/fixture.json"
+        .get "http://#{@bucket}.s3.amazonaws.com#{@path()}"
         .end (err, res) =>
           if res?.ok
             try

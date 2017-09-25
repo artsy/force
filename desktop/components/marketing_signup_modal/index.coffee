@@ -51,16 +51,12 @@ module.exports = class MarketingSignupModal extends Backbone.View
 
   initialize: ->
     slug = qs.parse(location.search.replace /^\?/, '')?['m-id']
-    console.log 'slug:', slug
 
     # Launches marketing signup modal for targeted url
     slug = 'ca3' if !slug and sd.CURRENT_PATH is sd.TARGET_CAMPAIGN_URL
 
-    # modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
-    modalData = _.findWhere(sd.NEW_MARKETING_MODALS.modals, { slug: slug })
-    console.log 'got hereeeeeeee'
-    console.log 'new data:', sd.NEW_MARKETING_MODALS
-    console.log 'modalData:', modalData
+    return unless sd.MARKETING_SIGNUP_MODALS?
+    modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
     @inner = new MarketingSignupModalInner
       data: modalData
 
