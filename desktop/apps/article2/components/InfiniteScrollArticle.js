@@ -8,7 +8,7 @@ import _ from 'underscore'
 import articlesQuery from '../queries/articles.js'
 import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
-const { Article, RelatedArticlesCanvas } = components
+const { Article } = components
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
@@ -55,9 +55,7 @@ export default class InfiniteScrollArticle extends React.Component {
     return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
         <div key={`article-${i}`}>
-          <Article article={article} relatedArticles={article.relatedArticlesPanel} />
-          <Break />
-          <RelatedArticlesCanvas vertical={article.vertical} articles={article.relatedArticlesCanvas} />
+          <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl='/editorial-signup/form' />
           <Break />
         </div>
       )
@@ -66,10 +64,10 @@ export default class InfiniteScrollArticle extends React.Component {
 
   render () {
     return (
-      <div id='article-root'>
+      <InfiniteScrollContainer id='article-root'>
         {this.renderContent()}
         {this.renderWaypoint()}
-      </div>
+      </InfiniteScrollContainer>
     )
   }
 }
@@ -81,4 +79,7 @@ const LoadingSpinner = styled.div`
 const Break = styled.div`
   border-top: 1px solid ${colors.grayRegular};
   width: 100%;
+`
+const InfiniteScrollContainer = styled.div`
+  margin-top: 100px;
 `

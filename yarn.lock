@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.5.7":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.5.7.tgz#c03d1f622fdc971f7f67d2fe04c86fdb3f97d7e9"
+"@artsy/reaction-force@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.6.0.tgz#2816c9762a9c4b0b98e53b34ed22c73ec53b1b1a"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.0"
@@ -36,6 +36,7 @@
     react-sizeme "^2.3.2"
     react-slick "^0.14.11"
     react-styled-flexboxgrid "^2.0.0"
+    react-tracking "^4.2.1"
     react-url-query "^1.1.4"
     request "^2.81.0"
     sharify "^0.1.6"
@@ -7527,6 +7528,12 @@ react-themeable@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
   dependencies:
     object-assign "^3.0.0"
+
+react-tracking@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-4.2.1.tgz#c34619ddd205609ea46281a6c8c8e1243e910e81"
+  dependencies:
+    lodash.merge "^4.6.0"
 
 react-transition-group@^1.1.2:
   version "1.2.0"
