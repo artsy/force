@@ -1,0 +1,29 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'marketing_signup_modals'
+
+block body
+
+  .marketing-signup-modals
+    h1= modals[0]["copy"]
+
+    table.marketing-signup-modals-table
+      thead
+        tr.marketing-signup-modals__table-header
+          th Slug
+          th Copy
+          th Image
+          th Photo Credit
+          th Text Color
+          th Duration
+      tbody
+        for modal in modals
+          tr
+            th= modal["slug"]
+            th= modal["copy"]
+            th
+              a(href=modal["image"])= modal["image"]
+            th= modal["photoCredit"]
+            th= modal["textColor"]
+            th= modal["duration"]
