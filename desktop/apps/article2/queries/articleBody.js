@@ -7,6 +7,7 @@ export default `
   search_description
   social_description
   thumbnail_image
+  thumbnail_title
   social_image
   published_at
   slug

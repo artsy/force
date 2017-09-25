@@ -8,6 +8,9 @@ import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { data as sd } from 'sharify'
 import { renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
+import mailcheck from 'mailcheck'
+const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
+const sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
 
 export async function index (req, res, next) {
   const articleId = req.params.slug
@@ -15,7 +18,6 @@ export async function index (req, res, next) {
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
-    const relatedArticles = data.relatedArticles
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
@@ -42,8 +44,7 @@ export async function index (req, res, next) {
         crop: crop
       },
       data: {
-        article,
-        relatedArticles
+        article
       }
     })
 
@@ -105,6 +106,38 @@ export function amp (req, res, next) {
         crop,
         embed
       }))
+    }
+  })
+}
+
+export const editorialSignup = async (req, res, next) => {
+  sailthru.apiPost('user', {
+    id: req.body.email,
+    lists: {
+      [`${sd.SAILTHRU_MASTER_LIST}`]: 1
+    },
+    name: req.body.name,
+    vars: {
+      source: 'editorial',
+      receive_editorial_email: true,
+      email_frequency: 'daily'
+    }
+  }, (err, response) => {
+    if (err) {
+      return res.status(500).send(response.errormsg)
+    }
+    if (response.ok) {
+      sailthru.apiPost('event', {
+        event: 'editorial_welcome',
+        id: req.body.email
+      }, (err, response) => {
+        if (err) {
+          return res.send(req.body)
+        }
+        return res.send(req.body)
+      })
+    } else {
+      return res.status(500).send(response.errormsg)
     }
   })
 }
