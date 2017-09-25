@@ -8,7 +8,6 @@ import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { data as sd } from 'sharify'
 import { renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
-import mailcheck from 'mailcheck'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
 
@@ -18,6 +17,10 @@ export async function index (req, res, next) {
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
+
+    const user = res.locals.sd.CURRENT_USER
+    const email = (user && user.email) || ''
+    const subscribed = await subscribedToEditorial(email)
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
@@ -44,7 +47,8 @@ export async function index (req, res, next) {
         crop: crop
       },
       data: {
-        article
+        article,
+        subscribed
       }
     })
 
@@ -110,13 +114,34 @@ export function amp (req, res, next) {
   })
 }
 
-export const editorialSignup = async (req, res, next) => {
+const subscribedToEditorial = (email) => {
+  return new Promise((resolve, reject) => {
+    if (!email.length) {
+      return resolve(false)
+    }
+    sailthru.apiGet('user', {
+      id: email
+    }, (err, response) => {
+      if (err) {
+        return resolve(false)
+      } else {
+        if (response.vars && response.vars.receive_editorial_email) {
+          resolve(true)
+        } else {
+          resolve(false)
+        }
+      }
+    })
+  })
+}
+
+export const editorialSignup = (req, res, next) => {
+  // Add user to list
   sailthru.apiPost('user', {
     id: req.body.email,
     lists: {
       [`${sd.SAILTHRU_MASTER_LIST}`]: 1
     },
-    name: req.body.name,
     vars: {
       source: 'editorial',
       receive_editorial_email: true,
@@ -127,6 +152,7 @@ export const editorialSignup = async (req, res, next) => {
       return res.status(500).send(response.errormsg)
     }
     if (response.ok) {
+      // Send welcome email
       sailthru.apiPost('event', {
         event: 'editorial_welcome',
         id: req.body.email

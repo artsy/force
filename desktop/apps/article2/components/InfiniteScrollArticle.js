@@ -12,7 +12,8 @@ const { Article } = components
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
-    article: PropTypes.object
+    article: PropTypes.object,
+    emailSignupUrl: PropTypes.string
   }
 
   constructor (props) {
@@ -55,7 +56,7 @@ export default class InfiniteScrollArticle extends React.Component {
     return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
         <div key={`article-${i}`}>
-          <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl={`${sd.APP_URL}/signup/editorial`} />
+          <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl={this.props.emailSignupUrl} />
           <Break />
         </div>
       )
