@@ -114,7 +114,7 @@ export function amp (req, res, next) {
   })
 }
 
-const subscribedToEditorial = (email) => {
+export const subscribedToEditorial = (email) => {
   return new Promise((resolve, reject) => {
     if (!email.length) {
       return resolve(false)
@@ -158,7 +158,7 @@ export const editorialSignup = (req, res, next) => {
         id: req.body.email
       }, (err, response) => {
         if (err) {
-          return res.send(req.body)
+          return res.status(500).send(response.errormsg)
         }
         return res.send(req.body)
       })
