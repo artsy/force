@@ -244,6 +244,7 @@ moment = require 'moment'
     type: "fullscreen",
     background_url: null,
     background_image_url: "https://artsy-media-uploads.s3.amazonaws.com/3d8FtQB9pRG7P8I0KxfAdQ%2FPErnesto+Neto+PedraGiboLagoDuaBuse%CC%81+22%28StonePythonDuaBuse%CC%81Lake%29%2C+2016.jpg"
+    url: 'https://artsy-media-uploads.s3.amazonaws.com/3d8FtQB9pRG7P8I0KxfAdQ%2FPErnesto+Neto+PedraGiboLagoDuaBuse%CC%81+22%28StonePythonDuaBuse%CC%81Lake%29%2C+2016.jpg'
   }
   channel_id: '5086df098523e60002000011'
 

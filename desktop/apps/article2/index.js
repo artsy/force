@@ -9,5 +9,5 @@ app.set('view engine', 'jade')
 app.set('views', `${__dirname}/templates`)
 
 app.get('/article2/:slug/amp', adminOnly, routes.amp)
-app.get('/article2/:slug', adminOnly, routes.index)
+app.get('/article2/:slug', routes.index)
 app.post('/signup/editorial', routes.editorialSignup)
