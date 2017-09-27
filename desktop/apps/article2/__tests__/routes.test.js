@@ -161,7 +161,7 @@ describe('Article Routes', () => {
         done()
       })
 
-      it('redirects to the correct slug if it does not match', (done) => {
+      it('redirects to the main slug if an older slug is queried', (done) => {
         const data = {
           article: new Article(_.extend({}, fixtures.article, {
             slug: 'zoobar',
