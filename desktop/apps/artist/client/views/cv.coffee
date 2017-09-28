@@ -24,7 +24,5 @@ module.exports = class CVView extends ArtistArtworksView
   render: (artist = {}) ->
     artistMetadata = artistHelpers.artistMeta @model.toJSON()
     @$el.html template _.extend { showHelpers, artistMetadata }, artist
-    if artistMetadata.length == 0
-      @$('#artist-cv-section').remove()
     super
     this
