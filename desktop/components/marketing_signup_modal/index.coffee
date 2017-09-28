@@ -55,6 +55,7 @@ module.exports = class MarketingSignupModal extends Backbone.View
     # Launches marketing signup modal for targeted url
     slug = 'ca3' if !slug and sd.CURRENT_PATH is sd.TARGET_CAMPAIGN_URL
 
+    return unless sd.MARKETING_SIGNUP_MODALS?
     modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
     @inner = new MarketingSignupModalInner
       data: modalData

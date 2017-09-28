@@ -1,11 +1,12 @@
+import 'jsdom-global/register'
 import InfiniteScrollArticle, { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/components/InfiniteScrollArticle'
 import sinon from 'sinon'
 import _ from 'underscore'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import React from 'react'
 import components from '@artsy/reaction-force/dist/components/publishing/index'
-const { Article, RelatedArticlesCanvas } = components
+const { Article } = components
 
 describe('<StandardArticle />', () => {
   it('renders the initial article', () => {
@@ -47,7 +48,7 @@ describe('<StandardArticle />', () => {
     rendered.find(Article).length.should.equal(2)
   })
 
-  it('renders the RelatedArticlesCanvas', () => {
+  it('renders Related Articles', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
@@ -56,9 +57,40 @@ describe('<StandardArticle />', () => {
       contributing_authors: [{name: 'Kana'}],
       relatedArticlesCanvas: [
         fixtures.article
+      ],
+      relatedArticlesPanel: [
+        fixtures.article
       ]
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
-    rendered.find(RelatedArticlesCanvas).length.should.equal(1)
+    const html = rendered.html()
+    html.should.containEql('Related Stories')
+    html.should.containEql('Further Reading')
+    html.should.containEql('related_articles_panel')
+    html.should.containEql('related_articles_canvas')
+  })
+
+  it('renders the email signup when user is not subscribed', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'standard',
+      vertical: {
+        name: 'Art Market'
+      },
+      contributing_authors: [{name: 'Kana'}]
+    })
+    const rendered = mount(<InfiniteScrollArticle article={article} emailSignupUrl={'/signup/editorial'} />)
+    rendered.html().should.containEql('Stay up to date with Artsy Editorial')
+  })
+
+  it('does not render the email signup when user is subscribed', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'standard',
+      vertical: {
+        name: 'Art Market'
+      },
+      contributing_authors: [{name: 'Kana'}]
+    })
+    const rendered = mount(<InfiniteScrollArticle article={article} emailSignupUrl={''} />)
+    rendered.html().should.not.containEql('Stay up to date with Artsy Editorial')
   })
 })

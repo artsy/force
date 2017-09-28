@@ -1,0 +1,37 @@
+{
+  "modals": [
+    {
+      "slug":"ca1",
+      "copy":"An art collection for every budget",
+      "image":"http://files.artsy.net/images/modal-collect-art.jpg",
+      "photoCredit": "",
+      "textColor": "",
+      "duration": ""
+    },
+    {
+      "slug":"ca2",
+      "copy":"Buy art from the best galleries and auction houses",
+      "image":"http://files.artsy.net/images/modal-collect-art.jpg",
+      "photoCredit": "",
+      "textColor": "",
+      "duration": ""
+    },
+    {
+      "slug":"ca3",
+      "copy":"Discover and Collect Works from KIAF 2017",
+      "image":"http://files.artsy.net/images/kiaf-modal-c.jpg",
+      "photoCredit": "",
+      "textColor": "",
+      "duration": ""
+    },
+    {
+      "slug":"ca4",
+      "copy":"Discover and Collect Works from EXPO Chicago 2017",
+      "image":"http://files.artsy.net/images/expo-chicago-modal-c.jpg",
+      "photoCredit": "Artsy",
+      "textColor": "",
+      "duration": "3000"
+    }
+  ]
+}
+
