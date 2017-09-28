@@ -6659,7 +6659,7 @@ pkginfo@0.3.x, pkginfo@0.x.x:
 
 "places@git://github.com/artsy/places.git":
   version "0.0.1"
-  resolved "git://github.com/artsy/places.git#a2859ff2c4df3552e331be9f16c14f229c2bed48"
+  resolved "git://github.com/artsy/places.git#f251a2404bc628fe0d08e9d76df4fda87aa9ee6d"
   dependencies:
     underscore "*"
 
