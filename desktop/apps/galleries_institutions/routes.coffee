@@ -55,8 +55,8 @@ fetchPartnerCategories = (type) ->
 
   Promise.all([
     fetchPrimaryCarousel(params)
-    partnerCities.fetch(cache: true)
-    partnerFeaturedCities.fetch(cache: true)
+    partnerCities.fetch()
+    partnerFeaturedCities.fetch()
     fetchPartnerCategories(type)
   ])
     .then ([profiles, partnerCities, partnerFeaturedCities, categories]) ->

@@ -11,8 +11,8 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
   partnerFeaturedCities = new PartnerFeaturedCities()
 
   Q.all([
-    partnerCities.fetch(cache: true)
-    partnerFeaturedCities.fetch(cache: true)
+    partnerCities.fetch()
+    partnerFeaturedCities.fetch()
     shows.fetch(cache: true)
   ]).then ->
     res.render 'index',
@@ -32,8 +32,8 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
   partnerFeaturedCities = new PartnerFeaturedCities()
 
   Q.all([
-    partnerCities.fetch(cache: true)
-    partnerFeaturedCities.fetch(cache: true)
+    partnerCities.fetch()
+    partnerFeaturedCities.fetch()
   ]).then ->
     city = _.findWhere(partnerCities.toJSON(), slug: req.params.city)
     return next() unless city?
