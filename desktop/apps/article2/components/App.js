@@ -9,7 +9,7 @@ import EditButton from 'desktop/apps/article2/components/EditButton'
 export default class App extends React.Component {
   static propTypes = {
     article: PropTypes.object,
-    subscribed: PropTypes.boolean
+    subscribed: PropTypes.bool
   }
 
   renderArticle = () => {
@@ -24,7 +24,7 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        {/* <EditButton channelId={this.props.article.channel_id} slug={this.props.article.slug} /> */}
+        <EditButton channelId={this.props.article.channel_id} slug={this.props.article.slug} />
         {this.renderArticle()}
       </div>
     )

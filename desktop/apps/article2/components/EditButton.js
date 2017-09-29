@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { pluck, contains } from 'underscore'
 import * as React from 'react'
 import { data as sd } from 'sharify'
@@ -6,34 +7,46 @@ import positronql from 'desktop/lib/positronql.coffee'
 import styled from 'styled-components'
 
 export default class EditButton extends React.Component {
-  constructor(props){
-    super(props)
-  }
-  componentDidMount() {
+  static propTypes = {
+    channelId: PropTypes.string,
+    slug: PropTypes.string
   }
 
-  render() {
+  constructor (props) {
+    super(props)
+    this.state = {
+      hasButtonState: false
+    }
+  }
+
+  componentDidMount = async () => {
     const userId = sd.CURRENT_USER && sd.CURRENT_USER.id
-    console.log(userId)
     if (!userId) {
+      return this.setState({ showEditButton: false, hasButtonState: true })
+    }
+    const data = await positronql({ query: ChannelMemberQuery(userId) })
+    if (contains(pluck(data.channels, 'id'), this.props.channelId)) {
+      this.setState({ showEditButton: true, hasButtonState: true })
+    } else {
+      this.setState({ showEditButton: false, hasButtonState: true })
+    }
+  }
+
+  render () {
+    if (!this.state.hasButtonState || !this.state.showEditButton) {
       return false
     } else {
-      const data = await positronql({ query: ChannelMemberQuery(userId) })
-      if (contains(pluck(data.channels, 'id'), props.channelId)) {
-        return (
-          <StyledEditButton href={`${sd.POSITRON_URL}/articles/${props.slug}/edit2`}>
-            <i className='icon-with-black-circle icon-edit' />
-          </StyledEditButton>
-        )
-      } else {
-        return false
-      }
+      return (
+        <StyledEditButton target='_blank' href={`${sd.POSITRON_URL}/articles/${this.props.slug}/edit2`}>
+          <i className='icon-with-black-circle icon-edit' />
+        </StyledEditButton>
+      )
     }
   }
 }
 
-const StyledEditButton = styled.div`
-  position: absolute;
-  top: 50px;
-  right: 50px;
+const StyledEditButton = styled.a`
+  position: fixed;
+  top: 75px;
+  right: 20px;
 `

@@ -1,7 +1,7 @@
 export default function ChannelMemberQuery (id) {
   return `
     {
-      channel(user_id: "${id}" ) {
+      channels(user_id: "${id}", limit: 50 ) {
         id
       }
     }
