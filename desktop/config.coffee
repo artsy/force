@@ -29,7 +29,7 @@ module.exports =
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
-  EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,kana'
+  EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'

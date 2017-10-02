@@ -9,7 +9,7 @@ GeocodedCities = require '../../collections/geocoded_cities'
 @index = (req, res, next) ->
   geocodedCities = new GeocodedCities()
   Q.all([
-    geocodedCities.fetch(cache: true)
+    geocodedCities.fetch()
     page.get()
   ]).spread (geocodedCities, pageData) ->
     res.locals.sd.CATEGORIES = pageData

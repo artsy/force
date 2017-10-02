@@ -3,10 +3,11 @@ Backbone = require 'backbone'
 { CLIENT } = require('sharify').data
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+get = require 'lodash.get'
 CurrentUser = require '../../../../models/current_user.coffee'
 artistsTemplate = -> require('./artists.jade') arguments...
 
-setupFollowButtons = ({ $el, relatedArtists, kind }) =>
+setupFollowButtons = ({ $el, relatedArtists, kind }) ->
   following = new Following(null, kind: kind) if CurrentUser.orNull()
   ids = $el.find('.follow-button').map ->
 
@@ -24,11 +25,11 @@ setupFollowButtons = ({ $el, relatedArtists, kind }) =>
   following?.syncFollows ids
 
 render = ({ relatedArtists, showMore, baseHref}) ->
-  viewAllUrl = sd.CLIENT.artists[0].href + '/related-artists'
+  viewAllUrl = get(sd.CLIENT, 'artists.0.href' + '/related-artists', '')
   artistsTemplate { relatedArtists, showMore, viewAllUrl }
 
 module.exports = ->
-  relatedArtists = sd.CLIENT.artists[0].artists
+  relatedArtists = get(sd.CLIENT, 'artists.0.artists', [])
   showMore = relatedArtists.length > 15
   $el = $('.js-artwork-artist-related-rail__content')
   relatedArtists = _.take(relatedArtists, 15)
