@@ -15,7 +15,7 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const GeneLink = styled.a`
+const GeneName = styled.span`
   position: absolute;
   left: 1em;
   bottom: 1em;
@@ -33,10 +33,12 @@ const GeneImage = styled.img`width: 100%;`
 
 const FeaturedGene = ({ title, href, image: { url: imageSrc } }) => {
   return (
-    <Container>
-      <GeneLink href={href}>{title}</GeneLink>
-      <GeneImage src={imageSrc} />
-    </Container>
+    <a href={href}>
+      <Container>
+        <GeneName>{title}</GeneName>
+        <GeneImage src={imageSrc} />
+      </Container>
+    </a>
   )
 }
 
