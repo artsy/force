@@ -3,8 +3,10 @@ import * as React from 'react'
 import components from '@artsy/reaction-force/dist/components/publishing/index'
 import InfiniteScrollArticle from './InfiniteScrollArticle'
 import { data as sd } from 'sharify'
-const { Article } = components
 import EditButton from 'desktop/apps/article2/components/EditButton'
+const { Article } = components
+
+const NAVHEIGHT = '53px'
 
 export default class App extends React.Component {
   static propTypes = {
@@ -17,7 +19,7 @@ export default class App extends React.Component {
       const emailSignupUrl = this.props.subscribed ? '' : `${sd.APP_URL}/signup/editorial`
       return <InfiniteScrollArticle article={this.props.article} emailSignupUrl={emailSignupUrl} />
     } else {
-      return <Article article={this.props.article} />
+      return <Article article={this.props.article} headerHeight={`calc(100vh - ${NAVHEIGHT})`} />
     }
   }
 
