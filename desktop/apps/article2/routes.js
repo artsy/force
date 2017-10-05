@@ -2,6 +2,8 @@ import * as _ from 'underscore'
 import App from 'desktop/apps/article2/components/App'
 import ArticleQuery from 'desktop/apps/article2/queries/article'
 import Article from 'desktop/models/article.coffee'
+import Articles from 'desktop/collections/articles.coffee'
+import SuperArticleQuery from 'desktop/apps/article2/queries/superArticle'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
@@ -18,10 +20,6 @@ export async function index (req, res, next) {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
 
-    const user = res.locals.sd.CURRENT_USER
-    const email = (user && user.email) || ''
-    const subscribed = await subscribedToEditorial(email)
-
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
     }
@@ -29,6 +27,20 @@ export async function index (req, res, next) {
     if (articleId !== article.slug) {
       return res.redirect(`/article2/${article.slug}`)
     }
+
+    const superArticle = new Article()
+    const superSubArticles = new Articles()
+    if (article.is_super_article && article.super_article.related_articles.length > 0) {
+      const superArticleData = await positronql({ query: SuperArticleQuery(article.super_article.related_articles, article.is_super_article) })
+      superArticle.set(article)
+      superSubArticles.set(superArticleData.related_articles)
+      console.log(superArticle)
+      console.log(superSubArticles)
+    }
+
+    const user = res.locals.sd.CURRENT_USER
+    const email = (user && user.email) || ''
+    const subscribed = await subscribedToEditorial(email)
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -48,7 +60,9 @@ export async function index (req, res, next) {
       },
       data: {
         article,
-        subscribed
+        subscribed,
+        superArticle,
+        superSubArticles
       }
     })
 

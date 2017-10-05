@@ -14,6 +14,10 @@ export default class App extends React.Component {
     subscribed: PropTypes.bool
   }
 
+  componentDidMount() {
+    
+  }
+
   renderArticle = () => {
     if (this.props.article.layout === 'standard') {
       const emailSignupUrl = this.props.subscribed ? '' : `${sd.APP_URL}/signup/editorial`

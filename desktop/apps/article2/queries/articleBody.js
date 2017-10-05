@@ -19,6 +19,11 @@ export default `
   keywords
   published
   postscript
+  is_super_article
+  is_super_sub_article
+  super_article {
+    related_articles
+  }
   email_metadata {
     headline
     author
