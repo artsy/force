@@ -11,6 +11,7 @@ const propTypes = {
 
 const Container = styled.div`
   position: relative;
+  width: 95%;
   overflow: hidden;
 `
 
@@ -28,7 +29,7 @@ const GeneLink = styled.a`
   font-weight: bold;
 `
 
-const GeneImage = styled.img`width: 90%;`
+const GeneImage = styled.img`width: 100%;`
 
 const FeaturedGene = ({ title, href, image: { url: imageSrc } }) => {
   return (
