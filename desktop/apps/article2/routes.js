@@ -3,7 +3,7 @@ import App from 'desktop/apps/article2/components/App'
 import ArticleQuery from 'desktop/apps/article2/queries/article'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
-import SuperArticleQuery from 'desktop/apps/article2/queries/superArticle'
+import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article2/queries/superArticle'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
@@ -29,14 +29,24 @@ export async function index (req, res, next) {
       return res.redirect(`/article2/${article.slug}`)
     }
 
+    const isSuper = article.is_super_article || article.is_super_sub_article
     const superArticle = new Article()
     const superSubArticles = new Articles()
-    if (article.is_super_article && article.super_article.related_articles.length > 0) {
-      const superArticleData = await positronql({ query: SuperArticleQuery(article.super_article.related_articles, article.is_super_article) })
+    // Set main super article
+    if (article.is_super_sub_article) {
+      const superData = await positronql({ query: SuperArticleQuery(article.id) })
+      superArticle.set(superData.articles[0])
+    } else if (article.is_super_article) {
       superArticle.set(article)
-      superSubArticles.set(superArticleData.articles)
+    }
+    // Set super sub articles
+    if (isSuper && superArticle.get('super_article').related_articles) {
+      const query = SuperSubArticlesQuery(superArticle.get('super_article').related_articles)
+      const superSubData = await positronql({ query })
+      superSubArticles.set(superSubData.articles)
     }
 
+    // Email signup
     const user = res.locals.sd.CURRENT_USER
     const email = (user && user.email) || ''
     const subscribed = await subscribedToEditorial(email)
@@ -62,7 +72,8 @@ export async function index (req, res, next) {
         article,
         subscribed,
         superArticle,
-        superSubArticles
+        superSubArticles,
+        isSuper
       },
       templates: {
         SuperArticleFooter: '../../../components/article/templates/super_article_footer.jade',
@@ -84,7 +95,6 @@ const getBodyClass = (article) => {
       bodyClass = bodyClass + ' body-no-header'
     }
   }
-  console.log(bodyClass)
   return bodyClass
 }
 

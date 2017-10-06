@@ -13,6 +13,7 @@ const NAVHEIGHT = '53px'
 export default class App extends React.Component {
   static propTypes = {
     article: PropTypes.object,
+    isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
     templates: PropTypes.object
   }
@@ -25,15 +26,14 @@ export default class App extends React.Component {
   }
 
   renderArticle = () => {
-    if (this.props.article.layout === 'standard') {
+    if (this.props.article.layout === 'standard' && !this.props.isSuper) {
       const emailSignupUrl = this.props.subscribed ? '' : `${sd.APP_URL}/signup/editorial`
 
       return (
         <InfiniteScrollArticle article={this.props.article} emailSignupUrl={emailSignupUrl} />
       )
     } else {
-      const isSuper = this.props.article.is_super_article || this.props.article.is_super_sub_article
-      const navHeight = isSuper ? '0px' : NAVHEIGHT
+      const navHeight = this.props.isSuper ? '0px' : NAVHEIGHT
 
       return (
         <Article article={this.props.article} headerHeight={`calc(100vh - ${navHeight})`} />
@@ -58,7 +58,7 @@ export default class App extends React.Component {
         />
         <EditButton channelId={article.channel_id} slug={article.slug} />
         {this.renderArticle()}
-      
+
         <div
           dangerouslySetInnerHTML={{
             __html: SuperArticleFooter
