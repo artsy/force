@@ -102,9 +102,7 @@ const getBodyClass = (article) => {
   let bodyClass = 'body-article body-no-margins'
   const isSuper = article.is_super_article || article.is_super_sub_article
   const isFullscreen = article.hero_section && article.hero_section.type === 'fullscreen'
-  if (isSuper && isFullscreen) {
-    bodyClass = bodyClass + ' body-no-header'
-  }
+  if (isSuper && isFullscreen) { bodyClass = bodyClass + ' body-no-header' }
   return bodyClass
 }
 

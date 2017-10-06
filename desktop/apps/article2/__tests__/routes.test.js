@@ -92,7 +92,7 @@ describe('Article Routes', () => {
         })
     })
 
-    it('fetches needed resources for a super article', () => {
+    it('fetches resources for a super article', () => {
       const article = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
@@ -123,7 +123,7 @@ describe('Article Routes', () => {
         })
     })
 
-    it('fetches super sub articles', () => {
+    it('fetches resources for super sub articles', () => {
       const article = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
