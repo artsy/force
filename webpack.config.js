@@ -11,7 +11,8 @@ const isProduction = NODE_ENV === 'production'
 const isDeploy = isStaging || isProduction
 
 const config = {
-  devtool: 'cheap-module-eval-source-map',
+  // devtool: 'eval',
+  devtool: 'cheap-module-source-map', // https://github.com/facebookincubator/create-react-app/issues/2407
   entry: {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
@@ -23,7 +24,7 @@ const config = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public/assets'),
     publicPath: '/assets',
-    sourceMapFilename: '[name].js.map'
+    sourceMapFilename: '[file].map?[contenthash]'
   },
   module: {
     rules: [
@@ -90,7 +91,7 @@ const config = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      minChunks: 2
+      minChunks: 2 // lower number for larger "common.js" bundle size
     })
   ],
   resolve: {
@@ -102,6 +103,9 @@ const config = {
     modules: [
       'node_modules'
     ]
+  },
+  externals: {
+    request: 'request'
   }
 }
 

@@ -19,7 +19,7 @@ class DOM extends Component {
 
   componentDidMount () {
     const FastClick = require('fastclick')
-    FastClick(document.body)
+    FastClick.attach(document.body)
 
     this.$ = require('jquery')
     this.addEventListeners()
