@@ -1,6 +1,10 @@
 - menuIsVisible = 'visible no-transition'
-- hasFullscreenHero = article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
-- fullscreenSuperArticle = article.get('is_super_article') && hasFullscreenHero
+if article.attributes
+  - hasFullscreenHero = article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
+  - fullscreenSuperArticle = article.get('is_super_article') && hasFullscreenHero
+else
+  - hasFullscreenHero = article.hero_section && article.hero_section.type === 'fullscreen'
+  - fullscreenSuperArticle = article.is_super_article && hasFullscreenHero
 
 if fullscreenSuperArticle || hasFullscreenHero
   - menuIsVisible = ''

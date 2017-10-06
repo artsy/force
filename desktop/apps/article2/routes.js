@@ -7,6 +7,7 @@ import SuperArticleQuery from 'desktop/apps/article2/queries/superArticle'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
+import markdown from 'desktop/components/util/markdown.coffee'
 import { data as sd } from 'sharify'
 import { renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
@@ -33,9 +34,7 @@ export async function index (req, res, next) {
     if (article.is_super_article && article.super_article.related_articles.length > 0) {
       const superArticleData = await positronql({ query: SuperArticleQuery(article.super_article.related_articles, article.is_super_article) })
       superArticle.set(article)
-      superSubArticles.set(superArticleData.related_articles)
-      console.log(superArticle)
-      console.log(superSubArticles)
+      superSubArticles.set(superArticleData.articles)
     }
 
     const user = res.locals.sd.CURRENT_USER
@@ -55,14 +54,19 @@ export async function index (req, res, next) {
       locals: {
         ...res.locals,
         assetPackage: 'article2',
-        bodyClass: 'body-no-margins',
-        crop: crop
+        bodyClass: getBodyClass(article),
+        crop,
+        markdown
       },
       data: {
         article,
         subscribed,
         superArticle,
         superSubArticles
+      },
+      templates: {
+        SuperArticleFooter: '../../../components/article/templates/super_article_footer.jade',
+        SuperArticleHeader: '../../../components/article/templates/super_article_sticky_header.jade'
       }
     })
 
@@ -70,6 +74,18 @@ export async function index (req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+
+const getBodyClass = (article) => {
+  let bodyClass = 'body-article body-no-margins'
+  if (article.hero_section && article.hero_section.type === 'fullscreen') {
+    bodyClass = bodyClass + ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
+    if (article.is_super_article || article.is_super_sub_article) {
+      bodyClass = bodyClass + ' body-no-header'
+    }
+  }
+  console.log(bodyClass)
+  return bodyClass
 }
 
 async function classic (req, res, next) {

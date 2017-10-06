@@ -22,6 +22,16 @@ export default `
   is_super_article
   is_super_sub_article
   super_article {
+    partner_link
+    partner_link_title
+    partner_logo
+    partner_logo_link
+    partner_fullscreen_header_logo
+    secondary_partner_logo
+    secondary_logo_text
+    secondary_logo_link
+    footer_blurb
+    footer_title
     related_articles
   }
   email_metadata {
