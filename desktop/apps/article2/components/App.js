@@ -19,10 +19,12 @@ export default class App extends React.Component {
   }
 
   componentDidMount () {
-    new SuperArticleView({
-      el: document.querySelector('body'),
-      article: new ArticleModel(this.props.article)
-    })
+    if (this.props.isSuper) {
+      new SuperArticleView({
+        el: document.querySelector('body'),
+        article: new ArticleModel(this.props.article)
+      })
+    }
   }
 
   renderArticle = () => {
@@ -56,6 +58,7 @@ export default class App extends React.Component {
             __html: SuperArticleHeader
           }}
         />
+
         <EditButton channelId={article.channel_id} slug={article.slug} />
         {this.renderArticle()}
 
@@ -64,6 +67,7 @@ export default class App extends React.Component {
             __html: SuperArticleFooter
           }}
         />
+
       </div>
     )
   }

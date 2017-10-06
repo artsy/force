@@ -3,7 +3,7 @@ const { stringifyJSONForWeb } = require('desktop/components/util/json.coffee')
 export const SuperSubArticlesQuery = (ids) => {
   return `
     {
-      articles(ids: ${stringifyJSONForWeb(ids)} ) {
+      articles(ids: ${stringifyJSONForWeb(ids)}, published: true) {
         thumbnail_title
         thumbnail_image
         title
@@ -16,7 +16,7 @@ export const SuperSubArticlesQuery = (ids) => {
 export const SuperArticleQuery = (id) => {
   return `
     {
-      articles(super_article_for: "${id}" ) {
+      articles(super_article_for: "${id}", published: true ) {
         is_super_article
         thumbnail_title
         title

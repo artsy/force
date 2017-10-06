@@ -32,6 +32,7 @@ export async function index (req, res, next) {
     const isSuper = article.is_super_article || article.is_super_sub_article
     const superArticle = new Article()
     const superSubArticles = new Articles()
+
     // Set main super article
     if (article.is_super_sub_article) {
       const superData = await positronql({ query: SuperArticleQuery(article.id) })
@@ -39,17 +40,30 @@ export async function index (req, res, next) {
     } else if (article.is_super_article) {
       superArticle.set(article)
     }
+
     // Set super sub articles
     if (isSuper && superArticle.get('super_article').related_articles) {
-      const query = SuperSubArticlesQuery(superArticle.get('super_article').related_articles)
+      const related = superArticle.get('super_article').related_articles
+      const query = SuperSubArticlesQuery(related)
       const superSubData = await positronql({ query })
       superSubArticles.set(superSubData.articles)
     }
 
     // Email signup
-    const user = res.locals.sd.CURRENT_USER
-    const email = (user && user.email) || ''
-    const subscribed = await subscribedToEditorial(email)
+    let subscribed = false
+    if (article.layout === 'standard') {
+      const user = res.locals.sd.CURRENT_USER
+      const email = (user && user.email) || ''
+      subscribed = await subscribedToEditorial(email)
+    }
+
+    let templates
+    if (isSuper) {
+      templates = {
+        SuperArticleFooter: '../../../components/article/templates/super_article_footer.jade',
+        SuperArticleHeader: '../../../components/article/templates/super_article_sticky_header.jade'
+      }
+    }
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -75,10 +89,7 @@ export async function index (req, res, next) {
         superSubArticles,
         isSuper
       },
-      templates: {
-        SuperArticleFooter: '../../../components/article/templates/super_article_footer.jade',
-        SuperArticleHeader: '../../../components/article/templates/super_article_sticky_header.jade'
-      }
+      templates
     })
 
     res.send(layout)
@@ -89,11 +100,10 @@ export async function index (req, res, next) {
 
 const getBodyClass = (article) => {
   let bodyClass = 'body-article body-no-margins'
-  if (article.hero_section && article.hero_section.type === 'fullscreen') {
-    bodyClass = bodyClass + ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
-    if (article.is_super_article || article.is_super_sub_article) {
-      bodyClass = bodyClass + ' body-no-header'
-    }
+  const isSuper = article.is_super_article || article.is_super_sub_article
+  const isFullscreen = article.hero_section && article.hero_section.type === 'fullscreen'
+  if (isSuper && isFullscreen) {
+    bodyClass = bodyClass + ' body-no-header'
   }
   return bodyClass
 }

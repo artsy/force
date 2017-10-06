@@ -1,6 +1,5 @@
 import 'jsdom-global/register'
 import sinon from 'sinon'
-import _ from 'underscore'
 import { mount } from 'enzyme'
 import React from 'react'
 import EditButton, { __RewireAPI__ as RewireApi } from 'desktop/apps/article2/components/EditButton'
