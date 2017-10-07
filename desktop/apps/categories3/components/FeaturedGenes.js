@@ -9,9 +9,14 @@ const propTypes = {
 }
 
 const Layout = styled.div`
-  padding-top: 1em;
-  column-count: 3;
-  column-gap: 2em;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+    padding-top: 1em;
+    column-count: 3;
+    column-gap: 2em;
+  }
 `
 
 const FeaturedGenes = ({ featuredGenes }) => {
