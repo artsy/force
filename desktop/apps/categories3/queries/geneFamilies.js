@@ -8,6 +8,7 @@ export default function GeneFamiliesQuery() {
         id
         name
         display_name
+        is_published
       }
     }
   }
