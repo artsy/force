@@ -14,6 +14,7 @@ const propTypes = {
 }
 
 const GeneFamilyName = styled.h2`
+  margin-top: 10px;
   font-size: 37px;
   line-height: 1.2em;
 `
