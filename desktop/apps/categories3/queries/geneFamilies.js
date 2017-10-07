@@ -7,6 +7,7 @@ export default function GeneFamiliesQuery() {
       genes {
         id
         name
+        display_name
       }
     }
   }
