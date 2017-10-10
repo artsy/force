@@ -20,15 +20,21 @@ describe 'Artwork', ->
       @artwork.set sale_message: 'Sold'
       @artwork.saleMessage().should.equal 'Sold'
 
+    it 'returns On loan when artwork is on loan', ->
+      @artwork.set availability: 'on loan'
+      @artwork.saleMessage().should.equal 'On loan'
+
     it 'returns the price when on hold', ->
       @artwork.set availability: 'on hold', price: '$420'
       @artwork.saleMessage().should.equal '$420, on hold'
       @artwork.unset 'price'
       @artwork.saleMessage().should.equal 'On hold'
 
-    describe 'sale_message is "Contact for Price" or availability is "not for sale"', ->
+    describe 'sale_message is "Contact for Price" or availability is "not for sale" or "permanent collection"', ->
       it 'returns undefined', ->
-        @artwork.set sale_message: 'Contact For Price', price: '$6,000'
+        @artwork.set availability: 'permanent collection'
+        _.isUndefined(@artwork.saleMessage()).should.be.true()
+        @artwork.set sale_message: 'Contact For Price', price: '$6,000', availability: 'for sale'
         _.isUndefined(@artwork.saleMessage()).should.be.true()
         @artwork.unset 'sale_message', 'price'
         @artwork.set availability: 'not for sale'
