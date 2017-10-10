@@ -1,4 +1,5 @@
 import 'jsdom-global/register'
+global.window = document.defaultView
 import App from 'desktop/apps/article2/components/App'
 import components from '@artsy/reaction-force/dist/Components/Publishing'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
@@ -21,7 +22,7 @@ describe('<App />', () => {
     })
     const rendered = shallow(<App article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(1)
-    rendered.html().should.containEql('standard_layout')
+    rendered.html().should.containEql('StandardLayout')
   })
 
   it('renders a feature article', () => {
@@ -35,7 +36,7 @@ describe('<App />', () => {
     })
     const rendered = shallow(<App article={article} templates={{}} />)
     rendered.find(Article).length.should.equal(1)
-    rendered.html().should.containEql('feature_layout')
+    rendered.html().should.containEql('FeatureLayout')
   })
 
   it('it mounts backbone views for super articles', () => {
