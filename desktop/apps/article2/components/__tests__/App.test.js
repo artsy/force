@@ -1,6 +1,6 @@
 import 'jsdom-global/register'
 import App from 'desktop/apps/article2/components/App'
-import components from '@artsy/reaction-force/dist/components/publishing/index'
+import components from '@artsy/reaction-force/dist/Components/Publishing'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import React from 'react'
 import { shallow, mount } from 'enzyme'

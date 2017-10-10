@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Scrollspy from 'react-scrollspy'
 
-import colors from '@artsy/reaction-force/dist/assets/colors'
-import { primary } from '@artsy/reaction-force/dist/assets/fonts'
+import colors from '@artsy/reaction-force/dist/Assets/Colors'
+import { primary } from '@artsy/reaction-force/dist/Assets/Fonts'
 import FrameAnimator from 'desktop/components/frame_animator'
 
 const propTypes = {

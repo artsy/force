@@ -5,7 +5,7 @@ import _ from 'underscore'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import { shallow, mount } from 'enzyme'
 import React from 'react'
-import components from '@artsy/reaction-force/dist/components/publishing/index'
+import components from '@artsy/reaction-force/dist/Components/Publishing'
 const { Article } = components
 
 describe('<StandardArticle />', () => {
