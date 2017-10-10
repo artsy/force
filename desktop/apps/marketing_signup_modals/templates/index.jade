@@ -6,11 +6,12 @@ append locals
 block body
 
   .marketing-signup-modals
-    h1= modals[0]["copy"]
+    h1 Marketing Signup Modals
 
     table.marketing-signup-modals-table
       thead
         tr.marketing-signup-modals__table-header
+          th Campaign Name
           th Slug
           th Copy
           th Image
@@ -20,6 +21,7 @@ block body
       tbody
         for modal in modals
           tr
+            th= modal["campaignName"]
             th= modal["slug"]
             th= modal["copy"]
             th

@@ -67,7 +67,9 @@ module.exports = class MarketingSignupModal extends Backbone.View
     @inner.on 'close', => @modal.close()
 
     loggedOut = not sd.CURRENT_USER?
-    setTimeout @open, 2000 if loggedOut and modalData?
+    delayDuration = modalData.duration || 2000
+
+    setTimeout @open, delayDuration if loggedOut and modalData?
 
   open: =>
     @modal.open()
