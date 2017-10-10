@@ -5,7 +5,7 @@
   "engines": {
     "node": "8.4.0",
     "npm": "4.x.x",
-    "yarn": "1.x"
+    "yarn": "0.27.x"
   },
   "scripts": {
     "acceptance": "sh scripts/acceptance.sh",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@artsy/express-reloadable": "^1.0.3",
-    "@artsy/reaction-force": "^0.8.0",
+    "@artsy/reaction-force": "^0.8.1",
     "@artsy/stitch": "^1.1.0",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
