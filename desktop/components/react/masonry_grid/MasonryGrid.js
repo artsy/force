@@ -4,7 +4,7 @@ import _ from 'underscore'
 
 /**
  * Temporary adaptation from Reaction Force:
- * https://github.com/artsy/reaction-force/blob/master/src/components/artwork_grid.tsx
+ * https://github.com/artsy/reaction/blob/master/src/Components/ArtworkGrid.tsx
  *
  * TODO: Move back into RF
  */

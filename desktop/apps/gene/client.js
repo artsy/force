@@ -5,8 +5,8 @@ imagesLoaded.makeJQueryPlugin($)
 
 import qs from 'querystring'
 import { data as sd } from 'sharify'
-import components, { init } from '@artsy/reaction-force/dist/components'
-import configs from '@artsy/reaction-force/dist/relay'
+import components, { init } from '@artsy/reaction-force/dist/Components'
+import configs from '@artsy/reaction-force/dist/Relay'
 
 import Gene from '../../models/gene.coffee'
 import CurrentUser from '../../models/current_user.coffee'

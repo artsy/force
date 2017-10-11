@@ -2,9 +2,12 @@ import * as _ from 'underscore'
 import App from 'desktop/apps/article2/components/App'
 import ArticleQuery from 'desktop/apps/article2/queries/article'
 import Article from 'desktop/models/article.coffee'
+import Articles from 'desktop/collections/articles.coffee'
+import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article2/queries/superArticle'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
+import markdown from 'desktop/components/util/markdown.coffee'
 import { data as sd } from 'sharify'
 import { renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
@@ -18,16 +21,48 @@ export async function index (req, res, next) {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
 
-    const user = res.locals.sd.CURRENT_USER
-    const email = (user && user.email) || ''
-    const subscribed = await subscribedToEditorial(email)
-
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
     }
 
     if (articleId !== article.slug) {
       return res.redirect(`/article2/${article.slug}`)
+    }
+
+    const isSuper = article.is_super_article || article.is_super_sub_article
+    const superArticle = new Article()
+    const superSubArticles = new Articles()
+
+    // Set main super article
+    if (article.is_super_sub_article) {
+      const superData = await positronql({ query: SuperArticleQuery(article.id) })
+      superArticle.set(superData.articles[0])
+    } else if (article.is_super_article) {
+      superArticle.set(article)
+    }
+
+    // Set super sub articles
+    if (isSuper && superArticle.get('super_article').related_articles) {
+      const related = superArticle.get('super_article').related_articles
+      const query = SuperSubArticlesQuery(related)
+      const superSubData = await positronql({ query })
+      superSubArticles.set(superSubData.articles)
+    }
+
+    // Email signup
+    let subscribed = false
+    if (article.layout === 'standard') {
+      const user = res.locals.sd.CURRENT_USER
+      const email = (user && user.email) || ''
+      subscribed = await subscribedToEditorial(email)
+    }
+
+    let templates
+    if (isSuper) {
+      templates = {
+        SuperArticleFooter: '../../../components/article/templates/super_article_footer.jade',
+        SuperArticleHeader: '../../../components/article/templates/super_article_sticky_header.jade'
+      }
     }
 
     const layout = await renderLayout({
@@ -43,19 +78,32 @@ export async function index (req, res, next) {
       locals: {
         ...res.locals,
         assetPackage: 'article2',
-        bodyClass: 'body-no-margins',
-        crop: crop
+        bodyClass: getBodyClass(article),
+        crop,
+        markdown
       },
       data: {
         article,
-        subscribed
-      }
+        subscribed,
+        superArticle,
+        superSubArticles,
+        isSuper
+      },
+      templates
     })
 
     res.send(layout)
   } catch (error) {
     next(error)
   }
+}
+
+const getBodyClass = (article) => {
+  let bodyClass = 'body-article body-no-margins'
+  const isSuper = article.is_super_article || article.is_super_sub_article
+  const isFullscreen = article.hero_section && article.hero_section.type === 'fullscreen'
+  if (isSuper && isFullscreen) { bodyClass = bodyClass + ' body-no-header' }
+  return bodyClass
 }
 
 async function classic (req, res, next) {

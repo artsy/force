@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom'
 import * as Relay from 'react-relay'
 import { data as sd } from 'sharify'
 
-import { artsyNetworkLayer } from '@artsy/reaction-force/dist/relay/config'
-import components from '@artsy/reaction-force/dist/components/index'
-import * as Artsy from '@artsy/reaction-force/dist/components/artsy'
-import FilterArtworksQueryConfig from '@artsy/reaction-force/dist/relay/queries/filter_artworks'
+import { artsyNetworkLayer } from '@artsy/reaction-force/dist/Relay/config'
+import components from '@artsy/reaction-force/dist/Components'
+import * as Artsy from '@artsy/reaction-force/dist/Components/Artsy'
+import FilterArtworksQueryConfig from '@artsy/reaction-force/dist/Relay/Queries/FilterArtworks'
 
 function init () {
   Relay.injectNetworkLayer(artsyNetworkLayer(sd.CURRENT_USER))

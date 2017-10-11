@@ -1,6 +1,10 @@
 - menuIsVisible = 'visible no-transition'
-- hasFullscreenHero = article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
-- fullscreenSuperArticle = article.get('is_super_article') && hasFullscreenHero
+if article.attributes
+  - hasFullscreenHero = article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
+  - fullscreenSuperArticle = article.get('is_super_article') && hasFullscreenHero
+else
+  - hasFullscreenHero = article.hero_section && article.hero_section.type === 'fullscreen'
+  - fullscreenSuperArticle = article.is_super_article && hasFullscreenHero
 
 if fullscreenSuperArticle || hasFullscreenHero
   - menuIsVisible = ''
@@ -30,7 +34,7 @@ if fullscreenSuperArticle || hasFullscreenHero
         .article-sa-related__magazine-text Back to the Magazine Homepage
 
   .article-sa-sticky-right
-    a.article-sa-magazine-link(href=sd.APP_URL + '/articles') Back to Magazine
+    a.article-sa-magazine-link(href=sd.APP_URL + '/articles') Back to Editorial
   .article-sa-sticky-hamburger.js-article-sa-sticky-hamburger
     .article-sa-sticky-hamburger-icon
     i.article-sa-sticky-close-icon.icon-close

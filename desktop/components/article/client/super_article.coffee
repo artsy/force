@@ -10,7 +10,6 @@ module.exports = class SuperArticleView extends Backbone.View
 
     @$window = $(window)
     @$body = $('body')
-    @$content = $('.article-content')
     @$superArticleNavToc = $('.article-sa-sticky-related-container')
     @$stickyHeader = $('.article-sa-sticky-header')
 
@@ -68,7 +67,8 @@ module.exports = class SuperArticleView extends Backbone.View
     return unless @$stickyHeader.length
 
     selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first, .article-body'
-    @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
+
+    @$(".article-container[data-id=#{@article.get('id')}] #{selector}, .article-content").waypoint (direction) =>
       if direction == 'down'
         @$stickyHeader.addClass 'visible'
       else unless @$stickyHeader.hasClass('no-transition')
@@ -82,6 +82,7 @@ module.exports = class SuperArticleView extends Backbone.View
       @$body.addClass 'is-open'
 
   maybeAddEoyClass: ->
+    return unless sd.SUPER_SUB_ARTICLE_IDS
     if @article.isEOYSubArticle(sd.SUPER_SUB_ARTICLE_IDS, sd.SUPER_ARTICLE)
       $('.article-section-container[data-section-type=text]').each ->
         if $(@).has('h2,h3').length and not $(@).has('p').length

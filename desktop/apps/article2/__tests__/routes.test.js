@@ -24,6 +24,7 @@ describe('Article Routes', () => {
       status: sinon.stub().returns({ send: sinon.stub() })
     }
     next = sinon.stub()
+    RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
   })
 
   afterEach(() => {
@@ -44,7 +45,6 @@ describe('Article Routes', () => {
       )
       const renderLayout = sinon.stub()
       RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
-      RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
       index(req, res, next)
         .then(() => {
           renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
@@ -64,7 +64,6 @@ describe('Article Routes', () => {
         'positronql',
         sinon.stub().returns(Promise.resolve(data))
       )
-      RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
       index(req, res, next)
         .then(() => {
           res.redirect.args[0][0].should.equal('/article2/zoobar')
@@ -84,13 +83,83 @@ describe('Article Routes', () => {
         'positronql',
         sinon.stub().returns(Promise.resolve(data))
       )
-      RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
       Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
       RoutesRewireApi.__Rewire__('Article', Article)
       index(req, res, next)
         .then(() => {
           res.render.args[0][0].should.equal('article')
           done()
+        })
+    })
+
+    it('fetches resources for a super article', () => {
+      const article = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          is_super_article: true
+        })
+      }
+      const superSubArticles = {
+        articles: [_.extend({}, fixtures.article, {
+          slug: 'sub-article',
+          channel_id: '123',
+          is_super_sub_article: true
+        })]
+      }
+      const positronql = sinon.stub()
+      positronql
+        .onCall(0).returns(Promise.resolve(article))
+        .onCall(1).returns(Promise.resolve(superSubArticles))
+      RoutesRewireApi.__Rewire__('positronql', positronql)
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      index(req, res, next)
+        .then(() => {
+          renderLayout.args[0][0].data.isSuper.should.be.true()
+          renderLayout.args[0][0].data.superArticle.get('slug').should.equal('foobar')
+          renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
+          renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
+        })
+    })
+
+    it('fetches resources for super sub articles', () => {
+      const article = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          is_super_sub_article: true
+        })
+      }
+      const superArticle = {
+        articles: [_.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          is_super_article: true,
+          title: 'Super Article Title'
+        })]
+      }
+      const superSubArticles = {
+        articles: [_.extend({}, fixtures.article, {
+          slug: 'sub-article',
+          channel_id: '123',
+          is_super_sub_article: true
+        })]
+      }
+      const positronql = sinon.stub()
+      positronql
+        .onCall(0).returns(Promise.resolve(article))
+        .onCall(1).returns(Promise.resolve(superArticle))
+        .onCall(2).returns(Promise.resolve(superSubArticles))
+      RoutesRewireApi.__Rewire__('positronql', positronql)
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      index(req, res, next)
+        .then(() => {
+          renderLayout.args[0][0].data.isSuper.should.be.true()
+          renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
+          renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
+          renderLayout.args[0][0].data.superArticle.get('title').should.equal('Super Article Title')
         })
     })
 
@@ -110,7 +179,6 @@ describe('Article Routes', () => {
           'positronql',
           sinon.stub().returns(Promise.resolve(data))
         )
-        RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
         Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
         RoutesRewireApi.__Rewire__('Article', Article)
         amp(req, res, next)
