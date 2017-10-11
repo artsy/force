@@ -1,5 +1,5 @@
 .marketing-signup-modal-left(
-  style="background-image: url(#{modal.image})"
+  style="background-image: url(#{modal.image}); opacity: #{modal.textOpacity};"
 )
   if modal.photoCredit
     p.marketing-signup-modal-left__photo-credit(style="color: #{modal.textColor}")= modal.photoCredit
