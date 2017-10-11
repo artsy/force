@@ -1,3 +1,4 @@
+import 'jsdom-global/register'
 import App from 'desktop/apps/article2/components/App'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import React from 'react'

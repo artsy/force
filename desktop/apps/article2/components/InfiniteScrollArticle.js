@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import components from '@artsy/reaction-force/dist/Components/Publishing'
+import components from '@artsy/reaction-force/dist/Components/Publishing/index'
+import { articleHref } from '@artsy/reaction-force/dist/Components/Publishing/Constants'
 import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
@@ -8,7 +9,7 @@ import _ from 'underscore'
 import articlesQuery from '../queries/articles.js'
 import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
-const { Article, Constants } = components
+const { Article } = components
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
@@ -24,10 +25,6 @@ export default class InfiniteScrollArticle extends React.Component {
       offset: 0,
       error: false
     }
-  }
-
-  componentDidMount () {
-    this.setState({window: window.innerHeight || 500})
   }
 
   fetchNextArticles = async () => {
@@ -56,16 +53,16 @@ export default class InfiniteScrollArticle extends React.Component {
     }
   }
 
-  onEnter = (article, i, {previousPosition, currentPosition}) => {
+  onEnter = (article, {previousPosition, currentPosition}) => {
     if (previousPosition === 'above' && currentPosition === 'inside') {
-      window.history.replaceState({}, article.id, Constants.articleHref(article.slug))
+      window.history.replaceState({}, article.id, articleHref(article.slug))
     }
   }
 
-  onLeave = (article, i, {previousPosition, currentPosition}) => {
+  onLeave = (i, {previousPosition, currentPosition}) => {
     const nextArticle = this.state.articles[i + 1]
     if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
-      window.history.replaceState({}, nextArticle.id, Constants.articleHref(nextArticle.slug))
+      window.history.replaceState({}, nextArticle.id, articleHref(nextArticle.slug))
     }
   }
 
@@ -76,8 +73,8 @@ export default class InfiniteScrollArticle extends React.Component {
           <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl={this.props.emailSignupUrl} />
           <Break />
           <Waypoint
-            onEnter={(waypointData => this.onEnter(article, i, waypointData))}
-            onLeave={(waypointData => this.onLeave(article, i, waypointData))}
+            onEnter={(waypointData => this.onEnter(article, waypointData))}
+            onLeave={(waypointData => this.onLeave(i, waypointData))}
           />
         </div>
       )
