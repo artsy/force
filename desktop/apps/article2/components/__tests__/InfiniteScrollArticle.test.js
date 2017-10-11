@@ -1,4 +1,3 @@
-import 'jsdom-global/register'
 import InfiniteScrollArticle, { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/components/InfiniteScrollArticle'
 import sinon from 'sinon'
 import _ from 'underscore'
@@ -9,6 +8,17 @@ import components from '@artsy/reaction-force/dist/Components/Publishing'
 const { Article } = components
 
 describe('<StandardArticle />', () => {
+  // let cleanup
+
+  // before(() => {
+  //   cleanup = require('jsdom-global')()
+  //   global.window = document.defaultView
+  // })
+
+  // after(() => {
+  //   cleanup()
+  // })
+
   it('renders the initial article', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',

@@ -8,7 +8,7 @@ import _ from 'underscore'
 import articlesQuery from '../queries/articles.js'
 import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
-const { Article } = components
+const { Article, Constants } = components
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
@@ -24,6 +24,10 @@ export default class InfiniteScrollArticle extends React.Component {
       offset: 0,
       error: false
     }
+  }
+
+  componentDidMount () {
+    this.setState({window: window.innerHeight || 500})
   }
 
   fetchNextArticles = async () => {
@@ -52,12 +56,29 @@ export default class InfiniteScrollArticle extends React.Component {
     }
   }
 
+  onEnter = (article, i, {previousPosition, currentPosition}) => {
+    if (previousPosition === 'above' && currentPosition === 'inside') {
+      window.history.replaceState({}, article.id, Constants.articleHref(article.slug))
+    }
+  }
+
+  onLeave = (article, i, {previousPosition, currentPosition}) => {
+    const nextArticle = this.state.articles[i + 1]
+    if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
+      window.history.replaceState({}, nextArticle.id, Constants.articleHref(nextArticle.slug))
+    }
+  }
+
   renderContent = () => {
     return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
         <div key={`article-${i}`}>
           <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl={this.props.emailSignupUrl} />
           <Break />
+          <Waypoint
+            onEnter={(waypointData => this.onEnter(article, i, waypointData))}
+            onLeave={(waypointData => this.onLeave(article, i, waypointData))}
+          />
         </div>
       )
     }))

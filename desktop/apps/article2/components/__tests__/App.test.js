@@ -1,14 +1,10 @@
-import 'jsdom-global/register'
-global.window = document.defaultView
 import App from 'desktop/apps/article2/components/App'
-import components from '@artsy/reaction-force/dist/Components/Publishing'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import * as _ from 'underscore'
 import InfiniteScrollArticle from '../InfiniteScrollArticle'
 import sinon from 'sinon'
-const { Article } = components
 
 describe('<App />', () => {
   it('renders a standard article', () => {
@@ -35,7 +31,6 @@ describe('<App />', () => {
       contributing_authors: [{name: 'Kana'}]
     })
     const rendered = shallow(<App article={article} templates={{}} />)
-    rendered.find(Article).length.should.equal(1)
     rendered.html().should.containEql('FeatureLayout')
   })
 
