@@ -282,8 +282,9 @@ module.exports = class Artwork extends Backbone.Model
     ]).join(", ")
 
   saleMessage: ->
-    return if @get('sale_message') is 'Contact For Price' or @get('availability') is 'not for sale'
-
+    return if @get('availability_hidden')
+    return if @get('sale_message') is 'Contact For Price'
+    return if @get('availability') is 'not for sale' or @get('availability') is 'permanent collection'
     if @get('availability') is 'on hold'
       if @get('price')
         return "#{@get('price')}, on hold"
@@ -292,11 +293,14 @@ module.exports = class Artwork extends Backbone.Model
     if @get('sale_message')?.indexOf('Sold') > - 1
       return 'Sold'
 
+    if (@get('availability') is 'on loan')
+      return 'On loan'
+
     @get 'sale_message'
 
   availabilityMessage: ->
     return if @get('partner')?.type is "Institutional Seller"
-    return if @get('availability') is 'for sale' or @get('availability') is 'not for sale'
+    return if @get('availability') is 'for sale' or @get('availability') is 'not for sale' or @get('availability') is 'permanent collection'
     if @get('partner')?.has_limited_fair_partnership
       'Not inquireable'
     else if @get('availability')?.indexOf('on hold') > - 1

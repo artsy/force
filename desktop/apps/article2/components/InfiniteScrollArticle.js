@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import components from '@artsy/reaction-force/dist/Components/Publishing'
+import components from '@artsy/reaction-force/dist/Components/Publishing/index'
 import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
@@ -52,12 +52,31 @@ export default class InfiniteScrollArticle extends React.Component {
     }
   }
 
+  onEnter = (article, {previousPosition, currentPosition}) => {
+    if (previousPosition === 'above' && currentPosition === 'inside') {
+      document.title = article.thumbnail_title
+      window.history.replaceState({}, article.id, `/article/${article.slug}`)
+    }
+  }
+
+  onLeave = (i, {previousPosition, currentPosition}) => {
+    const nextArticle = this.state.articles[i + 1]
+    if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
+      document.title = nextArticle.thumbnail_title
+      window.history.replaceState({}, nextArticle.id, `/article/${nextArticle.slug}`)
+    }
+  }
+
   renderContent = () => {
     return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
         <div key={`article-${i}`}>
           <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl={this.props.emailSignupUrl} />
           <Break />
+          <Waypoint
+            onEnter={(waypointData => this.onEnter(article, waypointData))}
+            onLeave={(waypointData => this.onLeave(i, waypointData))}
+          />
         </div>
       )
     }))
