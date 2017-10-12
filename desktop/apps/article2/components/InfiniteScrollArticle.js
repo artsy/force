@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import components from '@artsy/reaction-force/dist/Components/Publishing/index'
-import { articleHref } from '@artsy/reaction-force/dist/Components/Publishing/Constants'
 import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
@@ -55,14 +54,14 @@ export default class InfiniteScrollArticle extends React.Component {
 
   onEnter = (article, {previousPosition, currentPosition}) => {
     if (previousPosition === 'above' && currentPosition === 'inside') {
-      window.history.replaceState({}, article.id, articleHref(article.slug))
+      window.history.replaceState({}, article.id, `/article/${article.slug}`)
     }
   }
 
   onLeave = (i, {previousPosition, currentPosition}) => {
     const nextArticle = this.state.articles[i + 1]
     if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
-      window.history.replaceState({}, nextArticle.id, articleHref(nextArticle.slug))
+      window.history.replaceState({}, nextArticle.id, `/article/${nextArticle.slug}`)
     }
   }
 
