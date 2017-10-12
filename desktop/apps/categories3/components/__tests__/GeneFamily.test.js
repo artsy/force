@@ -14,15 +14,21 @@ describe('GeneFamily', () => {
       genes: [
         {
           id: 'gold',
-          name: 'Gold'
+          name: 'Gold',
+          display_name: 'Bigly Gold',
+          is_published: true
         },
         {
           id: 'silver',
-          name: 'Silver'
+          name: 'Silver',
+          display_name: 'Silver',
+          is_published: true
         },
         {
           id: 'bronze',
-          name: 'Bronze'
+          name: 'Bronze',
+          display_name: 'Bronze',
+          is_published: true
         }
       ]
     }
@@ -73,7 +79,7 @@ describe('GeneFamily', () => {
   })
 
   it('renders image links for featured genes', () => {
-    rendered.find('a + img').length.should.equal(3)
+    rendered.find('a img').length.should.equal(3)
   })
 
   it('renders a list of genes', () => {
@@ -81,9 +87,9 @@ describe('GeneFamily', () => {
     rendered.find('li').length.should.equal(3)
   })
 
-  it('alphabetizes the genes', () => {
-    rendered.find('li a').eq(0).text().should.equal('Bronze')
-    rendered.find('li a').eq(1).text().should.equal('Gold')
+  it('alphabetizes the genes by display name', () => {
+    rendered.find('li a').eq(0).text().should.equal('Bigly Gold')
+    rendered.find('li a').eq(1).text().should.equal('Bronze')
     rendered.find('li a').eq(2).text().should.equal('Silver')
   })
 })
