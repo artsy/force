@@ -54,6 +54,7 @@ export default class InfiniteScrollArticle extends React.Component {
 
   onEnter = (article, {previousPosition, currentPosition}) => {
     if (previousPosition === 'above' && currentPosition === 'inside') {
+      document.title = article.thumbnail_title
       window.history.replaceState({}, article.id, `/article/${article.slug}`)
     }
   }
@@ -61,6 +62,7 @@ export default class InfiniteScrollArticle extends React.Component {
   onLeave = (i, {previousPosition, currentPosition}) => {
     const nextArticle = this.state.articles[i + 1]
     if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
+      document.title = nextArticle.thumbnail_title
       window.history.replaceState({}, nextArticle.id, `/article/${nextArticle.slug}`)
     }
   }
