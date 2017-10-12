@@ -1,7 +1,7 @@
 import 'jsdom-global/register'
-import sinon from 'sinon'
-import { mount } from 'enzyme'
 import React from 'react'
+import { mount } from 'enzyme'
+import sinon from 'sinon'
 import EditButton, { __RewireAPI__ as RewireApi } from 'desktop/apps/article2/components/EditButton'
 
 describe('<EditButton />', () => {
