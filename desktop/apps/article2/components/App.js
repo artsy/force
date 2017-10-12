@@ -28,17 +28,22 @@ export default class App extends React.Component {
   }
 
   renderArticle = () => {
-    if (this.props.article.layout === 'standard' && !this.props.isSuper) {
+    const article = this.props.article
+    if (article.layout === 'standard' && !this.props.isSuper) {
       const emailSignupUrl = this.props.subscribed ? '' : `${sd.APP_URL}/signup/editorial`
 
       return (
-        <InfiniteScrollArticle article={this.props.article} emailSignupUrl={emailSignupUrl} />
+        <InfiniteScrollArticle article={article} emailSignupUrl={emailSignupUrl} />
       )
     } else {
       const navHeight = this.props.isSuper ? '0px' : NAVHEIGHT
 
       return (
-        <Article article={this.props.article} headerHeight={`calc(100vh - ${navHeight})`} />
+        <Article
+          article={article}
+          headerHeight={`calc(100vh - ${navHeight})`}
+          marginTop={!article.hero_section ? '100' : '0'}
+        />
       )
     }
   }
