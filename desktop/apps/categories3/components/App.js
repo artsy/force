@@ -9,6 +9,8 @@ const Layout = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 40px;
+  max-width: 1250px;
+  margin: auto;
 `
 class App extends Component {
   static propTypes = {

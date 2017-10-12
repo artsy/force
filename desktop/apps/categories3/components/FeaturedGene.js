@@ -11,10 +11,11 @@ const propTypes = {
 
 const Container = styled.div`
   position: relative;
+  width: 95%;
   overflow: hidden;
 `
 
-const GeneLink = styled.a`
+const GeneName = styled.span`
   position: absolute;
   left: 1em;
   bottom: 1em;
@@ -28,14 +29,16 @@ const GeneLink = styled.a`
   font-weight: bold;
 `
 
-const GeneImage = styled.img`width: 90%;`
+const GeneImage = styled.img`width: 100%;`
 
 const FeaturedGene = ({ title, href, image: { url: imageSrc } }) => {
   return (
-    <Container>
-      <GeneLink href={href}>{title}</GeneLink>
-      <GeneImage src={imageSrc} />
-    </Container>
+    <a href={href}>
+      <Container>
+        <GeneName>{title}</GeneName>
+        <GeneImage src={imageSrc} />
+      </Container>
+    </a>
   )
 }
 
