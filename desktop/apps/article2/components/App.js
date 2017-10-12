@@ -42,7 +42,7 @@ export default class App extends React.Component {
         <Article
           article={article}
           headerHeight={`calc(100vh - ${navHeight})`}
-          marginTop={!article.hero_section ? '100' : '0'}
+          marginTop={article.layout === 'standard' ? '100' : '0'}
         />
       )
     }
