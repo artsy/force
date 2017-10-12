@@ -8,10 +8,6 @@ routes =
   ''': require('../apps/categories/client.coffee').init
 
   '''
-  /categories2
-  ''': require('../apps/categories2/client/index.coffee').init
-
-  '''
   /tag
   ''': require('../apps/tag/client.js').default.init
 
