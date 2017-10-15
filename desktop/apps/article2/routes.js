@@ -4,6 +4,7 @@ import ArticleQuery from 'desktop/apps/article2/queries/article'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
 import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article2/queries/superArticle'
+import { DisplayQuery } from 'desktop/apps/article2/queries/display'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
@@ -19,8 +20,8 @@ export async function index (req, res, next) {
 
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
+    const { display } = await positronql({ query: DisplayQuery })
     const article = data.article
-    const display = data.display
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
