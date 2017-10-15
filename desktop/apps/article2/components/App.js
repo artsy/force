@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import components from '@artsy/reaction-force/dist/Components/Publishing'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import InfiniteScrollArticle from './InfiniteScrollArticle'
 import { data as sd } from 'sharify'
 import EditButton from 'desktop/apps/article2/components/EditButton'
 import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import ArticleModel from 'desktop/models/article.coffee'
-const { Article } = components
 
 const NAVHEIGHT = '53px'
 

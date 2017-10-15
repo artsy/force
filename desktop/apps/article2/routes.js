@@ -20,6 +20,7 @@ export async function index (req, res, next) {
   try {
     const data = await positronql({ query: ArticleQuery(articleId) })
     const article = data.article
+    const display = data.display
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
@@ -84,6 +85,7 @@ export async function index (req, res, next) {
       },
       data: {
         article,
+        display,
         subscribed,
         superArticle,
         superSubArticles,
