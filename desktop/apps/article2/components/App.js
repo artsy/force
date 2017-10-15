@@ -14,7 +14,8 @@ export default class App extends React.Component {
     article: PropTypes.object,
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
-    templates: PropTypes.object
+    templates: PropTypes.object,
+    display: PropTypes.object
   }
 
   componentDidMount () {
@@ -32,7 +33,11 @@ export default class App extends React.Component {
       const emailSignupUrl = this.props.subscribed ? '' : `${sd.APP_URL}/signup/editorial`
 
       return (
-        <InfiniteScrollArticle article={article} emailSignupUrl={emailSignupUrl} />
+        <InfiniteScrollArticle
+          article={article}
+          emailSignupUrl={emailSignupUrl}
+          display={this.props.display}
+        />
       )
     } else {
       const navHeight = this.props.isSuper ? '0px' : NAVHEIGHT

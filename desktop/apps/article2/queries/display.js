@@ -3,8 +3,7 @@ export default `
     name
     canvas {
       assets {
-        name
-        slug
+        url
       }
       body
       disclaimer
@@ -19,8 +18,7 @@ export default `
     }
     panel {
       assets {
-        name
-        slug
+        url
       }
       body
       disclaimer
