@@ -14,8 +14,7 @@ export default class App extends React.Component {
     article: PropTypes.object,
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
-    templates: PropTypes.object,
-    display: PropTypes.object
+    templates: PropTypes.object
   }
 
   componentDidMount () {
@@ -36,7 +35,6 @@ export default class App extends React.Component {
         <InfiniteScrollArticle
           article={article}
           emailSignupUrl={emailSignupUrl}
-          display={this.props.display}
         />
       )
     } else {
