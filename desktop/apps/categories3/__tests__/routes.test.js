@@ -4,7 +4,7 @@ import {
   index,
   __RewireAPI__ as RoutesRewireApi
 } from 'desktop/apps/categories3/routes'
-import { geneFamiliesFromConnection } from './utils'
+import { geneFamiliesFromConnection } from '../utils'
 
 let req
 let res
