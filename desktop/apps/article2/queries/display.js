@@ -1,15 +1,15 @@
-export const DisplayQuery = `
-  {
-    display {
-      name
-      canvas {
-        ...DisplayUnit
-      }
-      panel {
-        ...DisplayUnit
-      }
+export const display = `
+  display {
+    name
+    canvas {
+      ...DisplayUnit
+    }
+    panel {
+      ...DisplayUnit
     }
   }
+`
+export const displayFragment = `
   fragment DisplayUnit on DisplayUnit {
     assets {
       url

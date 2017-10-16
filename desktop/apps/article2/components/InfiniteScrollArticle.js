@@ -5,15 +5,14 @@ import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
 import _ from 'underscore'
-import articlesQuery from '../queries/articles.js'
+import articlesQuery from 'desktop/apps/article2/queries/articles.js'
 import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
-    emailSignupUrl: PropTypes.string,
-    display: PropTypes.object
+    emailSignupUrl: PropTypes.string
   }
 
   constructor (props) {
@@ -77,7 +76,7 @@ export default class InfiniteScrollArticle extends React.Component {
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             isTruncated={i !== 0}
             emailSignupUrl={this.props.emailSignupUrl}
-            display={this.props.display}
+            display={article.display}
           />
           <Break />
           <Waypoint
