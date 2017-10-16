@@ -4,6 +4,7 @@ import {
   index,
   __RewireAPI__ as RoutesRewireApi
 } from 'desktop/apps/categories3/routes'
+import { geneFamiliesFromConnection } from './utils'
 
 let req
 let res
@@ -19,22 +20,26 @@ describe('#index', () => {
     res = {}
     next = sinon.stub()
     geneFamiliesQuery = {
-      gene_families: [
-        {
-          id: 'materials',
-          name: 'Materials',
-          genes: [
-            {
-              id: 'silver',
-              name: 'Silver'
-            },
-            {
-              id: 'gold',
-              name: 'Gold'
+      gene_families: {
+        edges: [
+          {
+            node: {
+              id: 'materials',
+              name: 'Materials',
+              genes: [
+                {
+                  id: 'silver',
+                  name: 'Silver'
+                },
+                {
+                  id: 'gold',
+                  name: 'Gold'
+                }
+              ]
             }
-          ]
-        }
-      ]
+          }
+        ]
+      }
     }
 
     RoutesRewireApi.__Rewire__(
@@ -60,9 +65,23 @@ describe('#index', () => {
   })
   it('passes the correct variables', () => {
     index(req, res, next).then(() => {
-      renderLayout.args[0][0].data.geneFamilies.should.equal(
-        geneFamiliesQuery.gene_families
-      )
+      const expectedFamilies = [
+        {
+          id: 'materials',
+          name: 'Materials',
+          genes: [
+            {
+              id: 'silver',
+              name: 'Silver'
+            },
+            {
+              id: 'gold',
+              name: 'Gold'
+            }
+          ]
+        }
+      ]
+      renderLayout.args[0][0].data.geneFamilies.should.eql(expectedFamilies)
     })
   })
 })
