@@ -58,7 +58,7 @@ describe 'Articles routes', ->
 
     it 'renders the channel with its articles', ->
       channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'team'
-      @req.url = 'foo'
+      @req.path = '/foo'
       routes.teamChannel @req, @res, @next
       Backbone.sync.args[0][2].success channel
       Backbone.sync.args[1][2].data.ids.length.should.equal 4
@@ -68,7 +68,16 @@ describe 'Articles routes', ->
 
     it 'nexts if channel is not a team channel', ->
       channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'editorial'
-      @req.url = 'foo'
+      @req.path = '/foo'
       routes.teamChannel @req, @res, @next
       Backbone.sync.args[0][2].success channel
       @next.called.should.be.ok()
+
+    it 'handles query params', ->
+      channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'team'
+      @req.path = '/foo?utm=campaign2'
+      routes.teamChannel @req, @res, @next
+      Backbone.sync.args[0][2].success channel
+      Backbone.sync.args[1][2].success fixtures.article
+      @res.render.args[0][0].should.equal 'team_channel'
+      @res.render.args[0][1].channel.get('name').should.equal channel.name

@@ -15,7 +15,6 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 { topParselyArticles } = require '../../components/util/parsely.coffee'
 positronql = require '../../lib/positronql.coffee'
 query = require './queries/editorial_articles.coffee'
-{ parse } = require 'url'
 
 @articles = (req, res, next) ->
   send =
