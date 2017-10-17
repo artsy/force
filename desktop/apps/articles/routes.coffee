@@ -15,6 +15,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 { topParselyArticles } = require '../../components/util/parsely.coffee'
 positronql = require '../../lib/positronql.coffee'
 query = require './queries/editorial_articles.coffee'
+{ parse } = require 'url'
 
 @articles = (req, res, next) ->
   send =
@@ -63,10 +64,10 @@ setupEmailSubscriptions = (user, cb) ->
           res.locals.sd.SECTION = section.toJSON()
           res.render 'section', section: section, articles: articles, veniceBanner: true
 
-@teamChannel = (req, res, next) =>
-  slug = last req.url.split('/')
+@teamChannel = (req, res, next) ->
+  slug = req.path.split('/')[1]
   new Channel(id: slug).fetch
-    error: => res.backboneError
+    error: -> res.backboneError
     success: (channel) ->
       return next() unless channel.isTeam()
       topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
