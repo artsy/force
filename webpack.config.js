@@ -12,7 +12,8 @@ const isDeploy = isStaging || isProduction
 
 const config = {
   // devtool: 'eval',
-  devtool: 'cheap-module-source-map', // https://github.com/facebookincubator/create-react-app/issues/2407
+  devtool: 'source-map',
+  // devtool: 'cheap-module-source-map', // https://github.com/facebookincubator/create-react-app/issues/2407
   entry: {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
@@ -91,7 +92,7 @@ const config = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      minChunks: 2 // lower number for larger "common.js" bundle size
+      minChunks: 10 // lower number for larger "common.js" bundle size
     })
   ],
   resolve: {
