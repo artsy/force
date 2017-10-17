@@ -3,12 +3,15 @@ import GeneFamiliesQuery from './queries/geneFamilies'
 import FeaturedGenesQuery from './queries/featuredGenes'
 import metaphysics from 'lib/metaphysics.coffee'
 import { renderLayout } from '@artsy/stitch'
+import { geneFamiliesFromConnection } from './utils'
 
 export const index = async (req, res, next) => {
   try {
-    const { gene_families: geneFamilies } = await metaphysics({
+    const geneFamilyConnection = await metaphysics({
       query: GeneFamiliesQuery()
     })
+    const geneFamilies = geneFamiliesFromConnection(geneFamilyConnection)
+
     const { gene_families: allFeaturedGenesByFamily } = await metaphysics({
       query: FeaturedGenesQuery()
     })

@@ -8,3 +8,6 @@ export const featuredGenesForFamily = (familyName, featuredGenesList) => {
     featuredGenesFamily => featuredGenesFamily.name === familyName
   )
 }
+
+export const geneFamiliesFromConnection = connectionData =>
+  connectionData.gene_families.edges.map(edge => edge.node)
