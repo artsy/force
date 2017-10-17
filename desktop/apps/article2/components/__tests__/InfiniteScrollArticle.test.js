@@ -1,11 +1,11 @@
 import 'jsdom-global/register'
-import InfiniteScrollArticle, { __RewireAPI__ as RewireApi } from 'desktop/apps/article2/components/InfiniteScrollArticle'
-import sinon from 'sinon'
 import _ from 'underscore'
-import fixtures from 'desktop/test/helpers/fixtures.coffee'
-import { shallow } from 'enzyme'
+import InfiniteScrollArticle, { __RewireAPI__ as RewireApi } from 'desktop/apps/article2/components/InfiniteScrollArticle'
 import React from 'react'
+import fixtures from 'desktop/test/helpers/fixtures.coffee'
+import sinon from 'sinon'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
+import { shallow } from 'enzyme'
 
 describe('<InfiniteScrollArticle />', () => {
   beforeEach(() => {

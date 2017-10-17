@@ -1,8 +1,8 @@
 import 'jsdom-global/register'
-import React from 'react'
-import { mount } from 'enzyme'
-import sinon from 'sinon'
 import EditButton, { __RewireAPI__ as RewireApi } from 'desktop/apps/article2/components/EditButton'
+import React from 'react'
+import sinon from 'sinon'
+import { mount } from 'enzyme'
 
 describe('<EditButton />', () => {
   it('does not render edit button if there is no user', () => {

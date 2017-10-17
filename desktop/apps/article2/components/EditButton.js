@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
-import { pluck, contains } from 'underscore'
 import * as React from 'react'
-import { data as sd } from 'sharify'
 import ChannelMemberQuery from 'desktop/apps/article2/queries/channelMember'
+import PropTypes from 'prop-types'
 import positronql from 'desktop/lib/positronql.coffee'
 import styled from 'styled-components'
+import { data as sd } from 'sharify'
+import { pluck, contains } from 'underscore'
 
 export default class EditButton extends React.Component {
   static propTypes = {

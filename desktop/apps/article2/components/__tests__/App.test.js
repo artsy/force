@@ -1,11 +1,11 @@
 import 'jsdom-global/register'
-import App from 'desktop/apps/article2/components/App'
-import fixtures from 'desktop/test/helpers/fixtures.coffee'
-import InfiniteScrollArticle from 'desktop/apps/article2/components/InfiniteScrollArticle'
-import React from 'react'
-import { shallow, mount } from 'enzyme'
 import * as _ from 'underscore'
+import App from 'desktop/apps/article2/components/App'
+import InfiniteScrollArticle from '../InfiniteScrollArticle'
+import React from 'react'
+import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
+import { shallow, mount } from 'enzyme'
 
 describe('<App />', () => {
   it('renders a standard article', () => {
@@ -33,6 +33,23 @@ describe('<App />', () => {
     })
     const rendered = shallow(<App article={article} templates={{}} />)
     rendered.html().should.containEql('FeatureLayout')
+  })
+
+  it('renders Related Articles', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'standard',
+      vertical: {
+        name: 'Art Market'
+      },
+      contributing_authors: [{name: 'Kana'}],
+      relatedArticlesPanel: [
+        fixtures.article
+      ]
+    })
+    const rendered = shallow(<App article={article} />)
+    const html = rendered.html()
+    html.should.containEql('Related Stories')
+    html.should.containEql('RelatedArticlesPanel')
   })
 
   it('it mounts backbone views for super articles', () => {
