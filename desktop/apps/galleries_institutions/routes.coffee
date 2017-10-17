@@ -85,7 +85,7 @@ fetchPartnerCategories = (type) ->
   partners.fetchUntilEndInParallel
     cache: true
     data:
-      size: 20
+      size: 40
       type: mapTypeClasses[req.params.type]
       sort: 'sortable_id'
       has_full_profile: true
