@@ -1,6 +1,6 @@
 import * as fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
-import { amp, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/routes'
+import { amp, editorialSignup, article2Index as index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/routes'
 import * as _ from 'underscore'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'

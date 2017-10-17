@@ -10,8 +10,12 @@ request = require 'superagent'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { topParselyArticles } = require '../../components/util/parsely.coffee'
+{ article2Index } = require '../article2/routes'
 
 @article = (req, res, next) ->
+  user = res.locals.sd.CURRENT_USER
+  if user?.type is 'Admin'
+    return next()
   articleItem = new Article id: req.params.slug
   articleItem.fetchWithRelated
     accessToken: req.user?.get('accessToken')
@@ -30,10 +34,11 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.sd.ARTICLE_CHANNEL = data.channel?.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
+
       # Email Subscriptions
-      user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
+
         # Parsely Articles
         topParselyArticles articleItem.getParselySection(), articleItem.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles

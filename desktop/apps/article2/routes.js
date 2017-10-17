@@ -14,7 +14,7 @@ import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
 
-export async function index (req, res, next) {
+export async function article2Index (req, res, next) {
   const articleId = req.params.slug
 
   try {
@@ -29,7 +29,7 @@ export async function index (req, res, next) {
     }
 
     if (articleId !== article.slug) {
-      return res.redirect(`/article2/${article.slug}`)
+      return res.redirect(`/article/${article.slug}`)
     }
 
     const isSuper = article.is_super_article || article.is_super_sub_article
