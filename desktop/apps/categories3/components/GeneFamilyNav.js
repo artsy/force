@@ -29,7 +29,10 @@ const ResponsiveSidebar = styled.aside`
 const GeneFamilyList = styled(Scrollspy)`
   position: fixed;
   width: inherit;
+  max-width: 300px;
   padding-right: 2em;
+  background: white;
+  z-index: 1;
 
   ${primary.style};
   font-size: 13px;

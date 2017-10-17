@@ -20,6 +20,7 @@ export const SuperArticleQuery = (id) => {
         is_super_article
         thumbnail_title
         title
+        slug
         super_article {
           partner_link
           partner_link_title

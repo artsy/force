@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import components from '@artsy/reaction-force/dist/Components/Publishing/index'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
 import _ from 'underscore'
-import articlesQuery from '../queries/articles.js'
+import articlesQuery from 'desktop/apps/article2/queries/articles.js'
 import positronql from 'desktop/lib/positronql.coffee'
 import { data as sd } from 'sharify'
-const { Article } = components
 
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
@@ -71,7 +70,14 @@ export default class InfiniteScrollArticle extends React.Component {
     return _.flatten(_.map(this.state.articles, (article, i) => {
       return (
         <div key={`article-${i}`}>
-          <Article article={article} relatedArticlesForPanel={article.relatedArticlesPanel} relatedArticlesForCanvas={article.relatedArticlesCanvas} isTruncated={i !== 0} emailSignupUrl={this.props.emailSignupUrl} />
+          <Article
+            article={article}
+            relatedArticlesForPanel={article.relatedArticlesPanel}
+            relatedArticlesForCanvas={article.relatedArticlesCanvas}
+            isTruncated={i !== 0}
+            emailSignupUrl={this.props.emailSignupUrl}
+            display={article.display}
+          />
           <Break />
           <Waypoint
             onEnter={(waypointData => this.onEnter(article, waypointData))}

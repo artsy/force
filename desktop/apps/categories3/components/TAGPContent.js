@@ -12,6 +12,7 @@ const propTypes = {
 
 const ResponsiveContent = styled.main`
   width: 100%;
+  padding: 0 20px;
 
   @media (min-width: 768px) {
     width: 74%;

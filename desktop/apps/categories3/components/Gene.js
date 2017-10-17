@@ -6,7 +6,8 @@ import colors from '@artsy/reaction-force/dist/Assets/Colors'
 
 const propTypes = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  display_name: PropTypes.string
 }
 
 const GeneItem = styled.li`
@@ -21,11 +22,11 @@ const GeneLink = styled.a`
     color: ${colors.purpleRegular};
   }
 `
-const Gene = ({ id, name }) => {
+const Gene = ({ id, name, display_name }) => {
   return (
     <GeneItem>
       <GeneLink href={`/gene/${id}`}>
-        {name}
+        {display_name || name}
       </GeneLink>
     </GeneItem>
   )

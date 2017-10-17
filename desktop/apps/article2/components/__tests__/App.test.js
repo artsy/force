@@ -1,10 +1,10 @@
 import 'jsdom-global/register'
 import App from 'desktop/apps/article2/components/App'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
+import InfiniteScrollArticle from 'desktop/apps/article2/components/InfiniteScrollArticle'
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import * as _ from 'underscore'
-import InfiniteScrollArticle from '../InfiniteScrollArticle'
 import sinon from 'sinon'
 
 describe('<App />', () => {
@@ -61,5 +61,36 @@ describe('<App />', () => {
     rendered.html().should.containEql('sa-header')
     SuperArticleView.called.should.be.true()
     SuperArticleView.args[0][0].article.get('title').should.equal('Super Article Title')
+  })
+
+  it('renders a standard article with ads', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'standard',
+      vertical: {
+        name: 'Art Market'
+      },
+      published_at: '2017-05-19T13:09:18.567Z',
+      contributing_authors: [{name: 'Kana'}],
+      display: {
+        name: 'Campaign 1',
+        panel: {
+          assets: [{ url: 'http://url.jpg' }],
+          headline: 'Ad Headline',
+          link: { url: 'http://link' }
+        },
+        canvas: {
+          assets: [{ url: 'http://url.jpg' }],
+          headline: 'Ad Headline',
+          link: { url: 'http://link' },
+          layout: 'standard'
+        }
+      }
+    })
+    const rendered = shallow(<App article={article} templates={{}} />)
+    const html = rendered.html()
+    html.should.containEql('DisplayPanel')
+    html.should.containEql('DisplayCanvas')
+    html.should.containEql('Campaign 1')
+    html.should.containEql('Ad Headline')
   })
 })

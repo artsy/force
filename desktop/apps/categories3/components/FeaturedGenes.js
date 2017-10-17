@@ -9,25 +9,26 @@ const propTypes = {
 }
 
 const Layout = styled.div`
-  padding-top: 1em;
-  column-count: 3;
-  column-gap: 2em;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+    padding-top: 1em;
+    column-count: 3;
+    column-gap: 2em;
+  }
 `
 
 const FeaturedGenes = ({ featuredGenes }) => {
   return (
     <Layout>
-      {featuredGenes
-        ? featuredGenes.genes.length > 0
-          ? featuredGenes.genes
-              .map(featuredGene => <FeaturedGene key={featuredGene.id} {...featuredGene} />)
-              .slice(0, 3)
-          : <p style={{ color: 'orange' }}>
-              missing Featured Links?<br />(No featuredGenes.genes list)
-            </p>
-        : <p style={{ color: 'red' }}>
-            missing Set?<br />(No featuredGenes object)
-          </p>}
+      {featuredGenes &&
+        featuredGenes.genes.length > 0 &&
+        featuredGenes.genes
+          .map(featuredGene => (
+            <FeaturedGene key={featuredGene.id} {...featuredGene} />
+          ))
+          .slice(0, 3)}
     </Layout>
   )
 }

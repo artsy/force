@@ -14,6 +14,7 @@ const propTypes = {
 }
 
 const GeneFamilyName = styled.h2`
+  margin-top: 10px;
   font-size: 37px;
   line-height: 1.2em;
 `
@@ -29,7 +30,8 @@ const GeneList = styled.ul`
 `
 
 const GeneFamily = ({ id, name, genes, featuredGenes }) => {
-  const sortedGenes = alphabetizeGenes(genes)
+  const publishedGenes = genes.filter(g => g.is_published)
+  const sortedGenes = alphabetizeGenes(publishedGenes)
   return (
     <div id={id}>
       <GeneFamilyName>
