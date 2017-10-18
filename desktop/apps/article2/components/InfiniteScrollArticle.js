@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
-import colors from '@artsy/reaction-force/dist/Assets/Colors'
-import styled from 'styled-components'
-import Waypoint from 'react-waypoint'
 import _ from 'underscore'
+import PropTypes from 'prop-types'
+import Waypoint from 'react-waypoint'
 import articlesQuery from 'desktop/apps/article2/queries/articles.js'
+import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import positronql from 'desktop/lib/positronql.coffee'
+import styled from 'styled-components'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { data as sd } from 'sharify'
 
 export default class InfiniteScrollArticle extends React.Component {
@@ -17,6 +17,7 @@ export default class InfiniteScrollArticle extends React.Component {
 
   constructor (props) {
     super(props)
+
     this.state = {
       isLoading: false,
       articles: [this.props.article],
@@ -26,23 +27,46 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   fetchNextArticles = async () => {
-    this.setState({ isLoading: true })
+    const { articles, offset } = this.state
+
+    this.setState({
+      isLoading: true
+    })
+
     try {
-      const data = await positronql({ query: articlesQuery(this.state.offset, 3, sd.ARTSY_EDITORIAL_CHANNEL, this.props.article.id) })
+      const data = await positronql({
+        query: articlesQuery({
+          offset,
+          limit: 3,
+          channel: sd.ARTSY_EDITORIAL_CHANNEL,
+          omit: this.props.article.id
+        })
+      })
+
       this.setState({
-        articles: this.state.articles.concat(data.articles),
+        articles: articles.concat(data.articles),
         isLoading: false,
-        offset: this.state.offset + 3
+        offset: offset + 3
       })
     } catch (error) {
-      this.setState({ isLoading: false, error: true })
+      this.setState({
+        isLoading: false,
+        error: true
+      })
     }
   }
 
   renderWaypoint = () => {
-    if (!this.state.isLoading) {
-      return <Waypoint onEnter={this.fetchNextArticles} threshold={2.0} />
-    } else if (!this.state.error) {
+    const { isLoading, error } = this.state
+
+    if (!isLoading) {
+      return (
+        <Waypoint
+          onEnter={this.fetchNextArticles}
+          threshold={2.0}
+        />
+      )
+    } else if (!error) {
       return (
         <LoadingSpinner>
           <div className='loading-spinner' />
@@ -60,6 +84,7 @@ export default class InfiniteScrollArticle extends React.Component {
 
   onLeave = (i, {previousPosition, currentPosition}) => {
     const nextArticle = this.state.articles[i + 1]
+
     if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
       document.title = nextArticle.thumbnail_title
       window.history.replaceState({}, nextArticle.id, `/article/${nextArticle.slug}`)

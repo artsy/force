@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
-import * as React from 'react'
-import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
-import InfiniteScrollArticle from './InfiniteScrollArticle'
-import { data as sd } from 'sharify'
-import EditButton from 'desktop/apps/article2/components/EditButton'
-import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import ArticleModel from 'desktop/models/article.coffee'
+import EditButton from 'desktop/apps/article2/components/EditButton'
+import InfiniteScrollArticle from './InfiniteScrollArticle'
+import PropTypes from 'prop-types'
+import React from 'react'
+import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
+import { data as sd } from 'sharify'
 
 const NAVHEIGHT = '53px'
 
@@ -27,9 +27,10 @@ export default class App extends React.Component {
   }
 
   renderArticle = () => {
-    const article = this.props.article
-    if (article.layout === 'standard' && !this.props.isSuper) {
-      const emailSignupUrl = this.props.subscribed ? '' : `${sd.APP_URL}/signup/editorial`
+    const { article, isSuper, subscribed } = this.props
+
+    if (article.layout === 'standard' && !isSuper) {
+      const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
 
       return (
         <InfiniteScrollArticle
@@ -38,13 +39,16 @@ export default class App extends React.Component {
         />
       )
     } else {
-      const navHeight = this.props.isSuper ? '0px' : NAVHEIGHT
+      const navHeight = isSuper ? '0px' : NAVHEIGHT
+      const articleMarginTop = article.layout === 'standard' ? '100' : '0'
+      const headerHeight = `calc(100vh - ${navHeight})`
 
       return (
         <Article
           article={article}
-          headerHeight={`calc(100vh - ${navHeight})`}
-          marginTop={article.layout === 'standard' ? '100' : '0'}
+          relatedArticlesForPanel={article.relatedArticlesPanel}
+          headerHeight={headerHeight}
+          marginTop={articleMarginTop}
         />
       )
     }
@@ -56,8 +60,9 @@ export default class App extends React.Component {
       templates: {
         SuperArticleFooter,
         SuperArticleHeader
-      }
+      } = {}
     } = this.props
+
     return (
       <div>
         <div
@@ -66,7 +71,11 @@ export default class App extends React.Component {
           }}
         />
 
-        <EditButton channelId={article.channel_id} slug={article.slug} />
+        <EditButton
+          channelId={article.channel_id}
+          slug={article.slug}
+        />
+
         {this.renderArticle()}
 
         <div
