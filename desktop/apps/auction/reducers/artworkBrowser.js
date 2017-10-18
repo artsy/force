@@ -37,6 +37,7 @@ export const initialState = {
   maxEstimateRangeDisplay: 50000,
   minEstimateRangeDisplay: 0,
   numArtistsYouFollow: 0,
+  requestID: get(sd, 'REQUEST_ID', undefined),
   saleArtworks: [],
   saleArtworksByFollowedArtists: [],
   saleArtworksByFollowedArtistsTotal: 0,
