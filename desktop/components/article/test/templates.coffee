@@ -1,6 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 cheerio = require 'cheerio'
+embed = require 'particle'
 path = require 'path'
 jade = require 'jade'
 fs = require 'fs'
@@ -65,6 +66,73 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql '<img src="http://image.jpg"'
     html.should.containEql 'class="article-fullscreen__image"'
+
+  it 'renders hero section with static image', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: []
+        contributing_authors: []
+        hero_section:
+          type: 'image'
+          url: 'http://image.jpg'
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+      _s: _s
+    html.should.containEql '<img src="http://image.jpg"'
+    html.should.containEql 'class="article-large-format-image"'
+
+  it 'renders hero section with multiple images', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: []
+        contributing_authors: []
+        hero_section:
+          type: 'image_collection'
+          images: [
+            {
+              type: 'image'
+              url: 'http://image1.jpg'
+            }
+            {
+              type: 'image'
+              url: 'http://image2.jpg'
+            }
+          ]
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+      _s: _s
+    html.should.containEql '<img src="http://image1.jpg"'
+    html.should.containEql '<img src="http://image2.jpg"'
+    html.should.containEql 'class="article-large-format-image"'
+
+  it 'renders hero section with video', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: []
+        contributing_authors: []
+        hero_section:
+          type: 'video'
+          url: 'https://www.youtube.com/watch?v=Bv_5Zv5c-Ts'
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+      embed: embed
+    html.should.containEql '<iframe src="//www.youtube.com/embed/Bv_5Zv5c-Ts'
+    html.should.containEql 'class="article-large-format-video-container"'
 
   it 'superSubArticles can render fullscreen header and SA menu with correct classes', ->
     html = render('index')
