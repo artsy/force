@@ -15,6 +15,8 @@ redirects =
   '/institution': '/institutions'
   '/filter/artworks': '/browse'
   '/filter/artworks/*': '/browse'
+  '/category': '/categories'
+  '/gene': '/categories'
   '/genes': '/categories'
   '/partner-application': '/apply'
   '/fair-application': '/apply/fair'

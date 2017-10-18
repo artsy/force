@@ -5,7 +5,7 @@ routes =
   /categories$
   /category$
   /gene$
-  ''': require('../apps/categories/client.coffee').init
+  ''': require('../apps/categories/client.js').default
 
   '''
   /tag

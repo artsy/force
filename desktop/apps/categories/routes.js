@@ -28,7 +28,7 @@ export const index = async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'categories3'
+        assetPackage: 'categories'
       },
       data: {
         geneFamilies,
