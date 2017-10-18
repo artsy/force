@@ -14,10 +14,13 @@ aggregationParams = require './aggregations.coffee'
   filterData = size: 0, gene_id: req.params.id, aggregations: aggregationParams, include_medium_filter_in_aggregation: true
 
   Q.all [
-    gene.fetch cache: true
+    gene.fetch
+      cache: true,
+      headers: 'X-Request-Id': req.id
     filterArtworks.fetch
       data: filterData
       cache: true
+      headers: 'X-Request-Id': req.id
   ]
 
   .then ->

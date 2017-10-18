@@ -58,6 +58,7 @@ export function fetchArtworks () {
     const {
       artworkBrowser: {
         filterParams,
+        requestID,
         user
       }
     } = getState()
@@ -69,7 +70,8 @@ export function fetchArtworks () {
         query: filterQuery,
         variables: filterParams,
         req: {
-          user
+          user,
+          id: requestID
         }
       })
 
@@ -106,6 +108,7 @@ export function fetchArtworksByFollowedArtists () {
         followedArtistRailMax,
         followedArtistRailPage,
         filterParams,
+        requestID,
         user
       }
     } = getState()
@@ -121,7 +124,8 @@ export function fetchArtworksByFollowedArtists () {
         query: worksByFollowedArtists,
         variables: inputVars,
         req: {
-          user
+          user,
+          id: requestID
         }
       })
       if (filter_sale_artworks.hits.length > 0) {
