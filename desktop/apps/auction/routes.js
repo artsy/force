@@ -22,7 +22,8 @@ export async function index (req, res, next) {
 
   try {
     const { sale } = await metaphysics({
-      query: SaleQuery(saleId)
+      query: SaleQuery(saleId),
+      req: req
     })
 
     res.locals.sd.AUCTION = sale
@@ -37,7 +38,8 @@ export async function index (req, res, next) {
 
     try {
       ({ articles } = await metaphysics({
-        query: ArticlesQuery(sale._id)
+        query: ArticlesQuery(sale._id),
+        req: req
       }))
     } catch (error) {
       console.error('(apps/auction/routes.js) Error fetching Articles', error)
@@ -64,6 +66,7 @@ export async function index (req, res, next) {
           sale_id: saleId
         },
         isClosed: sale.is_closed,
+        requestID: req.id,
         user: res.locals.sd.CURRENT_USER
       }, auctionWorksInitialState)
     })
@@ -105,7 +108,7 @@ export async function index (req, res, next) {
 
 export async function redirectLive (req, res, next) {
   try {
-    const { sale } = await metaphysics({ query: SaleQuery(req.params.id) })
+    const { sale } = await metaphysics({ query: SaleQuery(req.params.id), req: req })
     const isLiveOpen = get(sale, 'is_live_open')
 
     if (isLiveOpen) {
@@ -139,7 +142,7 @@ export async function redirectLive (req, res, next) {
 async function fetchUser (req, res) {
   if (req.user) {
     try {
-      const user = await req.user.fetch()
+      const user = await req.user.fetch({ headers: { 'X-Request-Id': req.id } })
       res.locals.sd.CURRENT_USER = {
         ...res.locals.sd.CURRENT_USER,
         ...user
