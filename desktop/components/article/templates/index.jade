@@ -18,9 +18,13 @@ if superArticle
       if article.get('hero_section') && article.get('hero_section').type === 'video'
         .article-large-format-video-container
           +video(article.get('hero_section'))
+      //- TODO: Deprecate Image after Article2 launch
       if article.get('hero_section') && article.get('hero_section').type === 'image'
         .article-large-format-image
           +image(article.get('hero_section'))
+      if article.get('hero_section') && article.get('hero_section').type === 'image_collection'
+        .article-large-format-image
+          +imageCollection(article.get('hero_section').images)
 
     //- Article Share Fixed Nav
     if !hideShare
