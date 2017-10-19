@@ -6,7 +6,7 @@ import { display, displayFragment } from 'desktop/apps/article2/queries/display'
 export default function ArticleQuery (id) {
   return `
     {
-      article(id: "${id}" ) {
+      article(id: "${id}") {
         ${articleBody}
         ${relatedArticles}
         ${display}
