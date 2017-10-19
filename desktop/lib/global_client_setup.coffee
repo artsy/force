@@ -86,7 +86,6 @@ setupJquery = ->
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
-    'X-Request-Id': sd.REQUEST_ID
   window[key] = helper for key, helper of templateModules
 
 setupErrorReporting = ->
