@@ -167,10 +167,12 @@ body.body-article
       .share-item
         width 33.333%
 
-.responsive-layout-container[data-layout="overflow"]
+.responsive-layout-container[data-layout="overflow"],
+.responsive-layout-container[data-layout="overflow_fillwidth"]
   @media screen and (max-width 900px)
     margin 40px 0
-  .article-section-embed[data-layout="overflow"]
+  .article-section-embed[data-layout="overflow"],
+  .article-section-embed[data-layout="overflow_fillwidth"]
     width overflow-width
     @media screen and (max-width 1250px)
       width calc(100% \- 150px)
