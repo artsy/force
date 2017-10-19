@@ -12,7 +12,6 @@ $ -> analytics.ready ->
     analyticsHooks.on 'auth:logged-out', -> analytics.reset()
 
   require '../analytics/global.js'
-  require '../analytics/impressions.js'
   require '../analytics/show_page.js'
   require '../analytics/bidding.js'
   require '../analytics/criteo.js'
@@ -22,3 +21,4 @@ $ -> analytics.ready ->
   require '../analytics/following.js'
   require '../analytics/save.js'
   require '../analytics/partners.js'
+  require '../../desktop/analytics/impressions.js'
