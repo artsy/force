@@ -22,7 +22,8 @@ export default class InfiniteScrollArticle extends React.Component {
       isLoading: false,
       articles: [this.props.article],
       offset: 0,
-      error: false
+      error: false,
+      isEnabled: true
     }
   }
 
@@ -43,13 +44,31 @@ export default class InfiniteScrollArticle extends React.Component {
         })
       })
 
-      this.setState({
-        articles: articles.concat(data.articles),
-        isLoading: false,
-        offset: offset + 3
-      })
+      // TODO:
+      // At some point this could go in a query so as not to fetch unnecessary data
+
+      // Ignore 'Featured'
+      const newArticles = data.articles.filter(article => !article.featured)
+
+      if (newArticles.length) {
+        this.setState({
+          articles: articles.concat(newArticles),
+          isLoading: false,
+          offset: offset + 3
+        })
+      } else {
+        this.setState({
+          isEnabled: false,
+          isLoading: false
+        })
+      }
     } catch (error) {
+      console.error(
+        '(apps/article/InfiniteScrollArticle) Error fetching next article set: ', error
+      )
+
       this.setState({
+        isEnabled: false,
         isLoading: false,
         error: true
       })
@@ -57,21 +76,23 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderWaypoint = () => {
-    const { isLoading, error } = this.state
+    const { isEnabled, isLoading, error } = this.state
 
-    if (!isLoading) {
-      return (
-        <Waypoint
-          onEnter={this.fetchNextArticles}
-          threshold={2.0}
-        />
-      )
-    } else if (!error) {
-      return (
-        <LoadingSpinner>
-          <div className='loading-spinner' />
-        </LoadingSpinner>
-      )
+    if (isEnabled) {
+      if (!isLoading) {
+        return (
+          <Waypoint
+            onEnter={this.fetchNextArticles}
+            threshold={2.0}
+          />
+        )
+      } else if (!error) {
+        return (
+          <LoadingSpinner>
+            <div className='loading-spinner' />
+          </LoadingSpinner>
+        )
+      }
     }
   }
 
@@ -85,14 +106,14 @@ export default class InfiniteScrollArticle extends React.Component {
   onLeave = (i, {previousPosition, currentPosition}) => {
     const nextArticle = this.state.articles[i + 1]
 
-    if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
+    if (nextArticle && previousPosition === 'inside' && currentPosition === 'above') {
       document.title = nextArticle.thumbnail_title
       window.history.replaceState({}, nextArticle.id, `/article/${nextArticle.slug}`)
     }
   }
 
   renderContent = () => {
-    return _.flatten(_.map(this.state.articles, (article, i) => {
+    return _.flatten(this.state.articles.map((article, i) => {
       return (
         <div key={`article-${i}`}>
           <Article

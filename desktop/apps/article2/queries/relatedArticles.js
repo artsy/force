@@ -1,12 +1,18 @@
 export default `
   relatedArticlesPanel {
-    thumbnail_title
     slug
+    thumbnail_title
     thumbnail_image
+    contributing_authors {
+      name
+    }
   }
   relatedArticlesCanvas {
-    thumbnail_title
     slug
+    thumbnail_title
     thumbnail_image
+    contributing_authors {
+      name
+    }
   }
 `
