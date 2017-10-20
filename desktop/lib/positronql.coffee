@@ -13,6 +13,9 @@ positronql = ({ method, query, variables, req } = {}) ->
     r = request[method] POSITRON_GRAPHQL_URL
       .set 'Accept', 'application/json'
 
+    if req?.user
+      r.set 'X-Access-Token', req.user.get('accessToken')
+
     r.query
       query: query
       variables: JSON.stringify variables

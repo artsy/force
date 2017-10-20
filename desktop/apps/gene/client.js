@@ -42,7 +42,7 @@ function setupGenePage () {
       .html(html)
       .addClass('is-fade-in')
   })
-  gene.fetchArtists('related', { headers: { 'X-Request-Id': sd.REQUEST_ID } })
+  gene.fetchArtists('related')
 
   // Setup user
   const user = CurrentUser.orNull()

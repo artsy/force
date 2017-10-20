@@ -167,10 +167,12 @@ body.body-article
       .share-item
         width 33.333%
 
-.responsive-layout-container[data-layout="overflow"]
+.responsive-layout-container[data-layout="overflow"],
+.responsive-layout-container[data-layout="overflow_fillwidth"]
   @media screen and (max-width 900px)
     margin 40px 0
-  .article-section-embed[data-layout="overflow"]
+  .article-section-embed[data-layout="overflow"],
+  .article-section-embed[data-layout="overflow_fillwidth"]
     width overflow-width
     @media screen and (max-width 1250px)
       width calc(100% \- 150px)
@@ -265,6 +267,16 @@ body.body-article
     width 100%
   li
     list-style none
+  ul
+    display flex
+    justify-content center
+  figcaption
+    margin-top 10px
+    text-align left
+    color gray-darker-color
+    garamond-size('l-caption')
+    a
+      color gray-darker-color
 
 .article-edit-container
   position fixed
