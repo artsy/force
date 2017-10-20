@@ -47,8 +47,8 @@ export default class InfiniteScrollArticle extends React.Component {
       // TODO:
       // At some point this could go in a query so as not to fetch unnecessary data
 
-      // Ignore 'Featured'
-      const newArticles = data.articles.filter(article => !article.featured)
+      // Ignore featured layouts
+      const newArticles = data.articles.filter(article => article.layout !== 'feature')
 
       if (newArticles.length) {
         this.setState({
