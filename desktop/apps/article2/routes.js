@@ -18,7 +18,10 @@ export async function index (req, res, next) {
   const articleId = req.params.slug
 
   try {
-    const data = await positronql({ query: ArticleQuery(articleId) })
+    const data = await positronql({
+      query: ArticleQuery(articleId),
+      req
+    })
     const article = data.article
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
