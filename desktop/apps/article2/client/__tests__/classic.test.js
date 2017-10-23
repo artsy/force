@@ -3,7 +3,7 @@ import { init, __RewireAPI__ as RewireApi } from 'desktop/apps/article2/client/c
 import sinon from 'sinon'
 import Backbone from 'backbone'
 
-describe('Classic Article', () => {
+xdescribe('Classic Article', () => {
   before(() => {
     const $ = require('jquery')
     $.fn.waypoint = sinon.stub()
