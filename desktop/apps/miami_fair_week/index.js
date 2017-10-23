@@ -27,6 +27,7 @@ class EditableMiamFairWeekPage extends JSONPage {
         },
         data: {
           ...res.locals,
+          ...data,
           data
         }
       })
