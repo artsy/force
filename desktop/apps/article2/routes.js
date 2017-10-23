@@ -68,6 +68,8 @@ export async function index (req, res, next) {
       }
     }
 
+    const isMobile = res.locals.sd.IS_MOBILE
+
     const layout = await renderLayout({
       basePath: res.app.get('views'),
       layout: '../../../components/main_layout/templates/react_index.jade',
@@ -90,7 +92,8 @@ export async function index (req, res, next) {
         subscribed,
         superArticle,
         superSubArticles,
-        isSuper
+        isSuper,
+        isMobile
       },
       templates
     })
