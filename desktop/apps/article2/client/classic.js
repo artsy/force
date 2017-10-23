@@ -1,5 +1,5 @@
-// Classic articles include all non-editorial content
-// This varies from Team Channels to
+// Initializes all client-side Backbone views for "classic" layouts
+
 import $ from 'jquery'
 import { data as sd } from 'sharify'
 import Article from 'desktop/models/article.coffee'
@@ -19,7 +19,7 @@ export const init = () => {
     article
   })
 
-  new GalleryInsightsView({ el: $('body').addClass('body-responsive') })
+  new GalleryInsightsView({ el: $('body') })
 
   if (channel.isTeam()) {
     new TeamChannelNavView({
@@ -39,14 +39,15 @@ const setupFooterArticles = (channel) => {
     limit: 12,
     channel_id: channel.get('id')
   }
-
   const collection = new Articles()
+
   new ArticlesGridView({
     el: $('#articles-footer').addClass('articles-grid'),
     hideMore: true,
     header: `More from ${channel.get('name') || 'Artsy'}`,
-    collection: collection
+    collection
   })
+
   collection.fetch({
     data: data
   })
