@@ -22,6 +22,9 @@ const SectionTitle = Title.extend`
 const FairLogo = styled.img`
   width: 100%;
   display: inline;
+  @media (min-width: 48em) {
+    max-width: 160px;
+  }
 `
 
 const theme = {
