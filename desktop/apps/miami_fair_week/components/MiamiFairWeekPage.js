@@ -27,6 +27,13 @@ const FairLogo = styled.img`
   }
 `
 
+const ReveredColumnOnMobile = styled.div`
+  @media (max-width: 48em) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+`
+
 const theme = {
   flexboxgrid: {
     breakpoints: {
@@ -42,7 +49,7 @@ const theme = {
 export default (props) =>
   <ThemeProvider theme={theme}>
     <Container>
-      <Row style={{ paddingBottom: 70 }}>
+      <Row style={{ paddingBottom: 50 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle titleSize="large">
             Miami Week<br />
@@ -50,10 +57,14 @@ export default (props) =>
           </SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          <Text textSize='large' color={colors.graySemibold}>
-            For one week a year, Miami becomes a global destination for art, design, music and all things visual culture. Each fair brings together the most influential collectors, gallerists, designers, curators and critics from around the world in celebration of design culture and commerce.
-          </Text>
-          <img style={{ marginTop: 30, maxWidth: '100%' }} src='https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg' />
+          <ReveredColumnOnMobile>
+            <Text textSize='large' color={colors.graySemibold} style={{ marginBottom: 20 }}>
+              For one week a year, Miami becomes a global destination for art, design, music and all things visual culture. Each fair brings together the most influential collectors, gallerists, designers, curators and critics from around the world in celebration of design culture and commerce.
+            </Text>
+            <div>
+              <img style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }} src='https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg' />
+            </div>
+          </ReveredColumnOnMobile>
         </Col>
       </Row>
 
