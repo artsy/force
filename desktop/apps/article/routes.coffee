@@ -10,7 +10,6 @@ request = require 'superagent'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { topParselyArticles } = require '../../components/util/parsely.coffee'
-{ article2Index } = require '../article2/routes'
 
 @article = (req, res, next) ->
   user = res.locals.sd.CURRENT_USER
