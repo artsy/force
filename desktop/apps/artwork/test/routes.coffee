@@ -54,7 +54,7 @@ describe 'Artwork routes', ->
         it 'nexts with a 403', ->
           routes.download @req, @res, @next
           @next.called.should.be.true()
-          @res.status.args[0][0].should.equal 403
+          @next.args[0][0].status.should.eql 403
 
       describe 'when the image is not downloadable', ->
         beforeEach ->
@@ -66,7 +66,7 @@ describe 'Artwork routes', ->
           routes.download @req, @res, @next
           request.get.called.should.be.false()
           @next.called.should.be.true()
-          @res.status.args[0][0].should.equal 403
+          @next.args[0][0].status.should.eql 403
 
     describe 'as an admin', ->
       describe 'when the image is not downloadable', ->

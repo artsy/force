@@ -127,8 +127,9 @@ bootstrap = ->
       imageRequest.set('X-ACCESS-TOKEN': req.user.get('accessToken')) if req.user
       req.pipe(imageRequest).pipe res
     else
-      res.status 403
-      next new Error 'Not authorized to download this image'
+      err = new Error 'Not authorized to download this image.'
+      err.status = 403
+      next err
 
 # Helpers
 fetchMeData = (query, user, saleId) ->
