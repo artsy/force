@@ -1,11 +1,11 @@
--var hometown = artist.hometown || artist.get('hometown')
--var years = artist.years || artist.get('years')
--var name = artist.name || artist.get('name')
+-var hometown = artist.hometown || (typeof artist.get === 'function' ? artist.get('hometown') : null)
+-var years = artist.years || (typeof artist.get === 'function' ? artist.get('years') : null)
+-var name = artist.name || (typeof artist.get === 'function' ? artist.get('name') : null)
 
 header#artist-page-header
   h1.artist-page-large-header.avant-garde-header-center= name
   h2
     = hometown
     if years && hometown
-      | , 
+      | ,
     = years

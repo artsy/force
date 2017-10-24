@@ -65,6 +65,19 @@ describe 'Biography', ->
 
   it 'renders the bio and credit if there is one', ->
     @locals.artist = { hometown: 'Heaven', years: '1995 - 2014', name: 'Bitty', id: 'bitty', biography_blurb: { credit: 'Submitted by Matt', text: 'Bitty was a cat.' } }
-    render('biography')(@locals).should.containEql 'Bitty was a cat.'
-    render('biography')(@locals).should.containEql 'Submitted by Matt'
-  
+    template = render('biography')(@locals)
+    template.should.containEql 'Bitty was a cat.'
+    template.should.containEql 'Submitted by Matt'
+
+describe 'Header', ->
+
+  beforeEach ->
+    @locals = { sd: {}, asset: (->) }
+
+  it 'renders the byline if there is no hometown and no year', ->
+    @locals.artist = { hometown: null, years: null, name: 'Bitty', id: 'bitty', biography_blurb: { credit: 'Submitted by Matt', text: 'Bitty was a cat.' } }
+    render('header')(@locals).should.containEql('Bitty')
+
+  it 'renders the byline if there is no hometown', ->
+    @locals.artist = { hometown: null, years: '1995 - 2014', name: 'Bitty', id: 'bitty', biography_blurb: { credit: 'Submitted by Matt', text: 'Bitty was a cat.' } }
+    render('header')(@locals).should.containEql('1995 - 2014')
