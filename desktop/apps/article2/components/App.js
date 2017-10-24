@@ -12,6 +12,7 @@ const NAVHEIGHT = '53px'
 export default class App extends React.Component {
   static propTypes = {
     article: PropTypes.object,
+    isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
     templates: PropTypes.object
@@ -27,13 +28,14 @@ export default class App extends React.Component {
   }
 
   renderArticle = () => {
-    const { article, isSuper, subscribed } = this.props
+    const { article, isMobile, isSuper, subscribed } = this.props
 
     if (article.layout === 'standard' && !isSuper) {
       const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
 
       return (
         <InfiniteScrollArticle
+          isMobile={isMobile}
           article={article}
           emailSignupUrl={emailSignupUrl}
         />
@@ -45,6 +47,7 @@ export default class App extends React.Component {
 
       return (
         <Article
+          isMobile={isMobile}
           article={article}
           relatedArticlesForPanel={article.relatedArticlesPanel}
           headerHeight={headerHeight}

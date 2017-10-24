@@ -9,10 +9,13 @@ import styled from 'styled-components'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { data as sd } from 'sharify'
 
+const FETCH_TOP_OFFSET = 200
+
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
-    emailSignupUrl: PropTypes.string
+    emailSignupUrl: PropTypes.string,
+    isMobile: PropTypes.bool
   }
 
   constructor (props) {
@@ -22,7 +25,8 @@ export default class InfiniteScrollArticle extends React.Component {
       isLoading: false,
       articles: [this.props.article],
       offset: 0,
-      error: false
+      error: false,
+      isEnabled: true
     }
   }
 
@@ -43,13 +47,31 @@ export default class InfiniteScrollArticle extends React.Component {
         })
       })
 
-      this.setState({
-        articles: articles.concat(data.articles),
-        isLoading: false,
-        offset: offset + 3
-      })
+      // TODO:
+      // At some point this could go in a query so as not to fetch unnecessary data
+
+      // Ignore featured layouts
+      const newArticles = data.articles.filter(article => article.layout !== 'feature')
+
+      if (newArticles.length) {
+        this.setState({
+          articles: articles.concat(newArticles),
+          isLoading: false,
+          offset: offset + 3
+        })
+      } else {
+        this.setState({
+          isEnabled: false,
+          isLoading: false
+        })
+      }
     } catch (error) {
+      console.error(
+        '(apps/article/InfiniteScrollArticle) Error fetching next article set: ', error
+      )
+
       this.setState({
+        isEnabled: false,
         isLoading: false,
         error: true
       })
@@ -57,21 +79,24 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderWaypoint = () => {
-    const { isLoading, error } = this.state
+    const { isEnabled, isLoading, error } = this.state
 
-    if (!isLoading) {
-      return (
-        <Waypoint
-          onEnter={this.fetchNextArticles}
-          threshold={2.0}
-        />
-      )
-    } else if (!error) {
-      return (
-        <LoadingSpinner>
-          <div className='loading-spinner' />
-        </LoadingSpinner>
-      )
+    if (isEnabled) {
+      if (!isLoading) {
+        return (
+          <Waypoint
+            onEnter={this.fetchNextArticles}
+            threshold={2.0}
+            topOffset={FETCH_TOP_OFFSET}
+          />
+        )
+      } else if (!error) {
+        return (
+          <LoadingSpinner>
+            <div className='loading-spinner' />
+          </LoadingSpinner>
+        )
+      }
     }
   }
 
@@ -85,14 +110,14 @@ export default class InfiniteScrollArticle extends React.Component {
   onLeave = (i, {previousPosition, currentPosition}) => {
     const nextArticle = this.state.articles[i + 1]
 
-    if (previousPosition === 'inside' && currentPosition === 'above' && nextArticle) {
+    if (nextArticle && previousPosition === 'inside' && currentPosition === 'above') {
       document.title = nextArticle.thumbnail_title
       window.history.replaceState({}, nextArticle.id, `/article/${nextArticle.slug}`)
     }
   }
 
   renderContent = () => {
-    return _.flatten(_.map(this.state.articles, (article, i) => {
+    return _.flatten(this.state.articles.map((article, i) => {
       return (
         <div key={`article-${i}`}>
           <Article
@@ -100,6 +125,7 @@ export default class InfiniteScrollArticle extends React.Component {
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             isTruncated={i !== 0}
+            isMobile={this.props.isMobile}
             emailSignupUrl={this.props.emailSignupUrl}
             display={article.display}
           />
@@ -130,6 +156,8 @@ const LoadingSpinner = styled.div`
 const Break = styled.div`
   border-top: 1px solid ${colors.grayRegular};
   width: 100%;
+  margin-top: 80px;
+  margin-bottom: -42px; // FIXME: Magic values like this to be addressed between Reaction / Force
 `
 const InfiniteScrollContainer = styled.div`
   margin-top: 100px;

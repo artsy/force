@@ -1,10 +1,13 @@
 require('backbone').$ = $
+sd = require('sharify').data
 
-routes =
-  '''
-  /article2/
-  ''': require('../apps/article2/client.js').default
+layout = sd.ARTICLE?.layout
 
-for paths, init of routes
-  for path in paths.split('\n')
-    $(init) if location.pathname.match path
+$ ->
+  if location.pathname.match('article2')
+    if layout is 'classic'
+      { init } = require('../apps/article2/client/classic.js')
+      init()
+    else
+      { init } = require('../apps/article2/client/article.js')
+      init()
