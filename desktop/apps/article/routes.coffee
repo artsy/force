@@ -14,7 +14,8 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 
 @article = (req, res, next) ->
   user = res.locals.sd.CURRENT_USER
-  if user?.type is 'Admin'
+  # Remove after article2 launch
+  if user?.type is 'Admin' and !req.path.match('article1')
     return next()
   articleItem = new Article id: req.params.slug
   articleItem.fetchWithRelated
