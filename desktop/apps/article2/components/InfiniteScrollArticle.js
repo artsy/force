@@ -153,6 +153,8 @@ const LoadingSpinner = styled.div`
 const Break = styled.div`
   border-top: 1px solid ${colors.grayRegular};
   width: 100%;
+  margin-top: 80px;
+  margin-bottom: -42px; // FIXME: Magic values like this to be addressed between Reaction / Force
 `
 const InfiniteScrollContainer = styled.div`
   margin-top: 100px;
