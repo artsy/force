@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.9.2":
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.2.tgz#914da2f50a4d27a3d1cccec1b9b5ca06330db0dc"
+"@artsy/reaction-force@^0.9.5":
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.5.tgz#a6aac1ec432f9c8f33df3c58e4730ac69fe630d0"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -31,15 +31,16 @@
     prop-types "^15.5.10"
     qs "^6.5.0"
     react "^15.5.4"
+    react-lines-ellipsis damassi/react-lines-ellipsis
     react-markdown "^2.5.0"
     react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
+    react-responsive-decorator "^0.0.1"
     react-sizeme "^2.3.2"
     react-slick "^0.14.11"
     react-styled-flexboxgrid "^2.0.0"
     react-tracking "^4.2.1"
     react-url-query "^1.1.4"
     sharify "^0.1.6"
-    styled-components "^2.0.1"
     superagent "^3.6.3"
     uuid "^3.0.1"
 
@@ -3803,7 +3804,7 @@ enqueue@^1.0.2:
   dependencies:
     sliced "0.0.5"
 
-enquire.js@^2.1.6:
+enquire.js@^2.1.1, enquire.js@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/enquire.js/-/enquire.js-2.1.6.tgz#3e8780c9b8b835084c3f60e166dbc3c2a3c89814"
 
@@ -8108,6 +8109,10 @@ react-komposer@^2.0.0:
     react-stubber "^1.0.0"
     shallowequal "^0.2.2"
 
+"react-lines-ellipsis@github:damassi/react-lines-ellipsis":
+  version "0.7.3"
+  resolved "https://codeload.github.com/damassi/react-lines-ellipsis/tar.gz/c7cf3895efbd6eb524af3f4151bba34f481c500b"
+
 react-markdown@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-2.5.0.tgz#b1c61904fee5895886803bd9df7db23c3dc3a89e"
@@ -8143,6 +8148,14 @@ react-redux@^5.0.2:
     babel-runtime "^6.6.1"
     fbjs "^0.8.1"
     react-static-container "^1.0.1"
+
+react-responsive-decorator@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-responsive-decorator/-/react-responsive-decorator-0.0.1.tgz#bdcbf8df1143b55c2b3f8dd23875d33a0271a11a"
+  dependencies:
+    can-use-dom "^0.1.0"
+    enquire.js "^2.1.1"
+    json2mq "^0.2.0"
 
 react-router-redux@^4.0.8:
   version "4.0.8"
@@ -9499,20 +9512,6 @@ style-loader@^0.18.2:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
-
-styled-components@^2.0.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.1.1.tgz#7e9b5bc319ee3963b47aebb74f4658119ea9d484"
-  dependencies:
-    buffer "^5.0.3"
-    css-to-react-native "^2.0.3"
-    fbjs "^0.8.9"
-    hoist-non-react-statics "^1.2.0"
-    is-function "^1.0.1"
-    is-plain-object "^2.0.1"
-    prop-types "^15.5.4"
-    stylis "^3.2.1"
-    supports-color "^3.2.3"
 
 styled-components@^2.1.2:
   version "2.2.1"

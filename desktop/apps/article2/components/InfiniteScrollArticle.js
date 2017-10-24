@@ -12,7 +12,8 @@ import { data as sd } from 'sharify'
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
-    emailSignupUrl: PropTypes.string
+    emailSignupUrl: PropTypes.string,
+    isMobile: PropTypes.bool
   }
 
   constructor (props) {
@@ -121,6 +122,7 @@ export default class InfiniteScrollArticle extends React.Component {
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             isTruncated={i !== 0}
+            isMobile={this.props.isMobile}
             emailSignupUrl={this.props.emailSignupUrl}
             display={article.display}
           />
