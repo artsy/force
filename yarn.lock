@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.9.7":
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.7.tgz#9f9623138a9273479c3320f88e7e9ce166a21da5"
+"@artsy/reaction-force@^0.9.9":
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.9.tgz#c99c9a1e436bf12fece1baac70f0e75890e3203c"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -7963,7 +7963,7 @@ react-komposer@^2.0.0:
     react-stubber "^1.0.0"
     shallowequal "^0.2.2"
 
-react-lines-ellipsis@damassi/react-lines-ellipsis:
+"react-lines-ellipsis@github:damassi/react-lines-ellipsis":
   version "0.7.3"
   resolved "https://codeload.github.com/damassi/react-lines-ellipsis/tar.gz/c7cf3895efbd6eb524af3f4151bba34f481c500b"
 
@@ -9786,7 +9786,7 @@ ua-parser@^0.3.5:
   dependencies:
     yamlparser ">=0.0.2"
 
-uglify-js@2.x.x, uglify-js@^2.8.29:
+uglify-js@2.x.x, uglify-js@^2.4.19, uglify-js@^2.8.29:
   version "2.8.29"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.29.tgz#29c5733148057bb4e1f75df35b7a9cb72e6a59dd"
   dependencies:
