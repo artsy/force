@@ -48,6 +48,7 @@ describe('<App />', () => {
     })
     const rendered = shallow(<App article={article} templates={{}} isSuper />)
     rendered.find(Article).length.should.equal(1)
+    rendered.find(InfiniteScrollArticle).length.should.equal(0)
   })
 
   it('renders Related Articles', () => {
