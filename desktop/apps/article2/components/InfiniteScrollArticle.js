@@ -9,6 +9,8 @@ import styled from 'styled-components'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { data as sd } from 'sharify'
 
+const FETCH_TOP_OFFSET = 200
+
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
@@ -85,6 +87,7 @@ export default class InfiniteScrollArticle extends React.Component {
           <Waypoint
             onEnter={this.fetchNextArticles}
             threshold={2.0}
+            topOffset={FETCH_TOP_OFFSET}
           />
         )
       } else if (!error) {
