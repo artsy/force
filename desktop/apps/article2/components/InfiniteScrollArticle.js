@@ -13,7 +13,9 @@ export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     emailSignupUrl: PropTypes.string,
-    isMobile: PropTypes.bool
+    isMobile: PropTypes.bool,
+    headerHeight: PropTypes.string,
+    marginTop: PropTypes.string
   }
 
   constructor (props) {
@@ -125,6 +127,8 @@ export default class InfiniteScrollArticle extends React.Component {
             isMobile={this.props.isMobile}
             emailSignupUrl={this.props.emailSignupUrl}
             display={article.display}
+            headerHeight={i === 0 ? this.props.headerHeight : null}
+            marginTop={i === 0 ? this.props.marginTop : null}
           />
           <Break />
           <Waypoint
@@ -138,10 +142,10 @@ export default class InfiniteScrollArticle extends React.Component {
 
   render () {
     return (
-      <InfiniteScrollContainer id='article-root'>
+      <div id='article-root'>
         {this.renderContent()}
         {this.renderWaypoint()}
-      </InfiniteScrollContainer>
+      </div>
     )
   }
 }
@@ -153,7 +157,4 @@ const LoadingSpinner = styled.div`
 const Break = styled.div`
   border-top: 1px solid ${colors.grayRegular};
   width: 100%;
-`
-const InfiniteScrollContainer = styled.div`
-  margin-top: 100px;
 `

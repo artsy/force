@@ -30,7 +30,11 @@ export default class App extends React.Component {
   renderArticle = () => {
     const { article, isMobile, isSuper, subscribed } = this.props
 
-    if (article.layout === 'standard' && !isSuper) {
+    const articleMarginTop = article.layout === 'standard' ? '100' : '0'
+    const navHeight = isSuper ? '0px' : NAVHEIGHT
+    const headerHeight = `calc(100vh - ${navHeight})`
+
+    if (!isSuper) {
       const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
 
       return (
@@ -38,13 +42,11 @@ export default class App extends React.Component {
           isMobile={isMobile}
           article={article}
           emailSignupUrl={emailSignupUrl}
+          headerHeight={headerHeight}
+          marginTop={articleMarginTop}
         />
       )
     } else {
-      const navHeight = isSuper ? '0px' : NAVHEIGHT
-      const articleMarginTop = article.layout === 'standard' ? '100' : '0'
-      const headerHeight = `calc(100vh - ${navHeight})`
-
       return (
         <Article
           isMobile={isMobile}
