@@ -14,7 +14,7 @@ import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
 
-export async function article2Index (req, res, next) {
+export async function index (req, res, next) {
   const articleId = req.params.slug
 
   try {
