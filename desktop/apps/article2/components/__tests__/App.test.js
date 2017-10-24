@@ -1,7 +1,8 @@
 import 'jsdom-global/register'
 import * as _ from 'underscore'
 import App from 'desktop/apps/article2/components/App'
-import InfiniteScrollArticle from '../InfiniteScrollArticle'
+import InfiniteScrollArticle from 'desktop/apps/article2/components/InfiniteScrollArticle'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import React from 'react'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
@@ -32,7 +33,22 @@ describe('<App />', () => {
       contributing_authors: [{name: 'Kana'}]
     })
     const rendered = shallow(<App article={article} templates={{}} />)
+    rendered.find(InfiniteScrollArticle).length.should.equal(1)
     rendered.html().should.containEql('FeatureLayout')
+  })
+
+  it('renders a static article for super articles', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'standard',
+      vertical: {
+        name: 'Art Market'
+      },
+      published_at: '2017-05-19T13:09:18.567Z',
+      contributing_authors: [{name: 'Kana'}]
+    })
+    const rendered = shallow(<App article={article} templates={{}} isSuper />)
+    rendered.find(Article).length.should.equal(1)
+    rendered.find(InfiniteScrollArticle).length.should.equal(0)
   })
 
   it('renders Related Articles', () => {

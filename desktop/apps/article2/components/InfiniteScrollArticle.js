@@ -15,7 +15,9 @@ export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     emailSignupUrl: PropTypes.string,
-    isMobile: PropTypes.bool
+    isMobile: PropTypes.bool,
+    headerHeight: PropTypes.string,
+    marginTop: PropTypes.string
   }
 
   constructor (props) {
@@ -128,6 +130,8 @@ export default class InfiniteScrollArticle extends React.Component {
             isMobile={this.props.isMobile}
             emailSignupUrl={this.props.emailSignupUrl}
             display={article.display}
+            headerHeight={i === 0 ? this.props.headerHeight : null}
+            marginTop={i === 0 ? this.props.marginTop : null}
           />
           <Break />
           <Waypoint
@@ -141,10 +145,10 @@ export default class InfiniteScrollArticle extends React.Component {
 
   render () {
     return (
-      <InfiniteScrollContainer id='article-root'>
+      <div id='article-root'>
         {this.renderContent()}
         {this.renderWaypoint()}
-      </InfiniteScrollContainer>
+      </div>
     )
   }
 }
@@ -158,7 +162,4 @@ const Break = styled.div`
   width: 100%;
   margin-top: 80px;
   margin-bottom: -42px; // FIXME: Magic values like this to be addressed between Reaction / Force
-`
-const InfiniteScrollContainer = styled.div`
-  margin-top: 100px;
 `
