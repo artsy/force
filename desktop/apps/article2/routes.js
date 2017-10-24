@@ -29,7 +29,7 @@ export async function index (req, res, next) {
     }
 
     if (articleId !== article.slug) {
-      return res.redirect(`/article2/${article.slug}`)
+      return res.redirect(`/article/${article.slug}`)
     }
 
     const isSuper = article.is_super_article || article.is_super_sub_article
@@ -121,7 +121,7 @@ async function classic (req, res, next) {
     error: res.backboneError,
     success: (data) => {
       if (req.params.slug !== data.article.get('slug')) {
-        return res.redirect(`/article2/${data.article.get('slug')}`)
+        return res.redirect(`/article/${data.article.get('slug')}`)
       }
 
       if (data.partner) {

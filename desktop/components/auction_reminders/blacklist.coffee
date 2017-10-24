@@ -25,7 +25,6 @@ module.exports =
     '^/venice-biennale.*'
     '^/gallery-partnerships.*'
     '^/article/.*'
-    '^/article2/.*'
   ]
 
   check: ->

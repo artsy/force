@@ -72,7 +72,7 @@ describe('Article Routes', () => {
       )
       index(req, res, next)
         .then(() => {
-          res.redirect.args[0][0].should.equal('/article2/zoobar')
+          res.redirect.args[0][0].should.equal('/article/zoobar')
           done()
         })
     })

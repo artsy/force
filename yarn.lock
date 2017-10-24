@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.9.7":
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.7.tgz#9f9623138a9273479c3320f88e7e9ce166a21da5"
+"@artsy/reaction-force@^0.9.9":
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.9.tgz#c99c9a1e436bf12fece1baac70f0e75890e3203c"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -5639,6 +5639,7 @@ jade@^1.11.0:
     jstransformer "0.0.2"
     mkdirp "~0.5.0"
     transformers "2.1.0"
+    uglify-js "^2.4.19"
     void-elements "~2.0.1"
     with "~4.0.0"
 

@@ -14,3 +14,4 @@ describe 'clear cache app', ->
     app.__get__('all')({ user: new Backbone.Model(type: 'User') }, { status: -> },
       next = sinon.stub())
     next.args[0][0].toString().should.containEql 'must be logged in as an admin'
+    next.args[0][0].status.should.eql 403
