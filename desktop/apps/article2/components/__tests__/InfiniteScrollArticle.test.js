@@ -1,15 +1,27 @@
 import 'jsdom-global/register'
 import _ from 'underscore'
-import InfiniteScrollArticle, { __RewireAPI__ as RewireApi } from 'desktop/apps/article2/components/InfiniteScrollArticle'
-import React from 'react'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
-import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
+import React from 'react'
 import { shallow } from 'enzyme'
 
 describe('<InfiniteScrollArticle />', () => {
+  window.matchMedia = () => {
+    return {
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {}
+    }
+  }
+  const InfiniteScrollArticle = require('desktop/apps/article2/components/InfiniteScrollArticle').default
+  const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
+
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
+  })
+
+  afterEach(() => {
+    window.history.replaceState.reset()
   })
 
   it('renders the initial article', () => {
@@ -20,7 +32,13 @@ describe('<InfiniteScrollArticle />', () => {
       },
       contributing_authors: [{name: 'Kana'}]
     })
-    const rendered = shallow(<InfiniteScrollArticle article={article} />)
+    const rendered = shallow(
+      <InfiniteScrollArticle
+        article={article}
+        headerHeight={'calc(100vh - 50px)'}
+        marginTop={'50px'}
+      />
+    )
     rendered.find(Article).length.should.equal(1)
     rendered.html().should.containEql('StandardLayout')
   })
@@ -41,7 +59,7 @@ describe('<InfiniteScrollArticle />', () => {
         id: '678'
       })]
     }
-    RewireApi.__Rewire__(
+    InfiniteScrollArticle.__Rewire__(
       'positronql',
       sinon.stub().returns(Promise.resolve(data))
     )
