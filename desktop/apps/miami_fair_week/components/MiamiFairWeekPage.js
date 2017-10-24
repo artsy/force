@@ -31,6 +31,10 @@ const ReveredColumnOnMobile = styled.div`
   @media (max-width: 48em) {
     display: flex;
     flex-direction: column-reverse;
+    img {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 `
 
