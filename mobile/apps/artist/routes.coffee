@@ -21,7 +21,7 @@ query = """
 shouldDisplayAppBanner = (req) ->
   userAgent = req.headers['user-agent']
   dismissedAppBanner = req.cookies['dismissed-app-banner'] || false
-  
+
   userAgent.match(/iPhone/i) and
     not userAgent.match('Artsy-Mobile') and
     not dismissedAppBanner
