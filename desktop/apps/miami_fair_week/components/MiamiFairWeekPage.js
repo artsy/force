@@ -62,7 +62,7 @@ export default (props) =>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           <ReveredColumnOnMobile>
-            <Text textSize='xlarge' color={colors.graySemibold} style={{ marginBottom: 20 }}>
+            <Text textSize='xlarge' color={colors.grayDark} style={{ marginBottom: 20 }}>
               For one week a year, Miami becomes a global destination for art, design, music and all things visual culture. Each fair brings together the most influential collectors, gallerists, designers, curators and critics from around the world in celebration of design culture and commerce.
             </Text>
             <div>
@@ -121,7 +121,7 @@ export default (props) =>
               </Text>
             </Col>
             <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text textSize='medium' color={colors.graySemibold}>
+              <Text textSize='medium' color={colors.grayDark}>
                 Public Viewing<br />
                 December 7 12:00pm–6:00pm<br />
                 The Bath Club<br />
