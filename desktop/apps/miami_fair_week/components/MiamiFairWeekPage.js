@@ -79,7 +79,13 @@ export default ({ introduction, fair_coverage, artsy_in_miami, prepare_for_fairs
           <Row style={{ marginBottom: 20 }}>
             {fair_coverage.fairs.map(fair =>
               <Col lg={3} md={3} sm={3} xs={6} key={fair.logo_url}>
-                <FairLogo src={fair.logo_url} />
+                {(fair.site_url && fair.site_url.startsWith('http') ?
+                  <a href={fair.site_url} target='_blank'>
+                    <FairLogo src={fair.logo_url} />
+                  </a>
+                :
+                  <FairLogo src={fair.logo_url} />
+                )}
               </Col>
             )}
           </Row>

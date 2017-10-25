@@ -8,31 +8,31 @@
     "fairs": [
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/artb.jpg",
-        "fair_site_url": ""
+        "site_url": "https://www.google.com"
       },
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/designmiami.jpg",
-        "fair_site_url": ""
+        "site_url": ""
       },
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/ink.jpg",
-        "fair_site_url": ""
+        "site_url": ""
       },
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/artmiami.jpg",
-        "fair_site_url": ""
+        "site_url": ""
       },
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/context.jpg",
-        "fair_site_url": ""
+        "site_url": ""
       },
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/aqua.jpg",
-        "fair_site_url": ""
+        "site_url": ""
       },
       {
         "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/pulse.jpg",
-        "fair_site_url": ""
+        "site_url": ""
       }
     ]
   },
