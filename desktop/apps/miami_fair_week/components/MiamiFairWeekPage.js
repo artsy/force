@@ -7,6 +7,7 @@ import Text from '@artsy/reaction-force/dist/Components/Text'
 import Title from '@artsy/reaction-force/dist/Components/Title'
 
 const Container = styled.div`
+  margin: 0 auto;
   max-width: 1192px;
   padding-top: 25px;
   @media (max-width: 48em) {
