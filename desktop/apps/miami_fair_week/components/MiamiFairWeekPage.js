@@ -124,15 +124,19 @@ export default ({ introduction, fair_coverage, artsy_in_miami, prepare_for_fairs
           {prepare_for_fairs.articles.map(article =>
             <Row style={{ marginBottom: 25 }} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
-                <img style={{ marginBottom: 10, width: '100%' }} src={article.image_url} />
+                <a href={article.article_url} target='_blank'>
+                  <img style={{ marginBottom: 10, width: '100%' }} src={article.image_url} />
+                </a>
               </Col>
               <Col lg={5} md={5} sm={6} xs={12}>
-                <Title titleSize='small' style={{ margin: '0 0 5px', lineHeight: 1 }}>
-                  {article.title}
-                </Title>
-                <Text textStyle='primary' textSize='small'>
-                  {article.author}
-                </Text>
+                <a href={article.article_url} style={{ textDecoration: 'none' }} target='_blank'>
+                  <Title titleSize='small' style={{ margin: '0 0 5px', lineHeight: 1 }}>
+                    {article.title}
+                  </Title>
+                  <Text textStyle='primary' textSize='small'>
+                    {article.author}
+                  </Text>
+                </a>
               </Col>
             </Row>
           )}
