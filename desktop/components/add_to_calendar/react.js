@@ -19,8 +19,6 @@ export default class AddToCalendar extends Component {
       this.view = new AddToCalendarView({
         el: this.props.el || this.$('.add-to-calendar')
       })
-      console.log("*****", this.view)
-      console.log(this)
 
       return {
         isMounted: true
