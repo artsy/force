@@ -13,6 +13,14 @@ describe('<InfiniteScrollArticle />', () => {
       removeListener: () => {}
     }
   }
+  const $ = require('jquery')
+  global.$ = $
+
+  const sd = require('sharify').data
+  sd.APP_URL = 'http://artsy.net'
+  sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
+  sd.CURRENT_USER = {id: '123'}
+
   const InfiniteScrollArticle = require('desktop/apps/article2/components/InfiniteScrollArticle').default
   const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
 
@@ -191,5 +199,18 @@ describe('<InfiniteScrollArticle />', () => {
       currentPosition: 'above'
     })
     window.history.replaceState.args[0][2].should.containEql('/article/456')
+  })
+
+  it('sets up follow buttons', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'standard',
+      vertical: {
+        name: 'Art Market'
+      },
+      published_at: '2017-05-19T13:09:18.567Z',
+      contributing_authors: [{name: 'Kana'}]
+    })
+    const rendered = shallow(<InfiniteScrollArticle article={article} />)
+    rendered.state().following.length.should.exist
   })
 })
