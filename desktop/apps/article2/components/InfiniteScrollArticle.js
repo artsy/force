@@ -8,6 +8,7 @@ import positronql from 'desktop/lib/positronql.coffee'
 import styled from 'styled-components'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { data as sd } from 'sharify'
+import { setupFollows, setupFollowButtons } from './FollowButton.js'
 
 const FETCH_TOP_OFFSET = 200
 
@@ -28,8 +29,13 @@ export default class InfiniteScrollArticle extends React.Component {
       articles: [this.props.article],
       offset: 0,
       error: false,
+      following: setupFollows() || null,
       isEnabled: true
     }
+  }
+
+  componentDidMount () {
+    setupFollowButtons(this.state.following)
   }
 
   fetchNextArticles = async () => {
@@ -61,6 +67,7 @@ export default class InfiniteScrollArticle extends React.Component {
           isLoading: false,
           offset: offset + 3
         })
+        setupFollowButtons(this.state.following)
       } else {
         this.setState({
           isEnabled: false,
