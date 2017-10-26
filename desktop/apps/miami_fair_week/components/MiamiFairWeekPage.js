@@ -20,6 +20,14 @@ const SectionTitle = Title.extend`
   line-height: 1;
 `
 
+const IntroductionText = Text.extend`
+  line-height: 31px;
+  @media (max-width: 24em) {
+    font-size: 20px;
+    line-height: 26px;
+  }
+`
+
 const FairLogo = styled.img`
   width: 100%;
   display: inline;
@@ -60,9 +68,9 @@ export default ({ introduction, fair_coverage, artsy_in_miami, prepare_for_fairs
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           <ReveredColumnOnMobile>
-            <Text textSize='xlarge' color={colors.grayDark} style={{ marginBottom: 20 }}>
+            <IntroductionText textSize='xlarge' color={colors.grayDark} style={{ marginBottom: 20 }}>
               {introduction.description}
-            </Text>
+            </IntroductionText>
             <div>
               <img style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }} src='https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg' />
             </div>
