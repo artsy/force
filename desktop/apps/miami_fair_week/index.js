@@ -7,6 +7,7 @@ import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
 import MiamiFairWeekPage from './components/MiamiFairWeekPage'
 
+const SLUG = 'miami-fair-week'
 const MARKETING_MODAL_ID = 'ca12'
 
 class EditableMiamFairWeekPage extends JSONPage {
@@ -22,7 +23,7 @@ class EditableMiamFairWeekPage extends JSONPage {
       if (req.query['m-id'] !== MARKETING_MODAL_ID) {
         const queryStringAsString = queryString.stringify(merge({}, req.query, { 'm-id': MARKETING_MODAL_ID }))
 
-        return res.redirect(`/miami-fair-week?${queryStringAsString}`)
+        return res.redirect(`/${SLUG}?${queryStringAsString}`)
       }
 
       const data = await this.jsonPage.get()
@@ -51,9 +52,9 @@ class EditableMiamFairWeekPage extends JSONPage {
 
 // This smells... For some reason 'export default' doesn't work when this file is required by a coffeescript file.
 export default new EditableMiamFairWeekPage({
-  name: 'miami-fair-week',
+  name: SLUG,
   paths: {
-    show: '/miami-fair-week',
-    edit: '/miami-fair-week/edit'
+    show: `/${SLUG}`,
+    edit: `/${SLUG}/edit`
   }
 }).app
