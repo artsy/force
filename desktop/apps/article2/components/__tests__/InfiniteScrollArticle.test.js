@@ -1,11 +1,27 @@
 import 'jsdom-global/register'
 import _ from 'underscore'
+import benv from 'benv'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
+import { data as sd } from 'sharify'
 
 describe('<InfiniteScrollArticle />', () => {
+  before((done) => {
+    benv.setup(() => {
+      benv.expose({$: benv.require('jquery'), jQuery: benv.require('jquery')})
+      sd.APP_URL = 'http://artsy.net'
+      sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
+      sd.CURRENT_USER = {id: '123'}
+      done()
+    })
+  })
+
+  after(() => {
+    benv.teardown()
+  })
+
   window.matchMedia = () => {
     return {
       matches: false,
@@ -13,13 +29,6 @@ describe('<InfiniteScrollArticle />', () => {
       removeListener: () => {}
     }
   }
-  const $ = require('jquery')
-  global.$ = $
-
-  const sd = require('sharify').data
-  sd.APP_URL = 'http://artsy.net'
-  sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
-  sd.CURRENT_USER = {id: '123'}
 
   const InfiniteScrollArticle = require('desktop/apps/article2/components/InfiniteScrollArticle').default
   const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')

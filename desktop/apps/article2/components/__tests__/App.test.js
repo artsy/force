@@ -1,11 +1,27 @@
 import 'jsdom-global/register'
 import * as _ from 'underscore'
+import benv from 'benv'
 import React from 'react'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
 import { shallow, mount } from 'enzyme'
+import { data as sd } from 'sharify'
 
 describe('<App />', () => {
+  before((done) => {
+    benv.setup(() => {
+      benv.expose({$: benv.require('jquery'), jQuery: benv.require('jquery')})
+      sd.APP_URL = 'http://artsy.net'
+      sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
+      sd.CURRENT_USER = {id: '123'}
+      done()
+    })
+  })
+
+  after(() => {
+    benv.teardown()
+  })
+
   window.matchMedia = () => {
     return {
       matches: false,
@@ -13,13 +29,6 @@ describe('<App />', () => {
       removeListener: () => {}
     }
   }
-  const $ = require('jquery')
-  global.$ = $
-
-  const sd = require('sharify').data
-  sd.APP_URL = 'http://artsy.net'
-  sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
-  sd.CURRENT_USER = {id: '123'}
 
   const App = require('desktop/apps/article2/components/App').default
   const InfiniteScrollArticle = require('desktop/apps/article2/components/InfiniteScrollArticle').default
