@@ -1,6 +1,6 @@
 import * as fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
-import { amp, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/routes'
+import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/routes'
 import * as _ from 'underscore'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
@@ -167,6 +167,41 @@ describe('Article Routes', () => {
           renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
           renderLayout.args[0][0].data.superArticle.get('title').should.equal('Super Article Title')
         })
+    })
+
+    describe('#classic', () => {
+      it('renders a classic article', () => {
+        const data = {
+          article: new Article(_.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [],
+            featured: true,
+            published: true
+          })),
+          channel: new Channel({
+            name: 'Foo'
+          })
+        }
+        Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+        classic(req, res, next)
+        res.render.args[0][1].article.get('slug').should.equal('foobar')
+        res.render.args[0][1].channel.get('name').should.equal('Foo')
+      })
+
+      it('renders a ghosted article', () => {
+        const data = {
+          article: new Article(_.extend({}, fixtures.article, {
+            slug: 'foobar',
+            sections: [],
+            featured: true,
+            published: true
+          }))
+        }
+        Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+        classic(req, res, next)
+        res.render.args[0][1].article.get('slug').should.equal('foobar')
+      })
     })
 
     describe('#amp', () => {
