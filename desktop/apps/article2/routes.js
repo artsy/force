@@ -112,7 +112,7 @@ const getBodyClass = (article) => {
   return bodyClass
 }
 
-async function classic (req, res, next) {
+export function classic (req, res, next) {
   const article = new Article({id: req.params.slug})
   const accessToken = req.user ? req.user.get('accessToken') : null
 
@@ -130,7 +130,7 @@ async function classic (req, res, next) {
 
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
-      res.locals.sd.ARTICLE_CHANNEL = data.channel.toJSON()
+      res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
       res.render('article', _.extend(data, {
