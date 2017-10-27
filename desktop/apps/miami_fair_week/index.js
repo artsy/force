@@ -50,11 +50,4 @@ class EditableMiamFairWeekPage extends JSONPage {
   }
 }
 
-// This smells... For some reason 'export default' doesn't work when this file is required by a coffeescript file.
-export default new EditableMiamFairWeekPage({
-  name: SLUG,
-  paths: {
-    show: `/${SLUG}`,
-    edit: `/${SLUG}/edit`
-  }
-}).app
+export default new EditableMiamFairWeekPage({ name: SLUG, paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` }}).app
