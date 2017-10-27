@@ -17,7 +17,7 @@ export default class AddToCalendar extends Component {
 
     this.setState(() => {
       this.view = new AddToCalendarView({
-        el: this.props.el || this.$('.auction2-AuctionInfo__callout')
+        el: this.props.el || this.$('.add-to-calendar')
       })
 
       return {

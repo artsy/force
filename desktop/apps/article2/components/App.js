@@ -5,11 +5,18 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
+import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { data as sd } from 'sharify'
 
 const NAVHEIGHT = '53px'
 
 export default class App extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      following: setupFollows() || null
+    }
+  }
   static propTypes = {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
@@ -19,6 +26,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount () {
+    setupFollowButtons(this.state.following)
     if (this.props.isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),

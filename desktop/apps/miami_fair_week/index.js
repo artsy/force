@@ -27,6 +27,7 @@ class EditableMiamFairWeekPage extends JSONPage {
         },
         data: {
           ...res.locals,
+          ...data,
           data
         }
       })
@@ -43,6 +44,6 @@ export default new EditableMiamFairWeekPage({
   name: 'miami-fair-week',
   paths: {
     show: '/miami-fair-week',
-    edit: '/miami-fair-week/edt'
+    edit: '/miami-fair-week/edit'
   }
 }).app
