@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@artsy/express-reloadable": "^1.0.3",
-    "@artsy/reaction-force": "^0.9.9",
+    "@artsy/reaction-force": "^0.9.11",
     "@artsy/stitch": "^1.2.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
@@ -102,6 +102,7 @@
     "prop-types": "^15.5.8",
     "prundupify": "^1.0.0",
     "qs": "^6.3.0",
+    "query-string": "^5.0.1",
     "raven": "^1.2.1",
     "raven-js": "^3.14.2",
     "rc-slider": "^7.0.8",

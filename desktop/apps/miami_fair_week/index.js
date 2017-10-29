@@ -1,9 +1,14 @@
 import React from 'react'
+import queryString from 'query-string'
+import merge from 'lodash.merge'
 import { renderLayout } from '@artsy/stitch'
 
 import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
 import MiamiFairWeekPage from './components/MiamiFairWeekPage'
+
+const SLUG = 'miami-fair-week'
+const MARKETING_MODAL_ID = 'ca12'
 
 class EditableMiamFairWeekPage extends JSONPage {
   registerRoutes() {
@@ -15,6 +20,12 @@ class EditableMiamFairWeekPage extends JSONPage {
 
   async show(req, res, next) {
     try {
+      if (req.query['m-id'] !== MARKETING_MODAL_ID) {
+        const queryStringAsString = queryString.stringify(merge({}, req.query, { 'm-id': MARKETING_MODAL_ID }))
+
+        return res.redirect(`/${SLUG}?${queryStringAsString}`)
+      }
+
       const data = await this.jsonPage.get()
       const layout = await renderLayout({
         basePath: __dirname,
@@ -39,11 +50,4 @@ class EditableMiamFairWeekPage extends JSONPage {
   }
 }
 
-// This smells... For some reason 'export default' doesn't work when this file is required by a coffeescript file.
-export default new EditableMiamFairWeekPage({
-  name: 'miami-fair-week',
-  paths: {
-    show: '/miami-fair-week',
-    edit: '/miami-fair-week/edit'
-  }
-}).app
+export default new EditableMiamFairWeekPage({ name: SLUG, paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` }}).app
