@@ -12,7 +12,7 @@ const MARKETING_MODAL_ID = 'ca12'
 
 class EditableMiamFairWeekPage extends JSONPage {
   registerRoutes() {
-    this.app.get(this.jsonPage.paths.show, adminOnly, this.show.bind(this))
+    this.app.get(this.jsonPage.paths.show, this.show.bind(this))
     this.app.get(this.jsonPage.paths.show + '/data', adminOnly, this.data)
     this.app.get(this.jsonPage.paths.edit, adminOnly, this.edit)
     this.app.post(this.jsonPage.paths.edit, adminOnly, this.upload)
