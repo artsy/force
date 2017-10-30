@@ -7975,7 +7975,7 @@ react-komposer@^2.0.0:
     react-stubber "^1.0.0"
     shallowequal "^0.2.2"
 
-"react-lines-ellipsis@github:damassi/react-lines-ellipsis":
+react-lines-ellipsis@damassi/react-lines-ellipsis:
   version "0.7.3"
   resolved "https://codeload.github.com/damassi/react-lines-ellipsis/tar.gz/c7cf3895efbd6eb524af3f4151bba34f481c500b"
 
@@ -9364,9 +9364,9 @@ style-loader@^0.18.2:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
 
-styled-components@^2.1.2:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.2.1.tgz#f4835f1001c37bcc301ac3865b5d93466de4dd5b"
+styled-components@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.2.3.tgz#154575c269880c840f903f580287dab155cf684c"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
@@ -9375,8 +9375,12 @@ styled-components@^2.1.2:
     is-function "^1.0.1"
     is-plain-object "^2.0.1"
     prop-types "^15.5.4"
-    stylis "^3.2.1"
+    stylis "3.x"
     supports-color "^3.2.3"
+
+stylis@3.x:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.4.0.tgz#55c6530ebceeca5976d54fb4adc67578afee828d"
 
 stylis@^3.2.1:
   version "3.2.2"
