@@ -1,5 +1,4 @@
-FROM node:6.10
-RUN apt-get update -qq && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+FROM node:8.4.0
 
 # Set up working directory
 RUN mkdir /app
@@ -8,7 +7,7 @@ RUN mkdir /app
 WORKDIR /tmp
 ADD package.json package.json
 ADD yarn.lock yarn.lock
-RUN npm i yarn -g
+RUN npm i yarn@1.1.0 -g
 RUN yarn install
 RUN cp -a /tmp/node_modules /app/
 
