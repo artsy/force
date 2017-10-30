@@ -594,13 +594,12 @@ artsy-passport@^2.0.3:
 
 artsy-xapp@^1.0.4:
   version "1.0.4"
-  resolved "git://github.com/artsy/artsy-xapp.git#cbc3db68469054ab13bfbffe68edda422a0972bb"
+  resolved "https://registry.yarnpkg.com/artsy-xapp/-/artsy-xapp-1.0.4.tgz#13cc772122d1f8b8aeef6ad6555a792dffa9c3aa"
   dependencies:
     superagent "^1.2.0"
 
 artsy-xapp@artsy/artsy-xapp:
   version "1.0.4"
-  uid cbc3db68469054ab13bfbffe68edda422a0972bb
   resolved "https://codeload.github.com/artsy/artsy-xapp/tar.gz/cbc3db68469054ab13bfbffe68edda422a0972bb"
   dependencies:
     superagent "^1.2.0"
