@@ -34,6 +34,7 @@ class EditableMiamFairWeekPage extends JSONPage {
           styledComponents: true
         },
         blocks: {
+          head: 'templates/meta.jade',
           body: MiamiFairWeekPage
         },
         data: {
