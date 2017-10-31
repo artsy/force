@@ -7,7 +7,7 @@ import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
 import MiamiFairWeekPage from './components/MiamiFairWeekPage'
 
-const SLUG = 'miami-fair-week'
+const SLUG = 'artsy-in-miami'
 const MARKETING_MODAL_ID = 'ca12'
 
 class EditableMiamFairWeekPage extends JSONPage {
