@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.10.0.tgz#ee700414405594e3f2cc07ab7dbe88f54df7e86b"
+"@artsy/reaction-force@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.10.2.tgz#c949c3e5c0dfec5b8574b7fe6f32580044e11989"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -31,7 +31,7 @@
     prop-types "^15.5.10"
     qs "^6.5.0"
     react "^15.5.4"
-    react-lines-ellipsis damassi/react-lines-ellipsis
+    react-lines-ellipsis "^0.8.0"
     react-markdown "^2.5.0"
     react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
     react-responsive-decorator "^0.0.1"
@@ -7975,9 +7975,9 @@ react-komposer@^2.0.0:
     react-stubber "^1.0.0"
     shallowequal "^0.2.2"
 
-"react-lines-ellipsis@github:damassi/react-lines-ellipsis":
-  version "0.7.3"
-  resolved "https://codeload.github.com/damassi/react-lines-ellipsis/tar.gz/c7cf3895efbd6eb524af3f4151bba34f481c500b"
+react-lines-ellipsis@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.8.0.tgz#922d5a70e8b14260014308389fb47d882225f83f"
 
 react-markdown@^2.5.0:
   version "2.5.0"
