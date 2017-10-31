@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.9.11":
-  version "0.9.11"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.9.11.tgz#993db1a9d991be217236b7b7c700abd621c8e3d1"
+"@artsy/reaction-force@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.10.0.tgz#ee700414405594e3f2cc07ab7dbe88f54df7e86b"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -592,13 +592,7 @@ artsy-passport@^2.0.3:
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-artsy-xapp@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/artsy-xapp/-/artsy-xapp-1.0.4.tgz#13cc772122d1f8b8aeef6ad6555a792dffa9c3aa"
-  dependencies:
-    superagent "^1.2.0"
-
-artsy-xapp@artsy/artsy-xapp:
+artsy-xapp@^1.0.4, artsy-xapp@artsy/artsy-xapp:
   version "1.0.4"
   resolved "https://codeload.github.com/artsy/artsy-xapp/tar.gz/cbc3db68469054ab13bfbffe68edda422a0972bb"
   dependencies:
@@ -7981,7 +7975,7 @@ react-komposer@^2.0.0:
     react-stubber "^1.0.0"
     shallowequal "^0.2.2"
 
-react-lines-ellipsis@damassi/react-lines-ellipsis:
+"react-lines-ellipsis@github:damassi/react-lines-ellipsis":
   version "0.7.3"
   resolved "https://codeload.github.com/damassi/react-lines-ellipsis/tar.gz/c7cf3895efbd6eb524af3f4151bba34f481c500b"
 
