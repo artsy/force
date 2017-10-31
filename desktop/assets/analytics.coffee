@@ -3,9 +3,22 @@ mediator = require '../lib/mediator.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
+Events = require('@artsy/reaction-force/dist/Utils/Events.js').default
 
+# All Force mediator events can be hooked into for tracking purposes
 mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
+
+# All Reaction events are sent directly to Segment
+Events.onEvent (data) =>
+  analytics.track data.action, _.omit data, 'action'
+
+  # Send Reaction's read more as a Parsely page view
+  if data.action is 'Clicked read more'
+    window.PARSELY.beacon.trackPageView
+      url: location.href,
+      js: 1,
+      action_name: 'infinite'
 
 require '../analytics/main_layout.js'
 
