@@ -41,9 +41,12 @@ export default `
     credit_url
     image_url
   }
-  contributing_authors {
+  authors {
+    image_url
+    twitter_handle
     name
     id
+    bio
   }
   vertical {
     name
