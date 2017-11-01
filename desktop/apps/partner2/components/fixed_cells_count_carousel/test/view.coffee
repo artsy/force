@@ -64,8 +64,8 @@ describe 'FixedCellsCountCarousel', ->
         shows = [fabricate('show'), fabricate('show'), fabricate('show')]
         Backbone.sync
           .onCall 0
-          .yieldsTo 'success', shows
           .returns Promise.resolve shows
+          .yieldsTo 'success', shows
 
         @view.fetch().then (collection) =>
           collection.length.should.equal 3
@@ -101,13 +101,13 @@ describe 'FixedCellsCountCarousel', ->
         shows2 = [fabricate('show'), fabricate('show')]
         Backbone.sync
           .onCall 0
-          .yieldsTo 'success', shows1
           .returns Promise.resolve shows1
+          .yieldsTo 'success', shows1
 
         Backbone.sync
           .onCall 1
-          .yieldsTo 'success', shows2
           .returns Promise.resolve shows2
+          .yieldsTo 'success', shows2
 
         @view.fetch().then (collection) =>
           collection.length.should.equal 5
@@ -119,13 +119,13 @@ describe 'FixedCellsCountCarousel', ->
         articles2 = results: [fabricate('article')]
         Backbone.sync
           .onCall 0
-          .yieldsTo 'success', articles1
           .returns Promise.resolve articles1
+          .yieldsTo 'success', articles1
 
         Backbone.sync
           .onCall 1
-          .yieldsTo 'success', articles2
           .returns Promise.resolve articles2
+          .yieldsTo 'success', articles2
 
         @view.fetch().then (collection) =>
           collection.length.should.equal 2

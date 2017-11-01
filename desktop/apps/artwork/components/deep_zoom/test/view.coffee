@@ -41,7 +41,7 @@ describe 'DeepZoomView', ->
 
       DeepZoomView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
-      sinon.stub _, 'defer', (cb) -> cb()
+      sinon.stub(_, 'defer').callsFake (cb) -> cb()
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
       $.getScript = (url, cb) -> cb()

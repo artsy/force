@@ -62,11 +62,10 @@ describe 'QuasiInfiniteView', ->
         .returns Promise.resolve()
 
       @view.fetch()
-        .then =>
-          @view.updateCounts().should.eql
-            total: 5, remaining: 3
-          @view.fetch()
-
+      .then =>
+        @view.updateCounts().should.eql
+          total: 5, remaining: 3
+        @view.fetch()
         .then =>
           @view.updateCounts().should.eql
             total: 5, remaining: 2
@@ -87,14 +86,13 @@ describe 'QuasiInfiniteView', ->
         .returns Promise.resolve()
 
       @view.fetch()
-        .then =>
-          @view.$el.html().should.containEql '2 tests'
-          @view.$(@view.selectors.more)
-            .should.have.lengthOf 1
-          @view.$(@view.selectors.more).text()
-            .should.equal 'More (1)'
-          @view.fetch()
-
+      .then =>
+        @view.$el.html().should.containEql '2 tests'
+        @view.$(@view.selectors.more)
+          .should.have.lengthOf 1
+        @view.$(@view.selectors.more).text()
+          .should.equal 'More (1)'
+        @view.fetch()
         .then =>
           @view.$(@view.selectors.more)
             .should.have.lengthOf 0
