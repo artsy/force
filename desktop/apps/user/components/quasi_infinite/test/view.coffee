@@ -62,13 +62,11 @@ describe 'QuasiInfiniteView', ->
         .returns Promise.resolve()
 
       @view.fetch()
-      .then =>
-        @view.updateCounts().should.eql
-          total: 5, remaining: 3
-        @view.fetch()
-        .then =>
-          @view.updateCounts().should.eql
-            total: 5, remaining: 2
+      @view.updateCounts().should.eql
+        total: 5, remaining: 3
+      @view.fetch()
+      @view.updateCounts().should.eql
+        total: 5, remaining: 2
 
   describe '#detectEnd', ->
     it 'removes the "More (n)" button when there is 0 remaining', ->
@@ -86,16 +84,14 @@ describe 'QuasiInfiniteView', ->
         .returns Promise.resolve()
 
       @view.fetch()
-      .then =>
-        @view.$el.html().should.containEql '2 tests'
-        @view.$(@view.selectors.more)
-          .should.have.lengthOf 1
-        @view.$(@view.selectors.more).text()
-          .should.equal 'More (1)'
-        @view.fetch()
-        .then =>
-          @view.$(@view.selectors.more)
-            .should.have.lengthOf 0
+      @view.$el.html().should.containEql '2 tests'
+      @view.$(@view.selectors.more)
+        .should.have.lengthOf 1
+      @view.$(@view.selectors.more).text()
+        .should.equal 'More (1)'
+      @view.fetch()
+      @view.$(@view.selectors.more)
+        .should.have.lengthOf 0
 
   describe '#tripInfinite', ->
     it 'initializes the infinite scrolling mode on the 2nd page (once)', ->
