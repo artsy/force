@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ChannelMemberQuery from 'desktop/apps/article2/queries/channelMember'
+import ChannelMemberQuery from 'desktop/apps/article/queries/channelMember'
 import PropTypes from 'prop-types'
 import positronql from 'desktop/lib/positronql.coffee'
 import styled from 'styled-components'

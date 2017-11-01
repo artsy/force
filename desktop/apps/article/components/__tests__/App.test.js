@@ -30,8 +30,8 @@ describe('<App />', () => {
     }
   }
 
-  const App = require('desktop/apps/article2/components/App').default
-  const InfiniteScrollArticle = require('desktop/apps/article2/components/InfiniteScrollArticle').default
+  const App = require('desktop/apps/article/components/App').default
+  const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
   const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
 
   it('renders a standard article', () => {

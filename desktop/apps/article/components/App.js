@@ -1,5 +1,5 @@
 import ArticleModel from 'desktop/models/article.coffee'
-import EditButton from 'desktop/apps/article2/components/EditButton'
+import EditButton from 'desktop/apps/article/components/EditButton'
 import InfiniteScrollArticle from './InfiniteScrollArticle'
 import PropTypes from 'prop-types'
 import React from 'react'
