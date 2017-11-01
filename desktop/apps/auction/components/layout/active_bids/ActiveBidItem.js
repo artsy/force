@@ -3,6 +3,7 @@ import React from 'react'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
+import get from 'lodash.get'
 
 function ActiveBidItem (props) {
   const {
@@ -46,7 +47,7 @@ function ActiveBidItem (props) {
           Lot {lot_label}
         </div>
         <h3>
-          {artwork.artist.name}
+          {get(artwork, 'artist.name', '')}
         </h3>
         <div className={b('title')}>
           <em>
