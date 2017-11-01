@@ -1,4 +1,8 @@
-FROM node:8.4.0
+FROM node:8.8.1
+
+# Set up deploy user and working directory
+RUN adduser --disabled-password --gecos '' deploy
+RUN mkdir -p /app
 
 RUN npm i yarn@1.2.1 -g
 
@@ -7,15 +11,11 @@ WORKDIR /tmp
 ADD package.json package.json
 ADD yarn.lock yarn.lock
 RUN yarn install
+RUN mv /tmp/node_modules /app/
 
-# Set up deploy user and working directory
-RUN adduser --disabled-password --gecos '' deploy
-RUN mkdir -p /app
-
-# Set up code and node modules for deploy user
+# Set up /app and node modules for deploy user
 ADD . /app
 WORKDIR /app
-RUN mv /tmp/node_modules .
 RUN chown -R deploy:deploy /app
 
 # Switch to deploy user
