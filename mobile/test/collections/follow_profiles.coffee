@@ -61,7 +61,7 @@ describe 'FollowProfiles', ->
     beforeEach ->
       @profileId = @followProfile2.get('profile').id
       sinon.stub Backbone, 'sync'
-      sinon.stub CurrentUser, 'orNull', -> new CurrentUser(fabricate('user'))
+      sinon.stub(CurrentUser, 'orNull').callsFake -> new CurrentUser(fabricate('user'))
 
     afterEach ->
       delete @profileId

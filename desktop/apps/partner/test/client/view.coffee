@@ -135,7 +135,7 @@ describe 'PartnerView', ->
     describe '#initializeTablistAndContent', ->
 
       it 'renders correct tabs', ->
-        sinon.stub @view.partner, "fetch", (options) -> options?.success?()
+        sinon.stub(@view.partner, "fetch").callsFake (options) -> options?.success?()
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
         _.last(@tablistTemplate.args)[0].sections.should.eql ['shows', 'about']

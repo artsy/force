@@ -1,6 +1,6 @@
 // Initializes all client-side Backbone views for "classic" layouts
 
-import $ from 'jquery'
+// import { $ } from 'jquery'
 import { data as sd } from 'sharify'
 import { auctionQuery, partnerQuery } from 'desktop/apps/article2/queries/promotedContent'
 import metaphysics from 'lib/metaphysics.coffee'

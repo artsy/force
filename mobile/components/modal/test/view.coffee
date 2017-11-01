@@ -20,7 +20,7 @@ describe 'ModalView', ->
         el: $('body')
 
       @view.remove = sinon.stub()
-      sinon.stub(_, 'delay', (cb) -> cb())
+      sinon.stub(_, 'delay').callsFake (cb) -> cb()
       done()
 
   afterEach ->

@@ -1,24 +1,29 @@
 import 'jsdom-global/register'
 import _ from 'underscore'
-import { init, __RewireAPI__ as RewireApi } from 'desktop/apps/article2/client/classic'
 import sinon from 'sinon'
 import Backbone from 'backbone'
-
-const $ = require('jquery')
+import benv from 'benv'
 
 describe('Classic Article', () => {
-  before(() => {
-    $.fn.waypoint = sinon.stub()
-    global.$ = $
+  before((done) => {
+    benv.setup(() => {
+      benv.expose({
+        $: benv.require('jquery'),
+        jQuery: benv.require('jquery')
+      })
+      Backbone.$ = $
+      done()
+    })
   })
 
-  beforeEach(() => {
-    Backbone.sync = sinon.stub()
+  after(() => {
+    benv.teardown()
   })
 
-  afterEach(() => {
-    Backbone.sync.reset()
-  })
+  const classic = require('desktop/apps/article2/client/classic')
+  const init = classic.init
+  const RewireApi = classic.__RewireAPI__
+  const $ = window.$
 
   it('initializes ArticleView', () => {
     RewireApi.__Rewire__('sd', {

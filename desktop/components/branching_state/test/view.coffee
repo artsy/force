@@ -20,7 +20,7 @@ describe 'StateView', ->
     @ThirdView = class ThirdView extends Backbone.View
 
     for view in @views = [FirstView, SecondView, ThirdView]
-      sinon.stub view::, 'render', -> this
+      sinon.stub(view::, 'render').callsFake -> this
       sinon.stub view::, 'remove'
 
     @state = new State steps: ['first', 'second', 'noview', 'third']

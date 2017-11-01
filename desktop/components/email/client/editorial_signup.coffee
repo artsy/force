@@ -7,7 +7,6 @@ editorialCTABannerTemplate = -> require('../templates/editorial_cta_banner.jade'
 editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jade') arguments...
 Cycle = require '../../cycle/index.coffee'
 { crop } = require '../../resizer/index.coffee'
-mailcheck = require '../../mailcheck/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../flash/index.coffee'
 qs = require 'querystring'
@@ -48,7 +47,6 @@ module.exports = class EditorialSignupView extends Backbone.View
         images: images
         crop: crop
         isSignup: @eligibleToSignUp()
-      mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
     if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
       @showEditorialCTA 'modal'
@@ -68,7 +66,6 @@ module.exports = class EditorialSignupView extends Backbone.View
         crop: crop
         articlePage: true
         isSignup: @eligibleToSignUp()
-      mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
 
   cycleImages: =>

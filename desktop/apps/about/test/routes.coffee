@@ -34,7 +34,7 @@ describe 'About routes', ->
 
     describe 'first time', ->
       beforeEach ->
-        sinon.stub routes.__get__('cache'), 'set', (key, value) =>
+        sinon.stub(routes.__get__('cache'), 'set').callsFake (key, value) =>
           @cacheSet = arguments
         twilio = routes.__get__ 'twilio'
         twilio.RestClient = class TwilioClientStub
@@ -61,7 +61,7 @@ describe 'About routes', ->
 
     describe 'second time time', ->
       beforeEach ->
-        sinon.stub routes.__get__('cache'), 'get', (key, cb) ->
+        sinon.stub(routes.__get__('cache'), 'get').callsFake (key, cb) ->
           cb null, 'existy'
         routes.sendSMS @req, @res
 

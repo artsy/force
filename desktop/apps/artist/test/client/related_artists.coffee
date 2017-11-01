@@ -29,14 +29,14 @@ describe 'RelatedArtistsView', ->
     benv.teardown()
 
   beforeEach ->
-    sinon.stub _, 'defer', (cb) -> cb()
+    sinon.stub(_, 'defer').callsFake (cb) -> cb()
     sinon.stub(Backbone, 'sync').yieldsTo('success').returns([fabricate('artist')])
     stubChildClasses @RelatedArtistsView, this,
       ['ArtworkRailView']
       ['remove']
     @view = new @RelatedArtistsView model: @model, statuses: artistJSON.statuses
     sinon.stub @view, 'postRender'
-    sinon.stub @view, 'setupFollowButtons', (artists) -> return
+    sinon.stub(@view, 'setupFollowButtons').callsFake (artists) -> return
     @view.fetchRelated()
 
   afterEach ->

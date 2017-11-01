@@ -16,11 +16,11 @@ describe 'openInquiryQuestionnaireFor', ->
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
-      sinon.stub _, 'defer', (cb) -> cb()
+      sinon.stub(_, 'defer').callsFake (cb) -> cb()
       openInquiryQuestionnaireFor = rewire '../index'
 
       @StateView = openInquiryQuestionnaireFor.__get__ 'StateView'
-      @render = sinon.stub @StateView::, 'render', -> this
+      @render = sinon.stub(@StateView::, 'render').callsFake -> this
 
       @Logger = openInquiryQuestionnaireFor.__get__ 'Logger'
 

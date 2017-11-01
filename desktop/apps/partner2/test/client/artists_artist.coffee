@@ -50,7 +50,7 @@ describe 'PartnerArtistsArtistView', ->
 
   describe '#initializeBio', ->
     beforeEach ->
-      sinon.stub @artworks, 'fetch', (options) -> options?.success?()
+      sinon.stub(@artworks, 'fetch').callsFake (options) -> options?.success?()
       @view = new PartnerArtistsArtistView
         model: @partnerArtist
         el: $ 'body'
@@ -77,7 +77,7 @@ describe 'PartnerArtistsArtistView', ->
   describe '#fetchNextPageArtworks', ->
 
     it 'renders the artwork column and not calls the noArtworks callback if there are artworks', ->
-      sinon.stub @artworks, 'fetch', (options) =>
+      sinon.stub(@artworks, 'fetch').callsFake (options) =>
         @artworks.add fabricate('artwork')
         options?.success?()
       noArtworks = sinon.stub()
@@ -91,7 +91,7 @@ describe 'PartnerArtistsArtistView', ->
       noArtworks.called.should.not.be.ok()
 
     it 'calls the noArtworks callback if empty artworks retrieved', ->
-      sinon.stub @artworks, 'fetch', (options) -> options?.success?()
+      sinon.stub(@artworks, 'fetch').callsFake (options) -> options?.success?()
       noArtworks = sinon.stub()
 
       new PartnerArtistsArtistView
@@ -103,7 +103,7 @@ describe 'PartnerArtistsArtistView', ->
 
     it 'renders all artworks of the artist with infinite scrolling', ->
 
-      sinon.stub @artworks, 'fetch', (options) =>
+      sinon.stub(@artworks, 'fetch').callsFake (options) =>
         start = (options.data.page - 1) * options.data.size
         end = start + options.data.size
         @artworks.reset()

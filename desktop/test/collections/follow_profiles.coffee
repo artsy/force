@@ -18,7 +18,6 @@ describe 'FollowProfiles', ->
     @followProfiles.reset()
     @followProfiles.add @followProfile1
 
-
   describe "#initialize", ->
 
     it 'binds to add / remove callbacks to proxy model specific event triggers', ->
@@ -60,8 +59,8 @@ describe 'FollowProfiles', ->
 
     beforeEach ->
       @profileId = @followProfile2.get('profile').id
-      sinon.stub Backbone, 'sync'
-      sinon.stub CurrentUser, 'orNull', -> new CurrentUser(fabricate('user'))
+      sinon.stub(Backbone, 'sync')
+      sinon.stub(CurrentUser, 'orNull').callsFake(-> new CurrentUser(fabricate('user')))
 
     afterEach ->
       delete @profileId

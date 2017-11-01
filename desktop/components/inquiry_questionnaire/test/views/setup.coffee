@@ -12,7 +12,7 @@ StepView = require '../../views/step'
 
 module.exports = (cb) -> _.wrap cb, (cb) ->
   before (done) ->
-    sinon.stub _, 'defer', (cb) -> cb()
+    sinon.stub(_, 'defer').callsFake (cb) -> cb()
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $

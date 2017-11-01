@@ -39,7 +39,7 @@ describe 'Geo', ->
       Geo.googleMapsLoading = undefined
 
     it 'loads the Google Maps places library and runs the callback', (done) ->
-      sinon.stub $, 'getScript', -> window.googleMapsCallback()
+      sinon.stub($, 'getScript').callsFake -> window.googleMapsCallback()
 
       _.isUndefined(window.googleMapsCallback).should.be.true()
       Geo.loadGoogleMaps ->
@@ -50,7 +50,7 @@ describe 'Geo', ->
 
     it 'only calls $.getScript once', (done) ->
       count = sinon.stub()
-      sinon.stub $, 'getScript', ->
+      sinon.stub($, 'getScript').callsFake ->
         count()
         window.googleMapsCallback()
 
@@ -65,7 +65,7 @@ describe 'Geo', ->
     it 'calls back to all callbacks that get attached', (done) ->
       count = sinon.stub()
 
-      sinon.stub $, 'getScript', -> window.googleMapsCallback()
+      sinon.stub($, 'getScript').callsFake -> window.googleMapsCallback()
 
       Geo.loadGoogleMaps count
       Geo.loadGoogleMaps count

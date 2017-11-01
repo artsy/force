@@ -10,7 +10,10 @@ import { data as sd } from 'sharify'
 describe('<InfiniteScrollArticle />', () => {
   before((done) => {
     benv.setup(() => {
-      benv.expose({$: benv.require('jquery'), jQuery: benv.require('jquery')})
+      benv.expose({
+        $: benv.require('jquery'),
+        jQuery: benv.require('jquery')
+      })
       sd.APP_URL = 'http://artsy.net'
       sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
       sd.CURRENT_USER = {id: '123'}

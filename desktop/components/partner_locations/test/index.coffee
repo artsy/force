@@ -52,9 +52,6 @@ describe 'PartnerLocations', ->
       before ->
         sinon.stub(@artwork, "isPartOfAuctionPromo").returns(true)
 
-      after ->
-        sinon.restore(@artwork, "isPartOfAuctionPromo")
-
       it '#setupPhoneNumbers does not render phone number', ->
         @partnerLocations.setupPhoneNumbers()
         $('.artwork-partner-phone-container').text().should.eql ''

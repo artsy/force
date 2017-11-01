@@ -14,7 +14,7 @@ describe 'mobile inquiry flow initialization', ->
       initializeInquiry = rewire '../../client/routes/inquiry'
       initializeInquiry.__set__ 'attachFastClick', sinon.stub()
       @StateView = initializeInquiry.__get__ 'StateView'
-      @render = sinon.stub @StateView::, 'render', -> this
+      @render = sinon.stub(@StateView::, 'render').callsFake -> this
       done()
 
   after ->
