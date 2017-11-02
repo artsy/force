@@ -4,26 +4,33 @@ import sinon from 'sinon'
 import Backbone from 'backbone'
 import benv from 'benv'
 
+const $ = require('jquery')(window)
+
 describe('Classic Article', () => {
-  before((done) => {
+  let init
+  let RewireApi
+
+  beforeEach((done) => {
     benv.setup(() => {
       benv.expose({
         $: benv.require('jquery'),
         jQuery: benv.require('jquery')
       })
-      Backbone.$ = $
+      Backbone.$ = window.$
+      sinon.stub(Backbone, 'sync')
+
+      const classic = require('desktop/apps/article2/client/classic')
+      init = classic.init
+      RewireApi = classic.__RewireAPI__
+      RewireApi.__Rewire__('$', window.$)
       done()
     })
   })
 
-  after(() => {
+  afterEach(() => {
+    Backbone.sync.restore()
     benv.teardown()
   })
-
-  const classic = require('desktop/apps/article2/client/classic')
-  const init = classic.init
-  const RewireApi = classic.__RewireAPI__
-  const $ = window.$
 
   it('initializes ArticleView', () => {
     RewireApi.__Rewire__('sd', {
