@@ -147,7 +147,7 @@ describe('<App />', () => {
     const rendered = shallow(<App article={article} templates={{}} />)
     const html = rendered.html()
     html.should.containEql('DisplayPanel')
-    html.should.containEql('DisplayCanvas')
+    html.should.containEql('class="Canvas')
     html.should.containEql('Campaign 1')
     html.should.containEql('Ad Headline')
   })
