@@ -26,7 +26,7 @@ describe 'OverviewView', ->
     sinon.stub $, 'waypoints'
     sinon.stub $.fn, 'waypoint'
 
-    sinon.stub _, 'defer', (cb) -> cb()
+    sinon.stub(_, 'defer').callsFake (cb) -> cb()
     sinon.stub Backbone, 'sync'
     sinon.stub(Artist::, 'related').returns({
       artists: length: 0

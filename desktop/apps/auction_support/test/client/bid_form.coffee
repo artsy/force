@@ -25,7 +25,7 @@ describe 'BidForm', ->
 
   beforeEach (done) ->
     sinon.stub(Backbone, 'sync')
-    sinon.stub _, 'delay', (cb) -> cb()
+    sinon.stub(_, 'delay').callsFake (cb) -> cb()
     @order = new Order()
     @sale = new Sale fabricate 'sale'
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork',

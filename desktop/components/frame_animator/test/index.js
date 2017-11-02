@@ -82,7 +82,7 @@ describe('FrameAnimator', () => {
     window.performance.now.onCall(4).returns(120) // finishes
 
     // stub requestAnimationFrame itself
-    sinon.stub(window, 'requestAnimationFrame', fn => {
+    sinon.stub(window, 'requestAnimationFrame').callsFake((fn) => {
       const currentTimestamp = window.performance.now()
       fn(currentTimestamp)
     })

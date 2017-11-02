@@ -11,7 +11,7 @@ describe 'AboutRouter', ->
       Backbone.$ = $
       @AboutRouter = rewire '../../client/router'
       @AboutRouter.__set__ 'AboutView', Backbone.View
-      sinon.stub _, 'defer', (cb) -> cb()
+      sinon.stub(_, 'defer').callsFake (cb) -> cb()
       done()
 
   afterEach ->

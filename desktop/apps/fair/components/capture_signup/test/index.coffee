@@ -17,7 +17,7 @@ describe 'captureSignup', ->
 
       @flashSpy = sinon.spy()
       capture.__set__ 'FlashMessage', @flashSpy
-      sinon.stub _, 'delay', (cb) -> cb()
+      sinon.stub(_, 'delay').callsFake (cb) -> cb()
       done()
 
   after ->

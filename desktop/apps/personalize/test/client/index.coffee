@@ -13,7 +13,7 @@ describe 'PersonalizeRouter', ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       location.assign = sinon.stub()
-      sinon.stub _, 'defer', (cb) -> cb()
+      sinon.stub(_, 'defer').callsFake (cb) -> cb()
       { @PersonalizeRouter, init } = mod = rewire '../../client/index'
       mod.__set__ 'Transition', fade: (@fadeStub = sinon.stub())
       mod.__set__ 'views', LocationView: => render: => $el: 'location'

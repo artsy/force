@@ -8,7 +8,9 @@ JumpView = require '../view.coffee'
 describe 'JumpView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      benv.expose
+        $: benv.require('jquery')
+        jQuery: benv.require('jquery')
       Backbone.$ = $
       @view = new JumpView
       done()
@@ -33,7 +35,7 @@ describe 'JumpView', ->
       @view.state.should.equal 'hidden'
       @view.toggle()
       @view.state.should.equal 'hidden'
-      scrollStub = sinon.stub $.fn, 'scrollTop', => (@view.threshold + 1)
+      scrollStub = sinon.stub($.fn, 'scrollTop').callsFake => (@view.threshold + 1)
       @view.state.should.equal 'hidden'
       @view.toggle()
       @view.state.should.equal 'visible'

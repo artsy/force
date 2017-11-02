@@ -55,8 +55,8 @@ describe 'RSS', ->
 
       Backbone.sync
         .onCall 0
-        .returns Q.resolve()
         .yieldsTo 'success', @articles
+        .returns Q.resolve()
 
     it 'renders articles', ->
       routes.partnerUpdates @req, @res

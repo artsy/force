@@ -32,7 +32,7 @@ describe 'ShowsView', ->
     benv.teardown()
 
   beforeEach ->
-    sinon.stub _, 'defer', (cb) -> cb()
+    sinon.stub(_, 'defer').callsFake (cb) -> cb()
     sinon.stub Backbone, 'sync'
     @view = new @ShowsView model: @model
     sinon.stub @view, 'postRender'
