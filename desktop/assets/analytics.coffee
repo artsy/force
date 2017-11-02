@@ -14,7 +14,7 @@ Events.onEvent (data) =>
   analytics.track data.action, _.omit data, 'action'
 
   # Send Reaction's read more as a Parsely page view
-  if data.action is 'Clicked read more'
+  if data.action is 'Clicked read more' and window.PARSELY
     window.PARSELY.beacon.trackPageView
       url: location.href,
       js: 1,
