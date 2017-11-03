@@ -70,7 +70,7 @@ export async function index (req, res, next) {
     }
 
     const isMobile = res.locals.sd.IS_MOBILE
-    const jsonLD = articleModel.toJSONLD()
+    const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),

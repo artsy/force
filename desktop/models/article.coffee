@@ -222,8 +222,8 @@ module.exports = class Article extends Backbone.Model
         success: (article) =>
           superSubArticles.add article
 
-  getParselySection: (channel) ->
-    if @get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
+  getParselySection: ->
+    if @get('channel_id') is ARTSY_EDITORIAL_CHANNEL
       'Editorial'
     else if @get('channel_id')
       @get('channel')?.get('name')
@@ -233,7 +233,7 @@ module.exports = class Article extends Backbone.Model
       'Other'
 
   # article metadata tag for parse.ly
-  toJSONLD: (channel) ->
+  toJSONLD: ->
     tags = @get('tags')
     tags = tags.concat @get('vertical').name if @get('vertical')
     tags = tags.concat @get('tracking_tags') if @get('tracking_tags')
@@ -244,12 +244,12 @@ module.exports = class Article extends Backbone.Model
       "url": @fullHref()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
-      "articleSection": @getParselySection(channel)
+      "articleSection": @getParselySection()
       "creator": @getAuthorArray()
       "keywords": tags
     }
 
-  toJSONLDAmp: (channel) ->
+  toJSONLDAmp: ->
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
