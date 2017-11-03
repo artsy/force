@@ -30,7 +30,7 @@ describe('<InfiniteScrollArticle />', () => {
     }
   }
 
-  const InfiniteScrollArticle = require('desktop/apps/article2/components/InfiniteScrollArticle').default
+  const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
   const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
 
   beforeEach(() => {

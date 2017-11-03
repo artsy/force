@@ -1,13 +1,11 @@
 extends ../../../components/fair_layout/templates/conditional
 
 block head
-  include meta
-  if !article.get('indexable')
-    meta( name='robots', content='noindex' )
+  include classic_meta
 
 append locals
   - assetPackage = 'article'
-  - bodyClass = bodyClass + ' ' + article.getBodyClass({ superArticle: sd.SUPER_ARTICLE, superSubArticleIds: sd.SUPER_SUB_ARTICLE_IDS})
+  - bodyClass = bodyClass + ' ' + article.getBodyClass({})
 
 block body
 
@@ -22,13 +20,6 @@ block body
     //- Article body
     #articles-body-container(role='article')
       include ../../../components/article/templates/index
-
-      //- Render banner for venice 2017 if article is in venice section
-      if article.get('section_ids') && article.get('section_ids').includes(sd.VENICE_2015_SECTION)
-        .venice-redirect-banner--article
-
-    if sd.SCROLL_ARTICLE === "infinite"
-      #article-loading: .loading-spinner
 
   section#articles-footer.responsive-layout-container
     //- Rendered on client

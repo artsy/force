@@ -1,6 +1,6 @@
 import * as fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
-import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article2/routes'
+import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article/routes'
 import * as _ from 'underscore'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
@@ -54,7 +54,7 @@ describe('Article Routes', () => {
       index(req, res, next)
         .then(() => {
           renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
-          renderLayout.args[0][0].locals.assetPackage.should.equal('article2')
+          renderLayout.args[0][0].locals.assetPackage.should.equal('article')
           done()
         })
     })
@@ -287,7 +287,7 @@ describe('Article Routes', () => {
         Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
         RoutesRewireApi.__Rewire__('Article', Article)
         amp(req, res, next)
-        res.redirect.args[0][0].should.equal('/article2/zoobar/amp')
+        res.redirect.args[0][0].should.equal('/article/zoobar/amp')
         done()
       })
     })
