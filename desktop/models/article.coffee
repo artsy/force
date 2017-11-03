@@ -182,37 +182,6 @@ module.exports = class Article extends Backbone.Model
     not @get('is_super_article') and
     superArticle?.id is sd.EOY_2016_ARTICLE
 
-  prepForInstant: ->
-
-    replaceTagWith = (htmlStr, findTag, replaceTag ) ->
-      $ = cheerio.load(htmlStr)
-      $(findTag).each ->
-        $(this).replaceWith($('<' + replaceTag + '>' + $(this).html() + '</' + replaceTag + '>'))
-      $.html()
-
-    sections =  _.map @get('sections'), (section) ->
-      if section.type is 'text'
-        $ = cheerio.load(section.body)
-        $('br').remove()
-        $('*:empty').remove()
-        $('p').each ->
-          $(this).remove() if $(this).text().length is 0
-        section.body = $.html()
-        section.body = replaceTagWith(section.body, 'h3', 'h2')
-        section
-      else if section.type is 'image'
-        section.caption = replaceTagWith(section.caption, 'p', 'h1') if section.caption
-        section
-      else if section.type in ['image_set', 'image_collection']
-        section.images = _.map section.images, (image) ->
-          if image.type is 'image'
-            image.caption = replaceTagWith(image.caption, 'p', 'h1') if image.caption
-          image
-        section
-      else
-        section
-    @set 'sections', sections
-
   prepForAMP: ->
     sections =  _.map @get('sections'), (section) ->
       if section.type is 'text'
@@ -253,21 +222,18 @@ module.exports = class Article extends Backbone.Model
         success: (article) =>
           superSubArticles.add article
 
-  getParselySection: ->
-    if (name = @get('channel')?.get('name'))
-      if name is 'Artsy Editorial'
-        'Editorial'
-      else
-        name
-    else if @get('section')
-      @get('section').get('title')
-    else if @get('partner')
+  getParselySection: (channel) ->
+    if @get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
+      'Editorial'
+    else if @get('channel_id')
+      @get('channel')?.get('name')
+    else if @get('partner_channel_id')
       'Partner'
     else
       'Other'
 
   # article metadata tag for parse.ly
-  toJSONLD: ->
+  toJSONLD: (channel) ->
     tags = @get('tags')
     tags = tags.concat @get('vertical').name if @get('vertical')
     tags = tags.concat @get('tracking_tags') if @get('tracking_tags')
@@ -278,12 +244,12 @@ module.exports = class Article extends Backbone.Model
       "url": @fullHref()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
-      "articleSection": @getParselySection()
+      "articleSection": @getParselySection(channel)
       "creator": @getAuthorArray()
       "keywords": tags
     }
 
-  toJSONLDAmp: ->
+  toJSONLDAmp: (channel) ->
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"

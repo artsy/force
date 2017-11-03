@@ -23,6 +23,7 @@ export async function index (req, res, next) {
       req
     })
     const article = data.article
+    const articleModel = new Article(data.article)
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
@@ -69,6 +70,7 @@ export async function index (req, res, next) {
     }
 
     const isMobile = res.locals.sd.IS_MOBILE
+    const jsonLD = articleModel.toJSONLD()
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -89,11 +91,12 @@ export async function index (req, res, next) {
       },
       data: {
         article,
+        isSuper,
+        isMobile,
+        jsonLD,
         subscribed,
         superArticle,
-        superSubArticles,
-        isSuper,
-        isMobile
+        superSubArticles
       },
       templates
     })
