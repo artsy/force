@@ -12,7 +12,9 @@ momentTimezone = require 'moment-timezone'
 
 describe "Article", ->
   beforeEach ->
-    Article.__set__ 'sd', { EOY_2016_ARTICLE: '1234', ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993' }
+    Article.__set__ 'sd', {EOY_2016_ARTICLE: '1234'}
+    Article.__set__ 'ARTSY_EDITORIAL_CHANNEL', '5759e3efb5989e6f98f77993'
+    Article.__set__
     sinon.stub Backbone, 'sync'
       .returns Q.defer()
     @article = new Article
@@ -231,23 +233,26 @@ describe "Article", ->
   describe 'getParselySection', ->
 
     it 'returns Editorial', ->
-      @article.set 'channel', new Backbone.Model name: 'Artsy Editorial'
+      @article.set
+        channel_id: '5759e3efb5989e6f98f77993'
       @article.getParselySection().should.equal 'Editorial'
 
     it 'returns channel name', ->
-      @article.set 'channel', new Backbone.Model name: 'Life at Artsy'
+      @article.set
+        channel: new Backbone.Model name: 'Life at Artsy'
+        channel_id: '123'
       @article.getParselySection().should.equal 'Life at Artsy'
 
-    it 'returns Section', ->
-      @article.set 'section', new Backbone.Model title: '56th Venice Biennale'
-      @article.getParselySection().should.equal '56th Venice Biennale'
-
     it 'returns Partner', ->
-      @article.set 'partner', new Backbone.Model
+      @article.set
+        partner_channel_id: '123'
+        channel_id: null
       @article.getParselySection().should.equal 'Partner'
 
     it 'returns Other', ->
-      @article.clear()
+      @article.set
+        partner_channel_id: null
+        channel_id: null
       @article.getParselySection().should.equal 'Other'
 
   describe 'isEOYSubArticle', ->

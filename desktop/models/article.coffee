@@ -130,7 +130,7 @@ module.exports = class Article extends Backbone.Model
     crop @get(attr), args...
 
   date: (attr) ->
-    if @get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
+    if @get('channel_id') is ARTSY_EDITORIAL_CHANNEL
       momentTimezone(@get(attr)).tz('America/New_York')
     else
       moment(@get(attr)).local()
