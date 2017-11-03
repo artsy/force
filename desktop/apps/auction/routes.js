@@ -67,6 +67,7 @@ export async function index (req, res, next) {
         },
         isClosed: sale.is_closed,
         requestID: req.id,
+        symbol: sale.symbol,
         user: res.locals.sd.CURRENT_USER
       }, auctionWorksInitialState)
     })
