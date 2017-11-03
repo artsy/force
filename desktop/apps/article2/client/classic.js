@@ -2,6 +2,9 @@
 
 import $ from 'jquery'
 import { data as sd } from 'sharify'
+import { auctionQuery, partnerQuery } from 'desktop/apps/article2/queries/promotedContent'
+import metaphysics from 'lib/metaphysics.coffee'
+import promotedTemplate from '../templates/promoted_content.jade'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
 import ArticlesGridView from 'desktop/components/articles_grid/view.coffee'
@@ -30,6 +33,7 @@ export const init = () => {
   }
 
   setupFooterArticles(channel)
+  setupPromotedContent(article)
 }
 
 const setupFooterArticles = (channel) => {
@@ -51,4 +55,41 @@ const setupFooterArticles = (channel) => {
   collection.fetch({
     data: data
   })
+}
+
+const setupPromotedContent = (article) => {
+  const channel = article.get('channel_id')
+  if (channel === sd.PC_ARTSY_CHANNEL && article.get('partner_ids')) {
+    const send = {
+      method: 'post',
+      query: partnerQuery(article.get('partner_ids')[0])
+    }
+    metaphysics(send)
+    .then((data) => {
+      const cropped = data.partner.profile.image.cropped
+      const src = cropped ? cropped.url : ''
+      $('#articles-show').prepend(promotedTemplate({
+        src,
+        name: data.partner.name,
+        href: data.partner.profile.href,
+        type: data.partner.type === 'Gallery' ? 'Gallery' : 'Institution'
+      }))
+    })
+  } else if (channel === sd.PC_AUCTION_CHANNEL && article.get('auction_ids')) {
+    const send = {
+      method: 'post',
+      query: auctionQuery(article.get('auction_ids')[0])
+    }
+    metaphysics(send)
+    .then((data) => {
+      const cropped = data.sale.cover_image.cropped
+      const src = cropped ? cropped.url : ''
+      $('#articles-show').prepend(promotedTemplate({
+        src,
+        name: data.sale.name,
+        href: data.sale.href,
+        type: 'Auction'
+      }))
+    })
+  }
 }
