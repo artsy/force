@@ -41,8 +41,9 @@ describe('AMP Templates', () => {
   })
 
   it('includes analytics', () => {
+    const article = new Article(fixtures.article).set({channel_id: null})
     const html = render('amp_article')({
-      article: new Article(fixtures.article),
+      article,
       crop: url => url,
       resize: url => url,
       moment: () => {},
