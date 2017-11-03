@@ -71,13 +71,11 @@
     margin (gutter + (gutter / 3)) 0
 
     &__consign
+      block-margins(gutter / 2)
       margin-top -((gutter / 2) + 2)
       padding distance(gutter / 2) 0
       border-top 2px solid black
       border-bottom @border-top
-
-      &:first-child
-        block-margins(gutter / 2)
 
       > a
         fine-faux-underline()
