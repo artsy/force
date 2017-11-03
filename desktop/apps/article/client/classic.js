@@ -2,9 +2,8 @@
 
 import $ from 'jquery'
 import { data as sd } from 'sharify'
-import { auctionQuery, partnerQuery } from 'desktop/apps/article2/queries/promotedContent'
+import { auctionQuery, partnerQuery } from 'desktop/apps/article/queries/promotedContent'
 import metaphysics from 'lib/metaphysics.coffee'
-import promotedTemplate from '../templates/promoted_content.jade'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
 import ArticlesGridView from 'desktop/components/articles_grid/view.coffee'
@@ -12,6 +11,10 @@ import ArticleView from 'desktop/components/article/client/view.coffee'
 import Channel from 'desktop/models/channel.coffee'
 import GalleryInsightsView from 'desktop/components/email/client/gallery_insights.coffee'
 import TeamChannelNavView from 'desktop/components/channel_nav/view.coffee'
+
+const promotedTemplate = (args) => {
+  return require('desktop/apps/article/templates/promoted_content.jade')(args)
+}
 
 export const init = () => {
   const article = new Article(sd.ARTICLE)

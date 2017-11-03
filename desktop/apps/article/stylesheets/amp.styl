@@ -16,7 +16,6 @@ global-reset()
   line-height 1.4em
   text-rendering optimizeLegibility
   min-width inherit
-  max-width 580px
   a
     color black
     cursor pointer
@@ -30,6 +29,10 @@ global-reset()
   figcaption, figcaption a
     garamond-size('m-caption')
     color gray-darker-color
+
+  .article-container, amp-article__logo-header
+    max-width 1250px
+    margin auto
 
   .amp-article
     &__logo-header
@@ -55,11 +58,22 @@ global-reset()
           text-decoration none
 
     &__social
+      width 100vw
+      position fixed
+      bottom 0
+      left 0
+      margin 0
+      padding 0
+      z-index 1000
+      display flex
+      height 50px
+
       amp-social-share
         background-color transparent
         background-image none
 
       .share-item
+        width 33.333%
         display flex
         justify-content center
         align-items center

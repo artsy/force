@@ -1,3 +1,13 @@
-sd = require('sharify').data
 require('backbone').$ = $
-$ require('../apps/article/client/index.coffee').init
+sd = require('sharify').data
+
+layout = sd.ARTICLE?.layout
+
+$ ->
+  if location.pathname.match('article')
+    if layout is 'classic'
+      { init } = require('../apps/article/client/classic.js')
+      init()
+    else
+      { init } = require('../apps/article/client/article.js')
+      init()

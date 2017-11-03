@@ -1,7 +1,7 @@
-import articleBody from 'desktop/apps/article2/queries/articleBody'
-import sectionFragments from 'desktop/apps/article2/queries/sectionFragments'
-import relatedArticles from 'desktop/apps/article2/queries/relatedArticles'
-import { displayFragment, display } from 'desktop/apps/article2/queries/display'
+import articleBody from 'desktop/apps/article/queries/articleBody'
+import sectionFragments from 'desktop/apps/article/queries/sectionFragments'
+import relatedArticles from 'desktop/apps/article/queries/relatedArticles'
+import { displayFragment, display } from 'desktop/apps/article/queries/display'
 
 export default ({ offset, limit, channel, omit }) => {
   return `

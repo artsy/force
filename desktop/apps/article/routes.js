@@ -1,9 +1,9 @@
 import * as _ from 'underscore'
-import App from 'desktop/apps/article2/components/App'
-import ArticleQuery from 'desktop/apps/article2/queries/article'
+import App from 'desktop/apps/article/components/App'
+import ArticleQuery from 'desktop/apps/article/queries/article'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
-import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article2/queries/superArticle'
+import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article/queries/superArticle'
 import positronql from 'desktop/lib/positronql.coffee'
 import embed from 'particle'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
@@ -82,7 +82,7 @@ export async function index (req, res, next) {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'article2',
+        assetPackage: 'article',
         bodyClass: getBodyClass(article),
         crop,
         markdown
@@ -149,7 +149,7 @@ export function amp (req, res, next) {
     error: res.backboneError,
     success: (data) => {
       if (req.params.slug !== data.article.get('slug')) {
-        return res.redirect(`/article2/${data.article.get('slug')}/amp`)
+        return res.redirect(`/article/${data.article.get('slug')}/amp`)
       }
 
       if (!data.article.hasAMP()) {
@@ -221,3 +221,6 @@ export const editorialSignup = (req, res, next) => {
     }
   })
 }
+
+export const redirectPost = (req, res, next) =>
+  res.redirect(301, req.url.replace('post', 'article'))

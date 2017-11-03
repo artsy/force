@@ -48,6 +48,9 @@ export default `
     id
     bio
   }
+  contributing_authors {
+    name
+  }
   vertical {
     name
     id
