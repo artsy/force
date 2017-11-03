@@ -2,7 +2,7 @@
 
 import $ from 'jquery'
 import { data as sd } from 'sharify'
-import { auctionQuery, partnerQuery } from 'desktop/apps/article2/queries/promotedContent'
+import { auctionQuery, partnerQuery } from 'desktop/apps/article/queries/promotedContent'
 import metaphysics from 'lib/metaphysics.coffee'
 import promotedTemplate from '../templates/promoted_content.jade'
 import Article from 'desktop/models/article.coffee'
