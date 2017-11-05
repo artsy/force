@@ -12,7 +12,9 @@ momentTimezone = require 'moment-timezone'
 
 describe "Article", ->
   beforeEach ->
-    Article.__set__ 'sd', { EOY_2016_ARTICLE: '1234', ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993' }
+    Article.__set__ 'sd', {EOY_2016_ARTICLE: '1234'}
+    Article.__set__ 'ARTSY_EDITORIAL_CHANNEL', '5759e3efb5989e6f98f77993'
+    Article.__set__
     sinon.stub Backbone, 'sync'
       .returns Q.defer()
     @article = new Article
@@ -174,28 +176,6 @@ describe "Article", ->
       @article.set 'lead_paragraph', '<p>Existy</p>'
       @article.strip('lead_paragraph').should.equal 'Existy'
 
-  describe '#prepForInstant', ->
-
-    it 'returns the article with empty tags removed', ->
-      @article.set 'sections', [
-        { type: 'text', body: '<p>First Paragraph</p><p></p>' },
-        { type: 'text', body: '<p>Second Paragraph</p><br>'}
-      ]
-      @article.prepForInstant()
-      @article.get('sections')[0].body.should.equal '<p>First Paragraph</p>'
-      @article.get('sections')[1].body.should.equal '<p>Second Paragraph</p>'
-
-    it 'returns the article with captions p tags replaced by h1', ->
-      @article.set 'sections', [
-        { type: 'image', caption: '<p>First Paragraph</p>' },
-        { type: 'image_set', images: [
-          { type: 'image', caption: '<p>A place for credit</p>' }
-        ]}
-      ]
-      @article.prepForInstant()
-      @article.get('sections')[0].caption.should.equal '<h1>First Paragraph</h1>'
-      @article.get('sections')[1].images[0].caption.should.equal '<h1>A place for credit</h1>'
-
   describe 'byline', ->
 
     it 'returns the author when there are no contributing authors', ->
@@ -253,23 +233,26 @@ describe "Article", ->
   describe 'getParselySection', ->
 
     it 'returns Editorial', ->
-      @article.set 'channel', new Backbone.Model name: 'Artsy Editorial'
+      @article.set
+        channel_id: '5759e3efb5989e6f98f77993'
       @article.getParselySection().should.equal 'Editorial'
 
     it 'returns channel name', ->
-      @article.set 'channel', new Backbone.Model name: 'Life at Artsy'
+      @article.set
+        channel: new Backbone.Model name: 'Life at Artsy'
+        channel_id: '123'
       @article.getParselySection().should.equal 'Life at Artsy'
 
-    it 'returns Section', ->
-      @article.set 'section', new Backbone.Model title: '56th Venice Biennale'
-      @article.getParselySection().should.equal '56th Venice Biennale'
-
     it 'returns Partner', ->
-      @article.set 'partner', new Backbone.Model
+      @article.set
+        partner_channel_id: '123'
+        channel_id: null
       @article.getParselySection().should.equal 'Partner'
 
     it 'returns Other', ->
-      @article.clear()
+      @article.set
+        partner_channel_id: null
+        channel_id: null
       @article.getParselySection().should.equal 'Other'
 
   describe 'isEOYSubArticle', ->

@@ -138,7 +138,10 @@ describe 'ArticlesAdapter', ->
       @view.el.html().should.not.containEql 'articles-grid__more-button'
 
     it 'renders the json-ld', ->
-      Backbone.sync.args[0][2].success fixtures.article
+      article = _.extend {}, fixtures.article,
+        channel_id: null
+        partner_channel_id: '123'        
+      Backbone.sync.args[0][2].success article
       html = @view.el.html()
       html.should.containEql 'json-ld'
-      html.should.containEql 'Other'
+      html.should.containEql 'Partner'
