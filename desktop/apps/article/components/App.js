@@ -37,7 +37,6 @@ export default class App extends React.Component {
 
   renderArticle = () => {
     const { article, isMobile, isSuper, subscribed } = this.props
-
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
     const headerHeight = `calc(100vh - ${navHeight})`
