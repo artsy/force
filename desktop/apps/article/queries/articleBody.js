@@ -10,6 +10,8 @@ export default `
   thumbnail_title
   social_image
   published_at
+  tags
+  tracking_tags
   slug
   layout
   featured

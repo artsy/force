@@ -1,7 +1,7 @@
 import * as fixtures from 'desktop/test/helpers/fixtures.coffee'
-import sinon from 'sinon'
-import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article/routes'
 import * as _ from 'underscore'
+import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article/routes'
+import sinon from 'sinon'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
 
@@ -55,6 +55,27 @@ describe('Article Routes', () => {
         .then(() => {
           renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
           renderLayout.args[0][0].locals.assetPackage.should.equal('article')
+          done()
+        })
+    })
+
+    it('sets the correct jsonld', (done) => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123'
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      index(req, res, next)
+        .then(() => {
+          renderLayout.args[0][0].data.jsonLD.should.containEql('Top Ten Booths at miart 2014')
+          renderLayout.args[0][0].data.jsonLD.should.containEql('Fair Coverage')
           done()
         })
     })
@@ -202,6 +223,22 @@ describe('Article Routes', () => {
         classic(req, res, next)
         res.render.args[0][1].article.get('slug').should.equal('foobar')
       })
+
+      it('sets the correct jsonld', () => {
+        const data = {
+          article: new Article(_.extend({}, fixtures.article, {
+            slug: 'foobar',
+            sections: [],
+            featured: true,
+            published: true,
+            channel_id: '456'
+          }))
+        }
+        Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+        classic(req, res, next)
+        res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
+        res.locals.jsonLD.should.containEql('Fair Coverage')
+      })
     })
 
     describe('#amp', () => {
@@ -288,6 +325,31 @@ describe('Article Routes', () => {
         RoutesRewireApi.__Rewire__('Article', Article)
         amp(req, res, next)
         res.redirect.args[0][0].should.equal('/article/zoobar/amp')
+        done()
+      })
+
+      it('sets the correct jsonld', (done) => {
+        const data = {
+          article: new Article(_.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [],
+            featured: true,
+            published: true
+          })),
+          channel: new Channel()
+        }
+        RoutesRewireApi.__Rewire__(
+          'positronql',
+          sinon.stub().returns(Promise.resolve(data))
+        )
+        Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+        RoutesRewireApi.__Rewire__('Article', Article)
+        amp(req, res, next)
+        res.locals.jsonLD.should.containEql('Magazine')
+        res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
+        res.locals.jsonLD.should.containEql('Artsy Editorial')
+        res.locals.jsonLD.should.containEql('"publisher":{"name":"Artsy","logo":{"url":"undefined/images/full_logo.png","height":103,"width":300}}')
         done()
       })
     })
