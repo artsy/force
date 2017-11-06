@@ -130,7 +130,7 @@ module.exports = class Article extends Backbone.Model
     crop @get(attr), args...
 
   date: (attr) ->
-    if @get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
+    if @get('channel_id') is ARTSY_EDITORIAL_CHANNEL
       momentTimezone(@get(attr)).tz('America/New_York')
     else
       moment(@get(attr)).local()
@@ -182,37 +182,6 @@ module.exports = class Article extends Backbone.Model
     not @get('is_super_article') and
     superArticle?.id is sd.EOY_2016_ARTICLE
 
-  prepForInstant: ->
-
-    replaceTagWith = (htmlStr, findTag, replaceTag ) ->
-      $ = cheerio.load(htmlStr)
-      $(findTag).each ->
-        $(this).replaceWith($('<' + replaceTag + '>' + $(this).html() + '</' + replaceTag + '>'))
-      $.html()
-
-    sections =  _.map @get('sections'), (section) ->
-      if section.type is 'text'
-        $ = cheerio.load(section.body)
-        $('br').remove()
-        $('*:empty').remove()
-        $('p').each ->
-          $(this).remove() if $(this).text().length is 0
-        section.body = $.html()
-        section.body = replaceTagWith(section.body, 'h3', 'h2')
-        section
-      else if section.type is 'image'
-        section.caption = replaceTagWith(section.caption, 'p', 'h1') if section.caption
-        section
-      else if section.type in ['image_set', 'image_collection']
-        section.images = _.map section.images, (image) ->
-          if image.type is 'image'
-            image.caption = replaceTagWith(image.caption, 'p', 'h1') if image.caption
-          image
-        section
-      else
-        section
-    @set 'sections', sections
-
   prepForAMP: ->
     sections =  _.map @get('sections'), (section) ->
       if section.type is 'text'
@@ -254,14 +223,11 @@ module.exports = class Article extends Backbone.Model
           superSubArticles.add article
 
   getParselySection: ->
-    if (name = @get('channel')?.get('name'))
-      if name is 'Artsy Editorial'
-        'Editorial'
-      else
-        name
-    else if @get('section')
-      @get('section').get('title')
-    else if @get('partner')
+    if @get('channel_id') is ARTSY_EDITORIAL_CHANNEL
+      'Editorial'
+    else if @get('channel_id')
+      @get('channel')?.get('name')
+    else if @get('partner_channel_id')
       'Partner'
     else
       'Other'
