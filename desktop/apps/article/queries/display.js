@@ -14,6 +14,7 @@ export const displayFragment = `
     assets {
       url
     }
+    cover_image_url: cover_img_url
     body
     disclaimer
     headline
