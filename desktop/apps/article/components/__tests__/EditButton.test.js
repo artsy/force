@@ -23,7 +23,7 @@ describe('<EditButton />', () => {
     const rendered = mount(<EditButton slug='artsy-editorial-slug' channelId='123' />)
     await promise
     const html = rendered.html()
-    html.should.containEql('/articles/artsy-editorial-slug/edit2')
+    html.should.containEql('/articles/artsy-editorial-slug/edit')
     html.should.containEql('icon-with-black-circle')
   })
 
