@@ -46,7 +46,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
     error: next
     success: (curation) =>
       res.locals.sd.CURATION = curation.toJSON()
-      res.locals.sd.VIDEO_INDEX = req.params.slug
+      res.locals.sd.VIDEO_INDEX = setGucciVideoIndex(req.params.slug)
       res.render 'components/gucci/templates/index',
         curation: curation
 
@@ -69,7 +69,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles'), cache: true) )
       Q.all(promises)
       .then =>
-        videoIndex = setVideoIndex(curation, req.params.slug)
+        videoIndex = setVeniceVideoIndex(curation, req.params.slug)
         if isNaN videoIndex
           return res.redirect 301, '/venice-biennale/toward-venice'
         res.locals.sd.CURATION = curation.toJSON()
@@ -115,10 +115,16 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   proxy.web req, res, target: target, (err) ->
     res.redirect 301, '/articles' if err
 
-setVideoIndex = (curation, slug) ->
+setVeniceVideoIndex = (curation, slug) ->
   for section, i in curation.get 'sections'
     if section.slug is slug
       return i
+
+setGucciVideoIndex = (slug) ->
+  switch slug
+    when 'present' then 1
+    when 'future' then 2
+    else 0
 
 subscribedToEditorial = (email) ->
   Q.Promise (resolve, reject) =>
