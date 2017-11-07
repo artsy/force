@@ -4,6 +4,8 @@ import InfiniteScrollArticle from './InfiniteScrollArticle'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
+import get from 'lodash.get'
+import updeep from 'updeep'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { data as sd } from 'sharify'
@@ -36,11 +38,28 @@ export default class App extends React.Component {
   }
 
   renderArticle = () => {
-    const { article, isMobile, isSuper, subscribed } = this.props
-
+    let { article } = this.props
+    const { isMobile, isSuper, subscribed } = this.props
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
     const headerHeight = `calc(100vh - ${navHeight})`
+
+    /**
+     * FIXME:
+     * Patch missing canvas cover images with display cover images. Needed
+     * until support is added in Positron.
+     */
+    const cover_image_url = get(article, 'display.panel.cover_image_url', false)
+
+    if (cover_image_url) {
+      article = updeep({
+        display: {
+          canvas: {
+            cover_image_url
+          }
+        }
+      }, article)
+    }
 
     if (!isSuper) {
       const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
