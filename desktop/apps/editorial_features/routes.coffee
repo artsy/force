@@ -39,6 +39,16 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         superSubArticles: @superSubArticles,
         markdown: markdown
 
+@gucci = (req, res, next) ->
+  @curation = new Curation(id: sd.EF_GUCCI)
+  @curation.fetch
+    cache: true
+    error: next
+    success: (curation) =>
+      res.locals.sd.CURATION = curation.toJSON()
+      res.render 'components/gucci/templates/index',
+        curation: curation
+
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
   @veniceSubArticles = new Articles

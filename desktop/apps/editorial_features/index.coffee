@@ -10,6 +10,7 @@ app.locals.crop = crop
 app.locals.markdown = markdown
 
 app.get '/2016-year-in-art', routes.eoy
+app.get '/gender-equality', routes.gucci
 app.get '/venice-biennale', (_, res) -> res.redirect '/venice-biennale/toward-venice'
 app.post '/venice-biennale/sms', routes.sendSMS
 app.get '/venice-biennale/:slug', routes.venice
