@@ -49,7 +49,7 @@ module.exports =
     @isEligible(fair) and @isNotOver(fair)
 
   isEligible: (fair) ->
-    fair.is_published and fair.profile?.is_published
+    fair.is_published and fair.profile?.is_published and fair.profile?.icon?.url
 
   isNotOver: (fair) ->
     Date.parse(fair.end_at) > new Date
