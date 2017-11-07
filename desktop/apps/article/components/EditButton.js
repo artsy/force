@@ -37,7 +37,7 @@ export default class EditButton extends React.Component {
       return false
     } else {
       return (
-        <StyledEditButton target='_blank' href={`${sd.POSITRON_URL}/articles/${this.props.slug}/edit2`}>
+        <StyledEditButton target='_blank' href={`${sd.POSITRON_URL}/articles/${this.props.slug}/edit`}>
           <i className='icon-with-black-circle icon-edit' />
         </StyledEditButton>
       )
