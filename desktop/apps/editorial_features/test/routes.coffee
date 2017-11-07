@@ -47,42 +47,6 @@ describe 'EOY route', ->
       @res.render.args[0][1].superSubArticles.length.should.equal 2
       done()
 
-describe 'Gucci route', ->
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    Backbone.sync
-      .onCall 0
-      .yieldsTo 'success', { name: 'Artists For Gender Equality', sections: [{title: 'I. Present'}]}
-    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
-    @next = sinon.stub()
-    routes.__set__ 'sd', {EF_GUCCI: '123'}
-
-  afterEach (done) ->
-    Backbone.sync.restore()
-    done()
-
-  it 'sets a curation', (done) ->
-    @req = { params: { slug: 'past' } }
-    routes.gucci(@req, @res, @next)
-    _.defer => _.defer =>
-      @res.render.args[0][0].should.equal 'components/gucci/templates/index'
-      @res.render.args[0][1].curation.get('name').should.eql 'Artists For Gender Equality'
-      done()
-
-  it 'defaults to the first video', (done) ->
-    @req = { params: { slug: 'blah' } }
-    routes.gucci(@req, @res, @next)
-    _.defer => _.defer =>
-      @res.locals.sd.VIDEO_INDEX.should.eql 0
-      done()
-
-  it 'Sets a video index based on slug', (done) ->
-    @req = { params: { slug: 'future' } }
-    routes.gucci(@req, @res, @next)
-    _.defer => _.defer =>
-      @res.locals.sd.VIDEO_INDEX.should.eql 2
-      done()
-
 describe 'Venice route', ->
 
   beforeEach ->
