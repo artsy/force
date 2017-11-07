@@ -46,6 +46,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
     error: next
     success: (curation) =>
       res.locals.sd.CURATION = curation.toJSON()
+      res.locals.sd.VIDEO_INDEX = req.params.slug
       res.render 'components/gucci/templates/index',
         curation: curation
 
