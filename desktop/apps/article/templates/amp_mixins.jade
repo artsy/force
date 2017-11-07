@@ -116,7 +116,7 @@ mixin amp_head
   meta(charset='utf-8')
   title= article.get('search_title') || article.get('thumbnail_title')
   link(rel='canonical', href=article.fullHref())
-  link(type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
+  link(type='text/css' rel='stylesheet' href='#{sd.WEBFONT_URL}/force-webfonts.css?a=b')
   meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
   script(type='application/ld+json')
     != [jsonLD]
