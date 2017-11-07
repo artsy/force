@@ -113,6 +113,7 @@
     "react-router": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "react-scrollspy": "^3.3.3",
+    "react-styled-flexboxgrid": "^2.1.1",
     "react-waypoint": "^7.1.0",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
