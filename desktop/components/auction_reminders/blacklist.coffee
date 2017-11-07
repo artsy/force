@@ -23,6 +23,7 @@ module.exports =
     '^/2016-year-in-art'
     '^/artist/.*'
     '^/venice-biennale.*'
+    '^/gender-equality.*'
     '^/gallery-partnerships.*'
     '^/article/.*'
     '^/artsy-in-miami'
