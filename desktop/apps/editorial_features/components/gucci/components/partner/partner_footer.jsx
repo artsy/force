@@ -8,12 +8,12 @@ export const PartnerFooter = (props) => {
   const { logo, url } = props
 
   return (
-    <div className='partner-footer'>
+    <PartnerFooterContainer className='partner-footer'>
       <Title>Presented In Partnership With</Title>
       <a href={url} target='_blank'>
         <img src={logo} />
       </a>
-    </div>
+    </PartnerFooterContainer>
   )
 }
 
@@ -21,6 +21,18 @@ PartnerFooter.propTypes = {
   logo: PropTypes.string,
   url: PropTypes.string
 }
+
+const PartnerFooterContainer = styled.div`
+  img {
+    max-width: 220px;
+    padding: 20px 0;
+  }
+  ${pMedia.sm`
+    img {
+      max-width: 195px;
+    }
+  `}
+`
 
 const Title = styled.div`
   ${Fonts.unica('s16', 'medium')}

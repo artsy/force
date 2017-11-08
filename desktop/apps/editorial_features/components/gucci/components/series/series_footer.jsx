@@ -5,11 +5,11 @@ import { Col, Row } from 'react-styled-flexboxgrid'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 import { Text } from '@artsy/reaction-force/dist/Components/Publishing'
-import { PartnerFooter } from '../partner_footer.jsx'
+import { PartnerFooter } from '../partner/partner_footer.jsx'
 
 export const SeriesFooter = (props) => {
   const { curation } = props
-  const logoSrc = curation.partner_logo_footer || curation.partner_logo_header
+  const logoSrc = curation.partner_logo_footer || curation.partner_logo_primary
 
   return (
     <FooterContainer>

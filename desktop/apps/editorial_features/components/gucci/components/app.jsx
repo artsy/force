@@ -8,12 +8,12 @@ import { Section } from './section/section.jsx'
 export default class App extends Component {
   render () {
     const { curation } = this.props
-    const { sections } = curation
+
     return (
         <div className='gucci'>
           <SeriesHeader curation={curation} />
           <GucciContainer>
-            {sections.map((section, index) =>
+            {curation.sections.map((section, index) =>
               <Section section={section} curation={curation} />
             )}
             <SeriesFooter curation={curation} />

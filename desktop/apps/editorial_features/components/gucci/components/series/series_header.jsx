@@ -3,19 +3,21 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
+import { PartnerHeader } from '../partner/partner_header.jsx'
 
 export const SeriesHeader = (props) => {
   const { curation } = props
 
   return (
     <HeaderContainer>
-      <div className='menu-right'>
-        <a href='/'>Artsy +</a>
-      </div>
+      <PartnerHeader
+        url={curation.partner_link_url}
+        logo={curation.partner_logo_primary}
+      />
       <div className='title'>
         {curation.name}
       </div>
-      <div className='menu-left'>
+      <div className='menu'>
         <a href='/articles'>
           Back to Editorial
         </a>
@@ -29,12 +31,14 @@ SeriesHeader.propTypes = {
 }
 
 const HeaderContainer = styled.div`
+  width: 100%;
+  max-width: 1240px;
+  padding: 15px 20px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  padding: 15px 20px;
-  max-width: 1240px;
-  margin: 0 auto;
-  .menu-right {
+  align-items: center;
+  .partner-header {
     flex: 1;
   }
   .title {
@@ -42,14 +46,16 @@ const HeaderContainer = styled.div`
     text-align: center;
     font-size: 23px;
     text-transform: uppercase;
+    height: min-content;
   }
-  .menu-left {
+  .menu {
     flex: 1;
     text-align: right;
     a {
       ${Fonts.unica('s16', 'medium')}
       font-weight: 600;
       text-decoration: none;
+      border-bottom: 2px solid;
     }
   }
   ${pMedia.sm`
