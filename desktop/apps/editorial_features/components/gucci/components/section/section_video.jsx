@@ -18,19 +18,19 @@ export const SectionVideo = (props) => {
 
 function renderVideo (section) {
   const videoSection = {
-    url: section.video_url || 'https://youtu.be/Bv_5Zv5c-Ts',
+    url: section.video_url,
     cover_image_url: section.cover_image_url
   }
 
-  if (section.published) {
+  if (section.published && videoSection.url) {
     return (
       <Video section={videoSection} />
     )
   } else {
     return (
-      <VideoPreview backgroundSrc={videoSection.cover_image_url}>
+      <VideoPreview backgroundSrc={videoSection.cover_image_url || ''}>
         <ReleaseDate>
-          Available {moment(section.release_date).format('MMM. D')}
+          Available {moment(section.release_date).format('MMM. D') || 'Soon'}
         </ReleaseDate>
       </VideoPreview>
     )
