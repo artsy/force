@@ -53,6 +53,7 @@ const FooterContainer = styled.div`
     }
   }
   ${pMedia.sm`
+    padding: 0 20px;
     .col--first .partner-footer {
       display: none;
     }

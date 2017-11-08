@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
+import { SeriesHeader } from './series_header.jsx'
 import { SeriesFooter } from './series_footer.jsx'
 import { SectionText } from './section_text.jsx'
 
@@ -10,6 +11,7 @@ export default class App extends Component {
     const { sections } = curation
     return (
         <div className='gucci'>
+          <SeriesHeader curation={curation} />
           <GucciContainer>
             {sections.map((section, index) =>
               <SectionText section={section} curation={curation} />

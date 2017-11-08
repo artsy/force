@@ -53,6 +53,9 @@ const SectionContainer = styled.div`
     .col--first {
       margin-bottom: 40px;
     } 
+    .section-text {
+      padding: 0 20px;
+    }
   `}
 `
 const Title = styled.div`
