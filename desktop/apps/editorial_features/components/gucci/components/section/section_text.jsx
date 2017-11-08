@@ -5,18 +5,13 @@ import { Col, Row } from 'react-styled-flexboxgrid'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 import { Share } from '@artsy/reaction-force/dist/Components/Publishing/Byline/Share'
-import { Text, Video } from '@artsy/reaction-force/dist/Components/Publishing'
+import { Text } from '@artsy/reaction-force/dist/Components/Publishing'
 
 export const SectionText = (props) => {
   const { section, curation } = props
-  const videoSection = {
-    url: 'https://youtu.be/Bv_5Zv5c-Ts',
-    cover_image_url: section.cover_image_url
-  }
 
   return (
     <SectionContainer>
-      <Video section={videoSection} />
       <Row className='section-text'>
         <Col sm={4} className='col col--first'>
           <div>
@@ -44,20 +39,13 @@ SectionText.propTypes = {
 }
 
 const SectionContainer = styled.div`
-  margin-bottom: 180px;
-  .section-text {
-    justify-content: space-between;
-  }
-  ${pMedia.sm`
-    margin-bottom: 140px;
-    .col--first {
-      margin-bottom: 40px;
-    } 
-    .section-text {
-      padding: 0 20px;
+  ${pMedia.md`  
+    .article__text-section {
+      min-width: 100%;
     }
   `}
 `
+
 const Title = styled.div`
   ${Fonts.unica('s16', 'medium')}
   line-height: 1.85em;

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
-import { SeriesHeader } from './series_header.jsx'
-import { SeriesFooter } from './series_footer.jsx'
-import { SectionText } from './section_text.jsx'
+import { SeriesHeader } from './series/series_header.jsx'
+import { SeriesFooter } from './series/series_footer.jsx'
+import { Section } from './section/section.jsx'
 
 export default class App extends Component {
   render () {
@@ -14,7 +14,7 @@ export default class App extends Component {
           <SeriesHeader curation={curation} />
           <GucciContainer>
             {sections.map((section, index) =>
-              <SectionText section={section} curation={curation} />
+              <Section section={section} curation={curation} />
             )}
             <SeriesFooter curation={curation} />
           </GucciContainer>

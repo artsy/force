@@ -1,0 +1,74 @@
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled from 'styled-components'
+import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
+import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
+import { Video } from '@artsy/reaction-force/dist/Components/Publishing'
+
+export const SectionVideo = (props) => {
+  const { section, curation } = props
+
+  return (
+    <VideoContainer>
+      {renderVideo(section)}
+    </VideoContainer>
+  )
+}
+
+function renderVideo (section) {
+  const videoSection = {
+    url: section.video_url || 'https://youtu.be/Bv_5Zv5c-Ts',
+    cover_image_url: section.cover_image_url
+  }
+
+  if (section.published) {
+    return (
+      <Video section={videoSection} />
+    )
+  } else {
+    return (
+      <VideoPreview backgroundSrc={videoSection.cover_image_url}>
+        <ReleaseDate>
+          Available {moment(section.release_date).format('MMM. D')}
+        </ReleaseDate>
+      </VideoPreview>
+    )
+  }
+}
+
+SectionVideo.propTypes = {
+  section: PropTypes.object
+}
+
+const VideoContainer = styled.div`
+  margin-bottom: 50px;
+  ${pMedia.sm`
+    margin-bottom: 40px;  
+  `}
+`
+
+const VideoPreview = styled.div`
+  height: 59vw;
+  max-height: 668px;
+  position: relative;
+  background-image: ${props => 'url(' + props.backgroundSrc + ')'};
+  background-color: black;
+  background-position: 50%;
+  background-size: cover;
+`
+
+const ReleaseDate = styled.div`
+  ${Fonts.unica('s80', 'medium')}
+  color: white;
+  display: flex;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 15px 30px;
+  background: rgba(0,0,0,.3);
+  ${pMedia.sm`
+    ${Fonts.unica('s40', 'medium')}
+    padding: 10px 20px;
+  `}
+`
