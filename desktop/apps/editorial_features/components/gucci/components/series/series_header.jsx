@@ -1,85 +1,63 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
-import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { PartnerHeader } from '../partner/partner_header.jsx'
 import { SeriesNav } from './series_nav.jsx'
+import { Header } from '../nav/header.jsx'
 
-export class SeriesHeader extends Component {
-  static propTypes = {
-    activeSection: PropTypes.number,
-    curation: PropTypes.object,
-    onChangeSection: PropTypes.func
-  }
+export const SeriesHeader = (props) => {
+  const { curation, onChangeSection } = props
 
-  state = {
-    isOpen: true
-  }
+  return (
+    <SeriesHeaderContainer className='SeriesHeader'>
+      <Header curation={curation} />
+      <Title>
+        {curation.name}
+      </Title>
+      <SeriesNav
+        activeSection={null}
+        curation={curation}
+        onClick={onChangeSection}
+      />
+    </SeriesHeaderContainer>
+  )
+}
 
-  render () {
-    const { activeSection, curation, onChangeSection } = this.props
-
-    return (
-      <SeriesHeaderContainer className='SeriesHeader'>
-        <HeaderMain>
-          <PartnerHeader
-            url={curation.partner_link_url}
-            logo={curation.partner_logo_primary}
-          />
-          <div className='title'>
-            {curation.name}
-          </div>
-          <div className='menu'>
-            <a href='/articles'>
-              Back to Editorial
-            </a>
-          </div>
-        </HeaderMain>
-        { this.state.isOpen &&
-          <SeriesNav
-            activeSection={activeSection}
-            curation={curation}
-            onClick={onChangeSection}
-          />
-        }
-      </SeriesHeaderContainer>
-    )
-  }
+SeriesHeader.propTypes = {
+  curation: PropTypes.object,
+  onChangeSection: PropTypes.func
 }
 
 const SeriesHeaderContainer = styled.div`
   width: 100%;
   padding: 15px 20px;
-`
-
-const HeaderMain = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .PartnerHeader {
-    flex: 1;
-  }
-  .title {
-    flex: 2;
-    text-align: center;
-    font-size: 23px;
-    text-transform: uppercase;
-    height: min-content;
-  }
-  .menu {
-    flex: 1;
-    text-align: right;
-    a {
-      ${Fonts.unica('s16', 'medium')}
-      font-weight: 600;
-      text-decoration: none;
-      border-bottom: 2px solid;
-    }
-  }
-  ${pMedia.sm`
+  z-index: 100;
+  background: white;
+  .Header {
     .title {
       display: none;
     }
+  }
+  .SeriesNav__item {
+    color: black;
+  }
+  ${pMedia.sm`
+    .SeriesNav {
+      margin-top: 40px;
+    }
+  `}
+`
+const Title = styled.div`
+  font-size: 120px;
+  line-height: 111px;
+  letter-spacing: -3.5px;
+  text-transform: uppercase;
+  margin: 80px auto 40px auto;
+  text-align: center;
+  max-width: 1060px;
+  ${pMedia.lg`
+    font-size: 50px;
+    line-height: 0.9em;
+    letter-spacing: -1.5px;
   `}
 `

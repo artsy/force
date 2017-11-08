@@ -12,6 +12,7 @@ export const SeriesNav = (props) => {
     <SeriesNavContainer className='SeriesNav'>
       {curation.sections.map((section, index) =>
         <Title
+          className='SeriesNav__item'
           key={'nav-' + index}
           onClick={() => onClick(index)}
           isActive={activeSection === index}>
