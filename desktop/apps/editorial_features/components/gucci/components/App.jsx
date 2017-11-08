@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { SeriesHeader } from './series/series_header.jsx'
 import { SeriesFooter } from './series/series_footer.jsx'
+import { SeriesNav } from './series/series_nav.jsx'
 import { Section } from './section/section.jsx'
 
 export default class App extends Component {
@@ -12,6 +13,7 @@ export default class App extends Component {
     return (
         <div className='gucci'>
           <SeriesHeader curation={curation} />
+          <SeriesNav curation={curation} />
           <GucciContainer>
             {curation.sections.map((section, index) =>
               <Section section={section} curation={curation} />
