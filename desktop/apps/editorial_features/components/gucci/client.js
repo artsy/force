@@ -6,8 +6,8 @@ import { data as sd } from 'sharify'
 export default () => {
   ReactDOM.render(
     <App
+      activeSection={sd.VIDEO_INDEX}
       curation={sd.CURATION}
-      index={sd.VIDEO_INDEX}
     />,
     document.getElementById('react-root')
   )

@@ -4,37 +4,48 @@ import React from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 import { PartnerHeader } from '../partner/partner_header.jsx'
+import { SeriesNav } from './series_nav.jsx'
 
 export const SeriesHeader = (props) => {
-  const { curation } = props
+  const { activeSection, curation, onChangeSection } = props
 
   return (
     <SeriesHeaderContainer className='SeriesHeader'>
-      <PartnerHeader
-        url={curation.partner_link_url}
-        logo={curation.partner_logo_primary}
+      <HeaderMain>
+        <PartnerHeader
+          url={curation.partner_link_url}
+          logo={curation.partner_logo_primary}
+        />
+        <div className='title'>
+          {curation.name}
+        </div>
+        <div className='menu'>
+          <a href='/articles'>
+            Back to Editorial
+          </a>
+        </div>
+      </HeaderMain>
+      <SeriesNav
+        activeSection={activeSection}
+        curation={curation}
+        onClick={onChangeSection}
       />
-      <div className='title'>
-        {curation.name}
-      </div>
-      <div className='menu'>
-        <a href='/articles'>
-          Back to Editorial
-        </a>
-      </div>
     </SeriesHeaderContainer>
   )
 }
 
 SeriesHeader.propTypes = {
-  curation: PropTypes.object
+  activeSection: PropTypes.number,
+  curation: PropTypes.object,
+  onChangeSection: PropTypes.func
 }
 
 const SeriesHeaderContainer = styled.div`
   width: 100%;
-  max-width: 1240px;
   padding: 15px 20px;
-  margin: 0 auto;
+`
+
+const HeaderMain = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
