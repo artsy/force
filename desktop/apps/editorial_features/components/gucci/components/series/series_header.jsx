@@ -1,43 +1,51 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 import { PartnerHeader } from '../partner/partner_header.jsx'
 import { SeriesNav } from './series_nav.jsx'
 
-export const SeriesHeader = (props) => {
-  const { activeSection, curation, onChangeSection } = props
+export class SeriesHeader extends Component {
+  static propTypes = {
+    activeSection: PropTypes.number,
+    curation: PropTypes.object,
+    onChangeSection: PropTypes.func
+  }
 
-  return (
-    <SeriesHeaderContainer className='SeriesHeader'>
-      <HeaderMain>
-        <PartnerHeader
-          url={curation.partner_link_url}
-          logo={curation.partner_logo_primary}
-        />
-        <div className='title'>
-          {curation.name}
-        </div>
-        <div className='menu'>
-          <a href='/articles'>
-            Back to Editorial
-          </a>
-        </div>
-      </HeaderMain>
-      <SeriesNav
-        activeSection={activeSection}
-        curation={curation}
-        onClick={onChangeSection}
-      />
-    </SeriesHeaderContainer>
-  )
-}
+  state = {
+    isOpen: true
+  }
 
-SeriesHeader.propTypes = {
-  activeSection: PropTypes.number,
-  curation: PropTypes.object,
-  onChangeSection: PropTypes.func
+  render () {
+    const { activeSection, curation, onChangeSection } = this.props
+
+    return (
+      <SeriesHeaderContainer className='SeriesHeader'>
+        <HeaderMain>
+          <PartnerHeader
+            url={curation.partner_link_url}
+            logo={curation.partner_logo_primary}
+          />
+          <div className='title'>
+            {curation.name}
+          </div>
+          <div className='menu'>
+            <a href='/articles'>
+              Back to Editorial
+            </a>
+          </div>
+        </HeaderMain>
+        { this.state.isOpen &&
+          <SeriesNav
+            activeSection={activeSection}
+            curation={curation}
+            onClick={onChangeSection}
+          />
+        }
+      </SeriesHeaderContainer>
+    )
+  }
 }
 
 const SeriesHeaderContainer = styled.div`
