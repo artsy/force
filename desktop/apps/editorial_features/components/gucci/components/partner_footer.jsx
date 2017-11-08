@@ -1,31 +1,31 @@
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 
 export const PartnerFooter = (props) => {
-  const {
-    partner_link_url,
-    partner_logo_footer,
-    partner_logo_header
-  } = props.curation
-
-  const logoSrc = partner_logo_footer || partner_logo_header
+  const { logo, url } = props
 
   return (
-    <div>
+    <div className='partner-footer'>
       <Title>Presented In Partnership With</Title>
-      <a href={partner_link_url} target='_blank'>
-        <img src={logoSrc} />
+      <a href={url} target='_blank'>
+        <img src={logo} />
       </a>
     </div>
   )
 }
 
 PartnerFooter.propTypes = {
-  curation: PropTypes.object
+  logo: PropTypes.string,
+  url: PropTypes.string
 }
 
 const Title = styled.div`
   ${Fonts.unica('s16', 'medium')}
+  font-weight: 600;
+  ${pMedia.sm`
+    ${Fonts.unica('s14', 'medium')}
+  `}
 `
