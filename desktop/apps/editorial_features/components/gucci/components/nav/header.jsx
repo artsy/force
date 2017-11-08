@@ -48,7 +48,7 @@ const HeaderMain = styled.div`
     text-align: center;
     font-size: 23px;
     text-transform: uppercase;
-    height: min-content;
+    height: 23px;
   }
   .menu {
     flex: 1;

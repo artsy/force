@@ -32,7 +32,11 @@ export default class App extends Component {
           />
           <GucciContainer>
             {curation.sections.map((section, index) =>
-              <Section section={section} curation={curation} />
+              <Section
+                key={'section-' + index}
+                section={section}
+                curation={curation}
+              />
             )}
             <SeriesFooter curation={curation} />
           </GucciContainer>
