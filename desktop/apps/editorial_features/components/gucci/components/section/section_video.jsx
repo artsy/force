@@ -46,6 +46,43 @@ const VideoContainer = styled.div`
   ${pMedia.sm`
     margin-bottom: 40px;  
   `}
+  .VideoCover {
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 15px 30px;
+  }
+  .PlayButton {
+    background: none;
+    ${Fonts.unica('s80', 'medium')}
+    width: auto;
+    height: auto;
+    &:after {
+      color: white;
+      content: 'Play';
+    }
+    &__PlayButtonCaret {
+      border-left: 45px solid white;
+      border-top: 35px solid transparent;
+      border-bottom: 35px solid transparent;
+      margin-right 20px;
+    }
+  }
+  ${pMedia.sm`
+    .PlayButton {
+      &:after {
+        ${Fonts.unica('s40', 'medium')}
+      }
+      &__PlayButtonCaret {
+        border-left: 30px solid white;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        margin-right 10px;
+      }
+    }
+    .VideoCover {
+      padding: 10px 20px;
+    }
+  `}
 `
 
 const VideoPreview = styled.div`
