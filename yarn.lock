@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.11.14":
-  version "0.11.14"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.11.14.tgz#7938f9eaf9959f0e58d2510608ab94ffadfbed65"
+"@artsy/reaction-force@^0.11.15":
+  version "0.11.15"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.11.15.tgz#3a3280e9bd65ca0906178688d1efc6ef501fa718"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -8101,6 +8101,12 @@ react-style-proptype@^3.0.0:
 react-styled-flexboxgrid@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-2.0.3.tgz#308a8bbc80b1737a65f4ccf35d02afe20932a2f2"
+  dependencies:
+    lodash.isinteger "^4.0.4"
+
+react-styled-flexboxgrid@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-2.1.1.tgz#3464201d27f36256f65bef1d2eb4188317d5a484"
   dependencies:
     lodash.isinteger "^4.0.4"
 
