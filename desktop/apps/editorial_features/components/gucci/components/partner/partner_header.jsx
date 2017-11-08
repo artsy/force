@@ -6,7 +6,7 @@ export const PartnerHeader = (props) => {
   const { logo, url } = props
 
   return (
-      <PartnerHeaderContainer className='partner-header'>
+      <PartnerHeaderContainer className='PartnerHeader'>
         <a href='/' className='icon-logotype' />
         <span className='divider' />
         <a href={url} target='_blank'>

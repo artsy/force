@@ -11,8 +11,8 @@ export const SectionText = (props) => {
   const { section, curation } = props
 
   return (
-    <SectionContainer>
-      <Row className='section-text'>
+    <SectionTextContainer>
+      <Row className='SectionText'>
         <Col sm={4} className='col col--first'>
           <div>
             <Title>Featuring</Title>
@@ -30,7 +30,7 @@ export const SectionText = (props) => {
           <Text html={section.about} />
         </Col>
       </Row>
-    </SectionContainer>
+    </SectionTextContainer>
   )
 }
 
@@ -38,7 +38,7 @@ SectionText.propTypes = {
   section: PropTypes.object
 }
 
-const SectionContainer = styled.div`
+const SectionTextContainer = styled.div`
   ${pMedia.md`  
     .article__text-section {
       min-width: 100%;

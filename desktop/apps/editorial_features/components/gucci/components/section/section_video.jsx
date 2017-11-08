@@ -10,9 +10,9 @@ export const SectionVideo = (props) => {
   const { section, curation } = props
 
   return (
-    <VideoContainer>
+    <SectionVideoContainer className='SectionVideo'>
       {renderVideo(section)}
-    </VideoContainer>
+    </SectionVideoContainer>
   )
 }
 
@@ -41,7 +41,7 @@ SectionVideo.propTypes = {
   section: PropTypes.object
 }
 
-const VideoContainer = styled.div`
+const SectionVideoContainer = styled.div`
   margin-bottom: 50px;
   ${pMedia.sm`
     margin-bottom: 40px;  

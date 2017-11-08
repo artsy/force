@@ -8,7 +8,7 @@ export const PartnerFooter = (props) => {
   const { logo, url } = props
 
   return (
-    <PartnerFooterContainer className='partner-footer'>
+    <PartnerFooterContainer className='PartnerFooter'>
       <Title>Presented In Partnership With</Title>
       <a href={url} target='_blank'>
         <img src={logo} />

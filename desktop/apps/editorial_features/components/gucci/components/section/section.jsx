@@ -22,7 +22,7 @@ Section.propTypes = {
 
 const SectionContainer = styled.div`
   margin-bottom: 180px;
-  .section-text {
+  .SectionText {
     justify-content: space-between;
   }
   ${pMedia.sm`
@@ -30,7 +30,7 @@ const SectionContainer = styled.div`
     .col--first {
       margin-bottom: 40px;
     } 
-    .section-text {
+    .SectionText {
       padding: 0 20px;
     }
   `}

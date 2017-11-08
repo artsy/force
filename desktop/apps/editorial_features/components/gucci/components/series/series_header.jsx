@@ -9,7 +9,7 @@ export const SeriesHeader = (props) => {
   const { curation } = props
 
   return (
-    <HeaderContainer>
+    <SeriesHeaderContainer className='SeriesHeader'>
       <PartnerHeader
         url={curation.partner_link_url}
         logo={curation.partner_logo_primary}
@@ -22,7 +22,7 @@ export const SeriesHeader = (props) => {
           Back to Editorial
         </a>
       </div>
-    </HeaderContainer>
+    </SeriesHeaderContainer>
   )
 }
 
@@ -30,7 +30,7 @@ SeriesHeader.propTypes = {
   curation: PropTypes.object
 }
 
-const HeaderContainer = styled.div`
+const SeriesHeaderContainer = styled.div`
   width: 100%;
   max-width: 1240px;
   padding: 15px 20px;
@@ -38,7 +38,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .partner-header {
+  .PartnerHeader {
     flex: 1;
   }
   .title {

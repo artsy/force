@@ -12,8 +12,8 @@ export const SeriesFooter = (props) => {
   const logoSrc = curation.partner_logo_footer || curation.partner_logo_primary
 
   return (
-    <FooterContainer>
-      <Row className='series-footer'>
+    <SeriesFooterContainer>
+      <Row className='SeriesFooter'>
         <Col sm={4} className='col col--first'>
           <Title>About the Series</Title>
           <PartnerFooter
@@ -29,7 +29,7 @@ export const SeriesFooter = (props) => {
           />
         </Col>
       </Row>
-    </FooterContainer>
+    </SeriesFooterContainer>
   )
 }
 
@@ -37,9 +37,9 @@ SeriesFooter.propTypes = {
   curation: PropTypes.object
 }
 
-const FooterContainer = styled.div`
+const SeriesFooterContainer = styled.div`
   margin-bottom: 100px;
-  .series-footer {
+  .SeriesFooter {
     justify-content: space-between;
   }
   .col {
@@ -48,16 +48,16 @@ const FooterContainer = styled.div`
       flex-direction: column;
       justify-content: space-between;
     }
-    &--last .partner-footer {
+    &--last .PartnerFooter {
       display: none;
     }
   }
   ${pMedia.sm`
     padding: 0 20px;
-    .col--first .partner-footer {
+    .col--first .PartnerFooter {
       display: none;
     }
-    .col--last .partner-footer {
+    .col--last .PartnerFooter {
       display: block;
       margin-top: 80px;
     }
