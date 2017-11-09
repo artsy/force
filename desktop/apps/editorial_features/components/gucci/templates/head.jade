@@ -1,0 +1,33 @@
+if sd.SUB_PATH
+  - page = curation.get('sections')[sd.VIDEO_INDEX]
+else
+  - page = curation.toJSON()
+
+- url = sd.APP_URL + '/gender-equality' + sd.SUB_PATH
+
+title= page.title || page.name
+link( rel="canonical", href=url )
+//- TODO: Change to description
+meta(name="description" content=page.social_description)
+meta(name="keywords" content=page.keywords)
+
+meta( property="og:site_name" content='Artsy' )
+meta( property="og:url", content=url )
+meta( property="og:type", content="article" )
+meta( property="og:image", content=page.social_image)
+meta( property="og:title", content=page.social_title)
+meta( property="og:description", content=page.social_description)
+meta( property='article:publisher', content='https://www.facebook.com/artsy/')
+meta( name='twitter:site', content='@artsy' )
+meta( property='twitter:url', content=url )
+meta( property="twitter:card", content="summary_large_image" )
+meta( property="twitter:description", content=page.social_title + ' ' + url)
+meta( property='fb:app_id', content=sd.FACEBOOK_ID )
+
+meta( name="sailthru.title", content=page.email_title)
+meta( name="sailthru.image.full" content=crop(page.email_image, { width: 1200, height: 706 } ))
+meta( name="sailthru.image.thumb" content=crop(page.email_image, { width: 900, height: 530 } ))
+meta( name="sailthru.author" content=page.email_author)
+meta( name="sailthru.tags" content=page.email_tags)
+
+meta( name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' )
