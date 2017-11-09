@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import Waypoint from 'react-waypoint'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { SeriesHeader } from './series/series_header.jsx'
 import { SeriesFooter } from './series/series_footer.jsx'
@@ -16,8 +17,20 @@ export default class App extends Component {
     activeSection: this.props.activeSection
   }
 
+  // componentDidMount () {
+  //   // const videos = ReactDOM.findDOMNode(Section)
+  //   // debugger
+  // }
+
   onChangeSection = (index) => {
     this.setState({activeSection: index})
+  }
+
+  onEnterSection = (index, data) => {
+    if (this.state.activeSection !== index) {
+      console.log('entered waypoint', index)
+      this.onChangeSection(index)
+    }
   }
 
   render () {
@@ -32,11 +45,16 @@ export default class App extends Component {
           />
           <GucciContainer>
             {curation.sections.map((section, index) =>
-              <Section
-                key={'section-' + index}
-                section={section}
-                curation={curation}
-              />
+              <div>
+                <Waypoint
+                  onEnter={(waypointData => this.onEnterSection(index, waypointData))}
+                />
+                <Section
+                  key={'section-' + index}
+                  section={section}
+                  curation={curation}
+                />
+              </div>
             )}
             <SeriesFooter curation={curation} />
           </GucciContainer>

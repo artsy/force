@@ -1,21 +1,27 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
+import ReactDOM from 'react-dom'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { SectionVideo } from './section_video.jsx'
 import { SectionText } from './section_text.jsx'
 
-export const Section = (props) => {
-  const { section, curation } = props
+export class Section extends Component {
+  componentDidMount () {
+    const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+    console.log(this.props.section.title, rect)
+  }
 
-  return (
-    <SectionContainer>
-      <SectionVideo section={section} />
-      <SectionText section={section} />
-    </SectionContainer>
-  )
+  render () {
+    const { section, curation } = this.props
+    return (
+      <SectionContainer>
+        <SectionVideo section={section} />
+        <SectionText section={section} />
+      </SectionContainer>
+    )
+  }
 }
-
 Section.propTypes = {
   section: PropTypes.object
 }
