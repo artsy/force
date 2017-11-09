@@ -24,8 +24,8 @@ Section.propTypes = {
 }
 
 const SectionContainer = styled.div`
-  padding-top: 60px;
-  margin-bottom: 120px;
+  padding-top: 80px;
+  margin-bottom: 150px;
   .SectionText {
     justify-content: space-between;
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { PartnerHeader } from '../partner/partner_header.jsx'
+import { PartnerInline } from '../partner/partner_inline.jsx'
 
 export class Header extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export class Header extends Component {
 
     return (
       <HeaderMain className='Header'>
-        <PartnerHeader
+        <PartnerInline
           url={partner_url}
           logo={partner_logo}
         />
@@ -42,7 +42,7 @@ const HeaderMain = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .PartnerHeader {
+  .PartnerInline {
     flex: 1;
   }
   .title {

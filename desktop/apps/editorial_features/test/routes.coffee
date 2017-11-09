@@ -69,13 +69,6 @@ describe 'Gucci route', ->
       @res.render.args[0][1].curation.get('name').should.eql 'Artists For Gender Equality'
       done()
 
-  it 'defaults to the first video', (done) ->
-    @req = { params: { slug: 'blah' } }
-    routes.gucci(@req, @res, @next)
-    _.defer => _.defer =>
-      @res.locals.sd.VIDEO_INDEX.should.eql 0
-      done()
-
   it 'Sets a video index based on slug', (done) ->
     @req = { params: { slug: 'future' } }
     routes.gucci(@req, @res, @next)

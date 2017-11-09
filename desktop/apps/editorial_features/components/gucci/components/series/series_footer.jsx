@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Col, Row } from 'react-styled-flexboxgrid'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
+import { Col, Row } from '@artsy/reaction-force/dist/Components/Grid'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 import { Text } from '@artsy/reaction-force/dist/Components/Publishing'
-import { PartnerFooter } from '../partner/partner_footer.jsx'
+import { PartnerBlock } from '../partner/partner_block.jsx'
 
 export const SeriesFooter = (props) => {
   const { curation } = props
@@ -16,14 +16,14 @@ export const SeriesFooter = (props) => {
       <Row className='SeriesFooter'>
         <Col sm={4} className='col col--first'>
           <Title>About the Series</Title>
-          <PartnerFooter
+          <PartnerBlock
             logo={logoSrc}
             url={curation.partner_link_url}
           />
         </Col>
         <Col sm={7} className='col col--last'>
           <Text html={curation.about} />
-          <PartnerFooter
+          <PartnerBlock
             logo={logoSrc}
             url={curation.partner_link_url}
           />
@@ -42,22 +42,25 @@ const SeriesFooterContainer = styled.div`
   .SeriesFooter {
     justify-content: space-between;
   }
+  .PartnerBlock {
+    margin-bottom: 10px;
+  }
   .col {
     &--first {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    &--last .PartnerFooter {
+    &--last .PartnerBlock {
       display: none;
     }
   }
   ${pMedia.sm`
     padding: 0 20px;
-    .col--first .PartnerFooter {
+    .col--first .PartnerBlock {
       display: none;
     }
-    .col--last .PartnerFooter {
+    .col--last .PartnerBlock {
       display: block;
       margin-top: 80px;
     }

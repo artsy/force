@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Waypoint from 'react-waypoint'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { FixedHeader } from './nav/fixed_header.jsx'
 import { SeriesHeader } from './series/series_header.jsx'
@@ -22,8 +21,12 @@ export default class App extends Component {
   componentDidMount () {
     if (this.props.activeSection) {
       this.onChangeSection(this.props.activeSection)
-      this.setState({showHeader: true})
+      this.setState({ showHeader: true })
     }
+  }
+
+  inBody = (showHeader) => {
+    this.setState({ showHeader })
   }
 
   onChangeSection = (index) => {
@@ -48,13 +51,9 @@ export default class App extends Component {
           <SeriesHeader // relative position always at content top
             activeSection={activeSection}
             curation={curation}
+            inBody={this.inBody}
             onChangeSection={this.onChangeSection}
           />
-          <Waypoint
-            onEnter={() => this.setState({showHeader: false})}
-            onLeave={() => this.setState({showHeader: true})}
-          />
-
           <GucciBody>
             {curation.sections.map((section, index) =>
               <div id={section.slug} key={'section-' + index}>

@@ -5,35 +5,35 @@ import Colors from '@artsy/reaction-force/dist/Assets/Colors'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
 
-export const SeriesNav = (props) => {
-  const { activeSection, curation, onClick } = props
+export const SectionsNav = (props) => {
+  const { activeSection, sections, onClick } = props
 
   return (
-    <SeriesNavContainer className='SeriesNav'>
-      {curation.sections.map((section, index) =>
+    <SectionsNavContainer className='SectionsNav'>
+      {sections.map((section, index) =>
         <Title
-          className='SeriesNav__item'
+          className='SectionsNav__item'
           key={'nav-' + index}
           onClick={() => onClick(index)}
           isActive={activeSection === index}>
           {section.title}
         </Title>
       )}
-    </SeriesNavContainer>
+    </SectionsNavContainer>
   )
 }
 
-SeriesNav.propTypes = {
+SectionsNav.propTypes = {
   activeSection: PropTypes.number,
-  curation: PropTypes.object,
+  sections: PropTypes.array,
   onClick: PropTypes.func
 }
 
-const SeriesNavContainer = styled.div`
+const SectionsNavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   max-width 1240px;
-  margin: 60px auto 0 auto;
+  margin: 60px auto 50px auto;
   padding: 0 20px;
   ${pMedia.lg`
     padding: 0;

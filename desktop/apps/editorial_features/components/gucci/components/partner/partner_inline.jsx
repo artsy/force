@@ -2,26 +2,26 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export const PartnerHeader = (props) => {
+export const PartnerInline = (props) => {
   const { logo, url } = props
 
   return (
-      <PartnerHeaderContainer className='PartnerHeader'>
+      <PartnerInlineContainer className='PartnerInline'>
         <a href='/' className='icon-logotype' />
         <span className='divider' />
         <a href={url} target='_blank'>
           <img src={logo} />
         </a>
-      </PartnerHeaderContainer>
+      </PartnerInlineContainer>
   )
 }
 
-PartnerHeader.propTypes = {
+PartnerInline.propTypes = {
   logo: PropTypes.string,
   url: PropTypes.string
 }
 
-const PartnerHeaderContainer = styled.div`
+const PartnerInlineContainer = styled.div`
     display: flex;
     align-items: center;
     height: 32px;
