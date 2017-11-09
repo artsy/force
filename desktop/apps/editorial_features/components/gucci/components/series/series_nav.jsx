@@ -33,7 +33,7 @@ const SeriesNavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   max-width 1240px;
-  margin: 60px auto;
+  margin: 60px auto 0 auto;
   padding: 0 20px;
   ${pMedia.lg`
     padding: 0;

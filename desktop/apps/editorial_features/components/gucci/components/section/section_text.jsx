@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { data as sd } from 'sharify'
-import { slugify } from 'underscore.string'
 import { Col, Row } from 'react-styled-flexboxgrid'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
@@ -10,8 +9,7 @@ import { Share } from '@artsy/reaction-force/dist/Components/Publishing/Byline/S
 import { Text } from '@artsy/reaction-force/dist/Components/Publishing'
 
 export const SectionText = (props) => {
-  const { section, curation } = props
-  const slug = slugify(section.title.replace(/I/g, ''))
+  const { section } = props
 
   return (
     <SectionTextContainer>
@@ -24,7 +22,7 @@ export const SectionText = (props) => {
           <ShareContainer>
             <Title>Share</Title>
             <Share
-              url={`${sd.APP_URL}/gender-equality/${slug}`}
+              url={`${sd.APP_URL}/gender-equality/${section.slug}`}
               title={section.featuring} />
           </ShareContainer>
         </Col>

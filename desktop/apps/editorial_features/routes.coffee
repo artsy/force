@@ -122,9 +122,9 @@ setVeniceVideoIndex = (curation, slug) ->
 
 setGucciVideoIndex = (slug) ->
   switch slug
+    when 'past' then 0
     when 'present' then 1
     when 'future' then 2
-    else 0
 
 subscribedToEditorial = (email) ->
   Q.Promise (resolve, reject) =>

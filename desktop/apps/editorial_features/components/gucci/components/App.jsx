@@ -16,24 +16,20 @@ export default class App extends Component {
 
   state = {
     activeSection: this.props.activeSection,
-    sectionPositions: [0, 0, 0],
     showHeader: false
   }
 
-  setSectionPosition = (index, position) => {
-    const sectionPositions = this.state.sectionPositions
-    sectionPositions[index] = position
-    this.setState({ sectionPositions })
+  componentDidMount () {
+    if (this.props.activeSection) {
+      this.onChangeSection(this.props.activeSection)
+      this.setState({showHeader: true})
+    }
   }
 
   onChangeSection = (index) => {
+    const section = this.props.curation.sections[index]
     this.setState({activeSection: index})
-  }
-
-  onEnterSection = (index, data) => {
-    if (this.state.activeSection !== index) {
-      this.onChangeSection(index)
-    }
+    document.getElementById(section.slug).scrollIntoView()
   }
 
   render () {
@@ -58,28 +54,23 @@ export default class App extends Component {
             onLeave={() => this.setState({showHeader: true})}
           />
 
-          <GucciContainer>
+          <GucciBody>
             {curation.sections.map((section, index) =>
-              <div>
-                <Waypoint
-                  onEnter={(waypointData => this.onEnterSection(index, waypointData))}
-                />
+              <div id={section.slug} key={'section-' + index}>
                 <Section
-                  index={index}
-                  key={'section-' + index}
                   section={section}
-                  setSectionPosition={this.setSectionPosition}
+                  onScrollOver={() => this.setState({ activeSection: index })}
                 />
               </div>
             )}
             <SeriesFooter curation={curation} />
-          </GucciContainer>
+          </GucciBody>
         </div>
     )
   }
 }
 
-const GucciContainer = styled.div`
+const GucciBody = styled.div`
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
