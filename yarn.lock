@@ -8104,12 +8104,6 @@ react-styled-flexboxgrid@^2.0.0:
   dependencies:
     lodash.isinteger "^4.0.4"
 
-react-styled-flexboxgrid@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-2.1.1.tgz#3464201d27f36256f65bef1d2eb4188317d5a484"
-  dependencies:
-    lodash.isinteger "^4.0.4"
-
 react-test-renderer@^15.5.4:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.5.4.tgz#d4ebb23f613d685ea8f5390109c2d20fbf7c83bc"
