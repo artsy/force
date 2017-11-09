@@ -48,7 +48,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
     success: (curation) =>
       res.locals.sd.CURATION = curation.toJSON()
       res.locals.sd.VIDEO_INDEX = setGucciVideoIndex(slug)
-      res.locals.sd.SUB_PATH = if slug then "/#{slug}" else ''
+      res.locals.sd.IS_NESTED_PATH = slug?
       res.render 'components/gucci/templates/index',
         curation: curation
 

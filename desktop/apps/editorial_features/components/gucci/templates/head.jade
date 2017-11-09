@@ -1,14 +1,13 @@
-if sd.SUB_PATH
+if sd.IS_NESTED_PATH
   - page = curation.get('sections')[sd.VIDEO_INDEX]
+  - url = sd.APP_URL + '/gender-equality/' + page.slug
 else
   - page = sd.CURATION
-
-- url = sd.APP_URL + '/gender-equality' + sd.SUB_PATH
+  - url = sd.APP_URL + '/gender-equality'
 
 title= page.title || page.name
 link( rel="canonical", href=url )
-//- TODO: Change to description
-meta(name="description" content=page.social_description)
+meta(name="description" content=page.description)
 meta(name="keywords" content=page.keywords)
 
 meta( property="og:site_name" content='Artsy' )

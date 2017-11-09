@@ -28,7 +28,7 @@ describe('Meta template', () => {
     const html = render('head')({
       crop: url => url,
       sd: {
-        SUB_PATH: '',
+        IS_NESTED_PATH: false,
         CURATION: curation,
         APP_URL: 'https://artsy.net'
       }
@@ -45,6 +45,7 @@ describe('Meta template', () => {
       type: 'editorial-feature',
       sections: [{
         title: 'I. PAST',
+        slug: 'past',
         social_title: 'What Happened in the Past?',
         social_description: 'A series of films optimized for social media',
         email_title: 'Good Morning, What Happened?',
@@ -60,7 +61,7 @@ describe('Meta template', () => {
       curation,
       crop: url => url,
       sd: {
-        SUB_PATH: '/past',
+        IS_NESTED_PATH: true,
         CURATION: curation.toJSON(),
         APP_URL: 'https://artsy.net',
         VIDEO_INDEX: 0
