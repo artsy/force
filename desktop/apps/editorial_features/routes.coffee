@@ -40,13 +40,15 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         markdown: markdown
 
 @gucci = (req, res, next) ->
+  slug = req.params.slug
   @curation = new Curation(id: sd.EF_GUCCI)
   @curation.fetch
     cache: true
     error: next
     success: (curation) =>
       res.locals.sd.CURATION = curation.toJSON()
-      res.locals.sd.VIDEO_INDEX = setGucciVideoIndex(req.params.slug)
+      res.locals.sd.VIDEO_INDEX = setGucciVideoIndex(slug)
+      res.locals.sd.IS_NESTED_PATH = slug?
       res.render 'components/gucci/templates/index',
         curation: curation
 
