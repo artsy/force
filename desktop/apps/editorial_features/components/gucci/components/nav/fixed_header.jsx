@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import Colors from '@artsy/reaction-force/dist/Assets/Colors'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { SeriesNav } from '../series/series_nav.jsx'
 import { Header } from './header.jsx'
@@ -9,13 +10,38 @@ export class FixedHeader extends Component {
   static propTypes = {
     activeSection: PropTypes.number,
     curation: PropTypes.object,
-    isOpen: PropTypes.bool,
+    isOpen: PropTypes.any,
     isVisible: PropTypes.bool,
     onChangeSection: PropTypes.func
   }
 
   state = {
-    isOpen: this.props.isOpen || false
+    isOpen: false,
+    scrollPosition: 0
+  }
+
+  componentDidMount () {
+    let isOpen = false
+    if (this.props.isOpen) {
+      isOpen = true
+    }
+    this.setState({
+      scrollPosition: document.documentElement.scrollTop,
+      isOpen
+    })
+    window.addEventListener('scroll', this.onScroll)
+  }
+
+  onScroll = () => {
+    const { scrollPosition, isOpen } = this.state
+    const fromTop = document.documentElement.scrollTop
+    let setOpen = isOpen
+    if (fromTop > scrollPosition) {
+      setOpen = false
+    } else if (fromTop < scrollPosition) {
+      setOpen = true
+    }
+    this.setState({ scrollPosition: fromTop, isOpen: setOpen })
   }
 
   render () {
@@ -63,6 +89,7 @@ const FixedHeaderContainer = styled.div`
   z-index: 100;
   transition: opacity .25s;
   opacity: ${props => props.isVisible ? '1' : '0'};
+  border-bottom: 1px solid ${Colors.grayRegular};
   ${pMedia.sm`
     .SeriesNav {
       margin-top: 40px;

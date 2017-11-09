@@ -43,6 +43,7 @@ export default class App extends Component {
             curation={curation}
             onChangeSection={this.onChangeSection}
             isVisible={showHeader}
+            isOpen={this.props.activeSection}
           />
           <SeriesHeader // relative position always at content top
             activeSection={activeSection}
