@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Waypoint from 'react-waypoint'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
+import { FixedHeader } from './nav/fixed_header.jsx'
 import { SeriesHeader } from './series/series_header.jsx'
 import { SeriesFooter } from './series/series_footer.jsx'
 import { Section } from './section/section.jsx'
@@ -14,13 +15,16 @@ export default class App extends Component {
   }
 
   state = {
-    activeSection: this.props.activeSection
+    activeSection: this.props.activeSection,
+    sectionPositions: [0, 0, 0],
+    showHeader: false
   }
 
-  // componentDidMount () {
-  //   // const videos = ReactDOM.findDOMNode(Section)
-  //   // debugger
-  // }
+  setSectionPosition = (index, position) => {
+    const sectionPositions = this.state.sectionPositions
+    sectionPositions[index] = position
+    this.setState({ sectionPositions })
+  }
 
   onChangeSection = (index) => {
     this.setState({activeSection: index})
@@ -28,21 +32,32 @@ export default class App extends Component {
 
   onEnterSection = (index, data) => {
     if (this.state.activeSection !== index) {
-      console.log('entered waypoint', index)
       this.onChangeSection(index)
     }
   }
 
   render () {
     const { curation } = this.props
+    const { activeSection, showHeader } = this.state
 
     return (
         <div className='gucci'>
-          <SeriesHeader
-            activeSection={this.state.activeSection}
+          <FixedHeader // fixed position shows on scroll
+            activeSection={activeSection}
+            curation={curation}
+            onChangeSection={this.onChangeSection}
+            isVisible={showHeader}
+          />
+          <SeriesHeader // relative position always at content top
+            activeSection={activeSection}
             curation={curation}
             onChangeSection={this.onChangeSection}
           />
+          <Waypoint
+            onEnter={() => this.setState({showHeader: false})}
+            onLeave={() => this.setState({showHeader: true})}
+          />
+
           <GucciContainer>
             {curation.sections.map((section, index) =>
               <div>
@@ -50,9 +65,10 @@ export default class App extends Component {
                   onEnter={(waypointData => this.onEnterSection(index, waypointData))}
                 />
                 <Section
+                  index={index}
                   key={'section-' + index}
                   section={section}
-                  curation={curation}
+                  setSectionPosition={this.setSectionPosition}
                 />
               </div>
             )}

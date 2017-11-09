@@ -10,7 +10,11 @@ export const SeriesHeader = (props) => {
 
   return (
     <SeriesHeaderContainer className='SeriesHeader'>
-      <Header curation={curation} />
+      <Header
+        title={curation.name}
+        partner_logo={curation.partner_logo_primary}
+        partner_url={curation.partner_link_url}
+      />
       <Title>
         {curation.name}
       </Title>
@@ -31,8 +35,6 @@ SeriesHeader.propTypes = {
 const SeriesHeaderContainer = styled.div`
   width: 100%;
   padding: 15px 20px;
-  z-index: 100;
-  background: white;
   .Header {
     .title {
       display: none;

@@ -7,7 +7,9 @@ import { PartnerHeader } from '../partner/partner_header.jsx'
 
 export class Header extends Component {
   static propTypes = {
-    curation: PropTypes.object
+    title: PropTypes.string,
+    partner_logo: PropTypes.string,
+    partner_url: PropTypes.string
   }
 
   state = {
@@ -15,16 +17,16 @@ export class Header extends Component {
   }
 
   render () {
-    const { curation } = this.props
+    const { title, partner_logo, partner_url } = this.props
 
     return (
       <HeaderMain className='Header'>
         <PartnerHeader
-          url={curation.partner_link_url}
-          logo={curation.partner_logo_primary}
+          url={partner_url}
+          logo={partner_logo}
         />
         <div className='title'>
-          {curation.name}
+          {title}
         </div>
         <div className='menu'>
           <a href='/articles'>

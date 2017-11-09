@@ -7,13 +7,21 @@ import { SectionVideo } from './section_video.jsx'
 import { SectionText } from './section_text.jsx'
 
 export class Section extends Component {
+  static propTypes = {
+    index: PropTypes.number,
+    section: PropTypes.object,
+    setSectionPosition: PropTypes.func
+  }
+
   componentDidMount () {
-    const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
-    console.log(this.props.section.title, rect)
+    const { index, setSectionPosition } = this.props
+    const positionTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top
+    setSectionPosition(index, positionTop)
   }
 
   render () {
-    const { section, curation } = this.props
+    const { section } = this.props
+
     return (
       <SectionContainer>
         <SectionVideo section={section} />
@@ -21,9 +29,6 @@ export class Section extends Component {
       </SectionContainer>
     )
   }
-}
-Section.propTypes = {
-  section: PropTypes.object
 }
 
 const SectionContainer = styled.div`
