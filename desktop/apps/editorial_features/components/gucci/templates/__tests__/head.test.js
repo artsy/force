@@ -16,6 +16,7 @@ describe('Meta template', () => {
       type: 'editorial-feature',
       sections: [],
       social_title: 'What Happened in the Past?',
+      description: 'Description',
       social_description: 'A series of films optimized for social media',
       email_title: 'Good Morning, What Happened?',
       email_author: 'Artsy Editors',
@@ -34,7 +35,7 @@ describe('Meta template', () => {
       }
     })
     html.should.containEql('<title>Artists for Gender Equality</title>')
-    html.should.containEql('<meta name="description" content="A series of films optimized for social media"/>')
+    html.should.containEql('<meta name="description" content="Description"/>')
     html.should.containEql('<meta name="keywords" content="women,gender,equality"/>')
     html.should.containEql('<meta name="sailthru.title" content="Good Morning, What Happened?"/><meta name="sailthru.image.full" content="http://emailimage.jpg"/><meta name="sailthru.image.thumb" content="http://emailimage.jpg"/><meta name="sailthru.author" content="Artsy Editors"/><meta name="sailthru.tags" content="magazine,article,gucci"/>')
   })
@@ -48,6 +49,7 @@ describe('Meta template', () => {
         slug: 'past',
         social_title: 'What Happened in the Past?',
         social_description: 'A series of films optimized for social media',
+        description: 'Description',
         email_title: 'Good Morning, What Happened?',
         email_author: 'Artsy Editors',
         email_tags: 'magazine,article,gucci',
@@ -69,7 +71,7 @@ describe('Meta template', () => {
     })
     html.should.containEql('<title>I. PAST</title>')
     html.should.containEql('<link rel="canonical" href="https://artsy.net/gender-equality/past"/>')
-    html.should.containEql('<meta name="description" content="A series of films optimized for social media"/>')
+    html.should.containEql('<meta name="description" content="Description"/>')
     html.should.containEql('<meta name="keywords" content="women,gender,equality"/>')
     html.should.containEql('<meta name="sailthru.title" content="Good Morning, What Happened?"/><meta name="sailthru.image.full" content="http://emailimage.jpg"/><meta name="sailthru.image.thumb" content="http://emailimage.jpg"/><meta name="sailthru.author" content="Artsy Editors"/><meta name="sailthru.tags" content="magazine,article,gucci"/>')
   })
