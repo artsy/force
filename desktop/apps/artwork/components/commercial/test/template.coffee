@@ -39,4 +39,16 @@ describe 'Commercial template', ->
     $ = cheerio.load(html)
     $('input[name=email]').length.should.eql 1
 
+  it 'correctly displays on loan without pricing info', ->
+    html = renderArtwork { availability: 'on loan', sale_message: 'On loan', price: '$5,000' }
+    $ = cheerio.load(html)
+    $('.artwork-commercial__sale-message').text().should.eql 'On loan'
+    $('.artwork-commercial__shipping-info').length.should.eql 0
+
+  it 'correctly displays permanent collection without pricing info', ->
+    html = renderArtwork { availability: 'permanent collection', price: '$5,000' }
+    $ = cheerio.load(html)
+    $('.artwork-commercial__sale-message').text().should.eql 'Permanent collection'
+    $('.artwork-commercial__shipping-info').length.should.eql 0
+
 

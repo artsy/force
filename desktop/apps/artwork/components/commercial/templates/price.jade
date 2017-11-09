@@ -1,5 +1,7 @@
-- var showPriceLabel = artwork.price && artwork.availability !== 'sold'
-if artwork.sale_message
+- var isPermanentCollection = artwork.availability === 'permanent collection'
+- var isOnLoan = artwork.availability === 'on loan'
+- var showPriceLabel = artwork.price && artwork.availability !== 'sold' && !isOnLoan && !isPermanentCollection
+if artwork.sale_message || isPermanentCollection
   .artwork-commercial__container
     .artwork-commercial__sale-message
       if showPriceLabel
@@ -11,6 +13,8 @@ if artwork.sale_message
             data-message= 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'
             data-anchor= 'bottom-right'
           )
+      else if isPermanentCollection
+        | Permanent collection
       else
         | #{artwork.sale_message}
 
