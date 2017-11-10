@@ -48,10 +48,10 @@ const SectionTextContainer = styled.div`
 `
 
 const Title = styled.div`
-  ${Fonts.unica('s16', 'medium')}
+  ${Fonts.unica('s16')}
   line-height: 1.85em;
   ${pMedia.xs`
-    ${Fonts.unica('s14', 'medium')}
+    ${Fonts.unica('s14')}
   `}
 `
 const ShareContainer = styled.div`
@@ -78,9 +78,9 @@ const ShareContainer = styled.div`
   `}
 `
 const Featuring = styled.div`
-  ${Fonts.unica('s32', 'medium')}
+  ${Fonts.unica('s32')}
   line-height: 1.25em;
   ${pMedia.xs`
-    ${Fonts.unica('s19', 'medium')}
+    ${Fonts.unica('s19')}
   `}
 `

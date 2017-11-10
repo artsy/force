@@ -20,7 +20,7 @@ describe('Header', () => {
     component.find(PartnerInline).length.should.eql(1)
     component.html().should.containEql('Artists For Gender Equality')
     component.html().should.containEql('href="/articles"')
-    component.html().should.containEql('Back to Editorial')
+    component.html().should.containEql('Back to Magazine')
   })
 
   it('Hides the title and menu link if isMobile', () => {

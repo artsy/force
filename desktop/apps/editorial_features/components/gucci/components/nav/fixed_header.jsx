@@ -44,7 +44,9 @@ export class FixedHeader extends Component {
     } else {
       setOpen = true
     }
-    this.setState({ scrollPosition: fromTop, isOpen: setOpen })
+    if (fromTop !== scrollPosition) {
+      this.setState({ scrollPosition: fromTop, isOpen: setOpen })
+    }
   }
 
   render () {

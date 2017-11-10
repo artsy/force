@@ -53,7 +53,7 @@ const SectionVideoContainer = styled.div`
   }
   .PlayButton {
     background: none;
-    ${Fonts.unica('s80', 'medium')}
+    ${Fonts.unica('s80')}
     width: auto;
     height: auto;
     &:after {
@@ -70,7 +70,7 @@ const SectionVideoContainer = styled.div`
   ${pMedia.sm`
     .PlayButton {
       &:after {
-        ${Fonts.unica('s40', 'medium')}
+        ${Fonts.unica('s40')}
       }
       &__PlayButtonCaret {
         border-left: 30px solid white;
@@ -97,7 +97,7 @@ const VideoPreview = styled.div`
 `
 
 const ReleaseDate = styled.div`
-  ${Fonts.unica('s80', 'medium')}
+  ${Fonts.unica('s80')}
   color: white;
   display: flex;
   height: 100%;
