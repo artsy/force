@@ -8,6 +8,7 @@ import { PartnerInline } from '../partner/partner_inline.jsx'
 export class Header extends Component {
   static propTypes = {
     title: PropTypes.string,
+    isMobile: PropTypes.bool,
     partner_logo: PropTypes.string,
     partner_url: PropTypes.string
   }
@@ -17,7 +18,7 @@ export class Header extends Component {
   }
 
   render () {
-    const { title, partner_logo, partner_url } = this.props
+    const { title, isMobile, partner_logo, partner_url } = this.props
 
     return (
       <HeaderMain className='Header'>
@@ -28,11 +29,14 @@ export class Header extends Component {
         <div className='title'>
           {title}
         </div>
-        <div className='menu'>
-          <a href='/articles'>
-            Back to Editorial
-          </a>
-        </div>
+
+        {!isMobile &&
+          <div className='menu'>
+            <a href='/articles'>
+              Back to Editorial
+            </a>
+          </div>
+        }
       </HeaderMain>
     )
   }

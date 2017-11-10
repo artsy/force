@@ -10,6 +10,7 @@ export class FixedHeader extends Component {
   static propTypes = {
     activeSection: PropTypes.number,
     curation: PropTypes.object.isRequired,
+    isMobile: PropTypes.bool,
     isOpen: PropTypes.any,
     isVisible: PropTypes.bool,
     onChangeSection: PropTypes.func
@@ -49,6 +50,7 @@ export class FixedHeader extends Component {
     const {
       activeSection,
       curation,
+      isMobile,
       isVisible,
       onChangeSection
     } = this.props
@@ -68,6 +70,7 @@ export class FixedHeader extends Component {
       >
         <Header
           title={name}
+          isMobile={isMobile}
           partner_logo={partner_logo_primary}
           partner_url={partner_link_url}
         />

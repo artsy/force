@@ -37,6 +37,7 @@ const SectionContainer = styled.div`
     } 
     .SectionText {
       padding: 0 20px;
+      max-width: 100%;
     }
   `}
 `
