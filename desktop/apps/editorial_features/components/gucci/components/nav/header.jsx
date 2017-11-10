@@ -42,7 +42,7 @@ export class Header extends Component {
         {!isMobile &&
           <div className='menu'>
             <a href='/articles'>
-              Back to Editorial
+              Back to Magazine
             </a>
           </div>
         }
