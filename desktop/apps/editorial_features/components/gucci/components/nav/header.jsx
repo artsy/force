@@ -83,7 +83,6 @@ const HeaderMain = styled.div`
     align-items: center;
     a {
       ${Fonts.unica('s16', 'medium')}
-      font-weight: 600;
       text-decoration: none;
       border-bottom: 2px solid;
     }

@@ -36,7 +36,6 @@ const PartnerBlockContainer = styled.div`
 
 const Title = styled.div`
   ${Fonts.unica('s16', 'medium')}
-  font-weight: 600;
   ${pMedia.sm`
     ${Fonts.unica('s14', 'medium')}
   `}

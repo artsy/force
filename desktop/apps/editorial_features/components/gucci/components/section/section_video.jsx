@@ -24,7 +24,7 @@ function renderVideo (section) {
 
   if (section.published && videoSection.url) {
     return (
-      <Video section={videoSection} />
+      <Video section={videoSection} trackingData={{label: section.featuring}} />
     )
   } else {
     return (
