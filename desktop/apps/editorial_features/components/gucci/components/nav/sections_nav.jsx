@@ -49,7 +49,10 @@ const Title = styled.div`
     margin: 0 30px;
     ${Fonts.unica('s40', 'medium')}
   `}
-  ${pMedia.xs`
+  ${pMedia.sm`
     margin: 0;
+    &:nth-child(2) {
+      margin: 0 20px;
+    }
   `}
 `

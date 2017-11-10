@@ -78,7 +78,6 @@ export default class App extends Component {
               <div id={section.slug} key={'section-' + index}>
                 <Section
                   section={section}
-                  isMobile={isMobile}
                   onScrollOver={() => this.setState({ activeSection: index })}
                 />
               </div>

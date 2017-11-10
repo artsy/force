@@ -47,6 +47,7 @@ export class FixedHeader extends Component {
   }
 
   render () {
+    const { isOpen } = this.state
     const {
       activeSection,
       curation,
@@ -71,8 +72,10 @@ export class FixedHeader extends Component {
         <Header
           title={name}
           isMobile={isMobile}
+          isOpen={isOpen}
           partner_logo={partner_logo_primary}
           partner_url={partner_link_url}
+          onOpenMenu={() => this.setState({isOpen: !isOpen})}
         />
         {this.state.isOpen &&
           <SectionsNav
