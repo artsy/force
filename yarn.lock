@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"@artsy/express-reloadable@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.0.3.tgz#ba5ef5160c50dcc25b32ffab078e2a64eecb32a2"
+"@artsy/express-reloadable@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.1.0.tgz#012a76625df0c069cd05518fe6315baf94f94fcf"
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.12.0.tgz#8ac2bed6e3b1095357c942de1195c9f8a4321cf5"
+"@artsy/reaction-force@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.12.1.tgz#f1072f2746d5399dff7d764aa76145b2caf65b13"
   dependencies:
     "@storybook/addon-options" "^3.2.1"
     "@storybook/react" "^3.2.12"
@@ -8101,12 +8101,6 @@ react-style-proptype@^3.0.0:
 react-styled-flexboxgrid@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-2.0.3.tgz#308a8bbc80b1737a65f4ccf35d02afe20932a2f2"
-  dependencies:
-    lodash.isinteger "^4.0.4"
-
-react-styled-flexboxgrid@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-2.1.1.tgz#3464201d27f36256f65bef1d2eb4188317d5a484"
   dependencies:
     lodash.isinteger "^4.0.4"
 
