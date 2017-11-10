@@ -1,8 +1,10 @@
 import 'jsdom-global/register'
 import React from 'react'
+import sinon from 'sinon'
 import { mount } from 'enzyme'
 import { Header } from '../header.jsx'
 import { PartnerInline } from '../../partner/partner_inline.jsx'
+import Icon from '@artsy/reaction-force/dist/Components/Icon'
 
 describe('Header', () => {
   const props = {
@@ -19,5 +21,41 @@ describe('Header', () => {
     component.html().should.containEql('Artists For Gender Equality')
     component.html().should.containEql('href="/articles"')
     component.html().should.containEql('Back to Editorial')
+  })
+
+  it('Hides the title and menu link if isMobile', () => {
+    props.isMobile = true
+    const component = mount(
+      <Header {...props} />
+    )
+    component.find(PartnerInline).length.should.eql(1)
+    component.html().should.not.containEql('Artists For Gender Equality')
+    component.html().should.not.containEql('href="/articles"')
+    component.html().should.not.containEql('Back to Editorial')
+  })
+
+  it('Shows a menu icon if isMobile and has onOpenMenu', () => {
+    props.onOpenMenu = sinon.stub()
+    const component = mount(
+      <Header {...props} />
+    )
+    component.find(Icon).length.should.eql(1)
+  })
+
+  it('Hides the menu icon if isMobile and no onOpenMenu', () => {
+    delete props.onOpenMenu
+    const component = mount(
+      <Header {...props} />
+    )
+    component.find(Icon).length.should.eql(0)
+  })
+
+  it('Calls onOpenMenu when clicking menu icon', () => {
+    props.onOpenMenu = sinon.stub()
+    const component = mount(
+      <Header {...props} />
+    )
+    component.find(Icon).first().simulate('click')
+    props.onOpenMenu.called.should.eql(true)
   })
 })

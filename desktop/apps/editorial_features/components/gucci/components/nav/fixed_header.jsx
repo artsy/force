@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Colors from '@artsy/reaction-force/dist/Assets/Colors'
+import { debounce } from 'lodash'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { SectionsNav } from './sections_nav.jsx'
 import { Header } from './header.jsx'
@@ -22,7 +23,10 @@ export class FixedHeader extends Component {
   }
 
   componentDidMount () {
-    window.addEventListener('scroll', this.onScroll, true)
+    window.addEventListener(
+      'scroll', debounce(this.onScroll, 30, true)
+    )
+
     let isOpen = false
     if (this.props.isOpen) {
       isOpen = true
