@@ -1,5 +1,6 @@
+import 'jsdom-global/register'
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { PartnerInline } from '../partner_inline.jsx'
 
 describe('Partner Inline', () => {
@@ -9,14 +10,14 @@ describe('Partner Inline', () => {
   }
 
   it('Shows the artsy logo', () => {
-    const component = shallow(
+    const component = mount(
       <PartnerInline {...props} />
     )
     component.html().should.containEql('<a href="/" class="icon-logotype">')
   })
 
   it('Shows a partner link and logo if logo present', () => {
-    const component = shallow(
+    const component = mount(
       <PartnerInline {...props} />
     )
     component.html().should.containEql('href="http://partner.com"')
@@ -25,7 +26,7 @@ describe('Partner Inline', () => {
 
   it('Hides partner link and logo if logo not present', () => {
     delete props.logo
-    const component = shallow(
+    const component = mount(
       <PartnerInline {...props} />
     )
     component.html().should.not.containEql('href="http://partner.com"')

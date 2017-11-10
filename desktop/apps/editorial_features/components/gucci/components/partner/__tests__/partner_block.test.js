@@ -1,5 +1,6 @@
+import 'jsdom-global/register'
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { PartnerBlock } from '../partner_block.jsx'
 
 describe('Partner Inline', () => {
@@ -9,7 +10,7 @@ describe('Partner Inline', () => {
   }
 
   it('Renders "Presented..." text, partner link and logo', () => {
-    const component = shallow(
+    const component = mount(
       <PartnerBlock {...props} />
     )
     component.html().should.containEql('Presented In Partnership With')

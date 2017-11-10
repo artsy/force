@@ -9,7 +9,7 @@ import { Header } from './header.jsx'
 export class FixedHeader extends Component {
   static propTypes = {
     activeSection: PropTypes.number,
-    curation: PropTypes.object,
+    curation: PropTypes.object.isRequired,
     isOpen: PropTypes.any,
     isVisible: PropTypes.bool,
     onChangeSection: PropTypes.func
@@ -39,7 +39,7 @@ export class FixedHeader extends Component {
 
     if (fromTop > scrollPosition) {
       setOpen = false
-    } else if (fromTop < scrollPosition) {
+    } else {
       setOpen = true
     }
     this.setState({ scrollPosition: fromTop, isOpen: setOpen })
@@ -64,7 +64,8 @@ export class FixedHeader extends Component {
         className='FixedHeader'
         isVisible={isVisible}
         onMouseEnter={() => this.setState({isOpen: true})}
-        onMouseLeave={() => this.setState({isOpen: false})}>
+        onMouseLeave={() => this.setState({isOpen: false})}
+      >
         <Header
           title={name}
           partner_logo={partner_logo_primary}
