@@ -93,6 +93,7 @@ const VideoPreview = styled.div`
   background-color: black;
   background-position: 50%;
   background-size: cover;
+  filter: grayscale(100%);
 `
 
 const ReleaseDate = styled.div`
@@ -103,7 +104,7 @@ const ReleaseDate = styled.div`
   justify-content: flex-start;
   align-items: flex-end;
   padding: 15px 30px;
-  background: rgba(0,0,0,.3);
+  background: rgba(0,0,0,.5);
   ${pMedia.sm`
     ${Fonts.unica('s40', 'medium')}
     padding: 10px 20px;

@@ -1,22 +1,36 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
+import Waypoint from 'react-waypoint'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
-import { SeriesNav } from './series_nav.jsx'
 import { Header } from '../nav/header.jsx'
+import { SectionsNav } from '../nav/sections_nav.jsx'
 
 export const SeriesHeader = (props) => {
-  const { curation, onChangeSection } = props
+  const { curation, inBody, onChangeSection } = props
+  const {
+    name,
+    partner_logo_primary,
+    partner_link_url
+  } = curation
 
   return (
     <SeriesHeaderContainer className='SeriesHeader'>
-      <Header curation={curation} />
+      <Header
+        title={name}
+        partner_logo={partner_logo_primary}
+        partner_url={partner_link_url}
+      />
       <Title>
         {curation.name}
       </Title>
-      <SeriesNav
+      <Waypoint
+        onEnter={() => inBody(false)}
+        onLeave={() => inBody(true)}
+      />
+      <SectionsNav
         activeSection={null}
-        curation={curation}
+        sections={curation.sections}
         onClick={onChangeSection}
       />
     </SeriesHeaderContainer>
@@ -25,24 +39,23 @@ export const SeriesHeader = (props) => {
 
 SeriesHeader.propTypes = {
   curation: PropTypes.object,
+  inBody: PropTypes.func,
   onChangeSection: PropTypes.func
 }
 
 const SeriesHeaderContainer = styled.div`
   width: 100%;
   padding: 15px 20px;
-  z-index: 100;
-  background: white;
   .Header {
     .title {
       display: none;
     }
   }
-  .SeriesNav__item {
+  .SectionsNav__item {
     color: black;
   }
   ${pMedia.sm`
-    .SeriesNav {
+    .SectionsNav {
       margin-top: 40px;
     }
   `}
