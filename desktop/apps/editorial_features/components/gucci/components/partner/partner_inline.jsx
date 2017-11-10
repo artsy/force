@@ -6,13 +6,15 @@ export const PartnerInline = (props) => {
   const { logo, url } = props
 
   return (
-      <PartnerInlineContainer className='PartnerInline'>
-        <a href='/' className='icon-logotype' />
-        <span className='divider' />
+    <PartnerInlineContainer className='PartnerInline'>
+      <a href='/' className='icon-logotype' />
+      {logo && <span className='divider' /> }
+      {logo &&
         <a href={url} target='_blank'>
           <img src={logo} />
         </a>
-      </PartnerInlineContainer>
+      }
+    </PartnerInlineContainer>
   )
 }
 
@@ -32,6 +34,7 @@ const PartnerInlineContainer = styled.div`
     .divider:after {
       content: '+';
       margin-left: 20px;
+      font-size: 40px;
     }
   }
 `

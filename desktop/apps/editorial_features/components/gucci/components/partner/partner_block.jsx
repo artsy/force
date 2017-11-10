@@ -18,8 +18,8 @@ export const PartnerBlock = (props) => {
 }
 
 PartnerBlock.propTypes = {
-  logo: PropTypes.string,
-  url: PropTypes.string
+  logo: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
 }
 
 const PartnerBlockContainer = styled.div`
