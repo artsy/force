@@ -7,7 +7,13 @@ import { Header } from '../nav/header.jsx'
 import { SectionsNav } from '../nav/sections_nav.jsx'
 
 export const SeriesHeader = (props) => {
-  const { curation, inBody, onChangeSection } = props
+  const {
+    curation,
+    inBody,
+    isMobile,
+    onChangeSection
+  } = props
+
   const {
     name,
     partner_logo_primary,
@@ -18,6 +24,7 @@ export const SeriesHeader = (props) => {
     <SeriesHeaderContainer className='SeriesHeader'>
       <Header
         title={name}
+        isMobile={isMobile}
         partner_logo={partner_logo_primary}
         partner_url={partner_link_url}
       />
@@ -40,6 +47,7 @@ export const SeriesHeader = (props) => {
 SeriesHeader.propTypes = {
   curation: PropTypes.object,
   inBody: PropTypes.func,
+  isMobile: PropTypes.bool,
   onChangeSection: PropTypes.func
 }
 

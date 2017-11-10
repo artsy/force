@@ -8,25 +8,30 @@ import { Text } from '@artsy/reaction-force/dist/Components/Publishing'
 import { PartnerBlock } from '../partner/partner_block.jsx'
 
 export const SeriesFooter = (props) => {
-  const { curation } = props
+  const { curation, isMobile } = props
   const logoSrc = curation.partner_logo_footer || curation.partner_logo_primary
+  const logoUrl = curation.partner_link_url || ''
 
   return (
     <SeriesFooterContainer>
       <Row className='SeriesFooter'>
         <Col sm={4} className='col col--first'>
           <Title>About the Series</Title>
-          <PartnerBlock
-            logo={logoSrc}
-            url={curation.partner_link_url}
-          />
+          {!isMobile &&
+            <PartnerBlock
+              logo={logoSrc}
+              url={logoUrl}
+            />
+          }
         </Col>
         <Col sm={7} className='col col--last'>
           <Text html={curation.about} />
-          <PartnerBlock
-            logo={logoSrc}
-            url={curation.partner_link_url}
-          />
+          {isMobile &&
+            <PartnerBlock
+              logo={logoSrc}
+              url={logoUrl}
+            />
+          }
         </Col>
       </Row>
     </SeriesFooterContainer>
@@ -34,7 +39,8 @@ export const SeriesFooter = (props) => {
 }
 
 SeriesFooter.propTypes = {
-  curation: PropTypes.object
+  curation: PropTypes.object,
+  isMobile: PropTypes.bool
 }
 
 const SeriesFooterContainer = styled.div`
@@ -51,17 +57,10 @@ const SeriesFooterContainer = styled.div`
       flex-direction: column;
       justify-content: space-between;
     }
-    &--last .PartnerBlock {
-      display: none;
-    }
   }
   ${pMedia.sm`
     padding: 0 20px;
-    .col--first .PartnerBlock {
-      display: none;
-    }
-    .col--last .PartnerBlock {
-      display: block;
+    .PartnerBlock {
       margin-top: 80px;
     }
   `}

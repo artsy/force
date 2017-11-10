@@ -34,9 +34,11 @@ const SectionContainer = styled.div`
     margin-bottom: 100px;
     .col--first {
       margin-bottom: 40px;
+      width: 100%;
     } 
     .SectionText {
       padding: 0 20px;
+      max-width: 100%;
     }
   `}
 `

@@ -62,6 +62,9 @@ const ShareContainer = styled.div`
   ${Title} {
     margin-right: 20px;
   }
+  a:last-child {
+    padding-right: 0;
+  }
   ${pMedia.sm`
     position: absolute;
     top: 0;
