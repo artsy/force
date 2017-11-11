@@ -75,6 +75,7 @@ const HeaderMain = styled.div`
     font-size: 23px;
     text-transform: uppercase;
     height: 23px;
+    letter-spacing: -0.25px;
   }
   .menu {
     display: flex;
@@ -87,7 +88,13 @@ const HeaderMain = styled.div`
       border-bottom: 2px solid;
     }
   }
-  ${pMedia.sm`
+  ${pMedia.lg`
+  .title {
+    font-size: 19px;
+    height: 19px;
+  }
+`}
+  ${pMedia.md`
     .title {
       display: none;
     }
