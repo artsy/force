@@ -8,6 +8,7 @@ export default () => {
     <App
       activeSection={sd.VIDEO_INDEX}
       curation={sd.CURATION}
+      isMobile={sd.IS_MOBILE}
     />,
     document.getElementById('react-root')
   )

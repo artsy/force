@@ -24,7 +24,7 @@ function renderVideo (section) {
 
   if (section.published && videoSection.url) {
     return (
-      <Video section={videoSection} />
+      <Video section={videoSection} trackingData={{label: section.featuring}} />
     )
   } else {
     return (
@@ -53,7 +53,7 @@ const SectionVideoContainer = styled.div`
   }
   .PlayButton {
     background: none;
-    ${Fonts.unica('s80', 'medium')}
+    ${Fonts.unica('s80')}
     width: auto;
     height: auto;
     &:after {
@@ -70,7 +70,7 @@ const SectionVideoContainer = styled.div`
   ${pMedia.sm`
     .PlayButton {
       &:after {
-        ${Fonts.unica('s40', 'medium')}
+        ${Fonts.unica('s40')}
       }
       &__PlayButtonCaret {
         border-left: 30px solid white;
@@ -93,19 +93,20 @@ const VideoPreview = styled.div`
   background-color: black;
   background-position: 50%;
   background-size: cover;
+  filter: grayscale(100%);
 `
 
 const ReleaseDate = styled.div`
-  ${Fonts.unica('s80', 'medium')}
+  ${Fonts.unica('s80')}
   color: white;
   display: flex;
   height: 100%;
   justify-content: flex-start;
   align-items: flex-end;
   padding: 15px 30px;
-  background: rgba(0,0,0,.3);
+  background: rgba(0,0,0,.5);
   ${pMedia.sm`
-    ${Fonts.unica('s40', 'medium')}
+    ${Fonts.unica('s40')}
     padding: 10px 20px;
   `}
 `

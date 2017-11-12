@@ -1,5 +1,4 @@
 if (location.pathname.indexOf('/2016-year-in-art') > -1) {
-
   setTimeout(function () {
     analytics.track('time on page more than 30 seconds', { category: '30 Seconds', message: sd.CURRENT_PATH })
   }, 30000)
@@ -10,9 +9,16 @@ if (location.pathname.indexOf('/2016-year-in-art') > -1) {
       impression_type: 'scroll_body'
     })
   })
-
 }
 
+if (location.pathname.indexOf('/gender-equality') > -1) {
+  $(document.body).on('click', '.article__text-section a[href*="gucci"]', function () {
+    analytics.track('Clicked partner text link', {
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+      context_type: 'gucci_gender_equality'
+    })
+  })
+}
 if (location.pathname.indexOf('/venice-biennale') > -1) {
   $(document.body).on('click', '.venice-body__partner, .venice-nav__sticky-ubs-logo', function () {
     analytics.track('Clicked partner logo', {

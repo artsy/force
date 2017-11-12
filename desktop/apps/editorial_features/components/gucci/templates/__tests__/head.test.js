@@ -69,7 +69,7 @@ describe('Meta template', () => {
         VIDEO_INDEX: 0
       }
     })
-    html.should.containEql('<title>I. PAST</title>')
+    html.should.containEql('<title>Artists for Gender Equality: I. PAST</title>')
     html.should.containEql('<link rel="canonical" href="https://artsy.net/gender-equality/past"/>')
     html.should.containEql('<meta name="description" content="Description"/>')
     html.should.containEql('<meta name="keywords" content="women,gender,equality"/>')

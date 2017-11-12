@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@artsy/express-reloadable": "^1.1.0",
-    "@artsy/reaction-force": "^0.12.1",
+    "@artsy/reaction-force": "^0.12.2",
     "@artsy/stitch": "^1.2.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
@@ -113,7 +113,6 @@
     "react-router": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "react-scrollspy": "^3.3.3",
-    "react-styled-flexboxgrid": "^2.0.0",
     "react-waypoint": "^7.1.0",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
