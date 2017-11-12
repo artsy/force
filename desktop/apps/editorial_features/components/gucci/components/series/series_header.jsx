@@ -64,7 +64,8 @@ const SeriesHeaderContainer = styled.div`
   }
   ${pMedia.sm`
     .SectionsNav {
-      margin-top: 40px;
+      margin-top: 50px;
+      margin-bottom: 0;
     }
   `}
 `

@@ -1,11 +1,13 @@
 if sd.IS_NESTED_PATH
   - page = curation.get('sections')[sd.VIDEO_INDEX]
+  - title = curation.get('name') + ': ' + page.title
   - url = sd.APP_URL + '/gender-equality/' + page.slug
 else
   - page = sd.CURATION
+  - title = sd.CURATION.name
   - url = sd.APP_URL + '/gender-equality'
 
-title= page.title || page.name
+title= title
 link( rel="canonical", href=url )
 
 //- Unica Font

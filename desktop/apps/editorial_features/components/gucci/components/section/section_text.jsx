@@ -78,9 +78,9 @@ const ShareContainer = styled.div`
   `}
 `
 const Featuring = styled.div`
-  ${Fonts.unica('s32', 'medium')}
+  ${Fonts.unica('s32')}
   line-height: 1.25em;
   ${pMedia.xs`
-    ${Fonts.unica('s19', 'medium')}
+    ${Fonts.unica('s19')}
   `}
 `

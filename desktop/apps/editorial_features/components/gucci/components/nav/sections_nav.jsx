@@ -56,8 +56,7 @@ const SectionsNavContainer = styled.div`
     animation-duration: .5s;
     animation-timing-function: linear;
     ${Title} {
-      margin-top: 60px;
-      margin-bottom: 50px;
+      margin: 60px auto 50px auto;
     }
   `}
   ${pMedia.lg`
@@ -65,14 +64,17 @@ const SectionsNavContainer = styled.div`
     justify-content: space-evenly;
     flex-wrap: wrap;
   `}
+  ${pMedia.sm`
+    margin: 40px auto 20px auto;
+  `}
 `
 const Title = styled.div`
   cursor: pointer;
-  ${Fonts.unica('s80', 'medium')}
+  ${Fonts.unica('s80')}
   color: ${props => props.isActive ? 'black' : Colors.grayRegular};
   ${pMedia.lg`
     margin: 0 30px;
-    ${Fonts.unica('s40', 'medium')}
+    ${Fonts.unica('s40')}
   `}
   ${pMedia.sm`
     margin: 0;
