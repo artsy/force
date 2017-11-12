@@ -106,7 +106,7 @@ const ReleaseDate = styled.div`
   padding: 15px 30px;
   background: rgba(0,0,0,.5);
   ${pMedia.sm`
-    ${Fonts.unica('s40', 'medium')}
+    ${Fonts.unica('s40')}
     padding: 10px 20px;
   `}
 `
