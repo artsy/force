@@ -67,10 +67,11 @@ const SeriesFooterContainer = styled.div`
 
 `
 const Title = styled.div`
-  ${Fonts.unica('s80', 'medium')}
+  ${Fonts.unica('s80')}
   line-height: .95em;
   ${pMedia.sm`
-    ${Fonts.unica('s40', 'medium')}
+    ${Fonts.unica('s40')}
     margin-bottom: 20px;
+    margin-top: 140px;
   `}
 `
