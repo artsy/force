@@ -64,6 +64,9 @@ const SectionsNavContainer = styled.div`
     justify-content: space-evenly;
     flex-wrap: wrap;
   `}
+  ${pMedia.sm`
+    margin: 40px auto 20px auto;
+  `}
 `
 const Title = styled.div`
   cursor: pointer;

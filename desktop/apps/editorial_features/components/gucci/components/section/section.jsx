@@ -30,8 +30,8 @@ const SectionContainer = styled.div`
     justify-content: space-between;
   }
   ${pMedia.sm`
-    padding-top: 40px;
-    margin-bottom: 100px;
+    padding-top: 140px;
+    margin-bottom: 0;
     .col--first {
       margin-bottom: 40px;
       width: 100%;
