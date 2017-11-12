@@ -27,11 +27,16 @@ export default class App extends Component {
     window.addEventListener(
       'resize', debounce(this.checkWindowSize, 30)
     )
+    let showHeader = false
     // if landing on slug, go to section and show header
     if (this.props.activeSection) {
       this.onChangeSection(this.props.activeSection)
-      this.setState({ showHeader: true })
     }
+    // if landing scrolled below header, show fixed header
+    if (window.scrollY > 100) {
+      showHeader = true
+    }
+    this.setState({ showHeader })
   }
 
   checkWindowSize = () => {
