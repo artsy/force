@@ -3,10 +3,18 @@ import React from 'react'
 import sinon from 'sinon'
 import { mount } from 'enzyme'
 import { Header } from '../header.jsx'
-import { PartnerInline } from '../../partner/partner_inline.jsx'
+import { PartnerInline } from '@artsy/reaction-force/dist/Components/Publishing/Partner/PartnerInline'
 import Icon from '@artsy/reaction-force/dist/Components/Icon'
 
 describe('Header', () => {
+  window.matchMedia = () => {
+    return {
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {}
+    }
+  }
+
   const props = {
     title: 'Artists For Gender Equality',
     partner_logo: 'http://partner.com/logo.jpg',
@@ -39,7 +47,7 @@ describe('Header', () => {
     const component = mount(
       <Header {...props} />
     )
-    component.find(Icon).length.should.eql(1)
+    component.find(Icon).length.should.eql(2)
   })
 
   it('Hides the menu icon if isMobile and no onOpenMenu', () => {
@@ -47,7 +55,7 @@ describe('Header', () => {
     const component = mount(
       <Header {...props} />
     )
-    component.find(Icon).length.should.eql(0)
+    component.find(Icon).length.should.eql(1)
   })
 
   it('Calls onOpenMenu when clicking menu icon', () => {
@@ -55,7 +63,7 @@ describe('Header', () => {
     const component = mount(
       <Header {...props} />
     )
-    component.find(Icon).first().simulate('click')
+    component.find(Icon).at(1).simulate('click')
     props.onOpenMenu.called.should.eql(true)
   })
 })
