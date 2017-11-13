@@ -32,24 +32,21 @@ SectionsNav.propTypes = {
 
 const navKeyframes = keyframes`
   0% {
-    height: 0px;
-    opacity: 0;
-  }
-  50% {
-    height: auto;
+    max-height: 0px;
     opacity: 0;
   }
   100% {
+    max-height: 500px;
     opacity: 1;
   }
 `
-
 const SectionsNavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   max-width 1240px;
   margin: 60px auto 50px auto;
   padding: 0 20px;
+
   ${props => props.animated && `
     margin: 0;
     animation-name: ${navKeyframes};
@@ -59,11 +56,13 @@ const SectionsNavContainer = styled.div`
       margin: 60px auto 50px auto;
     }
   `}
+
   ${pMedia.lg`
     padding: 0;
     justify-content: space-evenly;
     flex-wrap: wrap;
   `}
+
   ${pMedia.sm`
     margin: 40px auto 20px auto;
   `}
@@ -72,10 +71,12 @@ const Title = styled.div`
   cursor: pointer;
   ${Fonts.unica('s80')}
   color: ${props => props.isActive ? 'black' : Colors.grayRegular};
+
   ${pMedia.lg`
     margin: 0 30px;
     ${Fonts.unica('s40')}
   `}
+
   ${pMedia.sm`
     margin: 0;
     &:nth-child(2) {
