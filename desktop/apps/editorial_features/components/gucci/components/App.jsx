@@ -88,7 +88,6 @@ export default class App extends Component {
               border='0'
               width='1'
               height='1'
-              alt='Advertisement'
             />
           </a>
 
