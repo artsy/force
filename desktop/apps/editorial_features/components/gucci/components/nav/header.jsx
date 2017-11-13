@@ -74,10 +74,6 @@ const HeaderMain = styled.div`
     flex: 1;
     img {
       max-width: 120px;
-      margin-left: 20px;
-    }
-    div[class^="Icon-"] {
-      margin-right: 10px;
     }
   }
   .title {
@@ -112,10 +108,6 @@ const HeaderMain = styled.div`
     .PartnerInline{
       img {
         max-width: 100px;
-        margin-left: 15px;
-      }
-      div[class^="Icon-"] {
-        margin-right: 5px;
       }
     }
   `}
