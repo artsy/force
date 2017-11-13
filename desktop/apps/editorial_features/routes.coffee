@@ -50,6 +50,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
       res.locals.sd.CURATION = curation.toJSON()
       res.locals.sd.VIDEO_INDEX = videoIndex
       res.locals.sd.IS_NESTED_PATH = slug?
+      res.locals.sd.INCLUDE_SAILTHRU = true
       if res.locals.sd.IS_NESTED_PATH
         section = curation.get('sections')[videoIndex]
         appendTitle = ': ' + section.title

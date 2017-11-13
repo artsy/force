@@ -100,7 +100,7 @@ if options.marketo
 
 //- Disable Parsely on non-article pages before loading Segment
 script( type="text/javascript" ).
-  if (!location.pathname.match(/^\/article|^\/2016-year-in-art|^\/venice-biennale/|^\/gender-equality/)){
+  if (!location.pathname.match(/^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality/)){
     window.PARSELY = {autotrack: false}
   }
 
