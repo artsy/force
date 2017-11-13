@@ -23,7 +23,10 @@ export const SectionText = (props) => {
             <Title>Share</Title>
             <Share
               url={`${sd.APP_URL}/gender-equality/${section.slug}`}
-              title={section.featuring} />
+              title={section.featuring}
+              trackingData={{
+                action: 'share'
+              }} />
           </ShareContainer>
         </Col>
         <Col sm={7} className='col col--last'>
