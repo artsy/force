@@ -52,7 +52,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
       res.locals.sd.IS_NESTED_PATH = slug?
       if res.locals.sd.IS_NESTED_PATH
         section = curation.get('sections')[videoIndex]
-        appendTitle = ' : ' + section.title
+        appendTitle = ': ' + section.title
         thumbnailImage = section.thumbnail_image
         url = sd.APP_URL + '/gender-equality/' + slug
         dateCreated = section.release_date
