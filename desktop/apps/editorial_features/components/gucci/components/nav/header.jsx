@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import Icon from '@artsy/reaction-force/dist/Components/Icon'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { PartnerInline } from '../partner/partner_inline.jsx'
+import { PartnerInline } from '@artsy/reaction-force/dist/Components/Publishing/Partner/PartnerInline'
 
 export class Header extends Component {
   static propTypes = {
@@ -31,6 +31,10 @@ export class Header extends Component {
         <PartnerInline
           url={partner_url}
           logo={partner_logo}
+          trackingData={{
+            type: 'external link',
+            destination_path: partner_url
+          }}
         />
 
         {!isMobile &&
@@ -68,6 +72,13 @@ const HeaderMain = styled.div`
   align-items: center;
   .PartnerInline {
     flex: 1;
+    img {
+      max-width: 120px;
+      margin-left: 20px;
+    }
+    div[class^="Icon-"] {
+      margin-right: 10px;
+    }
   }
   .title {
     flex: 2;
@@ -97,6 +108,15 @@ const HeaderMain = styled.div`
   ${pMedia.md`
     .title {
       display: none;
+    }
+    .PartnerInline{
+      img {
+        max-width: 100px;
+        margin-left: 15px;
+      }
+      div[class^="Icon-"] {
+        margin-right: 5px;
+      }
     }
   `}
 `
