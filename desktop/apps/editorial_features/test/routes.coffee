@@ -52,7 +52,20 @@ describe 'Gucci route', ->
     sinon.stub Backbone, 'sync'
     Backbone.sync
       .onCall 0
-      .yieldsTo 'success', { name: 'Artists For Gender Equality', sections: [{title: 'I. Present'}]}
+      .yieldsTo 'success', {
+        name: 'Artists For Gender Equality',
+        sections: [
+          {
+            title: 'I. Past'
+          }
+          {
+            title: 'I. Present'
+          },
+          {
+            title: 'I. Future'
+          }
+        ]
+      }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_GUCCI: '123'}
