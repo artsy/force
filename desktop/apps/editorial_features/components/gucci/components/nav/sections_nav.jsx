@@ -31,11 +31,11 @@ SectionsNav.propTypes = {
 }
 
 const navKeyframes = keyframes`
-  0% {
+  from {
     max-height: 0px;
     opacity: 0;
   }
-  100% {
+  to {
     max-height: 500px;
     opacity: 1;
   }
@@ -50,8 +50,8 @@ const SectionsNavContainer = styled.div`
   ${props => props.animated && `
     margin: 0;
     animation-name: ${navKeyframes};
-    animation-duration: .5s;
-    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-timing-function: ease;
     ${Title} {
       margin: 60px auto 50px auto;
     }

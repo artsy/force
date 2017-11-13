@@ -4,8 +4,7 @@ import React from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import { Col, Row } from '@artsy/reaction-force/dist/Components/Grid'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { Text } from '@artsy/reaction-force/dist/Components/Publishing'
-import { PartnerBlock } from '../partner/partner_block.jsx'
+import { Text, PartnerBlock } from '@artsy/reaction-force/dist/Components/Publishing'
 
 export const SeriesFooter = (props) => {
   const { curation, isMobile } = props
@@ -21,6 +20,10 @@ export const SeriesFooter = (props) => {
             <PartnerBlock
               logo={logoSrc}
               url={logoUrl}
+              trackingData={{
+                type: 'external link',
+                destination_path: logoUrl
+              }}
             />
           }
         </Col>
@@ -30,6 +33,10 @@ export const SeriesFooter = (props) => {
             <PartnerBlock
               logo={logoSrc}
               url={logoUrl}
+              trackingData={{
+                type: 'external link',
+                destination_path: logoUrl
+              }}
             />
           }
         </Col>

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
 import Icon from '@artsy/reaction-force/dist/Components/Icon'
 import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { PartnerInline } from '../partner/partner_inline.jsx'
+import { PartnerInline } from '@artsy/reaction-force/dist/Components/Publishing'
 
 export class Header extends Component {
   static propTypes = {
@@ -31,6 +31,10 @@ export class Header extends Component {
         <PartnerInline
           url={partner_url}
           logo={partner_logo}
+          trackingData={{
+            type: 'external link',
+            destination_path: partner_url
+          }}
         />
 
         {!isMobile &&
