@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import React, { Component } from 'react'
 import { debounce } from 'lodash'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
@@ -71,6 +72,7 @@ export default class App extends Component {
             isVisible={showHeader}
             isOpen={this.props.activeSection}
           />
+
           <SeriesHeader // relative position always at content top
             activeSection={activeSection}
             curation={curation}
@@ -78,6 +80,18 @@ export default class App extends Component {
             isMobile={isMobile}
             onChangeSection={this.onChangeSection}
           />
+
+          {/* Gucci Tracking Pixel */}
+          <a href={`https://ad.doubleclick.net/ddm/jump/N32001.3019648ARTSY/B20483079.208849246;sz=1x1;ord${moment().unix()}=?`}>
+            <img
+              src={`https://ad.doubleclick.net/ddm/ad/N32001.3019648ARTSY/B20483079.208849246;sz=1x1;ord=${moment().unix()};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?`}
+              border='0'
+              width='1'
+              height='1'
+              alt='Advertisement'
+            />
+          </a>
+
           <GucciBody>
             {curation.sections.map((section, index) =>
               <div id={section.slug} key={'section-' + index}>
