@@ -97,7 +97,10 @@ export default class App extends Component {
               <div id={section.slug} key={'section-' + index}>
                 <Section
                   section={section}
-                  onScrollOver={() => this.setState({ activeSection: index })}
+                  onScrollOver={() => {
+                    this.setState({ activeSection: index })
+                    window.history.pushState({}, section.name, `/gender-equality/${section.slug}`)
+                  }}
                 />
               </div>
             )}
