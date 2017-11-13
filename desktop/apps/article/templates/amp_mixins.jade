@@ -116,7 +116,6 @@ mixin amp_head
   meta(charset='utf-8')
   title= article.get('search_title') || article.get('thumbnail_title')
   link(rel='canonical', href=article.fullHref())
-  //- link(type='text/css' rel='stylesheet' href='#{sd.WEBFONT_URL}/force-webfonts.css?a=b')
   include ./amp_fonts.jade
   meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
   script(type='application/ld+json')
