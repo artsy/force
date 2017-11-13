@@ -53,4 +53,19 @@ describe('AMP Templates', () => {
     html.should.containEql('"properties.articleSection": "Other"')
     html.should.containEql('<amp-analytics type="segment">')
   })
+
+  it('includes artsy-icon fonts and fonts.com link', () => {
+    const article = new Article(fixtures.article).set({ channel_id: null })
+    const html = render('amp_article')({
+      article,
+      crop: url => url,
+      resize: url => url,
+      moment: () => { },
+      asset: () => { },
+      sd: { WEBFONT_URL: 'https://webfonts.artsy.net' }
+    })
+    html.should.containEql('https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css')
+    html.should.containEql('https://webfonts.artsy.net/artsy-icons.eot?uo9ko')
+    html.should.containEql('<style type="text/css" class="amp-custom">')
+  })
 })
