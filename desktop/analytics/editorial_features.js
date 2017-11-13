@@ -13,9 +13,9 @@ if (location.pathname.indexOf('/2016-year-in-art') > -1) {
 
 if (location.pathname.indexOf('/gender-equality') > -1) {
   $(document.body).on('click', '.article__text-section a[href*="gucci"]', function () {
-    analytics.track('Clicked partner text link', {
+    analytics.track('Click', {
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
-      context_type: 'gucci_gender_equality'
+      type: 'external link'
     })
   })
 }
