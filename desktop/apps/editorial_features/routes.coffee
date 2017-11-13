@@ -46,9 +46,32 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
     cache: true
     error: next
     success: (curation) =>
+      videoIndex = setGucciVideoIndex(slug)
       res.locals.sd.CURATION = curation.toJSON()
-      res.locals.sd.VIDEO_INDEX = setGucciVideoIndex(slug)
+      res.locals.sd.VIDEO_INDEX = videoIndex
       res.locals.sd.IS_NESTED_PATH = slug?
+      if res.locals.sd.IS_NESTED_PATH
+        section = curation.get('sections')[videoIndex]
+        appendTitle = ' : ' + section.title
+        thumbnailImage = section.thumbnail_image
+        url = sd.APP_URL + '/gender-equality/' + slug
+        dateCreated = section.release_date
+      else
+        appendTitle = ''
+        thumbnailImage = curation.get('thumbnail_image')
+        url = sd.APP_URL + '/gender-equality'
+        dateCreated = curation.get('sections')[0].release_date
+      jsonLD = {
+        "@context": "http://schema.org"
+        "@type": "NewsArticle"
+        "headline": "Artists For Gender Equality" + appendTitle
+        "url": url
+        "thumbnailUrl": thumbnailImage
+        "dateCreated": dateCreated
+        "articleSection": 'Editorial'
+        "creator": 'Artsy Editorial'
+      }
+      res.locals.jsonLD = stringifyJSONForWeb jsonLD
       res.render 'components/gucci/templates/index',
         curation: curation
 
