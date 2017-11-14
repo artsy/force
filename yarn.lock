@@ -535,8 +535,8 @@ artsy-backbone-mixins@artsy/artsy-backbone-mixins:
     underscore "*"
 
 artsy-eigen-web-association@artsy/artsy-eigen-web-association:
-  version "1.0.6"
-  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/1f03d796075be6badf80e3500f82dfc83d3cbaae"
+  version "1.0.7"
+  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/917ef5db99d2ff753d6f96b35bde702d14db5f4d"
   dependencies:
     express "*"
 
