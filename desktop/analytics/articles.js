@@ -146,10 +146,4 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
       context_type: options.type
     })
   })
-
-  analyticsHooks.on('veniceBannerClick', function () {
-    analytics.track('Clicked Venice 2017 Banner link', {
-      context_type: 'venice_biennale_2017'
-    })
-  })
 }
