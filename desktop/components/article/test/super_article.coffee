@@ -14,7 +14,7 @@ sd = require('sharify').data
 
 describe 'SuperArticleView', ->
 
-  beforeEach (done) ->
+  beforeEach ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       window.resize = ->
@@ -26,24 +26,7 @@ describe 'SuperArticleView', ->
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
-      benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
-        footerArticles: new Backbone.Collection
-        slideshowArtworks: null
-        article: @article = new Article _.extend {}, fixtures.article,
-          author_id: '4d8cd73191a5c50ce210002a'
-          sections: []
-          super_article: new Article fixtures.article
-        superArticle: new Article fixtures.article
-        superSubArticles: new Articles [fixtures.article]
-        author: new Backbone.Model fabricate 'user'
-        asset: (->)
-        sd: APP_URL: 'http://artsy.net'
-        embed: require('particle')
-        moment: require('moment')
-        crop: ->
-        resize: sinon.stub()
-      }, =>
-        done()
+      $('body').html('<div class="article-sa-sticky-header"><div class="article-sa-sticky-related-container"></div></div><div class="article-content"></div>')
 
   afterEach ->
     benv.teardown()
@@ -60,13 +43,6 @@ describe 'SuperArticleView', ->
 
     afterEach ->
       Backbone.sync.restore()
-
-    xit 'sets defaults and caches selectors', ->
-      @view.$content.selector.should.equal '.article-content'
-
-    it '#setupSuperArticle', ->
-      @initCarousel.called.should.not.be.ok()
-      @view.$superArticleNavToc.html().should.containEql 'Back to the Magazine Homepage'
 
     it '#toggleHamburgerNav', ->
       @view.toggleHamburgerNav()
@@ -85,15 +61,12 @@ describe 'SuperArticleView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    xit 'sets defaults and caches selectors', ->
-      @view.$content.selector.should.equal '.article-content'
-
     it '#setupSuperArticle', ->
       @initCarousel.called.should.be.ok()
 
     it 'opens nav on mouseenter', ->
       @view.$stickyHeader.mouseenter()
-      @view.$superArticleNavToc.hasClass 'visible'
+      @view.$superArticleNavToc.hasClass('visible').should.be.true()
 
     it 'closes nav on mouseleave', ->
       @view.$stickyHeader.hover()

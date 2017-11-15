@@ -28,8 +28,6 @@ module.exports = class SuperArticleView extends Backbone.View
     @$window.on 'scroll', throttledScroll
     @$window.on 'resize', throttledResize
 
-    @$('footer').hide()
-
   onScroll: ->
     @hideNav() if @$superArticleNavToc.hasClass('visible')
 
@@ -65,9 +63,7 @@ module.exports = class SuperArticleView extends Backbone.View
   setWaypoints: ->
     return unless @$stickyHeader.length
 
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first, .article-body'
-
-    @$(".article-container[data-id=#{@article.get('id')}] #{selector}, .article-content").waypoint (direction) =>
+    @$(".article-content").waypoint (direction) =>
       if direction == 'down'
         @$stickyHeader.addClass 'visible'
       else unless @$stickyHeader.hasClass('no-transition')

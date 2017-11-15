@@ -12,14 +12,7 @@ modalize = require '../../modalize/index.coffee'
 initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
 Q = require 'bluebird-q'
 Sticky = require '../../sticky/index.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
-
-DATA =
-  sort: '-published_at'
-  published: true
-  tier: 1
-  channel_id: sd.ARTSY_EDITORIAL_CHANNEL
 
 module.exports = class ArticleView extends Backbone.View
 
@@ -32,12 +25,11 @@ module.exports = class ArticleView extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @following = new Following(null, kind: 'artist') if @user?
-    { @article, @seenArticleIds, @lushSignup } = options
+    { @article } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
     @loadedArtworks = @loadedImageHeights = false
     @sticky = new Sticky
-    @previousHref = options.previousHref
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
     @$articleContainer = $(".article-container[data-id=#{@article.get('id')}] .article-content")
@@ -179,7 +171,6 @@ module.exports = class ArticleView extends Backbone.View
           # Remove loading state
           $list.closest('.article-section-image-collection').addClass 'images-loaded'
 
-
   imgsFillContainer: (imgs, $container, gutter) =>
     getWidth = _.map imgs, (img) -> img.width
     imgsWidth = _.reduce(getWidth, (a, b) ->
@@ -241,7 +232,7 @@ module.exports = class ArticleView extends Backbone.View
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
     resizeVideo = ->
-      newHeight = @windowheight - 100
+      newHeight = @windowHeight - 100
       $videos.each ->
         $el = $(this)
         $parent = $el.parent()

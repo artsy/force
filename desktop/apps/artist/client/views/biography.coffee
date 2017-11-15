@@ -18,7 +18,6 @@ module.exports = class BiographyView extends Backbone.View
     @$el.html template
       article: @articles.first()
       hideShare: true
-      hideSubscribe: true
       resize: resize
       embed: embed
       moment: moment
