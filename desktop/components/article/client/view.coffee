@@ -204,7 +204,7 @@ module.exports = class ArticleView extends Backbone.View
               $container = imgs[0].$el.closest('.article-section-image-set__images')
               imgsWidth = @imgsFillContainer(imgs, $container, 5).imgsWidth
         else
-          $(imgs).children().each (i, img)->
+          $(imgs).children().each (i, img) ->
             $(img).css({'width':'auto', 'height':'150px'})
 
   checkEditable: ->

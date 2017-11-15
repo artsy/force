@@ -157,14 +157,16 @@ describe 'ArticleView', ->
       @view.refreshWindowSize()
       @setupMaxImageHeights.callCount.should.equal 1
 
-  xdescribe '#resetImageSetPreview', ->
+  describe '#resetImageSetPreview', ->
 
     it 'on large screens, images are full height', ->
+      @view.windowWidth = 900
+      @view.resetImageSetPreview()
       @view.$('.article-section-image-set__image-container').height().should.equal 150
 
     it 'on small screens, resets image sizes for imageset previews', ->
       @view.windowWidth = 600
-      @imgsFillContainer.callCount.should.be.above 1
+      @imgsFillContainer.callCount.should.equal 1
 
   describe '#imgsFillContainer', ->
     it 'returns true if images are narrower than their container', ->
