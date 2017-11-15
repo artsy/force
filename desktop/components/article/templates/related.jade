@@ -1,7 +1,0 @@
-h4 What to Read Next
-ul.grid-3-up
-  for article in related
-    li.grid-item
-      a( href="/article/#{article.get('slug')}" )
-        img( src=crop(article.get('thumbnail_image'), { height: 100, width: 100 }) )
-        p= article.get('thumbnail_title')
