@@ -45,7 +45,7 @@
         label: $(this).text(),
         flow: 'artworks',
         context_module: 'artwork metadata',
-        destination_path: $(this).attr('href')
+        destination_path: $(this).attr('href') // perhaps import sd so we can remove the domain?
       })
     })
 
