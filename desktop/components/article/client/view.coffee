@@ -4,32 +4,15 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 CurrentUser = require '../../../models/current_user.coffee'
-Article = require '../../../models/article.coffee'
 Artist = require '../../../models/artist.coffee'
-Articles = require '../../../collections/articles.coffee'
 ShareView = require '../../share/view.coffee'
-CTABarView = require '../../cta_bar/view.coffee'
 ImageSetView = require './image_set.coffee'
-SuperArticleView = require './super_article.coffee'
-FullscreenView = require './fullscreen.coffee'
 modalize = require '../../modalize/index.coffee'
 { Following, FollowButton } = require '../../follow_button/index.coffee'
 initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
 Q = require 'bluebird-q'
-{ crop } = require '../../resizer/index.coffee'
-blurb = require '../../gradient_blurb/index.coffee'
 Sticky = require '../../sticky/index.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-JumpView = require '../../jump/view.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
-relatedTemplate = -> require('../templates/related.jade') arguments...
-calloutTemplate = -> require('../templates/callout.jade') arguments...
-
-DATA =
-  sort: '-published_at'
-  published: true
-  tier: 1
-  channel_id: sd.ARTSY_EDITORIAL_CHANNEL
 
 module.exports = class ArticleView extends Backbone.View
 
@@ -38,18 +21,15 @@ module.exports = class ArticleView extends Backbone.View
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
-    'click .article-section-toc-link a': 'jumpSmooth'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @following = new Following(null, kind: 'artist') if @user?
-    { @article, @gradient, @waypointUrls, @seenArticleIds, @lushSignup } = options
+    { @article } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
     @loadedArtworks = @loadedImageHeights = false
     @sticky = new Sticky
-    @jump = new JumpView
-    @previousHref = options.previousHref
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
     @$articleContainer = $(".article-container[data-id=#{@article.get('id')}] .article-content")
@@ -57,7 +37,6 @@ module.exports = class ArticleView extends Backbone.View
     # Render sections
     @renderSlideshow()
     @resizeImages(@doneResizingImages)
-    @setupFooterArticles()
     @setupStickyShare()
     @setupMobileShare()
     @setupFollowButtons()
@@ -65,18 +44,12 @@ module.exports = class ArticleView extends Backbone.View
     @resetImageSetPreview()
     if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
       @setupMarketoStyles()
-    @renderCalloutSections()
 
     # Resizing
     @sizeVideo()
     @embedMobileHeight()
     $(window).resize(_.debounce(@refreshWindowSize, 100))
-    @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
-    # FS and Super Article setup
-    if ($header = @$('.article-fullscreen')).length
-      new FullscreenView el: @$el, article: @article, header: $header
-    if sd.SUPER_SUB_ARTICLES?.length > 0 or @article.get('is_super_article')
-      new SuperArticleView el: @$el, article: @article
+    @$('.article-section-container a:not(.artist-follow)').attr('target', '_blank')
 
     # Utility
     @checkEditable()
@@ -84,9 +57,6 @@ module.exports = class ArticleView extends Backbone.View
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
-    else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
-      @addReadMore() if @gradient
-      @setupWaypointUrls() if @waypointUrls and not @gradient
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
@@ -149,11 +119,6 @@ module.exports = class ArticleView extends Backbone.View
     @modal.view.$el.addClass 'image-set-container'
     @modal.open()
 
-  jumpSmooth: (e) ->
-    e.preventDefault()
-    name = $(e.currentTarget).attr('href').substring(1)
-    @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
-
   resizeImages: (cb=->) =>
     imageSections = $('.article-section-image-collection ul')
     for section in imageSections
@@ -206,7 +171,6 @@ module.exports = class ArticleView extends Backbone.View
           # Remove loading state
           $list.closest('.article-section-image-collection').addClass 'images-loaded'
 
-
   imgsFillContainer: (imgs, $container, gutter) =>
     getWidth = _.map imgs, (img) -> img.width
     imgsWidth = _.reduce(getWidth, (a, b) ->
@@ -225,7 +189,6 @@ module.exports = class ArticleView extends Backbone.View
     @resizeImages()
     @resetImageSetPreview()
     @embedMobileHeight()
-    @addReadMore() if @gradient
 
   resetImageSetPreview: =>
     $('.article-section-image-set__images').each (i, container) =>
@@ -241,7 +204,7 @@ module.exports = class ArticleView extends Backbone.View
               $container = imgs[0].$el.closest('.article-section-image-set__images')
               imgsWidth = @imgsFillContainer(imgs, $container, 5).imgsWidth
         else
-          $(imgs).children().each (i, img)->
+          $(imgs).children().each (i, img) ->
             $(img).css({'width':'auto', 'height':'150px'})
 
   checkEditable: ->
@@ -269,7 +232,7 @@ module.exports = class ArticleView extends Backbone.View
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
     resizeVideo = ->
-      newHeight = @windowheight - 100
+      newHeight = @windowHeight - 100
       $videos.each ->
         $el = $(this)
         $parent = $el.parent()
@@ -312,93 +275,3 @@ module.exports = class ArticleView extends Backbone.View
     $(@$el).waypoint (direction) =>
       if direction is 'down'
         @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')
-
-  setupFooterArticles: =>
-    # Do not render footer articles if the article has related articles (is/is in a super article)
-    if sd.SCROLL_ARTICLE is 'infinite' and sd.SUPER_SUB_ARTICLES?.length < 1 and not @lushSignup
-      Q.allSettled([
-        (tagRelated = new Articles).fetch
-          data: _.extend _.clone DATA,
-            tags: if @article.get('tags')?.length then @article.get('tags') else [null]
-        (artistRelated = new Articles).fetch
-          data: _.extend _.clone DATA,
-            artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
-        (feed = new Articles).fetch
-          data: _.extend _.clone DATA,
-            limit: 20
-      ]).then =>
-        safeRelated = _.union tagRelated.models, artistRelated.models, feed.models
-        safeRelated = _.reject safeRelated, (a) =>
-            a.get('id') is @article.get('id') or _.contains @seenArticleIds, a.get('id')
-        $(".article-related-widget[data-id=#{@article.get('id')}]").html relatedTemplate
-          related: _.shuffle safeRelated.slice(0,3)
-          crop: crop
-    else
-      $(".article-related-widget[data-id=#{@article.get('id')}]").remove()
-
-  addReadMore: =>
-    if @windowWidth > 550
-      maxTextHeight = 405 # line-height * line-count
-    else
-      maxTextHeight = 500
-    limit = 0
-    textHeight = 0
-
-    # Computes the height of the div where the blur should begin
-    # based on the line count excluding images and video
-    imagesLoaded $(".article-container[data-id=#{@article.get('id')}] .article-content"), =>
-      for section in $(".article-container[data-id=#{@article.get('id')}] .article-content").children()
-        if $(section).children().hasClass('article-section-text')
-          textHeight = textHeight + $(section).children().height()
-        if textHeight >= maxTextHeight
-          limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
-          blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"),
-            limit: limit
-            afterApply: =>
-              @sticky.rebuild()
-              @setupWaypointUrls() if @waypointUrls
-              @setupMobileShare()
-            onClick: =>
-              @sticky.rebuild()
-              $.waypoints 'refresh'
-              @setupMobileShare()
-              analyticsHooks.trigger 'readmore', {urlref: @previousHref || ''}
-          break
-
-  setupWaypointUrls: =>
-    editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-    @$container = $(".article-container[data-id=#{@article.get('id')}] .article-content")
-    $(@$container).waypoint (direction) =>
-      if direction is 'down'
-        # Set the pageview
-        window.history.replaceState {}, @article.get('id'), @article.href()
-        # Update Edit button
-        $('.article-edit-container a').attr 'href', editUrl
-    $(@$container).waypoint (direction) =>
-      if direction is 'up'
-        # Setup the pageview
-        window.history.replaceState {}, @article.get('id'), @article.href()
-        # Update Edit button
-        $('.article-edit-container a').attr 'href', editUrl
-    , { offset: 'bottom-in-view' }
-
-  renderCalloutSections: =>
-    calloutSections = _.filter @article.get('sections'), (section) -> section.type is 'callout'
-    ids = _.pluck(calloutSections, 'article')
-
-    if sd.ARTICLE?.id is @article.get('id') or not ids.length
-      @loadedCallouts = true
-      @maybeFinishedLoading()
-      return
-
-    new Articles().fetch
-      data: ids: ids
-      success: (articles) =>
-        for section in calloutSections
-          if section.article
-            @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
-              section: section
-              calloutArticles: articles
-              crop: crop
-        @loadedCallouts = true
-        @maybeFinishedLoading()

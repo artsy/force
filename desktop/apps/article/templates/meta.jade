@@ -57,8 +57,8 @@ if article.published && article.email_metadata
     meta( name='sailthru.credit_line' content=email.credit_line)
   if email.image_url
     - var src = email.image_url
-    meta( name='sailthru.image.full' content=crop(src, { width: 1200, height: 706 } ))
-    meta( name='sailthru.image.thumb' content=crop(src, { width: 900, height: 530 } ))
+    meta( name='sailthru.image.full' content=crop(src, { width: 1200, height: 800 } ))
+    meta( name='sailthru.image.thumb' content=crop(src, { width: 600, height: 400 } ))
   - var sailthru_keywords = ['article']
   if article.featured === true
     - sailthru_keywords = sailthru_keywords.concat(['magazine'])
@@ -80,5 +80,8 @@ if !article.indexable
   meta( name='robots', content='noindex' )
 
 //- Slick styles
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"/>
+link( rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css")
+link( rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css")
+
+//- Set Viewport scale
+meta( name="viewport", content="width=device-width, initial-scale=1.0" )

@@ -25,7 +25,7 @@ describe 'ArticleView', ->
       $.fn.fillwidthLite = sinon.stub().yieldsTo('done', [{ $el: $('img') }])
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../client/view')
-        ['editTemplate', 'calloutTemplate', 'relatedTemplate' ]
+        ['editTemplate' ]
       )
       stubChildClasses @ArticleView, this,
         ['initCarousel']
@@ -81,65 +81,6 @@ describe 'ArticleView', ->
                   }]
                 }
               ]
-            },
-            {
-              type: 'artworks',
-              ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
-              layout: 'overflow_fillwidth',
-              artworks: [
-                {
-                  type: 'artwork'
-                  id: '5321b73dc9dc2458c4000196'
-                  slug: "govinda-sah-azad-in-between-1",
-                  date: "2015",
-                  title: "In Between",
-                  image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
-                  partner: {
-                    name: "October Gallery",
-                    slug: "october-gallery"
-                  },
-                  artists: [{
-                    name: "Govinda Sah 'Azad'",
-                    slug: "govinda-sah-azad"
-                  }]
-                },{
-                  type: 'artwork'
-                  id: '5321b71c275b24bcaa0001a5'
-                  slug: "govinda-sah-azad-in-between-2",
-                  date: "2015",
-                  title: "In Between 2",
-                  image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ2/larger.jpg",
-                  partner: {
-                    name: "October Gallery",
-                    slug: "october-gallery"
-                  },
-                  artists: [{
-                    name: "Govinda Sah 'Azad'",
-                    slug: "govinda-sah-azad"
-                  }]
-                }
-              ]
-            },
-            {
-              type: 'embed',
-              layout: 'overflow',
-              url: 'http://files.artsy.net/data.pdf',
-              height: '600'
-              mobile_height: '1100'
-            },
-            {
-              type: 'callout',
-              article: '54276766fd4f50996aeca2b8',
-              text: '',
-              title: ''
-              hide_image: false
-            },
-            {
-              type: 'callout',
-              article: null,
-              text: 'This is a text only callout',
-              title: ''
-              hide_image: false
             }
           ]
         author: new Backbone.Model fabricate 'user'
@@ -210,45 +151,25 @@ describe 'ArticleView', ->
 
     it 'calls fillwidth on images', ->
       @view.refreshWindowSize()
-      @fillwidth.callCount.should.be.above 1
+      @fillwidth.callCount.should.equal 1
 
     it 'calls setupMaxImageHeights on single images', ->
       @view.refreshWindowSize()
-      @setupMaxImageHeights.callCount.should.be.above 1
+      @setupMaxImageHeights.callCount.should.equal 1
 
-  describe '#embedMobileHeight', ->
-
-    it 'sets iframe height to desktop height on large screens', ->
-      @view.windowWidth = 1250
-      @view.embedMobileHeight()
-      @view.$el.find('iframe').height().should.equal 600
-
-    it 'sets iframe height to mobile height on small screens', ->
-      @view.windowWidth = 400
-      @view.embedMobileHeight()
-      @view.$el.find('iframe').height().should.equal 1100
-
-  xdescribe '#resetImageSetPreview', ->
+  describe '#resetImageSetPreview', ->
 
     it 'on large screens, images are full height', ->
+      @view.windowWidth = 900
+      @view.resetImageSetPreview()
       @view.$('.article-section-image-set__image-container').height().should.equal 150
 
     it 'on small screens, resets image sizes for imageset previews', ->
       @view.windowWidth = 600
-      @imgsFillContainer.callCount.should.be.above 1
+      @imgsFillContainer.callCount.should.equal 1
 
   describe '#imgsFillContainer', ->
     it 'returns true if images are narrower than their container', ->
       container = @view.$('.article-section-artworks ul').width(1400)
       imgsFillContainer = @view.imgsFillContainer([{width: 600}, {width:700}], container, 5)
       imgsFillContainer.isFilled.should.equal true
-
-  describe '#renderCalloutSections', ->
-
-    it 'renders callouts without articles', ->
-      @view.$el.html().should.containEql 'This is a text only callout'
-
-    it 'renders callouts with articles', ->
-      articles = [_.extend({}, fixtures.article, { thumbnail_title: 'callout article' })]
-      Backbone.sync.args[0][2].success results: articles
-      @view.$el.html().should.containEql 'callout article'

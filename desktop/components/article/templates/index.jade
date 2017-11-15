@@ -2,16 +2,9 @@ include ../../article_figure/mixin
 include ./share
 include ./mixins
 
-//- Super article header needs to be outside the article-container
-if superArticle
-  include ./super_article_sticky_header.jade
-
 .article-container(data-id=article.get('id'))
 
-  if article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
-    +fullscreen(article)
-
-  .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
+  .article-content
 
     .main-layout-container.first(data-section-type='hero')
       //- Article lead content
@@ -49,32 +42,12 @@ if superArticle
         case section.type
           when 'text'
             .article-section-text!= section.body
-          when 'artworks'
-            .article-section-image-collection( data-layout=section.layout )
-              ul
-                for artwork in section.artworks
-                  +artwork(artwork)
-          when 'image'
-            .article-section-image-collection( data-layout="#{section.layout ? section.layout : 'overflow_fillwidth'}" )
-              ul
-                +image(section)
           when 'video'
             .article-section-video( class="article-video-background-" + section.background_color )
               +video(section)
           when 'embed'
             .article-section-embed( data-layout=section.layout )
               +embed(section)
-          when 'callout'
-            if section.article && section.article.length > 0
-              +callout(section)
-            else if section.text && section.text.length > 0
-              +pullquote(section)
-            else if section.top_stories
-              +topStories
-          when 'toc'
-            if section.links.length > 0
-              .article-section-toc
-                +toc(section)
           when 'image_set'
             if section.images.length > 0
               .article-section-image-set( data-index= i )
@@ -91,17 +64,6 @@ if superArticle
           h2.article-social__header Share article
           +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
-    if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('featured') === true && !hideSubscribe && !lushSignup
-      .main-layout-container.article-es.article-subscribe__es
-        include ./editorial_signup.jade
     if channel && channel.id === sd.GALLERY_INSIGHTS_CHANNEL
       .responsive-layout-container.article-gi.article-subscribe__gi
         include ./gi_signup.jade
-
-  .responsive-layout-container
-    if superArticle
-      include ./super_article_footer.jade
-
-.responsive-layout-container
-  .articles-featured-articles.article-related-widget( data-id = article.get('id') )
-    //- Rendered on client

@@ -15,9 +15,6 @@ body.body-article
     margin-left 0px
     margin-right 0px
     max-width 100vw
-    .jump-to-top
-      @media screen and (max-width 900px)
-        display none
 
 .article-header.responsive-layout-container
   @media screen and (max-width 550px)
@@ -347,96 +344,3 @@ body.body-article
     border-color black
   i
     vertical-align middle
-
-.article-section-callout
-  max-width 580px
-  margin 0 auto
-  .related-title
-    avant-garde-size('body')
-  a
-    display flex
-    align-items center
-    text-decoration none
-    border 1px solid gray-lighter-color
-    transition border-color 0.3s
-    padding 15px
-    margin-top 10px
-    garamond-size('l-body')
-    &.no-image
-      border none
-      padding 0
-    img
-      max-width 120px
-      margin-right 20px
-    &:hover
-      border-color gray-dark-color
-  &__pullquote
-    margin 20px auto
-    padding 15px 0px
-    max-width 750px
-    garamond-size('l-headline')
-    text-align center
-
-.article-section-top-stories
-  float right
-  width 415px
-  margin 0px 74px 20px 20px
-  &__headline
-    avant-garde-size('body')
-    padding 10px
-    border 1px solid gray-lighter-color
-  &__item
-    display flex
-    garamond-size('s-body')
-    padding 20px 20px
-    border 1px solid gray-lighter-color
-    &:first-child
-      border-top 0px
-      border-bottom 0px
-    &:last-child
-      border-top 0px
-    &:hover
-      transition background-color 0.25s
-      background-color gray-lightest-color
-  img
-    width 80px
-    height 60px
-    margin-right 10px
-  p, img
-    display inline-block
-    vertical-align middle
-  p
-    max-width 275px
-
-.article-content.gradient-blurb
-  .gradient-blurb-read-more-container
-    width 100%
-    height 32px
-    z-index 2
-    .gradient-blurb-read-more
-      padding 8px 29px
-      z-index 1
-      avant-garde-size(s-headline)
-      position absolute
-      left 50%
-      top 50%
-      transform translate(-50%, -50%)
-      background-color white
-      border 1px solid gray-lighter-color
-      @media screen and (max-width 600px)
-        border none
-        avant-garde-size('m-headline')
-        text-decoration underline
-        line-height 1.5em
-
-    &::before
-      content ''
-      position absolute
-      bottom 50%
-      left 0
-      right 0
-      border-bottom 2px dotted gray-lighter-color
-      max-width column-width
-      margin auto
-      @media screen and (max-width 600px)
-        border none

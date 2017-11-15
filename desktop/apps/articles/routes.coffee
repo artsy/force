@@ -61,7 +61,7 @@ setupEmailSubscriptions = (user, cb) ->
         success: (articles) ->
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.SECTION = section.toJSON()
-          res.render 'section', section: section, articles: articles, veniceBanner: true
+          res.render 'section', section: section, articles: articles
 
 @teamChannel = (req, res, next) ->
   slug = req.path.split('/')[1]

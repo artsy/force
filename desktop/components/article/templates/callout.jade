@@ -1,8 +1,0 @@
-if calloutArticles
-  - var calloutArticle = calloutArticles.findWhere({id: section.article})
-  if calloutArticle
-    .related-title Related Article
-    a(class=(section.hide_image ? 'no-image' : '') href=(calloutArticle.href()))
-      if !section.hide_image
-        img( src= crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 180, height: 120 }) )
-      .article-section-callout__title= section.text ? section.text : calloutArticle.get('thumbnail_title')
