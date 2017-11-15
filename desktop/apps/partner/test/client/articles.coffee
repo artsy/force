@@ -26,7 +26,7 @@ describe 'ArticlesAdapter', ->
         (resolve __dirname, '../../../../components/articles_grid/view'), ['template', 'button', 'figure', 'empty']
       )
       @ArticleView = benv.requireWithJadeify(
-        (resolve __dirname, '../../../../components/article/client/view'), ['editTemplate', 'relatedTemplate']
+        (resolve __dirname, '../../../../components/article/client/view'), ['editTemplate']
       )
       @ArticleView.__set__ 'initCarousel', sinon.stub()
       sinon.stub @ArticleView::, 'fillwidth'

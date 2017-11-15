@@ -1,8 +1,6 @@
 @require '../../stylus_lib'
 
-.article-section-container.responsive-layout-container[data-section-type="image_collection"],
-.responsive-layout-container.article-section-container[data-section-type="artworks"],
-.article-section-container.responsive-layout-container[data-section-type="image"]
+.article-section-container.responsive-layout-container[data-section-type="image_collection"]
   @media screen and (max-width 1250px)
     &[data-layout=overflow_fillwidth]
       margin 45px 75px
@@ -13,14 +11,6 @@
       max-width 100vw
   @media screen and (max-width 550px)
     margin 20px auto
-
-.article-section-container.responsive-layout-container[data-section-type="image"]
-  @media screen and (max-width 1250px)
-    margin 45px 75px
-    max-width calc(100vw \- 150px)
-  @media screen and (max-width 900px)
-    margin 45px auto
-    max-width 100vw
 
 .article-section-image-collection
   width 100%

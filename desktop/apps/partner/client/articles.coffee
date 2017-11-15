@@ -38,7 +38,6 @@ module.exports = class ArticlesAdapter
         @el.html articleTemplate
           article: article
           hideShare: true
-          hideSubscribe: true
           resize: resize
           embed: embed
           moment: moment

@@ -76,7 +76,6 @@ fetchArticle = (articleParam, req, res, next) ->
         resize: resize,
         article: articles.first(),
         hideShare: true,
-        hideSubscribe: true
 
 @info = (req, res) ->
   res.redirect 'info/visitors'

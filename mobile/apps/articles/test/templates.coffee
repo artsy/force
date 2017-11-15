@@ -55,17 +55,3 @@ describe 'section template', ->
 
     $ = cheerio.load html
     $('.articles-section-header__banner a').attr('href').should.equal 'www.foobar.com'
-
-  it 'renders the Venice 2017 banner', ->
-    @Articles = new Articles
-    @Articles.model = Article
-    @Articles.add([_.extend(_.clone(fixtures.article), slug: 'foobar')])
-
-    html = render('section')
-      articles: @Articles
-      crop: (url) -> url
-      sd: {}
-      asset: ->
-      veniceBanner: true
-      featuredSection: new Section
-    html.should.containEql 'venice-redirect-banner--articles'

@@ -22,58 +22,6 @@ mixin video(video)
     if video.caption
       figcaption!= video.caption
 
-mixin fullscreen(article)
-  figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
-    - var url = article.get('hero_section').url
-    if url && url.indexOf('mp4') > -1
-      .article-fullscreen__overlay
-      video.article-fullscreen__video-player( src=url, autoplay=true, controls=false, loop=true muted playsinline)
-    else
-      .article-fullscreen__overlay
-      img.article-fullscreen__image(
-        src=resize(url, { height: 1250, width: 1250 })
-        alt=article.get('title')
-      )
-
-    .main-layout-container.article-fullscreen__container
-      if superArticle
-        .article-sa-fullscreen-logos
-          if superArticle
-            +superArticleLogos(superArticle)
-
-      .article-fullscreen__content
-        .article-fullscreen__text
-          if article.get('hero_section').title
-            .article-fullscreen__title= article.get('title')
-          .article-fullscreen__author-date
-            if article.get('contributing_authors').length > 0
-              = "By " + article.byline()
-            else
-              = "By " + article.related().author.get('name')
-            span
-              = article.date('published_at').format('MMM Do, YYYY h:mm a')
-
-        .article-fullscreen__share(data-id=article.get('id'))
-          +share( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref(), true)
-
-mixin superArticleLogos(article)
-  .article-sa-primary-logos
-    a( href="/" ).article-sa-artsy-logo.icon-logotype
-    if article.get('super_article').partner_logo && article.get('super_article').partner_logo_link
-      .article-sa-plus-container
-        .article-sa-plus.icon-close
-        .article-sa-primary-logo
-          a( href=article.get('super_article').partner_logo_link )
-            img( src=article.get('super_article').partner_fullscreen_header_logo alt='partner logo')
-
-mixin callout(section)
-  .article-section-callout(data-id=section.article)
-    include ./callout
-
-mixin pullquote(section)
-  .article-section-callout
-    .article-section-callout__pullquote= section.text
-
 mixin imageSet(section)
   .article-section-image-set__images
     for item, i in section.images.slice(0,3)
@@ -84,16 +32,6 @@ mixin imageSet(section)
     .article-section-image-set__icon(data-total="#{section.images.length}" class=section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
     .article-section-image-set__text Enter Slideshow
-
-mixin topStories
-  .article-section-top-stories
-    .article-section-top-stories__headline Top Stories on Artsy
-    ul.article-section-top-stories__list
-      for article in sd.PARSELY_ARTICLES.slice(0,3)
-        li.article-section-top-stories__item
-          a( href=article.url )
-            img( src=crop(article.image_url, { height: 180, width: 240 }) )
-            p= article.title
 
 mixin embed(section)
   .article-embed-container

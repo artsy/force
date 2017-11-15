@@ -20,7 +20,6 @@ module.exports = class SuperArticleView extends Backbone.View
   setupSuperArticle: ->
     @setStickyNav()
     @setWaypoints()
-    @maybeAddEoyClass() #2016-year-in-art
 
     # Throttle scroll and resize
     throttledScroll = _.throttle((=> @onScroll()), 100)
@@ -28,8 +27,6 @@ module.exports = class SuperArticleView extends Backbone.View
      100)
     @$window.on 'scroll', throttledScroll
     @$window.on 'resize', throttledResize
-
-    @$('footer').hide()
 
   onScroll: ->
     @hideNav() if @$superArticleNavToc.hasClass('visible')
@@ -66,9 +63,7 @@ module.exports = class SuperArticleView extends Backbone.View
   setWaypoints: ->
     return unless @$stickyHeader.length
 
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first, .article-body'
-
-    @$(".article-container[data-id=#{@article.get('id')}] #{selector}, .article-content").waypoint (direction) =>
+    @$(".article-content").waypoint (direction) =>
       if direction == 'down'
         @$stickyHeader.addClass 'visible'
       else unless @$stickyHeader.hasClass('no-transition')
@@ -80,16 +75,3 @@ module.exports = class SuperArticleView extends Backbone.View
     else
       @$superArticleNavToc.css 'height', '100vh'
       @$body.addClass 'is-open'
-
-  maybeAddEoyClass: ->
-    return unless sd.SUPER_SUB_ARTICLE_IDS
-    if @article.isEOYSubArticle(sd.SUPER_SUB_ARTICLE_IDS, sd.SUPER_ARTICLE)
-      $('.article-section-container[data-section-type=text]').each ->
-        if $(@).has('h2,h3').length and not $(@).has('p').length
-          $(@).addClass('eoy-border')
-          if $(@).prev().data('sectionType') is 'image'
-            $(@).prev().addClass 'eoy-border-no-bottom'
-            $(@).addClass('eoy-border-no-top')
-          if $(@).next().data('sectionType') is 'image'
-            $(@).addClass('eoy-border-no-bottom')
-            $(@).next().addClass 'eoy-border-no-top'
