@@ -28,7 +28,6 @@ module.exports = class ArticleView extends Backbone.View
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
-    'click .article-section-toc-link a': 'jumpSmooth'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
@@ -46,7 +45,6 @@ module.exports = class ArticleView extends Backbone.View
     # Render sections
     @renderSlideshow()
     @resizeImages(@doneResizingImages)
-    @setupFooterArticles()
     @setupStickyShare()
     @setupMobileShare()
     @setupFollowButtons()
@@ -59,7 +57,7 @@ module.exports = class ArticleView extends Backbone.View
     @sizeVideo()
     @embedMobileHeight()
     $(window).resize(_.debounce(@refreshWindowSize, 100))
-    @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
+    @$('.article-section-container a:not(.artist-follow)').attr('target', '_blank')
 
     # Utility
     @checkEditable()
@@ -128,11 +126,6 @@ module.exports = class ArticleView extends Backbone.View
       dimensions: width: '100vw', height: '100vh'
     @modal.view.$el.addClass 'image-set-container'
     @modal.open()
-
-  jumpSmooth: (e) ->
-    e.preventDefault()
-    name = $(e.currentTarget).attr('href').substring(1)
-    @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
   resizeImages: (cb=->) =>
     imageSections = $('.article-section-image-collection ul')
