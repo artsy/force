@@ -23,7 +23,7 @@ function Banner (props) {
       label: 'enter live auction',
       flow: 'auctions',
       context_module: 'auction banner',
-      destination_path: liveAuctionUrl.replace(sd.PREDICTION_URL, '/')
+      destination_path: liveAuctionUrl.replace(sd.PREDICTION_URL, '')
     })
   }
 
