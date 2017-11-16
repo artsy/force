@@ -1,7 +1,7 @@
 .past-fairs--fair-image-grid
   a(href=fair.href())
     .past-fairs--fair-image-grid__inner
-      .fair-large-image-left( style="background-image: url(#{fair.representation.first().imageUrl('large_square')});" )
+      .fair-large-image-left( style="background-image: url(#{fair.imageUrl('large_rectangle')});" )
       .fair-small-images-right
         if fair.representation
           - var representations = fair.representation.slice(1,3)
