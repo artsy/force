@@ -46,7 +46,7 @@ import { data as sd } from 'sharify'
         label: $(this).text(),
         flow: 'artworks',
         context_module: 'artwork metadata',
-        destination_path: $(this).attr('href') // perhaps import sd so we can remove the domain?
+        destination_path: $(this).attr('href').replace(sd.PREDICTION_URL, '/')
       })
     })
 
