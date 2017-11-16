@@ -4,6 +4,7 @@ import React from 'react'
 import block from 'bem-cn'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
+import { data as sd } from 'sharify'
 
 function Banner (props) {
   const {
@@ -15,6 +16,16 @@ function Banner (props) {
     liveAuctionUrl,
     name
   } = props
+
+  const trackEnterLive = () => {
+    window.analytics.track('click', {
+      type: 'button',
+      label: 'enter live auction',
+      flow: 'auctions',
+      context_module: 'auction banner',
+      destination_path: liveAuctionUrl.replace(sd.PREDICTION_URL, '')
+    })
+  }
 
   const b = block('auction-Banner')
 
@@ -35,7 +46,7 @@ function Banner (props) {
                 Live Bidding Now Open
               </h1>
 
-              <a href={liveAuctionUrl} className='avant-garde-button-white'>
+              <a onClick={trackEnterLive} href={liveAuctionUrl} className='avant-garde-button-white'>
                 Enter live auction
               </a>
             </div>
