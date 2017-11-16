@@ -1,3 +1,4 @@
+import { data as sd } from 'sharify'
 (function () {
   'use strict'
 
@@ -39,6 +40,15 @@
         context_type: context.context_type
       })
     })
+    .on('click', '.artwork-auction__live-button a', function () {
+      analytics.track('click', {
+        type: 'button',
+        label: $(this).text(),
+        flow: 'artworks',
+        context_module: 'artwork metadata',
+        destination_path: $(this).attr('href').replace(sd.PREDICTION_URL, '/')
+      })
+    })
 
   analyticsHooks
     .on('artwork:contact-gallery', function (context) {
@@ -54,4 +64,3 @@
       analytics.track("Showed 'Confirm registration on artwork page'", { nonInteraction: 1 })
     })
 })()
-
