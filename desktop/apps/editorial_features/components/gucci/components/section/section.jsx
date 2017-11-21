@@ -21,6 +21,7 @@ export const Section = (props) => {
       <Waypoint
         onEnter={(waypointData => onEnterSection(index, waypointData))}
         onLeave={(waypointData => onLeaveSection(index, waypointData))}
+        bottomOffset='50px'
       />
     </SectionContainer>
   )
@@ -40,7 +41,7 @@ const SectionContainer = styled.div`
     justify-content: space-between;
   }
   ${pMedia.sm`
-    padding-top: 140px;
+    padding-top: 220px;
     margin-bottom: 0;
     .col--first {
       margin-bottom: 40px;
