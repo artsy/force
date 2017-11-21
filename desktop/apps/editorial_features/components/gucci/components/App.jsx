@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import React, { Component } from 'react'
 import { debounce } from 'lodash'
 import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
@@ -58,56 +57,71 @@ export default class App extends Component {
     document.getElementById(section.slug).scrollIntoView()
   }
 
+  onEnterSection = (index, { previousPosition, currentPosition }) => {
+    const section = this.props.curation.sections[index]
+    if (
+      previousPosition === 'above' &&
+      currentPosition === 'inside'
+    ) {
+      this.setState({ activeSection: index })
+      document.title = section.title
+      window.history.pushState({}, section.title, `/gender-equality/${section.slug}`)
+    }
+  }
+
+  onLeaveSection = (index, { previousPosition, currentPosition }) => {
+    const nextSection = this.props.curation.sections[index + 1]
+    if (
+      nextSection &&
+      previousPosition === 'inside' &&
+      currentPosition === 'above'
+    ) {
+      this.setState({ activeSection: index + 1 })
+      document.title = nextSection.title
+      window.history.pushState({}, nextSection.title, `/gender-equality/${nextSection.slug}`)
+    }
+  }
+
   render () {
     const { curation } = this.props
     const { activeSection, isMobile, showHeader } = this.state
 
     return (
-        <div className='gucci'>
-          <FixedHeader // fixed position shows on scroll
-            activeSection={activeSection}
+      <div className='gucci'>
+        <FixedHeader // fixed position shows on scroll
+          activeSection={activeSection}
+          curation={curation}
+          onChangeSection={this.onChangeSection}
+          isMobile={isMobile}
+          isVisible={showHeader}
+          isOpen={this.props.activeSection}
+        />
+
+        <SeriesHeader // relative position always at content top
+          activeSection={activeSection}
+          curation={curation}
+          inBody={this.inBody}
+          isMobile={isMobile}
+          onChangeSection={this.onChangeSection}
+        />
+
+        <GucciBody>
+          {curation.sections.map((section, index) =>
+            <div id={section.slug} key={'section-' + index}>
+              <Section
+                section={section}
+                index={index}
+                onEnterSection={this.onEnterSection}
+                onLeaveSection={this.onLeaveSection}
+              />
+            </div>
+          )}
+          <SeriesFooter
             curation={curation}
-            onChangeSection={this.onChangeSection}
             isMobile={isMobile}
-            isVisible={showHeader}
-            isOpen={this.props.activeSection}
           />
-
-          <SeriesHeader // relative position always at content top
-            activeSection={activeSection}
-            curation={curation}
-            inBody={this.inBody}
-            isMobile={isMobile}
-            onChangeSection={this.onChangeSection}
-          />
-
-          {/* Gucci Tracking Pixel */}
-          <a href={`https://ad.doubleclick.net/ddm/jump/N32001.3019648ARTSY/B20483079.208849246;sz=1x1;ord${moment().unix()}=?`}>
-            <img
-              src={`https://ad.doubleclick.net/ddm/ad/N32001.3019648ARTSY/B20483079.208849246;sz=1x1;ord=${moment().unix()};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?`}
-              width='1'
-              height='1'
-            />
-          </a>
-
-          <GucciBody>
-            {curation.sections.map((section, index) =>
-              <div id={section.slug} key={'section-' + index}>
-                <Section
-                  section={section}
-                  onScrollOver={() => {
-                    this.setState({ activeSection: index })
-                    window.history.pushState({}, section.name, `/gender-equality/${section.slug}`)
-                  }}
-                />
-              </div>
-            )}
-            <SeriesFooter
-              curation={curation}
-              isMobile={isMobile}
-            />
-          </GucciBody>
-        </div>
+        </GucciBody>
+      </div>
     )
   }
 }

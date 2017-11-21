@@ -7,20 +7,30 @@ import { SectionVideo } from './section_video.jsx'
 import { SectionText } from './section_text.jsx'
 
 export const Section = (props) => {
-  const { section, onScrollOver } = props
+  const {
+    section,
+    onEnterSection,
+    onLeaveSection,
+    index
+  } = props
 
   return (
     <SectionContainer>
       <SectionVideo section={section} />
-      <Waypoint onEnter={onScrollOver} />
       <SectionText section={section} />
+      <Waypoint
+        onEnter={(waypointData => onEnterSection(index, waypointData))}
+        onLeave={(waypointData => onLeaveSection(index, waypointData))}
+      />
     </SectionContainer>
   )
 }
 
 Section.propTypes = {
-  onScrollOver: PropTypes.func,
-  section: PropTypes.object
+  onEnterSection: PropTypes.func,
+  onLeaveSection: PropTypes.func,
+  section: PropTypes.object,
+  index: PropTypes.number
 }
 
 const SectionContainer = styled.div`
