@@ -66,6 +66,6 @@ describe('AMP Templates', () => {
     })
     html.should.containEql('https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css')
     html.should.containEql('https://webfonts.artsy.net/artsy-icons.eot?uo9ko')
-    html.should.containEql('<style type="text/css" class="amp-custom">')
+    html.should.containEql('<style type="text/css" amp-custom="amp-custom">')
   })
 })

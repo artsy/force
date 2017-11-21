@@ -15,7 +15,6 @@ describe 'Articles routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     routes.__set__ 'positronql', @positronql = sinon.stub()
-    @positronql.debug = sinon.stub()
     @positronql.returns Q.resolve articles: articlesJSON
 
     @req = { params: {}, query: {} }

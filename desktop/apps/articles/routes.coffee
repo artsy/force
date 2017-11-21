@@ -13,7 +13,7 @@ request = require 'superagent'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { topParselyArticles } = require '../../components/util/parsely.coffee'
-positronql = require '../../lib/positronql.coffee'
+{ positronql } = require '../../lib/positronql.js'
 query = require './queries/editorial_articles.coffee'
 
 @articles = (req, res, next) ->
@@ -21,8 +21,6 @@ query = require './queries/editorial_articles.coffee'
     query: query,
     variables:
       id: req.params.id
-
-  return if positronql.debug req, res, send
 
   positronql send
     .then (result) ->
