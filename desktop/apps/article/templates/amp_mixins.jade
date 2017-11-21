@@ -116,7 +116,7 @@ mixin amp_head
   meta(charset='utf-8')
   title= article.get('search_title') || article.get('thumbnail_title')
   link(rel='canonical', href=article.fullHref())
-  include ./amp_fonts.jade
+  link(type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
   meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
   script(type='application/ld+json')
     != [jsonLD]
@@ -128,8 +128,22 @@ mixin amp_head
   <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
   style(amp-boilerplate='').
     body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-  style(amp-custom)
+  
+  - url = sd.WEBFONT_URL
+  style(type="text/css" amp-custom)
+    |@font-face {
+    |  font-family: 'artsy-icons';
+    |  src: url("#{url}/artsy-icons.eot?uo9ko");
+    |  src: url("#{url}/artsy-icons.eot?#iefixuo9ko") format('embedded-opentype'),
+    |    url("#{url}/artsy-icons.woff2?uo9ko") format('woff2'),
+    |    url("#{url}/artsy-icons.ttf?uo9ko") format('truetype'),
+    |    url("#{url}/artsy-icons.woff?uo9ko") format('woff'),
+    |    url("#{url}/artsy-icons.svg?uo9ko#artsy-icons") format('svg');
+    |  font-weight: normal;
+    |  font-style: normal;
+    |}
     include:styl ../stylesheets/amp.styl
+
   noscript
     style(amp-boilerplate='').
       body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
