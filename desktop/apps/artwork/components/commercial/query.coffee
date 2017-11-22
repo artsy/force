@@ -27,10 +27,9 @@ module.exports = """
     }
     edition_sets {
       id
-      is_sold
       is_acquireable
       edition_of
-      price
+      sale_message
       dimensions {
         in
         cm
