@@ -20,7 +20,7 @@ setupUser = (user, auction) ->
 
   auctions.fetch(
     cache: true
-    data: published: true, size: 30, sort: '-timely_at,name'
+    data: published: true, size: 40, sort: '-timely_at,name'
   ).then(->
     setupUser(req.user, auctions.next())
   ).then((userData) ->
