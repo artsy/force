@@ -56,7 +56,7 @@ export class Header extends Component {
             <Icon
               name={isOpen ? 'close' : 'list'}
               color='black'
-              fontSize={isOpen ? '35px' : '40px'}
+              fontSize={isOpen ? '25px' : '32px'}
             />
           </div>
         }

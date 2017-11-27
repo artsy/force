@@ -80,7 +80,7 @@ const Title = styled.div`
   ${pMedia.sm`
     margin: 0;
     &:nth-child(2) {
-      margin: 0 20px;
+      margin: 0;
     }
   `}
 `
