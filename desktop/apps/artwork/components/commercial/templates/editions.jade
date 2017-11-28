@@ -20,7 +20,4 @@ if artwork.edition_sets.length > 1
             = edition_set.edition_of
 
         .artwork-edition-set__price
-          if edition_set.is_sold
-            | #{edition_set.price} - Sold
-          else
-            = edition_set.price
+          = edition_set.sale_message

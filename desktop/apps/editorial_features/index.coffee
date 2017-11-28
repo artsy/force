@@ -1,6 +1,7 @@
 express = require 'express'
 routes = require './routes'
 markdown = require '../../components/util/markdown.coffee'
+moment = require 'moment'
 { crop } = require '../../components/resizer/index'
 
 app = module.exports = express()
@@ -8,6 +9,7 @@ app.set 'views', "#{__dirname}"
 app.set 'view engine', 'jade'
 app.locals.crop = crop
 app.locals.markdown = markdown
+app.locals.moment = moment
 
 app.get '/2016-year-in-art', routes.eoy
 app.get '/gender-equality', routes.gucci
