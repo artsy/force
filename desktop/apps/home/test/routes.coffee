@@ -4,7 +4,8 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 rewire = require 'rewire'
 routes = rewire '../routes'
-
+Items = require '../../../collections/items'
+Articles = require '../../../collections/articles'
 heroUnit =
   "title_image_url": "https://d32dm0rphc51dk.cloudfront.net/o8z4tRzTn3ObRWxvLg3L0g/untouched-png.png",
   "retina_title_image_url": "https://d32dm0rphc51dk.cloudfront.net/o8z4tRzTn3ObRWxvLg3L0g/untouched-png.png",
@@ -37,8 +38,60 @@ describe 'Home routes', ->
     Backbone.sync.restore()
 
   describe '#index', ->
+    describe 'handles failed services gracefully', ->
+      it 'passes empty articles if positron fetch fails', ->
+        @metaphysics.returns Promise.resolve
+          home_page:
+            hero_units: [heroUnit]
+            artwork_modules: []
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', [fabricate 'featured_link']
+          .onCall 1
+          .yieldsTo 'error'
+          .onCall 2
+          .yieldsTo 'success', [fabricate 'show']
+        routes.index extend({ user: 'existy' }, @req), @res
+          .then =>
+            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].featuredArticles.length.should.equal 0
+
+      it 'passes empty shows if show fetch fails', ->
+        @metaphysics.returns Promise.resolve
+          home_page:
+            hero_units: [heroUnit]
+            artwork_modules: []
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', [fabricate 'featured_link']
+          .onCall 1
+          .yieldsTo 'success', [fabricate 'article']
+          .onCall 2
+          .yieldsTo 'error'
+        routes.index extend({ user: 'existy' }, @req), @res
+          .then =>
+            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].featuredShows.length.should.equal 0
+
+      it 'passes empty featured links fetch fails', ->
+        @metaphysics.returns Promise.resolve
+          home_page:
+            hero_units: [heroUnit]
+            artwork_modules: []
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'error'
+          .onCall 1
+          .yieldsTo 'success', [fabricate 'article']
+          .onCall 2
+          .yieldsTo 'success', [fabricate 'show']
+        routes.index extend({ user: 'existy' }, @req), @res
+          .then =>
+            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].featuredLinks.length.should.equal 0
 
     describe 'logged out', ->
+
       describe 'first time', ->
         it 'renders the home page with hero units + welcome hero unit at the front', ->
 
@@ -47,7 +100,9 @@ describe 'Home routes', ->
             .onCall 0
             .yieldsTo 'success', [fabricate 'featured_link']
             .onCall 1
-            .yieldsTo 'success', [fabricate 'featured_link']
+            .yieldsTo 'success', [fabricate 'article']
+            .onCall 2
+            .yieldsTo 'success', [fabricate 'show']
 
           routes.index @req, @res
             .then =>
@@ -68,8 +123,9 @@ describe 'Home routes', ->
             .onCall 0
             .yieldsTo 'success', [fabricate 'featured_link']
             .onCall 1
-            .yieldsTo 'success', [fabricate 'featured_link']
-
+            .yieldsTo 'success', [fabricate 'article']
+            .onCall 2
+            .yieldsTo 'success', [fabricate 'show']
           routes.index @req, @res
             .then =>
               @res.render.args[0][0].should.equal 'index'
@@ -83,9 +139,12 @@ describe 'Home routes', ->
             hero_units: [heroUnit]
             artwork_modules: []
         Backbone.sync
-          .onCall 0
-          .yieldsTo 'success', [fabricate 'featured_link']
-
+            .onCall 0
+            .yieldsTo 'success', [fabricate 'featured_link']
+            .onCall 1
+            .yieldsTo 'success', [fabricate 'article']
+            .onCall 2
+            .yieldsTo 'success', [fabricate 'show']
         routes.index extend({ user: 'existy' }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
@@ -98,8 +157,12 @@ describe 'Home routes', ->
         err.data = home_page: hero_units: [heroUnit]
         @metaphysics.returns Promise.reject err
         Backbone.sync
-          .onCall 0
-          .yieldsTo 'success', [fabricate 'featured_link']
+            .onCall 0
+            .yieldsTo 'success', [fabricate 'featured_link']
+            .onCall 1
+            .yieldsTo 'success', [fabricate 'article']
+            .onCall 2
+            .yieldsTo 'success', [fabricate 'show']
         routes.index extend({ user: 'existy' }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'

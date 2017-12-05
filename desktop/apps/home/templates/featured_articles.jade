@@ -1,13 +1,14 @@
-#home-featured-articles-section( data-context='featured articles' )
-  h2.home-featured-header Artsy Magazine
-    .home-browse-all-right
-      a( href='/articles' )
-        | Explore the Magazine
-  ul#home-featured-articles.home-featured-list
-    - articles = featuredArticles.take(7)
-    for article, i in articles
-      li.home-featured-article-link
-        a( href=article.href() )
-          .home-featured-cover-img( style="background-image: url(" + resize(article.get('thumbnail_image'), { width: 500 }) + ")" )
-          h4= article.get('thumbnail_title')
-          h5= article.byline()
+if featuredArticles.length
+  #home-featured-articles-section( data-context='featured articles' )
+    h2.home-featured-header Artsy Magazine
+      .home-browse-all-right
+        a( href='/articles' )
+          | Explore the Magazine
+    ul#home-featured-articles.home-featured-list
+      - articles = featuredArticles.take(7)
+      for article, i in articles
+        li.home-featured-article-link
+          a( href=article.href() )
+            .home-featured-cover-img( style="background-image: url(" + resize(article.get('thumbnail_image'), { width: 500 }) + ")" )
+            h4= article.get('thumbnail_title')
+            h5= article.byline()
