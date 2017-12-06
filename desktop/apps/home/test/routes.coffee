@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
 Items = require '../../../collections/items'
-Articles = require '../../../collections/articles'
+
 heroUnit =
   "title_image_url": "https://d32dm0rphc51dk.cloudfront.net/o8z4tRzTn3ObRWxvLg3L0g/untouched-png.png",
   "retina_title_image_url": "https://d32dm0rphc51dk.cloudfront.net/o8z4tRzTn3ObRWxvLg3L0g/untouched-png.png",
@@ -55,6 +55,8 @@ describe 'Home routes', ->
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].featuredArticles.length.should.equal 0
+            @res.render.args[0][1].featuredShows.length.should.equal 1
+            @res.render.args[0][1].featuredLinks.length.should.equal 1
 
       it 'passes empty shows if show fetch fails', ->
         @metaphysics.returns Promise.resolve
@@ -65,13 +67,15 @@ describe 'Home routes', ->
           .onCall 0
           .yieldsTo 'success', [fabricate 'featured_link']
           .onCall 1
-          .yieldsTo 'success', [fabricate 'article']
+          .yieldsTo 'success', new Backbone.Model fabricate 'article'
           .onCall 2
           .yieldsTo 'error'
         routes.index extend({ user: 'existy' }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].featuredArticles.length.should.equal 1
             @res.render.args[0][1].featuredShows.length.should.equal 0
+            @res.render.args[0][1].featuredLinks.length.should.equal 1
 
       it 'passes empty featured links fetch fails', ->
         @metaphysics.returns Promise.resolve
@@ -82,12 +86,14 @@ describe 'Home routes', ->
           .onCall 0
           .yieldsTo 'error'
           .onCall 1
-          .yieldsTo 'success', [fabricate 'article']
+          .yieldsTo 'success', new Backbone.Model fabricate 'article'
           .onCall 2
           .yieldsTo 'success', [fabricate 'show']
         routes.index extend({ user: 'existy' }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].featuredArticles.length.should.equal 1
+            @res.render.args[0][1].featuredShows.length.should.equal 1
             @res.render.args[0][1].featuredLinks.length.should.equal 0
 
     describe 'logged out', ->
