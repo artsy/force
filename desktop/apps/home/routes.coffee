@@ -59,7 +59,7 @@ fetchMetaphysicsData = (req)->
   }
 
   Q
-    .all [
+    .allSettled [
       fetchMetaphysicsData req
       featuredLinks.fetch cache: true
       featuredArticles.fetch
@@ -72,21 +72,22 @@ fetchMetaphysicsData = (req)->
       featuredShows.fetch cache: true, cacheTime: timeToCacheInSeconds
     ]
 
-    .then ([{ home_page }]) ->
-      heroUnits = home_page.hero_units
+    .then (results) ->
+      homePage = results[0]?.value.home_page
+      heroUnits = homePage.hero_units
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       # always show followed artist rail for logged in users,
       # if we dont get results we will replace with artists TO follow
-      if req.user and not _.findWhere home_page.artwork_modules, { key: 'followed_artists' }
-        home_page.artwork_modules.unshift { key: 'followed_artists' }
+      if req.user and not _.findWhere homePage.artwork_modules, { key: 'followed_artists' }
+        homePage.artwork_modules.unshift { key: 'followed_artists' }
 
       res.locals.sd.HERO_UNITS = heroUnits
-      res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
+      res.locals.sd.USER_HOME_PAGE = homePage.artwork_modules
 
       res.render 'index',
         heroUnits: heroUnits
-        modules: home_page.artwork_modules
+        modules: homePage.artwork_modules
         featuredLinks: featuredLinks
         featuredArticles: featuredArticles
         featuredShows: featuredShows
