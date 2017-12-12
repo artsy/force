@@ -39,8 +39,6 @@ export default `
   email_metadata {
     headline
     author
-    credit_line
-    credit_url
     image_url
   }
   authors {

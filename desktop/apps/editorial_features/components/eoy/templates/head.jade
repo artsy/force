@@ -35,10 +35,6 @@ if article.get('published') && article.get('email_metadata')
     meta( name="sailthru.title", content=article.get('email_metadata').headline)
   if article.get('email_metadata').author
     meta( name="sailthru.author" content=article.get('email_metadata').author)
-  if article.get('email_metadata').credit_url
-    meta( name="sailthru.credit_url" content=article.get('email_metadata').credit_url)
-  if article.get('email_metadata').credit_line
-    meta( name="sailthru.credit_line" content=article.get('email_metadata').credit_line)
   if article.get('email_metadata').image_url
     - var src = article.get('email_metadata').image_url
     meta( name="sailthru.image.full" content=crop(src, { width: 1200, height: 800 } ))

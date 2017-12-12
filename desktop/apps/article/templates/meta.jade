@@ -51,10 +51,6 @@ if article.published && article.email_metadata
     meta( name='sailthru.title', content=email.headline)
   if email.author
     meta( name='sailthru.author' content=email.author)
-  if email.credit_url
-    meta( name='sailthru.credit_url' content=email.credit_url)
-  if email.credit_line
-    meta( name='sailthru.credit_line' content=email.credit_line)
   if email.image_url
     - var src = email.image_url
     meta( name='sailthru.image.full' content=crop(src, { width: 1200, height: 800 } ))
