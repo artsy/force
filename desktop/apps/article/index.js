@@ -9,6 +9,7 @@ app.set('views', `${__dirname}/templates`)
 
 app.get('/article/:slug/amp', routes.amp)
 app.get('/article/:slug', routes.index)
+app.get('/series/:slug', routes.index)
 app.post('/signup/editorial', routes.editorialSignup)
 app.get('/post/:id', routes.redirectPost)
 app.get('/:id/posts', routes.redirectPost)
