@@ -79,9 +79,8 @@ module.exports = class EditorialSignupView extends Backbone.View
       mode: 'modal'
       email: sd.CURRENT_USER?.email or ''
       image: sd.EDITORIAL_CTA_BANNER_IMG
-    $('body').waypoint (direction) =>
-      if direction is 'down'
-        setTimeout((=> $('.articles-es-cta--banner').css('opacity', 1)), 2000)
+    window.addEventListener 'scroll', () =>
+      setTimeout((=> $('.articles-es-cta--banner').css('opacity', 1)), 2000)
     analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
 
   hideEditorialCTA: (e) ->
