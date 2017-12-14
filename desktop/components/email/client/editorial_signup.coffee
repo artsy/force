@@ -20,19 +20,14 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: ->
-    @setupAEArticlePage() if @inAEArticlePage()
+  initialize: ({isArticle = false}) ->
+    @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
 
   eligibleToSignUp: ->
-    (@inAEArticlePage() or @inAEMagazinePage()) and
+    @inAEMagazinePage() and
     not sd.SUBSCRIBED_TO_EDITORIAL and
     qs.parse(location.search.replace(/^\?/, '')).utm_source isnt 'sailthru'
-
-  inAEArticlePage: ->
-    sd.ARTICLE? and
-    sd.ARTICLE.channel_id is sd.ARTSY_EDITORIAL_CHANNEL and
-    not sd.SUPER_ARTICLE
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'
@@ -51,7 +46,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
     if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
-      @showEditorialCTA 'modal'
+      @showEditorialCTA()
 
   setupAEArticlePage: ->
     @ctaBarView = new CTABarView
@@ -59,17 +54,9 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
-      @showEditorialCTA @outcome
-    @fetchSignupImages (images) =>
-      @$('.article-content').append editorialSignupLushTemplate
-        email: sd.CURRENT_USER?.email or ''
-        images: images
-        crop: crop
-        articlePage: true
-        isSignup: @eligibleToSignUp()
-      mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
-      @cycleImages() if images
+    return if qs.parse(location.search.replace(/^\?/, '')).utm_source is 'sailthru'
+    unless @ctaBarView.previouslyDismissed()
+      @showEditorialCTA()
 
   cycleImages: =>
     cycle = new Cycle
@@ -87,14 +74,13 @@ module.exports = class EditorialSignupView extends Backbone.View
       error: ->
         cb null
 
-  showEditorialCTA: () ->
+  showEditorialCTA: ->
     @$('#modal-container').append editorialCTABannerTemplate
       mode: 'modal'
       email: sd.CURRENT_USER?.email or ''
       image: sd.EDITORIAL_CTA_BANNER_IMG
-    @$('#articles-show, .articles-articles-page').waypoint (direction) =>
-      if direction is 'down'
-        setTimeout((=> @$('.articles-es-cta--banner').css('opacity', 1)), 2000)
+    window.addEventListener 'scroll', () =>
+      setTimeout((=> $('.articles-es-cta--banner').css('opacity', 1)), 2000)
     analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
 
   hideEditorialCTA: (e) ->
@@ -102,11 +88,6 @@ module.exports = class EditorialSignupView extends Backbone.View
     cta = @$(e.target).closest('.articles-es-cta--banner')
     @onDismiss(e)
     cta.fadeOut()
-
-  setupCTAWaypoints: =>
-    @$el.append @ctaBarView.render().$el
-    @$('#articles-show').waypoint (direction) =>
-      setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'
 
   # Subscribe controls
   onSubscribe: (e) ->
@@ -122,28 +103,22 @@ module.exports = class EditorialSignupView extends Backbone.View
         new FlashMessage message: 'Whoops, there was an error. Please try again.'
         @$(e.currentTarget).removeClass 'is-loading'
       success: (res) =>
-        new FlashMessage message: 'Thank you for signing up.'
+        new FlashMessage
+          message: 'Thank you for signing up.'
+          visibleDuration: 2000
         @$(e.currentTarget).removeClass 'is-loading'
-        # Inline Signup
-        @$('.article-es-header').fadeOut =>
-          @$('.article-es-thanks').fadeIn()
-          @$('.article-es-header').css('display', 'none')
-        # CTA Popup
-        @$('.cta-bar-container-editorial').fadeOut()
         # Lush Signup
         @$('.articles-es-cta__container').fadeOut =>
           @$('.articles-es-cta__social').fadeIn()
-        @ctaBarView.close()
-        # CTA Banner
-        @$('.articles-es-cta--banner').css('opacity', 0)
+        # Modal Signup
+        @$('.articles-es-cta--banner').fadeOut()
+
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
     type = $(e.currentTarget).data('type')
     if @inAEMagazinePage()
       'magazine_fixed'
-    else if type in ['inline', 'lush']
-      'article_fixed'
     else
       'article_popup'
 

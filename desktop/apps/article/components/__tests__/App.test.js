@@ -10,10 +10,13 @@ import { data as sd } from 'sharify'
 describe('<App />', () => {
   before((done) => {
     benv.setup(() => {
-      benv.expose({$: benv.require('jquery'), jQuery: benv.require('jquery')})
+      benv.expose({
+        $: benv.require('jquery'),
+        jQuery: benv.require('jquery')
+      })
       sd.APP_URL = 'http://artsy.net'
       sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
-      sd.CURRENT_USER = {id: '123'}
+      sd.CURRENT_USER = { id: '123' }
       done()
     })
   })
@@ -159,9 +162,11 @@ describe('<App />', () => {
         name: 'Art Market'
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }]
     })
-    const rendered = mount(<App article={article} templates={{}} />)
+    const rendered = mount(
+      <App article={article} templates={{}} />
+    )
     rendered.state().following.length.should.exist
   })
 })
