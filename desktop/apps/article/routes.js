@@ -70,6 +70,8 @@ export async function index (req, res, next) {
     }
 
     const isMobile = res.locals.sd.IS_MOBILE
+    res.locals.sd.ARTICLE = article
+    res.locals.sd.IS_SUPER = isSuper
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
 
     const layout = await renderLayout({
