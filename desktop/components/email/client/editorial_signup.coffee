@@ -20,7 +20,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: (isArticle = false) ->
+  initialize: ({isArticle = false}) ->
     @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
 
@@ -75,7 +75,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         cb null
 
   showEditorialCTA: ->
-    $('#modal-container').append editorialCTABannerTemplate
+    @$('#modal-container').append editorialCTABannerTemplate
       mode: 'modal'
       email: sd.CURRENT_USER?.email or ''
       image: sd.EDITORIAL_CTA_BANNER_IMG

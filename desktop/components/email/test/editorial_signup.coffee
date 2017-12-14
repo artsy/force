@@ -30,7 +30,6 @@ describe 'EditorialSignupView', ->
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView', 'splitTest']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
-      outcome = { outcome: sinon.stub().returns('old_modal'), view: sinon.stub() }
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
       sinon.stub(@EditorialSignupView::, 'fetchSignupImages').yields()
@@ -65,29 +64,6 @@ describe 'EditorialSignupView', ->
         CURRENT_PATH: '/articles'
       @view.setupAEMagazinePage()
       $(@view.el).find('#modal-container').html().should.not.containEql 'articles-es-cta--banner modal'
-
-  describe '#inAEArticlePage', ->
-
-    it 'returns true if in article page', ->
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: channel_id: '123'
-        SUPER_ARTICLE: null
-        ARTSY_EDITORIAL_CHANNEL: '123'
-      @view.inAEArticlePage().should.be.true()
-
-    it 'returns false if super article', ->
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: channel_id: '123'
-        SUPER_ARTICLE: {title: 'Super Article'}
-        ARTSY_EDITORIAL_CHANNEL: '123'
-      @view.inAEArticlePage().should.be.false()
-
-    it 'returns false non-editorial article', ->
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: channel_id: '123'
-        SUPER_ARTICLE: {title: 'Super Article'}
-        ARTSY_EDITORIAL_CHANNEL: '1233'
-      @view.inAEArticlePage().should.be.false()
 
   describe '#eligibleToSignUp', ->
 
@@ -128,7 +104,7 @@ describe 'EditorialSignupView', ->
         ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         EDITORIAL_CTA_BANNER_IMG: 'img.jpg'
-      @view.initialize()
+      @view.initialize({ isArticle: true })
       @view.$el.find('.articles-es-cta--banner').hasClass('modal').should.be.true()
 
   describe '#onSubscribe', ->
@@ -141,7 +117,7 @@ describe 'EditorialSignupView', ->
         SUBSCRIBED_TO_EDITORIAL: false
       @view.ctaBarView = {close: sinon.stub()}
       @view.onSubscribe({currentTarget: $('<div></div>')})
-      @view.$el.children('.article-es-header').css('display').should.containEql 'none'
+      @view.$el.find('.articles-es-cta--banner').length.should.equal 0
 
     it 'removes the loading spinner if there is an error', ->
       $.ajax.yieldsTo('error')
