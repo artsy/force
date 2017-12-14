@@ -42,9 +42,10 @@ export default class App extends React.Component {
         article: new ArticleModel(article)
       })
     }
-    if (!subscribed) {
+    if (!subscribed && !isSuper && article.layout === 'standard') {
       new EditorialSignupView({
-        el: document.querySelector('body')
+        el: document.querySelector('body'),
+        isArticle: true
       })
     }
   }

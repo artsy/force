@@ -20,19 +20,14 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: ->
-    @setupAEArticlePage() if @inAEArticlePage()
+  initialize: (isArticle = false) ->
+    @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
 
   eligibleToSignUp: ->
-    (@inAEArticlePage() or @inAEMagazinePage()) and
+    @inAEMagazinePage() and
     not sd.SUBSCRIBED_TO_EDITORIAL and
     qs.parse(location.search.replace(/^\?/, '')).utm_source isnt 'sailthru'
-
-  inAEArticlePage: ->
-    sd.ARTICLE? and
-    sd.ARTICLE.layout is "standard" and
-    not sd.IS_SUPER
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'
@@ -118,7 +113,6 @@ module.exports = class EditorialSignupView extends Backbone.View
           @$('.articles-es-cta__social').fadeIn()
         # Modal Signup
         @$('.articles-es-cta--banner').fadeOut()
-        @$('.articles-es-cta--banner').css('display', 'none')
 
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
