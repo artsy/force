@@ -3,7 +3,7 @@ import LogIn from '../log_in'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SignUp from '../sign_up'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { incrementStep } from '../../client/actions'
 

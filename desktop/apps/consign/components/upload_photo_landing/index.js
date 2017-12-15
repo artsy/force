@@ -2,7 +2,7 @@ import CreateAccount from '../create_account'
 import PropTypes from 'prop-types'
 import React from 'react'
 import UploadPhoto from '../upload_photo'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
 function UploadPhotoLanding ({ isMobile, user }) {
