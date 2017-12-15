@@ -5,8 +5,13 @@ imagesLoaded.makeJQueryPlugin($)
 
 import qs from 'querystring'
 import { data as sd } from 'sharify'
-import components, { init } from '@artsy/reaction-force/dist/Components'
-import configs from '@artsy/reaction-force/dist/Relay'
+// import components, { init } from '@artsy/reaction-force/dist/Components'
+// import configs from '@artsy/reaction-force/dist/Relay'
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Contents } from '@artsy/reaction-force/dist/Components/Gene'
+import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
 
 import Gene from '../../models/gene.coffee'
 import CurrentUser from '../../models/current_user.coffee'
@@ -22,14 +27,20 @@ const relatedArtistsTemplate = (args) => {
 function setupGenePage () {
   // Init GenePage component
   const urlParams = qs.parse(location.search.replace(/^\?/, ''))
-  const options = Object.assign({}, urlParams, { geneID: sd.GENE.id })
+  const options = Object.assign({}, urlParams, { geneID: sd.GENE.id, mode: sd.MODE })
 
-  init({
-    user: sd.CURRENT_USER,
-    component: components.Gene,
-    domID: 'gene-filter',
-    queryConfig: new configs.GeneQueryConfig(options)
-  })
+  debugger
+  ReactDOM.render((
+    <ContextProvider>
+      <Contents {...options} />
+    </ContextProvider>), document.getElementById('gene-filter'))
+
+  // init({
+  //   user: sd.CURRENT_USER,
+  //   component: components.Gene,
+  //   domID: 'gene-filter',
+  //   queryConfig: new configs.GeneQueryConfig(options)
+  // })
 
   // Load related artists
   const gene = new Gene(sd.GENE)

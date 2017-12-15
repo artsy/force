@@ -7,9 +7,9 @@ routes =
   /gene$
   ''': require('../apps/categories/client.js').default
 
-  '''
-  /tag
-  ''': require('../apps/tag/client.js').default.init
+  # '''
+  # /tag
+  # ''': require('../apps/tag/client.js').default.init
 
   '''
   /gene/.*
