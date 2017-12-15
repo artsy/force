@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { ArticleLayout } from './layouts/Article'
-import { SeriesLayout } from './layouts/Series'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 
 export default class App extends React.Component {
@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
     switch (article.layout) {
       case 'series': {
-        return <SeriesLayout {...this.props} />
+        return <Article {...this.props} />
       }
       default: {
         return <ArticleLayout {...this.props} />
