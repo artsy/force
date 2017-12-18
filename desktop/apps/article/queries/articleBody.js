@@ -23,6 +23,7 @@ export default `
   postscript
   is_super_article
   is_super_sub_article
+  series_description
   super_article {
     partner_link
     partner_link_title

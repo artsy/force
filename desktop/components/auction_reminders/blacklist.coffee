@@ -26,6 +26,7 @@ module.exports =
     '^/gender-equality.*'
     '^/gallery-partnerships.*'
     '^/article/.*'
+    '^/series/.*'
     '^/artsy-in-miami'
   ]
 

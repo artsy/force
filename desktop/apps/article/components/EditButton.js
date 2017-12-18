@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { data as sd } from 'sharify'
 import { pluck, contains } from 'underscore'
 
-export default class EditButton extends React.Component {
+export class EditButton extends React.Component {
   static propTypes = {
     channelId: PropTypes.string,
     slug: PropTypes.string
