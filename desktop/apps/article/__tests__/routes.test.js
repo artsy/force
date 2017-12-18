@@ -249,7 +249,8 @@ describe('Article Routes', () => {
             channel_id: '456',
             sections: [],
             featured: true,
-            published: true
+            published: true,
+            layout: 'standard'
           })),
           channel: new Channel()
         }
@@ -335,7 +336,8 @@ describe('Article Routes', () => {
             channel_id: '456',
             sections: [],
             featured: true,
-            published: true
+            published: true,
+            layout: 'standard'
           })),
           channel: new Channel()
         }
