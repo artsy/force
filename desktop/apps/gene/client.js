@@ -47,7 +47,7 @@ function setupGenePage () {
     mode = urlParams.mode
     delete urlParams.mode
   } else {
-    mode = sd.MODE
+    mode = sd.MODE === 'artist' ? 'artists' : sd.MODE
   }
 
   const options = Object.assign({}, { sort }, { filters: { ...urlParams } }, { geneID: sd.GENE.id, mode })

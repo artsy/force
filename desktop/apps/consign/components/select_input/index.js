@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { map } from 'underscore'
 
 export const renderSelectInput = ({ input, ...custom }) => (
@@ -23,7 +23,7 @@ function SelectInput (props) {
   return (
     <div className={b({item})}>
       { label && <div className={b('label')}>{ label }</div> }
-      <label className={b('select').mix('bordered-select')}>
+      <label className={b.builder()('select').mix('bordered-select')}>
         <select defaultValue={value} onChange={onChange}>
           {
             map(options, (option) => {

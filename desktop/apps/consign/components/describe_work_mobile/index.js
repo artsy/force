@@ -1,7 +1,7 @@
 import LocationAutocomplete from '../location_autocomplete'
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { Field, formValueSelector, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
@@ -172,7 +172,7 @@ export function makeDescribeWorkMobile (initialValues = {}) {
             </div>
           </div>
           <button
-            className={b('next-button').mix('avant-garde-button-black')}
+            className={b.builder()('next-button').mix('avant-garde-button-black')}
             type='submit'
           >
             {

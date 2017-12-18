@@ -9,6 +9,7 @@ import updeep from 'updeep'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { data as sd } from 'sharify'
+import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 
 const NAVHEIGHT = '53px'
 
@@ -28,11 +29,23 @@ export default class App extends React.Component {
   }
 
   componentDidMount () {
+    const {
+      article,
+      isSuper,
+      subscribed
+    } = this.props
+
     setupFollowButtons(this.state.following)
-    if (this.props.isSuper) {
+    if (isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),
-        article: new ArticleModel(this.props.article)
+        article: new ArticleModel(article)
+      })
+    }
+    if (!subscribed && !isSuper && article.layout === 'standard') {
+      new EditorialSignupView({
+        el: document.querySelector('body'),
+        isArticle: true
       })
     }
   }

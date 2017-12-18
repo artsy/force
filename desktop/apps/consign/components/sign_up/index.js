@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
@@ -72,7 +72,7 @@ function SignUp (props) {
           </div>
         </div>
         <button
-          className={b('sign-up-button').mix('avant-garde-button-black')}
+          className={b.builder()('sign-up-button').mix('avant-garde-button-black')}
           type='submit'
         >
           {
