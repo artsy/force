@@ -1,23 +1,37 @@
-// import React from 'react'
-// import ReactDOM from 'react-dom'
-// import * as Relay from 'react-relay'
-// import { data as sd } from 'sharify'
+import qs from 'querystring'
+import { data as sd } from 'sharify'
+import { assign } from 'lodash'
 
-// import { artsyNetworkLayer } from '@artsy/reaction-force/dist/Relay/config'
-// import components from '@artsy/reaction-force/dist/Components'
-// import * as Artsy from '@artsy/reaction-force/dist/Components/Artsy'
-// import FilterArtworksQueryConfig from '@artsy/reaction-force/dist/Relay/Queries/FilterArtworks'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Contents } from '@artsy/reaction-force/dist/Components/Tag'
+import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
 
-// function init () {
-//   Relay.injectNetworkLayer(artsyNetworkLayer(sd.CURRENT_USER))
-//   ReactDOM.render(
-//     <Artsy.ContextProvider currentUser={sd.CURRENT_USER}>
-//       <Relay.RootContainer
-//         Component={components.ArtworkFilter}
-//         route={new FilterArtworksQueryConfig({ tag_id: sd.TAG.id })}
-//       />
-//     </Artsy.ContextProvider>, document.getElementById('tag-filter')
-//   )
-// }
+import Tag from '../../models/tag.coffee'
+import CurrentUser from '../../models/current_user.coffee'
 
-// export default { init }
+// Update URL with current filters/mode/sort, for ease of sharing.
+const onStateChange = ({ filters, sort }) => {
+  const params = assign({ ...filters, sort }, {})
+  const fragment = '?' + qs.stringify(params)
+  window.history.replaceState({}, new Tag(sd.GENE).toPageTitle(), fragment)
+}
+
+function setupTagPage () {
+    // Pull out sort and filters from URL, if present
+  const urlParams = qs.parse(location.search.replace(/^\?/, ''))
+  let sort
+  if (urlParams.sort) {
+    sort = urlParams.sort
+    delete urlParams.sort
+  }
+
+  const options = Object.assign({}, { sort }, { filters: { ...urlParams } }, { tagID: sd.TAG.id })
+  const user = CurrentUser.orNull()
+  ReactDOM.render((
+    <ContextProvider currentUser={user ? user.toJSON() : null}>
+      <Contents {...options} onStateChange={onStateChange} />
+    </ContextProvider>), document.getElementById('tag-filter'))
+}
+
+export default { setupTagPage }

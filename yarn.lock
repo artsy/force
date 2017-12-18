@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@../reaction/artsy-reaction-force-0.14.0-alpha.8.tgz":
-  version "0.14.0-alpha.8"
-  resolved "../reaction/artsy-reaction-force-0.14.0-alpha.8.tgz#b2d7a7d6541e9a16529b19ed21abcefa3683810b"
+"@artsy/reaction-force@../reaction/artsy-reaction-force-0.14.0-alpha.10.tgz":
+  version "0.14.0-alpha.10"
+  resolved "../reaction/artsy-reaction-force-0.14.0-alpha.10.tgz#b54318f9a471b6978761d07805e1fb9f27d7616b"
   dependencies:
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
@@ -33,9 +33,9 @@
     sharify "^0.1.6"
     superagent "^3.6.3"
 
-"@artsy/reaction-force@../reaction/artsy-reaction-force-0.14.0-alpha.9.tgz":
-  version "0.14.0-alpha.9"
-  resolved "../reaction/artsy-reaction-force-0.14.0-alpha.9.tgz#5fdc3c3130686b1c0d5a02df0acb9a0ffd15455d"
+"@artsy/reaction-force@../reaction/artsy-reaction-force-0.14.0-alpha.11.tgz":
+  version "0.14.0-alpha.11"
+  resolved "../reaction/artsy-reaction-force-0.14.0-alpha.11.tgz#25b8c1c9dcddd98914c11c4b700b7f421c00521e"
   dependencies:
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"

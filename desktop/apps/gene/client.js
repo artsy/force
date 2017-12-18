@@ -5,7 +5,7 @@ imagesLoaded.makeJQueryPlugin($)
 
 import qs from 'querystring'
 import { data as sd } from 'sharify'
-import { keys, assign } from 'lodash'
+import { assign } from 'lodash'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
