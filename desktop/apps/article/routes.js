@@ -69,12 +69,18 @@ export async function index (req, res, next) {
       }
     }
 
+    // Series pages
+    let layoutTemplate = '../../../components/main_layout/templates/react_index.jade'
+    if (article.layout === 'series') {
+      layoutTemplate = '../../../components/main_layout/templates/react_blank_index.jade'
+    }
+
     const isMobile = res.locals.sd.IS_MOBILE
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
-      layout: '../../../components/main_layout/templates/react_index.jade',
+      layout: layoutTemplate,
       config: {
         styledComponents: true
       },

@@ -16,4 +16,11 @@ export default `
       name
     }
   }
+  relatedArticles {
+    description
+    thumbnail_title
+    thumbnail_image
+    title
+    slug
+  }
 `
