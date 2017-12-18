@@ -18,7 +18,12 @@ export default class App extends React.Component {
 
     switch (article.layout) {
       case 'series': {
-        return <Article {...this.props} />
+        return (
+          <Article
+            {...this.props}
+            relatedArticles={article.relatedArticles}
+          />
+        )
       }
       default: {
         return <ArticleLayout {...this.props} />
