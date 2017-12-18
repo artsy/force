@@ -58,26 +58,6 @@ describe '/rss', ->
             caption: '<p>The first caption</p>'
           },
           {
-            type: 'artworks',
-            layout: 'overflow_fillwidth',
-            artworks: [{
-              type: 'artwork'
-              id: '5321b73dc9dc2458c4000196'
-              slug: "govinda-sah-azad-in-between-1",
-              date: "2015",
-              title: "In Between as an Artwork",
-              image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
-              partner: {
-                name: "Gagosian Gallery",
-                slug: "gagosian-gallery"
-              },
-              artists: [{
-                name: "Andy Warhol",
-                slug: "andy-warhol"
-              }]
-            }]
-          },
-          {
             type: 'image_collection',
             layout: 'overflow_fillwidth',
             images: [
@@ -118,4 +98,19 @@ describe '/rss', ->
       rendered.should.containEql "In Between as Image Collection, 2015. <br/>Govinda Sah 'Azad', Andy Warhol and Joe Fun<br/>October Gallery"
       rendered.should.containEql "<p>The first caption</p>"
       rendered.should.containEql "<p>The second caption</p>"
-      rendered.should.containEql "In Between as an Artwork, 2015. <br/>Andy Warhol<br/>Gagosian Gallery"
+
+    it 'renders media', ->
+      article = new Article
+        media:
+          url: 'https://artsymedia.mp4'
+          credits: '<p>Director</p><p>Marina Cashdan</p>'
+          description: '<p>Sample Description</p>'
+      rendered = articleTemplate
+        sd: sd
+        article: article
+        resize: resize
+        _: _
+        toSentence: toSentence
+      rendered.should.containEql 'src="https://artsymedia.mp4"'
+      rendered.should.containEql '<p>Director</p><p>Marina Cashdan</p>'
+      rendered.should.containEql '<p>Sample Description</p>'

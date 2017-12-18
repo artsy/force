@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
 

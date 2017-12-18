@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
@@ -52,7 +52,7 @@ function ForgotPassword (props) {
           </div>
         </div>
         <button
-          className={b('reset-password-button').mix('avant-garde-button-black')}
+          className={b.builder()('reset-password-button').mix('avant-garde-button-black')}
           disabled={pristine || invalid}
           type='submit'
         >
