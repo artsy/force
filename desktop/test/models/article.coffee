@@ -276,7 +276,11 @@ describe "Article", ->
   describe 'AMP methods', ->
 
     it 'returns true if article has an AMP page', ->
-      @article.set sections: [ type: 'text' ], published: true, featured: true
+      @article.set
+        sections: [ type: 'text' ]
+        published: true
+        featured: true
+        layout: 'standard'
       @article.hasAMP().should.be.true()
 
     it 'returns false if article does not have an AMP page artworks', ->
@@ -285,6 +289,14 @@ describe "Article", ->
 
     it 'returns false if article does not have an AMP page image', ->
       @article.set sections: [ type: 'image' ]
+      @article.hasAMP().should.be.false()
+
+    it 'returns false if article is not standard or feature layout', ->
+      @article.set
+        sections: [ type: 'text' ]
+        published: true
+        featured: true
+        layout: 'series'
       @article.hasAMP().should.be.false()
 
     it 'preps article for AMP', ->
