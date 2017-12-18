@@ -9,7 +9,7 @@ routes =
 
   '''
   /tag
-  ''': require('../apps/tag/client.js').default.init
+  ''': require('../apps/tag/client.js').default.setupTagPage
 
   '''
   /gene/.*
