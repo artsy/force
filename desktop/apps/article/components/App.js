@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
-import { ArticleLayout } from './layouts/Article'
+import ArticleLayout from './layouts/Article'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 
 export default class App extends React.Component {

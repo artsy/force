@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 
 export const renderTextInput = ({ input: { onChange, value }, meta: { error, touched, warning }, ...custom }) => (
   <TextInput
@@ -35,7 +35,7 @@ function TextInput (props) {
       <input
         autoFocus={autofocus}
         data={item}
-        className={b('input').mix('bordered-input')}
+        className={b.builder()('input').mix('bordered-input')}
         type={type || 'text'}
         onKeyUp={(e) => onChange(e.target.value)}
         defaultValue={value}

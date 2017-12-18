@@ -4,7 +4,7 @@ import benv from 'benv'
 import React from 'react'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { data as sd } from 'sharify'
 
 describe('<Article />', () => {
@@ -30,7 +30,7 @@ describe('<Article />', () => {
     }
   }
 
-  const { ArticleLayout } = require('desktop/apps/article/components/layouts/Article')
+  const ArticleLayout = require('desktop/apps/article/components/layouts/Article').default
   const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
   const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
 
@@ -93,7 +93,7 @@ describe('<Article />', () => {
     html.should.containEql('RelatedArticlesPanel')
   })
 
-  xit('it mounts backbone views for super articles', () => {
+  it('it mounts backbone views for super articles', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'feature',
       vertical: {
@@ -144,7 +144,7 @@ describe('<Article />', () => {
         }
       }
     })
-    const rendered = mount(<ArticleLayout article={article} templates={{}} />)
+    const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     const html = rendered.html()
     html.should.containEql('DisplayPanel')
     html.should.containEql('class="Canvas')

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Select from '../../../../components/main_layout/public/icons/consignments-select.svg'
 import SpeechBubble from '../../../../components/main_layout/public/icons/consignments-speech-bubble.svg'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
 
@@ -55,7 +55,7 @@ function ThankYou ({ isMobile, submission, processingImages, uploadedImages }) {
           </div>
         </div>
       </div>
-      <a className={b('personalize-button').mix('avant-garde-button-black')} href='/personalize'>
+      <a className={b.builder()('personalize-button').mix('avant-garde-button-black')} href='/personalize'>
         Personalize My Artsy Account
       </a>
     </div>

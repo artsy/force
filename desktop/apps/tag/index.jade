@@ -22,14 +22,3 @@ block body
             .blurb!= tag.mdToHtml('description')
 
     #tag-filter
-      #tag-filter-nav.filter-fixed-header-nav
-        .filter-fixed-header-left
-          = tag.get('name')
-          | &nbsp;&mdash;&nbsp;
-          em
-            span.filter-artworks-num
-            | &nbsp;Works
-        span#tag-filter-artworks-nav
-          include ../../components/filter2/dropdown_group/template
-      #tag-artworks
-        include ../../components/filter2/template

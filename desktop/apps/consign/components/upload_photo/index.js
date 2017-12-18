@@ -3,7 +3,7 @@ import CheckboxInput from '../checkbox_input'
 import PropTypes from 'prop-types'
 import React from 'react'
 import UploadedImage from '../uploaded_image'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { selectPhoto, submitPhoto, updateSkipPhotoSubmission } from '../../client/actions'
 
@@ -77,7 +77,7 @@ function UploadPhoto (props) {
           )
         }
         <div
-          className={b('submit-button').mix('avant-garde-button-black')}
+          className={b.builder()('submit-button').mix('avant-garde-button-black')}
           onClick={submitPhotoAction}
           disabled={!nextEnabled}
         >

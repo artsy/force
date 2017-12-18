@@ -2,16 +2,17 @@ import ArticleModel from 'desktop/models/article.coffee'
 import InfiniteScrollArticle from '../InfiniteScrollArticle'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import get from 'lodash.get'
 import updeep from 'updeep'
-import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
-import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import { data as sd } from 'sharify'
+import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
+import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
+import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
+import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 
 const NAVHEIGHT = '53px'
 
-export class ArticleLayout extends React.Component {
+export default class ArticleLayout extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -27,11 +28,23 @@ export class ArticleLayout extends React.Component {
   }
 
   componentDidMount () {
+    const {
+      article,
+      isSuper,
+      subscribed
+    } = this.props
+
     setupFollowButtons(this.state.following)
-    if (this.props.isSuper) {
+    if (isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),
-        article: new ArticleModel(this.props.article)
+        article: new ArticleModel(article)
+      })
+    }
+    if (!subscribed && !isSuper && article.layout === 'standard') {
+      new EditorialSignupView({
+        el: document.querySelector('body'),
+        isArticle: true
       })
     }
   }
