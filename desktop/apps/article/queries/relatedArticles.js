@@ -22,5 +22,10 @@ export default `
     thumbnail_image
     title
     slug
+    media {
+      duration
+      published
+      release_date
+    }
   }
 `
