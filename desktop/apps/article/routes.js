@@ -69,9 +69,9 @@ export async function index (req, res, next) {
       }
     }
 
-    // Series pages
+    // Series and Video pages
     let layoutTemplate = '../../../components/main_layout/templates/react_index.jade'
-    if (article.layout === 'series') {
+    if (_.contains(['series', 'video'], article.layout)) {
       layoutTemplate = '../../../components/main_layout/templates/react_blank_index.jade'
     }
 

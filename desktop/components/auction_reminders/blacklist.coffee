@@ -27,6 +27,7 @@ module.exports =
     '^/gallery-partnerships.*'
     '^/article/.*'
     '^/series/.*'
+    '^/video/.*'
     '^/artsy-in-miami'
   ]
 
