@@ -32,6 +32,8 @@ export default `
   }
   seriesArticle {
     series_description
+    title
+    slug
     sponsor {
       partner_dark_logo
       partner_light_logo
