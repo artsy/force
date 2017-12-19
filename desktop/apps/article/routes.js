@@ -33,7 +33,11 @@ export async function index (req, res, next) {
       return res.redirect(`/article/${article.slug}`)
     }
 
-    if (article.media && !article.media.published) {
+    if (
+      article.layout === 'video' &&
+      article.media &&
+      !article.media.published
+    ) {
       return next()
     }
 
