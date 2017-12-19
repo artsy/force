@@ -24,6 +24,21 @@ export default `
   is_super_article
   is_super_sub_article
   series_description
+  sponsor {
+    partner_dark_logo
+    partner_light_logo
+    partner_condensed_logo
+    partner_logo_link
+  }
+  seriesArticle {
+    series_description
+    sponsor {
+      partner_dark_logo
+      partner_light_logo
+      partner_condensed_logo
+      partner_logo_link
+    }
+  }
   super_article {
     partner_link
     partner_link_title
@@ -63,13 +78,17 @@ export default `
     cover_image_url
     published
     duration
+    release_date
   }
   hero_section {
     ...Image
     ...Video
-    ...on FeatureHeader {
+    ... on FeatureHeader {
       type
       title
+      url
+    }
+    ... on SeriesHeader {
       url
     }
   }
