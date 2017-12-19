@@ -67,9 +67,12 @@ export default `
   hero_section {
     ...Image
     ...Video
-    ...on FeatureHeader {
+    ... on FeatureHeader {
       type
       title
+      url
+    }
+    ... on SeriesHeader {
       url
     }
   }
