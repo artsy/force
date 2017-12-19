@@ -72,6 +72,9 @@ export default `
       title
       url
     }
+    ... on SeriesHeader {
+      url
+    }
   }
   sections {
     ... on Text {
