@@ -3,7 +3,7 @@ import MediumFilter from 'desktop/apps/auction/components/artwork_browser/sideba
 import RangeSlider from 'desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider'
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
 function Sidebar ({ isClosed }) {

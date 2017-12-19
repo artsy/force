@@ -77,7 +77,7 @@ function UploadPhoto (props) {
           )
         }
         <div
-          className={b.builder()('submit-button').mix('avant-garde-button-black')}
+          className={b.builder()('submit-button').mix('avant-garde-button-black')()}
           onClick={submitPhotoAction}
           disabled={!nextEnabled}
         >

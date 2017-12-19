@@ -3,7 +3,7 @@ import InfoIcon from '../../../../../components/main_layout/public/icons/info-2.
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
 function AuctionInfoMobile (props) {
@@ -34,7 +34,7 @@ function AuctionInfoMobile (props) {
                 onClick={() => showInfoWindowAction(!showInfoWindow)}
                 className={b('info-window-close-button')}
               >
-                <span className={b('').mix('icon-close')} />
+                <span className={b.builder()('').mix('icon-close')()} />
               </div>
             </div>
           }

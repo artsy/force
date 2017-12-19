@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 import get from 'lodash.get'

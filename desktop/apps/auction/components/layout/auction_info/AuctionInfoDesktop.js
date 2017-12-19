@@ -2,7 +2,7 @@ import AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
 function AuctionInfoDesktop (props) {
@@ -45,7 +45,7 @@ function AuctionInfoDesktop (props) {
                 Live auction
               </span>
               <span
-                className={b('live-tooltip').mix('help-tooltip')}
+                className={b.builder()('live-tooltip').mix('help-tooltip')()}
                 data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
                 data-anchor='top-left'
               />

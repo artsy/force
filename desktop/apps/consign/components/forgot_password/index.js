@@ -52,7 +52,7 @@ function ForgotPassword (props) {
           </div>
         </div>
         <button
-          className={b.builder()('reset-password-button').mix('avant-garde-button-black')}
+          className={b.builder()('reset-password-button').mix('avant-garde-button-black')()}
           disabled={pristine || invalid}
           type='submit'
         >

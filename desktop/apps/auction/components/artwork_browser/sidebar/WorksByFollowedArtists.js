@@ -3,7 +3,7 @@ import ChevronLeft from '../../../../../components/main_layout/public/icons/chev
 import ChevronRight from '../../../../../components/main_layout/public/icons/chevron-right.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 

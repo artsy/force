@@ -165,7 +165,7 @@ export function makeDescribeWorkDesktop (initialValues = {}) {
             </div>
           </div>
           <button
-            className={b.builder()('next-button').mix('avant-garde-button-black')}
+            className={b.builder()('next-button').mix('avant-garde-button-black')()}
             type='submit'
           >
             {

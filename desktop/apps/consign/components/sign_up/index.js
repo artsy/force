@@ -72,7 +72,7 @@ function SignUp (props) {
           </div>
         </div>
         <button
-          className={b.builder()('sign-up-button').mix('avant-garde-button-black')}
+          className={b.builder()('sign-up-button').mix('avant-garde-button-black')()}
           type='submit'
         >
           {

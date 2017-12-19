@@ -50,7 +50,7 @@ function ChooseArtist (props) {
 
   const renderInputComponent = inputProps => (
     <div>
-      <input {...inputProps} className={b.builder()('input').mix('bordered-input')} />
+      <input {...inputProps} className={b.builder()('input').mix('bordered-input')()} />
     </div>
   )
 
@@ -76,7 +76,7 @@ function ChooseArtist (props) {
           />
         </div>
         <div
-          className={b.builder()('next-button').mix('avant-garde-button-black')}
+          className={b.builder()('next-button').mix('avant-garde-button-black')()}
           onClick={artistAutocompleteValue === artistName ? chooseArtistAdvanceAction : showNotConsigningMessageAction}
           disabled={!nextEnabled}
         >
