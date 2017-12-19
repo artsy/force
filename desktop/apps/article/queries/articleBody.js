@@ -56,6 +56,14 @@ export default `
     name
     id
   }
+  media {
+    url
+    credits
+    description
+    cover_image_url
+    published
+    duration
+  }
   hero_section {
     ...Image
     ...Video

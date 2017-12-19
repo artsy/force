@@ -4,7 +4,7 @@ sd = require('sharify').data
 layout = sd.ARTICLE?.layout
 
 $ ->
-  if location.pathname.match('article')
+  if location.pathname.match('/article/|/video/|/series/')
     if layout is 'classic'
       { init } = require('../apps/article/client/classic.js')
       init()

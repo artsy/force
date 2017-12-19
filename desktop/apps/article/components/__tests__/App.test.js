@@ -33,51 +33,34 @@ describe('<App />', () => {
   }
 
   const App = require('desktop/apps/article/components/App').default
-  const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
+  const { Article, Fixtures } = require('@artsy/reaction-force/dist/Components/Publishing')
   const ArticleLayout = require('../layouts/Article').default
 
   it('renders a standard article', () => {
-    const article = _.extend({}, fixtures.article, {
-      layout: 'standard',
-      vertical: {
-        name: 'Art Market'
-      },
-      published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
-    })
-    const rendered = mount(<App article={article} templates={{}} />)
+    const rendered = mount(<App article={Fixtures.StandardArticle} templates={{}} />)
     rendered.find(Article).length.should.equal(1)
     rendered.find(ArticleLayout).length.should.equal(1)
     rendered.html().should.containEql('StandardLayout')
   })
 
   it('renders a feature article', () => {
-    const article = _.extend({}, fixtures.article, {
-      layout: 'feature',
-      vertical: {
-        name: 'Art Market'
-      },
-      published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
-    })
-    const rendered = mount(<App article={article} templates={{}} />)
+    const rendered = mount(<App article={Fixtures.FeatureArticle} templates={{}} />)
     rendered.find(Article).length.should.equal(1)
     rendered.find(ArticleLayout).length.should.equal(1)
     rendered.html().should.containEql('FeatureLayout')
   })
 
   it('renders a series article', () => {
-    const article = _.extend({}, fixtures.article, {
-      layout: 'series',
-      vertical: {
-        name: 'Art Market'
-      },
-      published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }]
-    })
-    const rendered = mount(<App article={article} templates={{}} />)
+    const rendered = mount(<App article={Fixtures.SeriesArticle} templates={{}} />)
     rendered.find(Article).length.should.equal(1)
     rendered.find(ArticleLayout).length.should.equal(0)
     rendered.html().should.containEql('Series')
+  })
+
+  it('renders a video article', () => {
+    const rendered = mount(<App article={Fixtures.VideoArticle} templates={{}} />)
+    rendered.find(Article).length.should.equal(1)
+    rendered.find(ArticleLayout).length.should.equal(0)
+    rendered.html().should.containEql('Video')
   })
 })

@@ -17,6 +17,7 @@ export default class App extends React.Component {
     const { article } = this.props
 
     switch (article.layout) {
+      case 'video':
       case 'series': {
         return (
           <Article
