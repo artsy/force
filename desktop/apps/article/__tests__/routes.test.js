@@ -52,11 +52,11 @@ describe('Article Routes', () => {
       const renderLayout = sinon.stub()
       RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
       index(req, res, next)
-        .then(() => {
-          renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
-          renderLayout.args[0][0].locals.assetPackage.should.equal('article')
-          done()
-        })
+      .then(() => {
+        renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
+        renderLayout.args[0][0].locals.assetPackage.should.equal('article')
+        done()
+      })
     })
 
     it('sets the correct jsonld', (done) => {
@@ -73,11 +73,11 @@ describe('Article Routes', () => {
       const renderLayout = sinon.stub()
       RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
       index(req, res, next)
-        .then(() => {
-          renderLayout.args[0][0].data.jsonLD.should.containEql('Top Ten Booths at miart 2014')
-          renderLayout.args[0][0].data.jsonLD.should.containEql('Fair Coverage')
-          done()
-        })
+      .then(() => {
+        renderLayout.args[0][0].data.jsonLD.should.containEql('Top Ten Booths at miart 2014')
+        renderLayout.args[0][0].data.jsonLD.should.containEql('Fair Coverage')
+        done()
+      })
     })
 
     it('redirects to the main slug if an older slug is queried', (done) => {
@@ -92,10 +92,10 @@ describe('Article Routes', () => {
         sinon.stub().returns(Promise.resolve(data))
       )
       index(req, res, next)
-        .then(() => {
-          res.redirect.args[0][0].should.equal('/article/zoobar')
-          done()
-        })
+      .then(() => {
+        res.redirect.args[0][0].should.equal('/article/zoobar')
+        done()
+      })
     })
 
     it('renders classic mode if article is not editorial', (done) => {
@@ -113,10 +113,10 @@ describe('Article Routes', () => {
       Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
       RoutesRewireApi.__Rewire__('Article', Article)
       index(req, res, next)
-        .then(() => {
-          res.render.args[0][0].should.equal('article')
-          done()
-        })
+      .then(() => {
+        res.render.args[0][0].should.equal('article')
+        done()
+      })
     })
 
     it('fetches resources for a super article', () => {
@@ -142,12 +142,12 @@ describe('Article Routes', () => {
       const renderLayout = sinon.stub()
       RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
       index(req, res, next)
-        .then(() => {
-          renderLayout.args[0][0].data.isSuper.should.be.true()
-          renderLayout.args[0][0].data.superArticle.get('slug').should.equal('foobar')
-          renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
-          renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
-        })
+      .then(() => {
+        renderLayout.args[0][0].data.isSuper.should.be.true()
+        renderLayout.args[0][0].data.superArticle.get('slug').should.equal('foobar')
+        renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
+        renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
+      })
     })
 
     it('fetches resources for super sub articles', () => {
@@ -187,6 +187,48 @@ describe('Article Routes', () => {
         renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
         renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
         renderLayout.args[0][0].data.superArticle.get('title').should.equal('Super Article Title')
+      })
+    })
+
+    it('sets the main template for standard and feature layouts', (done) => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'standard'
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      index(req, res, next)
+      .then(() => {
+        renderLayout.args[0][0].layout.should.containEql('react_index')
+        done()
+      })
+    })
+
+    it('sets the blank template for series and video layouts', (done) => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'series'
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      index(req, res, next)
+      .then(() => {
+        renderLayout.args[0][0].layout.should.containEql('react_blank_index')
+        done()
       })
     })
   })
