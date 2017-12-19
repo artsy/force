@@ -1,6 +1,5 @@
 import qs from 'querystring'
 import { data as sd } from 'sharify'
-import { assign } from 'lodash'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -12,7 +11,7 @@ import CurrentUser from '../../models/current_user.coffee'
 
 // Update URL with current filters/mode/sort, for ease of sharing.
 const onStateChange = ({ filters, sort }) => {
-  const params = assign({ ...filters, sort }, {})
+  const params = { ...filters, sort }
   const fragment = '?' + qs.stringify(params)
   window.history.replaceState({}, new Tag(sd.GENE).toPageTitle(), fragment)
 }

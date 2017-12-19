@@ -80,6 +80,29 @@ describe('Article Routes', () => {
       })
     })
 
+    it('nexts if media is unpublished', (done) => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'video',
+          media: {
+            published: false
+          }
+        })
+      }
+
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      index(req, res, next)
+      .then(() => {
+        next.callCount.should.equal(1)
+        done()
+      })
+    })
+
     it('redirects to the main slug if an older slug is queried', (done) => {
       const data = {
         article: _.extend({}, fixtures.article, {

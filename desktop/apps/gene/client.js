@@ -5,7 +5,6 @@ imagesLoaded.makeJQueryPlugin($)
 
 import qs from 'querystring'
 import { data as sd } from 'sharify'
-import { assign } from 'lodash'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -27,9 +26,9 @@ const relatedArtistsTemplate = (args) => {
 const onStateChange = ({ filters, sort, mode }) => {
   let params
   if (mode === 'artists') {
-    params = assign({ mode }, {})
+    params = { mode }
   } else {
-    params = assign({ ...filters, sort, mode }, {})
+    params = { ...filters, sort, mode }
   }
   const fragment = '?' + qs.stringify(params)
   window.history.replaceState({}, new Gene(sd.GENE).toPageTitle(), fragment)
