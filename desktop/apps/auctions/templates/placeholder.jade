@@ -31,9 +31,9 @@
   .auctions-placeholder-hero
     if canRegister
       a( href= nextAuction.registerUrl() )
-        img( src='/images/auctions-placeholder.jpg', alt='Bid Online in Leading Auctions' )
+        img( src='/images/auctions-placeholder.png', alt='Bid Online in Leading Auctions' )
     else if !user
       a.js-sign-up-button( href='#' )
-        img( src='/images/auctions-placeholder.jpg', alt='Bid Online in Leading Auctions' )
+        img( src='/images/auctions-placeholder.png', alt='Bid Online in Leading Auctions' )
     else
-      img( src='/images/auctions-placeholder.jpg', alt='Bid Online in Leading Auctions' )
+      img( src='/images/auctions-placeholder.png', alt='Bid Online in Leading Auctions' )
