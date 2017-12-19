@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import renderTemplate from 'desktop/components/react/utils/renderTemplate'
 import { connect } from 'react-redux'
 import { first } from 'underscore'
@@ -22,9 +22,9 @@ function Footer (props) {
 
   return (
     <footer
-      className={b({without: false})
+      className={b.builder()({without: false})
         .mix('auction-page-section')
-        .mix(articles.length ? 'has-articles' : 'has-no-articles')}
+        .mix(articles.length ? 'has-articles' : 'has-no-articles')()}
     >
       { showArticles &&
         <div className={b('auction-articles')}>

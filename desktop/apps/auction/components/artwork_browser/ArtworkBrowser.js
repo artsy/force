@@ -4,7 +4,7 @@ import HeaderMobile from './header/HeaderMobile'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Sidebar from './sidebar/Sidebar'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
 function ArtworkBrowser ({ isMobile }) {
@@ -20,10 +20,10 @@ function ArtworkBrowser ({ isMobile }) {
 
           // Desktop
         : <div className={b('container')}>
-            <div className={b('left').mix('cf-sidebar')}>
+            <div className={b.builder()('left').mix('cf-sidebar')()}>
               <Sidebar />
             </div>
-            <div className={b('right').mix('cf-right')}>
+            <div className={b.builder()('right').mix('cf-right')()}>
               <HeaderDesktop />
               <ArtworkDisplay />
             </div>
