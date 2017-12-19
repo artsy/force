@@ -67,7 +67,7 @@ function LogIn (props) {
           <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('forgotPassword')}>Forgot Password</span>
         </div>
         <button
-          className={b.builder()('log-in-button').mix('avant-garde-button-black')}
+          className={b.builder()('log-in-button').mix('avant-garde-button-black')()}
           type='submit'
         >
           {
@@ -81,7 +81,7 @@ function LogIn (props) {
           <div className={b('or-content')}>Or</div>
         </div>
         <a
-          className={b.builder()('facebook-button').mix('avant-garde-button')}
+          className={b.builder()('facebook-button').mix('avant-garde-button')()}
           href={sd.AP.facebookPath}
         >
           <Facebook />

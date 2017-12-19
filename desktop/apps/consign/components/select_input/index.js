@@ -23,7 +23,7 @@ function SelectInput (props) {
   return (
     <div className={b({item})}>
       { label && <div className={b('label')}>{ label }</div> }
-      <label className={b.builder()('select').mix('bordered-select')}>
+      <label className={b.builder()('select').mix('bordered-select')()}>
         <select defaultValue={value} onChange={onChange}>
           {
             map(options, (option) => {

@@ -39,7 +39,7 @@ function LocationAutocomplete (props) {
 
   const renderInputComponent = inputProps => (
     <div>
-      <input {...inputProps} className={b.builder()('input').mix('bordered-input')} />
+      <input {...inputProps} className={b.builder()('input').mix('bordered-input')()} />
       {
         touched && (
           (error && <div className={b('error')}>{error}</div>)
@@ -69,7 +69,7 @@ function LocationAutocomplete (props) {
   }
 
   return (
-    <div className={b.builder()({ disabled: locationAutocompleteFrozen, error: Boolean(touched && error) })} name={'location'}>
+    <div className={b.builder()({ disabled: locationAutocompleteFrozen, error: Boolean(touched && error) })()} name={'location'}>
       <Autosuggest
         suggestions={locationAutocompleteSuggestions}
         onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
