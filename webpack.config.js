@@ -40,7 +40,7 @@ const config = {
         loader: 'jade-loader'
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
