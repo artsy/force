@@ -30,7 +30,6 @@ describe 'Gene routes', ->
       @req.path = '/gene/foo/artworks'
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
-      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
       _.defer => _.defer =>
         @res.locals.sd.GENE.id.should.equal 'foo'
         @res.render.args[0][0].should.equal 'index'
@@ -39,7 +38,6 @@ describe 'Gene routes', ->
     it 'redirects to the correct URL if the gene slug has been updated', (done) ->
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'not-foo'
-      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
       _.defer => _.defer =>
         @res.redirect.called.should.be.true()
         @res.redirect.args[0].should.eql [301, '/gene/not-foo']
@@ -51,8 +49,7 @@ describe 'Gene routes', ->
 
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
-      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
-
+      
       _.defer => _.defer =>
         @res.locals.sd.GENE.id.should.equal 'foo'
         @res.locals.sd.MODE.should.equal 'artworks'
@@ -65,8 +62,7 @@ describe 'Gene routes', ->
 
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'the-artists-pizza', type: name: 'E1 - Content'
-      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
-
+      
       _.defer => _.defer =>
         @res.locals.sd.GENE.id.should.equal 'the-artists-pizza'
         @res.locals.sd.MODE.should.equal 'artworks'

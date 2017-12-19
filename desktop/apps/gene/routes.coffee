@@ -4,25 +4,12 @@ _s = require 'underscore.string'
 qs = require 'qs'
 Backbone = require 'backbone'
 Gene = require '../../models/gene'
-FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './aggregations.coffee'
 
 @index = (req, res, next) ->
   gene = new Gene id: req.params.id
-  params = new Backbone.Model gene: gene.id
-  filterArtworks = new FilterArtworks
-  filterData = size: 0, gene_id: req.params.id, aggregations: aggregationParams, include_medium_filter_in_aggregation: true
 
-  Q.all [
-    gene.fetch
-      cache: true,
-      headers: 'X-Request-Id': req.id
-    filterArtworks.fetch
-      data: filterData
-      cache: true
-      headers: 'X-Request-Id': req.id
-  ]
-
+  gene
+  .fetch()
   .then ->
     # Permanently redirect to the new location
     # if the gene slug has been updated
@@ -40,15 +27,9 @@ aggregationParams = require './aggregations.coffee'
 
     res.locals.sd.GENE = gene.toJSON()
     res.locals.sd.MODE = mode
-    res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
 
     res.render 'index',
       gene: gene
-      filterRoot: gene.href() + '/artworks'
-      counts: counts
-      params: params
-      activeText: ''
-      mode: mode
-
+  
   .catch next
   .done()
