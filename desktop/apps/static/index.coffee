@@ -14,7 +14,7 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-app.get '/future-of-art', (req, res) ->
+app.get '/the-future-of-art', (req, res) ->
   new Page(id: 'future-of-art').fetch
     cache: true
     error: res.backboneError
