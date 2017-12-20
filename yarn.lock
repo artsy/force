@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@0.16.12":
-  version "0.16.12"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.16.12.tgz#6a0e17035d00c0a1741dc968279a7379182cd3ff"
+"@artsy/reaction-force@0.16.13":
+  version "0.16.13"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.16.13.tgz#3e107330ece0cd22751e3cdb02beac39c028fef2"
   dependencies:
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
