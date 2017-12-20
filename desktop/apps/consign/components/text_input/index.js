@@ -35,7 +35,7 @@ function TextInput (props) {
       <input
         autoFocus={autofocus}
         data={item}
-        className={b.builder()('input').mix('bordered-input')}
+        className={b.builder()('input').mix('bordered-input')()}
         type={type || 'text'}
         onKeyUp={(e) => onChange(e.target.value)}
         defaultValue={value}

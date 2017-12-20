@@ -7,7 +7,7 @@ import LoadingSpinner from 'desktop/apps/auction/components/artwork_browser/main
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import get from 'lodash.get'
 import { infiniteScroll } from 'desktop/apps/auction/actions/artworkBrowser'
 import { connect } from 'react-redux'

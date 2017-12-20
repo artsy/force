@@ -1,7 +1,7 @@
 import _ from 'underscore'
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { updateSort } from 'desktop/apps/auction/actions/artworkBrowser'
 
@@ -21,7 +21,7 @@ function FilterSort (props) {
 
   return (
     <div className={b()}>
-      <span className={b('label').mix('bordered-pulldown-label')}>Sort by:</span>
+      <span className={b.builder()('label').mix('bordered-pulldown-label')()}>Sort by:</span>
       <div className='bordered-pulldown'>
         <a className='bordered-pulldown-toggle' href='#'>
           <span className='bordered-pulldown-text'>{ sortMap[selectedSort] }</span>

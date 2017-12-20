@@ -55,7 +55,7 @@ function ThankYou ({ isMobile, submission, processingImages, uploadedImages }) {
           </div>
         </div>
       </div>
-      <a className={b.builder()('personalize-button').mix('avant-garde-button-black')} href='/personalize'>
+      <a className={b.builder()('personalize-button').mix('avant-garde-button-black')()} href='/personalize'>
         Personalize My Artsy Account
       </a>
     </div>

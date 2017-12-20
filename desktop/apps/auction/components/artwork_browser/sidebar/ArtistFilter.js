@@ -1,7 +1,7 @@
 import BasicCheckbox from './BasicCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
-import block from 'bem-cn'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
 import { updateArtistParams } from 'desktop/apps/auction/actions/artworkBrowser'
