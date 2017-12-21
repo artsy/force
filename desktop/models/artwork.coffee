@@ -299,6 +299,7 @@ module.exports = class Artwork extends Backbone.Model
     @get 'sale_message'
 
   availabilityMessage: ->
+    return if @get('availability_hidden')
     return if @get('partner')?.type is "Institutional Seller"
     return if @get('availability') is 'for sale' or @get('availability') is 'not for sale' or @get('availability') is 'permanent collection'
     if @get('partner')?.has_limited_fair_partnership
