@@ -6,7 +6,7 @@ import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayou
 export default () => {
   const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
 
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <App {...bootstrapData} />, document.getElementById('react-root')
   )
 }
