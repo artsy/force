@@ -5,10 +5,13 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class ClockView extends Backbone.View
   initialize: ({ @label, @timestamp }) ->
-    endAt = moment.utc @timestamp
+    endAt = moment.utc(@timestamp)
 
     if endAt.isAfter()
-      setTimeout (-> location.reload()), endAt.diff moment.utc()
+      reloadMs = Math.min(endAt.diff(moment.utc()), 0x7FFFFFFF)
+      setTimeout ->
+        location.reload()
+      , reloadMs
 
   start: ->
     @timer = setInterval @render.bind(this), 1000
