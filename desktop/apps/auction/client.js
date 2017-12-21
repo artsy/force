@@ -27,7 +27,7 @@ export default () => {
   })
 
   // Start app
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <App
       store={store}
       templateComponents={templateComponents}

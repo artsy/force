@@ -8,6 +8,7 @@ mocha \
   --require source-map-support/register \
   --require should \
   --require lib/jade_hook.js \
+  --require test/test.config.js \
   --compilers js:babel-core/register,coffee:coffee-script/register \
   --timeout 30000 \
    $@

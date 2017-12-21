@@ -8,7 +8,7 @@ export const init = () => {
   const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
 
   // Start app
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <App {...bootstrapData} />, document.getElementById('react-root')
   )
 }
