@@ -1,5 +1,6 @@
+import 'jsdom-global/register'
 import React from 'react'
-import { render } from 'enzyme'
+import { mount } from 'enzyme'
 import FeaturedGene from '../FeaturedGene'
 
 describe('FeaturedGene', () => {
@@ -15,15 +16,15 @@ describe('FeaturedGene', () => {
       }
     }
 
-    rendered = render(<FeaturedGene {...featuredGene} />)
+    rendered = mount(<FeaturedGene {...featuredGene} />)
   })
 
   it('renders a link to the gene', () => {
-    rendered.find('a').text().should.equal('Gold')
-    rendered.find('a').attr('href').should.equal('/gene/gold')
+    rendered.find('a').text().should.containEql('Gold')
+    rendered.find('a').props().href.should.equal('/gene/gold')
   })
 
   it('renders an image for the gene', () => {
-    rendered.find('img').attr('src').should.equal('gold.jpg')
+    rendered.find('img').props().src.should.equal('gold.jpg')
   })
 })

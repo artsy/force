@@ -12,7 +12,7 @@ export default () => {
     app: bootstrapData.app
   })
 
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <App store={store} />, document.getElementById('react-root')
   )
 }
