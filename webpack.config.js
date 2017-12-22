@@ -11,9 +11,7 @@ const isProduction = NODE_ENV === 'production'
 const isDeploy = isStaging || isProduction
 
 const config = {
-  // devtool: 'eval',
-  devtool: 'source-map',
-  // devtool: 'cheap-module-source-map', // https://github.com/facebookincubator/create-react-app/issues/2407
+  devtool: 'cheap-module-source-map',
   entry: {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
@@ -35,9 +33,13 @@ const config = {
         loader: 'coffee-loader'
       },
       {
-        test: /\.jade$/,
+        test: /\.(jade|pug)$/,
         exclude: /node_modules/,
-        loader: 'jade-loader'
+        loader: 'pug-loader',
+        options: {
+          doctype: 'html',
+          root: __dirname
+        }
       },
       {
         test: /\.(js|jsx)$/,
@@ -88,7 +90,8 @@ const config = {
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery',
-      'window.jQuery': 'jquery'
+      'window.jQuery': 'jquery',
+      'jade': 'jade/runtime.js'
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
@@ -103,7 +106,8 @@ const config = {
     extensions: ['.js', '.jsx', '.json', '.jade', '.coffee'],
     modules: [
       'node_modules'
-    ]
+    ],
+    symlinks: false
   },
   externals: {
     request: 'request'
