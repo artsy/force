@@ -4,6 +4,7 @@
 #
 
 express = require 'express'
+sd = require('sharify').data
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
@@ -17,5 +18,5 @@ app.get '/dev/blank', (req, res) ->
     env: NODE_ENV
     view_cache_enabled: app.enabled 'view cache'
 
-app.get '/yeg3dqrlq548zc77ggvfipouil1l1e.html', (req, res) ->
-  res.send 'yeg3dqrlq548zc77ggvfipouil1l1e'
+app.get "/#{sd.FACEBOOK_DOMAIN_VERIFICATION}.html", (req, res) ->
+  res.send "#{sd.FACEBOOK_DOMAIN_VERIFICATION}"
