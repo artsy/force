@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/reaction-force@0.17.3":
-  version "0.17.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.17.3.tgz#310a8545b0e279613ecd2d82383c1932fb2b5a65"
+"@artsy/reaction-force@../reaction/artsy-reaction-force-0.19.1-alpha.tgz":
+  version "0.19.1-alpha"
+  resolved "../reaction/artsy-reaction-force-0.19.1-alpha.tgz#f106e7d41685f1194cad4b6a19b2865e47962992"
   dependencies:
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
@@ -32,7 +32,6 @@
     relay-runtime "https://github.com/alloy/relay/releases/download/v1.3.0-artsy/relay-runtime-artsy.1.tgz"
     sharify "^0.1.6"
     superagent "^3.6.3"
-    yarn "^1.3.2"
 
 "@artsy/stitch@^1.3.1":
   version "1.3.1"
@@ -8012,10 +8011,6 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
-
-yarn@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.3.2.tgz#5939762581b5b4ddcd3418c0f6be42df3aee195f"
 
 yauzl@2.4.1:
   version "2.4.1"
