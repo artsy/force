@@ -432,11 +432,25 @@ describe('Article Routes', () => {
       sailthruApiGet.yields(
         null,
         {
-          vars: { receive_editorial_email: true }
+          vars: {
+            receive_editorial_email: true,
+            email_frequency: 'daily'
+          }
         }
       )
       const subscribed = await subscribedToEditorial('foo@test.com')
       subscribed.should.equal(true)
+    })
+
+    it('resolves to false if a user exists but is not subscribed with daily frequency', async () => {
+      sailthruApiGet.yields(null, {
+        vars: {
+          receive_editorial_email: true,
+          email_frequency: 'weekly'
+        }
+      })
+      const subscribed = await subscribedToEditorial('foo@test.com')
+      subscribed.should.equal(false)
     })
 
     it('resolves to false if a user exists but is not subscribed', async () => {
