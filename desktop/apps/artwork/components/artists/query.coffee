@@ -1,6 +1,7 @@
 module.exports = """
   fragment artists on Artwork {
     artists {
+      _id
       bio
       name
       href
