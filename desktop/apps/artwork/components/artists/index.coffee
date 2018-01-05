@@ -15,3 +15,4 @@ module.exports = ->
       $el = $($artistBlock).find('.artwork-artist__content__biography')
       gradient($el, limit: 175) if $el.length
   )
+  
