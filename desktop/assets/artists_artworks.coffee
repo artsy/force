@@ -11,7 +11,7 @@ routes =
       require('../apps/artwork_purchase/client/index.coffee').init()
     else
       require('../apps/artwork/client/index.coffee').init()
-      if true #CURRENT_USER?.type is 'Admin'
+      if CURRENT_USER?.type is 'Admin'
         require('../apps/artwork/components/artists/market_insights.js').default.setupMarketInsights()
 
   '/collect': require('../apps/collect/client.coffee').init

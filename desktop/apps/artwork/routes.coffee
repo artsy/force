@@ -97,7 +97,7 @@ bootstrap = ->
             res.render 'index', extend data, meData
           .catch next
       else
-        res.render 'index', extend data, { isAdmin: true }
+        res.render 'index', extend data, { isAdmin: res.locals.sd.CURRENT_USER?.type is 'Admin' }
     .catch next
 
 @acquire = (req, res, next) ->
