@@ -97,7 +97,7 @@ bootstrap = ->
             res.render 'index', extend data, meData
           .catch next
       else
-        res.render 'index', data
+        res.render 'index', extend data, { isAdmin: true }
     .catch next
 
 @acquire = (req, res, next) ->

@@ -6,10 +6,11 @@ import { Contents } from '@artsy/reaction-force/dist/Components/Artist/MarketIns
 import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
 
 const renderMarketInsightsFor = (artistID) => {
+  const elementID = 'market-insights-container-' + artistID
   ReactDOM.render((
     <ContextProvider>
       <Contents artistID={artistID} />
-    </ContextProvider>), document.getElementById('market-insights-container'))
+    </ContextProvider>), document.getElementById(elementID))
 }
 
 function setupMarketInsights () {

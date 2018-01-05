@@ -2,7 +2,7 @@ include ../../../../components/side_tabs/mixins
 
 if artwork.artists.length
   for artist in artwork.artists
-    - var tabs = helpers.artists.build(artist)
+    - var tabs = helpers.artists.build(artist, isAdmin)
 
     if tabs.length
       section.artwork-section.artwork-artist(data-artist-id=artist._id)

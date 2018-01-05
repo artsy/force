@@ -48,4 +48,5 @@ if sd.INCLUDE_SAILTHRU
     meta( name='image', content=artwork.meta_image.resized.url )
 
 //- Unica Font
-link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")
+if isAdmin
+  link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")
