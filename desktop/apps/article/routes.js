@@ -196,7 +196,11 @@ export const subscribedToEditorial = (email) => {
       if (err) {
         return resolve(false)
       } else {
-        if (response.vars && response.vars.receive_editorial_email) {
+        if (
+          response.vars &&
+          response.vars.receive_editorial_email &&
+          response.vars.email_frequency === 'daily'
+        ) {
           resolve(true)
         } else {
           resolve(false)
