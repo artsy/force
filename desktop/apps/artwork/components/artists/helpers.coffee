@@ -21,7 +21,7 @@ module.exports =
         when 'biography'
           artist.blurb || artist.bio || artist.biography_blurb?.text != ""
         when 'exhibition_highlights'
-          artist.exhibition_highlights? && artist.exhibition_highlights.length > 15
+          artist.exhibition_highlights? && artist.exhibition_highlights.length > 0
         when 'articles'
           artist.articles.length > 0
         else

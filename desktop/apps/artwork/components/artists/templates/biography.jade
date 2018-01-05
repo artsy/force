@@ -14,7 +14,9 @@
   .artwork-artist__content__short-bio
     p= artist.bio.replace('born', 'b.')
 
-if artist.exhibition_highlights && artist.exhibition_highlights.length <= 15
-  include ./exhibition
-else if artist.exhibition_highlights && artist.exhibition_highlights.length > 15
-  include ./highlights
+#market-insights-container
+
+//- if artist.exhibition_highlights && artist.exhibition_highlights.length <= 15
+//-   include ./exhibition
+//- else if artist.exhibition_highlights && artist.exhibition_highlights.length > 15
+//-   include ./highlights

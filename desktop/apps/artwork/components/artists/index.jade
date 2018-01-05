@@ -5,7 +5,7 @@ if artwork.artists.length
     - var tabs = helpers.artists.build(artist)
 
     if tabs.length
-      section.artwork-section.artwork-artist
+      section.artwork-section.artwork-artist(data-artist-id=artist._id)
         h2.artwork-artist__name
           | About #{artist.name}
 
@@ -28,5 +28,3 @@ if artwork.artists.length
                 a.avant-garde-jump-link( href= artist.href )
                   | Go to #{artist.name}’s Artist Page
                   i.icon-chevron-small-right
-          
-          #market-insights-container

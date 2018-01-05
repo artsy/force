@@ -10,6 +10,7 @@ routes =
       require('../apps/artwork_purchase/client/index.coffee').init()
     else
       require('../apps/artwork/client/index.coffee').init()
+      require('../apps/artwork/components/artists/market_insights.js').default.setupMarketInsights()
 
   '/collect': require('../apps/collect/client.coffee').init
 
