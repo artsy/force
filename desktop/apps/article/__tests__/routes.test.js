@@ -276,7 +276,29 @@ describe('Article Routes', () => {
       })
     })
 
-    it('sets the blank template for series and video layouts', (done) => {
+    it('sets the blank template for video layout', (done) => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'video'
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      const renderLayout = sinon.stub()
+      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      req.path = '/video/foobar'
+      index(req, res, next)
+        .then(() => {
+          renderLayout.args[0][0].layout.should.containEql('react_blank_index')
+          done()
+        })
+    })
+
+    it('sets the blank template for series layout', (done) => {
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
