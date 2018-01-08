@@ -15,7 +15,8 @@ describe('Article Routes', () => {
   beforeEach(() => {
     req = {
       body: {},
-      params: { slug: 'foobar' }
+      params: { slug: 'foobar' },
+      path: '/article/foobar'
     }
     res = {
       app: { get: sinon.stub().returns('components') },
@@ -42,7 +43,8 @@ describe('Article Routes', () => {
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
-          channel_id: '123'
+          channel_id: '123',
+          layout: 'standard'
         })
       }
       RoutesRewireApi.__Rewire__(
@@ -119,6 +121,46 @@ describe('Article Routes', () => {
         res.redirect.args[0][0].should.equal('/article/zoobar')
         done()
       })
+    })
+
+    it('redirects to the layout if it is not a regular article', () => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'series'
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      index(req, res, next)
+      .then(() => {
+        res.redirect.args[0][0].should.equal('/series/foobar')
+      })
+    })
+
+    it('redirects to a nested series if it is one', () => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'video',
+          seriesArticle: {
+            slug: 'future-of-art'
+          }
+        })
+      }
+      RoutesRewireApi.__Rewire__(
+        'positronql',
+        sinon.stub().returns(Promise.resolve(data))
+      )
+      req.path = '/video/foobar'
+      index(req, res, next)
+        .then(() => {
+          res.redirect.args[0][0].should.equal('/series/future-of-art/foobar')
+        })
     })
 
     it('renders classic mode if article is not editorial', (done) => {
@@ -248,6 +290,7 @@ describe('Article Routes', () => {
       )
       const renderLayout = sinon.stub()
       RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+      req.path = '/series/foobar'
       index(req, res, next)
       .then(() => {
         renderLayout.args[0][0].layout.should.containEql('react_blank_index')
