@@ -41,6 +41,20 @@ export async function index (req, res, next) {
       return next()
     }
 
+    if (
+      !_.includes(['standard', 'feature'], article.layout) &&
+      req.path.includes('/article')
+    ) {
+      return res.redirect(`/${article.layout}/${article.slug}`)
+    }
+
+    if (
+      article.seriesArticle &&
+      !req.path.includes(`/series/${article.seriesArticle.slug}/`)
+    ) {
+      return res.redirect(`/series/${article.seriesArticle.slug}/${article.slug}`)
+    }
+
     const isSuper = article.is_super_article || article.is_super_sub_article
     const superArticle = new Article()
     const superSubArticles = new Articles()
