@@ -15,13 +15,13 @@ module.exports =
   sortExhibitions: (shows) ->
     sortBy(shows, 'start_at').reverse()
 
-  sections: sections = (artist, isAdmin) ->
+  sections: sections = (artist, hasMarketDataEnabled) ->
     has: (section) ->
       switch section
         when 'biography'
           artist.blurb || artist.bio || artist.biography_blurb?.text != ""
         when 'exhibition_highlights'
-          if isAdmin
+          if hasMarketDataEnabled
             artist.exhibition_highlights? && artist.exhibition_highlights.length > 0
           else
             artist.exhibition_highlights? && artist.exhibition_highlights.length > 15
@@ -30,9 +30,9 @@ module.exports =
         else
           false
 
-  build: (artist, isAdmin) ->
+  build: (artist, hasMarketDataEnabled) ->
     tabs.filter (tab) ->
-      sections artist, isAdmin
+      sections artist, hasMarketDataEnabled
         .has tab
 
   name: (section) ->

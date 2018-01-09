@@ -90,14 +90,14 @@ bootstrap = ->
       # If a saleId is found, then check to see if user has been qualified for
       # bidding so that bid button UI is correct from the server down.
       saleId = get(data, 'artwork.sale.id', false)
-
+      
       if saleId
         fetchMeData(meQuery, req.user, saleId)
           .then (meData) ->
-            res.render 'index', extend data, meData, { isAdmin: res.locals.sd.CURRENT_USER?.type is 'Admin' }
+            res.render 'index', extend data, meData
           .catch next
       else
-        res.render 'index', extend data, { isAdmin: res.locals.sd.CURRENT_USER?.type is 'Admin' }
+        res.render 'index', extend data
     .catch next
 
 @acquire = (req, res, next) ->
