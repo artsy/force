@@ -1,18 +1,20 @@
+Profile = require '../../../../models/profile.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 
-module.exports = (profile) ->
+module.exports = (profileId) ->
   user = CurrentUser.orNull()
   following = new Following [], kind: 'profile' if user
 
-  $el = $(".profile-follow[data-id='#{profile.id}']")
+  $el = $(".profile-follow[data-id='#{profileId}']")
+  profile = new Profile id: profileId
 
   new FollowButton
     el: $el
     following: following
     modelName: 'profile'
-    href: "#{profile.href}/follow"
     model: profile
+    href: "#{profile.href()}/follow"
     context_page: "Show page"
 
-  following.syncFollows [profile.id] if user
+  following.syncFollows [profileId] if user
