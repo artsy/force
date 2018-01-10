@@ -1,12 +1,13 @@
-import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
-import Banner from 'desktop/apps/auction/components/layout/Banner'
 import ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
-import Footer from 'desktop/apps/auction/components/layout/Footer'
+import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
+import Banner from 'desktop/apps/auction/components/layout/Banner'
+import BuyNowRail from './layout/buy_now_rail/BuyNowRail'
+import Footer from 'desktop/apps/auction/components/layout/Footer'
 import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
-import WorksByFollowedArtists from 'desktop/apps/auction/components/artwork_browser/sidebar/WorksByFollowedArtists'
+import WorksByFollowedArtists from 'desktop/apps/auction/components/layout/followed_artists/WorksByFollowedArtists'
 import { connect } from 'react-redux'
 
 function Layout (props) {
@@ -19,6 +20,8 @@ function Layout (props) {
     showMyActiveBids,
     showFooter
   } = props
+
+  const showBuyNowRail = true
 
   return (
     <div className='auction-page'>
@@ -35,6 +38,9 @@ function Layout (props) {
 
         { showMyActiveBids &&
           <MyActiveBids /> }
+
+        { showBuyNowRail &&
+          <BuyNowRail /> }
 
         { showFollowedArtistsRail &&
           <WorksByFollowedArtists /> }
