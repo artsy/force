@@ -1,7 +1,8 @@
-unless artwork.auction 
-  if artwork.is_acquireable
-    a.artwork-meta-data-black__contact-button.js-purchase Buy
-  else if artwork.is_inquireable
+if artwork.is_acquireable
+  a.artwork-meta-data-black__contact-button.js-purchase Buy
+
+unless artwork.auction
+  if artwork.is_inquireable
     a.artwork-meta-data-black__contact-button(
       href="/inquiry/#{artwork.id}"
     )

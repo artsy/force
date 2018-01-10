@@ -8,11 +8,7 @@ unless artwork.is_in_auction
     if artwork.collecting_institution
       .artwork-partner-stub__name
         = artwork.collecting_institution
-
     else
-      if !artwork.is_inquireable
-        hr
-
       //- Default view
       h3.artwork-partner-stub__label
         if artwork.is_for_sale
