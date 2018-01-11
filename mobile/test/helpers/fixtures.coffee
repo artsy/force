@@ -67,11 +67,17 @@ moment = require 'moment'
         partner: {
           name: "October Gallery",
           slug: "october-gallery"
-        },
-        artist: {
-          name: "Govinda Sah 'Azad'",
-          slug: "govinda-sah-azad"
         }
+        artists: [
+          {
+            name: "Govinda Sah 'Azad'",
+            slug: "govinda-sah-azad"
+          },
+          {
+            name: "Andy Warhol",
+            slug: "andy-warhol"
+          }
+        ]
       ]
     }
     {
@@ -81,7 +87,8 @@ moment = require 'moment'
     {
       type: 'video',
       url: 'http://youtu.be/yYjLrJRuMnY',
-      caption: 'Doug and Claire get sucked into a marathon of Battlestar Galactica from Season 2 of Portlandia on IFC.'
+      caption: 'Doug and Claire get sucked into a marathon of Battlestar Galactica from Season 2 of Portlandia on IFC.',
+      cover_image_url: 'https://artsy.net/video_cover_image.jpg'
     }
   ]
   featured_artist_ids: ['5086df098523e60002000012']

@@ -1,4 +1,5 @@
 .article-video-container
+  - console.log(video)
   if video.cover_image_url
     .article-video-cover-image(
       style=("background-image: url(#{crop(video.cover_image_url, { width: 700, height: 400 })})")
