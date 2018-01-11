@@ -10,7 +10,7 @@ Article = require '../../models/article'
 embed = require 'embed-video'
 Q = require 'bluebird-q'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ resize } = require '../../components/resizer/index.coffee'
+{ crop, resize } = require '../../components/resizer/index.coffee'
 
 partnerFromProfile = (req) ->
   if req.profile?.isPartner()
@@ -82,6 +82,7 @@ module.exports.article = (req, res, next) ->
             partner: data.partner
             article: article
             footerArticles: data.footerArticles if data.footerArticles
+            crop: crop
             embed: embed
             resize: resize
             jsonLD: stringifyJSONForWeb(article.toJSONLD())
