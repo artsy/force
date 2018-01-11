@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Fragment } from 'react'
+import ReactDOM from 'react-dom'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import ArticleLayout from './layouts/Article'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
@@ -44,14 +45,33 @@ export default class App extends React.Component {
     const { article } = this.props
 
     return (
-      <div>
+      <Fragment>
+        <EditPortal article={article} />
+        {this.getArticleLayout()}
+      </Fragment>
+    )
+  }
+}
+
+class EditPortal extends React.Component {
+  static propTypes = {
+    article: PropTypes.object
+  }
+
+  render () {
+    const { article } = this.props
+
+    // Only render on client-side
+    if (typeof window !== 'undefined') {
+      return ReactDOM.createPortal(
         <EditButton
           channelId={article.channel_id}
           slug={article.slug}
-        />
-
-        {this.getArticleLayout()}
-      </div>
-    )
+        />,
+        document.getElementById('react-portal')
+      )
+    } else {
+      return false
+    }
   }
 }
