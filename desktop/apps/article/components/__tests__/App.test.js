@@ -1,8 +1,6 @@
 import 'jsdom-global/register'
-import * as _ from 'underscore'
 import benv from 'benv'
 import React from 'react'
-import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
 

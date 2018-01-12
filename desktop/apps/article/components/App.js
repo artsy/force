@@ -61,8 +61,7 @@ class EditPortal extends React.Component {
   render () {
     const { article } = this.props
 
-    // Only render on client-side
-    if (typeof window !== 'undefined') {
+    try {
       return ReactDOM.createPortal(
         <EditButton
           channelId={article.channel_id}
@@ -70,7 +69,7 @@ class EditPortal extends React.Component {
         />,
         document.getElementById('react-portal')
       )
-    } else {
+    } catch (e) {
       return false
     }
   }
