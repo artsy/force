@@ -184,6 +184,17 @@ describe 'Artwork metadata templates', ->
         $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Offered by'
         $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
 
+    describe 'e-commerce - for sale', ->
+      beforeEach ->
+        @artwork.is_acquireable = true
+
+      it 'should render a "Buy" button', ->
+        html = render('index')(
+          artwork: @artwork
+        )
+
+        html.should.containEql 'Buy'
+
     describe 'collecting institution', ->
       beforeEach ->
         @artwork.is_for_sale = true
@@ -193,8 +204,6 @@ describe 'Artwork metadata templates', ->
       it 'should drop institution header', ->
         html = render('partner')(
           artwork: @artwork
-          sd: {}
-          asset: (->)
         )
 
         $ = cheerio.load(html)
@@ -203,8 +212,6 @@ describe 'Artwork metadata templates', ->
       it 'should display collecting institution as link text', ->
         html = render('partner')(
           artwork: @artwork
-          sd: {}
-          asset: (->)
         )
 
         $ = cheerio.load(html)
@@ -218,8 +225,6 @@ describe 'Artwork metadata templates', ->
 
         @html = render('partner')(
           artwork: @artwork
-          sd: {}
-          asset: (->)
         )
 
       it 'should link to partner\'s page', ->
@@ -234,8 +239,6 @@ describe 'Artwork metadata templates', ->
 
         @html = render('partner')(
           artwork: @artwork
-          sd: {}
-          asset: (->)
         )
 
       it 'should link to partner\'s page', ->
@@ -253,9 +256,10 @@ describe 'Artwork metadata templates', ->
 
       @html = render('index')(
         artwork: @artwork
-        sd: {}
-        asset: (->)
       )
 
     it 'displays estimation', ->
       @html.should.containEql '$7,000-$9,000'
+
+    it 'renders bid module', ->
+      @html.should.containEql('js-artwork-auction-container')
