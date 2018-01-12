@@ -12,11 +12,8 @@ export class EditButton extends React.Component {
     slug: PropTypes.string
   }
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      hasButtonState: false
-    }
+  state = {
+    hasButtonState: false
   }
 
   componentDidMount = async () => {
