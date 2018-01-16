@@ -1,5 +1,5 @@
 require('backbone').$ = $
-{ CURRENT_USER } = require('sharify').data
+{ ARTIST_MARKET_DATA } = require('sharify').data
 
 routes =
   '/artist/.*': require('../apps/artist/client/index.coffee').init
@@ -11,7 +11,7 @@ routes =
       require('../apps/artwork_purchase/client/index.coffee').init()
     else
       require('../apps/artwork/client/index.coffee').init()
-      if CURRENT_USER?.type is 'Admin'
+      if ARTIST_MARKET_DATA is 'experiment'
         require('../apps/artwork/components/artists/market_insights.js').default.setupMarketInsights()
 
   '/collect': require('../apps/collect/client.coffee').init
