@@ -57,6 +57,7 @@ describe 'Artist Module template', ->
             groupBy: _.groupBy
         }
         asset: (->)
+        sd: {}
       )
 
       @$ = cheerio.load(@html)
@@ -110,6 +111,7 @@ describe 'Artist Module template', ->
             groupBy: _.groupBy
         }
         asset: (->)
+        sd: {}
       )
 
       @$ = cheerio.load(@html)
@@ -152,6 +154,7 @@ describe 'Artist Module template', ->
             groupBy: _.groupBy
         }
         asset: (->)
+        sd: {}
       )
 
       @$ = cheerio.load(@html)

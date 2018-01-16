@@ -19,7 +19,7 @@ setTimeout(function () {
 // debug tracking calls in development
 if (sd.NODE_ENV !== 'production') {
   analytics.on('track', function () {
-    console.debug('TRACKED: ', arguments[0], JSON.stringify(arguments[1]))
+    console.info('TRACKED: ', arguments[0], JSON.stringify(arguments[1]))
   })
 }
 if (sd.NODE_ENV === 'development') {

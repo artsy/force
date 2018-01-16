@@ -48,5 +48,5 @@ if sd.INCLUDE_SAILTHRU
     meta( name='image', content=artwork.meta_image.resized.url )
 
 //- Unica Font
-if isAdmin
+if sd.ARTIST_MARKET_DATA === 'experiment'
   link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")
