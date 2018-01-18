@@ -1,7 +1,7 @@
-mixin bordered-pulldown(defaultVal, label)
+mixin bordered-pulldown(defaultVal, label, isDisabled)
   if label
-    span.bordered-pulldown-label= label
-  .bordered-pulldown
+    span.bordered-pulldown-label(class="#{isDisabled ? 'is-disabled' : ''}")= label
+  .bordered-pulldown(class="#{isDisabled ? 'is-disabled' : ''}")
     a.bordered-pulldown-toggle( href="#" )
       span.bordered-pulldown-text= defaultVal
       .bordered-pulldown-toggle-caret
