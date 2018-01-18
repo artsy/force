@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
 import { Artwork } from '@artsy/reaction-force/dist/Components/Artwork'
-import { ArtworkRail } from './layout/artwork_rail/ArtworkRail'
+import { ArtworkRail } from './artwork_rail/ArtworkRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
@@ -51,7 +51,9 @@ function Layout (props) {
               artworks={buyNowSaleArtworks}
               getArtworkBrick={({ artwork }) => {
                 return (
-                  <Artwork artwork={artwork} />
+                  <a href={artwork.href}>
+                    <Artwork artwork={artwork} />
+                  </a>
                 )
               }}
             />
