@@ -50,7 +50,6 @@ function Layout (props) {
               title='Buy Now'
               artworks={buyNowSaleArtworks}
               getArtworkBrick={({ artwork }) => {
-                console.log(artwork)
                 return (
                   <Artwork artwork={artwork} />
                 )
@@ -69,7 +68,7 @@ function Layout (props) {
               )
             }}
             style={{
-              height: 525
+              height: 515
             }}
           />
         }

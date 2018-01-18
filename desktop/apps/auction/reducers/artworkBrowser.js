@@ -56,14 +56,6 @@ export const initialState = {
 
 export default function auctionArtworkFilter (state = initialState, action) {
   switch (action.type) {
-    case actions.DECREMENT_FOLLOWED_ARTISTS_PAGE: {
-      const currentPage = state.followedArtistRailPage
-      if (currentPage !== 1) {
-        return u({
-          followedArtistRailPage: currentPage - 1
-        }, state)
-      }
-    }
     case actions.GET_ARTWORKS_FAILURE: {
       return u({
         isFetchingArtworks: false
@@ -78,18 +70,6 @@ export default function auctionArtworkFilter (state = initialState, action) {
       return u({
         isFetchingArtworks: false
       }, state)
-    }
-    case actions.INCREMENT_FOLLOWED_ARTISTS_PAGE: {
-      const currentPage = state.followedArtistRailPage
-      if (state.isLastFollowedArtistsPage) {
-        return u({
-          followedArtistRailPage: 1
-        }, state)
-      } else {
-        return u({
-          followedArtistRailPage: currentPage + 1
-        }, state)
-      }
     }
     case actions.TOGGLE_LIST_VIEW: {
       return u({
@@ -181,18 +161,6 @@ export default function auctionArtworkFilter (state = initialState, action) {
         }, state)
       } else {
         return state
-      }
-    }
-    case actions.UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE: {
-      if (state.followedArtistRailPage >=
-        (state.saleArtworksByFollowedArtistsTotal / state.followedArtistRailSize)) {
-        return u({
-          isLastFollowedArtistsPage: true
-        }, state)
-      } else {
-        return u({
-          isLastFollowedArtistsPage: false
-        }, state)
       }
     }
     case actions.UPDATE_MEDIUM_ID: {

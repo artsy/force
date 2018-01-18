@@ -4,11 +4,9 @@ import { filterQuery } from 'desktop/apps/auction/queries/filter'
 import { worksByFollowedArtists } from 'desktop/apps/auction/queries/worksByFollowedArtists'
 
 // Action types
-export const DECREMENT_FOLLOWED_ARTISTS_PAGE = 'DECREMENT_FOLLOWED_ARTISTS_PAGE'
 export const GET_ARTWORKS_FAILURE = 'GET_ARTWORKS_FAILURE'
 export const GET_ARTWORKS_REQUEST = 'GET_ARTWORKS_REQUEST'
 export const GET_ARTWORKS_SUCCESS = 'GET_ARTWORKS_SUCCESS'
-export const INCREMENT_FOLLOWED_ARTISTS_PAGE = 'INCREMENT_FOLLOWED_ARTISTS_PAGE'
 export const SHOW_FOLLOWED_ARTISTS_RAIL = 'SHOW_FOLLOWED_ARTISTS_RAIL'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
@@ -18,7 +16,6 @@ export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
 export const UPDATE_ESTIMATE_RANGE = 'UPDATE_ESTIMATE_RANGE'
 export const UPDATE_INITIAL_MEDIUM_MAP = 'UPDATE_INITIAL_MEDIUM_MAP'
-export const UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE = 'UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE'
 export const UPDATE_MEDIUM_ID = 'UPDATE_MEDIUM_ID'
 export const UPDATE_NUM_ARTISTS_YOU_FOLLOW = 'UPDATE_NUM_ARTISTS_YOU_FOLLOW'
 export const UPDATE_PAGE = 'UPDATE_PAGE'
@@ -29,12 +26,6 @@ export const UPDATE_SORT = 'UPDATE_SORT'
 export const UPDATE_TOTAL = 'UPDATE_TOTAL'
 
 // Action creators
-export function decrementFollowedArtistsPage () {
-  return {
-    type: DECREMENT_FOLLOWED_ARTISTS_PAGE
-  }
-}
-
 export function getArtworksFailure () {
   return {
     type: GET_ARTWORKS_FAILURE
@@ -131,7 +122,6 @@ export function fetchArtworksByFollowedArtists () {
       if (filter_sale_artworks.hits.length > 0) {
         dispatch(updateSaleArtworksByFollowedArtists(filter_sale_artworks.hits))
         dispatch(updateSaleArtworksByFollowedArtistsTotal(filter_sale_artworks.counts.total))
-        dispatch(updateIsLastFollowedArtistsPage())
         dispatch(showFollowedArtistsRail())
       }
     } catch (error) {
@@ -180,26 +170,6 @@ export function infiniteScroll () {
       dispatch(updatePage(false))
       dispatch(fetchMoreArtworks())
     }
-  }
-}
-
-export function incrementFollowedArtistsPage () {
-  return {
-    type: INCREMENT_FOLLOWED_ARTISTS_PAGE
-  }
-}
-
-export function nextPageOfFollowedArtistArtworks () {
-  return (dispatch, getState) => {
-    dispatch(incrementFollowedArtistsPage())
-    dispatch(updateIsLastFollowedArtistsPage())
-  }
-}
-
-export function previousPageOfFollowedArtistArtworks () {
-  return (dispatch, getState) => {
-    dispatch(decrementFollowedArtistsPage())
-    dispatch(updateIsLastFollowedArtistsPage())
   }
 }
 
@@ -305,12 +275,6 @@ export function updateInitialMediumMap (initialMediumMap) {
     payload: {
       initialMediumMap
     }
-  }
-}
-
-export function updateIsLastFollowedArtistsPage () {
-  return {
-    type: UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE
   }
 }
 

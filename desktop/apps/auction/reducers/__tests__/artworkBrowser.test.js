@@ -22,21 +22,6 @@ describe('auction/actions/artworkBrowser.test.js', () => {
       initialResponse = auctions(undefined, {})
     })
 
-    describe('#decrementFollowedArtistsPage', () => {
-      it('decrements the followed artists page', () => {
-        initialResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-        const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
-        incrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(2)
-        const decrementedResponse = auctions(initialResponse, actions.decrementFollowedArtistsPage())
-        decrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-      })
-      it('does not decrement if you are already at the first page', () => {
-        initialResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-        const decrementedResponse = auctions(initialResponse, actions.decrementFollowedArtistsPage())
-        decrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-      })
-    })
-
     describe('#fetchArtworksByFollowedArtists', () => {
       let store
 
