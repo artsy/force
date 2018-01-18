@@ -4,15 +4,18 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn-lite'
 import classNames from 'classnames'
-import { Artwork } from '@artsy/reaction-force/dist/Components/Artwork'
 
-export class BuyNowRail extends Component {
+export class ArtworkRail extends Component {
   static propTypes = {
-    artworks: PropTypes.array.isRequired
+    artworks: PropTypes.array.isRequired,
+    getArtworkBrick: PropTypes.func.isRequired,
+    style: PropTypes.object,
+    title: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    artworks: []
+    artworks: [],
+    style: {}
   }
 
   state = {
@@ -83,8 +86,9 @@ export class BuyNowRail extends Component {
   }
 
   render () {
+    const { style, title } = this.props
     const { currArtworks, hasNextPage, hasPreviousPage, isSinglePage } = this.state
-    const b = block('auction-BuyNowRail')
+    const b = block('auction-ArtworkRail')
 
     const leftPageClasses = classNames(
       String(b('page-left')),
@@ -97,9 +101,9 @@ export class BuyNowRail extends Component {
     )
 
     return (
-      <div className={b()}>
+      <div className={b()} style={style}>
         <div className={b('title')}>
-          Buy Now
+          {title}
         </div>
         <div className={b('content')}>
           <div
@@ -110,10 +114,10 @@ export class BuyNowRail extends Component {
           </div>
           <div className={b('artworks')}>
             {
-              currArtworks.map(({ artwork }, key) => {
+              currArtworks.map((artwork, key) => {
                 return (
-                  <div className={b('artwork')}>
-                    <Artwork artwork={artwork} key={key} />
+                  <div className={b('artwork')} key={key}>
+                    {this.props.getArtworkBrick(artwork)}
                   </div>
                 )
               })

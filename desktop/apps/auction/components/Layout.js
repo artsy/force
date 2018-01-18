@@ -3,12 +3,13 @@ import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
 import Banner from 'desktop/apps/auction/components/layout/Banner'
 import Footer from 'desktop/apps/auction/components/layout/Footer'
+import GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork'
 import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
-import WorksByFollowedArtists from 'desktop/apps/auction/components/layout/followed_artists/WorksByFollowedArtists'
 import get from 'lodash.get'
-import { BuyNowRail } from './layout/buy_now_rail/BuyNowRail'
+import { Artwork } from '@artsy/reaction-force/dist/Components/Artwork'
+import { ArtworkRail } from './layout/artwork_rail/ArtworkRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
@@ -16,6 +17,7 @@ function Layout (props) {
   const {
     associatedSale,
     buyNowSaleArtworks,
+    saleArtworksByFollowedArtists,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
@@ -44,12 +46,32 @@ function Layout (props) {
 
         { buyNowSaleArtworks &&
           <RelayStubProvider>
-            <BuyNowRail artworks={buyNowSaleArtworks} />
+            <ArtworkRail
+              title='Buy Now'
+              artworks={buyNowSaleArtworks}
+              getArtworkBrick={({ artwork }) => {
+                console.log(artwork)
+                return (
+                  <Artwork artwork={artwork} />
+                )
+              }}
+            />
           </RelayStubProvider>
         }
 
         { showFollowedArtistsRail &&
-          <WorksByFollowedArtists />
+          <ArtworkRail
+            title='Works By Artists You Follow'
+            artworks={saleArtworksByFollowedArtists}
+            getArtworkBrick={artwork => {
+              return (
+                <GridArtwork saleArtwork={artwork} />
+              )
+            }}
+            style={{
+              height: 525
+            }}
+          />
         }
 
         { showFilter && !showInfoWindow &&
@@ -69,6 +91,7 @@ function Layout (props) {
 Layout.propTypes = {
   associatedSale: PropTypes.object,
   buyNowSaleArtworks: PropTypes.array.isRequired,
+  saleArtworksByFollowedArtists: PropTypes.array.isRequired,
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
   showFollowedArtistsRail: PropTypes.bool.isRequired,
@@ -78,7 +101,12 @@ Layout.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { articles, auction, me, isMobile, showInfoWindow } = state.app
+  const {
+    app: { articles, auction, me, isMobile, showInfoWindow },
+    artworkBrowser: {
+      saleArtworksByFollowedArtists
+    }
+  } = state
 
   const {
     associated_sale,
@@ -97,6 +125,7 @@ const mapStateToProps = (state) => {
   return {
     associatedSale: associated_sale,
     buyNowSaleArtworks: buyNowSaleArtworks.concat(buyNowSaleArtworks),
+    saleArtworksByFollowedArtists,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
