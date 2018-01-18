@@ -2,25 +2,26 @@ import ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/Artw
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
 import Banner from 'desktop/apps/auction/components/layout/Banner'
-import BuyNowRail from './layout/buy_now_rail/BuyNowRail'
 import Footer from 'desktop/apps/auction/components/layout/Footer'
 import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
 import WorksByFollowedArtists from 'desktop/apps/auction/components/layout/followed_artists/WorksByFollowedArtists'
-import { connect } from 'react-redux'
+import get from 'lodash.get'
+import { BuyNowRail } from './layout/buy_now_rail/BuyNowRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
+import { connect } from 'react-redux'
 
 function Layout (props) {
   const {
     associatedSale,
+    buyNowSaleArtworks,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
     showInfoWindow,
     showMyActiveBids,
-    showFooter,
-    showPromotedSale
+    showFooter
   } = props
 
   return (
@@ -41,9 +42,9 @@ function Layout (props) {
           <MyActiveBids />
         }
 
-        { showPromotedSale &&
+        { buyNowSaleArtworks &&
           <RelayStubProvider>
-            <BuyNowRail />
+            <BuyNowRail artworks={buyNowSaleArtworks} />
           </RelayStubProvider>
         }
 
@@ -67,13 +68,13 @@ function Layout (props) {
 
 Layout.propTypes = {
   associatedSale: PropTypes.object,
+  buyNowSaleArtworks: PropTypes.array.isRequired,
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
   showFollowedArtistsRail: PropTypes.bool.isRequired,
   showInfoWindow: PropTypes.bool.isRequired,
   showMyActiveBids: PropTypes.bool.isRequired,
-  showFooter: PropTypes.bool.isRequired,
-  showPromotedSale: PropTypes.bool.isRequired
+  showFooter: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -83,8 +84,7 @@ const mapStateToProps = (state) => {
     associated_sale,
     eligible_sale_artworks_count,
     is_open,
-    is_live_open,
-    promoted_sale
+    is_live_open
   } = auction.toJSON()
 
   const showAssociatedAuctions = Boolean(!isMobile && associated_sale)
@@ -92,17 +92,17 @@ const mapStateToProps = (state) => {
   const showFollowedArtistsRail = Boolean(!isMobile && state.artworkBrowser.showFollowedArtistsRail)
   const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
   const showFooter = Boolean(!isMobile && articles.length || !showFilter)
-  const showPromotedSale = Boolean(!isMobile && promoted_sale)
+  const buyNowSaleArtworks = get(state.app.auction.toJSON(), 'promoted_sale.sale_artworks', [])
 
   return {
     associatedSale: associated_sale,
+    buyNowSaleArtworks: buyNowSaleArtworks.concat(buyNowSaleArtworks),
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
     showInfoWindow,
     showMyActiveBids,
-    showFooter,
-    showPromotedSale
+    showFooter
   }
 }
 

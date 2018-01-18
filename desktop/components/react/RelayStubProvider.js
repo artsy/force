@@ -4,7 +4,7 @@ import { Environment, Network, RecordSource, Store } from 'relay-runtime'
 
 export class RelayStubProvider extends Component {
   static propTypes = {
-    children: PropTypes.node.isReuqired,
+    children: PropTypes.node.isRequired,
     relay: PropTypes.object
   }
 
