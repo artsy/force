@@ -8,7 +8,7 @@ import classNames from 'classnames'
 export class ArtworkRail extends Component {
   static propTypes = {
     artworks: PropTypes.array.isRequired,
-    getArtworkBrick: PropTypes.func.isRequired,
+    getDisplayComponent: PropTypes.func.isRequired,
     style: PropTypes.object,
     title: PropTypes.string.isRequired
   }
@@ -117,7 +117,7 @@ export class ArtworkRail extends Component {
               currArtworks.map((artwork, key) => {
                 return (
                   <div className={b('artwork')} key={key}>
-                    {this.props.getArtworkBrick(artwork)}
+                    {this.props.getDisplayComponent(artwork)}
                   </div>
                 )
               })

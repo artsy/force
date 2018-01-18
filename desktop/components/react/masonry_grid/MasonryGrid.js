@@ -11,18 +11,23 @@ import _ from 'underscore'
 export default class MasonryGrid extends Component {
   static propTypes = {
     items: PropTypes.array,
+    className: PropTypes.string,
     columnCount: PropTypes.number,
     columnMargin: PropTypes.number,
     getDisplayComponent: PropTypes.func.isRequired,
     getAspectRatio: PropTypes.func.isRequired,
-    rowMargin: PropTypes.number
+    rowMargin: PropTypes.number,
+    style: PropTypes.object,
+    title: PropTypes.string
   }
 
   static defaultProps = {
     items: [],
+    className: '',
     columnCount: 3,
     columnMargin: 20,
-    rowMargin: 20
+    rowMargin: 20,
+    style: {}
   }
 
   createGrid () {
@@ -125,13 +130,26 @@ export default class MasonryGrid extends Component {
   }
 
   render () {
+    const { className, style, title } = this.props
+
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-      }}>
-        {this.renderItems()}
+      <div>
+        {title &&
+          <div className='MasonryGrid__title'>
+            {title}
+          </div>
+        }
+
+        <div
+          className={className}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            ...style
+          }}>
+          {this.renderItems()}
+        </div>
       </div>
     )
   }
