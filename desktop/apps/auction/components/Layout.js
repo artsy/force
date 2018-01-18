@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import WorksByFollowedArtists from 'desktop/apps/auction/components/layout/followed_artists/WorksByFollowedArtists'
 import { connect } from 'react-redux'
+import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 
 function Layout (props) {
   const {
@@ -18,10 +19,9 @@ function Layout (props) {
     showFollowedArtistsRail,
     showInfoWindow,
     showMyActiveBids,
-    showFooter
+    showFooter,
+    showPromotedSale
   } = props
-
-  const showBuyNowRail = true
 
   return (
     <div className='auction-page'>
@@ -34,24 +34,32 @@ function Layout (props) {
           <AuctionBlock
             sale={associatedSale}
             relatedAuction
-          /> }
+          />
+        }
 
         { showMyActiveBids &&
-          <MyActiveBids /> }
+          <MyActiveBids />
+        }
 
-        { showBuyNowRail &&
-          <BuyNowRail /> }
+        { showPromotedSale &&
+          <RelayStubProvider>
+            <BuyNowRail />
+          </RelayStubProvider>
+        }
 
         { showFollowedArtistsRail &&
-          <WorksByFollowedArtists /> }
+          <WorksByFollowedArtists />
+        }
 
         { showFilter && !showInfoWindow &&
           <div className='auction-main-page'>
             <ArtworkBrowser />
-          </div> }
+          </div>
+        }
 
         {showFooter &&
-          <Footer /> }
+          <Footer />
+        }
       </div>
     </div>
   )
@@ -64,7 +72,8 @@ Layout.propTypes = {
   showFollowedArtistsRail: PropTypes.bool.isRequired,
   showInfoWindow: PropTypes.bool.isRequired,
   showMyActiveBids: PropTypes.bool.isRequired,
-  showFooter: PropTypes.bool.isRequired
+  showFooter: PropTypes.bool.isRequired,
+  showPromotedSale: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -74,7 +83,8 @@ const mapStateToProps = (state) => {
     associated_sale,
     eligible_sale_artworks_count,
     is_open,
-    is_live_open
+    is_live_open,
+    promoted_sale
   } = auction.toJSON()
 
   const showAssociatedAuctions = Boolean(!isMobile && associated_sale)
@@ -82,6 +92,7 @@ const mapStateToProps = (state) => {
   const showFollowedArtistsRail = Boolean(!isMobile && state.artworkBrowser.showFollowedArtistsRail)
   const showMyActiveBids = Boolean(me && me.bidders.length && is_open && !is_live_open)
   const showFooter = Boolean(!isMobile && articles.length || !showFilter)
+  const showPromotedSale = Boolean(!isMobile && promoted_sale)
 
   return {
     associatedSale: associated_sale,
@@ -90,7 +101,8 @@ const mapStateToProps = (state) => {
     showFollowedArtistsRail,
     showInfoWindow,
     showMyActiveBids,
-    showFooter
+    showFooter,
+    showPromotedSale
   }
 }
 
