@@ -74,3 +74,4 @@ module.exports = class PillboxView extends Backbone.View
       majorPeriods: @params.get('major_periods')
       partnerCities: @params.get('partner_cities')
       displayLocation: @displayLocation
+      keyword: @params.get('keyword')

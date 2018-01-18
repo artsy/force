@@ -35,12 +35,6 @@ module.exports.init = ->
     el: $('.cf-headline')
     params: params
 
-  categoryView = new CategoryFilterView
-    el: $('.cf-categories')
-    params: params
-    aggregations: filter.aggregations
-    categoryMap: sd.CATEGORIES
-
   totalView = new TotalView
     el: $('.cf-total-sort__total')
     filter: filter
@@ -50,19 +44,31 @@ module.exports.init = ->
     el: $('.cf-total-sort__sort')
     params: params
 
-  pillboxView = new PillboxView
-    el: $('.cf-pillboxes')
-    params: params
-    artworks: filter.artworks
-    categoryMap: sd.CATEGORIES
-
-  # Main Artworks view
   if CurrentUser.orNull()?.hasLabFeature('Keyword Search')
+    pillboxView = new PillboxView
+      el: $('.cf-headline-container .cf-pillboxes')
+      params: params
+      artworks: filter.artworks
+      categoryMap: sd.CATEGORIES
+
     keywordView = new KeywordFilterView
       el: $('.cf-keyword')
       params: params
-      aggregations: filter.aggregations
 
+  else
+    categoryView = new CategoryFilterView
+      el: $('.cf-categories')
+      params: params
+      aggregations: filter.aggregations
+      categoryMap: sd.CATEGORIES
+
+    pillboxView = new PillboxView
+      el: $('.cf-right .cf-pillboxes')
+      params: params
+      artworks: filter.artworks
+      categoryMap: sd.CATEGORIES
+
+  # Main Artworks view
   filter.artworks.on 'reset', ->
     artworkView = new ArtworkColumnsView
       collection: filter.artworks
