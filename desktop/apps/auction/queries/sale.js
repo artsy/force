@@ -27,6 +27,23 @@ export default function SaleQuery (id) {
         name
         sale_artworks {
           artwork {
+            id
+            title
+            date
+            sale_message
+            is_in_auction
+            image {
+              placeholder
+              url
+              aspect_ratio
+            }
+            artists {
+              id
+            }
+            partner {
+              name
+            }
+            href
             is_purchasable
             is_acquireable
           }

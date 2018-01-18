@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 function BuyNowRail (props) {
   const b = block('auction-BuyNowRail')
 
+  console.log(props.promoted_sale)
+
   return (
     <div className={b()}>
       <h2>
@@ -18,7 +20,7 @@ function BuyNowRail (props) {
 }
 
 const mapStateToProps = (state) => ({
-  state
+  promoted_sale: state.app.auction.toJSON().promoted_sale
 })
 
 export default connect(
