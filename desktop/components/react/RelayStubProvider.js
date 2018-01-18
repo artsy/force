@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Environment, Network, RecordSource, Store } from 'relay-runtime'
 
 export class RelayStubProvider extends Component {
@@ -29,11 +29,6 @@ export class RelayStubProvider extends Component {
   }
 
   render () {
-    console.log(this.props)
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    )
+    return this.props.children
   }
 }

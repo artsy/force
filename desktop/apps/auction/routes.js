@@ -82,6 +82,9 @@ export async function index (req, res, next) {
       const layout = await renderLayout({
         basePath: res.app.get('views'),
         layout: '../../../../components/main_layout/templates/react_index.jade',
+        config: {
+          styledComponents: true
+        },
         blocks: {
           head: 'meta.jade',
           body: (props) => <App store={store} {...props} />
