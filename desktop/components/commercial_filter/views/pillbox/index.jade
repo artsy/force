@@ -1,4 +1,4 @@
-if color || medium || price || width || height || category || majorPeriods || partnerCities
+if color || medium || price || width || height || category || majorPeriods || partnerCities || keyword
   .cf-pillbox__pillboxes
     if category
       .cf-pillbox__pillboxes__category
@@ -34,3 +34,7 @@ if color || medium || price || width || height || category || majorPeriods || pa
         .cf-pillbox__pillboxes__major-period
           span.cf-pillbox__pillboxes_display= displayLocation(partnerCity)
           span.cf-pillbox__pillboxes_clear(data-filter='partner_city' data-value=partnerCity) ×
+    if keyword
+      .cf-pillbox__pillboxes__keyword
+        span.cf-pillbox__pillboxes_display= keyword
+        span.cf-pillbox__pillboxes_clear(data-value='keyword') ×

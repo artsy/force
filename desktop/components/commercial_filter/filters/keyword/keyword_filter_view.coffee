@@ -7,10 +7,9 @@ module.exports = class KeywordFilterView extends Backbone.View
   events:
     "change input#keyword-search-bar-input" : 'setKeyword'
 
-  initialize: ({ @params, aggregations }) ->
+  initialize: ({ @params }) ->
     throw new Error "Requires a params model" unless @params
-    @listenToOnce @params, 'change', @render
-    @listenTo @aggregations, 'reset', @render
+    @listenTo @params, 'change', @render
 
   setKeyword: (e) ->
     if $('input[name=keyword]').val().length > 0
@@ -20,4 +19,3 @@ module.exports = class KeywordFilterView extends Backbone.View
 
   render: ->
     @$el.html template
-      keyword: @params.get('keyword')
