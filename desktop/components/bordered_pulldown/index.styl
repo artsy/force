@@ -2,6 +2,8 @@
 
 .bordered-pulldown-label
   margin-right 10px
+  &.is-disabled
+    color gray-lighter-color
 
 .bordered-pulldown
   display inline-block
@@ -14,9 +16,11 @@
     display block
     border-color gray-color
   &.is-disabled
+    pointer-events none
+    cursor pointer
     .bordered-pulldown-toggle
       cursor default
-      color gray-darker-color
+      color gray-lighter-color
 
 .bordered-pulldown-toggle
 .bordered-pulldown-options > a
