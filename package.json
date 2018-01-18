@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@artsy/express-reloadable": "^1.1.0",
-    "@artsy/reaction-force": "0.18.11",
+    "@artsy/reaction-force": "0.18.12",
     "@artsy/stitch": "^1.3.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
