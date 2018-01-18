@@ -13,6 +13,7 @@ module.exports = class KeywordFilterView extends Backbone.View
 
   setKeyword: (e) ->
     if $('input[name=keyword]').val().length > 0
+      @params.unset 'sort', silent: true
       @params.set keyword: $('input[name=keyword]').val()
     else
       @params.unset 'keyword'

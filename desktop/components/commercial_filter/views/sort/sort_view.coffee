@@ -9,15 +9,24 @@ module.exports = class SortView extends Backbone.View
     'click .bordered-pulldown-options a': 'setSort'
 
   sortMap: ->
-    @customSortMap || defaultSortMap
+    if !@params.has('keyword')
+      defaultSortMap
+    else
+      { 'relevance': 'Relevance' }
 
   defaultSort: ->
     _.keys(@sortMap())[0]
 
-  initialize: ({ @params, @customSortMap }) ->
+  currentSort: ->
+    if @params.has('sort')
+      @params.get('sort')
+    else
+      @defaultSort()
+
+  initialize: ({ @params }) ->
     throw new Error 'Requires a params model' unless @params?
 
-    @listenToOnce @params, 'change', @render
+    @listenTo @params, 'change', @render
 
   setSort: (e) ->
     e.preventDefault()
@@ -25,10 +34,12 @@ module.exports = class SortView extends Backbone.View
 
   render: ->
     @$el.html template
-      currentSort: @params.get('sort') or @defaultSort()
+      currentSort: @currentSort()
       map: @sortMap()
+      isDisabled: @params.has('keyword')
 
     _.defer => @_postRender()
 
   _postRender: ->
-    new BorderedPulldown el: @$('.bordered-pulldown')
+    new BorderedPulldown
+      el: @$('.bordered-pulldown')
