@@ -17,12 +17,24 @@ export class BuyNowRail extends Component {
 
   state = {
     currArtworks: [],
-    displayCount: 5,
+    displayCount: 4,
+    hasPreviousPage: false,
+    hasNextPage: false,
     isSinglePage: false,
     page: 1
   }
 
   componentWillMount () {
+    this.updatePageDisplay()
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.page !== prevState.page) {
+      this.updatePageDisplay()
+    }
+  }
+
+  updatePageDisplay () {
     const { artworks } = this.props
     const { displayCount, page } = this.state
     const initialSlice = (page - 1) * displayCount
@@ -33,25 +45,55 @@ export class BuyNowRail extends Component {
     )
 
     const isSinglePage = artworks.length <= displayCount
+    const hasPreviousPage = page > 1
+    const hasNextPage = page < artworks.length / displayCount
 
     this.setState({
       currArtworks,
-      isSinglePage
+      isSinglePage,
+      hasPreviousPage,
+      hasNextPage
     })
   }
 
+  previousPage = () => {
+    const { hasPreviousPage, page } = this.state
+
+    if (hasPreviousPage) {
+      const newPage = page - 1
+
+      this.setState({
+        hasPreviousPage,
+        page: newPage
+      })
+    }
+  }
+
+  nextPage = () => {
+    const { hasNextPage, page } = this.state
+
+    if (hasNextPage) {
+      const newPage = page + 1
+
+      this.setState({
+        hasNextPage,
+        page: newPage
+      })
+    }
+  }
+
   render () {
-    const { isSinglePage, page } = this.state
+    const { currArtworks, hasNextPage, hasPreviousPage, isSinglePage } = this.state
     const b = block('auction-BuyNowRail')
 
     const leftPageClasses = classNames(
       String(b('page-left')),
-      { disabled: page === 1 }
+      { disabled: !hasPreviousPage }
     )
 
     const rightPageClasses = classNames(
       String(b('page-right')),
-      { disabled: isSinglePage }
+      { disabled: isSinglePage || !hasNextPage }
     )
 
     return (
@@ -62,13 +104,13 @@ export class BuyNowRail extends Component {
         <div className={b('content')}>
           <div
             className={leftPageClasses}
-            onClick={this.handlePreviousPageClick}
+            onClick={this.previousPage}
           >
             <ChevronLeft />
           </div>
           <div className={b('artworks')}>
             {
-              this.props.artworks.map(({ artwork }, key) => {
+              currArtworks.map(({ artwork }, key) => {
                 return (
                   <div className={b('artwork')}>
                     <Artwork artwork={artwork} key={key} />
@@ -79,7 +121,7 @@ export class BuyNowRail extends Component {
           </div>
           <div
             className={rightPageClasses}
-            onClick={this.handleNextPageClick}
+            onClick={this.nextPage}
           >
             <ChevronRight />
           </div>
