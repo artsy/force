@@ -11,7 +11,8 @@ export class Reveal extends Component {
   }
 
   static defaultProps = {
-    isEnabled: true
+    isEnabled: true,
+    coverHeight: 450
   }
 
   state = {
@@ -34,16 +35,21 @@ export class Reveal extends Component {
 
   render () {
     const { coverHeight, isEnabled } = this.props
+    const { isExpanded } = this.state
+    const maskContent = !isExpanded && isEnabled
 
     return (
       <OuterContainer>
-        <InnerContainer coverHeight={coverHeight} onClick={this.handleToggleClick}>
+        <InnerContainer
+          isEnabled={maskContent}
+          coverHeight={coverHeight}
+        >
           {this.props.children}
         </InnerContainer>
 
-        {isEnabled &&
+        {maskContent &&
           <Revealer>
-            <RevealButton>
+            <RevealButton onClick={this.handleToggleClick}>
               <Icon
                 name='chevron-down'
                 color='black'
@@ -62,12 +68,10 @@ const OuterContainer = styled.div`
 `
 
 const InnerContainer = styled.div`
-  overflow: hidden;
-  height: 450px;
-
   ${props => {
-    if (props.coverHeight) {
+    if (props.isEnabled) {
       return `
+        overflow: hidden;
         height: ${props.coverHeight}px;
       `
     }
@@ -91,6 +95,7 @@ const Revealer = styled.div`
 `
 
 const RevealButton = styled.div`
+  cursor: pointer;
   background-color: white;
   border: 1px solid #e5e5e5;
   border-radius: 45px;
