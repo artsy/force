@@ -12,6 +12,7 @@ export default class MasonryGrid extends Component {
     columnMargin: PropTypes.number,
     getDisplayComponent: PropTypes.func.isRequired,
     getAspectRatio: PropTypes.func.isRequired,
+    mask: PropTypes.bool,
     rowMargin: PropTypes.number,
     style: PropTypes.object,
     title: PropTypes.string
@@ -22,6 +23,7 @@ export default class MasonryGrid extends Component {
     className: '',
     columnCount: 3,
     columnMargin: 20,
+    mask: false,
     rowMargin: 20,
     style: {}
   }
@@ -126,11 +128,11 @@ export default class MasonryGrid extends Component {
   }
 
   render () {
-    const { className, style, title } = this.props
+    const { className, mask, style, title } = this.props
 
     return (
       <Container>
-        <Reveal>
+        <Reveal isEnabled={mask}>
           {title &&
             <Title>
               {title}

@@ -11,7 +11,7 @@ export class Reveal extends Component {
   }
 
   static defaultProps = {
-    isEnabled: true,
+    isEnabled: false,
     coverHeight: 450
   }
 
@@ -27,7 +27,7 @@ export class Reveal extends Component {
     })
   }
 
-  handleToggleClick = () => {
+  handleExpandClick = () => {
     if (this.props.isEnabled) {
       this.toggle()
     }
@@ -49,13 +49,13 @@ export class Reveal extends Component {
 
         {maskContent &&
           <Revealer>
-            <RevealButton onClick={this.handleToggleClick}>
+            <Button onClick={this.handleExpandClick}>
               <Icon
                 name='chevron-down'
                 color='black'
                 fontSize='25px'
               />
-            </RevealButton>
+            </Button>
           </Revealer>
         }
       </OuterContainer>
@@ -94,7 +94,7 @@ const Revealer = styled.div`
   }
 `
 
-const RevealButton = styled.div`
+const Button = styled.div`
   cursor: pointer;
   background-color: white;
   border: 1px solid #e5e5e5;
