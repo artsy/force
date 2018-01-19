@@ -8,7 +8,12 @@ import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
 function BuyNowSaleArtworks (props) {
-  const { isMobile, buyNowSaleArtworks } = props
+  const { isMobile, promotedSaleArtworks } = props
+  const isRenderable = promotedSaleArtworks && promotedSaleArtworks.length
+
+  if (!isRenderable) {
+    return null
+  }
 
   return (
     <RelayStubProvider>
@@ -17,7 +22,7 @@ function BuyNowSaleArtworks (props) {
           mask
           title='Buy Now'
           columnCount={2}
-          items={buyNowSaleArtworks}
+          items={promotedSaleArtworks}
           getAspectRatio={({ artwork }) => {
             return get(artwork, 'images.0.aspect_ratio')
           }}
@@ -32,7 +37,7 @@ function BuyNowSaleArtworks (props) {
         // Desktop
         : <ArtworkRail
           title='Buy Now'
-          artworks={buyNowSaleArtworks}
+          artworks={promotedSaleArtworks}
           getDisplayComponent={({ artwork }) => {
             return (
               <a href={artwork.href}>
@@ -48,7 +53,11 @@ function BuyNowSaleArtworks (props) {
 
 BuyNowSaleArtworks.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-  buyNowSaleArtworks: PropTypes.array.isRequired
+  promotedSaleArtworks: PropTypes.array.isRequired
+}
+
+BuyNowSaleArtworks.defaultProps = {
+  promotedSaleArtworks: []
 }
 
 const mapStateToProps = (state) => {
@@ -59,11 +68,11 @@ const mapStateToProps = (state) => {
     }
   } = state
 
-  const buyNowSaleArtworks = get(auction.toJSON(), 'promoted_sale.sale_artworks', [])
+  const promotedSaleArtworks = get(auction.toJSON(), 'promoted_sale.sale_artworks', [])
 
   return {
     isMobile,
-    buyNowSaleArtworks
+    promotedSaleArtworks
   }
 }
 

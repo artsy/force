@@ -10,6 +10,11 @@ import { connect } from 'react-redux'
 
 function ArtworksByFollwedArtists (props) {
   const { isMobile, saleArtworksByFollowedArtists } = props
+  const isRenderable = saleArtworksByFollowedArtists && saleArtworksByFollowedArtists.length
+
+  if (!isRenderable) {
+    return null
+  }
 
   return (
     <RelayStubProvider>
@@ -51,6 +56,10 @@ function ArtworksByFollwedArtists (props) {
 ArtworksByFollwedArtists.propTypes = {
   isMobile: PropTypes.bool.isRequired,
   saleArtworksByFollowedArtists: PropTypes.array.isRequired
+}
+
+ArtworksByFollwedArtists.defaultProps = {
+  saleArtworksByFollowedArtists: []
 }
 
 const mapStateToProps = (state) => {

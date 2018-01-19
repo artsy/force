@@ -112,3 +112,8 @@ const Button = styled.div`
     font-size: 26px;
   }
 `
+
+OuterContainer.displayName = 'OuterContainer'
+InnerContainer.displayName = 'InnerContainer'
+Revealer.displayName = 'Revealer'
+Button.displayName = 'Button'
