@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import _ from 'underscore'
+import styled from 'styled-components'
+import { Reveal } from './Reveal'
 
-/**
- * Temporary adaptation from Reaction Force:
- * https://github.com/artsy/reaction/blob/master/src/Components/ArtworkGrid.tsx
- *
- * TODO: Move back into RF
- */
 export default class MasonryGrid extends Component {
   static propTypes = {
     items: PropTypes.array,
@@ -133,24 +129,39 @@ export default class MasonryGrid extends Component {
     const { className, style, title } = this.props
 
     return (
-      <div>
-        {title &&
-          <div className='MasonryGrid__title'>
-            {title}
-          </div>
-        }
+      <Container>
+        <Reveal>
+          {title &&
+            <Title>
+              {title}
+            </Title>
+          }
 
-        <div
-          className={className}
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            ...style
-          }}>
-          {this.renderItems()}
-        </div>
-      </div>
+          <div
+            className={className}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              ...style
+            }}>
+            {this.renderItems()}
+          </div>
+        </Reveal>
+      </Container>
     )
   }
 }
+
+const Container = styled.div`
+  margin-bottom: 40px;
+
+  a {
+    text-decoration: none;
+  }
+`
+
+const Title = styled.div`
+  font-size: 20px;
+  margin-bottom: 20px;
+`
