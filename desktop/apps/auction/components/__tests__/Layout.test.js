@@ -518,4 +518,94 @@ describe('<Layout />', () => {
       })
     })
   })
+
+  describe('e-commerce sale', () => {
+    const data = {
+      app: {
+        isEcommerceSale: true,
+        isMobile: false,
+        auction: {
+          name: 'An Auction',
+          sale_type: 'auction promo',
+          eligible_sale_artworks_count: 0,
+          promoted_sale: {
+            sale_artworks: promotedSaleArtworks
+          }
+        }
+      }
+    }
+
+    describe('desktop', () => {
+      it('removes top timer component', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.not.containEql('clock')
+      })
+
+      it('hides registration button', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.not.containEql('auction-Registration')
+      })
+
+      it('remove auction-related sort items', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.not.containEql('Lot Number Asc')
+        wrapper.html().should.not.containEql('Lot Number Desc')
+        wrapper.html().should.not.containEql('Most Bids')
+        wrapper.html().should.not.containEql('Least Bids')
+      })
+    })
+
+    describe('mobile', () => {
+      const mobileData = cloneDeep(data)
+      mobileData.app.isMobile = true
+
+      it('removes top timer component', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.html().should.not.containEql('clock')
+      })
+
+      it('hides registration button', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.html().should.not.containEql('auction-Registration')
+      })
+
+      it('remove auction-related sort items', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.html().should.not.containEql('Lot Number Asc')
+        wrapper.html().should.not.containEql('Lot Number Desc')
+        wrapper.html().should.not.containEql('Most Bids')
+        wrapper.html().should.not.containEql('Least Bids')
+      })
+    })
+  })
 })

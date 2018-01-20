@@ -8,6 +8,7 @@ function Registration (props) {
   const {
     isClosed,
     isEcommerceSale,
+    isLiveOpen,
     isQualifiedForBidding,
     isRegistrationEnded,
     numBidders,
@@ -17,12 +18,14 @@ function Registration (props) {
 
   const b = block('auction-Registration')
 
+  if (isEcommerceSale) {
+    return null
+  }
+
   return (
     <div className={b()}>
       {(() => {
-        if (isEcommerceSale) {
-          return null
-        } else if (isClosed) {
+        if (isClosed || isLiveOpen) {
           return null
         } else if (!isQualifiedForBidding) {
           return (
@@ -70,7 +73,6 @@ function Registration (props) {
       {
         showContactInfo && // Desktop only
           <div>
-
             <div className={b('how-to-bid')}>
               <strong>
                 Questions?
@@ -101,6 +103,7 @@ function Registration (props) {
 Registration.propTypes = {
   isClosed: PropTypes.bool.isRequired,
   isEcommerceSale: PropTypes.bool,
+  isLiveOpen: PropTypes.bool,
   isQualifiedForBidding: PropTypes.bool.isRequired,
   isRegistrationEnded: PropTypes.bool.isRequired,
   numBidders: PropTypes.number.isRequired,
@@ -118,6 +121,7 @@ const mapStateToProps = (state) => {
     isClosed: auction.isClosed() || auction.get('clockState') === 'closed',
     isEcommerceSale,
     isMobile,
+    isLiveOpen: auction.get('is_live_open'),
     isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),
     numBidders,

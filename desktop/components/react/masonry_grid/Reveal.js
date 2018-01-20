@@ -113,8 +113,6 @@ const Revealer = styled.div`
   bottom: -25px;
 
   &:before {
-    content: '';
-    position: absolute;
     ${BottomBorder}
   }
 `
