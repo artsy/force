@@ -47,12 +47,23 @@ export async function index (req, res, next) {
 
     // TODO: Refactor out Backbone
     const auctionModel = new Auction(sale)
+    const isEcommerceSale = saleId === 'chris-ecommerce-sale'
+
+    // If an e-commerce sale, remove all sort options that are Auction related
+    let artworkBrowserSortOptions = auctionWorksInitialState.sortMap
+    if (isEcommerceSale) {
+      artworkBrowserSortOptions = {
+        '-searchable_estimate': 'Most Expensive',
+        'searchable_estimate': 'Least Expensive'
+      }
+    }
 
     const store = configureStore(auctionReducer, {
       app: u({
         articles: new Articles(articles),
         auction: auctionModel,
         footerItems: footerItems,
+        isEcommerceSale,
         isLiveOpen: auctionModel.isLiveOpen(),
         isMobile: res.locals.sd.IS_MOBILE,
         liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
@@ -62,11 +73,13 @@ export async function index (req, res, next) {
       }, appInitialState),
 
       artworkBrowser: u({
+        // FIXME: This is a temporary fix to update UI
         filterParams: {
           sale_id: saleId
         },
         isClosed: sale.is_closed,
         requestID: req.id,
+        sortMap: u.constant(artworkBrowserSortOptions),
         symbol: sale.symbol,
         user: res.locals.sd.CURRENT_USER
       }, auctionWorksInitialState)

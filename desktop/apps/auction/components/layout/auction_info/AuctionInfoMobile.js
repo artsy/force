@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
 import block from 'bem-cn-lite'
+import capitalize from 'underscore.string/capitalize'
 import { connect } from 'react-redux'
 
 function AuctionInfoMobile (props) {
@@ -120,7 +121,12 @@ AuctionInfoMobile.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { auction, isMobile, showInfoWindow } = state.app
+  const { auction, isEcommerceSale, isMobile, showInfoWindow } = state.app
+
+  let upcomingLabel = auction.upcomingLabel()
+  if (isEcommerceSale) {
+    upcomingLabel = capitalize(upcomingLabel.replace('Bidding', '').trim())
+  }
 
   return {
     description: auction.mdToHtml('description'),
@@ -129,7 +135,7 @@ const mapStateToProps = (state) => {
     liveStartAt: auction.get('live_start_at'),
     name: auction.get('name'),
     showInfoWindow,
-    upcomingLabel: auction.upcomingLabel(),
+    upcomingLabel,
     upcomingDateTime: auction.upcomingDateTime()
   }
 }

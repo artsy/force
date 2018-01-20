@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 function Registration (props) {
   const {
     isClosed,
+    isEcommerceSale,
     isQualifiedForBidding,
     isRegistrationEnded,
     numBidders,
@@ -19,7 +20,9 @@ function Registration (props) {
   return (
     <div className={b()}>
       {(() => {
-        if (isClosed) {
+        if (isEcommerceSale) {
+          return null
+        } else if (isClosed) {
           return null
         } else if (!isQualifiedForBidding) {
           return (
@@ -97,6 +100,7 @@ function Registration (props) {
 
 Registration.propTypes = {
   isClosed: PropTypes.bool.isRequired,
+  isEcommerceSale: PropTypes.bool,
   isQualifiedForBidding: PropTypes.bool.isRequired,
   isRegistrationEnded: PropTypes.bool.isRequired,
   numBidders: PropTypes.number.isRequired,
@@ -105,13 +109,14 @@ Registration.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { auction, isMobile, me } = state.app
+  const { auction, isEcommerceSale, isMobile, me } = state.app
   const numBidders = get(me, 'bidders.length', 0)
   const isQualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding', true)
   const showContactInfo = !isMobile
 
   return {
     isClosed: auction.isClosed() || auction.get('clockState') === 'closed',
+    isEcommerceSale,
     isMobile,
     isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),

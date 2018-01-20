@@ -7,16 +7,26 @@ export class Reveal extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     isEnabled: PropTypes.bool,
+    isExpanded: PropTypes.bool,
     coverHeight: PropTypes.number
   }
 
   static defaultProps = {
     isEnabled: false,
+    isExpanded: false,
     coverHeight: 450
   }
 
   state = {
     isExpanded: false
+  }
+
+  componentWillMount () {
+    const { isExpanded } = this.props
+
+    this.setState({
+      isExpanded
+    })
   }
 
   toggle () {

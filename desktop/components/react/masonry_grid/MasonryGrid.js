@@ -128,11 +128,12 @@ export default class MasonryGrid extends Component {
   }
 
   render () {
-    const { className, mask, style, title } = this.props
+    const { className, items, mask, style, title } = this.props
+    const isRevealExpanded = mask && items.length <= 2
 
     return (
       <Container>
-        <Reveal isEnabled={mask}>
+        <Reveal isEnabled={mask} isExpanded={isRevealExpanded} >
           {title &&
             <Title>
               {title}

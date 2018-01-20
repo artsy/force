@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
 import block from 'bem-cn-lite'
+import capitalize from 'underscore.string/capitalize'
 import { connect } from 'react-redux'
 
 function AuctionInfoDesktop (props) {
@@ -21,11 +22,11 @@ function AuctionInfoDesktop (props) {
   return (
     <header className={b()}>
       <div className={b('primary')}>
-
         { isAuctionPromo &&
           <h4 className={b('sub-header')}>
             Sale Preview
-          </h4> }
+          </h4>
+        }
 
         <h1 className={b('title')}>
           {name}
@@ -37,7 +38,8 @@ function AuctionInfoDesktop (props) {
           { showAddToCalendar &&
             <AddToCalendarView
               event={event}
-            /> }
+            />
+          }
 
           { liveStartAt &&
             <div className={b('callout-live-label')}>
@@ -49,7 +51,8 @@ function AuctionInfoDesktop (props) {
                 data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
                 data-anchor='top-left'
               />
-            </div> }
+            </div>
+          }
 
         </div>
         <div
@@ -78,7 +81,12 @@ AuctionInfoDesktop.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { auction } = state.app
+  const { auction, isEcommerceSale } = state.app
+
+  let upcomingLabel = auction.upcomingLabel()
+  if (isEcommerceSale) {
+    upcomingLabel = capitalize(upcomingLabel.replace('Bidding', '').trim())
+  }
 
   return {
     description: auction.mdToHtml('description'),
@@ -87,7 +95,7 @@ const mapStateToProps = (state) => {
     liveStartAt: auction.get('live_start_at'),
     name: auction.get('name'),
     showAddToCalendar: !(auction.isClosed() || auction.isLiveOpen()),
-    upcomingLabel: auction.upcomingLabel()
+    upcomingLabel
   }
 }
 
