@@ -45,8 +45,17 @@
       display none
 
 
-.auction-page
+.auction-Layout
   clearfix()
+
+  +respond-mobile()
+    &__container
+      > div:first-child
+        margin-bottom 23px
+
+      > div
+        margin-top 20px
+        margin-bottom 40px
 
   .responsive-layout-container
     margin 0 auto

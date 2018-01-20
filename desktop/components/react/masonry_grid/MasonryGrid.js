@@ -155,9 +155,8 @@ export default class MasonryGrid extends Component {
   }
 }
 
+// margin-bottom: 40px;
 const Container = styled.div`
-  margin-bottom: 40px;
-
   a {
     text-decoration: none;
   }

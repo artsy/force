@@ -17,7 +17,7 @@ export const initialState = {
     include_artworks_by_followed_artists: false,
     page: 1,
     sale_id: get(sd, 'AUCTION.id', ''),
-    size: 50,
+    size: 20,
     ranges: {
       estimate_range: {
         min: 0,

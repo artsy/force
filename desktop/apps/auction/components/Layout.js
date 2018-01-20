@@ -8,6 +8,7 @@ import Footer from 'desktop/apps/auction/components/layout/Footer'
 import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
 function Layout (props) {
@@ -20,11 +21,13 @@ function Layout (props) {
     showFooter
   } = props
 
+  const b = block('auction-Layout')
+
   return (
-    <div className='auction-page'>
+    <div className={b()}>
       <Banner />
 
-      <div className='main-layout-container responsive-layout-container'>
+      <div className={b('container', 'responsive-layout-container')}>
         <AuctionInfoContainer />
 
         { showAssociatedAuctions &&

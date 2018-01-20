@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Icon from '@artsy/reaction-force/dist/Components/Icon'
 
 export class Reveal extends Component {
@@ -42,6 +42,7 @@ export class Reveal extends Component {
       <OuterContainer>
         <InnerContainer
           isEnabled={maskContent}
+          isExpanded={isExpanded}
           coverHeight={coverHeight}
         >
           {this.props.children}
@@ -63,6 +64,15 @@ export class Reveal extends Component {
   }
 }
 
+const BottomBorder = css`
+  content: '';
+  border-bottom: 1px solid #e5e5e5;
+  bottom: 50%;
+  width: 120%;
+  right: -20px;
+  position: absolute;
+`
+
 const OuterContainer = styled.div`
   position: relative;
 `
@@ -73,6 +83,14 @@ const InnerContainer = styled.div`
       return `
         overflow: hidden;
         height: ${props.coverHeight}px;
+      `
+    } else if (props.isExpanded) {
+      return `
+        &:after {
+          padding-top: 19px;
+          ${BottomBorder}
+          bottom: inherit;
+        }
       `
     }
   }}
@@ -86,11 +104,8 @@ const Revealer = styled.div`
 
   &:before {
     content: '';
-    border-bottom: 1px solid #e5e5e5;
-    bottom: 50%;
     position: absolute;
-    width: 120%;
-    right: -20px;
+    ${BottomBorder}
   }
 `
 
@@ -101,7 +116,7 @@ const Button = styled.div`
   border-radius: 45px;
   height: 45px;
   left: 50%;
-  padding: 12px 4px;
+  padding: 12px 5px;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
