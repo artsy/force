@@ -226,6 +226,8 @@ describe('<Layout />', () => {
   })
 
   it('index, registered to bid but auction closed', () => {
+    Layout.__ResetDependency__('Banner')
+
     const { wrapper } = renderTestComponent({
       Component: Layout,
       options: { renderMode: 'render' },
@@ -241,12 +243,16 @@ describe('<Layout />', () => {
             name: 'An Auction',
             auction_state: 'closed'
           }
+        },
+        artworkBrowser: {
+          isClosed: true
         }
       }
     })
 
     wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
     wrapper.find('.auction-AuctionInfo__callout').text().should.equal('Auction Closed')
+    wrapper.find('.auction-Banner__closed').text().should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {
@@ -471,7 +477,7 @@ describe('<Layout />', () => {
     })
 
     describe('<ArtworksByFollowedArtists />', () => {
-      it.only('does not render if there is no data', () => {
+      it('does not render if there is no data', () => {
         let emptyData = cloneDeep(data)
         emptyData.artworkBrowser.saleArtworksByFollowedArtists = null
 

@@ -101,7 +101,7 @@ const Button = styled.div`
   border-radius: 45px;
   height: 45px;
   left: 50%;
-  padding: 12px 5px;
+  padding: 12px 4px;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
