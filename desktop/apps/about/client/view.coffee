@@ -52,7 +52,7 @@ module.exports = class AboutView extends Backbone.View
     @$iphoneBg = @$('.about-section1-phone-bg')
 
   setupStickyNav: ->
-    @$nav.waypoint 'sticky'
+    # @$nav.waypoint 'sticky'
 
   setupSectionNavHighlighting: ->
     $nav = @$nav

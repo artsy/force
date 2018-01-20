@@ -91,7 +91,9 @@ const config = {
       '$': 'jquery',
       'jQuery': 'jquery',
       'window.jQuery': 'jquery',
-      'jade': 'jade/runtime.js'
+      'jade': 'jade/runtime.js',
+      'waypoints': 'jquery-waypoints/waypoints.js',
+      'waypointsMobile': 'waypoints/lib/jquery.waypoints.js'
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
@@ -100,8 +102,8 @@ const config = {
   ],
   resolve: {
     alias: {
-      'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
-      'waypoints': 'waypoints/lib/jquery.waypoints.js'
+      'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js'
+      // 'waypoints': 'jquery-waypoints/waypoints.js'
     },
     extensions: ['.js', '.jsx', '.json', '.jade', '.coffee'],
     modules: [

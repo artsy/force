@@ -29,12 +29,8 @@ html( class=htmlClass )
       if sharify
         != sharify.script()
 
-      //- Add Google's jQuery
-      script( src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" )
-
-      //- Common bundle generated from factor-bundle
-      if sd.NODE_ENV !== 'development'
-        script( src=asset("/assets/common.js") )
+      //- Common bundle
+      script( src=asset("/assets/common.js") )
 
       //- Include asset package's javascript
       script( src=asset('/assets/' + assetPackage + '.js') )

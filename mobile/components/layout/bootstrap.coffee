@@ -32,7 +32,7 @@ module.exports = ->
 
 
   # removes 300ms delay
-  FastClick document.body
+  FastClick.attach document.body
 
   setupErrorReporting()
   setupHeaderView()

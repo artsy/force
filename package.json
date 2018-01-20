@@ -12,6 +12,7 @@
     "assets": "sh scripts/assets.sh",
     "deploy": "sh scripts/deploy.sh",
     "mocha": "sh scripts/mocha.sh",
+    "prepare": "patch-package",
     "start": "sh scripts/start.sh",
     "test": "sh scripts/test.sh",
     "webpack": "webpack"
@@ -200,6 +201,8 @@
     "mocha": "^3.1.2",
     "nightmare": "^2.10.0",
     "openseadragon": "^2.2.1",
+    "patch-package": "^5.0.0",
+    "postinstall-prepare": "^1.0.1",
     "progress-bar-webpack-plugin": "^1.10.0",
     "pug-loader": "damassi/pug-loader#02921c5",
     "raf": "^3.4.0",
