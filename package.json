@@ -142,7 +142,7 @@
     "updeep": "^1.0.0",
     "uuid": "^3.0.1",
     "validator": "^7.0.0",
-    "waypoints": "^4.0.1",
+    "waypoints": "4.0.0",
     "xss-filters": "^1.2.6"
   },
   "devDependencies": {

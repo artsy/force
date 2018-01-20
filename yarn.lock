@@ -8824,9 +8824,9 @@ watchpack@^1.4.0:
     chokidar "^1.7.0"
     graceful-fs "^4.1.2"
 
-waypoints@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/waypoints/-/waypoints-4.0.1.tgz#09979a0573810b29627cba4366a284a062ec69c8"
+waypoints@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/waypoints/-/waypoints-4.0.0.tgz#4033dcccfbebfb732645a6ebb5db97b73367e7a0"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
