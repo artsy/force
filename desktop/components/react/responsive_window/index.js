@@ -40,12 +40,6 @@ class ResponsiveWindow extends Component {
 
   componentDidMount () {
     window.addEventListener('resize', this.handleResizeEvent)
-
-    // Needed to get around issues where legacy Backbone code needs to mount,
-    // avoiding race conditions. Could possibly be fixed in React 16.
-    setTimeout(() => {
-      this.props.onChange(window.innerWidth)
-    }, 50)
   }
 
   componentWillUnmount () {

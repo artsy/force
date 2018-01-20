@@ -51,6 +51,14 @@ function Banner (props) {
               </a>
             </div>
           )
+        } else if (isClosed) {
+          return (
+            <div className={b('closed')}>
+              <div>
+                Auction Closed
+              </div>
+            </div>
+          )
         } else {
           return (
             <ClockView
