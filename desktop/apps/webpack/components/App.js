@@ -7,8 +7,6 @@ const Container = styled.div`
   color: white;
 `
 
-Container.displayName = 'Container'
-
 export class App extends Component {
   render () {
     return (

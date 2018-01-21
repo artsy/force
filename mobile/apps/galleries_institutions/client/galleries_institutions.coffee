@@ -1,5 +1,3 @@
-# require 'waypoints/lib/jquery.waypoints.js'
-# require 'jquery-waypoints/waypoints.js'
 require '../../../../node_modules/waypoints/lib/jquery.waypoints.js'
 
 { CITY, PARTNERS } = require('sharify').data
