@@ -4,14 +4,14 @@ const WebpackNotifierPlugin = require('webpack-notifier')
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-const { NODE_ENV, PORT } = process.env
+const { NODE_ENV, PORT, WEBPACK_DEVTOOL } = process.env
 const isDevelopment = NODE_ENV === 'development'
 const isStaging = NODE_ENV === 'staging'
 const isProduction = NODE_ENV === 'production'
 const isDeploy = isStaging || isProduction
 
 const config = {
-  devtool: 'cheap-module-source-map',
+  devtool: WEBPACK_DEVTOOL || 'cheap-module-source-map',
   entry: {
     webpack: [
       'webpack-hot-middleware/client?reload=true',

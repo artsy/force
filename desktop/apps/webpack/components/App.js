@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  background: black;
+  font-size: 40px;
+  color: white;
+`
+
+Container.displayName = 'Container'
 
 export class App extends Component {
   render () {
     return (
-      <div>
-        hi!!!!! 5
-      </div>
+      <Container>
+        hi!!!!! 10
+      </Container>
     )
   }
 }
