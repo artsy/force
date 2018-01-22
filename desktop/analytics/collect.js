@@ -8,4 +8,8 @@
       context_module: 'collect_sidebar'
     })
   })
+
+  analyticsHooks.on('search:collect', function (data) {
+    analytics.track('Keyword search from collect', { query: data.query })
+  })
 })()
