@@ -21,12 +21,11 @@ export async function newOnboarding (req, res, next) {
         },
         layout: '../../components/main_layout/templates/react_blank_index.jade',
         blocks: {
-          // head: 'meta.jade',
           body: App
         },
         locals: {
           ...res.locals,
-          assetPackage: 'misc'
+          assetPackage: 'personalize'
         }
       })
 
@@ -35,7 +34,6 @@ export async function newOnboarding (req, res, next) {
       next(error)
     }
   } else {
-    console.log('index')
-    index(req, res)
+    res.redirect('/personalize')
   }
 }
