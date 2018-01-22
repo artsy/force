@@ -7,7 +7,7 @@ import Genes from '@artsy/reaction-force/dist/Components/Onboarding/Steps/Genes'
 import Budget from '@artsy/reaction-force/dist/Components/Onboarding/Steps/Budget'
 const sd = require('sharify').data
 
-export default class App extends React.Component {
+export class App extends React.Component {
   render () {
     return (
       <ContextProvider currentUser={sd.CURRENT_USER} >

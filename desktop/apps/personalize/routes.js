@@ -1,6 +1,6 @@
 import * as _ from 'underscore'
 import { renderLayout } from '@artsy/stitch'
-import App from 'desktop/apps/personalize/components/App'
+import { App } from 'desktop/apps/personalize/components/App'
 
 export const index = (req, res) => {
   req.user.fetch({
