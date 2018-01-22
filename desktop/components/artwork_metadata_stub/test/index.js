@@ -12,6 +12,22 @@ function render (locals) {
 }
 
 describe('metadata template', () => {
+  describe('without a partner', () => {
+    let partnerlessArtwork
+    beforeEach(() => {
+      partnerlessArtwork = {
+        date: '2018',
+        title: 'A Cat Has No Name',
+        partner: null
+      }
+    })
+
+    it('renders auction closed if the auction is closed', () => {
+      const $ = cheerio.load(render({ artwork: partnerlessArtwork }))
+      $.text().should.containEql('A Cat Has No Name, 2018')
+      $('.artwork-metadata-stub__partner').length.should.eql(0)
+    })
+  })
   describe('auction artwork', () => {
     let auctionArtwork
     beforeEach(() => {
