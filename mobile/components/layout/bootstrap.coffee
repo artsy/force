@@ -16,6 +16,7 @@ Cookies = require 'cookies-js'
 { parse } = require 'url'
 HeaderView = require './client/header_view.coffee'
 doc = window.document
+sharify = require('sharify')
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -30,9 +31,9 @@ module.exports = ->
     Cookies.set 'inquiry-referrer', doc.referrer
     Cookies.set 'inquiry-session-start', location.href
 
-
   # removes 300ms delay
-  FastClick.attach document.body
+  if sharify.data.NODE_ENV is 'development'
+    FastClick.attach document.body
 
   setupErrorReporting()
   setupHeaderView()

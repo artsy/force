@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { connect } from 'react-redux'
+import { data as sd } from 'sharify'
 
 class DOM extends Component {
   static propTypes = {
@@ -13,7 +14,11 @@ class DOM extends Component {
 
   componentDidMount () {
     const FastClick = require('fastclick')
-    FastClick.attach(document.body)
+
+    // removes 300ms delay
+    if (sd.NODE_ENV === 'test') {
+      FastClick.attach(document.body)
+    }
 
     this.$ = require('jquery')
     this.addEventListeners()
