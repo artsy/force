@@ -21,7 +21,7 @@ if artwork.collecting_institution
 else if artwork.sale && artwork.sale.is_auction
   a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.sale.href )
     = artwork.partner.name
-else
+else if artwork.partner
   a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.partner.href )
     = artwork.partner.name
 
