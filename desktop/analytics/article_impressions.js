@@ -1,3 +1,6 @@
+const $ = require('jquery')
+const _ = require('underscore')
+
 if (location.pathname.match('/article/') || location.pathname.match('/articles')) {
   var trackedImpressions = []
 
@@ -123,7 +126,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
             id: 'article_callout:' + articleId + ':' + destinationPath
           }
         } else {
-          return
+          
         }
       }).toArray()
 

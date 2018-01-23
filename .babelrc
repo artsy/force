@@ -1,11 +1,14 @@
 {
   "presets": [
-    "es2015",
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
+    }],
     "react",
     "stage-3"
   ],
   "plugins": [
-    "babel-plugin-rewire",
     "inline-react-svg",
     "transform-runtime",
     ["module-resolver", {
@@ -16,9 +19,15 @@
   "env": {
     "development": {
       "plugins": [
-        ["styled-components", {
-          "ssr": true
+        ["babel-plugin-styled-components", {
+          "ssr": true,
+          "displayName": true
         }]
+      ]
+    },
+    "test" : {
+      "plugins": [
+        "babel-plugin-rewire"
       ]
     }
   }

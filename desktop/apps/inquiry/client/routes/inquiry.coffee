@@ -1,5 +1,4 @@
 _ = require 'underscore'
-attachFastClick = -> require('fastclick') arguments...
 { ARTWORK } = require('sharify').data
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
@@ -10,10 +9,13 @@ openErrorFlash = require '../../../../components/inquiry_questionnaire/error.cof
 Logger = require '../../../../components/logger/index.coffee'
 Trail = require '../../../../components/inquiry_questionnaire/trail.coffee'
 analytics = require '../../../../components/inquiry_questionnaire/analytics.coffee'
+FastClick = require 'fastclick'
 { steps, decisions, views } = require '../map.coffee'
 
+
 module.exports = (id, bypass) ->
-  attachFastClick document.body
+  if FastClick.attach
+    FastClick.attach document.body
 
   steps = [bypass] if bypass and _.contains(_.keys(views), bypass)
 

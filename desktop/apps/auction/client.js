@@ -9,7 +9,6 @@ import configureStore from 'desktop/components/react/utils/configureStore'
 import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
 
 export default () => {
-  // Rehydrate data from Server
   const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
   const auctionModel = new Auction(bootstrapData.app.auction)
   const auctionArticles = new Articles(bootstrapData.app.articles)

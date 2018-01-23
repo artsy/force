@@ -6,7 +6,7 @@
 # to get more complex in how we break up and load assets.
 #
 
-require 'jquery'
+$ = require 'jquery'
 sd = require('sharify').data
 
 # TODO: Refactor to use Backbone router
