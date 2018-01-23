@@ -1,6 +1,5 @@
-const path = require('path')
-
 require('raf/polyfill')
+const path = require('path')
 
 // TODO: Look into why this bumps user off of other node command-line tab
 require('dotenv').config({

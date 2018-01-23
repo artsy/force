@@ -8,6 +8,7 @@
 require 'jquery'
 Backbone = require 'backbone'
 Backbone.$ = $
+
 _ = require 'underscore'
 FastClick = require 'fastclick'
 RavenClient = require 'raven-js'
@@ -18,7 +19,13 @@ HeaderView = require './client/header_view.coffee'
 doc = window.document
 sharify = require('sharify')
 
+imagesLoaded = require 'imagesloaded'
+jqueryFillwidthLite = require 'jquery-fillwidth-lite'
+
 module.exports = ->
+  imagesLoaded.makeJQueryPlugin($)
+  jqueryFillwidthLite($, _, imagesLoaded)
+
   # Add the Gravity XAPP or access token to all ajax requests
   $.ajaxSettings.headers = {
     "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN
@@ -32,7 +39,7 @@ module.exports = ->
     Cookies.set 'inquiry-session-start', location.href
 
   # removes 300ms delay
-  if sharify.data.NODE_ENV is 'development'
+  if FastClick.attach
     FastClick.attach document.body
 
   setupErrorReporting()
