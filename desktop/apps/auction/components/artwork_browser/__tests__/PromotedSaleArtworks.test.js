@@ -1,11 +1,11 @@
-import BuyNowSaleArtworks from '../BuyNowSaleArtworks'
+import PromotedSaleArtworks from '../PromotedSaleArtworks'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 import { ArtworkRail } from '../../artwork_rail/ArtworkRail'
 import { promotedSaleArtworks } from '../__tests__/fixtures/promotedSaleArtworks'
 import { cloneDeep } from 'lodash'
 
-describe('auction/components/artwork_browser/BuyNowSaleArtworks', () => {
+describe('auction/components/artwork_browser/PromotedSaleArtworks', () => {
   const data = {
     app: {
       isMobile: false,
@@ -22,7 +22,7 @@ describe('auction/components/artwork_browser/BuyNowSaleArtworks', () => {
 
   it('renders a <ArtworkRail /> on desktop', () => {
     const { wrapper } = renderTestComponent({
-      Component: BuyNowSaleArtworks,
+      Component: PromotedSaleArtworks,
       data,
       props: {
         promotedSaleArtworks
@@ -38,7 +38,7 @@ describe('auction/components/artwork_browser/BuyNowSaleArtworks', () => {
     mobileData.app.isMobile = true
 
     const { wrapper } = renderTestComponent({
-      Component: BuyNowSaleArtworks,
+      Component: PromotedSaleArtworks,
       data: mobileData,
       props: {
         promotedSaleArtworks
