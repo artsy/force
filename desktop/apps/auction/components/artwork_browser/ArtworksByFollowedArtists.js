@@ -29,9 +29,9 @@ function ArtworksByFollwedArtists (props) {
           }}
           getDisplayComponent={({ artwork }) => {
             return (
-              <a href={artwork.href}>
+              <div onClick={() => (window.location = artwork.href)}>
                 <Artwork artwork={artwork} />
-              </a>
+              </div>
             )
           }}
         />

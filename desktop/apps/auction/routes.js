@@ -14,6 +14,7 @@ import metaphysics from 'lib/metaphysics.coffee'
 import u from 'updeep'
 import { initialState as appInitialState } from 'desktop/apps/auction/reducers/app'
 import { initialState as auctionWorksInitialState } from 'desktop/apps/auction/reducers/artworkBrowser'
+import { isObject } from 'underscore'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 import { renderLayout } from '@artsy/stitch'
 
@@ -47,7 +48,14 @@ export async function index (req, res, next) {
 
     // TODO: Refactor out Backbone
     const auctionModel = new Auction(sale)
-    const isEcommerceSale = saleId === 'chris-ecommerce-sale'
+
+    /**
+     * An e-commerce sale is one which is created by following these steps:
+     * https://github.com/artsy/auctions/blob/master/auctions_support_faq.md#how-do-i-create-an-e-commerce-sale
+     * It enables relations between one or more conventional auctions and
+     * represents "Buy Now"-like artworks
+     */
+    const isEcommerceSale = !sale.is_auction && isObject(sale.promoted_sale)
 
     // If an e-commerce sale, remove all sort options that are Auction related
     let artworkBrowserSortOptions = auctionWorksInitialState.sortMap

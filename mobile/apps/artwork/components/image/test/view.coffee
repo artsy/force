@@ -41,7 +41,7 @@ describe 'ArtworkImageView', ->
           el: $('.artwork-image-module')
         done()
 
-    
+
     describe '#renderSave without a user', ->
 
       it 'is in unsaved state', ->
@@ -83,7 +83,7 @@ describe 'ArtworkImageView', ->
         it 'does nothing', ->
           @spy.called.should.not.be.ok()
 
-  describe.only 'watching an artwork in auction', ->
+  describe 'watching an artwork in auction', ->
     beforeEach (done) ->
       @artwork = fabricate('artwork', { image: url: '/image.png' } )
       @artwork.artists = [ fabricate('artist', name: 'Andy Warhol') ]
@@ -104,7 +104,7 @@ describe 'ArtworkImageView', ->
           el: $('.artwork-image-module')
         done()
 
-    
+
     describe '#renderSave without a user', ->
 
       it 'is in unsaved state', ->
