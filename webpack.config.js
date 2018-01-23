@@ -103,7 +103,6 @@ const config = {
   resolve: {
     alias: {
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js'
-      // 'waypoints': 'jquery-waypoints/waypoints.js'
     },
     extensions: ['.js', '.jsx', '.json', '.jade', '.coffee'],
     modules: [

@@ -15,7 +15,7 @@ describe 'errorHandler', ->
       stack: 'mad fat stacks'
     }
 
-  it.only 'invokes the error handler template with the right parameters (and the right status code for the page)', ->
+  it 'invokes the error handler template with the right parameters (and the right status code for the page)', ->
     errorHandler.__set__ 'NODE_ENV', 'development'
     errorHandler(@err, {}, @res, {})
     @res.status.args[0][0].should.equal 420

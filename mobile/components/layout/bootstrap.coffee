@@ -19,12 +19,15 @@ HeaderView = require './client/header_view.coffee'
 doc = window.document
 sharify = require('sharify')
 
-imagesLoaded = require 'imagesloaded'
-jqueryFillwidthLite = require 'jquery-fillwidth-lite'
 
 module.exports = ->
-  imagesLoaded.makeJQueryPlugin($)
-  jqueryFillwidthLite($, _, imagesLoaded)
+  try
+    jqueryFillwidthLite = require 'jquery-fillwidth-lite'
+    imagesLoaded = require 'imagesloaded'
+    imagesLoaded.makeJQueryPlugin($)
+    jqueryFillwidthLite($, _, imagesLoaded)
+  catch error
+    # Noop used for tests. No need to setup
 
   # Add the Gravity XAPP or access token to all ajax requests
   $.ajaxSettings.headers = {
