@@ -60,8 +60,6 @@ function Banner (props) {
               </div>
             </div>
           )
-        } else if (isEcommerceSale) {
-          return null
         } else {
           return (
             <ClockView
@@ -94,13 +92,13 @@ const mapStateToProps = (state) => {
     liveAuctionUrl
   } = state.app
 
-  const { cover_image, name } = auction.toJSON()
+  const { cover_image, is_closed, name } = auction.toJSON()
   const coverImage = get(cover_image, 'cropped.url', '')
 
   return {
     auction,
     coverImage,
-    isClosed: state.artworkBrowser.isClosed,
+    isClosed: is_closed,
     isEcommerceSale,
     isLiveOpen,
     isMobile,

@@ -13,6 +13,7 @@ function ListArtwork (props) {
     artistDisplay,
     date,
     image,
+    isAuction,
     isClosed,
     isMobile,
     lotLabel,
@@ -30,9 +31,11 @@ function ListArtwork (props) {
           </div>
 
           <div className={b('metadata')}>
-            <div className={b('lot-number')}>
-              Lot {lotLabel}
-            </div>
+            { isAuction &&
+              <div className={b('lot-number')}>
+                Lot {lotLabel}
+              </div>
+            }
 
             <div className={b('artists')}>
               {artistDisplay}
@@ -44,7 +47,7 @@ function ListArtwork (props) {
               }}
             />
 
-          { !isClosed &&
+          { isAuction && !isClosed &&
             <div className={b('bid-status')}>
               <BidStatus
                 artworkItem={saleArtwork}
@@ -71,10 +74,13 @@ function ListArtwork (props) {
               }}
             />
           </div>
-          <div className={b('lot-number')}>
-            Lot {saleArtwork.lot_label}
-          </div>
-          { !props.isClosed &&
+          { isAuction &&
+            <div className={b('lot-number')}>
+              Lot {saleArtwork.lot_label}
+            </div>
+          }
+
+          { isAuction && !props.isClosed &&
             <div className={b('bid-status')}>
               <BidStatus
                 artworkItem={saleArtwork}
@@ -88,6 +94,7 @@ ListArtwork.propTypes = {
   saleArtwork: PropTypes.object.isRequired,
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  isAuction: PropTypes.bool.isRequired,
   isClosed: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
   lotLabel: PropTypes.string.isRequired,
@@ -106,6 +113,7 @@ const mapStateToProps = (state, props) => {
   return {
     date: saleArtwork.artwork.date,
     image,
+    isAuction: state.app.auction.get('is_auction'),
     isClosed: state.artworkBrowser.isClosed || state.app.auction.isClosed(),
     isMobile: state.app.isMobile,
     lotLabel: saleArtwork.lot_label,

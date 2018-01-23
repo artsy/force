@@ -7,7 +7,7 @@ import { ArtworkRail } from '../artwork_rail/ArtworkRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
-function BuyNowSaleArtworks (props) {
+function PromotedSaleArtworks (props) {
   const { isMobile, promotedSaleArtworks } = props
   const isRenderable = promotedSaleArtworks && promotedSaleArtworks.length
 
@@ -51,12 +51,12 @@ function BuyNowSaleArtworks (props) {
   )
 }
 
-BuyNowSaleArtworks.propTypes = {
+PromotedSaleArtworks.propTypes = {
   isMobile: PropTypes.bool.isRequired,
   promotedSaleArtworks: PropTypes.array.isRequired
 }
 
-BuyNowSaleArtworks.defaultProps = {
+PromotedSaleArtworks.defaultProps = {
   promotedSaleArtworks: []
 }
 
@@ -78,4 +78,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(BuyNowSaleArtworks)
+)(PromotedSaleArtworks)

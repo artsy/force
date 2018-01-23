@@ -50,20 +50,21 @@ export async function index (req, res, next) {
     const auctionModel = new Auction(sale)
 
     /**
-     * An e-commerce sale is one which is created by following these steps:
-     * https://github.com/artsy/auctions/blob/master/auctions_support_faq.md#how-do-i-create-an-e-commerce-sale
-     * It enables relations between one or more conventional auctions and
-     * represents "Buy Now"-like artworks
+     * An e-commerce sale is a collection of artworks that can be sold over a
+     * fixed period of time. See https://github.com/artsy/auctions/blob/master/auctions_support_faq.md#how-do-i-create-an-e-commerce-sale
+     * for instructions on how to create.
      */
-    const isEcommerceSale = !sale.is_auction && isObject(sale.promoted_sale)
+    const isEcommerceSale = !sale.is_auction
 
     // If an e-commerce sale, remove all sort options that are Auction related
     let artworkBrowserSortOptions = auctionWorksInitialState.sortMap
+    let sort = auctionWorksInitialState.filterParams.sort
     if (isEcommerceSale) {
       artworkBrowserSortOptions = {
         '-searchable_estimate': 'Most Expensive',
         'searchable_estimate': 'Least Expensive'
       }
+      sort = '-searchable_estimate'
     }
 
     const store = configureStore(auctionReducer, {
@@ -83,7 +84,8 @@ export async function index (req, res, next) {
       artworkBrowser: u({
         // FIXME: This is a temporary fix to update UI
         filterParams: {
-          sale_id: saleId
+          sale_id: saleId,
+          sort
         },
         isClosed: sale.is_closed,
         requestID: req.id,

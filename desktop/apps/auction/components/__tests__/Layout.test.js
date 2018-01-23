@@ -241,6 +241,7 @@ describe('<Layout />', () => {
           },
           auction: {
             name: 'An Auction',
+            is_closed: true,
             auction_state: 'closed'
           }
         },

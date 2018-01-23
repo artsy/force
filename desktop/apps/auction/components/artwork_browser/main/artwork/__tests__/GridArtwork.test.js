@@ -21,7 +21,21 @@ describe('auction/components/artwork_browser/main/artwork/GridArtwork.test', () 
         Component: GridArtwork,
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: true,
           isClosed: true
+        }
+      })
+
+      wrapper.find(BidStatus).length.should.equal(0)
+    })
+
+    it('does not render a <BidStatus /> component if not an auction', () => {
+      const { wrapper } = renderTestComponent({
+        Component: GridArtwork,
+        props: {
+          saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: false,
+          isClosed: false
         }
       })
 
@@ -33,6 +47,7 @@ describe('auction/components/artwork_browser/main/artwork/GridArtwork.test', () 
         Component: GridArtwork,
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: true,
           isClosed: false
         }
       })

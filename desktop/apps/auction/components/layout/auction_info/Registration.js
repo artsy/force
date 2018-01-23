@@ -25,7 +25,7 @@ function Registration (props) {
   return (
     <div className={b()}>
       {(() => {
-        if (isClosed || isLiveOpen) {
+        if (isClosed) {
           return null
         } else if (!isQualifiedForBidding) {
           return (
