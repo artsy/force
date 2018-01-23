@@ -166,8 +166,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
   }
 
   var trackImpression = function (item) {
-    analytics.track(item.message, item.context,
-      { integrations: { 'Mixpanel': false } })
+    analytics.track(item.message, item.context)
   }
 
   $(window).on('scroll', _.throttle(trackImpressions, 500))

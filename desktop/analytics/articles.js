@@ -100,7 +100,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       destination_path: null,
       impression_type: 'newsletter_signup',
       context_type: options.type
-    }, { integrations: { 'Mixpanel': false } })
+    })
   })
 }
 
