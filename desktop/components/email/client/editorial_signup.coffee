@@ -11,6 +11,7 @@ mailcheck = require '../../mailcheck/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../flash/index.coffee'
 qs = require 'querystring'
+splitTest = require '../../split_test/index.coffee'
 
 module.exports = class EditorialSignupView extends Backbone.View
 
@@ -20,21 +21,29 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: ({isArticle = false}) ->
+  initialize: ({isArticle = false, isExperiment = false}) ->
+    @params = qs.parse(location.search.replace(/^\?/, ''))
+    @isExperiment = isExperiment
     @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
+    @revealEditorialCTA = _.once(@revealEditorialCTA)
 
   eligibleToSignUp: ->
     @inAEMagazinePage() and
     not sd.SUBSCRIBED_TO_EDITORIAL and
-    qs.parse(location.search.replace(/^\?/, '')).utm_source isnt 'sailthru'
+    not @fromSailthru()
+
+  fromSailthru: ->
+    @params.utm_source is 'sailthru' or
+    @params.utm_content?.includes('st-', 0)
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'
 
   setupAEMagazinePage: ->
     @ctaBarView = new CTABarView
-      name: 'editorial-signup'
+      mode: 'editorial-signup'
+      name: 'editorial-signup-dismissed'
       persist: true
     # Show the lush CTA after the 6th article
     @fetchSignupImages (images) =>
@@ -54,7 +63,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    return if qs.parse(location.search.replace(/^\?/, '')).utm_source is 'sailthru'
+    return if @fromSailthru()
     unless @ctaBarView.previouslyDismissed()
       @showEditorialCTA()
 
@@ -80,8 +89,12 @@ module.exports = class EditorialSignupView extends Backbone.View
       email: sd.CURRENT_USER?.email or ''
       image: sd.EDITORIAL_CTA_BANNER_IMG
     window.addEventListener 'scroll', () =>
-      setTimeout((=> $('.articles-es-cta--banner').css('opacity', 1)), 2000)
+      setTimeout(@revealEditorialCTA(), 2000)
     analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
+
+  revealEditorialCTA: ->
+    $('.articles-es-cta--banner').css('opacity', 1)
+    splitTest('editorial_signup_test').view() if @isExperiment
 
   hideEditorialCTA: (e) ->
     e?.preventDefault()
@@ -113,12 +126,14 @@ module.exports = class EditorialSignupView extends Backbone.View
         # Modal Signup
         @$('.articles-es-cta--banner').fadeOut()
 
+        @ctaBarView.logDimissal()
+
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
     type = $(e.currentTarget).data('type')
     if @inAEMagazinePage()
-      'magazine_fixed'
+      'magazine_popup'
     else
       'article_popup'
 
