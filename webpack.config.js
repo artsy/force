@@ -92,8 +92,7 @@ const config = {
       'jQuery': 'jquery',
       'window.jQuery': 'jquery',
       'jade': 'jade/runtime.js',
-      'waypoints': 'jquery-waypoints/waypoints.js',
-      'waypointsMobile': 'waypoints/lib/jquery.waypoints.js'
+      'waypoints': 'jquery-waypoints/waypoints.js'
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
@@ -168,6 +167,11 @@ function findAssets (basePath) {
           path.join(__dirname, basePath, file)
         ]
       }
+
+      // Load oldschool global module dependencies
+      asset[fileName].unshift(
+        './lib/global_modules'
+      )
 
       if (isDevelopment) {
         asset[fileName].unshift(

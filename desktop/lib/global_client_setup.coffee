@@ -74,10 +74,6 @@ setupJquery = ->
   require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
   require '../../node_modules/jquery-touch-events/src/jquery.mobile-events.min.js'
   require('artsy-gemini-upload') $
-  require('jquery-fillwidth-lite')($, _, imagesLoaded)
-
-  imagesLoaded = require 'imagesloaded'
-  imagesLoaded.makeJQueryPlugin($)
 
   # For drop down menus that appear on hover you may want that menu to close
   # once you click it. For these cases do `$el.click -> $(@).hidehover()` and
