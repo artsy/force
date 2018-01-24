@@ -37,7 +37,8 @@ module.exports = class EditorialSignupView extends Backbone.View
     if sd.EDITORIAL_SIGNUP_TEST is 'experiment'
       mediator.trigger('open:auth', {
         mode: 'register',
-        redirectTo: window.location.href
+        redirectTo: window.location.href,
+        copy: 'Sign up for the Best Stories in Art and Visual Culture'
       })
     else
       @$('.articles-es-cta--banner').css('opacity', 1)
