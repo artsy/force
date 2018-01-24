@@ -21,4 +21,10 @@ module.exports = {
       control: 50
       experiment: 50
     edge: 'experiment'
+  editorial_signup_test:
+    key: 'editorial_signup_test'
+    outcomes:
+      control: 50
+      experiment: 50
+    edge: 'experiment'
 }

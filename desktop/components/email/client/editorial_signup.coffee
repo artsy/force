@@ -11,6 +11,7 @@ mailcheck = require '../../mailcheck/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../flash/index.coffee'
 qs = require 'querystring'
+splitTest = require '../../split_test/index.coffee'
 
 module.exports = class EditorialSignupView extends Backbone.View
 
@@ -20,21 +21,43 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: ({isArticle = false}) ->
+  initialize: ({isArticle = false, @isABTest = false}) ->
+    @params = qs.parse(location.search.replace(/^\?/, ''))
     @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
+    @revealArticlePopup = _.once(@revealArticlePopup)
+    mediator.on 'modal:closed', @setDismissCookie
+    mediator.on 'auth:sign_up:success', @setDismissCookie
+
+  setDismissCookie: =>
+    @ctaBarView.logDismissal()
+
+  revealArticlePopup: =>
+    splitTest('editorial_signup_test').view() if @isABTest
+    if sd.EDITORIAL_SIGNUP_TEST is 'experiment'
+      mediator.trigger('open:auth', {
+        mode: 'register',
+        redirectTo: window.location.href
+      })
+    else
+      @$('.articles-es-cta--banner').css('opacity', 1)
 
   eligibleToSignUp: ->
     @inAEMagazinePage() and
     not sd.SUBSCRIBED_TO_EDITORIAL and
-    qs.parse(location.search.replace(/^\?/, '')).utm_source isnt 'sailthru'
+    not @fromSailthru()
+
+  fromSailthru: ->
+    @params.utm_source is 'sailthru' or
+    @params.utm_content?.includes('st-', 0)
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'
 
   setupAEMagazinePage: ->
     @ctaBarView = new CTABarView
-      name: 'editorial-signup'
+      mode: 'editorial-signup'
+      name: 'editorial-signup-dismissed'
       persist: true
     # Show the lush CTA after the 6th article
     @fetchSignupImages (images) =>
@@ -54,7 +77,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    return if qs.parse(location.search.replace(/^\?/, '')).utm_source is 'sailthru'
+    return if @fromSailthru()
     unless @ctaBarView.previouslyDismissed()
       @showEditorialCTA()
 
@@ -79,8 +102,8 @@ module.exports = class EditorialSignupView extends Backbone.View
       mode: 'modal'
       email: sd.CURRENT_USER?.email or ''
       image: sd.EDITORIAL_CTA_BANNER_IMG
-    window.addEventListener 'scroll', () =>
-      setTimeout((=> $('.articles-es-cta--banner').css('opacity', 1)), 2000)
+    $(window).on 'scroll', () =>
+      setTimeout(@revealArticlePopup, 2000)
     analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
 
   hideEditorialCTA: (e) ->
@@ -90,7 +113,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     cta.fadeOut()
 
   # Subscribe controls
-  onSubscribe: (e) ->
+  onSubscribe: (e) =>
     @$(e.currentTarget).addClass 'is-loading'
     @email = @$(e.currentTarget).prev('input').val()
     $.ajax
@@ -113,15 +136,17 @@ module.exports = class EditorialSignupView extends Backbone.View
         # Modal Signup
         @$('.articles-es-cta--banner').fadeOut()
 
+        @ctaBarView.logDismissal()
+
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
     type = $(e.currentTarget).data('type')
     if @inAEMagazinePage()
-      'magazine_fixed'
+      'magazine_popup'
     else
       'article_popup'
 
   onDismiss: (e)->
-    @ctaBarView.logDimissal()
+    @ctaBarView.logDismissal()
     analyticsHooks.trigger('dismiss:editorial-signup', type: @getSubmissionType(e))

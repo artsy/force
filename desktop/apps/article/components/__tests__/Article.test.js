@@ -152,7 +152,8 @@ describe('<Article />', () => {
     html.should.containEql('Ad Headline')
   })
 
-  it('sets up follow buttons', () => {
+  // FIXME: DOES NOT TEST ANTHING
+  xit('sets up follow buttons', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {

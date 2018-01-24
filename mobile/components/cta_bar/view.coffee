@@ -26,7 +26,7 @@ module.exports = class CTABarView extends Backbone.View
   previouslyDismissed: ->
     @persist and Cookies.get(@name)?
 
-  logDimissal: ->
+  logDismissal: ->
     if @persist
       Cookies.set @name, 1, expires: @expires
 
@@ -52,6 +52,6 @@ module.exports = class CTABarView extends Backbone.View
 
   close: (e) ->
     e?.preventDefault()
-    @logDimissal()
+    @logDismissal()
     @transitionOut =>
       @remove()
