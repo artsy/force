@@ -16,4 +16,6 @@ module.exports.init = ->
       featured: true
       sort: '-published_at'
   feedView.render()
-  new EditorialSignupView el: $('body')
+  new EditorialSignupView
+    el: $('body')
+    isABTest: true
