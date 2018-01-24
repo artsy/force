@@ -3,7 +3,7 @@
     .cf-categories__category(
       data-id=category.id
       style="background-image: url(#{category.image})"
-      data-has-results= hasResults && hasResults(counts, category.id) ? "true" : "false"
+      data-has-results= alwaysEnabled || (hasResults && hasResults(counts, category.id)) ? "true" : "false"
       class=(selectedCategory == category.id) ? "is-selected" : ""
     )
       .cf-categories__category__overlay

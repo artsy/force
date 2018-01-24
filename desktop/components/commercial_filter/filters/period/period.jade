@@ -1,6 +1,6 @@
-.artsy-checkbox.cf-periods__checkbox(data-has-results=agg ? 'true' : 'false')
+.artsy-checkbox.cf-periods__checkbox(data-has-results=enabled ? 'true' : 'false')
   .artsy-checkbox--checkbox
-    input( type='checkbox', id=majorPeriod, checked=isSelected, disabled=!agg )
+    input( type='checkbox', id=majorPeriod, checked=isSelected, disabled=!enabled )
     label( for=majorPeriod )
   label.artsy-checkbox--label( for=majorPeriod ) #{majorPeriod}
     if agg
