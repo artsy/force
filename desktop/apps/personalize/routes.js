@@ -26,6 +26,9 @@ export async function newOnboarding (req, res, next) {
         locals: {
           ...res.locals,
           assetPackage: 'personalize'
+        },
+        data: {
+          currentUser: res.locals.sd.CURRENT_USER
         }
       })
 

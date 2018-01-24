@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
 import Wizard from '@artsy/reaction-force/dist/Components/Onboarding/Wizard'
@@ -5,12 +6,15 @@ import CollectorIntent from '@artsy/reaction-force/dist/Components/Onboarding/St
 import Artists from '@artsy/reaction-force/dist/Components/Onboarding/Steps/Artists'
 import Genes from '@artsy/reaction-force/dist/Components/Onboarding/Steps/Genes'
 import Budget from '@artsy/reaction-force/dist/Components/Onboarding/Steps/Budget'
-const sd = require('sharify').data
 
 export class App extends React.Component {
+  static propTypes = {
+    currentUser: PropTypes.object
+  }
+
   render () {
     return (
-      <ContextProvider currentUser={sd.CURRENT_USER} >
+      <ContextProvider currentUser={this.props.currentUser} >
         <Wizard stepComponents={[CollectorIntent, Artists, Genes, Budget]} />
       </ContextProvider>
     )
