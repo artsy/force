@@ -9,8 +9,6 @@ import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
-import mediator from 'desktop/lib/mediator.coffee'
-import splitTest from 'desktop/components/split_test/index.coffee'
 
 const NAVHEIGHT = '53px'
 
@@ -44,34 +42,11 @@ export default class ArticleLayout extends React.Component {
       })
     }
     if (!subscribed && !isSuper && article.layout === 'standard') {
-      /**
-       * AB TEST
-       * Tests the editorial-only and full user signups
-       */
-      if (sd.IS_MOBILE) {
-        new EditorialSignupView({
-          el: document.querySelector('body'),
-          isArticle: true
-        })
-      } else {
-        if (sd.EDITORIAL_SIGNUP_TEST === 'experiment') {
-          window.addEventListener('scroll', () => {
-            setTimeout(() => {
-              mediator.trigger('open:auth', {
-                mode: 'register',
-                redirectTo: window.location.href
-              })
-              splitTest('editorial_signup_test').view()
-            }, 2000)
-          })
-        } else {
-          new EditorialSignupView({
-            el: document.querySelector('body'),
-            isArticle: true,
-            isExperiment: true
-          })
-        }
-      }
+      new EditorialSignupView({
+        el: document.querySelector('body'),
+        isArticle: true,
+        isABTest: !sd.IS_MOBILE
+      })
     }
   }
 

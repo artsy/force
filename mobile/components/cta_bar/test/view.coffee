@@ -49,7 +49,7 @@ describe 'CTABarView', ->
       @view = new CTABarView name: 'foobar', persist: true
       @view.render()
 
-    describe '#logDimissal', ->
+    describe '#logDismissal', ->
       beforeEach ->
         @view.$('.cta-bar-defer').click()
 

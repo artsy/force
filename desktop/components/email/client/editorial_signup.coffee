@@ -21,12 +21,26 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: ({isArticle = false, isExperiment = false}) ->
+  initialize: ({isArticle = false, @isABTest = false}) ->
     @params = qs.parse(location.search.replace(/^\?/, ''))
-    @isExperiment = isExperiment
     @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
-    @revealEditorialCTA = _.once(@revealEditorialCTA)
+    @revealArticlePopup = _.once(@revealArticlePopup)
+    mediator.on 'modal:closed', @setDismissCookie
+    mediator.on 'auth:sign_up:success', @setDismissCookie
+
+  setDismissCookie: =>
+    @ctaBarView.logDismissal()
+
+  revealArticlePopup: =>
+    splitTest('editorial_signup_test').view() if @isABTest
+    if sd.EDITORIAL_SIGNUP_TEST is 'experiment'
+      mediator.trigger('open:auth', {
+        mode: 'register',
+        redirectTo: window.location.href
+      })
+    else
+      @$('.articles-es-cta--banner').css('opacity', 1)
 
   eligibleToSignUp: ->
     @inAEMagazinePage() and
@@ -88,13 +102,9 @@ module.exports = class EditorialSignupView extends Backbone.View
       mode: 'modal'
       email: sd.CURRENT_USER?.email or ''
       image: sd.EDITORIAL_CTA_BANNER_IMG
-    window.addEventListener 'scroll', () =>
-      setTimeout(@revealEditorialCTA(), 2000)
+    $(window).on 'scroll', () =>
+      setTimeout(@revealArticlePopup, 2000)
     analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
-
-  revealEditorialCTA: ->
-    $('.articles-es-cta--banner').css('opacity', 1)
-    splitTest('editorial_signup_test').view() if @isExperiment
 
   hideEditorialCTA: (e) ->
     e?.preventDefault()
@@ -103,7 +113,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     cta.fadeOut()
 
   # Subscribe controls
-  onSubscribe: (e) ->
+  onSubscribe: (e) =>
     @$(e.currentTarget).addClass 'is-loading'
     @email = @$(e.currentTarget).prev('input').val()
     $.ajax
@@ -126,7 +136,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         # Modal Signup
         @$('.articles-es-cta--banner').fadeOut()
 
-        @ctaBarView.logDimissal()
+        @ctaBarView.logDismissal()
 
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
@@ -138,5 +148,5 @@ module.exports = class EditorialSignupView extends Backbone.View
       'article_popup'
 
   onDismiss: (e)->
-    @ctaBarView.logDimissal()
+    @ctaBarView.logDismissal()
     analyticsHooks.trigger('dismiss:editorial-signup', type: @getSubmissionType(e))

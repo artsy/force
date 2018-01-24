@@ -164,32 +164,4 @@ describe('<Article />', () => {
     const rendered = mount(<ArticleLayout article={article} templates={{}} />)
     rendered.state().following.length.should.exist()
   })
-
-  describe('Editorial Signup AB Test', () => {
-    it('shows an editorial modal', () => {
-      const article = _.extend({}, fixtures.article, {
-        layout: 'standard',
-        vertical: {
-          name: 'Art Market'
-        },
-        published_at: '2017-05-19T13:09:18.567Z',
-        contributing_authors: [{ name: 'Kana' }]
-      })
-      const rendered = mount(<ArticleLayout article={article} templates={{}} />)
-      rendered.state().following.length.should.exist()
-    })
-
-    it('shows an Artsy user signup modal', () => {
-      const article = _.extend({}, fixtures.article, {
-        layout: 'standard',
-        vertical: {
-          name: 'Art Market'
-        },
-        published_at: '2017-05-19T13:09:18.567Z',
-        contributing_authors: [{ name: 'Kana' }]
-      })
-      const rendered = mount(<ArticleLayout article={article} templates={{}} />)
-      rendered.state().following.length.should.exist()
-    })
-  })
 })
