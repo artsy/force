@@ -21,14 +21,6 @@ sharify = require('sharify')
 
 
 module.exports = ->
-  try
-    jqueryFillwidthLite = require 'jquery-fillwidth-lite'
-    imagesLoaded = require 'imagesloaded'
-    imagesLoaded.makeJQueryPlugin($)
-    jqueryFillwidthLite($, _, imagesLoaded)
-  catch error
-    # Noop used for tests. No need to setup
-
   # Add the Gravity XAPP or access token to all ajax requests
   $.ajaxSettings.headers = {
     "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN
