@@ -4,8 +4,8 @@ import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_bro
 
 const { MasonryArtwork } = test
 
-describe('auction/components/artwork_browser/main/artwork/ListArtwork.test', () => {
-  describe('<ListArtwork />', () => {
+describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', () => {
+  describe('<MasonryArtwork />', () => {
     const BidStatus = () => <div />
 
     beforeEach(() => {
@@ -21,6 +21,7 @@ describe('auction/components/artwork_browser/main/artwork/ListArtwork.test', () 
         Component: MasonryArtwork,
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: true,
           isClosed: true
         }
       })
@@ -28,11 +29,25 @@ describe('auction/components/artwork_browser/main/artwork/ListArtwork.test', () 
       wrapper.find(BidStatus).length.should.equal(0)
     })
 
-    it('renders a <BidStatus /> component is not closed', () => {
+    it('does not render a <BidStatus /> component if not an auction', () => {
       const { wrapper } = renderTestComponent({
         Component: MasonryArtwork,
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: false,
+          isClosed: false
+        }
+      })
+
+      wrapper.find(BidStatus).length.should.equal(0)
+    })
+
+    it('renders a <BidStatus /> component if not closed', () => {
+      const { wrapper } = renderTestComponent({
+        Component: MasonryArtwork,
+        props: {
+          saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: true,
           isClosed: false
         }
       })
