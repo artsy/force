@@ -24,12 +24,21 @@ export const worksByFollowedArtists = `
           display
         }
         artwork {
-          _id
           id
-          href
           title
           date
+          sale_message
+          is_in_auction
           is_sold
+          artists {
+            id
+            name
+          }
+          image {
+            placeholder
+            url
+            aspect_ratio
+          }
           images {
             id
             image_medium: url(version: "medium")
@@ -42,6 +51,12 @@ export const worksByFollowedArtists = `
             id
             name
           }
+          partner {
+            name
+          }
+          href
+          is_purchasable
+          is_acquireable
         }
       }
     }

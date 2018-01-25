@@ -3,8 +3,10 @@ import React from 'react'
 import footerItems from 'desktop/apps/auction/utils/footerItems'
 import moment from 'moment'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-
 import Layout from 'desktop/apps/auction/components/Layout'
+import { cloneDeep } from 'lodash'
+import { followedArtistSaleArtworks } from '../artwork_browser/__tests__/fixtures/followedArtistSaleArtworks'
+import { promotedSaleArtworks } from '../artwork_browser/__tests__/fixtures/promotedSaleArtworks'
 
 describe('<Layout />', () => {
   beforeEach(() => {
@@ -189,7 +191,7 @@ describe('<Layout />', () => {
             }]
           },
           auction: {
-            name: 'An Auction',
+            name: 'An Auction'
           }
         }
       }
@@ -224,6 +226,8 @@ describe('<Layout />', () => {
   })
 
   it('index, registered to bid but auction closed', () => {
+    Layout.__ResetDependency__('Banner')
+
     const { wrapper } = renderTestComponent({
       Component: Layout,
       options: { renderMode: 'render' },
@@ -237,14 +241,19 @@ describe('<Layout />', () => {
           },
           auction: {
             name: 'An Auction',
+            is_closed: true,
             auction_state: 'closed'
           }
+        },
+        artworkBrowser: {
+          isClosed: true
         }
       }
     })
 
     wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
     wrapper.find('.auction-AuctionInfo__callout').text().should.equal('Auction Closed')
+    wrapper.find('.auction-Banner__closed').text().should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {
@@ -404,6 +413,199 @@ describe('<Layout />', () => {
         wrapper.find('.auction-Footer').html().should.containEql('Artsy Editorial')
         wrapper.find('.auction-Footer').html().should.containEql('By Abigail C and Anna S')
         wrapper.find('.auction-Footer').html().should.containEql('Bid from your phone')
+      })
+    })
+  })
+
+  describe('artwork rails', () => {
+    const data = {
+      app: {
+        isMobile: false,
+        auction: {
+          name: 'An Auction',
+          sale_type: 'auction promo',
+          eligible_sale_artworks_count: 0,
+          promoted_sale: {
+            sale_artworks: promotedSaleArtworks
+          }
+        }
+      },
+      artworkBrowser: {
+        saleArtworksByFollowedArtists: followedArtistSaleArtworks
+      }
+    }
+
+    describe('<BuyNowSaleArtworks />', () => {
+      it('does not render if there is no data', () => {
+        let emptyData = cloneDeep(data)
+        emptyData.app.auction.promoted_sale.sale_artworks = null
+
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: emptyData
+        })
+
+        wrapper.html().should.not.containEql('Buy Now')
+      })
+
+      it('renders a desktop rail', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.containEql('Buy Now')
+        wrapper.html().should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
+        wrapper.html().should.containEql('/artwork/piper-oneill-boop')
+      })
+
+      it('renders a mobile rail', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: {
+            ...data,
+            isMobile: true
+          }
+        })
+
+        wrapper.html().should.containEql('Buy Now')
+        wrapper.html().should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
+        wrapper.html().should.containEql('/artwork/piper-oneill-boop')
+      })
+    })
+
+    describe('<ArtworksByFollowedArtists />', () => {
+      it('does not render if there is no data', () => {
+        let emptyData = cloneDeep(data)
+        emptyData.artworkBrowser.saleArtworksByFollowedArtists = null
+
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: emptyData
+        })
+
+        wrapper.html().should.not.containEql('Works By Artists You Follow')
+      })
+
+      it('renders a desktop rail', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.containEql('Works By Artists You Follow')
+        wrapper.html().should.containEql('/artwork/svend-aage-larsen-surrealism')
+        wrapper.html().should.containEql('/artwork/emile-gsell-untitled')
+      })
+
+      it('renders a mobile rail', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: {
+            ...data,
+            isMobile: true
+          }
+        })
+
+        wrapper.html().should.containEql('Works By Artists You Follow')
+        wrapper.html().should.containEql('/artwork/svend-aage-larsen-surrealism')
+        wrapper.html().should.containEql('/artwork/emile-gsell-untitled')
+      })
+    })
+  })
+
+  describe('e-commerce sale', () => {
+    const data = {
+      app: {
+        isEcommerceSale: true,
+        isMobile: false,
+        auction: {
+          name: 'An Auction',
+          sale_type: 'auction promo',
+          eligible_sale_artworks_count: 0,
+          promoted_sale: {
+            sale_artworks: promotedSaleArtworks
+          }
+        }
+      }
+    }
+
+    describe('desktop', () => {
+      it('removes top timer component', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.not.containEql('clock')
+      })
+
+      it('hides registration button', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.not.containEql('auction-Registration')
+      })
+
+      it('remove auction-related sort items', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.html().should.not.containEql('Lot Number Asc')
+        wrapper.html().should.not.containEql('Lot Number Desc')
+        wrapper.html().should.not.containEql('Most Bids')
+        wrapper.html().should.not.containEql('Least Bids')
+      })
+    })
+
+    describe('mobile', () => {
+      const mobileData = cloneDeep(data)
+      mobileData.app.isMobile = true
+
+      it('removes top timer component', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.html().should.not.containEql('clock')
+      })
+
+      it('hides registration button', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.html().should.not.containEql('auction-Registration')
+      })
+
+      it('remove auction-related sort items', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.html().should.not.containEql('Lot Number Asc')
+        wrapper.html().should.not.containEql('Lot Number Desc')
+        wrapper.html().should.not.containEql('Most Bids')
+        wrapper.html().should.not.containEql('Least Bids')
       })
     })
   })

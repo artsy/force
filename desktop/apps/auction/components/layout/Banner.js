@@ -11,6 +11,7 @@ function Banner (props) {
     auction,
     coverImage,
     isClosed,
+    isEcommerceSale,
     isLiveOpen,
     isMobile,
     liveAuctionUrl,
@@ -51,6 +52,14 @@ function Banner (props) {
               </a>
             </div>
           )
+        } else if (isClosed) {
+          return (
+            <div className={b('closed')}>
+              <div>
+                Auction Closed
+              </div>
+            </div>
+          )
         } else {
           return (
             <ClockView
@@ -67,6 +76,7 @@ Banner.propTypes = {
   auction: PropTypes.object.isRequired,
   coverImage: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
+  isEcommerceSale: PropTypes.bool.isRequired,
   isLiveOpen: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
   liveAuctionUrl: PropTypes.string,
@@ -76,18 +86,20 @@ Banner.propTypes = {
 const mapStateToProps = (state) => {
   const {
     auction,
+    isEcommerceSale,
     isLiveOpen,
     isMobile,
     liveAuctionUrl
   } = state.app
 
-  const { cover_image, name } = auction.toJSON()
+  const { cover_image, is_closed, name } = auction.toJSON()
   const coverImage = get(cover_image, 'cropped.url', '')
 
   return {
     auction,
     coverImage,
-    isClosed: state.artworkBrowser.isClosed,
+    isClosed: is_closed,
+    isEcommerceSale,
     isLiveOpen,
     isMobile,
     liveAuctionUrl,

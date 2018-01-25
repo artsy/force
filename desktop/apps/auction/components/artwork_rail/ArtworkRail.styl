@@ -1,4 +1,6 @@
-.auction-WorksByFollowedArtists
+.auction-ArtworkRail
+  user-select none
+
   &__title
     font-size 30px
     padding-top 30px
@@ -14,10 +16,11 @@
       visibility visible
 
   &__page-left, &__page-right
-    width 30px
-    height 100%
+    width 50px
+    height 300px
     display flex
     align-items center
+    justify-content center
 
     svg
       visibility hidden
@@ -28,8 +31,14 @@
   &__artworks
     width 100%
     .auction-page-GridArtwork
-      width 25%
-      height 365px
+      width 100%
+
+  &__artwork
+    float left
+    width 25%
+    padding 15px
+    a
+      text-decoration none
 
   .disabled
     pointer-events none

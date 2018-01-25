@@ -21,11 +21,11 @@ function AuctionInfoDesktop (props) {
   return (
     <header className={b()}>
       <div className={b('primary')}>
-
         { isAuctionPromo &&
           <h4 className={b('sub-header')}>
             Sale Preview
-          </h4> }
+          </h4>
+        }
 
         <h1 className={b('title')}>
           {name}
@@ -37,7 +37,8 @@ function AuctionInfoDesktop (props) {
           { showAddToCalendar &&
             <AddToCalendarView
               event={event}
-            /> }
+            />
+          }
 
           { liveStartAt &&
             <div className={b('callout-live-label')}>
@@ -49,7 +50,8 @@ function AuctionInfoDesktop (props) {
                 data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
                 data-anchor='top-left'
               />
-            </div> }
+            </div>
+          }
 
         </div>
         <div

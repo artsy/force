@@ -55,7 +55,7 @@ MasonryArtwork.propTypes = {
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   isClosed: PropTypes.bool.isRequired,
-  lotLabel: PropTypes.string.isRequired,
+  lotLabel: PropTypes.string, // Not needed for e-commerce works
   artistDisplay: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 }
