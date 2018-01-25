@@ -12,7 +12,7 @@ describe 'mobile inquiry flow initialization', ->
         jQuery: benv.require 'jquery'
       Backbone.$ = $
       initializeInquiry = rewire '../../client/routes/inquiry'
-      initializeInquiry.__set__ 'attachFastClick', sinon.stub()
+      initializeInquiry.__set__ 'FastClick', sinon.stub()
       @StateView = initializeInquiry.__get__ 'StateView'
       @render = sinon.stub @StateView::, 'render', -> this
       done()

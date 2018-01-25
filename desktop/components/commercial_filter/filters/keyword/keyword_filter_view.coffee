@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class KeywordFilterView extends Backbone.View
@@ -12,9 +12,10 @@ module.exports = class KeywordFilterView extends Backbone.View
     @listenTo @params, 'change', @render
 
   setKeyword: (e) ->
-    if $('input[name=keyword]').val().length > 0
+    if (keyword = $('input[name=keyword]').val()).length > 0
       @params.unset 'sort', silent: true
-      @params.set keyword: $('input[name=keyword]').val()
+      @params.set keyword: keyword
+      analyticsHooks.trigger 'search:collect', query: keyword
     else
       @params.unset 'keyword'
 

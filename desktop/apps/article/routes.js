@@ -76,12 +76,7 @@ export async function index (req, res, next) {
     }
 
     // Email signup
-    let subscribed = false
-    if (article.layout === 'standard') {
-      const user = res.locals.sd.CURRENT_USER
-      const email = (user && user.email) || ''
-      subscribed = await subscribedToEditorial(email)
-    }
+    const subscribed = typeof res.locals.sd.CURRENT_USER !== 'undefined'
 
     let templates
     if (isSuper) {

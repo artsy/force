@@ -19,7 +19,11 @@ class DOM extends Component {
 
   componentDidMount () {
     const FastClick = require('fastclick')
-    FastClick(document.body)
+
+    // removes 300ms delay
+    if (FastClick.attach) {
+      FastClick.attach(document.body)
+    }
 
     this.$ = require('jquery')
     this.addEventListeners()

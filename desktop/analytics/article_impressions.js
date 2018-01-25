@@ -1,3 +1,6 @@
+const $ = require('jquery')
+const _ = require('underscore')
+
 if (location.pathname.match('/article/') || location.pathname.match('/articles')) {
   var trackedImpressions = []
 
@@ -123,7 +126,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
             id: 'article_callout:' + articleId + ':' + destinationPath
           }
         } else {
-          return
+          
         }
       }).toArray()
 
@@ -166,8 +169,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
   }
 
   var trackImpression = function (item) {
-    analytics.track(item.message, item.context,
-      { integrations: { 'Mixpanel': false } })
+    analytics.track(item.message, item.context)
   }
 
   $(window).on('scroll', _.throttle(trackImpressions, 500))

@@ -64,4 +64,4 @@ module.exports = class SplitTest
       variation_id: outcome = @get()
       variation_name: outcome
       nonInteraction: 1
-    }, Mixpanel: false
+    }

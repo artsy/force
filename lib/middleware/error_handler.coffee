@@ -7,7 +7,6 @@ module.exports = (err, req, res, next) ->
     '../../desktop/components/error_handler/index.jade'
   )
   isDevelopment = NODE_ENV is 'development'
-  console.log err if isDevelopment
   code = 504 if req.timedout
   code ||= err.status || 500
   message = err.message || err.text || err.toString() if isDevelopment

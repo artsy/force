@@ -1,5 +1,6 @@
-require 'jquery'
+$ = require 'jquery'
 require('backbone').$ = $
+sd = require('sharify').data
 articleIndex = require '../apps/articles/client/articles.coffee'
 sectionView = require '../apps/articles/client/section.coffee'
 ArticleView = require '../components/article/client/view.coffee'

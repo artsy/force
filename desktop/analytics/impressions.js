@@ -35,8 +35,6 @@ var trackImpressions = function () {
   if (ids.length > 0) {
     analytics.track('Artwork impressions', {
       ids: ids, nonInteraction: 1
-    }, {
-      integrations: { 'Mixpanel': false }
     })
   }
 }

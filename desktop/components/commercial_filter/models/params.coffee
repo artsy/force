@@ -1,3 +1,4 @@
+qs = require 'qs'
 _ = require 'underscore'
 Backbone = require 'backbone'
 
@@ -6,19 +7,21 @@ module.exports = class Params extends Backbone.Model
     'source'
     'page'
     'medium'
-    'color',
-    'price_range',
-    'width',
-    'height',
-    'gene_id',
-    'sort',
-    'major_periods',
-    'partner_cities',
-    'sale_id',
-    'gene_ids',
-    'artist_ids',
+    'color'
+    'price_range'
+    'width'
+    'height'
+    'gene_id'
+    'sort'
+    'major_periods'
+    'partner_cities'
+    'sale_id'
+    'gene_ids'
+    'artist_ids'
     'keyword'
   ]
+
+  UTM = '^utm.*'
 
   defaults:
     size: 50
@@ -57,7 +60,14 @@ module.exports = class Params extends Backbone.Model
     _.uniq(@fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities'))
 
   whitelisted: ->
-    whitelisted = _.pick @current(), @urlWhitelist
-    omitted = _.omit whitelisted, (val, key) ->
+    paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
+    whitelistedUrlParams = _.pick paramsFromUrl, (value, key) ->
+      new RegExp(UTM).test key
+
+    whitelistedFilterParams = _.pick @current(), @urlWhitelist
+
+    whitelistedParams = _.assign whitelistedFilterParams, whitelistedUrlParams
+
+    _.omit whitelistedParams, (val, key) ->
       (key is 'page' and val is 1) or
       not val?
