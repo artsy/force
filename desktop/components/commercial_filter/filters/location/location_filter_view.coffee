@@ -15,7 +15,7 @@ module.exports = class LocationFilterView extends Backbone.View
     "change [type='checkbox']" : 'toggleLocation'
     'click .cf-periods__view-all': 'showAll'
 
-  initialize: ({ @params, @aggregations }) ->
+  initialize: ({ @params, @aggregations, @alwaysEnabled }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an aggregations collection' unless @aggregations?
 
@@ -83,6 +83,7 @@ module.exports = class LocationFilterView extends Backbone.View
     location.substring(0, commaIndex)
 
   findAggregation: (counts, id) ->
+  if counts?
     _.find counts, (count) -> count.id is id
 
   render: ->
@@ -94,4 +95,5 @@ module.exports = class LocationFilterView extends Backbone.View
       numberFormat: numberFormat
       _: _
       displayLocation: @displayLocation
+      alwaysEnabled: @alwaysEnabled
     @setupTypeahead()

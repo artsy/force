@@ -19,10 +19,10 @@ describe 'Filter', ->
     it 'returns the defaults if custom defaults are not passed in', ->
       params = new @Params({}, {})
       defaults = params.initialParams()
-      defaults.should.containEql(size: 50, partner_cities: [])
+      defaults.should.containEql(size: 40, partner_cities: [])
 
     it 'returns the custom defaults if they are passed in', ->
       params = new @Params({}, { customDefaults: { size: 20, artist_ids: [] } })
       defaults = params.initialParams()
       defaults.should.eql(size: 20, artist_ids: [])
-      defaults.should.not.containEql(size: 50)
+      defaults.should.not.containEql(size: 40)

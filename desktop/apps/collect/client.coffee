@@ -61,6 +61,7 @@ module.exports.init = ->
       params: params
       aggregations: filter.aggregations
       categoryMap: sd.CATEGORIES
+      alwaysEnabled: true
 
     pillboxView = new PillboxView
       el: $('.cf-right .cf-pillboxes')
@@ -86,11 +87,13 @@ module.exports.init = ->
     el: $('.cf-sidebar__mediums')
     params: params
     aggregations: filter.aggregations
+    alwaysEnabled: true    
 
   periodsView = new PeriodFilterView
     el: $('.cf-sidebar__periods')
     params: params
     aggregations: filter.aggregations
+    alwaysEnabled: true    
 
   followedArtistsView = new FollowedArtistFilterView
     el: $('.cf-sidebar__followed_artists')
@@ -101,6 +104,7 @@ module.exports.init = ->
     el: $('.cf-sidebar__locations')
     params: params
     aggregations: filter.aggregations
+    alwaysEnabled: true
 
   priceView = new PriceFilterView
     el: $('.cf-sidebar__price')
@@ -110,6 +114,7 @@ module.exports.init = ->
     el: $('.cf-sidebar__colors')
     params: params
     aggregations: filter.aggregations
+    alwaysEnabled: true
 
   widthView = new SizeFilterView
     el: $('.cf-sidebar__size__width')

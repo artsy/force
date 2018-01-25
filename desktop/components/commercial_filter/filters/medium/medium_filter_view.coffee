@@ -9,7 +9,7 @@ module.exports = class MediumFilterView extends Backbone.View
   events:
     'click h1' : 'setMedium'
 
-  initialize: ({ @params, @aggregations }) ->
+  initialize: ({ @params, @aggregations, @alwaysEnabled }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an aggregations collection' unless @aggregations?
 
@@ -34,3 +34,4 @@ module.exports = class MediumFilterView extends Backbone.View
       mediums: mediumMap
       selected: @params.get('medium')
       hasResults: @hasResults
+      alwaysEnabled: @alwaysEnabled

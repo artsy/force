@@ -6,7 +6,7 @@ module.exports = class CategoryFilterView extends Backbone.View
   events:
     'click .cf-categories__category' : 'toggleCategory'
 
-  initialize: ({ @params, @aggregations, @categoryMap }) ->
+  initialize: ({ @params, @aggregations, @categoryMap, @alwaysEnabled }) ->
     throw new Error "Requires a params model" unless @params
     throw new Error "Requires an aggregations collection" unless @aggregations
 
@@ -41,5 +41,5 @@ module.exports = class CategoryFilterView extends Backbone.View
       selectedCategory: @params.get('gene_id')
       hasResults: @hasResults
       counts: @aggregations.get('MEDIUM')?.get('counts')
-
+      alwaysEnabled: @alwaysEnabled
 

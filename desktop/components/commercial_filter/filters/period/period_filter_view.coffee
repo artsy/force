@@ -10,7 +10,7 @@ module.exports = class PeriodFilterView extends Backbone.View
     "change [type='checkbox']" : 'togglePeriod'
     'click .cf-periods__view-all': 'showAll'
 
-  initialize: ({ @params, @aggregations }) ->
+  initialize: ({ @params, @aggregations, @alwaysEnabled }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an aggregations collection' unless @aggregations?
 
@@ -49,3 +49,4 @@ module.exports = class PeriodFilterView extends Backbone.View
       numberFormat: numberFormat
       _: _
       showAllPeriods: @showAllPeriods
+      alwaysEnabled: @alwaysEnabled
