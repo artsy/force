@@ -30,7 +30,7 @@ module.exports = {
   onboarding_test:
     key: 'onboarding_test'
     outcomes:
-      control: 50
-      experiment: 50
+      control: 100
+      experiment: 0
     edge: 'experiment'
 }
