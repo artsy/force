@@ -53,6 +53,7 @@ export const filterQuery = `
           image {
             url
           }
+          sale_message
           images {
             aspect_ratio,
             id

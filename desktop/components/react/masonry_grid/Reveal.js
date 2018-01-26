@@ -64,7 +64,10 @@ export class Reveal extends Component {
               <Icon
                 name='chevron-down'
                 color='black'
-                fontSize='25px'
+                fontSize='24px'
+                style={{
+                  fontWeight: 'bold'
+                }}
               />
             </Button>
           </Revealer>

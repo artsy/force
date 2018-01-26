@@ -15,6 +15,7 @@ function MasonryArtwork (props) {
     isAuction,
     isClosed,
     lotLabel,
+    sale_message,
     title
   } = props
 
@@ -26,9 +27,12 @@ function MasonryArtwork (props) {
         <img className={b('image')} src={image} alt={title} />
       </div>
 
-      { isAuction &&
-        <div className={b('lot-number')}>
+      { isAuction
+        ? <div className={b('lot-number')}>
           Lot {lotLabel}
+        </div>
+        : <div className={b('sale-message')}>
+          {sale_message}
         </div>
       }
 
@@ -61,6 +65,7 @@ MasonryArtwork.propTypes = {
   isClosed: PropTypes.bool.isRequired,
   lotLabel: PropTypes.string, // Not needed for e-commerce works
   artistDisplay: PropTypes.string.isRequired,
+  sale_message: PropTypes.string,
   title: PropTypes.string.isRequired
 }
 
@@ -79,6 +84,7 @@ const mapStateToProps = (state, props) => {
     isClosed: state.app.auction.isClosed(),
     lotLabel: saleArtwork.lot_label,
     artistDisplay,
+    sale_message: saleArtwork.artwork.sale_message,
     title: saleArtwork.artwork.title
   }
 }
