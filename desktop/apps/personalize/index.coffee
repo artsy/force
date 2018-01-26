@@ -11,4 +11,3 @@ app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 app.get '/personalize*', index
-app.get '/onboarding', adminOnly, newOnboarding
