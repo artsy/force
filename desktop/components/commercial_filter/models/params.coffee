@@ -24,14 +24,14 @@ module.exports = class Params extends Backbone.Model
   UTM = '^utm.*'
 
   defaults:
-    size: 50
+    size: 40
     page: 1
     for_sale: true
     major_periods: []
     partner_cities: []
     gene_ids: []
     artist_ids: []
-    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS']
+    aggregations: ['TOTAL', 'FOLLOWED_ARTISTS']
     ranges:
       price_range:
         min: 50.00

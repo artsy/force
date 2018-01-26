@@ -112,6 +112,8 @@ module.exports = class Filter extends Backbone.Model
         .then ({ filter_artworks }) =>
           if filter_artworks.hits.length
             @artworks.reset filter_artworks.hits
+          else 
+            @artworks.reset []
           @set loading: false
           @set total: filter_artworks.total
           @set followed_artists_total: filter_artworks.followed_artists_total

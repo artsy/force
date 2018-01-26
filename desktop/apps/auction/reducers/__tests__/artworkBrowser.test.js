@@ -12,7 +12,7 @@ describe('auction/actions/artworkBrowser.test.js', () => {
         filterParams
       }
     } = auctions(undefined, {})
-    filterParams.should.containEql({ page: 1, size: 50 })
+    filterParams.should.containEql({ page: 1, size: 20 })
   })
 
   describe('with initial state', () => {
@@ -20,21 +20,6 @@ describe('auction/actions/artworkBrowser.test.js', () => {
 
     beforeEach(() => {
       initialResponse = auctions(undefined, {})
-    })
-
-    describe('#decrementFollowedArtistsPage', () => {
-      it('decrements the followed artists page', () => {
-        initialResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-        const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
-        incrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(2)
-        const decrementedResponse = auctions(initialResponse, actions.decrementFollowedArtistsPage())
-        decrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-      })
-      it('does not decrement if you are already at the first page', () => {
-        initialResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-        const decrementedResponse = auctions(initialResponse, actions.decrementFollowedArtistsPage())
-        decrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-      })
     })
 
     describe('#fetchArtworksByFollowedArtists', () => {
@@ -74,25 +59,6 @@ describe('auction/actions/artworkBrowser.test.js', () => {
         store.dispatch(actions.fetchArtworksByFollowedArtists()).then(() => {
           store.getActions().should.eql(expectedActions)
         })
-      })
-    })
-
-    describe('#incrementFollowedArtistsPage', () => {
-      it('increments the followed artists page', () => {
-        initialResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-        const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
-        incrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(2)
-      })
-
-      it('brings you to the first page if you were at the last', () => {
-        initialResponse.artworkBrowser.followedArtistRailPage.should.eql(1)
-        const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
-        incrementedResponse.artworkBrowser.followedArtistRailPage.should.eql(2)
-        const totalResponse = auctions(incrementedResponse, actions.updateSaleArtworksByFollowedArtistsTotal(7))
-        const updatedIsLastPage = auctions(totalResponse, actions.updateIsLastFollowedArtistsPage())
-        updatedIsLastPage.artworkBrowser.isLastFollowedArtistsPage.should.eql(true)
-        const anotherIncrement = auctions(updatedIsLastPage, actions.incrementFollowedArtistsPage())
-        anotherIncrement.artworkBrowser.followedArtistRailPage.should.eql(1)
       })
     })
 

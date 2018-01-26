@@ -28,7 +28,6 @@ export default class Jump extends Component {
     })
 
     this.$('body').append(this.backboneView.$el)
-    this.backboneView.scrollToPosition(0)
   }
 
   componentWillUnmount () {

@@ -9,7 +9,7 @@ module.exports = class ColorFilterView extends Backbone.View
 
   colors: ['darkblue', 'lightblue', 'darkgreen', 'lightgreen', 'yellow', 'gold', 'orange', 'darkorange', 'red', 'pink', 'darkviolet', 'violet', 'black-and-white']
 
-  initialize: ({ @params, @aggregations }) ->
+  initialize: ({ @params, @aggregations, @alwaysEnabled }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an aggregations collection' unless @aggregations?
 
@@ -56,8 +56,9 @@ module.exports = class ColorFilterView extends Backbone.View
       @$checkmark.hide()
 
     # Add empty states
-    respColors = _.pluck @aggregations.get('COLOR')?.get('counts'), 'name'
-    emptyColors = _.difference(@colors, respColors)
-    _.each(emptyColors, (color) ->
-      @$("svg path[data-value='#{color}']").attr('data-empty', true)
-    )
+    if !@alwaysEnabled
+      respColors = _.pluck @aggregations.get('COLOR')?.get('counts')?, 'name'
+      emptyColors = _.difference(@colors, respColors)
+      _.each(emptyColors, (color) ->
+        @$("svg path[data-value='#{color}']").attr('data-empty', true)
+      )

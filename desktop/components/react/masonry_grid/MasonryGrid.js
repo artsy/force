@@ -1,28 +1,31 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import _ from 'underscore'
+import styled from 'styled-components'
+import { Reveal } from './Reveal'
 
-/**
- * Temporary adaptation from Reaction Force:
- * https://github.com/artsy/reaction/blob/master/src/Components/ArtworkGrid.tsx
- *
- * TODO: Move back into RF
- */
 export default class MasonryGrid extends Component {
   static propTypes = {
     items: PropTypes.array,
+    className: PropTypes.string,
     columnCount: PropTypes.number,
     columnMargin: PropTypes.number,
     getDisplayComponent: PropTypes.func.isRequired,
     getAspectRatio: PropTypes.func.isRequired,
-    rowMargin: PropTypes.number
+    mask: PropTypes.bool,
+    rowMargin: PropTypes.number,
+    style: PropTypes.object,
+    title: PropTypes.string
   }
 
   static defaultProps = {
     items: [],
+    className: '',
     columnCount: 3,
     columnMargin: 20,
-    rowMargin: 20
+    mask: false,
+    rowMargin: 20,
+    style: {}
   }
 
   createGrid () {
@@ -125,14 +128,42 @@ export default class MasonryGrid extends Component {
   }
 
   render () {
+    const { className, items, mask, style, title } = this.props
+    const isRevealExpanded = mask && items.length <= 2
+
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-      }}>
-        {this.renderItems()}
-      </div>
+      <Container>
+        <Reveal isEnabled={mask} isExpanded={isRevealExpanded} >
+          {title &&
+            <Title>
+              {title}
+            </Title>
+          }
+
+          <div
+            className={className}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              ...style
+            }}>
+            {this.renderItems()}
+          </div>
+        </Reveal>
+      </Container>
     )
   }
 }
+
+// margin-bottom: 40px;
+const Container = styled.div`
+  a {
+    text-decoration: none;
+  }
+`
+
+const Title = styled.div`
+  font-size: 20px;
+  margin-bottom: 20px;
+`

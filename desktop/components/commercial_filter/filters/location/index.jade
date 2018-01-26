@@ -5,6 +5,7 @@ include ./all.jade
 each location in locations
   - agg = findAggregation(counts, location)
   - isSelected = _.contains(selected, location)
+  - enabled = alwaysEnabled || findAggregation(counts, location)
 
   include ./location.jade
 

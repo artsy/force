@@ -51,4 +51,9 @@ module.exports = (req, res, next) ->
     (ua.match(/BlackBerry/i))
   )
 
+  if req.query?.onboarding_test
+    res.cookie("onboarding_test", req.query?.onboarding_test, expires: new Date(Date.now() + 31536000000))
+
+  res.locals.sd.ONBOARDING_TEST = req.cookies?["onboarding_test"]
+
   next()

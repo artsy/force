@@ -20,10 +20,11 @@
 @require '../components/artwork_browser/sidebar/BasicCheckbox'
 @require '../components/artwork_browser/sidebar/MediumFilter'
 @require '../components/artwork_browser/sidebar/RangeSlider'
-@require '../components/artwork_browser/sidebar/WorksByFollowedArtists'
 @require '../components/artwork_browser/header/HeaderDesktop'
 @require '../components/artwork_browser/header/HeaderMobile'
 @require '../components/artwork_browser/ArtworkBrowser'
+
+@require '../components/artwork_rail/ArtworkRail'
 
 @require '../components/layout/auction_info/AuctionInfo'
 @require '../components/layout/auction_info/Registration'
@@ -44,8 +45,17 @@
       display none
 
 
-.auction-page
+.auction-Layout
   clearfix()
+
+  +respond-mobile()
+    &__container
+      > div:first-child
+        margin-bottom 23px
+
+      > div
+        margin-top 20px
+        margin-bottom 40px
 
   .responsive-layout-container
     margin 0 auto

@@ -12,6 +12,7 @@ function GridArtwork (props) {
     artistDisplay,
     date,
     image,
+    isAuction,
     isClosed,
     lotLabel,
     title
@@ -31,15 +32,17 @@ function GridArtwork (props) {
         </div>
       </div>
       <div className={b('metadata')}>
-        <div className={b('lot-information')}>
-          <div className={b('lot-number')}>
-            Lot {lotLabel}
+        { isAuction &&
+          <div className={b('lot-information')}>
+            <div className={b('lot-number')}>
+              Lot {lotLabel}
+            </div>
+            { !isClosed &&
+              <BidStatus
+                artworkItem={saleArtwork}
+              /> }
           </div>
-          { !isClosed &&
-            <BidStatus
-              artworkItem={saleArtwork}
-            /> }
-        </div>
+        }
         <div className={b('artists')}>
           {artistDisplay}
         </div>
@@ -58,8 +61,9 @@ GridArtwork.propTypes = {
   saleArtwork: PropTypes.object.isRequired,
   date: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  isAuction: PropTypes.bool.isRequired,
   isClosed: PropTypes.bool.isRequired,
-  lotLabel: PropTypes.string.isRequired,
+  lotLabel: PropTypes.string, // Not needed for e-commerce sales
   artistDisplay: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 }
@@ -76,6 +80,7 @@ const mapStateToProps = (state, props) => {
   return {
     date: saleArtwork.artwork.date,
     image,
+    isAuction: state.app.auction.get('is_auction'),
     isClosed: state.artworkBrowser.isClosed || state.app.auction.isClosed(),
     lotLabel: saleArtwork.lot_label,
     artistDisplay,

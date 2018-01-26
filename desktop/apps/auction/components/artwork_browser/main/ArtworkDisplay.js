@@ -84,6 +84,7 @@ class ArtworkDisplay extends Component {
                       <MasonryGrid
                         columnCount={2}
                         items={saleArtworks}
+                        mask={false}
                         getAspectRatio={(saleArtwork) => {
                           return get(saleArtwork, 'artwork.images.0.aspect_ratio')
                         }}
