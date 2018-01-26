@@ -54,5 +54,19 @@ describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', 
 
       wrapper.find(BidStatus).length.should.equal(1)
     })
+
+    it('renders a sale_message if not an auction', () => {
+      const { wrapper } = renderTestComponent({
+        Component: MasonryArtwork,
+        props: {
+          sale_message: '$1000',
+          saleArtwork: { _id: 'foo', id: 'bar' },
+          isAuction: false,
+          isClosed: false
+        }
+      })
+
+      wrapper.html().should.containEql('$1000')
+    })
   })
 })

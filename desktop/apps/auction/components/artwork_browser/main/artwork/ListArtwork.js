@@ -17,6 +17,7 @@ function ListArtwork (props) {
     isClosed,
     isMobile,
     lotLabel,
+    sale_message,
     title
   } = props
 
@@ -31,9 +32,12 @@ function ListArtwork (props) {
           </div>
 
           <div className={b('metadata')}>
-            { isAuction &&
-              <div className={b('lot-number')}>
+            { isAuction
+              ? <div className={b('lot-number')}>
                 Lot {lotLabel}
+              </div>
+              : <div>
+                {sale_message}
               </div>
             }
 
@@ -74,9 +78,12 @@ function ListArtwork (props) {
               }}
             />
           </div>
-          { isAuction &&
-            <div className={b('lot-number')}>
+          { isAuction
+            ? <div className={b('lot-number')}>
               Lot {saleArtwork.lot_label}
+            </div>
+            : <div>
+              {sale_message}
             </div>
           }
 
@@ -99,6 +106,7 @@ ListArtwork.propTypes = {
   isMobile: PropTypes.bool.isRequired,
   lotLabel: PropTypes.string.isRequired,
   artistDisplay: PropTypes.string.isRequired,
+  sale_message: PropTypes.string,
   title: PropTypes.string.isRequired
 }
 
@@ -118,6 +126,7 @@ const mapStateToProps = (state, props) => {
     isMobile: state.app.isMobile,
     lotLabel: saleArtwork.lot_label,
     artistDisplay,
+    sale_message: saleArtwork.artwork.sale_message,
     title: saleArtwork.artwork.title
   }
 }

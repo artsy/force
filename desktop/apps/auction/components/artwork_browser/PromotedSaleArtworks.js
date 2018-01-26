@@ -8,8 +8,8 @@ import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
 function PromotedSaleArtworks (props) {
-  const { isMobile, promotedSaleArtworks } = props
-  const isRenderable = promotedSaleArtworks && promotedSaleArtworks.length
+  const { isClosed, isMobile, promotedSaleArtworks } = props
+  const isRenderable = Boolean(!isClosed && promotedSaleArtworks && promotedSaleArtworks.length)
 
   if (!isRenderable) {
     return null
@@ -52,6 +52,7 @@ function PromotedSaleArtworks (props) {
 }
 
 PromotedSaleArtworks.propTypes = {
+  isClosed: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
   promotedSaleArtworks: PropTypes.array.isRequired
 }
@@ -68,9 +69,11 @@ const mapStateToProps = (state) => {
     }
   } = state
 
-  const promotedSaleArtworks = get(auction.toJSON(), 'promoted_sale.sale_artworks', [])
+  const auctionData = auction.toJSON()
+  const promotedSaleArtworks = get(auctionData, 'promoted_sale.sale_artworks', [])
 
   return {
+    isClosed: auctionData.is_closed,
     isMobile,
     promotedSaleArtworks
   }

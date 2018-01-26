@@ -48,4 +48,35 @@ describe('auction/components/artwork_browser/PromotedSaleArtworks', () => {
     wrapper.html().should.containEql('Buy Now')
     wrapper.find(MasonryGrid).length.should.eql(1)
   })
+
+  it('does not render if sale is closed in desktop', () => {
+    let updatedData = cloneDeep(data)
+    updatedData.app.auction.is_closed = true
+
+    const { wrapper } = renderTestComponent({
+      Component: PromotedSaleArtworks,
+      data: updatedData,
+      props: {
+        promotedSaleArtworks
+      }
+    })
+
+    wrapper.find(ArtworkRail).length.should.eql(0)
+  })
+
+  it('does not render if sale is closed in mobile', () => {
+    let mobileData = cloneDeep(data)
+    mobileData.app.isMobile = true
+    mobileData.app.auction.is_closed = true
+
+    const { wrapper } = renderTestComponent({
+      Component: PromotedSaleArtworks,
+      data: mobileData,
+      props: {
+        promotedSaleArtworks
+      }
+    })
+
+    wrapper.find(MasonryGrid).length.should.eql(0)
+  })
 })

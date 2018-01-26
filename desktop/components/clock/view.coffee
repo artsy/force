@@ -48,6 +48,7 @@ module.exports = class ClockView extends Backbone.View
         mediator.trigger 'clock:is-over'
         @$el.html "<div class='clock-header clock-closed'>#{@closedText}</div>"
         return
+
     @renderClock()
     @interval = setInterval @renderClock, 1000
 
