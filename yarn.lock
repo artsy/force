@@ -5274,9 +5274,22 @@ jquery.transition@dzucconi/jquery.transition:
   version "0.1.1"
   resolved "https://codeload.github.com/dzucconi/jquery.transition/tar.gz/9e1ced2d91227d54d6cc2627a4a6a32c341b2434"
 
-jquery@>=1.7, jquery@>=1.7.2, jquery@^2.1.4:
+jquery@>=1.7, jquery@>=1.7.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
+
+jquery@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
+js-beautify@^1.5.10:
+  version "1.6.14"
+  resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.6.14.tgz#d3b8f7322d02b9277d58bd238264c327e58044cd"
+  dependencies:
+    config-chain "~1.1.5"
+    editorconfig "^0.13.2"
+    mkdirp "~0.5.0"
+    nopt "~3.0.1"
 
 js-stringify@^1.0.1:
   version "1.0.2"
