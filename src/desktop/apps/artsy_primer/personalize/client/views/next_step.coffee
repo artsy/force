@@ -52,7 +52,7 @@ module.exports = class NextStepView extends StepView
     if @state.get('current_step') is 'favorites' and @favorites?.length < 5
       @$('.artsy-primer-next-step-button').attr('disabled', true)
     else
-      @$('.artsy-primer-next-step-button').removeAttr('disabled')
+      @$('.artsy-primer-next-step-button').attr('disabled', false)
     if @favorites?.length and @state.get('current_step') is 'favorites'
       @$('.artsy-primer-next-step-artworks').html template artworks: @favorites
     else
