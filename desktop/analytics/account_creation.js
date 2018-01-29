@@ -12,7 +12,8 @@ const getUrlParameter = name => {
 const getAcquisitionInitiative = () => getUrlParameter('m-id') || getUrlParameter('acquisition_initiative')
 
 const trackAccountCreation = options => {
-  analytics.track('Created account', _.pick(options, 'acquisition_initiative', 'signup_service', 'user_id', 'context'))
+  let properties = _.pick(options, 'acquisition_initiative', 'signup_service', 'user_id', 'context')
+  analytics.track('Created account', _.extend(properties, { order_id: properties.user_id }))
   analytics.identify(options.user_id, _.pick(options, 'email'), {
     integrations: {
       'All': false,
