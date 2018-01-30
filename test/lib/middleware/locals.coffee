@@ -11,9 +11,9 @@ describe 'locals middleware', ->
     res.locals.sd.SESSION_ID.should.equal req.session.id
 
   it 'adds the user agent', ->
-    middleware req = { url: 'localhost:3000', get: -> 'foobar' },
+    middleware req = { url: 'localhost:3000', get: -> 'foobar<script>omg</script>' },
       res = { locals: { sd: {} } }, ->
-    res.locals.userAgent.should.equal 'foobar'
+    res.locals.userAgent.should.equal 'foobar%3Cscript%3Eomg%3C/script%3E'
 
   it 'current_path does not include query params', ->
     middleware req = { url: 'localhost:3000/foo?bar=baz', get: -> 'foobar' },
