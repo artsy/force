@@ -118,7 +118,6 @@
     "jquery-on-infinite-scroll": ">=1.0.1 && 1.0.1",
     "jquery-touch-events": "git+https://github.com/benmajor/jQuery-Touch-Events",
     "jquery-ui": "^1.12.1",
-    "jquery-waypoints": "^2.0.5",
     "jquery.dotdotdot": "1.7.4",
     "jquery.fillwidth": "^0.1.7",
     "jquery.iframe-transport": "^1.0.0",

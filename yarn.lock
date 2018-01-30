@@ -5252,10 +5252,6 @@ jquery-ui@^1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
 
-jquery-waypoints@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/jquery-waypoints/-/jquery-waypoints-2.0.5.tgz#c302b188e2957ed763098793304a76356aeeee04"
-
 jquery.dotdotdot@1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/jquery.dotdotdot/-/jquery.dotdotdot-1.7.4.tgz#d285ff88c6897c479b2febd18a7f247fcc92744d"

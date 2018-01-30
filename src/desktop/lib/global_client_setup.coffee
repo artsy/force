@@ -70,8 +70,8 @@ setupJquery = ->
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
   require 'jquery-on-infinite-scroll'
-  require 'jquery-waypoints/waypoints.js'
-  require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
+  require 'waypoints/lib/jquery.waypoints.js'
+  require 'waypoints/lib/shortcuts/sticky.js'
   require '../../../node_modules/jquery-touch-events/src/jquery.mobile-events.min.js'
   require('artsy-gemini-upload') $
 
