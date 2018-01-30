@@ -5,6 +5,7 @@ export const initialState = {
   articles: [],
   auction: {},
   footerItems: [],
+  isEcommerceSale: undefined,
   isLiveOpen: undefined,
   isMobile: undefined,
   liveAuctionUrl: x => x,
