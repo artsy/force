@@ -14,7 +14,6 @@ import metaphysics from 'lib/metaphysics.coffee'
 import u from 'updeep'
 import { initialState as appInitialState } from 'desktop/apps/auction/reducers/app'
 import { initialState as auctionWorksInitialState } from 'desktop/apps/auction/reducers/artworkBrowser'
-import { isObject } from 'underscore'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
 import { renderLayout } from '@artsy/stitch'
 
@@ -29,11 +28,6 @@ export async function index (req, res, next) {
 
     res.locals.sd.AUCTION = sale
     fetchUser(req, res)
-
-    const { me } = await metaphysics({
-      query: MeQuery(sale.id),
-      req: req
-    })
 
     let articles = []
 
@@ -55,6 +49,18 @@ export async function index (req, res, next) {
      * for instructions on how to create.
      */
     const isEcommerceSale = !sale.is_auction
+
+    // Only query against actual Auctions. Since an e-commerce sale is not an
+    // auction there are no works to bid on and the  `me { ... }` query, which
+    // makes a request for lot_standings, 404's with a "Sale not found".
+    let me = {}
+
+    if (!isEcommerceSale) {
+      ({ me } = await metaphysics({
+        query: MeQuery(sale.id),
+        req: req
+      }))
+    }
 
     // If an e-commerce sale, remove all sort options that are Auction related
     let artworkBrowserSortOptions = auctionWorksInitialState.sortMap
