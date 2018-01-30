@@ -569,6 +569,16 @@ describe('<Layout />', () => {
         wrapper.html().should.not.containEql('Most Bids')
         wrapper.html().should.not.containEql('Least Bids')
       })
+
+      it('does not show active bids', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data
+        })
+
+        wrapper.find('.auction-MyActiveBids').length.should.eql(0)
+      })
     })
 
     describe('mobile', () => {
@@ -606,6 +616,16 @@ describe('<Layout />', () => {
         wrapper.html().should.not.containEql('Lot Number Desc')
         wrapper.html().should.not.containEql('Most Bids')
         wrapper.html().should.not.containEql('Least Bids')
+      })
+
+      it('does not show active bids', () => {
+        const { wrapper } = renderTestComponent({
+          Component: Layout,
+          options: { renderMode: 'render' },
+          data: mobileData
+        })
+
+        wrapper.find('.auction-MyActiveBids').length.should.eql(0)
       })
     })
   })
