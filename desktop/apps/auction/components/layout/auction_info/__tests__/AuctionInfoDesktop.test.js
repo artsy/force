@@ -93,5 +93,16 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
 
       wrapper.find(Registration).length.should.eql(1)
     })
+
+    it('hides upcomingLabel if empty', () => {
+      const { wrapper } = renderTestComponent({
+        Component: AuctionInfoDesktop,
+        props: {
+          upcomingLabel: ''
+        }
+      })
+
+      wrapper.html().should.not.containEql('AuctionInfoDesktop__upcominigLabel')
+    })
   })
 })

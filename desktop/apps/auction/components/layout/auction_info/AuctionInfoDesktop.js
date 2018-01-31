@@ -32,13 +32,19 @@ function AuctionInfoDesktop (props) {
         </h1>
 
         <div className={b('callout')}>
-          {upcomingLabel}
+          <div className={b('time')}>
+            { upcomingLabel &&
+              <div className={b('upcomingLabel')}>
+                {upcomingLabel}
+              </div>
+            }
 
-          { showAddToCalendar &&
-            <AddToCalendarView
-              event={event}
-            />
-          }
+            { showAddToCalendar &&
+              <AddToCalendarView
+                event={event}
+              />
+            }
+          </div>
 
           { liveStartAt &&
             <div className={b('callout-live-label')}>

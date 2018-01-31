@@ -16,7 +16,7 @@ module.exports = class ClockView extends Backbone.View
   modelName: 'Auction'
 
   initialize: ({ @closedText, @modelName, @stateCallback}) ->
-    @closedText ?= 'Auction Closed'
+    @closedText ?= "Auction Closed"
     @stateCallback = @stateCallback or (-> location.reload())
 
   start: (callback = $.noop) ->
