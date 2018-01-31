@@ -24,11 +24,6 @@ routes =
   ''': require('../apps/partnerships/client/index.coffee').init
 
   '''
-  /auction-partnerships/edit
-  /institution-partnerships/edit
-  ''': require('../apps/partnerships/client/edit.coffee').init
-
-  '''
   /show/.*
   ''': require('../apps/show/client/index.coffee').init
 
