@@ -25,6 +25,6 @@ for subject in ['auction', 'institution']
   { data, edit, upload } = jsonPageRoutes page
   app.use routes.setSubject subject
   app.get page.paths.show, routes.index
-  app.get page.paths.show + '/*', routes.index # scroll routes
   app.get page.paths.edit, adminOnly, edit
   app.post page.paths.edit, adminOnly, upload
+  app.get page.paths.show + '/*', routes.index # scroll routes
