@@ -21,9 +21,7 @@ describe 'OverviewView', ->
   beforeEach ->
     $.onInfiniteScroll = sinon.stub()
 
-    $.waypoints or= -> #
     $.fn.waypoint or= -> #
-    sinon.stub $, 'waypoints'
     sinon.stub $.fn, 'waypoint'
 
     sinon.stub _, 'defer', (cb) -> cb()
@@ -51,7 +49,6 @@ describe 'OverviewView', ->
     Backbone.sync.restore()
     @view.remove()
     @model.related.restore()
-    $.waypoints.restore()
     $.fn.waypoint.restore()
 
   describe '#render', ->

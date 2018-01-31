@@ -48,7 +48,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
-      $.waypoints('refresh')
+      Waypoint.refreshAll()
       watchScrolling()
 
   getScrollZones: =>
@@ -184,10 +184,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
-      $(".article-body section[data-section='" + active + "'] .video-controls").waypoint (direction) ->
-        if direction is 'down'
-          playVideo this
-      , {offset: '100%'}
+      $(".article-body section[data-section='" + active + "'] .video-controls").each (i, el) ->
+        $(el).waypoint (direction) ->
+          playVideo el if direction is 'down'
+        , {offset: '100%'}
 
   videoControls: =>
     for videoControls in $('.article-body__content .video-controls')

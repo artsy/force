@@ -60,7 +60,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
       @columnViews.push @renderColumns($container.find('.notifications-published-artworks'), artworks)
 
-    $.waypoints 'refresh'
+    Waypoint.refreshAll()
 
   containsNewArtwork: (artworks) =>
     @filterState.get('initialLoad') and _.intersection(@unreadNotifications.pluck('id'), artworks.pluck('id')).length > 0
@@ -98,7 +98,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       data: for_sale: @filterState.get('forSale')
     )?.then (response) ->
       unless response.length
-        $.waypoints 'destroy'
+        Waypoint.destroyAll()
         $('#notifications-feed').addClass 'end-of-content'
 
   isEmpty: ->
@@ -142,7 +142,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @columnViews = []
     $('#notifications-feed').html ''
     # Reset the waypoints
-    $.waypoints 'destroy'
+    Waypoint.destroyAll()
     @attachScrollHandler()
 
   render: =>

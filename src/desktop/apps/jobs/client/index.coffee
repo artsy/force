@@ -33,4 +33,5 @@ module.exports.init = ->
 
   $('.js-jobs-items')
     .waypoint _.partial(toggleNavLink, 'down'), offset: '10%'
-    .waypoint _.partial(toggleNavLink, 'up'), offset: -> -$(this).outerHeight()
+  $('.js-jobs-items')
+    .waypoint _.partial(toggleNavLink, 'up'), offset: => -$(this).outerHeight()

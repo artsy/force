@@ -35,7 +35,6 @@ describe 'RecentlyAddedWorksView', ->
       @notifications = new Notifications
 
       $.fn.waypoint = sinon.stub()
-      $.waypoints = sinon.stub()
       done()
 
   afterEach ->
