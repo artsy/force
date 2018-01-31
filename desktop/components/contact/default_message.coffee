@@ -3,7 +3,7 @@ module.exports = (artwork, partner) ->
     'Hello, I am interested in placing a bid on this work. ' +
     'Please send me more information.'
   else
-    if artwork.get('availability') is 'sold'
+    if artwork.get('availability') in ['sold', 'on loan']
       'Hi, I’m interested in similar works by this artist. ' +
       'Could you please let me know if you have anything available?'
     else if artwork.get('availability') isnt 'not for sale'
