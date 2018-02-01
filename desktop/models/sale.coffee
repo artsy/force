@@ -179,7 +179,7 @@ module.exports = class Sale extends Backbone.Model
 
   upcomingLabel: ->
     timeFormat = 'MMM D h:mm A z'
-    if @isClosed()
+    label = if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
       "Live bidding begins #{@zone(@get('live_start_at')).format(timeFormat)}"
@@ -189,8 +189,17 @@ module.exports = class Sale extends Backbone.Model
       "Auction opens #{@zone(@get('start_at')).format(timeFormat)}"
     else if !@get('is_sale')
       "Closes #{@zone(@get('end_at')).format(timeFormat)}"
-    else
+    else if @get('is_auction')
       "Bidding closes #{@zone(@get('end_at')).format(timeFormat)}"
+    else
+      ""
+
+    # Piggyback on common `moment` output to guard against missing / bad data
+    # FIXME: This could perhaps be a bit safer
+    if label.includes('Invalid')
+      ""
+    else
+      label
 
   upcomingDateTime: ->
     timeFormat = 'MMM D h:mm A z'

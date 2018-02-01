@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 function AuctionInfoMobile (props) {
   const {
     description,
+    isAuction,
     isAuctionPromo,
     liveStartAt,
     name,
@@ -28,7 +29,7 @@ function AuctionInfoMobile (props) {
           { showInfoWindow &&
             <div className={b('info-window-controls')}>
               <div className={b('info-window-title')}>
-                Auction Information
+                {isAuction ? 'Auction' : 'Sale'} Information
               </div>
               <div
                 onClick={() => showInfoWindowAction(!showInfoWindow)}
@@ -65,20 +66,24 @@ function AuctionInfoMobile (props) {
                 }}
               />
 
-              <div className={b('date-time')}>
-                <div className={b('live-label')}>
-                  Auction Begins
+              { liveStartAt &&
+                <div className={b('date-time')}>
+                  <div className={b('live-label')}>
+                    {isAuction ? 'Auction' : 'Sale'} Begins
+                  </div>
+                  <div>
+                    {upcomingDateTime}
+                  </div>
                 </div>
-                <div>
-                  {upcomingDateTime}
-                </div>
-              </div>
+              }
 
               <div>
                 <div className='chevron-nav-list'>
-                  <a href='/how-auctions-work'>
-                    Auctions FAQ
-                  </a>
+                  { isAuction &&
+                    <a href='/how-auctions-work'>
+                      Auctions FAQ
+                    </a>
+                  }
                   <a href='mailto:specialists@artsy.net'>
                     Contact
                   </a>
@@ -110,6 +115,7 @@ function AuctionInfoMobile (props) {
 
 AuctionInfoMobile.propTypes = {
   description: PropTypes.string.isRequired,
+  isAuction: PropTypes.bool.isRequired,
   isAuctionPromo: PropTypes.bool,
   liveStartAt: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -124,6 +130,7 @@ const mapStateToProps = (state) => {
 
   return {
     description: auction.mdToHtml('description'),
+    isAuction: auction.isAuction(),
     isAuctionPromo: auction.isAuctionPromo(),
     isMobile,
     liveStartAt: auction.get('live_start_at'),

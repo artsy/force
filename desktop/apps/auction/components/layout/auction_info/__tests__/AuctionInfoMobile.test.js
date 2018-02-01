@@ -71,10 +71,12 @@ describe('auction/components/layout/auction_info/AuctionInfoMobile.test', () => 
       wrapper.find(Registration).length.should.eql(1)
     })
 
-    it('shows an info window if showInfoWindow is true', () => {
+    it('shows a Auction info window if showInfoWindow is true', () => {
       const { wrapper } = renderTestComponent({
         Component: AuctionInfoMobile,
         props: {
+          isAuction: true,
+          liveStartAt: true,
           showInfoWindow: true,
           description: 'hello description'
         }
@@ -85,6 +87,25 @@ describe('auction/components/layout/auction_info/AuctionInfoMobile.test', () => 
       wrapper.text().should.containEql('Auction Begins')
       wrapper.find('.chevron-nav-list').length.should.eql(1)
       wrapper.text().should.containEql('Auctions FAQ')
+      wrapper.text().should.containEql('Contact')
+    })
+
+    it('shows a Sale info window if showInfoWindow is true', () => {
+      const { wrapper } = renderTestComponent({
+        Component: AuctionInfoMobile,
+        props: {
+          isAuction: false,
+          liveStartAt: true,
+          showInfoWindow: true,
+          description: 'hello description'
+        }
+      })
+
+      wrapper.find(Registration).length.should.eql(1)
+      wrapper.text().should.containEql('hello description')
+      wrapper.text().should.containEql('Sale Begins')
+      wrapper.find('.chevron-nav-list').length.should.eql(1)
+      wrapper.text().should.not.containEql('Auctions FAQ')
       wrapper.text().should.containEql('Contact')
     })
 
@@ -102,5 +123,16 @@ describe('auction/components/layout/auction_info/AuctionInfoMobile.test', () => 
       window.scrollTo.called.should.eql(true)
       wrapper.props().store.getState().app.showInfoWindow.should.eql(true)
     })
+  })
+
+  it('hide upcoming info if missing liveStartAt', () => {
+    const { wrapper } = renderTestComponent({
+      Component: AuctionInfoMobileWrapper,
+      props: {
+        liveStartAt: false,
+        showInfoWindow: false
+      }
+    })
+    wrapper.html().should.not.containEql('AuctionInfoMobile__live-label')
   })
 })
