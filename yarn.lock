@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/express-reloadable@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.2.0.tgz#acd68d38c48978b9bd6f383c6a7f017aa05c1d59"
+"@artsy/express-reloadable@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.2.2.tgz#9e01aaccce3e3d82285580215df3913d0d671bcf"
   dependencies:
     chokidar "^1.7.0"
 
