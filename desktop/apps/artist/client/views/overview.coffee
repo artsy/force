@@ -41,9 +41,9 @@ module.exports = class OverviewView extends Backbone.View
       heightBreakOffset: 20
       onExpand: =>
         if @useNewArtworkFilter
-          @filterView.sticky.rebuild()
+          @filterView.sticky?.rebuild()
         else
-          @sticky.rebuild()
+          @sticky?.rebuild() # FIXME: Is this still needed?
     _.defer =>
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'

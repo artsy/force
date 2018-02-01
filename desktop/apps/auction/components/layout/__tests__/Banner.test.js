@@ -1,9 +1,18 @@
+import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction/components/layout/Banner'
+import BannerWrapper, { test } from 'desktop/apps/auction/components/layout/Banner'
 import sinon from 'sinon'
 const { Banner } = test
 
 describe('auction/components/layout/Banner.test', () => {
+  beforeEach(() => {
+    BannerWrapper.__Rewire__('ClockView', () => <div className='auction-clock' />)
+  })
+
+  afterEach(() => {
+    BannerWrapper.__ResetDependency__('ClockView')
+  })
+
   describe('<Banner />', () => {
     it('tracks a click on the "Enter Live Auction" button', () => {
       const liveAuctionUrl = 'live.artsy.net/some-auction-url'
@@ -12,6 +21,8 @@ describe('auction/components/layout/Banner.test', () => {
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
+          hasEndTime: true,
+          isAuction: true,
           isLiveOpen: true,
           liveAuctionUrl
         }
@@ -20,12 +31,15 @@ describe('auction/components/layout/Banner.test', () => {
       wrapper.find('a').simulate('click')
       mockTrack.calledWithMatch('click').should.be.true()
     })
+
     it('renders an Enter Live Auction banner if isLiveOpen', () => {
       const liveAuctionUrl = 'live.artsy.net/some-auction-url'
 
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
+          isAuction: true,
+          hasEndTime: true,
           isLiveOpen: true,
           liveAuctionUrl
         }
@@ -39,6 +53,7 @@ describe('auction/components/layout/Banner.test', () => {
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
+          hasEndTime: true,
           isLiveOpen: false
         },
         options: {
@@ -47,6 +62,21 @@ describe('auction/components/layout/Banner.test', () => {
       })
 
       wrapper.find('.auction-clock').length.should.eql(1)
+    })
+
+    it('hides clock if no end_at', () => {
+      const { wrapper } = renderTestComponent({
+        Component: Banner,
+        props: {
+          hasEndTime: false,
+          isLiveOpen: false
+        },
+        options: {
+          renderMode: 'render'
+        }
+      })
+
+      wrapper.find('.auction-clock').length.should.eql(0)
     })
   })
 })

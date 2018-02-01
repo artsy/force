@@ -6,7 +6,8 @@ export default class Clock extends Component {
   static propTypes = {
     className: PropTypes.string,
     model: PropTypes.object,
-    modelName: PropTypes.string
+    modelName: PropTypes.string,
+    closedText: PropTypes.string
   }
 
   static defaultProps = {
@@ -22,6 +23,7 @@ export default class Clock extends Component {
     this.$ = require('jquery')
 
     const {
+      closedText,
       model,
       modelName
     } = this.props
@@ -29,6 +31,7 @@ export default class Clock extends Component {
     this.setState(() => {
       this.backboneView = new ClockView({
         el: this.$('.auction-clock'),
+        closedText,
         model,
         modelName
       })
