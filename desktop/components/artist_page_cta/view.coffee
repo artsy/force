@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 qs = require 'qs'
 _ = require 'underscore'
+sd = require('sharify').data
 Form = require '../mixins/form.coffee'
 Mailcheck = require '../mailcheck/index.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -96,7 +97,10 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       context: 'artist_page_cta'
 
   onRegisterSuccess: (model, response, options) =>
-    window.location = @afterAuthPath
+    if !sd.ARTIST_PAGE_GOOGLE_REFERRER
+      window.location = "/personalize?redirectTo=#{@artist.get('href')}"
+    else
+      window.location = @afterAuthPath
 
   render: ->
     @$el.html template

@@ -15,7 +15,7 @@ export class App extends React.Component {
   render () {
     return (
       <ContextProvider currentUser={this.props.currentUser} >
-        <Wizard stepComponents={[CollectorIntent, Artists, Genes, Budget]} />
+        <Wizard stepComponents={[CollectorIntent, Artists, Genes, Budget]} redirectTo={this.props.redirectTo} />
       </ContextProvider>
     )
   }

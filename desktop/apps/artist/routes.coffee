@@ -45,6 +45,7 @@ sd = require('sharify').data
             res.locals.sd.TAB = tab
             res.locals.sd.CURRENT_ITEM = currentItem
             res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !(res.locals.sd.CURRENT_USER? || res.locals.sd.REFERRER?.includes(APP_URL))
+            res.locals.sd.ARTIST_PAGE_GOOGLE_REFERRER = res.locals.sd.REFERRER?.includes('google')
 
             res.render 'index',
               viewHelpers: helpers
