@@ -5,15 +5,21 @@ Backbone = require 'backbone'
 JSONPage = require '../../components/json_page'
 page = new JSONPage name: 'browse-categories'
 GeocodedCities = require '../../collections/geocoded_cities'
+{ COLLECT_PAGE_TITLES_URL } = require('sharify').data
+getCollectPageTitle = require '../../components/commercial_filter/page_title'
 
 @index = (req, res, next) ->
   geocodedCities = new GeocodedCities()
+  collectPageTitleFilters = new Backbone.Collection()
   Q.all([
-    geocodedCities.fetch()
+    geocodedCities.fetch(cache: true)
+    collectPageTitleFilters.fetch(cache: true, url: COLLECT_PAGE_TITLES_URL)
     page.get()
-  ]).spread (geocodedCities, pageData) ->
+  ]).spread (geocodedCities, pageTitleFilters, pageData) ->
     res.locals.sd.CATEGORIES = pageData
     res.locals.sd.GEOCODED_CITIES = geocodedCities
+    res.locals.sd.PAGE_TITLE_FILTERS = pageTitleFilters
+    res.locals.sd.COLLECT_PAGE_TITLE = getCollectPageTitle(req.query, pageTitleFilters)
     res.render 'index'
   .catch next
 
