@@ -1,6 +1,7 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 import BannerWrapper, { test } from 'desktop/apps/auction/components/layout/Banner'
+import moment from 'moment'
 import sinon from 'sinon'
 const { Banner } = test
 
@@ -30,6 +31,34 @@ describe('auction/components/layout/Banner.test', () => {
 
       wrapper.find('a').simulate('click')
       mockTrack.calledWithMatch('click').should.be.true()
+    })
+
+    it('renders a clock if the auction has yet to open for live bidding', () => {
+      const { wrapper } = renderTestComponent({
+        Component: Banner,
+        props: {
+          auction: { live_start_at: moment().add(2, 'days') },
+          isAuction: true,
+          hasEndTime: false,
+          isLiveOpen: false
+        }
+      })
+
+      wrapper.find('.auction-clock').length.should.eql(1)
+    })
+
+    it("renders a clock if the auction hasn't started yet", () => {
+      const { wrapper } = renderTestComponent({
+        Component: Banner,
+        props: {
+          auction: { live_start_at: moment().add(4, 'days'), start_at: moment().add(2, 'days') },
+          isAuction: true,
+          hasEndTime: false,
+          isLiveOpen: false
+        }
+      })
+
+      wrapper.find('.auction-clock').length.should.eql(1)
     })
 
     it('renders an Enter Live Auction banner if isLiveOpen', () => {
