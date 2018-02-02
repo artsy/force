@@ -8,9 +8,16 @@ const { Sidebar } = test
 
 describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
   describe('<Sidebar />', () => {
-    it('does not render a range slidere if sale is closed', () => {
+    it('does not render a range slider if sale is closed', () => {
       const { wrapper } = renderTestComponent({
         Component: Sidebar,
+        data: {
+          app: {
+            auction: {
+              is_auction: true
+            }
+          }
+        },
         props: {
           isClosed: true
         }
@@ -19,15 +26,58 @@ describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
       wrapper.find(RangeSlider).length.should.eql(0)
     })
 
-    it('renders a range slidere if sale is not closed', () => {
+    it('renders a range slider if sale is not closed', () => {
       const { wrapper } = renderTestComponent({
         Component: Sidebar,
+        data: {
+          app: {
+            auction: {
+              is_auction: true
+            }
+          }
+        },
         props: {
           isClosed: false
         }
       })
 
       wrapper.find(RangeSlider).length.should.eql(1)
+    })
+
+    it('if auction, renders lot message in range slider', () => {
+      const { wrapper } = renderTestComponent({
+        Component: Sidebar,
+        data: {
+          app: {
+            auction: {
+              is_auction: true
+            }
+          }
+        },
+        props: {
+          isSale: true
+        }
+      })
+
+      wrapper.find('.auction-RangeSlider__info').length.should.eql(1)
+    })
+
+    it('if not auction, hide lot message in range slider', () => {
+      const { wrapper } = renderTestComponent({
+        Component: Sidebar,
+        data: {
+          app: {
+            auction: {
+              is_auction: false
+            }
+          }
+        },
+        props: {
+          isClosed: false
+        }
+      })
+
+      wrapper.find('.auction-RangeSlider__info').length.should.eql(0)
     })
 
     it('renders a MediumFilter and an ArtistFilter', () => {
