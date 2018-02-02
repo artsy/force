@@ -153,7 +153,13 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
 
     describe('no artists selected', () => {
       it('contains all of the aggregated artists and checks the artists-all box', () => {
-        const initialStore = createStore(auctions)
+        const initialStore = createStore(auctions, {
+          app: {
+            auction: {
+              isAuction: x => x
+            }
+          }
+        })
         initialStore.dispatch(actions.updateAggregatedArtists(aggregatedArtists))
 
         const { wrapper } = renderTestComponent({
@@ -261,7 +267,13 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
     })
 
     it('renders the range correctly for a middle bucket', () => {
-      const initialStore = createStore(auctions)
+      const initialStore = createStore(auctions, {
+        app: {
+          auction: {
+            isAuction: x => x
+          }
+        }
+      })
       initialStore.dispatch(actions.updateEstimateDisplay(200, 4000))
 
       const { wrapper } = renderTestComponent({
@@ -273,7 +285,13 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
       wrapper.text().should.containEql('$200 - 4,000')
     })
     it('renders the range correctly for an upper bucket', () => {
-      const initialStore = createStore(auctions)
+      const initialStore = createStore(auctions, {
+        app: {
+          auction: {
+            isAuction: x => x
+          }
+        }
+      })
       initialStore.dispatch(actions.updateEstimateDisplay(500, 50000))
 
       const { wrapper } = renderTestComponent({
