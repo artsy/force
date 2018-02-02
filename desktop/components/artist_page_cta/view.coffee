@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 qs = require 'qs'
 _ = require 'underscore'
 sd = require('sharify').data
+Cookies = require 'cookies-js'
 Form = require '../mixins/form.coffee'
 Mailcheck = require '../mailcheck/index.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -28,7 +29,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$body = $('body')
     @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
-    @afterAuthPath = "#{@artist.get('href')}/payoff"
+    @afterAuthPath = "/personalize"
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
@@ -51,7 +52,13 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$overlay.fadeIn 300
     @$banner.fadeOut 300
     fragment = qs.stringify @currentParams()
-    @afterAuthPath += "?#{fragment}" if fragment
+    # This handles the redirect for the new onboarding flow
+    @afterAuthPath += "?redirectTo=#{@artist.get('href')}"
+    @afterAuthPath += "#{fragment}" if fragment
+
+    # This handles the redirect for the old onboarding flow
+    Cookies.set('destination', @artist.get('href'), expires: 60 * 60 * 24)
+
     @$el.addClass 'fullscreen'
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
@@ -97,10 +104,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       context: 'artist_page_cta'
 
   onRegisterSuccess: (model, response, options) =>
-    if !sd.ARTIST_PAGE_GOOGLE_REFERRER
-      window.location = "/personalize?redirectTo=#{@artist.get('href')}"
-    else
-      window.location = @afterAuthPath
+    window.location = @afterAuthPath
 
   render: ->
     @$el.html template
