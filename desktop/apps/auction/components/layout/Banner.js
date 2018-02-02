@@ -62,7 +62,7 @@ function Banner (props) {
               </div>
             </div>
           )
-        } else if (hasEndTime) {
+        } else if (isAuction || hasEndTime) {
           return (
             <ClockView
               model={auction}
