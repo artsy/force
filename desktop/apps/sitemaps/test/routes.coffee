@@ -51,6 +51,7 @@ Sitemap: https://www.artsy.net/sitemap-artists.xml
 Sitemap: https://www.artsy.net/sitemap-artist-images.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-cities.xml
+Sitemap: https://www.artsy.net/sitemap-collect.xml
 Sitemap: https://www.artsy.net/sitemap-fairs.xml
 Sitemap: https://www.artsy.net/sitemap-features.xml
 Sitemap: https://www.artsy.net/sitemap-genes.xml
