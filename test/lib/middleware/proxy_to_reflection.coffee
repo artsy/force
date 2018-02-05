@@ -37,8 +37,9 @@ describe 'proxyToReflection', ->
 
     for source, dest of paths
       it "proxies #{source} to #{dest}", ->
+        @req.url = source
         @req.query._escaped_fragment_= ''
         @request.end.callsArg 0
         proxyToReflection @req, @res, @next
         options = @proxy.web.args[0][2]
-        options.target.should.equal 'reflection.url'
+        options.target.should.equal "reflection.url#{dest}"
