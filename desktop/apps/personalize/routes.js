@@ -31,7 +31,8 @@ export async function newOnboarding (req, res, next) {
         assetPackage: 'onboarding'
       },
       data: {
-        currentUser: res.locals.sd.CURRENT_USER
+        currentUser: res.locals.sd.CURRENT_USER,
+        redirectTo: req.query.redirectTo
       }
     })
 

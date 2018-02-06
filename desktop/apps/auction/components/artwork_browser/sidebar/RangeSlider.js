@@ -11,6 +11,7 @@ function RangeSlider (props) {
     formattedMaxDisplay,
     formattedMinDisplay,
     isAbsoluteMax,
+    isAuction,
     maxEstimate,
     maxEstimateRangeDisplay,
     minEstimate,
@@ -43,9 +44,11 @@ function RangeSlider (props) {
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}
         onAfterChange={([min, max]) => updateEstimateRangeAction(min, max)}
       />
-      <div className={b('info')}>
-        Based on the estimate for the lot
-      </div>
+      {isAuction &&
+        <div className={b('info')}>
+          Based on the estimate for the lot
+        </div>
+      }
     </div>
   )
 }
@@ -54,6 +57,7 @@ RangeSlider.propTypes = {
   formattedMaxDisplay: PropTypes.string.isRequired,
   formattedMinDisplay: PropTypes.string.isRequired,
   isAbsoluteMax: PropTypes.bool.isRequired,
+  isAuction: PropTypes.bool.isRequired,
   maxEstimate: PropTypes.number.isRequired,
   minEstimate: PropTypes.number.isRequired,
   minEstimateRangeDisplay: PropTypes.number.isRequired,
@@ -64,6 +68,9 @@ RangeSlider.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
+    app: {
+      auction
+    },
     artworkBrowser: {
       filterParams,
       maxEstimateRangeDisplay,
@@ -82,6 +89,7 @@ const mapStateToProps = (state) => {
     formattedMaxDisplay,
     formattedMinDisplay,
     isAbsoluteMax,
+    isAuction: auction.isAuction(),
     maxEstimate,
     maxEstimateRangeDisplay,
     minEstimate,
