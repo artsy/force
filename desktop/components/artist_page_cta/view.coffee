@@ -54,7 +54,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     fragment = qs.stringify @currentParams()
     # This handles the redirect for the new onboarding flow
     @afterAuthPath += "?redirectTo=#{@artist.get('href')}"
-    @afterAuthPath += "#{fragment}" if fragment
+    @afterAuthPath += "&#{fragment}" if fragment
 
     # This handles the redirect for the old onboarding flow
     Cookies.set('destination', @artist.get('href'), expires: 60 * 60 * 24)
