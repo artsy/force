@@ -50,6 +50,7 @@ app.use(require('./apps/artsy_primer'))
 app.use(require('./apps/gallery_partnerships'))
 app.use(require('./apps/marketing_signup_modals'))
 app.use(require('./apps/artsy_in_miami').default)
+app.use(require('./apps/the_armory_show').default)
 
 // Non-profile dynamic vanity url apps
 app.use(require('./apps/galleries_institutions'))
