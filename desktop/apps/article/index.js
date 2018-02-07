@@ -1,4 +1,4 @@
-import 'babel-core/register'
+import '@babel/register'
 import * as routes from './routes'
 import express from 'express'
 

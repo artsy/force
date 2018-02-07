@@ -4,7 +4,7 @@ set -e -x
 
 mocha \
   --retries 5 \
-  --compilers coffee:coffee-script/register,js:babel-core/register \
+  --compilers coffee:coffee-script/register,js:@babel/register \
   -r dotenv/config \
   -r should \
   -t 30000 \

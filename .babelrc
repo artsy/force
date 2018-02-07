@@ -1,20 +1,20 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/env", {
       "targets": {
         "browsers": ["last 2 versions"]
       }
     }],
-    "react",
-    "stage-3"
+    "@babel/react",
+    "@babel/stage-3"
   ],
   "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
     "inline-react-svg",
-    "transform-runtime",
     ["module-resolver", {
       "root": ["./"]
-    }],
-    "transform-class-properties"
+    }]
   ],
   "env": {
     "development": {
