@@ -4,7 +4,8 @@ import styled, { ThemeProvider } from 'styled-components'
 import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import { Row, Col } from '@artsy/reaction-force/dist/Components/Grid'
 import Text from '@artsy/reaction-force/dist/Components/Text'
-import Title from '@artsy/reaction-force/dist/Components/Title'
+import Title from "@artsy/reaction-force/dist/Components/Title"
+import InvertedButton from "@artsy/reaction-force/dist/Components/Buttons/Inverted"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -59,7 +60,40 @@ const theme = {
   }
 }
 
-export default ({ introduction, fair_coverage, event, prepare_for_fairs }) =>
+const Cta = styled.div`
+  cursor: pointer;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 999;
+  border-top: 2px solid #6e1fff;
+`
+
+const CtaImage = styled.img`
+  box-flex: 1;
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  margin: 0 20px 0;
+`
+
+const FullWidthCol = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+`
+
+const FlexCol = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export default ({ introduction, fair_coverage, event, prepare_for_fairs }) => (
   <ThemeProvider theme={theme}>
     <Container>
       <Row style={{ paddingBottom: 50 }}>
@@ -130,26 +164,52 @@ export default ({ introduction, fair_coverage, event, prepare_for_fairs }) =>
           </SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          {prepare_for_fairs.articles.map(article =>
+          {prepare_for_fairs.articles.map(article => (
             <Row style={{ marginBottom: 25 }} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
-                <a href={article.article_url} target='_blank'>
-                  <img style={{ marginBottom: 10, width: '100%' }} src={article.image_url} />
+                <a href={article.article_url} target="_blank">
+                  <img
+                    style={{ marginBottom: 10, width: "100%" }}
+                    src={article.image_url}
+                  />
                 </a>
               </Col>
               <Col lg={5} md={5} sm={6} xs={12}>
-                <a href={article.article_url} style={{ textDecoration: 'none' }} target='_blank'>
-                  <Title titleSize='small' style={{ margin: '0 0 5px', lineHeight: 1 }}>
+                <a
+                  href={article.article_url}
+                  style={{ textDecoration: "none" }}
+                  target="_blank"
+                >
+                  <Title
+                    titleSize="small"
+                    style={{ margin: "0 0 5px", lineHeight: 1 }}
+                  >
                     {article.title}
                   </Title>
-                  <Text textStyle='primary' textSize='small'>
+                  <Text textStyle="primary" textSize="small">
                     {article.author}
                   </Text>
                 </a>
               </Col>
             </Row>
-          )}
+          ))}
         </Col>
       </Row>
+      <Cta>
+        <Container style={{ padding: "20px 0", display: "flex" }}>
+          <FlexCol>
+            <CtaImage src="https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=150&height=149&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Fsquare.jpg" />
+          </FlexCol>
+          <FullWidthCol style={{ fontSize: "26px" }}>
+            A better way to experience Armory Week 2018
+          </FullWidthCol>
+          <FlexCol>
+            <InvertedButton style={{ marginRight: "30px", width: "160px" }}>
+              Sign Up
+            </InvertedButton>
+          </FlexCol>
+        </Container>
+      </Cta>
     </Container>
   </ThemeProvider>
+);
