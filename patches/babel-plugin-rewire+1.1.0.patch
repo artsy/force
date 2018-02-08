@@ -1,0 +1,23 @@
+patch-package
+--- a/node_modules/babel-plugin-rewire/lib/RewireState.js
++++ b/node_modules/babel-plugin-rewire/lib/RewireState.js
+@@ -22,7 +22,7 @@ var _Templates = require('./Templates.js');
+ 
+ var _RewireHelpers = require('./RewireHelpers.js');
+ 
+-var _babelTypes = require('babel-types');
++var _babelTypes = require('@babel/types');
+ 
+ var t = _interopRequireWildcard(_babelTypes);
+ 
+--- a/node_modules/babel-plugin-rewire/lib/Templates.js
++++ b/node_modules/babel-plugin-rewire/lib/Templates.js
+@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
+ });
+ exports.filterWildcardImportTemplate = exports.enrichExportTemplate = exports.universalAccesorsTemplate = undefined;
+ 
+-var _babelTemplate = require('babel-template');
++var _babelTemplate = require('@babel/template');
+ 
+ var _babelTemplate2 = _interopRequireDefault(_babelTemplate);
+ 
