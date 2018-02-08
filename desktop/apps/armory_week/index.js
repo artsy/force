@@ -5,11 +5,11 @@ import { renderLayout } from '@artsy/stitch'
 
 import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
-import ArmoryShowFairWeekPage from './components/ArmoryShowFairWeekPage'
+import ArmoryWeekPage from './components/ArmoryWeekPage'
 
-const SLUG = 'the-armory-show-fair-week'
+const SLUG = 'armory-week'
 
-class EditableArmoryShowFairWeekPage extends JSONPage {
+class EditableArmoryWeekPage extends JSONPage {
   registerRoutes() {
     this.app.get(this.jsonPage.paths.show, adminOnly, this.show.bind(this))
     this.app.get(this.jsonPage.paths.show + '/data', adminOnly, this.data)
@@ -28,7 +28,7 @@ class EditableArmoryShowFairWeekPage extends JSONPage {
         },
         blocks: {
           head: './templates/meta.jade',
-          body: ArmoryShowFairWeekPage
+          body: ArmoryWeekPage
         },
         data: {
           ...res.locals,
@@ -44,4 +44,4 @@ class EditableArmoryShowFairWeekPage extends JSONPage {
   }
 }
 
-export default new EditableArmoryShowFairWeekPage({ name: SLUG, paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` }}).app
+export default new EditableArmoryWeekPage({ name: SLUG, paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` }}).app
