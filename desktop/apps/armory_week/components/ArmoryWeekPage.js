@@ -74,7 +74,7 @@ export default ({ introduction, fair_coverage, event, prepare_for_fairs }) => (
               {introduction.description}
             </IntroductionText>
             <div>
-              <img style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }} src='https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg' />
+              <img style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }} src={introduction.image} />
             </div>
           </ReveredColumnOnMobile>
         </Col>
