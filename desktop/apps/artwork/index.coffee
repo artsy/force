@@ -1,4 +1,4 @@
-require('babel-core/register')
+require('@babel/register')
 
 express = require 'express'
 routes = require './routes'

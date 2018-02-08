@@ -48,21 +48,21 @@ const config = {
           {
             loader: 'babel-loader',
             query: {
-              cacheDirectory: true,
-              env: {
-                development: {
-                  presets: ['react-hmre'],
-                  plugins: [
-                    ['react-transform', {
-                      transforms: [{
-                        transform: 'react-transform-hmr',
-                        imports: ['react'],
-                        locals: ['module']
-                      }]
-                    }]
-                  ]
-                }
-              }
+              cacheDirectory: true
+              // env: {
+              //   development: {
+              //     presets: ['react-hmre'],
+              //     plugins: [
+              //       ['react-transform', {
+              //         transforms: [{
+              //           transform: 'react-transform-hmr',
+              //           imports: ['react'],
+              //           locals: ['module']
+              //         }]
+              //       }]
+              //     ]
+              //   }
+              // }
             }
           }
         ]
@@ -145,11 +145,7 @@ function findAssets (basePath) {
 
   // Filter out .styl files
   const validAssets = (file) => {
-    const whitelist = [
-      '.js',
-      '.coffee'
-    ]
-
+    const whitelist = ['.js', '.coffee']
     const isValid = whitelist.some(extension => extension === path.extname(file))
     return isValid
   }

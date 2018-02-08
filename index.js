@@ -1,6 +1,7 @@
 global.Promise = require('bluebird')
+
 require('coffee-script/register')
-require('babel-core/register')
+require('@babel/register')
 const artsyXapp = require('artsy-xapp')
 const cache = require('./lib/cache')
 const express = require('express')
@@ -9,7 +10,9 @@ const setup = require('./lib/setup').default
 const app = module.exports = express()
 const { API_URL, CLIENT_ID, CLIENT_SECRET, PORT, PROFILE_MEMORY } = process.env
 
-if (PROFILE_MEMORY) require('./lib/memory_profiler')()
+if (PROFILE_MEMORY) {
+  require('./lib/memory_profiler')()
+}
 
 // Add all of the middleware and global setup
 setup(app)
