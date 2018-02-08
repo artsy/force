@@ -1,11 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 
+import { Row, Col } from '@artsy/reaction-force/dist/Components/Grid'
 import colors from "@artsy/reaction-force/dist/Assets/Colors"
 import InvertedButton from "@artsy/reaction-force/dist/Components/Buttons/Inverted"
+import Text from '@artsy/reaction-force/dist/Components/Text'
+import Title from "@artsy/reaction-force/dist/Components/Title"
+import FacebookButton from "@artsy/reaction-force/dist/Components/Buttons/Facebook"
 
 const StickyFooter = styled.div`
-  cursor: pointer;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -18,6 +21,7 @@ const StickyFooter = styled.div`
 `
 
 const Container = styled.div`
+  cursor: pointer;
   margin: 0 auto;
   max-width: 1192px;
   padding-top: 25px;
@@ -42,26 +46,149 @@ const FullWidthCol = styled.div`
   align-items: center;
 `
 
-const Col = styled.div`
+const FixedCol = styled.div`
   display: flex;
   align-items: center;
 `
 
-export const Cta = () =>
-  <StickyFooter>
-    <Container>
-      <Col>
-        <CtaImage src="https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=150&height=149&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Fsquare.jpg" />
-      </Col>
-      <FullWidthCol style={{ fontSize: "26px" }}>
-        A better way to experience Armory Week 2018
-      </FullWidthCol>
-      <Col>
-        <InvertedButton
-          style={{ marginRight: "30px", width: "160px" }}
-        >
-          Sign Up
-        </InvertedButton>
-      </Col>
-    </Container>
-  </StickyFooter>
+const OverlayModalContainer = styled.div`
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: white;
+  align-items: center;
+  justify-content: center;
+`
+
+const ContentContainer = styled.div`
+  width: 710px;
+`
+const Close = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 40px;
+  color: ${colors.grayMedium};
+  cursor: pointer;
+`
+
+const Separator = styled.div`
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+  line-height: .1em;
+  margin: 20px 0 10px;
+`
+
+const SeparatorText = styled(Text)`
+  color: ${colors.graySemibold};
+  background: white;
+  letter-spacing: normal;
+  display: inline;
+  padding: 0 10px;
+`
+
+const FooterLink = styled.a`
+  color: ${colors.graySemibold};
+  text-decoration: underline;
+`
+
+export class Cta extends React.Component {
+  state = {
+    isModalOpen: false,
+  }
+
+  openModal() {
+    this.setState({ isModalOpen: true })
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false })
+  }
+
+  render () {
+    return (
+      <StickyFooter>
+        <Container onClick={this.openModal.bind(this)}>
+          <FixedCol>
+            <CtaImage
+              src="https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=150&height=149&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Fsquare.jpg" />
+          </FixedCol>
+          <FullWidthCol style={{fontSize: "26px"}}>
+            A better way to experience Armory Week 2018
+          </FullWidthCol>
+          <FixedCol>
+            <InvertedButton style={{marginRight: "30px", width: "160px"}}>
+              Sign Up
+            </InvertedButton>
+          </FixedCol>
+        </Container>
+
+        {this.state.isModalOpen && <OverlayModalContainer>
+          <ContentContainer>
+            <Title align="center" titleSize="large" style={{lineHeight: 'normal'}}>
+              Sign up for personalized fair content when our <b>Armory Week</b> coverage begins
+            </Title>
+
+            <Row>
+              <Col xs sm md lg>
+                <div style={{background: 'pink', width: '100%', height: '100%', width: '100%' }} />
+              </Col>
+              <Col xs sm md lg>
+                <form action="/log_in?modal_id=artist_page_cta" method="POST" className="auth-form" style={{ marginTop: 0 }}>
+                  <div className="auth-errors" />
+                  <input name="name" type="text" placeholder="Your full name" autoFocus required className="bordered-input is-block" style={{ marginTop: 0 }} />
+                  <input id="js-mailcheck-input-modal" name="email" type="email" placeholder="Your email address" required className="bordered-input is-block"/>
+                  <div id="js-mailcheck-hint-modal" />
+                  <input name="password" type="password" placeholder="Create a password" autoComplete="on"
+                         pattern=".{6,}"
+                         title="6 characters minimum" required className="bordered-input is-block"/>
+
+                  <button id="auth-submit" className="avant-garde-button-black is-block">
+                    Sign Up
+                  </button>
+                </form>
+
+                <Separator>
+                  <SeparatorText textStyle='primary' align='center' textSize='xsmall'>
+                    Or
+                  </SeparatorText>
+                </Separator>
+
+                <FacebookButton block />
+
+                <footer style={{ marginTop: '10px' }}>
+                  <Text align="center" color={colors.graySemibold}
+                        style={{fontSize: '13px', marginBottom: '25px', lineHeight: 'normal'}}>
+                    By signing up, you agree to our&nbsp;
+                    <FooterLink href="/terms">
+                      Terms of Use
+                    </FooterLink>
+                    &nbsp;and&nbsp;
+                    <FooterLink href="/privacy">
+                      Privacy Policy
+                    </FooterLink>
+                    .
+                  </Text>
+
+                  <Text textSize="medium" align="center" color={colors.graySemibold} style={{lineHeight: 'normal'}}>
+                    Already have an account?&nbsp;
+                    <FooterLink>
+                      Sign in.
+                    </FooterLink>
+                  </Text>
+                </footer>
+              </Col>
+            </Row>
+          </ContentContainer>
+          <Close onClick={this.closeModal.bind(this)}>
+            ×
+          </Close>
+        </OverlayModalContainer>}
+      </StickyFooter>
+    )
+  }
+}
