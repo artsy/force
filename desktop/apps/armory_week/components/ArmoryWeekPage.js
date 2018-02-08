@@ -4,7 +4,9 @@ import styled, { ThemeProvider } from 'styled-components'
 import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import { Row, Col } from '@artsy/reaction-force/dist/Components/Grid'
 import Text from '@artsy/reaction-force/dist/Components/Text'
-import Title from '@artsy/reaction-force/dist/Components/Title'
+import Title from "@artsy/reaction-force/dist/Components/Title"
+
+import { Cta } from './Cta'
 
 const Container = styled.div`
   margin: 0 auto;
@@ -59,7 +61,7 @@ const theme = {
   }
 }
 
-export default ({ introduction, fair_coverage, event, prepare_for_fairs }) =>
+export default ({ introduction, fair_coverage, event, prepare_for_fairs }) => (
   <ThemeProvider theme={theme}>
     <Container>
       <Row style={{ paddingBottom: 50 }}>
@@ -130,26 +132,39 @@ export default ({ introduction, fair_coverage, event, prepare_for_fairs }) =>
           </SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          {prepare_for_fairs.articles.map(article =>
+          {prepare_for_fairs.articles.map(article => (
             <Row style={{ marginBottom: 25 }} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
-                <a href={article.article_url} target='_blank'>
-                  <img style={{ marginBottom: 10, width: '100%' }} src={article.image_url} />
+                <a href={article.article_url} target="_blank">
+                  <img
+                    style={{ marginBottom: 10, width: "100%" }}
+                    src={article.image_url}
+                  />
                 </a>
               </Col>
               <Col lg={5} md={5} sm={6} xs={12}>
-                <a href={article.article_url} style={{ textDecoration: 'none' }} target='_blank'>
-                  <Title titleSize='small' style={{ margin: '0 0 5px', lineHeight: 1 }}>
+                <a
+                  href={article.article_url}
+                  style={{ textDecoration: "none" }}
+                  target="_blank"
+                >
+                  <Title
+                    titleSize="small"
+                    style={{ margin: "0 0 5px", lineHeight: 1 }}
+                  >
                     {article.title}
                   </Title>
-                  <Text textStyle='primary' textSize='small'>
+                  <Text textStyle="primary" textSize="small">
                     {article.author}
                   </Text>
                 </a>
               </Col>
             </Row>
-          )}
+          ))}
         </Col>
       </Row>
+
+      <Cta />
     </Container>
   </ThemeProvider>
+);
