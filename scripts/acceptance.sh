@@ -4,9 +4,6 @@ set -e -x
 
 mocha \
   --retries 5 \
-  --compilers coffee:coffee-script/register,js:@babel/register \
-  -r dotenv/config \
-  -r should \
+  --require test.config.js \
   -t 30000 \
   $@ \
-  dotenv_config_path=.env.test

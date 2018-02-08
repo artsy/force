@@ -1,6 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": [
+    "prettier",
     "standard",
     "standard-react"
   ],
@@ -11,6 +12,7 @@
   },
   "rules": {
     "camelcase": 0,
+    "comma-dangle": ["error", "always-multiline"],
     "no-mixed-operators": 0,
     "no-new": 0,
     "react/jsx-indent": 0

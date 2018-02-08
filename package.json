@@ -17,6 +17,9 @@
     "test": "sh scripts/test.sh",
     "webpack": "webpack"
   },
+  "resolutions": {
+    "babel-core": "^7.0.0-0"
+  },
   "dependencies": {
     "@artsy/express-reloadable": "^1.2.2",
     "@artsy/reaction-force": "0.19.2",
@@ -33,6 +36,8 @@
     "@babel/preset-typescript": "7.0.0-beta.39",
     "@babel/register": "7.0.0-beta.39",
     "@babel/runtime": "7.0.0-beta.39",
+    "@babel/template": "7.0.0-beta.39",
+    "@babel/types": "7.0.0-beta.39",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
     "annyang": "mzikherman/annyang",
@@ -188,6 +193,7 @@
     "electron": "1.7.8",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^3.18.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^7.1.0",
     "eslint-config-standard-react": "^4.3.0",
     "eslint-plugin-promise": "^3.5.0",
@@ -201,10 +207,11 @@
     "jsdom-global": "^3.0.2",
     "json-loader": "^0.5.7",
     "konami-js": "0.0.2",
-    "mocha": "^3.1.2",
+    "mocha": "^5.0.0",
     "nightmare": "^2.10.0",
     "patch-package": "^5.0.0",
     "postinstall-prepare": "^1.0.1",
+    "prettier": "^1.10.2",
     "progress-bar-webpack-plugin": "^1.10.0",
     "pug-loader": "damassi/pug-loader#02921c5",
     "react-test-renderer": "^15.5.4",
@@ -222,5 +229,12 @@
   "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
