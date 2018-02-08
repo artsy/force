@@ -29,6 +29,7 @@ module.exports =
     '^/series/.*'
     '^/video/.*'
     '^/artsy-in-miami'
+    '^/armory-week'
   ]
 
   check: ->
