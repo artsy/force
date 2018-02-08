@@ -5,7 +5,8 @@ import colors from '@artsy/reaction-force/dist/Assets/Colors'
 import { Row, Col } from '@artsy/reaction-force/dist/Components/Grid'
 import Text from '@artsy/reaction-force/dist/Components/Text'
 import Title from "@artsy/reaction-force/dist/Components/Title"
-import InvertedButton from "@artsy/reaction-force/dist/Components/Buttons/Inverted"
+
+import { Cta } from './Cta'
 
 const Container = styled.div`
   margin: 0 auto;
@@ -59,39 +60,6 @@ const theme = {
     }
   }
 }
-
-const Cta = styled.div`
-  cursor: pointer;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100px;
-  width: 100%;
-  background-color: #fff;
-  z-index: 999;
-  border-top: 2px solid #6e1fff;
-`
-
-const CtaImage = styled.img`
-  box-flex: 1;
-  flex: 0 0 60px;
-  width: 60px;
-  height: 60px;
-  border-radius: 60px;
-  margin: 0 20px 0;
-`
-
-const FullWidthCol = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`
-
-const FlexCol = styled.div`
-  display: flex;
-  align-items: center;
-`
 
 export default ({ introduction, fair_coverage, event, prepare_for_fairs }) => (
   <ThemeProvider theme={theme}>
@@ -195,21 +163,8 @@ export default ({ introduction, fair_coverage, event, prepare_for_fairs }) => (
           ))}
         </Col>
       </Row>
-      <Cta>
-        <Container style={{ padding: "20px 0", display: "flex" }}>
-          <FlexCol>
-            <CtaImage src="https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=150&height=149&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Fsquare.jpg" />
-          </FlexCol>
-          <FullWidthCol style={{ fontSize: "26px" }}>
-            A better way to experience Armory Week 2018
-          </FullWidthCol>
-          <FlexCol>
-            <InvertedButton style={{ marginRight: "30px", width: "160px" }}>
-              Sign Up
-            </InvertedButton>
-          </FlexCol>
-        </Container>
-      </Cta>
+
+      <Cta />
     </Container>
   </ThemeProvider>
 );
