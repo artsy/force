@@ -1,4 +1,10 @@
 {
+  "bannerPopUp": {
+    "ctaTitle": "A better way to experience Armory Week 2018",
+    "ctaImageUrl":"https://d3vpvtm3t56z1n.cloudfront.net/images/artsyinmiami.jpg",
+    "overlayModalTitle":"Sign up for personalized fair content when our Armory Week coverage begins",
+    "overlayModalImageUrl":"https://d3vpvtm3t56z1n.cloudfront.net/images/artsyinmiami.jpg"
+  },
   "event": {
     "banner_image_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/artsyinmiami.jpg",
     "description": "Collective Structures explores the relationship between individual artists and their mental landscape through a series of spatial installations. It will unfold in multiple chapters, across distinct spaces of the Bath Club, drawing on the historic building. The physical and sensory experiences strive to place viewers at a crossroads between current reality and imagined narrative.",

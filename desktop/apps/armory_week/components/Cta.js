@@ -96,6 +96,14 @@ const FooterLink = styled.a`
   text-decoration: underline;
 `
 
+// Use the interface below once https://github.com/artsy/force/pull/2145 is merged:
+// interface CtaProps {
+//   ctaTitle: string
+//   ctaImageUrl: string
+//   ovrlayModalTitle: string
+//   overlayModalImageUrl: string
+// }
+
 export class Cta extends React.Component {
   state = {
     isModalOpen: false,
@@ -112,15 +120,16 @@ export class Cta extends React.Component {
   }
 
   render () {
+    const { ctaTitle, ctaImageUrl, overlayModalTitle, overlayModalImageUrl } = this.props
+
     return (
       <StickyFooter>
         <Container onClick={this.openModal.bind(this)}>
           <FixedCol>
-            <CtaImage
-              src="https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=150&height=149&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Fsquare.jpg" />
+            <CtaImage src={ctaImageUrl} />
           </FixedCol>
           <FullWidthCol style={{fontSize: "26px"}}>
-            A better way to experience Armory Week 2018
+            {ctaTitle}
           </FullWidthCol>
           <FixedCol>
             <InvertedButton style={{marginRight: "30px", width: "160px"}}>
@@ -131,13 +140,15 @@ export class Cta extends React.Component {
 
         {this.state.isModalOpen && <OverlayModalContainer>
           <ContentContainer>
-            <Title align="center" titleSize="large" style={{lineHeight: 'normal'}}>
-              Sign up for personalized fair content when our <b>Armory Week</b> coverage begins
-            </Title>
+            <Title
+              align="center"
+              titleSize="large"
+              style={{ lineHeight: 'normal' }}
+              dangerouslySetInnerHTML={{ __html: overlayModalTitle }} />
 
             <Row>
               <Col xs sm md lg>
-                <div style={{background: 'pink', width: '100%', height: '100%', width: '100%' }} />
+                <div style={{ background: `url(${overlayModalImageUrl})`, width: '100%', height: '100%' }} />
               </Col>
               <Col xs sm md lg>
                 <form action="/log_in?modal_id=artist_page_cta" method="POST" className="auth-form" style={{ marginTop: 0 }}>
