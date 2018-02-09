@@ -6,7 +6,7 @@ export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
   const { ctaTitle, ctaImageUrl, overlayModalTitle, overlayModalImageUrl } = bootstrapData.bannerPopUp
 
-  ReactDOM.hydrate(
+  ReactDOM.render(
     <BannerPopUp {...{ ctaTitle, ctaImageUrl, overlayModalTitle, overlayModalImageUrl }} />,
     document.getElementById('react-root-for-cta')
   )
