@@ -171,7 +171,9 @@ export class Cta extends React.Component {
                   </SeparatorText>
                 </Separator>
 
-                <FacebookButton block />
+                <FacebookButton block>
+                  Continue with Facebook
+                </FacebookButton>
 
                 <footer style={{ marginTop: '10px' }}>
                   <Text align="center" color={colors.graySemibold}
