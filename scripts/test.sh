@@ -37,9 +37,9 @@ run () {
 
 if [ -z "$CIRCLE_NODE_INDEX" ]; then
   CIRCLE_NODE_INDEX=0 run
-  # CIRCLE_NODE_INDEX=1 run
-  # CIRCLE_NODE_INDEX=2 run
-  # CIRCLE_NODE_INDEX=3 run
+  CIRCLE_NODE_INDEX=1 run
+  CIRCLE_NODE_INDEX=2 run
+  CIRCLE_NODE_INDEX=3 run
 else
   run
 fi
