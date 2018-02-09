@@ -6,6 +6,7 @@ import colors from "@artsy/reaction-force/dist/Assets/Colors"
 import InvertedButton from "@artsy/reaction-force/dist/Components/Buttons/Inverted"
 import Text from '@artsy/reaction-force/dist/Components/Text'
 import Title from "@artsy/reaction-force/dist/Components/Title"
+import RawInput from "@artsy/reaction-force/dist/Components/Input"
 import FacebookButton from "@artsy/reaction-force/dist/Components/Buttons/Facebook"
 
 const StickyFooter = styled.div`
@@ -96,6 +97,11 @@ const FooterLink = styled.a`
   text-decoration: underline;
 `
 
+const Input = styled(RawInput)`
+  box-sizing: content-box;
+  margin: 0 0 10px;
+`
+
 // Use the interface below once https://github.com/artsy/force/pull/2145 is merged:
 // interface CtaProps {
 //   ctaTitle: string
@@ -151,18 +157,14 @@ export class Cta extends React.Component {
                 <div style={{ background: `url(${overlayModalImageUrl})`, width: '100%', height: '100%' }} />
               </Col>
               <Col xs sm md lg>
-                <form action="/log_in?modal_id=artist_page_cta" method="POST" className="auth-form" style={{ marginTop: 0 }}>
-                  <div className="auth-errors" />
-                  <input name="name" type="text" placeholder="Your full name" autoFocus required className="bordered-input is-block" style={{ marginTop: 0 }} />
-                  <input id="js-mailcheck-input-modal" name="email" type="email" placeholder="Your email address" required className="bordered-input is-block"/>
-                  <div id="js-mailcheck-hint-modal" />
-                  <input name="password" type="password" placeholder="Create a password" autoComplete="on"
-                         pattern=".{6,}"
-                         title="6 characters minimum" required className="bordered-input is-block"/>
+                <form action="/log_in" method="POST" style={{ marginTop: 0 }}>
+                  <Input name="name" type="text" placeholder="Your full name" autoFocus required  block />
+                  <Input name="email" type="email" placeholder="Your email address" required  block />
+                  <Input type="password" placeholder="Create a password" autoComplete="on" block />
 
-                  <button id="auth-submit" className="avant-garde-button-black is-block">
-                    Sign Up
-                  </button>
+                  <InvertedButton style={{ margin: "0" }} block>
+                    Submit
+                  </InvertedButton>
                 </form>
 
                 <Separator>
