@@ -6,7 +6,7 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-app.get '/personalize', (req, res) -> res.redirect '/personalize/collect'
+app.get '/personalize', index
 app.get '/personalize/collect', index
 app.get '/personalize/location', index
 app.get '/personalize/artists', index
