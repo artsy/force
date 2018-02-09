@@ -21,3 +21,4 @@ dump.rdb
 manifest.json
 public
 .vscode/settings.json
+.cache-loader

@@ -59,7 +59,7 @@ module.exports =
         #{require '../components/partner/query.coffee'}
         #{require('../components/auction_artworks/query.coffee').auction_artworks}
         #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
-        #{require('../../../components/react/current_auctions/query.js').default}
+        #{require('../../../components/react/current_auctions/query.js').currentAuctionQuery}
         #{require '../components/artist_artworks/query.coffee'}
         #{require '../components/related_artworks/query.coffee'}
       """

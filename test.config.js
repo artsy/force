@@ -1,6 +1,5 @@
-require('babel-register')({
-  extensions: ['.ts', '.js', '.tsx', '.jsx'],
-})
+require('babel-register')
+require('ts-node').register()
 require('coffee-script/register')
 require('source-map-support/register')
 require('babel-polyfill')

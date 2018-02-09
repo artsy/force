@@ -1,4 +1,4 @@
-export default `
+export const articleBody = `
   id
   title
   search_title

@@ -1,12 +1,15 @@
-global.Promise = require('bluebird')
-require('coffee-script/register')
 require('babel-core/register')
+require('ts-node').register()
+require('coffee-script/register')
+
+global.Promise = require('bluebird')
+
 const artsyXapp = require('artsy-xapp')
 const cache = require('./lib/cache')
 const express = require('express')
 const setup = require('./lib/setup').default
 
-const app = module.exports = express()
+const app = (module.exports = express())
 const { API_URL, CLIENT_ID, CLIENT_SECRET, PORT, PROFILE_MEMORY } = process.env
 
 if (PROFILE_MEMORY) require('./lib/memory_profiler')()
@@ -20,7 +23,9 @@ cache.setup(() => {
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
     if (module === require.main) {
-      app.listen(PORT, () => console.log(`\n\n  [Force] Booting on port ${PORT}... \n`))
+      app.listen(PORT, () =>
+        console.log(`\n\n  [Force] Booting on port ${PORT}... \n`)
+      )
     }
   })
 })
