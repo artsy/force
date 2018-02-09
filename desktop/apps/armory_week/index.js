@@ -29,7 +29,7 @@ class EditableArmoryWeekPage extends JSONPage {
           body: ArmoryWeekPage
         },
         locals: {
-          assetPackage: 'cta'
+          assetPackage: 'banner_pop_up'
         },
         data: {
           ...res.locals,

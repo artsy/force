@@ -110,7 +110,7 @@ const Input = styled(RawInput)`
 //   overlayModalImageUrl: string
 // }
 
-export class Cta extends React.Component {
+export class BannerPopUp extends React.Component {
   state = {
     isModalOpen: false,
   }
