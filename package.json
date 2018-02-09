@@ -12,10 +12,25 @@
     "assets": "sh scripts/assets.sh",
     "deploy": "sh scripts/deploy.sh",
     "mocha": "sh scripts/mocha.sh",
+    "precommit": "lint-staged",
     "prepare": "patch-package",
+    "prettier-write": "yarn run prettier --write",
     "start": "sh scripts/start.sh",
     "test": "sh scripts/test.sh",
     "webpack": "webpack"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "*.@(js|jsx)": [
+      "npm run prettier-write --",
+      "git add"
+    ]
   },
   "dependencies": {
     "@artsy/express-reloadable": "^1.2.2",
@@ -185,6 +200,7 @@
     "electron": "1.7.8",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^3.18.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^7.1.0",
     "eslint-config-standard-react": "^4.3.0",
     "eslint-plugin-promise": "^3.5.0",
@@ -192,16 +208,19 @@
     "eslint-plugin-standard": "^2.1.1",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "hulk-editor": "craigspaeth/hulk",
+    "husky": "^0.14.3",
     "imagesloaded": "^4.1.1",
     "inquirer": "^1.2.3",
     "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "^0.5.7",
     "konami-js": "0.0.2",
+    "lint-staged": "^6.1.0",
     "mocha": "^3.1.2",
     "nightmare": "^2.10.0",
     "patch-package": "^5.0.0",
     "postinstall-prepare": "^1.0.1",
+    "prettier": "^1.10.2",
     "progress-bar-webpack-plugin": "^1.10.0",
     "pug-loader": "damassi/pug-loader#02921c5",
     "react-test-renderer": "^15.5.4",
@@ -211,6 +230,8 @@
     "sinon": "^1.17.1",
     "source-map-support": "^0.4.14",
     "supertest": "^2.0.1",
+    "ts-loader": "^3.5.0",
+    "typescript": "^2.7.1",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
