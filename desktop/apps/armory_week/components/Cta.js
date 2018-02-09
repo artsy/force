@@ -102,10 +102,12 @@ export class Cta extends React.Component {
   }
 
   openModal() {
+    document.querySelector('body').style.overflow = 'hidden'
     this.setState({ isModalOpen: true })
   }
 
   closeModal() {
+    document.querySelector('body').style.overflow = ''
     this.setState({ isModalOpen: false })
   }
 
