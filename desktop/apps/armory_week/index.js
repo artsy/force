@@ -1,6 +1,4 @@
 import React from 'react'
-import queryString from 'query-string'
-import merge from 'lodash.merge'
 import { renderLayout } from '@artsy/stitch'
 
 import adminOnly from '../../lib/admin_only'
@@ -29,6 +27,9 @@ class EditableArmoryWeekPage extends JSONPage {
         blocks: {
           head: './templates/meta.jade',
           body: ArmoryWeekPage
+        },
+        locals: {
+          assetPackage: 'cta'
         },
         data: {
           ...res.locals,
