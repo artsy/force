@@ -32,7 +32,8 @@ export async function newOnboarding (req, res, next) {
       },
       data: {
         currentUser: res.locals.sd.CURRENT_USER,
-        redirectTo: req.query.redirectTo
+        redirectTo: req.query.redirectTo,
+        forceStep: req.params.slug
       }
     })
 

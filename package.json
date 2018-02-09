@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@artsy/express-reloadable": "^1.2.2",
-    "@artsy/reaction-force": "0.19.1",
+    "@artsy/reaction-force": "0.19.3",
     "@artsy/stitch": "^1.3.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
@@ -43,6 +43,7 @@
     "babel-plugin-styled-components": "^1.4.0",
     "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.22.0",
