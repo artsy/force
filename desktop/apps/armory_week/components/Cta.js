@@ -78,7 +78,7 @@ const Close = styled.span`
 const Separator = styled.div`
   width: 100%;
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid ${colors.grayRegular};
   line-height: .1em;
   margin: 20px 0 10px;
 `
