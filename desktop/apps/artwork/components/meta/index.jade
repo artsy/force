@@ -47,6 +47,5 @@ if sd.INCLUDE_SAILTHRU
   if artwork.meta_image && artwork.meta_image && artwork.meta_image.resized && artwork.meta_image.resized
     meta( name='image', content=artwork.meta_image.resized.url )
 
-//- Unica Font
-if sd.ARTIST_MARKET_DATA === 'experiment'
-  link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")
+//- Unica Font (currently used in Market Insights)
+link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")

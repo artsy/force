@@ -15,12 +15,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_market_data:
-    key: 'artist_market_data'
-    outcomes:
-      control: 50
-      experiment: 50
-    edge: 'experiment'
   editorial_signup_test:
     key: 'editorial_signup_test'
     outcomes:
