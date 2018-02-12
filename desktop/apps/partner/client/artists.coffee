@@ -20,6 +20,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
   initialize: (options={}) ->
     { @profile, @partner, @artistsListColumnSize, @nextPage, @pageSize, @artistId } =
       _.defaults options, @defaults
+    @distinguishRepresentedArtists = @partner.get('distinguish_represented_artists') != false # default to true
     @cache = options.cache; artists = @cache?.artists
     @collection = if artists? then artists else new PartnerArtists()
     @fetchAllArtists()
@@ -52,6 +53,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
     new ArtistsListView
       collection: @displayables
       el: @$('#artists-list')
+      distinguishRepresentedArtists: @distinguishRepresentedArtists
 
   appendArtist: (partnerArtist, scroll=false, allArtworks=false) ->
     a = partnerArtist.get('artist')
