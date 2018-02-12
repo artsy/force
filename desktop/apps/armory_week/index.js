@@ -4,8 +4,11 @@ import { renderLayout } from '@artsy/stitch'
 import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
 import ArmoryWeekPage from './components/ArmoryWeekPage'
+import merge from 'lodash.merge'
+import queryString from 'query-string'
 
 const SLUG = 'armory-week'
+const MARKETING_MODAL_ID = 'ca18'
 
 class EditableArmoryWeekPage extends JSONPage {
   registerRoutes() {
@@ -17,6 +20,12 @@ class EditableArmoryWeekPage extends JSONPage {
 
   async show(req, res, next) {
     try {
+      if (req.query['m-id'] !== MARKETING_MODAL_ID) {
+        const queryStringAsString = queryString.stringify(merge({}, req.query, { 'm-id': MARKETING_MODAL_ID }))
+
+        return res.redirect(`/${SLUG}?${queryStringAsString}`)
+      }
+
       const data = await this.jsonPage.get()
       const layout = await renderLayout({
         basePath: __dirname,

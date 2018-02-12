@@ -1,13 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Row, Col } from '@artsy/reaction-force/dist/Components/Grid'
 import colors from "@artsy/reaction-force/dist/Assets/Colors"
 import InvertedButton from "@artsy/reaction-force/dist/Components/Buttons/Inverted"
-import Text from '@artsy/reaction-force/dist/Components/Text'
-import Title from "@artsy/reaction-force/dist/Components/Title"
-import RawInput from "@artsy/reaction-force/dist/Components/Input"
-import FacebookButton from "@artsy/reaction-force/dist/Components/Buttons/Facebook"
+
+import MarketingModal from '../../../components/marketing_signup_modal/index.coffee'
 
 const StickyFooter = styled.div`
   position: fixed;
@@ -52,62 +49,10 @@ const FixedCol = styled.div`
   align-items: center;
 `
 
-const OverlayModalContainer = styled.div`
-  display: flex;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: white;
-  align-items: center;
-  justify-content: center;
-`
-
-const ContentContainer = styled.div`
-  width: 710px;
-`
-const Close = styled.span`
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 40px;
-  color: ${colors.grayMedium};
-  cursor: pointer;
-`
-
-const Separator = styled.div`
-  width: 100%;
-  text-align: center;
-  border-bottom: 1px solid ${colors.grayRegular};
-  line-height: .1em;
-  margin: 20px 0 10px;
-`
-
-const SeparatorText = styled(Text)`
-  color: ${colors.graySemibold};
-  background: white;
-  letter-spacing: normal;
-  display: inline;
-  padding: 0 10px;
-`
-
-const FooterLink = styled.a`
-  color: ${colors.graySemibold};
-  text-decoration: underline;
-`
-
-const Input = styled(RawInput)`
-  box-sizing: content-box;
-  margin: 0 0 10px;
-`
-
 // Use the interface below once https://github.com/artsy/force/pull/2145 is merged:
 // interface CtaProps {
 //   ctaTitle: string
 //   ctaImageUrl: string
-//   ovrlayModalTitle: string
-//   overlayModalImageUrl: string
 // }
 
 export class BannerPopUp extends React.Component {
@@ -116,17 +61,11 @@ export class BannerPopUp extends React.Component {
   }
 
   openModal() {
-    document.querySelector('body').style.overflow = 'hidden'
-    this.setState({ isModalOpen: true })
-  }
-
-  closeModal() {
-    document.querySelector('body').style.overflow = ''
-    this.setState({ isModalOpen: false })
+    new MarketingModal().open()
   }
 
   render () {
-    const { ctaTitle, ctaImageUrl, overlayModalTitle, overlayModalImageUrl } = this.props
+    const { ctaTitle, ctaImageUrl } = this.props
 
     return (
       <StickyFooter>
@@ -143,68 +82,6 @@ export class BannerPopUp extends React.Component {
             </InvertedButton>
           </FixedCol>
         </Container>
-
-        {this.state.isModalOpen && <OverlayModalContainer>
-          <ContentContainer>
-            <Title
-              align="center"
-              titleSize="large"
-              style={{ lineHeight: 'normal' }}
-              dangerouslySetInnerHTML={{ __html: overlayModalTitle }} />
-
-            <Row>
-              <Col xs sm md lg>
-                <div style={{ background: `url(${overlayModalImageUrl})`, width: '100%', height: '100%' }} />
-              </Col>
-              <Col xs sm md lg>
-                <form action="/log_in" method="POST" style={{ marginTop: 0 }}>
-                  <Input name="name" type="text" placeholder="Your full name" autoFocus required  block />
-                  <Input name="email" type="email" placeholder="Your email address" required  block />
-                  <Input type="password" placeholder="Create a password" autoComplete="on" block />
-
-                  <InvertedButton style={{ margin: "0" }} block>
-                    Submit
-                  </InvertedButton>
-                </form>
-
-                <Separator>
-                  <SeparatorText textStyle='primary' align='center' textSize='xsmall'>
-                    Or
-                  </SeparatorText>
-                </Separator>
-
-                <FacebookButton block>
-                  Continue with Facebook
-                </FacebookButton>
-
-                <footer style={{ marginTop: '10px' }}>
-                  <Text align="center" color={colors.graySemibold}
-                        style={{fontSize: '13px', marginBottom: '25px', lineHeight: 'normal'}}>
-                    By signing up, you agree to our&nbsp;
-                    <FooterLink href="/terms">
-                      Terms of Use
-                    </FooterLink>
-                    &nbsp;and&nbsp;
-                    <FooterLink href="/privacy">
-                      Privacy Policy
-                    </FooterLink>
-                    .
-                  </Text>
-
-                  <Text textSize="medium" align="center" color={colors.graySemibold} style={{lineHeight: 'normal'}}>
-                    Already have an account?&nbsp;
-                    <FooterLink>
-                      Sign in.
-                    </FooterLink>
-                  </Text>
-                </footer>
-              </Col>
-            </Row>
-          </ContentContainer>
-          <Close onClick={this.closeModal.bind(this)}>
-            ×
-          </Close>
-        </OverlayModalContainer>}
       </StickyFooter>
     )
   }
