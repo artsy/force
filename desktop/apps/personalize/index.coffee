@@ -3,7 +3,7 @@
 #
 
 express = require 'express'
-{ index, newOnboarding } = require './routes.js'
+{ index } = require './routes.js'
 adminOnly = require '../../lib/admin_only'
 
 app = module.exports = express()
