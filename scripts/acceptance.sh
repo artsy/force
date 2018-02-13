@@ -7,4 +7,3 @@ mocha \
   --require test.config.js \
   -t 30000 \
   $@ \
-  dotenv_config_path=.env.test
