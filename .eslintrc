@@ -2,7 +2,8 @@
   "parser": "babel-eslint",
   "extends": [
     "standard",
-    "standard-react"
+    "standard-react",
+    "prettier"
   ],
   "env": {
     "browser": true,

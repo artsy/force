@@ -22,15 +22,12 @@ export default () => {
   // Redux store
   const store = configureStore(auctionReducer, {
     app: bootstrapData.app,
-    artworkBrowser: bootstrapData.artworkBrowser
+    artworkBrowser: bootstrapData.artworkBrowser,
   })
 
   // Start app
   ReactDOM.hydrate(
-    <App
-      store={store}
-      templateComponents={templateComponents}
-    />,
+    <App store={store} templateComponents={templateComponents} />,
     document.getElementById('react-root')
   )
 }

@@ -7,10 +7,10 @@ import { Provider } from 'react-redux'
 
 export default class App extends Component {
   static propTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
   }
 
-  render () {
+  render() {
     return (
       <Provider store={this.props.store}>
         <ResponsiveWindow>

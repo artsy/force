@@ -1,4 +1,4 @@
-export default `
+export const currentAuctionQuery = `
   fragment current_auctions on Sale {
     cover_image {
       cropped(width: 260, height: 110) {

@@ -1,4 +1,4 @@
-export default `
+export const sectionFragments = `
   fragment Image on Image {
     url
     caption
