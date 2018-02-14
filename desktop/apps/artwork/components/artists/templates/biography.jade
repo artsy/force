@@ -15,9 +15,3 @@
     p= artist.bio.replace('born', 'b.')
 
 div(id="market-insights-container-" + artist._id)
-
-unless sd.ARTIST_MARKET_DATA === 'experiment'
-  if artist.exhibition_highlights && artist.exhibition_highlights.length <= 15
-    include ./exhibition
-  else if artist.exhibition_highlights && artist.exhibition_highlights.length > 15
-    include ./highlights

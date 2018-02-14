@@ -6,7 +6,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
-splitTest = require('../../../components/split_test/index.coffee')
 
 helpers = extend [
   {}
@@ -162,7 +161,6 @@ module.exports =
   init: ->
     setCookie(CLIENT._id)
     exec sharedInit
-    splitTest('artist_market_data').view()
 
     context = CLIENT.context or {}
     { query, init, variables } = setup(context)
