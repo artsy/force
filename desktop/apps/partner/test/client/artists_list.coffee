@@ -126,6 +126,25 @@ describe 'PartnerArtistsListView', ->
       groups[0].cols.should.have.lengthOf 1
       groups[0].cols[0].should.have.lengthOf 6
 
+    it 'groups all artists together when partner has distinguish_represented_artists: false', ->
+      pas = new PartnerArtists [
+        fabricate('partner_artist', represented_by: false),
+        fabricate('partner_artist')
+      ]
+      new PartnerArtistsListView
+        collection: pas.models
+        el: $ 'body'
+        numberOfColumns: 4
+        distinguishRepresentedArtists: false
+
+      groups = @template.args[0][0].groups
+      groups.should.have.lengthOf 1
+      groups[0].label.should.equal 'artists'
+      groups[0].cols.should.have.lengthOf 4
+      groups[0].cols[0].should.have.lengthOf 1
+      groups[0].cols[1].should.have.lengthOf 1
+      groups[0].cols[2].should.have.lengthOf 0
+
   describe '#render', ->
 
     beforeEach (done) ->

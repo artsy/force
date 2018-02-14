@@ -25,6 +25,7 @@ describe 'Partner page templates', ->
       represented: []
       unrepresented: new Artists([fabricate 'artist']).models
       sd: {}
+      partner: new Partner fabricate 'partner'
     ).should.not.containEql 'Represented Artists'
 
   it 'changes copy for gagosian', ->
@@ -32,6 +33,17 @@ describe 'Partner page templates', ->
       profile: new Profile fabricate 'profile', id: 'gagosian-gallery'
       represented: new Artists([fabricate 'artist']).models
       unrepresented: new Artists([fabricate 'artist']).models
+      sd: {}
+      partner: new Partner fabricate 'partner'
+    html.should.not.containEql 'Works Available By'
+    html.should.containEql 'Artists'
+
+  it 'renders single list when distinguish_represented_artists is false', ->
+    html = render('artists')
+      profile: new Profile fabricate 'profile'
+      represented: new Artists([fabricate 'artist']).models
+      unrepresented: new Artists([fabricate 'artist']).models
+      partner: new Partner distinguish_represented_artists: false
       sd: {}
     html.should.not.containEql 'Works Available By'
     html.should.containEql 'Artists'

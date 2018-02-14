@@ -24,7 +24,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     { @profile, @partner } = _.defaults options, @defaults
     @isPartner = @partner.get('claimed') isnt false
     @showBanner = not @isPartner and not @partner.get 'show_promoted'
-
+    @distinguishRepresentedArtists = @partner.get('distinguish_represented_artists') != false # default to true
     { @numberOfFeatured, @numberOfShows } =
       _.defaults options, if @isPartner then @partnerDefaults else @nonPartnerDefaults
     @$el.html template partner: @partner, showBanner: @showBanner, isPartner: @isPartner
@@ -58,12 +58,15 @@ module.exports = class PartnerOverviewView extends Backbone.View
           @renderArtistsList displayables
 
   renderArtistsGrid: (artists) ->
-    groups = _.groupBy artists, (pa) -> pa.get 'represented_by'
-    represented = label: "represented artists", list: groups.true or []
-    nonrepresented = label: "works available by", list: groups.false or []
+    if @distinguishRepresentedArtists
+      groups = _.groupBy artists, (pa) -> pa.get 'represented_by'
+      represented = label: "represented artists", list: groups.true or []
+      nonrepresented = label: "works available by", list: groups.false or []
 
-    groups = _.filter [represented, nonrepresented], (g) -> g.list.length > 0
-    groups[0].label = "artists" if groups.length is 1
+      groups = _.filter [represented, nonrepresented], (g) -> g.list.length > 0
+      groups[0].label = "artists" if groups.length is 1
+    else
+      groups = [{ label: 'artists', list: artists }]
 
     @$('.partner-overview-artists').html artistsGridTemplate
       partner: @partner
@@ -74,6 +77,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
       collection: artists
       el: @$('.partner-overview-artists')
       linkToPartnerArtist: @isPartner
+      distinguishRepresentedArtists: @distinguishRepresentedArtists
 
   initializeLocations: ->
     return @$('.partner-overview-locations').hide() if @isPartner

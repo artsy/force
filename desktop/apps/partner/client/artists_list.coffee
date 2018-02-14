@@ -7,9 +7,10 @@ module.exports = class PartnerArtistsListView extends Backbone.View
   defaults:
     linkToPartnerArtist: true # link to partner artist or artist page
     numberOfColumns: 6
+    distinguishRepresentedArtists: true
 
   initialize: (options={}) ->
-    { @numberOfColumns, @linkToPartnerArtist } = _.defaults options, @defaults
+    { @numberOfColumns, @linkToPartnerArtist, @distinguishRepresentedArtists } = _.defaults options, @defaults
     @render()
 
   render: ->
@@ -25,17 +26,20 @@ module.exports = class PartnerArtistsListView extends Backbone.View
         linkToPartnerArtist: @linkToPartnerArtist
 
   groupArtists: (pas) ->
+    if @distinguishRepresentedArtists
+      groups = _.groupBy pas, (pa) -> pa.get 'represented_by'
+      bigger = label: "represented artists", list: groups.true or []
+      smaller = label: "works available by", list: groups.false or []
+
+      if bigger.list.length < smaller.list.length
+        temp = bigger; bigger = smaller; smaller = temp
+      if smaller.list.length is 0
+        bigger.label = "artists"
+    else
+      bigger = { label: 'artists', list: pas}
+      smaller = { list: [] }
+
     h = Math.ceil pas.length / @numberOfColumns
-
-    groups = _.groupBy pas, (pa) -> pa.get 'represented_by'
-    bigger = label: "represented artists", list: groups.true or []
-    smaller = label: "works available by", list: groups.false or []
-
-    if bigger.list.length < smaller.list.length
-      temp = bigger; bigger = smaller; smaller = temp
-    if smaller.list.length is 0
-      bigger.label = "artists"
-
     smaller.numOfCols = Math.ceil smaller.list.length / h
     bigger.numOfCols = @numberOfColumns - smaller.numOfCols
 
