@@ -21,7 +21,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .modal-bg': 'hideEditorialCTA'
     'click .cta-bar-defer': 'hideEditorialCTA'
 
-  initialize: ({isArticle = false, @isABTest = false}) ->
+  initialize: ({isArticle = false}) ->
     @params = qs.parse(location.search.replace(/^\?/, ''))
     @setupAEArticlePage() if isArticle
     @setupAEMagazinePage() if @inAEMagazinePage()
@@ -33,15 +33,14 @@ module.exports = class EditorialSignupView extends Backbone.View
     @ctaBarView.logDismissal()
 
   revealArticlePopup: =>
-    splitTest('editorial_signup_test').view() if @isABTest
-    if sd.EDITORIAL_SIGNUP_TEST is 'experiment'
+    if sd.IS_MOBILE
+      @$('.articles-es-cta--banner').css('opacity', 1)
+    else
       mediator.trigger('open:auth', {
         mode: 'register',
         redirectTo: window.location.href,
         copy: 'Sign up for the Best Stories in Art and Visual Culture'
       })
-    else
-      @$('.articles-es-cta--banner').css('opacity', 1)
 
   eligibleToSignUp: ->
     @inAEMagazinePage() and

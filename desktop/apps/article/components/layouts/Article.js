@@ -13,10 +13,10 @@ import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 const NAVHEIGHT = '53px'
 
 export default class ArticleLayout extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      following: setupFollows() || null
+      following: setupFollows() || null,
     }
   }
   static propTypes = {
@@ -24,28 +24,24 @@ export default class ArticleLayout extends React.Component {
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
-    templates: PropTypes.object
+    templates: PropTypes.object,
   }
 
-  componentDidMount () {
-    const {
-      article,
-      isSuper,
-      subscribed
-    } = this.props
+  componentDidMount() {
+    const { article, isSuper, subscribed } = this.props
 
     setupFollowButtons(this.state.following)
     if (isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),
-        article: new ArticleModel(article)
+        article: new ArticleModel(article),
       })
     }
     if (!subscribed && !isSuper && article.layout === 'standard') {
       new EditorialSignupView({
         el: document.querySelector('body'),
         isArticle: true,
-        isABTest: !sd.IS_MOBILE
+        // isABTest: !sd.IS_MOBILE
       })
     }
   }
@@ -65,13 +61,16 @@ export default class ArticleLayout extends React.Component {
     const cover_image_url = get(article, 'display.panel.cover_image_url', false)
 
     if (cover_image_url) {
-      article = updeep({
-        display: {
-          canvas: {
-            cover_image_url
-          }
-        }
-      }, article)
+      article = updeep(
+        {
+          display: {
+            canvas: {
+              cover_image_url,
+            },
+          },
+        },
+        article
+      )
     }
 
     if (!isSuper) {
@@ -99,19 +98,16 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const {
-      templates: {
-        SuperArticleFooter,
-        SuperArticleHeader
-      } = {}
+      templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
 
     return (
       <div>
         <div
           dangerouslySetInnerHTML={{
-            __html: SuperArticleHeader
+            __html: SuperArticleHeader,
           }}
         />
 
@@ -119,10 +115,9 @@ export default class ArticleLayout extends React.Component {
 
         <div
           dangerouslySetInnerHTML={{
-            __html: SuperArticleFooter
+            __html: SuperArticleFooter,
           }}
         />
-
       </div>
     )
   }
