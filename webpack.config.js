@@ -137,6 +137,7 @@ const config = {
   resolve: {
     alias: {
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+      react: path.resolve('./node_modules/react'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.jade', '.coffee'],
     modules: ['node_modules'],
