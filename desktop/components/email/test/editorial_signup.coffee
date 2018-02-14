@@ -19,26 +19,16 @@ describe 'EditorialSignupView', ->
           <div id="modal-container"></div>
           <div id="main-layout-container"></div>
           <div class="article-es-header"></div>
-          <div class="articles-feed-item"></div>
-          <div class="articles-feed-item"></div>
-          <div class="articles-feed-item"></div>
-          <div class="articles-feed-item"></div>
-          <div class="articles-feed-item"></div>
-          <div class="articles-feed-item"></div>
         </div>')
-      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialCTABannerTemplate']
+      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialCTABannerTemplate']
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView']
         ['previouslyDismissed', 'render', 'logDismissal', 'transitionIn', 'transitionOut', 'close']
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
-      sinon.stub(@EditorialSignupView::, 'fetchSignupImages').yields()
-      sinon.stub @EditorialSignupView::, 'cycleImages'
       @EditorialSignupView.__set__ 'mediator',
         trigger: @mediatorTrigger = sinon.stub(),
         on: @mediatorOn = sinon.stub()
-      @EditorialSignupView.__set__ 'splitTest', sinon.stub().returns
-        view: @splitTestView = sinon.stub()
       @EditorialSignupView.__set__ 'analyticsHooks', trigger: @trigger = sinon.stub()
       @view = new @EditorialSignupView el: $el
       done()
@@ -49,11 +39,6 @@ describe 'EditorialSignupView', ->
     benv.teardown()
 
   describe '#setupAEMagazinePage', ->
-
-    it 'renders a lush signup after the 6th article in the feed', ->
-      @view.setupAEMagazinePage()
-      $(@view.el).html().should.containEql 'Enter your email address'
-      $(@view.el).html().should.containEql 'articles-es-cta'
 
     it 'opens a signup modal', ->
       @EditorialSignupView.__set__ 'sd',
@@ -164,15 +149,15 @@ describe 'EditorialSignupView', ->
       @view.revealArticlePopup()
       @splitTestView.callCount.should.equal 1
 
-    it 'opens the auth modal if experiment', ->
+    it 'opens the user signup modal if desktop', ->
       @EditorialSignupView.__set__ 'sd',
-        EDITORIAL_SIGNUP_TEST: 'experiment'
+        IS_MOBILE: false
       @view.revealArticlePopup()
       @mediatorTrigger.args[0][0].should.equal 'open:auth'
 
-    it 'shows the editorial signup if not experiment', ->
+    it 'shows the editorial signup if modal', ->
       @EditorialSignupView.__set__ 'sd',
-        EDITORIAL_SIGNUP_TEST: 'control'
+        IS_MOBILE: true
       @view.initialize({ isArticle: true })
       @view.revealArticlePopup()
       @mediatorTrigger.callCount.should.equal 0

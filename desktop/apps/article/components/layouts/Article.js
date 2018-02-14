@@ -40,8 +40,6 @@ export default class ArticleLayout extends React.Component {
     if (!subscribed && !isSuper && article.layout === 'standard') {
       new EditorialSignupView({
         el: document.querySelector('body'),
-        isArticle: true,
-        // isABTest: !sd.IS_MOBILE
       })
     }
   }
