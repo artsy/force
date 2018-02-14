@@ -87,6 +87,28 @@ describe 'PartnerShow', ->
       )
       show.location().should.be.instanceOf(FairLocation)
 
+  describe '#isOnlineExclusive', ->
+    it 'returns false when there is partner location', ->
+      show = new PartnerShow(fabricate 'show')
+      show.isOnlineExclusive().should.be.false()
+
+    it 'returns false when there is fair location', ->
+      show = new PartnerShow(fabricate 'show',
+        partner_location: null,
+        fair_location:
+          display: 'Booth 1234'
+      )
+      show.isOnlineExclusive().should.be.false()
+
+    it 'returns true when there is no location', ->
+      show = new PartnerShow(fabricate 'show',
+        location: null,
+        partner_location: null,
+        fair_location: null
+      )
+      show.isOnlineExclusive().should.be.true()
+
+
   describe '#formatShowOrFairCity', ->
 
     it 'returns undefined without location and fair', ->
