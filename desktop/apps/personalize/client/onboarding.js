@@ -1,12 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { App } from 'desktop/apps/personalize/components/App'
+import { Router } from 'react-router'
+import createHistory from 'history/createBrowserHistory'
+
+import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
+import { RoutesWithProgressBar } from '../components/RoutesWithProgressBar'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
 
   // Start app
   ReactDOM.hydrate(
-    <App {...bootstrapData} />, document.getElementById('react-root')
+    <Router history={createHistory()}>
+      <ContextProvider {...bootstrapData}>
+        <RoutesWithProgressBar />
+      </ContextProvider>
+    </Router>,
+    document.getElementById('react-root')
   )
 }
