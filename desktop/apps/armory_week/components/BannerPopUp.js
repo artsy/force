@@ -1,8 +1,8 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react'
+import styled from 'styled-components'
 
-import colors from "@artsy/reaction-force/dist/Assets/Colors"
-import InvertedButton from "@artsy/reaction-force/dist/Components/Buttons/Inverted"
+import colors from '@artsy/reaction-force/dist/Assets/Colors'
+import InvertedButton from '@artsy/reaction-force/dist/Components/Buttons/Inverted'
 
 import MarketingModal from '../../../components/marketing_signup_modal/index.coffee'
 
@@ -16,6 +16,10 @@ const StickyFooter = styled.div`
   background-color: #fff;
   z-index: 999;
   border-top: 2px solid ${colors.purpleRegular};
+
+  @media (max-width: 48em) {
+    height: 90px;
+  }
 `
 
 const Container = styled.div`
@@ -38,15 +42,37 @@ const CtaImage = styled.img`
   margin: 0 20px 0;
 `
 
+const Button = styled(InvertedButton)`
+  margin-right: 30px;
+  width: 160px;
+
+  @media (max-width: 48em) {
+    margin-right: 0;
+    width: 100px;
+    padding: 15px;
+  }
+`
+
 const FullWidthCol = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  font-size: 26px;
+
+  @media (max-width: 48em) {
+    font-size: 17px;
+  }
 `
 
 const FixedCol = styled.div`
   display: flex;
   align-items: center;
+`
+
+const CtaImageContainer = styled(FixedCol)`
+  @media (max-width: 48em) {
+    display: none;
+  }
 `
 
 // Use the interface below once https://github.com/artsy/force/pull/2145 is merged:
@@ -64,22 +90,18 @@ export class BannerPopUp extends React.Component {
     new MarketingModal().open()
   }
 
-  render () {
+  render() {
     const { ctaTitle, ctaImageUrl } = this.props
 
     return (
       <StickyFooter>
         <Container onClick={this.openModal.bind(this)}>
-          <FixedCol>
+          <CtaImageContainer>
             <CtaImage src={ctaImageUrl} />
-          </FixedCol>
-          <FullWidthCol style={{fontSize: "26px"}}>
-            {ctaTitle}
-          </FullWidthCol>
+          </CtaImageContainer>
+          <FullWidthCol>{ctaTitle}</FullWidthCol>
           <FixedCol>
-            <InvertedButton style={{marginRight: "30px", width: "160px"}}>
-              Sign Up
-            </InvertedButton>
+            <Button>Sign Up</Button>
           </FixedCol>
         </Container>
       </StickyFooter>
