@@ -22,8 +22,10 @@ CurrentUser = require '../../models/current_user.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
+splitTest = require('../../components/split_test/index.coffee')
 
 module.exports.init = ->
+  splitTest('collect_keyword_search').view()
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
@@ -44,7 +46,7 @@ module.exports.init = ->
     el: $('.cf-total-sort__sort')
     params: params
 
-  if CurrentUser.orNull()?.hasLabFeature('Keyword Search')
+  if sd.COLLECT_KEYWORD_SEARCH is 'experiment'
     pillboxView = new PillboxView
       el: $('.cf-headline-container .cf-pillboxes')
       params: params
