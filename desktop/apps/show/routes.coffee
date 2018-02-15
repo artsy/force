@@ -15,6 +15,7 @@ query = """
       end_at
       name
       displayable
+      is_online_exclusive
       press_release(format: HTML)
       description
       status

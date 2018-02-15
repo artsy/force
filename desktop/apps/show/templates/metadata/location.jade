@@ -1,7 +1,10 @@
 .show-location
-  span= ViewHelpers.singleLine(partner_show.location)
-  if partner_show.location.coordinates
-    a.show-entity-link.js-open-map-modal
-      i.icon-circle-chevron
-      span
-        | Map #{partner_show.location.day_schedules.length > 0 ? '& Full Hours' : ''}
+  if partner_show.is_online_exclusive
+   span= "Online Exclusive"
+  else
+    span= ViewHelpers.singleLine(partner_show.location)
+    if partner_show.location.coordinates
+      a.show-entity-link.js-open-map-modal
+        i.icon-circle-chevron
+        span
+          | Map #{partner_show.location.day_schedules.length > 0 ? '& Full Hours' : ''}

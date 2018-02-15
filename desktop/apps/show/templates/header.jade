@@ -31,8 +31,7 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
       else
         .show-dates
           = ViewHelpers.runningDates(partner_show)
-        if partner_show.location
-          include metadata/location
+        include metadata/location
         if partner_show.events.length > 0
           include metadata/events
 
