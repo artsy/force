@@ -28,7 +28,7 @@
     },
     "test" : {
       "plugins": [
-        "babel-plugin-rewire"
+        // "babel-plugin-rewire"
       ]
     }
   }

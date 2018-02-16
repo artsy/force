@@ -23,7 +23,6 @@ function Layout(props) {
 
   const b = block('auction-Layout')
 
-  console.log('hi!!!')
   return (
     <div className={b()}>
       <Banner />

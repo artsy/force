@@ -17,6 +17,7 @@
     "prettier-write": "yarn run prettier --write",
     "start": "sh scripts/start.sh",
     "test": "sh scripts/test.sh",
+    "rewire-test": "yarn mocha --require test.config.js test/test-test.js",
     "webpack": "webpack"
   },
   "prettier": {
