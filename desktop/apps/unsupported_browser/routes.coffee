@@ -1,6 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
-sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
+sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 
 #
 # Message users of unsupported browsers to upgrade

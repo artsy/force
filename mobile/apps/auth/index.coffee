@@ -6,7 +6,7 @@
 express = require 'express'
 routes = require './routes'
 { loginPagePath, signupPagePath,
-  twitterLastStepPath } = require('artsy-passport').options
+  twitterLastStepPath } = require('@artsy/passport').options
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
