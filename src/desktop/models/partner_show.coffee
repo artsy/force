@@ -322,7 +322,7 @@ module.exports = class PartnerShow extends Backbone.Model
     @has 'fair'
 
   isOnlineExclusive: ->
-    !@has('location') && !@has('fair_location') && !@has('partner_location')
+    not @has('location') && not @isFairBooth() && not @has('partner_city')
 
   contextualLabel: (name) ->
     type = if @isFairBooth()

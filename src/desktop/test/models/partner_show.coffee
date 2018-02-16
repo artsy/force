@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 PartnerShow = require '../../models/partner_show'
 PartnerLocation = require '../../models/partner_location'
 FairLocation = require '../../models/partner_location'
+Fair = require '../../models/fair'
 sinon = require 'sinon'
 moment = require 'moment'
 
@@ -89,14 +90,25 @@ describe 'PartnerShow', ->
 
   describe '#isOnlineExclusive', ->
     it 'returns false when there is partner location', ->
-      show = new PartnerShow(fabricate 'show')
+      show = new PartnerShow(fabricate 'show',
+        location: new PartnerLocation(fabricate: 'partner_location'),
+        partner_city: null,
+        fair: null)
       show.isOnlineExclusive().should.be.false()
 
-    it 'returns false when there is fair location', ->
+    it 'returns false when there is a partner_city', ->
       show = new PartnerShow(fabricate 'show',
-        partner_location: null,
-        fair_location:
-          display: 'Booth 1234'
+        location: null,
+        partner_city: 'Tehran',
+        fair: null
+      )
+      show.isOnlineExclusive().should.be.false()
+
+    it 'returns false when its a fair show', ->
+      show = new PartnerShow(fabricate 'show',
+        location: null,
+        fair: new Fair(fabricate: 'fair'),
+        partner_city: null
       )
       show.isOnlineExclusive().should.be.false()
 
@@ -104,7 +116,7 @@ describe 'PartnerShow', ->
       show = new PartnerShow(fabricate 'show',
         location: null,
         partner_location: null,
-        fair_location: null
+        fair: null
       )
       show.isOnlineExclusive().should.be.true()
 
