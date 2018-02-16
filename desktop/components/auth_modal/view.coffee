@@ -9,7 +9,7 @@ mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 { templateMap, stateEventMap, routeCopyMap } = require './maps.coffee'
-sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
+sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
 
