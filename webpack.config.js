@@ -43,20 +43,20 @@ const config = {
           root: __dirname,
         },
       },
-      {
-        test: /(\.tsx?$)/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'cache-loader' },
-          {
-            loader: 'ts-loader',
-            options: {
-              logInfoToStdOut: true,
-              happyPackMode: true,
-            },
-          },
-        ],
-      },
+      // {
+      //   test: /(\.tsx?$)/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     { loader: 'cache-loader' },
+      //     {
+      //       loader: 'ts-loader',
+      //       options: {
+      //         logInfoToStdOut: true,
+      //         happyPackMode: true,
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /(\.jsx?$)/,
         exclude: /node_modules/,
@@ -66,25 +66,25 @@ const config = {
             loader: 'babel-loader',
             query: {
               cacheDirectory: true,
-              env: {
-                development: {
-                  presets: ['react-hmre'],
-                  plugins: [
-                    [
-                      'react-transform',
-                      {
-                        transforms: [
-                          {
-                            transform: 'react-transform-hmr',
-                            imports: ['react'],
-                            locals: ['module'],
-                          },
-                        ],
-                      },
-                    ],
-                  ],
-                },
-              },
+              // env: {
+              //   development: {
+              //     presets: ['react-hmre'],
+              //     plugins: [
+              //       [
+              //         'react-transform',
+              //         {
+              //           transforms: [
+              //             {
+              //               transform: 'react-transform-hmr',
+              //               imports: ['react'],
+              //               locals: ['module'],
+              //             },
+              //           ],
+              //         },
+              //       ],
+              //     ],
+              //   },
+              // },
             },
           },
         ],
@@ -97,13 +97,13 @@ const config = {
   },
   plugins: [
     new ProgressBarPlugin(),
-    new ForkTsCheckerWebpackPlugin({
-      formatter: 'codeframe',
-      formatterOptions: 'highlightCode',
-      tslint: false,
-      checkSyntacticErrors: true,
-      watch: ['./desktop', './mobile'],
-    }),
+    // new ForkTsCheckerWebpackPlugin({
+    //   formatter: 'codeframe',
+    //   formatterOptions: 'highlightCode',
+    //   tslint: false,
+    //   checkSyntacticErrors: true,
+    //   watch: ['./desktop', './mobile'],
+    // }),
     // TODO: Look into making this more compatable with TypeScript
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
@@ -111,10 +111,10 @@ const config = {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`],
       },
     }),
-    new ForkTsCheckerNotifierWebpackPlugin({
-      excludeWarnings: true,
-      skipFirstNotification: true,
-    }),
+    // new ForkTsCheckerNotifierWebpackPlugin({
+    //   excludeWarnings: true,
+    //   skipFirstNotification: true,
+    // }),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
