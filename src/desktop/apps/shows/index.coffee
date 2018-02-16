@@ -13,6 +13,7 @@ app.get '/shows', routes.index
 app.get '/shows/:city', routes.city
 app.get '/show', routes.redirectShow
 app.get '/city/:city', routes.redirectFromCity
+app.get '/shows/online', routes.onlineExlusive
 
 # Redirect pre-2015 location routes
 oldRedirects =

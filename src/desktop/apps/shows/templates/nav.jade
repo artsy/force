@@ -7,6 +7,10 @@ nav.shows-page-cities-nav.horizontal-list-nav
       href='/shows'
       class= activeClass('/shows')
     ) All
+    a.hln-link.shows-location(
+      href="/shows/online"
+      class= activeClass("/shows/online")
+    )=  "Online Exclusive"
     for city in featuredCities
       a.hln-link.shows-location(
         href="/shows/#{city.slug}"
