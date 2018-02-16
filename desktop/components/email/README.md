@@ -1,11 +1,6 @@
 ### `EditorialSignupView`
 
-There are several places where signups occur:
-1. Lush Signup in article page in 1st article
-2. Lush Signup in magazine after 6th article
-3. CTA Popup on Magazine
-4. CTA Popup on magazine article page
-5. Inline signup in article after 1st article
+The editorial-only signup is currently being used on mobile only. For desktop, we use the full user signup.
 
 ### `GalleryInsightsView`
 
