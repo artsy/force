@@ -15,14 +15,14 @@
 # module.exports = {}
 
 module.exports = {
-  artist_market_data:
-    key: 'artist_market_data'
+  editorial_signup_test:
+    key: 'editorial_signup_test'
     outcomes:
       control: 50
       experiment: 50
     edge: 'experiment'
-  editorial_signup_test:
-    key: 'editorial_signup_test'
+  collect_keyword_search:
+    key: 'collect_keyword_search'
     outcomes:
       control: 50
       experiment: 50

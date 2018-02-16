@@ -1,4 +1,4 @@
-export default `
+export const relatedArticles = `
   relatedArticlesPanel {
     slug
     thumbnail_title

@@ -6,7 +6,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
-splitTest = require('../../../components/split_test/index.coffee')
 
 helpers = extend [
   {}
@@ -59,7 +58,7 @@ module.exports =
         #{require '../components/partner/query.coffee'}
         #{require('../components/auction_artworks/query.coffee').auction_artworks}
         #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
-        #{require('../../../components/react/current_auctions/query.js').default}
+        #{require('../../../components/react/current_auctions/query.js').currentAuctionQuery}
         #{require '../components/artist_artworks/query.coffee'}
         #{require '../components/related_artworks/query.coffee'}
       """
@@ -162,7 +161,6 @@ module.exports =
   init: ->
     setCookie(CLIENT._id)
     exec sharedInit
-    splitTest('artist_market_data').view()
 
     context = CLIENT.context or {}
     { query, init, variables } = setup(context)

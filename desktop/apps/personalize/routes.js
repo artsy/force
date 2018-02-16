@@ -6,35 +6,41 @@ export const index = (req, res, next) => {
   if (res.locals.sd.ONBOARDING_TEST !== 'experiment') {
     req.user.fetch({
       success: (model, response, options) => {
-        res.locals.sd.CURRENT_USER = _.extend({}, response, res.locals.sd.CURRENT_USER)
+        res.locals.sd.CURRENT_USER = _.extend(
+          {},
+          response,
+          res.locals.sd.CURRENT_USER
+        )
         res.render('template')
-      }
+      },
     })
   } else {
     newOnboarding(req, res, next)
   }
 }
 
-export async function newOnboarding (req, res, next) {
+export async function newOnboarding(req, res, next) {
   try {
     const layout = await renderLayout({
       basePath: req.app.get('views'),
       config: {
-        styledComponents: true
+        styledComponents: true,
       },
       layout: '../../components/main_layout/templates/react_blank_index.jade',
       blocks: {
-        body: App
+        head: './meta.jade',
+        body: App,
       },
       locals: {
         ...res.locals,
-        assetPackage: 'onboarding'
+        assetPackage: 'onboarding',
       },
       data: {
+        title: 'Personalize | Artsy',
         currentUser: res.locals.sd.CURRENT_USER,
         redirectTo: req.query.redirectTo,
-        forceStep: req.params.slug
-      }
+        forceStep: req.params.slug,
+      },
     })
 
     res.send(layout)

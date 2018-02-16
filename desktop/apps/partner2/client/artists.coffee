@@ -21,7 +21,6 @@ module.exports = class PartnerArtistsView extends Backbone.View
   initialize: (options = {}) ->
     { @profile, @partner, @artistsListColumnSize, @nextPage, @pageSize,
       @artistId, @cache } = _.defaults options, @defaults
-
     # @collection is all displayable partner artists.
     @collection = @cache.artists or new PartnerArtists()
     @startUp()
