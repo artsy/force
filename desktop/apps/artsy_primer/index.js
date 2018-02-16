@@ -1,2 +1,2 @@
-require('babel-core/register')
+require('@babel/register')
 module.exports = require('./server').default
