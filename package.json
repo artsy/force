@@ -35,7 +35,7 @@
   "dependencies": {
     "@artsy/express-reloadable": "^1.2.2",
     "@artsy/passport": "^1.0.5",
-    "@artsy/reaction-force": "0.21.0",
+    "@artsy/reaction-force": "0.23.4",
     "@artsy/stitch": "^1.3.1",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
@@ -250,5 +250,12 @@
   "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
+  },
+  "resolutions": {
+    "graphql": "^0.12.3",
+    "babel-plugin-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/babel-plugin-relay-1.5.0-artsy.3.tgz",
+    "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-compiler-1.5.0-artsy.3.tgz",
+    "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz",
+    "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
   }
 }
