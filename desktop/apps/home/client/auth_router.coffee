@@ -45,7 +45,10 @@ module.exports = class HomeAuthRouter extends Backbone.Router
         redirectTo: redirectTo
 
   signup: ->
-    mediator.trigger 'open:auth', mode: 'register'
+    redirectTo = qs.parse(@location.search.replace /^\?/, '')['redirect-to']
+    mediator.trigger 'open:auth',
+      mode: 'register',
+      redirectTo: if redirectTo then redirectTo else null
 
   forgot: ->
     mediator.trigger 'open:auth', mode: 'forgot'
