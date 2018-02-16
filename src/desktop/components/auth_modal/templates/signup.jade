@@ -11,8 +11,9 @@
 
     section#auth-body
       nav.auth-options
+        - var intentQuery = signupIntent ? '&signup-intent=' + signupIntent : ''
         a.auth-signup-facebook.avant-garde-button-black(
-          href='/users/auth/facebook?redirect-to=' + redirectTo
+          href='/users/auth/facebook?redirect-to=#{redirectTo}' + intentQuery
           data-context= context
         )
           i.icon-facebook
