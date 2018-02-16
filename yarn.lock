@@ -2021,6 +2021,10 @@ coffee-loader@^0.8.0:
   dependencies:
     loader-utils "^1.0.2"
 
+coffee-script@^1.12.7:
+  version "1.12.7"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.12.7.tgz#c05dae0cb79591d05b3070a8433a98c9a89ccc53"
+
 coffeescript@1.11.1:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-1.11.1.tgz#42d6769fdc61c1bf9a132fb1ddba5a43f4f2785c"
