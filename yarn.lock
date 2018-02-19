@@ -8,9 +8,9 @@
   dependencies:
     chokidar "^1.7.0"
 
-"@artsy/passport@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.0.3.tgz#e9b783f2b12b26c83886eae1a87ed596dd2effb0"
+"@artsy/passport@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.0.5.tgz#9ae4f88bcbda8e9e8da3c52d6d53f0ebe1a7d113"
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -346,7 +346,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
