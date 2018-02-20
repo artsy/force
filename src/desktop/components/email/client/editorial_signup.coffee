@@ -59,7 +59,6 @@ module.exports = class EditorialSignupView extends Backbone.View
     else
       mediator.trigger('open:auth', {
         mode: 'register',
-        redirectTo: window.location.href,
         copy: 'Sign up for the Best Stories in Art and Visual Culture'
       })
 

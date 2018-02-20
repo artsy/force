@@ -44,12 +44,19 @@ module.exports = class AuthModalView extends ModalView
     mode = mode: options.mode if options.mode
     @state = new State mode
 
+    currentPath = location.pathname
+    postLoginPath = @redirectTo or currentPath
+    postSignupPath = @redirectTo or '/personalize'
+    if (options.mode is 'signup' or options.mode is 'register') and !@destination
+      @destination = currentPath unless @redirectTo
+
     @templateData = _.extend {
       context: @context
       copy: @renderCopy(options.copy)
       redirectTo: switch @state.get 'mode'
-        when 'login' then @redirectTo or location.pathname
-        when 'signup' then @redirectTo or '/personalize'
+        when 'login' then postLoginPath
+        when 'signup' then postSignupPath
+        when 'register' then postSignupPath
         else @redirectTo or '/'
     }, options?.userData
 
