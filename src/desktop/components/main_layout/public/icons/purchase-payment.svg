@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="106px" height="94px" viewBox="0 0 106 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="0" y="0" width="69.3819444" height="43.503876" rx="6"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-3" y="-3" width="75.3819444" height="49.503876">
+            <rect x="-3" y="-3" width="75.3819444" height="49.503876" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+        <rect id="path-3" x="0" y="9.98449612" width="69.3819444" height="7.84496124"></rect>
+    </defs>
+    <g id="Spec" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="checkout-copy-4" transform="translate(-894.000000, -97.000000)">
+            <g id="Group-16" transform="translate(894.000000, 97.000000)">
+                <g id="Group-15">
+                    <polygon id="Rectangle-18" fill="#E5E5E5" points="0 0 51.5180304 0 51.5597229 61.3333333 45.0705329 56.2465257 38.640018 61.3333333 32.2016449 56.2465257 25.7786391 61.3333333 19.2527771 56.2465257 12.9308811 61.3333333 6.44588216 56.2465257 0 61.3333333"></polygon>
+                    <text id="$" font-family="AvantGardeGothicITCW01Dm, Avant Garde Gothic ITCW01Dm" font-size="30" font-weight="normal" line-spacing="30" fill="#FFFFFF">
+                        <tspan x="20.0277778" y="38.8449612">$</tspan>
+                    </text>
+                </g>
+                <g id="Group-11" transform="translate(33.618056, 38.511628)">
+                    <g id="Rectangle-16">
+                        <use fill="#E5E5E5" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <use stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="6" xlink:href="#path-1"></use>
+                    </g>
+                    <g id="Rectangle-17">
+                        <use fill="#D8D8D8" xlink:href="#path-3"></use>
+                        <use fill="#FFFFFF" xlink:href="#path-3"></use>
+                    </g>
+                </g>
+                <g id="Group-13" transform="translate(20.743056, 64.899225)" stroke="#FFFFFF" stroke-width="3">
+                    <ellipse id="Oval-5" fill="#E5E5E5" cx="13.5902778" cy="13.5503876" rx="13.5902778" ry="13.5503876"></ellipse>
+                    <polyline id="Path-3" points="7.86805556 12.9116114 12.1111398 17.1162791 20.0277778 9.27131783"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

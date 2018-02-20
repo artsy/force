@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="83px" height="54px" viewBox="0 0 83 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="0" y="9.98449612" width="69.3819444" height="7.84496124"></rect>
+    </defs>
+    <g id="Spec" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="payoff-copy" transform="translate(-817.000000, -363.000000)">
+            <g id="Group-10" transform="translate(817.000000, 363.000000)">
+                <g id="Group-11" transform="translate(0.618056, 0.511628)">
+                    <rect id="Rectangle-16" fill="#E5E5E5" x="0" y="0" width="69.3819444" height="43.503876" rx="6"></rect>
+                    <g id="Rectangle-17">
+                        <use fill="#D8D8D8" xlink:href="#path-1"></use>
+                        <use fill="#FFFFFF" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+                <g id="Group-9" transform="translate(56.000000, 27.000000)" stroke-width="3">
+                    <circle id="Oval-5" stroke="#F8F8F8" fill="#E5E5E5" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <g id="Group-13" transform="translate(6.000000, 8.000000)" stroke="#FFFFFF">
+                        <polyline id="Path-3" points="0.806051587 3.47698788 4.74605843 7.21447028 12.0972222 0.241171404"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

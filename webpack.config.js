@@ -2,6 +2,7 @@ const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-web
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackNotifierPlugin = require('webpack-notifier')
 const fs = require('fs')
 const path = require('path')
@@ -158,8 +159,14 @@ if (isDevelopment) {
   // Prod
   if (isProduction) {
     config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin({
+      new UglifyJsPlugin({
         sourceMap: true,
+        uglifyOptions: {
+          ecma: 8,
+          compress: {
+            warnings: false,
+          },
+        },
       })
     )
   }

@@ -14,11 +14,10 @@ logs
 results
 npm-debug.log
 .DS_Store
-desktop/public/assets
-mobile/public/assets
 dump.rdb
-/node_modules
 manifest.json
-public
-.vscode/settings.json
 .cache-loader
+/src/desktop/public/assets
+/src/mobile/public/assets
+/node_modules
+/public
