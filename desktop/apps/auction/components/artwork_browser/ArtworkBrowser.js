@@ -7,39 +7,46 @@ import Sidebar from './sidebar/Sidebar'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
-function ArtworkBrowser ({ isMobile }) {
+function ArtworkBrowser({ isMobile }) {
   const b = block('auction-ArtworkBrowser')
 
   return (
     <div className={b()}>
-      { isMobile
-        ? <div className={b('container')}>
-            <HeaderMobile />
+      {isMobile ? (
+        <div className={b('container')}>
+          <HeaderMobile />
+          <ArtworkDisplay />
+        </div>
+      ) : (
+        // Desktop
+        <div className={b('container')}>
+          <div
+            className={b
+              .builder()('left')
+              .mix('cf-sidebar')()}
+          >
+            <Sidebar />
+          </div>
+          <div
+            className={b
+              .builder()('right')
+              .mix('cf-right')()}
+          >
+            <HeaderDesktop />
             <ArtworkDisplay />
           </div>
-
-          // Desktop
-        : <div className={b('container')}>
-            <div className={b.builder()('left').mix('cf-sidebar')()}>
-              <Sidebar />
-            </div>
-            <div className={b.builder()('right').mix('cf-right')()}>
-              <HeaderDesktop />
-              <ArtworkDisplay />
-            </div>
-          </div> }
+        </div>
+      )}
     </div>
   )
 }
 
 ArtworkBrowser.propTypes = {
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  isMobile: state.app.isMobile
+  isMobile: state.app.isMobile,
 })
 
-export default connect(
-  mapStateToProps
-)(ArtworkBrowser)
+export default connect(mapStateToProps)(ArtworkBrowser)

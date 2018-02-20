@@ -1,19 +1,25 @@
 import * as React from 'react'
 import ChannelMemberQuery from 'desktop/apps/article/queries/channelMember'
 import PropTypes from 'prop-types'
-import { positronql } from 'desktop/lib/positronql'
+import { positronql as _positronql } from 'desktop/lib/positronql'
 import styled from 'styled-components'
-import { data as sd } from 'sharify'
+import { data as _sd } from 'sharify'
 import { pluck, contains } from 'underscore'
+
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+let sd = _sd
+let positronql = _positronql
 
 export class EditButton extends React.Component {
   static propTypes = {
     channelId: PropTypes.string,
-    slug: PropTypes.string
+    slug: PropTypes.string,
   }
 
   state = {
-    hasButtonState: false
+    hasButtonState: false,
   }
 
   componentDidMount = async () => {
@@ -29,13 +35,16 @@ export class EditButton extends React.Component {
     }
   }
 
-  render () {
+  render() {
     if (!this.state.hasButtonState || !this.state.showEditButton) {
       return false
     } else {
       return (
-        <StyledEditButton target='_blank' href={`${sd.POSITRON_URL}/articles/${this.props.slug}/edit`}>
-          <i className='icon-with-black-circle icon-edit' />
+        <StyledEditButton
+          target="_blank"
+          href={`${sd.POSITRON_URL}/articles/${this.props.slug}/edit`}
+        >
+          <i className="icon-with-black-circle icon-edit" />
         </StyledEditButton>
       )
     }

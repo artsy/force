@@ -3,18 +3,22 @@ import React from 'react'
 import footerItems from 'desktop/apps/auction/utils/footerItems'
 import moment from 'moment'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import Layout from 'desktop/apps/auction/components/Layout'
 import { cloneDeep } from 'lodash'
 import { followedArtistSaleArtworks } from '../artwork_browser/__tests__/fixtures/followedArtistSaleArtworks'
 import { promotedSaleArtworks } from '../artwork_browser/__tests__/fixtures/promotedSaleArtworks'
 
+const test = require('rewire')('../Layout')
+const { Layout } = test
+
 describe('<Layout />', () => {
+  let revertRewire
+
   beforeEach(() => {
-    Layout.__Rewire__('Banner', () => <div />)
+    revertRewire = test.__set__('Banner', () => <div />)
   })
 
   afterEach(() => {
-    Layout.__ResetDependency__('Banner')
+    revertRewire()
   })
 
   it('default auction with no user', () => {
@@ -24,14 +28,21 @@ describe('<Layout />', () => {
       data: {
         app: {
           auction: {
-            name: 'An Auction'
-          }
-        }
-      }
+            name: 'An Auction',
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').html().should.containEql('An Auction')
-    wrapper.find('.auction-Registration').html().should.containEql('Register to bid')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .html()
+      .should.containEql('An Auction')
+    wrapper
+      .find('.auction-Registration')
+      .html()
+      .should.containEql('Register to bid')
+
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
   })
 
@@ -44,19 +55,26 @@ describe('<Layout />', () => {
           auction: {
             name: 'An Auction',
             auction_state: 'preview',
-            cover_image: 'foo.jpg'
+            cover_image: 'foo.jpg',
           },
           sd: {
             sd: {
-              ARTSY_EDITORIAL_CHANNEL: 'foo'
-            }
-          }
-        }
-      }
+              ARTSY_EDITORIAL_CHANNEL: 'foo',
+            },
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').html().should.containEql('An Auction')
-    wrapper.find('.auction-Registration').html().should.containEql('Register to bid')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .html()
+      .should.containEql('An Auction')
+    wrapper
+      .find('.auction-Registration')
+      .html()
+      .should.containEql('Register to bid')
+
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
   })
 
@@ -70,16 +88,27 @@ describe('<Layout />', () => {
             name: 'An Auction',
             auction_state: 'open',
             auction_promo: 'false',
-            live_start_at: moment().add(3, 'days')
-          }
-        }
-      }
+            live_start_at: moment().add(3, 'days'),
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction-Registration').html().should.containEql('Register to bid')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .text()
+      .should.equal('An Auction')
+    wrapper
+      .find('.auction-Registration')
+      .html()
+      .should.containEql('Register to bid')
+
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
-    wrapper.find('.auction-AuctionInfo__callout').text().should.containEql('Live bidding begins')
+
+    wrapper
+      .find('.auction-AuctionInfo__callout')
+      .text()
+      .should.containEql('Live bidding begins')
   })
 
   it('live auction, open for live bidding', () => {
@@ -91,16 +120,27 @@ describe('<Layout />', () => {
           auction: {
             name: 'An Auction',
             auction_state: 'open',
-            live_start_at: moment().subtract(3, 'days')
-          }
-        }
-      }
+            live_start_at: moment().subtract(3, 'days'),
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.js-register-button').text().should.equal('Register to bid')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .text()
+      .should.equal('An Auction')
+    wrapper
+      .find('.js-register-button')
+      .text()
+      .should.equal('Register to bid')
+
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
-    wrapper.find('.auction-AuctionInfo__callout').text().should.containEql('Live bidding now open')
+
+    wrapper
+      .find('.auction-AuctionInfo__callout')
+      .text()
+      .should.containEql('Live bidding now open')
   })
 
   it('default auction with user', () => {
@@ -111,18 +151,27 @@ describe('<Layout />', () => {
         app: {
           me: {
             id: 'user',
-            bidders: []
+            bidders: [],
           },
           auction: {
-            name: 'An Auction'
-          }
-        }
-      }
+            name: 'An Auction',
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.js-register-button').text().should.equal('Register to bid')
-    wrapper.find('.auction-Registration__small').text().should.containEql('Registration required to bid')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .text()
+      .should.equal('An Auction')
+    wrapper
+      .find('.js-register-button')
+      .text()
+      .should.equal('Register to bid')
+    wrapper
+      .find('.auction-Registration__small')
+      .text()
+      .should.containEql('Registration required to bid')
   })
 
   it('user with bidder positions', () => {
@@ -136,43 +185,45 @@ describe('<Layout />', () => {
             bidders: [1],
             lot_standings: [
               {
-                'is_leading_bidder': false,
-                'sale_artwork': {
-                  'id': 'imhuge-brillo-condensed-soap',
-                  'lot_label': '2',
-                  'reserve_status': 'no_reserve',
-                  'counts': {
-                    'bidder_positions': 1
+                is_leading_bidder: false,
+                sale_artwork: {
+                  id: 'imhuge-brillo-condensed-soap',
+                  lot_label: '2',
+                  reserve_status: 'no_reserve',
+                  counts: {
+                    bidder_positions: 1,
                   },
-                  'sale_id': 'juliens-auctions-street-and-contemporary-art-day-sale',
-                  'highest_bid': {
-                    'display': '$750'
+                  sale_id:
+                    'juliens-auctions-street-and-contemporary-art-day-sale',
+                  highest_bid: {
+                    display: '$750',
                   },
-                  'sale': {
-                    'end_at': '2016-10-31T04:28:00+00:00',
-                    'is_live_open': false
+                  sale: {
+                    end_at: '2016-10-31T04:28:00+00:00',
+                    is_live_open: false,
                   },
-                  'artwork': {
-                    'href': '/artwork/imhuge-brillo-condensed-soap',
-                    'title': 'Brillo Condensed Soap',
-                    'date': '2016',
-                    'image': {
-                      'url': 'https://d32dm0rphc51dk.cloudfront.net/G5tbqHUjuiGvjwDtCVlsGQ/square.jpg'
+                  artwork: {
+                    href: '/artwork/imhuge-brillo-condensed-soap',
+                    title: 'Brillo Condensed Soap',
+                    date: '2016',
+                    image: {
+                      url:
+                        'https://d32dm0rphc51dk.cloudfront.net/G5tbqHUjuiGvjwDtCVlsGQ/square.jpg',
                     },
-                    'artist': {
-                      'name': 'Imhuge'
-                    }
-                  }
-                }
-              }
-            ]
+                    artist: {
+                      name: 'Imhuge',
+                    },
+                  },
+                },
+              },
+            ],
           },
           auction: {
             name: 'An Auction',
-            is_open: true
-          }
-        }
-      }
+            is_open: true,
+          },
+        },
+      },
     })
 
     wrapper.find('.auction-MyActiveBids').length.should.equal(1)
@@ -186,20 +237,31 @@ describe('<Layout />', () => {
         app: {
           me: {
             id: 'user',
-            bidders: [{
-              qualified_for_bidding: false
-            }]
+            bidders: [
+              {
+                qualified_for_bidding: false,
+              },
+            ],
           },
           auction: {
-            name: 'An Auction'
-          }
-        }
-      }
+            name: 'An Auction',
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction-Registration').html().should.containEql('Registration pending')
-    wrapper.find('.auction-Registration').html().should.containEql('Reviewing submitted information')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .text()
+      .should.equal('An Auction')
+    wrapper
+      .find('.auction-Registration')
+      .html()
+      .should.containEql('Registration pending')
+    wrapper
+      .find('.auction-Registration')
+      .html()
+      .should.containEql('Reviewing submitted information')
   })
 
   it('index, registered to bid and qualified', () => {
@@ -210,23 +272,31 @@ describe('<Layout />', () => {
         app: {
           me: {
             id: 'user',
-            bidders: [{
-              qualified_for_bidding: true
-            }]
+            bidders: [
+              {
+                qualified_for_bidding: true,
+              },
+            ],
           },
           auction: {
-            name: 'An Auction'
-          }
-        }
-      }
+            name: 'An Auction',
+          },
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction-Registration').html().should.containEql('Approved to Bid')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .text()
+      .should.equal('An Auction')
+    wrapper
+      .find('.auction-Registration')
+      .html()
+      .should.containEql('Approved to Bid')
   })
 
   it('index, registered to bid but auction closed', () => {
-    Layout.__ResetDependency__('Banner')
+    revertRewire()
 
     const { wrapper } = renderTestComponent({
       Component: Layout,
@@ -235,25 +305,36 @@ describe('<Layout />', () => {
         app: {
           me: {
             id: 'user',
-            bidders: [{
-              qualified_for_bidding: true
-            }]
+            bidders: [
+              {
+                qualified_for_bidding: true,
+              },
+            ],
           },
           auction: {
             name: 'An Auction',
             is_closed: true,
-            auction_state: 'closed'
-          }
+            auction_state: 'closed',
+          },
         },
         artworkBrowser: {
-          isClosed: true
-        }
-      }
+          isClosed: true,
+        },
+      },
     })
 
-    wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
-    wrapper.find('.auction-AuctionInfo__callout').text().should.equal('Auction Closed')
-    wrapper.find('.auction-Banner__closed').text().should.equal('Auction Closed')
+    wrapper
+      .find('.auction-AuctionInfo__title')
+      .text()
+      .should.equal('An Auction')
+    wrapper
+      .find('.auction-AuctionInfo__callout')
+      .text()
+      .should.equal('Auction Closed')
+    wrapper
+      .find('.auction-Banner__closed')
+      .text()
+      .should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {
@@ -266,14 +347,22 @@ describe('<Layout />', () => {
             auction: {
               name: 'An Auction',
               is_auction: true,
-              registration_ends_at: moment().subtract(2, 'days').format()
-            }
-          }
-        }
+              registration_ends_at: moment()
+                .subtract(2, 'days')
+                .format(),
+            },
+          },
+        },
       })
 
-      wrapper.find('.auction-Registration').html().should.containEql('Registration closed')
-      wrapper.find('.auction-Registration__small').html().should.containEql('Registration required to bid')
+      wrapper
+        .find('.auction-Registration')
+        .html()
+        .should.containEql('Registration closed')
+      wrapper
+        .find('.auction-Registration__small')
+        .html()
+        .should.containEql('Registration required to bid')
     })
   })
 
@@ -288,19 +377,21 @@ describe('<Layout />', () => {
               auction: {
                 name: 'An Auction',
                 sale_type: 'auction promo',
-                eligible_sale_artworks_count: 0
+                eligible_sale_artworks_count: 0,
               },
               articles: new Articles([]),
               sd: {
                 sd: {
-                  ARTSY_EDITORIAL_CHANNEL: 'foo'
-                }
-              }
-            }
-          }
+                  ARTSY_EDITORIAL_CHANNEL: 'foo',
+                },
+              },
+            },
+          },
         })
 
-        wrapper.find('.auction-Footer__auction-app-promo-wrapper').length.should.eql(0)
+        wrapper
+          .find('.auction-Footer__auction-app-promo-wrapper')
+          .length.should.eql(0)
       })
     })
   })
@@ -312,25 +403,26 @@ describe('<Layout />', () => {
         slug: 'artsy-editorial-fight-art',
         thumbnail_title: 'The Fight to Own Art',
         thumbnail_image: {
-          url: 'https://artsy-media-uploads.s3.amazonaws.com/e6rsZcv5h7zCL7gU_4cjXw%2Frose.jpg'
+          url:
+            'https://artsy-media-uploads.s3.amazonaws.com/e6rsZcv5h7zCL7gU_4cjXw%2Frose.jpg',
         },
-        'tier': 1,
-        'published_at': '2017-01-26T00:26:57.928Z',
-        'channel_id': '5759e3efb5989e6f98f77993',
-        'author': {
-          'id': '54cfdab872616972546e0400',
-          'name': 'Artsy Editorial'
+        tier: 1,
+        published_at: '2017-01-26T00:26:57.928Z',
+        channel_id: '5759e3efb5989e6f98f77993',
+        author: {
+          id: '54cfdab872616972546e0400',
+          name: 'Artsy Editorial',
         },
-        'contributing_authors': [
+        contributing_authors: [
           {
-            'id': 'abc124',
-            'name': 'Abigail C'
+            id: 'abc124',
+            name: 'Abigail C',
           },
           {
-            'id': 'def456',
-            'name': 'Anna S'
-          }
-        ]
+            id: 'def456',
+            name: 'Anna S',
+          },
+        ],
       }
     })
 
@@ -342,16 +434,16 @@ describe('<Layout />', () => {
           data: {
             app: {
               auction: {
-                name: 'An Auction'
+                name: 'An Auction',
               },
               articles: [],
               sd: {
                 sd: {
-                  ARTSY_EDITORIAL_CHANNEL: 'foo'
-                }
-              }
-            }
-          }
+                  ARTSY_EDITORIAL_CHANNEL: 'foo',
+                },
+              },
+            },
+          },
         })
 
         wrapper.find('.auction-Footer').length.should.eql(0)
@@ -367,23 +459,34 @@ describe('<Layout />', () => {
             app: {
               auction: {
                 name: 'An Auction',
-                sale_type: 'auction promo'
+                sale_type: 'auction promo',
               },
               articles: [article],
               isMobile: false,
               sd: {
                 sd: {
-                  ARTSY_EDITORIAL_CHANNEL: 'foo'
-                }
-              }
-            }
-          }
+                  ARTSY_EDITORIAL_CHANNEL: 'foo',
+                },
+              },
+            },
+          },
         })
 
-        wrapper.find('.auction-Footer').html().should.containEql('The Fight to Own Art')
-        wrapper.find('.auction-Footer').html().should.containEql('Artsy Editorial')
-        wrapper.find('.auction-Footer').html().should.containEql('By Abigail C and Anna S')
-        wrapper.find('.auction-Footer__auction-app-promo-wrapper').length.should.equal(0)
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('The Fight to Own Art')
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('Artsy Editorial')
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('By Abigail C and Anna S')
+        wrapper
+          .find('.auction-Footer__auction-app-promo-wrapper')
+          .length.should.equal(0)
       })
     })
 
@@ -395,24 +498,36 @@ describe('<Layout />', () => {
           data: {
             app: {
               auction: {
-                name: 'An Auction'
+                name: 'An Auction',
               },
               articles: [article],
               footerItems,
               isMobile: false,
               sd: {
                 sd: {
-                  ARTSY_EDITORIAL_CHANNEL: 'foo'
-                }
-              }
-            }
-          }
+                  ARTSY_EDITORIAL_CHANNEL: 'foo',
+                },
+              },
+            },
+          },
         })
 
-        wrapper.find('.auction-Footer').html().should.containEql('The Fight to Own Art')
-        wrapper.find('.auction-Footer').html().should.containEql('Artsy Editorial')
-        wrapper.find('.auction-Footer').html().should.containEql('By Abigail C and Anna S')
-        wrapper.find('.auction-Footer').html().should.containEql('Bid from your phone')
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('The Fight to Own Art')
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('Artsy Editorial')
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('By Abigail C and Anna S')
+        wrapper
+          .find('.auction-Footer')
+          .html()
+          .should.containEql('Bid from your phone')
       })
     })
   })
@@ -426,13 +541,13 @@ describe('<Layout />', () => {
           sale_type: 'auction promo',
           eligible_sale_artworks_count: 0,
           promoted_sale: {
-            sale_artworks: promotedSaleArtworks
-          }
-        }
+            sale_artworks: promotedSaleArtworks,
+          },
+        },
       },
       artworkBrowser: {
-        saleArtworksByFollowedArtists: followedArtistSaleArtworks
-      }
+        saleArtworksByFollowedArtists: followedArtistSaleArtworks,
+      },
     }
 
     describe('<BuyNowSaleArtworks />', () => {
@@ -443,7 +558,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data: emptyData
+          data: emptyData,
         })
 
         wrapper.html().should.not.containEql('Buy Now')
@@ -453,11 +568,15 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data
+          data,
         })
 
         wrapper.html().should.containEql('Buy Now')
-        wrapper.html().should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
+
+        wrapper
+          .html()
+          .should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
+
         wrapper.html().should.containEql('/artwork/piper-oneill-boop')
       })
 
@@ -467,12 +586,16 @@ describe('<Layout />', () => {
           options: { renderMode: 'render' },
           data: {
             ...data,
-            isMobile: true
-          }
+            isMobile: true,
+          },
         })
 
         wrapper.html().should.containEql('Buy Now')
-        wrapper.html().should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
+
+        wrapper
+          .html()
+          .should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
+
         wrapper.html().should.containEql('/artwork/piper-oneill-boop')
       })
     })
@@ -485,7 +608,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data: emptyData
+          data: emptyData,
         })
 
         wrapper.html().should.not.containEql('Works By Artists You Follow')
@@ -495,11 +618,15 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data
+          data,
         })
 
         wrapper.html().should.containEql('Works By Artists You Follow')
-        wrapper.html().should.containEql('/artwork/svend-aage-larsen-surrealism')
+
+        wrapper
+          .html()
+          .should.containEql('/artwork/svend-aage-larsen-surrealism')
+
         wrapper.html().should.containEql('/artwork/emile-gsell-untitled')
       })
 
@@ -509,12 +636,16 @@ describe('<Layout />', () => {
           options: { renderMode: 'render' },
           data: {
             ...data,
-            isMobile: true
-          }
+            isMobile: true,
+          },
         })
 
         wrapper.html().should.containEql('Works By Artists You Follow')
-        wrapper.html().should.containEql('/artwork/svend-aage-larsen-surrealism')
+
+        wrapper
+          .html()
+          .should.containEql('/artwork/svend-aage-larsen-surrealism')
+
         wrapper.html().should.containEql('/artwork/emile-gsell-untitled')
       })
     })
@@ -530,10 +661,10 @@ describe('<Layout />', () => {
           sale_type: 'auction promo',
           eligible_sale_artworks_count: 0,
           promoted_sale: {
-            sale_artworks: promotedSaleArtworks
-          }
-        }
-      }
+            sale_artworks: promotedSaleArtworks,
+          },
+        },
+      },
     }
 
     describe('desktop', () => {
@@ -541,7 +672,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data
+          data,
         })
 
         wrapper.html().should.not.containEql('clock')
@@ -551,7 +682,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data
+          data,
         })
 
         wrapper.html().should.not.containEql('auction-Registration')
@@ -561,7 +692,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data
+          data,
         })
 
         wrapper.html().should.not.containEql('Lot Number Asc')
@@ -574,7 +705,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data
+          data,
         })
 
         wrapper.find('.auction-MyActiveBids').length.should.eql(0)
@@ -589,7 +720,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data: mobileData
+          data: mobileData,
         })
 
         wrapper.html().should.not.containEql('clock')
@@ -599,7 +730,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data: mobileData
+          data: mobileData,
         })
 
         wrapper.html().should.not.containEql('auction-Registration')
@@ -609,7 +740,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data: mobileData
+          data: mobileData,
         })
 
         wrapper.html().should.not.containEql('Lot Number Asc')
@@ -622,7 +753,7 @@ describe('<Layout />', () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: 'render' },
-          data: mobileData
+          data: mobileData,
         })
 
         wrapper.find('.auction-MyActiveBids').length.should.eql(0)

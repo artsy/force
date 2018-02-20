@@ -9,6 +9,7 @@ const $ = require('jquery')(window)
 describe('Classic Article', () => {
   let init
   let classic
+  let rewires = []
 
   beforeEach((done) => {
     benv.setup(() => {
@@ -20,16 +21,16 @@ describe('Classic Article', () => {
       sinon.stub(Backbone, 'sync')
 
       classic = require('rewire')('../classic')
+      rewires.push(classic.__set__('$', window.$))
       init = classic.init
       done()
     })
-
-    classic.__set__('$', window.$)
   })
 
   afterEach(() => {
     Backbone.sync.restore()
     benv.teardown()
+    rewires.forEach((revert) => revert())
   })
 
   it('initializes ArticleView', () => {

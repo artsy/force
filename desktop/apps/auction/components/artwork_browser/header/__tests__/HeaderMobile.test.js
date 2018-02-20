@@ -1,25 +1,28 @@
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 import HeaderMobile from 'desktop/apps/auction/components/artwork_browser/header/HeaderMobile'
 import sinon from 'sinon'
-import { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/auction/actions/artworkBrowser'
+// import { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/auction/actions/artworkBrowser'
+
+const artworkBrowser = require('rewire')('../../../../actions/artworkBrowser')
 
 describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
   describe('<HeaderMobile />', () => {
-    afterEach(() => {
-      RoutesRewireApi.__ResetDependency__('metaphysics')
-    })
-
     it('default sort is Default', () => {
       const { wrapper } = renderTestComponent({
-        Component: HeaderMobile
+        Component: HeaderMobile,
       })
 
-      wrapper.find('select').find('option').first().html().should.containEql('Default')
+      wrapper
+        .find('select')
+        .find('option')
+        .first()
+        .html()
+        .should.containEql('Default')
     })
 
     it('calls updateSort on select change', () => {
       const { wrapper } = renderTestComponent({
-        Component: HeaderMobile
+        Component: HeaderMobile,
       })
 
       const { store } = wrapper.props()
@@ -30,30 +33,33 @@ describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
           aggregations: [
             {
               slice: 'ARTIST',
-              counts: 10
+              counts: 10,
             },
             {
               slice: 'MEDIUM',
-              counts: 13
-            }
+              counts: 13,
+            },
           ],
           counts: 10,
           hits: [
             {
               artwork: {
-                _id: 'foo'
-              }
-            }
-          ]
-        }
+                _id: 'foo',
+              },
+            },
+          ],
+        },
       }
 
-      RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+      artworkBrowser.__set__(
+        'metaphysics',
+        sinon.stub().returns(Promise.resolve(auctionQueries))
+      )
 
       wrapper.find('select').simulate('change', {
         target: {
-          value: updateSort
-        }
+          value: updateSort,
+        },
       })
 
       store.getState().artworkBrowser.filterParams.sort.should.eql(updateSort)

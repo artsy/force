@@ -1,5 +1,5 @@
 import ArticleModel from 'desktop/models/article.coffee'
-import InfiniteScrollArticle from '../InfiniteScrollArticle'
+import { InfiniteScrollArticle } from '../InfiniteScrollArticle'
 import PropTypes from 'prop-types'
 import React from 'react'
 import get from 'lodash.get'
@@ -7,16 +7,21 @@ import updeep from 'updeep'
 import { data as sd } from 'sharify'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
 import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
-import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
+import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
+
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+let SuperArticleView = _SuperArticleView
 
 const NAVHEIGHT = '53px'
 
-export default class ArticleLayout extends React.Component {
-  constructor (props) {
+export class ArticleLayout extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
-      following: setupFollows() || null
+      following: setupFollows() || null,
     }
   }
   static propTypes = {
@@ -24,28 +29,24 @@ export default class ArticleLayout extends React.Component {
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
-    templates: PropTypes.object
+    templates: PropTypes.object,
   }
 
-  componentDidMount () {
-    const {
-      article,
-      isSuper,
-      subscribed
-    } = this.props
+  componentDidMount() {
+    const { article, isSuper, subscribed } = this.props
 
     setupFollowButtons(this.state.following)
     if (isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),
-        article: new ArticleModel(article)
+        article: new ArticleModel(article),
       })
     }
     if (!subscribed && !isSuper && article.layout === 'standard') {
       new EditorialSignupView({
         el: document.querySelector('body'),
         isArticle: true,
-        isABTest: !sd.IS_MOBILE
+        isABTest: !sd.IS_MOBILE,
       })
     }
   }
@@ -65,13 +66,16 @@ export default class ArticleLayout extends React.Component {
     const cover_image_url = get(article, 'display.panel.cover_image_url', false)
 
     if (cover_image_url) {
-      article = updeep({
-        display: {
-          canvas: {
-            cover_image_url
-          }
-        }
-      }, article)
+      article = updeep(
+        {
+          display: {
+            canvas: {
+              cover_image_url,
+            },
+          },
+        },
+        article
+      )
     }
 
     if (!isSuper) {
@@ -99,19 +103,16 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const {
-      templates: {
-        SuperArticleFooter,
-        SuperArticleHeader
-      } = {}
+      templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
 
     return (
       <div>
         <div
           dangerouslySetInnerHTML={{
-            __html: SuperArticleHeader
+            __html: SuperArticleHeader,
           }}
         />
 
@@ -119,10 +120,9 @@ export default class ArticleLayout extends React.Component {
 
         <div
           dangerouslySetInnerHTML={{
-            __html: SuperArticleFooter
+            __html: SuperArticleFooter,
           }}
         />
-
       </div>
     )
   }

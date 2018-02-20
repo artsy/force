@@ -1,35 +1,37 @@
-import * as routes from 'desktop/apps/auction/routes'
 import Backbone from 'backbone'
 import CurrentUser from 'desktop/models/current_user.coffee'
 import sinon from 'sinon'
 import { __RewireAPI__ as RoutesRewireApi } from '../routes'
 import { fabricate } from 'antigravity'
 
+const routes = require('rewire')('../routes')
+
 describe('#index', () => {
   let req
   let res
   let next
+  let rewires = []
 
   beforeEach(() => {
     sinon.stub(Backbone, 'sync')
     req = {
       body: {},
       params: { id: 'foobar' },
-      user: new CurrentUser(fabricate('user'))
+      user: new CurrentUser(fabricate('user')),
     }
     res = {
       app: { get: sinon.stub().returns('components/page') },
       locals: { sd: {} },
       redirect: sinon.stub(),
       render: sinon.stub(),
-      send: sinon.stub()
+      send: sinon.stub(),
     }
     next = sinon.stub()
   })
 
   afterEach(() => {
     Backbone.sync.restore()
-    RoutesRewireApi.__ResetDependency__('metaphysics')
+    rewires.forEach((revert) => revert())
   })
 
   it('renders the index with the correct variables', () => {
@@ -38,31 +40,35 @@ describe('#index', () => {
         id: 'foo',
         is_auction: true,
         auction_state: 'open',
-        is_live_open: true
+        is_live_open: true,
       },
       me: {
-        bidders: [{
-          id: 'me',
-          qualified_for_bidding: true,
-          sale: {
-            id: 'foo'
-          }
-        }]
-      }
+        bidders: [
+          {
+            id: 'me',
+            qualified_for_bidding: true,
+            sale: {
+              id: 'foo',
+            },
+          },
+        ],
+      },
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
-    RoutesRewireApi.__Rewire__('renderReactLayout', () => '<html />')
-    RoutesRewireApi.__Rewire__('actions', {
+    routes.__set__(
+      'metaphysics',
+      sinon.stub().returns(Promise.resolve(auctionQueries))
+    )
+    routes.__set__('renderLayout', () => '<html />')
+    routes.__set__('actions', {
       fetchArtworksByFollowedArtists: () => ({ type: 'GET_ARTWORKS_SUCCESS' }),
-      fetchArtworks: () => ({ type: 'GET_ARTWORKS_SUCCESS' })
+      fetchArtworks: () => ({ type: 'GET_ARTWORKS_SUCCESS' }),
     })
 
     // FIXME: Need to write more robust output test
-    routes.index(req, res, next)
-      .then(() => {
-        res.send.args[0][0].should.eql('<html />')
-      })
+    routes.index(req, res, next).then(() => {
+      res.send.args[0][0].should.eql('<html />')
+    })
   })
 })
 
@@ -76,7 +82,7 @@ describe('#redirectLive', () => {
     req = {
       body: {},
       params: { id: 'foobar' },
-      user: new CurrentUser(fabricate('user'))
+      user: new CurrentUser(fabricate('user')),
     }
     res = { redirect: sinon.stub() }
     next = sinon.stub()
@@ -92,25 +98,30 @@ describe('#redirectLive', () => {
         id: 'foo',
         is_auction: true,
         auction_state: 'open',
-        is_live_open: true
+        is_live_open: true,
       },
       me: {
-        bidders: [{
-          id: 'me',
-          qualified_for_bidding: true,
-          sale: {
-            id: 'foo'
-          }
-        }]
-      }
+        bidders: [
+          {
+            id: 'me',
+            qualified_for_bidding: true,
+            sale: {
+              id: 'foo',
+            },
+          },
+        ],
+      },
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    routes.__set__(
+      'metaphysics',
+      sinon.stub().returns(Promise.resolve(auctionQueries))
+    )
 
     res = {
       redirect: (url) => {
         url.should.containEql('/foo/login')
-      }
+      },
     }
     routes.redirectLive(req, res, next).then(() => {
       done()
@@ -123,20 +134,25 @@ describe('#redirectLive', () => {
         id: 'foo',
         is_auction: true,
         auction_state: 'open',
-        is_live_open: true
+        is_live_open: true,
       },
       me: {
-        bidders: [{
-          id: 'me',
-          qualified_for_bidding: false,
-          sale: {
-            id: 'foo'
-          }
-        }]
-      }
+        bidders: [
+          {
+            id: 'me',
+            qualified_for_bidding: false,
+            sale: {
+              id: 'foo',
+            },
+          },
+        ],
+      },
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    routes.__set__(
+      'metaphysics',
+      sinon.stub().returns(Promise.resolve(auctionQueries))
+    )
     await routes.redirectLive(req, res, next)
     res.redirect.called.should.not.be.ok()
     next.called.should.be.ok()
@@ -148,20 +164,25 @@ describe('#redirectLive', () => {
         id: 'foo',
         is_auction: true,
         auction_state: 'open',
-        is_live_open: false
+        is_live_open: false,
       },
       me: {
-        bidders: [{
-          id: 'me',
-          qualified_for_bidding: false,
-          sale: {
-            id: 'foo'
-          }
-        }]
-      }
+        bidders: [
+          {
+            id: 'me',
+            qualified_for_bidding: false,
+            sale: {
+              id: 'foo',
+            },
+          },
+        ],
+      },
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    routes.__set__(
+      'metaphysics',
+      sinon.stub().returns(Promise.resolve(auctionQueries))
+    )
     await routes.redirectLive(req, res, next)
     res.redirect.called.should.not.be.ok()
     next.called.should.be.ok()

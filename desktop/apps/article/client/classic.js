@@ -9,9 +9,9 @@ import {
 import metaphysics from 'lib/metaphysics.coffee'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
+import Channel from 'desktop/models/channel.coffee'
 import _ArticlesGridView from 'desktop/components/articles_grid/view.coffee'
 import _ArticleView from 'desktop/components/article/client/view.coffee'
-import Channel from 'desktop/models/channel.coffee'
 import _GalleryInsightsView from 'desktop/components/email/client/gallery_insights.coffee'
 import _TeamChannelNavView from 'desktop/components/channel_nav/view.coffee'
 

@@ -6,13 +6,13 @@ import React from 'react'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
-function Sidebar ({ isClosed }) {
+function Sidebar({ isClosed }) {
   const b = block('Sidebar')
 
   return (
     <div className={b()}>
       <div className={b('artist-filter')}>
-        { !isClosed && <RangeSlider /> }
+        {!isClosed && <RangeSlider />}
         <MediumFilter />
         <ArtistFilter />
       </div>
@@ -21,17 +21,15 @@ function Sidebar ({ isClosed }) {
 }
 
 Sidebar.propTypes = {
-  isClosed: PropTypes.bool.isRequired
+  isClosed: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => {
   return {
-    isClosed: state.artworkBrowser.isClosed
+    isClosed: state.artworkBrowser.isClosed,
   }
 }
 
-export default connect(
-  mapStateToProps,
-)(Sidebar)
+export default connect(mapStateToProps)(Sidebar)
 
 export const test = { Sidebar }

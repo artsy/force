@@ -2,16 +2,12 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
-import ArticleLayout from './layouts/Article'
+import { ArticleLayout } from './layouts/Article'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 
-export default class App extends React.Component {
+export class App extends React.Component {
   static propTypes = {
     article: PropTypes.object,
-    isMobile: PropTypes.bool,
-    isSuper: PropTypes.bool,
-    subscribed: PropTypes.bool,
-    templates: PropTypes.object
   }
 
   getArticleLayout = () => {
@@ -29,10 +25,7 @@ export default class App extends React.Component {
       }
       case 'series': {
         return (
-          <Article
-            {...this.props}
-            relatedArticles={article.relatedArticles}
-          />
+          <Article {...this.props} relatedArticles={article.relatedArticles} />
         )
       }
       default: {
@@ -41,7 +34,7 @@ export default class App extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { article } = this.props
 
     return (
@@ -55,18 +48,15 @@ export default class App extends React.Component {
 
 class EditPortal extends React.Component {
   static propTypes = {
-    article: PropTypes.object
+    article: PropTypes.object,
   }
 
-  render () {
+  render() {
     const { article } = this.props
 
     try {
       return ReactDOM.createPortal(
-        <EditButton
-          channelId={article.channel_id}
-          slug={article.slug}
-        />,
+        <EditButton channelId={article.channel_id} slug={article.slug} />,
         document.getElementById('react-portal')
       )
     } catch (e) {
