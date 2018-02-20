@@ -1,5 +1,7 @@
 require('babel-register')
-require('ts-node').register()
+require('ts-node').register({
+  ignore: /node_modules\/(?!(@artsy\/reaction-force\/src\/__generated__)).*/,
+})
 require('coffeescript/register')
 require('source-map-support/register')
 require('babel-polyfill')

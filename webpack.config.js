@@ -45,7 +45,7 @@ const config = {
       },
       {
         test: /(\.tsx?$)/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!(@artsy\/reaction-force\/src\/__generated__)).*/,
         use: [
           { loader: 'cache-loader' },
           {
