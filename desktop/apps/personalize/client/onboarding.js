@@ -4,7 +4,7 @@ import { Router } from 'react-router'
 import createHistory from 'history/createBrowserHistory'
 
 import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
-import { Wizard } from '@artsy/reaction-force/dist/Components/Onboarding/Wizard'
+import { RoutesWithProgressBar } from '../components/RoutesWithProgressBar'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
@@ -13,7 +13,7 @@ export const init = () => {
   ReactDOM.hydrate(
     <Router history={createHistory()}>
       <ContextProvider {...bootstrapData}>
-        <Wizard />
+        <RoutesWithProgressBar />
       </ContextProvider>
     </Router>,
     document.getElementById('react-root')
