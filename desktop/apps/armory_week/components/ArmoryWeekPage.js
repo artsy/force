@@ -11,7 +11,7 @@ const Container = styled.div`
   max-width: 1192px;
   padding-top: 25px;
   @media (max-width: 48em) {
-    padding: 10px 0 0;
+    padding: 10px 20px 0;
   }
 `
 
@@ -33,6 +33,13 @@ const FairLogo = styled.img`
   display: inline;
   @media (min-width: 48em) {
     max-width: 160px;
+  }
+`
+
+const ResponsiveRow = styled(Row)`
+  @media (max-width: 48em) {
+    margin-left: -8px;
+    margin-right: -8px;
   }
 `
 
@@ -68,7 +75,7 @@ export default ({
 }) => (
   <ThemeProvider theme={theme}>
     <Container>
-      <Row style={{ paddingBottom: 50 }}>
+      <ResponsiveRow style={{ paddingBottom: 50 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle
             titleSize="large"
@@ -92,14 +99,14 @@ export default ({
             </div>
           </ReveredColumnOnMobile>
         </Col>
-      </Row>
+      </ResponsiveRow>
 
-      <Row style={{ paddingBottom: 50 }}>
+      <ResponsiveRow style={{ paddingBottom: 50 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle titleSize="large">{fair_coverage.title}</SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          <Row style={{ marginBottom: 20 }}>
+          <ResponsiveRow style={{ marginBottom: 20 }}>
             {fair_coverage.fairs.map((fair) => (
               <Col lg={3} md={3} sm={3} xs={6} key={fair.logo_url}>
                 {fair.site_url && fair.site_url.startsWith('http') ? (
@@ -111,11 +118,11 @@ export default ({
                 )}
               </Col>
             ))}
-          </Row>
+          </ResponsiveRow>
         </Col>
-      </Row>
+      </ResponsiveRow>
 
-      <Row style={{ paddingBottom: 45 }}>
+      <ResponsiveRow style={{ paddingBottom: 45 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle titleSize="large">{event.title}</SectionTitle>
         </Col>
@@ -125,8 +132,8 @@ export default ({
             src={event.banner_image_url}
           />
 
-          <Row>
-            <Col lg={7} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
+          <ResponsiveRow>
+            <Col lg={7} md={8} sm={12} xs={12} style={{ marginBottom: 25 }}>
               <Text textSize="medium">{event.description}</Text>
             </Col>
             <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
@@ -136,11 +143,11 @@ export default ({
                 dangerouslySetInnerHTML={{ __html: event.public_viewing_date }}
               />
             </Col>
-          </Row>
+          </ResponsiveRow>
         </Col>
-      </Row>
+      </ResponsiveRow>
 
-      <Row>
+      <ResponsiveRow>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle titleSize="large">
             {prepare_for_fairs.title}
@@ -148,7 +155,7 @@ export default ({
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           {prepare_for_fairs.articles.map((article) => (
-            <Row style={{ marginBottom: 25 }} key={article.title}>
+            <ResponsiveRow style={{ marginBottom: 25 }} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
                 <a href={article.article_url} target="_blank">
                   <img
@@ -174,10 +181,10 @@ export default ({
                   </Text>
                 </a>
               </Col>
-            </Row>
+            </ResponsiveRow>
           ))}
         </Col>
-      </Row>
+      </ResponsiveRow>
 
       {displayStickyFooter ? <div id="react-root-for-cta" /> : ''}
     </Container>
