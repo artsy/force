@@ -45,6 +45,8 @@ module.exports = class HeaderView extends Backbone.View
 
     @checkForPersonalizeFlash()
 
+    @checkForPostSignupAction()
+
     activatePulldowns()
 
   checkForNotifications: =>
@@ -130,6 +132,16 @@ module.exports = class HeaderView extends Backbone.View
       new FlashMessage message: 'Thank you for personalizing your profile'
     else if document.referrer.match '/artsy-primer-personalize/'
       new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
+
+  checkForPostSignupAction: ->
+    postSignupAction = Cookies.get 'postSignupAction'
+    if postSignupAction
+      Cookies.expire 'postSignupAction'
+      return unless @currentUser
+      { action, objectId } = JSON.parse(postSignupAction)
+      if action is 'save'
+        @currentUser.initializeDefaultArtworkCollection()
+        @currentUser.defaultArtworkCollection().saveArtwork objectId
 
   highlightSearch: (e) ->
     if $('#main-layout-search-bar-input').is(':focus')

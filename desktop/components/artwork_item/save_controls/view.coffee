@@ -34,6 +34,10 @@ module.exports = class SaveControls extends Backbone.View
         mode: 'register'
         copy: 'Sign up to save artworks'
         redirectTo: "#{@model.href()}/save"
+        afterSignUpAction: {
+          action: 'save',
+          objectId: @model.id
+        }
       return false
 
     trackedProperties = {
