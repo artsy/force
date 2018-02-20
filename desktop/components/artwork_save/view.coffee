@@ -29,7 +29,6 @@ module.exports = class ArtworkSaveView extends Backbone.View
         width: '500px',
         mode: 'register'
         copy: 'Sign up to save artworks'
-        redirectTo: "/artwork/#{@id}/save"
 
     if @saved
       save = @savedArtworks.get @id

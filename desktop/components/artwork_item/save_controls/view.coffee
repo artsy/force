@@ -33,7 +33,6 @@ module.exports = class SaveControls extends Backbone.View
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: 'Sign up to save artworks'
-        redirectTo: "#{@model.href()}/save"
       return false
 
     trackedProperties = {

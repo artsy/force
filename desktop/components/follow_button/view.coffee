@@ -56,7 +56,7 @@ module.exports = class FollowButton extends Backbone.View
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: "Sign up to follow #{@label}"
-        redirectTo: @href || "#{@model.href()}/follow"
+        destination: @href || "#{@model.href()}/follow"
       return false
 
     # remove null values
