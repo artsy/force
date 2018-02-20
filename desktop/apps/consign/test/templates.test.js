@@ -11,23 +11,18 @@ describe('landing page', () => {
 
   const render = (filename, data) => {
     const file = `${path.resolve(__dirname, '../')}/templates/${filename}.jade`
-    return jade.compile(
-      fs.readFileSync(file),
-      { filename: file }
-    )(data)
+    return jade.compile(fs.readFileSync(file), { filename: file })(data)
   }
 
   before(() => {
-    data = extend(
-      jsonData, {
-        sales: [],
-        sd: {},
-        recentlySold: [],
-        inDemand: new OrderedSets([]),
-        moment,
-        asset: () => {}
-      }
-    )
+    data = extend(jsonData, {
+      sales: [],
+      sd: {},
+      recentlySold: [],
+      inDemand: new OrderedSets([]),
+      moment,
+      asset: () => {},
+    })
   })
 
   it('hides the upcoming sales section if there are no sales', () => {

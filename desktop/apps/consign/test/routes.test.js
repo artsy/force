@@ -1,9 +1,12 @@
-import * as routes from '../routes'
 import Backbone from 'backbone'
 import CurrentUser from '../../../models/current_user.coffee'
 import sinon from 'sinon'
 import { fabricate } from 'antigravity'
-import { __RewireAPI__ as RoutesRewireApi } from '../routes'
+
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+const routes = require('rewire')('../routes')
 
 describe('#redirectToSubmissionFlow', () => {
   let req
@@ -14,7 +17,7 @@ describe('#redirectToSubmissionFlow', () => {
     sinon.stub(Backbone, 'sync')
     req = {
       body: {},
-      user: new CurrentUser(fabricate('user'))
+      user: new CurrentUser(fabricate('user')),
     }
     res = { redirect: sinon.stub() }
     next = sinon.stub()
@@ -41,15 +44,15 @@ describe('#submissionFlowWithFetch', () => {
     req = {
       body: {},
       params: { id: 'sub-1' },
-      user: new CurrentUser(fabricate('user'))
+      user: new CurrentUser(fabricate('user')),
     }
     res = {
       locals: {
         sd: {
-          CONVECTION_APP_URL: 'https://test-convection.artsy.net'
-        }
+          CONVECTION_APP_URL: 'https://test-convection.artsy.net',
+        },
       },
-      render: sinon.stub()
+      render: sinon.stub(),
     }
     next = sinon.stub()
   })
@@ -62,16 +65,19 @@ describe('#submissionFlowWithFetch', () => {
     const artistQuery = {
       artist: {
         id: 'andy-warhol',
-        name: 'Andy Warhol'
-      }
+        name: 'Andy Warhol',
+      },
     }
     request = sinon.stub()
     request.get = sinon.stub().returns(request)
     request.set = sinon.stub().returns({ body: { id: 'my-submission' } })
 
-    RoutesRewireApi.__Rewire__('request', request)
-    RoutesRewireApi.__Rewire__('fetchToken', sinon.stub().returns('foo-token'))
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(artistQuery)))
+    routes.__set__('request', request)
+    routes.__set__('fetchToken', sinon.stub().returns('foo-token'))
+    routes.__set__(
+      'metaphysics',
+      sinon.stub().returns(Promise.resolve(artistQuery))
+    )
     await routes.submissionFlowWithFetch(req, res, next)
     res.render.args[0][0].should.eql('submission_flow')
     res.render.args[0][1].user.should.not.eql(undefined)

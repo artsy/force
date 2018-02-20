@@ -1,13 +1,19 @@
-import ForgotPassword from '../forgot_password'
-import LogIn from '../log_in'
+import _ForgotPassword from '../forgot_password'
+import _LogIn from '../log_in'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SignUp from '../sign_up'
+import _SignUp from '../sign_up'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { incrementStep } from '../../client/actions'
 
-function CreateAccount ({ CurrentStateComponent }) {
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+let ForgotPassword = _ForgotPassword
+let LogIn = _LogIn
+let SignUp = _SignUp
+
+function CreateAccount({ CurrentStateComponent }) {
   const b = block('consignments-submission-create-account')
 
   return (
@@ -18,32 +24,26 @@ function CreateAccount ({ CurrentStateComponent }) {
 }
 
 const mapDispatchToProps = {
-  incrementStepAction: incrementStep
+  incrementStepAction: incrementStep,
 }
 
 const mapStateToProps = (state) => {
-  const {
-    submissionFlow: {
-      authFormState
-    }
-  } = state
+  const { submissionFlow: { authFormState } } = state
 
   const stateToComponents = {
-    'logIn': LogIn,
-    'signUp': SignUp,
-    'forgotPassword': ForgotPassword
+    logIn: LogIn,
+    signUp: SignUp,
+    forgotPassword: ForgotPassword,
   }
 
   return {
-    CurrentStateComponent: stateToComponents[authFormState]
+    CurrentStateComponent: stateToComponents[authFormState],
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateAccount)
+// TODO: Refactor out rewire
+module.exports = connect(mapStateToProps, mapDispatchToProps)(CreateAccount)
 
 CreateAccount.propTypes = {
-  CurrentStateComponent: PropTypes.func.isRequired
+  CurrentStateComponent: PropTypes.func.isRequired,
 }

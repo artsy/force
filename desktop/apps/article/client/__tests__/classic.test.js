@@ -8,23 +8,23 @@ const $ = require('jquery')(window)
 
 describe('Classic Article', () => {
   let init
-  let RewireApi
+  let classic
 
   beforeEach((done) => {
     benv.setup(() => {
       benv.expose({
         $: benv.require('jquery'),
-        jQuery: benv.require('jquery')
+        jQuery: benv.require('jquery'),
       })
       Backbone.$ = window.$
       sinon.stub(Backbone, 'sync')
 
-      const classic = require('desktop/apps/article/client/classic')
+      classic = require('rewire')('../classic')
       init = classic.init
-      RewireApi = classic.__RewireAPI__
-      RewireApi.__Rewire__('$', window.$)
       done()
     })
+
+    classic.__set__('$', window.$)
   })
 
   afterEach(() => {
@@ -33,46 +33,49 @@ describe('Classic Article', () => {
   })
 
   it('initializes ArticleView', () => {
-    RewireApi.__Rewire__('sd', {
+    classic.__set__('sd', {
       ARTICLE: {
-        title: 'Foo'
-      }
+        title: 'Foo',
+      },
     })
     const ArticleView = sinon.stub()
-    RewireApi.__Rewire__('ArticleView', ArticleView)
+    classic.__set__('ArticleView', ArticleView)
     init()
     ArticleView.args[0][0].article.get('title').should.equal('Foo')
   })
 
   it('initializes GalleryInsightsView', () => {
     const GalleryInsightsView = sinon.stub()
-    RewireApi.__Rewire__('GalleryInsightsView', GalleryInsightsView)
+    classic.__set__('ArticleView', sinon.stub())
+    classic.__set__('GalleryInsightsView', GalleryInsightsView)
     init()
     GalleryInsightsView.callCount.should.equal(1)
   })
 
   it('initializes TeamChannelNavView', () => {
-    RewireApi.__Rewire__('sd', {
+    classic.__set__('sd', {
       ARTICLE_CHANNEL: {
-        type: 'team'
-      }
+        type: 'team',
+      },
     })
     const TeamChannelNavView = sinon.stub()
-    RewireApi.__Rewire__('TeamChannelNavView', TeamChannelNavView)
+    classic.__set__('ArticleView', sinon.stub())
+    classic.__set__('TeamChannelNavView', TeamChannelNavView)
     init()
     TeamChannelNavView.callCount.should.equal(1)
   })
 
   it('initializes ArticlesGridView', () => {
-    RewireApi.__Rewire__('sd', {
+    classic.__set__('sd', {
       ARTICLE_CHANNEL: {
         type: 'team',
         id: '123',
-        name: 'Team Channel'
-      }
+        name: 'Team Channel',
+      },
     })
     const ArticlesGridView = sinon.stub()
-    RewireApi.__Rewire__('ArticlesGridView', ArticlesGridView)
+    classic.__set__('ArticleView', sinon.stub())
+    classic.__set__('ArticlesGridView', ArticlesGridView)
     init()
     ArticlesGridView.callCount.should.equal(1)
     ArticlesGridView.args[0][0].header.should.equal('More from Team Channel')
@@ -80,14 +83,14 @@ describe('Classic Article', () => {
   })
 
   xit('sets up promoted content gallery', (done) => {
-    RewireApi.__Rewire__('sd', {
+    classic.__set__('sd', {
       ARTICLE: {
         title: 'Foo',
         partner_ids: ['789'],
-        channel_id: '123'
+        channel_id: '123',
       },
       PC_ARTSY_CHANNEL: '123',
-      PC_AUCTION_CHANNEL: null
+      PC_AUCTION_CHANNEL: null,
     })
     const data = {
       partner: {
@@ -95,11 +98,11 @@ describe('Classic Article', () => {
         type: 'Gallery',
         profile: {
           href: 'lisson-gallery',
-          image: ''
-        }
-      }
+          image: '',
+        },
+      },
     }
-    RewireApi.__Rewire__('metaphysics', sinon.stub().resolves(data))
+    classic.__set__('metaphysics', sinon.stub().resolves(data))
     $('body').html('<div id="articles-show"></div>')
     init()
     _.defer(() => {
@@ -112,23 +115,23 @@ describe('Classic Article', () => {
   })
 
   xit('sets up promoted content auctions', (done) => {
-    RewireApi.__Rewire__('sd', {
+    classic.__set__('sd', {
       ARTICLE: {
         title: 'Foo',
         auction_ids: ['789'],
-        channel_id: '123'
+        channel_id: '123',
       },
       PC_ARTSY_CHANNEL: null,
-      PC_AUCTION_CHANNEL: '123'
+      PC_AUCTION_CHANNEL: '123',
     })
     const data = {
       sale: {
         name: 'Summer School',
         href: '/auction/summer-school',
-        cover_image: ''
-      }
+        cover_image: '',
+      },
     }
-    RewireApi.__Rewire__('metaphysics', sinon.stub().resolves(data))
+    classic.__set__('metaphysics', sinon.stub().resolves(data))
     $('body').html('<div id="articles-show"></div>')
     init()
     _.defer(() => {

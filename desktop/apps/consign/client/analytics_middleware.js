@@ -1,44 +1,39 @@
 import * as actions from './actions'
-import analyticsHooks from '../../../lib/analytics_hooks.coffee'
 import { data as sd } from 'sharify'
+import _analyticsHooks from '../../../lib/analytics_hooks.coffee'
 
-const analyticsMiddleware = store => next => action => {
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+let analyticsHooks = _analyticsHooks
+
+const analyticsMiddleware = (store) => (next) => (action) => {
   const result = next(action)
   const nextState = store.getState()
 
   // track certain types of actions
   switch (action.type) {
     case actions.UPDATE_USER: {
-      const {
-        user,
-        accountCreated
-      } = action.payload
+      const { user, accountCreated } = action.payload
       analyticsHooks.trigger('consignment:account:created', {
         id: user.id,
         email: user.email,
-        accountCreated: accountCreated
+        accountCreated: accountCreated,
       })
       return result
     }
     case actions.SUBMISSION_CREATED: {
-      analyticsHooks.trigger(
-        'consignment:submitted',
-        {
-          submissionId: action.payload.submissionId
-        }
-      )
+      analyticsHooks.trigger('consignment:submitted', {
+        submissionId: action.payload.submissionId,
+      })
       return result
     }
     case actions.SUBMISSION_COMPLETED: {
       const submissionId = nextState.submissionFlow.submission.id
       const assetIds = nextState.submissionFlow.assetIds
-      analyticsHooks.trigger(
-        'consignment:completed',
-        {
-          submissionId,
-          assetIds
-        }
-      )
+      analyticsHooks.trigger('consignment:completed', {
+        submissionId,
+        assetIds,
+      })
       return result
     }
     case actions.SUBMISSION_ERROR: {
@@ -53,22 +48,21 @@ const analyticsMiddleware = store => next => action => {
         errors = 'Error completing submission'
       }
 
-      analyticsHooks.trigger(
-        'consignment:submission:error',
-        { type: errorType, errors }
-      )
+      analyticsHooks.trigger('consignment:submission:error', {
+        type: errorType,
+        errors,
+      })
       return result
     }
     case actions.SUBMIT_ARTIST: {
       const artistId = nextState.submissionFlow.inputs.artist_id
-      analyticsHooks.trigger(
-        'consignment:artist:confirmed',
-        { artistId }
-      )
+      analyticsHooks.trigger('consignment:artist:confirmed', { artistId })
       return result
     }
-    default: return result
+    default:
+      return result
   }
 }
 
-export default analyticsMiddleware
+module.exports = analyticsMiddleware
+// export default analyticsMiddleware

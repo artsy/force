@@ -1,14 +1,18 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import StepMarker from '../step_marker'
 import block from 'bem-cn-lite'
-import stepsConfig from '../../client/steps_config'
+import _StepMarker from '../step_marker'
+import _stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
-import {
-  resizeWindow
-} from '../../client/actions'
+import { resizeWindow } from '../../client/actions'
 
-function SubmissionFlow (props) {
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+let stepsConfig = _stepsConfig
+let StepMarker = _StepMarker
+
+function SubmissionFlow(props) {
   const b = block('consignments-submission-flow')
   const { CurrentStepComponent } = props
 
@@ -23,26 +27,22 @@ function SubmissionFlow (props) {
 }
 
 const mapStateToProps = (state) => {
-  const {
-    submissionFlow: {
-      currentStep
-    }
-  } = state
+  const { submissionFlow: { currentStep } } = state
 
   return {
-    CurrentStepComponent: stepsConfig[currentStep].component
+    CurrentStepComponent: stepsConfig[currentStep].component,
   }
 }
 
 const mapDispatchToProps = {
-  responsiveWindowAction: resizeWindow
+  responsiveWindowAction: resizeWindow,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SubmissionFlow)
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+module.exports = connect(mapStateToProps, mapDispatchToProps)(SubmissionFlow)
 
 SubmissionFlow.propTypes = {
-  CurrentStepComponent: PropTypes.func.isRequired
+  CurrentStepComponent: PropTypes.func.isRequired,
 }

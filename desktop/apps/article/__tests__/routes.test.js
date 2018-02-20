@@ -1,9 +1,14 @@
 import * as fixtures from 'desktop/test/helpers/fixtures.coffee'
 import * as _ from 'underscore'
-import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article/routes'
 import sinon from 'sinon'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
+
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+const routes = require('rewire')('../routes')
+const { amp, classic, editorialSignup, index, subscribedToEditorial } = routes
 
 describe('Article Routes', () => {
   let req
@@ -11,12 +16,13 @@ describe('Article Routes', () => {
   let next
   let sailthruApiPost
   let sailthruApiGet
+  let rewires = []
 
   beforeEach(() => {
     req = {
       body: {},
       params: { slug: 'foobar' },
-      path: '/article/foobar'
+      path: '/article/foobar',
     }
     res = {
       app: { get: sinon.stub().returns('components') },
@@ -24,18 +30,23 @@ describe('Article Routes', () => {
       render: sinon.stub(),
       send: sinon.stub(),
       redirect: sinon.stub(),
-      status: sinon.stub().returns({ send: sinon.stub() })
+      status: sinon.stub().returns({ send: sinon.stub() }),
     }
     next = sinon.stub()
-    RoutesRewireApi.__Rewire__('sd', {ARTSY_EDITORIAL_CHANNEL: '123'})
     sailthruApiPost = sinon.stub()
     sailthruApiGet = sinon.stub()
-    RoutesRewireApi.__Rewire__('sailthru', { apiPost: sailthruApiPost, apiGet: sailthruApiGet })
+
+    rewires.push(
+      routes.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: '123' }),
+      routes.__set__('sailthru', {
+        apiPost: sailthruApiPost,
+        apiGet: sailthruApiGet,
+      })
+    )
   })
 
   afterEach(() => {
-    RoutesRewireApi.__ResetDependency__('positronql')
-    RoutesRewireApi.__ResetDependency__('sailthru')
+    rewires.forEach((revert) => revert())
   })
 
   describe('#index', () => {
@@ -44,18 +55,18 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          layout: 'standard'
-        })
+          layout: 'standard',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
-      index(req, res, next)
-      .then(() => {
-        renderLayout.args[0][0].data.article.title.should.equal('Top Ten Booths')
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('renderLayout', renderLayout)
+
+      index(req, res, next).then(() => {
+        renderLayout.args[0][0].data.article.title.should.equal(
+          'Top Ten Booths'
+        )
         renderLayout.args[0][0].locals.assetPackage.should.equal('article')
         done()
       })
@@ -65,18 +76,19 @@ describe('Article Routes', () => {
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
-          channel_id: '123'
-        })
+          channel_id: '123',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
+
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
-      index(req, res, next)
-      .then(() => {
-        renderLayout.args[0][0].data.jsonLD.should.containEql('Top Ten Booths at miart 2014')
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('renderLayout', renderLayout)
+
+      index(req, res, next).then(() => {
+        renderLayout.args[0][0].data.jsonLD.should.containEql(
+          'Top Ten Booths at miart 2014'
+        )
         renderLayout.args[0][0].data.jsonLD.should.containEql('Fair Coverage')
         done()
       })
@@ -89,17 +101,14 @@ describe('Article Routes', () => {
           channel_id: '123',
           layout: 'video',
           media: {
-            published: false
-          }
-        })
+            published: false,
+          },
+        }),
       }
 
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      index(req, res, next)
-      .then(() => {
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+
+      index(req, res, next).then(() => {
         next.callCount.should.equal(1)
         done()
       })
@@ -109,15 +118,13 @@ describe('Article Routes', () => {
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'zoobar',
-          channel_id: '123'
-        })
+          channel_id: '123',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      index(req, res, next)
-      .then(() => {
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+
+      index(req, res, next).then(() => {
         res.redirect.args[0][0].should.equal('/article/zoobar')
         done()
       })
@@ -128,15 +135,13 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          layout: 'series'
-        })
+          layout: 'series',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      index(req, res, next)
-      .then(() => {
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+
+      index(req, res, next).then(() => {
         res.redirect.args[0][0].should.equal('/series/foobar')
       })
     })
@@ -148,37 +153,38 @@ describe('Article Routes', () => {
           channel_id: '123',
           layout: 'video',
           seriesArticle: {
-            slug: 'future-of-art'
-          }
-        })
+            slug: 'future-of-art',
+          },
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+
       req.path = '/video/foobar'
-      index(req, res, next)
-        .then(() => {
-          res.redirect.args[0][0].should.equal('/series/future-of-art/foobar')
-        })
+      index(req, res, next).then(() => {
+        res.redirect.args[0][0].should.equal('/series/future-of-art/foobar')
+      })
     })
 
     it('renders classic mode if article is not editorial', (done) => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '456'
-        })),
-        channel: new Channel()
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+          })
+        ),
+        channel: new Channel(),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-      RoutesRewireApi.__Rewire__('Article', Article)
-      index(req, res, next)
-      .then(() => {
+
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('Article', Article)
+
+      index(req, res, next).then(() => {
         res.render.args[0][0].should.equal('article')
         done()
       })
@@ -189,29 +195,39 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          is_super_article: true
-        })
+          is_super_article: true,
+        }),
       }
       const superSubArticles = {
-        articles: [_.extend({}, fixtures.article, {
-          slug: 'sub-article',
-          channel_id: '123',
-          is_super_sub_article: true
-        })]
+        articles: [
+          _.extend({}, fixtures.article, {
+            slug: 'sub-article',
+            channel_id: '123',
+            is_super_sub_article: true,
+          }),
+        ],
       }
       const positronql = sinon.stub()
       positronql
-        .onCall(0).returns(Promise.resolve(article))
-        .onCall(1).returns(Promise.resolve(superSubArticles))
-      RoutesRewireApi.__Rewire__('positronql', positronql)
+        .onCall(0)
+        .returns(Promise.resolve(article))
+        .onCall(1)
+        .returns(Promise.resolve(superSubArticles))
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
-      index(req, res, next)
-      .then(() => {
+
+      routes.__set__('positronql', positronql)
+      routes.__set__('renderLayout', renderLayout)
+
+      index(req, res, next).then(() => {
         renderLayout.args[0][0].data.isSuper.should.be.true()
-        renderLayout.args[0][0].data.superArticle.get('slug').should.equal('foobar')
+        renderLayout.args[0][0].data.superArticle
+          .get('slug')
+          .should.equal('foobar')
         renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
-        renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
+        renderLayout.args[0][0].data.superSubArticles
+          .first()
+          .get('slug')
+          .should.equal('sub-article')
       })
     })
 
@@ -220,38 +236,51 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          is_super_sub_article: true
-        })
+          is_super_sub_article: true,
+        }),
       }
       const superArticle = {
-        articles: [_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '123',
-          is_super_article: true,
-          title: 'Super Article Title'
-        })]
+        articles: [
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '123',
+            is_super_article: true,
+            title: 'Super Article Title',
+          }),
+        ],
       }
       const superSubArticles = {
-        articles: [_.extend({}, fixtures.article, {
-          slug: 'sub-article',
-          channel_id: '123',
-          is_super_sub_article: true
-        })]
+        articles: [
+          _.extend({}, fixtures.article, {
+            slug: 'sub-article',
+            channel_id: '123',
+            is_super_sub_article: true,
+          }),
+        ],
       }
       const positronql = sinon.stub()
       positronql
-        .onCall(0).returns(Promise.resolve(article))
-        .onCall(1).returns(Promise.resolve(superArticle))
-        .onCall(2).returns(Promise.resolve(superSubArticles))
-      RoutesRewireApi.__Rewire__('positronql', positronql)
+        .onCall(0)
+        .returns(Promise.resolve(article))
+        .onCall(1)
+        .returns(Promise.resolve(superArticle))
+        .onCall(2)
+        .returns(Promise.resolve(superSubArticles))
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
-      index(req, res, next)
-      .then(() => {
+
+      routes.__set__('positronql', positronql)
+      routes.__set__('renderLayout', renderLayout)
+
+      index(req, res, next).then(() => {
         renderLayout.args[0][0].data.isSuper.should.be.true()
         renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
-        renderLayout.args[0][0].data.superSubArticles.first().get('slug').should.equal('sub-article')
-        renderLayout.args[0][0].data.superArticle.get('title').should.equal('Super Article Title')
+        renderLayout.args[0][0].data.superSubArticles
+          .first()
+          .get('slug')
+          .should.equal('sub-article')
+        renderLayout.args[0][0].data.superArticle
+          .get('title')
+          .should.equal('Super Article Title')
       })
     })
 
@@ -260,17 +289,15 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          layout: 'standard'
-        })
+          layout: 'standard',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
-      index(req, res, next)
-      .then(() => {
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('renderLayout', renderLayout)
+
+      index(req, res, next).then(() => {
         renderLayout.args[0][0].layout.should.containEql('react_index')
         done()
       })
@@ -281,21 +308,19 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          layout: 'video'
-        })
+          layout: 'video',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('renderLayout', renderLayout)
+
       req.path = '/video/foobar'
-      index(req, res, next)
-        .then(() => {
-          renderLayout.args[0][0].layout.should.containEql('react_blank_index')
-          done()
-        })
+      index(req, res, next).then(() => {
+        renderLayout.args[0][0].layout.should.containEql('react_blank_index')
+        done()
+      })
     })
 
     it('sets the blank template for series layout', (done) => {
@@ -303,18 +328,16 @@ describe('Article Routes', () => {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          layout: 'series'
-        })
+          layout: 'series',
+        }),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
       const renderLayout = sinon.stub()
-      RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('renderLayout', renderLayout)
+
       req.path = '/series/foobar'
-      index(req, res, next)
-      .then(() => {
+      index(req, res, next).then(() => {
         renderLayout.args[0][0].layout.should.containEql('react_blank_index')
         done()
       })
@@ -324,18 +347,22 @@ describe('Article Routes', () => {
   describe('#classic', () => {
     it('renders a classic article', () => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '456',
-          sections: [],
-          featured: true,
-          published: true
-        })),
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [],
+            featured: true,
+            published: true,
+          })
+        ),
         channel: new Channel({
-          name: 'Foo'
-        })
+          name: 'Foo',
+        }),
       }
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
       classic(req, res, next)
       res.render.args[0][1].article.get('slug').should.equal('foobar')
       res.render.args[0][1].channel.get('name').should.equal('Foo')
@@ -343,29 +370,37 @@ describe('Article Routes', () => {
 
     it('renders a ghosted article', () => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          sections: [],
-          featured: true,
-          published: true
-        }))
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            sections: [],
+            featured: true,
+            published: true,
+          })
+        ),
       }
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
       classic(req, res, next)
       res.render.args[0][1].article.get('slug').should.equal('foobar')
     })
 
     it('sets the correct jsonld', () => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          sections: [],
-          featured: true,
-          published: true,
-          channel_id: '456'
-        }))
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            sections: [],
+            featured: true,
+            published: true,
+            channel_id: '456',
+          })
+        ),
       }
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
       classic(req, res, next)
       res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
       res.locals.jsonLD.should.containEql('Fair Coverage')
@@ -375,22 +410,25 @@ describe('Article Routes', () => {
   describe('#amp', () => {
     it('renders amp page', (done) => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '456',
-          sections: [],
-          featured: true,
-          published: true,
-          layout: 'standard'
-        })),
-        channel: new Channel()
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [],
+            featured: true,
+            published: true,
+            layout: 'standard',
+          })
+        ),
+        channel: new Channel(),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-      RoutesRewireApi.__Rewire__('Article', Article)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('Article', Article)
+
       amp(req, res, next)
       res.render.args[0][0].should.equal('amp_article')
       done()
@@ -398,21 +436,26 @@ describe('Article Routes', () => {
 
     it('skips if image/artwork sections exist (amp requires image dimensions)', (done) => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '456',
-          sections: [{
-            type: 'image'
-          }]
-        })),
-        channel: new Channel()
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [
+              {
+                type: 'image',
+              },
+            ],
+          })
+        ),
+        channel: new Channel(),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-      RoutesRewireApi.__Rewire__('Article', Article)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('Article', Article)
+
       amp(req, res, next)
       next.callCount.should.equal(1)
       done()
@@ -420,20 +463,23 @@ describe('Article Routes', () => {
 
     it('skips if it isnt featured', (done) => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '456',
-          featured: false,
-          sections: []
-        })),
-        channel: new Channel()
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            featured: false,
+            sections: [],
+          })
+        ),
+        channel: new Channel(),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-      RoutesRewireApi.__Rewire__('Article', Article)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('Article', Article)
+
       amp(req, res, next)
       next.callCount.should.equal(1)
       done()
@@ -441,20 +487,23 @@ describe('Article Routes', () => {
 
     it('redirects to the main slug if an older slug is queried', (done) => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'zoobar',
-          channel_id: '456',
-          featured: true,
-          sections: []
-        })),
-        channel: new Channel()
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'zoobar',
+            channel_id: '456',
+            featured: true,
+            sections: [],
+          })
+        ),
+        channel: new Channel(),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-      RoutesRewireApi.__Rewire__('Article', Article)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('Article', Article)
+
       amp(req, res, next)
       res.redirect.args[0][0].should.equal('/article/zoobar/amp')
       done()
@@ -462,27 +511,32 @@ describe('Article Routes', () => {
 
     it('sets the correct jsonld', (done) => {
       const data = {
-        article: new Article(_.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '456',
-          sections: [],
-          featured: true,
-          published: true,
-          layout: 'standard'
-        })),
-        channel: new Channel()
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [],
+            featured: true,
+            published: true,
+            layout: 'standard',
+          })
+        ),
+        channel: new Channel(),
       }
-      RoutesRewireApi.__Rewire__(
-        'positronql',
-        sinon.stub().returns(Promise.resolve(data))
-      )
-      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-      RoutesRewireApi.__Rewire__('Article', Article)
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+
+      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      routes.__set__('Article', Article)
+
       amp(req, res, next)
       res.locals.jsonLD.should.containEql('Magazine')
       res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
       res.locals.jsonLD.should.containEql('Artsy Editorial')
-      res.locals.jsonLD.should.containEql('"publisher":{"name":"Artsy","logo":{"url":"undefined/images/full_logo.png","height":103,"width":300}}')
+      res.locals.jsonLD.should.containEql(
+        '"publisher":{"name":"Artsy","logo":{"url":"undefined/images/full_logo.png","height":103,"width":300}}'
+      )
       done()
     })
   })
@@ -494,15 +548,12 @@ describe('Article Routes', () => {
     })
 
     it('resolves to true if a user is subscribed', async () => {
-      sailthruApiGet.yields(
-        null,
-        {
-          vars: {
-            receive_editorial_email: true,
-            email_frequency: 'daily'
-          }
-        }
-      )
+      sailthruApiGet.yields(null, {
+        vars: {
+          receive_editorial_email: true,
+          email_frequency: 'daily',
+        },
+      })
       const subscribed = await subscribedToEditorial('foo@test.com')
       subscribed.should.equal(true)
     })
@@ -511,8 +562,8 @@ describe('Article Routes', () => {
       sailthruApiGet.yields(null, {
         vars: {
           receive_editorial_email: true,
-          email_frequency: 'weekly'
-        }
+          email_frequency: 'weekly',
+        },
       })
       const subscribed = await subscribedToEditorial('foo@test.com')
       subscribed.should.equal(false)
@@ -550,7 +601,7 @@ describe('Article Routes', () => {
       sailthruApiPost.args[0][1].id.should.equal('foo@goo.net')
       sailthruApiPost.args[0][2](null, { ok: true })
       sailthruApiPost.args[1][1].event.should.equal('editorial_welcome')
-      sailthruApiPost.args[1][2]('error', {errormsg: 'Error'})
+      sailthruApiPost.args[1][2]('error', { errormsg: 'Error' })
       res.status.args[0][0].should.equal(500)
     })
   })

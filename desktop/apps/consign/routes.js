@@ -1,10 +1,17 @@
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
-import metaphysics from 'lib/metaphysics.coffee'
-import request from 'superagent'
+import _metaphysics from 'lib/metaphysics.coffee'
 import { extend } from 'underscore'
-import { fetchToken } from './helpers'
+import { fetchToken as _fetchToken } from './helpers'
+
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+const _request = require('request')
+let request = _request
+let fetchToken = _fetchToken
+let metaphysics = _metaphysics
 
 const landing = new JSONPage({ name: 'consignments-landing' })
 
@@ -13,14 +20,14 @@ export const landingPage = async (req, res, next) => {
 
   try {
     const data = await landing.get()
-    const {
-      recently_sold,
-      in_demand
-    } = data.sections
+    const { recently_sold, in_demand } = data.sections
     inDemand.id = in_demand.set.id
 
     await inDemand.fetch({ cache: true })
-    const { ordered_set: recentlySold } = await metaphysics({ query: RecentlySoldQuery(recently_sold.set.id), req })
+    const { ordered_set: recentlySold } = await metaphysics({
+      query: RecentlySoldQuery(recently_sold.set.id),
+      req,
+    })
     const { sales } = await metaphysics({ query: SalesQuery(), req })
 
     res.locals.sd.RECENTLY_SOLD = recentlySold.artworks
@@ -30,7 +37,7 @@ export const landingPage = async (req, res, next) => {
       recentlySold: recentlySold.artworks,
       sales: sales,
       inDemand: inDemand,
-      markdown: markdown
+      markdown: markdown,
     })
     res.render('landing', pageData)
   } catch (e) {
@@ -56,9 +63,14 @@ export const submissionFlowWithFetch = async (req, res, next) => {
     if (req.user) {
       const token = await fetchToken(req.user.get('accessToken'))
       const submission = await request
-                                .get(`${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`)
-                                .set('Authorization', `Bearer ${token}`)
-      const { artist: { name } } = await metaphysics({ query: ArtistQuery(submission.body.artist_id), req })
+        .get(
+          `${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`
+        )
+        .set('Authorization', `Bearer ${token}`)
+      const { artist: { name } } = await metaphysics({
+        query: ArtistQuery(submission.body.artist_id),
+        req,
+      })
       res.locals.sd.SUBMISSION = submission.body
       res.locals.sd.SUBMISSION_ARTIST_NAME = name
     }
@@ -68,7 +80,7 @@ export const submissionFlowWithFetch = async (req, res, next) => {
   }
 }
 
-function ArtistQuery (artistId) {
+function ArtistQuery(artistId) {
   return `{
     artist(id: "${artistId}") {
       id
@@ -77,7 +89,7 @@ function ArtistQuery (artistId) {
   }`
 }
 
-function RecentlySoldQuery (id) {
+function RecentlySoldQuery(id) {
   return `
     {
       ordered_set(id: "${id}") {
@@ -108,7 +120,7 @@ function RecentlySoldQuery (id) {
   `
 }
 
-function SalesQuery () {
+function SalesQuery() {
   return `{
     sales(live: true, published: true, is_auction: true, size: 3) {
       _id

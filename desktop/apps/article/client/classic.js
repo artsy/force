@@ -1,16 +1,29 @@
 // Initializes all client-side Backbone views for "classic" layouts
 
-import $ from 'jquery'
-import { data as sd } from 'sharify'
-import { auctionQuery, partnerQuery } from 'desktop/apps/article/queries/promotedContent'
+import _$ from 'jquery'
+import { data as _sd } from 'sharify'
+import {
+  auctionQuery,
+  partnerQuery,
+} from 'desktop/apps/article/queries/promotedContent'
 import metaphysics from 'lib/metaphysics.coffee'
 import Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
-import ArticlesGridView from 'desktop/components/articles_grid/view.coffee'
-import ArticleView from 'desktop/components/article/client/view.coffee'
+import _ArticlesGridView from 'desktop/components/articles_grid/view.coffee'
+import _ArticleView from 'desktop/components/article/client/view.coffee'
 import Channel from 'desktop/models/channel.coffee'
-import GalleryInsightsView from 'desktop/components/email/client/gallery_insights.coffee'
-import TeamChannelNavView from 'desktop/components/channel_nav/view.coffee'
+import _GalleryInsightsView from 'desktop/components/email/client/gallery_insights.coffee'
+import _TeamChannelNavView from 'desktop/components/channel_nav/view.coffee'
+
+// NOTE: Required to enable rewire hooks in tests
+// TODO: Refactor with jest
+// FIXME: Rewire
+let $ = _$
+let sd = _sd
+let ArticleView = _ArticleView
+let GalleryInsightsView = _GalleryInsightsView
+let TeamChannelNavView = _TeamChannelNavView
+let ArticlesGridView = _ArticlesGridView
 
 const promotedTemplate = (args) => {
   return require('desktop/apps/article/templates/promoted_content.jade')(args)
@@ -22,7 +35,7 @@ export const init = () => {
 
   new ArticleView({
     el: $('body'),
-    article
+    article,
   })
 
   new GalleryInsightsView({ el: $('body') })
@@ -31,7 +44,7 @@ export const init = () => {
     new TeamChannelNavView({
       el: $('body'),
       $content: $('.article-content'),
-      offset: 0
+      offset: 0,
     })
   }
 
@@ -44,7 +57,7 @@ const setupFooterArticles = (channel) => {
     published: true,
     sort: '-published_at',
     limit: 12,
-    channel_id: channel.get('id')
+    channel_id: channel.get('id'),
   }
   const collection = new Articles()
 
@@ -52,11 +65,11 @@ const setupFooterArticles = (channel) => {
     el: $('#articles-footer').addClass('articles-grid'),
     hideMore: true,
     header: `More from ${channel.get('name') || 'Artsy'}`,
-    collection
+    collection,
   })
 
   collection.fetch({
-    data: data
+    data: data,
   })
 }
 
@@ -65,34 +78,36 @@ const setupPromotedContent = (article) => {
   if (channel === sd.PC_ARTSY_CHANNEL && article.get('partner_ids')) {
     const send = {
       method: 'post',
-      query: partnerQuery(article.get('partner_ids')[0])
+      query: partnerQuery(article.get('partner_ids')[0]),
     }
-    metaphysics(send)
-    .then((data) => {
+    metaphysics(send).then((data) => {
       const cropped = data.partner.profile.image.cropped
       const src = cropped ? cropped.url : ''
-      $('#articles-show').prepend(promotedTemplate({
-        src,
-        name: data.partner.name,
-        href: data.partner.profile.href,
-        type: data.partner.type === 'Gallery' ? 'Gallery' : 'Institution'
-      }))
+      $('#articles-show').prepend(
+        promotedTemplate({
+          src,
+          name: data.partner.name,
+          href: data.partner.profile.href,
+          type: data.partner.type === 'Gallery' ? 'Gallery' : 'Institution',
+        })
+      )
     })
   } else if (channel === sd.PC_AUCTION_CHANNEL && article.get('auction_ids')) {
     const send = {
       method: 'post',
-      query: auctionQuery(article.get('auction_ids')[0])
+      query: auctionQuery(article.get('auction_ids')[0]),
     }
-    metaphysics(send)
-    .then((data) => {
+    metaphysics(send).then((data) => {
       const cropped = data.sale.cover_image.cropped
       const src = cropped ? cropped.url : ''
-      $('#articles-show').prepend(promotedTemplate({
-        src,
-        name: data.sale.name,
-        href: data.sale.href,
-        type: 'Auction'
-      }))
+      $('#articles-show').prepend(
+        promotedTemplate({
+          src,
+          name: data.sale.name,
+          href: data.sale.href,
+          type: 'Auction',
+        })
+      )
     })
   }
 }
