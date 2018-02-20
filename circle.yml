@@ -1,8 +1,7 @@
 general:
   branches:
-    only:
-      - master
-      - release
+    ignore:
+      - staging
 machine:
   node:
     version: 8.4.0
