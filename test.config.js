@@ -1,6 +1,6 @@
 require('babel-register')
 require('ts-node').register()
-require('coffee-script/register')
+require('coffeescript/register')
 require('source-map-support/register')
 require('babel-polyfill')
 require('raf/polyfill')

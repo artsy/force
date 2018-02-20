@@ -18,4 +18,3 @@ module.exports.init = ->
   feedView.render()
   new EditorialSignupView
     el: $('body')
-    isABTest: true

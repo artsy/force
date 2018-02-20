@@ -13,8 +13,7 @@ describe 'EditorialSignupView', ->
       sinon.stub($, 'ajax')
       Backbone.$ = $
       @$el = $('<div><div class="article-container" data-id="123"</div></div>')
-      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../../client/editorial_signup'), ['editorialSignupLushTemplate']
-      @cycleImages = sinon.stub @EditorialSignupView::, 'cycleImages'
+      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../../client/editorial_signup'), []
       sinon.stub @EditorialSignupView::, 'trackSignup'
       @ctaBarView = sinon.stub().returns
         render: sinon.stub().returns { $el: '<div class="cta-bar-magazine"></div>' }
@@ -57,7 +56,6 @@ describe 'EditorialSignupView', ->
           { src: 'image2.jpg' },
           { src: 'image3.jpg' },
         ]
-      $.ajax.args[1][0].success()
       _.defer =>
         $(@$el).children("articles-es-cta__container").css('display').should.containEql 'none'
         $(@$el).children('.articles-es-cta__social').css('display').should.containEql 'block'
