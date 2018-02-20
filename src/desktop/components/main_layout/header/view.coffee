@@ -106,9 +106,7 @@ module.exports = class HeaderView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup'
-      redirectTo: '/personalize'
+    mediator.trigger 'open:auth', mode: 'signup'
 
   login: (e) ->
     e.preventDefault()
