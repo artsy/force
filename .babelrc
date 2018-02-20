@@ -12,7 +12,7 @@
     "inline-react-svg",
     "transform-runtime",
     ["module-resolver", {
-      "root": ["./"]
+      "root": ["./src"]
     }],
     "transform-class-properties"
   ],
