@@ -15,6 +15,7 @@ query = """
       end_at
       name
       displayable
+      has_location
       press_release(format: HTML)
       description
       status
