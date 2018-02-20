@@ -17,7 +17,7 @@ const config = {
   entry: {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
-      './desktop/apps/webpack/client.js',
+      './src/desktop/apps/webpack/client.js',
     ],
     ...getEntrypoints(),
   },
@@ -169,8 +169,8 @@ if (isDevelopment) {
 
 function getEntrypoints() {
   return {
-    ...findAssets('desktop/assets'),
-    ...findAssets('mobile/assets'),
+    ...findAssets('src/desktop/assets'),
+    ...findAssets('src/mobile/assets'),
   }
 }
 
@@ -198,7 +198,7 @@ function findAssets(basePath) {
     }
 
     // Load oldschool global module dependencies
-    asset[fileName].unshift('./lib/global_modules')
+    asset[fileName].unshift('./src/lib/global_modules')
 
     if (isDevelopment) {
       asset[fileName].unshift('webpack-hot-middleware/client?reload=true')

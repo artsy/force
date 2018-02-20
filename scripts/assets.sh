@@ -7,6 +7,6 @@ mkdir public
 mkdir public/assets
 NODE_ENV=production webpack
 stylus \
-  $(find desktop/assets mobile/assets -name '*.styl') \
+  $(find src/desktop/assets mobile/assets -name '*.styl') \
   --compress \
   -o public/assets

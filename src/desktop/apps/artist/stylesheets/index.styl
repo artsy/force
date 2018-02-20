@@ -1,0 +1,39 @@
+@require '../../../components/stylus_lib'
+
+#artist-page
+  position relative
+  margin-top 80px
+
+// Tab sections
+.artist-section-header
+  garamond-size('headline')
+  margin-bottom 30px
+
+.artist-page-content
+  position relative
+  margin 30px 0 80px 0
+  .arv-container
+    padding-top 20px
+
+#artist-page-content-section
+  position relative
+
+.artist-page-section-block
+  margin 10px 0 60px 0
+  padding-top 15px
+  border-top 1px solid gray-lighter-color
+  &:first-child
+    margin-top 0
+    padding-top 0
+    border-top none
+
+.arv-fillwidth-list
+  width 100%
+
+@require './header'
+@require '../components/carousel'
+@require '../components/current_item'
+@require './sections'
+@require '../../../components/auction_lots/stylesheets'
+@require '../../../../../node_modules/artsy-ezel-components/pagination'
+@require '../../../apps/home/components/followed_artists'
