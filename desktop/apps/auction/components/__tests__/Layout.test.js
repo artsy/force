@@ -7,14 +7,13 @@ import { cloneDeep } from 'lodash'
 import { followedArtistSaleArtworks } from '../artwork_browser/__tests__/fixtures/followedArtistSaleArtworks'
 import { promotedSaleArtworks } from '../artwork_browser/__tests__/fixtures/promotedSaleArtworks'
 
-const test = require('rewire')('../Layout')
-const { Layout } = test
+const Layout = require('rewire')('../Layout')
 
 describe('<Layout />', () => {
   let revertRewire
 
   beforeEach(() => {
-    revertRewire = test.__set__('Banner', () => <div />)
+    revertRewire = Layout.__set__('Banner', () => <div />)
   })
 
   afterEach(() => {
@@ -42,7 +41,6 @@ describe('<Layout />', () => {
       .find('.auction-Registration')
       .html()
       .should.containEql('Register to bid')
-
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
   })
 
@@ -74,7 +72,6 @@ describe('<Layout />', () => {
       .find('.auction-Registration')
       .html()
       .should.containEql('Register to bid')
-
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
   })
 
@@ -102,9 +99,7 @@ describe('<Layout />', () => {
       .find('.auction-Registration')
       .html()
       .should.containEql('Register to bid')
-
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
-
     wrapper
       .find('.auction-AuctionInfo__callout')
       .text()
@@ -134,9 +129,7 @@ describe('<Layout />', () => {
       .find('.js-register-button')
       .text()
       .should.equal('Register to bid')
-
     wrapper.find('.auction-MyActiveBids').length.should.eql(0)
-
     wrapper
       .find('.auction-AuctionInfo__callout')
       .text()
@@ -572,11 +565,9 @@ describe('<Layout />', () => {
         })
 
         wrapper.html().should.containEql('Buy Now')
-
         wrapper
           .html()
           .should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
-
         wrapper.html().should.containEql('/artwork/piper-oneill-boop')
       })
 
@@ -591,11 +582,9 @@ describe('<Layout />', () => {
         })
 
         wrapper.html().should.containEql('Buy Now')
-
         wrapper
           .html()
           .should.containEql('/artwork/torkil-gudnason-hothouse-flowers')
-
         wrapper.html().should.containEql('/artwork/piper-oneill-boop')
       })
     })
@@ -622,11 +611,9 @@ describe('<Layout />', () => {
         })
 
         wrapper.html().should.containEql('Works By Artists You Follow')
-
         wrapper
           .html()
           .should.containEql('/artwork/svend-aage-larsen-surrealism')
-
         wrapper.html().should.containEql('/artwork/emile-gsell-untitled')
       })
 
@@ -641,11 +628,9 @@ describe('<Layout />', () => {
         })
 
         wrapper.html().should.containEql('Works By Artists You Follow')
-
         wrapper
           .html()
           .should.containEql('/artwork/svend-aage-larsen-surrealism')
-
         wrapper.html().should.containEql('/artwork/emile-gsell-untitled')
       })
     })

@@ -1,8 +1,8 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/sidebar/ArtistFilter'
 
-const { ArtistFilter } = test
+const rewire = require('rewire')('../ArtistFilter')
+const { ArtistFilter } = rewire
 
 describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
   describe('<ArtistFilter />', () => {
@@ -12,24 +12,22 @@ describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
       allArtists: { id: 1 },
       artistIds: [1, 2, 3],
       artistsYouFollow: { id: 1 },
-      aggregatedArtists: [{ id: 1 }, { id: 2 }, { id: 3 }]
+      aggregatedArtists: [{ id: 1 }, { id: 2 }, { id: 3 }],
     }
 
     beforeEach(() => {
-      __RewireAPI__.__Rewire__('BasicCheckbox', BasicCheckbox)
-    })
-
-    afterEach(() => {
-      __RewireAPI__.__ResetDependency__('BasicCheckbox')
+      rewire.__set__('BasicCheckbox', BasicCheckbox)
     })
 
     it('by default does not render a artists you follow checkbox', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtistFilter,
-        props
+        props,
       })
 
-      wrapper.find('.auction-ArtistFilter__artists-you-follow').length.should.eql(0)
+      wrapper
+        .find('.auction-ArtistFilter__artists-you-follow')
+        .length.should.eql(0)
     })
 
     it('renders an works by artists you follow checkbox if user', () => {
@@ -37,17 +35,19 @@ describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
         Component: ArtistFilter,
         props: {
           ...props,
-          user: { foo: 'bar' }
-        }
+          user: { foo: 'bar' },
+        },
       })
 
-      wrapper.find('.auction-ArtistFilter__artists-you-follow').length.should.eql(1)
+      wrapper
+        .find('.auction-ArtistFilter__artists-you-follow')
+        .length.should.eql(1)
     })
 
     it('renders an Artists basic checkbox', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtistFilter,
-        props
+        props,
       })
 
       wrapper.html().should.containEql('Artists')
@@ -56,7 +56,7 @@ describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
     it('renders a list oc checkboxes based on number of aggregated artists', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtistFilter,
-        props
+        props,
       })
 
       wrapper.find(BasicCheckbox).length.should.eql(4)

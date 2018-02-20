@@ -49,4 +49,4 @@ const mapStateToProps = (state) => ({
   isMobile: state.app.isMobile,
 })
 
-export default connect(mapStateToProps)(ArtworkBrowser)
+module.exports = connect(mapStateToProps)(ArtworkBrowser)

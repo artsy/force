@@ -7,8 +7,8 @@ import Channel from 'desktop/models/channel.coffee'
 // NOTE: Required to enable rewire hooks in tests
 // TODO: Refactor with jest
 // FIXME: Rewire
-const routes = require('rewire')('../routes')
-const { amp, classic, editorialSignup, index, subscribedToEditorial } = routes
+const rewire = require('rewire')('../routes')
+const { amp, classic, editorialSignup, index, subscribedToEditorial } = rewire
 
 describe('Article Routes', () => {
   let req
@@ -37,8 +37,8 @@ describe('Article Routes', () => {
     sailthruApiGet = sinon.stub()
 
     rewires.push(
-      routes.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: '123' }),
-      routes.__set__('sailthru', {
+      rewire.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: '123' }),
+      rewire.__set__('sailthru', {
         apiPost: sailthruApiPost,
         apiGet: sailthruApiGet,
       })
@@ -60,8 +60,8 @@ describe('Article Routes', () => {
       }
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('renderLayout', renderLayout)
 
       index(req, res, next).then(() => {
         renderLayout.args[0][0].data.article.title.should.equal(
@@ -82,8 +82,8 @@ describe('Article Routes', () => {
 
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('renderLayout', renderLayout)
 
       index(req, res, next).then(() => {
         renderLayout.args[0][0].data.jsonLD.should.containEql(
@@ -106,7 +106,7 @@ describe('Article Routes', () => {
         }),
       }
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
 
       index(req, res, next).then(() => {
         next.callCount.should.equal(1)
@@ -122,7 +122,7 @@ describe('Article Routes', () => {
         }),
       }
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
 
       index(req, res, next).then(() => {
         res.redirect.args[0][0].should.equal('/article/zoobar')
@@ -139,7 +139,7 @@ describe('Article Routes', () => {
         }),
       }
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
 
       index(req, res, next).then(() => {
         res.redirect.args[0][0].should.equal('/series/foobar')
@@ -158,7 +158,7 @@ describe('Article Routes', () => {
         }),
       }
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
 
       req.path = '/video/foobar'
       index(req, res, next).then(() => {
@@ -181,8 +181,8 @@ describe('Article Routes', () => {
         .stub()
         .yieldsTo('success', data)
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('Article', Article)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('Article', Article)
 
       index(req, res, next).then(() => {
         res.render.args[0][0].should.equal('article')
@@ -215,8 +215,8 @@ describe('Article Routes', () => {
         .returns(Promise.resolve(superSubArticles))
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', positronql)
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', positronql)
+      rewire.__set__('renderLayout', renderLayout)
 
       index(req, res, next).then(() => {
         renderLayout.args[0][0].data.isSuper.should.be.true()
@@ -268,8 +268,8 @@ describe('Article Routes', () => {
         .returns(Promise.resolve(superSubArticles))
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', positronql)
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', positronql)
+      rewire.__set__('renderLayout', renderLayout)
 
       index(req, res, next).then(() => {
         renderLayout.args[0][0].data.isSuper.should.be.true()
@@ -294,8 +294,8 @@ describe('Article Routes', () => {
       }
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('renderLayout', renderLayout)
 
       index(req, res, next).then(() => {
         renderLayout.args[0][0].layout.should.containEql('react_index')
@@ -313,8 +313,8 @@ describe('Article Routes', () => {
       }
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('renderLayout', renderLayout)
 
       req.path = '/video/foobar'
       index(req, res, next).then(() => {
@@ -333,8 +333,8 @@ describe('Article Routes', () => {
       }
       const renderLayout = sinon.stub()
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('renderLayout', renderLayout)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('renderLayout', renderLayout)
 
       req.path = '/series/foobar'
       index(req, res, next).then(() => {
@@ -426,8 +426,8 @@ describe('Article Routes', () => {
         .stub()
         .yieldsTo('success', data)
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('Article', Article)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('Article', Article)
 
       amp(req, res, next)
       res.render.args[0][0].should.equal('amp_article')
@@ -453,8 +453,8 @@ describe('Article Routes', () => {
         .stub()
         .yieldsTo('success', data)
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('Article', Article)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('Article', Article)
 
       amp(req, res, next)
       next.callCount.should.equal(1)
@@ -477,8 +477,8 @@ describe('Article Routes', () => {
         .stub()
         .yieldsTo('success', data)
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('Article', Article)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('Article', Article)
 
       amp(req, res, next)
       next.callCount.should.equal(1)
@@ -501,8 +501,8 @@ describe('Article Routes', () => {
         .stub()
         .yieldsTo('success', data)
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('Article', Article)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('Article', Article)
 
       amp(req, res, next)
       res.redirect.args[0][0].should.equal('/article/zoobar/amp')
@@ -527,8 +527,8 @@ describe('Article Routes', () => {
         .stub()
         .yieldsTo('success', data)
 
-      routes.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-      routes.__set__('Article', Article)
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      rewire.__set__('Article', Article)
 
       amp(req, res, next)
       res.locals.jsonLD.should.containEql('Magazine')

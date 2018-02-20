@@ -1,20 +1,24 @@
-import analyticsMiddleware from 'desktop/apps/auction/utils/analyticsMiddleware'
 import auctions from 'desktop/apps/auction/reducers'
 import { applyMiddleware, createStore } from 'redux'
 import sinon from 'sinon'
+
+const analyticsMiddleware = require('rewire')('../analyticsMiddleware')
 
 describe('analytics middleware', () => {
   let triggerStub
 
   beforeEach(() => {
     triggerStub = sinon.spy()
-    analyticsMiddleware.__Rewire__('analyticsHooks', {
-      trigger: triggerStub
+    analyticsMiddleware.__set__('analyticsHooks', {
+      trigger: triggerStub,
     })
   })
 
   it('tracks changes in mediums', () => {
-    const action = { type: 'UPDATE_MEDIUM_ID', payload: { mediumId: 'painting' } }
+    const action = {
+      type: 'UPDATE_MEDIUM_ID',
+      payload: { mediumId: 'painting' },
+    }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
     store.dispatch(action)
@@ -26,14 +30,17 @@ describe('analytics middleware', () => {
         { artists: [] },
         { medium: ['painting'] },
         { sort: 'position' },
-        { price: '' }
+        { price: '' },
       ],
-      changed: { medium: 'painting' }
+      changed: { medium: 'painting' },
     })
   })
 
   it('tracks changes in artists', () => {
-    const action = { type: 'UPDATE_ARTIST_ID', payload: { artistId: 'andy-warhol' } }
+    const action = {
+      type: 'UPDATE_ARTIST_ID',
+      payload: { artistId: 'andy-warhol' },
+    }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
     store.dispatch(action)
@@ -45,14 +52,17 @@ describe('analytics middleware', () => {
         { artists: ['andy-warhol'] },
         { medium: [] },
         { sort: 'position' },
-        { price: '' }
+        { price: '' },
       ],
-      changed: { artist: 'andy-warhol' }
+      changed: { artist: 'andy-warhol' },
     })
   })
 
   it('correctly tracks artists when Artists You Follow is clicked', () => {
-    const action = { type: 'UPDATE_ARTIST_ID', payload: { artistId: 'artists-you-follow' } }
+    const action = {
+      type: 'UPDATE_ARTIST_ID',
+      payload: { artistId: 'artists-you-follow' },
+    }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
     store.dispatch(action)
@@ -64,14 +74,17 @@ describe('analytics middleware', () => {
         { artists: ['artists-you-follow'] },
         { medium: [] },
         { sort: 'position' },
-        { price: '' }
+        { price: '' },
       ],
-      changed: { artist: 'artists-you-follow' }
+      changed: { artist: 'artists-you-follow' },
     })
   })
 
   it('tracks changes in price', () => {
-    const action = { type: 'UPDATE_ESTIMATE_RANGE', payload: { min: 100, max: 50000 } }
+    const action = {
+      type: 'UPDATE_ESTIMATE_RANGE',
+      payload: { min: 100, max: 50000 },
+    }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
     store.dispatch(action)
@@ -83,9 +96,9 @@ describe('analytics middleware', () => {
         { artists: [] },
         { medium: [] },
         { sort: 'position' },
-        { price: '10000-*' }
+        { price: '10000-*' },
       ],
-      changed: { price: '10000-*' }
+      changed: { price: '10000-*' },
     })
   })
 
@@ -102,9 +115,9 @@ describe('analytics middleware', () => {
         { artists: [] },
         { medium: [] },
         { sort: 'lot_number' },
-        { price: '' }
+        { price: '' },
       ],
-      changed: { sort: 'lot_number' }
+      changed: { sort: 'lot_number' },
     })
   })
 

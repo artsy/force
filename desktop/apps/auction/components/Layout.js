@@ -1,5 +1,6 @@
 import ArtworksByFollowedArtists from 'desktop/apps/auction/components/artwork_browser/ArtworksByFollowedArtists'
 import PromotedSaleArtworks from 'desktop/apps/auction/components/artwork_browser/PromotedSaleArtworks'
+import ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
 import _Banner from 'desktop/apps/auction/components/layout/Banner'
@@ -10,14 +11,9 @@ import React from 'react'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
-import { ArtworkBrowser } from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
-
-// NOTE: Required to enable rewire hooks in tests
-// TODO: Refactor with jest
-// FIXME: Rewire
 let Banner = _Banner
 
-function LayoutWrapper(props) {
+function Layout(props) {
   const {
     associatedSale,
     showAssociatedAuctions,
@@ -58,7 +54,7 @@ function LayoutWrapper(props) {
   )
 }
 
-LayoutWrapper.propTypes = {
+Layout.propTypes = {
   associatedSale: PropTypes.object,
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
@@ -101,4 +97,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export const Layout = connect(mapStateToProps)(LayoutWrapper)
+module.exports = connect(mapStateToProps)(Layout)

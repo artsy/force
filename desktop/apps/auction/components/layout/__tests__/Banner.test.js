@@ -1,17 +1,14 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import BannerWrapper, { test } from 'desktop/apps/auction/components/layout/Banner'
 import moment from 'moment'
 import sinon from 'sinon'
-const { Banner } = test
+
+const rewire = require('rewire')('../Banner')
+const { Banner } = rewire
 
 describe('auction/components/layout/Banner.test', () => {
   beforeEach(() => {
-    BannerWrapper.__Rewire__('ClockView', () => <div className='auction-clock' />)
-  })
-
-  afterEach(() => {
-    BannerWrapper.__ResetDependency__('ClockView')
+    rewire.__set__('ClockView', () => <div className="auction-clock" />)
   })
 
   describe('<Banner />', () => {
@@ -25,8 +22,8 @@ describe('auction/components/layout/Banner.test', () => {
           hasEndTime: true,
           isAuction: true,
           isLiveOpen: true,
-          liveAuctionUrl
-        }
+          liveAuctionUrl,
+        },
       })
 
       wrapper.find('a').simulate('click')
@@ -40,8 +37,8 @@ describe('auction/components/layout/Banner.test', () => {
           auction: { live_start_at: moment().add(2, 'days') },
           isAuction: true,
           hasEndTime: false,
-          isLiveOpen: false
-        }
+          isLiveOpen: false,
+        },
       })
 
       wrapper.find('.auction-clock').length.should.eql(1)
@@ -51,11 +48,14 @@ describe('auction/components/layout/Banner.test', () => {
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
-          auction: { live_start_at: moment().add(4, 'days'), start_at: moment().add(2, 'days') },
+          auction: {
+            live_start_at: moment().add(4, 'days'),
+            start_at: moment().add(2, 'days'),
+          },
           isAuction: true,
           hasEndTime: false,
-          isLiveOpen: false
-        }
+          isLiveOpen: false,
+        },
       })
 
       wrapper.find('.auction-clock').length.should.eql(1)
@@ -70,12 +70,15 @@ describe('auction/components/layout/Banner.test', () => {
           isAuction: true,
           hasEndTime: true,
           isLiveOpen: true,
-          liveAuctionUrl
-        }
+          liveAuctionUrl,
+        },
       })
 
       wrapper.text().should.containEql('Live Bidding Now Open')
-      wrapper.find('a').html().should.containEql(liveAuctionUrl)
+      wrapper
+        .find('a')
+        .html()
+        .should.containEql(liveAuctionUrl)
     })
 
     it('renders a normal banner if not live', () => {
@@ -83,11 +86,11 @@ describe('auction/components/layout/Banner.test', () => {
         Component: Banner,
         props: {
           hasEndTime: true,
-          isLiveOpen: false
+          isLiveOpen: false,
         },
         options: {
-          renderMode: 'render'
-        }
+          renderMode: 'render',
+        },
       })
 
       wrapper.find('.auction-clock').length.should.eql(1)
@@ -98,11 +101,11 @@ describe('auction/components/layout/Banner.test', () => {
         Component: Banner,
         props: {
           hasEndTime: false,
-          isLiveOpen: false
+          isLiveOpen: false,
         },
         options: {
-          renderMode: 'render'
-        }
+          renderMode: 'render',
+        },
       })
 
       wrapper.find('.auction-clock').length.should.eql(0)

@@ -1,4 +1,4 @@
-import BasicCheckbox from './BasicCheckbox'
+import _BasicCheckbox from './BasicCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
 import _, { contains } from 'underscore'
@@ -6,23 +6,24 @@ import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { updateMediumParams } from 'desktop/apps/auction/actions/artworkBrowser'
 
-function MediumFilter (props) {
+// FIXME: Rewire
+let BasicCheckbox = _BasicCheckbox
+
+export function MediumFilter(props) {
   const {
     aggregatedMediums,
     allMediums,
     mediumIds,
     updateMediumParamsAction,
     allMediumsSelected,
-    initialMediumMap
+    initialMediumMap,
   } = props
 
   const b = block('auction-MediumFilter')
 
   return (
     <div className={b()}>
-      <div className={b('title')}>
-        Medium
-      </div>
+      <div className={b('title')}>Medium</div>
 
       <BasicCheckbox
         key={allMediums.id}
@@ -31,25 +32,26 @@ function MediumFilter (props) {
         checked={allMediumsSelected}
       />
 
-      {
-        _.map(initialMediumMap, (initialAgg) => {
-          const mediumSelected = contains(mediumIds, initialAgg.id)
-          const includedMedium = _.find(aggregatedMediums, (agg) => agg.id === initialAgg.id)
-          return (
-            <BasicCheckbox
-              key={initialAgg.id}
-              item={{
-                id: initialAgg.id,
-                name: initialAgg.name,
-                count: includedMedium && includedMedium.count
-              }}
-              onClick={updateMediumParamsAction}
-              checked={mediumSelected}
-              disabled={includedMedium === undefined}
-            />
-          )
-        })
-      }
+      {_.map(initialMediumMap, (initialAgg) => {
+        const mediumSelected = contains(mediumIds, initialAgg.id)
+        const includedMedium = _.find(
+          aggregatedMediums,
+          (agg) => agg.id === initialAgg.id
+        )
+        return (
+          <BasicCheckbox
+            key={initialAgg.id}
+            item={{
+              id: initialAgg.id,
+              name: initialAgg.name,
+              count: includedMedium && includedMedium.count,
+            }}
+            onClick={updateMediumParamsAction}
+            checked={mediumSelected}
+            disabled={includedMedium === undefined}
+          />
+        )
+      })}
     </div>
   )
 }
@@ -60,16 +62,12 @@ MediumFilter.propTypes = {
   allMediumsSelected: PropTypes.bool.isRequired,
   initialMediumMap: PropTypes.array.isRequired,
   mediumIds: PropTypes.array.isRequired,
-  updateMediumParamsAction: PropTypes.func.isRequired
+  updateMediumParamsAction: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
   const {
-    artworkBrowser: {
-      aggregatedMediums,
-      filterParams,
-      initialMediumMap
-    }
+    artworkBrowser: { aggregatedMediums, filterParams, initialMediumMap },
   } = state
 
   const mediumIds = filterParams.gene_ids
@@ -81,17 +79,12 @@ const mapStateToProps = (state) => {
     allMediums,
     mediumIds,
     allMediumsSelected,
-    initialMediumMap
+    initialMediumMap,
   }
 }
 
 const mapDispatchToProps = {
-  updateMediumParamsAction: updateMediumParams
+  updateMediumParamsAction: updateMediumParams,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MediumFilter)
-
-export const test = { MediumFilter }
+export default connect(mapStateToProps, mapDispatchToProps)(MediumFilter)

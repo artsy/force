@@ -1,9 +1,13 @@
 import React from 'react'
 import Registration from 'desktop/apps/auction/components/layout/auction_info/Registration'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/layout/auction_info/AuctionInfoDesktop'
+import {
+  test,
+  __RewireAPI__,
+} from 'desktop/apps/auction/components/layout/auction_info/AuctionInfoDesktop'
 
-const { AuctionInfoDesktop } = test
+const rewire = require('rewire')('../AuctionInfoDesktop')
+const { AuctionInfoDesktop } = rewire
 
 describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () => {
   describe('<AuctionInfoDesktop />', () => {
@@ -11,8 +15,8 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
       let component = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          isAuctionPromo: true
-        }
+          isAuctionPromo: true,
+        },
       })
 
       component.wrapper.text().should.containEql('Sale Preview')
@@ -20,8 +24,8 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
       component = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          isAuctionPromo: false
-        }
+          isAuctionPromo: false,
+        },
       })
 
       component.wrapper.text().should.not.containEql('Sale Preview')
@@ -32,8 +36,8 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
         Component: AuctionInfoDesktop,
         props: {
           name: 'Foo',
-          upcomingLabel: 'Bar'
-        }
+          upcomingLabel: 'Bar',
+        },
       })
 
       wrapper.text().should.containEql('Foo')
@@ -42,13 +46,13 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
 
     it('renders AddToCalendarView if showAddToCalendar is true', () => {
       const AddToCalendarView = () => <div />
-      __RewireAPI__.__Rewire__('AddToCalendarView', AddToCalendarView)
+      const revert = rewire.__set__('AddToCalendarView', AddToCalendarView)
 
       let component = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          showAddToCalendar: true
-        }
+          showAddToCalendar: true,
+        },
       })
 
       component.wrapper.find(AddToCalendarView).length.should.eql(1)
@@ -56,20 +60,20 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
       component = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          showAddToCalendar: false
-        }
+          showAddToCalendar: false,
+        },
       })
 
       component.wrapper.find(AddToCalendarView).length.should.eql(0)
-      __RewireAPI__.__ResetDependency__('AddToCalendarView', AddToCalendarView)
+      revert()
     })
 
     it('renders Live Auction if liveStartAt exists', () => {
       const { wrapper } = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          liveStartAt: 'foo'
-        }
+          liveStartAt: 'foo',
+        },
       })
 
       wrapper.text().should.containEql('Live auction')
@@ -79,8 +83,8 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
       const { wrapper } = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          description: 'hello description'
-        }
+          description: 'hello description',
+        },
       })
 
       wrapper.text().should.containEql('hello description')
@@ -88,7 +92,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
 
     it('renders a Registration metadata component', () => {
       const { wrapper } = renderTestComponent({
-        Component: AuctionInfoDesktop
+        Component: AuctionInfoDesktop,
       })
 
       wrapper.find(Registration).length.should.eql(1)
@@ -98,8 +102,8 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
       const { wrapper } = renderTestComponent({
         Component: AuctionInfoDesktop,
         props: {
-          upcomingLabel: ''
-        }
+          upcomingLabel: '',
+        },
       })
 
       wrapper.html().should.not.containEql('AuctionInfoDesktop__upcominigLabel')

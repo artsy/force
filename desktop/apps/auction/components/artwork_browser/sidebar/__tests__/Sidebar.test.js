@@ -2,9 +2,7 @@ import ArtistFilter from 'desktop/apps/auction/components/artwork_browser/sideba
 import MediumFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/MediumFilter'
 import RangeSlider from 'desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test } from 'desktop/apps/auction/components/artwork_browser/sidebar/Sidebar'
-
-const { Sidebar } = test
+import Sidebar from 'desktop/apps/auction/components/artwork_browser/sidebar/Sidebar'
 
 describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
   describe('<Sidebar />', () => {
@@ -14,13 +12,13 @@ describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
         data: {
           app: {
             auction: {
-              is_auction: true
-            }
-          }
+              is_auction: true,
+            },
+          },
+          artworkBrowser: {
+            isClosed: true,
+          },
         },
-        props: {
-          isClosed: true
-        }
       })
 
       wrapper.find(RangeSlider).length.should.eql(0)
@@ -32,13 +30,13 @@ describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
         data: {
           app: {
             auction: {
-              is_auction: true
-            }
-          }
+              is_auction: true,
+            },
+          },
         },
         props: {
-          isClosed: false
-        }
+          isClosed: false,
+        },
       })
 
       wrapper.find(RangeSlider).length.should.eql(1)
@@ -50,13 +48,13 @@ describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
         data: {
           app: {
             auction: {
-              is_auction: true
-            }
-          }
+              is_auction: true,
+            },
+          },
         },
         props: {
-          isSale: true
-        }
+          isSale: true,
+        },
       })
 
       wrapper.find('.auction-RangeSlider__info').length.should.eql(1)
@@ -68,13 +66,13 @@ describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
         data: {
           app: {
             auction: {
-              is_auction: false
-            }
-          }
+              is_auction: false,
+            },
+          },
         },
         props: {
-          isClosed: false
-        }
+          isClosed: false,
+        },
       })
 
       wrapper.find('.auction-RangeSlider__info').length.should.eql(0)
@@ -84,8 +82,8 @@ describe('auction/components/artwork_browser/sidebar/Sidebar.test', () => {
       const { wrapper } = renderTestComponent({
         Component: Sidebar,
         props: {
-          isClosed: false
-        }
+          isClosed: false,
+        },
       })
 
       wrapper.find(ArtistFilter).length.should.eql(1)

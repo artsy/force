@@ -1,4 +1,4 @@
-import BidStatus from './BidStatus'
+import _BidStatus from './BidStatus'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
@@ -6,7 +6,10 @@ import titleAndYear from 'desktop/apps/auction/utils/titleAndYear'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 
-function GridArtwork (props) {
+// FIXME: Rewire
+let BidStatus = _BidStatus
+
+export function GridArtwork(props) {
   const {
     saleArtwork,
     artistDisplay,
@@ -16,44 +19,40 @@ function GridArtwork (props) {
     isClosed,
     lotLabel,
     sale_message,
-    title
+    title,
   } = props
 
   const b = block('auction-page-GridArtwork')
 
   return (
-    <a className={b()} key={saleArtwork._id} href={`/artwork/${saleArtwork.id}`}>
+    <a
+      className={b()}
+      key={saleArtwork._id}
+      href={`/artwork/${saleArtwork.id}`}
+    >
       <div className={b('image-container')}>
-        <div className='vam-outer'>
-          <div className='vam-inner'>
+        <div className="vam-outer">
+          <div className="vam-inner">
             <div className={b('image')}>
-              <img src={image} alt={title} / >
+              <img src={image} alt={title} />
             </div>
           </div>
         </div>
       </div>
       <div className={b('metadata')}>
-        { isAuction
-          ? <div className={b('lot-information')}>
-            <div className={b('lot-number')}>
-              Lot {lotLabel}
-            </div>
-            { !isClosed &&
-              <BidStatus
-                artworkItem={saleArtwork}
-              /> }
+        {isAuction ? (
+          <div className={b('lot-information')}>
+            <div className={b('lot-number')}>Lot {lotLabel}</div>
+            {!isClosed && <BidStatus artworkItem={saleArtwork} />}
           </div>
-          : <div>
-            {sale_message}
-          </div>
-        }
-        <div className={b('artists')}>
-          {artistDisplay}
-        </div>
+        ) : (
+          <div>{sale_message}</div>
+        )}
+        <div className={b('artists')}>{artistDisplay}</div>
         <div
           className={b('title')}
           dangerouslySetInnerHTML={{
-            __html: titleAndYear(title, date)
+            __html: titleAndYear(title, date),
           }}
         />
       </div>
@@ -70,17 +69,20 @@ GridArtwork.propTypes = {
   lotLabel: PropTypes.string, // Not needed for e-commerce sales
   artistDisplay: PropTypes.string.isRequired,
   sale_message: PropTypes.string, // E-commerce sales only
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 // TODO: Unify this selector across artwork types
 const mapStateToProps = (state, props) => {
   const { saleArtwork } = props
-  const image = get(saleArtwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
+  const image = get(
+    saleArtwork,
+    'artwork.images.0.image_medium',
+    '/images/missing_image.png'
+  )
   const { artists } = saleArtwork.artwork
-  const artistDisplay = artists && artists.length > 0
-    ? artists.map((aa) => aa.name).join(', ')
-    : ''
+  const artistDisplay =
+    artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : ''
 
   return {
     artistDisplay,
@@ -90,12 +92,8 @@ const mapStateToProps = (state, props) => {
     isClosed: state.artworkBrowser.isClosed || state.app.auction.isClosed(),
     lotLabel: saleArtwork.lot_label,
     sale_message: saleArtwork.artwork.sale_message,
-    title: saleArtwork.artwork.title
+    title: saleArtwork.artwork.title,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(GridArtwork)
-
-export const test = { GridArtwork }
+export default connect(mapStateToProps)(GridArtwork)

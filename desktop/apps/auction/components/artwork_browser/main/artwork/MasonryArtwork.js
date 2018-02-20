@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import BidStatus from './BidStatus'
+import _BidStatus from './BidStatus'
 import block from 'bem-cn-lite'
 import get from 'lodash.get'
 import titleAndYear from 'desktop/apps/auction/utils/titleAndYear'
 import { connect } from 'react-redux'
 
-function MasonryArtwork (props) {
+// FIXME: Rewire
+let BidStatus = _BidStatus
+
+export function MasonryArtwork(props) {
   const {
     saleArtwork,
     artistDisplay,
@@ -16,7 +19,7 @@ function MasonryArtwork (props) {
     isClosed,
     lotLabel,
     sale_message,
-    title
+    title,
   } = props
 
   const b = block('auction-page-MasonryArtwork')
@@ -27,32 +30,27 @@ function MasonryArtwork (props) {
         <img className={b('image')} src={image} alt={title} />
       </div>
 
-      { isAuction
-        ? <div className={b('lot-number')}>
-          Lot {lotLabel}
-        </div>
-        : <div className={b('sale-message')}>
-          {sale_message}
-        </div>
-      }
+      {isAuction ? (
+        <div className={b('lot-number')}>Lot {lotLabel}</div>
+      ) : (
+        <div className={b('sale-message')}>{sale_message}</div>
+      )}
 
-      <div className={b('artists')}>
-        {artistDisplay}
-      </div>
+      <div className={b('artists')}>{artistDisplay}</div>
 
       <div
         className={b('title')}
         dangerouslySetInnerHTML={{
-          __html: titleAndYear(title, date)
+          __html: titleAndYear(title, date),
         }}
       />
 
-      { isAuction && !isClosed &&
-        <div className={b('bid-status')}>
-          <BidStatus
-            artworkItem={saleArtwork}
-          />
-        </div> }
+      {isAuction &&
+        !isClosed && (
+          <div className={b('bid-status')}>
+            <BidStatus artworkItem={saleArtwork} />
+          </div>
+        )}
     </a>
   )
 }
@@ -66,16 +64,19 @@ MasonryArtwork.propTypes = {
   lotLabel: PropTypes.string, // Not needed for e-commerce works
   artistDisplay: PropTypes.string.isRequired,
   sale_message: PropTypes.string,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state, props) => {
   const { saleArtwork } = props
-  const image = get(saleArtwork, 'artwork.images.0.image_medium', '/images/missing_image.png')
+  const image = get(
+    saleArtwork,
+    'artwork.images.0.image_medium',
+    '/images/missing_image.png'
+  )
   const { artists } = saleArtwork.artwork
-  const artistDisplay = artists && artists.length > 0
-    ? artists.map((aa) => aa.name).join(', ')
-    : ''
+  const artistDisplay =
+    artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : ''
 
   return {
     date: saleArtwork.artwork.date,
@@ -85,12 +86,8 @@ const mapStateToProps = (state, props) => {
     lotLabel: saleArtwork.lot_label,
     artistDisplay,
     sale_message: saleArtwork.artwork.sale_message,
-    title: saleArtwork.artwork.title
+    title: saleArtwork.artwork.title,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(MasonryArtwork)
-
-export const test = { MasonryArtwork }
+export default connect(mapStateToProps)(MasonryArtwork)

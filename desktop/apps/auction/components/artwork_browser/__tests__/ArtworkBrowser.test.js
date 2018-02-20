@@ -120,7 +120,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
 
     it('renders the range filter if the auction is open', () => {
       const { wrapper } = renderTestComponent({
-        Component: Sidebar.Sidebar,
+        Component: Sidebar,
         data: {
           artworkBrowser: {
             isClosed: false,
@@ -135,7 +135,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
 
     it('does not render the range filter if the auction is closed', () => {
       const { wrapper } = renderTestComponent({
-        Component: Sidebar.Sidebar,
+        Component: Sidebar,
         data: {
           artworkBrowser: {
             isClosed: true,
@@ -174,7 +174,7 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
         )
 
         const { wrapper } = renderTestComponent({
-          Component: Sidebar.Sidebar,
+          Component: Sidebar,
           store: initialStore,
         })
 

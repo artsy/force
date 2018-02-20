@@ -1,19 +1,15 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/main/artwork/MasonryArtwork'
 
-const { MasonryArtwork } = test
+const rewire = require('rewire')('../MasonryArtwork')
+const { MasonryArtwork } = rewire
 
 describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', () => {
   describe('<MasonryArtwork />', () => {
     const BidStatus = () => <div />
 
     beforeEach(() => {
-      __RewireAPI__.__Rewire__('BidStatus', BidStatus)
-    })
-
-    afterEach(() => {
-      __RewireAPI__.__ResetDependency__('BidStatus')
+      rewire.__set__('BidStatus', BidStatus)
     })
 
     it('does not render a <BidStatus /> component if closed', () => {
@@ -22,8 +18,8 @@ describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', 
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
           isAuction: true,
-          isClosed: true
-        }
+          isClosed: true,
+        },
       })
 
       wrapper.find(BidStatus).length.should.equal(0)
@@ -35,8 +31,8 @@ describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', 
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
           isAuction: false,
-          isClosed: false
-        }
+          isClosed: false,
+        },
       })
 
       wrapper.find(BidStatus).length.should.equal(0)
@@ -48,8 +44,8 @@ describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', 
         props: {
           saleArtwork: { _id: 'foo', id: 'bar' },
           isAuction: true,
-          isClosed: false
-        }
+          isClosed: false,
+        },
       })
 
       wrapper.find(BidStatus).length.should.equal(1)
@@ -62,8 +58,8 @@ describe('auction/components/artwork_browser/main/artwork/MasonryArtwork.test', 
           sale_message: '$1000',
           saleArtwork: { _id: 'foo', id: 'bar' },
           isAuction: false,
-          isClosed: false
-        }
+          isClosed: false,
+        },
       })
 
       wrapper.html().should.containEql('$1000')

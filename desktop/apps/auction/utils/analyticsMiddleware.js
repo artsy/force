@@ -1,8 +1,11 @@
 import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
-import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
+import _analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
 import { isEqual } from 'underscore'
 
-const analyticsMiddleware = store => next => action => {
+// FIXME: Rewire
+let analyticsHooks = _analyticsHooks
+
+const analyticsMiddleware = (store) => (next) => (action) => {
   const result = next(action)
   const nextState = store.getState()
 
@@ -21,16 +24,20 @@ const analyticsMiddleware = store => next => action => {
       return result
     }
     case actions.UPDATE_ESTIMATE_RANGE: {
-      trackParamChange({
-        price: nextState.artworkBrowser.filterParams.estimate_range
-      }, nextState)
+      trackParamChange(
+        {
+          price: nextState.artworkBrowser.filterParams.estimate_range,
+        },
+        nextState
+      )
       return result
     }
-    default: return result
+    default:
+      return result
   }
 }
 
-function trackableArtistIds (changed, filterParams) {
+function trackableArtistIds(changed, filterParams) {
   if (isEqual(changed, { artist: 'artists-you-follow' })) {
     return ['artists-you-follow']
   } else {
@@ -38,20 +45,17 @@ function trackableArtistIds (changed, filterParams) {
   }
 }
 
-function trackParamChange (changed, newState) {
+function trackParamChange(changed, newState) {
   const { filterParams } = newState.artworkBrowser
-  analyticsHooks.trigger(
-    'auction:artworks:params:change',
-    {
-      current: [
-        { artists: trackableArtistIds(changed, filterParams) },
-        { medium: filterParams.gene_ids },
-        { sort: filterParams.sort },
-        { price: filterParams.estimate_range }
-      ],
-      changed
-    }
-  )
+  analyticsHooks.trigger('auction:artworks:params:change', {
+    current: [
+      { artists: trackableArtistIds(changed, filterParams) },
+      { medium: filterParams.gene_ids },
+      { sort: filterParams.sort },
+      { price: filterParams.estimate_range },
+    ],
+    changed,
+  })
 }
 
-export default analyticsMiddleware
+module.exports = analyticsMiddleware

@@ -1,11 +1,14 @@
-import AddToCalendarView from 'desktop/components/add_to_calendar/react'
+import _AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 
-function AuctionInfoDesktop (props) {
+// FIXME: Rewire
+let AddToCalendarView = _AddToCalendarView
+
+export function AuctionInfoDesktop(props) {
   const {
     description,
     event,
@@ -13,7 +16,7 @@ function AuctionInfoDesktop (props) {
     liveStartAt,
     name,
     showAddToCalendar,
-    upcomingLabel
+    upcomingLabel,
   } = props
 
   const b = block('auction-AuctionInfo')
@@ -21,49 +24,36 @@ function AuctionInfoDesktop (props) {
   return (
     <header className={b()}>
       <div className={b('primary')}>
-        { isAuctionPromo &&
-          <h4 className={b('sub-header')}>
-            Sale Preview
-          </h4>
-        }
+        {isAuctionPromo && <h4 className={b('sub-header')}>Sale Preview</h4>}
 
-        <h1 className={b('title')}>
-          {name}
-        </h1>
+        <h1 className={b('title')}>{name}</h1>
 
         <div className={b('callout')}>
           <div className={b('time')}>
-            { upcomingLabel &&
-              <div className={b('upcomingLabel')}>
-                {upcomingLabel}
-              </div>
-            }
+            {upcomingLabel && (
+              <div className={b('upcomingLabel')}>{upcomingLabel}</div>
+            )}
 
-            { showAddToCalendar &&
-              <AddToCalendarView
-                event={event}
-              />
-            }
+            {showAddToCalendar && <AddToCalendarView event={event} />}
           </div>
 
-          { liveStartAt &&
+          {liveStartAt && (
             <div className={b('callout-live-label')}>
-              <span className={b('live-label')}>
-                Live auction
-              </span>
+              <span className={b('live-label')}>Live auction</span>
               <span
-                className={b.builder()('live-tooltip').mix('help-tooltip')()}
-                data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
-                data-anchor='top-left'
+                className={b
+                  .builder()('live-tooltip')
+                  .mix('help-tooltip')()}
+                data-message="Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens."
+                data-anchor="top-left"
               />
             </div>
-          }
-
+          )}
         </div>
         <div
           className={b('description')}
           dangerouslySetInnerHTML={{
-            __html: description
+            __html: description,
           }}
         />
       </div>
@@ -82,7 +72,7 @@ AuctionInfoDesktop.propTypes = {
   liveStartAt: PropTypes.string,
   name: PropTypes.string.isRequired,
   showAddToCalendar: PropTypes.bool.isRequired,
-  upcomingLabel: PropTypes.string.isRequired
+  upcomingLabel: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -95,13 +85,8 @@ const mapStateToProps = (state) => {
     liveStartAt: auction.get('live_start_at'),
     name: auction.get('name'),
     showAddToCalendar: !(auction.isClosed() || auction.isLiveOpen()),
-    upcomingLabel: auction.upcomingLabel()
+    upcomingLabel: auction.upcomingLabel(),
   }
 }
 
-export default connect(
-  mapStateToProps
-)(AuctionInfoDesktop)
-
-// Helpers
-export const test = { AuctionInfoDesktop }
+export default connect(mapStateToProps)(AuctionInfoDesktop)
