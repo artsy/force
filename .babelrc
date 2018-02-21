@@ -1,20 +1,23 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/env", {
       "targets": {
         "browsers": ["last 2 versions"]
       }
     }],
-    "react",
-    "stage-3"
+    "@babel/react",
+    "@babel/stage-3",
+    "@babel/preset-typescript"
   ],
   "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-typescript",
     "inline-react-svg",
-    "transform-runtime",
     ["module-resolver", {
+      "extensions": [".js", ".jsx", ".ts", ".tsx"],
       "root": ["./src"]
-    }],
-    "transform-class-properties"
+    }]
   ],
   "env": {
     "development": {

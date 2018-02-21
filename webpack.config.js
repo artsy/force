@@ -1,5 +1,5 @@
-const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+// const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -44,20 +44,20 @@ const config = {
           root: __dirname,
         },
       },
-      {
-        test: /(\.tsx?$)/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'cache-loader' },
-          {
-            loader: 'ts-loader',
-            options: {
-              logInfoToStdOut: true,
-              happyPackMode: true,
-            },
-          },
-        ],
-      },
+      // {
+      //   test: /(\.tsx?$)/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     { loader: 'cache-loader' },
+      //     {
+      //       loader: 'ts-loader',
+      //       options: {
+      //         logInfoToStdOut: true,
+      //         happyPackMode: true,
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /(\.jsx?$)/,
         exclude: /node_modules/,
@@ -98,24 +98,23 @@ const config = {
   },
   plugins: [
     new ProgressBarPlugin(),
-    new ForkTsCheckerWebpackPlugin({
-      formatter: 'codeframe',
-      formatterOptions: 'highlightCode',
-      tslint: false,
-      checkSyntacticErrors: true,
-      watch: ['./desktop', './mobile'],
-    }),
-    // TODO: Look into making this more compatable with TypeScript
+    // new ForkTsCheckerWebpackPlugin({
+    //   formatter: 'codeframe',
+    //   formatterOptions: 'highlightCode',
+    //   tslint: false,
+    //   checkSyntacticErrors: true,
+    //   watch: ['./desktop', './mobile'],
+    // }),
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
       compilationSuccessInfo: {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`],
       },
     }),
-    new ForkTsCheckerNotifierWebpackPlugin({
-      excludeWarnings: true,
-      skipFirstNotification: true,
-    }),
+    // new ForkTsCheckerNotifierWebpackPlugin({
+    //   excludeWarnings: true,
+    //   skipFirstNotification: true,
+    // }),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

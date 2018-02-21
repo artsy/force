@@ -1,5 +1,7 @@
-require('babel-core/register')
-require('ts-node').register()
+require('@babel/register')({
+  extensions: ['.ts', '.js', '.tsx', '.jsx'],
+})
+// require('ts-node').register()
 require('coffeescript/register')
 
 global.Promise = require('bluebird')
