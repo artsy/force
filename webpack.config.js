@@ -53,25 +53,6 @@ const config = {
             loader: 'babel-loader',
             query: {
               cacheDirectory: true,
-              // env: {
-              //   development: {
-              //     presets: ['react-hmre'],
-              //     plugins: [
-              //       [
-              //         'react-transform',
-              //         {
-              //           transforms: [
-              //             {
-              //               transform: 'react-transform-hmr',
-              //               imports: ['react'],
-              //               locals: ['module'],
-              //             },
-              //           ],
-              //         },
-              //       ],
-              //     ],
-              //   },
-              // },
             },
           },
         ],
@@ -96,6 +77,7 @@ const config = {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
+    new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',

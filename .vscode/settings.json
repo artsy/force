@@ -10,10 +10,9 @@
   },
   "files.exclude": {
     "**/.git": true
-    // "**/dist": true
   },
   "[json]": {
     "editor.formatOnSave": false
   },
-  "editor.formatOnSave": false
+  "editor.formatOnSave": true
 }

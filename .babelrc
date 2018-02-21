@@ -24,7 +24,8 @@
       "plugins": [
         ["babel-plugin-styled-components", {
           "ssr": true
-        }]
+        }],
+        "react-hot-loader/babel"
       ]
     }
   }
