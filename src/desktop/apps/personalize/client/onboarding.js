@@ -10,17 +10,22 @@ import { Wizard } from '@artsy/reaction/dist/Components/Onboarding/Wizard'
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
 
-  // Get the path we should redirect to after onboarding
-  const destination = Cookies.get('destination')
-  if (destination) {
+  let redirectTo = '/'
+  // Check the cookie for a destination
+  if (Cookies.get('destination')) {
+    redirectTo = Cookies.get('destination')
     Cookies.expire('destination')
+
+    // Also check the redirectTo from query params
+  } else if (bootstrapData.redirectTo) {
+    redirectTo = bootstrapData.redirectTo
   }
 
   // Start app
   ReactDOM.hydrate(
     <Router history={createHistory()}>
       <ContextProvider {...bootstrapData}>
-        <Wizard redirectTo={destination} />
+        <Wizard redirectTo={redirectTo} />
       </ContextProvider>
     </Router>,
     document.getElementById('react-root')
