@@ -29,6 +29,10 @@ module.exports = class ArtworkSaveView extends Backbone.View
         width: '500px',
         mode: 'register'
         copy: 'Sign up to save artworks'
+        afterSignUpAction: {
+          action: 'save',
+          objectId: @id
+        }
 
     if @saved
       save = @savedArtworks.get @id

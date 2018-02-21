@@ -32,7 +32,7 @@ module.exports = class AuthModalView extends ModalView
   initialize: (options) ->
     return if isEigen.checkWith options
 
-    { @destination, @successCallback } = options
+    { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     @preInitialize options
 
@@ -70,6 +70,9 @@ module.exports = class AuthModalView extends ModalView
     mediator.on 'modal:closed', @logClose
 
     @logState()
+
+    Cookies.set 'postSignupAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
+    Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
 
   initializeMailcheck: ->
     if @state.get('mode') is 'register'
