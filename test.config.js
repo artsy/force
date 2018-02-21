@@ -1,11 +1,16 @@
-require('babel-register')
-require('ts-node').register()
+require('@babel/register')({
+  extensions: ['.ts', '.js', '.tsx', '.jsx'],
+})
+
 require('coffeescript/register')
-require('source-map-support/register')
-require('babel-polyfill')
+require('@babel/polyfill')
 require('raf/polyfill')
 require('should')
 require('./src/lib/jade_hook')
+
+// FIXME: Do we need this?
+// require('source-map-support/register')
+// require('ts-node').register()
 
 const path = require('path')
 const Adapter = require('enzyme-adapter-react-16')

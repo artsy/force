@@ -1,17 +1,14 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import BannerWrapper, { test } from 'desktop/apps/auction/components/layout/Banner'
 import moment from 'moment'
 import sinon from 'sinon'
-const { Banner } = test
+
+const rewire = require('rewire')('../Banner')
+const { Banner } = rewire.test
 
 describe('auction/components/layout/Banner.test', () => {
   beforeEach(() => {
-    BannerWrapper.__Rewire__('ClockView', () => <div className='auction-clock' />)
-  })
-
-  afterEach(() => {
-    BannerWrapper.__ResetDependency__('ClockView')
+    rewire.__set__('ClockView', () => <div className='auction-clock' />)
   })
 
   describe('<Banner />', () => {

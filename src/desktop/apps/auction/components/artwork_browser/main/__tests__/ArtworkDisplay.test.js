@@ -1,9 +1,9 @@
 import React from 'react'
 import LoadingSpinner from 'desktop/apps/auction/components/artwork_browser/main/LoadingSpinner'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/main/ArtworkDisplay'
 
-const { ArtworkDisplay } = test
+const rewire = require('rewire')('../ArtworkDisplay')
+const { ArtworkDisplay } = rewire.test
 
 describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
   describe('<ArtworkDisplay />', () => {
@@ -17,21 +17,21 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
     const infiniteScrollAction = x => x
 
     beforeEach(() => {
-      __RewireAPI__.__Rewire__('InfiniteScroll', InfiniteScroll)
-      __RewireAPI__.__Rewire__('Jump', Jump)
-      __RewireAPI__.__Rewire__('MasonryArtwork', MasonryArtwork)
-      __RewireAPI__.__Rewire__('GridArtwork', GridArtwork)
-      __RewireAPI__.__Rewire__('ListArtwork', ListArtwork)
-      __RewireAPI__.__Rewire__('MasonryGrid', MasonryGrid)
+      rewire.__set__('InfiniteScroll', InfiniteScroll)
+      rewire.__set__('Jump', Jump)
+      rewire.__set__('MasonryArtwork', MasonryArtwork)
+      rewire.__set__('GridArtwork', GridArtwork)
+      rewire.__set__('ListArtwork', ListArtwork)
+      rewire.__set__('MasonryGrid', MasonryGrid)
     })
 
     afterEach(() => {
-      __RewireAPI__.__ResetDependency__('InfiniteScroll')
-      __RewireAPI__.__ResetDependency__('Jump')
-      __RewireAPI__.__ResetDependency__('MasonryArtwork')
-      __RewireAPI__.__ResetDependency__('GridArtwork')
-      __RewireAPI__.__ResetDependency__('ListArtwork')
-      __RewireAPI__.__ResetDependency__('MasonryGrid')
+      // __RewireAPI__.__ResetDependency__('InfiniteScroll')
+      // __RewireAPI__.__ResetDependency__('Jump')
+      // __RewireAPI__.__ResetDependency__('MasonryArtwork')
+      // __RewireAPI__.__ResetDependency__('GridArtwork')
+      // __RewireAPI__.__ResetDependency__('ListArtwork')
+      // __RewireAPI__.__ResetDependency__('MasonryGrid')
     })
 
     it('renders a <ListArtwork /> component if isMobile and isListView', () => {

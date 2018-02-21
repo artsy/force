@@ -1,15 +1,20 @@
 import * as actions from '../client/actions'
 import ChooseArtist from '../components/choose_artist'
-import CreateAccount from '../components/create_account'
-import StepMarker from '../components/step_marker'
-import SubmissionFlow from '../components/submission_flow'
-import UploadPhoto from '../components/upload_photo'
 import UploadedImage from '../components/uploaded_image'
 import React from 'react'
 import reducers from '../client/reducers'
 import { responsiveWindowAction } from '../../../components/react/responsive_window'
 import { createStore } from 'redux'
 import { shallow } from 'enzyme'
+
+const createAccountRewire = require('rewire')('../components/create_account')
+const { default: CreateAccount } = createAccountRewire
+const stepMarkerRewire = require('rewire')('../components/step_marker')
+const { default: StepMarker } = stepMarkerRewire
+const submissionFlowRewire = require('rewire')('../components/submission_flow')
+const { default: SubmissionFlow } = submissionFlowRewire
+const uploadPhotoRewire = require('rewire')('../components/upload_photo')
+const { default: UploadPhoto } = uploadPhotoRewire
 
 describe('React components', () => {
   let initialStore
@@ -85,18 +90,20 @@ describe('React components', () => {
   })
 
   describe('CreateAccount', () => {
+    let rewires = []
+
     beforeEach(() => {
-      CreateAccount.__Rewire__('ForgotPassword', () => (
-        <div className="forgot-password" />
-      ))
-      CreateAccount.__Rewire__('LogIn', () => <div className="log-in" />)
-      CreateAccount.__Rewire__('SignUp', () => <div className="sign-up" />)
+      rewires.push(
+        createAccountRewire.__set__('ForgotPassword', () => (
+          <div className="forgot-password" />
+        )),
+        createAccountRewire.__set__('LogIn', () => <div className="log-in" />),
+        createAccountRewire.__set__('SignUp', () => <div className="sign-up" />)
+      )
     })
 
     afterEach(() => {
-      CreateAccount.__ResetDependency__('ForgotPassword')
-      CreateAccount.__ResetDependency__('LogInCreateAccount')
-      CreateAccount.__ResetDependency__('SignUp')
+      rewires.forEach(reset => reset())
     })
 
     describe('log in', () => {
@@ -255,14 +262,16 @@ describe('React components', () => {
     })
 
     describe('with photos', () => {
+      let resetRewire
+
       beforeEach(() => {
-        UploadPhoto.__Rewire__('UploadedImage', () => (
+        resetRewire = uploadPhotoRewire.__set__('UploadedImage', () => (
           <div className="uploaded-image" />
         ))
       })
 
       afterEach(() => {
-        UploadPhoto.__ResetDependency__('UploadedImage')
+        resetRewire()
       })
 
       it('enables the button when there is an uploaded photo and there are no processing images', () => {
@@ -337,6 +346,8 @@ describe('React components', () => {
   })
 
   describe('SubmissionFlow', () => {
+    let rewires = []
+
     beforeEach(() => {
       const componentMap = {
         chooseArtist: {
@@ -352,15 +363,17 @@ describe('React components', () => {
           component: () => <div className="upload-photos" />,
         },
       }
-      SubmissionFlow.__Rewire__('stepsConfig', componentMap)
-      SubmissionFlow.__Rewire__('StepMarker', () => (
-        <div className="step-marker" />
-      ))
+
+      rewires.push(
+        submissionFlowRewire.__set__('stepsConfig', componentMap),
+        submissionFlowRewire.__set__('StepMarker', () => (
+          <div className="step-marker" />
+        ))
+      )
     })
 
     afterEach(() => {
-      SubmissionFlow.__ResetDependency__('stepsConfig')
-      SubmissionFlow.__ResetDependency__('StepMarker')
+      rewires.forEach(reset => reset())
     })
 
     describe('non-logged-in user, stepping through', () => {

@@ -2,10 +2,13 @@ import Camera from '../../../../components/main_layout/public/icons/camera.svg'
 import CheckboxInput from '../checkbox_input'
 import PropTypes from 'prop-types'
 import React from 'react'
-import UploadedImage from '../uploaded_image'
+import _UploadedImage from '../uploaded_image'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { selectPhoto, submitPhoto, updateSkipPhotoSubmission } from '../../client/actions'
+
+// FIXME: Rewire
+let UploadedImage = _UploadedImage
 
 function UploadPhoto (props) {
   const {

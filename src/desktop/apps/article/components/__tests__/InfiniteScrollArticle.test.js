@@ -30,8 +30,9 @@ describe('<InfiniteScrollArticle />', () => {
     }
   }
 
-  const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
-  const { Article } = require('@artsy/reaction/dist/Components/Publishing')
+  let rewire = require('rewire')('../InfiniteScrollArticle')
+  let InfiniteScrollArticle = rewire.default
+  const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
@@ -76,7 +77,7 @@ describe('<InfiniteScrollArticle />', () => {
         id: '678'
       })]
     }
-    InfiniteScrollArticle.__Rewire__(
+    rewire.__set__(
       'positronql',
       sinon.stub().returns(Promise.resolve(data))
     )

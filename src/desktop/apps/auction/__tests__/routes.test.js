@@ -2,8 +2,9 @@ import * as routes from 'desktop/apps/auction/routes'
 import Backbone from 'backbone'
 import CurrentUser from 'desktop/models/current_user.coffee'
 import sinon from 'sinon'
-import { __RewireAPI__ as RoutesRewireApi } from '../routes'
 import { fabricate } from 'antigravity'
+
+const rewire = require('rewire')('../routes')
 
 describe('#index', () => {
   let req
@@ -29,7 +30,6 @@ describe('#index', () => {
 
   afterEach(() => {
     Backbone.sync.restore()
-    RoutesRewireApi.__ResetDependency__('metaphysics')
   })
 
   it('renders the index with the correct variables', () => {
@@ -51,9 +51,9 @@ describe('#index', () => {
       }
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
-    RoutesRewireApi.__Rewire__('renderReactLayout', () => '<html />')
-    RoutesRewireApi.__Rewire__('actions', {
+    rewire.__set__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    rewire.__set__('renderLayout', () => '<html />')
+    rewire.__set__('actions', {
       fetchArtworksByFollowedArtists: () => ({ type: 'GET_ARTWORKS_SUCCESS' }),
       fetchArtworks: () => ({ type: 'GET_ARTWORKS_SUCCESS' })
     })
@@ -105,7 +105,7 @@ describe('#redirectLive', () => {
       }
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    rewire.__set__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
 
     res = {
       redirect: (url) => {
@@ -136,7 +136,7 @@ describe('#redirectLive', () => {
       }
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    rewire.__set__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
     await routes.redirectLive(req, res, next)
     res.redirect.called.should.not.be.ok()
     next.called.should.be.ok()
@@ -161,7 +161,7 @@ describe('#redirectLive', () => {
       }
     }
 
-    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    rewire.__set__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
     await routes.redirectLive(req, res, next)
     res.redirect.called.should.not.be.ok()
     next.called.should.be.ok()

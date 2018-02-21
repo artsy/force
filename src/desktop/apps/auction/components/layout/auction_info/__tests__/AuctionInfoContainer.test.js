@@ -1,8 +1,8 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/layout/auction_info/index'
 
-const { AuctionInfoContainer } = test
+const rewire = require('rewire')('../index')
+const { AuctionInfoContainer } = rewire.test
 
 describe('auction/components/layout/auction_info/AuctionInfoContainer.test', () => {
   describe('<AuctionInfoContainer />', () => {
@@ -10,13 +10,8 @@ describe('auction/components/layout/auction_info/AuctionInfoContainer.test', () 
     const AuctionInfoMobile = () => <div />
 
     beforeEach(() => {
-      __RewireAPI__.__Rewire__('AuctionInfoDesktop', AuctionInfoDesktop)
-      __RewireAPI__.__Rewire__('AuctionInfoMobile', AuctionInfoMobile)
-    })
-
-    afterEach(() => {
-      __RewireAPI__.__Rewire__('AuctionInfoDesktop', AuctionInfoDesktop)
-      __RewireAPI__.__Rewire__('AuctionInfoMobile', AuctionInfoMobile)
+      rewire.__set__('AuctionInfoDesktop', AuctionInfoDesktop)
+      rewire.__set__('AuctionInfoMobile', AuctionInfoMobile)
     })
 
     it('renders mobile mode if isMobile', () => {

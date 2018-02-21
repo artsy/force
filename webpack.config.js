@@ -67,25 +67,25 @@ const config = {
             loader: 'babel-loader',
             query: {
               cacheDirectory: true,
-              env: {
-                development: {
-                  presets: ['react-hmre'],
-                  plugins: [
-                    [
-                      'react-transform',
-                      {
-                        transforms: [
-                          {
-                            transform: 'react-transform-hmr',
-                            imports: ['react'],
-                            locals: ['module'],
-                          },
-                        ],
-                      },
-                    ],
-                  ],
-                },
-              },
+              // env: {
+              //   development: {
+              //     presets: ['react-hmre'],
+              //     plugins: [
+              //       [
+              //         'react-transform',
+              //         {
+              //           transforms: [
+              //             {
+              //               transform: 'react-transform-hmr',
+              //               imports: ['react'],
+              //               locals: ['module'],
+              //             },
+              //           ],
+              //         },
+              //       ],
+              //     ],
+              //   },
+              // },
             },
           },
         ],

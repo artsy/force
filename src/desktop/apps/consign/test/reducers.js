@@ -3,8 +3,10 @@ import configureMockStore from 'redux-mock-store'
 import reducers from '../client/reducers'
 import thunk from 'redux-thunk'
 import sinon from 'sinon'
-import * as actions from '../client/actions'
-import { __RewireAPI__ as ActionsRewireApi } from '../client/actions'
+// import * as actions from '../client/actions'
+
+const rewire = require('rewire')('../client/actions')
+const actions = rewire
 
 describe('Reducers', () => {
   describe('auctions', () => {
@@ -81,8 +83,8 @@ describe('Reducers', () => {
             body: [{ name: 'andy-warhol' }, { name: 'kara-walker' }],
           })
 
-          ActionsRewireApi.__Rewire__('request', request)
-          ActionsRewireApi.__Rewire__('sd', {
+          rewire.__set__('request', request)
+          rewire.__set__('sd', {
             CURRENT_USER: { accessToken: 'foo' },
           })
         })
@@ -110,6 +112,7 @@ describe('Reducers', () => {
       describe('#createSubmission', () => {
         let store
         let request
+        let rewires = []
 
         beforeEach(() => {
           benv.setup(() => {
@@ -131,23 +134,23 @@ describe('Reducers', () => {
           request.send = sinon.stub().returns({ body: { id: 'sub1' } })
 
           global.window = { btoa: sinon.stub() }
-          ActionsRewireApi.__Rewire__('request', request)
-          ActionsRewireApi.__Rewire__(
-            'fetchToken',
-            sinon.stub().returns('fooToken')
+          rewires.push(
+            rewire.__set__('request', request),
+            rewire.__set__(
+              'fetchToken',
+              sinon.stub().returns('fooToken')
+            ),
+            rewire.__set__('sd', {
+              CURRENT_USER: { accessToken: 'foo' },
+              CONVECTION_APP_ID: 'myapp',
+            })
           )
-          ActionsRewireApi.__Rewire__('sd', {
-            CURRENT_USER: { accessToken: 'foo' },
-            CONVECTION_APP_ID: 'myapp',
-          })
         })
 
         afterEach(() => {
           benv.teardown()
           global.btoa.restore()
-          ActionsRewireApi.__ResetDependency__('request')
-          ActionsRewireApi.__ResetDependency__('fetchToken')
-          ActionsRewireApi.__ResetDependency__('sd')
+          rewires.forEach(reset => reset())
         })
 
         it('sends the correct actions on success without updating phone', (done) => {
@@ -258,6 +261,7 @@ describe('Reducers', () => {
         let store
         let request
         let mockStore
+        let rewires = []
 
         beforeEach(() => {
           const middlewares = [thunk]
@@ -276,16 +280,17 @@ describe('Reducers', () => {
           request.set = sinon.stub().returns(request)
           request.send = sinon.stub().returns(userResponse)
 
-          ActionsRewireApi.__Rewire__('request', request)
-          ActionsRewireApi.__Rewire__('sd', {
-            AP: { loginPagePath: 'https://artsy/login' },
-            CSRF_TOKEN: 'foo',
-          })
+          rewires.push(
+            rewire.__set__('request', request),
+            rewire.__set__('sd', {
+              AP: { loginPagePath: 'https://artsy/login' },
+              CSRF_TOKEN: 'foo',
+            })
+          )
         })
 
         afterEach(() => {
-          ActionsRewireApi.__ResetDependency__('request')
-          ActionsRewireApi.__ResetDependency__('sd')
+          rewires.forEach(reset => reset())
         })
 
         it('calls the correct actions', (done) => {
@@ -346,6 +351,7 @@ describe('Reducers', () => {
       describe('#resetPassword', () => {
         let store
         let request
+        let rewires = []
 
         beforeEach(() => {
           const middlewares = [thunk]
@@ -357,16 +363,17 @@ describe('Reducers', () => {
           request.set = sinon.stub().returns(request)
           request.send = sinon.stub().returns({ success: true })
 
-          ActionsRewireApi.__Rewire__('request', request)
-          ActionsRewireApi.__Rewire__('sd', {
-            API_URL: 'api.artsy.net',
-            ARTSY_XAPP_TOKEN: 'foo',
-          })
+          rewires.push(
+            rewire.__set__('request', request),
+            rewire.__set__('sd', {
+              API_URL: 'api.artsy.net',
+              ARTSY_XAPP_TOKEN: 'foo',
+            })
+          )
         })
 
         afterEach(() => {
-          ActionsRewireApi.__ResetDependency__('request')
-          ActionsRewireApi.__ResetDependency__('sd')
+          rewires.forEach(reset => reset())
         })
 
         it('calls the correct actions', (done) => {
@@ -387,6 +394,7 @@ describe('Reducers', () => {
       describe('#signUp', () => {
         let store
         let request
+        let rewires = []
 
         beforeEach(() => {
           const middlewares = [thunk]
@@ -405,16 +413,17 @@ describe('Reducers', () => {
           request.set = sinon.stub().returns(request)
           request.send = sinon.stub().returns(userResponse)
 
-          ActionsRewireApi.__Rewire__('request', request)
-          ActionsRewireApi.__Rewire__('sd', {
-            AP: { loginPagePath: 'https://artsy/login' },
-            CSRF_TOKEN: 'foo',
-          })
+          rewires.push(
+            rewire.__set__('request', request),
+            rewire.__set__('sd', {
+              AP: { loginPagePath: 'https://artsy/login' },
+              CSRF_TOKEN: 'foo',
+            })
+          )
         })
 
         afterEach(() => {
-          ActionsRewireApi.__ResetDependency__('request')
-          ActionsRewireApi.__ResetDependency__('sd')
+          rewires.forEach(reset => reset())
         })
 
         it('calls the correct actions', (done) => {
@@ -791,6 +800,7 @@ describe('Reducers', () => {
       describe('#uploadImageToConvection', () => {
         let store
         let request
+        let rewires = []
 
         beforeEach(() => {
           benv.setup(() => {
@@ -813,23 +823,23 @@ describe('Reducers', () => {
             .returns({ body: { token: 'i-have-access' } })
 
           global.window = { btoa: sinon.stub() }
-          ActionsRewireApi.__Rewire__('request', request)
-          ActionsRewireApi.__Rewire__(
-            'fetchToken',
-            sinon.stub().returns('fooToken')
+          rewires.push(
+            rewire.__set__('request', request),
+            rewire.__set__(
+              'fetchToken',
+              sinon.stub().returns('fooToken')
+            ),
+            rewire.__set__('sd', {
+              CURRENT_USER: { accessToken: 'foo' },
+              CONVECTION_APP_ID: 'myapp',
+            })
           )
-          ActionsRewireApi.__Rewire__('sd', {
-            CURRENT_USER: { accessToken: 'foo' },
-            CONVECTION_APP_ID: 'myapp',
-          })
         })
 
         afterEach(() => {
           benv.teardown()
           global.btoa.restore()
-          ActionsRewireApi.__ResetDependency__('request')
-          ActionsRewireApi.__ResetDependency__('fetchToken')
-          ActionsRewireApi.__ResetDependency__('sd')
+          rewires.forEach(reset => reset())
         })
 
         it('stops processing the image if it succeeds', (done) => {

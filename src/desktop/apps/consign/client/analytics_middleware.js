@@ -1,6 +1,8 @@
 import * as actions from './actions'
-import analyticsHooks from '../../../lib/analytics_hooks.coffee'
-import { data as sd } from 'sharify'
+import _analyticsHooks from '../../../lib/analytics_hooks.coffee'
+
+// FIXME: Rewire
+let analyticsHooks = _analyticsHooks
 
 const analyticsMiddleware = store => next => action => {
   const result = next(action)

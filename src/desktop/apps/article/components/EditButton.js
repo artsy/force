@@ -1,10 +1,14 @@
 import * as React from 'react'
 import ChannelMemberQuery from 'desktop/apps/article/queries/channelMember'
 import PropTypes from 'prop-types'
-import { positronql } from 'desktop/lib/positronql'
+import { positronql as _positronql } from 'desktop/lib/positronql'
 import styled from 'styled-components'
-import { data as sd } from 'sharify'
+import { data as _sd } from 'sharify'
 import { pluck, contains } from 'underscore'
+
+// FIXME: Rewire
+let sd = _sd
+let positronql = _positronql
 
 export class EditButton extends React.Component {
   static propTypes = {

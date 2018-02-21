@@ -3,16 +3,22 @@ import embed from 'particle'
 import markdown from 'desktop/components/util/markdown.coffee'
 import App from 'desktop/apps/article/components/App'
 import ArticleQuery from 'desktop/apps/article/queries/article'
-import Article from 'desktop/models/article.coffee'
+import _Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
 import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article/queries/superArticle'
-import { positronql } from 'desktop/lib/positronql'
+import { positronql as _positronql } from 'desktop/lib/positronql'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
-import { data as sd } from 'sharify'
-import { renderLayout } from '@artsy/stitch'
+import { data as _sd } from 'sharify'
+import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
+
+// FIXME: Rewire
+let sd = _sd
+let positronql = _positronql
+let Article = _Article
+let renderLayout = _renderLayout
 
 export async function index (req, res, next) {
   const articleId = req.params.slug

@@ -7,8 +7,11 @@ import updeep from 'updeep'
 import { data as sd } from 'sharify'
 import { Article } from '@artsy/reaction/dist/Components/Publishing'
 import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
-import SuperArticleView from 'desktop/components/article/client/super_article.coffee'
+import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
+
+// FIXME: Rewire
+let SuperArticleView = _SuperArticleView
 
 const NAVHEIGHT = '53px'
 

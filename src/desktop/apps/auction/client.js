@@ -6,10 +6,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import auctionReducer from 'desktop/apps/auction/reducers'
 import configureStore from 'desktop/components/react/utils/configureStore'
-import { rehydrateClient } from 'desktop/components/react/utils/renderReactLayout'
 
 export default () => {
-  const bootstrapData = rehydrateClient(window.__BOOTSTRAP__)
+  const bootstrapData = window.__BOOTSTRAP__
   const auctionModel = new Auction(bootstrapData.app.auction)
   const auctionArticles = new Articles(bootstrapData.app.articles)
   const { templateComponents } = bootstrapData

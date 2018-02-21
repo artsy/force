@@ -1,9 +1,9 @@
 import sinon from 'sinon'
 import App from 'desktop/apps/categories/components/App'
-import {
-  index,
-  __RewireAPI__ as RoutesRewireApi
-} from 'desktop/apps/categories/routes'
+
+const rewire = require('rewire')('../routes')
+const { index } = rewire
+
 
 let req
 let res
@@ -41,18 +41,18 @@ describe('#index', () => {
       }
     }
 
-    RoutesRewireApi.__Rewire__(
+    rewire.__set__(
       'metaphysics',
       sinon.stub().returns(Promise.resolve(geneFamiliesQuery))
     )
 
     renderLayout = sinon.stub()
-    RoutesRewireApi.__Rewire__('renderLayout', renderLayout)
+    rewire.__set__('renderLayout', renderLayout)
   })
 
-  afterEach(() => {
-    RoutesRewireApi.__ResetDependency__('metaphysics')
-  })
+  // afterEach(() => {
+  //   RoutesRewireApi.__ResetDependency__('metaphysics')
+  // })
 
   it('renders the categories app', () => {
     index(req, res, next).then(() => {

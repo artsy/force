@@ -1,20 +1,23 @@
 import Articles from 'desktop/collections/articles.coffee'
-import React from 'react'
 import footerItems from 'desktop/apps/auction/utils/footerItems'
 import moment from 'moment'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import Layout from 'desktop/apps/auction/components/Layout'
 import { cloneDeep } from 'lodash'
 import { followedArtistSaleArtworks } from '../artwork_browser/__tests__/fixtures/followedArtistSaleArtworks'
 import { promotedSaleArtworks } from '../artwork_browser/__tests__/fixtures/promotedSaleArtworks'
 
+const rewire = require('rewire')('../Layout')
+const Layout = rewire.default
+
 describe('<Layout />', () => {
+  let resetRewire
+
   beforeEach(() => {
-    Layout.__Rewire__('Banner', () => <div />)
+    resetRewire = rewire.__set__('Banner', () => '')
   })
 
   afterEach(() => {
-    Layout.__ResetDependency__('Banner')
+    resetRewire()
   })
 
   it('default auction with no user', () => {
@@ -226,8 +229,6 @@ describe('<Layout />', () => {
   })
 
   it('index, registered to bid but auction closed', () => {
-    Layout.__ResetDependency__('Banner')
-
     const { wrapper } = renderTestComponent({
       Component: Layout,
       options: { renderMode: 'render' },
@@ -253,7 +254,6 @@ describe('<Layout />', () => {
 
     wrapper.find('.auction-AuctionInfo__title').text().should.equal('An Auction')
     wrapper.find('.auction-AuctionInfo__callout').text().should.equal('Auction Closed')
-    wrapper.find('.auction-Banner__closed').text().should.equal('Auction Closed')
   })
 
   describe('index, registration closed', () => {

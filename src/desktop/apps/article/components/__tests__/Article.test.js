@@ -30,7 +30,8 @@ describe('<Article />', () => {
     }
   }
 
-  const ArticleLayout = require('desktop/apps/article/components/layouts/Article').default
+  const rewire = require('rewire')('../layouts/Article')
+  const ArticleLayout = rewire.default
   const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
   const { Article } = require('@artsy/reaction/dist/Components/Publishing')
 
@@ -104,7 +105,7 @@ describe('<Article />', () => {
       title: 'Super Article Title'
     })
     const SuperArticleView = sinon.stub()
-    ArticleLayout.__Rewire__('SuperArticleView', SuperArticleView)
+    rewire.__set__('SuperArticleView', SuperArticleView)
     const rendered = mount(
       <ArticleLayout
         isSuper

@@ -3,13 +3,16 @@ import PromotedSaleArtworks from 'desktop/apps/auction/components/artwork_browse
 import ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
-import Banner from 'desktop/apps/auction/components/layout/Banner'
+import _Banner from 'desktop/apps/auction/components/layout/Banner'
 import Footer from 'desktop/apps/auction/components/layout/Footer'
 import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
+
+// FIXME: Rewire
+let Banner = _Banner
 
 function Layout (props) {
   const {
