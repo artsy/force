@@ -1,16 +1,11 @@
 if show.formatCity()
-  = show.formatCity()
+  = show.formatCity() + ", "
+else if show.isOnlineExclusive()
+  = "Online Exclusive, "
 
 if show.upcoming()
-  if show.formatCity()
-    = ', '
   | Opening #{show.dateFormatted('start_at')}
 else if show.isEndingSoon()
-  if show.formatCity()
-    = ', '
   span.fsfs-warning Closing #{show.endingIn()}
 else
-  if show.formatCity()
-    | ,
-    = ' '
   | #{show.date('start_at').format('MMM DD')} – #{show.dateFormatted('end_at')}
