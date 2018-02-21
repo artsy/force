@@ -13,6 +13,7 @@
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-transform-typescript",
+    ["relay", { "artifactDirectory": "/node_modules/@artsy/reaction-force/src/__generated__" }],
     "inline-react-svg",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],

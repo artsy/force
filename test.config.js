@@ -10,7 +10,6 @@ require('./src/lib/jade_hook')
 
 // FIXME: Do we need this?
 // require('source-map-support/register')
-// require('ts-node').register()
 
 const path = require('path')
 const Adapter = require('enzyme-adapter-react-16')

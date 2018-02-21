@@ -1,7 +1,7 @@
 require('@babel/register')({
   extensions: ['.ts', '.js', '.tsx', '.jsx'],
+  ignore: [/node_modules\/(?!(@artsy\/reaction-force\/src))/],
 })
-// require('ts-node').register()
 require('coffeescript/register')
 
 global.Promise = require('bluebird')
