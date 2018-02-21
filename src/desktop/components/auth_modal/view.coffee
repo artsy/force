@@ -39,7 +39,7 @@ module.exports = class AuthModalView extends ModalView
     super
 
   preInitialize: (options = {}) ->
-    { @copy, @context } = options
+    { @copy, @context, @signupIntent } = options
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
@@ -52,6 +52,7 @@ module.exports = class AuthModalView extends ModalView
 
     @templateData = _.extend {
       context: @context
+      signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
       redirectTo: switch @state.get 'mode'
         when 'login' then postLoginPath
@@ -112,6 +113,7 @@ module.exports = class AuthModalView extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     @user.set (data = @serializeForm())
+    @user.set(signupIntent: @signupIntent)
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>
