@@ -30,7 +30,13 @@ module.exports = class SaveButton extends Backbone.View
 
   toggle: (e) ->
     unless @saved
-      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to save artworks' }
+      mediator.trigger 'open:auth',
+        mode: 'register',
+        copy: 'Sign up to save artworks',
+        afterSignUpAction: {
+          action: 'save',
+          objectId: @model.id
+        }
       return false
 
     trackedProperties = {

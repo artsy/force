@@ -11,10 +11,9 @@ module.exports = class SaveControls extends Backbone.View
 
   initialize: (options) ->
     throw 'You must pass an el' unless @el?
-    return unless options.artworkCollection && options.artwork
+    return unless options.artwork
 
     { @artworkCollection, @artwork, @context_page } = options
-
     @$button = @$('.overlay-button-save')
 
     @listenTo @artworkCollection, "add:#{@artwork.id}", @onArtworkSaveChange
@@ -32,6 +31,10 @@ module.exports = class SaveControls extends Backbone.View
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: 'Sign up to save artworks'
+        afterSignUpAction: {
+          action: 'save',
+          objectId: @artwork.id
+        }
       return false
 
     trackedProperties = {
