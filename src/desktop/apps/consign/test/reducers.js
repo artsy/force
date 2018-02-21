@@ -3,7 +3,6 @@ import configureMockStore from 'redux-mock-store'
 import reducers from '../client/reducers'
 import thunk from 'redux-thunk'
 import sinon from 'sinon'
-// import * as actions from '../client/actions'
 
 const rewire = require('rewire')('../client/actions')
 const actions = rewire

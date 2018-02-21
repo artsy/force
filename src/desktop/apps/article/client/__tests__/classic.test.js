@@ -22,7 +22,6 @@ describe('Classic Article', () => {
       Backbone.$ = window.$
       sinon.stub(Backbone, 'sync')
 
-      // const classic = requirerequire('desktop/apps/article/client/classic')
       rewire = require('rewire')('../classic')
       init = rewire.init
       rewires.push(rewire.__set__('$', window.$))

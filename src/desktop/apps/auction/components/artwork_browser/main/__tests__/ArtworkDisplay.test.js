@@ -25,15 +25,6 @@ describe('auction/components/artwork_browser/main/ArtworkDisplay.test', () => {
       rewire.__set__('MasonryGrid', MasonryGrid)
     })
 
-    afterEach(() => {
-      // __RewireAPI__.__ResetDependency__('InfiniteScroll')
-      // __RewireAPI__.__ResetDependency__('Jump')
-      // __RewireAPI__.__ResetDependency__('MasonryArtwork')
-      // __RewireAPI__.__ResetDependency__('GridArtwork')
-      // __RewireAPI__.__ResetDependency__('ListArtwork')
-      // __RewireAPI__.__ResetDependency__('MasonryGrid')
-    })
-
     it('renders a <ListArtwork /> component if isMobile and isListView', () => {
       const { wrapper } = renderTestComponent({
         Component: ArtworkDisplay,

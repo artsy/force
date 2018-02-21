@@ -4,7 +4,6 @@ import sinon from 'sinon'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
 
-// import { amp, classic, editorialSignup, index, subscribedToEditorial, __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/article/routes'
 const rewire = require('rewire')('../routes')
 const { amp, classic, editorialSignup, index, subscribedToEditorial } = rewire
 
