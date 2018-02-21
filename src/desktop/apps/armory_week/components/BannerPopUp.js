@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import colors from '@artsy/reaction-force/dist/Assets/Colors'
-import InvertedButton from '@artsy/reaction-force/dist/Components/Buttons/Inverted'
+import colors from '@artsy/reaction/dist/Assets/Colors'
+import InvertedButton from '@artsy/reaction/dist/Components/Buttons/Inverted'
 
 import MarketingModal from '../../../components/marketing_signup_modal/index.coffee'
 

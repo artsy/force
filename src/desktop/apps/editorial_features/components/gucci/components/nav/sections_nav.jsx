@@ -1,9 +1,9 @@
 import styled, { keyframes } from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Colors from '@artsy/reaction-force/dist/Assets/Colors'
-import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
-import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
+import Colors from '@artsy/reaction/dist/Assets/Colors'
+import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
+import { Fonts } from '@artsy/reaction/dist/Components/Publishing/Fonts'
 
 export const SectionsNav = (props) => {
   const { animated, activeSection, sections, onClick } = props

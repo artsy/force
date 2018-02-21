@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
-import Icon from '@artsy/reaction-force/dist/Components/Icon'
-import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { PartnerInline } from '@artsy/reaction-force/dist/Components/Publishing/Partner/PartnerInline'
+import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
+import Icon from '@artsy/reaction/dist/Components/Icon'
+import { Fonts } from '@artsy/reaction/dist/Components/Publishing/Fonts'
+import { PartnerInline } from '@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline'
 
 export class Header extends Component {
   static propTypes = {

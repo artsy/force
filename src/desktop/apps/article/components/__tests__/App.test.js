@@ -31,7 +31,7 @@ describe('<App />', () => {
   }
 
   const App = require('desktop/apps/article/components/App').default
-  const { Article, Fixtures } = require('@artsy/reaction-force/dist/Components/Publishing')
+  const { Article, Fixtures } = require('@artsy/reaction/dist/Components/Publishing')
   const ArticleLayout = require('../layouts/Article').default
 
   it('renders a standard article', () => {

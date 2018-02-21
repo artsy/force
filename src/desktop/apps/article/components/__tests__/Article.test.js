@@ -32,7 +32,7 @@ describe('<Article />', () => {
 
   const ArticleLayout = require('desktop/apps/article/components/layouts/Article').default
   const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
-  const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
+  const { Article } = require('@artsy/reaction/dist/Components/Publishing')
 
   it('renders a standard article', () => {
     const article = _.extend({}, fixtures.article, {

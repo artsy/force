@@ -3,7 +3,7 @@ import GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/ar
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import React from 'react'
 import get from 'lodash.get'
-import { Artwork } from '@artsy/reaction-force/dist/Components/Artwork'
+import { Artwork } from '@artsy/reaction/dist/Components/Artwork'
 import { ArtworkRail } from '../artwork_rail/ArtworkRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'

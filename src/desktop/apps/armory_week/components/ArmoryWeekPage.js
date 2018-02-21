@@ -1,10 +1,10 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-import colors from '@artsy/reaction-force/dist/Assets/Colors'
-import { Row, Col } from '@artsy/reaction-force/dist/Components/Grid'
-import Text from '@artsy/reaction-force/dist/Components/Text'
-import Title from '@artsy/reaction-force/dist/Components/Title'
+import colors from '@artsy/reaction/dist/Assets/Colors'
+import { Row, Col } from '@artsy/reaction/dist/Components/Grid'
+import Text from '@artsy/reaction/dist/Components/Text'
+import Title from '@artsy/reaction/dist/Components/Title'
 
 const Container = styled.div`
   margin: 0 auto;

@@ -216,7 +216,7 @@ export default function(app) {
     })
 
     mountAndReload(path.resolve('src/desktop'), {
-      watchModules: ['@artsy/reaction-force'],
+      watchModules: ['@artsy/reaction'],
     })
 
     // In staging or prod, mount routes normally
@@ -235,7 +235,7 @@ export default function(app) {
   app.get('/system/up', (req, res) => res.send(200, { nodejs: true }))
 
   // Ensure CurrentUser is set for Artsy Passport
-  // TODO: Investigate race condition b/t reaction-force's use of AP
+  // TODO: Investigate race condition b/t reaction's use of AP
   artsyPassport.options.CurrentUser = CurrentUser
 
   // 404 handler
