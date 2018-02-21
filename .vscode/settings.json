@@ -1,0 +1,17 @@
+{
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "javascript.validate.enable": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/graphql": true
+  },
+  "files.exclude": {
+    "**/.git": true
+    // "**/dist": true
+  },
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "editor.formatOnSave": true
+}

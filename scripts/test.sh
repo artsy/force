@@ -8,29 +8,29 @@ run () {
   case $CIRCLE_NODE_INDEX in
   0)
     yarn assets
-    yarn acceptance test/acceptance/*.js
+    yarn acceptance src/test/acceptance/*.js
     ;;
   1)
-    yarn mocha test/lib/*
-    yarn mocha $(find desktop/test -name '*.coffee')
-    yarn mocha $(find desktop/components/*/test -name '*.coffee')
-    yarn mocha $(find desktop/components/*/test -name '*.js')
-    yarn mocha $(find desktop/components/**/*/test -name '*.coffee')
-    yarn mocha $(find desktop/components/**/*/test -name '*.js')
-    yarn mocha $(find desktop/components -name '*.test.js')
+    yarn mocha src/test/lib/*
+    yarn mocha $(find src/desktop/test -name '*.coffee')
+    yarn mocha $(find src/desktop/components/*/test -name '*.coffee')
+    yarn mocha $(find src/desktop/components/*/test -name '*.js')
+    yarn mocha $(find src/desktop/components/**/*/test -name '*.coffee')
+    yarn mocha $(find src/desktop/components/**/*/test -name '*.js')
+    yarn mocha $(find src/desktop/components -name '*.test.js')
     ;;
   2)
-    yarn mocha $(find desktop/apps/*/test -name '*.coffee')
-    yarn mocha $(find desktop/apps/*/test -name '*.js')
-    yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee')
-    yarn mocha $(find desktop/apps -name '*.test.js')
+    yarn mocha $(find src/desktop/apps/*/test -name '*.coffee')
+    yarn mocha $(find src/desktop/apps/*/test -name '*.js')
+    yarn mocha $(find src/desktop/apps/*/**/*/test -name '*.coffee')
+    yarn mocha $(find src/desktop/apps -name '*.test.js')
     ;;
   3)
-    yarn mocha $(find mobile/test -name '*.coffee')
-    yarn mocha $(find mobile/components/*/test -name '*.coffee')
-    yarn mocha $(find mobile/components/**/*/test -name '*.coffee')
-    yarn mocha $(find mobile/apps/*/test -name '*.coffee')
-    yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')
+    yarn mocha $(find src/mobile/test -name '*.coffee')
+    yarn mocha $(find src/mobile/components/*/test -name '*.coffee')
+    yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
+    yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
+    yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
     ;;
   esac
 }

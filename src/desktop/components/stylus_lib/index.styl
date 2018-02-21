@@ -1,0 +1,266 @@
+//
+// A library of mixins and variables commonly used throughout stylesheets.
+//
+// Do NOT put any actual style declarations here. We don't want this to impact
+// CSS size.
+//
+
+@require '../../../../node_modules/nib'
+@require './typography'
+
+// Widths
+content-margin-top = 10px
+default-icon-font-size = 32px
+default-max-page-width = 1250px
+default-modal-padding = 30px
+feed-max-width = 1084px
+golden-ratio-small-percent = 38%
+gutter = 30px
+home-logo-size = 52px
+layout-side-margin = 55px
+main-header-height = 53px
+nav-bar-break = 550px
+welcome-header-height = 85px
+responsive-mobile-width = 768px
+
+// Colors
+json('../../../../node_modules/artsy-ezel-components/stylus_lib/colors.json')
+new-green-color = #16D047
+new-red-color = #F4645C
+new-yellow-color = #f1af1b
+
+// Z-indexes
+zindex-deepzoom = 1000
+zindex-filter-fixed-header = 980
+zindex-flash = 1080
+zindex-hover-pulldown = 800
+zindex-iframepopover = 1050
+zindex-jump = 950
+zindex-modal = 1070
+zindex-primary-nav = 970
+
+// Utilities
+force-hardware-acceleration()
+  transform translate3d(0, 0, 0)
+
+prevent-content-shift()
+  transform translateZ(0)
+
+// Surprisingly, nib doesn't support calc
+calc()
+  for prefix in webkit moz ms o
+    arguments = unquote(arguments) if typeof(arguments) is string
+    add-property(current-property[0], s('-%s-calc(%s)', prefix, arguments))
+  s('calc(%s)', arguments)
+
+fade-in()
+  opacity 0
+  &.is-fade-in
+    transition opacity 0.5s
+    opacity 1
+
+caret(color = black)
+  display inline-block
+  content ''
+  width 0
+  height 0
+  vertical-align middle
+  border-top 8px solid color
+  border-right 4px solid transparent
+  border-left 4px solid transparent
+  margin 2px 0 4px 4px
+
+iconfont-styling()
+  font-family 'artsy-icons'
+  speak none
+  font-style normal
+  font-weight normal
+  font-variant normal
+  text-transform none
+  text-decoration none
+  line-height default-icon-font-size
+  font-size default-icon-font-size
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
+bottom-cover-gradient(height)
+  position relative
+  &::after
+    content '.'
+    width 100%
+    height height
+    position absolute
+    bottom 0
+    left 0
+    color transparent
+    display block
+    position absolute
+    z-index 2
+    background linear-gradient(top, rgba(white, 0), white)
+    pointer-events none
+
+// Takes a color and returns the RGBA equivalent
+//
+// transparify(light-grey-text-color, black)
+// => rgba(0,0,0,0.4)
+transparify(color, basecolor)
+  if dark(basecolor)
+    rgba(basecolor, unit(lightness(invert(color)), '') * 0.01)
+  else
+    rgba(basecolor, unit(lightness(color), '') * 0.01)
+
+block-margins(margin-size = 20px, bottom-margin-size = false)
+  if bottom-margin-size
+    margin margin-size 0 bottom-margin-size 0
+  else
+    margin margin-size 0
+
+  &:first-child
+    margin-top 0
+  &:last-child
+    margin-bottom 0
+
+inline-block-margins(margin-size = 20px)
+  margin 0 margin-size
+  &:first-child
+    margin-left 0
+  &:last-child
+    margin-right 0
+
+// Grid mixins used in the grid component mostly, but elsewhere for custom gap sizes
+grid-n-up(n, horizontalGap, verticalGap = horizontalGap)
+  > .grid-item
+    margin verticalGap horizontalGap 0 horizontalGap
+    &:nth-child(-n+{n})
+      margin-top 0
+    &:nth-child(1n)
+      margin-left 0
+    &:nth-child({n}n)
+      margin-right 0
+    &:last-child
+      margin-right 0
+  &.is-flush .grid-item
+    width (100 / n)%
+    margin 0 !important
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      margin (verticalGap / 2) (horizontalGap / 2) 0 (horizontalGap / 2)
+
+grid-4-up(horizontalGap, verticalGap = horizontalGap)
+  grid-n-up(4, horizontalGap, verticalGap)
+  offset = horizontalGap * 0.75
+  > .grid-item
+    width 23%
+    width calc('25% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      offset = offset / 2
+      width 23%
+      width calc('25% - %s' % offset)
+
+grid-3-up(offset, horizongalGap, verticalGap = horizontalGap)
+  grid-n-up(3, horizongalGap, verticalGap)
+  > .grid-item
+    width 32%
+    width calc('33.33% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      offset = offset / 2
+      width calc('33.33% - %s' % offset)
+
+grid-2-up(offset, horizongalGap, verticalGap = horizontalGap)
+  grid-n-up(2, horizongalGap, verticalGap)
+  > .grid-item
+    width 48%
+    width calc('50% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      offset = offset / 2
+      width calc('50% - %s' % offset)
+
+// When text-decoration: underline is too clunky
+faux-underline()
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    display: inline-block
+    height: 1em
+    width: 100%
+    margin-top: 0.15em
+    border-bottom: 1px solid #777
+    color: rgb(80, 80, 80)
+  &:hover
+    text-decoration: none
+
+fine-faux-underline(color = gray-darkest-color)
+  text-decoration none
+  background-image linear-gradient(top, transparent 0, color 1px, transparent 0)
+  background-size 1px 5px
+  background-repeat repeat-x
+  background-position bottom
+
+medium-faux-underline(color = gray-darkest-color)
+  text-decoration none
+  background-image linear-gradient(top, transparent 0, color 1px, transparent 0)
+  background-size 1px 1px
+  background-repeat repeat-x
+  background-position bottom
+
+initials()
+  &[data-initials]
+    position relative
+    &:before
+    &:after
+      display block
+      position absolute
+      z-index -1
+    &:before
+      content ''
+      top 0
+      left 0
+      right 0
+      bottom 0
+      background-color gray-lighter-color
+    &:after
+      content attr(data-initials)
+      avant-garde-size('xl-headline')
+      color gray-darker-color
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
+// https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+break-word()
+  overflow-wrap break-word
+  word-wrap break-word
+  -ms-word-break break-all
+  word-break break-word
+  -ms-hyphens auto
+  -moz-hyphens auto
+  -webkit-hyphens auto
+  hyphens auto
+
+//http://stackoverflow.com/questions/20233416/prevent-text-to-line-break-if-overflow
+ellipsis()
+  width 100%
+  text-overflow ellipsis
+  overflow hidden
+  white-space nowrap
+
+blur(radius)
+  vendor('filter', 'blur(%s)' % radius, only: webkit moz ms official)
+  if support-for-ie
+    filter '"progid:DXImageTransform.Microsoft.Blur(PixelRadius=%d)"' % radius
+
+respond-desktop($width = responsive-mobile-width)
+  @media screen and (min-width: $width)
+    {block}
+
+respond-mobile($width = responsive-mobile-width - 1)
+  @media screen and (max-width: $width)
+    {block}
