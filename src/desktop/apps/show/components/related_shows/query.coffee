@@ -1,6 +1,6 @@
 module.exports = """
   query($featured: Boolean, $size: Int, $sort: PartnerShowSorts, $fair_id: String, $partner_id: String, $near: Near, $status: EventStatus, $displayable: Boolean) {
-    related_shows: partner_shows(featured: $featured, size: $size, sort: $sort, fair_id: $fair_id, partner_id: $partner_id, near: $near, status: $status, displayable: $displayable) {
+    related_shows: shows(featured: $featured, size: $size, sort: $sort, fair_id: $fair_id, partner_id: $partner_id, near: $near, status: $status, displayable: $displayable) {
       id
       start_at
       end_at
