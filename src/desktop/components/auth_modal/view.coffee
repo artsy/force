@@ -71,6 +71,7 @@ module.exports = class AuthModalView extends ModalView
     @logState()
 
     Cookies.set 'postSignupAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
+    Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
 
   initializeMailcheck: ->
     if @state.get('mode') is 'register'
