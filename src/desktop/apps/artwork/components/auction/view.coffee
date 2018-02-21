@@ -81,7 +81,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     if not CURRENT_USER?
       return new AuthModalView
         width: '500px',
-        intent: 'bid'
+        signupIntent: 'bid'
         mode: 'register'
         copy: 'Sign up to bid'
         redirectTo: form.action()

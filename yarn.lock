@@ -9,9 +9,9 @@
     chalk "^2.3.1"
     chokidar "^1.7.0"
 
-"@artsy/passport@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.0.5.tgz#9ae4f88bcbda8e9e8da3c52d6d53f0ebe1a7d113"
+"@artsy/passport@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.0.6.tgz#6e42df0ad6ad440ae1feaa1b9d5c60394ab164ee"
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
