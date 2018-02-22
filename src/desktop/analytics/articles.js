@@ -45,25 +45,25 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       impression_type: 'related_article',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-primary-logo a', function(){
+  }).on('click', '.article-sa-primary-logo a', function () {
     analytics.track('Clicked primary partner logo', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_primary_logo',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-secondary-logo a', function(){
+  }).on('click', '.article-sa-secondary-logo a', function () {
     analytics.track('Clicked secondary partner logo', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_secondary_logo',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-cta-container a', function(){
+  }).on('click', '.article-sa-cta-container a', function () {
     analytics.track('Clicked partner cta link', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_partner_cta',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-footer-blurb a', function(){
+  }).on('click', '.article-sa-footer-blurb a', function () {
     analytics.track('Clicked partner cta link in footer blurb', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_partner_cta',
@@ -74,7 +74,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
   // Hooks
   analyticsHooks.on('readmore', function (options) {
     analytics.track('Clicked Read More', {})
-    analytics.page({path: location.pathname}, {integrations: {'Marketo': false}})
+    analytics.page({ path: location.pathname }, { integrations: { 'Marketo': false } })
     if (window.PARSELY) {
       window.PARSELY.beacon.trackPageView({
         url: location.href,
@@ -106,7 +106,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
 
 // Applies to both /article/* and /articles
 if (location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights') || location.pathname.match('/venice-biennale-2015')) {
-  $('.cta-bar .mktoButtonRow').click(function(e) {
+  $('.cta-bar .mktoButtonRow').click(function (e) {
     analytics.track('Sign up for gallery insights email', {
       session_id: sd.SESSION_ID,
       email: $('.cta-bar-container input').val(),
@@ -119,7 +119,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
     });
   })
 
-  $('#articles-body-container .mktoButtonRow').click(function(e) {
+  $('#articles-body-container .mktoButtonRow').click(function (e) {
     var email = $("#Email").val();
     analytics.track('Sign up for gallery insights email', {
       session_id: sd.SESSION_ID,

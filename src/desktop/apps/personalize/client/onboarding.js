@@ -22,8 +22,15 @@ export const init = () => {
   }
 
   const history = createHistory()
+  history.listen((ev) => {
+    window.scrollTo(0, 0)
 
-  history.listen(() => window.scrollTo(0, 0))
+    // track pageviews when react-router updates the url
+    window.analytics.page(
+      { path: ev.pathname },
+      { integrations: { 'Marketo': false } }
+    )
+  })
 
   // Start app
   ReactDOM.hydrate(
