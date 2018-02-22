@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { secondary } from '@artsy/reaction-force/dist/Assets/Fonts'
+import { secondary } from '@artsy/reaction/dist/Assets/Fonts'
 
 const Headline = styled.h1`
   font-size: 50px;

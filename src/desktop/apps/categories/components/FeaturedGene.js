@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { primary } from '@artsy/reaction-force/dist/Assets/Fonts'
+import { primary } from '@artsy/reaction/dist/Assets/Fonts'
 
 const propTypes = {
   title: PropTypes.string,

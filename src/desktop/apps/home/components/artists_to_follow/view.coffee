@@ -65,7 +65,6 @@ module.exports = class ArtistsToFollowView extends Backbone.View
       modelName: 'artist'
       hideSuggestions: true
       el: $el
-      href: _.findWhere(@results, id: id)?.href
     id
 
   afterFollow: (el, model) =>

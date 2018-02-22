@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import { Article } from '@artsy/reaction-force/dist/Components/Publishing'
+import { Article } from '@artsy/reaction/dist/Components/Publishing'
 import ArticleLayout from './layouts/Article'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 

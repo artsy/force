@@ -31,7 +31,7 @@ describe('<InfiniteScrollArticle />', () => {
   }
 
   const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle').default
-  const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
+  const { Article } = require('@artsy/reaction/dist/Components/Publishing')
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()

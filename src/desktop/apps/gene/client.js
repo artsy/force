@@ -8,8 +8,8 @@ import { data as sd } from 'sharify'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Contents } from '@artsy/reaction-force/dist/Components/Gene'
-import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
+import { Contents } from '@artsy/reaction/dist/Components/Gene'
+import { ContextProvider } from '@artsy/reaction/dist/Components/Artsy'
 
 import Gene from '../../models/gene.coffee'
 import CurrentUser from '../../models/current_user.coffee'
