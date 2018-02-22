@@ -15,6 +15,8 @@ CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
+{ Following } = require '../../follow_button/index.coffee'
+
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -134,12 +136,16 @@ module.exports = class HeaderView extends Backbone.View
   checkForPostSignupAction: ->
     postSignupAction = Cookies.get 'postSignupAction'
     if postSignupAction
-      Cookies.expire 'postSignupAction'
       return unless @currentUser
-      { action, objectId } = JSON.parse(postSignupAction)
+      { action, objectId, kind } = JSON.parse(postSignupAction)
       if action is 'save'
         @currentUser.initializeDefaultArtworkCollection()
         @currentUser.defaultArtworkCollection().saveArtwork objectId
+      else if action is 'follow' and kind?
+        following = new Following [], kind: kind
+        following.follow objectId
+
+      Cookies.expire 'postSignupAction'
 
   highlightSearch: (e) ->
     if $('#main-layout-search-bar-input').is(':focus')

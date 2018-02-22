@@ -14,7 +14,6 @@ module.exports = (artists) ->
       following: following
       modelName: 'artist'
       model: new Backbone.Model artist
-      href: "#{artist.href}/follow"
       context_page: "Show page"
 
     artist.id

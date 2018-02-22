@@ -85,7 +85,6 @@ module.exports = class ArticleView extends Backbone.View
         model: artist
         context_page: "Article page"
         context_module: 'article_artist_follow'
-        href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 
   setupImageSets: ->
