@@ -17,7 +17,6 @@ module.exports = (page = 'EOY 2016') ->
       modelName: 'artist'
       hideSuggestions: true
       el: $(this)
-      href: "/artist/#{$(this).data('id')}/follow"
 
     return $(this).data('id')
 

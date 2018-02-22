@@ -67,7 +67,7 @@ module.exports = class CategoriesView extends QuasiInfiniteView
         view = new FollowButton
           el: @$(".js-entity-follow[data-id='#{category.id}']")
           following: @allFollows
-          modelName: 'category'
+          modelName: 'gene'
           model: category
           context_page: "User setttings page"
 

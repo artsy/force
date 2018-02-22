@@ -175,7 +175,6 @@ module.exports = class VeniceView extends Backbone.View
         context_page: 'venice_biennale_2017'
         context_module: 'article_artist_follow'
         entity_id: artist.id
-        href: sd.APP_URL + sd.CURRENT_PATH
       new FollowButton
         el: @$(".venice-carousel .artist-follow[data-id='#{artist.id}']")
         following: @following
@@ -184,7 +183,6 @@ module.exports = class VeniceView extends Backbone.View
         context_page: 'venice_biennale_2017'
         context_module: 'article_artist_follow'
         entity_id: artist.id
-        href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
     @$('.venice-body__follow-item').show()
 

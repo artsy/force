@@ -39,7 +39,6 @@ module.exports = class RelatedArtistsView extends ArtistArtworksView
         model: new Backbone.Model id: id
         modelName: 'artist'
         el: $el
-        href: artist.href
       id
 
     @following?.syncFollows ids

@@ -47,7 +47,7 @@ module.exports = class BrowseRouter extends Backbone.Router
     mediator.trigger 'open:auth',
       mode: 'register'
       copy: "Sign up to receive updates about #{@fair.nameSansYear()}"
-      redirectTo: "#{@fair.href()}/capture/#{action}"
+      destination: "#{@fair.href()}/capture/#{action}"
 
   capture: (id, action)=>
     signupSuccess fair: @fair, action: action, user: CurrentUser.orNull()

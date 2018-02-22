@@ -19,7 +19,6 @@ setupFollowButtons = ({ $el, relatedArtists, kind }) ->
       model: new Backbone.Model id: id
       modelName: kind
       el: $el
-      href: _.findWhere(relatedArtists, id:id).href
     id
 
   following?.syncFollows ids
