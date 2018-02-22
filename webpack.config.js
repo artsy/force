@@ -1,5 +1,3 @@
-// const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
-// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -32,12 +30,12 @@ const config = {
     rules: [
       {
         test: /\.coffee$/,
-        exclude: /node_modules/,
+        include: /src/,
         use: [{ loader: 'coffee-loader' }],
       },
       {
         test: /\.(jade|pug)$/,
-        exclude: /node_modules/,
+        include: /src/,
         loader: 'pug-loader',
         options: {
           doctype: 'html',
@@ -45,8 +43,8 @@ const config = {
         },
       },
       {
-        test: /(\.jsx?$)/,
-        exclude: /node_modules\/(?!(@artsy\/reaction-force\/src))/,
+        test: /(\.(js|ts)x?$)/,
+        include: /src/,
         use: [
           { loader: 'cache-loader' },
           {
@@ -64,6 +62,7 @@ const config = {
     ],
   },
   plugins: [
+    // TODO: Add webpack typechecker
     new ProgressBarPlugin(),
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
@@ -97,7 +96,7 @@ const config = {
       react: path.resolve('./node_modules/react'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.jade', '.coffee'],
-    modules: ['node_modules'],
+    modules: ['node_modules', 'src'],
     symlinks: false,
   },
   externals: {

@@ -6,19 +6,19 @@
       }
     }],
     "@babel/react",
-    "@babel/stage-3",
-    "@babel/preset-typescript"
+    "@babel/preset-typescript",
+    "@babel/stage-3"
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-typescript",
     ["relay", { "artifactDirectory": "/node_modules/@artsy/reaction-force/src/__generated__" }],
     "inline-react-svg",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
       "root": ["./src"]
-    }]
+    }],
+    "@babel/plugin-transform-typescript"
   ],
   "env": {
     "development": {

@@ -22,6 +22,8 @@ script( type="text/javascript" )
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/force-webfonts.css?a=b')
+  link( rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css")
+  link( rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css")
 
 //- Criteo marketing tag... no Segment integration (  ._.)
 script(type='text/javascript', src='//static.criteo.net/js/ld/ld.js', async='true')
