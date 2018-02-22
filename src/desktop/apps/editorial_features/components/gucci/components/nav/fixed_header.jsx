@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Colors from '@artsy/reaction-force/dist/Assets/Colors'
-import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
+import Colors from '@artsy/reaction/dist/Assets/Colors'
+import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
 import { SectionsNav } from './sections_nav.jsx'
 import { Header } from './header.jsx'
 

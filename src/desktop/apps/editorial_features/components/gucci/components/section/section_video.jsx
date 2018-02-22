@@ -2,9 +2,9 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
-import { Fonts } from '@artsy/reaction-force/dist/Components/Publishing/Fonts'
-import { Video } from '@artsy/reaction-force/dist/Components/Publishing'
+import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
+import { Fonts } from '@artsy/reaction/dist/Components/Publishing/Fonts'
+import { Video } from '@artsy/reaction/dist/Components/Publishing'
 
 export const SectionVideo = (props) => {
   const { section, curation } = props

@@ -2,8 +2,8 @@ import $ from 'jquery'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Contents } from '@artsy/reaction-force/dist/Components/Artist/MarketInsights'
-import { ContextProvider } from '@artsy/reaction-force/dist/Components/Artsy'
+import { Contents } from '@artsy/reaction/dist/Components/Artist/MarketInsights'
+import { ContextProvider } from '@artsy/reaction/dist/Components/Artsy'
 
 const renderMarketInsightsFor = (artistID) => {
   const elementID = 'market-insights-container-' + artistID

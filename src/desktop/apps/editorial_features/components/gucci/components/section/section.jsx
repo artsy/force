@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
-import { pMedia } from '@artsy/reaction-force/dist/Components/Helpers'
+import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
 import { SectionVideo } from './section_video.jsx'
 import { SectionText } from './section_text.jsx'
 

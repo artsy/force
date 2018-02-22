@@ -3,7 +3,7 @@ mediator = require '../lib/mediator.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
-Events = require('@artsy/reaction-force/dist/Utils/Events.js').default
+Events = require('@artsy/reaction/dist/Utils/Events.js').default
 
 # All Force mediator events can be hooked into for tracking purposes
 mediator.on 'all', (name, data) ->
