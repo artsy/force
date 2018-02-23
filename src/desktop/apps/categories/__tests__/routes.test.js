@@ -4,7 +4,6 @@ import App from 'desktop/apps/categories/components/App'
 const rewire = require('rewire')('../routes')
 const { index } = rewire
 
-
 let req
 let res
 let next
@@ -14,7 +13,12 @@ let renderLayout
 describe('#index', () => {
   beforeEach(() => {
     req = {
-      app: { get: sinon.stub().withArgs('views').returns('components') }
+      app: {
+        get: sinon
+          .stub()
+          .withArgs('views')
+          .returns('components'),
+      },
     }
     res = {}
     next = sinon.stub()
@@ -28,17 +32,17 @@ describe('#index', () => {
               genes: [
                 {
                   id: 'silver',
-                  name: 'Silver'
+                  name: 'Silver',
                 },
                 {
                   id: 'gold',
-                  name: 'Gold'
-                }
-              ]
-            }
-          }
-        ]
-      }
+                  name: 'Gold',
+                },
+              ],
+            },
+          },
+        ],
+      },
     }
 
     rewire.__set__(
@@ -50,16 +54,10 @@ describe('#index', () => {
     rewire.__set__('renderLayout', renderLayout)
   })
 
-  // afterEach(() => {
-  //   RoutesRewireApi.__ResetDependency__('metaphysics')
-  // })
-
   it('renders the categories app', () => {
     index(req, res, next).then(() => {
       renderLayout.args[0][0].blocks.body.should.equal(App)
-      renderLayout.args[0][0].locals.assetPackage.should.equal(
-        'categories'
-      )
+      renderLayout.args[0][0].locals.assetPackage.should.equal('categories')
     })
   })
   it('passes the correct variables', () => {
@@ -71,14 +69,14 @@ describe('#index', () => {
           genes: [
             {
               id: 'silver',
-              name: 'Silver'
+              name: 'Silver',
             },
             {
               id: 'gold',
-              name: 'Gold'
-            }
-          ]
-        }
+              name: 'Gold',
+            },
+          ],
+        },
       ]
       renderLayout.args[0][0].data.geneFamilies.should.eql(expectedFamilies)
     })

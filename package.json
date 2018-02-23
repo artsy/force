@@ -223,6 +223,8 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "^2.1.1",
+    "fork-ts-checker-notifier-webpack-plugin": "^0.2.0",
+    "fork-ts-checker-webpack-plugin": "^0.3.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "hulk-editor": "craigspaeth/hulk",
     "husky": "^0.14.3",
@@ -261,12 +263,5 @@
   "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
-  },
-  "resolutions": {
-    "graphql": "^0.12.3",
-    "babel-plugin-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/babel-plugin-relay-1.5.0-artsy.3.tgz",
-    "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-compiler-1.5.0-artsy.3.tgz",
-    "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz",
-    "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
   }
 }

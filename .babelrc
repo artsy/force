@@ -12,7 +12,6 @@
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
-    "relay",
     "inline-react-svg",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -21,7 +20,7 @@
         "reaction": "@artsy/reaction/dist/"
       }
     }],
-    "@babel/plugin-transform-typescript"
+    "relay"
   ],
   "env": {
     "development": {

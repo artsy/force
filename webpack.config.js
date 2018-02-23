@@ -1,3 +1,5 @@
+const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -64,8 +66,19 @@ const config = {
   plugins: [
     // TODO: Add webpack typechecker
     new ProgressBarPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      formatter: 'codeframe',
+      formatterOptions: 'highlightCode',
+      tslint: false,
+      checkSyntacticErrors: true,
+      watch: ['./src'],
+    }),
+    new ForkTsCheckerNotifierWebpackPlugin({
+      excludeWarnings: true,
+      skipFirstNotification: true,
+    }),
     new FriendlyErrorsWebpackPlugin({
-      clearConsole: true,
+      clearConsole: false,
       compilationSuccessInfo: {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`],
       },
