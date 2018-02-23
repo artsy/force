@@ -23,7 +23,6 @@ describe 'GeneArtworksView', ->
         gene: gene
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      $.fn.error = sinon.stub()
       @e = new $.Event('click')
       sinon.stub Backbone, 'sync'
       filename = path.resolve(__dirname, '../client.coffee')
@@ -61,7 +60,6 @@ describe 'GeneArtistsView', ->
       artists.url = "/api/v1/search/filtered/gene/foo"
       gene = new Gene fabricate 'gene'
       benv.expose { $: benv.require 'jquery' }
-      $.fn.error = sinon.stub()
       Backbone.$ = $
       @e = new $.Event('click')
       benv.render path.resolve(__dirname, '../templates/index.jade'),

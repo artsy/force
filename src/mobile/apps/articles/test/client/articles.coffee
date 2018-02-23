@@ -18,7 +18,6 @@ describe 'MagazineView', ->
         sd: ARTSY_EDITORIAL_CHANNEL: '123'
       Backbone.$ = $
       $.onInfiniteScroll = sinon.stub()
-      $.fn.error = sinon.stub()
 
       @articles = [
         {
