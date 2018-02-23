@@ -9,7 +9,7 @@ class DOM extends Component {
   static propTypes = {
     auction: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-    user: PropTypes.object
+    user: PropTypes.object,
   }
 
   // Selectors
@@ -17,7 +17,7 @@ class DOM extends Component {
   $body = null
   $registerBtn = null
 
-  componentDidMount () {
+  componentDidMount() {
     const FastClick = require('fastclick')
 
     // removes 300ms delay
@@ -30,18 +30,18 @@ class DOM extends Component {
     this.maybeShowRegistration()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.removeEventListeners()
   }
 
-  addEventListeners () {
+  addEventListeners() {
     this.$body = this.$('body')
     this.$body.on('click', '.artsy-checkbox', scrollToTop)
     this.$registerBtn = this.$body.find('.js-register-button')
     this.$registerBtn.on('click', this.handleRegisterBtnClick)
   }
 
-  removeEventListeners () {
+  removeEventListeners() {
     this.$body.off('click')
     this.$registerBtn.off('click', this.handleRegisterBtnClick)
   }
@@ -52,33 +52,32 @@ class DOM extends Component {
 
       mediator.trigger('open:auth', {
         mode: 'register',
-        redirectTo: this.$(event.target).attr('href')
+        redirectTo: this.$(event.target).attr('href'),
+        signupIntent: 'register to bid',
       })
     }
   }
 
-  maybeShowRegistration () {
+  maybeShowRegistration() {
     const { auction, user } = this.props
 
     if (user) {
       if (location.pathname.match('/confirm-registration')) {
         new ConfirmRegistrationModal({
-          auction
+          auction,
         })
       }
     }
   }
 
-  render () {
+  render() {
     return this.props.children
   }
 }
 
 const mapStateToProps = (state) => ({
   auction: state.app.auction,
-  user: state.app.user
+  user: state.app.user,
 })
 
-export default connect(
-  mapStateToProps
-)(DOM)
+export default connect(mapStateToProps)(DOM)
