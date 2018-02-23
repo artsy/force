@@ -6,7 +6,7 @@ benv = require 'benv'
 Show = require '../../../models/partner_show'
 Shows = require '../shows'
 
-describe 'City', ->
+describe 'Location Based', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
@@ -26,7 +26,7 @@ describe 'City', ->
 
     describe 'on the first page', ->
       before (done) ->
-        benv.render resolve(__dirname, '../templates/city.jade'), _.defaults({
+        benv.render resolve(__dirname, '../templates/location_based.jade'), _.defaults({
           opening: [new Show fabricate 'show']
           upcoming: []
           current: new Shows [fabricate 'show'], state: currentPage: 1, pageSize: 1, totalRecords: 1
@@ -40,7 +40,7 @@ describe 'City', ->
 
     describe 'on the second page', ->
       before (done) ->
-        benv.render resolve(__dirname, '../templates/city.jade'), _.defaults({
+        benv.render resolve(__dirname, '../templates/location_based.jade'), _.defaults({
           opening: [new Show fabricate 'show']
           upcoming: []
           current: new Shows _.times(2, -> fabricate 'show'), state: currentPage: 2, pageSize: 1, totalRecords: 2
