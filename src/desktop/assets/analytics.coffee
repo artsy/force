@@ -14,11 +14,19 @@ Events.onEvent (data) =>
   analytics.track data.action, _.omit data, 'action'
 
   # Send Reaction's read more as a Parsely page view
-  if data.action is 'Clicked read more' and window.PARSELY
-    window.PARSELY.beacon.trackPageView
-      url: location.href,
-      js: 1,
-      action_name: 'infinite'
+  if data.action is 'Clicked read more'
+    if window.PARSELY
+      window.PARSELY.beacon.trackPageView
+        url: location.href,
+        js: 1,
+        action_name: 'infinite'
+    if window.Sailthru
+      window.Sailthru.track
+        domain: 'horizon.artsy.net',
+        spider: true,
+        track_url: true,
+        url: sd.APP_URL + '/' + location.pathname,
+        use_stored_tags: true
 
 require '../analytics/main_layout.js'
 

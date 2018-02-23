@@ -7,6 +7,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
+splitTest = require '../../../components/split_test'
 views =
   CollectView: require './views/collect.coffee'
   ArtistsView: require './views/artists.coffee'
@@ -30,6 +31,9 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
     analyticsHooks.trigger 'personalize:impression', label: "User:#{@user.id}"
     analyticsHooks.trigger('personalize:reonboarding') if @reonboarding
+
+    # ONBOARDING_TEST remove after test closes
+    splitTest('onboarding_test').view()
 
     _.defer => @next()
 

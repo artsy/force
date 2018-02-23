@@ -18,52 +18,25 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       context_type: 'article_sticky',
       service: $(this).attr('data-service')
     })
-  }).on('click', '.article-section-image-set', function () {
-    var articleId = $(this).closest('.article-container').data('id')
-    analytics.track('Clicked article impression', {
-      article_id: articleId,
-      destination_path: null,
-      impression_type: 'image_set',
-      context_type: 'article_fixed'
-    })
-  }).on('click', '.article-section-callout a', function () {
-    var articleId = $(this).closest('.article-container').data('id')
-    // Only track callouts that are links
-    if ($(this)[0].href) {
-      analytics.track('Clicked article impression', {
-        article_id: articleId,
-        destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
-        impression_type: 'article_callout',
-        context_type: 'article_fixed'
-      })
-    }
-  }).on('click', '.article-related-widget a', function () {
-    var articleId = $(this).closest('.article-related-widget').data('id')
-    analytics.track('Clicked article impression', {
-      article_id: articleId,
-      destination_path: $(this)[0].href,
-      impression_type: 'related_article',
-      context_type: 'article_fixed'
-    })
-  }).on('click', '.article-sa-primary-logo a', function(){
+  }).on('click', '.article-sa-primary-logo a', function () {
     analytics.track('Clicked primary partner logo', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_primary_logo',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-secondary-logo a', function(){
+  }).on('click', '.article-sa-secondary-logo a', function () {
     analytics.track('Clicked secondary partner logo', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_secondary_logo',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-cta-container a', function(){
+  }).on('click', '.article-sa-cta-container a', function () {
     analytics.track('Clicked partner cta link', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_partner_cta',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-footer-blurb a', function(){
+  }).on('click', '.article-sa-footer-blurb a', function () {
     analytics.track('Clicked partner cta link in footer blurb', {
       destination_path: $(this)[0].href,
       impression_type: 'sa_partner_cta',
@@ -72,28 +45,6 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
   })
 
   // Hooks
-  analyticsHooks.on('readmore', function (options) {
-    analytics.track('Clicked Read More', {})
-    analytics.page({path: location.pathname}, {integrations: {'Marketo': false}})
-    if (window.PARSELY) {
-      window.PARSELY.beacon.trackPageView({
-        url: location.href,
-        urlref: sd.APP_URL + '/' + options.urlref,
-        js: 1,
-        action_name: 'infinite'
-      })
-    }
-    if (window.Sailthru) {
-      window.Sailthru.track({
-        domain: 'horizon.artsy.net',
-        spider: true,
-        track_url: true,
-        url: sd.APP_URL + '/' + location.pathname,
-        use_stored_tags: true
-      })
-    }
-  })
-
   analyticsHooks.on('view:editorial-signup', function (options) {
     analytics.track('Article impression', {
       article_id: null,
@@ -106,7 +57,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
 
 // Applies to both /article/* and /articles
 if (location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights') || location.pathname.match('/venice-biennale-2015')) {
-  $('.cta-bar .mktoButtonRow').click(function(e) {
+  $('.cta-bar .mktoButtonRow').click(function (e) {
     analytics.track('Sign up for gallery insights email', {
       session_id: sd.SESSION_ID,
       email: $('.cta-bar-container input').val(),
@@ -119,7 +70,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
     });
   })
 
-  $('#articles-body-container .mktoButtonRow').click(function(e) {
+  $('#articles-body-container .mktoButtonRow').click(function (e) {
     var email = $("#Email").val();
     analytics.track('Sign up for gallery insights email', {
       session_id: sd.SESSION_ID,
