@@ -33,6 +33,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
           action: 'save',
           objectId: @id
         }
+        signupIntent: 'save artwork'
 
     if @saved
       save = @savedArtworks.get @id

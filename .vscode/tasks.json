@@ -7,14 +7,11 @@
       "type": "shell",
       "label": "mocha: watch current file",
       "command": "yarn mocha -- --watch ${fileDirname}/${fileBasename}",
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      }
+      "group": "build"
     },
     {
       "type": "shell",
-      "label": "mocha: test file",
+      "label": "mocha: test current file",
       "command": "yarn mocha -- ${fileDirname}/${fileBasename}",
       "group": {
         "kind": "build",
