@@ -6,6 +6,7 @@ import Cookies from 'cookies-js'
 
 import { ContextProvider } from '@artsy/reaction/dist/Components/Artsy'
 import { Wizard } from '@artsy/reaction/dist/Components/Onboarding/Wizard'
+import splitTest from 'desktop/components/split_test/index.coffee'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
@@ -22,6 +23,7 @@ export const init = () => {
   }
 
   const history = createHistory()
+
   history.listen((ev) => {
     window.scrollTo(0, 0)
 
@@ -31,6 +33,9 @@ export const init = () => {
       { integrations: { 'Marketo': false } }
     )
   })
+
+  // ONBOARDING_TEST remove after test closes
+  splitTest('onboarding_test').view()
 
   // Start app
   ReactDOM.hydrate(
