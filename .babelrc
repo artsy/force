@@ -12,12 +12,16 @@
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
+    // ["babel-plugin-styled-components", {
+    //   "ssr": true,
+    //   "displayName": true
+    // }],
     "inline-react-svg",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
       "root": ["./src"],
       "alias": {
-        "reaction": "@artsy/reaction/dist/"
+        "reaction": "@artsy/reaction/dist"
       }
     }],
     "relay"
@@ -26,7 +30,8 @@
     "development": {
       "plugins": [
         ["babel-plugin-styled-components", {
-          "ssr": true
+          "ssr": true,
+          "displayName": true
         }],
         "react-hot-loader/babel"
       ]

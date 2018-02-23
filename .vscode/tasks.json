@@ -6,20 +6,16 @@
     {
       "type": "shell",
       "label": "mocha: watch current file",
-      "command": "yarn mocha -- --watch ${fileDirname}/${fileBasename}",
+      "command": "yarn mocha --watch ${fileDirname}/${fileBasename}",
       "group": {
         "kind": "build",
-        "isDefault": false
+        "isDefault": true
       }
     },
     {
       "type": "shell",
       "label": "mocha: test file",
-      "command": "yarn mocha -- ${fileDirname}/${fileBasename}",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
+      "command": "yarn mocha ${fileDirname}/${fileBasename}",
     }
   ]
 }

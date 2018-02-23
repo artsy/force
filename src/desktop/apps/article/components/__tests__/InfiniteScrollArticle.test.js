@@ -43,7 +43,7 @@ describe('<InfiniteScrollArticle />', () => {
     window.history.replaceState.reset()
   })
 
-  it('renders the initial article', () => {
+  it.only('renders the initial article', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
