@@ -21,9 +21,13 @@ export const init = () => {
     redirectTo = bootstrapData.redirectTo
   }
 
+  const history = createHistory()
+
+  history.listen(() => window.scrollTo(0, 0))
+
   // Start app
   ReactDOM.hydrate(
-    <Router history={createHistory()}>
+    <Router history={history}>
       <ContextProvider {...bootstrapData}>
         <Wizard redirectTo={redirectTo} />
       </ContextProvider>
