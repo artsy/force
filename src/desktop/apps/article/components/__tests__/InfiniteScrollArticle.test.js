@@ -10,10 +10,11 @@ import { data as sd } from 'sharify'
 describe('<InfiniteScrollArticle />', () => {
   before((done) => {
     benv.setup(() => {
-      benv.expose({$: benv.require('jquery'), jQuery: benv.require('jquery')})
+      benv.expose({ $: benv.require('jquery'), jQuery: benv.require('jquery') })
       sd.APP_URL = 'http://artsy.net'
-      sd.CURRENT_PATH = '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
-      sd.CURRENT_USER = {id: '123'}
+      sd.CURRENT_PATH =
+        '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
+      sd.CURRENT_USER = { id: '123' }
       done()
     })
   })
@@ -26,13 +27,13 @@ describe('<InfiniteScrollArticle />', () => {
     return {
       matches: false,
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     }
   }
 
   let rewire = require('rewire')('../InfiniteScrollArticle')
   let InfiniteScrollArticle = rewire.default
-  const { Article } = require('@artsy/reaction-force/dist/Components/Publishing')
+  const { Article } = require('reaction/Components/Publishing')
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
@@ -46,9 +47,9 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(
       <InfiniteScrollArticle
@@ -65,22 +66,21 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const data = {
-      articles: [_.extend({}, fixtures.article, {
-        slug: 'foobar',
-        channel_id: '123',
-        id: '678'
-      })]
+      articles: [
+        _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          id: '678',
+        }),
+      ],
     }
-    rewire.__set__(
-      'positronql',
-      sinon.stub().returns(Promise.resolve(data))
-    )
+    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
     await rendered.instance().fetchNextArticles()
     rendered.update()
@@ -91,15 +91,11 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
-      contributing_authors: [{name: 'Kana'}],
-      relatedArticlesCanvas: [
-        fixtures.article
-      ],
-      relatedArticlesPanel: [
-        fixtures.article
-      ]
+      contributing_authors: [{ name: 'Kana' }],
+      relatedArticlesCanvas: [fixtures.article],
+      relatedArticlesPanel: [fixtures.article],
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
     const html = rendered.html()
@@ -113,11 +109,16 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
-    const rendered = shallow(<InfiniteScrollArticle article={article} emailSignupUrl={'/signup/editorial'} />)
+    const rendered = shallow(
+      <InfiniteScrollArticle
+        article={article}
+        emailSignupUrl={'/signup/editorial'}
+      />
+    )
     rendered.html().should.containEql('Stay up to date with Artsy Editorial')
   })
 
@@ -125,22 +126,26 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
-    const rendered = shallow(<InfiniteScrollArticle article={article} emailSignupUrl={''} />)
-    rendered.html().should.not.containEql('Stay up to date with Artsy Editorial')
+    const rendered = shallow(
+      <InfiniteScrollArticle article={article} emailSignupUrl={''} />
+    )
+    rendered
+      .html()
+      .should.not.containEql('Stay up to date with Artsy Editorial')
   })
 
   it('#onEnter does not push url to browser if it is not scrolling upwards into an article', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
     rendered.instance().onEnter({}, 0, {})
@@ -151,16 +156,19 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
-    rendered.instance().onEnter({slug: '123'}, {
-      previousPosition: 'above',
-      currentPosition: 'inside'
-    })
+    rendered.instance().onEnter(
+      { slug: '123' },
+      {
+        previousPosition: 'above',
+        currentPosition: 'inside',
+      }
+    )
     window.history.replaceState.args[0][2].should.containEql('/article/123')
   })
 
@@ -168,10 +176,10 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
     rendered.instance().onEnter({}, {})
@@ -179,7 +187,9 @@ describe('<InfiniteScrollArticle />', () => {
   })
 
   it('#onLeave does not push url to browser if it is not scrolling downwards into the next article', () => {
-    const rendered = shallow(<InfiniteScrollArticle article={fixtures.article} />)
+    const rendered = shallow(
+      <InfiniteScrollArticle article={fixtures.article} />
+    )
     rendered.instance().onLeave(0, {})
     window.history.replaceState.args.length.should.equal(0)
   })
@@ -188,25 +198,25 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const article1 = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       slug: '456',
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
-    rendered.setState({articles: rendered.state('articles').concat(article1)})
+    rendered.setState({ articles: rendered.state('articles').concat(article1) })
     rendered.instance().onLeave(0, {
       previousPosition: 'inside',
-      currentPosition: 'above'
+      currentPosition: 'above',
     })
     window.history.replaceState.args[0][2].should.containEql('/article/456')
   })
@@ -215,10 +225,10 @@ describe('<InfiniteScrollArticle />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{name: 'Kana'}]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<InfiniteScrollArticle article={article} />)
     rendered.state().following.length.should.exist

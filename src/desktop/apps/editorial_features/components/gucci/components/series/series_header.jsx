@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Waypoint from 'react-waypoint'
-import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
+import { pMedia } from 'reaction/Components/Helpers'
 import { Header } from '../nav/header.jsx'
 import { SectionsNav } from '../nav/sections_nav.jsx'
 

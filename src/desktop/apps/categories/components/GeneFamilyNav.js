@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Scrollspy from 'react-scrollspy'
 
-import colors from '@artsy/reaction/dist/Assets/Colors'
-import { primary } from '@artsy/reaction/dist/Assets/Fonts'
+import colors from 'reaction/Assets/Colors'
+import { primary } from 'reaction/Assets/Fonts'
 import FrameAnimator from 'desktop/components/frame_animator'
 
 const propTypes = {
-  geneFamilies: PropTypes.array.isRequired
+  geneFamilies: PropTypes.array.isRequired,
 }
 
 // amount by which to adjust scrolling & spying,
@@ -56,33 +56,33 @@ const GeneFamilyLink = styled.a`
 `
 
 class GeneFamilyNav extends React.Component {
-  handleClick = e => {
+  handleClick = (e) => {
     e.preventDefault()
     const id = e.target.hash
     const section = document.querySelector(id)
     const scroller = new FrameAnimator(
-      val => {
+      (val) => {
         window.scrollTo(0, val)
       },
       {
         duration: 600,
         startValue: window.scrollY,
-        endValue: section.offsetTop - TOP_BUFFER
+        endValue: section.offsetTop - TOP_BUFFER,
       }
     )
     scroller.start()
   }
 
-  render () {
+  render() {
     const { geneFamilies } = this.props
     return (
       <ResponsiveSidebar>
         <GeneFamilyList
-          items={geneFamilies.map(f => f.id)}
-          currentClassName='is-current'
+          items={geneFamilies.map((f) => f.id)}
+          currentClassName="is-current"
           offset={-1 * TOP_BUFFER}
         >
-          {geneFamilies.map(geneFamily => (
+          {geneFamilies.map((geneFamily) => (
             <GeneFamilyItem key={geneFamily.id}>
               <GeneFamilyLink
                 href={`#${geneFamily.id}`}

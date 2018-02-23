@@ -65,7 +65,7 @@ const config = {
     // TODO: Add webpack typechecker
     new ProgressBarPlugin(),
     new FriendlyErrorsWebpackPlugin({
-      clearConsole: false,
+      clearConsole: true,
       compilationSuccessInfo: {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`],
       },

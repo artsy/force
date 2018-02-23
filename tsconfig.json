@@ -13,6 +13,6 @@
     "strictNullChecks": true,
     "target": "es2016"
   },
-  "files": ["./node_modules/@artsy/reaction-force/src"],
+  "files": ["./node_modules/@artsy/reaction/dist"],
   "include": ["./src"]
 }

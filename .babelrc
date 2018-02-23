@@ -12,11 +12,14 @@
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
-    ["relay", { "artifactDirectory": "/node_modules/@artsy/reaction-force/src/__generated__" }],
+    "relay",
     "inline-react-svg",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
-      "root": ["./src"]
+      "root": ["./src"],
+      "alias": {
+        "reaction": "@artsy/reaction/dist/"
+      }
     }],
     "@babel/plugin-transform-typescript"
   ],

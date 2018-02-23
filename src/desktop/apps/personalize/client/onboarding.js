@@ -4,8 +4,8 @@ import { Router } from 'react-router'
 import createHistory from 'history/createBrowserHistory'
 import Cookies from 'cookies-js'
 
-import { ContextProvider } from '@artsy/reaction/dist/Components/Artsy'
-import { Wizard } from '@artsy/reaction/dist/Components/Onboarding/Wizard'
+import { ContextProvider } from 'reaction/Components/Artsy'
+import { Wizard } from 'reaction/Components/Onboarding/Wizard'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__

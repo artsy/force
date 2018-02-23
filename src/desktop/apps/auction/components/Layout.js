@@ -9,7 +9,7 @@ import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyA
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
-import { RailSlider } from '@artsy/reaction-force/dist/Components/Auctions/RailSlider'
+import { RailSlider } from 'reaction/Components/Auctions/RailSlider'
 import { connect } from 'react-redux'
 
 // FIXME: Rewire

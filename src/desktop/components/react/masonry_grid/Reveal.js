@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
-import Icon from '@artsy/reaction/dist/Components/Icon'
+import Icon from 'reaction/Components/Icon'
 
 export class Reveal extends Component {
   static propTypes = {

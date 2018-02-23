@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { secondary } from '@artsy/reaction/dist/Assets/Fonts'
+import { secondary } from 'reaction/Assets/Fonts'
 
 const Headline = styled.h1`
   font-size: 50px;
@@ -9,8 +9,7 @@ const Headline = styled.h1`
 `
 
 const Description = styled.p`
-  ${secondary.style}
-  font-size: 25px;
+  ${secondary.style} font-size: 25px;
   line-height: 1.4em;
   margin: 35px 0;
 `

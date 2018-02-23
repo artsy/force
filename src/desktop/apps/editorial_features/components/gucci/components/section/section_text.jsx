@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { data as sd } from 'sharify'
-import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
-import { Col, Row } from '@artsy/reaction/dist/Components/Grid'
-import { Fonts } from '@artsy/reaction/dist/Components/Publishing/Fonts'
-import { Share } from '@artsy/reaction/dist/Components/Publishing/Byline/Share'
-import { Text } from '@artsy/reaction/dist/Components/Publishing'
+import { pMedia } from 'reaction/Components/Helpers'
+import { Col, Row } from 'reaction/Components/Grid'
+import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { Share } from 'reaction/Components/Publishing/Byline/Share'
+import { Text } from 'reaction/Components/Publishing'
 
 export const SectionText = (props) => {
   const { section } = props
@@ -41,7 +41,7 @@ SectionText.propTypes = {
 }
 
 const SectionTextContainer = styled.div`
-  ${pMedia.md`  
+  ${pMedia.md`
     .article__text-section {
       min-width: 100%;
     }

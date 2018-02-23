@@ -2,14 +2,16 @@ import PropTypes from 'prop-types'
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import React from 'react'
 import get from 'lodash.get'
-import { Artwork } from '@artsy/reaction/dist/Components/Artwork'
+import { Artwork } from 'reaction/Components/Artwork'
 import { ArtworkRail } from '../artwork_rail/ArtworkRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
-function PromotedSaleArtworks (props) {
+function PromotedSaleArtworks(props) {
   const { isClosed, isMobile, promotedSaleArtworks } = props
-  const isRenderable = Boolean(!isClosed && promotedSaleArtworks && promotedSaleArtworks.length)
+  const isRenderable = Boolean(
+    !isClosed && promotedSaleArtworks && promotedSaleArtworks.length
+  )
 
   if (!isRenderable) {
     return null
@@ -17,10 +19,10 @@ function PromotedSaleArtworks (props) {
 
   return (
     <RelayStubProvider>
-      { isMobile
-        ? <MasonryGrid
+      {isMobile ? (
+        <MasonryGrid
           mask
-          title='Buy Now'
+          title="Buy Now"
           columnCount={2}
           items={promotedSaleArtworks}
           getAspectRatio={({ artwork }) => {
@@ -34,9 +36,10 @@ function PromotedSaleArtworks (props) {
             )
           }}
         />
+      ) : (
         // Desktop
-        : <ArtworkRail
-          title='Buy Now'
+        <ArtworkRail
+          title="Buy Now"
           artworks={promotedSaleArtworks}
           getDisplayComponent={({ artwork }) => {
             return (
@@ -45,8 +48,8 @@ function PromotedSaleArtworks (props) {
               </div>
             )
           }}
-          />
-      }
+        />
+      )}
     </RelayStubProvider>
   )
 }
@@ -54,31 +57,28 @@ function PromotedSaleArtworks (props) {
 PromotedSaleArtworks.propTypes = {
   isClosed: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  promotedSaleArtworks: PropTypes.array.isRequired
+  promotedSaleArtworks: PropTypes.array.isRequired,
 }
 
 PromotedSaleArtworks.defaultProps = {
-  promotedSaleArtworks: []
+  promotedSaleArtworks: [],
 }
 
 const mapStateToProps = (state) => {
-  const {
-    app: {
-      auction,
-      isMobile
-    }
-  } = state
+  const { app: { auction, isMobile } } = state
 
   const auctionData = auction.toJSON()
-  const promotedSaleArtworks = get(auctionData, 'promoted_sale.sale_artworks', [])
+  const promotedSaleArtworks = get(
+    auctionData,
+    'promoted_sale.sale_artworks',
+    []
+  )
 
   return {
     isClosed: auctionData.is_closed,
     isMobile,
-    promotedSaleArtworks
+    promotedSaleArtworks,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(PromotedSaleArtworks)
+export default connect(mapStateToProps)(PromotedSaleArtworks)

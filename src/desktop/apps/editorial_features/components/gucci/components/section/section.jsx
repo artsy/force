@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
-import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
+import { pMedia } from 'reaction/Components/Helpers'
 import { SectionVideo } from './section_video.jsx'
 import { SectionText } from './section_text.jsx'
 
@@ -41,7 +41,7 @@ const SectionContainer = styled.div`
     .col--first {
       margin-bottom: 40px;
       width: 100%;
-    } 
+    }
     .SectionText {
       padding: 0 20px;
       max-width: 100%;

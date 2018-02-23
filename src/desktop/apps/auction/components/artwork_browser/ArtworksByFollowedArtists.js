@@ -3,14 +3,15 @@ import GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/ar
 import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import React from 'react'
 import get from 'lodash.get'
-import { Artwork } from '@artsy/reaction/dist/Components/Artwork'
+import { Artwork } from 'reaction/Components/Artwork'
 import { ArtworkRail } from '../artwork_rail/ArtworkRail'
 import { RelayStubProvider } from 'desktop/components/react/RelayStubProvider'
 import { connect } from 'react-redux'
 
-function ArtworksByFollwedArtists (props) {
+function ArtworksByFollwedArtists(props) {
   const { isMobile, saleArtworksByFollowedArtists } = props
-  const isRenderable = saleArtworksByFollowedArtists && saleArtworksByFollowedArtists.length
+  const isRenderable =
+    saleArtworksByFollowedArtists && saleArtworksByFollowedArtists.length
 
   if (!isRenderable) {
     return null
@@ -18,10 +19,10 @@ function ArtworksByFollwedArtists (props) {
 
   return (
     <RelayStubProvider>
-      { isMobile
-        ? <MasonryGrid
+      {isMobile ? (
+        <MasonryGrid
           mask
-          title='Works By Artists You Follow'
+          title="Works By Artists You Follow"
           columnCount={2}
           items={saleArtworksByFollowedArtists}
           getAspectRatio={({ artwork }) => {
@@ -35,49 +36,42 @@ function ArtworksByFollwedArtists (props) {
             )
           }}
         />
+      ) : (
         // Desktop
-        : <ArtworkRail
-          title='Works By Artists You Follow'
+        <ArtworkRail
+          title="Works By Artists You Follow"
           artworks={saleArtworksByFollowedArtists}
-          getDisplayComponent={artwork => {
-            return (
-              <GridArtwork saleArtwork={artwork} />
-            )
+          getDisplayComponent={(artwork) => {
+            return <GridArtwork saleArtwork={artwork} />
           }}
           style={{
-            height: 515
+            height: 515,
           }}
         />
-      }
+      )}
     </RelayStubProvider>
   )
 }
 
 ArtworksByFollwedArtists.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-  saleArtworksByFollowedArtists: PropTypes.array.isRequired
+  saleArtworksByFollowedArtists: PropTypes.array.isRequired,
 }
 
 ArtworksByFollwedArtists.defaultProps = {
-  saleArtworksByFollowedArtists: []
+  saleArtworksByFollowedArtists: [],
 }
 
 const mapStateToProps = (state) => {
   const {
-    app: {
-      isMobile
-    },
-    artworkBrowser: {
-      saleArtworksByFollowedArtists
-    }
+    app: { isMobile },
+    artworkBrowser: { saleArtworksByFollowedArtists },
   } = state
 
   return {
     isMobile,
-    saleArtworksByFollowedArtists
+    saleArtworksByFollowedArtists,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(ArtworksByFollwedArtists)
+export default connect(mapStateToProps)(ArtworksByFollwedArtists)

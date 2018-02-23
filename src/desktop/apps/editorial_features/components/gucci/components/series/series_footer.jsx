@@ -1,13 +1,10 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
-import { Col, Row } from '@artsy/reaction/dist/Components/Grid'
-import { Fonts } from '@artsy/reaction/dist/Components/Publishing/Fonts'
-import {
-  Text,
-  PartnerBlock,
-} from '@artsy/reaction/dist/Components/Publishing'
+import { pMedia } from 'reaction/Components/Helpers'
+import { Col, Row } from 'reaction/Components/Grid'
+import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { Text, PartnerBlock } from 'reaction/Components/Publishing'
 
 export const SeriesFooter = (props) => {
   const { curation, isMobile } = props
