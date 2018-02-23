@@ -37,6 +37,7 @@ module.exports = class SaveControls extends Backbone.View
           action: 'save',
           objectId: @model.id
         }
+        signupIntent: 'save artwork'
       return false
 
     trackedProperties = {

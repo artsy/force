@@ -27,6 +27,43 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
 @redirectFromCity = (req, res) ->
   res.redirect 302, req.url.replace '/city/', '/shows/'
 
+@onlineExlusive = (req, res, next) ->
+  partnerCities = new PartnerCities()
+  partnerFeaturedCities = new PartnerFeaturedCities()
+  Q.all([
+    partnerCities.fetch()
+    partnerFeaturedCities.fetch()
+  ]).then ->
+    currentPage = parseInt req.query.page or 1
+    pageSize = 18
+    upcoming = new PartnerShows
+    upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
+    current = new PartnerShows [], state: currentPage: currentPage, pageSize: pageSize
+    current.comparator = (show) -> Date.parse(show.get('end_at'))
+    past = new PartnerShows
+    past.comparator = (show) -> -(Date.parse(show.get('end_at')))
+    criteria =
+      has_location: false
+      sort: '-start_at'
+      size: pageSize
+      displayable: true
+      at_a_fair: false
+    Q.all([
+      upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', sort: 'start_at', criteria))
+      current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
+      past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
+    ]).then ->
+      opening = upcoming.groupBy (show) -> show.openingThisWeek()
+      res.render 'location_based',
+        onlineExclusive: true
+        cities: partnerCities.toJSON()
+        featuredCities: partnerFeaturedCities.toJSON()
+        opening: opening.true or []
+        upcoming: opening.false or []
+        current: current
+        past: past
+  .catch next
+
 @city = (req, res, next) ->
   partnerCities = new PartnerCities()
   partnerFeaturedCities = new PartnerFeaturedCities()
@@ -61,7 +98,8 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
       past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
     ]).then ->
       opening = upcoming.groupBy (show) -> show.openingThisWeek()
-      res.render 'city',
+      res.render 'location_based',
+        onlineExclusive: false
         city: city
         cities: partnerCities.toJSON()
         featuredCities: partnerFeaturedCities.toJSON()
