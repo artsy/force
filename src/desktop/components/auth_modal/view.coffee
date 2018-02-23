@@ -39,7 +39,6 @@ module.exports = class AuthModalView extends ModalView
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
-    console.log('***', 'signup intent: ' + @signupIntent)
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
