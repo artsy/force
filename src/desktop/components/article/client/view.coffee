@@ -170,11 +170,11 @@ module.exports = class ArticleView extends Backbone.View
           # Remove loading state
           $list.closest('.article-section-image-collection').addClass 'images-loaded'
 
-  imgsFillContainer: (imgs, $container, gutter) =>
+  imgsFillContainer: (imgs, $container, gutter) ->
     getWidth = _.map imgs, (img) -> img.width
     imgsWidth = _.reduce(getWidth, (a, b) ->
-                return a + b
-              , 0) + (($container.children().length - 1) * gutter)
+      return a + b
+    , 0) + (($container.children().length - 1) * gutter)
     isFilled = $container.width() - 15 < imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
 
