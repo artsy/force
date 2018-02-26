@@ -11,7 +11,13 @@ Artworks = require '../../../../collections/artworks.coffee'
 describe 'RecentlyAddedWorksView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      benv.expose
+        $: benv.require('jquery')
+        jQuery: benv.require('jquery')
+        Waypoint: {
+          destroyAll: sinon.stub()
+          refreshAll: sinon.stub()
+        }
       Backbone.$ = $
       done()
 
@@ -113,10 +119,12 @@ describe 'RecentlyAddedWorksView', ->
     afterEach ->
       @view.params.restore()
 
-    it 'fetches the artist slug first; pins it', ->
-      @view.$pins.find('.notifications-list-item').length.should.equal 1
-      Backbone.sync.args[0][1].url().should.containEql 'api/v1/artist/foobar'
-      Backbone.sync.args[1][1].url.should.containEql 'api/v1/artist/foobar/artworks?published=true'
+    it 'fetches the artist slug first; pins it', (done) ->
+      _.defer =>
+        @view.$pins.find('.notifications-list-item').length.should.equal 1
+        Backbone.sync.args[0][1].url().should.containEql 'api/v1/artist/foobar'
+        Backbone.sync.args[1][1].url.should.containEql 'api/v1/artist/foobar/artworks?published=true'
+        done()
 
   describe '#isEmpty', ->
     beforeEach ->

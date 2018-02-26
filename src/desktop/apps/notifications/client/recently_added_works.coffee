@@ -37,7 +37,12 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       @pinnedArtist.fetch()
       @pinnedArtworks.fetch(data: sort: '-published_at', size: 6 )
     ])?.then =>
-      @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks, @containsNewArtwork(@pinnedArtworks))
+      $container = @renderContainerTemplate(
+        @pinnedArtist,
+        @pinnedArtworks,
+        @containsNewArtwork(@pinnedArtworks)
+      )
+      @$pins.html $container
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
 
   params: ->
@@ -116,12 +121,12 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       Q.all(
         artists.map (artist) =>
           new Artist(artist).related().artworks.fetch
-              url: "#{API_URL}/api/v1/artist/#{artist.id}/artworks"
-              data:
-                filter: [@forSaleFormatted]
-                sort: '-published_at'
-                size: 10
-                published: true
+            url: "#{API_URL}/api/v1/artist/#{artist.id}/artworks"
+            data:
+              filter: [@forSaleFormatted]
+              sort: '-published_at'
+              size: 10
+              published: true
       ).then (artworks) =>
         if artworks.length
           @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> a.published_at ).reverse()

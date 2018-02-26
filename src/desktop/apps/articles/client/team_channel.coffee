@@ -21,7 +21,7 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
       $content: $('.team-channel-body')
       offset: -400
       el: $('body')
-    $(window).on('resize', _.throttle(@windowResized, 200));
+    $(window).on('resize', _.throttle(@windowResized, 200))
 
   renderGrid: ->
     $el = $('.team-channel-grid')

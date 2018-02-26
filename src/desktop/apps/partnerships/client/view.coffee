@@ -72,9 +72,9 @@ module.exports = class PartnershipsView extends Backbone.View
       element: @$nav
     # waypoint for the very top section
     @$nav.waypoint (direction) ->
-        backLink = "/#{sd.SUBJECT}-partnerships"
-        Backbone.history.navigate( backLink ,
-          trigger: false, replace: true) if direction is 'up'
+      backLink = "/#{sd.SUBJECT}-partnerships"
+      Backbone.history.navigate( backLink ,
+        trigger: false, replace: true) if direction is 'up'
 
   setupSectionNavHighlighting: ->
     activateNavLink = (el) =>
