@@ -21,10 +21,10 @@ module.exports = {
       control: 50
       experiment: 50
     edge: 'experiment'
-#  onboarding_test:
-#    key: 'onboarding_test'
-#    outcomes:
-#      control: 50
-#      experiment: 50
-#    edge: 'experiment'
+ onboarding_test:
+   key: 'onboarding_test'
+   outcomes:
+     control: 50
+     experiment: 50
+   edge: 'experiment'
 }

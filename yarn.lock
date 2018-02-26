@@ -27,9 +27,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@0.23.7":
-  version "0.23.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.23.7.tgz#bfb69b82faf2b0f639e917ef708e5df9612ebab8"
+"@artsy/reaction@0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.26.0.tgz#d8603b19d12e64485796e7df0204638ff1dc9dc2"
   dependencies:
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
