@@ -43,6 +43,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       width: '500px'
       mode: 'login'
       redirectTo: @afterAuthPath
+      signupIntent: 'artist page cta'
 
   currentParams: ->
     qs.parse(location.search.replace(/^\?/, ''))
