@@ -1,21 +1,21 @@
-if partner_show.press_release || (partner_show.artists && partner_show.artists.length > 0)
+if show.press_release || (show.artists && show.artists.length > 0)
   .show-footer
     .show-footer-row
-      if partner_show.press_release
+      if show.press_release
         .show-footer-cell
           h3.show-subheadline
             | Press Release
           .show-press-release
-            != partner_show.press_release
+            != show.press_release
 
       .show-footer-cell
         h3.show-subheadline
           | Follow Artists In This Show
 
-        - artists = partner_show.artists
+        - artists = show.artists
         include ../components/follow_artists/template
 
-      if !partner_show.press_release && partner_show.artists && partner_show.artists.length > 0
+      if !show.press_release && show.artists && show.artists.length > 0
         //- Force 50% layout
         .show-footer-cell
           | &nbsp;

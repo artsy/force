@@ -1,11 +1,11 @@
 .show-events
   //- More than one event (opens modal)
-  if partner_show.events.length > 1
+  if show.events.length > 1
     a.show-entity-link.js-open-show-events( href='#' )
       i.icon-circle-chevron
       span Multiple events for this show
   else
-    - var showEvent = partner_show.events[0]
+    - var showEvent = show.events[0]
 
     //- One event with description (opens modal)
     if showEvent.description

@@ -1,38 +1,38 @@
 header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
   .show-header-cell
     h1.show-title
-      if partner_show.fair
-        = partner_show.partner.name
+      if show.fair
+        = show.partner.name
         br
-        em= partner_show.fair.name
+        em= show.fair.name
       else
-        = ViewHelpers.title(partner_show)
+        = ViewHelpers.title(show)
 
-    if partner_show.description
+    if show.description
       .show-description
-        != partner_show.description
+        != show.description
 
   .show-header-cell
     .show-partner
       .entity-with-follow
-        if partner_show.partner.is_linkable
-          a.entity-link( href= partner_show.partner.href )
-            = partner_show.partner.name
+        if show.partner.is_linkable
+          a.entity-link( href= show.partner.href )
+            = show.partner.name
         else
-          span.entity-link= partner_show.partner.name
-        a.entity-follow.profile-follow( data-id= partner_show.partner.default_profile_id )
+          span.entity-link= show.partner.name
+        a.entity-follow.profile-follow( data-id= show.partner.default_profile_id )
 
       nav.show-share.js-show-share
-        +share(ViewHelpers.shareTitle(partner_show))
+        +share(ViewHelpers.shareTitle(show))
 
     .show-metadata
-      if partner_show.fair
+      if show.fair
         include metadata/fair
       else
         .show-dates
-          = ViewHelpers.runningDates(partner_show)
+          = ViewHelpers.runningDates(show)
         include metadata/location
-        if partner_show.events.length > 0
+        if show.events.length > 0
           include metadata/events
 
 //- Rendered client-side

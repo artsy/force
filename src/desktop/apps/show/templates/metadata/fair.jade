@@ -1,12 +1,12 @@
 //- Temporary naïve check
-if partner_show.fair.published && partner_show.fair.has_full_feature
-  a.show-entity-link( href= partner_show.fair.href )
-    span= partner_show.fair.name
+if show.fair.published && show.fair.has_full_feature
+  a.show-entity-link( href= show.fair.href )
+    span= show.fair.name
     i.icon-circle-chevron
 else
-  = partner_show.fair.name
+  = show.fair.name
 .show-dates
-  = DateHelpers.timespanInWords(partner_show.fair.start_at, partner_show.fair.end_at)
-if partner_show.location
+  = DateHelpers.timespanInWords(show.fair.start_at, show.fair.end_at)
+if show.location
   .show-location
-    = partner_show.location.display
+    = show.location.display
