@@ -43,24 +43,14 @@ module.exports = class AuthModalView extends ModalView
     mode = mode: options.mode if options.mode
     @state = new State mode
 
-    currentPath = location.pathname
-    postLoginPath = @redirectTo or currentPath
-    postSignupPath = @redirectTo or '/personalize'
-    if (options.mode is 'signup' or options.mode is 'register') and !@destination
-      @destination = currentPath unless @redirectTo
-
     @templateData = _.extend {
       context: @context
       signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
-      redirectTo: switch @state.get 'mode'
-        when 'login' then postLoginPath
-        when 'signup' then postSignupPath
-        when 'register' then postSignupPath
-        else @redirectTo or '/'
+      redirectTo: @currentRedirectTo()
     }, options?.userData
 
-    @listenTo @state, 'change:mode', @reRender
+    @listenTo @state, 'change:mode', @updateTemplateAndRender
     @listenTo @state, 'change:mode', @logState
     @on 'rerendered', @initializeMailcheck
 
@@ -72,6 +62,24 @@ module.exports = class AuthModalView extends ModalView
 
     Cookies.set 'postSignupAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
     Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
+
+  currentRedirectTo: ->
+    currentPath = location.pathname
+    postLoginPath = @redirectTo or currentPath
+    postSignupPath = @redirectTo or '/personalize'
+    mode = @state.get 'mode'
+    if (mode is 'signup' or mode is 'register') and !@destination
+      @destination = currentPath unless @redirectTo
+    
+    switch mode
+      when 'login' then postLoginPath
+      when 'signup' then postSignupPath
+      when 'register' then postSignupPath
+      else @redirectTo or '/'
+
+  updateTemplateAndRender: ->
+    @templateData.redirectTo = @currentRedirectTo()
+    @reRender()
 
   initializeMailcheck: ->
     if @state.get('mode') is 'register'
