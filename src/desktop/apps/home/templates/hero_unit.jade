@@ -1,6 +1,6 @@
 .home-hero-unit(
   class= 'home-hero-unit' + _s.dasherize(_s.humanize(heroUnit.mode)) + (i == 0 ? ' home-hero-unit-active' : '')
-  style="background-image: url('#{heroUnit.background_image_url}')"
+  style="background-image: url('#{resize(heroUnit.background_image_url, { width: 2000 })}')"
   data-mode=heroUnit.mode
 )
   a.hhu-frame( class='js-homepage-hero-unit', href=heroUnit.href ): .responsive-layout-container: .main-layout-container
