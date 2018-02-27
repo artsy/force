@@ -1,8 +1,8 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/sidebar/ArtistFilter'
 
-const { ArtistFilter } = test
+const rewire = require('rewire')('../ArtistFilter')
+const { ArtistFilter } = rewire.test
 
 describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
   describe('<ArtistFilter />', () => {
@@ -16,11 +16,7 @@ describe('auction/components/artwork_browser/sidebar/ArtistFilter.test', () => {
     }
 
     beforeEach(() => {
-      __RewireAPI__.__Rewire__('BasicCheckbox', BasicCheckbox)
-    })
-
-    afterEach(() => {
-      __RewireAPI__.__ResetDependency__('BasicCheckbox')
+      rewire.__set__('BasicCheckbox', BasicCheckbox)
     })
 
     it('by default does not render a artists you follow checkbox', () => {

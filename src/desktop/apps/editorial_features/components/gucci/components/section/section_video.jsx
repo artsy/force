@@ -2,9 +2,9 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { pMedia } from '@artsy/reaction/dist/Components/Helpers'
-import { Fonts } from '@artsy/reaction/dist/Components/Publishing/Fonts'
-import { Video } from '@artsy/reaction/dist/Components/Publishing'
+import { pMedia } from 'reaction/Components/Helpers'
+import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { Video } from 'reaction/Components/Publishing'
 
 export const SectionVideo = (props) => {
   const { section, curation } = props
@@ -50,7 +50,7 @@ SectionVideo.propTypes = {
 const SectionVideoContainer = styled.div`
   margin-bottom: 50px;
   ${pMedia.sm`
-    margin-bottom: 40px;  
+    margin-bottom: 40px;
   `}
   .VideoCover {
     justify-content: flex-start;

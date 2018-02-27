@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import colors from '@artsy/reaction/dist/Assets/Colors'
+import colors from 'reaction/Assets/Colors'
 
 const propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  display_name: PropTypes.string
+  display_name: PropTypes.string,
 }
 
 const GeneItem = styled.li`
@@ -25,9 +25,7 @@ const GeneLink = styled.a`
 const Gene = ({ id, name, display_name }) => {
   return (
     <GeneItem>
-      <GeneLink href={`/gene/${id}`}>
-        {display_name || name}
-      </GeneLink>
+      <GeneLink href={`/gene/${id}`}>{display_name || name}</GeneLink>
     </GeneItem>
   )
 }

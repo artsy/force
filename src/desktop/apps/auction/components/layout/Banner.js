@@ -1,10 +1,13 @@
-import ClockView from 'desktop/components/clock/react'
+import _ClockView from 'desktop/components/clock/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
 import { data as sd } from 'sharify'
+
+// FIXME: Rewire
+let ClockView = _ClockView
 
 function Banner (props) {
   const {

@@ -1,9 +1,12 @@
-import AddToCalendarView from 'desktop/components/add_to_calendar/react'
+import _AddToCalendarView from 'desktop/components/add_to_calendar/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Registration from './Registration'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
+
+// FIXME: Rewire
+let AddToCalendarView = _AddToCalendarView
 
 function AuctionInfoDesktop (props) {
   const {

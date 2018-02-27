@@ -1,19 +1,15 @@
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/artwork_browser/main/artwork/ListArtwork'
 
-const { ListArtwork } = test
+const rewire = require('rewire')('../ListArtwork')
+const { ListArtwork } = rewire.test
 
 describe('auction/components/artwork_browser/main/artwork/ListArtwork.test', () => {
   describe('<ListArtwork />', () => {
     const BidStatus = () => <div />
 
     beforeEach(() => {
-      __RewireAPI__.__Rewire__('BidStatus', BidStatus)
-    })
-
-    afterEach(() => {
-      __RewireAPI__.__ResetDependency__('BidStatus')
+      rewire.__set__('BidStatus', BidStatus)
     })
 
     it('does not render a <BidStatus /> component if closed', () => {

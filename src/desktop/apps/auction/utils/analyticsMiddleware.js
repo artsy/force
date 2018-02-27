@@ -1,6 +1,9 @@
 import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
-import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
+import _analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
 import { isEqual } from 'underscore'
+
+// FIXME: Rewire
+let analyticsHooks = _analyticsHooks
 
 const analyticsMiddleware = store => next => action => {
   const result = next(action)

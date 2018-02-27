@@ -1,10 +1,10 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-import colors from '@artsy/reaction/dist/Assets/Colors'
-import { Row, Col } from '@artsy/reaction/dist/Components/Grid'
-import Text from '@artsy/reaction/dist/Components/Text'
-import Title from '@artsy/reaction/dist/Components/Title'
+import colors from 'reaction/Assets/Colors'
+import { Row, Col } from 'reaction/Components/Grid'
+import Text from 'reaction/Components/Text'
+import Title from 'reaction/Components/Title'
 
 const Container = styled.div`
   margin: 0 auto;
@@ -54,25 +54,40 @@ const theme = {
       xs: 0,
       sm: 24,
       md: 48,
-      lg: 64
-    }
-  }
+      lg: 64,
+    },
+  },
 }
 
-export default ({ introduction, fair_coverage, artsy_in_miami, prepare_for_fairs }) =>
+export default ({
+  introduction,
+  fair_coverage,
+  artsy_in_miami,
+  prepare_for_fairs,
+}) => (
   <ThemeProvider theme={theme}>
     <Container>
       <Row style={{ paddingBottom: 50 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
-          <SectionTitle titleSize="large" dangerouslySetInnerHTML={{ __html: introduction.title }} />
+          <SectionTitle
+            titleSize="large"
+            dangerouslySetInnerHTML={{ __html: introduction.title }}
+          />
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           <ReveredColumnOnMobile>
-            <IntroductionText textSize='xlarge' color={colors.grayDark} style={{ marginBottom: 20 }}>
+            <IntroductionText
+              textSize="xlarge"
+              color={colors.grayDark}
+              style={{ marginBottom: 20 }}
+            >
               {introduction.description}
             </IntroductionText>
             <div>
-              <img style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }} src='https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg' />
+              <img
+                style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }}
+                src="https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg"
+              />
             </div>
           </ReveredColumnOnMobile>
         </Col>
@@ -80,44 +95,47 @@ export default ({ introduction, fair_coverage, artsy_in_miami, prepare_for_fairs
 
       <Row style={{ paddingBottom: 50 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
-          <SectionTitle titleSize="large">
-            {fair_coverage.title}
-          </SectionTitle>
+          <SectionTitle titleSize="large">{fair_coverage.title}</SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           <Row style={{ marginBottom: 20 }}>
-            {fair_coverage.fairs.map(fair =>
+            {fair_coverage.fairs.map((fair) => (
               <Col lg={3} md={3} sm={3} xs={6} key={fair.logo_url}>
-                {(fair.site_url && fair.site_url.startsWith('http') ?
-                  <a href={fair.site_url} target='_blank'>
+                {fair.site_url && fair.site_url.startsWith('http') ? (
+                  <a href={fair.site_url} target="_blank">
                     <FairLogo src={fair.logo_url} />
                   </a>
-                :
+                ) : (
                   <FairLogo src={fair.logo_url} />
                 )}
               </Col>
-            )}
+            ))}
           </Row>
         </Col>
       </Row>
 
       <Row style={{ paddingBottom: 45 }}>
         <Col lg={4} md={4} sm={12} xs={12}>
-          <SectionTitle titleSize="large">
-            {artsy_in_miami.title}
-          </SectionTitle>
+          <SectionTitle titleSize="large">{artsy_in_miami.title}</SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          <img style={{ marginBottom: 10, width: '100%' }} src={artsy_in_miami.banner_image_url} />
+          <img
+            style={{ marginBottom: 10, width: '100%' }}
+            src={artsy_in_miami.banner_image_url}
+          />
 
           <Row>
             <Col lg={7} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text textSize='medium'>
-                {artsy_in_miami.description}
-              </Text>
+              <Text textSize="medium">{artsy_in_miami.description}</Text>
             </Col>
             <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text textSize='medium' color={colors.grayDark} dangerouslySetInnerHTML={{ __html: artsy_in_miami.public_viewing_date }} />
+              <Text
+                textSize="medium"
+                color={colors.grayDark}
+                dangerouslySetInnerHTML={{
+                  __html: artsy_in_miami.public_viewing_date,
+                }}
+              />
             </Col>
           </Row>
         </Col>
@@ -130,26 +148,37 @@ export default ({ introduction, fair_coverage, artsy_in_miami, prepare_for_fairs
           </SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          {prepare_for_fairs.articles.map(article =>
+          {prepare_for_fairs.articles.map((article) => (
             <Row style={{ marginBottom: 25 }} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
-                <a href={article.article_url} target='_blank'>
-                  <img style={{ marginBottom: 10, width: '100%' }} src={article.image_url} />
+                <a href={article.article_url} target="_blank">
+                  <img
+                    style={{ marginBottom: 10, width: '100%' }}
+                    src={article.image_url}
+                  />
                 </a>
               </Col>
               <Col lg={5} md={5} sm={6} xs={12}>
-                <a href={article.article_url} style={{ textDecoration: 'none' }} target='_blank'>
-                  <Title titleSize='small' style={{ margin: '0 0 5px', lineHeight: 1 }}>
+                <a
+                  href={article.article_url}
+                  style={{ textDecoration: 'none' }}
+                  target="_blank"
+                >
+                  <Title
+                    titleSize="small"
+                    style={{ margin: '0 0 5px', lineHeight: 1 }}
+                  >
                     {article.title}
                   </Title>
-                  <Text textStyle='primary' textSize='small'>
+                  <Text textStyle="primary" textSize="small">
                     {article.author}
                   </Text>
                 </a>
               </Col>
             </Row>
-          )}
+          ))}
         </Col>
       </Row>
     </Container>
   </ThemeProvider>
+)

@@ -1,11 +1,16 @@
-import request from 'superagent'
+import _request from 'superagent'
 import gemup from 'gemup'
 import get from 'lodash.get'
 import stepsConfig from './steps_config'
-import { data as sd } from 'sharify'
-import { fetchToken, formattedLocation } from '../helpers'
+import { data as _sd } from 'sharify'
+import { fetchToken as _fetchToken, formattedLocation } from '../helpers'
 import { find } from 'underscore'
 import { push } from 'react-router-redux'
+
+// FIXME: Rewire
+let request = _request
+let sd = _sd
+let fetchToken = _fetchToken
 
 // Action types
 export const ADD_ASSET_ID = 'ADD_ASSET_ID'

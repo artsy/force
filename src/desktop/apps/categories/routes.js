@@ -1,9 +1,13 @@
 import App from './components/App'
 import GeneFamiliesQuery from './queries/geneFamilies'
 import FeaturedGenesQuery from './queries/featuredGenes'
-import metaphysics from 'lib/metaphysics.coffee'
-import { renderLayout } from '@artsy/stitch'
+import _metaphysics from 'lib/metaphysics.coffee'
+import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { geneFamiliesFromConnection } from './utils'
+
+// FIXME: Rewire
+let metaphysics = _metaphysics
+let renderLayout = _renderLayout
 
 export const index = async (req, res, next) => {
   try {

@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import StepMarker from '../step_marker'
+import _StepMarker from '../step_marker'
 import block from 'bem-cn-lite'
-import stepsConfig from '../../client/steps_config'
+import _stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
 import {
   resizeWindow
 } from '../../client/actions'
+
+// FIXME: Rewire
+let StepMarker = _StepMarker
+let stepsConfig = _stepsConfig
 
 function SubmissionFlow (props) {
   const b = block('consignments-submission-flow')

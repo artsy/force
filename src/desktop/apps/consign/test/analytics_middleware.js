@@ -1,14 +1,16 @@
-import analyticsMiddleware from '../client/analytics_middleware'
 import reducers from '../client/reducers'
 import { applyMiddleware, createStore } from 'redux'
 import sinon from 'sinon'
+
+const rewire = require('rewire')('../client/analytics_middleware')
+const analyticsMiddleware = rewire.default
 
 describe('analytics middleware', () => {
   let triggerStub
 
   beforeEach(() => {
     triggerStub = sinon.spy()
-    analyticsMiddleware.__Rewire__('analyticsHooks', {
+    rewire.__set__('analyticsHooks', {
       trigger: triggerStub,
     })
   })

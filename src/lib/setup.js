@@ -216,7 +216,7 @@ export default function(app) {
     })
 
     mountAndReload(path.resolve('src/desktop'), {
-      watchModules: ['@artsy/reaction'],
+      watchModules: ['@artsy/reaction', '@artsy/stitch'],
     })
 
     // In staging or prod, mount routes normally

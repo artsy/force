@@ -1,10 +1,13 @@
-import BidStatus from './BidStatus'
+import _BidStatus from './BidStatus'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
 import titleAndYear from 'desktop/apps/auction/utils/titleAndYear'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
+
+// FIXME: Rewire
+let BidStatus = _BidStatus
 
 function GridArtwork (props) {
   const {

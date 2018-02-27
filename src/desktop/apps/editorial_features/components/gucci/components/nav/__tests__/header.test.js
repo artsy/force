@@ -3,8 +3,8 @@ import React from 'react'
 import sinon from 'sinon'
 import { mount } from 'enzyme'
 import { Header } from '../header.jsx'
-import { PartnerInline } from '@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline'
-import Icon from '@artsy/reaction/dist/Components/Icon'
+import { PartnerInline } from 'reaction/Components/Publishing/Partner/PartnerInline'
+import Icon from 'reaction/Components/Icon'
 
 describe('Header', () => {
   window.matchMedia = () => {

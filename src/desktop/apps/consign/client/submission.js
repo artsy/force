@@ -18,12 +18,12 @@ import {
   updateCurrentStep,
   updateLocationFromSubmissionAndFreeze,
   updateStepsWithUser,
-  updateStepsWithoutUser
+  updateStepsWithoutUser,
 } from './actions'
 import { render } from 'react-dom'
 import { routerMiddleware } from 'react-router-redux'
 
-function setupSubmissionFlow () {
+function setupSubmissionFlow() {
   // load google maps for autocomplete
   geo.loadGoogleMaps()
   const history = createHistory()
@@ -35,15 +35,15 @@ function setupSubmissionFlow () {
   middleware.push(analyticsMiddleware) // middleware to help us track previous and future states
 
   if (sd.NODE_ENV === 'development' || sd.NODE_ENV === 'staging') {
-    middleware.push(createLogger({ // middleware that logs actions
-      collapsed: true
-    }))
+    middleware.push(
+      createLogger({
+        // middleware that logs actions
+        collapsed: true,
+      })
+    )
   }
 
-  const store = createStore(
-    reducers,
-    applyMiddleware(...middleware)
-  )
+  const store = createStore(reducers, applyMiddleware(...middleware))
 
   const determineSteps = () => {
     if (sd.CURRENT_USER) {
@@ -57,7 +57,7 @@ function setupSubmissionFlow () {
   history.listen((ev) => {
     window.analytics.page(
       { path: ev.pathname },
-      { integrations: { 'Marketo': false } }
+      { integrations: { Marketo: false } }
     )
   })
 
@@ -67,7 +67,8 @@ function setupSubmissionFlow () {
         <Router history={history}>
           <Switch>
             <Route
-              exact path='/consign/submission'
+              exact
+              path="/consign/submission"
               render={() => {
                 if (sd.CURRENT_USER) {
                   store.dispatch(updateStepsWithUser())
@@ -128,7 +129,10 @@ function setupSubmissionFlow () {
                 return <Component />
               }}
             />
-            <Route path={stepsConfig.thankYou.submissionPath} component={stepsConfig.thankYou.component} />
+            <Route
+              path={stepsConfig.thankYou.submissionPath}
+              component={stepsConfig.thankYou.component}
+            />
           </Switch>
         </Router>
       </ResponsiveWindow>

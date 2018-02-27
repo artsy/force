@@ -1,10 +1,13 @@
-import BasicCheckbox from './BasicCheckbox'
+import _BasicCheckbox from './BasicCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
 import { contains } from 'underscore'
 import { updateArtistParams } from 'desktop/apps/auction/actions/artworkBrowser'
+
+// FIXME: Rewire
+let BasicCheckbox = _BasicCheckbox
 
 function ArtistFilter (props) {
   const {

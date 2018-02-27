@@ -3,24 +3,36 @@ import embed from 'particle'
 import markdown from 'desktop/components/util/markdown.coffee'
 import App from 'desktop/apps/article/components/App'
 import ArticleQuery from 'desktop/apps/article/queries/article'
-import Article from 'desktop/models/article.coffee'
+import _Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
-import { SuperSubArticlesQuery, SuperArticleQuery } from 'desktop/apps/article/queries/superArticle'
-import { positronql } from 'desktop/lib/positronql'
+import {
+  SuperSubArticlesQuery,
+  SuperArticleQuery,
+} from 'desktop/apps/article/queries/superArticle'
+import { positronql as _positronql } from 'desktop/lib/positronql'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
-import { data as sd } from 'sharify'
-import { renderLayout } from '@artsy/stitch'
+import { data as _sd } from 'sharify'
+import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
-const sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
+const sailthru = require('sailthru-client').createSailthruClient(
+  SAILTHRU_KEY,
+  SAILTHRU_SECRET
+)
 
-export async function index (req, res, next) {
+// FIXME: Rewire
+let sd = _sd
+let positronql = _positronql
+let Article = _Article
+let renderLayout = _renderLayout
+
+export async function index(req, res, next) {
   const articleId = req.params.slug
 
   try {
     const data = await positronql({
       query: ArticleQuery(articleId),
-      req
+      req,
     })
     const article = data.article
     const articleModel = new Article(data.article)
@@ -52,7 +64,9 @@ export async function index (req, res, next) {
       article.seriesArticle &&
       !req.path.includes(`/series/${article.seriesArticle.slug}/`)
     ) {
-      return res.redirect(`/series/${article.seriesArticle.slug}/${article.slug}`)
+      return res.redirect(
+        `/series/${article.seriesArticle.slug}/${article.slug}`
+      )
     }
 
     const isSuper = article.is_super_article || article.is_super_sub_article
@@ -61,7 +75,9 @@ export async function index (req, res, next) {
 
     // Set main super article
     if (article.is_super_sub_article) {
-      const superData = await positronql({ query: SuperArticleQuery(article.id) })
+      const superData = await positronql({
+        query: SuperArticleQuery(article.id),
+      })
       superArticle.set(superData.articles[0])
     } else if (article.is_super_article) {
       superArticle.set(article)
@@ -81,15 +97,19 @@ export async function index (req, res, next) {
     let templates
     if (isSuper) {
       templates = {
-        SuperArticleFooter: '../../../components/article/templates/super_article_footer.jade',
-        SuperArticleHeader: '../../../components/article/templates/super_article_sticky_header.jade'
+        SuperArticleFooter:
+          '../../../components/article/templates/super_article_footer.jade',
+        SuperArticleHeader:
+          '../../../components/article/templates/super_article_sticky_header.jade',
       }
     }
 
     // Series and Video pages
-    let layoutTemplate = '../../../components/main_layout/templates/react_index.jade'
+    let layoutTemplate =
+      '../../../components/main_layout/templates/react_index.jade'
     if (_.contains(['series', 'video'], article.layout)) {
-      layoutTemplate = '../../../components/main_layout/templates/react_blank_index.jade'
+      layoutTemplate =
+        '../../../components/main_layout/templates/react_blank_index.jade'
     }
 
     const isMobile = res.locals.sd.IS_MOBILE
@@ -99,18 +119,18 @@ export async function index (req, res, next) {
       basePath: res.app.get('views'),
       layout: layoutTemplate,
       config: {
-        styledComponents: true
+        styledComponents: true,
       },
       blocks: {
         head: 'meta.jade',
-        body: App
+        body: App,
       },
       locals: {
         ...res.locals,
         assetPackage: 'article',
         bodyClass: getBodyClass(article),
         crop,
-        markdown
+        markdown,
       },
       data: {
         article,
@@ -119,9 +139,9 @@ export async function index (req, res, next) {
         jsonLD,
         subscribed,
         superArticle,
-        superSubArticles
+        superSubArticles,
       },
-      templates
+      templates,
     })
 
     res.send(layout)
@@ -133,13 +153,16 @@ export async function index (req, res, next) {
 const getBodyClass = (article) => {
   let bodyClass = 'body-article body-no-margins'
   const isSuper = article.is_super_article || article.is_super_sub_article
-  const isFullscreen = article.hero_section && article.hero_section.type === 'fullscreen'
-  if (isSuper && isFullscreen) { bodyClass = bodyClass + ' body-no-header' }
+  const isFullscreen =
+    article.hero_section && article.hero_section.type === 'fullscreen'
+  if (isSuper && isFullscreen) {
+    bodyClass = bodyClass + ' body-no-header'
+  }
   return bodyClass
 }
 
-export function classic (req, res, next) {
-  const article = new Article({id: req.params.slug})
+export function classic(req, res, next) {
+  const article = new Article({ id: req.params.slug })
   const accessToken = req.user ? req.user.get('accessToken') : null
 
   article.fetchWithRelated({
@@ -151,25 +174,33 @@ export function classic (req, res, next) {
       }
 
       if (data.partner) {
-        return res.redirect(`/${data.partner.get('default_profile_id')}/article/${data.article.get('slug')}`)
+        return res.redirect(
+          `/${data.partner.get(
+            'default_profile_id'
+          )}/article/${data.article.get('slug')}`
+        )
       }
 
       res.locals.sd.ARTICLE = data.article.toJSON()
-      res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
+      res.locals.sd.INCLUDE_SAILTHRU =
+        res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
       res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      res.render('article', _.extend(data, {
-        embed,
-        crop,
-        resize
-      }))
-    }
+      res.render(
+        'article',
+        _.extend(data, {
+          embed,
+          crop,
+          resize,
+        })
+      )
+    },
   })
 }
 
-export function amp (req, res, next) {
-  const article = new Article({id: req.params.slug})
+export function amp(req, res, next) {
+  const article = new Article({ id: req.params.slug })
 
   article.fetchWithRelated({
     error: res.backboneError,
@@ -185,12 +216,15 @@ export function amp (req, res, next) {
       data.article = data.article.prepForAMP()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
 
-      return res.render('amp_article', _.extend(data, {
-        resize,
-        crop,
-        embed
-      }))
-    }
+      return res.render(
+        'amp_article',
+        _.extend(data, {
+          resize,
+          crop,
+          embed,
+        })
+      )
+    },
   })
 }
 
@@ -199,57 +233,69 @@ export const subscribedToEditorial = (email) => {
     if (!email.length) {
       return resolve(false)
     }
-    sailthru.apiGet('user', {
-      id: email
-    }, (err, response) => {
-      if (err) {
-        return resolve(false)
-      } else {
-        if (
-          response.vars &&
-          response.vars.receive_editorial_email &&
-          response.vars.email_frequency === 'daily'
-        ) {
-          resolve(true)
+    sailthru.apiGet(
+      'user',
+      {
+        id: email,
+      },
+      (err, response) => {
+        if (err) {
+          return resolve(false)
         } else {
-          resolve(false)
+          if (
+            response.vars &&
+            response.vars.receive_editorial_email &&
+            response.vars.email_frequency === 'daily'
+          ) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         }
       }
-    })
+    )
   })
 }
 
 export const editorialSignup = (req, res, next) => {
   // Add user to list
-  sailthru.apiPost('user', {
-    id: req.body.email,
-    lists: {
-      [`${sd.SAILTHRU_MASTER_LIST}`]: 1
+  sailthru.apiPost(
+    'user',
+    {
+      id: req.body.email,
+      lists: {
+        [`${sd.SAILTHRU_MASTER_LIST}`]: 1,
+      },
+      vars: {
+        source: 'editorial',
+        receive_editorial_email: true,
+        email_frequency: 'daily',
+      },
     },
-    vars: {
-      source: 'editorial',
-      receive_editorial_email: true,
-      email_frequency: 'daily'
+    (err, response) => {
+      if (err) {
+        return res.status(500).send(response.errormsg)
+      }
+      if (response.ok) {
+        // Send welcome email
+        sailthru.apiPost(
+          'event',
+          {
+            event: 'editorial_welcome',
+            id: req.body.email,
+          },
+          (err, response) => {
+            if (err) {
+              return res.status(500).send(response.errormsg)
+            }
+            return res.send(req.body)
+          }
+        )
+      } else {
+        return res.status(500).send(response.errormsg)
+      }
     }
-  }, (err, response) => {
-    if (err) {
-      return res.status(500).send(response.errormsg)
-    }
-    if (response.ok) {
-      // Send welcome email
-      sailthru.apiPost('event', {
-        event: 'editorial_welcome',
-        id: req.body.email
-      }, (err, response) => {
-        if (err) {
-          return res.status(500).send(response.errormsg)
-        }
-        return res.send(req.body)
-      })
-    } else {
-      return res.status(500).send(response.errormsg)
-    }
-  })
+  )
 }
 
 export const redirectPost = (req, res, next) =>

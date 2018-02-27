@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import GeneFamilyNav from './GeneFamilyNav'
 import TAGPContent from './TAGPContent'
 
+import { hot } from 'react-hot-loader'
+
 const Layout = styled.div`
   display: flex;
   justify-content: space-between;
@@ -15,10 +17,10 @@ const Layout = styled.div`
 class App extends Component {
   static propTypes = {
     geneFamilies: PropTypes.array.isRequired,
-    allFeaturedGenesByFamily: PropTypes.array.isRequired
+    allFeaturedGenesByFamily: PropTypes.array.isRequired,
   }
 
-  render () {
+  render() {
     const { geneFamilies, allFeaturedGenesByFamily } = this.props
     return (
       <Layout>
@@ -32,4 +34,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default hot(module)(App)

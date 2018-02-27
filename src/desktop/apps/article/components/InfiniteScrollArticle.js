@@ -3,12 +3,15 @@ import _ from 'underscore'
 import PropTypes from 'prop-types'
 import Waypoint from 'react-waypoint'
 import styled from 'styled-components'
-import colors from '@artsy/reaction/dist/Assets/Colors'
+import colors from 'reaction/Assets/Colors'
 import { data as sd } from 'sharify'
-import { positronql } from 'desktop/lib/positronql'
-import { Article } from '@artsy/reaction/dist/Components/Publishing'
+import { positronql as _positronql } from 'desktop/lib/positronql'
+import { Article } from 'reaction/Components/Publishing'
 import { articlesQuery } from 'desktop/apps/article/queries/articles'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
+
+// FIXME: Rewire
+let positronql = _positronql
 
 const FETCH_TOP_OFFSET = 200
 
