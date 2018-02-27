@@ -94,6 +94,7 @@
     "classnames": "^2.2.5",
     "coffee-script": "^1.12.7",
     "coffeescript": "1.11.1",
+    "compression": "^1.7.2",
     "connect-timeout": "^1.8.0",
     "cookie-parser": "^1.4.0",
     "cookie-session": "^2.0.0-alpha.1",
