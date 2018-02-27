@@ -32,7 +32,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
     mediator.trigger 'open:auth',
       mode: 'register',
       copy: "Sign up to receive alerts when new works are available by artists you follow.",
-      signupIntent: 'commercial filter collect cta'
+      signupIntent: 'artists you follow filter'
 
   trackAnalytics: ->
     if @params.get('include_artworks_by_followed_artists')

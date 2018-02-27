@@ -30,6 +30,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
     @afterAuthPath = "/personalize"
+    @signupIntent = "landing full page modal"
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
@@ -43,7 +44,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       width: '500px'
       mode: 'login'
       redirectTo: @afterAuthPath
-      signupIntent: 'artist page cta'
+      signupIntent: @signupIntent
 
   currentParams: ->
     qs.parse(location.search.replace(/^\?/, ''))
@@ -94,6 +95,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$('button').attr 'data-state', 'loading'
 
     @user.set (data = @serializeForm())
+    @user.set(signupIntent: @signupIntent)
     @user.signup
       success: @onRegisterSuccess
       error: (model, response, options) =>
@@ -111,6 +113,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$el.html template
       artist: @artist
       afterAuthPath: @afterAuthPath
+      signupIntent: encodeURIComponent(@signupIntent)
     @$banner = @$('.artist-page-cta-banner')
     @$overlay = @$('.artist-page-cta-overlay')
     @

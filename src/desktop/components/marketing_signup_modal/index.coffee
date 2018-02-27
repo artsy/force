@@ -25,7 +25,7 @@ class MarketingSignupModalInner extends Backbone.View
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'login'
-      signupIntent: 'marketing cta modal'
+      signupIntent: 'marketing modal'
     @trigger 'close'
 
   submit: (e) ->

@@ -36,7 +36,7 @@ module.exports = class AboutView extends Backbone.View
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'register',
-      signupIntent: 'about page signup cta'
+      signupIntent: 'sign up to save works'
 
   intercept: (e) ->
     e.preventDefault()
