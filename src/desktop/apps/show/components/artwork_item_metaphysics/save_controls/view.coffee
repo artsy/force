@@ -19,7 +19,7 @@ module.exports = class SaveControls extends Backbone.View
     @listenTo @artworkCollection, "add:#{@artwork.id}", @onArtworkSaveChange
     @listenTo @artworkCollection, "remove:#{@artwork.id}", @onArtworkSaveChange
 
-    @onArtworkSaveChange()
+    @onArtworkSaveChange() if @artworkCollection
 
   onArtworkSaveChange: ->
     state = if @artworkCollection.isSaved(@artwork) then 'saved' else 'unsaved'
