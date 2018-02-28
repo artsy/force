@@ -15,7 +15,7 @@ module.exports = """
   }
   image {
     placeholder
-    url
+    url (version: "tall")
     is_default
     thumb: resized(width: 350, version: ["large", "larger"]) {
       url
