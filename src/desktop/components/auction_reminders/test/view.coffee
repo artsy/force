@@ -38,7 +38,7 @@ describe 'AuctionReminderView', ->
           .should.equal 'My Auction'
 
         view.$('img').attr('src')
-          .should.containEql '/crop?url=%2Flarge.jpg&width=80&height=60&quality=95'
+          .should.containEql '/crop?url=%2Flarge.jpg&width=80&height=60&quality=80'
 
   describe '#click', ->
     beforeEach ->
