@@ -42,6 +42,7 @@ import CurrentUser from './current_user'
 import splitTestMiddleware from '../desktop/components/split_test/middleware'
 import marketingModals from './middleware/marketing_modals'
 import config from '../config'
+import compression from 'compression'
 
 const {
   API_REQUEST_TIMEOUT,
@@ -69,6 +70,9 @@ export default function(app) {
     RavenServer.config(SENTRY_PRIVATE_DSN).install()
     app.use(RavenServer.requestHandler())
   }
+
+  // Minification and compression
+  app.use(compression())
 
   // Blacklist IPs
   app.use(ipfilter(IP_BLACKLIST.split(','), { log: false, mode: 'deny' }))

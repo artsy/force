@@ -4,5 +4,5 @@ module.exports =
   enabled: DISABLE_IMAGE_PROXY isnt 'true'
   proxy: IMAGE_PROXY or 'EMBEDLY' # Fallback for specs (sigh)
   defaults:
-    quality: 95
+    quality: 80
     color: 'fff'

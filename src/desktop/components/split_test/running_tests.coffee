@@ -15,12 +15,6 @@
 # module.exports = {}
 
 module.exports = {
-  collect_keyword_search:
-    key: 'collect_keyword_search'
-    outcomes:
-      control: 50
-      experiment: 50
-    edge: 'experiment'
  onboarding_test:
    key: 'onboarding_test'
    outcomes:

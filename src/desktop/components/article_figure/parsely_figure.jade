@@ -2,7 +2,7 @@
 
 - width = width || 300
 
-- var imgUrl = crop(article.image_url, { width: width, height: Math.round(width / 1.5), quality: 95 })
+- var imgUrl = crop(article.image_url, { width: width, height: Math.round(width / 1.5) })
 figure.article-figure: .article-figure-container
   a.article-figure-img-container( href= article.link )
     .article-figure-img( style="background-image: url(#{imgUrl})" )

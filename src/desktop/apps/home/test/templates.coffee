@@ -7,7 +7,8 @@ render = (data) ->
   template = jade.compileFile(require.resolve '../templates/hero_unit.jade')
   template _.extend {}, {
     _s: _s
-    markdown: markdown
+    markdown: markdown,
+    resize: () => {}
   }, data
 
 describe 'Hero unit template', ->
