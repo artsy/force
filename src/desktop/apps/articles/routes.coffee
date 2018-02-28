@@ -27,7 +27,7 @@ query = require './queries/editorial_articles.coffee'
       articles = new Articles result.articles
       user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, (results) ->
-        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
+        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = (results.editorial || !!req.user)
         res.locals.sd.ARTICLES = articles.toJSON()
         res.render 'articles',
           articles: articles
