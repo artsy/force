@@ -14,25 +14,26 @@ describe('auction/components/layout/Footer.test', () => {
         slug: 'artsy-editorial-fight-art',
         thumbnail_title: 'The Fight to Own Art',
         thumbnail_image: {
-          url: 'https://artsy-media-uploads.s3.amazonaws.com/e6rsZcv5h7zCL7gU_4cjXw%2Frose.jpg'
+          url:
+            'https://artsy-media-uploads.s3.amazonaws.com/e6rsZcv5h7zCL7gU_4cjXw%2Frose.jpg',
         },
-        'tier': 1,
-        'published_at': '2017-01-26T00:26:57.928Z',
-        'channel_id': '5759e3efb5989e6f98f77993',
-        'author': {
-          'id': '54cfdab872616972546e0400',
-          'name': 'Artsy Editorial'
+        tier: 1,
+        published_at: '2017-01-26T00:26:57.928Z',
+        channel_id: '5759e3efb5989e6f98f77993',
+        author: {
+          id: '54cfdab872616972546e0400',
+          name: 'Artsy Editorial',
         },
-        'contributing_authors': [
+        contributing_authors: [
           {
-            'id': 'abc124',
-            'name': 'Abigail C'
+            id: 'abc124',
+            name: 'Abigail C',
           },
           {
-            'id': 'def456',
-            'name': 'Anna S'
-          }
-        ]
+            id: 'def456',
+            name: 'Anna S',
+          },
+        ],
       }
     })
 
@@ -41,22 +42,22 @@ describe('auction/components/layout/Footer.test', () => {
         Component: Footer,
         data: {
           app: {
-            articles: []
-          }
-        }
+            articles: [],
+          },
+        },
       })
 
       wrapper.find('.auction-Footer').length.should.eql(0)
     })
 
     describe('articles, not auction promo', () => {
-      it('shows the articles and the extra footer item', () => {
+      it('(clientside) shows the articles and the extra footer item', () => {
         const { wrapper } = renderTestComponent({
           Component: Footer,
           data: {
             app: {
-              articles: [article]
-            }
+              articles: [article],
+            },
           },
           props: {
             articles: new Articles([article]),
@@ -65,17 +66,53 @@ describe('auction/components/layout/Footer.test', () => {
             footerItem: footerItems[0],
             sd: {
               sd: {
-                ARTSY_EDITORIAL_CHANNEL: 'foo'
-              }
-            }
-          }
+                ARTSY_EDITORIAL_CHANNEL: 'foo',
+              },
+            },
+          },
         })
 
         wrapper.html().should.containEql('The Fight to Own Art')
         wrapper.html().should.containEql('Artsy Editorial')
         wrapper.html().should.containEql('By Abigail C and Anna S')
-        wrapper.find('.auction-Footer__auction-app-promo-wrapper').length.should.equal(1)
+        wrapper
+          .find('.auction-Footer__auction-app-promo-wrapper')
+          .length.should.equal(1)
         wrapper.html().should.containEql('Bid from your phone')
+      })
+
+      it('(serverside) shows the articles and the extra footer item', () => {
+        const window = global.window
+        global.window = undefined
+
+        const { wrapper } = renderTestComponent({
+          Component: Footer,
+          data: {
+            app: {
+              articles: [article],
+            },
+          },
+          props: {
+            articles: new Articles([article]),
+            showArticles: true,
+            showFooterItems: true,
+            footerItem: footerItems[0],
+            sd: {
+              sd: {
+                ARTSY_EDITORIAL_CHANNEL: 'foo',
+              },
+            },
+          },
+        })
+
+        wrapper.html().should.containEql('The Fight to Own Art')
+        wrapper.html().should.containEql('Artsy Editorial')
+        wrapper.html().should.containEql('By Abigail C and Anna S')
+        wrapper
+          .find('.auction-Footer__auction-app-promo-wrapper')
+          .length.should.equal(1)
+        wrapper.html().should.containEql('Bid from your phone')
+        global.window = window
       })
     })
   })
