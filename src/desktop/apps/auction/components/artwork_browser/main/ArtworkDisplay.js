@@ -1,16 +1,24 @@
-import InfiniteScroll from 'desktop/components/react/infinite_scroll/InfiniteScroll'
-import Jump from 'desktop/components/jump/react'
-import MasonryArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/MasonryArtwork'
-import GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork'
-import ListArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/ListArtwork'
+import _InfiniteScroll from 'desktop/components/react/infinite_scroll/InfiniteScroll'
+import _Jump from 'desktop/components/jump/react'
+import _MasonryArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/MasonryArtwork'
+import _GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork'
+import _ListArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/ListArtwork'
 import LoadingSpinner from 'desktop/apps/auction/components/artwork_browser/main/LoadingSpinner'
-import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
+import _MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import block from 'bem-cn-lite'
 import get from 'lodash.get'
 import { infiniteScroll } from 'desktop/apps/auction/actions/artworkBrowser'
 import { connect } from 'react-redux'
+
+// FIXME: Rewire
+let InfiniteScroll = _InfiniteScroll
+let Jump = _Jump
+let MasonryArtwork = _MasonryArtwork
+let GridArtwork = _GridArtwork
+let ListArtwork = _ListArtwork
+let MasonryGrid = _MasonryGrid
 
 class ArtworkDisplay extends Component {
   static propTypes = {

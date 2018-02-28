@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { primary } from '@artsy/reaction/dist/Assets/Fonts'
+import { primary } from 'reaction/Assets/Fonts'
 
 const propTypes = {
   title: PropTypes.string,
   href: PropTypes.string,
-  image: PropTypes.object
+  image: PropTypes.object,
 }
 
 const Container = styled.div`
@@ -29,7 +29,9 @@ const GeneName = styled.span`
   font-weight: bold;
 `
 
-const GeneImage = styled.img`width: 100%;`
+const GeneImage = styled.img`
+  width: 100%;
+`
 
 const FeaturedGene = ({ title, href, image: { url: imageSrc } }) => {
   return (

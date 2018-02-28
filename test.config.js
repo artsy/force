@@ -1,11 +1,16 @@
-require('babel-register')
-require('ts-node').register()
+require('@babel/register')({
+  extensions: ['.ts', '.js', '.tsx', '.jsx'],
+})
+
 require('coffeescript/register')
-require('source-map-support/register')
-require('babel-polyfill')
+require('@babel/polyfill')
 require('raf/polyfill')
 require('should')
 require('./src/lib/jade_hook')
+
+// FIXME: Do we need this?
+// NOTE: Once we do AOT compilation we probably want to re-enable this on the server in development mode only.
+// require('source-map-support/register')
 
 const path = require('path')
 const Adapter = require('enzyme-adapter-react-16')

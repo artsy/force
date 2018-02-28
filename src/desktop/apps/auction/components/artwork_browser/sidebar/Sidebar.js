@@ -1,10 +1,15 @@
-import ArtistFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/ArtistFilter'
-import MediumFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/MediumFilter'
-import RangeSlider from 'desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider'
+import _ArtistFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/ArtistFilter'
+import _MediumFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/MediumFilter'
+import _RangeSlider from 'desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn-lite'
 import { connect } from 'react-redux'
+
+// FIXME: Rewire
+let ArtistFilter = _ArtistFilter
+let MediumFilter = _MediumFilter
+let RangeSlider = _RangeSlider
 
 function Sidebar ({ isClosed }) {
   const b = block('Sidebar')

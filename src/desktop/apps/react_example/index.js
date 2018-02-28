@@ -1,4 +1,3 @@
-import 'babel-core/register'
 import * as routes from './routes'
 import adminOnly from 'desktop/lib/admin_only.coffee'
 import express from 'express'

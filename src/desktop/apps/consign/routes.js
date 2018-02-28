@@ -1,10 +1,15 @@
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
-import metaphysics from 'lib/metaphysics.coffee'
-import request from 'superagent'
+import _metaphysics from 'lib/metaphysics.coffee'
+import _request from 'superagent'
 import { extend } from 'underscore'
-import { fetchToken } from './helpers'
+import { fetchToken as _fetchToken } from './helpers'
+
+// FIXME: Rewire
+let request = _request
+let fetchToken = _fetchToken
+let metaphysics = _metaphysics
 
 const landing = new JSONPage({ name: 'consignments-landing' })
 

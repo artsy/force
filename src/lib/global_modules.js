@@ -1,4 +1,4 @@
-require('babel-polyfill')
+require('@babel/polyfill')
 
 const _ = require('underscore')
 const $ = require('jquery')

@@ -1,14 +1,11 @@
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 import HeaderMobile from 'desktop/apps/auction/components/artwork_browser/header/HeaderMobile'
 import sinon from 'sinon'
-import { __RewireAPI__ as RoutesRewireApi } from 'desktop/apps/auction/actions/artworkBrowser'
+
+const rewire = require('rewire')('../../../../actions/artworkBrowser')
 
 describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
   describe('<HeaderMobile />', () => {
-    afterEach(() => {
-      RoutesRewireApi.__ResetDependency__('metaphysics')
-    })
-
     it('default sort is Default', () => {
       const { wrapper } = renderTestComponent({
         Component: HeaderMobile
@@ -48,7 +45,7 @@ describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
         }
       }
 
-      RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+      const resetRewire = rewire.__set__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
 
       wrapper.find('select').simulate('change', {
         target: {
@@ -57,6 +54,7 @@ describe('auction/components/artwork_browser/header/HeaderMobile.test', () => {
       })
 
       store.getState().artworkBrowser.filterParams.sort.should.eql(updateSort)
+      resetRewire()
     })
   })
 })

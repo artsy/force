@@ -10,12 +10,16 @@ import auctionReducer from 'desktop/apps/auction/reducers'
 import configureStore from 'desktop/components/react/utils/configureStore'
 import footerItems from 'desktop/apps/auction/utils/footerItems'
 import get from 'lodash.get'
-import metaphysics from 'lib/metaphysics.coffee'
+import _metaphysics from 'lib/metaphysics.coffee'
 import u from 'updeep'
 import { initialState as appInitialState } from 'desktop/apps/auction/reducers/app'
 import { initialState as auctionWorksInitialState } from 'desktop/apps/auction/reducers/artworkBrowser'
 import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
-import { renderLayout } from '@artsy/stitch'
+import { renderLayout as _renderLayout } from '@artsy/stitch'
+
+// FIXME: Metaphysics
+let metaphysics = _metaphysics
+let renderLayout = _renderLayout
 
 export async function index (req, res, next) {
   const saleId = req.params.id

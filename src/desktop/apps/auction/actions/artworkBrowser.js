@@ -1,7 +1,10 @@
 import analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
-import metaphysics from 'lib/metaphysics.coffee'
+import _metaphysics from 'lib/metaphysics.coffee'
 import { filterQuery } from 'desktop/apps/auction/queries/filter'
 import { worksByFollowedArtists } from 'desktop/apps/auction/queries/worksByFollowedArtists'
+
+// FIXME: Rewire
+let metaphysics = _metaphysics
 
 // Action types
 export const GET_ARTWORKS_FAILURE = 'GET_ARTWORKS_FAILURE'

@@ -5,11 +5,13 @@ import ListArtwork from 'desktop/apps/auction/components/artwork_browser/main/ar
 import FilterSort from 'desktop/apps/auction/components/artwork_browser/header/FilterSort'
 import MediumFilter from 'desktop/apps/auction/components/artwork_browser/sidebar/MediumFilter'
 import RangeSlider from 'desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider'
-import Sidebar from 'desktop/apps/auction/components/artwork_browser/sidebar/Sidebar'
 import auctions from 'desktop/apps/auction/reducers'
 import React from 'react'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
 import { createStore } from 'redux'
+
+const rewire = require('rewire')('../sidebar/Sidebar')
+const Sidebar = rewire.default
 
 describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
   describe('<ArtworkDisplay />', () => {
@@ -97,16 +99,18 @@ describe('auction/components/artwork_browser/ArtworkBrowser.test.js', () => {
   })
 
   describe('<Sidebar />', () => {
+    let rewires = []
+
     beforeEach(() => {
-      Sidebar.__Rewire__('ArtistFilter', () => <div className='artist-filter' />)
-      Sidebar.__Rewire__('MediumFilter', () => <div className='medium-filter' />)
-      Sidebar.__Rewire__('RangeSlider', () => <div className='range-slider' />)
+      rewires.push(
+        rewire.__set__('ArtistFilter', () => <div className='artist-filter' />),
+        rewire.__set__('MediumFilter', () => <div className='medium-filter' />),
+        rewire.__set__('RangeSlider', () => <div className='range-slider' />)
+      )
     })
 
     afterEach(() => {
-      Sidebar.__ResetDependency__('ArtistFilter')
-      Sidebar.__ResetDependency__('MediumFilter')
-      Sidebar.__ResetDependency__('RangeSlider')
+      rewires.forEach(reset => reset())
     })
 
     it('renders the range filter if the auction is open', () => {

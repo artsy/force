@@ -5,6 +5,8 @@ import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
 import { __RewireAPI__ as ActionsRewireApi } from 'desktop/apps/auction/actions/artworkBrowser' // eslint-disable-line
 import sinon from 'sinon'
 
+const rewire = require('rewire')('../../actions/artworkBrowser')
+
 describe('auction/actions/artworkBrowser.test.js', () => {
   it('returns the initial state', () => {
     const {
@@ -30,7 +32,7 @@ describe('auction/actions/artworkBrowser.test.js', () => {
         const mockStore = configureMockStore(middlewares)
 
         store = mockStore(initialResponse)
-        ActionsRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(
+        rewire.__set__('metaphysics', sinon.stub().returns(Promise.resolve(
           {
             filter_sale_artworks: {
               hits: [

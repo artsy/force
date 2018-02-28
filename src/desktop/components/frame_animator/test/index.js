@@ -1,6 +1,8 @@
 import 'jsdom-global/register'
 import sinon from 'sinon'
-import FrameAnimator from '..'
+
+const rewire = require('rewire')('../index')
+const FrameAnimator = rewire.default
 
 describe('FrameAnimator', () => {
   beforeEach(() => {
@@ -110,17 +112,18 @@ describe('FrameAnimator', () => {
 
   describe('easing function', () => {
     let easingFunctions
+    let resetRewire
 
     beforeEach(() => {
       easingFunctions = {
         sinInOut: sinon.spy(),
         cubicInOut: sinon.spy(),
       }
-      FrameAnimator.__Rewire__('easingFunctions', easingFunctions)
+      resetRewire = rewire.__set__('easingFunctions', easingFunctions)
     })
 
     afterEach(() => {
-      FrameAnimator.__ResetDependency__('easingFunctions')
+      resetRewire()
     })
 
     it('defaults to cubicInOut', () => {

@@ -1,9 +1,10 @@
-import * as routes from '../routes'
 import Backbone from 'backbone'
 import CurrentUser from '../../../models/current_user.coffee'
 import sinon from 'sinon'
 import { fabricate } from 'antigravity'
-import { __RewireAPI__ as RoutesRewireApi } from '../routes'
+
+const rewire = require('rewire')('../routes')
+const routes = rewire
 
 describe('#redirectToSubmissionFlow', () => {
   let req
@@ -69,9 +70,9 @@ describe('#submissionFlowWithFetch', () => {
     request.get = sinon.stub().returns(request)
     request.set = sinon.stub().returns({ body: { id: 'my-submission' } })
 
-    RoutesRewireApi.__Rewire__('request', request)
-    RoutesRewireApi.__Rewire__('fetchToken', sinon.stub().returns('foo-token'))
-    RoutesRewireApi.__Rewire__(
+    rewire.__set__('request', request)
+    rewire.__set__('fetchToken', sinon.stub().returns('foo-token'))
+    rewire.__set__(
       'metaphysics',
       sinon.stub().returns(Promise.resolve(artistQuery))
     )

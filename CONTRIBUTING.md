@@ -44,13 +44,24 @@ Start the server.
 yarn start
 ```
 
+When working with components built in [Reaction](https://github.com/artsy/reaction) and want to keep both environments in sync, run:
+
+```sh
+cd reaction
+yarn link && yarn watch
+
+# Open a new terminal pane
+cd force
+yarn link @artsy/reaction && yarn start
+```
+
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
 
 **NOTE:** If you would like to test Force in various `NODE_ENV`s, run:
+
 ```sh
 yarn assets && NODE_ENV=<env> yarn start
 ```
-
 
 ## Create a Topic Branch
 

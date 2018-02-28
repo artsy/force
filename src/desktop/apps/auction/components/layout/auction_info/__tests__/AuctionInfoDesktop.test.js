@@ -1,9 +1,9 @@
 import React from 'react'
 import Registration from 'desktop/apps/auction/components/layout/auction_info/Registration'
 import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { test, __RewireAPI__ } from 'desktop/apps/auction/components/layout/auction_info/AuctionInfoDesktop'
 
-const { AuctionInfoDesktop } = test
+const rewire = require('rewire')('../AuctionInfoDesktop')
+const { AuctionInfoDesktop } = rewire.test
 
 describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () => {
   describe('<AuctionInfoDesktop />', () => {
@@ -42,7 +42,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
 
     it('renders AddToCalendarView if showAddToCalendar is true', () => {
       const AddToCalendarView = () => <div />
-      __RewireAPI__.__Rewire__('AddToCalendarView', AddToCalendarView)
+      const resetRewire = rewire.__set__('AddToCalendarView', AddToCalendarView)
 
       let component = renderTestComponent({
         Component: AuctionInfoDesktop,
@@ -61,7 +61,7 @@ describe('auction/components/layout/auction_info/AuctionInfoDesktop.test', () =>
       })
 
       component.wrapper.find(AddToCalendarView).length.should.eql(0)
-      __RewireAPI__.__ResetDependency__('AddToCalendarView', AddToCalendarView)
+      resetRewire()
     })
 
     it('renders Live Auction if liveStartAt exists', () => {

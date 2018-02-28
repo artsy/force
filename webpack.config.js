@@ -32,12 +32,12 @@ const config = {
     rules: [
       {
         test: /\.coffee$/,
-        exclude: /node_modules/,
+        include: /src/,
         use: [{ loader: 'coffee-loader' }],
       },
       {
         test: /\.(jade|pug)$/,
-        exclude: /node_modules/,
+        include: /src/,
         loader: 'pug-loader',
         options: {
           doctype: 'html',
@@ -45,47 +45,14 @@ const config = {
         },
       },
       {
-        test: /(\.tsx?$)/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'cache-loader' },
-          {
-            loader: 'ts-loader',
-            options: {
-              logInfoToStdOut: true,
-              happyPackMode: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /(\.jsx?$)/,
-        exclude: /node_modules/,
+        test: /(\.(js|ts)x?$)/,
+        include: /src/,
         use: [
           { loader: 'cache-loader' },
           {
             loader: 'babel-loader',
             query: {
               cacheDirectory: true,
-              env: {
-                development: {
-                  presets: ['react-hmre'],
-                  plugins: [
-                    [
-                      'react-transform',
-                      {
-                        transforms: [
-                          {
-                            transform: 'react-transform-hmr',
-                            imports: ['react'],
-                            locals: ['module'],
-                          },
-                        ],
-                      },
-                    ],
-                  ],
-                },
-              },
             },
           },
         ],
@@ -97,24 +64,24 @@ const config = {
     ],
   },
   plugins: [
+    // TODO: Add webpack typechecker
     new ProgressBarPlugin(),
     new ForkTsCheckerWebpackPlugin({
       formatter: 'codeframe',
       formatterOptions: 'highlightCode',
       tslint: false,
       checkSyntacticErrors: true,
-      watch: ['./desktop', './mobile'],
+      watch: ['./src'],
     }),
-    // TODO: Look into making this more compatable with TypeScript
+    new ForkTsCheckerNotifierWebpackPlugin({
+      excludeWarnings: true,
+      skipFirstNotification: true,
+    }),
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
       compilationSuccessInfo: {
         messages: [`[Force] Listening on http://localhost:${PORT} \n`],
       },
-    }),
-    new ForkTsCheckerNotifierWebpackPlugin({
-      excludeWarnings: true,
-      skipFirstNotification: true,
     }),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
@@ -122,6 +89,7 @@ const config = {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
+    new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -141,7 +109,7 @@ const config = {
       react: path.resolve('./node_modules/react'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.jade', '.coffee'],
-    modules: ['node_modules'],
+    modules: ['node_modules', 'src'],
     symlinks: false,
   },
   externals: {

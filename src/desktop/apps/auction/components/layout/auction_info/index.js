@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import AuctionInfoDesktop from './AuctionInfoDesktop'
-import AuctionInfoMobile from './AuctionInfoMobile'
+import _AuctionInfoDesktop from './AuctionInfoDesktop'
+import _AuctionInfoMobile from './AuctionInfoMobile'
 import { connect } from 'react-redux'
+
+// FIXME: Rewire
+let AuctionInfoDesktop = _AuctionInfoDesktop
+let AuctionInfoMobile = _AuctionInfoMobile
 
 function AuctionInfoContainer ({ isMobile }) {
   return isMobile
