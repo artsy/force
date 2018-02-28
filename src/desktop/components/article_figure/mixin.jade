@@ -7,7 +7,7 @@ mixin article-figure(article, width, showDate, showShare)
   if article.get('thumbnail_image') && article.get('thumbnail_image').url
     - var imgUrl = article.get('thumbnail_image').url
   else
-    - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.5), quality: 95 })
+    - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.5) })
   figure.article-figure: .article-figure-container
     a.article-figure-img-container( href= article.href() )
       .article-figure-img( style="background-image: url(#{imgUrl})" )

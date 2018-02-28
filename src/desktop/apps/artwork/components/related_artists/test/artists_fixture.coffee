@@ -45,7 +45,7 @@ module.exports =
         "name": "James Rosenquist",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F3VUm07DpKQNQdA_QfCrPcA%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F3VUm07DpKQNQdA_QfCrPcA%2Flarge.jpg"
           }
         },
         "birthday": "1933",
@@ -62,7 +62,7 @@ module.exports =
         "name": "Tom Wesselmann",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8smV519M1L352CTihrfW7A%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8smV519M1L352CTihrfW7A%2Flarge.jpg"
           }
         },
         "birthday": "1931",
@@ -79,7 +79,7 @@ module.exports =
         "name": "Roy Lichtenstein",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2For9oKva9F7V4VjrUKKx2iA%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2For9oKva9F7V4VjrUKKx2iA%2Flarge.jpg"
           }
         },
         "birthday": "1923",
@@ -96,7 +96,7 @@ module.exports =
         "name": "Robert Indiana",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FxPV7zLtiKJPPxRVJTEtHIA%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FxPV7zLtiKJPPxRVJTEtHIA%2Flarge.jpg"
           }
         },
         "birthday": "1928",
@@ -113,7 +113,7 @@ module.exports =
         "name": "Jim Dine",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FLl4gMf_OsLMehbgv05H6mw%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FLl4gMf_OsLMehbgv05H6mw%2Flarge.jpg"
           }
         },
         "birthday": "1935",
@@ -130,7 +130,7 @@ module.exports =
         "name": "Claes Oldenburg & Coosje van Bruggen",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FlnJopeqKO7np6fvqpegQpQ%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FlnJopeqKO7np6fvqpegQpQ%2Flarge.jpg"
           }
         },
         "birthday": "1929 and 1942",
@@ -147,7 +147,7 @@ module.exports =
         "name": "Richard Hamilton",
         "image": {
           "cropped": {
-            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCqLm5-pqOP2wlCcXoxTkhw%2Flarge.jpg"
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCqLm5-pqOP2wlCcXoxTkhw%2Flarge.jpg"
           }
         },
         "birthday": "1922",

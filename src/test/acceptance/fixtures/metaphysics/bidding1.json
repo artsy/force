@@ -6,7 +6,7 @@
       "auction_state": "open",
       "cover_image": {
         "cropped": {
-          "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=1800&height=600&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FEdyXwUnVhPOeGGSU4lExzg%2Fwide.jpg"
+          "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=1800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FEdyXwUnVhPOeGGSU4lExzg%2Fwide.jpg"
         }
       },
       "currency": "USD",

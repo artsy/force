@@ -17,7 +17,7 @@
   ul.about-hero-unit-bgs
     for image, i in hero.images
       li.about-hero-unit-bg(
-        style="background-image: url(#{crop(image.src, { width: 1500, height: 900, quality: 90 })})"
+        style="background-image: url(#{crop(image.src, { width: 1500, height: 900 })})"
         class=(i === 0 ? 'is-active' : undefined)
       )
         .about-hero-unit-bg-credit: span= image.credit

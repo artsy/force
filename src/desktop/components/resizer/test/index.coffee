@@ -28,7 +28,7 @@ describe 'resizer', ->
     describe '#resize', ->
       it 'returns the appropriate URL', ->
         resizer.resize @src, width: 32, height: 32
-          .should.equal 'https://i.embed.ly/1/display/resize?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95&key=xxx'
+          .should.equal 'https://i.embed.ly/1/display/resize?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=80&key=xxx'
 
       it 'supports options', ->
         resizer.resize @src, width: 300, height: 200, quality: 50
@@ -41,7 +41,7 @@ describe 'resizer', ->
     describe '#crop', ->
       it 'returns the appropriate URL', ->
         resizer.crop @src, width: 32, height: 32
-          .should.equal 'https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95&key=xxx'
+          .should.equal 'https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=80&key=xxx'
 
       it 'supports options', ->
         resizer.crop @src, width: 300, height: 200, quality: 50
@@ -54,7 +54,7 @@ describe 'resizer', ->
     describe '#fill', ->
       it 'returns the appropriate URL', ->
         resizer.fill @src, width: 32, height: 32
-          .should.equal 'https://i.embed.ly/1/display/fill?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&color=fff&quality=95&key=xxx'
+          .should.equal 'https://i.embed.ly/1/display/fill?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&color=fff&quality=80&key=xxx'
 
       it 'supports options', ->
         resizer.fill @src, width: 300, height: 200, quality: 50, color: 'ff00cc'
@@ -92,22 +92,22 @@ describe 'resizer', ->
     describe '#resize', ->
       it 'returns the appropriate URL when no width is specified', ->
         resizer.resize @src, height: 300
-          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=height&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&height=300&quality=95'
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=height&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&height=300&quality=80'
 
       it 'returns the appropriate URL when no height is specified', ->
         resizer.resize @src, width: 300
-          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&quality=95'
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&quality=80'
 
       it 'returns the appropriate URL when both a height and width are specified', ->
         resizer.resize @src, width: 300, height: 200
-          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=95'
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=80'
 
     describe '#crop', ->
       it 'returns the appropriate URL', ->
         resizer.crop @src, width: 32, height: 32
-          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95'
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=80'
 
     describe '#fill', ->
       it 'is not really supported and falls back to crop', ->
         resizer.fill @src, width: 32, height: 32
-          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95'
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=80'
