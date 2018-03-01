@@ -128,7 +128,11 @@ module.exports = class HeaderView extends Backbone.View
         new FlashMessage message: errorMessage
 
   checkForPersonalizeFlash: ->
-    if document.referrer.match '/personalize/'
+    # Sometime '/personalize/' can exist as a redirect parameter in the URL.
+    # This causes the flash message to display at unexpected times.
+    # This ensures we check for personalize in the pathname.
+    referrerUrl = new URL(document.referrer)
+    if referrerUrl.pathname.match '^/personalize.*'
       new FlashMessage message: 'Thank you for personalizing your profile'
     else if document.referrer.match '/artsy-primer-personalize/'
       new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
