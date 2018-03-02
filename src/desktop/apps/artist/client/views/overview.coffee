@@ -132,7 +132,7 @@ module.exports = class OverviewView extends Backbone.View
       viewHelpers: viewHelpers
       statuses: @statuses
       showSections:
-        heder: testGroup is 'control' or testGroup is 'no_info'
+        header: testGroup is 'control' or testGroup is 'no_info'
         info: testGroup is 'control' or testGroup is 'no_header'
     _.defer => @postRender()
     this
