@@ -63,7 +63,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view.render()
 
   overview: ->
-    @view = new OverviewView _.extend {}, @options,
+    @view = new OverviewView @options
 
     $('body').append @jump.$el
     @view.on 'artist:overview:sync', (artist) =>
