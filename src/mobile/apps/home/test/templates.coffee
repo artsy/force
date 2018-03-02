@@ -60,7 +60,7 @@ describe 'Index', ->
       { title: 'Diary of a cat' }
       { title: 'Diary of a dog' }
     ]
-    html = render('page')(heroUnits: heroUnits, sd: {}, _s: _s)
+    html = render('page')(heroUnits: heroUnits, sd: {}, _s: _s, resize: () => {})
     html.should.containEql 'Diary of a cat'
     $ = cheerio.load html
 
