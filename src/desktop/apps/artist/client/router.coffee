@@ -18,7 +18,6 @@ attachCTA = require './cta.coffee'
 AuctionLots = require '../../../collections/auction_lots.coffee'
 ArtistAuctionResultsView = require './views/auction_results.coffee'
 Artist = require '../../../models/artist.coffee'
-splitTest = require '../../../components/split_test/index.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
