@@ -15,6 +15,8 @@ payoffQuery = require '../../components/artist_page_cta/query'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 currentVeniceFeature = require './components/current_venice_feature/index'
+SplitTest = require '../../components/split_test/server_split_test'
+runningTests = require '../../components/split_test/running_tests'
 sd = require('sharify').data
 
 @index = (req, res, next) ->
@@ -36,6 +38,9 @@ sd = require('sharify').data
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
+      artistTest = new SplitTest req, res, runningTests.artist_page
+      artistTestOutcome = artistTest.outcome()
+
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
           .then (veniceFeature) ->
@@ -53,6 +58,9 @@ sd = require('sharify').data
               nav: nav
               currentItem: currentItem
               jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
+              showSections:
+                header: artistTestOutcome is 'control' or artistTestOutcome is 'no_info'
+                info: artistTestOutcome is 'control' or artistTestOutcome is 'no_header'
 
       else
         res.redirect artist.href

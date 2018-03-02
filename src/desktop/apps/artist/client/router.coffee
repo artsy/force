@@ -18,6 +18,7 @@ attachCTA = require './cta.coffee'
 AuctionLots = require '../../../collections/auction_lots.coffee'
 ArtistAuctionResultsView = require './views/auction_results.coffee'
 Artist = require '../../../models/artist.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -62,7 +63,8 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view.render()
 
   overview: ->
-    @view = new OverviewView @options
+    @view = new OverviewView _.extend {}, @options,
+
     $('body').append @jump.$el
     @view.on 'artist:overview:sync', (artist) =>
       attachCTA new Artist(_.extend({}, artist, @model.attributes))

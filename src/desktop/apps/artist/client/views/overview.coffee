@@ -125,10 +125,15 @@ module.exports = class OverviewView extends Backbone.View
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
+    outcome = splitTest('artist_page')?.outcome()
+
     @$el.html template
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
+      showSections:
+        header: outcome is 'control' or outcome is 'no_info'
+        info: outcome is 'control' or outcome is 'no_header'
     _.defer => @postRender()
     this
 
