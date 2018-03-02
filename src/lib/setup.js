@@ -56,6 +56,7 @@ const {
   REQUEST_EXPIRE_MS,
   REQUEST_LIMIT,
   SENTRY_PRIVATE_DSN,
+  SEGMENT_WRITE_KEY_SERVER,
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
@@ -147,6 +148,7 @@ export default function(app) {
       _.extend({}, config, {
         CurrentUser: CurrentUser,
         ARTSY_URL: API_URL,
+        SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
         userKeys: [
           'collector_level',
           'default_profile_id',
@@ -220,7 +222,7 @@ export default function(app) {
     })
 
     mountAndReload(path.resolve('src/desktop'), {
-      watchModules: ['@artsy/reaction', '@artsy/stitch'],
+      watchModules: ['@artsy/reaction'],
     })
 
     // In staging or prod, mount routes normally

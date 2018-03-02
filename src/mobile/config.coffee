@@ -51,6 +51,7 @@ module.exports =
   SAILTHRU_SECRET: ''
   SECURE_IMAGES_URL: 'https://d1ycxz9plii3tb.cloudfront.net'
   SEGMENT_WRITE_KEY: null
+  SEGMENT_WRITE_KEY_SERVER: null
   SENTRY_PRIVATE_DSN: null
   SENTRY_PUBLIC_DSN: null
   SESSION_COOKIE_KEY: 'microgravity-sess'
