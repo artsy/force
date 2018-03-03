@@ -54,21 +54,17 @@ $(document).on(
 // Created account (via social)
 
 // 1. Upon clicking the social signup button
-$(document).on(
-  'click',
-  '.auth-signup-facebook, .marketing-signup-modal-fb',
-  function(e) {
-    // 2. Store some data in cookies before being redirected everywhere
-    Cookies.set(
-      'analytics-signup',
-      JSON.stringify({
-        service: 'facebook',
-        acquisition_initiative: getAcquisitionInitiative(),
-        context: $(e.currentTarget).data('context'),
-      })
-    )
-  }
-)
+$(document).on('click', '.auth-signup-facebook, .gdpr-signup__fb', function(e) {
+  // 2. Store some data in cookies before being redirected everywhere
+  Cookies.set(
+    'analytics-signup',
+    JSON.stringify({
+      service: 'facebook',
+      acquisition_initiative: getAcquisitionInitiative(),
+      context: $(e.currentTarget).data('context'),
+    })
+  )
+})
 
 // 3. After landing back on Artsy send the tracking call and expire the cookie
 if (Cookies.get('analytics-signup')) {
