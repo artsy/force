@@ -18,7 +18,12 @@ class MarketingSignupModalInner extends Backbone.View
 
   render: ->
     @$el.html template
-      modal: @data
+      image: @data.image
+      photoCredit: @data.photoCredit
+      textColor: @data.textColor
+      textOpacity: @data.textOpacity
+      copy: @data.copy
+      slug: @data.slug
     this
 
   openLogin: (e) ->
