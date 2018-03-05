@@ -9,7 +9,7 @@ append locals
 
 block body
   - carousel = artist.carousel
-  - hasCarousel = carousel && carousel.images.length >= 4
+  - hasCarousel = carousel && carousel.images.length >= 4 && showSections.header
 
   #artist-page(
     class=(hasCarousel ? 'has-carousel' : 'has-no-carousel')
