@@ -8,6 +8,7 @@ RelatedArticlesView = require '../../../../components/related_articles/view.coff
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtworkFilterView = require '../../../../components/artwork_filter_2/view.coffee'
 FollowButton = require '../../../../components/follow_button/view.coffee'
+splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
