@@ -35,6 +35,7 @@ sd = require('sharify').data
       nav = new Nav artist: artist
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
+      testGroup = res.locals.sd.ARTIST_PAGE_VARIANTS
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
@@ -53,6 +54,9 @@ sd = require('sharify').data
               nav: nav
               currentItem: currentItem
               jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
+              showSections:
+                header: testGroup is 'control' or testGroup is 'no_info'
+                info: testGroup is 'control' or testGroup is 'no_header'
 
       else
         res.redirect artist.href

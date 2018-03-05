@@ -15,10 +15,18 @@
 # module.exports = {}
 
 module.exports = {
- onboarding_test:
-   key: 'onboarding_test'
-   outcomes:
-     control: 50
-     experiment: 50
-   edge: 'experiment'
+  onboarding_test:
+    key: 'onboarding_test'
+    outcomes:
+      control: 50
+      experiment: 50
+    edge: 'experiment'
+  artist_page_variants:
+    key: 'artist_page_variants'
+    outcomes:
+      control: 25
+      no_info: 25
+      no_header: 25
+      no_info_header: 25
+    edge: 'no_info_header'
 }
