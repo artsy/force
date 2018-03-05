@@ -48,3 +48,18 @@ describe 'SplitTest', ->
       adminTest = new @SplitTest key: 'foobar', edge: 'baz', outcomes: baz: 0, qux: 100
       adminTest.admin().should.be.true()
       adminTest.outcome().should.equal 'baz'
+
+  describe 'reflection', ->
+    beforeEach ->
+      @reflectionStub = sinon.stub(@SplitTest::, 'reflection').returns true
+
+    afterEach ->
+      @reflectionStub.restore()
+
+    it 'outcome is set to control group if request comes from Reflection', ->
+      test = new @SplitTest key: 'foobar', edge: 'baz', outcomes: control: 10, qux: 90
+      test.outcome().should.equal 'control'
+    
+    it 'outcome should be set to specified control group key', ->
+      test = new @SplitTest key: 'foobar', edge: 'baz', control_group: 'old', outcomes: old: 10, qux: 90
+      test.outcome().should.equal 'old'
