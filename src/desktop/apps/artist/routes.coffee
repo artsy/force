@@ -19,13 +19,13 @@ sd = require('sharify').data
 
 @index = (req, res, next) ->
   tab = if req.params.tab? then req.params.tab else ''
-  includeJSONLD = res.locals.sd.REFLECTION
+  isReqFromReflection = res.locals.sd.REFLECTION
   send =
     query: query,
     variables:
       artist_id: req.params.id
       includeBlurb: (tab is '')
-      includeJSONLD: includeJSONLD
+      includeJSONLD: isReqFromReflection
     req: req
 
   return if metaphysics.debug req, res, send
@@ -35,6 +35,9 @@ sd = require('sharify').data
       nav = new Nav artist: artist
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
+
+      # if request comes from reflection render the control variant of the artist page
+      testGroup = if isReqFromReflection then 'control' else res.locals.sd.ARTIST_PAGE_VARIANTS 
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
@@ -52,7 +55,10 @@ sd = require('sharify').data
               tab: tab
               nav: nav
               currentItem: currentItem
-              jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
+              jsonLD: JSON.stringify helpers.toJSONLD artist if isReqFromReflection
+              showSections:
+                header: testGroup is 'control' or testGroup is 'no_info'
+                info: testGroup is 'control' or testGroup is 'no_header'
 
       else
         res.redirect artist.href

@@ -23,6 +23,8 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
+    # remove after test closes
+    splitTest('artist_page_variants').view()
 
   fetchRelated: ->
     metaphysics
