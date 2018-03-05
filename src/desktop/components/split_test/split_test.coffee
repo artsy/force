@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ CURRENT_USER } = require('sharify').data
+{ CURRENT_USER, REFLECTION } = require('sharify').data
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
 
 # These need to be set up individually before using. Read this non-sense:
@@ -8,7 +8,7 @@ setDimension = (index, value) ->
   ga? 'set', index, value
 
 module.exports = class SplitTest
-  constructor: ({ @key, @outcomes, @edge, @dimension }) ->
+  constructor: ({ @key, @outcomes, @edge, @dimension, @control_group }) ->
     return throw new Error('Your probability values for outcomes must add up to 100') if @sum() isnt 100
 
   _key: ->
@@ -41,6 +41,9 @@ module.exports = class SplitTest
   admin: ->
     CURRENT_USER?.type is 'Admin'
 
+  reflection: ->
+    REFLECTION is true
+
   toss: ->
     _.sample _.flatten _.map @outcomes, (probability, outcome) ->
       _.times(probability, -> outcome)
@@ -51,7 +54,13 @@ module.exports = class SplitTest
     , 0
 
   outcome: ->
-    outcome = if (@admin() and @edge?) then @edge else @get()
+    outcome = 
+      if (@admin() and @edge?)
+        @edge
+      else if @reflection()
+        if @control_group then @control_group else 'control'
+      else @get()
+
     if outcome?
       @set outcome
     else

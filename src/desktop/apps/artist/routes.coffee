@@ -35,10 +35,8 @@ sd = require('sharify').data
       nav = new Nav artist: artist
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
-      testGroup = res.locals.sd.ARTIST_PAGE_VARIANTS
 
-      # if request comes from reflection render the control variant of the artist page
-      testGroup = if isReqFromReflection then 'control' else res.locals.sd.ARTIST_PAGE_VARIANTS 
+      testGroup = res.locals.sd.ARTIST_PAGE_VARIANTS 
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
