@@ -63,7 +63,6 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
-
     $('body').append @jump.$el
     @view.on 'artist:overview:sync', (artist) =>
       attachCTA new Artist(_.extend({}, artist, @model.attributes))

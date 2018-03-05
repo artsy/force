@@ -8,6 +8,7 @@ RelatedArticlesView = require '../../../../components/related_articles/view.coff
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtworkFilterView = require '../../../../components/artwork_filter_2/view.coffee'
 FollowButton = require '../../../../components/follow_button/view.coffee'
+splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
@@ -15,7 +16,6 @@ showHighlightsTemplate = -> require('../../templates/sections/exhibition_highlig
 renderRail = require '../../components/rail/index.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/overview.coffee'
-sd = require('sharify').data
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
@@ -125,15 +125,10 @@ module.exports = class OverviewView extends Backbone.View
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
-    testGroup = sd.ARTIST_PAGE_VARIANTS
-
     @$el.html template
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
-      showSections:
-        header: testGroup is 'control' or testGroup is 'no_info'
-        info: testGroup is 'control' or testGroup is 'no_header'
     _.defer => @postRender()
     this
 
