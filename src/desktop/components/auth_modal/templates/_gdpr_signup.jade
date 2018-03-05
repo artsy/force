@@ -1,0 +1,61 @@
+- fbPathQuery = acquisitionInitiative ? "?acquisition_initiative=#{acquisitionInitiative}" : ''
+- DISABLE_GDPR = false
+
+.gdpr-signup
+  form.gdpr-signup__form
+    input.bordered-input(
+      name='name'
+      placeholder='Your full name'
+    )
+    input.bordered-input(
+      name='email'
+      placeholder='Your email address'
+    )
+    input.bordered-input(
+      name='password'
+      placeholder='Create password'
+      type='password'
+    )
+    if !DISABLE_GDPR
+      .gdpr-signup__form__checkbox
+        .artsy-checkbox
+          .artsy-checkbox--checkbox
+            input(
+              required=true
+              name='accept_tos'
+              id='tos-checkbox'
+              type='checkbox'
+            )
+            label(for='tos-checkbox')
+          span Agree to our&nbsp;
+                a( href='/terms' ) Terms of Use
+                | &nbsp;and&nbsp;
+                a(href='/privacy') Privacy Policy.
+      .gdpr-signup__form__checkbox.artsy-checkbox
+        .artsy-checkbox--checkbox
+          input(
+            required=true
+            name='receive_newsletter'
+            type='checkbox'
+            id='news-checkbox'
+          )
+          label(for='news-checkbox')
+        span Receive our weekly newsletter.
+    button.avant-garde-button-black Sign Up
+    .gdpr-signup__error
+  .gdpr-signup__divider Or
+  a.avant-garde-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
+    href=sd.AP.facebookPath + fbPathQuery
+  )
+    i.icon-facebook
+    | Continue with Facebook
+  if DISABLE_GDPR
+    .gdpr-signup__copy
+      small.gdpr-signup__small By signing up, you agree to our&nbsp;
+        a( href='/terms' ) Terms of Use
+        | &nbsp;and&nbsp;
+        a(href='/privacy') Privacy Policy
+//-   p.marketing-signup-modal-have-account Already have an account?&nbsp;
+//-     a( href='/log_in' ) Sign in
+
+

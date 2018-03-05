@@ -1,0 +1,71 @@
+.gdpr-signup
+  display flex
+  flex-direction column
+  margin 19px 22px 10px 22px
+  &__form
+    input
+     width 100%
+    &__checkbox
+      margin 0 0 13px 0
+      width 100%
+      float left
+      text-align left
+      span
+        margin-left 10px
+        garamond-size('l-caption')
+        font-size 13px
+        color gray-darker-color
+  &__divider
+    width 100%
+    height divider-height
+    position relative
+    color transparent
+    &:before
+      content '.'
+      color transparent
+      border-top 1px solid gray-lighter-color
+      position absolute
+      width 100%
+      left 0
+      top (divider-height / 2)
+    &:after
+      content 'or'
+      avant-garde()
+      avant-garde-size('s-headline')
+      color gray-darker-color
+      text-align center
+      background white
+      position absolute
+      width 60px
+      height divider-height
+      line-height divider-height
+      left calc(50% \- 35px)
+      top 0
+      z-index 1
+  &__fb
+    background #3A4C95
+  &__copy a
+    color gray-darker-color
+    text-decoration underline
+
+  &__error
+    color red-color
+    padding-top 7px
+    display none
+  
+
+  &__small
+    display block
+    margin 10px 0 20px 0
+    color gray-darker-color
+    garamond-size('l-caption')
+
+  .bordered-input
+    width 100%
+    margin-bottom 10px
+
+  .avant-garde-button-black
+    width 100%
+
+  .icon-close
+    font-size 18px
