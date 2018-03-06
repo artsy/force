@@ -22,11 +22,11 @@
           .artsy-checkbox--checkbox
             input(
               required=true
-              name='accept_tos'
-              id='tos-checkbox'
+              name='accepted_terms_of_service'
+              id='accepted_terms_of_service'
               type='checkbox'
             )
-            label(for='tos-checkbox')
+            label(for='accepted_terms_of_service')
           span Agree to our&nbsp;
                 a( href='/terms' ) Terms of Use
                 | &nbsp;and&nbsp;
@@ -34,12 +34,11 @@
       .gdpr-signup__form__checkbox.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
-            required=true
-            name='receive_newsletter'
+            name='receive_emails'
             type='checkbox'
-            id='news-checkbox'
+            id='receive_emails'
           )
-          label(for='news-checkbox')
+          label(for='receive_emails')
         span Receive our weekly newsletter.
     button.avant-garde-button-black Sign Up
     .gdpr-signup__error
