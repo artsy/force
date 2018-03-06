@@ -8,7 +8,7 @@ block content
           for heroUnit in heroUnits
             figure.home-page-hero-unit(
               class= 'home-page-hero-unit' + _s.dasherize(_s.humanize(heroUnit.mode))
-              style="background-image: url(#{heroUnit.background_image_url});"
+              style="background-image: url(#{resize(heroUnit.background_image_url, { width: 635 })});"
             )
               a( href= heroUnit.href )
                 figcaption.home-page-hero-unit-details
