@@ -13,14 +13,15 @@ class MarketingSignupModalInner extends Backbone.View
 
   className: 'marketing-signup-modal'
 
+  signupIntent: 'marketing modal'
+
   events:
     'click .marketing-signup-modal-have-account a': 'openLogin'
     'click #signup-fb': 'fbSignup'
     'submit form': 'submit'
 
   initialize: ({@data}) ->
-    @signupIntent = 'marketing modal'
-    @acquisitionInitiative = @data.slug
+    @acquisitionInitiative = @data?.slug
 
   render: ->
     @$el.html template
@@ -29,7 +30,6 @@ class MarketingSignupModalInner extends Backbone.View
       textColor: @data.textColor
       textOpacity: @data.textOpacity
       copy: @data.copy
-      # slug: @data.slug # used for acquisition Initiative in artsy passport
     this
 
   openLogin: (e) ->
@@ -42,23 +42,29 @@ class MarketingSignupModalInner extends Backbone.View
   fbSignup: (e) ->
     e.preventDefault()
     formData = @serializeForm()
-    queryData = {
-      'signup-intent': @signupIntent
-      'receive-emails': !!formData['receive_emails']
-      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-      'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
-    }
-    queryString = $.param(queryData)
-    redirectUrl = sd.AP.facebookPath + '?'
-    redirectUrl += queryString
-    window.location.href = sd.AP.facebookPath
+    if $('input#accepted_terms_of_service')[0].checkValidity()
+      queryData = {
+        'redirect-to': '/personalize'
+        'signup-intent': @signupIntent
+        'receive-emails': !!formData['receive_emails']
+        'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+        'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
+      }
+      queryString = $.param(queryData)
+      redirectUrl = sd.AP.facebookPath + '?'
+      redirectUrl += queryString
+      window.location.href = sd.AP.facebookPath
+    else
+      @showError('Please accept the Terms of Service.')
+
+  showError: (msg) =>
+    @$('.auth-errors').text msg
 
   submit: (e) ->
     e.preventDefault()
     @$('.marketing-signup-modal-error').hide()
     @$('form button').addClass 'is-loading'
     formData = @serializeForm()
-    console.log(formData)
     body =
       'name': formData['name']
       'email': formData['email']
@@ -67,7 +73,6 @@ class MarketingSignupModalInner extends Backbone.View
       'receive_emails': !!formData['receive_emails']
       'accepted_terms_of_service': !!formData['accepted_terms_of_service']
       'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
-    console.log(body)
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'

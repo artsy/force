@@ -57,7 +57,7 @@ module.exports = class AuthModalView extends ModalView
     @on 'rerendered', @initializeMailcheck
 
     mediator.on 'auth:change:mode', @setMode, this
-    mediator.on 'auth:error', @showError
+    mediator.on 'auth:error', @showFormError
     mediator.on 'modal:closed', @logClose
 
     @logState()
@@ -119,14 +119,17 @@ module.exports = class AuthModalView extends ModalView
   fbSignup: (e) ->
     e.preventDefault()
     formData = @serializeForm()
-    queryData =
-      'signup-intent': @signupIntent
-      'receive-emails': !!formData['receive_emails']
-      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-    queryString = $.param(queryData)
-    redirectUrl = sd.AP.facebookPath + '?'
-    redirectUrl += queryString
-    window.location.href = sd.AP.facebookPath#redirectUrl
+    if $('input#accepted_terms_of_service')[0].checkValidity()
+      queryData =
+        'signup-intent': @signupIntent
+        'redirect-to': @currentRedirectTo()
+        'receive-emails': !!formData['receive_emails']
+        'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+      queryString = $.param(queryData)
+      fbUrl = sd.AP.facebookPath + '?' + queryString
+      window.location.href = fbUrl
+    else
+      @showError('Please accept the Terms of Service.')
 
 
   submit: (e) ->
@@ -167,8 +170,11 @@ module.exports = class AuthModalView extends ModalView
         @undelegateEvents()
         @$('form').submit()
 
-  showError: (msg) =>
+  showFormError: (msg) =>
     @$('button').attr 'data-state', 'error'
+    @showError(msg)
+
+  showError: (msg) =>
     @$('.auth-errors').text msg
 
   remove: ->
