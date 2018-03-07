@@ -2,29 +2,41 @@
 - DISABLE_GDPR = false
 
 .gdpr-signup
-  form.gdpr-signup__form
+  form.gdpr-signup__form(
+    action=sd.AP.loginPagePath + '?redirect-to' + redirectTo
+    method= POST
+  )
+    .auth-errors
     input.bordered-input(
-      name='name'
-      placeholder='Your full name'
+      name='name',
+      placeholder='Your full name',
+      autofocus,
+      required
     )
-    input.bordered-input(
-      name='email'
-      placeholder='Your email address'
+    input#js-mailcheck-input-modal.bordered-input(
+      name='email',
+      type='email',
+      placeholder='Your email address',
+      required
     )
-    input.bordered-input(
-      name='password'
-      placeholder='Create password'
-      type='password'
+    input#js-mailcheck-hint-modal.bordered-input(
+      name='password',
+      placeholder='Create password',
+      type='password',
+      pattern= '.{6,}',
+      title= '6 characters minimum',
+      required
     )
     if !DISABLE_GDPR
       .gdpr-signup__form__checkbox
         .artsy-checkbox
           .artsy-checkbox--checkbox
             input(
-              required=true
-              name='accepted_terms_of_service'
-              id='accepted_terms_of_service'
-              type='checkbox'
+              required,
+              name='accepted_terms_of_service',
+              id='accepted_terms_of_service',
+              type='checkbox',
+              tabindex="0"
             )
             label(for='accepted_terms_of_service')
           span Agree to our&nbsp;
@@ -34,9 +46,10 @@
       .gdpr-signup__form__checkbox.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
-            name='receive_emails'
-            type='checkbox'
-            id='receive_emails'
+            name='receive_emails',
+            type='checkbox',
+            id='receive_emails',
+            tabindex="0"
           )
           label(for='receive_emails')
         span Receive our weekly newsletter.

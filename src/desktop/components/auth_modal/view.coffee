@@ -119,11 +119,10 @@ module.exports = class AuthModalView extends ModalView
   fbSignup: (e) ->
     e.preventDefault()
     formData = @serializeForm()
-    queryData = {
+    queryData =
       'signup-intent': @signupIntent
       'receive-emails': !!formData['receive_emails']
-      'accepted-terms-of-service': !!formData['accepted-terms-of-service']
-    }
+      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
     queryString = $.param(queryData)
     redirectUrl = sd.AP.facebookPath + '?'
     redirectUrl += queryString

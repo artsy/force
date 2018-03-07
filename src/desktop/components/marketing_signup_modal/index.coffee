@@ -6,15 +6,21 @@ FlashMessage = require '../flash/index.coffee'
 modalize = require '../modalize/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
+Form = require('../mixins/form.coffee')
 
 class MarketingSignupModalInner extends Backbone.View
+  _.extend @prototype, Form
+
   className: 'marketing-signup-modal'
 
   events:
-    'submit form': 'submit'
     'click .marketing-signup-modal-have-account a': 'openLogin'
+    'click #signup-fb': 'fbSignup'
+    'submit form': 'submit'
 
   initialize: ({@data}) ->
+    @signupIntent = 'marketing modal'
+    @acquisitionInitiative = @data.slug
 
   render: ->
     @$el.html template
@@ -23,28 +29,49 @@ class MarketingSignupModalInner extends Backbone.View
       textColor: @data.textColor
       textOpacity: @data.textOpacity
       copy: @data.copy
-      slug: @data.slug
+      # slug: @data.slug # used for acquisition Initiative in artsy passport
     this
 
   openLogin: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'login'
-      signupIntent: 'marketing modal'
+      signupIntent: @signupIntent
     @trigger 'close'
+
+  fbSignup: (e) ->
+    e.preventDefault()
+    formData = @serializeForm()
+    queryData = {
+      'signup-intent': @signupIntent
+      'receive-emails': !!formData['receive_emails']
+      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+      'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
+    }
+    queryString = $.param(queryData)
+    redirectUrl = sd.AP.facebookPath + '?'
+    redirectUrl += queryString
+    window.location.href = sd.AP.facebookPath
 
   submit: (e) ->
     e.preventDefault()
     @$('.marketing-signup-modal-error').hide()
     @$('form button').addClass 'is-loading'
+    formData = @serializeForm()
+    console.log(formData)
+    body =
+      'name': formData['name']
+      'email': formData['email']
+      'password': formData['password']
+      'signup_intent': @signupIntent
+      'receive_emails': !!formData['receive_emails']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
+      'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
+    console.log(body)
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'
-      data:
-        name: @$('[name=name]').val()
-        email: @$('[name=email]').val()
-        password: @$('[name=password]').val()
-        acquisition_initiative: sd.MARKETING_SIGNUP_MODAL_SLUG
+      data: body
       error: (e) =>
         err = e.responseJSON?.error or e.toString()
         @$('.marketing-signup-modal-error').show().text err
