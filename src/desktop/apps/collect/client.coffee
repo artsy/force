@@ -18,12 +18,16 @@ SizeFilterView = require '../../components/commercial_filter/filters/size/size_f
 KeywordFilterView = require '../../components/commercial_filter/filters/keyword/keyword_filter_view.coffee'
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
+splitTest = require '../../components/split_test/index.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
 
 module.exports.init = ->
+  # MERCH_SORT_TEST remove after test closes
+  splitTest('merch_sort_test').view()
+  
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
