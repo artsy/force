@@ -12,6 +12,7 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
+sd = require('sharify').data
 
 class State extends Backbone.Model
   defaults: mode: 'register'
@@ -28,6 +29,7 @@ module.exports = class AuthModalView extends ModalView
     'click .auth-toggle': 'toggleMode'
     'submit form': 'submit'
     'click #auth-submit': 'submit'
+    'click #signup-fb': 'fbSignup'
 
   initialize: (options) ->
     return if isEigen.checkWith options
@@ -113,6 +115,20 @@ module.exports = class AuthModalView extends ModalView
   toggleMode: (e) ->
     e.preventDefault()
     @state.set 'mode', $(e.target).data('mode')
+
+  fbSignup: (e) ->
+    e.preventDefault()
+    formData = @serializeForm()
+    queryData = {
+      'signup-intent': @signupIntent
+      'receive-emails': !!formData['receive_emails']
+      'accepted-terms-of-service': !!formData['accepted-terms-of-service']
+    }
+    queryString = $.param(queryData)
+    redirectUrl = sd.AP.facebookPath + '?'
+    redirectUrl += queryString
+    window.location.href = sd.AP.facebookPath#redirectUrl
+
 
   submit: (e) ->
     return unless @validateForm()
