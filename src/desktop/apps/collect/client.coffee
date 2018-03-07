@@ -28,7 +28,8 @@ module.exports.init = ->
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
-    fullyQualifiedLocations: fullyQualifiedLocations
+    fullyQualifiedLocations: fullyQualifiedLocations,
+    merchTestGroup: sd.MERCH_SORT_TEST
   filter = new Filter params: params
 
   headlineView = new HeadlineView
@@ -44,30 +45,18 @@ module.exports.init = ->
     el: $('.cf-total-sort__sort')
     params: params
 
-  if CurrentUser.orNull()?.hasLabFeature('Keyword Search')
-    pillboxView = new PillboxView
-      el: $('.cf-headline-container .cf-pillboxes')
-      params: params
-      artworks: filter.artworks
-      categoryMap: sd.CATEGORIES
+  categoryView = new CategoryFilterView
+    el: $('.cf-categories')
+    params: params
+    aggregations: filter.aggregations
+    categoryMap: sd.CATEGORIES
+    alwaysEnabled: true
 
-    keywordView = new KeywordFilterView
-      el: $('.cf-keyword')
-      params: params
-
-  else
-    categoryView = new CategoryFilterView
-      el: $('.cf-categories')
-      params: params
-      aggregations: filter.aggregations
-      categoryMap: sd.CATEGORIES
-      alwaysEnabled: true
-
-    pillboxView = new PillboxView
-      el: $('.cf-right .cf-pillboxes')
-      params: params
-      artworks: filter.artworks
-      categoryMap: sd.CATEGORIES
+  pillboxView = new PillboxView
+    el: $('.cf-right .cf-pillboxes')
+    params: params
+    artworks: filter.artworks
+    categoryMap: sd.CATEGORIES
 
   # Main Artworks view
   filter.artworks.on 'reset', ->

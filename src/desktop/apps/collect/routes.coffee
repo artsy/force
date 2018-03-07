@@ -7,8 +7,11 @@ page = new JSONPage name: 'browse-categories'
 GeocodedCities = require '../../collections/geocoded_cities'
 { COLLECT_PAGE_TITLES_URL } = require('sharify').data
 getCollectPageTitle = require '../../components/commercial_filter/page_title'
+splitTest = require '../../components/split_test/index.coffee'
 
 @index = (req, res, next) ->
+  # MERCH_SORT_TEST remove after test closes
+  splitTest('merch_sort_test').view()
   geocodedCities = new GeocodedCities()
   collectPageTitleFilters = new Backbone.Collection()
   Q.all([
