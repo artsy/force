@@ -1,4 +1,3 @@
-- fbPathQuery = acquisitionInitiative ? "?acquisition_initiative=#{acquisitionInitiative}" : ''
 - DISABLE_GDPR = false
 
 .gdpr-signup
@@ -28,22 +27,21 @@
       required
     )
     if !DISABLE_GDPR
-      .gdpr-signup__form__checkbox
-        .artsy-checkbox
-          .artsy-checkbox--checkbox
-            input(
-              required,
-              name='accepted_terms_of_service',
-              id='accepted_terms_of_service',
-              type='checkbox',
-              tabindex="0"
-            )
-            label(for='accepted_terms_of_service')
-          span Agree to our&nbsp;
-                a( href='/terms' ) Terms of Use
-                | &nbsp;and&nbsp;
-                a(href='/privacy') Privacy Policy.
-      .gdpr-signup__form__checkbox.artsy-checkbox
+      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
+        .artsy-checkbox--checkbox
+          input(
+            required,
+            name='accepted_terms_of_service',
+            id='accepted_terms_of_service',
+            type='checkbox',
+            tabindex="0"
+          )
+          label(for='accepted_terms_of_service')
+        span Agree to our&nbsp;
+              a( href='/terms' ) Terms of Use
+              | &nbsp;and&nbsp;
+              a(href='/privacy') Privacy Policy.
+      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__receive-email.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
             name='receive_emails',
@@ -58,7 +56,7 @@
   .gdpr-signup__divider Or
   a.avant-garde-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
     id='signup-fb'
-    href=sd.AP.facebookPath + fbPathQuery
+    href='#'
   )
     i.icon-facebook
     | Continue with Facebook

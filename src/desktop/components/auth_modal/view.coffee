@@ -115,11 +115,22 @@ module.exports = class AuthModalView extends ModalView
   toggleMode: (e) ->
     e.preventDefault()
     @state.set 'mode', $(e.target).data('mode')
+  
+  checkAcceptedTerms: ->
+    $input = $('.gdpr-signup__form__checkbox__accept-terms input')[0]
+    $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
+    if $input.checkValidity()
+      $boxContainer.attr('data-state', null)
+      true
+    else
+      $boxContainer.attr('data-state', 'error')
+      @showError('Please accept the Terms of Service.')
+      false
 
   fbSignup: (e) ->
     e.preventDefault()
     formData = @serializeForm()
-    if $('input#accepted_terms_of_service')[0].checkValidity()
+    if @checkAcceptedTerms()
       queryData =
         'signup-intent': @signupIntent
         'redirect-to': @currentRedirectTo()
@@ -128,8 +139,7 @@ module.exports = class AuthModalView extends ModalView
       queryString = $.param(queryData)
       fbUrl = sd.AP.facebookPath + '?' + queryString
       window.location.href = fbUrl
-    else
-      @showError('Please accept the Terms of Service.')
+
 
 
   submit: (e) ->

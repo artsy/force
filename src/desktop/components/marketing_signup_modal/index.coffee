@@ -42,7 +42,7 @@ class MarketingSignupModalInner extends Backbone.View
   fbSignup: (e) ->
     e.preventDefault()
     formData = @serializeForm()
-    if $('input#accepted_terms_of_service')[0].checkValidity()
+    if @checkAcceptedTerms()
       queryData = {
         'redirect-to': '/personalize'
         'signup-intent': @signupIntent
@@ -54,11 +54,20 @@ class MarketingSignupModalInner extends Backbone.View
       redirectUrl = sd.AP.facebookPath + '?'
       redirectUrl += queryString
       window.location.href = sd.AP.facebookPath
-    else
-      @showError('Please accept the Terms of Service.')
 
   showError: (msg) =>
     @$('.auth-errors').text msg
+
+  checkAcceptedTerms: ->
+    $input = $('.gdpr-signup__form__checkbox__accept-terms input')[0]
+    $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
+    if $input.checkValidity()
+      $boxContainer.attr('data-state', null)
+      true
+    else
+      $boxContainer.attr('data-state', 'error')
+      @showError('Please accept the Terms of Service.')
+      false
 
   submit: (e) ->
     e.preventDefault()

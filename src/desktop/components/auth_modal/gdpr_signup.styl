@@ -1,7 +1,7 @@
 .gdpr-signup
   display flex
   flex-direction column
-  margin 19px 22px 10px 22px
+  // margin 19px 22px 10px 22px
   &__form
     input
      width 100%
@@ -10,8 +10,14 @@
       width 100%
       float left
       text-align left
-    .artsy-checkbox--checkbox > input[type='checkbox']
-      visibility visible
+      .artsy-checkbox--checkbox
+        > input[type='checkbox']
+          visibility visible
+      &[data-state='error']
+        .artsy-checkbox--checkbox
+          background purple-color
+        span, a
+          color purple-color
       span
         margin-left 10px
         garamond-size('l-caption')
