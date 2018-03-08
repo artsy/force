@@ -5,6 +5,11 @@
   &__artist
   &__secondary-metadata
     block-margins(distance(gutter / 2))
+    color gray-darker-color
+
+  &__attribution-class
+    block-margins(distance(gutter / 2))
+    color gray-darker-color
 
   &__lot-number
     sans('s-headline')
@@ -21,9 +26,6 @@
 
   &__title
     break-word()
-
-  &__secondary-metadata
-    color gray-darker-color
 
   // Collapse between margins when these two are next to one another
   &__title + &__secondary-metadata
