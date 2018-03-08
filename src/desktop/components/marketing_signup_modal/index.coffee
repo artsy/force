@@ -22,6 +22,7 @@ class MarketingSignupModalInner extends Backbone.View
 
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
+    @DISABLE_GDPR = false
 
   render: ->
     @$el.html template
@@ -30,6 +31,7 @@ class MarketingSignupModalInner extends Backbone.View
       textColor: @data.textColor
       textOpacity: @data.textOpacity
       copy: @data.copy
+      DISABLE_GDPR: @DISABLE_GDPR
     this
 
   openLogin: (e) ->
@@ -41,19 +43,24 @@ class MarketingSignupModalInner extends Backbone.View
 
   fbSignup: (e) ->
     e.preventDefault()
-    formData = @serializeForm()
+    queryData =
+      'signup-intent': @signupIntent
+      'redirect-to': '/personalize'
+      'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative # TODO Fix 
+    queryString = $.param(queryData)
+    fbUrl = sd.AP.facebookPath + '?' + queryString
+    console.log('fbUrl', fbUrl)
+    return window.location.href = fbUrl if @DISABLE_GDPR
+
     if @checkAcceptedTerms()
-      queryData = {
-        'redirect-to': '/personalize'
-        'signup-intent': @signupIntent
+      formData = @serializeForm()
+      gdprData =
         'receive-emails': !!formData['receive_emails']
         'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-        'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
-      }
-      queryString = $.param(queryData)
-      redirectUrl = sd.AP.facebookPath + '?'
-      redirectUrl += queryString
-      window.location.href = sd.AP.facebookPath
+      gdprString = $.param(gdprData)
+      gdprFbUrl = fbUrl + "&" + queryString
+      console.log('fbUrl With Boxes', gdprFbUrl)
+      window.location.href = gdprFbUrl
 
   showError: (msg) =>
     @$('.auth-errors').text msg
@@ -65,6 +72,7 @@ class MarketingSignupModalInner extends Backbone.View
       $boxContainer.attr('data-state', null)
       true
     else
+      $input.focus()
       $boxContainer.attr('data-state', 'error')
       @showError('Please accept the Terms of Service.')
       false

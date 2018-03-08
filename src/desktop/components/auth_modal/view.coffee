@@ -36,6 +36,7 @@ module.exports = class AuthModalView extends ModalView
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     @preInitialize options
+    @DISABLE_GDPR = false
 
     super
 
@@ -49,6 +50,7 @@ module.exports = class AuthModalView extends ModalView
       context: @context
       signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
+      DISABLE_GDPR: @DISABLE_GDPR
       redirectTo: @currentRedirectTo()
     }, options?.userData
 
@@ -129,16 +131,23 @@ module.exports = class AuthModalView extends ModalView
 
   fbSignup: (e) ->
     e.preventDefault()
-    formData = @serializeForm()
+    queryData =
+      'signup-intent': @signupIntent
+      'redirect-to': @currentRedirectTo()
+    queryString = $.param(queryData)
+    fbUrl = sd.AP.facebookPath + '?' + queryString
+    console.log('fbUrl', fbUrl)
+    return window.location.href = fbUrl if @DISABLE_GDPR
+
     if @checkAcceptedTerms()
-      queryData =
-        'signup-intent': @signupIntent
-        'redirect-to': @currentRedirectTo()
+      formData = @serializeForm()
+      gdprData =
         'receive-emails': !!formData['receive_emails']
         'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-      queryString = $.param(queryData)
-      fbUrl = sd.AP.facebookPath + '?' + queryString
-      window.location.href = fbUrl
+      gdprString = $.param(gdprData)
+      gdprFbUrl = fbUrl + "&" + queryString
+      console.log('fbUrl With Boxes', gdprFbUrl)
+      window.location.href = gdprFbUrl
 
 
 

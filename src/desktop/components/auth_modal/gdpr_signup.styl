@@ -10,6 +10,7 @@
       width 100%
       float left
       text-align left
+      color grey-darker-color
       .artsy-checkbox--checkbox
         > input[type='checkbox']
           visibility visible
@@ -20,38 +21,21 @@
           color purple-color
       span
         margin-left 10px
+      span, a
         garamond-size('l-caption')
         font-size 13px
         color gray-darker-color
   &__divider
     width 100%
-    height divider-height
-    position relative
-    color transparent
-    &:before
-      content '.'
-      color transparent
-      border-top 1px solid gray-lighter-color
-      position absolute
-      width 100%
-      left 0
-      top (divider-height / 2)
-    &:after
-      content 'or'
-      avant-garde()
-      avant-garde-size('s-headline')
-      color gray-darker-color
-      text-align center
-      background white
-      position absolute
-      width 60px
-      height divider-height
-      line-height divider-height
-      left calc(50% \- 35px)
-      top 0
-      z-index 1
+    color gray-darker-color
+    text-align center
+    avant-garde()
+    avant-garde-size('s-headline')
+    font-size 11px
+    height 21px
+    line-height 21px
   &__fb
-    background #3A4C95
+    background #4e65b1
   &__copy a
     color gray-darker-color
     text-decoration underline

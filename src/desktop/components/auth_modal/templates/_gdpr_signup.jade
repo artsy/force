@@ -1,4 +1,4 @@
-- DISABLE_GDPR = false
+//- - DISABLE_GDPR = true
 
 .gdpr-signup
   form.gdpr-signup__form(
@@ -27,6 +27,16 @@
       required
     )
     if !DISABLE_GDPR
+      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__receive-email.artsy-checkbox
+        .artsy-checkbox--checkbox
+          input(
+            name='receive_emails',
+            type='checkbox',
+            id='receive_emails',
+            tabindex="0"
+          )
+          label(for='receive_emails')
+        span Receive our weekly newsletter.
       .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
@@ -41,19 +51,9 @@
               a( href='/terms' ) Terms of Use
               | &nbsp;and&nbsp;
               a(href='/privacy') Privacy Policy.
-      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__receive-email.artsy-checkbox
-        .artsy-checkbox--checkbox
-          input(
-            name='receive_emails',
-            type='checkbox',
-            id='receive_emails',
-            tabindex="0"
-          )
-          label(for='receive_emails')
-        span Receive our weekly newsletter.
     button.avant-garde-button-black Sign Up
     .gdpr-signup__error
-  .gdpr-signup__divider Or
+  .gdpr-signup__divider or
   a.avant-garde-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
     id='signup-fb'
     href='#'
@@ -66,7 +66,6 @@
         a( href='/terms' ) Terms of Use
         | &nbsp;and&nbsp;
         a(href='/privacy') Privacy Policy
-//-   p.marketing-signup-modal-have-account Already have an account?&nbsp;
-//-     a( href='/log_in' ) Sign in
+
 
 
