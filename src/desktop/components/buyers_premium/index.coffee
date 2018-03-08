@@ -3,7 +3,7 @@ _ = require 'underscore'
 Page = require '../../models/page.coffee'
 
 module.exports = (auction, callback) ->
-  round = (number) -> parseFloat(number.toFixed(2))
+  round = (number) -> parseFloat(number.toFixed(5))
   page = new Page id: 'buyers-premium'     # TODO: support multiple concurrent buyer's premiums
   page.fetch
     error: callback
