@@ -3,6 +3,7 @@ _ = require 'underscore'
 Page = require '../../models/page.coffee'
 
 module.exports = (auction, callback) ->
+  round = (number) -> parseFloat(number.toFixed(2))
   page = new Page id: 'buyers-premium'     # TODO: support multiple concurrent buyer's premiums
   page.fetch
     error: callback
@@ -13,7 +14,7 @@ module.exports = (auction, callback) ->
       if sortedSchedule.length == 1
         buyersPremiumHtml = """
           <div>
-            #{sortedSchedule[0].percent * 100}% on the hammer price
+            #{round(sortedSchedule[0].percent * 100)}% on the hammer price
           </div>
         """
       else
@@ -24,7 +25,7 @@ module.exports = (auction, callback) ->
               <div class='buyers-premium-pre'>
                 On the hammer price up to and including \
                 #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}:
-                #{sortedSchedule[idx].percent * 100}%
+                #{round(sortedSchedule[idx].percent * 100)}%
               </div>
             </li>
             """
@@ -34,7 +35,7 @@ module.exports = (auction, callback) ->
               <div class='buyers-premium-pre'>
                 On the portion of the hammer price in excess of \
                 #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)}:
-                #{sortedSchedule[idx].percent * 100}%
+                #{round(sortedSchedule[idx].percent * 100)}%
               </div>
             </li>
             """
@@ -46,7 +47,7 @@ module.exports = (auction, callback) ->
                 #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)} \
                 up to and including \
                 #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}: \
-                #{sortedSchedule[idx].percent * 100}%
+                #{round(sortedSchedule[idx].percent * 100)}%
               </div>
             </li>
             """
