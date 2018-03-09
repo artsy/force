@@ -43,8 +43,7 @@ metaphysics = ({ query, variables, req } = {}) ->
 
 metaphysics.debug = (req, res, send) ->
   if req.query.query?
-    get = extend {}, send,
-      variables: JSON.stringify send.variables
+    get = { query: send.query, variables: JSON.stringify send.variables }
 
     res.redirect "#{METAPHYSICS_ENDPOINT}?#{qs.stringify get}"
 
