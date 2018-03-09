@@ -1,25 +1,10 @@
 import * as _ from 'underscore'
-import { renderLayout } from '@artsy/stitch'
+import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { App } from 'desktop/apps/personalize/components/App'
 
-export const index = (req, res, next) => {
-  if (res.locals.sd.ONBOARDING_TEST !== 'experiment') {
-    req.user.fetch({
-      success: (model, response, options) => {
-        res.locals.sd.CURRENT_USER = _.extend(
-          {},
-          response,
-          res.locals.sd.CURRENT_USER
-        )
-        res.render('template')
-      },
-    })
-  } else {
-    newOnboarding(req, res, next)
-  }
-}
+let renderLayout = _renderLayout
 
-export async function newOnboarding(req, res, next) {
+export const index = async (req, res, next) => {
   try {
     const layout = await renderLayout({
       basePath: req.app.get('views'),

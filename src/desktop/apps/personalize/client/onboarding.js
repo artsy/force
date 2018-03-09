@@ -30,12 +30,9 @@ export const init = () => {
     // track pageviews when react-router updates the url
     window.analytics.page(
       { path: ev.pathname },
-      { integrations: { 'Marketo': false } }
+      { integrations: { Marketo: false } }
     )
   })
-
-  // ONBOARDING_TEST remove after test closes
-  splitTest('onboarding_test').view()
 
   // Start app
   ReactDOM.hydrate(
