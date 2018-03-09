@@ -6,7 +6,6 @@ import Cookies from 'cookies-js'
 
 import { ContextProvider } from 'reaction/Components/Artsy'
 import { Wizard } from 'reaction/Components/Onboarding/Wizard'
-import splitTest from 'desktop/components/split_test/index.coffee'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
