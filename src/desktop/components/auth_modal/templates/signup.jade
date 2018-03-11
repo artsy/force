@@ -1,9 +1,12 @@
+- 
 #auth-page.vam-outer
   .vam-inner
     include ./_header
       aside
         if copy.has('signup')
           = copy.get('signup')
+        else if copy.has('register')
+          = copy.get('register')
         else
           | The world’s greatest art, online. Sign up
           br

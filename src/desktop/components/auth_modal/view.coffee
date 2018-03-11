@@ -45,7 +45,7 @@ module.exports = class AuthModalView extends ModalView
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
-
+    console.log(@copy)
     @templateData = _.extend {
       context: @context
       signupIntent: @signupIntent
@@ -90,6 +90,7 @@ module.exports = class AuthModalView extends ModalView
       Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   renderCopy: (copy) ->
+    console.log(copy)
     attrs = if copy?
       if _.isObject copy
         containsRequired = _.partial _.contains, ['signup', 'register', 'login']
