@@ -121,6 +121,7 @@ describe 'AuthModalView', ->
       ) + "</form>"
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
+      console.log(Backbone.sync.args[1][1].toJSON())
       Backbone.sync.args[1][1].toJSON()._csrf.should.equal 'csrfoo'
 
   describe '#onSubmitSuccess', ->
@@ -138,5 +139,19 @@ describe 'AuthModalView', ->
       @view.onSubmitSuccess @view.user, { success: 200 }
       @submitSpy.should.be.calledOnce
 
+  # describe 'GDPR compliance', ->
+  #   beforeEach ->
+  #     @view.reRender()
 
+  #   it 'requires user accept terms for registration via email', ->
+  #     @view.$('input[name="name"]').val('Foo Bar')
+  #     @view.$('input[name="email"]').val('foo@bar.com')
+  #     @view.$('input[name="password"]').val('password123!')
+  #     @view.$('form').submit()
+  #     console.log('**********', @view.$('*').text())
+  #     @view.$('.auth-errors').html().should.equal 'oops'
+  #     # _.last(Backbone.sync.args)[0].should.equal 'create'
+  #     # _.last(Backbone.sync.args)[1].url.should.containEql 'api/v1/me/artwork_inquiry_request'
+
+  #   # xit 'requires user accept terms for registration via social auth'
 

@@ -35,8 +35,11 @@ module.exports = class AuthModalView extends ModalView
     return if isEigen.checkWith options
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
+    ## For AB test- # of gdpr checkboxes to show
+    @GDPR_BOXES = 1
+    @gdprDisabled = @GDPR_BOXES == 0
     @preInitialize options
-    @DISABLE_GDPR = false
+
 
     super
 
@@ -45,12 +48,11 @@ module.exports = class AuthModalView extends ModalView
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
-    console.log(@copy)
     @templateData = _.extend {
       context: @context
       signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
-      DISABLE_GDPR: @DISABLE_GDPR
+      GDPR_BOXES: @GDPR_BOXES
       redirectTo: @currentRedirectTo()
     }, options?.userData
 
@@ -90,7 +92,6 @@ module.exports = class AuthModalView extends ModalView
       Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   renderCopy: (copy) ->
-    console.log(copy)
     attrs = if copy?
       if _.isObject copy
         containsRequired = _.partial _.contains, ['signup', 'register', 'login']
@@ -137,20 +138,23 @@ module.exports = class AuthModalView extends ModalView
       'redirect-to': @currentRedirectTo()
     queryString = $.param(queryData)
     fbUrl = sd.AP.facebookPath + '?' + queryString
-    console.log('fbUrl', fbUrl)
-    return window.location.href = fbUrl if @DISABLE_GDPR
+    return window.location.href = fbUrl if @gdprDisabled
 
     if @checkAcceptedTerms()
-      formData = @serializeForm()
-      gdprData =
-        'receive-emails': !!formData['receive_emails']
-        'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-      gdprString = $.param(gdprData)
-      gdprFbUrl = fbUrl + "&" + queryString
+      gdprString = $.param(@gdprData(@serializeForm()))
+      gdprFbUrl = fbUrl + "&" + gdprString
       console.log('fbUrl With Boxes', gdprFbUrl)
       window.location.href = gdprFbUrl
 
-
+  # accomodate AB test for checkboxes
+  gdprData: (formData) ->
+    return {} if @gdprDisabled
+    if @GDPR_BOXES == 2
+      'receive-emails': !!formData['receive_emails']
+      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+    else if @GDPR_BOXES == 1
+      'receive-emails': !!formData['accepted_terms_of_service']
+      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
 
   submit: (e) ->
     return unless @validateForm()
@@ -160,7 +164,9 @@ module.exports = class AuthModalView extends ModalView
 
     @$('button').attr 'data-state', 'loading'
 
-    @user.set (data = @serializeForm())
+    formData = @serializeForm
+    userData = Object.assign {}, formData, gdprData(formData)
+    @user.set (data = userData)
     @user.set(signupIntent: @signupIntent)
     @user[@state.get 'mode']
       success: @onSubmitSuccess

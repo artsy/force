@@ -26,7 +26,8 @@
       title= '6 characters minimum',
       required
     )
-    if !DISABLE_GDPR
+    - console.log(GDPR_BOXES)
+    if GDPR_BOXES === 2
       .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__receive-email.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
@@ -51,6 +52,22 @@
               a( href='/terms' ) Terms of Use
               | &nbsp;and&nbsp;
               a(href='/privacy') Privacy Policy.
+    else if GDPR_BOXES === 1
+      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
+        .artsy-checkbox--checkbox
+          input(
+            required,
+            name='accepted_terms_of_service',
+            id='accepted_terms_of_service',
+            type='checkbox',
+            tabindex="0"
+          )
+          label(for='accepted_terms_of_service')
+        span Agree to our&nbsp;
+              a( href='/terms' ) Terms of Use
+              | &nbsp;and&nbsp;
+              a(href='/privacy') Privacy Policy&nbsp;
+              |(and subscribe).
     button.avant-garde-button-black Sign Up
     .gdpr-signup__error
   .gdpr-signup__divider or
@@ -60,7 +77,7 @@
   )
     i.icon-facebook
     | Continue with Facebook
-  if DISABLE_GDPR
+  if GDPR_BOXES === 0
     .gdpr-signup__copy
       small.gdpr-signup__small By signing up, you agree to our&nbsp;
         a( href='/terms' ) Terms of Use
