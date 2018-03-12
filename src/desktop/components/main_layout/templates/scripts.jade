@@ -1,8 +1,10 @@
 - defaultOptions = {stripe: true, sailthru: true, marketo: true, quantcast: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
+
 //- Common bundle
 script( src=asset("/assets/common.js") )
+script( src=asset("/assets/jquery.js") )
 
 if options.marketo
   //- Marketo Tracking
