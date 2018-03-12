@@ -16,13 +16,6 @@
 # module.exports = {}
 
 module.exports = {
-  onboarding_test:
-    key: 'onboarding_test'
-    outcomes:
-      control: 50
-      experiment: 50
-    control_group: 'control'
-    edge: 'experiment'
   artist_page_variants:
     key: 'artist_page_variants'
     outcomes:
