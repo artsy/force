@@ -4,6 +4,7 @@
 # or component.
 #
 
+$ = require 'jquery'
 Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
