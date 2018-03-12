@@ -32,4 +32,11 @@ module.exports = {
       no_info_header: 25
     control_group: 'control'
     edge: 'no_info_header'
+  merch_sort_test:
+    key: 'merch_sort_test'
+    outcomes:
+      control: 50
+      experiment: 50
+    control_group: 'control'
+    edge: 'experiment'
 }

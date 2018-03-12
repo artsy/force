@@ -18,17 +18,22 @@ SizeFilterView = require '../../components/commercial_filter/filters/size/size_f
 KeywordFilterView = require '../../components/commercial_filter/filters/keyword/keyword_filter_view.coffee'
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
+splitTest = require '../../components/split_test/index.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
 
 module.exports.init = ->
+  # MERCH_SORT_TEST remove after test closes
+  splitTest('merch_sort_test').view()
+  
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
-    fullyQualifiedLocations: fullyQualifiedLocations
+    fullyQualifiedLocations: fullyQualifiedLocations,
+    merchTestGroup: sd.MERCH_SORT_TEST
   filter = new Filter params: params
 
   headlineView = new HeadlineView
@@ -44,30 +49,18 @@ module.exports.init = ->
     el: $('.cf-total-sort__sort')
     params: params
 
-  if CurrentUser.orNull()?.hasLabFeature('Keyword Search')
-    pillboxView = new PillboxView
-      el: $('.cf-headline-container .cf-pillboxes')
-      params: params
-      artworks: filter.artworks
-      categoryMap: sd.CATEGORIES
+  categoryView = new CategoryFilterView
+    el: $('.cf-categories')
+    params: params
+    aggregations: filter.aggregations
+    categoryMap: sd.CATEGORIES
+    alwaysEnabled: true
 
-    keywordView = new KeywordFilterView
-      el: $('.cf-keyword')
-      params: params
-
-  else
-    categoryView = new CategoryFilterView
-      el: $('.cf-categories')
-      params: params
-      aggregations: filter.aggregations
-      categoryMap: sd.CATEGORIES
-      alwaysEnabled: true
-
-    pillboxView = new PillboxView
-      el: $('.cf-right .cf-pillboxes')
-      params: params
-      artworks: filter.artworks
-      categoryMap: sd.CATEGORIES
+  pillboxView = new PillboxView
+    el: $('.cf-right .cf-pillboxes')
+    params: params
+    artworks: filter.artworks
+    categoryMap: sd.CATEGORIES
 
   # Main Artworks view
   filter.artworks.on 'reset', ->
