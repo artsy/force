@@ -4,7 +4,6 @@
 # or component.
 #
 
-require '../../lib/global_modules'
 $ = require 'jquery'
 Backbone = require 'backbone'
 Backbone.$ = $

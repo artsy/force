@@ -20,6 +20,9 @@ const config = {
       'webpack-hot-middleware/client?reload=true',
       './src/desktop/apps/webpack/client.js',
     ],
+    // FIXME: Quickfix for PhantomJS / SEO due to jQuery missing in header. See
+    // https://artsy.slack.com/archives/C02BDPZPC/p1520871445000663 for more info.
+    jquery: './node_modules/jquery/dist/jquery.js',
     ...getEntrypoints(),
   },
   output: {
@@ -105,6 +108,7 @@ const config = {
   ],
   resolve: {
     alias: {
+      jquery: 'jquery/dist/jquery.js', // FIXME: Quickfix for PhantomJS / SEO due to jQuery missing in header; see above
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
       react: path.resolve('./node_modules/react'),
     },
