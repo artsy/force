@@ -1,17 +1,19 @@
 @require './components/artwork_classification'
 
 .artwork-metadata
-  serif('s-body')
-  line-height 1.25 // compact-line-height
+  garamond()
+  font-size 15px
+  line-height 1.47
+  color gray-darkest-color
 
   &__artist
   &__secondary-metadata
     block-margins(distance(gutter / 2))
-    color gray-darker-color
 
   &__attribution-class
-    block-margins(distance(gutter / 2))
-    color gray-darker-color
+    block-margins(25px)
+    display block
+    text-decoration underline
 
   &__lot-number
     sans('s-headline')
@@ -19,7 +21,12 @@
 
   &__artist
     > .entity-link
-      sans('m-headline')
+      garamond()
+      text-transform none
+      letter-spacing 0
+      font-size 20px
+      font-weight bold
+      color black
 
     > .entity-follow
       display block
@@ -33,15 +40,17 @@
   &__title + &__secondary-metadata
     margin-top 0
 
-  &__image-rights
+  &__image
+    block-margins(25px)
     serif('s-caption')
-    line-height 1.25 // compact-line-height
-    block-margins(distance(gutter / 2))
+    color gray-dark-color
+
+  &__image__download
+    > a
+      color gray-dark-color
 
   &__actions
-    serif('s-body')
-    margin-top distance(gutter)
+    block-margins(25px)
 
     > a
       color gray-dark-color
-      fine-faux-underline(gray-dark-color)

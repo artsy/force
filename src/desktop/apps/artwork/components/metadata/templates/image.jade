@@ -1,0 +1,12 @@
+if artwork.image_rights || artwork.is_downloadable
+  .artwork-metadata__image
+    if artwork.image_rights
+      .artwork-metadata__image__rights
+        = artwork.image_rights
+    if artwork.is_downloadable
+      .artwork-metadata__image__download
+        a(
+          href='#{artwork.href}/download/#{helpers.metadata.filename(artwork)}.jpg'
+          target='_blank'
+        ) Download Image
+
