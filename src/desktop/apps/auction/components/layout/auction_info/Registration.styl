@@ -1,0 +1,89 @@
+.auction-Registration
+  +respond-mobile()
+    padding-bottom 20px
+
+    &:after
+      content ''
+      border-bottom 1px solid #e5e5e5
+      width 120%
+      right 0
+      position absolute
+      padding-top 20px
+
+  &__wrapper
+    border 1px solid gray-lighter-color
+    padding 20px
+
+    +respond-desktop()
+      margin-bottom 20px
+
+    +respond-mobile()
+      border none
+      margin-top 16px
+      padding 0
+
+
+  &__small
+    color gray-dark-color
+    padding-top 20px
+    text-align center
+
+    +respond-mobile()
+      padding-top 15px
+
+    &_warning
+      color #f0cc49
+
+  &__preview
+    p
+      garamond-size('l-body')
+      margin-bottom 15px
+    .bordered-input
+      margin-bottom 15px
+
+  &__approved
+    color new-green-color
+    garamond-size('l-body')
+
+    +respond-desktop()
+      margin-bottom 20px
+      padding-left 20px
+
+    +respond-mobile()
+      garamond-size('s-body')
+      margin-top 15px
+      padding-left 0
+
+      .icon-check
+        display none
+
+    .icon-check
+      color new-green-color
+      width 23px
+      //
+      border 2px solid
+      border-color @color
+      border-radius @width
+      font-size 9px
+      height @width
+      margin-right 8px
+      padding 3px
+      position relative
+      top -2px
+
+  &__how-to-bid
+    display block
+    margin 0 0 20px 0
+    text-decoration none
+
+    img
+      display inline-block
+      height 40px
+      margin-right 15px
+      vertical-align middle
+
+  &__wrapper + &__how-to-bid
+    margin-top 30px
+
+  &__how-to-bid, &__question
+    margin-left 20px

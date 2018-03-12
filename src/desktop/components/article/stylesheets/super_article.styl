@@ -1,0 +1,300 @@
+@require '../../stylus_lib'
+
+.article-sa-footer
+  max-width 1250px
+  margin auto
+  margin-bottom 100px
+  padding 20px
+  display flex
+  background-color white
+  .article-sa-title
+    garamond-size('xl-headline')
+    display block
+    font-style normal
+
+.article-sa-footer-left, .article-sa-footer-right
+  border-top 1px solid gray-lighter-color
+  min-height 300px
+
+.article-sa-footer-left
+  display flex
+  flex-direction column
+  position relative
+  width 55%
+  margin-right 30px
+  padding 60px 0 30px 0
+  border-bottom 1px solid gray-lighter-color
+
+.article-sa-footer-right
+  width 45%
+  margin-left 30px
+
+.article-sa-title
+  font-size 72px
+  line-height 106%
+  font-style italic
+  text-decoration none
+
+.article-sa-artsy-logo
+  width 94px
+  max-height 32px
+  display inline-block
+  vertical-align middle
+
+.article-sa-primary-logos
+  display flex
+  align-items center
+
+.article-sa-logos
+  bottom 30px
+  &__container
+    display flex
+    align-items center
+  &__presented
+    avant-garde-size('s-headline')
+    margin-bottom 10px
+
+.article-sa-primary-logo, .article-sa-secondary-logo
+  vertical-align top
+  img
+    height 32px
+
+.article-sa-plus
+  transform rotate(45deg)
+  margin 10px
+  font-size 17px
+  font-smoothing antialiased
+
+.article-sa-cta-container
+  margin-top 20px
+  flex-grow 1
+
+.article-sa-cta
+  margin-top 20px
+  text-decoration none
+
+.article-sa-footer-blurb
+  margin-top 20px
+  a
+    fine-faux-underline()
+.article-sa-cta-container, .article-sa-footer-blurb
+  garamond-size('l-body')
+
+.article-sa-related
+  width 100%
+  display flex
+  align-items center
+  justify-content flex-start
+  padding 20px
+  border-bottom 1px solid gray-lighter-color
+  text-decoration none
+  transition background-color 0.3s
+  &:hover
+    background #f8
+  img
+    width 100px
+    height 66px
+  &__title
+    garamond-size('l-body')
+    margin-left 20px
+
+.article-sa-magazine-link
+  avant-garde-size('s-headline')
+  text-decoration none
+
+// Sticky header
+.article-sa-sticky-header
+  position fixed
+  top 0px
+  left 0px
+  width 100%
+  z-index zindex-primary-nav + 1
+  background white
+  opacity 0
+  transition all 400ms
+  pointer-events none
+  &.no-transition
+    transition all 0ms
+  &.visible
+    pointer-events all
+    opacity 1
+    transition all 200ms
+  .article-sa-plus
+    font-size 15px
+
+.article-sa-sticky-close-icon
+  display none
+
+.article-content
+  transition all 200ms
+
+.article-sa-sticky-left, .article-sa-sticky-right
+  position absolute
+  display flex
+  align-items center
+
+.article-sa-sticky-left
+  left 20px
+  height 57px
+
+.article-sa-sticky-right
+  top 20px
+  right 20px
+  .article-sticky-back
+    text-decoration none
+
+.article-sa-sticky-center
+  text-align center
+  margin-top 15px
+  .article-sa-sticky-title
+    garamond-size('l-body')
+    cursor pointer
+    transition all 200ms
+    text-decoration none
+    &:hover
+      color purple-color
+
+.article-sa-sticky-related-container
+  border-top 1px solid gray-lighter-color
+  height 0px
+  transition height 200ms
+  margin-top 15px
+  overflow hidden
+  &.visible
+    border-bottom 1px solid gray-lighter-color
+    border-left 1px solid gray-lighter-color
+  .mgr-cells
+    margin 0 25px
+  .mgr-cell
+    width 400px
+    margin-right 0px
+  .mgr-navigation
+    opacity 1
+    .mgr-arrow-icon
+      font-size 12px
+      padding 6px
+    .mgr-arrow-left, .mgr-arrow-right
+      width 25px
+      &:hover
+        background-color #f8
+    .mgr-arrow-left
+      left 0px
+    .mgr-arrow-right
+      left unset
+      right 0px
+      border-left 1px solid gray-lighter-color
+
+  .article-sa-related
+    border-bottom none
+    border-right 1px solid gray-lighter-color
+    &__title
+      white-space normal
+      text-align left
+    &__magazine-link
+      display none
+
+.article-sa-sticky
+  &__presented
+    garamond-size('m-caption')
+    display inline-block
+    margin-right 20px
+
+// Mobile
+.article-sa-footer
+  @media screen and (max-width: 900px)
+    flex-direction column-reverse
+    .article-sa-footer-left, .article-sa-footer-right
+      width 100%
+      margin 0px
+    .article-sa-footer-right
+      .article-sa-related:last-of-type
+        border-bottom none
+    .article-sa-cta-container
+      margin-bottom 180px
+  @media screen and (max-width: 550px)
+    .article-sa-footer-left
+      padding-top 30px
+      .article-sa-title
+        garamond-size('headline')
+      .article-sa-footer-blurb, .article-sa-cta
+        garamond-size('s-body')
+    .article-sa-related
+      padding-left 0px
+      &__title
+        garamond-size('s-body')
+
+.article-sa-sticky-header
+  @media screen and (max-width: 550px)
+    .article-sa-related__title
+      garamond-size('s-body')
+  @media screen and (max-width: 900px)
+    .article-sa-plus
+      display inline-block
+      margin 0px
+    .article-sa-sticky-title
+      visibility hidden
+      overflow hidden
+      white-space nowrap
+      text-overflow ellipsis
+    .article-sa-sticky-right
+      display none
+    .article-sa-sticky-related-container
+      overflow scroll
+      .mgr-navigation
+        display none
+      .mgr-cells
+        margin 0px
+      .mgr-cell
+        width 100%
+        display block
+        padding 0 25px
+    .article-sa-primary-logo
+      margin-left 10px
+      img
+        height 25px
+    .article-sa-artsy-logo
+      font-size 25px
+      width 88px
+    .article-sa-plus
+      font-size 12px
+    .article-sa-sticky-hamburger
+      position absolute
+      top 10px
+      right 20px
+      &-icon
+        vertical-align middle
+        position relative
+        font-style normal
+        color black
+        text-align left
+        text-indent -9999px
+        direction ltr
+        width 20px
+        height 4px
+        box-shadow inset 0 0 0 7px,0 -7px,0 7px
+        margin 16px 7px
+    .article-sa-related
+      border-right 0px
+      padding 20px 0
+      &__magazine-link
+        display flex
+        text-decoration none
+        margin 25px 0 0 25px
+        .icon-chevron-left
+          font-size 12px
+          line-height 18px
+          font-weight bold
+      &__magazine-text
+        avant-garde-size('body')
+        margin-left 5px
+
+body.body-fullscreen-article.is-open
+  overflow hidden
+  .article-sa-sticky-hamburger-icon
+    display none
+  .article-sa-sticky-close-icon
+    display block
+    position absolute
+    top 2px
+    right 6px
+    font-size 22px

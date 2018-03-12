@@ -1,0 +1,12 @@
+.avant-garde-s-headline.cf-locations__title Gallery Location
+span.help-tooltip.cf-locations-filter(data-message='Filter works offered by galleries with at least one location near a given city.', data-anchor='top-left')
+include ./all.jade
+
+each location in locations
+  - agg = findAggregation(counts, location)
+  - isSelected = _.contains(selected, location)
+  - enabled = alwaysEnabled || findAggregation(counts, location)
+
+  include ./location.jade
+
+include ./search.jade

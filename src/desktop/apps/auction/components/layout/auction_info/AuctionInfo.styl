@@ -1,0 +1,196 @@
+.auction-AuctionInfo
+  clearfix()
+
+  +respond-desktop()
+    &__upcomingLabel
+      display inline
+      margin-right 30px
+      position relative
+      top 1px
+
+  +respond-mobile()
+    &__container
+      display flex
+      align-items center
+
+    &_expandToFullScreen
+      align-items flex-start
+      background white
+      left 0
+      padding-left 20px
+      padding-top: 80px
+      margin-top: 0px !important // overwrite section spacing when expanded
+      position fixed
+      overflow-y scroll
+      top 0
+      z-index 970 // Index required to overwrite top mobile nav ¯\_(ツ)_/¯
+      width 100%
+      height 100%
+
+    &__info-window-controls
+      align-items center
+      display flex
+      justify-content space-between
+      left 0
+      overlapping-border()
+      padding-bottom 6px
+      padding-left 20px
+      padding-top 10px
+      position absolute
+      top -1px
+      width 100%
+
+    &__info-window-title
+
+    &__info-window-close-button
+      cursor pointer
+      font-size 20px
+      padding-right 15px
+      top: -2px
+
+      .icon-close
+        &::before
+          font-size: 20px
+          position relative
+          top -5px
+
+
+  // Left column
+
+  &__primary
+    float left
+    padding-right 30px
+    width 75%
+
+    +respond-mobile()
+      float none
+      padding-right 20px
+      width 100%
+
+
+  // Right Column
+
+  &__metadata
+    float left
+    width 25%
+
+    +respond-mobile()
+      cursor pointer
+      float none
+      position: relative
+      width inherit
+
+      &_expandToFullScreen
+        display none
+
+  &__info-button
+    +respond-mobile()
+      size = 40px
+      border-radius size
+      font-size size
+      width size
+      height size
+      border 2px solid gray-lighter-color
+      display block
+      padding-left 14px
+      padding-top 2px
+
+
+  // Main Content
+
+  &__sub-header
+    avant-garde-size('body', true)
+
+  &__title
+    garamond-size('l-headline')
+    padding-right 30px
+
+    +respond-mobile()
+      garamond-size('l-body')
+
+  &__description
+    garamond-size('l-body')
+    margin 30px 0
+    > p
+      block-margins(15px)
+    a
+      fine-faux-underline()
+
+    +respond-mobile()
+      garamond-size('s-body')
+      margin 10px 0 20px 0
+
+  &__date-time
+    +respond-mobile()
+      margin-bottom 25px
+
+  &__register-button
+    margin-bottom 30px
+
+  &__metadata-cell
+    margin-bottom 20px
+
+    > h3
+      margin 0.5em 0
+      avant-garde-size('body', true)
+
+  &__metadata-cell-contents
+    > p
+      block-margins(10px)
+
+  &__callout
+    border-bottom 1px solid gray-lighter-color
+    border-top 1px solid gray-lighter-color
+    garamond-size('l-body')
+    margin 20px 0
+    position relative
+
+    +respond-desktop()
+      padding 10px 0 12px 0
+
+    +respond-mobile()
+      border-bottom 0
+      border-top 0
+      garamond-size('s-body')
+      margin 0
+      padding 0
+
+  &__callout-live-label
+    position absolute
+    right 0
+    top 10px
+
+    +respond-mobile()
+      avant-garde-size('s-headline')
+      position relative
+      top -5px
+
+  &__live-label
+    avant-garde-size('body')
+    letter-spacing 3px
+
+    +respond-mobile()
+      avant-garde-size('s-headline')
+
+
+  &__live-tooltip
+    garamond-size('s-body')
+    margin-left 10px
+    margin-left 14px
+    top -3px
+
+    &:hover::before
+      background gray-darker-color
+      border 0
+      color white
+
+    &::before
+      background transparent
+      border 1px solid gray-lighter-color
+      color black
+      width 20px
+      height @width
+      line-height @width - 1px
+
+    +respond-mobile()
+      text-transform none

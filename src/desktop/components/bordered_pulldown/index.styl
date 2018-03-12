@@ -1,0 +1,60 @@
+@require '../stylus_lib'
+
+.bordered-pulldown-label
+  margin-right 10px
+  &.is-disabled
+    color gray-lighter-color
+
+.bordered-pulldown
+  display inline-block
+  width 200px
+  position relative
+  border 2px solid gray-lighter-color
+  text-align left
+  font-size default-garamond-font-size
+  &:hover > .bordered-pulldown-options
+    display block
+    border-color gray-color
+  &.is-disabled
+    pointer-events none
+    cursor pointer
+    .bordered-pulldown-toggle
+      cursor default
+      color gray-lighter-color
+
+.bordered-pulldown-toggle
+.bordered-pulldown-options > a
+  display block
+  padding 8px 10px 6px
+  text-decoration none
+
+.bordered-pulldown-toggle
+  > .bordered-pulldown-toggle-caret
+    float right
+    padding-left 5px
+    border-left 1px solid gray-lighter-color
+    > .caret
+      caret(gray-color)
+
+.bordered-pulldown-options
+  display none
+  position absolute
+  background white
+  border 2px solid gray-lighter-color
+  // Offset border width
+  top -2px
+  left @top
+  right @top
+  z-index 2
+  > a
+    text-decoration none
+    overflow ellipsis
+    &:hover
+      background-color gray-lightest-color
+
+// Scrollable variant
+.bordered-scrollable-pulldown
+  @extends .bordered-pulldown
+  > .bordered-pulldown-options
+    max-height 245px
+    overflow-y auto

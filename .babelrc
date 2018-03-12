@@ -1,24 +1,34 @@
 {
   "presets": [
-    "es2015",
-    "react",
-    "stage-3"
+    ["@babel/env", {
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
+    }],
+    "@babel/react",
+    "@babel/preset-typescript",
+    "@babel/stage-3"
   ],
   "plugins": [
-    "babel-plugin-rewire",
-    "inline-react-svg",
-    "transform-runtime",
-    ["module-resolver", {
-      "root": ["./"]
+    "@babel/plugin-transform-runtime",
+    ["babel-plugin-styled-components", {
+      "ssr": true,
+      "displayName": true
     }],
-    "transform-class-properties"
+    "inline-react-svg",
+    ["module-resolver", {
+      "extensions": [".js", ".jsx", ".ts", ".tsx"],
+      "root": ["./src"],
+      "alias": {
+        "reaction": "@artsy/reaction/dist"
+      }
+    }],
+    "relay"
   ],
   "env": {
     "development": {
       "plugins": [
-        ["styled-components", {
-          "ssr": true
-        }]
+        "react-hot-loader/babel"
       ]
     }
   }

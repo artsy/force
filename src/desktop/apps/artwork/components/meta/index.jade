@@ -1,0 +1,51 @@
+- var img = artwork.meta_image && artwork.meta_image.resized
+
+//- General tags
+title= artwork.meta.title
+meta( name='description', content= artwork.meta.description )
+if img
+  meta( name='thumbnail', content= img.url )
+
+link( rel='canonical', href= sd.APP_URL + artwork.href )
+if sd.INCLUDE_ESCAPED_FRAGMENT && !sd.PARAMS.action
+  meta( name='fragment', content='!' )
+
+//- Twitter tags
+meta( property='twitter:description', content= artwork.meta.long_description )
+meta(
+  property='twitter:card'
+  content= (artwork.is_shareable && img ? 'summary_large_image' : 'summary')
+)
+
+//- Open Graph tags
+meta( property='og:title', content= artwork.meta.title )
+meta( property='og:description', content= artwork.meta.description )
+meta( property='og:url', content= sd.APP_URL + artwork.href )
+meta( property='og:type', content='#{sd.FACEBOOK_APP_NAMESPACE}:artwork' )
+if artwork.is_shareable && img
+  meta( property='og:image', content= img.url )
+  meta( property='og:image:width' content= img.width )
+  meta( property='og:image:height' content= img.height )
+else
+  meta( property='og:image', content= asset('/images/icon-152.png') )
+
+//- Sailthru tags for fair artwork image
+if sd.INCLUDE_SAILTHRU
+  meta( name='artwork_type', content='fair' )
+  meta( name='artwork_date', content=artwork.date )
+  if artwork.artists && artwork.artists[0] && artwork.artists[0].name
+    meta( name='artist_name', content=artwork.artists[0].name )
+  if artwork.sale_message
+    meta( name='price', content=artwork.sale_message )
+  meta( name='sailthru_fair_slug', content=artwork.fair.id )
+  meta( name='sailthru_fair_name', content=artwork.fair.name )
+  meta( name='sailthru_fair_page', content='artwork' )
+  if artwork.partner
+    meta( name='sailthru_partner_name', content=artwork.partner.name )
+  if artwork.image_rights
+    meta( name='sailthru_credit', content=artwork.image_rights )
+  if artwork.meta_image && artwork.meta_image && artwork.meta_image.resized && artwork.meta_image.resized
+    meta( name='image', content=artwork.meta_image.resized.url )
+
+//- Unica Font (currently used in Market Insights)
+link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")

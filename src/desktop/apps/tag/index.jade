@@ -1,0 +1,24 @@
+extends ../../components/main_layout/templates/index
+include ../../components/share/mixin
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'categories'
+
+block body
+  .main-layout-container
+    header#tag-header
+      h1.avant-garde-header-center Artwork related to “#{tag.get('name')}”
+      #tag-share-buttons
+        +share(tag.get('name') + ' on Artsy')
+
+    .sixty-forty-bisected-header
+      if tag.get('description')
+        .bisected-header-cell.tag-blurb
+          .bisected-header-cell-section
+            h2 About
+            .blurb!= tag.mdToHtml('description')
+
+    #tag-filter

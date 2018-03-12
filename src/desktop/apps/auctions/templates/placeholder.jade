@@ -1,0 +1,39 @@
+- canRegister = nextAuction && user && !user.get('registered_to_bid')
+
+.auctions-placeholder
+  .auctions-placeholder-metadata
+    h2 Bid Online in Leading Auctions
+
+    if nextAuction
+      //- Has an upcoming auction
+      p
+        | Next Upcoming Auction:
+        br
+        a.fine-faux-underline( href= nextAuction.href() )
+          = nextAuction.get('name')
+      .apu-clock.js-apu-clock( data-id= nextAuction.id )
+        include ../../../components/clock/template
+    else
+      //- No upcoming auction
+      unless user
+        //- Logged out, no upcoming auctions
+        p Want to learn about new upcoming auctions?
+
+    unless user
+      //- Logged out
+      a.avant-garde-button-black.is-block.js-sign-up-button
+        | Sign up to be notified
+    else if canRegister
+      //- Logged in, upcoming auction, not registered to bid
+      a.avant-garde-button-black.is-block( href= nextAuction.registerUrl() )
+        | Register to bid
+
+  .auctions-placeholder-hero
+    if canRegister
+      a( href= nextAuction.registerUrl() )
+        img( src='/images/auctions-placeholder.png', alt='Bid Online in Leading Auctions' )
+    else if !user
+      a.js-sign-up-button( href='#' )
+        img( src='/images/auctions-placeholder.png', alt='Bid Online in Leading Auctions' )
+    else
+      img( src='/images/auctions-placeholder.png', alt='Bid Online in Leading Auctions' )

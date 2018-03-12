@@ -1,0 +1,23 @@
+- var isPermanentCollection = artwork.availability === 'permanent collection'
+- var isOnLoan = artwork.availability === 'on loan'
+- var showPriceLabel = artwork.price && artwork.availability !== 'sold' && !isOnLoan && !isPermanentCollection
+if artwork.sale_message || isPermanentCollection
+  .artwork-commercial__container
+    .artwork-commercial__sale-message
+      if showPriceLabel
+        .artwork-commercial__price-label Price
+        .artwork-commerical__price
+          | #{artwork.sale_message}
+          span(
+            class= artwork.is_price_range ? 'help-tooltip' : ''
+            data-message= 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'
+            data-anchor= 'bottom-right'
+          )
+      else if isPermanentCollection
+        | Permanent collection
+      else
+        | #{artwork.sale_message}
+
+    if showPriceLabel
+      .artwork-commercial__shipping-info
+        | Shipping, tax, and service quoted by seller

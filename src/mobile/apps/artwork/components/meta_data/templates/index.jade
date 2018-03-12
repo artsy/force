@@ -1,0 +1,19 @@
+.artwork-section-separator
+.main-side-margin
+  .artwork-meta-data-module
+    if artwork.auction && artwork.auction.is_auction
+      include ../../bid/index.jade
+    else
+      include ./price.jade
+      include ./edition_sets.jade
+      include ./inquiry.jade
+
+    include ./details.jade
+    include ./partner.jade
+
+    if artwork.auction && artwork.auction.sale_artwork.estimate
+      .artwork-meta-data__estimation
+        h2.artwork-header Estimated Value
+        p= artwork.auction.sale_artwork.estimate
+
+    include ./description.jade

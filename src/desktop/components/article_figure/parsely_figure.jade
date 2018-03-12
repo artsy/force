@@ -1,0 +1,19 @@
+//- This mixin has a dependency of _s
+
+- width = width || 300
+
+- var imgUrl = crop(article.image_url, { width: width, height: Math.round(width / 1.5) })
+figure.article-figure: .article-figure-container
+  a.article-figure-img-container( href= article.link )
+    .article-figure-img( style="background-image: url(#{imgUrl})" )
+
+  figcaption.article-figure-figcaption
+    a.article-figure-title( href= article.link )
+      = article.title
+
+    .article-figure-author-section
+      .article-figure-author(class = article.authors.length > 1 ? 'has-contributing-author' : '')
+        = article.author
+
+      if article.authors.length > 1
+        .article-figure-contributing-name= "By " + toSentence(article.authors.slice(1))

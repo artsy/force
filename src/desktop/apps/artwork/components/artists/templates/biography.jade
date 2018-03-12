@@ -1,0 +1,17 @@
+.artwork-artist__content__biography
+  
+  //- If featured bio's partner is the artwork's partner, show it.
+  if artist.biography_blurb && artist.biography_blurb.text != "" && artist.biography_blurb.partner_id == artwork.partner.id
+    .artwork-artist__content__biography__text
+      != artist.biography_blurb.text
+    if artist.biography_blurb.credit
+      .artwork-artist__content__biography__credit
+        | &mdash; #{artist.biography_blurb.credit}
+  else if artist.blurb
+    .artwork-artist__content__biography__text
+      != artist.blurb
+
+  .artwork-artist__content__short-bio
+    p= artist.bio.replace('born', 'b.')
+
+div(id="market-insights-container-" + artist._id)

@@ -1,0 +1,8 @@
+.artsy-checkbox.cf-locations__checkbox(data-has-results=enabled  ? 'true' : 'false')
+  .artsy-checkbox--checkbox
+    input( type='checkbox', id=location, checked=isSelected )
+    label( for=location )
+  label.artsy-checkbox--label( for=location ) #{displayLocation(location)}
+    if agg
+      | &nbsp;
+      span.cf-periods__total.garamond-m-caption (#{numberFormat(agg.count)})

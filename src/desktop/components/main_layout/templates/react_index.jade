@@ -1,0 +1,20 @@
+extends index
+
+append locals
+  - assetPackage = locals.assetPackage || ''
+  - bodyClass = bodyClass + ' ' + (locals.bodyClass || '')
+
+block head
+  != head
+  != css
+
+block body
+  script.
+    var __BOOTSTRAP__ = !{JSON.stringify(data)}
+
+  #react-root
+    != body
+  #react-portal
+
+  if jsonLD
+    include ./json_ld

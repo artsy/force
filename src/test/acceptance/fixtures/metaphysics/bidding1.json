@@ -1,0 +1,29 @@
+{
+  "data": {
+    "sale": {
+      "_id": "58f78b2b2a893a5337af0037",
+      "associated_sale": null,
+      "auction_state": "open",
+      "cover_image": {
+        "cropped": {
+          "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&width=1800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FEdyXwUnVhPOeGGSU4lExzg%2Fwide.jpg"
+        }
+      },
+      "currency": "USD",
+      "description": "Artsy presents **Rago Auctions: 19th/20th C. American/European Art,** featuring works by Pablo Picasso, Marc Chagall, Joan Miró, and more. In advance of the auction, browse lots and place max bids before live bidding begins on **May 6th at 10:00am ET.**\r\n\r\nWhen the sale opens, all pre-registered Artsy users can participate and watch the bidding unfold in real time. Registration for the live auction will close on **May 5th at 10:00am ET.**",
+      "eligible_sale_artworks_count": 184,
+      "end_at": null,
+      "id": "rago-auctions-19th-slash-20th-c-american-slash-european-art",
+      "is_auction": true,
+      "is_closed": false,
+      "is_live_open": false,
+      "is_open": true,
+      "live_start_at": "2017-05-06T14:00:00+00:00",
+      "name": "Rago Auctions: 19th/20th C. American/European Art",
+      "registration_ends_at": "2017-05-05T14:00:00+00:00",
+      "start_at": "2017-04-20T16:30:00+00:00",
+      "status": "open",
+      "symbol": "$"
+    }
+  }
+}

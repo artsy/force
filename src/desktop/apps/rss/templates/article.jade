@@ -1,0 +1,42 @@
+include article_mixins
+
+//- Hero Section
+- hero = article.get('hero_section')
+if hero
+  case hero.type
+    when 'video'
+      != embed(hero.url)
+    when 'image'
+      +image(hero, 1100)
+
+//- Content
+if article.strip('lead_paragraph')
+  != article.get('lead_paragraph')
+for section, i in article.get('sections')
+  case section.type
+    when 'text'
+      != section.body
+    when 'image'
+      +image(section, 500)
+    when 'video'
+      != embed(section.url)
+    when 'image_collection'
+      if section.images
+        for image in section.images
+          if image.type == 'image'
+            +image(image, 500)
+          else
+            +artwork(image)
+    when 'image_set'
+      if section.images
+        for image in section.images
+          if image.type == 'image'
+            +image(image, 500)
+          else
+            +artwork(image)
+
+if article.get('media')
+  - media = article.get('media')
+  video(src=media.url)
+  != media.description
+  != media.credits

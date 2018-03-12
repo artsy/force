@@ -1,0 +1,13 @@
+if featuredShows.length
+  #home-featured-shows-section( class='js-homepage-featured-links', data-context='featured shows' )
+    h2.home-featured-header Featured Shows
+      .home-browse-all-right
+        a( href='/shows' )
+          | Explore All Shows
+    ul#home-featured-shows.home-featured-list
+      - allShows = featuredShows.take(8)
+      - displayLocation = true
+      - shows = allShows.slice(0, 2)
+      include ../../../components/featured_shows/large
+      - shows = allShows.slice(2)
+      include ../../../components/featured_shows/small

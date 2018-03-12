@@ -1,0 +1,34 @@
+div.artist-page-cta-overlay__register
+  form.auth-form(
+    action="#{sd.AP.loginPagePath}?modal_id=artist_page_cta"
+    method='POST'
+  )
+    .auth-errors
+    input.bordered-input.is-block(
+      name='name', type='text', placeholder='Your full name', autofocus=true, required
+    )
+    input#js-mailcheck-input-modal.bordered-input.is-block(
+      name='email', type='email', placeholder='Your email address', required
+    )
+    #js-mailcheck-hint-modal
+    input.bordered-input.is-block(
+      name= 'password'
+      type= 'password'
+      placeholder= 'Create a password'
+      autocomplete= 'on'
+      pattern= '.{6,}'
+      title= '6 characters minimum'
+      required
+    )
+
+    input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+    button#auth-submit.avant-garde-button-black.is-block Sign Up
+
+  h2
+    span Or
+
+  a.auth-signup-facebook.avant-garde-button-black(href="/users/auth/facebook?skip-onboarding=true&modal_id=artist_page_cta&redirect-to=#{afterAuthPath}&signup-intent=#{signupIntent}", data-context='artist_page_cta')
+    i.icon-facebook
+    | Continue with Facebook
+
+  include ./register_footer.jade

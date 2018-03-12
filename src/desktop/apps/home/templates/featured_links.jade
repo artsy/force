@@ -1,0 +1,9 @@
+if featuredLinks.length
+  ul#home-top-featured-links( class='js-homepage-featured-links', data-context='under banner' )
+    for link in featuredLinks.models
+      li.home-top-feature-link
+        a.htfl-image-link( href=link.get('href') )
+          .htfl-image: img( src=link.imageUrl('small_rectangle'), alt=link.get('title') )
+          .htfl-details
+            h3= link.get('title')
+            h4= link.get('subtitle')

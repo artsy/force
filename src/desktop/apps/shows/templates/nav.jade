@@ -1,0 +1,25 @@
+include ../../../components/bordered_pulldown/mixin
+include ../../../components/util/activator
+
+nav.shows-page-cities-nav.horizontal-list-nav
+  .hln-cell.is-dominant
+    a.hln-link.shows-location(
+      href='/shows'
+      class= activeClass('/shows')
+    ) All
+    a.hln-link.shows-location(
+      href="/shows/online"
+      class= activeClass("/shows/online")
+    )=  "Online Exclusive"
+    for city in featuredCities
+      a.hln-link.shows-location(
+        href="/shows/#{city.slug}"
+        class= activeClass("/shows/#{city.slug}")
+      )= city.name
+  .hln-cell
+    label.bordered-select
+      select( onChange='window.location.href=this.value' )
+        option( value='/shows' ) All Cities
+        for city in cities
+          option( value='/shows/#{city.slug}' )
+            = city.name

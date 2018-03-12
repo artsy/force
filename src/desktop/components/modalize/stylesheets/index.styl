@@ -1,0 +1,112 @@
+@require '../../stylus_lib'
+
+.modalize
+  z-index zindex-modal
+  transition opacity 0.25s
+  opacity 0
+
+  // Fade transition
+  &[data-state='open']
+  &.is-open
+    opacity 1
+    > .modalize-backdrop > .modalize-dialog
+      // Avoid transitioning the initial open
+      transition opacity 0.25s, width 0
+
+  // Loading state
+  &.is-loading
+    .modalize-backdrop::before
+      display block
+      content ''
+      spinner(20px, 5px, white)
+
+    .modalize-dialog
+      opacity 0
+
+.modalize
+.modalize-backdrop
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+.modalize-backdrop
+  display flex
+  align-items center
+  background-color rgba(black, 0.75)
+
+.has-nobackdrop > .modalize-backdrop
+  background-color transparent
+
+.modalize-dialog
+  position relative
+  margin 0 auto
+  max-width 90%
+  max-height 90%
+  text-align left
+  overflow-y auto
+  -webkit-overflow-scrolling touch
+  background-color white
+  &.is-notransition
+    transition none !important
+
+.modalize-close
+  position absolute
+  top 0
+  right 0
+  padding 25px
+  cursor pointer
+  transition opacity 0.25s
+  opacity 0.15
+  z-index 2
+  prevent-content-shift()
+  &:hover
+    opacity 1
+  > i
+    font-size 26px
+    line-height @font-size
+
+.modalize-body
+  height 100%
+  min-height 100%
+  overflow-y auto
+  -webkit-overflow-scrolling touch
+
+// Dialog transitions
+// ------------------
+.modalize-dialog
+  transition opacity 0.25s, transform 500ms
+
+  // Fade in/out
+  // Transition duration: 250ms
+  &[data-state='fade-out']
+  &.is-fade-out
+    opacity 0
+  &[data-state='fade-in']
+  &.is-fade-in
+    opacity 1
+
+  // Slide in/out
+  // Transition duration: 500ms
+  &[data-state='slide-out']
+  &.is-slide-out
+    transform translateY(100px)
+    opacity 0
+  &[data-state='slide-in']
+  &.is-slide-in
+    transform translateY(0)
+    opacity 1
+
+  // Bounce in/out
+  // Transition duration: 500ms
+  &[data-state='bounce-out']
+  &.is-slide-out
+    transition-timing-function cubic-bezier(0, 0, 1, 1)
+    transition transform 50ms
+    transform scale(1.04, 1.04)
+  &[data-state='bounce-in']
+  &.is-slide-in
+    transition-timing-function cubic-bezier(0, 0, 1, 1)
+    transition transform 50ms
+    transform scale(1, 1)

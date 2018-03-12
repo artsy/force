@@ -1,0 +1,285 @@
+{
+  "data": {
+    "artwork": {
+      "_id": "58f7d6032a893a53da6f388a",
+      "is_shareable": true,
+      "is_hangable": true,
+      "dimensions": {
+        "cm": "47 × 41.9 cm",
+        "in": "18 1/2 × 16 1/2 in"
+      },
+      "articles": [],
+      "publisher": null,
+      "manufacturer": null,
+      "signature": "Signed and dated",
+      "provenance": "<p>Private Collection, New York</p>\n",
+      "description": null,
+      "additional_information": "<p>Framed</p>\n",
+      "exhibition_history": null,
+      "bibliography": null,
+      "artists": [
+        {
+          "bio": "",
+          "name": "Jean Dupas",
+          "href": "/artist/jean-dupas",
+          "blurb": null,
+          "biography_blurb": {
+            "text": "",
+            "credit": null,
+            "partner_id": null
+          },
+          "exhibition_highlights": [],
+          "articles": [],
+          "artists": [],
+          "is_consignable": false,
+          "_id": "58f7cfcf2a893a5337af05f6",
+          "id": "jean-dupas"
+        }
+      ],
+      "id": "jean-dupas-untitled-spanish-noble-woman-standing-with-lutist",
+      "href": "/artwork/jean-dupas-untitled-spanish-noble-woman-standing-with-lutist",
+      "sale_message": "Contact For Price",
+      "is_sold": false,
+      "is_buy_nowable": false,
+      "is_in_auction": true,
+      "sale": {
+        "id": "rago-auctions-19th-slash-20th-c-american-slash-european-art",
+        "name": "Rago Auctions: 19th/20th C. American/European Art",
+        "is_open": true,
+        "is_live_open": false,
+        "is_preview": false,
+        "is_closed": false,
+        "is_auction": true,
+        "is_auction_promo": false,
+        "is_with_buyers_premium": true
+      },
+      "sale_artwork": {
+        "id": "jean-dupas-untitled-spanish-noble-woman-standing-with-lutist",
+        "reserve_status": "no_reserve",
+        "reserve_message": null,
+        "estimate": "$6,000–$8,000",
+        "is_biddable": true,
+        "symbol": "$",
+        "bid_increments": [
+          325000,
+          350000,
+          375000,
+          400000,
+          425000,
+          450000,
+          475000,
+          500000,
+          550000,
+          600000,
+          650000,
+          700000,
+          750000,
+          800000,
+          850000,
+          900000,
+          950000,
+          1000000,
+          1100000,
+          1200000,
+          1300000,
+          1400000,
+          1500000,
+          1600000,
+          1700000,
+          1800000,
+          1900000,
+          2000000,
+          2100000,
+          2200000,
+          2300000,
+          2400000,
+          2500000,
+          2600000,
+          2700000,
+          2800000,
+          2900000,
+          3000000,
+          3250000,
+          3500000,
+          3750000,
+          4000000,
+          4250000,
+          4500000,
+          4750000,
+          5000000,
+          5500000,
+          6000000,
+          6500000,
+          7000000,
+          7500000,
+          8000000,
+          8500000,
+          9000000,
+          9500000,
+          10000000,
+          11000000,
+          12000000,
+          13000000,
+          14000000,
+          15000000,
+          16000000,
+          17000000,
+          18000000,
+          19000000,
+          20000000,
+          21000000,
+          22000000,
+          23000000,
+          24000000,
+          25000000,
+          26000000,
+          27000000,
+          28000000,
+          29000000,
+          30000000,
+          31000000,
+          32000000,
+          33000000,
+          34000000,
+          35000000,
+          36000000,
+          37000000,
+          38000000,
+          39000000,
+          40000000,
+          41000000,
+          42000000,
+          43000000,
+          44000000,
+          45000000,
+          46000000,
+          47000000,
+          48000000,
+          49000000,
+          50000000,
+          51000000,
+          52000000,
+          53000000,
+          54000000,
+          55000000
+        ],
+        "current_bid": {
+          "display": "$3,000",
+          "cents": 300000
+        },
+        "minimum_next_bid": {
+          "display": "$3,250",
+          "cents": 325000
+        },
+        "counts": {
+          "bidder_positions": 1
+        },
+        "lot_label": "1"
+      },
+      "banner": {
+        "__typename": "ArtworkContextAuction",
+        "name": "Rago Auctions: 19th/20th C. American/European Art",
+        "href": "/auction/rago-auctions-19th-slash-20th-c-american-slash-european-art",
+        "start_at": "2017-04-20T16:30:00+00:00",
+        "end_at": null,
+        "live_start_at": "2017-05-06T14:00:00+00:00",
+        "is_auction": true,
+        "is_live_open": false
+      },
+      "context": {
+        "__typename": "ArtworkContextAuction",
+        "is_closed": false
+      },
+      "is_acquireable": false,
+      "is_inquireable": true,
+      "is_purchasable": false,
+      "availability": "for sale",
+      "contact_message": "Hello, I am interested in placing a bid on this work. Please send me more information.",
+      "is_price_range": false,
+      "price": "",
+      "partner": {
+        "id": "rago-auctions-19th-slash-20th-c-american-slash-european-art",
+        "name": "Rago Auctions: 19th/20th C. American/European Art",
+        "type": "Auction House",
+        "is_pre_qualify": false,
+        "_id": "58f7bd3b275b2403cd505036",
+        "is_linkable": false,
+        "href": "/auction/rago-auctions-19th-slash-20th-c-american-slash-european-art",
+        "locations": []
+      },
+      "fair": null,
+      "edition_sets": [],
+      "images": [
+        {
+          "deep_zoom": {
+            "Image": {
+              "xmlns": "http://schemas.microsoft.com/deepzoom/2008",
+              "Url": "https://d32dm0rphc51dk.cloudfront.net/OKJIqI_F0-UOjhbU7dnSbQ/dztiles/",
+              "Format": "jpg",
+              "TileSize": 512,
+              "Overlap": 0,
+              "Size": {
+                "Width": 1601,
+                "Height": 1800
+              }
+            }
+          },
+          "id": "58f7d603c9dc241dad8a593b",
+          "url": "https://d32dm0rphc51dk.cloudfront.net/OKJIqI_F0-UOjhbU7dnSbQ/larger.jpg",
+          "placeholder": {
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=26&height=30&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FOKJIqI_F0-UOjhbU7dnSbQ%2Fsmall.jpg"
+          },
+          "is_zoomable": true
+        },
+        {
+          "deep_zoom": {
+            "Image": {
+              "xmlns": "http://schemas.microsoft.com/deepzoom/2008",
+              "Url": "https://d32dm0rphc51dk.cloudfront.net/C9hlGURBAIoVlT6SfVuoXQ/dztiles/",
+              "Format": "jpg",
+              "TileSize": 512,
+              "Overlap": 0,
+              "Size": {
+                "Width": 1626,
+                "Height": 1800
+              }
+            }
+          },
+          "id": "58f8d98ca09a6706d5b28a09",
+          "url": "https://d32dm0rphc51dk.cloudfront.net/C9hlGURBAIoVlT6SfVuoXQ/larger.jpg",
+          "placeholder": {
+            "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=27&height=30&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FC9hlGURBAIoVlT6SfVuoXQ%2Fsmall.jpg"
+          },
+          "is_zoomable": true
+        }
+      ],
+      "title": "Untitled (Spanish Noble Woman Standing with Lutist)",
+      "image_alt": "Jean Dupas, ‘Untitled (Spanish Noble Woman Standing with Lutist)’, 1929, Rago Auctions: 19th/20th C. American/European Art",
+      "image_title": "Jean Dupas, ‘Untitled (Spanish Noble Woman Standing with Lutist)’, 1929",
+      "is_embeddable_video": false,
+      "embed": null,
+      "meta_image": {
+        "resized": {
+          "width": 569,
+          "height": 640,
+          "url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=569&height=640&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FOKJIqI_F0-UOjhbU7dnSbQ%2Flarge.jpg"
+        }
+      },
+      "meta": {
+        "title": "Jean Dupas | Untitled (Spanish Noble Woman Standing with Lutist) (1929) | Available for Sale | Artsy",
+        "description": "Available for sale from Rago Auctions: 19th/20th C. American/European Art, Jean Dupas, Untitled (Spanish Noble Woman Standing with Lutist) (1929), Pencil, …",
+        "long_description": "Available for sale from Rago Auctions: 19th/20th C. American/European Art, Jean Dupas, Untitled (Spanish Noble Woman Standing with Lutist) (1929), Pencil, pen and ink on paper, 18 1/2 × 16 1/2 in"
+      },
+      "series": null,
+      "date": "1929",
+      "edition_of": null,
+      "cultural_maker": null,
+      "medium": "Pencil, pen and ink on paper",
+      "website": "",
+      "image_rights": "",
+      "is_downloadable": false,
+      "collecting_institution": null,
+      "is_for_sale": true
+    }
+  }
+}

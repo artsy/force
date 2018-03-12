@@ -1,0 +1,13 @@
+.avant-garde-s-headline.cf-periods__title Period
+
+include ./all.jade
+
+each majorPeriod in periods
+  - agg = findAggregation(counts, majorPeriod)
+  - isSelected = _.contains(selected, majorPeriod)
+  - enabled = alwaysEnabled || findAggregation(counts, location)
+
+  include ./period.jade
+
+unless showAllPeriods
+  a.cf-periods__view-all See All

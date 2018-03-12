@@ -1,0 +1,19 @@
+extends ../../../../../components/main_layout/templates/blank.jade
+
+append locals
+  - assetPackage = 'editorial_features'
+
+block head
+  include head
+
+block body
+  a(href="https://ad.doubleclick.net/ddm/jump/N32001.3019648ARTSY/B20483079.208849246;sz=1x1;ord#{moment().unix()}=?")
+    img(
+      src="https://ad.doubleclick.net/ddm/ad/N32001.3019648ARTSY/B20483079.208849246;sz=1x1;ord=#{moment().unix()};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?"
+      width='1'
+      height='1'
+    )
+
+  #react-root
+
+  include ../../../../../components/main_layout/templates/json_ld

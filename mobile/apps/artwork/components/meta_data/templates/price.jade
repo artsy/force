@@ -1,6 +1,0 @@
-if artwork.sale_message && !artwork.auction
-  .artwork-meta-data-price
-    if artwork.sale_message
-      .sale_message= artwork.sale_message
-    if artwork.price && artwork.availability !== 'sold'
-      .shipping-info Shipping, tax, and services quoted by seller

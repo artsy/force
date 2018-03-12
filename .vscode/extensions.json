@@ -7,6 +7,11 @@
     "mikestead.dotenv",
     "djabraham.vscode-yaml-validation",
     "dbaeumer.vscode-eslint",
-    "lkytal.coffeelinter"
+    "lkytal.coffeelinter",
+    "christian-kohler.path-intellisense",
+    "christian-kohler.npm-intellisense",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "jpoissonnier.vscode-styled-components"
   ]
 }

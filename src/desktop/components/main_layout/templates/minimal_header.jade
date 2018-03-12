@@ -1,0 +1,30 @@
+//- Override any locals with `append locals`
+block locals
+  - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed minimal-header') : ''
+  - defaultOptions = {modal: true, flash: true, stripe: true, sailthru: true, marketo: true, quantcast: true}
+- options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
+
+doctype html
+html( data-useragent= userAgent lang="en")
+  head
+    include head
+    block head
+    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    if assetPackage
+      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
+
+  body( class=bodyClass )
+    include ../header/templates/index
+    include ../../modal/template
+    include ../../flash/template
+
+    #main-layout-container
+      block body
+
+    #scripts
+      include scripts
+      //- script( src= asset("/assets/common.js") )
+      script( src= asset('/assets/main_layout.js') )
+      if assetPackage
+        script( src=asset('/assets/#{assetPackage}.js') )
+      block scripts

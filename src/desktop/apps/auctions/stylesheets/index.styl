@@ -1,0 +1,168 @@
+@require '../../../components/stylus_lib'
+
+.af-hero-image
+  width 100%
+.af-name
+  margin 20px 0
+  garamond-size('headline')
+.af-metadata
+  margin 20px 0
+  display flex
+  align-items flex-start
+.af-thumbnail
+  display inline-block
+
+.ap-featured-item--small
+  margin-bottom 30px
+  display table
+  width 100%
+
+  a
+    text-decoration none
+
+.ap-featured-item__thumb
+.ap-featured-item__title
+.ap-featured-item__clock
+  display table-cell
+  width auto
+  vertical-align middle
+
+.ap-featured-item__thumb
+  vertical-align top
+  width 252px
+  height 175px
+  line-height 0
+
+.ap-featured-item__logo
+  margin-bottom 20px
+
+.ap-featured-item__title
+  padding 0 30px
+  max-width 300px
+
+  h3
+    margin 0
+    line-height 32px
+
+.ap-featured-item__clock
+  text-align right
+
+  .af-clock
+    float right
+
+  .af-clock .clock-header
+    text-align right
+
+#auctions-page > .aggregate-page-items
+  margin-bottom 30px
+
+.aggregate-page-items-featured-set
+  margin 0
+
+.auctions-list
+  block-margins(30px)
+  .leader-dots-list-item
+    garamond-size('l-body')
+    &:after
+      font-size 12px
+      line-height 2.2
+
+// Preview state
+.auctions-placeholder
+  display table
+  width 100%
+.auctions-placeholder-metadata
+.auctions-placeholder-hero
+  display table-cell
+  height 100%
+  vertical-align middle
+  text-align center
+.auctions-placeholder-metadata
+  width 33.33%
+  padding 0 50px 0 20px
+  > h2
+    garamond-size('l-headline')
+    // Visually center. Due to line-height and hard-edged bottom button
+    margin -((@font-size * (@line-height - 1)) * 2) auto 10px
+  > p
+    margin 20px 0
+    padding 0 20px
+    garamond-size('l-body')
+  > a
+    white-space nowrap
+.auctions-placeholder-hero
+  width 66.66%
+  > a > img
+    width 100%
+
+.apu-clock
+  margin 20px 0 30px
+  .clock-header
+    display none
+
+.auction-cta-group
+  display table
+  text-decoration none
+  > div
+    display table-cell
+    vertical-align middle
+    padding 20px 0
+  h2
+    font-style italic
+
+.auction-cta-group .auction-cta-group__left
+  width 20%
+  text-align center
+  > img
+    width 90%
+    margin 0 auto
+
+.auction-cta-group .auction-cta-group__right
+  padding-left 10px
+
+.auctions-header, .auctions-my-active-bids h3
+  garamond-size('headline')
+  border-bottom 1px solid gray-lighter-color
+  padding-bottom 17px
+
+.auctions-my-active-bids h3
+  margin-bottom 30px
+  min-width 260px
+
+.my-active-bids-item-details
+  max-width 160px
+
+.auctions-header
+  margin-bottom -17px
+
+.af-hero-image
+  background center center gray-lightest-color
+  height 300px
+  background-size cover
+  position relative
+  &:after
+    content ' '
+    width 100%
+    height 100%
+    background rgba(0,0,0,0.4)
+    top 0
+    left 0
+    position absolute
+
+.af-details
+  display inline-block
+  flex-grow 1
+
+.af-name
+  garamond-size('s-headline')
+  margin 0
+
+.af-live-header
+  avant-garde-size('body')
+  letter-spacing 3px
+
+.af-go-button
+  width 200px
+
+.ap-featured-item:first-of-type
+  margin-top 35px

@@ -1,0 +1,21 @@
+mixin bordered-pulldown(defaultVal, label, isDisabled)
+  if label
+    span.bordered-pulldown-label(class="#{isDisabled ? 'is-disabled' : ''}")= label
+  .bordered-pulldown(class="#{isDisabled ? 'is-disabled' : ''}")
+    a.bordered-pulldown-toggle( href="#" )
+      span.bordered-pulldown-text= defaultVal
+      .bordered-pulldown-toggle-caret
+        span.caret
+    .bordered-pulldown-options
+      block
+
+mixin bordered-scrollable-pulldown(defaultVal, label)
+  if label
+    span.bordered-pulldown-label= label
+  .bordered-scrollable-pulldown
+    a.bordered-pulldown-toggle( href="#" )
+      span.bordered-pulldown-text= defaultVal
+      .bordered-pulldown-toggle-caret
+        span.caret
+    .bordered-pulldown-options
+      block

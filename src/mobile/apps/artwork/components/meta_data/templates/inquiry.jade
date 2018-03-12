@@ -1,0 +1,12 @@
+if artwork.is_acquireable
+  a.artwork-meta-data-black__contact-button.js-purchase Buy
+
+unless artwork.auction
+  if artwork.is_inquireable
+    a.artwork-meta-data-black__contact-button(
+      href="/inquiry/#{artwork.id}"
+    )
+      if artwork.partner && artwork.partner.type == 'Gallery'
+        | Contact Gallery
+      else
+        | Contact Seller

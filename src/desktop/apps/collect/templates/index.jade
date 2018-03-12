@@ -1,0 +1,37 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'artists_artworks'
+
+block body
+  .commercial-filter.main-layout-container
+    .cf-headline-container
+      .cf-headline
+      .cf-pillboxes
+
+    .cf-sidebar
+      .cf-sidebar__filter.cf-sidebar__price
+      .cf-sidebar__filter.cf-sidebar__followed_artists
+      .cf-sidebar__filter.cf-sidebar__mediums
+      .cf-sidebar__filter.cf-sidebar__size
+        .cf-sidebar__size__width
+        .cf-sidebar__size__height
+      .cf-sidebar__filter.cf-sidebar__periods
+      .cf-sidebar__filter.cf-sidebar__locations
+      .cf-sidebar__filter.cf-sidebar__colors
+
+    .cf-right
+      .cf-keyword
+      .cf-categories        
+      .cf-total-sort
+        .cf-total-sort__total
+        .cf-total-sort__sort
+      .cf-pillboxes
+      .cf-artworks
+
+      hr
+      .cf-pagination
+        

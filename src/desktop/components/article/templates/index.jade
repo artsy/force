@@ -1,0 +1,69 @@
+include ../../article_figure/mixin
+include ./share
+include ./mixins
+
+.article-container(data-id=article.get('id'))
+
+  .article-content
+
+    .main-layout-container.first(data-section-type='hero')
+      //- Article lead content
+      if article.get('hero_section') && article.get('hero_section').type === 'video'
+        .article-large-format-video-container
+          +video(article.get('hero_section'))
+      //- TODO: Deprecate Image after Article2 launch
+      if article.get('hero_section') && article.get('hero_section').type === 'image'
+        .article-large-format-image
+          +image(article.get('hero_section'))
+      if article.get('hero_section') && article.get('hero_section').type === 'image_collection'
+        .article-large-format-image
+          +imageCollection(article.get('hero_section').images)
+
+    //- Article Share Fixed Nav
+    if !hideShare
+      .article-share-fixed(data-id=article.get('id'))
+        +share-fixed((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
+
+    .article-header.responsive-layout-container
+      h1.large-garamond-header= article.get('title')
+      if article.strip('lead_paragraph')
+        .article-lead-paragraph
+          != article.get('lead_paragraph')
+      +author-date
+
+    .responsive-layout-container
+      //- Article body content
+      if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
+        .article-carousel
+          include carousel
+
+    for section, i in article.get('sections')
+      .article-section-container.responsive-layout-container( data-layout=section.layout, data-section-type=section.type )
+        case section.type
+          when 'text'
+            .article-section-text!= section.body
+          when 'video'
+            .article-section-video( class="article-video-background-" + section.background_color )
+              +video(section)
+          when 'embed'
+            .article-section-embed( data-layout=section.layout )
+              +embed(section)
+          when 'image_set'
+            if section.images.length > 0
+              .article-section-image-set( data-index= i )
+                +imageSet(section)
+          when 'image_collection'
+            if section.images.length > 0
+              .article-section-image-collection( data-index= i data-layout=section.layout )
+                +imageCollection(section.images)
+
+    if !hideShare
+      .responsive-layout-container
+        //- Footer social buttons
+        .article-social(data-id=article.get('id'))
+          h2.article-social__header Share article
+          +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
+
+    if channel && channel.id === sd.GALLERY_INSIGHTS_CHANNEL
+      .responsive-layout-container.article-gi.article-subscribe__gi
+        include ./gi_signup.jade
