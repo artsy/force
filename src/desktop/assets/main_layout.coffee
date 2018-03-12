@@ -1,3 +1,5 @@
+console.log('firing main layout')
+$ = require('jquery')
 CurrentUser = require '../models/current_user.coffee'
 
 $ ->
