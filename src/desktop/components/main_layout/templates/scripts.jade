@@ -2,7 +2,7 @@
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
-script(defer, src=asset("/assets/common.js") )
+script( src=asset("/assets/common.js") )
 
 if options.marketo
   //- Marketo Tracking
@@ -123,7 +123,7 @@ if options.stripe
 
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
-  script(defer, src=asset('/assets/analytics.js') )
+  script( src=asset('/assets/analytics.js') )
 
 //- Quantcast
 if options.quantcast

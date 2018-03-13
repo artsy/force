@@ -37,7 +37,7 @@ html(
     //- Javascripts
     #scripts
       include scripts
-      script(defer, src= asset('/assets/main_layout.js') )
+      script( src= asset('/assets/main_layout.js') )
       if assetPackage
-        script(defer, src=asset('/assets/#{assetPackage}.js') )
+        script( src=asset('/assets/#{assetPackage}.js') )
       block scripts
