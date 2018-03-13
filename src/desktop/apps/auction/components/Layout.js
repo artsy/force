@@ -29,7 +29,6 @@ function Layout(props) {
   return (
     <div className={b()}>
       <Banner />
-
       <div className={b('container', 'responsive-layout-container')}>
         <AuctionInfoContainer />
 
