@@ -122,7 +122,7 @@ if options.stripe
   script( type="text/javascript", src="https://js.stripe.com/v2/" )
 
 //- Analytics & common asset package
-if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
+if sd.BROWSER && sd.BROWSER.family != 'Other'
   script( src=asset('/assets/analytics.js') )
 
 //- Quantcast

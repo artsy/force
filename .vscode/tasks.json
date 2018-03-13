@@ -11,11 +11,6 @@
         "kind": "build",
         "isDefault": true
       }
-    },
-    {
-      "type": "shell",
-      "label": "mocha: test file",
-      "command": "yarn mocha ${fileDirname}/${fileBasename}",
     }
   ]
 }
