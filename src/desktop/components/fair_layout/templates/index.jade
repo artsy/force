@@ -27,6 +27,6 @@ html( data-useragent=userAgent )
     include ../../main_layout/footer/template
     #scripts
       include ../../main_layout/templates/scripts
-      script(defer, src=asset('/assets/fairs.js') )
+      script( src=asset('/assets/fairs.js') )
       if assetPackage
-        script(defer, src=asset("/assets/#{assetPackage}.js") )
+        script( src=asset("/assets/#{assetPackage}.js") )
