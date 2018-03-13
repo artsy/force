@@ -30,12 +30,28 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
 
 const config = {
   devtool: WEBPACK_DEVTOOL || "cheap-module-source-map",
+  mode: NODE_ENV,
   entry: {
     webpack: [
       "webpack-hot-middleware/client?reload=true",
       "./src/desktop/apps/webpack/client.js",
     ],
     ...getEntrypoints(),
+  },
+
+  // See https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366 and
+  // https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          chunks: "initial",
+          name: "vendor",
+          enforce: true,
+        },
+      },
+    },
   },
   output: {
     filename: "[name].js",
@@ -132,10 +148,6 @@ const config = {
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'common',
-    //   minChunks: 10, // lower number for larger "common.js" bundle size
-    // }),
   ],
   resolve: {
     alias: {
@@ -180,17 +192,17 @@ if (isDevelopment) {
 
   // Prod
   if (isProduction) {
-    config.plugins.push(
-      new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
-        },
-      })
-    )
+    // config.plugins.push(
+    //   new UglifyJsPlugin({
+    //     sourceMap: true,
+    //     uglifyOptions: {
+    //       ecma: 8,
+    //       compress: {
+    //         warnings: false,
+    //       },
+    //     },
+    //   })
+    // )
   }
 
   if (ANALYZE_BUNDLE) {

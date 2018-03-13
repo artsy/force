@@ -17,9 +17,10 @@ app.use(
     quiet: true,
     publicPath: config.output.publicPath,
     serverSideRender: true,
-    stats: {
-      colors: true,
-    },
+    stats: false,
+    // stats: {
+    //   colors: true,
+    // },
   })
 )
 
@@ -32,8 +33,7 @@ app.get("/webpack", (req, res, next) => {
     </head>
     <body>
       <div id='react-root' />
-      <script defer src='/assets/common.js'></script>
-      <script defer src='/assets/webpack.js'></script>
+      <script src='/assets/webpack.js'></script>
     </body>
   </html>
   `)
