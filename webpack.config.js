@@ -132,10 +132,10 @@ const config = {
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common",
-      minChunks: 10, // lower number for larger "common.js" bundle size
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'common',
+    //   minChunks: 10, // lower number for larger "common.js" bundle size
+    // }),
   ],
   resolve: {
     alias: {
