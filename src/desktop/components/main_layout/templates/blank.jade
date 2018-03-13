@@ -1,6 +1,6 @@
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd) : ''
-  - defaultOptions = {modal: true, flash: true, stripe: true, sailthru: true, marketo: true, quantcast: true}
+  - defaultOptions = {modal: true, flash: true, stripe: false, sailthru: true, marketo: true, quantcast: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 doctype html
