@@ -1,6 +1,6 @@
 module.exports =
   """
-  query artist($artist_id: String!, $shows: Boolean!, $artists: Boolean!, $articles: Boolean!) {
+  query artist($artist_id: String!, $shows: Boolean!, $artists: Boolean!, $articles: Boolean!, $loggedOut: Boolean!) {
     artist(id: $artist_id) {
       counts {
         shows: partner_shows
@@ -15,7 +15,7 @@ module.exports =
       artists (size: 15) @include(if: $artists){
         ... artistCell
       }
-      cta_artists: artists(size: 1) {
+      cta_artists: artists(size: 1) @include(if: $loggedOut){
         image {
           thumb: resized(width: 150, version: "square") {
             url
