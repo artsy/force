@@ -67,8 +67,6 @@ module.exports =
   MAX_POLLS_FOR_MAX_BIDS: 20
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: null
-  METAPHYSICS_BLUE_ENDPOINT: null
-  METAPHYSICS_BLUE_LOAD_RATIO: 0
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
   NODE_ENV: 'development'
