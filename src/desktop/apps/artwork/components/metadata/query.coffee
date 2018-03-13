@@ -9,7 +9,6 @@ module.exports = """
     edition_of
     attribution_class {
       short_description
-      long_description
     }
     artists {
       _id

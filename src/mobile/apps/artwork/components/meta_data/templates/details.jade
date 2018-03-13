@@ -14,5 +14,11 @@
 
   if artwork.edition_of
     p.artwork-meta-data__details__edition-of= artwork.edition_of
+
+  if artwork.attribution_class
+    .artwork-tab-item.artwork-meta-data__details__attribution-class
+      a.artwork-tab-link.chevron-arrow-button(data-id='attribution-class' class='js-artwork-tab-link')= artwork.attribution_class.short_description
+      .artwork-tab(data-id='attribution-class' class='js-artwork-item')= artwork.attribution_class.long_description
+
   if artwork.image_rights
     p.artwork-meta-data__details__image-rights= artwork.image_rights
