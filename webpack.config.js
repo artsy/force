@@ -38,10 +38,10 @@ const config = {
     ],
     ...getEntrypoints(),
   },
-
   // See https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366 and
-  // https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693
   optimization: {
+    namedModules: true,
+    noEmitOnErrors: true,
     splitChunks: {
       cacheGroups: {
         vendor: {
@@ -139,8 +139,6 @@ const config = {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
