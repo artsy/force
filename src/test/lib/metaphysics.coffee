@@ -18,35 +18,9 @@ describe 'metaphysics', ->
 
     metaphysics.__set__ 'request', @request
     metaphysics.__set__ 'METAPHYSICS_ENDPOINT', 'https://metaphysics.test'
-    metaphysics.__set__ 'METAPHYSICS_BLUE_ENDPOINT', 'https://metaphysics.blue'
 
   afterEach ->
     metaphysics.__set__ 'request', @__request__
-
-  it 'routes a request to the blue deployment', ->
-    metaphysics.oneIn = -> true
-    @request.end.yields null, ok: true, body: data: artist: id: 'foo-bar'
-
-    metaphysics
-      variables: variables = id: 'foo-bar', size: 3
-      query: query = '
-        query artist($id: String!) {
-          artist(id: $id) {
-            id
-          }
-        }
-      '
-    .then =>
-      @request.set.args.should.eql [
-        ['Accept', 'application/json'],
-        ['X-Request-Id', 'implement-me']
-      ]
-      @request.get.called.should.be.false()
-      @request.post.args[0][0].should.equal 'https://metaphysics.blue'
-      @request.send.args[0][0].query.should.equal query
-      @request.send.args[0][0].variables.should.equal variables
-    
-    metaphysics.oneIn = -> false
 
   it 'accepts a query and variables and makes a request to the METAPHYSICS_ENDPOINT', ->
     @request.end.yields null, ok: true, body: data: artist: id: 'foo-bar'

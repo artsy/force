@@ -16,13 +16,7 @@ describe 'Filter', ->
     benv.teardown()
 
   describe '#initialParams', ->
-    it 'returns the defaults if custom defaults are not passed in', ->
+    it 'returns the defaults', ->
       params = new @Params({}, {})
       defaults = params.initialParams()
       defaults.should.containEql(size: 40, partner_cities: [])
-
-    it 'returns the custom defaults if they are passed in', ->
-      params = new @Params({}, { customDefaults: { size: 20, artist_ids: [] } })
-      defaults = params.initialParams()
-      defaults.should.eql(size: 20, artist_ids: [])
-      defaults.should.not.containEql(size: 40)

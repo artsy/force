@@ -6,7 +6,6 @@ import Cookies from 'cookies-js'
 
 import { ContextProvider } from 'reaction/Components/Artsy'
 import { Wizard } from 'reaction/Components/Onboarding/Wizard'
-import splitTest from 'desktop/components/split_test/index.coffee'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
@@ -30,12 +29,9 @@ export const init = () => {
     // track pageviews when react-router updates the url
     window.analytics.page(
       { path: ev.pathname },
-      { integrations: { 'Marketo': false } }
+      { integrations: { Marketo: false } }
     )
   })
-
-  // ONBOARDING_TEST remove after test closes
-  splitTest('onboarding_test').view()
 
   // Start app
   ReactDOM.hydrate(

@@ -32,8 +32,8 @@ app.get('/webpack', (req, res, next) => {
     </head>
     <body>
       <div id='react-root' />
-      <script src='/assets/common.js'></script>
-      <script src='/assets/webpack.js'></script>
+      <script defer src='/assets/common.js'></script>
+      <script defer src='/assets/webpack.js'></script>
     </body>
   </html>
   `)

@@ -1,7 +1,7 @@
 //- Override any locals with `append locals`
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
-  - defaultOptions = {modal: true, flash: true, stripe: true, sailthru: true, marketo: true, quantcast: true}
+  - defaultOptions = {modal: true, flash: true, stripe: false, sailthru: true, marketo: true, quantcast: true}
   - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 doctype html
@@ -37,7 +37,6 @@ html(
     //- Javascripts
     #scripts
       include scripts
-
       script( src= asset('/assets/main_layout.js') )
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
