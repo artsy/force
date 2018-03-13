@@ -76,7 +76,7 @@ export default class ArticleLayout extends React.Component {
 
     if (!isSuper) {
       const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
-
+      console.log('here....')
       return (
         <InfiniteScrollArticle
           isMobile={isMobile}
@@ -87,6 +87,7 @@ export default class ArticleLayout extends React.Component {
         />
       )
     } else {
+      console.log('rendering....')
       return (
         <Article
           isMobile={isMobile}

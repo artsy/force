@@ -33,6 +33,9 @@ export default hot(module)(
             />
           )
         }
+        case 'news': {
+          return <Article {...this.props} />
+        }
         default: {
           return <ArticleLayout {...this.props} />
         }
