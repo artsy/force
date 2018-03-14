@@ -81,4 +81,5 @@ describe 'Artwork image templates', ->
       )
 
     it 'does not display attribution class container', ->
+      $ = cheerio.load(@html)
       $('.artwork-image-module__attribution-class').length.should.equal 0
