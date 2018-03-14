@@ -20,7 +20,7 @@ script( type="text/javascript" )
   include ../../../../../node_modules/scroll-frame/scroll-frame-head.js
 
 //- Don't include fonts if Reflection is requesting it
-if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
+if sd.BROWSER && sd.BROWSER.family != 'Other'
   link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/force-webfonts.css?a=b')
   link( rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css")
   link( rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css")
