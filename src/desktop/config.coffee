@@ -103,6 +103,7 @@ module.exports =
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
+  TRACK_PAGELOAD_PATHS: null
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null
   TWILIO_NUMBER: null

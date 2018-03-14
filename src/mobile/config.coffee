@@ -59,6 +59,7 @@ module.exports =
   SESSION_SECRET: 'artsyoss'
   STRIPE_PUBLISHABLE_KEY: null
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
+  TRACK_PAGELOAD_PATHS: null
   TWITTER_CONSUMER_KEY: null
   TWITTER_CONSUMER_SECRET: null
   VENICE_2015_SECTION: null
