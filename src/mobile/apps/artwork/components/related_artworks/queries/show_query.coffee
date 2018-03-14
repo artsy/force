@@ -4,7 +4,10 @@ module.exports = """
       name
       href
       kind
-      artworks(all: true, size: 50, exclude: [$id]) {
+      counts {
+        eligible_artworks
+      }
+      artworks(size: 20, exclude: [$id]) {
         #{require('./index.coffee')}
       }
     }
