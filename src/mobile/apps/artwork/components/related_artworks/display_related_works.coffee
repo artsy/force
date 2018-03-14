@@ -17,8 +17,9 @@ module.exports =
         $section = $('.artwork-related-artworks').append template
           title: relatedWorks.title
           type: type
-          isArtist: relatedWorks.isArtist
-          isPartner: relatedWorks.isPartner
+          isRelated: relatedWorks.isRelated
+          href: relatedWorks.href
+          totalCount: relatedWorks.totalCount
 
         $section.find("[data-artworks=#{type}]").html artworks
     )

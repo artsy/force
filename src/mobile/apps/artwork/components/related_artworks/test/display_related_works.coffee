@@ -8,7 +8,7 @@ Artworks = require '../../../../../collections/artworks'
 
 describe 'Render Related Artworks', ->
 
-  xdescribe 'displayRelatedWorks', ->
+  describe 'displayRelatedWorks', ->
     beforeEach (done) ->
       benv.setup =>
         benv.expose
