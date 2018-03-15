@@ -1,5 +1,5 @@
 follow = require '../../lib/follow.coffee'
-openArtworkClassificationModal = require './components/artwork_classification/index.coffee'
+openArtworkClassificationModal = require './components/artwork_classification_modal/index.coffee'
 
 module.exports = ->
   $el = $('.js-artwork-metadata')
