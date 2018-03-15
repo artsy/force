@@ -33,6 +33,10 @@ export default hot(module)(
             />
           )
         }
+        case 'news': {
+          // TODO: InfiniteScroll
+          return <Article {...this.props} />
+        }
         default: {
           return <ArticleLayout {...this.props} />
         }

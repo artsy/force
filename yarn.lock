@@ -28,12 +28,13 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@0.26.5":
-  version "0.26.5"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.26.5.tgz#380c042d830c8b219bace8811713df65b112320a"
+"@artsy/reaction@0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.31.0.tgz#66fe8e108bef326ed9e294ac9537a4c2d97f4a64"
   dependencies:
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
+    jsonp "^0.2.1"
     lodash "^4.17.4"
     moment-timezone "^0.5.13"
     numeral "^2.0.4"
@@ -42,6 +43,7 @@
     react-css-transition-replace "^3.0.2"
     react-lines-ellipsis "^0.8.0"
     react-markdown "^2.5.0"
+    react-oembed-container "^0.3.0"
     react-relay "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
     react-responsive-decorator "^0.0.1"
     react-router "4.1.1"
@@ -974,7 +976,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -6317,6 +6318,12 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
+jsonp@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/jsonp/-/jsonp-0.2.1.tgz#a65b4fa0f10bda719a05441ea7b94c55f3e15bae"
+  dependencies:
+    debug "^2.1.3"
+
 jsonparse@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-0.0.5.tgz#330542ad3f0a654665b778f3eb2d9a9fa507ac64"
@@ -8684,6 +8691,12 @@ react-markdown@^2.5.0:
     commonmark-react-renderer "^4.2.4"
     in-publish "^2.0.0"
     prop-types "^15.5.1"
+
+react-oembed-container@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-oembed-container/-/react-oembed-container-0.3.0.tgz#6fcfc145d1a392fd27e801d19adcaeeb3f5b6865"
+  dependencies:
+    prop-types "^15.6.0"
 
 react-reconciler@^0.7.0:
   version "0.7.0"
