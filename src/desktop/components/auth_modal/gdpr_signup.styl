@@ -8,8 +8,8 @@
     &__checkbox
       margin 0 0 13px 0
       width 100%
-      float left
-      text-align left
+      // float left
+      // text-align left
       color grey-darker-color
       display flex
       .artsy-checkbox--checkbox
@@ -19,10 +19,11 @@
           visibility visible
       &[data-state='error']
         .artsy-checkbox--checkbox
-          background purple-color
+          background red-color
         span, a
-          color purple-color
+          color red-color
       span
+        text-align left
         margin-left 10px
       span, a
         garamond-size('l-caption')
@@ -53,6 +54,13 @@
     display block
     margin 10px 0 20px 0
     color gray-darker-color
+    garamond-size('l-caption')
+
+  .tos-error
+    color red-color
+    text-align left
+    height 1.23em
+    margin-bottom 8px
     garamond-size('l-caption')
 
   .bordered-input

@@ -1,5 +1,3 @@
-//- - DISABLE_GDPR = true
-
 .gdpr-signup
   form.gdpr-signup__form(
     action=sd.AP.loginPagePath + '?redirect-to' + redirectTo
@@ -67,6 +65,8 @@
               | &nbsp;and&nbsp;
               a(href='/privacy') Privacy Policy&nbsp;
               |, and to receive emails from Artsy.
+    .tos-error
+    input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
     button.avant-garde-button-black Sign Up
     .gdpr-signup__error
   .gdpr-signup__divider or
@@ -75,7 +75,7 @@
     href='#'
   )
     i.icon-facebook
-    | Continue with Facebook
+    | Sign up with Facebook
   if GDPR_BOXES === 0
     .gdpr-signup__copy
       small.gdpr-signup__small By signing up, you agree to our&nbsp;
