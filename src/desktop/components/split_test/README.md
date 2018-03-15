@@ -17,13 +17,17 @@ header_design:
 
 `key` name of your test
 
-`outcomes` a hash of your outcomes. Point values must add up to one hundred.
+`outcomes` either a hash of your outcomes, whose point values must add up to 100, or an array (when used with `weighting`: 'equal').
 
 `edge` is the feature that you want logged in admins to always have.
 
 `dimension` is a Google Analytics dimension. You can create one by logging into GA, clicking 'Admin', clicking 'Custom Definitions' in the middle column, clicking 'Custom Dimensions'. From there you can create a new custom dimension. Note that you should then name this 'dimension1', 'dimesion2', etc. - corresponding to the index of the custom definition in this UI.
 
 `scope` in some cases you may only want to initialize a test once a certain action is triggered (ie: landing on a specific page), if that's the case passing `scope: 'local'` will not globally intialize the test.
+
+`control_group` is what Reflection and other crawlers will see. Defaults to 'control'.
+
+`weighting` when specified as 'equal', will equally weight `outcomes`.
 
 Tests are by default initialized globally meaning as soon as there is a configuration in the running tests file you'll get access to a Sharify variable the same name as your configuration key with the outcome and the test will set itself up client-side.
 
@@ -42,7 +46,6 @@ test.outcome() # => 'new'
 # Do something with your outcome
 # Another useful method is `cssClass` which will output a class name for use in stylesheets
 test.cssClass() # => 'is-splittest-header_design--new'
-
 ```
 
 ## Forcing a test down a specific path (optional)
