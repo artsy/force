@@ -30,8 +30,7 @@ module.exports = class AuthModalView extends ModalView
     'submit form': 'submit'
     'click #auth-submit': 'submit'
     'click #signup-fb': 'fbSignup'
-    # 'change #accepted_terms_of_service': 'checkAcceptedTerms'
-    # 'invalid #accepted_terms_of_service': 'showTosMessage' # does not work
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: (options) ->
     return if isEigen.checkWith options
@@ -42,7 +41,8 @@ module.exports = class AuthModalView extends ModalView
     @gdprDisabled = @GDPR_BOXES == 0
     @preInitialize options
     super
-    # $('#accepted_terms_of_service').on('invalid', @showTosMessage) # Has to be set here to work?
+    # This 'invalid' event doesn't seem to work in the @events property
+    $('#accepted_terms_of_service').on('invalid', @showTosMessage)
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
@@ -123,15 +123,16 @@ module.exports = class AuthModalView extends ModalView
   
   checkAcceptedTerms: (includeRedError) ->
     input = $('input#accepted_terms_of_service').get(0)
+    input.setCustomValidity? ''
     if input.checkValidity()
+      @showError('')
       $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
       $boxContainer.attr('data-state', null)
-      input.get(0).setCustomValidity? ''
       true
     else
       @showTosMessage()
-      # $boxContainer.attr('data-state', 'error')
-      @showError('Please accept the Terms of Service.') if includeRedError
+      # Include the red error message (for facebook signup, which does not trigger browser's form validation)
+      @showError('Please agree to our terms to continue') if includeRedError
       false
 
   showTosMessage: () ->
@@ -142,7 +143,7 @@ module.exports = class AuthModalView extends ModalView
 
 
   fbSignup: (e) ->
-    # e.preventDefault()
+    e.preventDefault()
     queryData =
       'signup-intent': @signupIntent
       'redirect-to': @currentRedirectTo()
@@ -155,9 +156,6 @@ module.exports = class AuthModalView extends ModalView
       gdprFbUrl = fbUrl + "&" + gdprString
       console.log('fbUrl With Boxes', gdprFbUrl)
       window.location.href = gdprFbUrl
-    console.log($('.gdpr-signup__form__checkbox__accept-terms input').get(0).validationMessage)
-    
-    
 
   # accomodate AB test for checkboxes
   gdprData: (formData) ->
@@ -168,11 +166,6 @@ module.exports = class AuthModalView extends ModalView
     else if @GDPR_BOXES == 1
       'receive-emails': !!formData['accepted_terms_of_service']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-
-  validateForm: () ->
-    formValid = super
-    termsAccepted = @checkAcceptedTerms()
-    formValid and termsAccepted
 
   submit: (e) ->
     return unless @validateForm()
@@ -225,4 +218,5 @@ module.exports = class AuthModalView extends ModalView
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
+    $('#accepted_terms_of_service').off()
     super
