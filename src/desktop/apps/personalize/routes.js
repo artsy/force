@@ -33,3 +33,8 @@ export const index = async (req, res, next) => {
     next(error)
   }
 }
+
+export const ensureLoggedInUser = (req, res, next) => {
+  if (!res.locals.sd.CURRENT_USER) return res.redirect('/personalize')
+  next()
+}

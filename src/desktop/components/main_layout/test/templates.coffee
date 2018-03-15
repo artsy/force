@@ -14,9 +14,9 @@ describe 'Main layout template', ->
       sd: { BROWSER: {}, CURRENT_PATH: '/' }, sharify: { script: -> 'foobar' }, asset: ((p) -> p)
     ).should.containEql '/assets/analytics.js'
 
-  it 'excludes analytics for phantom', ->
+  it 'excludes analytics for headless browsers', ->
     render('../templates/index.jade')(
-      sd: { BROWSER: { family: 'PhantomJS' }, CURRENT_PATH: '/' }
+      sd: { BROWSER: { family: 'Other' }, CURRENT_PATH: '/' }
       sharify: { script: -> 'foobar' }
       asset: ((p) -> p)
     ).should.not.containEql '/assets/analytics.js'

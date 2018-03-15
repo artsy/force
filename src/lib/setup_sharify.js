@@ -87,6 +87,7 @@ sharify.data = _.extend(
     'STRIPE_PUBLISHABLE_KEY',
     'TARGET_CAMPAIGN_URL',
     'TEAM_BLOGS',
+    'TRACK_PAGELOAD_PATHS',
     'VENICE_2015_SECTION',
     'WEBFONT_URL'
   ),

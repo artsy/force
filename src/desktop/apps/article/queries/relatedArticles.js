@@ -3,9 +3,6 @@ export const relatedArticles = `
     slug
     thumbnail_title
     thumbnail_image
-    contributing_authors {
-      name
-    }
   }
   relatedArticlesCanvas {
     slug
@@ -13,6 +10,9 @@ export const relatedArticles = `
     thumbnail_image
     published_at
     contributing_authors {
+      name
+    }
+    authors {
       name
     }
   }

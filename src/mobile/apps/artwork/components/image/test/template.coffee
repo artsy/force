@@ -49,3 +49,37 @@ describe 'Artwork image templates', ->
   it 'displays cultural_maker when there is not artist', ->
     $ = cheerio.load(@html)
     $('.artist-name').text().should.equal 'Kanye West'
+
+describe 'Artwork image templates', ->
+  beforeEach ->
+    @artwork = fabricate 'artwork'
+
+  describe 'artwork with attribution class', ->
+
+    beforeEach ->
+      @artwork.attribution_class = {
+        short_description: 'This work is unique',
+        long_description: 'Very detailed explanation of what unique means'
+      }
+
+      @html = render('index')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+    it 'displays attribution class short description', ->
+      $ = cheerio.load(@html)
+      $('.artwork-image-module__attribution-class a').text().should.equal 'This work is unique'
+
+  describe 'artwork without attribution class', ->
+    beforeEach ->
+      @html = render('index')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+    it 'does not display attribution class container', ->
+      $ = cheerio.load(@html)
+      $('.artwork-image-module__attribution-class').length.should.equal 0
