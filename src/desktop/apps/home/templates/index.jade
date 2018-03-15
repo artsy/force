@@ -24,7 +24,9 @@ block body
     include rails
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
-        include featured_shows
-        include featured_articles
+        #js-home-featured-shows
+          // loaded by HomeView#setupFeaturedShows (template: /templates/featured_shows.jade )
+        #js-home-featured-articles
+          // loaded by HomeView#setupFeaturedArticles (template: /templates/featured_articles.jade )
 
   include ../../../components/main_layout/templates/json_ld
