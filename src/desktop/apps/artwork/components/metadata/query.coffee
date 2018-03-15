@@ -7,6 +7,9 @@ module.exports = """
     series
     date
     edition_of
+    attribution_class {
+      short_description
+    }
     artists {
       _id
       id

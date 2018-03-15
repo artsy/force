@@ -1,13 +1,6 @@
-if artwork.is_downloadable || artwork.website
+if artwork.website
   .artwork-metadata__actions
-    if artwork.is_downloadable
-      a(
-        href='#{artwork.href}/download/#{helpers.metadata.filename(artwork)}.jpg'
-        target='_blank'
-      ) Download Image
-
-    if artwork.website
-      a(
-        href= artwork.website
-        target='_blank'
-      ) Visit Website
+    a(
+      href= artwork.website
+      target='_blank'
+    ) Visit Website

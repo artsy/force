@@ -33,6 +33,10 @@ describe('<App />', () => {
 
   const App = require('desktop/apps/article/components/App').default
   const { Article, Fixtures } = require('reaction/Components/Publishing')
+  // TODO: Export News to Fixtures
+  const {
+    NewsArticle,
+  } = require('reaction/Components/Publishing/Fixtures/Articles')
   const ArticleLayout = require('../layouts/Article').default
 
   it('renders a standard article', () => {
@@ -69,5 +73,12 @@ describe('<App />', () => {
     rendered.find(Article).length.should.equal(1)
     rendered.find(ArticleLayout).length.should.equal(0)
     rendered.html().should.containEql('Video')
+  })
+
+  it('renders a news article', () => {
+    const rendered = mount(<App article={NewsArticle} templates={{}} />)
+    rendered.find(Article).length.should.equal(1)
+    rendered.find(ArticleLayout).length.should.equal(0)
+    rendered.html().should.containEql('News')
   })
 })
