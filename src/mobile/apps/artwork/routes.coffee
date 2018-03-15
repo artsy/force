@@ -23,6 +23,10 @@ query = (user) -> """
       is_for_sale
       medium
       edition_of
+      attribution_class {
+        short_description
+        long_description
+      }
       image_rights
       collecting_institution
       cultural_maker
