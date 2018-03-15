@@ -2,7 +2,7 @@
   each category, id in categories
     .cf-categories__category(
       data-id=category.id
-      style="background-image: url(#{category.image})"
+      style="background-image: url(#{resize(category.image, { width: 250 })})"
       data-has-results= alwaysEnabled || (hasResults && hasResults(counts, category.id)) ? "true" : "false"
       class=(selectedCategory == category.id) ? "is-selected" : ""
     )
