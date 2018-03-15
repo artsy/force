@@ -9,7 +9,9 @@
 #   edge: 'new'
 #   dimension: 'dimension1' # Optional GA dimension
 #   scope: 'local' # Optionally disable global initialization
-#   control_group: 'old' #Defaults to `control`
+#   control_group: 'old' #Defaults to `control`, Reflection sees this.
+#
+# For equal weighting, add `weighting: 'equal'` and `outcomes` as an array.
 #
 # Note: if there are no running tests
 # this should export empty Object
@@ -18,13 +20,15 @@
 module.exports = {
   artist_page_variants:
     key: 'artist_page_variants'
-    outcomes:
-      control: 25
-      no_info: 25
-      no_header: 25
-      no_info_header: 25
+    outcomes: [
+      'control'
+      'no_info'
+      'no_header'
+      'no_info_header'
+    ]
     control_group: 'control'
     edge: 'no_info_header'
+    weighting: 'equal'
   merch_sort_test:
     key: 'merch_sort_test'
     outcomes:

@@ -26,6 +26,14 @@ describe 'SplitTest', ->
     (=> new @SplitTest key: 'foobar', outcomes: foo: 50, bar: 50)
       .should.not.throw 'Your probability values for outcomes must add up to 100'
 
+  it 'with equal weighting, requires outcomes to be an array with at least 2 entries', ->
+    (=> new @SplitTest key: 'foobar', weighting: 'equal', outcomes: foo: 50, bar: 40)
+      .should.throw 'The `outcomes` param must be an array of > 1'
+    (=> new @SplitTest key: 'foobar', weighting: 'equal', outcomes: ['foo'])
+      .should.throw 'The `outcomes` param must be an array of > 1'
+    (=> new @SplitTest key: 'foobar', weighting: 'equal', outcomes: ['foo', 'bar'])
+      .should.not.throw 'The `outcomes` param must be an array of > 1'
+
   describe '#_key', ->
     it 'sets a key for the test which is used for the cookie and as an analytics property', ->
       test = new @SplitTest key: 'foobar', outcomes: foo: 0, bar: 100

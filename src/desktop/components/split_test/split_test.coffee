@@ -8,8 +8,11 @@ setDimension = (index, value) ->
   ga? 'set', index, value
 
 module.exports = class SplitTest
-  constructor: ({ @key, @outcomes, @edge, @dimension, @control_group }) ->
-    return throw new Error('Your probability values for outcomes must add up to 100') if @sum() isnt 100
+  constructor: ({ @key, @outcomes, @edge, @dimension, @control_group, @weighting }) ->
+    if @weighting is 'equal'
+      return throw new Error('The `outcomes` param must be an array of > 1') if !Array.isArray(@outcomes) or @outcomes.length < 2
+    else
+      return throw new Error('Your probability values for outcomes must add up to 100') if @sum() isnt 100
 
   _key: ->
     "split_test--#{@key}"
@@ -45,8 +48,11 @@ module.exports = class SplitTest
     REFLECTION is true
 
   toss: ->
-    _.sample _.flatten _.map @outcomes, (probability, outcome) ->
-      _.times(probability, -> outcome)
+    if @weighting is 'equal'
+      @outcomes[Math.floor(Math.random() * @outcomes.length)]
+    else
+      _.sample _.flatten _.map @outcomes, (probability, outcome) ->
+        _.times(probability, -> outcome)
 
   sum: ->
     _.reduce @outcomes, (memo, probability, outcome) ->
