@@ -49,19 +49,45 @@
       max-height 100%
       max-width 100%
 
+.artwork-image-module__details
+  margin-bottom 14px
+  
 .artwork-image-module__label-icons
   display flex
-  margin-bottom 14px
 
 .artwork-image-module__artwork-label
   width 100%
   .artist-name
-    avant-garde-size('body', true)
+    garamond-size('s-body', true)
     display inline-block
+    font-weight bold
+    margin-bottom 10px
     text-decoration none
   .artwork-display
-    garamond-size('s-body', true)
+    color gray-darker-color
     clear right
+    garamond-size('l-caption', true)
+    line-height 1.5
+
+.artwork-image-module__attribution-class
+  .artwork-tab-link
+    color gray-darker-color
+    garamond-size('l-caption', true)
+    line-height 1.5
+    &.chevron-arrow-button::after
+      background gray-darkest-color
+      height 12px
+      margin 8px 0 0 7px
+      transform rotate(90deg)
+      width 11px
+    &.chevron-arrow-button.is-active::after
+      margin 4px 0 0 7px
+      transform rotate(-90deg)
+  .artwork-tab
+    color gray-darker-color
+    garamond-size('m-caption', true)
+    padding-top 0
+
 .artwork-meta-data-module .artwork-meta-data-price
   garamond-size('s-body', true)
 
