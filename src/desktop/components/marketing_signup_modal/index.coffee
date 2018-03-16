@@ -19,10 +19,13 @@ class MarketingSignupModalInner extends Backbone.View
     'click .marketing-signup-modal-have-account a': 'openLogin'
     'click #signup-fb': 'fbSignup'
     'submit form': 'submit'
+    'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
-    @DISABLE_GDPR = false
+    @GDPR_BOXES = 1
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   render: ->
     @$el.html template
@@ -31,7 +34,7 @@ class MarketingSignupModalInner extends Backbone.View
       textColor: @data.textColor
       textOpacity: @data.textOpacity
       copy: @data.copy
-      DISABLE_GDPR: @DISABLE_GDPR
+      GDPR_BOXES: @GDPR_BOXES
     this
 
   openLogin: (e) ->
@@ -53,28 +56,40 @@ class MarketingSignupModalInner extends Backbone.View
     return window.location.href = fbUrl if @DISABLE_GDPR
 
     if @checkAcceptedTerms()
-      formData = @serializeForm()
-      gdprData =
-        'receive-emails': !!formData['receive_emails']
-        'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-      gdprString = $.param(gdprData)
-      gdprFbUrl = fbUrl + "&" + queryString
-      console.log('fbUrl With Boxes', gdprFbUrl)
+      gdprString = $.param(@gdprData(@serializeForm()))
+      gdprFbUrl = fbUrl + "&" + gdprString
       window.location.href = gdprFbUrl
+
+  gdprData: (formData) ->
+    return {} if @gdprDisabled
+    if @GDPR_BOXES == 2
+      'receive-emails': !!formData['receive_emails']
+      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+    else if @GDPR_BOXES == 1
+      'receive-emails': !!formData['accepted_terms_of_service']
+      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+
+  showFormError: (msg) =>
+    @$('button').attr 'data-state', 'error'
+    @showError(msg)
 
   showError: (msg) =>
     @$('.auth-errors').text msg
 
-  checkAcceptedTerms: ->
-    $input = $('.gdpr-signup__form__checkbox__accept-terms input')[0]
-    $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-    if $input.checkValidity()
+  checkAcceptedTerms: () ->
+    input = $('input#accepted_terms_of_service').get(0)
+    input.setCustomValidity? ''
+    if $(input).prop('checked')
+      $('.tos-error').text ''
+      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
       $boxContainer.attr('data-state', null)
       true
     else
-      $input.focus()
+      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
       $boxContainer.attr('data-state', 'error')
-      @showError('Please accept the Terms of Service.')
+      input = $('input#accepted_terms_of_service').get(0)
+      input.setCustomValidity('')
+      $('.tos-error').text 'Please agree to our terms to continue'
       false
 
   submit: (e) ->
@@ -96,7 +111,8 @@ class MarketingSignupModalInner extends Backbone.View
       data: body
       error: (e) =>
         err = e.responseJSON?.error or e.toString()
-        @$('.marketing-signup-modal-error').show().text err
+        # @$('.marketing-signup-modal-error').show().text err
+        @showFormError err
       success: =>
         @trigger 'close'
         flash = new FlashMessage message: 'Thank you for joining Artsy', href: '/personalize'

@@ -42,7 +42,6 @@ module.exports = class AuthModalView extends ModalView
     @preInitialize options
     super
 
-
     # This 'invalid' event doesn't seem to work in the @events property
     $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
@@ -139,11 +138,11 @@ module.exports = class AuthModalView extends ModalView
       $('.tos-error').text 'Please agree to our terms to continue'
       false
 
-  showTosMessage: () ->
-    $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-    $boxContainer.attr('data-state', 'error')
-    input = $('input#accepted_terms_of_service').get(0)
-    input.setCustomValidity('')
+  # showTosMessage: () ->
+  #   $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
+  #   $boxContainer.attr('data-state', 'error')
+  #   input = $('input#accepted_terms_of_service').get(0)
+  #   input.setCustomValidity('')
 
 
   fbSignup: (e) ->
