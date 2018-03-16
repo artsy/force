@@ -46,9 +46,9 @@
           )
           label(for='accepted_terms_of_service')
         span Agree to our&nbsp;
-              a( href='/terms' ) Terms of Use
+              a( href='/terms', target='_blank' ) Terms of Use
               | &nbsp;and&nbsp;
-              a(href='/privacy') Privacy Policy.
+              a(href='/privacy', target='_blank') Privacy Policy.
     else if GDPR_BOXES === 1
       .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
         .artsy-checkbox--checkbox
@@ -61,16 +61,16 @@
           )
           label(for='accepted_terms_of_service')
         span Agree to our&nbsp;
-              a( href='/terms' ) Terms of Use
+              a( href='/terms', target='_blank' ) Terms of Use
               | &nbsp;and&nbsp;
-              a(href='/privacy') Privacy Policy&nbsp;
+              a( href='/terms', target='_blank') Privacy Policy&nbsp;
               |, and to receive emails from Artsy.
     .tos-error
     input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
-    button.avant-garde-button-black Sign Up
+    button.avant-garde-button-black.avant-garde-button-black Sign Up
     .gdpr-signup__error
   .gdpr-signup__divider or
-  a.avant-garde-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
+  a.avant-garde-button-black.avant-garde-box-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
     id='signup-fb'
     href='#'
   )
