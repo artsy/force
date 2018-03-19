@@ -43,4 +43,12 @@ module.exports = {
       experiment: 50
     control_group: 'control'
     edge: 'experiment'
+  gdpr_compliance_test:
+    key: 'gdpr_compliance_test'
+    outcomes:
+      control: 100
+      combined_terms_of_service: 0
+      separated_terms_of_service: 0
+    control_group: 'control'
+    edge: 'gdpr_terms_of_service'
 }

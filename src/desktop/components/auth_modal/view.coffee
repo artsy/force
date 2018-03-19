@@ -37,8 +37,7 @@ module.exports = class AuthModalView extends ModalView
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     ## For AB test- # of gdpr checkboxes to show
-    @GDPR_BOXES = 1
-    @gdprDisabled = @GDPR_BOXES == 0
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST == 'control'
     @preInitialize options
     super
 
@@ -54,7 +53,6 @@ module.exports = class AuthModalView extends ModalView
       context: @context
       signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
-      GDPR_BOXES: @GDPR_BOXES
       redirectTo: @currentRedirectTo()
     }, options?.userData
 
@@ -162,10 +160,10 @@ module.exports = class AuthModalView extends ModalView
   # accomodate AB test for checkboxes
   gdprData: (formData) ->
     return {} if @gdprDisabled
-    if @GDPR_BOXES == 2
+    if sd.GDPR_COMPLIANCE_TEST == 'separated_terms_of_service'
       'receive-emails': !!formData['receive_emails']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-    else if @GDPR_BOXES == 1
+    else if sd.GDPR_COMPLIANCE_TEST == 'combined_terms_of_service'
       'receive-emails': !!formData['accepted_terms_of_service']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
 

@@ -24,7 +24,7 @@
       title= '6 characters minimum',
       required
     )
-    if GDPR_BOXES === 2
+    if sd.GDPR_COMPLIANCE_TEST === 'separated_terms_of_service'
       .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__receive-email.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
@@ -49,7 +49,7 @@
               a( href='/terms', target='_blank' ) Terms of Use
               | &nbsp;and&nbsp;
               a(href='/privacy', target='_blank') Privacy Policy.
-    else if GDPR_BOXES === 1
+    else if sd.GDPR_COMPLIANCE_TEST === 'combined_terms_of_service'
       .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
         .artsy-checkbox--checkbox
           input(
@@ -76,7 +76,7 @@
   )
     i.icon-facebook
     | Sign up with Facebook
-  if GDPR_BOXES === 0
+  if sd.GDPR_COMPLIANCE_TEST === 'control'
     .gdpr-signup__copy
       small.gdpr-signup__small By signing up, you agree to our&nbsp;
         a( href='/terms' ) Terms of Use
