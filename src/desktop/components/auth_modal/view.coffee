@@ -160,10 +160,10 @@ module.exports = class AuthModalView extends ModalView
   # accomodate AB test for checkboxes
   gdprData: (formData) ->
     return {} if @gdprDisabled
-    if sd.GDPR_COMPLIANCE_TEST == 'separated_terms_of_service'
+    if sd.GDPR_COMPLIANCE_TEST == 'separated_checkboxes'
       'receive-emails': !!formData['receive_emails']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-    else if sd.GDPR_COMPLIANCE_TEST == 'combined_terms_of_service'
+    else if sd.GDPR_COMPLIANCE_TEST == 'combined_checkboxes'
       'receive-emails': !!formData['accepted_terms_of_service']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
 

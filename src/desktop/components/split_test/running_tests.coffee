@@ -47,8 +47,8 @@ module.exports = {
     key: 'gdpr_compliance_test'
     outcomes:
       control: 100
-      combined_terms_of_service: 0
-      separated_terms_of_service: 0
+      combined_checkboxes: 0
+      separated_checkboxes: 0
     control_group: 'control'
     edge: 'gdpr_terms_of_service'
 }

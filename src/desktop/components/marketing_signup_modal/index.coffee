@@ -24,7 +24,6 @@ class MarketingSignupModalInner extends Backbone.View
 
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
-    @GDPR_BOXES = 1
     $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   render: ->
@@ -34,7 +33,6 @@ class MarketingSignupModalInner extends Backbone.View
       textColor: @data.textColor
       textOpacity: @data.textOpacity
       copy: @data.copy
-      GDPR_BOXES: @GDPR_BOXES
     this
 
   openLogin: (e) ->
@@ -62,10 +60,10 @@ class MarketingSignupModalInner extends Backbone.View
 
   gdprData: (formData) ->
     return {} if @gdprDisabled
-    if @GDPR_BOXES == 2
+    if sd.GDPR_COMPLIANCE_TEST == 'separated_checkboxes'
       'receive-emails': !!formData['receive_emails']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-    else if @GDPR_BOXES == 1
+    else if sd.GDPR_COMPLIANCE_TEST == 'combined_checkboxes'
       'receive-emails': !!formData['accepted_terms_of_service']
       'accepted-terms-of-service': !!formData['accepted_terms_of_service']
 
