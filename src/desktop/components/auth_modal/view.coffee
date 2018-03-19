@@ -37,7 +37,7 @@ module.exports = class AuthModalView extends ModalView
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     ## For AB test- # of gdpr checkboxes to show
-    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST == 'control'
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
     @preInitialize options
     super
 
@@ -153,12 +153,12 @@ module.exports = class AuthModalView extends ModalView
   # accomodate AB test for checkboxes
   gdprData: (formData) ->
     return {} if @gdprDisabled
-    if sd.GDPR_COMPLIANCE_TEST == 'separated_checkboxes'
-      'receive-emails': !!formData['receive_emails']
-      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-    else if sd.GDPR_COMPLIANCE_TEST == 'combined_checkboxes'
-      'receive-emails': !!formData['accepted_terms_of_service']
-      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+    if sd.GDPR_COMPLIANCE_TEST is 'separated_checkboxes'
+      'receive_emails': !!formData['receive_emails']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
+    else if sd.GDPR_COMPLIANCE_TEST is 'combined_checkboxes'
+      'receive_emails': !!formData['accepted_terms_of_service']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
 
   submit: (e) ->
     return unless @validateForm()

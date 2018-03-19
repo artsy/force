@@ -19,7 +19,6 @@ class MarketingSignupModalInner extends Backbone.View
     'click .auth-mode-toggle a': 'openLogin'
     'click #signup-fb': 'fbSignup'
     'submit form': 'submit'
-    'click #signup-fb': 'fbSignup'
     'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: ({@data}) ->
@@ -60,12 +59,12 @@ class MarketingSignupModalInner extends Backbone.View
 
   gdprData: (formData) ->
     return {} if @gdprDisabled
-    if sd.GDPR_COMPLIANCE_TEST == 'separated_checkboxes'
-      'receive-emails': !!formData['receive_emails']
-      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
-    else if sd.GDPR_COMPLIANCE_TEST == 'combined_checkboxes'
-      'receive-emails': !!formData['accepted_terms_of_service']
-      'accepted-terms-of-service': !!formData['accepted_terms_of_service']
+    if sd.GDPR_COMPLIANCE_TEST is 'separated_checkboxes'
+      'receive_emails': !!formData['receive_emails']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
+    else if sd.GDPR_COMPLIANCE_TEST is 'combined_checkboxes'
+      'receive_emails': !!formData['accepted_terms_of_service']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
 
   showFormError: (msg) =>
     @$('button').attr 'data-state', 'error'
@@ -94,14 +93,14 @@ class MarketingSignupModalInner extends Backbone.View
     e.preventDefault()
     @$('form button').addClass 'is-loading'
     formData = @serializeForm()
-    body =
+    userData =
       'name': formData['name']
       'email': formData['email']
       'password': formData['password']
+    analyticsData =
       'signup_intent': @signupIntent
-      'receive_emails': !!formData['receive_emails']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
       'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
+    body = Object.assign {}, userData, analyticsData, @gdprData(formData)
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'
