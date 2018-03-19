@@ -68,7 +68,6 @@
     .tos-error
     input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
     button.avant-garde-button-black.avant-garde-button-black Sign Up
-    .gdpr-signup__error
   .gdpr-signup__divider or
   a.avant-garde-button-black.avant-garde-box-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
     id='signup-fb'
@@ -78,7 +77,9 @@
     | Sign up with Facebook
   if sd.GDPR_COMPLIANCE_TEST === 'control'
     .gdpr-signup__copy
-      small.gdpr-signup__small By signing up, you agree to our&nbsp;
+      small.gdpr-signup__small
+        | By signing up, you agree to our&nbsp;
+        br
         a( href='/terms' ) Terms of Use
         | &nbsp;and&nbsp;
         a(href='/privacy') Privacy Policy

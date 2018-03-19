@@ -136,13 +136,6 @@ module.exports = class AuthModalView extends ModalView
       $('.tos-error').text 'Please agree to our terms to continue'
       false
 
-  # showTosMessage: () ->
-  #   $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-  #   $boxContainer.attr('data-state', 'error')
-  #   input = $('input#accepted_terms_of_service').get(0)
-  #   input.setCustomValidity('')
-
-
   fbSignup: (e) ->
     e.preventDefault()
     queryData =

@@ -16,7 +16,7 @@ class MarketingSignupModalInner extends Backbone.View
   signupIntent: 'marketing modal'
 
   events:
-    'click .marketing-signup-modal-have-account a': 'openLogin'
+    'click .auth-mode-toggle a': 'openLogin'
     'click #signup-fb': 'fbSignup'
     'submit form': 'submit'
     'click #signup-fb': 'fbSignup'
@@ -47,7 +47,7 @@ class MarketingSignupModalInner extends Backbone.View
     queryData =
       'signup-intent': @signupIntent
       'redirect-to': '/personalize'
-      'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative # TODO are both necessary?
+      'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
     queryString = $.param(queryData)
     fbUrl = sd.AP.facebookPath + '?' + queryString
     console.log('fbUrl', fbUrl)
@@ -92,7 +92,6 @@ class MarketingSignupModalInner extends Backbone.View
 
   submit: (e) ->
     e.preventDefault()
-    @$('.marketing-signup-modal-error').hide()
     @$('form button').addClass 'is-loading'
     formData = @serializeForm()
     body =
@@ -102,14 +101,13 @@ class MarketingSignupModalInner extends Backbone.View
       'signup_intent': @signupIntent
       'receive_emails': !!formData['receive_emails']
       'accepted_terms_of_service': !!formData['accepted_terms_of_service']
-      'acquisition_initiative': sd.MARKETING_SIGNUP_MODAL_SLUG || @acquisitionInitiative
+      'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'
       data: body
       error: (e) =>
         err = e.responseJSON?.error or e.toString()
-        # @$('.marketing-signup-modal-error').show().text err
         @showFormError err
       success: =>
         @trigger 'close'
