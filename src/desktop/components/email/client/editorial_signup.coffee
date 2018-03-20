@@ -76,7 +76,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     @email = @$(e.currentTarget).prev('input').val()
     $.ajax
       type: 'POST'
-      url: '/editorial-signup/form'
+      url: '/signup/editorial'
       data:
         email: @email
         name: sd.CURRENT_USER?.name or= ''

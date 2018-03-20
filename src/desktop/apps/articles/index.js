@@ -18,7 +18,6 @@ app.get('/articles', routes.articles)
 app.get('/news', adminOnly, routes.news)
 app.get(sd.TEAM_BLOGS, routes.teamChannel)
 app.get('/venice-biennale-2015', routes.section)
-app.post('/editorial-signup/form', routes.editorialForm)
 app.get('/gallery-insights/opt-in', (_, res) => {
   res.redirect('/gallery-insights')
 })

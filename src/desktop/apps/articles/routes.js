@@ -6,19 +6,7 @@ import { crop } from 'desktop/components/resizer/index.coffee'
 import Channel from 'desktop/models/channel.coffee'
 import { topParselyArticles as _topParselyArticles } from 'desktop/components/util/parsely.coffee'
 import { map, sortBy, first, last, reject } from 'lodash'
-import sailthruClient from 'sailthru-client'
-import {
-  PARSELY_KEY,
-  PARSELY_SECRET,
-  SAILTHRU_KEY,
-  SAILTHRU_SECRET,
-  SAILTHRU_MASTER_LIST,
-} from '../../config.coffee'
-
-const sailthru = sailthruClient.createSailthruClient(
-  SAILTHRU_KEY,
-  SAILTHRU_SECRET
-)
+import { PARSELY_KEY, PARSELY_SECRET } from '../../config.coffee'
 
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
@@ -115,42 +103,6 @@ export const teamChannel = (req, res, next) => {
       )
     },
   })
-}
-
-export const editorialForm = (req, res, next) => {
-  sailthru.apiPost(
-    'user',
-    {
-      id: req.body.email,
-      lists: {
-        [`${SAILTHRU_MASTER_LIST}`]: 1,
-      },
-      name: req.body.name,
-      vars: {
-        source: req.body.source || 'editorial',
-        receive_editorial_email: true,
-        email_frequency: 'daily',
-      },
-    },
-    (err, response) => {
-      if (err) {
-        return res.status(500).send(err)
-      } else if (response.ok) {
-        sailthru.apiPost(
-          'event',
-          {
-            event: 'editorial_welcome',
-            id: req.body.email,
-          },
-          (err, response) => {
-            res.send(req.body)
-          }
-        )
-      } else {
-        res.status(500).send(response.errormsg)
-      }
-    }
-  )
 }
 
 export const news = (req, res, next) => {
