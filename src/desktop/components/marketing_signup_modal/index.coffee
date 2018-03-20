@@ -24,6 +24,7 @@ class MarketingSignupModalInner extends Backbone.View
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
     $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
 
   render: ->
     @$el.html template
@@ -50,7 +51,7 @@ class MarketingSignupModalInner extends Backbone.View
     queryString = $.param(queryData)
     fbUrl = sd.AP.facebookPath + '?' + queryString
     console.log('fbUrl', fbUrl)
-    return window.location.href = fbUrl if @DISABLE_GDPR
+    return window.location.href = fbUrl if @gdprDisabled
 
     if @checkAcceptedTerms()
       gdprString = $.param(@gdprData(@serializeForm()))
