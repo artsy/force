@@ -10,6 +10,8 @@
     "@babel/stage-3"
   ],
   "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
     "@babel/plugin-transform-runtime",
     ["babel-plugin-styled-components", {
       "ssr": true,
