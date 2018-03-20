@@ -1,10 +1,10 @@
 import magazineQuery from './queries/editorial_articles.coffee'
-import { positronql } from 'desktop/lib/positronql'
+import { positronql as _positronql } from 'desktop/lib/positronql'
 import Articles from 'desktop/collections/articles.coffee'
 import Section from 'desktop/models/section.coffee'
 import { crop } from 'desktop/components/resizer/index.coffee'
 import Channel from 'desktop/models/channel.coffee'
-import { topParselyArticles } from 'desktop/components/util/parsely.coffee'
+import { topParselyArticles as _topParselyArticles } from 'desktop/components/util/parsely.coffee'
 import { map, sortBy, first, last, reject } from 'lodash'
 import sailthruClient from 'sailthru-client'
 import {
@@ -20,9 +20,12 @@ const sailthru = sailthruClient.createSailthruClient(
   SAILTHRU_SECRET
 )
 
+let positronql = _positronql
+let topParselyArticles = _topParselyArticles
+
 export const articles = (req, res, next) => {
   const query = { query: magazineQuery }
-  positronql(query)
+  return positronql(query)
     .then((result) => {
       const articles = new Articles(result.articles)
       res.locals.sd.SUBSCRIBED_TO_EDITORIAL = !!req.user
