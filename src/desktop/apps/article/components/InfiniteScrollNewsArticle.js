@@ -17,7 +17,6 @@ export default class InfiniteScrollNewsArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
-    headerHeight: PropTypes.string,
     marginTop: PropTypes.string,
   }
 
@@ -140,7 +139,6 @@ export default class InfiniteScrollNewsArticle extends React.Component {
               isTruncated={i !== 0}
               isMobile={this.props.isMobile}
               display={article.display}
-              headerHeight={i === 0 ? this.props.headerHeight : null}
               marginTop={i === 0 ? this.props.marginTop : null}
             />
             <Waypoint

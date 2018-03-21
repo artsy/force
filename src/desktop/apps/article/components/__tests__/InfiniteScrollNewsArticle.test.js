@@ -49,11 +49,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(
-      <InfiniteScrollNewsArticle
-        article={article}
-        headerHeight={'calc(100vh - 50px)'}
-        marginTop={'50px'}
-      />
+      <InfiniteScrollNewsArticle article={article} marginTop={'50px'} />
     )
     rendered.find(Article).length.should.equal(1)
     rendered.html().should.containEql('NewsLayout')
