@@ -139,26 +139,3 @@ describe 'AuthModalView', ->
     it 'does not submit form if the the mode is password reset', ->
       @view.onSubmitSuccess @view.user, { success: 200 }
       @submitSpy.should.be.calledOnce
-
-  describe 'GDPR compliance', ->
-    beforeEach ->
-      @view.state = new Backbone.Model mode: 'register'
-      @view.user = new LoggedOutUser
-      @view.$el.html $ "<form>" + render('register')(
-        copy: new Backbone.Model
-        sd: CSRF_TOKEN: 'csrfoo', AP: loginPagePath: 'foo'
-      ) + "</form>"
-      # @view.renderInner()
-
-
-
-    xit 'requires user accept terms for registration via email', ->
-      @view.$('input[name="name"]').val('Foo Bar')
-      @view.$('input[name="email"]').val('foo@bar.com')
-      @view.$('input[name="password"]').val('password123!')
-      console.log(typeof @view.$('form').get(0).checkValidity)
-      @view.$('form').checkValidity()
-      console.log(@view.$('.tos-error').html())
-      @view.$('.tos-error').text().should.equal 'html5 checkValidity not firing in node'
-    xit 'requires user accept terms for registration via social auth'
-
