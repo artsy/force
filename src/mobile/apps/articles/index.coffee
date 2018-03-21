@@ -19,4 +19,4 @@ app.get '/:id/posts', routes.redirectPost
 app.get '/articles', routes.articles
 app.get '/venice-biennale-2015', routes.section
 app.post '/gallery-insights/form', routes.form
-app.post '/editorial-signup/form', routes.editorialForm
+app.post '/signup/editorial', routes.editorialForm
