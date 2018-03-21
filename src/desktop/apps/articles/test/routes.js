@@ -23,6 +23,7 @@ describe('Articles routes', () => {
       render: sinon.stub(),
       locals: { sd: {} },
       redirect: sinon.stub(),
+      backboneError: sinon.stub(),
     }
     next = sinon.stub()
 
@@ -110,6 +111,17 @@ describe('Articles routes', () => {
       teamChannel(req, res, next)
       Backbone.sync.args[0][2].success(channel)
       next.called.should.be.ok()
+    })
+
+    it('errors if there is an issue fetching a team channel', () => {
+      const channel = _.extend(_.cloneDeep(fixtures.channel), {
+        slug: 'foo',
+        type: 'editorial',
+      })
+      req.path = '/foo'
+      teamChannel(req, res, next)
+      Backbone.sync.args[0][2].error(channel)
+      res.backboneError.called.should.be.ok()
     })
 
     it('handles query params', () => {
