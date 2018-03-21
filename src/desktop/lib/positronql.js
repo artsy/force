@@ -1,6 +1,4 @@
-import qs from 'qs'
 import request from 'superagent'
-import { extend } from 'underscore'
 
 const { POSITRON_URL } = require('sharify').data
 const POSITRON_GRAPHQL_URL = POSITRON_URL + '/api/graphql'
