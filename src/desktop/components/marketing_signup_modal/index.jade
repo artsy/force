@@ -1,37 +1,10 @@
 .marketing-signup-modal-left(
-  style="background-image: url(#{modal.image});"
+  style="background-image: url(#{image});"
 )
-  if modal.photoCredit
-    p.marketing-signup-modal-left__photo-credit(style="color: #{modal.textColor}; opacity: #{modal.textOpacity};")= modal.photoCredit
+  if photoCredit
+    p.marketing-signup-modal-left__photo-credit(style="color: #{textColor}; opacity: #{textOpacity};")= photoCredit
 .marketing-signup-modal-right
   .marketing-signup-modal-right__logo.icon-logotype
-  h2.marketing-signup-modal-h2= modal.copy
-  form
-    input.bordered-input(
-      name='name'
-      placeholder='Your full name'
-    )
-    input.bordered-input(
-      name='email'
-      placeholder='Your email address'
-    )
-    input.bordered-input(
-      name='password'
-      placeholder='Create password'
-      type='password'
-    )
-    button.avant-garde-button-black Sign Up
-    .marketing-signup-modal-error
-  .marketing-signup-modal-divider Or
-  a.avant-garde-button-black.marketing-signup-modal-fb(
-    href=sd.AP.facebookPath + '?acquisition_initiative=' + modal.slug
-  )
-    i.icon-facebook
-    | Continue with Facebook
-  .marketing-signup-modal-copy
-    small.marketing-signup-modal-small By signing up, you agree to our&nbsp;
-      a( href='/terms' ) Terms of Use
-      | &nbsp;and&nbsp;
-      a(href='/privacy') Privacy Policy
-    p.marketing-signup-modal-have-account Already have an account?&nbsp;
-      a( href='/log_in' ) Sign in
+  h2.marketing-signup-modal-h2= copy
+  include ../auth_modal/templates/_gdpr_signup.jade
+  include ../auth_modal/templates/_signup_footer.jade
