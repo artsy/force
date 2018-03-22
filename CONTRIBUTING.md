@@ -57,10 +57,10 @@ yarn link @artsy/reaction && yarn start
 
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
 
-**NOTE:** If you would like to test Force in various `NODE_ENV`s, run:
+**NOTE:** If you would like spin up Force in production mode, run:
 
 ```sh
-yarn assets && NODE_ENV=<env> yarn start
+yarn assets && yarn debug:prod
 ```
 
 ## Create a Topic Branch

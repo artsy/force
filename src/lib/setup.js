@@ -7,6 +7,7 @@ import _ from 'underscore'
 import addRequestId from 'express-request-id'
 import artsyPassport from '@artsy/passport'
 import artsyXapp from 'artsy-xapp'
+import { argv } from 'yargs'
 import Backbone from 'backbone'
 import bodyParser from 'body-parser'
 import bucketAssets from 'bucket-assets'
@@ -195,7 +196,14 @@ export default function(app) {
   app.use(hardcodedRedirects)
 
   // General helpers and express middleware
-  app.use(bucketAssets())
+  if (argv.debugProd) {
+    // Mount static webserver instead of requesting assets through bucket
+    // manifest. Pass in --debugProd on boot.
+    app.use(express.static('public'))
+  } else {
+    app.use(bucketAssets())
+  }
+
   app.use(localsMiddleware)
   app.use(backboneErrorHelper)
   app.use(sameOriginMiddleware)
@@ -227,11 +235,18 @@ export default function(app) {
 
     // In staging or prod, mount routes normally
   } else {
-    // Direct mobile devices to the mobile app, otherwise fall through to
-    // the desktop app
     app.use((req, res, next) => {
-      if (res.locals.sd.IS_MOBILE) require('../mobile')(req, res, next)
-      else next()
+      if (argv.debugProd) {
+        res.locals.asset = (filename) => filename // Stub bucketAssets middleware helper
+      }
+
+      // Direct mobile devices to the mobile app, otherwise fall through to
+      // the desktop app
+      if (res.locals.sd.IS_MOBILE) {
+        require('../mobile')(req, res, next)
+      } else {
+        next()
+      }
     })
     app.use(require('../desktop'))
   }
