@@ -46,7 +46,7 @@ describe('<Article />', () => {
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
     })
-    const rendered = mount(<ArticleLayout article={article} templates={{}} />)
+    const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(1)
     rendered.html().should.containEql('StandardLayout')
   })
@@ -60,7 +60,7 @@ describe('<Article />', () => {
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
     })
-    const rendered = mount(<ArticleLayout article={article} templates={{}} />)
+    const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(1)
     rendered.html().should.containEql('FeatureLayout')
   })
@@ -74,7 +74,7 @@ describe('<Article />', () => {
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
     })
-    const rendered = mount(
+    const rendered = shallow(
       <ArticleLayout article={article} templates={{}} isSuper />
     )
     rendered.find(Article).length.should.equal(1)
@@ -90,7 +90,7 @@ describe('<Article />', () => {
       contributing_authors: [{ name: 'Kana' }],
       relatedArticlesPanel: [fixtures.article],
     })
-    const rendered = mount(<ArticleLayout article={article} />)
+    const rendered = shallow(<ArticleLayout article={article} />)
     const html = rendered.html()
     html.should.containEql('Related Stories')
     html.should.containEql('RelatedArticlesPanel')
@@ -108,7 +108,7 @@ describe('<Article />', () => {
     })
     const SuperArticleView = sinon.stub()
     rewire.__set__('SuperArticleView', SuperArticleView)
-    const rendered = mount(
+    const rendered = shallow(
       <ArticleLayout
         isSuper
         article={article}
