@@ -10,6 +10,7 @@
     "acceptance": "sh scripts/acceptance.sh",
     "acceptance-record": "sh scripts/acceptance_record.sh",
     "assets": "sh scripts/assets.sh",
+    "debug:prod": "NODE_ENV=production node -r dotenv/config --max_old_space_size=1024 ./src --verbose --debugProd",
     "deploy": "sh scripts/deploy.sh",
     "mocha": "sh scripts/mocha.sh",
     "precommit": "lint-staged",
@@ -202,7 +203,8 @@
     "uuid": "^3.0.1",
     "validator": "^7.0.0",
     "waypoints": "4.0.0",
-    "xss-filters": "^1.2.6"
+    "xss-filters": "^1.2.6",
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.6",
