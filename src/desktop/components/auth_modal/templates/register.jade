@@ -1,1 +1,34 @@
-include ./signup
+#auth-page.vam-outer
+  .vam-inner
+    include ./_header
+      aside
+        = copy.get('register') || 'Enter your name, email and password to join'
+
+    section#auth-body
+      .auth-register
+        form.auth-form(
+          action=sd.AP.loginPagePath + '?redirect-to=' + redirectTo
+          method='POST'
+        )
+          .auth-errors
+          input#js-mailcheck-input-modal.bordered-input.is-block(
+            name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus
+          )
+          #js-mailcheck-hint-modal
+          input.bordered-input.is-block(
+            name= 'password'
+            type= 'password'
+            value= password
+            placeholder= 'Password'
+            autocomplete= 'on'
+            pattern= '.{6,}'
+            title= '6 characters minimum'
+            required
+          )
+          input.bordered-input.is-block(
+            name='name', type='text', placeholder='Full Name', value= name, required
+          )
+          input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+          button#auth-submit.avant-garde-button-black.is-block Join Artsy
+
+    include ./_signup_footer

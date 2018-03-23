@@ -6,109 +6,43 @@ FlashMessage = require '../flash/index.coffee'
 modalize = require '../modalize/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
-Form = require('../mixins/form.coffee')
 
 class MarketingSignupModalInner extends Backbone.View
-  _.extend @prototype, Form
-
   className: 'marketing-signup-modal'
 
-  signupIntent: 'marketing modal'
-
   events:
-    'click .auth-mode-toggle a': 'openLogin'
-    'click #signup-fb': 'fbSignup'
     'submit form': 'submit'
-    'change #accepted_terms_of_service': 'checkAcceptedTerms'
+    'click .marketing-signup-modal-have-account a': 'openLogin'
 
   initialize: ({@data}) ->
-    @acquisitionInitiative = @data?.slug
-    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
-    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
 
   render: ->
     @$el.html template
-      image: @data.image
-      photoCredit: @data.photoCredit
-      textColor: @data.textColor
-      textOpacity: @data.textOpacity
-      copy: @data.copy
+      modal: @data
     this
 
   openLogin: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'login'
-      signupIntent: @signupIntent
+      signupIntent: 'marketing modal'
     @trigger 'close'
-
-  fbSignup: (e) ->
-    e.preventDefault()
-    queryData =
-      'signup-intent': @signupIntent
-      'redirect-to': '/personalize'
-      'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
-    queryString = $.param(queryData)
-    fbUrl = sd.AP.facebookPath + '?' + queryString
-    console.log('fbUrl', fbUrl)
-    return window.location.href = fbUrl if @gdprDisabled
-
-    if @checkAcceptedTerms()
-      gdprString = $.param(@gdprData(@serializeForm()))
-      gdprFbUrl = fbUrl + "&" + gdprString
-      window.location.href = gdprFbUrl
-
-  gdprData: (formData) ->
-    return {} if @gdprDisabled
-    if sd.GDPR_COMPLIANCE_TEST is 'separated_checkboxes'
-      'receive_emails': !!formData['receive_emails']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
-    else if sd.GDPR_COMPLIANCE_TEST is 'combined_checkboxes'
-      'receive_emails': !!formData['accepted_terms_of_service']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
-
-  showFormError: (msg) =>
-    @$('button').attr 'data-state', 'error'
-    @showError(msg)
-
-  showError: (msg) =>
-    @$('.auth-errors').text msg
-
-  checkAcceptedTerms: () ->
-    input = $('input#accepted_terms_of_service').get(0)
-    input.setCustomValidity? ''
-    if $(input).prop('checked')
-      $('.tos-error').text ''
-      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-      $boxContainer.attr('data-state', null)
-      true
-    else
-      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-      $boxContainer.attr('data-state', 'error')
-      input = $('input#accepted_terms_of_service').get(0)
-      input.setCustomValidity('')
-      $('.tos-error').text 'Please agree to our terms to continue'
-      false
 
   submit: (e) ->
     e.preventDefault()
+    @$('.marketing-signup-modal-error').hide()
     @$('form button').addClass 'is-loading'
-    formData = @serializeForm()
-    userData =
-      'name': formData['name']
-      'email': formData['email']
-      'password': formData['password']
-    analyticsData =
-      'signup_intent': @signupIntent
-      'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
-    body = Object.assign {}, userData, analyticsData, @gdprData(formData)
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'
-      data: body
+      data:
+        name: @$('[name=name]').val()
+        email: @$('[name=email]').val()
+        password: @$('[name=password]').val()
+        acquisition_initiative: sd.MARKETING_SIGNUP_MODAL_SLUG
       error: (e) =>
         err = e.responseJSON?.error or e.toString()
-        @showFormError err
+        @$('.marketing-signup-modal-error').show().text err
       success: =>
         @trigger 'close'
         flash = new FlashMessage message: 'Thank you for joining Artsy', href: '/personalize'

@@ -12,7 +12,6 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
-sd = require('sharify').data
 
 class State extends Backbone.Model
   defaults: mode: 'register'
@@ -29,26 +28,21 @@ module.exports = class AuthModalView extends ModalView
     'click .auth-toggle': 'toggleMode'
     'submit form': 'submit'
     'click #auth-submit': 'submit'
-    'click #signup-fb': 'fbSignup'
-    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: (options) ->
     return if isEigen.checkWith options
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
-    ## For AB test- # of gdpr checkboxes to show
-    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
     @preInitialize options
-    super
 
-    # This 'invalid' event doesn't seem to work in the @events property
-    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
+    super
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
+
     @templateData = _.extend {
       context: @context
       signupIntent: @signupIntent
@@ -61,7 +55,7 @@ module.exports = class AuthModalView extends ModalView
     @on 'rerendered', @initializeMailcheck
 
     mediator.on 'auth:change:mode', @setMode, this
-    mediator.on 'auth:error', @showFormError
+    mediator.on 'auth:error', @showError
     mediator.on 'modal:closed', @logClose
 
     @logState()
@@ -119,46 +113,6 @@ module.exports = class AuthModalView extends ModalView
   toggleMode: (e) ->
     e.preventDefault()
     @state.set 'mode', $(e.target).data('mode')
-  
-  checkAcceptedTerms: () ->
-    input = $('input#accepted_terms_of_service').get(0)
-    input.setCustomValidity? ''
-    if $(input).prop('checked')
-      $('.tos-error').text ''
-      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-      $boxContainer.attr('data-state', null)
-      true
-    else
-      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-      $boxContainer.attr('data-state', 'error')
-      input = $('input#accepted_terms_of_service').get(0)
-      input.setCustomValidity('')
-      $('.tos-error').text 'Please agree to our terms to continue'
-      false
-
-  fbSignup: (e) ->
-    e.preventDefault()
-    queryData =
-      'signup-intent': @signupIntent
-      'redirect-to': @currentRedirectTo()
-    queryString = $.param(queryData)
-    fbUrl = sd.AP.facebookPath + '?' + queryString
-    return window.location.href = fbUrl if @gdprDisabled
-
-    if @checkAcceptedTerms()
-      gdprString = $.param(@gdprData(@serializeForm()))
-      gdprFbUrl = fbUrl + "&" + gdprString
-      window.location.href = gdprFbUrl
-
-  # accomodate AB test for checkboxes
-  gdprData: (formData) ->
-    return {} if @gdprDisabled
-    if sd.GDPR_COMPLIANCE_TEST is 'separated_checkboxes'
-      'receive_emails': !!formData['receive_emails']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
-    else if sd.GDPR_COMPLIANCE_TEST is 'combined_checkboxes'
-      'receive_emails': !!formData['accepted_terms_of_service']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
 
   submit: (e) ->
     return unless @validateForm()
@@ -168,9 +122,7 @@ module.exports = class AuthModalView extends ModalView
 
     @$('button').attr 'data-state', 'loading'
 
-    formData = @serializeForm()
-    userData = Object.assign {}, formData, @gdprData(formData)
-    @user.set (data = userData)
+    @user.set (data = @serializeForm())
     @user.set(signupIntent: @signupIntent)
     @user[@state.get 'mode']
       success: @onSubmitSuccess
@@ -200,16 +152,12 @@ module.exports = class AuthModalView extends ModalView
         @undelegateEvents()
         @$('form').submit()
 
-  showFormError: (msg) =>
-    @$('button').attr 'data-state', 'error'
-    @showError(msg)
-
   showError: (msg) =>
+    @$('button').attr 'data-state', 'error'
     @$('.auth-errors').text msg
 
   remove: ->
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
-    $('#accepted_terms_of_service').off()
     super
