@@ -31,7 +31,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
     }
   }
 
-  let rewire = require('rewire')('../InfiniteScrollNewsArticle')
+  let rewire = require('rewire')('../InfiniteScrollNewsArticle.tsx')
   let { InfiniteScrollNewsArticle } = rewire
   const { Article } = require('reaction/Components/Publishing')
 

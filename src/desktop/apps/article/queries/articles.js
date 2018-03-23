@@ -17,7 +17,7 @@ export const articlesQuery = ({ offset, limit, channel, omit }) => {
   `
 }
 
-export const newsArticlesQuery = ({ offset, layout, limit, omit }) => {
+export const newsArticlesQuery = ({ offset, limit, omit }) => {
   return `
     {
       articles(published: true, layout: "news", limit: ${limit}, offset: ${offset}, sort: "-published_at", omit: ["${omit}"]) {
