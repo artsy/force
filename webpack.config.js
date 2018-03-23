@@ -128,9 +128,11 @@ if (isDevelopment) {
   if (isProduction) {
     config.plugins.push(
       new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
         sourceMap: true,
         uglifyOptions: {
-          ecma: 8,
+          mangle: true,
           compress: {
             warnings: false,
           },
