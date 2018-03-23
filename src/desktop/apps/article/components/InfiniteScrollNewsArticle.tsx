@@ -23,6 +23,7 @@ interface State {
   isEnabled: boolean
 }
 
+// FIXME: Rewire
 let positronql = _positronql
 
 const FETCH_TOP_OFFSET = 200
@@ -103,7 +104,6 @@ export class InfiniteScrollNewsArticle extends Component<
         return (
           <Waypoint
             onEnter={this.fetchNextArticles}
-            threshold={2.0}
             topOffset={FETCH_TOP_OFFSET}
           />
         )
