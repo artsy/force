@@ -13,7 +13,7 @@ let positronql = _positronql
 
 const FETCH_TOP_OFFSET = 200
 
-export default class InfiniteScrollNewsArticle extends React.Component {
+export class InfiniteScrollNewsArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
@@ -48,7 +48,7 @@ export default class InfiniteScrollNewsArticle extends React.Component {
       const data = await positronql({
         query: newsArticlesQuery({
           offset,
-          limit: 3,
+          limit: 6,
           omit: this.props.article.id,
         }),
       })
@@ -59,7 +59,7 @@ export default class InfiniteScrollNewsArticle extends React.Component {
         this.setState({
           articles: articles.concat(newArticles),
           isLoading: false,
-          offset: offset + 3,
+          offset: offset + 6,
         })
         setupFollowButtons(this.state.following)
       } else {
@@ -135,10 +135,8 @@ export default class InfiniteScrollNewsArticle extends React.Component {
           <div key={`article-${i}`}>
             <Article
               article={article}
-              relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
               isMobile={this.props.isMobile}
-              display={article.display}
               marginTop={i === 0 ? this.props.marginTop : null}
             />
             <Waypoint

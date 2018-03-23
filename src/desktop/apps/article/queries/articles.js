@@ -22,10 +22,8 @@ export const newsArticlesQuery = ({ offset, layout, limit, omit }) => {
     {
       articles(published: true, layout: "news", limit: ${limit}, offset: ${offset}, sort: "-published_at", omit: ["${omit}"]) {
         ${articleBody}
-        ${display}
       }
     }
-    ${displayFragment}
     ${sectionFragments}
   `
 }

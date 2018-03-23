@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Article } from 'reaction/Components/Publishing'
 import ArticleLayout from './layouts/Article'
-import InfiniteScrollNewsArticle from './InfiniteScrollNewsArticle'
+import { InfiniteScrollNewsArticle } from './InfiniteScrollNewsArticle'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 import { hot } from 'react-hot-loader'
 

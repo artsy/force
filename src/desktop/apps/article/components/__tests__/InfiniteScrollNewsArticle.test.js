@@ -32,7 +32,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
   }
 
   let rewire = require('rewire')('../InfiniteScrollNewsArticle')
-  let InfiniteScrollNewsArticle = rewire.default
+  let { InfiniteScrollNewsArticle } = rewire
   const { Article } = require('reaction/Components/Publishing')
 
   beforeEach(() => {
