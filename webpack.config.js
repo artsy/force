@@ -129,10 +129,8 @@ if (isDevelopment) {
     config.plugins.push(
       new UglifyJsPlugin({
         cache: true,
-        parallel: true,
         sourceMap: true,
         uglifyOptions: {
-          mangle: true,
           compress: {
             warnings: false,
           },
