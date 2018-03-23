@@ -29,7 +29,7 @@ module.exports.LoginView = class LoginView extends Backbone.View
       when 'twitter-denied'
         "Canceled Twitter log in."
       else
-        "Uknown Error: " + error
+        "Unknown Error: " + error
     @showError msg
 
   events:
