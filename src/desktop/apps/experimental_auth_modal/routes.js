@@ -2,7 +2,6 @@ import { renderLayout } from '@artsy/stitch'
 import App from './components/App'
 
 export const index = async (req, res, next) => {
-  debugger
   try {
     const layout = await renderLayout({
       basePath: __dirname,

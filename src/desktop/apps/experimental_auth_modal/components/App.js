@@ -1,9 +1,4 @@
 import React from 'react'
-// import styled from 'styled-components'
-
-// import colors from 'reaction/Assets/Colors'
-// import { Row, Col } from 'reaction/Components/Grid'
-// import Text from 'reaction/Components/Text'
 
 import Button from 'reaction/Components/Buttons/Default'
 import Modal from 'reaction/Components/Modal/Modal'
