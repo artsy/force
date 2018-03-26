@@ -9,6 +9,16 @@ export const display = `
     }
   }
 `
+
+export const displayCanvas = `
+  display {
+    name
+    canvas {
+      ...DisplayUnit
+    }
+  }
+`
+
 export const displayFragment = `
   fragment DisplayUnit on DisplayUnit {
     assets {

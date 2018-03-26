@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
-import { flatten } from 'lodash'
-import { Article } from '@artsy/reaction/dist/Components/Publishing'
-import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
-import Waypoint from 'react-waypoint'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
+import { flatten } from 'lodash'
+import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
+import { Article } from '@artsy/reaction/dist/Components/Publishing'
+import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
+import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 
 export interface Props {
   article: ArticleData
@@ -17,6 +18,7 @@ export interface Props {
 interface State {
   isLoading: boolean
   articles: ArticleData[]
+  display: any[]
   offset: number
   error: boolean
   following: any[]
@@ -39,6 +41,7 @@ export class InfiniteScrollNewsArticle extends Component<
     this.state = {
       isLoading: false,
       articles: [props.article],
+      display: [],
       offset: 0,
       error: false,
       following: setupFollows() || null,
@@ -51,7 +54,7 @@ export class InfiniteScrollNewsArticle extends Component<
   }
 
   fetchNextArticles = async () => {
-    const { articles, following, offset } = this.state
+    const { articles, display, following, offset } = this.state
     const { article } = this.props
 
     this.setState({
@@ -68,10 +71,12 @@ export class InfiniteScrollNewsArticle extends Component<
       })
 
       const newArticles = data.articles
+      const newDisplay = data.display
 
       if (newArticles.length) {
         this.setState({
           articles: articles.concat(newArticles),
+          display: display.concat(newDisplay),
           isLoading: false,
           offset: offset + 6,
         })
@@ -145,24 +150,40 @@ export class InfiniteScrollNewsArticle extends Component<
   }
 
   renderContent = () => {
-    const { articles } = this.state
+    const { articles, display } = this.state
     const { isMobile, marginTop } = this.props
+
+    let displayCounter = 0
 
     return flatten(
       articles.map((article, i) => {
+        const hasDisplay = i % 6 === 0 && i !== 0
+        const displayAd = display[displayCounter]
+        if (hasDisplay) {
+          displayCounter++
+        }
+        console.log("i: ", i)
+        console.log("hasDisplay: ", hasDisplay)
+        console.log("display: ", display)
+        console.log("displayAd: ", displayAd)
+        console.log("displayCounter: ", displayCounter)
+
         return (
-          <div key={`article-${i}`}>
-            <Article
-              article={article}
-              isTruncated={i !== 0}
-              isMobile={isMobile}
-              marginTop={i === 0 ? marginTop : null}
-            />
-            <Waypoint
-              onEnter={(waypointData) => this.onEnter(article, waypointData)}
-              onLeave={(waypointData) => this.onLeave(i, waypointData)}
-            />
-          </div>
+          <Fragment key={`article-${i}`}>
+            <div key={`article-${i}`}>
+              <Article
+                article={article}
+                isTruncated={i !== 0}
+                isMobile={isMobile}
+                marginTop={i === 0 ? marginTop : null}
+              />
+              <Waypoint
+                onEnter={(waypointData) => this.onEnter(article, waypointData)}
+                onLeave={(waypointData) => this.onLeave(i, waypointData)}
+              />
+            </div>
+            {hasDisplay && displayAd && <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />}
+          </Fragment>
         )
       })
     )
