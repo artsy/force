@@ -6,15 +6,14 @@ nav.mlh-navbar
       block minimal-nav-header
     include ../../../search_bar/templates/index
   #main-layout-header-center.mlh-navbar-cell
-    a.mlh-top-nav-link( data-priority='1' href='/artists', class= activeClass('/artists') ) Artists
-    a.mlh-top-nav-link( data-priority='2' href='/collect', class= activeClass("/collect") ) Artworks
-    a.mlh-top-nav-link( data-priority='6' href='/shows', class= activeClass('/shows') ) Shows
-    a.mlh-top-nav-link( data-priority='7' href='/galleries', class= isActive('/galleries') ? activeClass('/galleries') : activeClass('/galleries-a-z') ) Galleries
-    a.mlh-top-nav-link( data-priority='8' href='/institutions', class= isActive('/institutions') ? activeClass('/institutions') : activeClass('/institutions-a-z') ) Museums
+    a.mlh-top-nav-link( data-priority='1' href='/collect', class= activeClass('/collect') ) Artworks
+    a.mlh-top-nav-link( data-priority='2' href='/auctions', class= activeClass('/auctions') ) Auctions
+    a.mlh-top-nav-link( data-priority='4' href='/galleries', class= isActive('/galleries') ? activeClass('/galleries') : activeClass('/galleries-a-z') ) Galleries
     a.mlh-top-nav-link( data-priority='5' href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
-    a.mlh-top-nav-link( data-priority='3' href='/auctions', class= activeClass('/auctions') ) Auctions
-    a.mlh-top-nav-link( data-priority='4' href='/articles', class= activeClass('/articles') ) Magazine
-
+    a.mlh-top-nav-link( data-priority='3' href='/articles', class= activeClass('/articles') ) Magazine
+    a.mlh-top-nav-link( data-priority='6' href='/artists', class= activeClass('/artists') ) Artists
+    a.mlh-top-nav-link( data-priority='7' href='/institutions', class= isActive('/institutions') ? activeClass('/institutions') : activeClass('/institutions-a-z') ) Museums
+    a.mlh-top-nav-link( data-priority='8' href='/shows', class= activeClass('/shows') ) Shows
     include ./more
   include ./user
   include ./notifications
