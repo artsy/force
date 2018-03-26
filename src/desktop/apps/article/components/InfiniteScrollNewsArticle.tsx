@@ -8,6 +8,7 @@ import { Article } from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
+import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 
 export interface Props {
   article: ArticleData
@@ -162,11 +163,6 @@ export class InfiniteScrollNewsArticle extends Component<
         if (hasDisplay) {
           displayCounter++
         }
-        console.log("i: ", i)
-        console.log("hasDisplay: ", hasDisplay)
-        console.log("display: ", display)
-        console.log("displayAd: ", displayAd)
-        console.log("displayCounter: ", displayCounter)
 
         return (
           <Fragment key={`article-${i}`}>
@@ -182,7 +178,14 @@ export class InfiniteScrollNewsArticle extends Component<
                 onLeave={(waypointData) => this.onLeave(i, waypointData)}
               />
             </div>
-            {hasDisplay && displayAd && <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />}
+            {hasDisplay && displayAd && (
+              <Fragment>
+                <Break />
+                <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
+                <Break />
+              </Fragment>
+            )
+            }
           </Fragment>
         )
       })

@@ -180,7 +180,7 @@ const LoadingSpinner = styled.div`
   position: relative;
   padding: 100px;
 `
-const Break = styled.div`
+export const Break = styled.div`
   border-top: 1px solid ${colors.grayRegular};
   width: 100%;
   margin-top: 80px;

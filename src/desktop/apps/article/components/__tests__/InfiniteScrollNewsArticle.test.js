@@ -6,6 +6,7 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 import { data as sd } from 'sharify'
+import { UnitCanvasImage } from 'reaction/Components/Publishing/Fixtures/Components'
 
 describe('<InfiniteScrollNewsArticle />', () => {
   before((done) => {
@@ -34,6 +35,9 @@ describe('<InfiniteScrollNewsArticle />', () => {
   let rewire = require('rewire')('../InfiniteScrollNewsArticle.tsx')
   let { InfiniteScrollNewsArticle } = rewire
   const { Article } = require('reaction/Components/Publishing')
+  const {
+    DisplayCanvas,
+  } = require('reaction/Components/Publishing/Display/Canvas')
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
@@ -153,5 +157,32 @@ describe('<InfiniteScrollNewsArticle />', () => {
     })
     const rendered = shallow(<InfiniteScrollNewsArticle article={article} />)
     rendered.state().following.length.should.exist
+  })
+
+  it('injects a canvas ad after the sixth article', async () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'news',
+      published_at: '2017-05-19T13:09:18.567Z',
+      contributing_authors: [{ name: 'Kana' }],
+    })
+    const data = {
+      articles: _.times(6, () => {
+        return _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          id: '678',
+        })
+      }),
+      display: {
+        name: 'BMW',
+        canvas: UnitCanvasImage,
+      },
+    }
+    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    const rendered = shallow(<InfiniteScrollNewsArticle article={article} />)
+    await rendered.instance().fetchNextArticles()
+    rendered.update()
+    rendered.find(DisplayCanvas).length.should.equal(1)
+    rendered.html().should.containEql('Advertisement by BMW')
   })
 })
