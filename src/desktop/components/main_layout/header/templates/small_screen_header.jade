@@ -1,7 +1,6 @@
 nav.mlh-small-screen#main-header-small-screen
   a#main-layout-header-home-logo( href='/', class=activeClass('/') )
-    i.icon-logo
-      span.screen-reader-text Home
+    include ../../public/icons/logo.svg
   form#main-header-search-form( action='/search', method='GET' )
     input#main-header-search-box(
       placeholder='Search',
