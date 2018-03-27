@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
-import { InfiniteScrollNewsArticles } from './InfiniteScrollNewsArticles'
+import { InfiniteScrollNewsArticle } from 'desktop/apps/article/components/InfiniteScrollNewsArticle'
 
 export interface Props {
   articles: ArticleData[]
@@ -21,7 +21,7 @@ export default hot(module)(
 
     render() {
       return (
-        <InfiniteScrollNewsArticles {...this.props} />
+        <InfiniteScrollNewsArticle {...this.props} />
       )
     }
   }

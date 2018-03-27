@@ -13,7 +13,7 @@ import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 import { LoadingSpinner } from './InfiniteScrollArticle'
 
 export interface Props {
-  article: ArticleData
+  article?: ArticleData
   articles: ArticleData[]
   isMobile: boolean
   marginTop: string
@@ -74,7 +74,7 @@ export class InfiniteScrollNewsArticle extends Component<
         query: newsArticlesQuery({
           offset,
           limit: 6,
-          omit: article && article.id
+          omit: article && article.id ? article.id : ''
         }),
       })
 

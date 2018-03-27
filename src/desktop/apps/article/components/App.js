@@ -35,7 +35,9 @@ export default hot(module)(
           )
         }
         case 'news': {
-          return <InfiniteScrollNewsArticle {...this.props} />
+          return (
+            <InfiniteScrollNewsArticle articles={[article]} {...this.props} />
+          )
         }
         default: {
           return <ArticleLayout {...this.props} />
