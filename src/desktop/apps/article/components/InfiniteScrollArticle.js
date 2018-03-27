@@ -176,7 +176,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 }
 
-const LoadingSpinner = styled.div`
+export const LoadingSpinner = styled.div`
   position: relative;
   padding: 100px;
 `

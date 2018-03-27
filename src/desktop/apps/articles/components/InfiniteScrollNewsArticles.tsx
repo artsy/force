@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { flatten } from 'lodash'
 import { Article } from '@artsy/reaction/dist/Components/Publishing'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
+import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import Waypoint from 'react-waypoint'
-import styled from 'styled-components'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from '../queries/news_articles_query'
 import { setupFollows, setupFollowButtons } from 'desktop/apps/article/components/FollowButton.js'
+import { LoadingSpinner } from 'desktop/apps/article/components/InfiniteScrollArticle'
 
 export interface Props {
   articles: ArticleData[]
@@ -38,10 +39,13 @@ export class InfiniteScrollNewsArticles extends Component<
   constructor(props) {
     super(props)
 
+    const { articles } = props
+    const date = articles && articles.length ? articles[0].published_at : null
+
     this.state = {
       isLoading: false,
       articles: props.articles || [],
-      date: 'Today',
+      date,
       offset: 6,
       error: false,
       following: setupFollows() || null,
@@ -119,24 +123,37 @@ export class InfiniteScrollNewsArticles extends Component<
   }
 
   onEnter = (article, { previousPosition, currentPosition }) => {
+    const { date } = this.state
     const enteredArticle =
       previousPosition === 'above' && currentPosition === 'inside'
+    const hasNewDate = article.published_at !== date
 
-    if (enteredArticle) {
+    if (enteredArticle && hasNewDate) {
       // ENTERED AN ARTICLE
+      this.setState({ date: article.published_at })
     }
   }
 
   onLeave = (i, { previousPosition, currentPosition }) => {
     const nextArticle = this.state.articles[i + 1]
-
+    const { date } = this.state
+    const hasNewDate = nextArticle && nextArticle.published_at !== date
     if (
       nextArticle &&
       previousPosition === 'inside' &&
-      currentPosition === 'above'
+      currentPosition === 'above' &&
+      hasNewDate
     ) {
       // LEFT AN ARTICLE
+      this.setState({ date: nextArticle.published_at })
+      window.history.replaceState({}, 'news', `/news`)
     }
+  }
+
+  onExpand = (article) => {
+    // Set slug/document title when expanding an article
+    document.title = article.thumbnail_title
+    window.history.replaceState({}, article.id, `/news/${article.slug}`)
   }
 
   renderContent = () => {
@@ -145,15 +162,22 @@ export class InfiniteScrollNewsArticles extends Component<
 
     return flatten(
       articles.map((article, i) => {
+        const beforeArticle = articles[i - 1]
+        const hasNewDate = beforeArticle &&
+          beforeArticle.published_at.substring(0, 10) !== article.published_at.substring(0, 10)
+
         return (
           <div key={`article-${i}`}>
+            {hasNewDate && <NewsDateDivider date={article.published_at} />}
             <Article
               article={article}
               isTruncated={true}
               isMobile={isMobile}
               marginTop={i === 0 ? marginTop : null}
+              onExpand={() => this.onExpand(article)}
             />
             <Waypoint
+              topOffset={FETCH_TOP_OFFSET}
               onEnter={(waypointData) => this.onEnter(article, waypointData)}
               onLeave={(waypointData) => this.onLeave(i, waypointData)}
             />
@@ -168,15 +192,10 @@ export class InfiniteScrollNewsArticles extends Component<
 
     return (
       <div id="article-root">
-        <NewsNav date={new Date()} />
+        <NewsNav date={date} />
         {this.renderContent()}
         {this.renderWaypoint()}
       </div>
     )
   }
 }
-
-const LoadingSpinner = styled.div`
-  position: relative;
-  padding: 100px;
-`

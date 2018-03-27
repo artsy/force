@@ -112,6 +112,7 @@ export const teamChannel = (req, res, next) => {
 
 export async function news(req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
+  const marginTop = isMobile ? '100px' : '200px'
 
   try {
     const { articles } = await positronql({
@@ -120,22 +121,24 @@ export async function news(req, res, next) {
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
-      layout:
-        '../../../components/main_layout/templates/react_blank_index.jade',
+      layout: '../../../components/main_layout/templates/react_index.jade',
       config: {
         styledComponents: true,
       },
       blocks: {
         body: App,
+        head: './meta/articles.jade',
       },
       locals: {
         ...res.locals,
         assetPackage: 'articles',
+        bodyClass: 'body-no-margins',
         crop,
       },
       data: {
         articles,
         isMobile,
+        marginTop,
       },
     })
 
