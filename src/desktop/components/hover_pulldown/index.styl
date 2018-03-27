@@ -78,25 +78,18 @@ computed-padding(font-size, target-line-height)
       left inherit
       right 10px
 
-.mlh-pulldown-top-link
+.mlh-pulldown-top-more-link
   display none
 
-.mlh-pulldown-top
-  display none
-
-for num in (1..8)
+for num in (1..5)
   delta = (num - 1) * 100
-  pixels = 650px + delta
+  pixels = 950px + delta
   string_number = "'"+num+"'"
   @media (max-width: pixels)
-    first-break = num==8
-    if first-break
-      .mlh-pulldown-top
-        display block
     [data-priority={string_number}]
       &.mlh-top-nav-link
         display none
-      &.mlh-pulldown-top-link
+      &.mlh-pulldown-top-more-link
         display block
 
 .hover-pulldown-menu > *
@@ -144,7 +137,7 @@ for num in (1..8)
     overflow ellipsis
     garamond()
     font-size 18px
-    &:not(.mlh-pulldown-top-link)
+    &:not(.mlh-pulldown-top-more-link)
       display block
     &:hover
       background-color gray-darkest-color
