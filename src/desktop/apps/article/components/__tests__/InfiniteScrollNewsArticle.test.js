@@ -183,6 +183,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
     await rendered.instance().fetchNextArticles()
     rendered.update()
     rendered.find(DisplayCanvas).length.should.equal(1)
-    rendered.html().should.containEql('Advertisement by BMW')
+    rendered.html().should.containEql('Sponsored by BMW')
   })
 })
