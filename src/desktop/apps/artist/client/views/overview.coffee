@@ -32,6 +32,7 @@ module.exports = class OverviewView extends Backbone.View
         artists: @statuses.artists
         articles: @statuses.articles
         shows: @statuses.shows || @statuses.cv
+        loggedOut: !@user
     .then ({ artist }) => @trigger 'artist:overview:sync', artist
 
   setupBlurb: ->

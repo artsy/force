@@ -34,7 +34,7 @@ describe 'locals middleware', ->
     res.locals.sd.MEDIUM.should.equal 'search'
 
   it 'flags reflection', ->
-    middleware req = { url: 'localhost:3000/foo?bar=baz', get: -> 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari' },
+    middleware req = { url: 'localhost:3000/foo?bar=baz', get: -> 'Artsy/Reflection' },
       res = { locals: { sd: {} } }, ->
     res.locals.sd.REFLECTION.should.be.ok()
 

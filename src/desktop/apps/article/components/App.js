@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Article } from 'reaction/Components/Publishing'
 import ArticleLayout from './layouts/Article'
+import { InfiniteScrollNewsArticle } from './InfiniteScrollNewsArticle.tsx'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 import { hot } from 'react-hot-loader'
 
@@ -32,6 +33,9 @@ export default hot(module)(
               relatedArticles={article.relatedArticles}
             />
           )
+        }
+        case 'news': {
+          return <InfiniteScrollNewsArticle {...this.props} />
         }
         default: {
           return <ArticleLayout {...this.props} />

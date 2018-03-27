@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+{ resize } = require '../../../../components/resizer'
 
 template = -> require('./index.jade') arguments...
 
@@ -42,4 +43,5 @@ module.exports = class CategoryFilterView extends Backbone.View
       hasResults: @hasResults
       counts: @aggregations.get('MEDIUM')?.get('counts')
       alwaysEnabled: @alwaysEnabled
+      resize: resize
 

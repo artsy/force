@@ -6,7 +6,8 @@ module.exports = """
       name
       href
       is_open
-      artworks(all: true, size: 50, exclude: [$id]) {
+      eligible_sale_artworks_count
+      artworks(size: 20, exclude: [$id]) {
         sale_artwork {
           lot_label
         }

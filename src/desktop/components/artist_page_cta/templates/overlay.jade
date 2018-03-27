@@ -16,7 +16,7 @@
                 - var count = 7
                 - var name = artist.get('name')
                 include ./row.jade
-              if artist.get('cta_artists')[0]
+              if artist.get('cta_artists') && artist.get('cta_artists')[0]
                 li
                   - var image = artist.get('cta_artists')[0].image.thumb.url
                   - var count = 3

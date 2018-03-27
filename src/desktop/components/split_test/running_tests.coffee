@@ -6,10 +6,19 @@
 #   outcomes:
 #     old: 8
 #     new: 2
+#
+# Or, `outcomes` can be an array, when you specify `weighting: 'equal'.
+#   weighting: 'equal'
+#   outcomes: [
+#     'old'
+#     'new'
+#   ]
 #   edge: 'new'
 #   dimension: 'dimension1' # Optional GA dimension
 #   scope: 'local' # Optionally disable global initialization
-#   control_group: 'old' #Defaults to `control`
+#   control_group: 'old'  #Defaults to `control`, Reflection sees this.
+#
+# For equal weighting, add `weighting: 'equal'` and `outcomes` as an array.
 #
 # Note: if there are no running tests
 # this should export empty Object
@@ -23,4 +32,12 @@ module.exports = {
       experiment: 50
     control_group: 'control'
     edge: 'experiment'
+  gdpr_compliance_test:
+    key: 'gdpr_compliance_test'
+    outcomes:
+      control: 100
+      combined_checkboxes: 0
+      separated_checkboxes: 0
+    control_group: 'control'
+    edge: 'gdpr_terms_of_service'
 }
