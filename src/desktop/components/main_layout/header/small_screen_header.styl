@@ -64,7 +64,10 @@
     z-index 1
     position absolute
     width logo-size + 1
+    height logo-size
     border-right 1px solid gray-lighter-color
+    > svg
+      margin-top content-margin-top
 
   #main-header-search-box
     position relative
@@ -106,10 +109,11 @@
     margin 16px 7px
 
   #main-header-menu-button
-    padding 8px
+    padding 12px
     position absolute
     right 0
     top 0
     width logo-size
+    height logo-size
     border-left 1px solid gray-lighter-color
     -webkit-tap-highlight-color rgba(0,0,0,0)
