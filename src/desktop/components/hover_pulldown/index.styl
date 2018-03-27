@@ -81,18 +81,14 @@ computed-padding(font-size, target-line-height)
 .mlh-pulldown-top-link
   display none
 
-.mlh-pulldown-top
-  display none
+.mlh-pulldown-top-link-persistent
+  display block
 
-for num in (1..8)
+for num in (1..5)
   delta = (num - 1) * 100
   pixels = 650px + delta
   string_number = "'"+num+"'"
   @media (max-width: pixels)
-    first-break = num==8
-    if first-break
-      .mlh-pulldown-top
-        display block
     [data-priority={string_number}]
       &.mlh-top-nav-link
         display none
@@ -149,6 +145,7 @@ for num in (1..8)
     &:hover
       background-color gray-darkest-color
   .mlh-pulldown-top-link
+  .mlh-pulldown-top-link-persistent
     avant-garde()
     font-size 13px
   > hr
