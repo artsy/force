@@ -28,16 +28,16 @@
 #main-layout-header-home-logo
   flex-shrink 0
   display inline-block
+  height header-logo-size
   width home-logo-size
   text-align center
   text-decoration none
   vertical-align middle
-  > i
-    font-size default-icon-font-size
-    line-height home-logo-size
+  > svg
+    height header-logo-size
+    width header-logo-size
 #main-layout-header-center
-  padding 0 20px
-  flex-grow 1
+  padding 0 30px
 #main-layout-header-center
 .main-layout-header-user
   avant-garde()
@@ -63,9 +63,9 @@
   &:focus
     color purple-color
 .mlh-login
-  padding-left 20px
+  margin-right 10px
 .mlh-signup
-  padding-right 20px
+  margin-right 20px
 .mlh-user-name
   @extends .mlh-nav-link
   padding-left 30px
