@@ -1,6 +1,9 @@
 import { articleBody } from 'desktop/apps/article/queries/articleBody'
 import { sectionFragments } from 'desktop/apps/article/queries/sectionFragments'
-import { relatedArticles } from 'desktop/apps/article/queries/relatedArticles'
+import {
+  relatedArticles,
+  relatedArticlesNews,
+} from 'desktop/apps/article/queries/relatedArticles'
 import {
   display,
   displayCanvas,
@@ -28,6 +31,7 @@ export const newsArticlesQuery = ({ offset, limit, omit }) => {
         ${articleBody}
       }
       ${displayCanvas}
+      relatedArticlesCanvas: ${relatedArticlesNews(offset, limit)}
     }
     ${displayFragment}
     ${sectionFragments}
