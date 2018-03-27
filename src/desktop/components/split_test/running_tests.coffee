@@ -25,17 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_page_variants:
-    key: 'artist_page_variants'
-    outcomes: [
-      'control'
-      'no_info'
-      'no_header'
-      'no_info_header'
-    ]
-    control_group: 'control'
-    edge: 'no_info_header'
-    weighting: 'equal'
   merch_sort_test:
     key: 'merch_sort_test'
     outcomes:
