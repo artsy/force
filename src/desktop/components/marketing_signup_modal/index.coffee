@@ -7,6 +7,7 @@ modalize = require '../modalize/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 Form = require('../mixins/form.coffee')
+splitTest = require('../split_test/index')
 
 class MarketingSignupModalInner extends Backbone.View
   _.extend @prototype, Form
@@ -23,8 +24,11 @@ class MarketingSignupModalInner extends Backbone.View
 
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
-    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
+    
+    # remove after a/b test closes
+    splitTest('gdpr_compliance_test').view()
     @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   render: ->
     @$el.html template
