@@ -10,6 +10,7 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
+splitTest = require('../split_test/index')
 
 module.exports = class ArtistPageCTAView extends Backbone.View
   _.extend @prototype, Form
@@ -33,7 +34,11 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @alreadyDismissed = false
     @afterAuthPath = "/personalize"
     @signupIntent = "landing full page modal"
+
+    # remove after a/b test closes
+    splitTest('gdpr_compliance_test').view()
     @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
