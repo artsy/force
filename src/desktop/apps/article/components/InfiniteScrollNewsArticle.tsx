@@ -200,10 +200,6 @@ export class InfiniteScrollNewsArticle extends Component<
                 <RelatedArticlesCanvas
                   articles={related}
                   isMobile={isMobile}
-                  vertical={{
-                    name: 'Art Market',
-                    id: '12345'
-                  }}
                 />
                 <Break />
               </Fragment>
