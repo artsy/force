@@ -36,7 +36,7 @@ module.exports = {
     key: 'gdpr_compliance_test'
     weighting: 'equal'
     outcomes: [
-      'control',
+      'control'
       'combined_checkboxes'
       'separated_checkboxes'
     ]
