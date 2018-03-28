@@ -44,13 +44,17 @@ export class InfiniteScrollNewsArticle extends Component<
   constructor(props) {
     super(props)
 
+    const date = props.articles[0] ? props.articles[0].published_at : null
+    const omit = props.article ? props.article.id : null
+    const offset = props.article ? 0 : 6
+
     this.state = {
       isLoading: false,
       articles: props.articles,
-      date: props.articles[0] ? props.articles[0].published_at : null,
+      date,
       display: [],
-      offset: props.article ? 0 : 6,
-      omit: props.article ? props.article.id : null,
+      offset,
+      omit,
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
@@ -152,11 +156,12 @@ export class InfiniteScrollNewsArticle extends Component<
     if (
       nextArticle &&
       previousPosition === 'inside' &&
-      currentPosition === 'above' &&
-      hasNewDate
+      currentPosition === 'above'
     ) {
       // LEFT AN ARTICLE
-      this.setState({ date: nextArticle.published_at })
+      if (hasNewDate) {
+        this.setState({ date: nextArticle.published_at })
+      }
       document.title = 'News' // todo: replace with actual meta-title
       window.history.replaceState({}, 'news', `/news`)
     }
