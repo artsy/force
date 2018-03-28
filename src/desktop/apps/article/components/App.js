@@ -65,10 +65,15 @@ class EditPortal extends React.Component {
 
   render() {
     const { article } = this.props
+    const positionTop = article.layout === 'news' && 125
 
     try {
       return ReactDOM.createPortal(
-        <EditButton channelId={article.channel_id} slug={article.slug} />,
+        <EditButton
+          channelId={article.channel_id}
+          slug={article.slug}
+          positionTop={positionTop}
+        />,
         document.getElementById('react-portal')
       )
     } catch (e) {

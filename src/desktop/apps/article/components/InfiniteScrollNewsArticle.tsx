@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { flatten, flattenDeep } from 'lodash'
+import { flatten } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
@@ -25,6 +25,7 @@ interface State {
   date: any
   display: any[]
   offset: number
+  omit: string
   error: boolean
   following: any[]
   isEnabled: boolean
@@ -43,14 +44,13 @@ export class InfiniteScrollNewsArticle extends Component<
   constructor(props) {
     super(props)
 
-    const articles = props.articles || []
-
     this.state = {
       isLoading: false,
-      articles: flattenDeep([props.article, articles]),
-      date: props.article ? props.article.published_at : null,
+      articles: props.articles,
+      date: props.articles[0] ? props.articles[0].published_at : null,
       display: [],
-      offset: 0,
+      offset: props.article ? 0 : 6,
+      omit: props.article ? props.article.id : null,
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
@@ -62,8 +62,7 @@ export class InfiniteScrollNewsArticle extends Component<
   }
 
   fetchNextArticles = async () => {
-    const { articles, display, following, offset } = this.state
-    const { article } = this.props
+    const { articles, display, following, offset, omit } = this.state
 
     this.setState({
       isLoading: true,
@@ -74,7 +73,7 @@ export class InfiniteScrollNewsArticle extends Component<
         query: newsArticlesQuery({
           offset,
           limit: 6,
-          omit: article && article.id ? article.id : ''
+          omit
         }),
       })
 
@@ -179,7 +178,8 @@ export class InfiniteScrollNewsArticle extends Component<
 
   renderContent = () => {
     const { articles, display } = this.state
-    const { isMobile, marginTop } = this.props
+    const { isMobile } = this.props
+    const marginTop = isMobile ? '100px' : '200px'
 
     let displayCounter = 0
 
@@ -192,6 +192,7 @@ export class InfiniteScrollNewsArticle extends Component<
         }
 
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
+        const isExpanded = this.props.article && i === 0
 
         return (
           <Fragment key={`article-${i}`}>
@@ -201,7 +202,7 @@ export class InfiniteScrollNewsArticle extends Component<
             <div key={`article-${i}`}>
               <Article
                 article={article}
-                isTruncated={i !== 0}
+                isTruncated={!isExpanded}
                 isMobile={isMobile}
                 marginTop={i === 0 ? marginTop : null}
                 onExpand={() => this.onExpand(article)}

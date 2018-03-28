@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
@@ -15,9 +14,6 @@ export default hot(module)(
     Props,
     any
     > {
-    static propTypes = {
-      articles: PropTypes.object,
-    }
 
     render() {
       return (

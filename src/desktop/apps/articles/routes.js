@@ -112,7 +112,6 @@ export const teamChannel = (req, res, next) => {
 
 export async function news(req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
-  const marginTop = isMobile ? '100px' : '200px'
 
   try {
     const { articles } = await positronql({
@@ -127,7 +126,7 @@ export async function news(req, res, next) {
       },
       blocks: {
         body: App,
-        head: './meta/articles.jade',
+        head: './meta/news.jade',
       },
       locals: {
         ...res.locals,
@@ -138,7 +137,6 @@ export async function news(req, res, next) {
       data: {
         articles,
         isMobile,
-        marginTop,
       },
     })
 
