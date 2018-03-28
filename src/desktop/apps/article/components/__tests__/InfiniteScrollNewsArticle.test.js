@@ -90,6 +90,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       rendered.find(Article).length.should.equal(1)
       rendered.html().should.containEql('NewsLayout')
     })
+
     it('sets up state for a single article', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered.state().offset.should.eql(0)

@@ -13,6 +13,7 @@ sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
 sd = require('sharify').data
+splitTest = require('../split_test/index')
 
 class State extends Backbone.Model
   defaults: mode: 'register'
@@ -37,7 +38,9 @@ module.exports = class AuthModalView extends ModalView
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     ## For AB test- # of gdpr checkboxes to show
+    splitTest('gdpr_compliance_test').view()
     @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+    
     @preInitialize options
     super
 
