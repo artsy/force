@@ -43,6 +43,9 @@ module.exports = class Messenger
       else
         $el.append "<span class='is-error'>#{message}</span>"
 
+        # remove after gdpr compliance test closes
+        $('.gdpr-signup__form__checkbox__accept-terms .is-error').hide() 
+
   # A field might have multiple validity errors simultaneously,
   # as a user interacts with a form they will all be exposed: not really necessary
   # to display everything at once.
