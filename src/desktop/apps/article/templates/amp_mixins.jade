@@ -70,6 +70,13 @@ mixin amp_embed(section)
     .article-section-embed
       amp-iframe(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
 
+mixin amp_social_embed(section)
+  .article-section-container.responsive-layout-container
+    .article-section-social-embed
+      if section.url.match('twitter')
+        - var tweetid = section.url.split('/').pop()
+        amp-twitter(data-tweetid=tweetid width="300" height="270" layout="responsive")
+
 mixin amp_callout(section)
   .article-section-container.responsive-layout-container(data-section-type="callout")
     if section.article && section.article.length > 0
