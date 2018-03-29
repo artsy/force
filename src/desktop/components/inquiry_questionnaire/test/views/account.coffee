@@ -2,25 +2,13 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 setup = require './setup'
+{ resolve } = require 'path'
 
-Account = benv.requireWithJadeify require.resolve('../../views/account'), [
+Account = benv.requireWithJadeify resolve(__dirname, '../../views/account'), [
   'templates.login'
   'templates.register'
   'templates.forgot'
 ]
-
-before (done) ->
-  benv.setup ->
-    benv.expose 
-      $: benv.require('jquery'), jQuery: benv.require('jquery'),
-      sd: {
-        AP: { loginPagePath: '/login' }
-      }
-    Backbone.$ = $
-    done()
-
-after ->
-  benv.teardown()
 
 describe 'Account', setup ->
   beforeEach ->
