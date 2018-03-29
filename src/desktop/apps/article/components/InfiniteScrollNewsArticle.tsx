@@ -263,7 +263,7 @@ export class InfiniteScrollNewsArticle extends Component<
 
     return (
       <div id="article-root">
-        <NewsNav date={date} />
+        <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}
       </div>
