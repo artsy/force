@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^0.33.4":
-  version "0.33.4"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.33.4.tgz#3ea57e12a17be4e235d0a48bec14e639f70ebca5"
+"@artsy/reaction@0.34.1":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.34.1.tgz#fef30b01639f415625fb29af6182c4896d4f6523"
   dependencies:
     formik "^0.11.11"
     history "^4.6.1"
