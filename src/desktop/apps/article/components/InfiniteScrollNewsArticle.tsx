@@ -66,11 +66,6 @@ export class InfiniteScrollNewsArticle extends Component<
     })
 
     try {
-      console.log(newsArticlesQuery({
-        offset,
-        limit: 6,
-        omit: article.id
-      }))
       const data = await positronql({
         query: newsArticlesQuery({
           offset,
@@ -175,7 +170,6 @@ export class InfiniteScrollNewsArticle extends Component<
         const hasMetaContent = i % 6 === 0 && i !== 0
         const displayAd = display[counter]
         const related = relatedArticles[counter]
-        console.log(related)
         if (hasMetaContent) {
           counter++
         }
