@@ -2,11 +2,25 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 setup = require './setup'
+
 Account = benv.requireWithJadeify require.resolve('../../views/account'), [
   'templates.login'
   'templates.register'
   'templates.forgot'
 ]
+
+before (done) ->
+  benv.setup ->
+    benv.expose 
+      $: benv.require('jquery'), jQuery: benv.require('jquery'),
+      sd: {
+        AP: { loginPagePath: '/login' }
+      }
+    Backbone.$ = $
+    done()
+
+after ->
+  benv.teardown()
 
 describe 'Account', setup ->
   beforeEach ->
@@ -20,7 +34,7 @@ describe 'Account', setup ->
       @view.$('.iq-headline').text()
         .should.containEql 'Create an account to send your message'
       @view.$('input').map(-> $(this).attr('name')).get()
-        .should.eql ['name', 'email', 'password']
+        .should.eql ['name', 'email', 'password', '_csrf']
 
     it 're-renders when the mode changes', ->
       @view.active.set 'mode', 'forgot'
