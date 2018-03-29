@@ -44,6 +44,7 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:cursorchanged', @ensureResult
 
     @setupTypeahead()
+    @setupPlaceholder()
 
   events:
     'keyup input': 'checkSubmission'
@@ -190,3 +191,17 @@ module.exports = class SearchBarView extends Backbone.View
     mediator.off null, null, this
     @$input.typeahead 'destroy'
     super
+
+  setupPlaceholder: ->
+    @handlePlaceholderTextResponsively()
+    $(window).on 'resize', _.throttle(@handlePlaceholderTextResponsively, 200)
+
+  handlePlaceholderTextResponsively: =>
+    if @$input.width() < 200
+      @$input.attr('placeholder', 'Search by artist, etc.')
+    else if @$input.width() < 400
+      @$input.attr('placeholder', 'Search by artist, gallery, etc.')
+    else if @$input.width() < 600
+      @$input.attr('placeholder', 'Search by artist, gallery, style, tag, etc.')
+    else
+      @$input.attr('placeholder', 'Search by artist, gallery, style, theme, tag, etc.')

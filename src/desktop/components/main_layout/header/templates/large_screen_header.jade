@@ -7,11 +7,11 @@ nav.mlh-navbar
       block minimal-nav-header
     include ../../../search_bar/templates/index
   #main-layout-header-center.mlh-navbar-cell
-    a.mlh-top-nav-link( data-priority='1' href='/collect', class= activeClass("/collect") ) Artworks
-    a.mlh-top-nav-link( data-priority='2' href='/auctions', class= activeClass('/auctions') ) Auctions
-    a.mlh-top-nav-link( data-priority='4' href='/galleries', class= isActive('/galleries') ? activeClass('/galleries') : activeClass('/galleries-a-z') ) Galleries
-    a.mlh-top-nav-link( data-priority='5' href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
-    a.mlh-top-nav-link( data-priority='3' href='/articles', class= activeClass('/articles') ) Magazine
+    a.mlh-top-nav-link( href='/collect', class= activeClass("/collect") ) Artworks
+    a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
+    a.mlh-top-nav-link.galleries( href='/galleries', class= isActive('/galleries') ? activeClass('/galleries') : activeClass('/galleries-a-z') ) Galleries
+    a.mlh-top-nav-link.fairs( href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
+    a.mlh-top-nav-link.magazine( href='/articles', class= activeClass('/articles') ) Magazine
 
     include ./more
   include ./user

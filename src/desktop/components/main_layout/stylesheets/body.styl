@@ -41,19 +41,19 @@ html[data-useragent*="iPad"]
     position absolute
 
 #main-layout-search-bar-container
-  border-color #e5e5e5
+  border-color gray-color
   background-color gray-lightest-color
   &:hover
-    border 1px solid black
+    border 1px solid gray-darker-color
 
 #main-layout-header
   #main-layout-search-bar-container.focused
     &:hover
-      border-color #6e00ff !important
+      border-color purple-color !important
 
 #main-layout-header
   #main-layout-search-bar-container.focused
-    border-color #6e00ff !important
+    border-color purple-color !important
 
   #main-layout-search-bar-input
     &::placeholder
@@ -103,7 +103,7 @@ html[data-useragent*="iPad"]
       color black
     #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, span.mlh-top-nav-link
       &:hover
-        color #6e00ff
+        color purple-color
     .hover-pulldown-menu a
       color white !important
     .hover-pulldown:not(.mlh-hamburger):not(.mlh-notification):not(.artist-page-cta-overlay__feed__pulldown):before
@@ -123,18 +123,18 @@ html[data-useragent*="iPad"]
     #main-layout-header
       #main-layout-search-bar-container
         background-color gray-lightest-color
-        border-color #e5e5e5
+        border-color gray-color
         &:hover
-          border-color black !important
+          border-color gray-darker-color !important
 
     #main-layout-header
       #main-layout-search-bar-container.focused
         &:hover
-          border-color #6e00ff !important
+          border-color purple-color !important
 
     #main-layout-header
       #main-layout-search-bar-container.focused
-        border-color #6e00ff !important
+        border-color purple-color !important
 
     #main-layout-search-bar-container.is-loading .loading-spinner-small
       background black
