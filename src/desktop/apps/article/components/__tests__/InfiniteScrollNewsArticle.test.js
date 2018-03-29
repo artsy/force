@@ -39,7 +39,10 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   let rewire = require('rewire')('../InfiniteScrollNewsArticle.tsx')
   let { InfiniteScrollNewsArticle } = rewire
-  const { Article } = require('reaction/Components/Publishing')
+  const {
+    Article,
+    RelatedArticlesCanvas,
+  } = require('reaction/Components/Publishing')
   const {
     DisplayCanvas,
   } = require('reaction/Components/Publishing/Display/Canvas')
@@ -235,5 +238,35 @@ describe('<InfiniteScrollNewsArticle />', () => {
         .instance()
         .setState.args[0][0].date.should.equal(nextArticle.published_at)
     })
+  })
+
+  it('injects read more after the sixth article', async () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'news',
+      published_at: '2017-05-19T13:09:18.567Z',
+      contributing_authors: [{ name: 'Kana' }],
+    })
+    const data = {
+      articles: _.times(6, () => {
+        return _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          id: '678',
+        })
+      }),
+      relatedArticlesCanvas: _.times(4, () => {
+        return _.extend({}, fixtures.article, {
+          slug: 'related-article',
+          channel_id: '123',
+          id: '456',
+        })
+      }),
+    }
+    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    await rendered.instance().fetchNextArticles()
+    rendered.update()
+    rendered.find(RelatedArticlesCanvas).length.should.equal(1)
+    rendered.html().should.containEql('More from Artsy Editorial')
   })
 })

@@ -3,7 +3,7 @@ import { flatten } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import { Article } from '@artsy/reaction/dist/Components/Publishing'
+import { Article, RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
@@ -11,6 +11,7 @@ import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 import { LoadingSpinner } from './InfiniteScrollArticle'
+
 
 export interface Props {
   article?: ArticleData
@@ -20,7 +21,6 @@ export interface Props {
 }
 
 interface State {
-  isLoading: boolean
   articles: ArticleData[]
   date: any
   display: any[]
@@ -29,6 +29,8 @@ interface State {
   error: boolean
   following: any[]
   isEnabled: boolean
+  isLoading: boolean
+  relatedArticles: any[]
 }
 
 // FIXME: Rewire
@@ -58,6 +60,7 @@ export class InfiniteScrollNewsArticle extends Component<
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
+      relatedArticles: []
     }
   }
 
@@ -66,7 +69,14 @@ export class InfiniteScrollNewsArticle extends Component<
   }
 
   fetchNextArticles = async () => {
-    const { articles, display, following, offset, omit } = this.state
+    const {
+      articles,
+      display,
+      following,
+      offset,
+      omit,
+      relatedArticles
+    } = this.state
 
     this.setState({
       isLoading: true,
@@ -83,11 +93,13 @@ export class InfiniteScrollNewsArticle extends Component<
 
       const newArticles = data.articles
       const newDisplay = data.display
+      const newRelatedArticles = [data.relatedArticlesCanvas]
 
       if (newArticles.length) {
         this.setState({
           articles: articles.concat(newArticles),
           display: display.concat(newDisplay),
+          relatedArticles: relatedArticles.concat(newRelatedArticles),
           isLoading: false,
           offset: offset + 6,
         })
@@ -182,18 +194,23 @@ export class InfiniteScrollNewsArticle extends Component<
   }
 
   renderContent = () => {
-    const { articles, display } = this.state
+    const {
+      articles,
+      display,
+      relatedArticles
+    } = this.state
     const { isMobile } = this.props
     const marginTop = isMobile ? '100px' : '200px'
 
-    let displayCounter = 0
+    let counter = 0
 
     return flatten(
       articles.map((article, i) => {
-        const hasDisplay = i % 6 === 0 && i !== 0
-        const displayAd = display[displayCounter]
-        if (hasDisplay) {
-          displayCounter++
+        const hasMetaContent = i % 6 === 0 && i !== 0
+        const displayAd = display[counter]
+        const related = relatedArticles[counter]
+        if (hasMetaContent) {
+          counter++
         }
 
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
@@ -218,18 +235,26 @@ export class InfiniteScrollNewsArticle extends Component<
                 topOffset={FETCH_TOP_OFFSET}
               />
             </div>
-
-            {hasDisplay && displayAd && (
+            {hasMetaContent && related && (
               <Fragment>
                 <Break />
+                <RelatedArticlesCanvas
+                  articles={related}
+                  isMobile={isMobile}
+                />
+                <Break />
+              </Fragment>
+            )}
+            {hasMetaContent && displayAd && (
+              <Fragment>
                 <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
                 <Break />
               </Fragment>
-            )
-            }
-          </Fragment>
+            )}
+          </Fragment >
         )
-      })
+      }
+      )
     )
   }
 
