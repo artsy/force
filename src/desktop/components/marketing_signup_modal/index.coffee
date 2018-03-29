@@ -19,6 +19,7 @@ class MarketingSignupModalInner extends Backbone.View
   events:
     'click .auth-mode-toggle a': 'openLogin'
     'click #signup-fb': 'fbSignup'
+    'click .gdpr-signup__form button': 'submit'
     'submit form': 'submit'
     'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
@@ -96,6 +97,7 @@ class MarketingSignupModalInner extends Backbone.View
 
   submit: (e) ->
     e.preventDefault()
+
     @$('form button').addClass 'is-loading'
     formData = @serializeForm()
     userData =
