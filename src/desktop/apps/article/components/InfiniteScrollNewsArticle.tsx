@@ -197,7 +197,7 @@ export class InfiniteScrollNewsArticle extends Component<
         }
 
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
-        const isExpanded = this.props.article && i === 0
+        const isTruncated = !this.props.article || i !== 0
 
         return (
           <Fragment key={`article-${i}`}>
@@ -207,7 +207,7 @@ export class InfiniteScrollNewsArticle extends Component<
             <div key={`article-${i}`}>
               <Article
                 article={article}
-                isTruncated={!isExpanded}
+                isTruncated={isTruncated}
                 isMobile={isMobile}
                 marginTop={i === 0 ? marginTop : null}
                 onExpand={() => this.onExpand(article)}
