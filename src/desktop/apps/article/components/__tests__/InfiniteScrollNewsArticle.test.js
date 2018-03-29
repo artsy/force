@@ -1,11 +1,12 @@
 import 'jsdom-global/register'
 import _ from 'underscore'
 import benv from 'benv'
-import fixtures from 'desktop/test/helpers/fixtures.coffee'
+import moment from 'moment'
 import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 import { data as sd } from 'sharify'
+import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import { UnitCanvasImage } from 'reaction/Components/Publishing/Fixtures/Components'
 import { NewsArticle } from 'reaction/Components/Publishing/Fixtures/Articles'
 
@@ -162,6 +163,37 @@ describe('<InfiniteScrollNewsArticle />', () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     const hasNewDate = rendered.instance().hasNewDate(nextArticle, 1)
     hasNewDate.should.equal(true)
+  })
+
+  describe('#getDateField', () => {
+    it('Returns published_at if present', () => {
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      const getDateField = rendered.instance().getDateField(article)
+
+      getDateField.should.equal(article.published_at)
+    })
+    it('Returns scheduled_publish_at if no published_at', () => {
+      const published_at = article.published_at
+      article.scheduled_publish_at = published_at
+      delete article.published_at
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      const getDateField = rendered.instance().getDateField(article)
+
+      getDateField.should.equal(published_at)
+    })
+    it('Returns today for articles with no date field', () => {
+      const today = moment()
+        .toISOString()
+        .substring(0, 10)
+      delete article.published_at
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      const getDateField = rendered
+        .instance()
+        .getDateField(article)
+        .substring(0, 10)
+
+      getDateField.should.equal(today)
+    })
   })
 
   describe('#onEnter', () => {

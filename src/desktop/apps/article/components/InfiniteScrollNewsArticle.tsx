@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { Component, Fragment } from 'react'
 import { flatten } from 'lodash'
 import Waypoint from 'react-waypoint'
@@ -46,7 +47,8 @@ export class InfiniteScrollNewsArticle extends Component<
   constructor(props) {
     super(props)
 
-    const date = props.articles[0] ? props.articles[0].published_at : null
+    const article = props.articles[0] ? props.articles[0] : {}
+    const date = this.getDateField(article)
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
 
@@ -185,10 +187,16 @@ export class InfiniteScrollNewsArticle extends Component<
     window.history.replaceState({}, article.id, `/news/${article.slug}`)
   }
 
+  getDateField = (article) => {
+    const { published_at, scheduled_publish_at } = article
+    return published_at || scheduled_publish_at || moment().toISOString()
+  }
+
   hasNewDate = (article, i) => {
     const { articles } = this.state
-    const beforeDate = articles[i - 1] && articles[i - 1].published_at.substring(0, 10)
-    const currentDate = article.published_at.substring(0, 10)
+    const beforeArticle = articles[i - 1] ? articles[i - 1] : {}
+    const beforeDate = this.getDateField(beforeArticle).substring(0, 10)
+    const currentDate = this.getDateField(article).substring(0, 10)
 
     return beforeDate !== currentDate
   }
@@ -263,7 +271,10 @@ export class InfiniteScrollNewsArticle extends Component<
 
     return (
       <div id="article-root">
-        <NewsNav date={date} />
+        <NewsNav
+          date={date}
+          positionTop={61}
+        />
         {this.renderContent()}
         {this.renderWaypoint()}
       </div>
