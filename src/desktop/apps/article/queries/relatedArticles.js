@@ -36,7 +36,7 @@ export const relatedArticles = `
 
 export const relatedArticlesNews = (offset, limit) => {
   return `
-    articles(published: true, limit: 4, offset: ${offset}, sort: "-published_at"){
+    articles(published: true, in_editorial_feed: true, limit: 4, offset: ${offset}, sort: "-published_at"){
       ${canvasBody}
     }
   `
