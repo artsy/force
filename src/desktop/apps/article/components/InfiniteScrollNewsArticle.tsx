@@ -194,7 +194,7 @@ export class InfiniteScrollNewsArticle extends Component<
 
   hasNewDate = (article, i) => {
     const { articles } = this.state
-    const beforeArticle = articles[i - 1] ? articles[i - 1] : {}
+    const beforeArticle = articles[i - 1] || {}
     const beforeDate = this.getDateField(beforeArticle).substring(0, 10)
     const currentDate = this.getDateField(article).substring(0, 10)
 
