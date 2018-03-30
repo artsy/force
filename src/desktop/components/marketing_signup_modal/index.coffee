@@ -9,6 +9,7 @@ template = -> require('./index.jade') arguments...
 Form = require('../mixins/form.coffee')
 splitTest = require('../split_test/index')
 
+
 class MarketingSignupModalInner extends Backbone.View
   _.extend @prototype, Form
 
@@ -19,7 +20,6 @@ class MarketingSignupModalInner extends Backbone.View
   events:
     'click .auth-mode-toggle a': 'openLogin'
     'click #signup-fb': 'fbSignup'
-    'click .gdpr-signup__form button': 'submit'
     'submit form': 'submit'
     'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
@@ -55,7 +55,6 @@ class MarketingSignupModalInner extends Backbone.View
       'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
     queryString = $.param(queryData)
     fbUrl = sd.AP.facebookPath + '?' + queryString
-    console.log('fbUrl', fbUrl)
     return window.location.href = fbUrl if @gdprDisabled
 
     if @checkAcceptedTerms()
@@ -97,7 +96,6 @@ class MarketingSignupModalInner extends Backbone.View
 
   submit: (e) ->
     e.preventDefault()
-
     @$('form button').addClass 'is-loading'
     formData = @serializeForm()
     userData =
