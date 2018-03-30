@@ -5,6 +5,8 @@
     "tslint-react"
   ],
   "rules": {
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
     "no-default-export": true,
     "space-before-function-paren": false
   }

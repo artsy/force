@@ -1,4 +1,7 @@
+import { renderLayout as _renderLayout } from '@artsy/stitch'
+import App from 'desktop/apps/articles/components/App.tsx'
 import magazineQuery from './queries/editorial_articles.coffee'
+import { newsArticlesQuery } from './queries/news_articles_query.js'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import Articles from 'desktop/collections/articles.coffee'
 import Section from 'desktop/models/section.coffee'
@@ -8,8 +11,10 @@ import { topParselyArticles as _topParselyArticles } from 'desktop/components/ut
 import { map, sortBy, first, last, reject } from 'lodash'
 import { PARSELY_KEY, PARSELY_SECRET } from '../../config.coffee'
 
+// FIXME: Rewire
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
+let renderLayout = _renderLayout
 
 export const articles = (req, res, next) => {
   const query = { query: magazineQuery }
@@ -105,6 +110,38 @@ export const teamChannel = (req, res, next) => {
   })
 }
 
-export const news = (req, res, next) => {
-  res.send('Hello!')
+export async function news(req, res, next) {
+  const isMobile = res.locals.sd.IS_MOBILE
+
+  try {
+    const { articles } = await positronql({
+      query: newsArticlesQuery({ limit: 6 }),
+    })
+
+    const layout = await renderLayout({
+      basePath: res.app.get('views'),
+      layout: '../../../components/main_layout/templates/react_index.jade',
+      config: {
+        styledComponents: true,
+      },
+      blocks: {
+        body: App,
+        head: './meta/news.jade',
+      },
+      locals: {
+        ...res.locals,
+        assetPackage: 'articles',
+        bodyClass: 'body-no-margins',
+        crop,
+      },
+      data: {
+        articles,
+        isMobile,
+      },
+    })
+
+    res.send(layout)
+  } catch (error) {
+    next(error)
+  }
 }

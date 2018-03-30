@@ -13,11 +13,12 @@ let positronql = _positronql
 export class EditButton extends React.Component {
   static propTypes = {
     channelId: PropTypes.string,
-    slug: PropTypes.string
+    slug: PropTypes.string,
+    positionTop: PropTypes.number,
   }
 
   state = {
-    hasButtonState: false
+    hasButtonState: false,
   }
 
   componentDidMount = async () => {
@@ -33,13 +34,20 @@ export class EditButton extends React.Component {
     }
   }
 
-  render () {
-    if (!this.state.hasButtonState || !this.state.showEditButton) {
+  render() {
+    const { hasButtonState, showEditButton } = this.state
+    const { positionTop, slug } = this.props
+
+    if (!hasButtonState || !showEditButton) {
       return false
     } else {
       return (
-        <StyledEditButton target='_blank' href={`${sd.POSITRON_URL}/articles/${this.props.slug}/edit`}>
-          <i className='icon-with-black-circle icon-edit' />
+        <StyledEditButton
+          target="_blank"
+          href={`${sd.POSITRON_URL}/articles/${slug}/edit`}
+          positionTop={positionTop}
+        >
+          <i className="icon-with-black-circle icon-edit" />
         </StyledEditButton>
       )
     }
@@ -47,7 +55,7 @@ export class EditButton extends React.Component {
 }
 
 const StyledEditButton = styled.a`
+  top: ${(props) => (props.positionTop ? `${props.positionTop}px` : `75px`)};
   position: fixed;
-  top: 75px;
   right: 20px;
 `

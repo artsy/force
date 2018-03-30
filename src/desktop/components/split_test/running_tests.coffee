@@ -25,17 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_page_variants:
-    key: 'artist_page_variants'
-    outcomes: [
-      'control'
-      'no_info'
-      'no_header'
-      'no_info_header'
-    ]
-    control_group: 'control'
-    edge: 'no_info_header'
-    weighting: 'equal'
   merch_sort_test:
     key: 'merch_sort_test'
     outcomes:
@@ -43,4 +32,13 @@ module.exports = {
       experiment: 50
     control_group: 'control'
     edge: 'experiment'
+  gdpr_compliance_test:
+    key: 'gdpr_compliance_test'
+    outcomes: {
+      control: 100
+      combined_checkboxes: 0
+      separated_checkboxes: 0
+    }
+    control_group: 'control'
+    edge: 'combined_checkboxes'
 }

@@ -127,5 +127,10 @@ export const articleBody = `
         ...Artwork
       }
     }
+    ... on SocialEmbed {
+      type
+      url
+      layout
+    }
   }
 `

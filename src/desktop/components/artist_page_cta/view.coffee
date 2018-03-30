@@ -10,6 +10,7 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
+splitTest = require('../split_test/index')
 
 module.exports = class ArtistPageCTAView extends Backbone.View
   _.extend @prototype, Form
@@ -18,9 +19,11 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   events:
     'click': 'fullScreenOverlay'
-    'submit .artist-page-cta-overlay__register': 'submit'
+    'submit form': 'submit'
     'click .auth-toggle': 'triggerLoginModal'
     'keydown': 'keyAction'
+    'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: ({ artist }) ->
     @artist = artist
@@ -31,9 +34,17 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @alreadyDismissed = false
     @afterAuthPath = "/personalize"
     @signupIntent = "landing full page modal"
+
+    # remove after a/b test closes
+    # splitTest('gdpr_compliance_test').view()
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
+
+    # This 'invalid' event doesn't seem to work in the @events property
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
@@ -62,7 +73,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     Cookies.set('destination', @artist.get('href'), expires: 60 * 60 * 24)
 
     @$el.addClass 'fullscreen'
-    @$(".artist-page-cta-overlay__register input[name='name']").focus()
+    @$(".gdpr-signup input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
     analyticsHooks.trigger 'artist_page:cta:shown'
     setTimeout (=> @disableScroll()), 400
@@ -85,6 +96,47 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     setTimeout (=> @reenableScroll()), 400
     @alreadyDismissed = true
     analyticsHooks.trigger 'artist_page:cta:hidden'
+
+  checkAcceptedTerms: () ->
+    input = $('input#accepted_terms_of_service').get(0)
+    input.setCustomValidity? ''
+    if $(input).prop('checked')
+      $('.tos-error').text ''
+      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
+      $boxContainer.attr('data-state', null)
+      true
+    else
+      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
+      $boxContainer.attr('data-state', 'error')
+      input = $('input#accepted_terms_of_service').get(0)
+      input.setCustomValidity('')
+      $('.tos-error').text 'Please agree to our terms to continue'
+      false
+
+  fbSignup: (e) ->
+    e.preventDefault()
+    queryData =
+      'signup-intent': @signupIntent
+      'redirect-to': @afterAuthPath
+      'modal_id': 'artist_page_cta'
+    queryString = $.param(queryData)
+    fbUrl = sd.AP.facebookPath + '?' + queryString
+    return window.location.href = fbUrl if @gdprDisabled
+
+    if @checkAcceptedTerms()
+      gdprString = $.param(@gdprData(@serializeForm()))
+      gdprFbUrl = fbUrl + "&" + gdprString
+      window.location.href = gdprFbUrl
+
+  # accomodate AB test for checkboxes
+  gdprData: (formData) ->
+    return {} if @gdprDisabled
+    if sd.GDPR_COMPLIANCE_TEST is 'separated_checkboxes'
+      'receive_emails': !!formData['receive_emails']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
+    else if sd.GDPR_COMPLIANCE_TEST is 'combined_checkboxes'
+      'receive_emails': !!formData['accepted_terms_of_service']
+      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
 
   submit: (e) ->
     return unless @validateForm()
