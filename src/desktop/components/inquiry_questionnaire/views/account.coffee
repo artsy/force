@@ -1,13 +1,19 @@
 _ = require 'underscore'
+sd = require('sharify').data
+splitTest = require('../../split_test/index')
 Backbone = require 'backbone'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
+FormMixin = require '../../mixins/form'
+FormErrorHelpers = require '../../auth_modal/helpers'
 templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
 
 module.exports = class Account extends StepView
+  _.extend @prototype, FormMixin
+  _.extend @prototype, FormErrorHelpers
   className: 'iq-account'
 
   template: ->
@@ -17,11 +23,17 @@ module.exports = class Account extends StepView
     'click button': 'submit'
     'click .js-mode': 'change'
     'click .js-iq-save-skip': 'next'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
+    'click #signup-fb': 'fbSignup'
 
   initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
     @modal?.dialog 'bounce-in'
     @active = new Backbone.Model mode: 'auth'
 
+    # remove after gdpr compliance a/b test closes
+    splitTest('gdpr_compliance_test').view()
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+   
     @listenTo @active, 'change:mode', @render
     @listenTo @active, 'change:mode', @forgot
 
@@ -39,6 +51,9 @@ module.exports = class Account extends StepView
 
   submit: (e) ->
     e.preventDefault()
+
+    # remove after gdpr compliance test closes
+    @checkAcceptedTerms() if !@gdprDisabled
 
     form = new Form model: @user, $form: @$('form'), $submit: @$('.js-form-submit')
     return unless form.isReady()
