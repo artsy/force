@@ -23,6 +23,14 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('article', model: 'article'))
         model.href().should.containEql '/article/' + model.id
 
+      it 'has a location attribute when it is a fair', ->
+        model = new SearchResult(fabricate('fair', model: 'fair', profile_id: 'foo-profile'))
+        model.get('location').should.containEql '/foo-profile'
+
+      it 'has a location attribute when it is a page', ->
+        model = new SearchResult(fabricate('page', model: 'page'))
+        model.get('location').should.containEql '/' + model.id
+
     describe '#displayModel', ->
       it 'has a display_model attribute when it is a artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
