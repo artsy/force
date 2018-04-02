@@ -34,12 +34,11 @@ module.exports = {
     edge: 'experiment'
   gdpr_compliance_test:
     key: 'gdpr_compliance_test'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'combined_checkboxes'
-      'separated_checkboxes'
-    ]
+    outcomes: {
+      control: 100
+      combined_checkboxes: 0
+      separated_checkboxes: 0
+    }
     control_group: 'control'
     edge: 'combined_checkboxes'
 }

@@ -26,7 +26,7 @@ class MarketingSignupModalInner extends Backbone.View
     @acquisitionInitiative = @data?.slug
     
     # remove after a/b test closes
-    splitTest('gdpr_compliance_test').view()
+    # splitTest('gdpr_compliance_test').view()
     @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
     $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
