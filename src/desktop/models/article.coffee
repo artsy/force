@@ -212,6 +212,7 @@ module.exports = class Article extends Backbone.Model
     # Articles that have been converted to ImageCollections will have this info
     for section in @get('sections')
       return false if section.type in ['artworks', 'image']
+    return true if @get('layout') is 'news' and @get('published')
     return @get('featured') and @get('published') and @get('layout') in ['standard', 'feature']
 
   fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
