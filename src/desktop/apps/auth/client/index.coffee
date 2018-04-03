@@ -2,7 +2,7 @@ _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
 { parse } = require 'url'
-{ API_URL } = require('sharify').data
+{ API_URL, REDIRECT_TO } = require('sharify').data
 Form = require '../../../components/mixins/form.coffee'
 
 module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
@@ -32,7 +32,7 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
 
     @model.save @serializeForm(),
       success: ->
-        window.location = '/log_in'
+        window.location = REDIRECT_TO || '/log_in'
       error: (model, response, options) =>
         @reenableForm()
         @$errors.html @errorMessage(response)
