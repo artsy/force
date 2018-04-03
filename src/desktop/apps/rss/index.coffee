@@ -1,5 +1,5 @@
 express = require 'express'
-routes = require './routes'
+routes = require './routes.js'
 embed = require 'particle'
 { resize, crop } = require '../../components/resizer'
 { toSentence } = require 'underscore.string'
