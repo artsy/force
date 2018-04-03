@@ -56,6 +56,8 @@ module.exports = class AuthModalView extends ModalView
     @state = new State mode
     @templateData = _.extend {
       context: @context
+      email: options.email
+      setPassword: options.setPassword
       signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
       redirectTo: @currentRedirectTo()

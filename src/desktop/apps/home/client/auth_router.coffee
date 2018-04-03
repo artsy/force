@@ -51,4 +51,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
       redirectTo: if redirectTo then redirectTo else null
 
   forgot: ->
-    mediator.trigger 'open:auth', mode: 'forgot'
+    email = qs.parse(@location.search.replace /^\?/, '').email
+    setPassword = qs.parse(@location.search.replace /^\?/, '').set_password
+    redirectTo = qs.parse(@location.search.replace /^\?/, '').redirect_to
+    mediator.trigger 'open:auth', mode: 'forgot', email: email, setPassword: setPassword, redirectTo: redirectTo
