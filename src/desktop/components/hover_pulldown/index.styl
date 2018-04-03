@@ -16,7 +16,7 @@ computed-padding(font-size, target-line-height)
     text-decoration none
 
   // Small tip
-  &:not(.mlh-hamburger):not(.mlh-notification):not(.artist-page-cta-overlay__feed__pulldown):before
+  &:not(.mlh-hamburger):not(.mlh-notification):not(.mlh-user-name):not(.artist-page-cta-overlay__feed__pulldown):before
     size = 4px
     display block
     position absolute
@@ -76,7 +76,7 @@ computed-padding(font-size, target-line-height)
     .hover-pulldown-menu
     .hover-pulldown-static
       left inherit
-      right 10px
+      right 0px
 
 .mlh-pulldown-top-link
   display none
@@ -193,7 +193,7 @@ computed-padding(font-size, target-line-height)
       color white
       svg
         fill white
-      &:not(.mlh-hamburger):not(.mlh-notification):before
+      &:not(.mlh-hamburger):not(.mlh-notification):not(.mlh-user-name):before
         border-top-color white
 
 
