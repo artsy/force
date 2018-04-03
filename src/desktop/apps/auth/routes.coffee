@@ -10,7 +10,9 @@ sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
     req.session.reset_password_token = req.query.reset_password_token
     res.redirect '/reset_password'
   else
-    res.render 'reset_password', reset_password_token: req.session.reset_password_token
+    setPassword = req.query.set_password == 'true'
+    redirectTo = req.query.redirect_to
+    res.render 'reset_password', reset_password_token: req.session.reset_password_token, setPassword: setPassword, redirectTo: redirectTo
 
 @twitterLastStep = (req, res) ->
   res.render 'twitter_email'
