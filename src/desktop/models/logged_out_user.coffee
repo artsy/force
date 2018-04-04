@@ -81,7 +81,7 @@ module.exports = class LoggedOutUser extends User
 
   forgot: (options = {}) ->
     attrs = @pick('email')
-    attrs.redirect_to = sd.REDIRECT_TO
+    attrs.reset_password_redirect_to = sd.RESET_PASSWORD_REDIRECT_TO
     attrs.mode = if sd.SET_PASSWORD is 'true' then 'fair_set_password' else null
 
     new Backbone.Model()

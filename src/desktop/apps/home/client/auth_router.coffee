@@ -54,5 +54,5 @@ module.exports = class HomeAuthRouter extends Backbone.Router
   forgot: ->
     email = @parsedLocation.email
     setPassword = @parsedLocation.set_password
-    redirectTo = @parsedLocation.redirect_to
+    redirectTo = @parsedLocation.reset_password_redirect_to
     mediator.trigger 'open:auth', mode: 'forgot', email: email, setPassword: setPassword, redirectTo: redirectTo
