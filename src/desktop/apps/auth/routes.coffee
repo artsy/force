@@ -4,6 +4,7 @@ CurrentUser = require '../../models/current_user.coffee'
 { parse } = require 'url'
 qs = require 'querystring'
 sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
+sd = require('sharify').data
 
 @resetPassword = (req, res) ->
   if req.query.reset_password_token?
