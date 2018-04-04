@@ -37,7 +37,7 @@ const trackAccountCreation = (options) => {
 // Created account (via email)
 $(document).on(
   'submit',
-  '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form',
+  '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form, .gdpr-signup form',
   function() {
     $(document).one('ajaxComplete', (e, xhr, options) =>
       trackAccountCreation({
