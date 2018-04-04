@@ -1,10 +1,13 @@
 import moment from 'moment'
 import React, { Component, Fragment } from 'react'
-import { flatten } from 'lodash'
+import { cloneDeep, flatten } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import { Article, RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing'
+import {
+  Article,
+  RelatedArticlesCanvas,
+} from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
@@ -12,7 +15,6 @@ import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 import { LoadingSpinner } from './InfiniteScrollArticle'
-
 
 export interface Props {
   article?: ArticleData
@@ -25,25 +27,21 @@ interface State {
   articles: ArticleData[]
   date: any
   display: any[]
-  offset: number
-  omit: string
   error: boolean
   following: any[]
+  offset: number
   isEnabled: boolean
   isLoading: boolean
+  omit: string
   relatedArticles: any[]
 }
 
 // FIXME: Rewire
 let positronql = _positronql
 
-const FETCH_TOP_OFFSET = 200
+const TOP_OFFSET = '50%'
 
-export class InfiniteScrollNewsArticle extends Component<
-  Props,
-  State
-  > {
-
+export class InfiniteScrollNewsArticle extends Component<Props, State> {
   constructor(props) {
     super(props)
 
@@ -62,7 +60,7 @@ export class InfiniteScrollNewsArticle extends Component<
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
-      relatedArticles: []
+      relatedArticles: [],
     }
   }
 
@@ -77,7 +75,7 @@ export class InfiniteScrollNewsArticle extends Component<
       following,
       offset,
       omit,
-      relatedArticles
+      relatedArticles,
     } = this.state
 
     this.setState({
@@ -89,7 +87,7 @@ export class InfiniteScrollNewsArticle extends Component<
         query: newsArticlesQuery({
           offset,
           limit: 6,
-          omit
+          omit,
         }),
       })
 
@@ -131,12 +129,7 @@ export class InfiniteScrollNewsArticle extends Component<
 
     if (isEnabled) {
       if (!isLoading) {
-        return (
-          <Waypoint
-            onEnter={this.fetchNextArticles}
-            topOffset={FETCH_TOP_OFFSET}
-          />
-        )
+        return <Waypoint onEnter={this.fetchNextArticles} bottomOffset="-50%" />
       } else if (!error) {
         return (
           <LoadingSpinner>
@@ -147,18 +140,21 @@ export class InfiniteScrollNewsArticle extends Component<
     }
   }
 
-  onEnter = (article, { previousPosition, currentPosition }) => {
-    const { date } = this.state
+  onEnter = (i, { previousPosition, currentPosition }) => {
+    const { articles, date } = this.state
+    const article = articles[i]
     const enteredArticle =
       previousPosition === 'above' && currentPosition === 'inside'
     const hasNewDate = article.published_at !== date
 
-    if (enteredArticle && hasNewDate) {
+    if (enteredArticle) {
       // ENTERED AN ARTICLE
-      this.setState({ date: article.published_at })
-    }
-    if (enteredArticle && article === this.props.article) {
-      this.onExpand(article)
+      if (hasNewDate) {
+        this.setState({ date: article.published_at })
+      }
+      if (i === 0 || article.isTruncated === false) {
+        this.setMetadata(article)
+      }
     }
   }
 
@@ -176,15 +172,28 @@ export class InfiniteScrollNewsArticle extends Component<
       if (hasNewDate) {
         this.setState({ date: nextArticle.published_at })
       }
-      document.title = 'News' // todo: replace with actual meta-title
-      window.history.replaceState({}, 'news', `/news`)
+      if (nextArticle.isTruncated === false) {
+        this.setMetadata(nextArticle)
+      } else {
+        this.setMetadata()
+      }
     }
   }
 
-  onExpand = (article) => {
-    // Set slug/document title when expanding an article
-    document.title = article.thumbnail_title
-    window.history.replaceState({}, article.id, `/news/${article.slug}`)
+  setMetadata = (article: any = null) => {
+    const id = article ? article.id : 'news'
+    const path = article ? `/news/${article.slug}` : '/news'
+    document.title = article ? article.thumbnail_title : 'News'
+    window.history.replaceState({}, id, path)
+  }
+
+  onExpand = (i) => {
+    const { articles } = this.state
+    const newArticles = cloneDeep(articles)
+    newArticles[i].isTruncated = false
+    this.setState({ articles: newArticles })
+
+    this.setMetadata(articles[i])
   }
 
   getDateField = (article) => {
@@ -202,11 +211,7 @@ export class InfiniteScrollNewsArticle extends Component<
   }
 
   renderContent = () => {
-    const {
-      articles,
-      display,
-      relatedArticles
-    } = this.state
+    const { articles, display, relatedArticles } = this.state
     const { isMobile } = this.props
     const marginTop = isMobile ? '100px' : '200px'
 
@@ -226,43 +231,40 @@ export class InfiniteScrollNewsArticle extends Component<
 
         return (
           <Fragment key={`article-${i}`}>
-            {hasDateDivider &&
-              <NewsDateDivider date={article.published_at} />
-            }
-            <div key={`article-${i}`}>
-              <Article
-                article={article}
-                isTruncated={isTruncated}
-                isMobile={isMobile}
-                marginTop={i === 0 ? marginTop : null}
-                onExpand={() => this.onExpand(article)}
-              />
-              <Waypoint
-                onEnter={(waypointData) => this.onEnter(article, waypointData)}
-                onLeave={(waypointData) => this.onLeave(i, waypointData)}
-                topOffset={FETCH_TOP_OFFSET}
-              />
-            </div>
-            {hasMetaContent && related && (
-              <Fragment>
-                <Break />
-                <RelatedArticlesCanvas
-                  articles={related}
-                  isMobile={isMobile}
-                />
-                <Break />
-              </Fragment>
-            )}
-            {hasMetaContent && displayAd && (
-              <Fragment>
-                <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
-                <Break />
-              </Fragment>
-            )}
-          </Fragment >
+            {hasDateDivider && <NewsDateDivider date={article.published_at} />}
+            <Article
+              article={article}
+              isTruncated={isTruncated}
+              isMobile={isMobile}
+              marginTop={i === 0 ? marginTop : null}
+              onExpand={() => this.onExpand(i)}
+            />
+            {hasMetaContent &&
+              related && (
+                <Fragment>
+                  <Break />
+                  <RelatedArticlesCanvas
+                    articles={related}
+                    isMobile={isMobile}
+                  />
+                  <Break />
+                </Fragment>
+              )}
+            {hasMetaContent &&
+              displayAd && (
+                <Fragment>
+                  <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
+                  <Break />
+                </Fragment>
+              )}
+            <Waypoint
+              onEnter={(waypointData) => this.onEnter(i, waypointData)}
+              onLeave={(waypointData) => this.onLeave(i, waypointData)}
+              topOffset={TOP_OFFSET}
+            />
+          </Fragment>
         )
-      }
-      )
+      })
     )
   }
 
@@ -271,10 +273,7 @@ export class InfiniteScrollNewsArticle extends Component<
 
     return (
       <div id="article-root">
-        <NewsNav
-          date={date}
-          positionTop={61}
-        />
+        <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}
       </div>
