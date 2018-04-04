@@ -39,8 +39,6 @@ interface State {
 // FIXME: Rewire
 let positronql = _positronql
 
-const TOP_OFFSET = '50%'
-
 export class InfiniteScrollNewsArticle extends Component<Props, State> {
   constructor(props) {
     super(props)
@@ -152,8 +150,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       if (hasNewDate) {
         this.setState({ date: article.published_at })
       }
-      if (i === 0 || article.isTruncated === false) {
+      if (article.isTruncated === false) {
         this.setMetadata(article)
+      } else {
+        this.setMetadata()
       }
     }
   }
@@ -239,6 +239,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               marginTop={i === 0 ? marginTop : null}
               onExpand={() => this.onExpand(i)}
             />
+            <Waypoint
+              onEnter={(waypointData) => this.onEnter(i, waypointData)}
+              onLeave={(waypointData) => this.onLeave(i, waypointData)}
+              topOffset="200px"
+            />
             {hasMetaContent &&
               related && (
                 <Fragment>
@@ -257,11 +262,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
                   <Break />
                 </Fragment>
               )}
-            <Waypoint
-              onEnter={(waypointData) => this.onEnter(i, waypointData)}
-              onLeave={(waypointData) => this.onLeave(i, waypointData)}
-              topOffset={TOP_OFFSET}
-            />
           </Fragment>
         )
       })
