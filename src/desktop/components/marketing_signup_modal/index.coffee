@@ -129,6 +129,8 @@ module.exports = class MarketingSignupModal extends Backbone.View
 
     return unless sd.MARKETING_SIGNUP_MODALS?
     modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
+
+    return unless modalData
     @inner = new MarketingSignupModalInner
       data: modalData
 
