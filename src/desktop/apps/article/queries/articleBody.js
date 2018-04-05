@@ -73,6 +73,10 @@ export const articleBody = `
     name
     id
   }
+  news_source {
+    title
+    url
+  }
   media {
     url
     credits
