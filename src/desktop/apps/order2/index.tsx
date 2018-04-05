@@ -11,7 +11,7 @@ app.get('/order2', async (_req, res) => {
   try {
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_index.jade',
+      layout: '../../components/main_layout/templates/blank.jade',
       config: {
         styledComponents: true,
       },

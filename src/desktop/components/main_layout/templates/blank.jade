@@ -8,6 +8,8 @@ html( data-useragent= userAgent lang="en")
   head
     include head
     block head
+      != head
+      != css
 
     link( type='text/css', rel='stylesheet', href= asset('/assets/main_layout.css') )
     if assetPackage
@@ -20,7 +22,14 @@ html( data-useragent= userAgent lang="en")
     if options.flash
       include ../../flash/template
 
-    #blank-layout-container: block body
+    #blank-layout-container
+      block body
+        script.
+          var __BOOTSTRAP__ = !{JSON.stringify(data)}
+
+        #react-root
+          != body
+        #react-portal
 
     #scripts
       include scripts
