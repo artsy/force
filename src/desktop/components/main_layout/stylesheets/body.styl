@@ -57,9 +57,9 @@ html[data-useragent*="iPad"]
 
   #main-layout-search-bar-input
     &::placeholder
-      color #666
+      color gray-darker-color
 #main-layout-search-bar-icon
-  color #666
+  color gray-darker-color
 
 // Pages like checkout or onboarding remove options from the header to heavily
 // focus on the task at hand.
@@ -94,14 +94,14 @@ html[data-useragent*="iPad"]
   #main-layout-header
     display none
 
-// Dark banners and backgrounds need the header it to be white text and outlines
+// Dark banners and backgrounds need the header to be white text and outlines
 // for visiblity.
 @media(min-width: nav-bar-break)
   .body-transparent-header-white
-    #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, #main-layout-header-home-logo
+    #main-layout-header-center a, .main-layout-header-user a:not(.mlh-signup), .mlh-user-name, #main-layout-header-home-logo
     #main-layout-search-bar-icon, #main-layout-search-bar-input, span.mlh-top-nav-link, span.mlh-top-nav-link:before
       color black
-    #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, span.mlh-top-nav-link
+    #main-layout-header-center a, .main-layout-header-user a:not(.mlh-signup), .mlh-user-name, span.mlh-top-nav-link
       &:hover
         color purple-color
     .hover-pulldown-menu a
@@ -109,17 +109,14 @@ html[data-useragent*="iPad"]
     .hover-pulldown:not(.mlh-hamburger):not(.mlh-notification):not(.artist-page-cta-overlay__feed__pulldown):before
       border-top-color black
     .mlh-notification, .mlh-user-name
-      border-left: 1px solid rgba(0,0,0,0.102) !important
       svg
         fill black
-        width 25px
-        height 25px
     #main-layout-search-bar-icon
-      color #666
+      color gray-darker-color
     #main-layout-search-bar-input
-      color #000
+      color black
       &::placeholder
-        color #666
+        color gray-darker-color
     #main-layout-header
       #main-layout-search-bar-container
         background-color gray-lightest-color
@@ -139,7 +136,7 @@ html[data-useragent*="iPad"]
     #main-layout-search-bar-container.is-loading .loading-spinner-small
       background black
     #main-layout-header-home-logo::after
-      border-color #666
+      border-color gray-darker-color
 
 // A page that infinite scrolls will hide the footer
 .body-infinite-scroll

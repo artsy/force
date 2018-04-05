@@ -176,5 +176,5 @@ describe 'success', ->
     $($html.find('.ap-success__next-step-text .ap-success__step')[2]).text().should.eql 'You will review the quote and complete payment'
     $($html.find('.ap-success__next-step-text .ap-success__step')[3]).text().should.eql 'Galerie Foo Bar will ship the work to your address'
 
-    $html.find('a.avant-garde-button-black').text().should.eql 'Back to Browsing'
-    $html.find('a.avant-garde-button-black').attr('href').should.eql '/artwork/foo-bar-id'
+    $html.find('.artwork-purchase__section a.avant-garde-button-black').text().should.eql 'Back to Browsing'
+    $html.find('.artwork-purchase__section a.avant-garde-button-black').attr('href').should.eql '/artwork/foo-bar-id'

@@ -222,6 +222,7 @@ export function amp(req, res, next) {
           resize,
           crop,
           embed,
+          _,
         })
       )
     },

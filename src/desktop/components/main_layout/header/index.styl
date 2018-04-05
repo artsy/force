@@ -22,7 +22,7 @@
 
 #main-layout-header-left
   flex-grow 1
-  max-width 850px
+  max-width 750px
   #main-layout-header-minimal-title
     display none
 
@@ -38,7 +38,7 @@
     height header-logo-icon-size
     width header-logo-icon-size
 #main-layout-header-center
-  padding 0 30px
+  padding 0 20px 0 30px
   flex-grow 0
 #main-layout-header-center
 .main-layout-header-user
@@ -47,8 +47,8 @@
   height 100%
   flex-grow 0
   flex-shrink 0
-  text-align right
   margin-left auto
+  padding 0 10px
 
 .mlh-nav-link
   position relative
@@ -66,21 +66,46 @@
   &:active
   &:focus
     color purple-color
+.mlh-login.avant-garde-button-white
+.mlh-signup.avant-garde-button-black
+  width auto
 .mlh-login
-  padding-left 0
+  margin-right 10px
 .mlh-signup
-  padding-right 20px
+  margin-right 10px
 .mlh-user-name
   @extends .mlh-nav-link
-  padding-left 30px
-  padding-right @padding-left
-  border-left 1px solid transparify(gray-lighter-color, black)
+  padding 11px 10px
   position relative
-  min-width 130px
   text-align center
-  white-space nowrap
   &:hover #main-layout-header-user-nav
     display block
+.mlh-notification
+  @extends .mlh-nav-link
+  padding 10px 10px
+  position relative
+  text-align center
+  flex-grow 0
+  flex-shrink 0
+  margin-left auto
+  &.hover-pulldown
+    &:before
+      border none
+  svg
+    fill black
+  .hpm-header
+    cursor default
+  .hover-pulldown-menu
+    width 300px
+    padding-bottom 0px
+  .hpm-view-all
+    text-align center
+    border-top 1px solid gray-darkest-color
+    padding 20px 0px
+    avant-garde-size('body')
+.mlh-notification ~ .main-layout-header-user
+  margin-left 0
+  padding-left 0
 .mlh-hamburger
   @extends .mlh-nav-link
   padding 8px 20px
@@ -92,30 +117,6 @@
     fill black
     width 25px
     height 30px
-.mlh-notification
-  @extends .mlh-nav-link
-  padding 8px 20px
-  position relative
-  text-align center
-  white-space nowrap
-  border-left  1px solid transparify(gray-lighter-color, black)
-  &.hover-pulldown
-    &:before
-      border none
-  svg
-    fill black
-    width 25px
-    height 25px
-  .hpm-header
-    cursor default
-  .hover-pulldown-menu
-    width 300px
-    padding-bottom 0px
-  .hpm-view-all
-    text-align center
-    border-top 1px solid gray-darkest-color
-    padding 20px 0px
-    avant-garde-size('body')
 .mlh-bundle-count
   avant-garde()
   display none
@@ -125,8 +126,8 @@
   width 19px
   height 19px
   position absolute
-  top 4px
-  right 15px
+  top 1px
+  right 2px
   line-height 19px
   color white
 .mlh-bundle-count[data-visible=true]
