@@ -4,10 +4,8 @@
       .am-featured-hero
         - article = featuredArticles[0]
         +article-figure(article, 1000, false, false)
-
-      aside.am-featured-also
-        for article in featuredArticles.slice(1)
-          +article-figure(article, 600, false, false)
+      #news-panel
+      //- renders reaction newsPanel via magazine.coffee
 
   if sd.CURRENT_PATH != '/articles' && section && section.get('featured_links')
     section.articles-featured-articles.main-layout-container

@@ -70,6 +70,7 @@ module.exports =
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
   NODE_ENV: 'development'
+  NEWS_ARTICLES: null
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
   EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video'

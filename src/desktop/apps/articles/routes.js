@@ -24,10 +24,13 @@ export const articles = (req, res, next) => {
   return positronql(query)
     .then((result) => {
       const articles = new Articles(result.articles)
+      res.locals.sd.SUBSCRIBED_TO_EDITORIAL = !!req.user
+      res.locals.sd.ARTICLES = articles.toJSON()
+      // Fetch News Panel Articles
       positronql({ query: newsPanelQuery() }).then((result) => {
         const newsArticles = result.articles
-        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = !!req.user
-        res.locals.sd.ARTICLES = articles.toJSON()
+        res.locals.sd.NEWS_ARTICLES = newsArticles
+
         res.render('articles', {
           articles: articles,
           crop,
