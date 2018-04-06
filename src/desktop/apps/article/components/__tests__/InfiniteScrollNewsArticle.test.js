@@ -50,11 +50,17 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
-    article = _.extend({ slug: 'news-article' }, NewsArticle)
+    article = _.extend(
+      {
+        slug: 'news-article',
+        isTruncated: false,
+      },
+      NewsArticle
+    )
     nextArticle = {
       layout: 'news',
       id: '456',
-      slug: 'news-article',
+      slug: 'next-news-article',
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
     }
@@ -68,6 +74,92 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   afterEach(() => {
     window.history.replaceState.reset()
+  })
+
+  it('fetches more articles at the end of the page', async () => {
+    const data = {
+      articles: [
+        _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          id: '678',
+        }),
+      ],
+    }
+    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    await rendered.instance().fetchNextArticles()
+    rendered.update()
+    rendered.find(Article).length.should.equal(2)
+  })
+
+  it('sets up follow buttons', () => {
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    rendered.state().following.length.should.exist
+  })
+
+  it('#onExpand pushes article url to browser and updates articles state', () => {
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    rendered.instance().onExpand(0)
+
+    rendered.state('articles')[0].isTruncated.should.be.false()
+    window.history.replaceState.args[0][2].should.containEql(
+      '/news/news-article'
+    )
+  })
+
+  it('#hasNewDate returns true if article date is different from previous article', () => {
+    props.articles.push(nextArticle)
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    const hasNewDate = rendered.instance().hasNewDate(nextArticle, 1)
+    hasNewDate.should.equal(true)
+  })
+
+  it('injects a canvas ad after the sixth article', async () => {
+    const data = {
+      articles: _.times(6, () => {
+        return _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          id: '678',
+        })
+      }),
+      display: {
+        name: 'BMW',
+        canvas: UnitCanvasImage,
+      },
+    }
+    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    await rendered.instance().fetchNextArticles()
+    rendered.update()
+    rendered.find(DisplayCanvas).length.should.equal(1)
+    rendered.html().should.containEql('Sponsored by BMW')
+  })
+
+  it('injects read more after the sixth article', async () => {
+    const data = {
+      articles: _.times(6, () => {
+        return _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          id: '678',
+        })
+      }),
+      relatedArticlesCanvas: _.times(4, () => {
+        return _.extend({}, fixtures.article, {
+          slug: 'related-article',
+          channel_id: '123',
+          id: '456',
+        })
+      }),
+    }
+    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    await rendered.instance().fetchNextArticles()
+    rendered.update()
+    rendered.find(RelatedArticlesCanvas).length.should.equal(1)
+    rendered.html().should.containEql('More from Artsy Editorial')
   })
 
   describe('/news - news index', () => {
@@ -101,68 +193,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
       rendered.state().omit.should.eql(props.article.id)
       rendered.state().date.should.eql(props.article.published_at)
     })
-  })
-
-  it('fetches more articles at the end of the page', async () => {
-    const data = {
-      articles: [
-        _.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '123',
-          id: '678',
-        }),
-      ],
-    }
-    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    await rendered.instance().fetchNextArticles()
-    rendered.update()
-    rendered.find(Article).length.should.equal(2)
-  })
-
-  it('sets up follow buttons', () => {
-    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    rendered.state().following.length.should.exist
-  })
-
-  it('injects a canvas ad after the sixth article', async () => {
-    const data = {
-      articles: _.times(6, () => {
-        return _.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '123',
-          id: '678',
-        })
-      }),
-      display: {
-        name: 'BMW',
-        canvas: UnitCanvasImage,
-      },
-    }
-    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    await rendered.instance().fetchNextArticles()
-    rendered.update()
-    rendered.find(DisplayCanvas).length.should.equal(1)
-    rendered.html().should.containEql('Sponsored by BMW')
-  })
-
-  it('#onExpand pushes article url to browser', () => {
-    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    rendered
-      .instance()
-      .onExpand({ id: '123', slug: 'news-article', title: 'Foo bar' })
-
-    window.history.replaceState.args[0][2].should.containEql(
-      '/news/news-article'
-    )
-  })
-
-  it('#hasNewDate returns true if article date is different from previous article', () => {
-    props.articles.push(nextArticle)
-    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    const hasNewDate = rendered.instance().hasNewDate(nextArticle, 1)
-    hasNewDate.should.equal(true)
   })
 
   describe('#getDateField', () => {
@@ -199,22 +229,20 @@ describe('<InfiniteScrollNewsArticle />', () => {
   describe('#onEnter', () => {
     it('does not push url to browser if it is not scrolling upwards into an article', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-      rendered.instance().onEnter({}, 0, {})
+      rendered.instance().onEnter(0, {})
 
       window.history.replaceState.args.length.should.equal(0)
     })
 
     it('sets state.date if entered and article date is different from existing state', () => {
+      props.articles.push(nextArticle)
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered.instance().setState = sinon.stub()
       rendered.update()
-      rendered.instance().onEnter(
-        { published_at: nextArticle.published_at },
-        {
-          previousPosition: 'above',
-          currentPosition: 'inside',
-        }
-      )
+      rendered.instance().onEnter(1, {
+        previousPosition: 'above',
+        currentPosition: 'inside',
+      })
       rendered
         .instance()
         .setState.args[0][0].date.should.equal(nextArticle.published_at)
@@ -222,7 +250,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
     it('pushes article url to browser if it is scrolling upwards into props.article', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-      rendered.instance().onEnter(props.article, {
+      rendered.instance().onEnter(0, {
         previousPosition: 'above',
         currentPosition: 'inside',
       })
@@ -231,9 +259,19 @@ describe('<InfiniteScrollNewsArticle />', () => {
       )
     })
 
+    it('pushes /news to browser if it is scrolling upwards into a truncated news article', () => {
+      props.articles.push(nextArticle)
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      rendered.instance().onEnter(1, {
+        previousPosition: 'above',
+        currentPosition: 'inside',
+      })
+      window.history.replaceState.args[0][2].should.containEql('/news')
+    })
+
     it('does not push url to browser if it is not scrolling upwards into an article', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-      rendered.instance().onEnter({}, {})
+      rendered.instance().onEnter(0, {})
 
       window.history.replaceState.args.length.should.equal(0)
     })
@@ -272,33 +310,23 @@ describe('<InfiniteScrollNewsArticle />', () => {
     })
   })
 
-  it('injects read more after the sixth article', async () => {
-    const article = _.extend({}, fixtures.article, {
-      layout: 'news',
-      published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }],
+  describe('#setMetadata', () => {
+    it('sets default news metadata', () => {
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      rendered.instance().setMetadata()
+      window.history.replaceState.args[0][2].should.containEql('/news')
     })
-    const data = {
-      articles: _.times(6, () => {
-        return _.extend({}, fixtures.article, {
-          slug: 'foobar',
-          channel_id: '123',
-          id: '678',
-        })
-      }),
-      relatedArticlesCanvas: _.times(4, () => {
-        return _.extend({}, fixtures.article, {
-          slug: 'related-article',
-          channel_id: '123',
-          id: '456',
-        })
-      }),
-    }
-    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
-    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    await rendered.instance().fetchNextArticles()
-    rendered.update()
-    rendered.find(RelatedArticlesCanvas).length.should.equal(1)
-    rendered.html().should.containEql('More from Artsy Editorial')
+
+    it('#sets article metadata', () => {
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      rendered.instance().setMetadata({
+        slug: 'some-slug',
+        thumbnail_title: 'Some title',
+        id: '123',
+      })
+      window.history.replaceState.args[0][2].should.containEql(
+        '/news/some-slug'
+      )
+    })
   })
 })

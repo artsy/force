@@ -35,6 +35,7 @@ export default hot(module)(
           )
         }
         case 'news': {
+          article.isTruncated = false
           return (
             <InfiniteScrollNewsArticle articles={[article]} {...this.props} />
           )
