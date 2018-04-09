@@ -1,20 +1,21 @@
 import moment from 'moment'
 import React, { Component, Fragment } from 'react'
-import { cloneDeep, flatten } from 'lodash'
+import { flatten, throttle } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
 import {
-  Article,
   RelatedArticlesCanvas,
 } from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
-import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
+
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 import { LoadingSpinner } from './InfiniteScrollArticle'
+import { NewsArticle } from './NewsArticle'
+import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
 
 export interface Props {
   article?: ArticleData
@@ -47,6 +48,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const date = this.getDateField(article)
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
+
+    this.onDateChange = throttle(this.onDateChange, 500, {
+      trailing: true
+    })
 
     this.state = {
       isLoading: false,
@@ -138,67 +143,18 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     }
   }
 
-  onEnter = (i, { previousPosition, currentPosition }) => {
-    const { articles, date } = this.state
-    const article = articles[i]
-    const enteredArticle =
-      previousPosition === 'above' && currentPosition === 'inside'
-    const hasNewDate = article.published_at !== date
-
-    if (enteredArticle) {
-      // ENTERED AN ARTICLE
-      if (hasNewDate) {
-        this.setState({ date: article.published_at })
-      }
-      if (article.isTruncated === false) {
-        this.setMetadata(article)
-      } else {
-        this.setMetadata()
-      }
+  onDateChange = (date) => {
+    const hasNewDate = date !== this.state.date
+    if (hasNewDate) {
+      this.setState({ date })
     }
   }
 
-  onLeave = (i, { previousPosition, currentPosition }) => {
-    const { date, articles } = this.state
-    const nextArticle = articles[i + 1]
-    const hasNewDate = nextArticle && nextArticle.published_at !== date
-
-    if (
-      nextArticle &&
-      previousPosition === 'inside' &&
-      currentPosition === 'above'
-    ) {
-      // LEFT AN ARTICLE
-      if (hasNewDate) {
-        this.setState({ date: nextArticle.published_at })
-      }
-      if (nextArticle.isTruncated === false) {
-        this.setMetadata(nextArticle)
-      } else {
-        this.setMetadata()
-      }
-    }
-  }
-
-  setMetadata = (article: any = null) => {
+  onMetadataChange = (article: any = null) => {
     const id = article ? article.id : 'news'
     const path = article ? `/news/${article.slug}` : '/news'
     document.title = article ? article.thumbnail_title : 'News'
     window.history.replaceState({}, id, path)
-  }
-
-  onExpand = (i) => {
-    const { articles } = this.state
-    const newArticles = cloneDeep(articles)
-    newArticles[i].isTruncated = false
-    this.setState({ articles: newArticles })
-
-    this.setMetadata(articles[i])
-  }
-
-  getDateField = (article) => {
-    const { published_at, scheduled_publish_at } = article
-    return published_at || scheduled_publish_at || moment().toISOString()
   }
 
   hasNewDate = (article, i) => {
@@ -210,10 +166,14 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     return beforeDate !== currentDate
   }
 
+  getDateField = (article) => {
+    const { published_at, scheduled_publish_at } = article
+    return published_at || scheduled_publish_at || moment().toISOString()
+  }
+
   renderContent = () => {
     const { articles, display, relatedArticles } = this.state
     const { isMobile } = this.props
-    const marginTop = isMobile ? '100px' : '200px'
 
     let counter = 0
 
@@ -225,24 +185,20 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         if (hasMetaContent) {
           counter++
         }
-
-        const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
         const isTruncated = !this.props.article || i !== 0
+        const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
 
         return (
           <Fragment key={`article-${i}`}>
             {hasDateDivider && <NewsDateDivider date={article.published_at} />}
-            <Article
+            <NewsArticle
+              isMobile={isMobile}
               article={article}
               isTruncated={isTruncated}
-              isMobile={isMobile}
-              marginTop={i === 0 ? marginTop : null}
-              onExpand={() => this.onExpand(i)}
-            />
-            <Waypoint
-              onEnter={(waypointData) => this.onEnter(i, waypointData)}
-              onLeave={(waypointData) => this.onLeave(i, waypointData)}
-              topOffset="200px"
+              isFirstArticle={i === 0}
+              nextArticle={articles[i + 1]}
+              onDateChange={(date) => this.onDateChange(date)}
+              onMetadataChange={this.onMetadataChange}
             />
             {hasMetaContent &&
               related && (
