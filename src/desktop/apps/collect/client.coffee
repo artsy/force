@@ -25,15 +25,11 @@ sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
 
 module.exports.init = ->
-  # MERCH_SORT_TEST remove after test closes
-  splitTest('merch_sort_test').view()
-  
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
-    fullyQualifiedLocations: fullyQualifiedLocations,
-    merchTestGroup: sd.MERCH_SORT_TEST
+    fullyQualifiedLocations: fullyQualifiedLocations
   filter = new Filter params: params
 
   headlineView = new HeadlineView

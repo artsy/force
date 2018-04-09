@@ -26,6 +26,7 @@ module.exports = class Params extends Backbone.Model
   defaults:
     size: 40
     page: 1
+    sort: '-decayed_merch'
     for_sale: true
     major_periods: []
     partner_cities: []
@@ -43,15 +44,12 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
-  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations, @merchTestGroup }) ->
+  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations }) ->
 
   initialParams: ->
     @defaults
 
   current: ->
-    if @merchTestGroup is 'experiment' and not @attributes.sort?
-      _.extend @attributes, sort: '-decayed_merch'
-
     if @categoryMap
       categories = @categoryMap[@get('medium') || 'global']
       extra_aggregation_gene_ids = _.pluck categories, 'id'
