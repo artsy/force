@@ -10,17 +10,23 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
+splitTest = require('../split_test/index')
+FormErrorHelpers = require('../auth_modal/helpers')
 
 module.exports = class ArtistPageCTAView extends Backbone.View
   _.extend @prototype, Form
+  _.extend @prototype, FormErrorHelpers
 
   className: 'artist-page-cta initial'
 
   events:
     'click': 'fullScreenOverlay'
-    'submit .artist-page-cta-overlay__register': 'submit'
+    'click .gdpr-signup__form button': 'submit'
+    'submit form': 'submit'
     'click .auth-toggle': 'triggerLoginModal'
     'keydown': 'keyAction'
+    'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: ({ artist }) ->
     @artist = artist
@@ -31,9 +37,17 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @alreadyDismissed = false
     @afterAuthPath = "/personalize"
     @signupIntent = "landing full page modal"
+
+    # remove after a/b test closes
+    splitTest('gdpr_compliance_test').view()
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
+
+    # This 'invalid' event doesn't seem to work in the @events property
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
@@ -62,7 +76,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     Cookies.set('destination', @artist.get('href'), expires: 60 * 60 * 24)
 
     @$el.addClass 'fullscreen'
-    @$(".artist-page-cta-overlay__register input[name='name']").focus()
+    @$(".gdpr-signup input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
     analyticsHooks.trigger 'artist_page:cta:shown'
     setTimeout (=> @disableScroll()), 400
@@ -87,6 +101,9 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     analyticsHooks.trigger 'artist_page:cta:hidden'
 
   submit: (e) ->
+    # remove after gdpr compliance test closes
+    @checkAcceptedTerms() if !@gdprDisabled
+
     return unless @validateForm()
     return if @formIsSubmitting()
 

@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Article } from 'reaction/Components/Publishing'
 import ArticleLayout from './layouts/Article'
+import { InfiniteScrollNewsArticle } from './InfiniteScrollNewsArticle.tsx'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 import { hot } from 'react-hot-loader'
 
@@ -33,6 +34,11 @@ export default hot(module)(
             />
           )
         }
+        case 'news': {
+          return (
+            <InfiniteScrollNewsArticle articles={[article]} {...this.props} />
+          )
+        }
         default: {
           return <ArticleLayout {...this.props} />
         }
@@ -59,10 +65,15 @@ class EditPortal extends React.Component {
 
   render() {
     const { article } = this.props
+    const positionTop = article.layout === 'news' && 125
 
     try {
       return ReactDOM.createPortal(
-        <EditButton channelId={article.channel_id} slug={article.slug} />,
+        <EditButton
+          channelId={article.channel_id}
+          slug={article.slug}
+          positionTop={positionTop}
+        />,
         document.getElementById('react-portal')
       )
     } catch (e) {

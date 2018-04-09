@@ -12,12 +12,16 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
+sd = require('sharify').data
+splitTest = require('../split_test/index')
+FormErrorHelpers = require('../auth_modal/helpers')
 
 class State extends Backbone.Model
   defaults: mode: 'register'
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
+  _.extend @prototype, FormErrorHelpers
 
   className: 'auth'
 
@@ -28,23 +32,32 @@ module.exports = class AuthModalView extends ModalView
     'click .auth-toggle': 'toggleMode'
     'submit form': 'submit'
     'click #auth-submit': 'submit'
+    'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: (options) ->
     return if isEigen.checkWith options
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
+    ## For AB test- # of gdpr checkboxes to show
+    splitTest('gdpr_compliance_test').view()
+    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
+    
     @preInitialize options
-
     super
+
+    # This 'invalid' event doesn't seem to work in the @events property
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
-
     @templateData = _.extend {
       context: @context
+      email: options.email
+      setPassword: options.setPassword
       signupIntent: @signupIntent
       copy: @renderCopy(options.copy)
       redirectTo: @currentRedirectTo()
@@ -55,7 +68,7 @@ module.exports = class AuthModalView extends ModalView
     @on 'rerendered', @initializeMailcheck
 
     mediator.on 'auth:change:mode', @setMode, this
-    mediator.on 'auth:error', @showError
+    mediator.on 'auth:error', @showFormError
     mediator.on 'modal:closed', @logClose
 
     @logState()
@@ -122,7 +135,9 @@ module.exports = class AuthModalView extends ModalView
 
     @$('button').attr 'data-state', 'loading'
 
-    @user.set (data = @serializeForm())
+    formData = @serializeForm()
+    userData = Object.assign {}, formData, @gdprData(formData)
+    @user.set (data = userData)
     @user.set(signupIntent: @signupIntent)
     @user[@state.get 'mode']
       success: @onSubmitSuccess
@@ -152,12 +167,16 @@ module.exports = class AuthModalView extends ModalView
         @undelegateEvents()
         @$('form').submit()
 
-  showError: (msg) =>
+  showFormError: (msg) =>
     @$('button').attr 'data-state', 'error'
+    @showError(msg)
+
+  showError: (msg) =>
     @$('.auth-errors').text msg
 
   remove: ->
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
+    $('#accepted_terms_of_service').off()
     super

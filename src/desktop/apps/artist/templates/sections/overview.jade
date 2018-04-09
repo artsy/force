@@ -10,26 +10,26 @@ mixin rail(title, viewAllUrl, section)
 
         include ../../../../components/merry_go_round/templates/horizontal_navigation
 
-if showSections.info
-  .artist-overview-header
-    .evenly-bisected-header
-      - var artistMeta = viewHelpers.artistMeta(artist)
 
-      - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
-      - var hasShows = statuses.shows || statuses.cv
+.artist-overview-header
+  .evenly-bisected-header
+    - var artistMeta = viewHelpers.artistMeta(artist)
 
-      .bisected-header-cell.js-artist-overview-header-left
-        if hasMeta
-          .artist-blurb.bisected-header-cell-section
-            h2 Biography
-            if artist.biography_blurb && artist.biography_blurb.text
-              .blurb!= artist.biography_blurb.text
-              if artist.biography_blurb.credit
-                .artist-blurb__credit &mdash; #{artist.biography_blurb.credit}
-              if artistMeta.length
-                br
+    - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
+    - var hasShows = statuses.shows || statuses.cv
+
+    .bisected-header-cell.js-artist-overview-header-left
+      if hasMeta
+        .artist-blurb.bisected-header-cell-section
+          h2 Biography
+          if artist.biography_blurb && artist.biography_blurb.text
+            .blurb!= artist.biography_blurb.text
+            if artist.biography_blurb.credit
+              .artist-blurb__credit &mdash; #{artist.biography_blurb.credit}
             if artistMeta.length
-              .artist-meta-detail!= artistMeta
+              br
+          if artistMeta.length
+            .artist-meta-detail!= artistMeta
 
       .bisected-header-cell.js-artist-overview-header-right
         if hasShows

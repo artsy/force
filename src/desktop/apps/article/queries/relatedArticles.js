@@ -1,20 +1,24 @@
+export const canvasBody = `
+  slug
+  thumbnail_title
+  thumbnail_image
+  published_at
+  contributing_authors {
+    name
+  }
+  authors {
+    name
+  }
+`
+
 export const relatedArticles = `
   relatedArticlesPanel {
     slug
     thumbnail_title
     thumbnail_image
-    contributing_authors {
-      name
-    }
   }
   relatedArticlesCanvas {
-    slug
-    thumbnail_title
-    thumbnail_image
-    published_at
-    contributing_authors {
-      name
-    }
+    ${canvasBody}
   }
   relatedArticles {
     description
@@ -29,3 +33,11 @@ export const relatedArticles = `
     }
   }
 `
+
+export const relatedArticlesNews = (offset, limit) => {
+  return `
+    articles(published: true, in_editorial_feed: true, limit: 4, offset: ${offset}, sort: "-published_at"){
+      ${canvasBody}
+    }
+  `
+}

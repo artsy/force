@@ -70,7 +70,7 @@ module.exports = class LoggedOutUser extends User
 
   signup: (options = {}) ->
     new Backbone.Model()
-      .save @pick('name', 'email', 'password', '_csrf', 'signupIntent'), _.extend {}, options,
+      .save @pick('name', 'email', 'password', '_csrf', 'signupIntent', 'accepted_terms_of_service', 'receive_emails'), _.extend {}, options,
         url: "#{APP_URL}#{sd.AP.signupPagePath}"
         success: =>
           @__isRecentlyRegistered__ = true
@@ -80,8 +80,12 @@ module.exports = class LoggedOutUser extends User
   register: @::signup
 
   forgot: (options = {}) ->
+    attrs = @pick('email')
+    attrs.reset_password_redirect_to = sd.RESET_PASSWORD_REDIRECT_TO || null
+    attrs.mode = if sd.SET_PASSWORD is 'true' then 'fair_set_password' else null
+
     new Backbone.Model()
-      .save @pick('email'), _.extend {}, options,
+      .save attrs, _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
 
   repossess: (subsequent_user_id, options = {}) ->

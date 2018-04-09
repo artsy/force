@@ -73,6 +73,10 @@ export const articleBody = `
     name
     id
   }
+  news_source {
+    title
+    url
+  }
   media {
     url
     credits
@@ -126,6 +130,11 @@ export const articleBody = `
         ...Image
         ...Artwork
       }
+    }
+    ... on SocialEmbed {
+      type
+      url
+      layout
     }
   }
 `

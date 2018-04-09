@@ -1,4 +1,4 @@
-- defaultOptions = {stripe: true, sailthru: true, marketo: true, quantcast: true}
+- defaultOptions = {stripe: false, sailthru: true, marketo: true, quantcast: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
@@ -6,7 +6,7 @@ script( src=asset("/assets/common.js") )
 
 if options.marketo
   //- Marketo Tracking
-  script(type='text/javascript', src='//du4pg90j806ok.cloudfront.net/js/touch-history/dist/conversionpath-0.3.8.min.js').
+  script(type='text/javascript', src='https://d1s2w0upia4e9w.cloudfront.net/assets/conversionpath-0.3.8.min.js').
     {
     "nolog": true,
     "stageMappings": {
@@ -122,7 +122,7 @@ if options.stripe
   script( type="text/javascript", src="https://js.stripe.com/v2/" )
 
 //- Analytics & common asset package
-if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
+if sd.BROWSER && sd.BROWSER.family != 'Other'
   script( src=asset('/assets/analytics.js') )
 
 //- Quantcast

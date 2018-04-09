@@ -16,7 +16,6 @@ showHighlightsTemplate = -> require('../../templates/sections/exhibition_highlig
 renderRail = require '../../components/rail/index.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/overview.coffee'
-sd = require('sharify').data
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
@@ -24,8 +23,6 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
-    # remove after test closes
-    splitTest('artist_page_variants').view()
 
   fetchRelated: ->
     metaphysics
@@ -35,6 +32,7 @@ module.exports = class OverviewView extends Backbone.View
         artists: @statuses.artists
         articles: @statuses.articles
         shows: @statuses.shows || @statuses.cv
+        loggedOut: !@user
     .then ({ artist }) => @trigger 'artist:overview:sync', artist
 
   setupBlurb: ->
@@ -127,16 +125,11 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push subView
 
   render: ->
-    # Template expects plain JSON, not a Backbone model.
-    testGroup = sd.ARTIST_PAGE_VARIANTS
-
     @$el.html template
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
-      showSections:
-        header: testGroup is 'control' or testGroup is 'no_info'
-        info: testGroup is 'control' or testGroup is 'no_header'
+
     _.defer => @postRender()
     this
 

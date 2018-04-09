@@ -6,8 +6,8 @@ metaphysics = require '../../../../../lib/metaphysics.coffee'
 { displayRelatedWorks } = require './display_related_works.coffee'
 
 module.exports = ->
-  isArtist = false
-  isPartner = false
+  isRelated = false
+
   context = ARTWORK.context || {}
   if context.__typename is 'ArtworkContextAuction'
     query = """
@@ -76,12 +76,13 @@ module.exports = ->
       artist_collection = new Artworks _.shuffle artwork.artist?.artworks
       related_collection = new Artworks _.shuffle artwork.layer?.artworks
 
-      relatedWorks = [
-        { collection: auction_collection, title: "Other Works from the Auction", typeName: context.__typename }
-        { collection: artist_collection, title: "Other Works by #{artwork.artist?.name}", typeName: 'artist', isArtist: true }
-        { collection: related_collection, title: "Related Works", typeName: 'related' }
-      ]
-
+      if context.is_open
+        relatedWorks = [{ collection: auction_collection, title: "Other Works from the Auction", typeName: context.__typename, href: artwork.sale.href, totalCount: artwork.sale?.eligible_sale_artworks_count }]
+      else
+        relatedWorks = [
+          { collection: artist_collection, title: "Other Works by #{artwork.artist?.name}", typeName: 'artist', href: ARTWORK.artist?.href, totalCount: ARTWORK.artist?.counts?.artworks }
+          { collection: related_collection, title: "Related Works", typeName: 'related', isRelated: true }
+        ]
       displayRelatedWorks(relatedWorks, context)
     else if context.__typename is 'ArtworkContextFair'
       fair_collection = new Artworks _.shuffle artwork.shows[0]?.artworks
@@ -90,10 +91,10 @@ module.exports = ->
       related_collection = new Artworks _.shuffle artwork.layer?.artworks
 
       relatedWorks = [
-        { collection: fair_collection, title: 'Other Works from the Booth', typeName: context.__typename }
-        { collection: artist_collection, title: "Other Works by #{artwork.artist.name}", typeName: 'artist', isArtist: true }
-        { collection: partner_collection, title: "Other Works by #{artwork.partner?.name}", typeName: context.__typename }
-        { collection: related_collection, title: "Related Works", typeName: 'related' }
+        { collection: fair_collection, title: 'Other Works from the Booth', typeName: context.__typename, href: artwork.shows[0]?.href, totalCount: artwork.shows[0]?.counts?.eligible_artworks }
+        { collection: artist_collection, title: "Other Works by #{artwork.artist?.name}", typeName: 'artist', href: ARTWORK.artist?.href, totalCount: ARTWORK.artist?.counts?.artworks }
+        { collection: partner_collection, title: "Other Works from #{artwork.partner?.name}", typeName: context.__typename, href: ARTWORK.partner?.href, totalCount: ARTWORK.partner?.counts?.artworks }
+        { collection: related_collection, title: "Related Works", typeName: 'related', isRelated: true  }
       ]
 
       displayRelatedWorks(relatedWorks, context)
@@ -103,10 +104,10 @@ module.exports = ->
       partner_collection = new Artworks _.take _.shuffle(artwork.partner?.artworks), 10
       related_collection = new Artworks _.take _.shuffle(artwork.layer?.artworks), 10
       relatedWorks = [
-        { collection: show_collection, title: 'Other Works from the Show', typeName: context.__typename }
-        { collection: artist_collection, title: "Other Works by #{artwork.artist.name}", typeName: 'artist', isArtist: true }
-        { collection: partner_collection, title: "Other Works from #{artwork.partner.name}", typeName: 'gallery', isPartner: true }
-        { collection: related_collection, title: "Related Works", typeName: 'related' }
+        { collection: show_collection, title: 'Other Works from the Show', typeName: context.__typename, href: artwork.shows[0]?.href, totalCount: artwork.shows[0]?.counts?.eligible_artworks }
+        { collection: artist_collection, title: "Other Works by #{artwork.artist.name}", typeName: 'artist', href: ARTWORK.artist?.href, totalCount: ARTWORK.artist?.counts?.artworks }
+        { collection: partner_collection, title: "Other Works from #{artwork.partner.name}", typeName: 'gallery', href: ARTWORK.partner?.href, totalCount: ARTWORK.partner?.counts?.artworks }
+        { collection: related_collection, title: "Related Works", typeName: 'related', isRelated: true  }
       ]
 
       displayRelatedWorks(relatedWorks, context)
@@ -115,9 +116,9 @@ module.exports = ->
       partner_collection = new Artworks _.take _.shuffle(artwork.partner.artworks), 10
       related_collection = new Artworks _.take _.shuffle(artwork.layer?.artworks), 10
       relatedWorks = [
-        { collection: artist_collection, title: "Other Works by #{artwork.artist.name}", typeName: 'artist', isArtist: true }
-        { collection: partner_collection, title: "Other Works from #{artwork.partner.name}", typeName: 'gallery', isPartner: true }
-        { collection: related_collection, title: "Related Works", typeName: 'related' }
+        { collection: artist_collection, title: "Other Works by #{artwork.artist.name}", typeName: 'artist', totalCount: ARTWORK.artist?.counts?.artworks, href: ARTWORK.artist?.href }
+        { collection: partner_collection, title: "Other Works from #{artwork.partner.name}", typeName: 'gallery', href: ARTWORK.partner?.href, totalCount: ARTWORK.partner?.counts?.artworks }
+        { collection: related_collection, title: "Related Works", typeName: 'related', isRelated: true  }
       ]
 
       displayRelatedWorks(relatedWorks, context)

@@ -5,6 +5,8 @@
     "baseUrl": "./src",
     "jsx": "react",
     "module": "es2015",
+    "moduleResolution": "node",
+    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
@@ -13,6 +15,10 @@
     "strictNullChecks": true,
     "target": "es2016"
   },
-  "files": ["./node_modules/@artsy/reaction/dist"],
-  "include": ["./src"]
+  "files": [
+    "./node_modules/@artsy/reaction/dist"
+  ],
+  "include": [
+    "./src"
+  ]
 }

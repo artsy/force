@@ -1,5 +1,8 @@
 const app = (module.exports = require('express')())
 
+// NOTE:
+// App order matters as some apps establish logic that is shared inside of subapps.
+
 // Apps with hardcoded routes or "RESTful" routes
 app.use(require('./apps/home'))
 app.use(require('./apps/editorial_features'))
@@ -29,6 +32,7 @@ app.use(require('./apps/geo'))
 app.use(require('./apps/jobs'))
 app.use(require('./apps/notifications'))
 app.use(require('./apps/order'))
+app.use(require('./apps/order2/index.tsx'))
 app.use(require('./apps/personalize'))
 app.use(require('./apps/press'))
 app.use(require('./apps/pro_buyer'))
