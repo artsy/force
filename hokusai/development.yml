@@ -2,17 +2,18 @@
 version: '2'
 services:
   force:
-    command: yarn start
-    environment:
-    - NODE_ENV=development
-    - REDIS_URL=redis://redis:6379/0
-    - PORT=5000
     extends:
       file: common.yml
       service: force
+    environment:
+    - NODE_ENV=development
+    - REDIS_URL=redis://force-redis:6379/0
+    - PORT=5000
+    env_file: ../.env
     ports:
     - 5000:5000
-  redis:
+    command: node ./src/index.js
+  force-redis:
     image: redis:3.2-alpine
     ports:
     - 6379:6379

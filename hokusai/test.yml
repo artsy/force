@@ -5,6 +5,7 @@ services:
     command: yarn test
     environment:
     - NODE_ENV=test
+    env_file: ../.env.test
     extends:
       file: common.yml
       service: force
