@@ -82,12 +82,13 @@ module.exports.init = ->
     collection: sd.ARTICLES
     offset: 0
 
-  ReactDOM.render(
-    React.createElement(
-      NewsPanel,
-      {articles: []}
-    ),
-    document.getElementById('news-panel')
-  )
+  if sd.CURRENT_USER && sd.CURRENT_USER.type is 'Admin'
+    ReactDOM.render(
+      React.createElement(
+        NewsPanel,
+        {articles: sd.NEWS_ARTICLES}
+      ),
+      document.getElementById('news-panel')
+    )
 
   new EditorialSignupView el: $('body')

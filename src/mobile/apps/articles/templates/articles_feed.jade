@@ -1,10 +1,10 @@
 - isAdmin = sd.CURRENT_USER && sd.CURRENT_USER.type === 'Admin'
 
 for article, i in articles
-  if hasNews && isAdmin && i == 0
+  if newsArticles && isAdmin && i == 0
       .article-item-first
         include ../../../components/article_figure/index
         #news-panel
-        //- renders reaction newsPanel via articles.coffee
+        //- renders reaction NewsPanel via articles.coffee
   else
     include ../../../components/article_figure/index
