@@ -14,11 +14,14 @@ template = -> require('./templates/index.jade') arguments...
 module.exports = class ArtworkFilterView extends Backbone.View
   subviews: []
 
-  initialize: ({ @artistID, @topOffset = 0 }) ->
+  initialize: ({ @artistID, @topOffset = 0, @testGroup }) ->
     @siteHeaderHeight = $('#main-layout-header').outerHeight(true)
     @path = window.location.pathname
     paramsFromUrl = qs.parse(window.location.search.replace(/^\?/, ''))
     @params = new Params paramsFromUrl
+    
+    if not @params.get('sort') and @testGroup != 'control'
+      @params.updateWith 'sort', '-decayed_merch'
 
     @filter = new Filter
       params: @params

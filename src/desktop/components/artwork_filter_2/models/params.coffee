@@ -31,5 +31,3 @@ module.exports = class Params extends Backbone.Model
   currentParamsQueryString: ->
     # Exclude default values of attributes that are not explicitly set
     qs.stringify _.pick @attributes, @whitelisted
-
-

@@ -31,6 +31,8 @@ describe 'Artist header', ->
         artist: @artist
         nav: @nav
         viewHelpers: helpers
+        showSections: 
+          header: true
       }, done
 
     it 'should not display the no works message if there is more than 0 artworks', ->
@@ -62,6 +64,8 @@ describe 'Artist header', ->
         artist: @artist
         nav: @nav
         viewHelpers: helpers
+        showSections: 
+          header: true
       }, done
 
     it 'should not display the no works message if there is more than 0 artworks', ->
@@ -96,6 +100,8 @@ describe 'Artist header', ->
         artist: @artist
         nav: @nav
         viewHelpers: helpers
+        showSections: 
+          header: true
       }, done
 
     it 'should display the no works message if there are no artworks', ->
