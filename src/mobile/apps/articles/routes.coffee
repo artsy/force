@@ -78,6 +78,7 @@ module.exports.articles = (req, res, next) ->
         res.locals.sd.ARTICLES = articles
         res.render 'articles',
           articles: articles
+          hasNews: true
 
 module.exports.form = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
