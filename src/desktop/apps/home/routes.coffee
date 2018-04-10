@@ -69,6 +69,10 @@ fetchMetaphysicsData = (req)->
       res.locals.sd.HERO_UNITS = heroUnits
       res.locals.sd.USER_HOME_PAGE = homePage.artwork_modules
 
+      # for pasing data to client side forgot code
+      res.locals.sd.RESET_PASWORD_REDIRECT_TO = req.query.reset_password_redirect_to
+      res.locals.sd.SET_PASSWORD = req.query.set_password
+
       res.render 'index',
         heroUnits: heroUnits
         modules: homePage.artwork_modules

@@ -68,11 +68,9 @@
     color purple-color
 .mlh-login.avant-garde-button-white
 .mlh-signup.avant-garde-button-black
+  margin-right 10px
+  padding 12px 30px
   width auto
-.mlh-login
-  margin-right 10px
-.mlh-signup
-  margin-right 10px
 .mlh-user-name
   @extends .mlh-nav-link
   padding 11px 10px
@@ -88,16 +86,17 @@
   flex-grow 0
   flex-shrink 0
   margin-left auto
-  &.hover-pulldown
+  &.hover-pulldown[data-anchor='right']
     &:before
       border none
+    .hover-pulldown-menu
+      padding-bottom 0px
+      right -38px
+      width 300px
   svg
     fill black
   .hpm-header
     cursor default
-  .hover-pulldown-menu
-    width 300px
-    padding-bottom 0px
   .hpm-view-all
     text-align center
     border-top 1px solid gray-darkest-color

@@ -83,7 +83,31 @@ describe 'LoggedOutUser', ->
         user.forgot()
         Backbone.sync.args[0][0].should.equal 'create'
         Backbone.sync.args[0][2].url.should.containEql '/api/v1/users/send_reset_password_instructions'
-        Backbone.sync.args[0][1].attributes.should.containEql email: 'foo@bar.com'
+        attributes = Backbone.sync.args[0][1].attributes
+        attributes.should.containEql email: 'foo@bar.com'
+        attributes.should.containEql mode: null
+        attributes.should.containEql reset_password_redirect_to: null
+
+      it 'sends the redirect to in the request', ->
+        LoggedOutUser.__set__ 'sd', RESET_PASSWORD_REDIRECT_TO: 'https://cms.artsy.net'
+        user = new LoggedOutUser email: 'foo@bar.com'
+        user.forgot()
+        attributes = Backbone.sync.args[0][1].attributes
+        attributes.should.containEql reset_password_redirect_to: 'https://cms.artsy.net'
+
+      it 'sends the mode when set password is true', ->
+        LoggedOutUser.__set__ 'sd', SET_PASSWORD: 'true'
+        user = new LoggedOutUser email: 'foo@bar.com'
+        user.forgot()
+        attributes = Backbone.sync.args[0][1].attributes
+        attributes.should.containEql mode: 'fair_set_password'
+
+      it 'ignores other values of SET_PASSWORD', ->
+        LoggedOutUser.__set__ 'sd', SET_PASSWORD: 'invalid'
+        user = new LoggedOutUser email: 'foo@bar.com'
+        user.forgot()
+        attributes = Backbone.sync.args[0][1].attributes
+        attributes.should.containEql mode: null
 
       it 'accepts options and overwrites the default success', (done) ->
         user = new LoggedOutUser email: 'foo@bar.com'

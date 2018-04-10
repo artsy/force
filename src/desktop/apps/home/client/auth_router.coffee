@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 mediator = require '../../../lib/mediator.coffee'
-qs = require 'querystring'
+qs = require 'qs'
 
 module.exports = class HomeAuthRouter extends Backbone.Router
 
@@ -12,14 +12,15 @@ module.exports = class HomeAuthRouter extends Backbone.Router
 
   initialize: ->
     @location = window.location
+    @parsedLocation = qs.parse(window.location.search.replace /^\?/, '')
 
   login: ->
-    error = qs.parse(@location.search.replace /^\?/, '').error
-    redirectTo = qs.parse(@location.search.replace /^\?/, '').redirect_uri or qs.parse(@location.search.replace /^\?/, '')['redirect-to']
+    error = @parsedLocation.error
+    redirectTo = @parsedLocation.redirect_uri or @parsedLocation['redirect-to']
 
     # Handle gravity style account created errors
     unless error
-      error = qs.parse(@location.search.replace /^\?/, '').account_created_email
+      error = @parsedLocation.account_created_email
 
     if error
       msg = switch error
@@ -45,10 +46,13 @@ module.exports = class HomeAuthRouter extends Backbone.Router
         redirectTo: redirectTo
 
   signup: ->
-    redirectTo = qs.parse(@location.search.replace /^\?/, '')['redirect-to']
+    redirectTo = @parsedLocation['redirect-to']
     mediator.trigger 'open:auth',
       mode: 'register',
       redirectTo: if redirectTo then redirectTo else null
 
   forgot: ->
-    mediator.trigger 'open:auth', mode: 'forgot'
+    email = @parsedLocation.email
+    setPassword = @parsedLocation.set_password
+    redirectTo = @parsedLocation.reset_password_redirect_to
+    mediator.trigger 'open:auth', mode: 'forgot', email: email, setPassword: setPassword, redirectTo: redirectTo

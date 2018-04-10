@@ -17,7 +17,11 @@ describe 'Auth routes', ->
       get: sinon.stub()
       logout: sinon.stub()
       user: new Backbone.Model accessToken: 'secret'
-    @res = render: sinon.stub(), send: sinon.stub(), redirect: sinon.stub()
+    @res =
+      locals: sd: {}
+      redirect: sinon.stub()
+      render: sinon.stub()
+      send: sinon.stub()
     @next = sinon.stub()
 
   describe '#resetPassword', ->
