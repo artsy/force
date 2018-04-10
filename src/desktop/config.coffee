@@ -72,7 +72,7 @@ module.exports =
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
-  EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video'
+  EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video|^\/news'
   PARSELY_SECRET: null
   PC_ARTSY_CHANNEL: '5759e508b5989e6f98f77999'
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
