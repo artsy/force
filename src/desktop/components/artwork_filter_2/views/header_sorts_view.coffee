@@ -9,13 +9,19 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
     # Render the template once when the params are first set.
     # Afterwards, the superclass handles changes in the selection.
     @listenToOnce @params, 'firstSet', @render
-    super
 
-  sorts:
+    @sorts = {
     '-partner_updated_at': 'Recently Updated'
     '-published_at': 'Recently Added'
     '-year': 'Artwork Year (desc.)'
     'year': 'Artwork Year (asc.)'
+    }
+
+    # allows decayed_merch to be set via url.
+    if @params && @params.get('sort') && @params.get('sort') == '-decayed_merch'
+      @sorts['-decayed_merch'] = 'Default' 
+
+    super
 
   render: ->
     sort = @params.get('sort')
