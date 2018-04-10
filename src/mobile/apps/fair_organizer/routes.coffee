@@ -42,6 +42,7 @@ module.exports.fetchFairOrgData = (req, res, next) ->
   request = fairs.fetch
     data:
       fair_organizer_id: fairOrg.id
+      sort: "-start_at"
     success: (models, response, options)->
       articles = new Articles()
 
