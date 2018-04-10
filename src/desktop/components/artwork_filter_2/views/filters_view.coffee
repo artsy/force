@@ -15,7 +15,7 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     'click .js-artwork-filter-remove'   : 'filterDeselected'
     'click .js-artwork-filter-view-all' : 'seeAllClicked'
 
-  initialize: ({ @params, @counts, stickyOffset = 0 }) ->
+  initialize: ({ @params, @counts, stickyOffset = 0, @testGroup }) ->
     @sticky = new Sticky
     @sticky.headerHeight = stickyOffset
 
@@ -29,6 +29,10 @@ module.exports = class ArtworkFiltersView extends Backbone.View
 
   render: ->
     forSaleTotal = @counts.get 'for_sale'
+    forSaleFilter = @testGroup == 'control'
+    if !forSaleFilter
+      @params.set 'for_sale', true
+
     key = if forSale = @params.get 'for_sale' then 'for_sale' else 'all'
     aggregations = @counts.aggregations?[key]
 
@@ -39,7 +43,8 @@ module.exports = class ArtworkFiltersView extends Backbone.View
       forSale,
       @counts,
       @params,
-      @truncate
+      @truncate,
+      forSaleFilter
     }
     this
 

@@ -38,6 +38,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     { @sticky } = new FiltersView _.extend
       el: @$('.artwork-filter-criteria'),
       stickyOffset: @siteHeaderHeight + @topOffset,
+      testGroup: @testGroup,
       { counts, @params }
     @subviews.push new CountView _.extend el: @$('#artwork-filter-right__totals'), { counts, @params }
     @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
