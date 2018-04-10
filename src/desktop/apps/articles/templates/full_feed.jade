@@ -5,9 +5,15 @@
         - article = featuredArticles[0]
         +article-figure(article, 1000, false, false)
 
-      aside.am-featured-also
-        for article in featuredArticles.slice(1)
-          +article-figure(article, 600, false, false)
+      //- TODO: REMOVE WHEN NEWS LAUNCHES
+      - isAdmin = sd.CURRENT_USER && sd.CURRENT_USER.type === 'Admin'
+      if !isAdmin
+        aside.am-featured-also
+          for article in featuredArticles.slice(1)
+            +article-figure(article, 600, false, false)
+      else
+        #news-panel
+        //- renders reaction newsPanel via magazine.coffee
 
   if sd.CURRENT_PATH != '/articles' && section && section.get('featured_links')
     section.articles-featured-articles.main-layout-container
