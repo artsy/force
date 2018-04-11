@@ -5,7 +5,5 @@ This component encapsulates rendering of the error page. We check in a pre-compi
 To update the css file run:
 
 ```
-node_modules/.bin/stylus desktop/components/error_handler/index.styl
-node_modules/.bin/sqwish desktop/components/error_handler/index.css
-mv desktop/components/error_handler/index.min.css desktop/components/error_handler/index.css
+node_modules/.bin/stylus src/desktop/components/error_handler/index.styl --compress
 ```

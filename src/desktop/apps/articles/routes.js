@@ -1,7 +1,10 @@
 import { renderLayout as _renderLayout } from '@artsy/stitch'
 import App from 'desktop/apps/articles/components/App.tsx'
 import magazineQuery from './queries/editorial_articles.coffee'
-import { newsArticlesQuery } from './queries/news_articles_query.js'
+import {
+  newsArticlesQuery,
+  newsPanelQuery,
+} from './queries/news_articles_query.js'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import Articles from 'desktop/collections/articles.coffee'
 import Section from 'desktop/models/section.coffee'
@@ -23,9 +26,16 @@ export const articles = (req, res, next) => {
       const articles = new Articles(result.articles)
       res.locals.sd.SUBSCRIBED_TO_EDITORIAL = !!req.user
       res.locals.sd.ARTICLES = articles.toJSON()
-      res.render('articles', {
-        articles: articles,
-        crop,
+      // Fetch News Panel Articles
+      positronql({ query: newsPanelQuery() }).then((result) => {
+        const newsArticles = result.articles
+        res.locals.sd.NEWS_ARTICLES = newsArticles
+
+        res.render('articles', {
+          articles: articles,
+          crop,
+          newsArticles,
+        })
       })
     })
     .catch(next)
