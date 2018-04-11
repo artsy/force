@@ -12,7 +12,7 @@ services:
     env_file: ../.env
     ports:
     - 5000:5000
-    command: node ./src/index.js
+    command: npm start
   force-redis:
     image: redis:3.2-alpine
     ports:
