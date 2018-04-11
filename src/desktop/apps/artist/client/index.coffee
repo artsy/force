@@ -6,7 +6,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 ArtistRouter = require './router.coffee'
 FollowedArtistsRailView = require '../../home/components/followed_artists/view.coffee'
 splitTest = require '../../../components/split_test/index.coffee'
-sd = require('sharify').data
 
 testGroup = sd.ARTIST_MERCH_TEST
 

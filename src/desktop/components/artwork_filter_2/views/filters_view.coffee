@@ -30,9 +30,6 @@ module.exports = class ArtworkFiltersView extends Backbone.View
   render: ->
     forSaleTotal = @counts.get 'for_sale'
     forSaleFilter = @testGroup == 'control'
-    if !forSaleFilter
-      @params.set 'for_sale', true
-
     key = if forSale = @params.get 'for_sale' then 'for_sale' else 'all'
     aggregations = @counts.aggregations?[key]
 
