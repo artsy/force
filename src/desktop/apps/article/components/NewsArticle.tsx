@@ -7,9 +7,7 @@ interface Props {
   isMobile: boolean
   isTruncated: boolean
   isFirstArticle: boolean
-  nextArticle: any
-  onDateChange: any
-  onMetadataChange: any
+  onDateChange: (date: string) => void
 }
 
 interface State {
@@ -26,49 +24,34 @@ export class NewsArticle extends Component<Props, State> {
   }
 
   onExpand = () => {
+    const { article } = this.props
+    this.setMetadata(article)
     this.setState({
       isTruncated: false
     })
   }
 
-  onEnter = ({ previousPosition, currentPosition }) => {
+  setMetadata = (article: any = null) => {
+    const id = article ? article.id : 'news'
+    const path = article ? `/news/${article.slug}` : '/news'
+    document.title = article ? article.thumbnail_title : 'News'
+    window.history.replaceState({}, id, path)
+  }
+
+  onEnter = ({ currentPosition }) => {
     const {
       article,
-      onDateChange,
-      onMetadataChange
+      onDateChange
     } = this.props
     const { isTruncated } = this.state
-    const enteredArticle =
-      previousPosition === 'above' && currentPosition === 'inside'
 
-    if (enteredArticle) {
+    if (currentPosition === 'inside') {
       onDateChange(article.published_at)
 
       if (!isTruncated) {
-        onMetadataChange(article)
+        this.setMetadata(article)
       } else {
-        onMetadataChange()
-      }
-    }
-  }
-
-  onLeave = ({ previousPosition, currentPosition }) => {
-    const {
-      nextArticle,
-      onDateChange,
-      onMetadataChange
-    } = this.props
-
-    if (
-      nextArticle &&
-      previousPosition === 'inside' &&
-      currentPosition === 'above'
-    ) {
-      onDateChange(nextArticle.published_at)
-      if (nextArticle.isTruncated === false) {
-        onMetadataChange(nextArticle)
-      } else {
-        onMetadataChange()
+        this.setMetadata()
       }
     }
   }
@@ -84,18 +67,20 @@ export class NewsArticle extends Component<Props, State> {
 
     return (
       <Fragment>
-        <Article
-          article={article}
-          isTruncated={isTruncated}
-          isMobile={isMobile}
-          marginTop={isFirstArticle ? marginTop : null}
-          onExpand={this.onExpand}
-        />
         <Waypoint
           onEnter={(waypointData) => this.onEnter(waypointData)}
-          onLeave={(waypointData) => this.onLeave(waypointData)}
           topOffset="30px"
-        />
+        >
+          <div>
+            <Article
+              article={article}
+              isTruncated={isTruncated}
+              isMobile={isMobile}
+              marginTop={isFirstArticle ? marginTop : null}
+              onExpand={this.onExpand}
+            />
+          </div>
+        </Waypoint>
       </Fragment>
     )
   }

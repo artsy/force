@@ -8,7 +8,6 @@ import {
   RelatedArticlesCanvas,
 } from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
-
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
@@ -26,15 +25,15 @@ export interface Props {
 
 interface State {
   articles: ArticleData[]
-  date: any
+  date: string
   display: any[]
   error: boolean
-  following: any[]
+  following: object[]
   offset: number
   isEnabled: boolean
   isLoading: boolean
   omit: string
-  relatedArticles: any[]
+  relatedArticles: object[]
 }
 
 // FIXME: Rewire
@@ -44,14 +43,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   constructor(props) {
     super(props)
 
-    const article = props.articles[0] ? props.articles[0] : {}
+    const article = props.articles[0] || {}
     const date = this.getDateField(article)
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
-
-    this.onDateChange = throttle(this.onDateChange, 500, {
-      trailing: true
-    })
 
     this.state = {
       isLoading: false,
@@ -150,13 +145,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     }
   }
 
-  onMetadataChange = (article: any = null) => {
-    const id = article ? article.id : 'news'
-    const path = article ? `/news/${article.slug}` : '/news'
-    document.title = article ? article.thumbnail_title : 'News'
-    window.history.replaceState({}, id, path)
-  }
-
   hasNewDate = (article, i) => {
     const { articles } = this.state
     const beforeArticle = articles[i - 1] || {}
@@ -196,9 +184,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               article={article}
               isTruncated={isTruncated}
               isFirstArticle={i === 0}
-              nextArticle={articles[i + 1]}
               onDateChange={(date) => this.onDateChange(date)}
-              onMetadataChange={this.onMetadataChange}
             />
             {hasMetaContent &&
               related && (
