@@ -5,9 +5,9 @@ import Waypoint from 'react-waypoint'
 interface Props {
   article: any
   isActive: boolean
+  isFirstArticle: boolean
   isMobile: boolean
   isTruncated: boolean
-  isFirstArticle: boolean
   nextArticle: any
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
@@ -64,7 +64,6 @@ export class NewsArticle extends Component<Props, State> {
       if (isMobile) {
         onActiveArticleChange(article.id)
       }
-
     }
   }
 

@@ -24,17 +24,17 @@ export interface Props {
 }
 
 interface State {
+  activeArticle: string
   articles: ArticleData[]
   date: string
   display: any[]
   error: boolean
   following: object[]
-  offset: number
   isEnabled: boolean
   isLoading: boolean
+  offset: number
   omit: string
   relatedArticles: object[]
-  activeArticle: string
 }
 
 // FIXME: Rewire
@@ -50,17 +50,17 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const offset = props.article ? 0 : 6
 
     this.state = {
-      isLoading: false,
+      activeArticle: '',
       articles: props.articles,
       date,
       display: [],
-      offset,
-      omit,
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
-      relatedArticles: [],
-      activeArticle: ''
+      isLoading: false,
+      offset,
+      omit,
+      relatedArticles: []
     }
   }
 
