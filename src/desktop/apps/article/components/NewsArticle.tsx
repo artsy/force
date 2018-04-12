@@ -15,6 +15,7 @@ interface Props {
 
 interface State {
   isTruncated: boolean
+  bottomOffset: string
 }
 
 export class NewsArticle extends Component<Props, State> {
@@ -22,8 +23,15 @@ export class NewsArticle extends Component<Props, State> {
     super(props)
 
     this.state = {
-      isTruncated: props.isTruncated || false
+      isTruncated: props.isTruncated || false,
+      bottomOffset: "200px"
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      bottomOffset: `${window.innerHeight / 2}px`
+    })
   }
 
   onExpand = () => {
@@ -93,8 +101,8 @@ export class NewsArticle extends Component<Props, State> {
       isTruncated,
       isFirstArticle
     } = this.props
+    const { bottomOffset } = this.state
     const marginTop = isMobile ? '100px' : '200px'
-    const bottomOffset = window ? `${window.innerHeight / 2}px` : '200px'
 
     return (
       <Fragment>
