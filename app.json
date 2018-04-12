@@ -1,0 +1,336 @@
+{
+  "name":"force-staging",
+  "scripts":{},
+  "env":{
+    "ADMIN_URL": {
+      "required": true
+    },
+    "API_URL": {
+      "required": true
+    },
+    "APPLICATION_NAME": {
+      "required": true
+    },
+    "APP_URL": {
+      "required": true
+    },
+    "ARTSY_EDITORIAL_ID": {
+      "required": true
+    },
+    "ARTSY_ID": {
+      "required": true
+    },
+    "ARTSY_SECRET": {
+      "required": true
+    },
+    "ASSET_MANIFEST": {
+      "required": true
+    },
+    "BIDDER_H2_COPY": {
+      "required": true
+    },
+    "CALENDAR_URL": {
+      "required": true
+    },
+    "CDN_URL": {
+      "required": true
+    },
+    "CLIENT_ID": {
+      "required": true
+    },
+    "CLIENT_SECRET": {
+      "required": true
+    },
+    "CMS_URL": {
+      "required": true
+    },
+    "CONVECTION_APP_ID": {
+      "required": true
+    },
+    "CONVECTION_APP_URL": {
+      "required": true
+    },
+    "CONVECTION_GEMINI_APP": {
+      "required": true
+    },
+    "COOKIE_DOMAIN": {
+      "required": true
+    },
+    "DEBUG": {
+      "required": true
+    },
+    "DEFAULT_CACHE_TIME": {
+      "required": true
+    },
+    "EF_GUCCI": {
+      "required": true
+    },
+    "EF_VENICE": {
+      "required": true
+    },
+    "EF_VIDEO_GUIDE": {
+      "required": true
+    },
+    "EMAIL_SIGNUP_IMAGES_ID": {
+      "required": true
+    },
+    "EMBEDLY_KEY": {
+      "required": true
+    },
+    "EOY_2016": {
+      "required": true
+    },
+    "EOY_2016_ARTICLE": {
+      "required": true
+    },
+    "EOY_2016_SLUGS": {
+      "required": true
+    },
+    "ERROR_PAGE_URL": {
+      "required": true
+    },
+    "FACEBOOK_APP_ID": {
+      "required": true
+    },
+    "FACEBOOK_APP_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_ID": {
+      "required": true
+    },
+    "FACEBOOK_SECRET": {
+      "required": true
+    },
+    "FORCE_COLOR": {
+      "required": true
+    },
+    "FORCE_MERGE_URL": {
+      "required": true
+    },
+    "FORCE_MERGE_WEIGHT": {
+      "required": true
+    },
+    "FORCE_URL": {
+      "required": true
+    },
+    "FUSION_URL": {
+      "required": true
+    },
+    "GALAXY_PUBLISHABLE_TOKEN": {
+      "required": true
+    },
+    "GALAXY_URL": {
+      "required": true
+    },
+    "GEMINI_ACCOUNT_KEY": {
+      "required": true
+    },
+    "GEMINI_APP": {
+      "required": true
+    },
+    "GEMINI_CLOUDFRONT_URL": {
+      "required": true
+    },
+    "GEMINI_S3_ACCESS_KEY": {
+      "required": true
+    },
+    "GOOGLE_ANALYTICS_ID": {
+      "required": true
+    },
+    "GOOGLE_MAPS_API_KEY": {
+      "required": true
+    },
+    "GOOGLE_SEARCH_CX": {
+      "required": true
+    },
+    "GOOGLE_SEARCH_KEY": {
+      "required": true
+    },
+    "LINKEDIN_KEY": {
+      "required": true
+    },
+    "LINKEDIN_SECRET": {
+      "required": true
+    },
+    "LINKED_SECRET": {
+      "required": true
+    },
+    "MAILCHIMP_KEY": {
+      "required": true
+    },
+    "MAINTENANCE_PAGE_URL": {
+      "required": true
+    },
+    "MARKETING_SIGNUP_MODAL_COPY": {
+      "required": true
+    },
+    "MARKETING_SIGNUP_MODAL_HEADER": {
+      "required": true
+    },
+    "MARKETING_SIGNUP_MODAL_IMG": {
+      "required": true
+    },
+    "MARKETING_SIGNUP_MODALS": {
+      "required": true
+    },
+    "MARKETING_SIGNUP_MODAL_SLUG": {
+      "required": true
+    },
+    "METAPHYSICS_ENDPOINT": {
+      "required": true
+    },
+    "MIXPANEL_ID": {
+      "required": true
+    },
+    "MOBILE_MARKETING_SIGNUP_MODALS": {
+      "required": true
+    },
+    "MOBILE_URL": {
+      "required": true
+    },
+    "NEW_RELIC_APP_NAME": {
+      "required": true
+    },
+    "NEW_RELIC_BROWSER_MONITOR_ENABLE": {
+      "required": true
+    },
+    "NEW_RELIC_LOG": {
+      "required": true
+    },
+    "NEW_RELIC_LOG_LEVEL": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "NODE_MODULES_CACHE": {
+      "required": true
+    },
+    "OPENREDIS_URL": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    },
+    "PARSELY_KEY": {
+      "required": true
+    },
+    "PARSELY_SECRET": {
+      "required": true
+    },
+    "PATH": {
+      "required": true
+    },
+    "POSITRON_URL": {
+      "required": true
+    },
+    "PREDICTION_URL": {
+      "required": true
+    },
+    "REDIRECT_DESKTOP": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    },
+    "REFLECTION_URL": {
+      "required": true
+    },
+    "RESTART_INTERVAL": {
+      "required": true
+    },
+    "S3_BUCKET": {
+      "required": true
+    },
+    "S3_KEY": {
+      "required": true
+    },
+    "S3_SECRET": {
+      "required": true
+    },
+    "SAILTHRU_KEY": {
+      "required": true
+    },
+    "SAILTHRU_MASTER_LIST": {
+      "required": true
+    },
+    "SAILTHRU_SECRET": {
+      "required": true
+    },
+    "SECURE_IMAGES_URL": {
+      "required": true
+    },
+    "SEGMENT_WRITE_KEY": {
+      "required": true
+    },
+    "SEGMENT_WRITE_KEY_SERVER": {
+      "required": true
+    },
+    "SENTRY_PRIVATE_DSN": {
+      "required": true
+    },
+    "SENTRY_PUBLIC_DSN": {
+      "required": true
+    },
+    "SESSION_COOKIE_KEY": {
+      "required": true
+    },
+    "SESSION_COOKIE_MAX_AGE": {
+      "required": true
+    },
+    "SESSION_SECRET": {
+      "required": true
+    },
+    "STRIPE_PUBLISHABLE_KEY": {
+      "required": true
+    },
+    "TARGET_CAMPAIGN_URL": {
+      "required": true
+    },
+    "TRACK_PAGELOAD_PATHS": {
+      "required": true
+    },
+    "TWILIO_ACCOUNT_SID": {
+      "required": true
+    },
+    "TWILIO_AUTH_TOKEN": {
+      "required": true
+    },
+    "TWILIO_NUMBER": {
+      "required": true
+    },
+    "TWITTER_CONSUMER_KEY": {
+      "required": true
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "required": true
+    },
+    "TWITTER_KEY": {
+      "required": true
+    },
+    "TWITTER_SECRET": {
+      "required": true
+    },
+    "VANITY_BUCKET": {
+      "required": true
+    },
+    "VENICE_2015_SECTION": {
+      "required": true
+    },
+    "WEBFONT_URL": {
+      "required": true
+    },
+    "WHITELISTED_VANITY_ASSETS": {
+      "required": true
+    }
+  },
+  "addons":[
+    "heroku-redis",
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
