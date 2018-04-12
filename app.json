@@ -1,17 +1,17 @@
 {
-  "name":"force-staging",
-  "scripts":{},
-  "env":{
+  "name": "force",
+  "scripts": {},
+  "env": {
     "ADMIN_URL": {
       "required": true
     },
     "API_URL": {
       "required": true
     },
-    "APPLICATION_NAME": {
+    "APP_URL": {
       "required": true
     },
-    "APP_URL": {
+    "APPLICATION_NAME": {
       "required": true
     },
     "ARTSY_EDITORIAL_ID": {
@@ -146,13 +146,13 @@
     "GOOGLE_SEARCH_KEY": {
       "required": true
     },
+    "LINKED_SECRET": {
+      "required": true
+    },
     "LINKEDIN_KEY": {
       "required": true
     },
     "LINKEDIN_SECRET": {
-      "required": true
-    },
-    "LINKED_SECRET": {
       "required": true
     },
     "MAILCHIMP_KEY": {
@@ -170,10 +170,10 @@
     "MARKETING_SIGNUP_MODAL_IMG": {
       "required": true
     },
-    "MARKETING_SIGNUP_MODALS": {
+    "MARKETING_SIGNUP_MODAL_SLUG": {
       "required": true
     },
-    "MARKETING_SIGNUP_MODAL_SLUG": {
+    "MARKETING_SIGNUP_MODALS": {
       "required": true
     },
     "METAPHYSICS_ENDPOINT": {
@@ -324,9 +324,14 @@
       "required": true
     }
   },
-  "addons":[
-    "heroku-redis",
-    "papertrail"
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "newrelic",
+    "heroku-redis"
   ],
   "buildpacks": [
     {
