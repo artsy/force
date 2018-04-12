@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { Component, Fragment } from 'react'
-import { flatten, throttle } from 'lodash'
+import { flatten } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
@@ -34,6 +34,7 @@ interface State {
   isLoading: boolean
   omit: string
   relatedArticles: object[]
+  activeArticle: string
 }
 
 // FIXME: Rewire
@@ -48,10 +49,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
 
-    this.onDateChange = throttle(this.onDateChange, 500, {
-      trailing: true
-    })
-
     this.state = {
       isLoading: false,
       articles: props.articles,
@@ -63,6 +60,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       following: setupFollows() || null,
       isEnabled: true,
       relatedArticles: [],
+      activeArticle: ''
     }
   }
 
@@ -149,6 +147,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     }
   }
 
+  onActiveArticleChange = (id) => {
+    this.setState({ activeArticle: id })
+  }
+
   hasNewDate = (article, i) => {
     const { articles } = this.state
     const beforeArticle = articles[i - 1] || {}
@@ -164,7 +166,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   renderContent = () => {
-    const { articles, display, relatedArticles } = this.state
+    const { activeArticle, articles, display, relatedArticles } = this.state
     const { isMobile } = this.props
 
     let counter = 0
@@ -190,6 +192,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               isFirstArticle={i === 0}
               onDateChange={(date) => this.onDateChange(date)}
               nextArticle={articles[i + 1]}
+              onActiveArticleChange={(id) => this.onActiveArticleChange(id)}
+              isActive={activeArticle === article.id}
             />
             {hasMetaContent &&
               related && (

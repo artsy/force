@@ -4,10 +4,12 @@ import Waypoint from 'react-waypoint'
 
 interface Props {
   article: any
+  isActive: boolean
   isMobile: boolean
   isTruncated: boolean
   isFirstArticle: boolean
   nextArticle: any
+  onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
 }
 
@@ -42,7 +44,9 @@ export class NewsArticle extends Component<Props, State> {
   onEnter = ({ previousPosition, currentPosition }) => {
     const {
       article,
-      onDateChange
+      onActiveArticleChange,
+      onDateChange,
+      isMobile
     } = this.props
     const { isTruncated } = this.state
 
@@ -56,18 +60,28 @@ export class NewsArticle extends Component<Props, State> {
       } else {
         this.setMetadata()
       }
+
+      if (isMobile) {
+        onActiveArticleChange(article.id)
+      }
+
     }
   }
 
   onLeave = ({ previousPosition, currentPosition }) => {
     const {
       nextArticle,
-      onDateChange
+      onDateChange,
+      isMobile,
+      onActiveArticleChange
     } = this.props
 
-    if (currentPosition === 'inside' && previousPosition === 'below') {
+    if (currentPosition === 'above' && previousPosition === 'inside') {
       if (nextArticle) {
         onDateChange(nextArticle.published_at)
+        if (isMobile) {
+          onActiveArticleChange(nextArticle.id)
+        }
       }
     }
   }
@@ -75,17 +89,21 @@ export class NewsArticle extends Component<Props, State> {
   render() {
     const {
       article,
+      isActive,
       isMobile,
       isTruncated,
       isFirstArticle
     } = this.props
     const marginTop = isMobile ? '100px' : '200px'
+    const bottomOffset = window ? `${window.innerHeight / 2}px` : '200px'
 
     return (
       <Fragment>
         <Waypoint
           onEnter={(waypointData) => this.onEnter(waypointData)}
-          topOffset="30px"
+          onLeave={(waypointData) => this.onLeave(waypointData)}
+          topOffset="-10px"
+          bottomOffset={bottomOffset}
         >
           <div>
             <Article
@@ -94,6 +112,7 @@ export class NewsArticle extends Component<Props, State> {
               isMobile={isMobile}
               marginTop={isFirstArticle ? marginTop : null}
               onExpand={this.onExpand}
+              isHovered={isMobile && isActive}
             />
           </div>
         </Waypoint>

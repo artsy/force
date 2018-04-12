@@ -96,7 +96,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   it('sets up follow buttons', () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    rendered.state().following.length.should.exist
+    rendered.state('following').length.should.exist
   })
 
   it('#hasNewDate returns true if article date is different from previous article', () => {
@@ -151,6 +151,12 @@ describe('<InfiniteScrollNewsArticle />', () => {
     rendered.update()
     rendered.find(RelatedArticlesCanvas).length.should.equal(1)
     rendered.html().should.containEql('More from Artsy Editorial')
+  })
+
+  it('#onActiveArticleChange sets the activeArticle', () => {
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    rendered.instance().onActiveArticleChange('1234')
+    rendered.state('activeArticle').should.equal('1234')
   })
 
   describe('/news - news index', () => {
@@ -223,12 +229,18 @@ describe('<InfiniteScrollNewsArticle />', () => {
     })
   })
 
-  // describe('#onDateChange', () => {
-  //   it('is throttled', () => {
-  //     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-  //     rendered.instance().onDateChange('123')
-  //     console.log(rendered.state('date'))
+  describe('#onDateChange', () => {
+    it('it sets date if it has a new one', () => {
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      rendered.instance().onDateChange('123')
+      rendered.state('date').should.equal('123')
+    })
 
-  //   })
-  // })
+    it("it doesn't set date if it hasn't changed", () => {
+      const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+      rendered.setState = sinon.stub()
+      rendered.instance().onDateChange('2018-07-19T17:19:55.909Z')
+      rendered.setState.callCount.should.equal(0)
+    })
+  })
 })

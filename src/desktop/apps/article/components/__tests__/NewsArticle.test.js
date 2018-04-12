@@ -46,7 +46,12 @@ describe('<NewsArticle />', () => {
       isMobile: true,
       isTruncated: true,
       isFirstArticle: true,
+      nextArticle: {
+        id: '1234',
+        published_at: '5678',
+      },
       onDateChange: sinon.stub(),
+      onActiveArticleChange: sinon.stub(),
     }
   })
 
@@ -103,6 +108,7 @@ describe('<NewsArticle />', () => {
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onEnter({
         currentPosition: 'inside',
+        previousPosition: 'above',
       })
 
       props.onDateChange.args[0][0].should.equal(article.published_at)
@@ -125,6 +131,35 @@ describe('<NewsArticle />', () => {
       window.history.replaceState.args[0][2].should.containEql(
         '/news/news-article'
       )
+    })
+
+    it('calls #onActiveArticleChange if it is mobile', () => {
+      props.isMobile = true
+      const rendered = mount(<NewsArticle {...props} />)
+      rendered.instance().onEnter({
+        currentPosition: 'inside',
+      })
+      props.onActiveArticleChange.callCount.should.equal(1)
+    })
+  })
+
+  describe('#onLeave', () => {
+    it('changes the date if there is a next article on leave', () => {
+      const rendered = mount(<NewsArticle {...props} />)
+      rendered.instance().onLeave({
+        currentPosition: 'above',
+        previousPosition: 'inside',
+      })
+      props.onDateChange.args[0][0].should.equal('5678')
+    })
+
+    it('calls #onActiveArticleChange if it is mobile', () => {
+      const rendered = mount(<NewsArticle {...props} />)
+      rendered.instance().onLeave({
+        currentPosition: 'above',
+        previousPosition: 'inside',
+      })
+      props.onActiveArticleChange.args[0][0].should.equal('1234')
     })
   })
 })
