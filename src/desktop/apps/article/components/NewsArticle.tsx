@@ -7,6 +7,7 @@ interface Props {
   isMobile: boolean
   isTruncated: boolean
   isFirstArticle: boolean
+  nextArticle: any
   onDateChange: (date: string) => void
 }
 
@@ -38,7 +39,7 @@ export class NewsArticle extends Component<Props, State> {
     window.history.replaceState({}, id, path)
   }
 
-  onEnter = ({ currentPosition }) => {
+  onEnter = ({ previousPosition, currentPosition }) => {
     const {
       article,
       onDateChange
@@ -46,12 +47,27 @@ export class NewsArticle extends Component<Props, State> {
     const { isTruncated } = this.state
 
     if (currentPosition === 'inside') {
-      onDateChange(article.published_at)
+      if (previousPosition === 'above') {
+        onDateChange(article.published_at)
+      }
 
       if (!isTruncated) {
         this.setMetadata(article)
       } else {
         this.setMetadata()
+      }
+    }
+  }
+
+  onLeave = ({ previousPosition, currentPosition }) => {
+    const {
+      nextArticle,
+      onDateChange
+    } = this.props
+
+    if (currentPosition === 'inside' && previousPosition === 'below') {
+      if (nextArticle) {
+        onDateChange(nextArticle.published_at)
       }
     }
   }
