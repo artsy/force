@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Layout } from './Layout'
+import { hot } from 'react-hot-loader'
+import { OrderForm } from '@artsy/reaction/dist/Components/Forms/OrderForm'
 
 interface Props {}
 
-export class App extends Component<Props> {
-  componentDidMount() {
-    console.log('mounted on client')
-  }
+export const App = hot(module)(
+  class extends Component<Props> {
+    componentDidMount() {
+      console.log('mounted on client')
+    }
 
-  render() {
-    return (
-      <Container>
-        App
-        <Layout />
-      </Container>
-    )
+    render() {
+      return (
+        <Container>
+          <OrderForm />
+        </Container>
+      )
+    }
   }
-}
+)
 
 const Container = styled.div`
   border: 1px solid black;

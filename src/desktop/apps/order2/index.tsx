@@ -1,6 +1,6 @@
-import React from 'react'
 import express from 'express'
 import { App } from './Components/App'
+import { Head } from './Components/Head'
 import { renderLayout } from '@artsy/stitch'
 
 const app = (module.exports = express())
@@ -11,12 +11,12 @@ app.get('/order2', async (_req, res) => {
   try {
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_index.jade',
+      layout: '../../components/main_layout/templates/blank.jade',
       config: {
         styledComponents: true,
       },
       blocks: {
-        head: () => <div>head</div>,
+        head: Head,
         body: App,
       },
       locals: {
@@ -29,4 +29,9 @@ app.get('/order2', async (_req, res) => {
   } catch (error) {
     console.log('(apps/order2) Error: ', error)
   }
+})
+
+// FIXME: Remove
+app.get('/order2/*', (_req, res) => {
+  res.redirect('/order2')
 })
