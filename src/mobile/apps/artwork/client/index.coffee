@@ -9,6 +9,7 @@ ArtworkPartnerView = require '../components/partner/view.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 fetchArtworkBuckets = require '../components/related_artworks/index.coffee'
+{ recordArtworkView } = require 'lib/components/record_artwork_view'
 
 module.exports.init = ->
   bootstrap()
@@ -16,6 +17,7 @@ module.exports.init = ->
   artwork = new Artwork sd.ARTWORK
   user = CurrentUser.orNull()
   user.initializeDefaultArtworkCollection() if user
+  recordArtworkView(sd.ARTWORK._id, user)
 
   new ArtworkImageView
     artwork: sd.ARTWORK
