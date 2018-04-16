@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^0.37.0":
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.37.0.tgz#41a66acdefe70c37378c77962f3c4e72b44b71a4"
+"@artsy/reaction@^0.37.1":
+  version "0.37.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.37.1.tgz#a09c35f30945620422b3cb03ad250882e985c339"
   dependencies:
     formik "^0.11.11"
     history "^4.6.1"
@@ -980,6 +980,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
