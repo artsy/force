@@ -1,5 +1,8 @@
-import metaphysics from '../../../lib/metaphysics.coffee'
+import _metaphysics from '../../../lib/metaphysics.coffee'
 import query from './mutation'
+
+// FIXME: Rewire
+let metaphysics = _metaphysics
 
 export const recordArtworkView = (artwork_id, user) => {
   if (user === null) {
