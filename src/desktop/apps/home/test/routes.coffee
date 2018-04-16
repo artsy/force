@@ -102,6 +102,15 @@ describe 'Home routes', ->
             @res.render.args[0][1].heroUnits[0].subtitle
               .should.equal 'My hero'
 
+      it 'with lab feature, does not fetch hero units or featured links', ->
+        @metaphysics.returns Promise.resolve
+          home_page:
+            artwork_modules: []
+        routes.index extend({ user: { lab_features: ['Homepage Search'] } }, @req), @res
+          .then =>
+            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
+
       it 'catches error fetching homepage rails and still renders hero units', ->
         err = new Error 'Failed to get rails'
         err.data = home_page: hero_units: [heroUnit]
