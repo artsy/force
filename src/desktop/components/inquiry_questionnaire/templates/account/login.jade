@@ -37,8 +37,6 @@ form.stacked-form
           | Sign up
 
   .iq-account-sub
-    if user.isWithAccount()
-      include ../partials/nevermind
-    else
+    unless user.isWithAccount()
       a.fine-faux-underline.js-iq-save-skip
         | No thanks don&rsquo;t save my information

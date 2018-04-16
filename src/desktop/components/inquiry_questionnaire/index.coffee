@@ -60,12 +60,6 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
     # Log each step
     .on 'next', log
 
-    # Abort by clicking 'nevermind'
-    .on 'abort', ->
-      modal.close()
-      logger.reset()
-      trail.reset()
-
     # End of complete flow
     .on 'done', ->
 
