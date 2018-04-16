@@ -244,7 +244,7 @@
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.10.2",
     "progress-bar-webpack-plugin": "^1.10.0",
-    "pug-loader": "damassi/pug-loader#02921c5",
+    "pug-loader": "2.4.0",
     "rewire": "2.2.0",
     "should": "^11.1.1",
     "sinon": "^1.17.1",
