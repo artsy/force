@@ -3,7 +3,7 @@ import * as routes from './routes'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { toSentence } from 'underscore.string'
 import { data as sd } from 'sharify'
-import adminOnly from 'desktop/lib/admin_only.coffee'
+import adminOnly from 'desktop/lib/admin_only'
 
 const app = (module.exports = express())
 app.set('view engine', 'jade')
