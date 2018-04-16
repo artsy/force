@@ -58,7 +58,10 @@ fetchMetaphysicsData = (req)->
     ]
     .then (results) ->
       homePage = results[0]?.value.home_page
-      heroUnits = homePage.hero_units
+
+      isAdmin = req.user?.get('type') is 'Admin'
+
+      heroUnits = if isAdmin then [] else homePage.hero_units
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       # always show followed artist rail for logged in users,

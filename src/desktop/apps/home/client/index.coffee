@@ -21,9 +21,10 @@ module.exports.HomeView = class HomeView extends Backbone.View
     # Set up a router for the /log_in /sign_up and /forgot routes
     new HomeAuthRouter
     Backbone.history.start pushState: true
+    isAdmin = CurrentUser.orNull()?.isAdmin()
 
     # Render Featured Sections
-    @setupHeroUnits()
+    if not isAdmin then @setupHeroUnits()
     @setupFeaturedShows()
     @setupFeaturedArticles()
 
