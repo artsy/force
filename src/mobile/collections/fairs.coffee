@@ -12,15 +12,6 @@ module.exports = class Fairs extends Backbone.Collection
 
   model: Fair
 
-  comparator: (fair) ->
-    sizes =
-      'x-large' : 1
-      'large' : 2
-      'medium' : 3
-      'small' : 4
-      'x-small' : 5
-    sizes[fair.get('banner_size')]
-
   url: "#{sd.API_URL}/api/v1/fairs"
 
   # fairs is the array of links to the previous fairs,
