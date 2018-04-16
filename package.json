@@ -21,7 +21,6 @@
     "webpack": "webpack"
   },
   "prettier": {
-    "arrowParens": "always",
     "bracketSpacing": true,
     "semi": false,
     "singleQuote": true,
@@ -221,7 +220,7 @@
     "eslint": "^3.18.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^7.1.0",
-    "eslint-config-standard-react": "^4.3.0",
+    "eslint-config-standard-react": "^6.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "^2.1.1",

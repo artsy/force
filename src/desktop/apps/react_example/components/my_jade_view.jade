@@ -1,21 +1,26 @@
 div
-  | Hello from MyJadeView 
-  
+  | Hello from MyJadeView
+
 div
   | Data from `data` is available: name: #{name}
-    
-br 
+
+br
+
+div
+  !=renderArtworkBrick({ title: name })
+
+br
 
 div
   strong
     | Backbone
   hr
-    
+
   div
     | Example interaction backbone-code. See components/DOM.js
-    
+
     .js-backbone-view
       button.js-button
         | Click Me!
-      
-    
+
+
