@@ -32,16 +32,17 @@ module.exports = class HeaderView extends Backbone.View
     @checkForNotifications()
     @mobileHeaderView = new MobileHeaderView
       el : @$('#main-header-small-screen')
-    @searchBarView = new SearchBarView
-      el: @$('#main-layout-search-bar-container')
-      $input: @$('#main-layout-search-bar-input')
-      displayEmptyItem: true
-      autoselect: true
-      mode: 'suggest'
-      limit: 7
+    unless @currentUser?.hasLabFeature('Homepage Search')
+      @searchBarView = new SearchBarView
+        el: @$('#main-layout-search-bar-container')
+        $input: @$('#main-layout-search-bar-input')
+        displayEmptyItem: true
+        autoselect: true
+        mode: 'suggest'
+        limit: 7
 
-    @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
-    @searchBarView.on 'search:selected', @searchBarView.selectResult
+      @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
+      @searchBarView.on 'search:selected', @searchBarView.selectResult
 
     mediator.on 'open:auth', @openAuth, @
 

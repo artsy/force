@@ -53,8 +53,7 @@ fetchMetaphysicsData = (req, showHeroUnits)->
     }
   }
 
-  user = new CurrentUser(req.user) if req.user
-  hideHeroUnits = user.hasLabFeature('Homepage Search') if user
+  hideHeroUnits = req.user?.hasLabFeature('Homepage Search')
   initialFetch = fetchMetaphysicsData req, false if hideHeroUnits
   unless hideHeroUnits
     initialFetch = Q
