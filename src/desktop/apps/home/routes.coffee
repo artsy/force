@@ -65,16 +65,17 @@ fetchMetaphysicsData = (req, showHeroUnits)->
     .then (results) ->
       if hideHeroUnits
         homePage = results.home_page
+        homePage.artwork_modules = homePage.artwork_modules.filter (module) -> module.key isnt 'followed_artists'
         heroUnits = []
       else
         homePage = results?[0].value.home_page
         heroUnits = homePage.hero_units
         heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
-      # always show followed artist rail for logged in users,
-      # if we dont get results we will replace with artists TO follow
-      if req.user and not _.findWhere homePage.artwork_modules, { key: 'followed_artists' }
-        homePage.artwork_modules.unshift { key: 'followed_artists' }
+        # always show followed artist rail for logged in users,
+        # if we dont get results we will replace with artists TO follow
+        if req.user and not _.findWhere homePage.artwork_modules, { key: 'followed_artists' }
+          homePage.artwork_modules.unshift { key: 'followed_artists' }
 
       res.locals.sd.HERO_UNITS = heroUnits
       res.locals.sd.USER_HOME_PAGE = homePage.artwork_modules
