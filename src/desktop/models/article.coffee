@@ -236,6 +236,7 @@ module.exports = class Article extends Backbone.Model
   # article metadata tag for parse.ly
   toJSONLD: ->
     tags = @get('tags')
+    tags = tags.concat @get('layout') if @get('layout')
     tags = tags.concat @get('vertical').name if @get('vertical')
     tags = tags.concat @get('tracking_tags') if @get('tracking_tags')
     compactObject {

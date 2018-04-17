@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^0.37.1":
-  version "0.37.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.37.1.tgz#a09c35f30945620422b3cb03ad250882e985c339"
+"@artsy/reaction@^0.38.1":
+  version "0.38.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-0.38.1.tgz#f9d6bc3858b7a0536ba3a108b6126895cd989e22"
   dependencies:
     formik "^0.11.11"
     history "^4.6.1"
@@ -3783,15 +3783,19 @@ eslint-config-prettier@^2.9.0:
   dependencies:
     get-stdin "^5.0.1"
 
-eslint-config-standard-jsx@3.3.0, eslint-config-standard-jsx@^3.0.0:
+eslint-config-standard-jsx@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/eslint-config-standard-jsx/-/eslint-config-standard-jsx-3.3.0.tgz#cab0801a15a360bf63facb97ab22fbdd88d8a5e0"
 
-eslint-config-standard-react@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-standard-react/-/eslint-config-standard-react-4.3.0.tgz#7e0d3575f15a3c0b6639ccb63949dfb5ba3a0a8a"
+eslint-config-standard-jsx@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard-jsx/-/eslint-config-standard-jsx-5.0.0.tgz#4abfac554f38668e0078c664569e7b2384e5d2aa"
+
+eslint-config-standard-react@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard-react/-/eslint-config-standard-react-6.0.0.tgz#d366d6c3c092426fd3ae794a4ca0b3cb131f2964"
   dependencies:
-    eslint-config-standard-jsx "^3.0.0"
+    eslint-config-standard-jsx "^5.0.0"
 
 eslint-config-standard@7.1.0, eslint-config-standard@^7.1.0:
   version "7.1.0"

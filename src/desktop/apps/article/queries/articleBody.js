@@ -23,7 +23,6 @@ export const articleBody = `
   postscript
   is_super_article
   is_super_sub_article
-  series_description
   sponsor {
     partner_dark_logo
     partner_light_logo
@@ -31,9 +30,12 @@ export const articleBody = `
     partner_logo_link
   }
   seriesArticle {
-    series_description
     title
     slug
+    series {
+      description
+      sub_title
+    }
     sponsor {
       partner_dark_logo
       partner_light_logo
@@ -85,6 +87,10 @@ export const articleBody = `
     published
     duration
     release_date
+  }
+  series {
+    description
+    sub_title
   }
   hero_section {
     ...Image

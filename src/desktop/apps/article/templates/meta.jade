@@ -1,5 +1,6 @@
 - title = article.search_title || article.thumbnail_title || ''
-- url = sd.APP_URL + '/article/' + article.slug
+- titleExtension = article.layout === 'news' ? ' - Artsy News' : ' - Artsy'
+- url = sd.APP_URL + sd.CURRENT_PATH
 - search_title = article.search_title || article.thumbnail_title || ''
 - social_title = article.social_title || article.thumbnail_title || ''
 
@@ -9,7 +10,7 @@
 - social_image = article.social_image || article.thumbnail_image
 - keywords = []
 
-title= title
+title= title + titleExtension
 meta( name='description', content= search_description )
 link( rel='canonical' href=url )
 if article.featured && article.published
