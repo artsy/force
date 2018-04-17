@@ -66,6 +66,15 @@ module.exports.articles = (req, res, next) ->
       }
     }
   """
+  newsQuery = """
+    {
+      articles(published: true, limit: 3, sort: "-published_at", layout: "news" ) {
+        title
+        slug
+      }
+    }
+  """
+  # fetch recent articles
   request.post(sd.POSITRON_URL + '/api/graphql')
     .send(
       query: query
@@ -73,11 +82,20 @@ module.exports.articles = (req, res, next) ->
       return next() if err
       articles = response.body.data?.articles
       email = res.locals.sd.CURRENT_USER?.email
-      subscribedToEditorial email, (err, subscribed) ->
-        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
-        res.locals.sd.ARTICLES = articles
-        res.render 'articles',
-          articles: articles
+      # fetch news articles
+      request.post(sd.POSITRON_URL + '/api/graphql')
+        .send(
+          query: newsQuery
+        ).end (err, response) ->
+          newsArticles = response.body.data?.articles
+          # check if subscribed
+          subscribedToEditorial email, (err, subscribed) ->
+            res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
+            res.locals.sd.ARTICLES = articles
+            res.locals.sd.NEWS_ARTICLES = newsArticles
+            res.render 'articles',
+              articles: articles,
+              newsArticles: newsArticles
 
 module.exports.form = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')

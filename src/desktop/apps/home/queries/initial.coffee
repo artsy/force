@@ -1,5 +1,5 @@
 module.exports = """
-  query {
+  query($showHeroUnits: Boolean!) {
     home_page {
       artwork_modules(
         max_rails: 6,
@@ -21,7 +21,7 @@ module.exports = """
           followed_artist_id
         }
       }
-      hero_units(platform: DESKTOP) {
+      hero_units(platform: DESKTOP) @include(if: $showHeroUnits){
         mode
         heading
         title

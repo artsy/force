@@ -29,7 +29,6 @@ module.exports = class ContactView extends ModalView
   events: -> _.extend super,
     'submit form': 'onSubmit'
     'click #contact-submit' : 'onSubmit'
-    'click .contact-nevermind' : 'close'
     'mouseenter #contact-submit' : 'logHover'
 
   initialize: (options = {}) ->

@@ -153,11 +153,11 @@ function findAssets(basePath) {
   const files = fs.readdirSync(path.join(process.cwd(), basePath))
 
   // Filter out .styl files
-  const validAssets = (file) => {
+  const validAssets = file => {
     const whitelist = ['.js', '.coffee']
 
     const isValid = whitelist.some(
-      (extension) => extension === path.extname(file)
+      extension => extension === path.extname(file)
     )
     return isValid
   }

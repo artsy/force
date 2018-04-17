@@ -2,6 +2,9 @@ bootstrap = require '../../../components/layout/bootstrap.coffee'
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
+React = require 'react'
+ReactDOM = require 'react-dom'
+{ NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'
 Articles = require '../../../collections/articles.coffee'
 EditorialSignupView = require './editorial_signup.coffee'
 articleTemplate = -> require('../templates/articles_feed.jade') arguments...
@@ -78,5 +81,14 @@ module.exports.init = ->
     el: $('#articles-page')
     collection: sd.ARTICLES
     offset: 0
+
+  if sd.CURRENT_USER && sd.CURRENT_USER.type is 'Admin'
+    ReactDOM.render(
+      React.createElement(
+        NewsPanel,
+        {articles: sd.NEWS_ARTICLES}
+      ),
+      document.getElementById('news-panel')
+    )
 
   new EditorialSignupView el: $('body')

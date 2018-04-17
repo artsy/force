@@ -17,6 +17,31 @@ render = (templateName) ->
     { filename: filename }
   )
 
+describe 'articles feed template', ->
+
+  it 'renders the article_figure template for each article', ->
+
+    html = render('articles_feed')
+      articles: [_.clone(fixtures.article)]
+      crop: (url) -> url
+      sd: {}
+
+    html.should.containEql 'article-item'
+    html.should.not.containEql 'article-item-first'
+    html.should.not.containEql 'news-panel'
+
+  it 'renders the NewsPanel if user is admin and has newsArticles', ->
+
+    html = render('articles_feed')
+      articles: [_.clone(fixtures.article)]
+      crop: (url) -> url
+      newsArticles: [{layout: "news"}]
+      sd: { CURRENT_USER: {type: 'Admin'}}
+
+    html.should.containEql 'article-item-first'
+    html.should.containEql 'article-item'
+    html.should.containEql 'news-panel'
+
 describe 'section template', ->
 
   it 'renders the section title', ->

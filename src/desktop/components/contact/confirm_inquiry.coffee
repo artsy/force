@@ -18,7 +18,6 @@ module.exports = class ConfirmInquiryView extends ContactView
 
   events: -> _.extend super,
     'click.handler .modal-backdrop': undefined
-    'click .contact-form-cancel': 'close'
 
   headerTemplate: (locals) =>
     headerTemplate _.extend locals,
@@ -55,7 +54,6 @@ module.exports = class ConfirmInquiryView extends ContactView
       @updatePosition()
       @isLoaded()
       @focusTextareaAfterCopy()
-      @hideCloseButton()
     super
 
   renderLocation: =>
@@ -107,6 +105,3 @@ module.exports = class ConfirmInquiryView extends ContactView
   close: =>
     @exit?()
     super
-
-  hideCloseButton: ->
-    $('.modal-close').hide()
