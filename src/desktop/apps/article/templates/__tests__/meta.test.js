@@ -5,7 +5,7 @@ import fs from 'fs'
 import Article from 'desktop/models/article.coffee'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 
-const render = (templateName) => {
+const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)
   return jade.compile(fs.readFileSync(filename), { filename })
 }
@@ -21,7 +21,7 @@ describe('Meta template', () => {
     })
     const html = render('meta')({
       article,
-      crop: (url) => url,
+      crop: url => url,
       sd: {
         APP_URL: 'https://www.artsy.net',
         CURRENT_PATH: '/article/artsy-editorial-slug',
@@ -55,7 +55,7 @@ describe('Meta template', () => {
     })
     const html = render('meta')({
       article,
-      crop: (url) => url,
+      crop: url => url,
       sd: {
         APP_URL: 'https://www.artsy.net',
         CURRENT_PATH: '/news/artsy-editorial-slug',
@@ -82,7 +82,7 @@ describe('Classic meta template', () => {
     })
     const html = render('classic_meta')({
       article: new Article(article),
-      crop: (url) => url,
+      crop: url => url,
       sd: {},
     })
     html.should.containEql('<title>Top Ten Booths at miart 2014</title>')
