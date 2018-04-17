@@ -13,7 +13,16 @@ import {
 export const articlesQuery = ({ offset, limit, channel, omit }) => {
   return `
     {
-      articles(published: true, channel_id: "${channel}", limit: ${limit}, offset: ${offset}, featured: true, sort: "-published_at", omit: ["${omit}"]) {
+      articles(
+        published: true,
+        channel_id: "${channel}",
+        limit: ${limit},
+        offset: ${offset},
+        featured: true,
+        sort: "-published_at",
+        omit: ["${omit}"],
+        layout: "standard"
+      ) {
         ${articleBody}
         ${relatedArticles}
         ${display}

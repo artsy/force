@@ -109,15 +109,15 @@ describe 'Home routes', ->
             @res.render.args[0][1].heroUnits[0].subtitle
               .should.equal 'My hero'
 
-      it 'with lab feature, does not fetch hero units or featured links', ->
+      it 'with lab feature, does not fetch hero units, featured links, or followed artists rail', ->
         @user.hasLabFeature = () -> true
         @metaphysics.returns Promise.resolve
           home_page:
-            artwork_modules: []
+            artwork_modules: [{ key: 'followed_artists' }, { key: 'recommended_works'}]
         routes.index @req, @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
-            @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
+            @res.render.args[0][1].modules[0].key.should.equal 'recommended_works'
 
       it 'catches error fetching homepage rails and still renders hero units', ->
         err = new Error 'Failed to get rails'
