@@ -32,7 +32,7 @@ module.exports = class HeaderView extends Backbone.View
     @checkForNotifications()
     @mobileHeaderView = new MobileHeaderView
       el : @$('#main-header-small-screen')
-    unless @currentUser?.hasLabFeature('Homepage Search')
+    unless sd.HIDE_HERO_UNITS
       @searchBarView = new SearchBarView
         el: @$('#main-layout-search-bar-container')
         $input: @$('#main-layout-search-bar-input')

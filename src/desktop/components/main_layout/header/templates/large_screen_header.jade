@@ -5,7 +5,7 @@ nav.mlh-navbar
   #main-layout-header-left.mlh-navbar-cell
     #main-layout-header-minimal-title
       block minimal-nav-header
-    unless sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.indexOf('Homepage Search') !== -1
+    unless sd.HIDE_HERO_UNITS
       include ../../../search_bar/templates/index
   #main-layout-header-center.mlh-navbar-cell
     a.mlh-top-nav-link( href='/collect', class= activeClass("/collect") ) Artworks
