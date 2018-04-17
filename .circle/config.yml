@@ -3,7 +3,6 @@ jobs:
   test:
     docker:
       - image: artsy/hokusai:0.4.0
-    parallelism: 6
     steps:
       - add_ssh_keys
       - checkout
