@@ -15,6 +15,7 @@ Items = require '../../../collections/items'
 featuredArticlesTemplate = -> require('../templates/featured_articles.jade') arguments...
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 { resize } = require '../../../components/resizer/index.coffee'
+sd = require('sharify').data
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: ->
@@ -23,7 +24,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
     Backbone.history.start pushState: true
 
     # Render Featured Sections
-    @setupHeroUnits()
+    @setupHeroUnits() unless sd.HIDE_HERO_UNITS
     @setupFeaturedShows()
     @setupFeaturedArticles()
 
