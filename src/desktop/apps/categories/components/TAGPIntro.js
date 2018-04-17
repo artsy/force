@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { secondary } from 'reaction/Assets/Fonts'
+import { garamond } from 'reaction/Assets/Fonts'
 
 const Headline = styled.h1`
   font-size: 50px;
-  line-height 1em;
+  line-height: 1em;
 `
 
 const Description = styled.p`
-  ${secondary.style} font-size: 25px;
+  ${garamond('s23')};
   line-height: 1.4em;
   margin: 35px 0;
 `

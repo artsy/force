@@ -15,6 +15,7 @@ module.exports.init = ->
       .animate { scrollTop: $faq.offset().top }, 'fast'
 
   $('.js-register-button').click (e) ->
+    # TODO: remove dead code
     e.preventDefault()
     new AuthModalView
       width: '500px',

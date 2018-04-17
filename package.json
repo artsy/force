@@ -25,7 +25,7 @@
     "bracketSpacing": true,
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "none"
   },
   "lint-staged": {
     "*.@(js|jsx)": [

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Colors from 'reaction/Assets/Colors'
 import { pMedia } from 'reaction/Components/Helpers'
-import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { unica } from 'reaction/Assets/Fonts'
 
 export const SectionsNav = (props) => {
   const { animated, activeSection, sections, onClick } = props
@@ -28,7 +28,7 @@ SectionsNav.propTypes = {
   activeSection: PropTypes.number,
   animated: PropTypes.bool,
   sections: PropTypes.array,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func
 }
 
 const navKeyframes = keyframes`
@@ -72,12 +72,12 @@ const SectionsNavContainer = styled.div`
 `
 const Title = styled.div`
   cursor: pointer;
-  ${Fonts.unica('s80')} color: ${(props) =>
-      props.isActive ? 'black' : Colors.grayRegular};
+  ${unica('s80')};
+  color: ${(props) => (props.isActive ? 'black' : Colors.grayRegular)};
 
   ${pMedia.lg`
     margin: 0 30px;
-    ${Fonts.unica('s40')}
+    ${unica('s40')}
   `} ${pMedia.sm`
     margin: 0;
     &:nth-child(2) {

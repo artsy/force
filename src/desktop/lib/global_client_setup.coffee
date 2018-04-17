@@ -21,7 +21,7 @@ listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 
 module.exports = ->
-  setupErrorReporting()
+  # setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
   syncAuth()

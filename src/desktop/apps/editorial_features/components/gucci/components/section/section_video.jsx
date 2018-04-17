@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { pMedia } from 'reaction/Components/Helpers'
-import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import * as Fonts from 'reaction/Assets/Fonts'
 import { Video } from 'reaction/Components/Publishing'
 
 export const SectionVideo = (props) => {
@@ -19,7 +19,7 @@ export const SectionVideo = (props) => {
 function renderVideo(section) {
   const videoSection = {
     url: section.video_url,
-    cover_image_url: section.cover_image_url,
+    cover_image_url: section.cover_image_url
   }
 
   if (section.published && videoSection.url) {
@@ -28,7 +28,7 @@ function renderVideo(section) {
         section={videoSection}
         trackingData={{
           type: 'play video',
-          label: section.featuring,
+          label: section.featuring
         }}
       />
     )
@@ -44,7 +44,7 @@ function renderVideo(section) {
 }
 
 SectionVideo.propTypes = {
-  section: PropTypes.object,
+  section: PropTypes.object
 }
 
 const SectionVideoContainer = styled.div`

@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { primary } from 'reaction/Assets/Fonts'
+import { avantgarde } from 'reaction/Assets/Fonts'
 
 const propTypes = {
   title: PropTypes.string,
   href: PropTypes.string,
-  image: PropTypes.object,
+  image: PropTypes.object
 }
 
 const Container = styled.div`
@@ -24,7 +24,7 @@ const GeneName = styled.span`
   color: white;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 
-  ${primary.style} font-size: 13px;
+  ${avantgarde('s13')};
   line-height: 1.33em;
   font-weight: bold;
 `

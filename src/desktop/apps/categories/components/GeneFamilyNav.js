@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import Scrollspy from 'react-scrollspy'
 
 import colors from 'reaction/Assets/Colors'
-import { primary } from 'reaction/Assets/Fonts'
+import { avantgarde } from 'reaction/Assets/Fonts'
 import FrameAnimator from 'desktop/components/frame_animator'
 
 const propTypes = {
-  geneFamilies: PropTypes.array.isRequired,
+  geneFamilies: PropTypes.array.isRequired
 }
 
 // amount by which to adjust scrolling & spying,
@@ -34,8 +34,7 @@ const GeneFamilyList = styled(Scrollspy)`
   background: white;
   z-index: 1;
 
-  ${primary.style};
-  font-size: 13px;
+  ${avantgarde('s13')};
   line-height: 1.33em;
 `
 
@@ -67,7 +66,7 @@ class GeneFamilyNav extends React.Component {
       {
         duration: 600,
         startValue: window.scrollY,
-        endValue: section.offsetTop - TOP_BUFFER,
+        endValue: section.offsetTop - TOP_BUFFER
       }
     )
     scroller.start()

@@ -12,7 +12,9 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .js-article-es': 'onSubscribe'
 
   initialize: ->
-    @setupAEMagazinePage() if @inAEMagazinePage()
+    # @setupAEMagazinePage() if @inAEMagazinePage()
+    @initCTABarView()
+    @setupCTAWaypoints()
 
   eligibleToSignUp: ->
     @inAEMagazinePage() and not sd.SUBSCRIBED_TO_EDITORIAL
