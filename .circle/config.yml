@@ -12,8 +12,10 @@ jobs:
           name: Test
           command: hokusai test
 workflows:
-  jobs:
-    - test
+  version: 2
+  default:
+    jobs:
+      - test
 
 # general:
 #   branches:
