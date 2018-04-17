@@ -34,6 +34,10 @@ describe 'Home routes', ->
       redirect: sinon.stub()
       cookie: @cookieStub = sinon.stub()
 
+    @user = {
+      hasLabFeature: () -> false
+    }
+
   afterEach ->
     Backbone.sync.restore()
 
@@ -47,7 +51,7 @@ describe 'Home routes', ->
         Backbone.sync
           .onCall 0
           .yieldsTo 'error'
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index extend(@user, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].featuredLinks.length.should.equal 0
@@ -87,6 +91,9 @@ describe 'Home routes', ->
                 .should.equal 'Sign up to get updates on your favorite artists'
 
     describe 'logged in', ->
+      beforeEach ->
+        @req.user = @user
+
       it 'renders the homepage without the welcome hero unit', ->
         @metaphysics.returns Promise.resolve
           home_page:
@@ -95,7 +102,7 @@ describe 'Home routes', ->
         Backbone.sync
             .onCall 0
             .yieldsTo 'success', [fabricate 'featured_link']
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index @req, @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
@@ -103,10 +110,11 @@ describe 'Home routes', ->
               .should.equal 'My hero'
 
       it 'with lab feature, does not fetch hero units or featured links', ->
+        @user.hasLabFeature = () -> true
         @metaphysics.returns Promise.resolve
           home_page:
             artwork_modules: []
-        routes.index extend({ user: { lab_features: ['Homepage Search'] } }, @req), @res
+        routes.index @req, @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
@@ -118,7 +126,7 @@ describe 'Home routes', ->
         Backbone.sync
             .onCall 0
             .yieldsTo 'success', [fabricate 'featured_link']
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index @req, @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
