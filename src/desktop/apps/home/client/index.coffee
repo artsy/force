@@ -74,6 +74,8 @@ module.exports.HomeView = class HomeView extends Backbone.View
     @searchBarView.on 'search:selected', @searchBarView.selectResult
     throttledScroll = _.throttle((=> @onScroll()), 100)
     $(window).on 'scroll', throttledScroll
+    @$input.focus()
+    @highlightSearch({}, false)
 
   onScroll: ->
     if $(window).scrollTop() > 250
@@ -83,8 +85,10 @@ module.exports.HomeView = class HomeView extends Backbone.View
       @$('#main-layout-header #main-layout-search-bar-container').removeClass('visible')
       @$('#main-layout-header').removeClass('visible')
 
-  highlightSearch: (e) ->
-    if $('#home-foreground #main-layout-search-bar-input').is(':focus')
+  highlightSearch: (e, onlyOnFocus = true) ->
+    if onlyOnFocus
+      $('#home-foreground #main-layout-search-bar-container').addClass('focused') if @$input.is(':focus')
+    else
       $('#home-foreground #main-layout-search-bar-container').addClass('focused')
 
   unhighlightSearch: (e) ->
