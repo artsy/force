@@ -15,14 +15,14 @@ describe('BannerPopUp', () => {
     return mount(<BannerPopUp {...props} />)
   }
 
-  it('renders title and image', () => {
+  xit('renders title and image', () => {
     const component = getWrapper(props)
 
     expect(component.text()).toMatch(props.ctaTitle)
     expect(component.html()).toMatch(props.ctaImageUrl)
   })
 
-  it('Calls #openModal on click', () => {
+  xit('Calls #openModal on click', () => {
     const component = getWrapper(props)
     component.find(Container).simulate('click')
 

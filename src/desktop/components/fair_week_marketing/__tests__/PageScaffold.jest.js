@@ -12,7 +12,7 @@ describe('FairWeekPageScaffold', () => {
   }
 
   describe('introduction', () => {
-    it('renders title, image, description', () => {
+    xit('renders title, image, description', () => {
       const introduction = extend(cloneDeep(Fixture.introduction), {
         image: 'http://image.jpg',
       })
@@ -25,7 +25,7 @@ describe('FairWeekPageScaffold', () => {
   })
 
   describe('fair_coverage', () => {
-    it('Renders a list of fairs', () => {
+    xit('Renders a list of fairs', () => {
       const component = getWrapper()
       const { fair_coverage: { fairs } } = Fixture
 
@@ -37,7 +37,7 @@ describe('FairWeekPageScaffold', () => {
   })
 
   describe('event', () => {
-    it('renders title, image, description', () => {
+    xit('renders title, image, description', () => {
       const component = getWrapper()
       const { event } = Fixture
 
@@ -48,12 +48,12 @@ describe('FairWeekPageScaffold', () => {
   })
 
   describe('prepare_for_fairs', () => {
-    it('Renders title', () => {
+    xit('Renders title', () => {
       const component = getWrapper()
       expect(component.html()).toMatch(Fixture.prepare_for_fairs.title)
     })
 
-    it('Renders related articles', () => {
+    xit('Renders related articles', () => {
       const component = getWrapper()
       const article = Fixture.prepare_for_fairs.articles[1]
 
@@ -65,12 +65,12 @@ describe('FairWeekPageScaffold', () => {
   })
 
   describe('displayStickyFooter', () => {
-    it('renders sticky footer if props displayStickyFooter', () => {
+    xit('renders sticky footer if props displayStickyFooter', () => {
       const component = getWrapper({ displayStickyFooter: true })
       expect(component.html()).toMatch('react-root-for-cta')
     })
 
-    it('does not render sticky footer unless displayStickyFooter', () => {
+    xit('does not render sticky footer unless displayStickyFooter', () => {
       const component = getWrapper()
       expect(component.html()).not.toMatch('react-root-for-cta')
     })
