@@ -24,6 +24,7 @@ html[data-hide-hero-units]
       margin auto
       margin-bottom 110px
       border 2px solid gray-color
+      transition all 250ms ease
       &.focused
         border 2px solid purple-color
         background white
@@ -38,10 +39,12 @@ html[data-hide-hero-units]
         width 109px
         transition unset
         border-radius 2px
+        transition all 250ms ease
       #main-layout-search-bar-spinner
         display none
 
   #home-foreground input
+    font-size 20px
     &::placeholder
       color gray-darker-color
       font-size 20px
