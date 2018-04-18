@@ -37,14 +37,14 @@ workflows:
     jobs:
       - test
       - push:
-        filters:
-          branches:
-            only: master
-        requires:
-          - test
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
       - deploy:
-        filters:
-          branches:
-            only: master
-        requires:
-          - push
+          filters:
+            branches:
+              only: master
+          requires:
+            - push
