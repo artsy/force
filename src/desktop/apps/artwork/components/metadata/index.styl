@@ -4,7 +4,7 @@
   garamond()
   font-size 15px
   line-height 1.47
-  color gray-darkest-color
+  color gray-darker-color
 
   &__artist
   &__secondary-metadata
@@ -12,6 +12,7 @@
 
   &__attribution-class
     block-margins(12.5px)
+    fine-faux-underline()
     display inline-block
 
   &__lot-number
@@ -21,11 +22,13 @@
   &__artist
     > .entity-link
       garamond()
-      text-transform none
-      letter-spacing 0
+      fine-faux-underline()
       font-size 20px
-      font-weight bold
-      color black
+      font-weight 600
+      letter-spacing 0
+      text-transform none
+      &:hover
+       border-bottom none
 
     > .entity-follow
       display block

@@ -4,10 +4,11 @@
 - var artistIds = helpers.partner_stub.artistIds(artwork.artists)
 
 unless artwork.is_in_auction
-  .artwork-partner-stub( class='js-artwork-partner-stub' )
-    if artwork.collecting_institution
-        = artwork.collecting_institution
-    else
+  if artwork.collecting_institution
+    .artwork-collecting-institution-stub
+      = artwork.collecting_institution
+  else
+    .artwork-partner-stub( class='js-artwork-partner-stub' )
       //- Default view
       a.artwork-partner-stub__name( href= (partner.is_linkable ? partner.href : undefined) )
         = partner.name
