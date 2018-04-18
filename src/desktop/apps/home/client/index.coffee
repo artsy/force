@@ -23,6 +23,7 @@ _s = require 'underscore.string'
 module.exports.HomeView = class HomeView extends Backbone.View
   events:
     'click #main-layout-search-bar-container': 'highlightSearch'
+    'mousedown #main-layout-search-bar-button': 'trackClickingSearch'
     'blur #main-layout-search-bar-container': 'unhighlightSearch'
     'click #main-layout-search-bar-button': 'performSearch'
 
@@ -62,8 +63,9 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
   setupSearchBar: ->
     @$input = @$('#home-foreground #main-layout-search-bar-input')
+    @$searchContainer = $('#home-foreground #main-layout-search-bar-container')
     @searchBarView = new SearchBarView
-      el: @$('#home-foreground #main-layout-search-bar-container')
+      el: @$searchContainer
       $input: @$input
       displayEmptyItem: true
       autoselect: true
@@ -87,19 +89,25 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
   highlightSearch: (e, onlyOnFocus = true) ->
     if onlyOnFocus
-      $('#home-foreground #main-layout-search-bar-container').addClass('focused') if @$input.is(':focus')
+      @$searchContainer.addClass('focused') if @$input.is(':focus')
     else
-      $('#home-foreground #main-layout-search-bar-container').addClass('focused')
+      @$searchContainer.addClass('focused')
 
   unhighlightSearch: (e) ->
-    $(e.currentTarget).removeClass('focused')
+    $(e.currentTarget).removeClass('focused') unless @clickingSearch
 
   isEmpty: ->
     _.isEmpty(_s.trim(@$input.val()))
 
+  trackClickingSearch: (e) ->
+    @clickingSearch = true
+
   performSearch: (e) ->
     e.preventDefault()
-    return if @isEmpty()
+    @clickingSearch = false
+    if @isEmpty()
+      @$input.focus()
+      return
     term = @$input.val()
     window.location = "/search?q=#{term}"
 
