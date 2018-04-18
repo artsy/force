@@ -18,11 +18,13 @@ featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments
 { resize } = require '../../../components/resizer/index.coffee'
 sd = require('sharify').data
 _ = require 'underscore'
+_s = require 'underscore.string'
 
 module.exports.HomeView = class HomeView extends Backbone.View
   events:
     'click #main-layout-search-bar-container': 'highlightSearch'
     'blur #main-layout-search-bar-container': 'unhighlightSearch'
+    'click #main-layout-search-bar-button': 'performSearch'
 
   initialize: ->
     # Set up a router for the /log_in /sign_up and /forgot routes
@@ -59,9 +61,10 @@ module.exports.HomeView = class HomeView extends Backbone.View
         resize: resize
 
   setupSearchBar: ->
+    @$input = @$('#home-foreground #main-layout-search-bar-input')
     @searchBarView = new SearchBarView
       el: @$('#home-foreground #main-layout-search-bar-container')
-      $input: @$('#home-foreground #main-layout-search-bar-input')
+      $input: @$input
       displayEmptyItem: true
       autoselect: true
       mode: 'suggest'
@@ -86,6 +89,15 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
   unhighlightSearch: (e) ->
     $(e.currentTarget).removeClass('focused')
+
+  isEmpty: ->
+    _.isEmpty(_s.trim(@$input.val()))
+
+  performSearch: (e) ->
+    e.preventDefault()
+    return if @isEmpty()
+    term = @$input.val()
+    window.location = "/search?q=#{term}"
 
 module.exports.init = ->
   user = CurrentUser.orNull()
