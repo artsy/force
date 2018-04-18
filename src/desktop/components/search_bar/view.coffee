@@ -102,6 +102,7 @@ module.exports = class SearchBarView extends Backbone.View
     _.isEmpty(_s.trim(@$input.val()))
 
   displaySuggestions: ->
+    return if @isEmpty() and @centeredHomepageSearch
     if @isEmpty() and @shouldDisplaySuggestions
       @renderFeedback()
       @$el.addClass 'is-display-suggestions'

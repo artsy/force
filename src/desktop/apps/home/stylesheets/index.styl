@@ -18,12 +18,17 @@ html[data-hide-hero-units]
     margin-top 0px
     padding-top 20px
     #main-layout-search-bar-container
-      border 2px solid purple-color
-      background white
+      background gray-lightest-color
       width 50%
       height 60px
       margin auto
       margin-bottom 110px
+      border 2px solid gray-color
+      &.focused
+        border 2px solid purple-color
+        background white
+      .tt-dropdown-menu
+        margin-top 2px
 
   #home-foreground input
     &::placeholder

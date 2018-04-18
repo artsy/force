@@ -20,6 +20,10 @@ sd = require('sharify').data
 _ = require 'underscore'
 
 module.exports.HomeView = class HomeView extends Backbone.View
+  events:
+    'click #main-layout-search-bar-container': 'highlightSearch'
+    'blur #main-layout-search-bar-container': 'unhighlightSearch'
+
   initialize: ->
     # Set up a router for the /log_in /sign_up and /forgot routes
     new HomeAuthRouter
@@ -75,6 +79,13 @@ module.exports.HomeView = class HomeView extends Backbone.View
     else
       @$('#main-layout-header #main-layout-search-bar-container').removeClass('visible')
       @$('#main-layout-header').removeClass('visible')
+
+  highlightSearch: (e) ->
+    if $('#home-foreground #main-layout-search-bar-input').is(':focus')
+      $('#home-foreground #main-layout-search-bar-container').addClass('focused')
+
+  unhighlightSearch: (e) ->
+    $(e.currentTarget).removeClass('focused')
 
 module.exports.init = ->
   user = CurrentUser.orNull()
