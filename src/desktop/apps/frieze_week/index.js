@@ -2,6 +2,7 @@ import { renderLayout as _renderLayout } from '@artsy/stitch'
 import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
 import { FairWeekPageScaffold } from 'desktop/components/fair_week_marketing/PageScaffold'
+import { FairWeekMeta } from 'desktop/components/fair_week_marketing/Meta'
 import merge from 'lodash.merge'
 import queryString from 'query-string'
 
@@ -35,7 +36,7 @@ export class EditableFriezeWeekPage extends JSONPage {
           styledComponents: true,
         },
         blocks: {
-          head: '../../components/fair_week_marketing/meta.jade',
+          head: FairWeekMeta,
           body: FairWeekPageScaffold,
         },
         locals: {
