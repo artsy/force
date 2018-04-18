@@ -105,9 +105,13 @@ export async function index(req, res, next) {
     }
 
     // Series and Video pages
+    const hasSeriesNav =
+      _.contains(['series', 'video'], article.layout) ||
+      (article.seriesArticle && article.layout === 'feature')
+
     let layoutTemplate =
       '../../../components/main_layout/templates/react_index.jade'
-    if (_.contains(['series', 'video'], article.layout)) {
+    if (hasSeriesNav) {
       layoutTemplate =
         '../../../components/main_layout/templates/react_blank_index.jade'
     }
@@ -150,7 +154,7 @@ export async function index(req, res, next) {
   }
 }
 
-const getBodyClass = (article) => {
+const getBodyClass = article => {
   let bodyClass = 'body-article body-no-margins'
   const isSuper = article.is_super_article || article.is_super_sub_article
   const isFullscreen =
@@ -168,7 +172,7 @@ export function classic(req, res, next) {
   article.fetchWithRelated({
     accessToken,
     error: res.backboneError,
-    success: (data) => {
+    success: data => {
       if (req.params.slug !== data.article.get('slug')) {
         return res.redirect(`/article/${data.article.get('slug')}`)
       }
@@ -204,7 +208,7 @@ export function amp(req, res, next) {
 
   article.fetchWithRelated({
     error: res.backboneError,
-    success: (data) => {
+    success: data => {
       if (req.params.slug !== data.article.get('slug')) {
         return res.redirect(`/article/${data.article.get('slug')}/amp`)
       }
@@ -229,7 +233,7 @@ export function amp(req, res, next) {
   })
 }
 
-export const subscribedToEditorial = (email) => {
+export const subscribedToEditorial = email => {
   return new Promise((resolve, reject) => {
     if (!email.length) {
       return resolve(false)

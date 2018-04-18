@@ -74,7 +74,7 @@ export default class ArticleLayout extends React.Component {
       )
     }
 
-    if (!isSuper) {
+    if (!isSuper && !article.seriesArticle) {
       const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
       return (
         <InfiniteScrollArticle

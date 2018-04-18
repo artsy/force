@@ -8,7 +8,7 @@ import { mount, shallow } from 'enzyme'
 import { data as sd } from 'sharify'
 
 describe('<Article />', () => {
-  before((done) => {
+  before(done => {
     benv.setup(() => {
       benv.expose({ $: benv.require('jquery'), jQuery: benv.require('jquery') })
       sd.APP_URL = 'http://artsy.net'
@@ -62,6 +62,21 @@ describe('<Article />', () => {
     })
     const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(1)
+    rendered.html().should.containEql('FeatureLayout')
+  })
+
+  it('renders a feature article in a series', () => {
+    const article = _.extend({}, fixtures.article, {
+      layout: 'feature',
+      vertical: {
+        name: 'Art Market',
+      },
+      published_at: '2017-05-19T13:09:18.567Z',
+      contributing_authors: [{ name: 'Kana' }],
+      seriesArticle: { title: 'Series', slug: 'a-series' },
+    })
+    const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
+    rendered.find(InfiniteScrollArticle).length.should.equal(0)
     rendered.html().should.containEql('FeatureLayout')
   })
 
