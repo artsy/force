@@ -6,29 +6,35 @@
 unless artwork.is_in_auction
   .artwork-partner-stub( class='js-artwork-partner-stub' )
     if artwork.collecting_institution
-      .artwork-partner-stub__name
         = artwork.collecting_institution
     else
       //- Default view
-      h3.artwork-partner-stub__label
-        if artwork.is_for_sale
-          | Offered by
-
       a.artwork-partner-stub__name( href= (partner.is_linkable ? partner.href : undefined) )
         = partner.name
-        if location
-          = ', '
-          span= location
 
-      if artwork.is_inquireable && contacts && contacts.length
-        .artwork-partner-stub__phone
-          a(
-            class='js-artwork-partner-stub-inquire-via-phone analytics-artwork-show-phone-number garamond-s-body'
-            data-partner_id= partner._id
-            data-artwork_id= artwork._id
-            data-partner= partner
-            data-artist_ids= artistIds
-            data-user_id=(sd.CURRENT_USER && sd.CURRENT_USER.id )
-            data-context='show phone number'
-          )
-            | Inquire via phone
+      if location
+        .artwork-partner-stub__location
+          span.icon
+            include public/icons/location.svg
+          span.content
+            = location
+
+        //- if artwork.is_inquireable && contacts && contacts.length
+        //-   .artwork-partner-stub__phone
+        //-     a(
+        //-       class='js-artwork-partner-stub-inquire-via-phone analytics-artwork-show-phone-number garamond-s-body'
+        //-       data-partner_id= partner._id
+        //-       data-artwork_id= artwork._id
+        //-       data-partner= partner
+        //-       data-artist_ids= artistIds
+        //-       data-user_id=(sd.CURRENT_USER && sd.CURRENT_USER.id )
+        //-       data-context='show phone number'
+        //-     )
+        //-       | Inquire via phone
+      
+      if partner.acceptsCardPayments
+        .artwork-partner-stub__card
+          span.icon
+            include public/icons/creditcard.svg
+          span.content
+            = 'Accepts credit card'

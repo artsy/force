@@ -11,6 +11,7 @@ module.exports = """
       is_linkable
       href
       name
+      acceptsCardPayments
       locations {
         city
         state

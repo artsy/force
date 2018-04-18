@@ -1,17 +1,40 @@
 .artwork-partner-stub
   serif('s-body')
-  line-height 1.25 // compact-line-height
-
-  &__label
-    sans('s-headline')
-    margin-bottom 5px
-
+  border-bottom 1px solid gray-lighter-color
+  line-height 1.33
+  padding 25px 0
+  
   &__name
-    text-decoration none
-    font-size 15px
+    garamond()
+    fine-faux-underline()
+    display inline-block
+    font-size 20px
+    font-weight 600
+    margin-bottom 8px
 
     &:not([href])
+      background none
       cursor default
+
+  &__location
+  &__card
+    font-size 15px
+    position relative
+    span
+      display inline-block
+      &.icon
+        position absolute
+          
+      &.content
+        padding 0 0 5px 28px
+        line-height 23px
+    
+  &__location .icon
+    top 0
+    left 3px
+    
+  &__card .icon
+      top 3px
 
   &__phone
     serif('l-caption')
