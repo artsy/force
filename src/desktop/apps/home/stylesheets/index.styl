@@ -17,13 +17,30 @@ html[data-hide-hero-units]
   #home-foreground
     margin-top 0px
     padding-top 20px
-  #home-foreground #main-layout-search-bar-container
-    border 2px solid purple-color
-    background white
-    width 50%
-    height 60px
-    margin auto
-    margin-bottom 110px
+    #main-layout-search-bar-container
+      background gray-lightest-color
+      width 845px
+      height 60px
+      margin auto
+      margin-bottom 110px
+      border 2px solid gray-color
+      &.focused
+        border 2px solid purple-color
+        background white
+        .avant-garde-button-black
+          background-color purple-color
+      .tt-dropdown-menu
+        margin-top 2px
+      .avant-garde-button-black
+        position absolute
+        top 6px
+        right 6px
+        width 109px
+        transition unset
+        border-radius 2px
+      #main-layout-search-bar-spinner
+        display none
+
   #home-foreground input
     &::placeholder
       color gray-darker-color
@@ -35,7 +52,7 @@ html[data-hide-hero-units]
     font-size 42px
     margin-bottom 42px
     margin-top 64px
-    width 520px
+    width 550px
 
 #home-hero-units
   height hero-units-height
