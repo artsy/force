@@ -8,13 +8,16 @@ unless artwork.is_in_auction
     if artwork.collecting_institution
         = artwork.collecting_institution
     else
+      //- Default view
       a.artwork-partner-stub__name( href= (partner.is_linkable ? partner.href : undefined) )
         = partner.name
 
       if location
         .artwork-partner-stub__location
-          include public/icons/location.svg
-          span= location
+          span.icon
+            include public/icons/location.svg
+          span.content
+            = location
 
         //- if artwork.is_inquireable && contacts && contacts.length
         //-   .artwork-partner-stub__phone
@@ -31,5 +34,7 @@ unless artwork.is_in_auction
       
       if partner.acceptsCardPayments
         .artwork-partner-stub__card
-          include public/icons/creditcard.svg
-          = 'Accepts credit card'
+          span.icon
+            include public/icons/creditcard.svg
+          span.content
+            = 'Accepts credit card'
