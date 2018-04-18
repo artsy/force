@@ -5,7 +5,8 @@ nav.mlh-navbar
   #main-layout-header-left.mlh-navbar-cell
     #main-layout-header-minimal-title
       block minimal-nav-header
-    include ../../../search_bar/templates/index
+    unless sd.HIDE_HERO_UNITS
+      include ../../../search_bar/templates/index
   #main-layout-header-center.mlh-navbar-cell
     a.mlh-top-nav-link( href='/collect', class= activeClass("/collect") ) Artworks
     a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
