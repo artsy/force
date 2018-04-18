@@ -25,8 +25,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
     Backbone.history.start pushState: true
 
     # Render Featured Sections
-    @setupSearchBar()
-    @setupHeroUnits() unless sd.HIDE_HERO_UNITS
+    if sd.HIDE_HERO_UNITS then @setupSearchBar() else @setupHeroUnits()
     @setupFeaturedShows()
     @setupFeaturedArticles()
 
