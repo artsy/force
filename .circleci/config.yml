@@ -10,7 +10,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Test
-          command: hokusai test
+          command: bash -c 'hokusai test'
   push:
     docker:
       - image: artsy/hokusai:0.4.0
