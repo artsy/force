@@ -1,9 +1,8 @@
-import React from 'react'
 import { renderLayout as _renderLayout } from '@artsy/stitch'
-
 import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page/es6'
-import PageScaffold from 'desktop/components/fair_week_marketing/PageScaffold'
+import { FairWeekPageScaffold } from 'desktop/components/fair_week_marketing/PageScaffold'
+import { FairWeekMeta } from 'desktop/components/fair_week_marketing/Meta'
 import merge from 'lodash.merge'
 import queryString from 'query-string'
 
@@ -20,7 +19,6 @@ export class EditableFriezeWeekPage extends JSONPage {
   }
 
   async show(req, res, next) {
-    console.log('got to show???')
     try {
       if (req.query['m-id'] !== MARKETING_MODAL_ID) {
         const queryStringAsString = queryString.stringify(
@@ -38,8 +36,8 @@ export class EditableFriezeWeekPage extends JSONPage {
           styledComponents: true,
         },
         blocks: {
-          head: '../../components/fair_week_marketing/meta.jade',
-          body: PageScaffold,
+          head: FairWeekMeta,
+          body: FairWeekPageScaffold,
         },
         locals: {
           assetPackage: 'banner_pop_up',

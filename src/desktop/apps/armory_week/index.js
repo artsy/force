@@ -1,9 +1,8 @@
-import React from 'react'
 import { renderLayout } from '@artsy/stitch'
-
-import adminOnly from '../../lib/admin_only'
-import JSONPage from '../../components/json_page/es6'
-import ArmoryWeekPage from './components/ArmoryWeekPage'
+import adminOnly from 'desktop/lib/admin_only'
+import JSONPage from 'desktop/components/json_page/es6'
+import { FairWeekPageScaffold } from 'desktop/components/fair_week_marketing/PageScaffold'
+import { FairWeekMeta } from 'desktop/components/fair_week_marketing/Meta'
 import merge from 'lodash.merge'
 import queryString from 'query-string'
 
@@ -36,8 +35,8 @@ class EditableArmoryWeekPage extends JSONPage {
           styledComponents: true,
         },
         blocks: {
-          head: './templates/meta.jade',
-          body: ArmoryWeekPage,
+          head: FairWeekMeta,
+          body: FairWeekPageScaffold,
         },
         locals: {
           assetPackage: 'banner_pop_up',
