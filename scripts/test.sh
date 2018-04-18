@@ -31,8 +31,6 @@ run () {
     yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
     yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
     yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
-    ;;
-  4)
     yarn jest $(find src/desktop/components -name '*.jest.js')
     ;;
   esac
@@ -43,7 +41,6 @@ if [ -z "$CIRCLE_NODE_INDEX" ]; then
   CIRCLE_NODE_INDEX=1 run
   CIRCLE_NODE_INDEX=2 run
   CIRCLE_NODE_INDEX=3 run
-  CIRCLE_NODE_INDEX=4 run
 else
   run
 fi
