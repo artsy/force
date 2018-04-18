@@ -3,9 +3,13 @@ version: '2'
 services:
   force:
     command: yarn test
-    environment:
-    - NODE_ENV=test
-    env_file: ../.env.test
     extends:
       file: common.yml
       service: force
+    environment:
+      - CIRCLE_NODE_INDEX
+    env_file: ../.env.test
+    #environment:
+    #- NODE_ENV=test
+    #env_file: ../.env.test
+    
