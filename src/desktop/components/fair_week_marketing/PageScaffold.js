@@ -155,7 +155,7 @@ export const FairWeekPageScaffold = ({
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           {prepare_for_fairs.articles.map(article => (
-            <ResponsiveRow paddingnBottom={25} key={article.title}>
+            <ResponsiveRow paddingBottom={25} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
                 <a href={article.article_url} target="_blank">
                   <img
