@@ -6,8 +6,7 @@ module.exports = class StepView extends Backbone.View
   __events__: null
 
   events: ->
-    _.extend @__events__,
-      'click .js-nevermind': 'dismiss'
+    @__events__
 
   initialize: ({ @user, @inquiry, @artwork, @state, @trail }) ->
     @__setup__()
@@ -18,10 +17,6 @@ module.exports = class StepView extends Backbone.View
   next: (e) ->
     e?.preventDefault()
     @state.next()
-
-  dismiss: (e) ->
-    e.preventDefault()
-    @state.trigger 'abort'
 
   shouldAutofocus: true
 

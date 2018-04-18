@@ -52,11 +52,6 @@ module.exports = (id, bypass) ->
       logger.log step
       window.scrollTo 0, 0
 
-    # Abort by clicking 'nevermind'
-    .on 'abort', ->
-      logger.reset()
-      location.href = artwork.href()
-
     # End of complete flow
     .on 'done', ->
       if inquiry.send?

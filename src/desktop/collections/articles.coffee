@@ -12,7 +12,11 @@ module.exports = class Articles extends Backbone.Collection
     data.results
 
   featured: ->
-    @where(tier: 1).slice(0, 4)
+    # TODO: REMOVE WHEN NEWS LAUNCHES
+    isAdmin = sd.CURRENT_USER && sd.CURRENT_USER.type is 'Admin'
+    sliced = if isAdmin then 1 else 4
+
+    @where(tier: 1).slice(0, sliced)
 
   feed: ->
     featured = @featured()

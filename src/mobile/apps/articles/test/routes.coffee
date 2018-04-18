@@ -84,10 +84,12 @@ describe "#articles", ->
 
   beforeEach ->
     routes.__set__ 'sailthru', apiGet: sinon.stub().yields('error')
+    end = sinon.stub().yields(null, body: data: articles: [fixtures.article])
+    end.onCall(1).yields(null, body: data: articles: [{layout: "news", title: "News Article"}])
     sinon.stub request, 'post'
       .returns
         send: sinon.stub().returns
-          end: sinon.stub().yields(null, body: data: articles: [fixtures.article])
+          end: end
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
@@ -99,4 +101,9 @@ describe "#articles", ->
     routes.articles @req, @res, @next
     @res.render.args[0][0].should.equal 'articles'
     @res.render.args[0][1].articles[0].thumbnail_title.should.containEql 'Top Ten Booths at miart 2014'
+    done()
+
+  it 'fetches news articles', (done) ->
+    routes.articles @req, @res, @next
+    @res.render.args[0][1].newsArticles[0].title.should.containEql 'News Article'
     done()
