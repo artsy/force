@@ -17,6 +17,7 @@ featuredArticlesTemplate = -> require('../templates/featured_articles.jade') arg
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 { resize } = require '../../../components/resizer/index.coffee'
 sd = require('sharify').data
+_ = require 'underscore'
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: ->
@@ -53,17 +54,27 @@ module.exports.HomeView = class HomeView extends Backbone.View
         featuredArticles: featuredArticles
         resize: resize
 
-  setupSearchBar: -> 
+  setupSearchBar: ->
     @searchBarView = new SearchBarView
-      el: @$('#main-layout-search-bar-container')
-      $input: @$('#main-layout-search-bar-input')
+      el: @$('#home-foreground #main-layout-search-bar-container')
+      $input: @$('#home-foreground #main-layout-search-bar-input')
       displayEmptyItem: true
       autoselect: true
       mode: 'suggest'
-      limit: 7
+      limit: 3
+      centeredHomepageSearch: true
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
+    throttledScroll = _.throttle((=> @onScroll()), 100)
+    $(window).on 'scroll', throttledScroll
 
+  onScroll: ->
+    if $(window).scrollTop() > 250
+      @$('#main-layout-header #main-layout-search-bar-container').addClass('visible')
+      @$('#main-layout-header').addClass('visible')
+    else
+      @$('#main-layout-header #main-layout-search-bar-container').removeClass('visible')
+      @$('#main-layout-header').removeClass('visible')
 
 module.exports.init = ->
   user = CurrentUser.orNull()
