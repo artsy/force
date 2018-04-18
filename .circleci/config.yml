@@ -10,7 +10,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Test
-          command: bash -c 'hokusai test'
+          command: docker-compose -f hokusai/test.yml run force yarn test
   push:
     docker:
       - image: artsy/hokusai:0.4.0
