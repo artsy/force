@@ -8,6 +8,7 @@ $ = require 'jquery'
 Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
+{ uniqBy } = require 'lodash'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 Raven = require 'raven-js'
@@ -19,6 +20,7 @@ setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
+{ ReactionRenderer } = require './middleware/renderArtworkBrick'
 
 module.exports = ->
   setupErrorReporting()
@@ -29,6 +31,8 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
+  mountReactionBlocks()
+
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -92,3 +96,11 @@ setupJquery = ->
 setupErrorReporting = ->
   Raven.config(sd.SENTRY_PUBLIC_DSN).install()
   Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
+
+mountReactionBlocks = ->
+  blocks = uniqBy(sd.reactionBlocks, 'id')
+
+  blocks.forEach (block) ->
+    renderer = new ReactionRenderer('client')
+    renderer.deserialize(block)
+
