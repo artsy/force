@@ -7,4 +7,5 @@ trap "exit" INT
 mocha \
   --require test.config.js \
   --timeout 30000 \
+  --exit \
    $@
