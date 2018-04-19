@@ -1,8 +1,11 @@
 version: 2.0
 jobs:
   test:
-    docker:
-      - image: artsy/hokusai:0.4.0
+    # docker:
+    #   - image: artsy/hokusai:0.4.0
+    machine:
+      node:
+        version: 8.4.0
     parallelism: 4
     steps:
       - add_ssh_keys
@@ -10,7 +13,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Test
-          command: bash -c 'docker-compose -f hokusai/test.yml build && docker-compose -f hokusai/test.yml run force yarn test'
+          command: "yarn test"
   push:
     docker:
       - image: artsy/hokusai:0.4.0
