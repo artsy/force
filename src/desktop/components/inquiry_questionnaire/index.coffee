@@ -51,12 +51,6 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
   modal.view.on 'closed', ->
     analytics.teardown state.context
 
-  # Disable backdrop clicks
-  modal.view.$el.off 'click', '.js-modalize-backdrop'
-
-  # Disable <esc> close
-  $(window).off 'keyup.modalize'
-
   # Log to both the `Logger` and the `Trail`
   log = (step) ->
     trail.log step
@@ -65,12 +59,6 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
   state
     # Log each step
     .on 'next', log
-
-    # Abort by clicking 'nevermind'
-    .on 'abort', ->
-      modal.close()
-      logger.reset()
-      trail.reset()
 
     # End of complete flow
     .on 'done', ->

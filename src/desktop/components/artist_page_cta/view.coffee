@@ -39,7 +39,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @signupIntent = "landing full page modal"
 
     # remove after a/b test closes
-    # splitTest('gdpr_compliance_test').view()
+    splitTest('gdpr_compliance_test').view()
     @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
 
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)

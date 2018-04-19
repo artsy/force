@@ -6,10 +6,15 @@
       .auth-register
         form.auth-form
           input.bordered-input.is-block(
-            name='email', type='email', placeholder='Email' autofocus= autofocus, required
+            name='email', value=email, type='email', placeholder='Email' autofocus= autofocus, required
           )
-          button#auth-submit.avant-garde-button-black.is-block Send me reset instructions
-          footer.auth-form-options
-            a.auth-toggle( href='/log_in', data-mode='login' ) I remember it!
 
-    include ./_login_footer.jade
+          - buttonText = setPassword ? 'token' : 'reset instructions'
+          button#auth-submit.avant-garde-button-black.is-block Send me #{buttonText}
+
+          - if (!setPassword)
+            footer.auth-form-options
+              a.auth-toggle( href='/log_in', data-mode='login' ) I remember it!
+
+    - if (!setPassword)
+      include ./_login_footer.jade

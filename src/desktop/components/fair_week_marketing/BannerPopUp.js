@@ -1,10 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-
 import colors from 'reaction/Assets/Colors'
 import InvertedButton from 'reaction/Components/Buttons/Inverted'
-
-import MarketingModal from '../../../components/marketing_signup_modal/index.coffee'
+import MarketingModal from 'desktop/components/marketing_signup_modal/index.coffee'
 
 const StickyFooter = styled.div`
   position: fixed;
@@ -22,7 +21,7 @@ const StickyFooter = styled.div`
   }
 `
 
-const Container = styled.div`
+export const Container = styled.div`
   cursor: pointer;
   margin: 0 auto;
   max-width: 1192px;
@@ -75,18 +74,8 @@ const CtaImageContainer = styled(FixedCol)`
   }
 `
 
-// Use the interface below once https://github.com/artsy/force/pull/2145 is merged:
-// interface CtaProps {
-//   ctaTitle: string
-//   ctaImageUrl: string
-// }
-
 export class BannerPopUp extends React.Component {
-  state = {
-    isModalOpen: false,
-  }
-
-  openModal() {
+  openModal = () => {
     new MarketingModal().open()
   }
 
@@ -95,7 +84,7 @@ export class BannerPopUp extends React.Component {
 
     return (
       <StickyFooter>
-        <Container onClick={this.openModal.bind(this)}>
+        <Container onClick={this.openModal}>
           <CtaImageContainer>
             <CtaImage src={ctaImageUrl} />
           </CtaImageContainer>
@@ -107,4 +96,9 @@ export class BannerPopUp extends React.Component {
       </StickyFooter>
     )
   }
+}
+
+BannerPopUp.propTypes = {
+  ctaTitle: PropTypes.string,
+  ctaImageUrl: PropTypes.string,
 }

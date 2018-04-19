@@ -10,6 +10,7 @@ viewHelpers = require './view_helpers.coffee'
 welcomeHero = require './welcome'
 browseCategories = require './browse_categories.coffee'
 query = require './queries/initial'
+CurrentUser = require '../../models/current_user.coffee'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or
@@ -23,9 +24,10 @@ positionWelcomeHeroMethod = (req, res) ->
   res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)
   method
 
-fetchMetaphysicsData = (req)->
+fetchMetaphysicsData = (req, showHeroUnits)->
   deferred = Q.defer()
-  metaphysics(query: query, req: req)
+
+  metaphysics(query: query, req: req, variables: {showHeroUnits: showHeroUnits})
     .then (data) -> deferred.resolve data
     .catch (err) ->
       deferred.resolve
@@ -51,24 +53,38 @@ fetchMetaphysicsData = (req)->
     }
   }
 
-  Q
-    .allSettled [
-      fetchMetaphysicsData req
-      featuredLinks.fetch cache: true
-    ]
+  hideHeroUnits = req.user?.hasLabFeature('Homepage Search')
+  initialFetch = fetchMetaphysicsData req, false if hideHeroUnits
+  unless hideHeroUnits
+    initialFetch = Q
+      .allSettled [
+        fetchMetaphysicsData req, true
+        featuredLinks.fetch cache: true
+      ]
+  initialFetch
     .then (results) ->
-      homePage = results[0]?.value.home_page
-      heroUnits = homePage.hero_units
-      heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
+      if hideHeroUnits
+        homePage = results.home_page
+        homePage.artwork_modules = homePage.artwork_modules.filter (module) -> module.key isnt 'followed_artists'
+        heroUnits = []
+      else
+        homePage = results?[0].value.home_page
+        heroUnits = homePage.hero_units
+        heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
-      # always show followed artist rail for logged in users,
-      # if we dont get results we will replace with artists TO follow
-      if req.user and not _.findWhere homePage.artwork_modules, { key: 'followed_artists' }
-        homePage.artwork_modules.unshift { key: 'followed_artists' }
+        # always show followed artist rail for logged in users,
+        # if we dont get results we will replace with artists TO follow
+        if req.user and not _.findWhere homePage.artwork_modules, { key: 'followed_artists' }
+          homePage.artwork_modules.unshift { key: 'followed_artists' }
 
       res.locals.sd.HERO_UNITS = heroUnits
       res.locals.sd.USER_HOME_PAGE = homePage.artwork_modules
 
+      # for pasing data to client side forgot code
+      res.locals.sd.RESET_PASSWORD_REDIRECT_TO = req.query.reset_password_redirect_to
+      res.locals.sd.SET_PASSWORD = req.query.set_password
+
+      res.locals.sd.HIDE_HERO_UNITS = hideHeroUnits
       res.render 'index',
         heroUnits: heroUnits
         modules: homePage.artwork_modules

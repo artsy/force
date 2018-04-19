@@ -12,3 +12,14 @@ export const newsArticlesQuery = ({ limit, offset }) => {
     ${sectionFragments}
   `
 }
+
+export const newsPanelQuery = () => {
+  return `
+    {
+      articles(published: true, layout: "news", limit: 3, sort: "-published_at") {
+        title
+        slug
+      }
+    }
+  `
+}

@@ -12,7 +12,7 @@ block body
         if profile.hasIcon()
           .fair-organization-page__profile-icon( style="background-image: url(#{profile.iconUrl()})" )
         h1.fair-organization-page__title= fairOrg.get('name')
-        h1.fair-organization-page__subtitle!= newestFair.subtitle()
+        h1.fair-organization-page__subtitle!= newestFair.formatDates()
         h2.fair-organization-page__caption Discover and collect works before the fair opens on Artsy
 
         a.fair-organization-page__notification.avant-garde-box-button.avant-garde-box-button-gray.follow-button( data-state='unfollowed' )

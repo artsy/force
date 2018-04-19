@@ -27,7 +27,7 @@ class MarketingSignupModalInner extends Backbone.View
     @acquisitionInitiative = @data?.slug
     
     # remove after a/b test closes
-    # splitTest('gdpr_compliance_test').view()
+    splitTest('gdpr_compliance_test').view()
     @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
     $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
@@ -129,6 +129,8 @@ module.exports = class MarketingSignupModal extends Backbone.View
 
     return unless sd.MARKETING_SIGNUP_MODALS?
     modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
+
+    return unless modalData
     @inner = new MarketingSignupModalInner
       data: modalData
 

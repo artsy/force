@@ -2,7 +2,7 @@
   if user
     span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
       a( href='/user/saves' )
-        = user.get('name') ? user.get('name') : 'Account'
+        include ../../public/icons/person.svg
 
       .hover-pulldown-menu
         if user.isAdmin()
@@ -23,5 +23,5 @@
           | Log out
 
   else
-    a.avant-garde-button-white.is-tiny.mlh-login( href='/log_in' ) Log in
-    a.avant-garde-button-black.is-tiny.mlh-signup( href='/sign_up' ) Sign up
+    a.avant-garde-button-white.mlh-login( href='/log_in' ) Log in
+    a.avant-garde-button-black.mlh-signup( href='/sign_up' ) Sign up

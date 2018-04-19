@@ -6,8 +6,23 @@ mixin author-date
     if article.get('contributing_authors') && article.get('contributing_authors').length > 0
       .article-contributing-author
         = "By " + article.byline()
-    .article-date
-      = article.date('published_at').format('MMM Do, YYYY h:mm a')
+    if article.get('news_source')
+      .article-date-source
+        +articleDate(article.date('published_at'))
+        +newsSource(article.get('news_source'))
+    else
+      +articleDate(article.date('published_at'))
+
+mixin articleDate(date)
+  .article-date
+    = date.format('MMM Do, YYYY h:mm a')
+
+mixin newsSource(source)
+  .article-news-source
+    if source.url && source.title
+      span via 
+      a(href=source.url target='_blank')
+        = source.title
 
 mixin video(video)
   .article-video-container

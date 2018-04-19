@@ -1,2 +1,10 @@
-for article in articles
-  include ../../../components/article_figure/index
+- isAdmin = sd.CURRENT_USER && sd.CURRENT_USER.type === 'Admin'
+
+for article, i in articles
+  if newsArticles && isAdmin && i == 0
+      .article-item-first
+        include ../../../components/article_figure/index
+        #news-panel
+        //- renders reaction NewsPanel via articles.coffee
+  else
+    include ../../../components/article_figure/index

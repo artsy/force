@@ -21,7 +21,6 @@
     "webpack": "webpack"
   },
   "prettier": {
-    "arrowParens": "always",
     "bracketSpacing": true,
     "semi": false,
     "singleQuote": true,
@@ -44,7 +43,7 @@
   "dependencies": {
     "@artsy/express-reloadable": "^1.3.0",
     "@artsy/passport": "^1.0.8",
-    "@artsy/reaction": "^0.34.9",
+    "@artsy/reaction": "^0.39.1",
     "@artsy/stitch": "^1.4.0",
     "@babel/core": "7.0.0-beta.40",
     "@babel/node": "7.0.0-beta.40",
@@ -221,7 +220,7 @@
     "eslint": "^3.18.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^7.1.0",
-    "eslint-config-standard-react": "^4.3.0",
+    "eslint-config-standard-react": "^6.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "^2.1.1",
@@ -233,6 +232,7 @@
     "imagesloaded": "^4.1.1",
     "inquirer": "^1.2.3",
     "jest": "^22.4.2",
+    "jest-coffee-preprocessor": "^1.0.0",
     "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "^0.5.7",
@@ -244,7 +244,7 @@
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.10.2",
     "progress-bar-webpack-plugin": "^1.10.0",
-    "pug-loader": "damassi/pug-loader#02921c5",
+    "pug-loader": "2.4.0",
     "rewire": "2.2.0",
     "should": "^11.1.1",
     "sinon": "^1.17.1",
@@ -256,6 +256,7 @@
     "tslint-config-prettier": "^1.7.0",
     "tslint-config-standard": "^7.0.0",
     "tslint-react": "^3.4.0",
+    "typescript-babel-jest": "^1.0.5",
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
@@ -265,5 +266,27 @@
   "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.coffee$": "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
+      ".(ts|tsx)": "typescript-babel-jest"
+    },
+    "moduleFileExtensions": [
+      "coffee",
+      "js",
+      "json",
+      "jsx",
+      "ts",
+      "tsx"
+    ],   
+    "testRegex": "/__tests__/.*\\.jest\\.(ts|tsx|js|jsx)$",
+    "setupFiles": [
+      "<rootDir>/test.config.js"
+    ],
+    "roots": [
+      "<rootDir>/src"
+    ]
   }
 }
