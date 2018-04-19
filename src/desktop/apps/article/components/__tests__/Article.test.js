@@ -65,15 +65,22 @@ describe('<Article />', () => {
     rendered.html().should.containEql('FeatureLayout')
   })
 
-  it('renders a feature article in a series', () => {
+  it('renders a feature fullscreen article in a series', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'feature',
       vertical: {
         name: 'Art Market',
       },
+      hero_section: {
+        type: 'fullscreen',
+      },
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
-      seriesArticle: { title: 'Series', slug: 'a-series' },
+      seriesArticle: {
+        title: 'Series',
+        slug: 'a-series',
+        series: { description: '' },
+      },
     })
     const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(0)

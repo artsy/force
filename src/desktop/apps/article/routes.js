@@ -105,9 +105,12 @@ export async function index(req, res, next) {
     }
 
     // Series and Video pages
+    const isFeatureInSeries =
+      article.seriesArticle &&
+      article.layout === 'feature' &&
+      (article.hero_section && article.hero_section.type === 'fullscreen')
     const hasSeriesNav =
-      _.contains(['series', 'video'], article.layout) ||
-      (article.seriesArticle && article.layout === 'feature')
+      _.contains(['series', 'video'], article.layout) || isFeatureInSeries
 
     let layoutTemplate =
       '../../../components/main_layout/templates/react_index.jade'

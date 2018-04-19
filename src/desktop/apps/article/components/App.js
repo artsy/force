@@ -40,12 +40,7 @@ export default hot(module)(
           )
         }
         default: {
-          return (
-            <ArticleLayout
-              seriesArticle={article.seriesArticle}
-              {...this.props}
-            />
-          )
+          return <ArticleLayout {...this.props} />
         }
       }
     }
