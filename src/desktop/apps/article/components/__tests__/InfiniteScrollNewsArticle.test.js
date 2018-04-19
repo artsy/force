@@ -14,6 +14,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
   let props
   let article
   let nextArticle
+  let clock
 
   before(done => {
     benv.setup(() => {
@@ -22,11 +23,13 @@ describe('<InfiniteScrollNewsArticle />', () => {
       sd.CURRENT_PATH =
         '/news/artsy-editorial-surprising-reason-men-women-selfies-differently'
       sd.CURRENT_USER = { id: '123' }
+      clock = sinon.useFakeTimers()
       done()
     })
   })
 
   after(() => {
+    clock.restore()
     benv.teardown()
   })
 
@@ -232,8 +235,9 @@ describe('<InfiniteScrollNewsArticle />', () => {
   describe('#onDateChange', () => {
     it('it sets date if it has a new one', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-      rendered.instance().onDateChange('123')
-      rendered.state('date').should.equal('123')
+      rendered.instance().onDateChange('2018-07-20T17:19:55.909Z')
+      clock.tick(200)
+      rendered.state('date').should.equal('2018-07-20T17:19:55.909Z')
     })
 
     it("it doesn't set date if it hasn't changed", () => {
