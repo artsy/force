@@ -8,6 +8,7 @@ jobs:
       - add_ssh_keys
       - checkout
       - run: "npm install -g yarn@1.5.1"
+      - run: "yarn install"
       - run:
           name: Test
           command: "yarn test"
