@@ -5,7 +5,7 @@ const app = (module.exports = require('express')())
 
 // TODO: Move to src/lib/middleware/locals once done developing; this is just so
 // we can get hot module reloading which only works in /desktop and /mobile
-app.use(require('./lib/middleware/renderArtworkBrick'))
+app.use(require('./lib/middleware/renderArtworkBrick').serverRenderer)
 
 // Apps with hardcoded routes or "RESTful" routes
 app.use(require('./apps/home'))
@@ -59,6 +59,7 @@ app.use(require('./apps/gallery_partnerships'))
 app.use(require('./apps/marketing_signup_modals'))
 app.use(require('./apps/artsy_in_miami').default)
 app.use(require('./apps/armory_week').default)
+app.use(require('./apps/frieze_week').default)
 
 // Non-profile dynamic vanity url apps
 app.use(require('./apps/galleries_institutions'))

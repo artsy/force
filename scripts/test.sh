@@ -31,6 +31,7 @@ run () {
     yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
     yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
     yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
+    yarn jest
     ;;
   esac
 }

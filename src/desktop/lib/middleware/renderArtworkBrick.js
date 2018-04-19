@@ -1,44 +1,126 @@
 import React from 'react'
-import { renderToString } from 'react-dom/server'
+import ReactDOM from 'react-dom'
 import { Artwork } from 'reaction/Components/Artwork'
 import { ArtworkGrid } from 'reaction/Components/ArtworkGrid'
+import { Fillwidth } from 'reaction/Components/Artwork/Fillwidth'
 import { ServerStyleSheet } from 'styled-components'
+import { renderToString } from 'react-dom/server'
+import { isFunction, uniqueId } from 'lodash'
 
-function renderArtworkBrick(props = {}) {
-  const html = render(() => {
-    return <Artwork artwork={artwork} useRelay={false} />
-  })
+export class ReactionRenderer {
+  id
+  mode
+  type
+  res
+  props
 
-  return html
-}
+  constructor(mode = 'server', res) {
+    this.mode = mode
+    this.res = res
+  }
 
-function renderArtworkGrid(props = {}) {
-  const html = render(() => {
-    return <ArtworkGrid columnCount={2} artworks={artworks} useRelay={false} />
-  })
+  artworkBrick(props) {
+    this.type = this.artworkBrick.name
 
-  return html
-}
+    const html = this.render(props => {
+      return <Artwork artwork={artwork} useRelay={false} />
+    })
+    return html
+  }
 
-function render(onRender) {
-  try {
-    const sheet = new ServerStyleSheet()
-    const html = renderToString(sheet.collectStyles(onRender()))
-    const css = sheet.getStyleTags()
-    const out = `
-      ${css}
-      ${html}
-    `.trim()
+  artworkGrid(props) {
+    this.type = this.artworkGrid.name
 
-    return out
-  } catch (error) {
-    console.log(error)
+    const html = this.render(props => {
+      return (
+        <ArtworkGrid columnCount={2} artworks={artworks} useRelay={false} />
+      )
+    })
+    return html
+  }
+
+  fillWidth(props) {
+    this.type = this.fillWidth.name
+
+    const html = this.render(props => {
+      return <Fillwidth artworks={artworks} useRelay={false} />
+    })
+    return html
+  }
+
+  /**
+   * Sharify automatically passes over data to the client. Once render is called
+   * on the server append block and wait for client-side mount, which will then
+   * deserialize and rehydrate.
+   */
+  addToQueue(block) {
+    try {
+      this.res.locals.sharify.data.reactionBlocks.push(block)
+    } catch (error) {
+      console.error(
+        '(middlware/renderArtworkBrick) Error adding to queue:',
+        error
+      )
+    }
+  }
+
+  serialize() {
+    this.addToQueue({
+      mode: this.mode,
+      id: this.id,
+      type: this.type,
+      props: this.props,
+    })
+  }
+
+  deserialize(block) {
+    this.mode = 'client'
+    this.id = block.id
+    this.type = block.type
+    this.props = block.props
+
+    const blockType = this[this.type].bind(this)
+
+    if (isFunction(blockType)) {
+      blockType(this.props)
+    }
+  }
+
+  render(blockType) {
+    try {
+      const isServer = this.mode === 'server'
+
+      if (isServer) {
+        this.id = uniqueId('react-mount-reaction-')
+        const sheet = new ServerStyleSheet()
+        const html = renderToString(sheet.collectStyles(blockType(this.props)))
+        const css = sheet.getStyleTags()
+
+        this.serialize()
+
+        const out = [`<div id=${this.id}></div>`, css, html].join('\n')
+        return out
+
+        // Client-side
+      } else {
+        ReactDOM.hydrate(
+          blockType(this.props),
+          document.getElementById(this.id)
+        )
+      }
+    } catch (error) {
+      console.error(
+        '(middleware/renderArtworkBrick) Error rendering server-side: ',
+        error
+      )
+    }
   }
 }
 
-module.exports = (req, res, next) => {
-  res.locals.renderArtworkBrick = renderArtworkBrick
-  res.locals.renderArtworkGrid = renderArtworkGrid
+module.exports.serverRenderer = (req, res, next) => {
+  const renderer = new ReactionRenderer('server', res)
+  res.locals.reaction = renderer
+  res.locals.sharify.data.reactionBlocks = []
   next()
 }
 
