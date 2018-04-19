@@ -27,7 +27,8 @@ module.exports = class SearchBarView extends Backbone.View
       @limit,
       @autoselect,
       @displayKind,
-      @displayEmptyItem
+      @displayEmptyItem,
+      @centeredHomepageSearch
       @shouldDisplaySuggestions } = _.defaults options, @defaults
 
     @$input ?= @$('input')
@@ -101,6 +102,7 @@ module.exports = class SearchBarView extends Backbone.View
     _.isEmpty(_s.trim(@$input.val()))
 
   displaySuggestions: ->
+    return if @isEmpty() and @centeredHomepageSearch
     if @isEmpty() and @shouldDisplaySuggestions
       @renderFeedback()
       @$el.addClass 'is-display-suggestions'
@@ -197,7 +199,9 @@ module.exports = class SearchBarView extends Backbone.View
     $(window).on 'resize', _.throttle(@handlePlaceholderTextResponsively, 200)
 
   handlePlaceholderTextResponsively: =>
-    if @$input.width() < 200
+    if @centeredHomepageSearch
+      @$input.attr('placeholder', 'Search artists, styles, subject matter, galleries')
+    else if @$input.width() < 200
       @$input.attr('placeholder', 'Search by artist, etc.')
     else if @$input.width() < 400
       @$input.attr('placeholder', 'Search by artist, gallery, etc.')
