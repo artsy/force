@@ -232,6 +232,7 @@
     "imagesloaded": "^4.1.1",
     "inquirer": "^1.2.3",
     "jest": "^22.4.2",
+    "jest-coffee-preprocessor": "^1.0.0",
     "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "^0.5.7",
@@ -255,6 +256,7 @@
     "tslint-config-prettier": "^1.7.0",
     "tslint-config-standard": "^7.0.0",
     "tslint-react": "^3.4.0",
+    "typescript-babel-jest": "^1.0.5",
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
@@ -264,5 +266,27 @@
   "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.coffee$": "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
+      ".(ts|tsx)": "typescript-babel-jest"
+    },
+    "moduleFileExtensions": [
+      "coffee",
+      "js",
+      "json",
+      "jsx",
+      "ts",
+      "tsx"
+    ],   
+    "testRegex": "/__tests__/.*\\.jest\\.(ts|tsx|js|jsx)$",
+    "setupFiles": [
+      "<rootDir>/test.config.js"
+    ],
+    "roots": [
+      "<rootDir>/src"
+    ]
   }
 }
