@@ -1,16 +1,13 @@
 version: 2.0
 jobs:
   test:
-    # docker:
-    #   - image: artsy/hokusai:0.4.0
-    machine:
-      node:
-        version: 8.4.0
+    docker:
+      - image: bitnami/node:8
     parallelism: 4
     steps:
       - add_ssh_keys
       - checkout
-      - setup_remote_docker
+      - run: "npm install -g yarn@1.5.1"
       - run:
           name: Test
           command: "yarn test"
