@@ -18,7 +18,7 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
-    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), (path) => {
+    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
       if (window.location.pathname.split('/')[1] === path) {
         window.setTimeout(function() {
           const {
@@ -31,6 +31,7 @@ if (
             requestStart,
             loadEventEnd,
             domComplete,
+            nonInteraction: 1,
           })
         }, 0)
       }
