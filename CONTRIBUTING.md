@@ -75,11 +75,15 @@ git checkout -b my-feature-branch
 
 ## Write Tests
 
-Write tests for all new features and fixes. Run tests with `yarn test`. To speed up your workflow try watching an individual file for changes, e.g. `yarn mocha -- --watch desktop/components/foo/test.coffee`
+Write tests for all new features and fixes using Mocha or Jest. Run all tests with `yarn test`.
 
-We definitely appreciate pull requests that highlight or reproduce a problem, even without a fix.
+Mocha looks for files prefixed with `.test` or `.spec`, while Jest looks for the prefix `.jest`.
+
+To speed up your workflow try watching an individual file for changes, e.g. `yarn mocha -- --watch desktop/components/foo/bar.test.coffee`
 
 ## Write Code
+
+We definitely appreciate pull requests that highlight or reproduce a problem, even without a fix.
 
 Implement your feature or bug fix.
 
