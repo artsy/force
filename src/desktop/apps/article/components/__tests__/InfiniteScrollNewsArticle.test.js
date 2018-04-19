@@ -15,7 +15,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
   let article
   let nextArticle
 
-  before((done) => {
+  before(done => {
     benv.setup(() => {
       benv.expose({ $: benv.require('jquery'), jQuery: benv.require('jquery') })
       sd.APP_URL = 'http://artsy.net'

@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { Component, Fragment } from 'react'
-import { flatten } from 'lodash'
+import { flatten, debounce } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
@@ -48,6 +48,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const date = this.getDateField(article)
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
+
+    this.onDateChange = debounce(this.onDateChange, 200)
 
     this.state = {
       activeArticle: '',
@@ -141,7 +143,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   onDateChange = (date) => {
-    const hasNewDate = date !== this.state.date
+    const hasNewDate = !moment(date).isSame(this.state.date, 'day')
     if (hasNewDate) {
       this.setState({ date })
     }
