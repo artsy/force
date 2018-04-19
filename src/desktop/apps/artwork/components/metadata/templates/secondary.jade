@@ -12,7 +12,6 @@
       = artwork.manufacturer
 
   unless artwork.edition_sets && artwork.edition_sets.length > 1
-
     if artwork.dimensions.in || artwork.dimensions.cm
       .artwork-metadata__dimensions
         = [artwork.dimensions.in, artwork.dimensions.cm].join('; ')
@@ -20,4 +19,3 @@
   if artwork.edition_of
     .artwork-metadata__edition-of
       = artwork.edition_of
-
