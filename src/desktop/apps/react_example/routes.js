@@ -19,7 +19,7 @@ export async function index(req, res, next) {
         description: 'hello hi how are you',
       },
       templates: {
-        MyJadeView: 'my_jade_view.jade',
+        MyJadeView: 'myJadeView.jade',
       },
     })
 
