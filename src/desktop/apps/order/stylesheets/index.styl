@@ -84,3 +84,9 @@
   margin-top 20px
   color gray-darkest-color
 
+// Hide nav bar if on ipad
+html[data-useragent*="Artsy-Mobile"]
+  .order-body
+    margin-top -60px
+    #main-layout-header
+      display none
