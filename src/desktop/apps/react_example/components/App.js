@@ -14,7 +14,7 @@ export default class App extends Component {
     console.log('Component mounted on client!')
   }
 
-  handleButtonClick = (event) => {
+  handleButtonClick = event => {
     console.warn('React Button clicked!', this.props.description)
   }
 

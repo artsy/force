@@ -6,21 +6,35 @@ div
 
 br
 
+h1
+  | Reaction Helpers
+
+br
+hr
+br
+
+
 style.
   .reactionArtworkBrick {
     width: 50%;
   }
 
 div(class='reactionArtworkBrick')
-  !=renderArtworkGrid({ title: name })
+  !=reaction.artworkGrid({ title: name })
 
 br
 hr
 br
 
 div(class='reactionArtworkBrick')
-  !=renderArtworkBrick({ title: name })
+  !=reaction.artworkBrick({ title: name })
 
+br
+hr
+br
+
+div
+  !=reaction.fillWidth({ title: name })
 
 br
 

@@ -11,7 +11,6 @@ mediator.on 'all', (name, data) ->
 
 # All Reaction events are sent directly to Segment
 Events.onEvent (data) =>
-  analytics.track data.action, _.omit data, 'action'
 
   # Send Reaction's read more as a Parsely page view
   if data.action is 'Clicked read more'
@@ -27,6 +26,11 @@ Events.onEvent (data) =>
         track_url: true,
         url: sd.APP_URL + '/' + location.pathname,
         use_stored_tags: true
+
+    # Return early because we don't want to make a Segment call for read more
+    return
+
+  analytics.track data.action, _.omit data, 'action'
 
 require '../analytics/main_layout.js'
 
