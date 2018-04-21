@@ -1,19 +1,18 @@
-- artworkSize = artworkSize || 'tall'
-- setHeight = setHeight || false
-- displayPurchase = displayPurchase || false
-- isAuction = isAuction || false
+//- TODO: STITCH: Remove old grid code once new system is sufficiently tested
+//- if artworkColumns
+//-   for column in artworkColumns
+//-     .artwork-column
+//-       for artwork in column
+//-         if setHeight
+//-           - artworkSize = artwork.defaultImage().imageSizeForHeight(setHeight)
+//-         include ../artwork_item/templates/artwork
 
-if artworkColumns
-  for column in artworkColumns
-    .artwork-column
-      for artwork in column
-        if setHeight
-          - artworkSize = artwork.defaultImage().imageSizeForHeight(setHeight)
-        include ../artwork_item/templates/artwork
+//- if numberOfColumns
+//-   - for (var i = 0; i < numberOfColumns; i++)
+//-     .artwork-column
 
-if numberOfColumns
-  - for (var i = 0; i < numberOfColumns; i++)
-    .artwork-column
+#react-artwork-grid-columns
+  != stitch.components.ArtworkGrid({ artworks: artworks, mountId: 'react-artwork-grid-columns' })
 
 if seeMore
   button.avant-garde-button-text.artwork-columns-see-more= buttonLabel
