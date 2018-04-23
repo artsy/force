@@ -130,6 +130,8 @@ module.exports = class OverviewView extends Backbone.View
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
+      showSections:
+        info: @testGroup is 'merch_sort' or @testGroup is 'control'
 
     _.defer => @postRender()
     this
