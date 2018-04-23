@@ -4,13 +4,13 @@
     method='POST'
   )
     .auth-errors
-    - const name = (user && user.get('name')) ? user.get('name') : ''
+    - const userName = (user && user.get('name')) ? user.get('name') : ''
     input.bordered-input(
       name='name',
       placeholder='Your full name',
       autofocus=true,
       required
-      value=name
+      value=userName
     )
     - const email = (user && user.get('email')) ? user.get('email') : ''
     input#js-mailcheck-input-modal.bordered-input(
