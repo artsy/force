@@ -1,7 +1,5 @@
-- isAdmin = sd.CURRENT_USER && sd.CURRENT_USER.type === 'Admin'
-
 for article, i in articles
-  if newsArticles && isAdmin && i == 0
+  if newsArticles && i == 0
       .article-item-first
         include ../../../components/article_figure/index
         #news-panel

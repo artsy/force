@@ -2,9 +2,10 @@ module.exports = """
   query($showHeroUnits: Boolean!) {
     home_page {
       artwork_modules(
-        max_rails: 6,
+        max_rails: 7,
         order: [
           ACTIVE_BIDS,
+          RECENTLY_VIEWED_WORKS
           RECOMMENDED_WORKS,
           FOLLOWED_ARTISTS,
           RELATED_ARTISTS,

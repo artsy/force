@@ -13,7 +13,7 @@ const MARKETING_MODAL_ID = 'ca18'
 export class EditableFriezeWeekPage extends JSONPage {
   registerRoutes() {
     this.app.get(this.jsonPage.paths.show, this.show.bind(this))
-    this.app.get(this.jsonPage.paths.show + '/data', adminOnly, this.data)
+    this.app.get(this.jsonPage.paths.show + '/data', this.data)
     this.app.get(this.jsonPage.paths.edit, adminOnly, this.edit)
     this.app.post(this.jsonPage.paths.edit, adminOnly, this.upload)
   }

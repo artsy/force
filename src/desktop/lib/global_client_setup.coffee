@@ -20,7 +20,7 @@ setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
-{ ReactionRenderer } = require './middleware/renderArtworkBrick'
+{ ReactionRenderer } = require './reactionRenderer'
 
 module.exports = ->
   setupErrorReporting()
@@ -101,6 +101,15 @@ mountReactionBlocks = ->
   blocks = uniqBy(sd.reactionBlocks, 'id')
 
   blocks.forEach (block) ->
-    renderer = new ReactionRenderer('client')
+    renderer = new ReactionRenderer({
+      mode: 'client'
+    })
+
     renderer.deserialize(block)
+
+  # Mount renderer for runtime client-side templates. NOTE: must be included
+  # in template when rendering data; e.g., html = myTemplate({ data, reaction })
+  sd.reaction = new ReactionRenderer({
+    mode: 'runtime'
+  })
 
