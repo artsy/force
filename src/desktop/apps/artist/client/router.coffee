@@ -62,11 +62,9 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view.render()
 
   overview: ->
-    console.log('got in overview')
     @view = new OverviewView @options
     $('body').append @jump.$el
     @view.on 'artist:overview:sync', (artist) =>
-      console.log('triggered overview sync')
       attachCTA new Artist(_.extend({}, artist, @model.attributes))
 
   cv: ->
