@@ -7,8 +7,6 @@ modalize = require '../modalize/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 Form = require('../mixins/form.coffee')
-splitTest = require('../split_test/index')
-
 
 class MarketingSignupModalInner extends Backbone.View
   _.extend @prototype, Form
@@ -21,15 +19,9 @@ class MarketingSignupModalInner extends Backbone.View
     'click .auth-mode-toggle a': 'openLogin'
     'click #signup-fb': 'fbSignup'
     'submit form': 'submit'
-    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
-    
-    # remove after a/b test closes
-    splitTest('gdpr_compliance_test').view()
-    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
-    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   render: ->
     @$el.html template
@@ -55,21 +47,7 @@ class MarketingSignupModalInner extends Backbone.View
       'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
     queryString = $.param(queryData)
     fbUrl = sd.AP.facebookPath + '?' + queryString
-    return window.location.href = fbUrl if @gdprDisabled
-
-    if @checkAcceptedTerms()
-      gdprString = $.param(@gdprData(@serializeForm()))
-      gdprFbUrl = fbUrl + "&" + gdprString
-      window.location.href = gdprFbUrl
-
-  gdprData: (formData) ->
-    return {} if @gdprDisabled
-    if sd.GDPR_COMPLIANCE_TEST is 'separated_checkboxes'
-      'receive_emails': !!formData['receive_emails']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
-    else if sd.GDPR_COMPLIANCE_TEST is 'combined_checkboxes'
-      'receive_emails': !!formData['accepted_terms_of_service']
-      'accepted_terms_of_service': !!formData['accepted_terms_of_service']
+    return window.location.href = fbUrl 
 
   showFormError: (msg) =>
     @$('button').attr 'data-state', 'error'
@@ -77,22 +55,6 @@ class MarketingSignupModalInner extends Backbone.View
 
   showError: (msg) =>
     @$('.auth-errors').text msg
-
-  checkAcceptedTerms: () ->
-    input = $('input#accepted_terms_of_service').get(0)
-    input.setCustomValidity? ''
-    if $(input).prop('checked')
-      $('.tos-error').text ''
-      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-      $boxContainer.attr('data-state', null)
-      true
-    else
-      $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
-      $boxContainer.attr('data-state', 'error')
-      input = $('input#accepted_terms_of_service').get(0)
-      input.setCustomValidity('')
-      $('.tos-error').text 'Please agree to our terms to continue'
-      false
 
   submit: (e) ->
     e.preventDefault()
@@ -105,7 +67,7 @@ class MarketingSignupModalInner extends Backbone.View
     analyticsData =
       'signup_intent': @signupIntent
       'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
-    body = Object.assign {}, userData, analyticsData, @gdprData(formData)
+    body = Object.assign {}, userData, analyticsData, formData
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'

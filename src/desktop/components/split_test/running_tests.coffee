@@ -35,14 +35,5 @@ module.exports = {
     ]
     control_group: 'control'
     edge: 'merch_sort'
-  gdpr_compliance_test:
-    key: 'gdpr_compliance_test'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'combined_checkboxes'
-      'separated_checkboxes'
-    ]
-    control_group: 'control'
-    edge: 'combined_checkboxes'
 }
+
