@@ -5,7 +5,7 @@ const app = (module.exports = require('express')())
 
 // TODO: Move to src/lib/middleware/locals once done developing; this is just so
 // we can get hot module reloading which only works in /desktop and /mobile
-app.use(require('./lib/middleware/renderArtworkBrick').serverRenderer)
+app.use(require('./lib/reactionRenderer').middleware)
 
 // Apps with hardcoded routes or "RESTful" routes
 app.use(require('./apps/home'))

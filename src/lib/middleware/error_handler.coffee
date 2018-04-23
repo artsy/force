@@ -14,6 +14,8 @@ module.exports = (err, req, res, next) ->
   if isDevelopment
     message = err.message || err.text || err.toString()
     detail = err.stack
-    console.log detail
+
+    if err.status isnt 404
+      console.log detail
 
   res.status(code).render(file, { message, detail, code })

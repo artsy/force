@@ -65,7 +65,7 @@ class EditPortal extends React.Component {
 
   render() {
     const { article } = this.props
-    const positionTop = article.layout === 'news' && 125
+    const positionTop = article.layout === 'news' ? 125 : null
 
     try {
       return ReactDOM.createPortal(
