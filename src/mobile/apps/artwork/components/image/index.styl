@@ -50,39 +50,40 @@
       max-width 100%
 
 .artwork-image-module__details
-  margin-bottom 14px
-  
-.artwork-image-module__label-icons
-  display flex
+  border-bottom 1px solid gray-lighter-color
 
-.artwork-image-module__artwork-label
+.artwork-image-module__artwork-details
   width 100%
   .artist-name
-    garamond-size('s-body', true)
+    garamond()
+    fine-faux-underline()
     display inline-block
-    font-weight bold
-    margin-bottom 10px
-    text-decoration none
+    font-size 20px
+    font-weight 600
+    letter-spacing 0
+    margin-bottom 18px
+    text-transform none
+    &:hover
+      border-bottom none
+
   .artwork-display
+  .artwork-meta-data__details
+    garamond()
     color gray-darker-color
-    clear right
-    garamond-size('l-caption', true)
-    line-height 1.5
+    font-size 14px
+
+  .artwork-meta-data__details
+    margin-bottom 18px
 
 .artwork-image-module__attribution-class
+  margin-bottom 24px
+
   .artwork-tab-link
-    color gray-darker-color
-    garamond-size('l-caption', true)
+    fine-faux-underline()
+    garamond()
+    font-size 14px
     line-height 1.5
-    &.chevron-arrow-button::after
-      background gray-darkest-color
-      height 12px
-      margin 8px 0 0 7px
-      transform rotate(90deg)
-      width 11px
-    &.chevron-arrow-button.is-active::after
-      margin 4px 0 0 7px
-      transform rotate(-90deg)
+
   .artwork-tab
     color gray-darker-color
     garamond-size('m-caption', true)
@@ -94,8 +95,8 @@
 .artwork-header-module
   display flex
   justify-content space-between
-  height 30px
-  width 85px
+  margin 18px auto
+  width 100px
   .circle-border-icon-button
     border-style none
     height 100%
