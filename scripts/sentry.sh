@@ -2,5 +2,5 @@
 
 set -e -x
 
-VERSION=$(sentry-cli releases propose-version)
-sentry-cli releases -o artsynet -p force-$DEPLOY_ENV files $VERSION upload-sourcemaps ./public/assets
+VERSION=$(node_modules/.bin/sentry-cli releases propose-version)
+node_modules/.bin/sentry-cli releases -o artsynet -p force-$DEPLOY_ENV files $VERSION upload-sourcemaps ./public/assets
