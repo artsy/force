@@ -25,16 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_merch_test:
-    key: 'artist_merch_test'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'no_header_merch_sort'
-      'merch_sort'
-    ]
-    control_group: 'control'
-    edge: 'merch_sort'
   gdpr_compliance_test:
     key: 'gdpr_compliance_test'
     weighting: 'equal'

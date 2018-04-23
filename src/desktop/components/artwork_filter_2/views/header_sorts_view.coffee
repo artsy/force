@@ -12,7 +12,6 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
     super
 
   sorts:
-    '-decayed_merch': 'Default'
     '-partner_updated_at': 'Recently Updated'
     '-published_at': 'Recently Added'
     '-year': 'Artwork Year (desc.)'

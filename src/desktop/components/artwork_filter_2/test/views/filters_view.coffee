@@ -22,8 +22,6 @@ describe 'FiltersView', ->
     @view = new @FiltersView
       params: new Backbone.Model
       counts: new Backbone.Model
-      stickyOffset: 0
-      testGroup: 'control'
 
   it 'renders the template', ->
     @view.counts.aggregations = mappedAggregations
