@@ -20,19 +20,6 @@ unless artwork.is_in_auction
           span.content
             = location
 
-        //- if artwork.is_inquireable && contacts && contacts.length
-        //-   .artwork-partner-stub__phone
-        //-     a(
-        //-       class='js-artwork-partner-stub-inquire-via-phone analytics-artwork-show-phone-number garamond-s-body'
-        //-       data-partner_id= partner._id
-        //-       data-artwork_id= artwork._id
-        //-       data-partner= partner
-        //-       data-artist_ids= artistIds
-        //-       data-user_id=(sd.CURRENT_USER && sd.CURRENT_USER.id )
-        //-       data-context='show phone number'
-        //-     )
-        //-       | Inquire via phone
-      
       if partner.acceptsCardPayments
         .artwork-partner-stub__card
           span.icon
