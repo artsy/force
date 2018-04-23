@@ -5,14 +5,15 @@ jobs:
       - image: bitnami/node:8
     parallelism: 4
     steps:
-      - run: install_packages procps git openssh-client
+      - run: install_packages procps git openssh-client htop
       - add_ssh_keys
       - checkout
       - run: "npm install -g yarn@1.5.1"
       - run: "yarn install"
       - run:
           name: Test
-          command: "yarn test"
+          command: "CIRCLE_NODE_INDEX=1 yarn test"
+          #command: "yarn test"
   push:
     docker:
       - image: artsy/hokusai:0.4.0
