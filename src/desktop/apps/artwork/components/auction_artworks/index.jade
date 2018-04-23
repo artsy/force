@@ -25,6 +25,10 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
     - var columns = helpers.auction_artworks.masonry(auction.artworks, followed_artist_ids).columns
     include ../../../../components/artwork_masonry_4_column/index
 
+    //- TODO: Replace columns above with below
+    //- #test-mount
+    //-   != reaction.artworkGrid({ mountId: 'test-mount'})
+
     .artwork-auction-artworks__view-all
       .artwork-auction-artworks__view-all__mask
       .artwork-auction-artworks__view-all__button

@@ -27,25 +27,15 @@ describe 'article figure template', ->
 
 describe 'articles template', ->
 
-  it 'shows the news panel if user is admin', ->
+  it 'shows the news panel', ->
     html = render('articles')
       articles: new Articles([_.extend(fixtures.article, {slug: 'foobar', tier: 1})])
       asset: (url) -> url
       crop: (url) -> url
       moment: moment
-      sd: { CURRENT_USER: { type: 'Admin'}}
+      sd: {}
     html.should.containEql 'news-panel'
 
-  it 'shows featured articles if user is not admin', ->
-    # TODO: Remove after news launches
-    html = render('articles')
-      articles: new Articles([_.extend(fixtures.article, {slug: 'foobar', tier: 1})])
-      asset: (url) -> url
-      crop: (url) -> url
-      moment: moment
-      sd: { CURRENT_USER: { type: 'foo'}}
-    html.should.containEql 'am-featured-hero'
-    html.should.not.containEql 'news-panel'
 
 describe 'section template', ->
 

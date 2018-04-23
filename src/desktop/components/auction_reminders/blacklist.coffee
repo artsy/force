@@ -28,6 +28,7 @@ module.exports =
     '^/news/.*'
     '^/news'
     '^/series/.*'
+    '^/spring-art-fairs'
     '^/video/.*'
     '^/artsy-in-miami'
     '^/armory-week'

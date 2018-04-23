@@ -15,19 +15,6 @@ describe 'Articles', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#feed (pre-news)', ->
-    # TODO: Remove this block in favor of below after News launches
-    it 'pulls the rest of the articles not in featured', ->
-      Articles.__set__ 'sd', {CURRENT_USER: {type: 'foo'}}
-      @articles.set [
-        { tier: 1, id: 'foo' }
-        { tier: 1, id: 'bar' }
-        { tier: 2, id: 'baz' }
-        { tier: 1, id: 'qux' }
-        { tier: 2, id: 'bam' }
-      ]
-      _.pluck(@articles.feed(), 'id').join('').should.equal 'bazbam'
-
   describe '#feed', ->
 
     it 'pulls the rest of the articles not in featured', ->
@@ -39,21 +26,6 @@ describe 'Articles', ->
         { tier: 2, id: 'bam' }
       ]
       _.pluck(@articles.feed(), 'id').join('').should.equal 'barbazquxbam'
-
-  describe '#featured (pre-news)', ->
-    # TODO: Remove this block in favor of below after News launches
-    it 'pulls the top 4 tier 1s', ->
-      Articles.__set__ 'sd', {CURRENT_USER: {type: 'foo'}}
-      @articles.set [
-        { tier: 1, id: 'foo' }
-        { tier: 1, id: 'bar' }
-        { tier: 2, id: 'baz' }
-        { tier: 1, id: 'qux' }
-        { tier: 2, id: 'bam' }
-        { tier: 1, id: 'moo' }
-        { tier: 2, id: 'boom' }
-      ]
-      _.pluck(@articles.featured(), 'id').join('').should.equal 'foobarquxmoo'
 
   describe '#featured', ->
 
