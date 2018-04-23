@@ -11,8 +11,14 @@ const render = templateName => {
 }
 
 describe('Meta template', () => {
+  let article
+
+  beforeEach(() => {
+    article = _.clone(fixtures.article)
+  })
+
   it('contains basic meta tags', () => {
-    const article = _.extend({}, fixtures.article, {
+    article = _.extend(article, {
       slug: 'artsy-editorial-slug',
       indexable: true,
       description: 'Artsy Editorial is an editorial channel.',
@@ -46,7 +52,7 @@ describe('Meta template', () => {
   })
 
   it('uses a different title extension for news', () => {
-    const article = _.extend({}, fixtures.article, {
+    article = _.extend(article, {
       slug: 'artsy-editorial-slug',
       description: 'Artsy Editorial is an editorial channel.',
       social_description: 'Artsy Editorial is socially friendly.',
@@ -66,6 +72,26 @@ describe('Meta template', () => {
     )
     html.should.containEql(
       '<link rel="canonical" href="https://www.artsy.net/news/artsy-editorial-slug"/>'
+    )
+  })
+
+  it('loads a default image if no thumbnail_image on news', () => {
+    article = _.extend(article, {
+      slug: 'artsy-editorial-slug',
+      description: 'Artsy Editorial is an editorial channel.',
+      layout: 'news',
+    })
+    delete article.thumbnail_image
+    const html = render('meta')({
+      article,
+      crop: url => url,
+      sd: {
+        EDITORIAL_NEWS_IMG:
+          'http://files.artsy.net/images/newssocialplaceholderimage.png',
+      },
+    })
+    html.should.containEql(
+      '<meta property="og:image" content="http://files.artsy.net/images/newssocialplaceholderimage.png"/>'
     )
   })
 })
