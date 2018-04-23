@@ -26,7 +26,6 @@ describe 'HeaderCountsView', ->
 
   it 'sorts hash', ->
     @view.sorts.should.eql {
-      '-decayed_merch': 'Default'
       '-partner_updated_at': 'Recently Updated'
       '-published_at': 'Recently Added'
       '-year': 'Artwork Year (desc.)'
