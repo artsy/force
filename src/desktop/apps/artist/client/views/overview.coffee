@@ -21,7 +21,7 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  initialize: ({ @user, @statuses }) ->
+  initialize: ({ @user, @statuses, @testGroup }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
 
   fetchRelated: ->
@@ -91,6 +91,7 @@ module.exports = class OverviewView extends Backbone.View
       el: @$('#artwork-section')
       artistID: @model.get('id')
       topOffset: $('.artist-sticky-header-container').height()
+      testGroup: @testGroup
     ).render()
 
     @listenToOnce mediator, 'infinite:scroll:end', =>
