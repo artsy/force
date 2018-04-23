@@ -16,6 +16,7 @@
     "precommit": "lint-staged",
     "prepare": "patch-package",
     "prettier-write": "yarn run prettier --write",
+    "sentry": "sh scripts/sentry.sh",
     "start": "sh scripts/start.sh",
     "test": "sh scripts/test.sh",
     "webpack": "webpack"

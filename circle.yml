@@ -8,6 +8,8 @@ machine:
 deployment:
   staging:
     branch: master
+    environment:
+      DEPLOY_ENV: staging
     commands:
       - |
         cat >~/.netrc <<EOF
@@ -20,10 +22,13 @@ deployment:
         EOF
       - chmod 600 ~/.netrc
       - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-      - DEPLOY_ENV=staging yarn deploy
+      - yarn deploy
       - git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
+      - yarn sentry
   production:
     branch: release
+    environment:
+      DEPLOY_ENV: production
     commands:
       - |
         cat >~/.netrc <<EOF
@@ -36,7 +41,8 @@ deployment:
         EOF
       - chmod 600 ~/.netrc
       - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-      - DEPLOY_ENV=production yarn deploy
+      - yarn deploy
+      - yarn sentry
 dependencies:
   override:
     - rm -rf node_modules/electron
