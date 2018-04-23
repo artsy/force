@@ -114,10 +114,14 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     window.location = @afterAuthPath
 
   render: ->
+    console.log('rendered got called!')
+    console.log('artist in view', @artist)
     @$el.html template
       artist: @artist
       afterAuthPath: @afterAuthPath
       signupIntent: encodeURIComponent(@signupIntent)
+
+    console.log('el:', @$el)
     @$banner = @$('.artist-page-cta-banner')
     @$overlay = @$('.artist-page-cta-overlay')
     @

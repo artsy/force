@@ -1,6 +1,7 @@
 .artist-page-cta-banner
   .responsive-layout-container
     .main-layout-container
+      - console.log('artist:', artist)
       img.artist-page-cta__image(src=artist.get('cta_image').thumb.url)
       div.artist-page-cta__headline Be the first to know when new works by&nbsp;
         span.artist-page-cta__headline__artist-name #{artist.get('name')}&nbsp;

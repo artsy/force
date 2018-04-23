@@ -18,6 +18,7 @@ currentVeniceFeature = require './components/current_venice_feature/index'
 sd = require('sharify').data
 
 @index = (req, res, next) ->
+  console.log('referrer:', req.get('Referrer'))
   tab = if req.params.tab? then req.params.tab else ''
   isReqFromReflection = res.locals.sd.REFLECTION
   send =
@@ -46,6 +47,9 @@ sd = require('sharify').data
             res.locals.sd.TAB = tab
             res.locals.sd.CURRENT_ITEM = currentItem
             res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !(res.locals.sd.CURRENT_USER? || res.locals.sd.REFERRER?.includes(APP_URL))
+            console.log('ARTIST_PAGE_CTA_ENABLED:', res.locals.sd.ARTIST_PAGE_CTA_ENABLED)
+            console.log('res.locals.sd.CURRENT_USER?:', res.locals.sd.CURRENT_USER?)
+            console.log('res.locals.sd.REFERRER?.includes(APP_URL):', res.locals.sd.REFERRER?.includes(APP_URL))
 
             res.render 'index',
               viewHelpers: helpers
