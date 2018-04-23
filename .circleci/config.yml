@@ -7,7 +7,7 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
-      - run: install_packages procps
+      - run: install_packages procps git openssh-client
       - run: "npm install -g yarn@1.5.1"
       - run: "yarn install"
       - run:

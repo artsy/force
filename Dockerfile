@@ -1,6 +1,6 @@
 FROM bitnami/node:8
 
-install_packages procps
+#install_packages procps git openssh
 
 RUN npm install -g yarn@1.5.1
 
