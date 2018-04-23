@@ -1,5 +1,7 @@
 FROM bitnami/node:8
 
+install_packages procps
+
 RUN npm install -g yarn@1.5.1
 
 ADD . /app

@@ -1,12 +1,13 @@
 version: 2.0
 jobs:
-  test:
+  build:
     docker:
       - image: bitnami/node:8
     parallelism: 4
     steps:
       - add_ssh_keys
       - checkout
+      - run: install_packages procps
       - run: "npm install -g yarn@1.5.1"
       - run: "yarn install"
       - run:
@@ -36,13 +37,13 @@ workflows:
   version: 2
   default:
     jobs:
-      - test
+      - build
       - push:
           filters:
             branches:
               only: master
           requires:
-            - test
+            - build
       - deploy:
           filters:
             branches:
