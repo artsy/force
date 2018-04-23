@@ -12,8 +12,12 @@ mediator.on 'all', (name, data) ->
 # All Reaction events are sent directly to Segment
 Events.onEvent (data) =>
 
-  # Send Reaction's read more as a Parsely page view
+  # Send Reaction's read more as a page view
   if data.action is 'Clicked read more'
+    analytics.page(
+      { path: location.pathname },
+      { integrations: { Marketo: false }}
+    )
     if window.PARSELY
       window.PARSELY.beacon.trackPageView
         url: location.href,

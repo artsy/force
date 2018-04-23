@@ -1,6 +1,5 @@
 import * as routes from './routes'
 import express from 'express'
-import adminOnly from 'desktop/lib/admin_only'
 
 const app = (module.exports = express())
 
@@ -12,8 +11,8 @@ app.get('/article/:slug', routes.index)
 app.get('/series/:slug', routes.index)
 app.get('/series/:seriesSlug/:slug', routes.index)
 app.get('/video/:slug', routes.index)
-app.get('/news/:slug/amp', adminOnly, routes.amp)
-app.get('/news/:slug', adminOnly, routes.index)
+app.get('/news/:slug/amp', routes.amp)
+app.get('/news/:slug', routes.index)
 app.post('/signup/editorial', routes.editorialSignup)
 app.get('/post/:id', routes.redirectPost)
 app.get('/:id/posts', routes.redirectPost)
