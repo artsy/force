@@ -36,7 +36,7 @@ for section, i in article.get('sections')
             else
               +artwork(image)
       when 'social_embed'
-        != section.type
+        != section.url
 
 if article.get('media')
   - media = article.get('media')
