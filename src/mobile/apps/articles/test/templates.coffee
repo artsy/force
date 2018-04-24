@@ -30,13 +30,13 @@ describe 'articles feed template', ->
     html.should.not.containEql 'article-item-first'
     html.should.not.containEql 'news-panel'
 
-  it 'renders the NewsPanel if user is admin and has newsArticles', ->
+  it 'renders the NewsPanel', ->
 
     html = render('articles_feed')
       articles: [_.clone(fixtures.article)]
       crop: (url) -> url
       newsArticles: [{layout: "news"}]
-      sd: { CURRENT_USER: {type: 'Admin'}}
+      sd: {}
 
     html.should.containEql 'article-item-first'
     html.should.containEql 'article-item'
