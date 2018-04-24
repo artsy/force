@@ -1,24 +1,28 @@
-import request from 'superagent'
-import { data as sd } from 'sharify'
+import _request from 'superagent'
+import { data as _sd } from 'sharify'
 import Articles from '../../collections/articles'
 const PAGE_SIZE = 50
 import Q from 'bluebird-q'
 
+// FIXME: Rewire
+let sd = _sd
+let request = _request
+
 export const news = (req, res, next) =>
   new Articles().fetch({
     data: {
-      // featured: true - not used on news
+      channel_id: sd.ARTSY_EDITORIAL_CHANNEL,
       published: true,
       sort: '-published_at',
       exclude_google_news: false,
       limit: PAGE_SIZE,
     },
     error: res.backboneError,
-    success: async articles => {
+    success: async data => {
       try {
-        const newArticles = await findArticlesWithEmbeds(articles.models)
+        const articles = await findArticlesWithEmbeds(data.models)
         res.set('Content-Type', 'application/rss+xml')
-        return res.render('news', { articles: newArticles, pretty: true })
+        return res.render('news', { articles, pretty: true })
       } catch (err) {
         console.error(err)
       }
@@ -40,11 +44,12 @@ export const partnerUpdates = (req, res, next) =>
     },
   })
 
-const findArticlesWithEmbeds = articles => {
+export const findArticlesWithEmbeds = articles => {
   return Q.all(
     articles.map(async (article, i) => {
       const newSections = await findSocialEmbeds(article)
       article.set('sections', newSections)
+
       return article
     })
   ).then(res => {
@@ -52,7 +57,7 @@ const findArticlesWithEmbeds = articles => {
   })
 }
 
-const findSocialEmbeds = article => {
+export const findSocialEmbeds = article => {
   return Q.all(
     article.get('sections').map(async (section, index) => {
       try {
@@ -67,7 +72,7 @@ const findSocialEmbeds = article => {
   })
 }
 
-const maybeFetchSocialEmbed = section => {
+export const maybeFetchSocialEmbed = section => {
   return new Promise((resolve, reject) => {
     if (section.type !== 'social_embed') {
       return resolve(section)
@@ -79,12 +84,12 @@ const maybeFetchSocialEmbed = section => {
 
       request
         .get(`https://${service}.com/oembed?url=${url}`)
-        .end(function(err, res) {
+        .end((err, res) => {
           if (err) {
             reject(err)
           }
           section.url = res.body.html
-          return reject(section)
+          return resolve(section)
         })
     }
   })

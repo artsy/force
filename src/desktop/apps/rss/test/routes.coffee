@@ -2,7 +2,7 @@
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
-routes = rewire '../routes'
+routes = rewire '../routes.coffee'
 sd = require('sharify').data
 Q = require 'bluebird-q'
 

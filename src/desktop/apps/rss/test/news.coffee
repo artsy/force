@@ -48,7 +48,7 @@ describe '/rss', ->
       rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql 'Andy Foobar never wanted fame.But sometimes fame chooses you.'
 
-    it 'renders images, artworks, and image_collection', ->
+    it 'renders images, artworks, social_embed and image_collection', ->
       article = new Article(
         lead_paragraph: 'Andy Foobar never wanted fame.'
         sections: [
@@ -88,6 +88,9 @@ describe '/rss', ->
                 type: 'image'
                 url: "http://artsy.net/image2.jpg",
                 caption: "<p>The second caption</p>",
+              }, {
+                type: 'social_embed'
+                url: 'https://twitter.com/artsy/status/978997552061272064'
               }
             ]
           }
@@ -98,6 +101,7 @@ describe '/rss', ->
       rendered.should.containEql "In Between as Image Collection, 2015. <br/>Govinda Sah 'Azad', Andy Warhol and Joe Fun<br/>October Gallery"
       rendered.should.containEql "<p>The first caption</p>"
       rendered.should.containEql "<p>The second caption</p>"
+      # rendered.should.containEql 'https://twitter.com/artsy/status/978997552061272064'
 
     it 'renders media', ->
       article = new Article
