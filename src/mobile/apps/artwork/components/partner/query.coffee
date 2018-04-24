@@ -1,22 +1,24 @@
 module.exports = """
   partner {
-    id
-    name
-    href
-    type
+    acceptsCardPayments
     contact_message
     counts {
       artworks
     }
+    has_fair_partnership
+    href
+    id
+    is_linkable
     locations {
       city
       country
     }
-    has_fair_partnership
+    name
     profile {
       id
       _id
       bio
     }
+    type
   }
 """

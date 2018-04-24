@@ -1,11 +1,22 @@
+- var partner = artwork.partner
+
 .artwork-meta-data__partner
-  if artwork.collecting_institution && artwork.partner.type == 'Institution'
-    //- Drop Header
+  if partner.type == 'Auction' || partner.type == 'Auction House'
+    .artwork-partner-name= partner.name
+  else if artwork.collecting_institution
+    a.artwork-partner-link= artwork.collecting_institution
   else
-    h2.artwork-header= artwork.is_for_sale ? 'Offered by' : artwork.partner.type.replace('Institutional Seller', 'Institution')
-  if artwork.partner.type == 'Auction' || artwork.partner.type == 'Auction House'
-    .artwork-partner-name= artwork.partner.name
-  else if artwork.collecting_institution && artwork.partner.type == 'Institution'
-    a.artwork-partner-link.chevron-arrow-button( href=artwork.partner.href )= artwork.collecting_institution
-  else
-    a.artwork-partner-link.chevron-arrow-button( href=artwork.partner.href )= artwork.partner.name
+    a.artwork-partner-link(href=(partner.is_linkable ? partner.href : undefined))= partner.name
+
+  if partner.locations && partner.locations.length > 0
+    .artwork-partner-locations
+      span.icon
+        include ../../../public/icons/location.svg
+      span.content
+        = partner.locations
+  if partner.acceptsCardPayments
+    .artwork-partner-card
+      span.icon
+        include ../../../public/icons/creditcard.svg
+      span.content
+        = 'Accepts credit card'

@@ -14,8 +14,6 @@ module.exports = """
       acceptsCardPayments
       locations {
         city
-        state
-        phone
       }
     }
   }

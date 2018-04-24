@@ -1,16 +1,18 @@
+.artwork-display
+  if artwork.title
+    em= artwork.title
+  if artwork.date
+    | , #{artwork.date}
+
 .artwork-meta-data__details
-  h2.artwork-header Details
   if artwork.series
     .artwork-meta-data__details__series From the series <em>#{artwork.series}</em>
   if artwork.medium
     .artwork-meta-data__details__medium= artwork.medium
 
-  if artwork.dimensions.in && artwork.dimensions.cm
-    p.artwork-meta-data__details__dimensions #{artwork.dimensions.in}, #{artwork.dimensions.cm}
-  else if artwork.dimensions.in
-    p.artwork-meta-data__details__dimensions= artwork.dimensions.in
-  else if artwork.dimensions.cm
-    p.artwork-meta-data__details__dimensions= artwork.dimensions.cm
+  if artwork.dimensions.in || artwork.dimensions.cm
+    p.artwork-meta-data__details__dimensions
+     = [artwork.dimensions.in, artwork.dimensions.cm].join(', ')
 
   if artwork.edition_of
     p.artwork-meta-data__details__edition-of= artwork.edition_of
