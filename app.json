@@ -333,9 +333,7 @@
     "newrelic",
     "heroku-redis"
   ],
-  "buildpacks": [
-    {
+  "buildpacks": [{
       "url": "heroku/nodejs"
-    }
-  ]
+  }]
 }
