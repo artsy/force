@@ -9,7 +9,7 @@ jobs:
 #      - run: install_packages procps git openssh-client htop
       - add_ssh_keys
       - checkout
-      - run: "npm install -g yarn@1.5.1"
+      - run: "npm install yarn@1.5.1"
       - run: "yarn install"
       - run:
           name: Test
