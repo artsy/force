@@ -6,7 +6,7 @@ jobs:
 #      - image: bitnami/node:8
     parallelism: 5
     steps:
-      - run: install_packages procps git openssh-client htop
+#      - run: install_packages procps git openssh-client htop
       - add_ssh_keys
       - checkout
       - run: "npm install -g yarn@1.5.1"
