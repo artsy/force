@@ -2,7 +2,8 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: bitnami/node:8
+      - image: circleci/node:latest-browsers
+#      - image: bitnami/node:8
     parallelism: 5
     steps:
       - run: install_packages procps git openssh-client htop
