@@ -2,7 +2,7 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: circleci/node:latest-browsers
+      - image: circleci/node:8-stretch-browsers
 #      - image: bitnami/node:8
     parallelism: 5
     steps:
