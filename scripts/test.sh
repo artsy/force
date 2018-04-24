@@ -7,7 +7,6 @@ set -e -x
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    echo "not today"
     #yarn assets
     #yarn acceptance src/test/acceptance/*.js
     ;;
