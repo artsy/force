@@ -1,5 +1,4 @@
 - var partner = artwork.partner
-- var location = 
 
 .artwork-meta-data__partner
   if partner.type == 'Auction' || partner.type == 'Auction House'
@@ -9,7 +8,7 @@
   else
     a.artwork-partner-link(href=(partner.is_linkable ? partner.href : undefined))= partner.name
 
-  if partner.locations
+  if partner.locations && partner.locations.length > 0
     .artwork-partner-locations
       span.icon
         include ../../../public/icons/location.svg
