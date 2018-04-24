@@ -36,29 +36,45 @@
   garamond-size('s-body', true)
   margin 20px 0px
 
-.artwork-meta-data__details
-  garamond-size('s-body', true)
-  .artwork-meta-data__details__image-rights
-    garamond-size('m-caption', true)
-    color #666
-    margin-top 8px
-
 .artwork-meta-data__partner
   margin-top 30px
+  .artwork-partner-name
+  .artwork-partner-link
+    garamond()
+    fine-faux-underline()
+    font-size 18px
+    font-weight 600
+    text-decoration none
 
-.artwork-partner-link.chevron-arrow-button
-  display inline-block
-  &::after
+    &:not([href])
+      background none
+      cursor default
+
+  .artwork-partner-card
+  .artwork-partner-locations
+    font-size 15px
+    line-height 1.5
     margin-top 5px
-    margin-left 5px
-    width 11px
-    height 12px
+    position relative
+    span
+      display inline-block
+      &.icon
+        position absolute
+          
+      &.content
+        padding 0 0 5px 28px
+        line-height 23px
+  .artwork-partner-locations .icon
+    top 0
+    left 3px 
+  .artwork-partner-card .icon
+    top 3px
 
 .artwork-meta-data__estimation
   margin-top 30px
 
 .artwork-meta-data-module__description
-  margin-top 24px
+  margin-top 30px
   pre
     white-space normal
 
@@ -67,6 +83,3 @@
 
 .artwork-meta-data-module__description_sub-section
   margin-top 12px
-
-.artwork-meta-data__accordion
-  margin-bottom 40px
