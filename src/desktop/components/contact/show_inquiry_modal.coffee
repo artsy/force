@@ -90,4 +90,3 @@ module.exports = class ShowInquiryModal extends ContactView
             inquiry: @model
             show: @show
             fair_id: @show.get('fair')?.id
-

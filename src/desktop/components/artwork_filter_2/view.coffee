@@ -14,11 +14,14 @@ template = -> require('./templates/index.jade') arguments...
 module.exports = class ArtworkFilterView extends Backbone.View
   subviews: []
 
-  initialize: ({ @artistID, @topOffset = 0 }) ->
+  initialize: ({ @artistID, @topOffset = 0, @testGroup }) ->
     @siteHeaderHeight = $('#main-layout-header').outerHeight(true)
     @path = window.location.pathname
     paramsFromUrl = qs.parse(window.location.search.replace(/^\?/, ''))
     @params = new Params paramsFromUrl
+    
+    if not @params.get('sort') and @testGroup != 'control'
+      @params.updateWith 'sort', '-decayed_merch'
 
     @filter = new Filter
       params: @params
@@ -35,6 +38,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     { @sticky } = new FiltersView _.extend
       el: @$('.artwork-filter-criteria'),
       stickyOffset: @siteHeaderHeight + @topOffset,
+      testGroup: @testGroup,
       { counts, @params }
     @subviews.push new CountView _.extend el: @$('#artwork-filter-right__totals'), { counts, @params }
     @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
