@@ -12,7 +12,7 @@ jobs:
       - run: "yarn install"
       - run:
           name: Test
-          command: "yarn test"
+          command: "CIRCLE_NODE_INDEX=1 yarn test"
   push:
     docker:
       - image: artsy/hokusai:0.4.0
