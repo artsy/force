@@ -76,13 +76,13 @@ module.exports.init = ->
     el: $('.cf-sidebar__mediums')
     params: params
     aggregations: filter.aggregations
-    alwaysEnabled: true    
+    alwaysEnabled: true
 
   periodsView = new PeriodFilterView
     el: $('.cf-sidebar__periods')
     params: params
     aggregations: filter.aggregations
-    alwaysEnabled: true    
+    alwaysEnabled: true
 
   followedArtistsView = new FollowedArtistFilterView
     el: $('.cf-sidebar__followed_artists')

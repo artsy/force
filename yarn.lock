@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/express-reloadable@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.3.0.tgz#93ba96f42f7c4ae65aa696ed45cc4d663e7ac88b"
+"@artsy/express-reloadable@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.3.1.tgz#206adcc56ebcf999aece7efcc34eaf1460cf90a7"
   dependencies:
     chalk "^2.3.1"
     chokidar "^1.7.0"
@@ -62,11 +62,11 @@
     yarn "^1.3.2"
     yup "^0.24.1"
 
-"@artsy/stitch@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-1.4.0.tgz#36530e706e8396f0b2694207f6e81c30af0c491f"
+"@artsy/stitch@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-1.5.0.tgz#c73a1ddb827664c52f3b8d3e647038446f6bafa7"
   dependencies:
-    "@babel/runtime" "^7.0.0-beta.40"
+    "@babel/runtime" "^7.0.0-beta.46"
     consolidate "^0.14.5"
     lodash "^4.17.4"
 
@@ -633,9 +633,16 @@
     pirates "^3.0.1"
     source-map-support "^0.4.2"
 
-"@babel/runtime@7.0.0-beta.40", "@babel/runtime@^7.0.0-beta.40":
+"@babel/runtime@7.0.0-beta.40":
   version "7.0.0-beta.40"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.40.tgz#8e3b8f1d2d8639d010e991a7e99c1d9ef578f886"
+  dependencies:
+    core-js "^2.5.3"
+    regenerator-runtime "^0.11.1"
+
+"@babel/runtime@^7.0.0-beta.46":
+  version "7.0.0-beta.46"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
   dependencies:
     core-js "^2.5.3"
     regenerator-runtime "^0.11.1"
@@ -995,6 +1002,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:

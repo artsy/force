@@ -1,153 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { Artwork } from 'reaction/Components/Artwork'
-import { ArtworkGrid } from 'reaction/Components/ArtworkGrid'
-import { Fillwidth } from 'reaction/Components/Artwork/Fillwidth'
-import { ServerStyleSheet } from 'styled-components'
-import { data as sd } from 'sharify'
-import { renderToString } from 'react-dom/server'
-import { isFunction, uniqueId } from 'lodash'
+import { Artwork as _Artwork } from '@artsy/reaction/dist/Components/Artwork'
+import { ArtworkGrid as _ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
+import { Fillwidth as _Fillwidth } from '@artsy/reaction/dist/Components/Artwork/Fillwidth'
 
-export class ReactionRenderer {
-  id
-  mode
-  type
-  res
-  props
+export const Artwork = props => (
+  <_Artwork artwork={artwork} {...props} useRelay={false} />
+)
+export const ArtworkGrid = props => (
+  <_ArtworkGrid artworks={artworks} {...props} useRelay={false} />
+)
+export const Fillwidth = props => (
+  <_Fillwidth artworks={artworks} {...props} useRelay={false} />
+)
 
-  constructor({ mode = 'server', res }) {
-    this.mode = mode
-    this.res = res
-  }
-
-  artworkBrick(props) {
-    this.props = props
-    this.type = this.artworkBrick.name
-
-    const html = this.render(props => {
-      return <Artwork artwork={artwork} useRelay={false} />
-    })
-    return html
-  }
-
-  artworkGrid(props) {
-    this.props = props
-    this.type = this.artworkGrid.name
-
-    const html = this.render(props => {
-      return (
-        <ArtworkGrid
-          columnCount={props.columnCount || 3}
-          artworks={artworks}
-          useRelay={false}
-        />
-      )
-    })
-    return html
-  }
-
-  fillWidth(props) {
-    this.props = props
-    this.type = this.fillWidth.name
-
-    const html = this.render(props => {
-      return <Fillwidth artworks={artworks} useRelay={false} />
-    })
-    return html
-  }
-
-  /**
-   * Sharify automatically passes over data to the client. Once render is called
-   * on the server append block and wait for client-side mount, which will then
-   * deserialize and rehydrate.
-   */
-  addToQueue(block) {
-    try {
-      if (this.mode === 'server') {
-        this.res.locals.sharify.data.reactionBlocks.push(block)
-      } else {
-        if (!sd.reactionBlocks) {
-          sd.reactionBlocks = []
-        }
-
-        sd.reactionBlocks.push(block)
-      }
-    } catch (error) {
-      console.error('(lib/reactionRenderer) Error adding to queue:', error)
-    }
-  }
-
-  serialize() {
-    this.id = this.props.mountId || uniqueId('react-mount-reaction-')
-
-    this.addToQueue({
-      mode: this.mode,
-      id: this.id,
-      type: this.type,
-      props: this.props,
-    })
-  }
-
-  deserialize(block) {
-    this.mode = 'client'
-    this.id = block.id
-    this.type = block.type
-    this.props = block.props
-
-    const blockType = this[this.type].bind(this)
-
-    if (isFunction(blockType)) {
-      blockType(this.props)
-    }
-  }
-
-  render(blockType) {
-    try {
-      if (this.mode === 'server') {
-        const sheet = new ServerStyleSheet()
-        const html = renderToString(sheet.collectStyles(blockType(this.props)))
-        const css = sheet.getStyleTags()
-        this.serialize()
-        const out = [`<div id=${this.id}></div>`, css, html].join('\n')
-        return out
-      } else {
-        // Add timeout so that client-side-only templates have a chance to mount
-        // before react attachment / rehydration occurs.
-        setTimeout(() => {
-          if (this.mode === 'runtime') {
-            this.serialize()
-          }
-
-          ReactDOM.hydrate(
-            blockType(this.props),
-            document.getElementById(this.id)
-          )
-        }, 0)
-      }
-    } catch (error) {
-      console.error(
-        `(lib/reactionRenderer) Error rendering ${this.mode}-side:`,
-        error
-      )
-    }
-  }
-}
-
-module.exports.middleware = (req, res, next) => {
-  const renderer = new ReactionRenderer({
-    mode: 'server',
-    res,
-  })
-
-  res.locals.reaction = renderer
-  res.locals.sharify.data.reactionBlocks = []
-
-  next()
-}
-
-// Fixtures: FIXME: (move)
-
-const artwork = {
+export const artwork = {
   id: 'mikael-olson-some-kind-of-dinosaur',
   title: 'Some Kind of Dinosaur',
   date: '2015',
@@ -172,7 +38,7 @@ const artwork = {
   href: '/artwork/mikael-olson-some-kind-of-dinosaur',
 }
 
-const artworks = {
+export const artworks = {
   edges: [
     {
       node: {
