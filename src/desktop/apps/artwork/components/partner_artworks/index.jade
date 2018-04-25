@@ -8,9 +8,12 @@ if artwork.partner && artwork.partner.artworks && artwork.partner.artworks.lengt
         href='#{artwork.partner.href}/works'
       ) View All
 
-    - var columns = helpers.partner_artworks.masonry(artwork.partner.artworks).columns
-
-    include ../../../../components/artwork_masonry/index
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      #stitch-artwork-partner-artworks-masonry
+        != sd.stitch.components.ArtworkGrid({ artworks: artwork.partner.artworks, mountId: 'stitch-artwork-partner-artworks-masonry'})
+    else
+      - var columns = helpers.partner_artworks.masonry(artwork.partner.artworks).columns
+      include ../../../../components/artwork_masonry/index
 
     .artwork-section__jump
       a.avant-garde-jump-link( href='#{artwork.partner.href}/works' )

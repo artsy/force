@@ -1,22 +1,75 @@
-import React from 'react'
-import { Artwork as _Artwork } from '@artsy/reaction/dist/Components/Artwork'
-import { ArtworkGrid as _ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { Artwork as ReactionArtwork } from '@artsy/reaction/dist/Components/Artwork'
+import { ArtworkGrid as ReactionArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
 
 export const Artwork = props => (
-  <_Artwork artwork={artwork} {...props} useRelay={false} />
+  <ReactionArtwork artwork={artwork} {...props} useRelay={false} />
 )
-export const ArtworkGrid = props => (
-  <_ArtworkGrid artworks={artworks} {...props} useRelay={false} />
-)
+
+export class ArtworkGrid extends Component {
+  static propTypes = {
+    artworks: PropTypes.array.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      artworks: props.artworks || [],
+    }
+
+    // NOTE: Reaction's ArtworkGrid has its own conception of infinite scroll
+    // which is enabled when `onLoadMore` is passed in. Since we're detecting
+    // scroll thresholds from backbone and thus externally, this callback can
+    // be used instead. See desktop/components/artwork_masonry/view.coffee for
+    // an example implementation
+    if (props.onAppendArtworks) {
+      props.onAppendArtworks(this.appendArtworks)
+    }
+  }
+
+  appendArtworks = artworks => {
+    this.setState({
+      artworks,
+    })
+  }
+
+  render() {
+    const artworks = mapToRelayConnection(this.state.artworks)
+
+    return (
+      <ReactionArtworkGrid
+        {...this.props}
+        artworks={artworks}
+        useRelay={false}
+      />
+    )
+  }
+}
+
 export const Fillwidth = props => {
   if (typeof window !== 'undefined') {
     const {
-      Fillwidth: _Fillwidth,
+      Fillwidth: ReactionFillWidth,
     } = require('@artsy/reaction/dist/Components/Artwork/Fillwidth')
 
-    return <_Fillwidth artworks={artworks} {...props} useRelay={false} />
-  } else {
-    return ''
+    const artworks = mapToRelayConnection(props.artworks) // eslint-disable-line
+
+    return <ReactionFillWidth {...props} artworks={artworks} useRelay={false} />
+  }
+}
+
+// Helpers
+
+// Ensure that old artwork collections conform to new Relay connection api
+const mapToRelayConnection = artworks => {
+  return {
+    edges: artworks.map(artwork => {
+      return {
+        node: artwork,
+      }
+    }),
   }
 }
 

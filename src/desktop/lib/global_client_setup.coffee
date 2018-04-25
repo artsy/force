@@ -30,7 +30,7 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  mountReactionBlocks()
+  mountStitchBlocks()
 
 
 ensureFreshUser = (data) ->
@@ -96,7 +96,7 @@ setupErrorReporting = ->
   Raven.config(sd.SENTRY_PUBLIC_DSN).install()
   Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
 
-mountReactionBlocks = ->
+mountStitchBlocks = ->
   {components, mountOnClient} = componentRenderer({
     mode: 'client',
     modules: globalReactModules

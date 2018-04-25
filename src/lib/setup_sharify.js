@@ -42,7 +42,11 @@ sharify.data = _.extend(
     'EDITORIAL_PATHS',
     'EMAIL_SIGNUP_IMAGES_ID',
     'EMBEDLY_KEY',
+<<<<<<< HEAD
     'ENABLE_WEB_CRAWLING',
+=======
+    'ENABLE_EXPERIMENTAL_STITCH_INJECTION',
+>>>>>>> Swap out /artwork/id; Add infinite scroll pattern
     'EOY_2016_ARTICLE',
     'EOY_2016',
     'EF_GUCCI',

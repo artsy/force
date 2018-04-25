@@ -23,6 +23,13 @@
           li.abrv-context.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
             //- rendered on the client
         if artworks && artworks.length
+
+          //- TODO: Enable when Reaction artwork rail is ready
+          //- if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+          //-   li(id= mountId)
+          //-     != sd.stitch.components.Fillwidth({ artworks, mountId: mountId })
+          //- else
+
           for artwork in artworks
             li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
               include brick
