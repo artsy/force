@@ -41,7 +41,7 @@ if article.get('source')
   - source = article.get('source')
   +source(source)
 
-if article.get('media')
+if article.get('media') && article.get('media').url
   - media = article.get('media')
   video(src=media.url)
   != media.description
