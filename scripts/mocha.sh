@@ -2,7 +2,7 @@
 
 set -e -x
 
-#trap "exit" INT
+trap "exit" INT
 
 mocha \
   --require test.config.js \
