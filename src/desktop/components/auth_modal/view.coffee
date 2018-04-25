@@ -12,8 +12,6 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
-sd = require('sharify').data
-splitTest = require('../split_test/index')
 FormErrorHelpers = require('../auth_modal/helpers')
 
 class State extends Backbone.Model
@@ -33,21 +31,14 @@ module.exports = class AuthModalView extends ModalView
     'submit form': 'submit'
     'click #auth-submit': 'submit'
     'click #signup-fb': 'fbSignup'
-    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: (options) ->
     return if isEigen.checkWith options
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
-    ## For AB test- # of gdpr checkboxes to show
-    splitTest('gdpr_compliance_test').view()
-    @gdprDisabled = sd.GDPR_COMPLIANCE_TEST is 'control'
     
     @preInitialize options
     super
-
-    # This 'invalid' event doesn't seem to work in the @events property
-    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
@@ -136,7 +127,7 @@ module.exports = class AuthModalView extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     formData = @serializeForm()
-    userData = Object.assign {}, formData, @gdprData(formData)
+    userData = Object.assign {}, formData
     @user.set (data = userData)
     @user.set(signupIntent: @signupIntent)
     @user[@state.get 'mode']
@@ -178,5 +169,4 @@ module.exports = class AuthModalView extends ModalView
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
-    $('#accepted_terms_of_service').off()
     super
