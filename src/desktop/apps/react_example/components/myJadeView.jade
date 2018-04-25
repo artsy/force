@@ -20,21 +20,21 @@ style.
   }
 
 div(class='reactionArtworkBrick')
-  !=reaction.artworkGrid({ title: name })
+  != stitch.components.ArtworkGrid({ title: name })
 
 br
 hr
 br
 
 div(class='reactionArtworkBrick')
-  !=reaction.artworkBrick({ title: name })
+  != stitch.components.Artwork({ title: name })
 
 br
 hr
 br
 
 div
-  !=reaction.fillWidth({ title: name })
+  != stitch.components.Fillwidth({ title: name })
 
 br
 
