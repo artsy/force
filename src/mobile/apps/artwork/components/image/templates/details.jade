@@ -5,16 +5,13 @@
     | , #{artwork.date}
 
 .artwork-meta-data__details
-  if artwork.series
-    .artwork-meta-data__details__series From the series <em>#{artwork.series}</em>
   if artwork.medium
     .artwork-meta-data__details__medium= artwork.medium
 
-  if artwork.dimensions.in || artwork.dimensions.cm
-    p.artwork-meta-data__details__dimensions
-     = [artwork.dimensions.in, artwork.dimensions.cm].join(', ')
+  unless artwork.edition_sets && artwork.edition_sets.length > 1
+    if artwork.dimensions.in || artwork.dimensions.cm
+      p.artwork-meta-data__details__dimensions
+      = [artwork.dimensions.in, artwork.dimensions.cm].join('; ')
 
   if artwork.edition_of
     p.artwork-meta-data__details__edition-of= artwork.edition_of
-  if artwork.image_rights
-    p.artwork-meta-data__details__image-rights= artwork.image_rights
