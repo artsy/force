@@ -48,6 +48,24 @@ describe '/rss', ->
       rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql 'Andy Foobar never wanted fame.But sometimes fame chooses you.'
 
+    it 'renders news source', ->
+      article = new Article(
+        lead_paragraph: 'Andy Foobar never wanted fame.'
+        sections: [
+          {
+            type: 'text'
+            body: 'But sometimes fame chooses you.'
+          }
+        ]
+        contributing_authors: []
+        source: {
+          title: 'New York Times',
+          url: 'http://artsy.net'
+        }
+      )
+      rendered = articleTemplate(sd: sd, article: article)
+      rendered.should.containEql '<p>via <a href="http://artsy.net">New York Times</a>'
+
     it 'renders images, artworks, social_embed and image_collection', ->
       article = new Article(
         lead_paragraph: 'Andy Foobar never wanted fame.'
@@ -88,11 +106,12 @@ describe '/rss', ->
                 type: 'image'
                 url: "http://artsy.net/image2.jpg",
                 caption: "<p>The second caption</p>",
-              }, {
-                type: 'social_embed'
-                url: 'https://twitter.com/artsy/status/978997552061272064'
-              }
+              },
             ]
+          },
+          {
+            type: 'social_embed'
+            url: 'https://twitter.com/artsy/status/978997552061272064'
           }
         ]
         contributing_authors: []
@@ -101,7 +120,7 @@ describe '/rss', ->
       rendered.should.containEql "In Between as Image Collection, 2015. <br/>Govinda Sah 'Azad', Andy Warhol and Joe Fun<br/>October Gallery"
       rendered.should.containEql "<p>The first caption</p>"
       rendered.should.containEql "<p>The second caption</p>"
-      # rendered.should.containEql 'https://twitter.com/artsy/status/978997552061272064'
+      rendered.should.containEql 'https://twitter.com/artsy/status/978997552061272064'
 
     it 'renders media', ->
       article = new Article

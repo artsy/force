@@ -1,4 +1,4 @@
-import _request from 'superagent'
+import request from 'superagent'
 import { data as _sd } from 'sharify'
 import Articles from '../../collections/articles'
 const PAGE_SIZE = 50
@@ -6,7 +6,6 @@ import Q from 'bluebird-q'
 
 // FIXME: Rewire
 let sd = _sd
-let request = _request
 
 export const news = (req, res, next) =>
   new Articles().fetch({

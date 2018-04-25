@@ -6,27 +6,35 @@ div
 
 br
 
+h1
+  | Reaction Helpers
+
+br
+hr
+br
+
+
 style.
   .reactionArtworkBrick {
     width: 50%;
   }
 
 div(class='reactionArtworkBrick')
-  !=reaction.artworkGrid({ title: name })
+  != stitch.components.ArtworkGrid({ title: name })
 
 br
 hr
 br
 
 div(class='reactionArtworkBrick')
-  !=reaction.artworkBrick({ title: name })
+  != stitch.components.Artwork({ title: name })
 
 br
 hr
 br
 
 div
-  !=reaction.fillWidth({ title: name })
+  != stitch.components.Fillwidth({ title: name })
 
 br
 

@@ -11,6 +11,10 @@ if artwork.artist && artwork.artist.artworks && artwork.artist.artworks.length
     - var columns = helpers.artist_artworks.masonry(artwork.artist.artworks).columns
     include ../../../../components/artwork_masonry/index
 
+    //- TODO: Replace columns above with below
+    //- #test-mount
+    //-   != reaction.artworkGrid({ mountId: 'test-mount'})
+
     .artwork-section__jump
       a.avant-garde-jump-link( href='#{artwork.artist.href}/works' )
         | View all #{artwork.artist.counts.artworks} by #{artwork.artist.name}

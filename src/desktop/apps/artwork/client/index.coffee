@@ -169,6 +169,7 @@ module.exports =
 
     return unless query? and init?
     variables ?= {}
+
     metaphysics {
       query: query,
       variables: extend { id: CLIENT.id }, variables

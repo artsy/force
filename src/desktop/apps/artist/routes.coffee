@@ -11,7 +11,6 @@ Artist = require '../../models/artist'
 Nav = require './nav'
 metaphysics = require '../../../lib/metaphysics'
 query = require './queries/server.coffee'
-payoffQuery = require '../../components/artist_page_cta/query'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 currentVeniceFeature = require './components/current_venice_feature/index'
@@ -35,8 +34,7 @@ sd = require('sharify').data
       nav = new Nav artist: artist
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
-
-      testGroup = res.locals.sd.ARTIST_PAGE_VARIANTS 
+      testGroup = res.locals.sd.ARTIST_MERCH_TEST
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
@@ -56,8 +54,7 @@ sd = require('sharify').data
               currentItem: currentItem
               jsonLD: JSON.stringify helpers.toJSONLD artist if isReqFromReflection
               showSections:
-                header: testGroup is 'control' or testGroup is 'no_info'
-                info: testGroup is 'control' or testGroup is 'no_header'
+                header: testGroup is 'merch_sort' or testGroup is 'control'
 
       else
         res.redirect artist.href
@@ -75,29 +72,3 @@ sd = require('sharify').data
     success: ->
       res.redirect "/artist/#{req.params.id}?#{qs.stringify req.query}"
 
-@ctaPayoff = (req, res) ->
-  if req.user?
-    req.user.fetch
-      success: (model, resp, options) ->
-        user = _.extend(resp, res.locals.sd.CURRENT_USER)
-        send =
-          query: payoffQuery,
-          variables:
-            artist_id: req.params.id
-          req: user: user, id: req.id
-        req.user.followArtist req.params.id,
-          error: res.backboneError
-          success: ->
-            return if metaphysics.debug req, res, send
-            metaphysics send
-              .then ({ me, artist }) ->
-                res.locals.sd.CURRENT_USER = user
-                res.locals.sd.INITIAL_ARTISTS = me.suggested_artists
-                res.locals.sd.IS_PAYOFF = true
-                res.render 'payoff',
-                  name: user.name
-                  href: "/artist/#{req.params.id}?#{qs.stringify req.query}"
-                  artist: artist
-              .catch (err) -> next
-  else
-    res.redirect "/artist/#{req.params.id}"

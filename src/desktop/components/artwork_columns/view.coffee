@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ stitch, ENABLE_EXPERIMENTAL_STITCH_INJECTION } = require('sharify').data
 AdditionalImage = require '../../models/additional_image.coffee'
 Backbone = require 'backbone'
 CurrentUser = require '../../models/current_user.coffee'
@@ -7,6 +8,7 @@ ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 SaveControls = require '../artwork_item/save_controls.coffee'
 artworkColumns = -> require('./template.jade') arguments...
+stitchArtworkColumns = -> require('./stitch_template.jade') arguments...
 artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
 
 module.exports = class ArtworkColumns extends Backbone.View
@@ -74,15 +76,30 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   render: =>
     # Render columns and set some styles according to view params
-    @$el
-      .html artworkColumns
-        numberOfColumns: @numberOfColumns
-        buttonLabel: @buttonLabel()
-        seeMore: @seeMore
 
-    @sizeColumns()
+    if ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      artworks =
+        edges: @collection.toJSON().map (artwork) ->
+          return {
+            node: artwork
+          }
 
-    @appendArtworks @collection.models
+      @$el
+        .html stitchArtworkColumns
+          artworks: artworks
+          stitch: stitch
+          buttonLabel: @buttonLabel()
+          seeMore: @seeMore
+    else
+      @$el
+        .html artworkColumns
+          artworks: artworks
+          numberOfColumns: @numberOfColumns
+          buttonLabel: @buttonLabel()
+          seeMore: @seeMore
+
+      @sizeColumns()
+      @appendArtworks @collection.models
 
     if @seeMore
       _.each(@collection.rest(@initialItemCount), ((artwork) =>

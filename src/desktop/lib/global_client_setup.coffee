@@ -20,7 +20,8 @@ setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
-{ ReactionRenderer } = require './middleware/renderArtworkBrick'
+globalReactModules = require('./global_react_modules')
+{ componentRenderer } = require('@artsy/stitch/iso')
 
 module.exports = ->
   setupErrorReporting()
@@ -98,9 +99,15 @@ setupErrorReporting = ->
   Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
 
 mountReactionBlocks = ->
-  blocks = uniqBy(sd.reactionBlocks, 'id')
+  {components, mountOnClient} = componentRenderer({
+    mode: 'client',
+    modules: globalReactModules
+  })
 
-  blocks.forEach (block) ->
-    renderer = new ReactionRenderer('client')
-    renderer.deserialize(block)
+  sd.stitch.renderQueue.forEach (block) ->
+    mountOnClient(block)
+
+  # Mount renderer for runtime client-side templates. NOTE: must be included
+  # in template when rendering data; e.g., html = myTemplate({ data, reaction })
+  sd.stitch.components = components
 

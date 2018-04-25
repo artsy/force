@@ -32,6 +32,7 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
+  ENABLE_EXPERIMENTAL_STITCH_INJECTION: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: null

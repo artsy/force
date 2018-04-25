@@ -25,14 +25,15 @@
 # module.exports = {}
 
 module.exports = {
-  gdpr_compliance_test:
-    key: 'gdpr_compliance_test'
+  artist_merch_test:
+    key: 'artist_merch_test'
     weighting: 'equal'
     outcomes: [
       'control'
-      'combined_checkboxes'
-      'separated_checkboxes'
+      'no_header_merch_sort'
+      'merch_sort'
     ]
     control_group: 'control'
-    edge: 'combined_checkboxes'
+    edge: 'merch_sort'
 }
+
