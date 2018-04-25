@@ -7,5 +7,4 @@ set -e -x
 mocha \
   --require test.config.js \
   --timeout 30000 \
-  --exit \
    $@
