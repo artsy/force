@@ -56,15 +56,15 @@
   width 100%
   .artist-name
     garamond()
-    fine-faux-underline()
     display inline-block
     font-size 20px
     font-weight 600
     letter-spacing 0
     margin-bottom 18px
+    text-decoration underline
     text-transform none
     &:hover
-      border-bottom none
+      text-decoration none
 
   .artwork-display
   .artwork-meta-data__details
@@ -100,7 +100,7 @@
 .artwork-header-module
   display flex
   justify-content space-between
-  margin 18px auto
+  margin 12px auto
   width 100px
   .circle-border-icon-button
     border-style none

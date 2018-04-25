@@ -14,8 +14,8 @@
     block-margins(distance(gutter))
 
   &__attribution-class
-    fine-faux-underline()
     display inline-block
+    text-decoration underline
 
   &__lot-number
     sans('s-headline')
@@ -24,10 +24,10 @@
   &__artist
     > .entity-link
       garamond()
-      fine-faux-underline()
       font-size 20px
       font-weight 600
       letter-spacing 0
+      text-decoration underline
       text-transform none
       &:hover
        border-bottom none
@@ -43,12 +43,3 @@
   // Collapse between margins when these two are next to one another
   &__title + &__secondary-metadata
     margin-top 0
-
-  &__image
-    block-margins(12.5px)
-    serif('s-caption')
-    color gray-dark-color
-
-  &__image__download
-    > a
-      color gray-dark-color

@@ -1,0 +1,9 @@
+if artwork.image_rights || artwork.is_downloadable
+  if artwork.image_rights
+    p Image rights: #{artwork.image_rights}
+  if artwork.is_downloadable
+    p
+      a(
+        href='#{artwork.href}/download/#{helpers.metadata.filename(artwork)}.jpg'
+        target='_blank'
+      ) Download Image
