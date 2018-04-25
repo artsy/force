@@ -7,7 +7,7 @@ module.exports = """
     date
     image {
       placeholder
-      url
+      url: url(version: ["tall"])
       aspect_ratio
     }
     images {
