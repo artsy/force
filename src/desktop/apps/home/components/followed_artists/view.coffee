@@ -7,7 +7,6 @@ Artists = require '../../../../collections/artists.coffee'
 Items = require '../../../../collections/items.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 ArtworkBrickView = require '../../../../components/artwork_brick/view.coffee'
-SearchArtistsView = require './search_artists_view.coffee'
 FollowedArtistsView = require './followed_artists_view.coffee'
 template = -> require('./templates/index.jade') arguments...
 
@@ -15,14 +14,16 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
   subViews: []
 
   defaults:
-    useInitialArtists: false
     showHeader: true
     includeContext: true
 
   initialize: (options = {}) ->
-    { @module, @$el, @user, @useInitialArtists, @showHeader, @includeContext, @analyticsMessage } = defaults options, @defaults
+    { @module, @$el, @user, @showHeader, @includeContext, @analyticsMessage } = defaults options, @defaults
 
   render: ->
+    if @module.context.counts.artists < 1 or @module.results.length < 1
+      return
+
     artists = new Backbone.Collection @module.context.artists
 
     @$el.html template
@@ -36,9 +37,6 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     @_postRender()
 
   _postRender: ->
-    if @module.context.counts.artists < 1 or @module.results.length < 1 or @useInitialArtists
-      return @_renderEmptyView()
-
     @setupArtworkViews()
     @setupCarousel()
 
@@ -74,38 +72,6 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
 
       unless @cellWidth > @$('.js-my-carousel').width()
         @$('.mgr-navigation').addClass 'is-hidden'
-
-  _renderEmptyView: ->
-    # pre-populate search with featured artists or use initial artists
-    if @useInitialArtists
-      initialArtists = new Artists []
-      @subViews.push sav = new SearchArtistsView
-        el: @$('.arbv-follow-search-container')
-        initialSuggestions: initialArtists
-        followedArtists: new Artists []
-        analyticsMessage: @analyticsMessage
-      initialArtists.add @module.context.artists
-    else
-      featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
-      # empty collection to pass along to keep track of new follows
-      followedArtists = new Artists @module.context.artists
-      suggestedArtists = new Artists []
-
-      Q.all [
-        featuredArtists.fetch()
-      ]
-      .then => @_parseAndFetchArtists featuredArtists
-      .then (artists) =>
-        @subViews.push sav = new SearchArtistsView
-          el: @$('.arbv-follow-search-container')
-          initialSuggestions: suggestedArtists
-          followedArtists: followedArtists
-
-        suggestedArtists.add artists
-
-        @subViews.push fav = new FollowedArtistsView
-          el: @$('.arbv-context--followed-artists')
-          collection: followedArtists
 
   _parseAndFetchArtists: (featuredArtists) =>
     # get the artist from the ids of the featured links :|

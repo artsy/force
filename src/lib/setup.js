@@ -185,7 +185,7 @@ export default function(app) {
   }
   glob
     .sync(`${__dirname}/../{public,{desktop,mobile}/**/public}`)
-    .forEach((fld) => app.use(express.static(fld)))
+    .forEach(fld => app.use(express.static(fld)))
   app.use(
     favicon(path.resolve(__dirname, '../mobile/public/images/favicon.ico'))
   )
@@ -230,14 +230,14 @@ export default function(app) {
     })
 
     mountAndReload(path.resolve('src/desktop'), {
-      watchModules: ['@artsy/reaction'],
+      watchModules: ['@artsy/reaction', '@artsy/stitch'],
     })
 
     // In staging or prod, mount routes normally
   } else {
     app.use((req, res, next) => {
       if (argv.debugProd) {
-        res.locals.asset = (filename) => filename // Stub bucketAssets middleware helper
+        res.locals.asset = filename => filename // Stub bucketAssets middleware helper
       }
 
       // Direct mobile devices to the mobile app, otherwise fall through to

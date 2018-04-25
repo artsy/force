@@ -1,5 +1,5 @@
 { extend, map, compact } = require 'underscore'
-{ AUCTION, CLIENT, reaction } = require('sharify').data
+{ AUCTION, CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 { recordArtworkView } = require 'lib/components/record_artwork_view'
 metaphysics = require '../../../../lib/metaphysics.coffee'
@@ -156,7 +156,6 @@ module.exports =
     for key, template of { fold: fold, footer: footer }
       $(".js-artwork-#{key}")
         .html template extend data,
-          reaction: reaction
           helpers: helpers
           user: CurrentUser.orNull()
 
