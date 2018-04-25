@@ -4,17 +4,21 @@
     method='POST'
   )
     .auth-errors
+    - const userName = (user && user.get('name')) ? user.get('name') : ''
     input.bordered-input(
       name='name',
       placeholder='Your full name',
       autofocus=true,
       required
+      value=userName
     )
+    - const email = (user && user.get('email')) ? user.get('email') : ''
     input#js-mailcheck-input-modal.bordered-input(
       name='email',
       type='email',
       placeholder='Your email address',
       required
+      value=email
     )
     input#js-mailcheck-hint-modal.bordered-input(
       name='password',
@@ -24,47 +28,6 @@
       title= '6 characters minimum',
       required
     )
-    if sd.GDPR_COMPLIANCE_TEST === 'separated_checkboxes'
-      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__receive-email.artsy-checkbox
-        .artsy-checkbox--checkbox
-          input(
-            name='receive_emails',
-            type='checkbox',
-            id='receive_emails',
-            tabindex="0"
-          )
-          label(for='receive_emails')
-        span Receive emails from Artsy.
-      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
-        .artsy-checkbox--checkbox
-          input(
-            required,
-            name='accepted_terms_of_service',
-            id='accepted_terms_of_service',
-            type='checkbox',
-            tabindex="0"
-          )
-          label(for='accepted_terms_of_service')
-        span Agree to our&nbsp;
-              a( href='/terms', target='_blank' ) Terms of Use
-              | &nbsp;and&nbsp;
-              a(href='/privacy', target='_blank') Privacy Policy.
-    else if sd.GDPR_COMPLIANCE_TEST === 'combined_checkboxes'
-      .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
-        .artsy-checkbox--checkbox
-          input(
-            required,
-            name='accepted_terms_of_service',
-            id='accepted_terms_of_service',
-            type='checkbox',
-            tabindex="0"
-          )
-          label(for='accepted_terms_of_service')
-        span Agree to our&nbsp;
-              a( href='/terms', target='_blank' ) Terms of Use
-              | &nbsp;and&nbsp;
-              a( href='/terms', target='_blank') Privacy Policy&nbsp;
-              |, and to receive emails from Artsy.
     .tos-error
     input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
     button.avant-garde-button-black.avant-garde-button-black Sign Up
@@ -75,14 +38,13 @@
   )
     i.icon-facebook
     | Sign up with Facebook
-  if sd.GDPR_COMPLIANCE_TEST === 'control'
-    .gdpr-signup__copy
-      small.gdpr-signup__small
-        | By signing up, you agree to our&nbsp;
-        br
-        a( href='/terms' ) Terms of Use
-        | &nbsp;and&nbsp;
-        a(href='/privacy') Privacy Policy
+  .gdpr-signup__copy
+    small.gdpr-signup__small
+      | By signing up, you agree to our&nbsp;
+      br
+      a( href='/terms' ) Terms of Use
+      | &nbsp;and&nbsp;
+      a(href='/privacy') Privacy Policy
 
 
 

@@ -57,8 +57,6 @@ module.exports = class ContactView extends ModalView
     @renderTemplates()
 
   renderTemplates: ->
-    # Hiding the close button here for now to account for new styling
-    @$('.modal-close').hide()
     @$('#contact-header').html @headerTemplate(@templateData)
     @$('#contact-form').html @formTemplate(@templateData)
 
