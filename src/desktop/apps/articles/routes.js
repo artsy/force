@@ -22,12 +22,11 @@ let renderLayout = _renderLayout
 export const articles = (req, res, next) => {
   const query = { query: magazineQuery }
   return positronql(query)
-    .then((result) => {
+    .then(result => {
       const articles = new Articles(result.articles)
-      res.locals.sd.SUBSCRIBED_TO_EDITORIAL = !!req.user
       res.locals.sd.ARTICLES = articles.toJSON()
       // Fetch News Panel Articles
-      positronql({ query: newsPanelQuery() }).then((result) => {
+      positronql({ query: newsPanelQuery() }).then(result => {
         const newsArticles = result.articles
         res.locals.sd.NEWS_ARTICLES = newsArticles
 
@@ -49,7 +48,7 @@ export const section = (req, res, next) => {
   new Section({ id: 'venice-biennale-2015' }).fetch({
     cache: true,
     error: next,
-    success: (section) => {
+    success: section => {
       new Articles().fetch({
         data: {
           published: true,
@@ -58,7 +57,7 @@ export const section = (req, res, next) => {
           section_id: section.get('id'),
         },
         error: res.backboneError,
-        success: (articles) => {
+        success: articles => {
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.SECTION = section.toJSON()
           res.render('section', {
@@ -75,7 +74,7 @@ export const teamChannel = (req, res, next) => {
   const slug = req.path.split('/')[1]
   new Channel({ id: slug }).fetch({
     error: res.backboneError,
-    success: (channel) => {
+    success: channel => {
       if (!channel.isTeam()) {
         return next()
       }
@@ -84,7 +83,7 @@ export const teamChannel = (req, res, next) => {
         null,
         PARSELY_KEY,
         PARSELY_SECRET,
-        (parselyArticles) => {
+        parselyArticles => {
           new Articles().fetch({
             data: {
               published: true,
@@ -93,14 +92,14 @@ export const teamChannel = (req, res, next) => {
               ids: map(sortBy(channel.get('pinned_articles'), 'index'), 'id'),
             },
             error: res.backboneError,
-            success: (pinnedArticles) => {
+            success: pinnedArticles => {
               if (channel.get('pinned_articles').length === 0) {
                 pinnedArticles.reset()
               }
-              const pinnedSlugs = pinnedArticles.map((article) =>
+              const pinnedSlugs = pinnedArticles.map(article =>
                 article.get('slug')
               )
-              const newParselyArticles = reject(parselyArticles, (article) => {
+              const newParselyArticles = reject(parselyArticles, article => {
                 const slug = last(article.link.split('/'))
                 return pinnedSlugs.includes(slug)
               })
