@@ -2,18 +2,17 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: circleci/node:8-stretch-browsers
+      - image: artsy/hokusai:0.4.0
+#      - image: circleci/node:8-stretch-browsers
 #      - image: bitnami/node:8
     parallelism: 5
     steps:
-#      - run: install_packages procps git openssh-client htop
       - add_ssh_keys
       - checkout
-      - run: "npm install yarn@1.5.1"
-      - run: "yarn install"
+      - setup_remote_docker
       - run:
           name: Test
-          command: "yarn test"
+          command: "hokusai test"
   push:
     docker:
       - image: artsy/hokusai:0.4.0
