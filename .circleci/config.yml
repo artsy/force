@@ -1,6 +1,5 @@
 version: 2.0
 jobs:
-  build:
   acceptance:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -48,10 +47,6 @@ workflows:
     jobs:
       - test
       - acceptance
-      - build
-          requires:
-            - acceptance
-            - test
       - push:
           filters:
             branches:
