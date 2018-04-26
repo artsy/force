@@ -1,11 +1,20 @@
 version: 2.0
 jobs:
   build:
+  acceptance:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    parallelism: 1
+    steps:
+      - add_ssh_keys
+      - checkout
+      - run:
+          name: Acceptance Tests
+          command: "yarn acceptance src/test/acceptance/*.js"
+  test:
     docker:
       - image: artsy/hokusai:0.4.0
-#      - image: circleci/node:8-stretch-browsers
-#      - image: bitnami/node:8
-    parallelism: 5
+    parallelism: 4
     steps:
       - add_ssh_keys
       - checkout
@@ -37,7 +46,12 @@ workflows:
   version: 2
   default:
     jobs:
+      - test
+      - acceptance
       - build
+          requires:
+            - acceptance
+            - test
       - push:
           filters:
             branches:

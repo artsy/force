@@ -2,7 +2,7 @@
 version: '2'
 services:
   force:
-    command: yarn hokusai_test
+    command: yarn test
     extends:
       file: common.yml
       service: force
