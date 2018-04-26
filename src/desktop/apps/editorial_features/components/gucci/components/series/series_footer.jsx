@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { pMedia } from 'reaction/Components/Helpers'
 import { Col, Row } from 'reaction/Components/Grid'
-import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { Fonts } from 'reaction/Assets/Fonts'
 import { Text, PartnerBlock } from 'reaction/Components/Publishing'
 
-export const SeriesFooter = (props) => {
+export const SeriesFooter = props => {
   const { curation, isMobile } = props
   const logoSrc = curation.partner_logo_footer || curation.partner_logo_primary
   const logoUrl = curation.partner_link_url || ''

@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { data as sd } from 'sharify'
 import { pMedia } from 'reaction/Components/Helpers'
 import { Col, Row } from 'reaction/Components/Grid'
-import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { Fonts } from 'reaction/Assets/Fonts'
 import { Share } from 'reaction/Components/Publishing/Byline/Share'
 import { Text } from 'reaction/Components/Publishing'
 
-export const SectionText = (props) => {
+export const SectionText = props => {
   const { section } = props
 
   return (
