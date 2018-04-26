@@ -55,9 +55,9 @@ workflows:
       - test
       - acceptance
       - build:
-        requires:
-          - test
-          - acceptance
+          requires:
+            - test
+            - acceptance
       - push:
           filters:
             branches:
