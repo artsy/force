@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Acceptance Tests
-          command: "yarn acceptance src/test/acceptance/*.js"
+          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
   test:
     docker:
       - image: artsy/hokusai:0.4.0
