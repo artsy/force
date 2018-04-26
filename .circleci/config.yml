@@ -21,6 +21,13 @@ jobs:
       - run:
           name: Test
           command: "hokusai test"
+  build:
+    docker:
+      - image: artsy/hokusai:0.4.0
+    steps:
+      - run:
+          name: "OK"
+          command: "echo All Tests Pass!"
   push:
     docker:
       - image: artsy/hokusai:0.4.0
@@ -47,6 +54,10 @@ workflows:
     jobs:
       - test
       - acceptance
+      - build:
+        requires:
+          - test
+          - acceptance
       - push:
           filters:
             branches:
