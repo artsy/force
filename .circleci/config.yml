@@ -64,3 +64,4 @@ workflows:
       - deploy:
           requires:
             - push
+
