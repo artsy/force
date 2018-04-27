@@ -25,8 +25,6 @@ const GeneName = styled.span`
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 
   ${avantgarde('s13')};
-  font-size: 13px;
-  line-height: 1.33em;
   font-weight: bold;
 `
 
