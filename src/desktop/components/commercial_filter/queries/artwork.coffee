@@ -5,6 +5,11 @@ module.exports = """
     href
     title
     date
+    image {
+      placeholder
+      url: url(version: ["tall"])
+      aspect_ratio
+    }
     images {
       id
       image_url: url(version: ["tall"])

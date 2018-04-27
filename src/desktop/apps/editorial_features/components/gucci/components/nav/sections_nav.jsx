@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Colors from 'reaction/Assets/Colors'
 import { pMedia } from 'reaction/Components/Helpers'
-import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { unica } from 'reaction/Assets/Fonts'
 
-export const SectionsNav = (props) => {
+export const SectionsNav = props => {
   const { animated, activeSection, sections, onClick } = props
 
   return (
@@ -44,11 +44,11 @@ const navKeyframes = keyframes`
 const SectionsNavContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width 1240px;
+  max-width: 1240px;
   margin: 60px auto 50px auto;
   padding: 0 20px;
 
-  ${(props) =>
+  ${props =>
     props.animated &&
     `
     margin: 0;
@@ -72,12 +72,12 @@ const SectionsNavContainer = styled.div`
 `
 const Title = styled.div`
   cursor: pointer;
-  ${Fonts.unica('s80')} color: ${(props) =>
-      props.isActive ? 'black' : Colors.grayRegular};
+  ${unica('s80')};
+  color: ${props => (props.isActive ? 'black' : Colors.grayRegular)};
 
   ${pMedia.lg`
     margin: 0 30px;
-    ${Fonts.unica('s40')}
+    ${unica('s40')};
   `} ${pMedia.sm`
     margin: 0;
     &:nth-child(2) {

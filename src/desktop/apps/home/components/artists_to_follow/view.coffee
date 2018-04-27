@@ -59,7 +59,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
   _addFollowButton: (id, $el) ->
     new FollowButton
       context_page: "Home page"
-      context_module: "Artists to Follow rail"
+      context_module: "Artists to follow rail"
       following: @following
       model: new Backbone.Model id: id
       modelName: 'artist'

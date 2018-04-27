@@ -1,9 +1,9 @@
 if featuredShows.length
   #home-featured-shows-section( class='js-homepage-featured-links', data-context='featured shows' )
-    h2.home-featured-header Featured Shows
+    h2.home-featured-header Featured shows
       .home-browse-all-right
         a( href='/shows' )
-          | Explore All Shows
+          | Explore all shows
     ul#home-featured-shows.home-featured-list
       - allShows = featuredShows.take(8)
       - displayLocation = true

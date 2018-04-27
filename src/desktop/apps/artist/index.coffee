@@ -15,5 +15,3 @@ app.get '/artist/:id/follow', routes.follow
 app.get '/artist/:id', timeout('25s'), routes.index
 for { slug } in sections
   app.get "/artist/:id/#{slug}", routes.tab
-
-app.get '/artist/:id/payoff', routes.ctaPayoff

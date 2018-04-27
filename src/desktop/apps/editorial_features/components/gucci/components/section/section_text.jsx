@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { data as sd } from 'sharify'
 import { pMedia } from 'reaction/Components/Helpers'
 import { Col, Row } from 'reaction/Components/Grid'
-import { Fonts } from 'reaction/Components/Publishing/Fonts'
+import { unica } from 'reaction/Assets/Fonts'
 import { Share } from 'reaction/Components/Publishing/Byline/Share'
 import { Text } from 'reaction/Components/Publishing'
 
-export const SectionText = (props) => {
+export const SectionText = props => {
   const { section } = props
 
   return (
@@ -49,9 +49,9 @@ const SectionTextContainer = styled.div`
 `
 
 const Title = styled.div`
-  ${Fonts.unica('s16', 'medium')} line-height: 1.85em;
+  ${unica('s16', 'medium')} line-height: 1.85em;
   ${pMedia.xs`
-    ${Fonts.unica('s14', 'medium')}
+    ${unica('s14', 'medium')}
   `};
 `
 const ShareContainer = styled.div`
@@ -78,8 +78,8 @@ const ShareContainer = styled.div`
   `};
 `
 const Featuring = styled.div`
-  ${Fonts.unica('s32')} line-height: 1.25em;
+  ${unica('s32')} line-height: 1.25em;
   ${pMedia.xs`
-    ${Fonts.unica('s19')}
+    ${unica('s19')}
   `};
 `

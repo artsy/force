@@ -1,4 +1,4 @@
-{ ARTIST, IS_PAYOFF, CURRENT_USER, INITIAL_ARTISTS } = sd = require('sharify').data
+{ ARTIST, CURRENT_USER, INITIAL_ARTISTS } = sd = require('sharify').data
 Backbone = require 'backbone'
 scrollFrame = require 'scroll-frame'
 Artist = require '../../../models/artist.coffee'
@@ -13,24 +13,6 @@ module.exports.init = ->
   # ARTIST_MERCH_TEST remove after test closes
   splitTest('artist_merch_test').view()
   
-  if IS_PAYOFF
-    view = new FollowedArtistsRailView
-      $el: $('.payoff-content__content')
-      user: CURRENT_USER
-      module: 
-        context: 
-          artists: INITIAL_ARTISTS
-          counts:
-            artists: INITIAL_ARTISTS.length
-        results: []
-      useInitialArtists: true
-      includeContext: false
-      showHeader: false
-      analyticsMessage: 'artist page sign up prompt payoff screen'
-
-    view.render()
-    return
-
   statuses = ARTIST.statuses
   artist = new Artist ARTIST
   user = CurrentUser.orNull()
