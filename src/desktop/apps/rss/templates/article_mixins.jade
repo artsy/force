@@ -14,3 +14,10 @@ mixin image(image, width)
   img(src=resize(image.url, { width: width } ))
   if image.caption
     != image.caption
+
+mixin source(source)
+  if source.url
+    p via 
+      a(href="#{source.url}")= source.title
+  else
+    p= 'via ' + source.title
