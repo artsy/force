@@ -473,31 +473,34 @@ describe('Article Routes', () => {
       done()
     })
 
-    // it('sets the correct jsonld', (done) => {
-    //   const data = {
-    //     article: new Article(_.extend({}, fixtures.article, {
-    //       slug: 'foobar',
-    //       channel_id: '456',
-    //       sections: [],
-    //       featured: true,
-    //       published: true,
-    //       layout: 'standard'
-    //     })),
-    //     channel: new Channel()
-    //   }
-    //   rewire.__set__(
-    //     'positronql',
-    //     sinon.stub().returns(Promise.resolve(data))
-    //   )
-    //   Article.prototype.fetchWithRelated = sinon.stub().yieldsTo('success', data)
-    //   rewire.__set__('Article', Article)
-    //   amp(req, res, next)
-    //   res.locals.jsonLD.should.containEql('Magazine')
-    //   res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
-    //   res.locals.jsonLD.should.containEql('Artsy Editorial')
-    //   res.locals.jsonLD.should.containEql('"publisher":{"name":"Artsy","logo":{"url":"undefined/images/full_logo.png","height":103,"width":300}}')
-    //   done()
-    // })
+    it('sets the correct jsonld', done => {
+      const data = {
+        article: new Article(
+          _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '456',
+            sections: [],
+            featured: true,
+            published: true,
+            layout: 'standard',
+          })
+        ),
+        channel: new Channel(),
+      }
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      Article.prototype.fetchWithRelated = sinon
+        .stub()
+        .yieldsTo('success', data)
+      rewire.__set__('Article', Article)
+      amp(req, res, next)
+      res.locals.jsonLD.should.containEql('Magazine')
+      res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
+      res.locals.jsonLD.should.containEql('Artsy Editorial')
+      res.locals.jsonLD.should.containEql(
+        '"publisher":{"name":"Artsy","logo":{"url":"http://artsy.net/images/full_logo.png","height":103,"width":300}}'
+      )
+      done()
+    })
   })
 
   describe('#subscribedToEditorial', () => {
