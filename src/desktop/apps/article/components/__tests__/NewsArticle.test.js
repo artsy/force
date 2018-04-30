@@ -30,7 +30,7 @@ describe('<NewsArticle />', () => {
     return {
       matches: false,
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     }
   }
 
@@ -48,10 +48,10 @@ describe('<NewsArticle />', () => {
       isFirstArticle: true,
       nextArticle: {
         id: '1234',
-        published_at: '5678'
+        published_at: '5678',
       },
       onDateChange: sinon.stub(),
-      onActiveArticleChange: sinon.stub()
+      onActiveArticleChange: sinon.stub(),
     }
   })
 
@@ -86,7 +86,7 @@ describe('<NewsArticle />', () => {
       rendered.instance().setMetadata({
         slug: 'some-slug',
         thumbnail_title: 'Some title',
-        id: '123'
+        id: '123',
       })
       window.history.replaceState.args[0][2].should.containEql(
         '/news/some-slug'
@@ -98,7 +98,7 @@ describe('<NewsArticle />', () => {
     it('does not push url to browser if it is not scrolling into an article', () => {
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onEnter({
-        currentPosition: 'outside'
+        currentPosition: 'outside',
       })
 
       window.history.replaceState.args.length.should.equal(0)
@@ -108,7 +108,7 @@ describe('<NewsArticle />', () => {
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onEnter({
         currentPosition: 'inside',
-        previousPosition: 'above'
+        previousPosition: 'above',
       })
 
       props.onDateChange.args[0][0].should.equal(article.published_at)
@@ -117,7 +117,7 @@ describe('<NewsArticle />', () => {
     it('pushes /news to browser if it is scrolling into a truncated article', () => {
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onEnter({
-        currentPosition: 'inside'
+        currentPosition: 'inside',
       })
       window.history.replaceState.args[0][2].should.containEql('/news')
     })
@@ -126,7 +126,7 @@ describe('<NewsArticle />', () => {
       props.isTruncated = false
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onEnter({
-        currentPosition: 'inside'
+        currentPosition: 'inside',
       })
       window.history.replaceState.args[0][2].should.containEql(
         '/news/news-article'
@@ -137,7 +137,7 @@ describe('<NewsArticle />', () => {
       props.isMobile = true
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onEnter({
-        currentPosition: 'inside'
+        currentPosition: 'inside',
       })
       props.onActiveArticleChange.callCount.should.equal(1)
     })
@@ -148,7 +148,7 @@ describe('<NewsArticle />', () => {
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onLeave({
         currentPosition: 'above',
-        previousPosition: 'inside'
+        previousPosition: 'inside',
       })
       props.onDateChange.args[0][0].should.equal('5678')
     })
@@ -157,7 +157,7 @@ describe('<NewsArticle />', () => {
       const rendered = mount(<NewsArticle {...props} />)
       rendered.instance().onLeave({
         currentPosition: 'above',
-        previousPosition: 'inside'
+        previousPosition: 'inside',
       })
       props.onActiveArticleChange.args[0][0].should.equal('1234')
     })

@@ -37,7 +37,7 @@ export const SectionText = props => {
 }
 
 SectionText.propTypes = {
-  section: PropTypes.object
+  section: PropTypes.object,
 }
 
 const SectionTextContainer = styled.div`
@@ -49,8 +49,7 @@ const SectionTextContainer = styled.div`
 `
 
 const Title = styled.div`
-  ${unica('s16', 'medium')};
-  line-height: 1.85em;
+  ${unica('s16', 'medium')} line-height: 1.85em;
   ${pMedia.xs`
     ${unica('s14', 'medium')}
   `};
@@ -79,12 +78,7 @@ const ShareContainer = styled.div`
   `};
 `
 const Featuring = styled.div`
-<<<<<<< HEAD
-  ${unica('s32')};
-  line-height: 1.25em;
-=======
   ${unica('s32')} line-height: 1.25em;
->>>>>>> 0d57df6430679c85205867f36d2e08a001f0d4d2
   ${pMedia.xs`
     ${unica('s19')}
   `};

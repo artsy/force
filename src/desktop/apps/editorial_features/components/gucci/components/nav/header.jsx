@@ -13,7 +13,7 @@ export class Header extends Component {
     isOpen: PropTypes.bool,
     onOpenMenu: PropTypes.any,
     partner_logo: PropTypes.string,
-    partner_url: PropTypes.string
+    partner_url: PropTypes.string,
   }
 
   render() {
@@ -23,7 +23,7 @@ export class Header extends Component {
       isOpen,
       onOpenMenu,
       partner_logo,
-      partner_url
+      partner_url,
     } = this.props
 
     return (
@@ -33,7 +33,7 @@ export class Header extends Component {
           logo={partner_logo}
           trackingData={{
             type: 'external link',
-            destination_path: partner_url
+            destination_path: partner_url,
           }}
         />
 

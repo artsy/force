@@ -19,7 +19,7 @@ export const SectionVideo = props => {
 function renderVideo(section) {
   const videoSection = {
     url: section.video_url,
-    cover_image_url: section.cover_image_url
+    cover_image_url: section.cover_image_url,
   }
 
   if (section.published && videoSection.url) {
@@ -28,7 +28,7 @@ function renderVideo(section) {
         section={videoSection}
         trackingData={{
           type: 'play video',
-          label: section.featuring
+          label: section.featuring,
         }}
       />
     )
@@ -44,7 +44,7 @@ function renderVideo(section) {
 }
 
 SectionVideo.propTypes = {
-  section: PropTypes.object
+  section: PropTypes.object,
 }
 
 const SectionVideoContainer = styled.div`

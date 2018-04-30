@@ -7,7 +7,7 @@ export default class App extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    templates: PropTypes.object
+    templates: PropTypes.object,
   }
 
   componentDidMount() {
@@ -42,7 +42,7 @@ export default class App extends Component {
 
           <div
             dangerouslySetInnerHTML={{
-              __html: MyJadeView
+              __html: MyJadeView,
             }}
           />
         </div>

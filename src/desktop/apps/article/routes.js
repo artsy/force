@@ -7,7 +7,7 @@ import _Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
 import {
   SuperSubArticlesQuery,
-  SuperArticleQuery
+  SuperArticleQuery,
 } from 'desktop/apps/article/queries/superArticle'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
@@ -32,7 +32,7 @@ export async function index(req, res, next) {
   try {
     const data = await positronql({
       query: ArticleQuery(articleId),
-      req
+      req,
     })
     const article = data.article
     const articleModel = new Article(data.article)
@@ -76,7 +76,7 @@ export async function index(req, res, next) {
     // Set main super article
     if (article.is_super_sub_article) {
       const superData = await positronql({
-        query: SuperArticleQuery(article.id)
+        query: SuperArticleQuery(article.id),
       })
       superArticle.set(superData.articles[0])
     } else if (article.is_super_article) {
@@ -100,7 +100,7 @@ export async function index(req, res, next) {
         SuperArticleFooter:
           '../../../components/article/templates/super_article_footer.jade',
         SuperArticleHeader:
-          '../../../components/article/templates/super_article_sticky_header.jade'
+          '../../../components/article/templates/super_article_sticky_header.jade',
       }
     }
 
@@ -126,18 +126,18 @@ export async function index(req, res, next) {
       basePath: res.app.get('views'),
       layout: layoutTemplate,
       config: {
-        styledComponents: true
+        styledComponents: true,
       },
       blocks: {
         head: 'meta.jade',
-        body: App
+        body: App,
       },
       locals: {
         ...res.locals,
         assetPackage: 'article',
         bodyClass: getBodyClass(article),
         crop,
-        markdown
+        markdown,
       },
       data: {
         article,
@@ -146,9 +146,9 @@ export async function index(req, res, next) {
         jsonLD,
         subscribed,
         superArticle,
-        superSubArticles
+        superSubArticles,
       },
-      templates
+      templates,
     })
 
     res.send(layout)
@@ -199,10 +199,10 @@ export function classic(req, res, next) {
         _.extend(data, {
           embed,
           crop,
-          resize
+          resize,
         })
       )
-    }
+    },
   })
 }
 
@@ -229,10 +229,10 @@ export function amp(req, res, next) {
           resize,
           crop,
           embed,
-          _
+          _,
         })
       )
-    }
+    },
   })
 }
 
@@ -244,7 +244,7 @@ export const subscribedToEditorial = email => {
     sailthru.apiGet(
       'user',
       {
-        id: email
+        id: email,
       },
       (err, response) => {
         if (err) {
@@ -272,13 +272,13 @@ export const editorialSignup = (req, res, next) => {
     {
       id: req.body.email,
       lists: {
-        [`${sd.SAILTHRU_MASTER_LIST}`]: 1
+        [`${sd.SAILTHRU_MASTER_LIST}`]: 1,
       },
       vars: {
         source: 'editorial',
         receive_editorial_email: true,
-        email_frequency: 'daily'
-      }
+        email_frequency: 'daily',
+      },
     },
     (err, response) => {
       if (err) {
@@ -290,7 +290,7 @@ export const editorialSignup = (req, res, next) => {
           'event',
           {
             event: 'editorial_welcome',
-            id: req.body.email
+            id: req.body.email,
           },
           (err, response) => {
             if (err) {

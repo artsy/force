@@ -27,7 +27,7 @@ describe('<Article />', () => {
     return {
       matches: false,
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     }
   }
 
@@ -41,10 +41,10 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(1)
@@ -55,10 +55,10 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'feature',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(1)
@@ -69,18 +69,18 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'feature',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       hero_section: {
-        type: 'fullscreen'
+        type: 'fullscreen',
       },
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
       seriesArticle: {
         title: 'Series',
         slug: 'a-series',
-        series: { description: '' }
-      }
+        series: { description: '' },
+      },
     })
     const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     rendered.find(InfiniteScrollArticle).length.should.equal(0)
@@ -91,10 +91,10 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = shallow(
       <ArticleLayout article={article} templates={{}} isSuper />
@@ -107,10 +107,10 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       contributing_authors: [{ name: 'Kana' }],
-      relatedArticlesPanel: [fixtures.article]
+      relatedArticlesPanel: [fixtures.article],
     })
     const rendered = shallow(<ArticleLayout article={article} />)
     const html = rendered.html()
@@ -122,11 +122,11 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'feature',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
-      title: 'Super Article Title'
+      title: 'Super Article Title',
     })
     const SuperArticleView = sinon.stub()
     rewire.__set__('SuperArticleView', SuperArticleView)
@@ -136,7 +136,7 @@ describe('<Article />', () => {
         article={article}
         templates={{
           SuperArticleFooter: 'sa-footer',
-          SuperArticleHeader: 'sa-header'
+          SuperArticleHeader: 'sa-header',
         }}
       />
     )
@@ -152,7 +152,7 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
       contributing_authors: [{ name: 'Kana' }],
@@ -161,15 +161,15 @@ describe('<Article />', () => {
         panel: {
           assets: [{ url: 'http://url.jpg' }],
           headline: 'Ad Headline',
-          link: { url: 'http://link' }
+          link: { url: 'http://link' },
         },
         canvas: {
           assets: [{ url: 'http://url.jpg' }],
           headline: 'Ad Headline',
           link: { url: 'http://link' },
-          layout: 'standard'
-        }
-      }
+          layout: 'standard',
+        },
+      },
     })
     const rendered = shallow(<ArticleLayout article={article} templates={{}} />)
     const html = rendered.html()
@@ -184,10 +184,10 @@ describe('<Article />', () => {
     const article = _.extend({}, fixtures.article, {
       layout: 'standard',
       vertical: {
-        name: 'Art Market'
+        name: 'Art Market',
       },
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }]
+      contributing_authors: [{ name: 'Kana' }],
     })
     const rendered = mount(<ArticleLayout article={article} templates={{}} />)
     rendered.state().following.length.should.exist

@@ -44,7 +44,7 @@ function ArtworksByFollwedArtists(props) {
             return <GridArtwork saleArtwork={artwork} useRelay={false} />
           }}
           style={{
-            height: 515
+            height: 515,
           }}
         />
       )}
@@ -54,22 +54,22 @@ function ArtworksByFollwedArtists(props) {
 
 ArtworksByFollwedArtists.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-  saleArtworksByFollowedArtists: PropTypes.array.isRequired
+  saleArtworksByFollowedArtists: PropTypes.array.isRequired,
 }
 
 ArtworksByFollwedArtists.defaultProps = {
-  saleArtworksByFollowedArtists: []
+  saleArtworksByFollowedArtists: [],
 }
 
 const mapStateToProps = state => {
   const {
     app: { isMobile },
-    artworkBrowser: { saleArtworksByFollowedArtists }
+    artworkBrowser: { saleArtworksByFollowedArtists },
   } = state
 
   return {
     isMobile,
-    saleArtworksByFollowedArtists
+    saleArtworksByFollowedArtists,
   }
 }
 

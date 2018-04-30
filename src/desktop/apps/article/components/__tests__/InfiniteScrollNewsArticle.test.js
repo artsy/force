@@ -37,7 +37,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
     return {
       matches: false,
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     }
   }
 
@@ -45,7 +45,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
   let { InfiniteScrollNewsArticle } = rewire
   const { RelatedArticlesCanvas } = require('reaction/Components/Publishing')
   const {
-    DisplayCanvas
+    DisplayCanvas,
   } = require('reaction/Components/Publishing/Display/Canvas')
 
   beforeEach(() => {
@@ -53,7 +53,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
     article = _.extend(
       {
         slug: 'news-article',
-        isTruncated: false
+        isTruncated: false,
       },
       NewsArticle
     )
@@ -62,14 +62,14 @@ describe('<InfiniteScrollNewsArticle />', () => {
       id: '456',
       slug: 'next-news-article',
       published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }]
+      contributing_authors: [{ name: 'Kana' }],
     }
 
     props = {
       article,
       articles: [article],
       marginTop: '50px',
-      isMobile: false
+      isMobile: false,
     }
   })
 
@@ -83,9 +83,9 @@ describe('<InfiniteScrollNewsArticle />', () => {
         _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          id: '678'
-        })
-      ]
+          id: '678',
+        }),
+      ],
     }
     rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
@@ -115,13 +115,13 @@ describe('<InfiniteScrollNewsArticle />', () => {
         return _.extend({}, NewsArticle, {
           slug: 'foobar',
           channel_id: '123',
-          id: '678'
+          id: '678',
         })
       }),
       display: {
         name: 'BMW',
-        canvas: UnitCanvasImage
-      }
+        canvas: UnitCanvasImage,
+      },
     }
     rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
@@ -137,16 +137,16 @@ describe('<InfiniteScrollNewsArticle />', () => {
         return _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
-          id: '678'
+          id: '678',
         })
       }),
       relatedArticlesCanvas: _.times(4, () => {
         return _.extend({}, fixtures.article, {
           slug: 'related-article',
           channel_id: '123',
-          id: '456'
+          id: '456',
         })
-      })
+      }),
     }
     rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)

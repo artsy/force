@@ -15,7 +15,7 @@ export const news = (req, res, next) =>
       published: true,
       sort: '-published_at',
       exclude_google_news: false,
-      limit: PAGE_SIZE
+      limit: PAGE_SIZE,
     },
     error: res.backboneError,
     success: async data => {
@@ -26,7 +26,7 @@ export const news = (req, res, next) =>
       } catch (err) {
         console.error(err)
       }
-    }
+    },
   })
 
 export const partnerUpdates = (req, res, next) =>
@@ -35,13 +35,13 @@ export const partnerUpdates = (req, res, next) =>
       channel_id: sd.GALLERY_PARTNER_UPDATES_CHANNEL,
       published: true,
       sort: '-published_at',
-      limit: PAGE_SIZE
+      limit: PAGE_SIZE,
     },
     error: res.backboneError,
     success: articles => {
       res.set('Content-Type', 'application/rss+xml')
       return res.render('partner_updates', { articles, pretty: true })
-    }
+    },
   })
 
 export const findArticlesWithEmbeds = articles => {

@@ -8,7 +8,7 @@ import { avantgarde } from 'reaction/Assets/Fonts'
 import FrameAnimator from 'desktop/components/frame_animator'
 
 const propTypes = {
-  geneFamilies: PropTypes.array.isRequired
+  geneFamilies: PropTypes.array.isRequired,
 }
 
 // amount by which to adjust scrolling & spying,
@@ -65,7 +65,7 @@ class GeneFamilyNav extends React.Component {
       {
         duration: 600,
         startValue: window.scrollY,
-        endValue: section.offsetTop - TOP_BUFFER
+        endValue: section.offsetTop - TOP_BUFFER,
       }
     )
     scroller.start()

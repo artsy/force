@@ -29,8 +29,8 @@ const trackAccountCreation = options => {
   analytics.identify(options.user_id, _.pick(options, 'email'), {
     integrations: {
       All: false,
-      Marketo: true
-    }
+      Marketo: true,
+    },
   })
 }
 
@@ -45,7 +45,7 @@ $(document).on(
         signup_service: 'email',
         user_id: xhr.responseJSON.user.id,
         context: options.context,
-        email: xhr.responseJSON.user.email
+        email: xhr.responseJSON.user.email,
       })
     )
   }
@@ -61,7 +61,7 @@ $(document).on('click', '.auth-signup-facebook, .gdpr-signup__fb', function(e) {
     JSON.stringify({
       service: 'facebook',
       acquisition_initiative: getAcquisitionInitiative(),
-      context: $(e.currentTarget).data('context')
+      context: $(e.currentTarget).data('context'),
     })
   )
 })
@@ -77,7 +77,7 @@ if (Cookies.get('analytics-signup')) {
       signup_service: data.service,
       user_id: sd.CURRENT_USER.id,
       context: data.context,
-      email: sd.CURRENT_USER.email
+      email: sd.CURRENT_USER.email,
     })
   }
 }
@@ -88,7 +88,7 @@ analyticsHooks.on('signUpFromPhoneModal', ({ user }) =>
     signup_service: 'email',
     email: user.email,
     user_id: user.id,
-    context: 'show phone number'
+    context: 'show phone number',
   })
 )
 
@@ -141,14 +141,14 @@ analyticsHooks.on('consignment:account:created', function(options) {
       signup_service: 'email',
       user_id: options.id,
       context: 'consignments',
-      email: options.email
+      email: options.email,
     })
   } else {
     analytics.identify(options.user_id, options.email, {
       integrations: {
         All: false,
-        Marketo: true
-      }
+        Marketo: true,
+      },
     })
   }
 })

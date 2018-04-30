@@ -3,7 +3,7 @@ import App from 'desktop/apps/articles/components/App.tsx'
 import magazineQuery from './queries/editorial_articles.coffee'
 import {
   newsArticlesQuery,
-  newsPanelQuery
+  newsPanelQuery,
 } from './queries/news_articles_query.js'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import Articles from 'desktop/collections/articles.coffee'
@@ -33,7 +33,7 @@ export const articles = (req, res, next) => {
         res.render('articles', {
           articles: articles,
           crop,
-          newsArticles
+          newsArticles,
         })
       })
     })
@@ -54,7 +54,7 @@ export const section = (req, res, next) => {
           published: true,
           limit: 50,
           sort: '-published_at',
-          section_id: section.get('id')
+          section_id: section.get('id'),
         },
         error: res.backboneError,
         success: articles => {
@@ -62,11 +62,11 @@ export const section = (req, res, next) => {
           res.locals.sd.SECTION = section.toJSON()
           res.render('section', {
             section,
-            articles
+            articles,
           })
-        }
+        },
       })
-    }
+    },
   })
 }
 
@@ -89,7 +89,7 @@ export const teamChannel = (req, res, next) => {
               published: true,
               limit: 6,
               sort: '-published_at',
-              ids: map(sortBy(channel.get('pinned_articles'), 'index'), 'id')
+              ids: map(sortBy(channel.get('pinned_articles'), 'index'), 'id'),
             },
             error: res.backboneError,
             success: pinnedArticles => {
@@ -109,13 +109,13 @@ export const teamChannel = (req, res, next) => {
               res.render('team_channel', {
                 channel,
                 pinnedArticles,
-                parselyArticles: first(newParselyArticles, numRemaining)
+                parselyArticles: first(newParselyArticles, numRemaining),
               })
-            }
+            },
           })
         }
       )
-    }
+    },
   })
 }
 
@@ -124,29 +124,29 @@ export async function news(req, res, next) {
 
   try {
     const { articles } = await positronql({
-      query: newsArticlesQuery({ limit: 6 })
+      query: newsArticlesQuery({ limit: 6 }),
     })
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
       layout: '../../../components/main_layout/templates/react_index.jade',
       config: {
-        styledComponents: true
+        styledComponents: true,
       },
       blocks: {
         body: App,
-        head: './meta/news.jade'
+        head: './meta/news.jade',
       },
       locals: {
         ...res.locals,
         assetPackage: 'articles',
         bodyClass: 'body-no-margins',
-        crop
+        crop,
       },
       data: {
         articles,
-        isMobile
-      }
+        isMobile,
+      },
     })
 
     res.send(layout)
