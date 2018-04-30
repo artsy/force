@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Scrollspy from 'react-scrollspy'
 
 import colors from 'reaction/Assets/Colors'
-import { primary } from 'reaction/Assets/Fonts'
+import { avantgarde } from 'reaction/Assets/Fonts'
 import FrameAnimator from 'desktop/components/frame_animator'
 
 const propTypes = {
@@ -34,9 +34,7 @@ const GeneFamilyList = styled(Scrollspy)`
   background: white;
   z-index: 1;
 
-  ${primary.style};
-  font-size: 13px;
-  line-height: 1.33em;
+  ${avantgarde('s13')};
 `
 
 const GeneFamilyItem = styled.li`
@@ -56,12 +54,12 @@ const GeneFamilyLink = styled.a`
 `
 
 class GeneFamilyNav extends React.Component {
-  handleClick = (e) => {
+  handleClick = e => {
     e.preventDefault()
     const id = e.target.hash
     const section = document.querySelector(id)
     const scroller = new FrameAnimator(
-      (val) => {
+      val => {
         window.scrollTo(0, val)
       },
       {
@@ -78,11 +76,11 @@ class GeneFamilyNav extends React.Component {
     return (
       <ResponsiveSidebar>
         <GeneFamilyList
-          items={geneFamilies.map((f) => f.id)}
+          items={geneFamilies.map(f => f.id)}
           currentClassName="is-current"
           offset={-1 * TOP_BUFFER}
         >
-          {geneFamilies.map((geneFamily) => (
+          {geneFamilies.map(geneFamily => (
             <GeneFamilyItem key={geneFamily.id}>
               <GeneFamilyLink
                 href={`#${geneFamily.id}`}

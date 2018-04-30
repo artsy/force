@@ -1,7 +1,6 @@
 import React from 'react'
 import { Artwork as _Artwork } from '@artsy/reaction/dist/Components/Artwork'
 import { ArtworkGrid as _ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
-import { Fillwidth as _Fillwidth } from '@artsy/reaction/dist/Components/Artwork/Fillwidth'
 
 export const Artwork = props => (
   <_Artwork artwork={artwork} {...props} useRelay={false} />
@@ -9,9 +8,17 @@ export const Artwork = props => (
 export const ArtworkGrid = props => (
   <_ArtworkGrid artworks={artworks} {...props} useRelay={false} />
 )
-export const Fillwidth = props => (
-  <_Fillwidth artworks={artworks} {...props} useRelay={false} />
-)
+export const Fillwidth = props => {
+  if (typeof window !== 'undefined') {
+    const {
+      Fillwidth: _Fillwidth,
+    } = require('@artsy/reaction/dist/Components/Artwork/Fillwidth')
+
+    return <_Fillwidth artworks={artworks} {...props} useRelay={false} />
+  } else {
+    return ''
+  }
+}
 
 export const artwork = {
   id: 'mikael-olson-some-kind-of-dinosaur',

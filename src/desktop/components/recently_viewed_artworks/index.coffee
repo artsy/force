@@ -23,7 +23,7 @@ module.exports =
     Cookies.set COOKIE_NAME, JSON.stringify(artworkIdsToStore), expires: COOKIE_EXPIRY
 
   shouldShowRVARail: ->
-    !blacklist.check() && cookieValue().length > 0
+    !blacklist.check() && cookieValue().length > 0 && location.pathname isnt '/'
 
   reInitRVARail: ($el) ->
     return unless $el.find('.rva-container').length > 0

@@ -5,12 +5,15 @@
     section#auth-body
       .auth-register
         form.auth-form
+          - if (setPassword)
+            p Get a unique link sent to your email and finish creating your account.
+
           input.bordered-input.is-block(
             name='email', value=email, type='email', placeholder='Email' autofocus= autofocus, required
           )
 
-          - buttonText = setPassword ? 'token' : 'reset instructions'
-          button#auth-submit.avant-garde-button-black.is-block Send me #{buttonText}
+          - buttonText = setPassword ? 'Submit' : 'Send me reset instructions'
+          button#auth-submit.avant-garde-button-black.is-block= buttonText
 
           - if (!setPassword)
             footer.auth-form-options

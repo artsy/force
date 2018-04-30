@@ -22,7 +22,7 @@ describe 'Account', setup ->
       @view.$('.iq-headline').text()
         .should.containEql 'Create an account to send your message'
       @view.$('input').map(-> $(this).attr('name')).get()
-        .should.eql ['name', 'email', 'password', '_csrf']
+        .should.eql ['name', 'email', 'password']
 
     it 're-renders when the mode changes', ->
       @view.active.set 'mode', 'forgot'
