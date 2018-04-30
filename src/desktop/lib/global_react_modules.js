@@ -1,7 +1,16 @@
 import React from 'react'
 import { Artwork as _Artwork } from '@artsy/reaction/dist/Components/Artwork'
 import { ArtworkGrid as _ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
+import { Tooltip as _Tooltip } from '@artsy/reaction/dist/Components/Tooltip'
+import { Help } from '@artsy/reaction/dist/Assets/Icons/Help'
 
+export const Tooltip = props => (
+  <_Tooltip {...props}>
+    <span style={{ verticalAlign: 'text-top' }}>
+      <Help />
+    </span>
+  </_Tooltip>
+)
 export const Artwork = props => (
   <_Artwork artwork={artwork} {...props} useRelay={false} />
 )
