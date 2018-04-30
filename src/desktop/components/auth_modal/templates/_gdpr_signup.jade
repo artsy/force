@@ -4,21 +4,17 @@
     method='POST'
   )
     .auth-errors
-    - const userName = (user && user.get('name')) ? user.get('name') : ''
     input.bordered-input(
       name='name',
       placeholder='Your full name',
       autofocus=true,
       required
-      value=userName
     )
-    - const email = (user && user.get('email')) ? user.get('email') : ''
     input#js-mailcheck-input-modal.bordered-input(
       name='email',
       type='email',
       placeholder='Your email address',
       required
-      value=email
     )
     input#js-mailcheck-hint-modal.bordered-input(
       name='password',
@@ -42,9 +38,9 @@
     small.gdpr-signup__small
       | By signing up, you agree to our&nbsp;
       br
-      a( href='/terms' ) Terms of Use
+      a( href='/terms' target="_blank" ) Terms of Use
       | &nbsp;and&nbsp;
-      a(href='/privacy') Privacy Policy
+      a(href='/privacy' target="_blank" ) Privacy Policy
 
 
 
