@@ -14,7 +14,4 @@
   "[json]": {
     "editor.formatOnSave": false
   },
-  "editor.formatOnSave": true,
-  "editor.fontLigatures": true,
-  "prettier.trailingComma": "none"
-}
+  "editor.formatOnSave": true
