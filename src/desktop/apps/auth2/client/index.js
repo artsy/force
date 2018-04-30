@@ -1,38 +1,23 @@
 import React from 'react'
-import { render } from 'react-dom'
-import mediator from '../../../lib/mediator.coffee'
+import ReactDOM from 'react-dom'
+// import mediator from '../../../lib/mediator.coffee'
 
-import LoginModal from '../components/LoginModal'
-import SignupModal from '../components/SignUpModal'
+import { App } from 'desktop/apps/auth2/components/App.tsx'
 
-export const open = (type = '') => {
-  let Modal
+// mediator.on('open:auth', (options) => {
+//   const { mode } = options
+//   if (mode) {
+//     open(mode)
+//   }
+// })
 
-  if (!type) {
-    return
-  }
+export const init = () => {
+  // Rehydrate data from Server
+  const bootstrapData = window.__BOOTSTRAP__
 
-  switch (type) {
-    case 'login':
-      Modal = LoginModal
-      break
-    case 'signup':
-      Modal = SignupModal
-      break
-    case 'marketing':
-    default:
-      break
-  }
-
-  render(
-    <Modal openedAt={new Date()} />,
-    document.getElementById('modal-container')
+  // Start app
+  ReactDOM.hydrate(
+    <App {...bootstrapData} />,
+    document.getElementById('react-root')
   )
 }
-
-mediator.on('open:auth', (options) => {
-  const { mode } = options
-  if (mode) {
-    open(mode)
-  }
-})

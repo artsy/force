@@ -1,22 +1,26 @@
 import { renderLayout } from '@artsy/stitch'
-import App from './components/App'
+import { App } from './components/App.tsx'
 
 export const index = async (req, res, next) => {
+  const mode = req.path.includes('login') ? 'login' : 'register'
   try {
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_index.jade',
+      layout: '../../components/main_layout/templates/react_blank_index.jade',
       config: {
-        styledComponents: true
+        styledComponents: true,
       },
       blocks: {
         head: 'templates/meta.jade',
-        body: App
+        body: App,
       },
       locals: {
         ...res.locals,
-        assetPackage: 'experimental_auth_modal'
-      }
+        assetPackage: 'auth2',
+      },
+      data: {
+        mode,
+      },
     })
 
     res.send(layout)
