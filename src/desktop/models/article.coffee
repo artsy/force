@@ -149,10 +149,10 @@ module.exports = class Article extends Backbone.Model
     ''
 
   hasContributingAuthors: ->
-    @get('contributing_authors').length > 0
+    @get('contributing_authors')?.length > 0
 
   hasAuthors: ->
-    @get('contributing_authors').length > 0
+    @get('authors')?.length > 0
 
   getAuthorArray: ->
     creator = []

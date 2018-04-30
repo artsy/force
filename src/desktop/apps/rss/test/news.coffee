@@ -32,6 +32,39 @@ describe '/rss', ->
       rendered.should.containEql '<item><title>World</title>'
       rendered.should.containEql '<description>A piece about the Whitney.</description>'
 
+    it 'renders authors', ->
+      article = new Article
+        authors: [
+          {
+            name: "Jun"
+            id: '123'
+          },
+          {
+            name: "Owen"
+            id: '456'
+          }
+        ]
+      rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
+      rendered.should.containEql '<author>Jun and Owen</author>'
+
+    it 'renders categories', ->
+      article = new Article
+        vertical:
+          name: 'Art'
+          id: '123'
+      rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
+      rendered.should.containEql '<category>Art</category>'
+
+    it 'renders enclosures', ->
+      article = new Article
+        layout: 'video'
+        media:
+          url: 'https://artsymedia.mp4'
+          credits: '<p>Director</p><p>Marina Cashdan</p>'
+          description: '<p>Sample Description</p>'
+      rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
+      rendered.should.containEql '<enclosure url="https://artsymedia.mp4" type="video/mp4">'
+
   describe 'article', ->
 
     it 'renders the lead paragraph and body text', ->
