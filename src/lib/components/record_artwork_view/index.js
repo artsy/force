@@ -11,7 +11,7 @@ export const recordArtworkView = (artwork_id, user) => {
   const send = {
     query,
     variables: { artwork_id },
-    req: { user }
+    req: { user },
   }
   // We don't need to do anything on success.
   metaphysics(send).catch(console.error.bind(console))

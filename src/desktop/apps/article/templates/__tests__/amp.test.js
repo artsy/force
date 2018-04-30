@@ -24,7 +24,7 @@ describe('AMP Templates', () => {
       moment: () => {},
       asset: () => {},
       sd: {},
-      _
+      _,
     }
   })
 
@@ -55,7 +55,7 @@ describe('AMP Templates', () => {
   describe('embed sections', () => {
     it('renders embed', () => {
       res.article = new Article({
-        sections: Fixtures.Embeds
+        sections: Fixtures.Embeds,
       })
       const html = render('amp_article')(res)
       html.should.containEql(
@@ -65,7 +65,7 @@ describe('AMP Templates', () => {
 
     it('renders social_embed twitter', () => {
       res.article = new Article({
-        sections: [Fixtures.SocialEmbedTwitter]
+        sections: [Fixtures.SocialEmbedTwitter],
       })
       const html = render('amp_article')(res)
       html.should.containEql('<amp-twitter data-tweetid="965246051107164160"')
@@ -73,7 +73,7 @@ describe('AMP Templates', () => {
 
     it('renders social_embed instagram', () => {
       res.article = new Article({
-        sections: [Fixtures.SocialEmbedInstagram]
+        sections: [Fixtures.SocialEmbedInstagram],
       })
       const html = render('amp_article')(res)
       html.should.containEql('<amp-instagram data-shortcode="BfJ2TU9F6sm"')
@@ -90,11 +90,11 @@ describe('AMP Templates', () => {
               {
                 type: 'image',
                 url: 'http://image.com',
-                caption: '<p>An image caption.</p>'
-              }
-            ]
-          }
-        ]
+                caption: '<p>An image caption.</p>',
+              },
+            ],
+          },
+        ],
       })
       const html = render('amp_article')(res)
 
@@ -111,11 +111,11 @@ describe('AMP Templates', () => {
               {
                 type: 'image',
                 url: 'http://image.com',
-                caption: '<p>An image caption.</p>'
-              }
-            ]
-          }
-        ]
+                caption: '<p>An image caption.</p>',
+              },
+            ],
+          },
+        ],
       })
       const html = render('amp_article')(res)
 
@@ -128,7 +128,7 @@ describe('AMP Templates', () => {
   describe('video sections', () => {
     it('renders youtube videos', () => {
       res.article = new Article({
-        sections: [_.extend(Fixtures.Videos[0], { type: 'video' })]
+        sections: [_.extend(Fixtures.Videos[0], { type: 'video' })],
       })
       const html = render('amp_article')(res)
       html.should.containEql('<amp-youtube')
@@ -139,7 +139,7 @@ describe('AMP Templates', () => {
 
     it('renders vimeo videos', () => {
       res.article = new Article({
-        sections: [_.extend(Fixtures.Videos[1], { type: 'video' })]
+        sections: [_.extend(Fixtures.Videos[1], { type: 'video' })],
       })
       const html = render('amp_article')(res)
       html.should.containEql('<amp-vimeo')

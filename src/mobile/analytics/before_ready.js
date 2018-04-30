@@ -28,14 +28,14 @@ if (
           const {
             requestStart,
             loadEventEnd,
-            domComplete
+            domComplete,
           } = window.performance.timing
 
           analytics.track('Page load time', {
             requestStart,
             loadEventEnd,
             domComplete,
-            nonInteraction: 1
+            nonInteraction: 1,
           })
         }, 0)
       }

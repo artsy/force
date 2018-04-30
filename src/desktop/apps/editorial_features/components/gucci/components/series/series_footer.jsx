@@ -22,7 +22,7 @@ export const SeriesFooter = props => {
               url={logoUrl}
               trackingData={{
                 type: 'external link',
-                destination_path: logoUrl
+                destination_path: logoUrl,
               }}
             />
           )}
@@ -35,7 +35,7 @@ export const SeriesFooter = props => {
               url={logoUrl}
               trackingData={{
                 type: 'external link',
-                destination_path: logoUrl
+                destination_path: logoUrl,
               }}
             />
           )}
@@ -47,7 +47,7 @@ export const SeriesFooter = props => {
 
 SeriesFooter.propTypes = {
   curation: PropTypes.object,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
 }
 
 const SeriesFooterContainer = styled.div`
@@ -73,8 +73,7 @@ const SeriesFooterContainer = styled.div`
   `};
 `
 const Title = styled.div`
-  ${unica('s80')};
-  line-height: 0.95em;
+  ${unica('s80')} line-height: .95em;
   ${pMedia.sm`
     ${unica('s40')}
     margin-bottom: 20px;

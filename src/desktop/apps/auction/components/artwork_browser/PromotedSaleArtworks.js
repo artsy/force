@@ -56,11 +56,11 @@ function PromotedSaleArtworks(props) {
 PromotedSaleArtworks.propTypes = {
   isClosed: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  promotedSaleArtworks: PropTypes.array.isRequired
+  promotedSaleArtworks: PropTypes.array.isRequired,
 }
 
 PromotedSaleArtworks.defaultProps = {
-  promotedSaleArtworks: []
+  promotedSaleArtworks: [],
 }
 
 const mapStateToProps = state => {
@@ -76,7 +76,7 @@ const mapStateToProps = state => {
   return {
     isClosed: auctionData.is_closed,
     isMobile,
-    promotedSaleArtworks
+    promotedSaleArtworks,
   }
 }
 

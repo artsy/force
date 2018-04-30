@@ -33,21 +33,21 @@ export class EditableFriezeWeekPage extends JSONPage {
         basePath: __dirname,
         layout: '../../components/main_layout/templates/react_index.jade',
         config: {
-          styledComponents: true
+          styledComponents: true,
         },
         blocks: {
           head: FairWeekMeta,
-          body: FairWeekPageScaffold
+          body: FairWeekPageScaffold,
         },
         locals: {
-          assetPackage: 'banner_pop_up'
+          assetPackage: 'banner_pop_up',
         },
         data: {
           ...res.locals,
           ...data,
           displayStickyFooter: !req.user,
-          data
-        }
+          data,
+        },
       })
 
       res.send(layout)
@@ -59,5 +59,5 @@ export class EditableFriezeWeekPage extends JSONPage {
 
 export default new EditableFriezeWeekPage({
   name: SLUG,
-  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` }
+  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
 }).app

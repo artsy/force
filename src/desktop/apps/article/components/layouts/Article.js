@@ -19,7 +19,7 @@ export default class ArticleLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      following: setupFollows() || null
+      following: setupFollows() || null,
     }
   }
   static propTypes = {
@@ -27,7 +27,7 @@ export default class ArticleLayout extends React.Component {
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
-    templates: PropTypes.object
+    templates: PropTypes.object,
   }
 
   componentDidMount() {
@@ -37,12 +37,12 @@ export default class ArticleLayout extends React.Component {
     if (isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),
-        article: new ArticleModel(article)
+        article: new ArticleModel(article),
       })
     }
     if (!subscribed && !isSuper && article.layout === 'standard') {
       new EditorialSignupView({
-        el: document.querySelector('body')
+        el: document.querySelector('body'),
       })
     }
   }
@@ -66,9 +66,9 @@ export default class ArticleLayout extends React.Component {
         {
           display: {
             canvas: {
-              cover_image_url
-            }
-          }
+              cover_image_url,
+            },
+          },
         },
         article
       )
@@ -100,14 +100,14 @@ export default class ArticleLayout extends React.Component {
 
   render() {
     const {
-      templates: { SuperArticleFooter, SuperArticleHeader } = {}
+      templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
 
     return (
       <div>
         <div
           dangerouslySetInnerHTML={{
-            __html: SuperArticleHeader
+            __html: SuperArticleHeader,
           }}
         />
 
@@ -115,7 +115,7 @@ export default class ArticleLayout extends React.Component {
 
         <div
           dangerouslySetInnerHTML={{
-            __html: SuperArticleFooter
+            __html: SuperArticleFooter,
           }}
         />
       </div>

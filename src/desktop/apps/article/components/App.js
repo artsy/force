@@ -10,7 +10,7 @@ import { hot } from 'react-hot-loader'
 export default hot(module)(
   class App extends React.Component {
     static propTypes = {
-      article: PropTypes.object
+      article: PropTypes.object,
     }
 
     getArticleLayout = () => {
@@ -60,7 +60,7 @@ export default hot(module)(
 
 class EditPortal extends React.Component {
   static propTypes = {
-    article: PropTypes.object
+    article: PropTypes.object,
   }
 
   render() {

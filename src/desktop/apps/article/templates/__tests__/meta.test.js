@@ -17,15 +17,15 @@ describe('Meta template', () => {
       indexable: true,
       description: 'Artsy Editorial is an editorial channel.',
       social_description: 'Artsy Editorial is socially friendly.',
-      social_image: 'http://kitten-social.com'
+      social_image: 'http://kitten-social.com',
     })
     const html = render('meta')({
       article,
       crop: url => url,
       sd: {
         APP_URL: 'https://www.artsy.net',
-        CURRENT_PATH: '/article/artsy-editorial-slug'
-      }
+        CURRENT_PATH: '/article/artsy-editorial-slug',
+      },
     })
     html.should.containEql(
       '<title>Top Ten Booths at miart 2014 - Artsy</title>'
@@ -51,15 +51,15 @@ describe('Meta template', () => {
       description: 'Artsy Editorial is an editorial channel.',
       social_description: 'Artsy Editorial is socially friendly.',
       social_image: 'http://kitten-social.com',
-      layout: 'news'
+      layout: 'news',
     })
     const html = render('meta')({
       article,
       crop: url => url,
       sd: {
         APP_URL: 'https://www.artsy.net',
-        CURRENT_PATH: '/news/artsy-editorial-slug'
-      }
+        CURRENT_PATH: '/news/artsy-editorial-slug',
+      },
     })
     html.should.containEql(
       '<title>Top Ten Booths at miart 2014 - Artsy News</title>'
@@ -78,12 +78,12 @@ describe('Classic meta template', () => {
       description: 'Gallery Insights is a team channel.',
       social_description:
         'Gallery Insights is a socially friendly team channel.',
-      social_image: 'http://kitten-social.com'
+      social_image: 'http://kitten-social.com',
     })
     const html = render('classic_meta')({
       article: new Article(article),
       crop: url => url,
-      sd: {}
+      sd: {},
     })
     html.should.containEql('<title>Top Ten Booths at miart 2014</title>')
     html.should.containEql(

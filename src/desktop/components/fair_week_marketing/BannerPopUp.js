@@ -100,5 +100,5 @@ export class BannerPopUp extends React.Component {
 
 BannerPopUp.propTypes = {
   ctaTitle: PropTypes.string,
-  ctaImageUrl: PropTypes.string
+  ctaImageUrl: PropTypes.string,
 }

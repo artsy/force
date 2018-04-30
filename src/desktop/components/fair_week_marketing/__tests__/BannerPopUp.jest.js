@@ -8,7 +8,7 @@ describe('BannerPopUp', () => {
 
   let props = {
     ctaTitle: 'CTA Title',
-    ctaImageUrl: 'http://image.jpg'
+    ctaImageUrl: 'http://image.jpg',
   }
 
   const getWrapper = props => {

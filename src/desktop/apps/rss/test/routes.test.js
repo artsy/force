@@ -11,7 +11,7 @@ describe('Routes', () => {
   let results = [
     { id: 1, published_at },
     { id: 2, published_at },
-    { id: 3, published_at }
+    { id: 3, published_at },
   ]
 
   beforeEach(() => {
@@ -20,10 +20,10 @@ describe('Routes', () => {
       end: cb => {
         cb(null, {
           body: {
-            html: '<blockquote class="twitter-tweet">'
-          }
+            html: '<blockquote class="twitter-tweet">',
+          },
         })
-      }
+      },
     })
 
     routes.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: 'foo' })
@@ -32,7 +32,7 @@ describe('Routes', () => {
     req = {}
     res = {
       render: sinon.stub(),
-      set: sinon.stub()
+      set: sinon.stub(),
     }
   })
 
@@ -42,7 +42,7 @@ describe('Routes', () => {
       Backbone.sync.args[0][2].success({
         total: 16088,
         count: 2,
-        results
+        results,
       })
       res.render.args[0][0].should.containEql('partner_updates')
       res.render.args[0][1].articles.length.should.eql(3)
@@ -54,14 +54,14 @@ describe('Routes', () => {
       request.get = sinon.stub().returns({
         end: cb => {
           cb(new Error())
-        }
+        },
       })
       routes.__set__('request', request)
       routes.news(req, res)
       await Backbone.sync.args[0][2].success({
         total: 16088,
         count: 3,
-        results
+        results,
       })
       setTimeout(() => {
         res.render.args[0][0].should.containEql('news')
@@ -79,7 +79,7 @@ describe('Routes', () => {
       await Backbone.sync.args[0][2].success({
         total: 16088,
         count: 3,
-        results
+        results,
       })
       res.render.args[0][0].should.containEql('news')
       res.render.args[0][1].articles.length.should.eql(3)
@@ -98,7 +98,7 @@ describe('Routes', () => {
     it('Returns fetched oembed data if social_embed', async () => {
       section = {
         type: 'social_embed',
-        url: 'https://twitter.com/artsy/status/978997552061272064'
+        url: 'https://twitter.com/artsy/status/978997552061272064',
       }
 
       const newSection = await routes.maybeFetchSocialEmbed(section)
@@ -112,7 +112,7 @@ describe('Routes', () => {
     it('Fetches from instagram', async () => {
       section = {
         type: 'social_embed',
-        url: 'https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy'
+        url: 'https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy',
       }
 
       await routes.maybeFetchSocialEmbed(section)

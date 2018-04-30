@@ -6,7 +6,7 @@ import { avantgarde } from 'reaction/Assets/Fonts'
 const propTypes = {
   title: PropTypes.string,
   href: PropTypes.string,
-  image: PropTypes.object
+  image: PropTypes.object,
 }
 
 const Container = styled.div`

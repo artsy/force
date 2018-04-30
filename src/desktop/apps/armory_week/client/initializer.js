@@ -8,7 +8,7 @@ export const init = () => {
     ctaTitle,
     ctaImageUrl,
     overlayModalTitle,
-    overlayModalImageUrl
+    overlayModalImageUrl,
   } = bootstrapData.bannerPopUp
 
   ReactDOM.render(

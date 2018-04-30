@@ -14,7 +14,7 @@ describe('FairWeekPageScaffold', () => {
   describe('introduction', () => {
     it('renders title, image, description', () => {
       const introduction = extend(cloneDeep(Fixture.introduction), {
-        image: 'http://image.jpg'
+        image: 'http://image.jpg',
       })
       const component = getWrapper({ introduction })
 

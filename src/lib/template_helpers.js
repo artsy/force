@@ -9,7 +9,7 @@ export function buildBodyClass(sd, baseClass) {
   const flagMap = {
     MICROSITE: 'is-microsite',
     EIGEN: 'body-eigen',
-    IS_RESPONSIVE: 'body-responsive'
+    IS_RESPONSIVE: 'body-responsive',
   }
 
   Object.keys(flagMap).forEach(flag => {

@@ -18,22 +18,22 @@ const config = {
   entry: {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
-      './src/desktop/apps/webpack/client.js'
+      './src/desktop/apps/webpack/client.js',
     ],
-    ...getEntrypoints()
+    ...getEntrypoints(),
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public/assets'),
     publicPath: '/assets',
-    sourceMapFilename: '[file].map?[contenthash]'
+    sourceMapFilename: '[file].map?[contenthash]',
   },
   module: {
     rules: [
       {
         test: /\.coffee$/,
         include: /src/,
-        use: [{ loader: 'coffee-loader' }]
+        use: [{ loader: 'coffee-loader' }],
       },
       {
         test: /\.(jade|pug)$/,
@@ -41,8 +41,8 @@ const config = {
         loader: 'pug-loader',
         options: {
           doctype: 'html',
-          root: __dirname
-        }
+          root: __dirname,
+        },
       },
       {
         test: /(\.(js|ts)x?$)/,
@@ -52,16 +52,16 @@ const config = {
           {
             loader: 'babel-loader',
             query: {
-              cacheDirectory: true
-            }
-          }
-        ]
+              cacheDirectory: true,
+            },
+          },
+        ],
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
-      }
-    ]
+        loader: 'json-loader',
+      },
+    ],
   },
   plugins: [
     // TODO: Add webpack typechecker
@@ -71,23 +71,23 @@ const config = {
       formatterOptions: 'highlightCode',
       tslint: false,
       checkSyntacticErrors: true,
-      watch: ['./src']
+      watch: ['./src'],
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
       excludeWarnings: true,
-      skipFirstNotification: true
+      skipFirstNotification: true,
     }),
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
       compilationSuccessInfo: {
-        messages: [`[Force] Listening on http://localhost:${PORT} \n`]
-      }
+        messages: [`[Force] Listening on http://localhost:${PORT} \n`],
+      },
     }),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV)
-      }
+        NODE_ENV: JSON.stringify(NODE_ENV),
+      },
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -96,25 +96,25 @@ const config = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       jade: 'jade/runtime.js',
-      waypoints: 'jquery-waypoints/waypoints.js'
+      waypoints: 'jquery-waypoints/waypoints.js',
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      minChunks: 10 // lower number for larger "common.js" bundle size
-    })
+      minChunks: 10, // lower number for larger "common.js" bundle size
+    }),
   ],
   resolve: {
     alias: {
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
-      react: path.resolve('./node_modules/react')
+      react: path.resolve('./node_modules/react'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.jade', '.coffee'],
     modules: ['node_modules', 'src'],
-    symlinks: false
+    symlinks: false,
   },
   externals: {
-    request: 'request'
-  }
+    request: 'request',
+  },
 }
 
 if (isDevelopment) {
@@ -132,9 +132,9 @@ if (isDevelopment) {
         sourceMap: true,
         uglifyOptions: {
           compress: {
-            warnings: false
-          }
-        }
+            warnings: false,
+          },
+        },
       })
     )
   }
@@ -145,7 +145,7 @@ if (isDevelopment) {
 function getEntrypoints() {
   return {
     ...findAssets('src/desktop/assets'),
-    ...findAssets('src/mobile/assets')
+    ...findAssets('src/mobile/assets'),
   }
 }
 
@@ -169,7 +169,7 @@ function findAssets(basePath) {
   const assets = files.filter(validAssets).reduce((assetMap, file) => {
     const fileName = path.basename(file, path.extname(file))
     const asset = {
-      [fileName]: [path.join(__dirname, basePath, file)]
+      [fileName]: [path.join(__dirname, basePath, file)],
     }
 
     // Load oldschool global module dependencies
@@ -181,7 +181,7 @@ function findAssets(basePath) {
 
     return {
       ...assetMap,
-      ...asset
+      ...asset,
     }
   }, {})
 

@@ -16,5 +16,5 @@ export const FairWeekMeta = props => {
 }
 
 FairWeekMeta.propTypes = {
-  meta: PropTypes.object
+  meta: PropTypes.object,
 }

@@ -24,7 +24,7 @@ globalReactModules = require('./global_react_modules')
 { componentRenderer } = require('@artsy/stitch/iso')
 
 module.exports = ->
-  # setupErrorReporting()
+  setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
   syncAuth()

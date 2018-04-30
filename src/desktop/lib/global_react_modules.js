@@ -11,7 +11,7 @@ export const ArtworkGrid = props => (
 export const Fillwidth = props => {
   if (typeof window !== 'undefined') {
     const {
-      Fillwidth: _Fillwidth
+      Fillwidth: _Fillwidth,
     } = require('@artsy/reaction/dist/Components/Artwork/Fillwidth')
 
     return <_Fillwidth artworks={artworks} {...props} useRelay={false} />
@@ -31,18 +31,18 @@ export const artwork = {
     // only required prop
     url:
       'https://d32dm0rphc51dk.cloudfront.net/w6h1rYqIqhhCRE5f0_fxMQ/larger.jpg',
-    aspect_ratio: 0.74
+    aspect_ratio: 0.74,
   },
   artists: [
     {
       __id: 'mikael-olson',
-      name: 'Mikael Olson'
-    }
+      name: 'Mikael Olson',
+    },
   ],
   partner: {
-    name: 'Gallery 1261'
+    name: 'Gallery 1261',
   },
-  href: '/artwork/mikael-olson-some-kind-of-dinosaur'
+  href: '/artwork/mikael-olson-some-kind-of-dinosaur',
 }
 
 export const artworks = {
@@ -54,7 +54,7 @@ export const artworks = {
           aspect_ratio: 1,
           placeholder: '100%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/hoFocUdpgF4mazPIgekpZA/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/hoFocUdpgF4mazPIgekpZA/large.jpg',
         },
         href: '/artwork/banksy-we-love-you-so-love-us',
         title: 'We Love You So Love Us',
@@ -65,23 +65,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'EHC Fine Art',
           href: '/ehc-fine-art',
           __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e1a19d275b247d353ff0d9',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-we-love-you-so-love-us',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -90,7 +90,7 @@ export const artworks = {
           aspect_ratio: 1,
           placeholder: '100%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/NQvnb87U8oGDm6kpdJ9jLA/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/NQvnb87U8oGDm6kpdJ9jLA/large.jpg',
         },
         href: '/artwork/banksy-radar-rat-dirty-funker-lp',
         title: 'Radar Rat (Dirty Funker LP)',
@@ -101,23 +101,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'EHC Fine Art',
           href: '/ehc-fine-art',
           __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e1a19ecd530e4d612cb07f',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-radar-rat-dirty-funker-lp',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -126,7 +126,7 @@ export const artworks = {
           aspect_ratio: 1.5,
           placeholder: '66.66666666666666%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/88LaQZxzQdksn76f0LGFoQ/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/88LaQZxzQdksn76f0LGFoQ/large.jpg',
         },
         href: '/artwork/banksy-flower-bomber-by-brandalism',
         title: 'Flower Bomber (by Brandalism)',
@@ -137,23 +137,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'EHC Fine Art',
           href: '/ehc-fine-art',
           __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e1a19f275b247d353ff0e2',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-flower-bomber-by-brandalism',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -162,7 +162,7 @@ export const artworks = {
           aspect_ratio: 0.75,
           placeholder: '132.9%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/RRGE9Ild18_IPghZXT6wuQ/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/RRGE9Ild18_IPghZXT6wuQ/large.jpg',
         },
         href: '/artwork/banksy-girl-with-balloon-14',
         title: 'Girl With Balloon',
@@ -173,23 +173,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'Graffik Gallery / Banksy Editions',
           href: '/graffik-gallery-slash-banksy-editions',
           __id: 'UGFydG5lcjpncmFmZmlrLWdhbGxlcnktc2xhc2gtYmFua3N5LWVkaXRpb25z',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e370659c18db774f25ed5b',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-girl-with-balloon-14',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -198,7 +198,7 @@ export const artworks = {
           aspect_ratio: 1,
           placeholder: '100%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/hoFocUdpgF4mazPIgekpZA/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/hoFocUdpgF4mazPIgekpZA/large.jpg',
         },
         href: '/artwork/banksy-we-love-you-so-love-us',
         title: 'We Love You So Love Us',
@@ -209,23 +209,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'EHC Fine Art',
           href: '/ehc-fine-art',
           __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e1a19d275b247d353ff0d9',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-we-love-you-so-love-us',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -234,7 +234,7 @@ export const artworks = {
           aspect_ratio: 1,
           placeholder: '100%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/NQvnb87U8oGDm6kpdJ9jLA/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/NQvnb87U8oGDm6kpdJ9jLA/large.jpg',
         },
         href: '/artwork/banksy-radar-rat-dirty-funker-lp',
         title: 'Radar Rat (Dirty Funker LP)',
@@ -245,23 +245,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'EHC Fine Art',
           href: '/ehc-fine-art',
           __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e1a19ecd530e4d612cb07f',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-radar-rat-dirty-funker-lp',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -270,7 +270,7 @@ export const artworks = {
           aspect_ratio: 1.5,
           placeholder: '66.66666666666666%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/88LaQZxzQdksn76f0LGFoQ/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/88LaQZxzQdksn76f0LGFoQ/large.jpg',
         },
         href: '/artwork/banksy-flower-bomber-by-brandalism',
         title: 'Flower Bomber (by Brandalism)',
@@ -281,23 +281,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'EHC Fine Art',
           href: '/ehc-fine-art',
           __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e1a19f275b247d353ff0e2',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-flower-bomber-by-brandalism',
-        is_saved: null
-      }
+        is_saved: null,
+      },
     },
     {
       node: {
@@ -306,7 +306,7 @@ export const artworks = {
           aspect_ratio: 0.75,
           placeholder: '132.9%',
           url:
-            'https://d32dm0rphc51dk.cloudfront.net/RRGE9Ild18_IPghZXT6wuQ/large.jpg'
+            'https://d32dm0rphc51dk.cloudfront.net/RRGE9Ild18_IPghZXT6wuQ/large.jpg',
         },
         href: '/artwork/banksy-girl-with-balloon-14',
         title: 'Girl With Balloon',
@@ -317,23 +317,23 @@ export const artworks = {
           {
             __id: 'QXJ0aXN0OmJhbmtzeQ==',
             href: '/artist/banksy',
-            name: 'Banksy'
-          }
+            name: 'Banksy',
+          },
         ],
         collecting_institution: null,
         partner: {
           name: 'Graffik Gallery / Banksy Editions',
           href: '/graffik-gallery-slash-banksy-editions',
           __id: 'UGFydG5lcjpncmFmZmlrLWdhbGxlcnktc2xhc2gtYmFua3N5LWVkaXRpb25z',
-          type: 'Gallery'
+          type: 'Gallery',
         },
         sale: null,
         _id: '58e370659c18db774f25ed5b',
         is_inquireable: true,
         sale_artwork: null,
         id: 'banksy-girl-with-balloon-14',
-        is_saved: null
-      }
-    }
-  ]
+        is_saved: null,
+      },
+    },
+  ],
 }

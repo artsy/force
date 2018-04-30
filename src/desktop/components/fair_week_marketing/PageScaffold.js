@@ -66,9 +66,9 @@ const theme = {
       xs: 0,
       sm: 24,
       md: 48,
-      lg: 64
-    }
-  }
+      lg: 64,
+    },
+  },
 }
 
 export const FairWeekPageScaffold = ({
@@ -76,7 +76,7 @@ export const FairWeekPageScaffold = ({
   fair_coverage,
   event,
   prepare_for_fairs,
-  displayStickyFooter
+  displayStickyFooter,
 }) => (
   <ThemeProvider theme={theme}>
     <Container>
@@ -196,5 +196,5 @@ FairWeekPageScaffold.propTypes = {
   fair_coverage: PropTypes.object,
   event: PropTypes.object,
   prepare_for_fairs: PropTypes.object,
-  displayStickyFooter: PropTypes.bool
+  displayStickyFooter: PropTypes.bool,
 }

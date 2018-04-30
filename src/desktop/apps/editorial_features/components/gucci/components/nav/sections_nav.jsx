@@ -28,7 +28,7 @@ SectionsNav.propTypes = {
   activeSection: PropTypes.number,
   animated: PropTypes.bool,
   sections: PropTypes.array,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 const navKeyframes = keyframes`
