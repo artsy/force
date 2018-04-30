@@ -139,6 +139,7 @@ module.exports = class Article extends Backbone.Model
     stripTags(@get attr)
 
   byline: ->
+    return _s.toSentence(_.pluck(@get('authors'), 'name')) if @hasAuthors()
     return _s.toSentence(_.pluck(@get('contributing_authors'), 'name')) if @hasContributingAuthors()
     return @get('author').name if @get('author')
     ''
@@ -148,6 +149,9 @@ module.exports = class Article extends Backbone.Model
     ''
 
   hasContributingAuthors: ->
+    @get('contributing_authors').length > 0
+
+  hasAuthors: ->
     @get('contributing_authors').length > 0
 
   getAuthorArray: ->

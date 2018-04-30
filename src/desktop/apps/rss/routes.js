@@ -45,7 +45,7 @@ export const findArticlesWithEmbeds = articles => {
   return Q.all(
     articles.map(async (article, i) => {
       const newSections = await findSocialEmbeds(article)
-      article.set('sections', newSections)
+      article.sections = newSections
 
       return article
     })
@@ -56,7 +56,7 @@ export const findArticlesWithEmbeds = articles => {
 
 export const findSocialEmbeds = article => {
   return Q.all(
-    article.get('sections').map(async (section, index) => {
+    article.sections.map(async (section, index) => {
       try {
         const newSection = await maybeFetchSocialEmbed(section)
         return newSection
