@@ -3,13 +3,14 @@ import { data as _sd } from 'sharify'
 import Articles from '../../collections/articles'
 import Q from 'bluebird-q'
 import { news as newsQuery } from './queries/news'
-import { positronql } from 'desktop/lib/positronql'
+import { positronql as _positronql } from 'desktop/lib/positronql'
 
 const PAGE_SIZE = 50
 
 // FIXME: Rewire
 let sd = _sd
 let request = _request
+let positronql = _positronql
 
 export const news = (req, res, next) => {
   const query = { query: newsQuery }
