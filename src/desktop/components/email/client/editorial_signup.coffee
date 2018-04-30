@@ -40,6 +40,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     @showCTA()
 
   setupDesktopCTA: ->
+    return if sd.CURRENT_USER
     mediator.on 'modal:closed', @setDismissCookie
     mediator.on 'auth:sign_up:success', @setDismissCookie
     @showCTA()

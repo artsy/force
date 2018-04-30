@@ -29,7 +29,6 @@ module.exports = class ContactView extends ModalView
   events: -> _.extend super,
     'submit form': 'onSubmit'
     'click #contact-submit' : 'onSubmit'
-    'click .contact-nevermind' : 'close'
     'mouseenter #contact-submit' : 'logHover'
 
   initialize: (options = {}) ->
@@ -58,8 +57,6 @@ module.exports = class ContactView extends ModalView
     @renderTemplates()
 
   renderTemplates: ->
-    # Hiding the close button here for now to account for new styling
-    @$('.modal-close').hide()
     @$('#contact-header').html @headerTemplate(@templateData)
     @$('#contact-form').html @formTemplate(@templateData)
 

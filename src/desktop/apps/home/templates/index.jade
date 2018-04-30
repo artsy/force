@@ -8,17 +8,23 @@ append locals
   - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header' + (heroUnits.length && heroUnits[0].mode.match('LIGHT') ? '-white' : '')
 
 block body
-  include hero_units
+  unless sd.HIDE_HERO_UNITS
+    include hero_units
 
   #home-foreground
-    #home-hero-units-controls( data-length= heroUnits.length )
-      ul#home-hero-unit-dots
-        for x, i in heroUnits
-          li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
+    if sd.HIDE_HERO_UNITS
+      h3= 'Collect art from leading galleries and auction houses.'
+      include ../../../components/search_bar/templates/index
+    else
+      #home-hero-units-controls( data-length= heroUnits.length )
+        ul#home-hero-unit-dots
+          for x, i in heroUnits
+            li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
 
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
-        include featured_links
+        unless sd.HIDE_HERO_UNITS
+          include featured_links
         unless user
           include browse
     include rails

@@ -212,6 +212,7 @@ module.exports = class Article extends Backbone.Model
     # Articles that have been converted to ImageCollections will have this info
     for section in @get('sections')
       return false if section.type in ['artworks', 'image']
+    return true if @get('layout') is 'news' and @get('published')
     return @get('featured') and @get('published') and @get('layout') in ['standard', 'feature']
 
   fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
@@ -235,6 +236,7 @@ module.exports = class Article extends Backbone.Model
   # article metadata tag for parse.ly
   toJSONLD: ->
     tags = @get('tags')
+    tags = tags.concat @get('layout') if @get('layout')
     tags = tags.concat @get('vertical').name if @get('vertical')
     tags = tags.concat @get('tracking_tags') if @get('tracking_tags')
     compactObject {

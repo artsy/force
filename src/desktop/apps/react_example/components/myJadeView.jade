@@ -1,0 +1,53 @@
+div
+  | Hello from MyJadeView
+
+div
+  | Data from `data` is available: name: #{name}
+
+br
+
+h1
+  | Reaction Helpers
+
+br
+hr
+br
+
+
+style.
+  .reactionArtworkBrick {
+    width: 50%;
+  }
+
+div(class='reactionArtworkBrick')
+  != stitch.components.ArtworkGrid({ title: name })
+
+br
+hr
+br
+
+div(class='reactionArtworkBrick')
+  != stitch.components.Artwork({ title: name })
+
+br
+hr
+br
+
+div
+  != stitch.components.Fillwidth({ title: name })
+
+br
+
+div
+  strong
+    | Backbone
+  hr
+
+  div
+    | Example interaction backbone-code. See components/DOM.js
+
+    .js-backbone-view
+      button.js-button
+        | Click Me!
+
+

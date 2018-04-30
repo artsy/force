@@ -1,13 +1,15 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+rewire = require 'rewire'
 fixtures = require '../helpers/fixtures'
-Articles = require '../../collections/articles'
+Articles = rewire '../../collections/articles'
 
 describe 'Articles', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    Articles.__set__ 'sd', {CURRENT_USER: {type: 'Admin'}}
     @articles = new Articles [fixtures.articles]
 
   afterEach ->
@@ -23,21 +25,16 @@ describe 'Articles', ->
         { tier: 1, id: 'qux' }
         { tier: 2, id: 'bam' }
       ]
-      _.pluck(@articles.feed(), 'id').join('').should.equal 'bazbam'
+      _.pluck(@articles.feed(), 'id').join('').should.equal 'barbazquxbam'
 
   describe '#featured', ->
 
-    it 'pulls the top 4 tier 1s', ->
+    it 'pulls the first tier 1', ->
       @articles.set [
-        { tier: 1, id: 'foo' }
+        { tier: 2, id: 'foo' }
         { tier: 1, id: 'bar' }
-        { tier: 2, id: 'baz' }
-        { tier: 1, id: 'qux' }
-        { tier: 2, id: 'bam' }
-        { tier: 1, id: 'moo' }
-        { tier: 2, id: 'boom' }
       ]
-      _.pluck(@articles.featured(), 'id').join('').should.equal 'foobarquxmoo'
+      _.pluck(@articles.featured(), 'id').join('').should.equal 'bar'
 
   describe 'biography', ->
 

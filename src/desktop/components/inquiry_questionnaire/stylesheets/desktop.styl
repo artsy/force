@@ -1,6 +1,4 @@
 .inquiry-questionnaire-modal
-  .modalize-close
-    display none
   .modalize-body
     padding 30px
 
@@ -19,8 +17,8 @@
   &--centered
     text-align center
   #auth-header-logo
-    font-size 45px
-    margin-top 10px
+    font-size 39px
+    margin 10px auto 15px
   > span
     display table-cell
     vertical-align bottom
@@ -75,15 +73,10 @@
     width 100%
 
 .iq-push-down
-.iq-nevermind
   display block
   margin 20px 0 30px 0
   text-decoration none
   garamond-size('s-body')
-
-.iq-nevermind
-  &, a
-    color gray-darker-color
 
 .iq-loadable
   > *
@@ -147,3 +140,20 @@
 
 .iq-sticky-spacer
   height 150px
+
+.gdpr-signup .tos-error
+  color red-color
+  text-align left
+  height 1.23em
+  margin-bottom 8px
+  garamond-size('l-caption')
+
+  .bordered-input
+    width 100%
+    margin-bottom 10px
+
+  .avant-garde-button-black
+    width 100%
+
+  .gdpr-signup__form__checkbox__accept-terms .is-error
+    visibility hidden

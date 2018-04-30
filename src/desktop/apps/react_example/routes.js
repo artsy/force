@@ -8,19 +8,19 @@ export async function index(req, res, next) {
       layout: '../../../components/main_layout/templates/react_index.jade',
       blocks: {
         head: 'meta.jade',
-        body: App,
+        body: App
       },
       locals: {
         ...res.locals,
-        assetPackage: 'react_example',
+        assetPackage: 'react_example'
       },
       data: {
         name: 'Leif',
-        description: 'hello hi how are you',
+        description: 'hello hi how are you'
       },
       templates: {
-        MyJadeView: 'my_jade_view.jade',
-      },
+        MyJadeView: 'myJadeView.jade'
+      }
     })
 
     res.send(layout)

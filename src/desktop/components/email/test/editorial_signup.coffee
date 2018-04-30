@@ -100,6 +100,14 @@ describe 'EditorialSignupView', ->
     it 'shows the user modal', ->
       @view.showCTA.callCount.should.equal 1
 
+    it 'returns early if the user is logged in', ->
+      @EditorialSignupView.__set__ 'sd',
+        IS_MOBILE: false,
+        CURRENT_USER: { name: 'Joe' }
+      @EditorialSignupView::showCTA = sinon.spy()
+      view = new @EditorialSignupView el: @$el
+      view.showCTA.callCount.should.equal 0
+
   describe '#fromSailthru', ->
 
     it 'checks if the utm_source is sailthru', ->

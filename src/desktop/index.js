@@ -1,4 +1,12 @@
+import * as modules from './lib/global_react_modules'
 const app = (module.exports = require('express')())
+
+// NOTE:
+// App order matters as some apps establish logic that is shared inside of subapps.
+
+// TODO: Move to src/lib/middleware/locals once done developing; this is just so
+// we can get hot module reloading which only works in /desktop and /mobile
+app.use(require('@artsy/stitch/iso').middleware(modules))
 
 // Apps with hardcoded routes or "RESTful" routes
 app.use(require('./apps/home'))
@@ -29,6 +37,7 @@ app.use(require('./apps/geo'))
 app.use(require('./apps/jobs'))
 app.use(require('./apps/notifications'))
 app.use(require('./apps/order'))
+app.use(require('./apps/order2/index.tsx'))
 app.use(require('./apps/personalize'))
 app.use(require('./apps/press'))
 app.use(require('./apps/pro_buyer'))
@@ -51,6 +60,7 @@ app.use(require('./apps/gallery_partnerships'))
 app.use(require('./apps/marketing_signup_modals'))
 app.use(require('./apps/artsy_in_miami').default)
 app.use(require('./apps/armory_week').default)
+app.use(require('./apps/frieze_week').default)
 
 // Non-profile dynamic vanity url apps
 app.use(require('./apps/galleries_institutions'))

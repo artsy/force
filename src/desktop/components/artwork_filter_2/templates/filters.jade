@@ -1,21 +1,22 @@
 h2 Works
 
-.artwork-filter-criteria__for-sale.artsy-checkbox(
-  class=(forSaleTotal ? undefined : 'is-disabled')
-)
-  .artsy-checkbox--checkbox
-    input(
-      type='checkbox', name='for_sale', id='for_sale',
-      checked=(forSale ? 'checked' : undefined)
-      disabled=(forSaleTotal > 0 ? undefined : 'disabled')
-      class= 'js-artwork-filter-toggle'
-    )
-    label( for='for_sale' )
-  label.artsy-checkbox--label.artwork-filter-label(
-    for='for_sale'
+if forSaleFilter
+  .artwork-filter-criteria__for-sale.artsy-checkbox(
+    class=(forSaleTotal ? undefined : 'is-disabled')
   )
-    | Only For Sale
-    span.artwork-filter-count (#{forSaleTotal})
+    .artsy-checkbox--checkbox
+      input(
+        type='checkbox', name='for_sale', id='for_sale',
+        checked=(forSale ? 'checked' : undefined)
+        disabled=(forSaleTotal > 0 ? undefined : 'disabled')
+        class= 'js-artwork-filter-toggle'
+      )
+      label( for='for_sale' )
+    label.artsy-checkbox--label.artwork-filter-label(
+      for='for_sale'
+    )
+      | Only For Sale
+      span.artwork-filter-count (#{forSaleTotal})
 
 if aggregations
   for mapped in aggregationsMap

@@ -60,7 +60,7 @@ const {
   SEGMENT_WRITE_KEY_SERVER,
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
-  SESSION_SECRET,
+  SESSION_SECRET
 } = config
 
 export default function(app) {
@@ -91,7 +91,7 @@ export default function(app) {
       onRateLimited(req, res, next) {
         console.log('Rate limit exceeded for', req.headers['x-forwarded-for'])
         return next()
-      },
+      }
     })
   }
 
@@ -132,7 +132,7 @@ export default function(app) {
       domain: COOKIE_DOMAIN,
       name: SESSION_COOKIE_KEY,
       maxAge: SESSION_COOKIE_MAX_AGE,
-      secure: NODE_ENV === 'production' || NODE_ENV === 'staging',
+      secure: NODE_ENV === 'production' || NODE_ENV === 'staging'
     })
   )
 
@@ -160,8 +160,8 @@ export default function(app) {
           'name',
           'paddle_number',
           'phone',
-          'type',
-        ],
+          'type'
+        ]
       })
     )
   )
@@ -173,19 +173,19 @@ export default function(app) {
     app.use(
       require('stylus').middleware({
         src: path.resolve(__dirname, '../desktop'),
-        dest: path.resolve(__dirname, '../desktop/public'),
+        dest: path.resolve(__dirname, '../desktop/public')
       })
     )
     app.use(
       require('stylus').middleware({
         src: path.resolve(__dirname, '../mobile'),
-        dest: path.resolve(__dirname, '../mobile/public'),
+        dest: path.resolve(__dirname, '../mobile/public')
       })
     )
   }
   glob
     .sync(`${__dirname}/../{public,{desktop,mobile}/**/public}`)
-    .forEach((fld) => app.use(express.static(fld)))
+    .forEach(fld => app.use(express.static(fld)))
   app.use(
     favicon(path.resolve(__dirname, '../mobile/public/images/favicon.ico'))
   )
@@ -230,14 +230,14 @@ export default function(app) {
     })
 
     mountAndReload(path.resolve('src/desktop'), {
-      watchModules: ['@artsy/reaction'],
+      watchModules: ['@artsy/reaction', '@artsy/stitch']
     })
 
     // In staging or prod, mount routes normally
   } else {
     app.use((req, res, next) => {
       if (argv.debugProd) {
-        res.locals.asset = (filename) => filename // Stub bucketAssets middleware helper
+        res.locals.asset = filename => filename // Stub bucketAssets middleware helper
       }
 
       // Direct mobile devices to the mobile app, otherwise fall through to

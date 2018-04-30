@@ -7,7 +7,7 @@ import _Article from 'desktop/models/article.coffee'
 import Articles from 'desktop/collections/articles.coffee'
 import {
   SuperSubArticlesQuery,
-  SuperArticleQuery,
+  SuperArticleQuery
 } from 'desktop/apps/article/queries/superArticle'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { crop, resize } from 'desktop/components/resizer/index.coffee'
@@ -32,7 +32,7 @@ export async function index(req, res, next) {
   try {
     const data = await positronql({
       query: ArticleQuery(articleId),
-      req,
+      req
     })
     const article = data.article
     const articleModel = new Article(data.article)
@@ -76,7 +76,7 @@ export async function index(req, res, next) {
     // Set main super article
     if (article.is_super_sub_article) {
       const superData = await positronql({
-        query: SuperArticleQuery(article.id),
+        query: SuperArticleQuery(article.id)
       })
       superArticle.set(superData.articles[0])
     } else if (article.is_super_article) {
@@ -100,14 +100,21 @@ export async function index(req, res, next) {
         SuperArticleFooter:
           '../../../components/article/templates/super_article_footer.jade',
         SuperArticleHeader:
-          '../../../components/article/templates/super_article_sticky_header.jade',
+          '../../../components/article/templates/super_article_sticky_header.jade'
       }
     }
 
     // Series and Video pages
+    const isFeatureInSeries =
+      article.seriesArticle &&
+      article.layout === 'feature' &&
+      (article.hero_section && article.hero_section.type === 'fullscreen')
+    const hasSeriesNav =
+      _.contains(['series', 'video'], article.layout) || isFeatureInSeries
+
     let layoutTemplate =
       '../../../components/main_layout/templates/react_index.jade'
-    if (_.contains(['series', 'video'], article.layout)) {
+    if (hasSeriesNav) {
       layoutTemplate =
         '../../../components/main_layout/templates/react_blank_index.jade'
     }
@@ -119,18 +126,18 @@ export async function index(req, res, next) {
       basePath: res.app.get('views'),
       layout: layoutTemplate,
       config: {
-        styledComponents: true,
+        styledComponents: true
       },
       blocks: {
         head: 'meta.jade',
-        body: App,
+        body: App
       },
       locals: {
         ...res.locals,
         assetPackage: 'article',
         bodyClass: getBodyClass(article),
         crop,
-        markdown,
+        markdown
       },
       data: {
         article,
@@ -139,9 +146,9 @@ export async function index(req, res, next) {
         jsonLD,
         subscribed,
         superArticle,
-        superSubArticles,
+        superSubArticles
       },
-      templates,
+      templates
     })
 
     res.send(layout)
@@ -150,7 +157,7 @@ export async function index(req, res, next) {
   }
 }
 
-const getBodyClass = (article) => {
+const getBodyClass = article => {
   let bodyClass = 'body-article body-no-margins'
   const isSuper = article.is_super_article || article.is_super_sub_article
   const isFullscreen =
@@ -168,7 +175,7 @@ export function classic(req, res, next) {
   article.fetchWithRelated({
     accessToken,
     error: res.backboneError,
-    success: (data) => {
+    success: data => {
       if (req.params.slug !== data.article.get('slug')) {
         return res.redirect(`/article/${data.article.get('slug')}`)
       }
@@ -192,10 +199,10 @@ export function classic(req, res, next) {
         _.extend(data, {
           embed,
           crop,
-          resize,
+          resize
         })
       )
-    },
+    }
   })
 }
 
@@ -204,7 +211,7 @@ export function amp(req, res, next) {
 
   article.fetchWithRelated({
     error: res.backboneError,
-    success: (data) => {
+    success: data => {
       if (req.params.slug !== data.article.get('slug')) {
         return res.redirect(`/article/${data.article.get('slug')}/amp`)
       }
@@ -222,13 +229,14 @@ export function amp(req, res, next) {
           resize,
           crop,
           embed,
+          _
         })
       )
-    },
+    }
   })
 }
 
-export const subscribedToEditorial = (email) => {
+export const subscribedToEditorial = email => {
   return new Promise((resolve, reject) => {
     if (!email.length) {
       return resolve(false)
@@ -236,7 +244,7 @@ export const subscribedToEditorial = (email) => {
     sailthru.apiGet(
       'user',
       {
-        id: email,
+        id: email
       },
       (err, response) => {
         if (err) {
@@ -264,13 +272,13 @@ export const editorialSignup = (req, res, next) => {
     {
       id: req.body.email,
       lists: {
-        [`${sd.SAILTHRU_MASTER_LIST}`]: 1,
+        [`${sd.SAILTHRU_MASTER_LIST}`]: 1
       },
       vars: {
         source: 'editorial',
         receive_editorial_email: true,
-        email_frequency: 'daily',
-      },
+        email_frequency: 'daily'
+      }
     },
     (err, response) => {
       if (err) {
@@ -282,7 +290,7 @@ export const editorialSignup = (req, res, next) => {
           'event',
           {
             event: 'editorial_welcome',
-            id: req.body.email,
+            id: req.body.email
           },
           (err, response) => {
             if (err) {

@@ -32,6 +32,7 @@ module.exports = class HeaderView extends Backbone.View
     @checkForNotifications()
     @mobileHeaderView = new MobileHeaderView
       el : @$('#main-header-small-screen')
+
     @searchBarView = new SearchBarView
       el: @$('#main-layout-search-bar-container')
       $input: @$('#main-layout-search-bar-input')

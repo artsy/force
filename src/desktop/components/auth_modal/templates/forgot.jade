@@ -5,11 +5,19 @@
     section#auth-body
       .auth-register
         form.auth-form
-          input.bordered-input.is-block(
-            name='email', type='email', placeholder='Email' autofocus= autofocus, required
-          )
-          button#auth-submit.avant-garde-button-black.is-block Send me reset instructions
-          footer.auth-form-options
-            a.auth-toggle( href='/log_in', data-mode='login' ) I remember it!
+          - if (setPassword)
+            p Get a unique link sent to your email and finish creating your account.
 
-    include ./_login_footer.jade
+          input.bordered-input.is-block(
+            name='email', value=email, type='email', placeholder='Email' autofocus= autofocus, required
+          )
+
+          - buttonText = setPassword ? 'Submit' : 'Send me reset instructions'
+          button#auth-submit.avant-garde-button-black.is-block= buttonText
+
+          - if (!setPassword)
+            footer.auth-form-options
+              a.auth-toggle( href='/log_in', data-mode='login' ) I remember it!
+
+    - if (!setPassword)
+      include ./_login_footer.jade

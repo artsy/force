@@ -6,7 +6,7 @@ import { Col, Row } from 'reaction/Components/Grid'
 import { unica } from 'reaction/Assets/Fonts'
 import { Text, PartnerBlock } from 'reaction/Components/Publishing'
 
-export const SeriesFooter = (props) => {
+export const SeriesFooter = props => {
   const { curation, isMobile } = props
   const logoSrc = curation.partner_logo_footer || curation.partner_logo_primary
   const logoUrl = curation.partner_link_url || ''

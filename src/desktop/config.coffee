@@ -32,6 +32,7 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
+  ENABLE_EXPERIMENTAL_STITCH_INJECTION: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: null
@@ -72,7 +73,7 @@ module.exports =
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
-  EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video'
+  EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video|^\/news'
   PARSELY_SECRET: null
   PC_ARTSY_CHANNEL: '5759e508b5989e6f98f77999'
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'

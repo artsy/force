@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 17.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<g>
-	<circle cx="16" cy="11" r="6"/>
-	<path d="M21,19h-5h-5c-5,0-6,2-6,4s0,4,0,4h11h11c0,0,0-2,0-4S26,19,21,19z"/>
-</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="20px" viewBox="0 0 18 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+  <g id="person" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1387.000000, -20.000000)">
+    <g id="person-1" transform="translate(1387.000000, 20.000000)" fill="#000000">
+      <path d="M8.6774,1.9687 C10.8334,1.9687 12.5864,3.7227 12.5864,5.8777 C12.5864,8.0327 10.8334,9.7867 8.6774,9.7867 C6.5214,9.7867 4.7684,8.0327 4.7684,5.8777 C4.7684,3.7227 6.5214,1.9687 8.6774,1.9687 M8.6774,11.7547 C11.9184,11.7547 14.5544,9.1187 14.5544,5.8777 C14.5544,2.6367 11.9184,-0.0003 8.6774,-0.0003 C5.4364,-0.0003 2.8004,2.6367 2.8004,5.8777 C2.8004,9.1187 5.4364,11.7547 8.6774,11.7547" id="person-2"></path>
+      <path d="M13.8288,13.2304 L3.6888,13.2304 C1.6548,13.2304 -0.0002,14.8844 -0.0002,16.9184 L-0.0002,20.0004 L1.9688,20.0004 L1.9688,16.9184 C1.9688,15.9704 2.7398,15.1994 3.6888,15.1994 L13.8288,15.1994 C14.7768,15.1994 15.5488,15.9704 15.5488,16.9184 L15.5488,20.0004 L17.5168,20.0004 L17.5168,16.9184 C17.5168,14.8844 15.8628,13.2304 13.8288,13.2304" id="person-3"></path>
+    </g>
+  </g>
 </svg>

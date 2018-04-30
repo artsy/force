@@ -40,7 +40,7 @@ imageUrl = require './components/image_url'
     success: (results, response, options) ->
       totalPages = Math.ceil(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
       totalPages = 99 if totalPages > 99
-      models = results.moveMatchResultsToTop term
+      models = results.models
       res.locals.sd.RESULTS = results.toJSON()
       res.render 'template',
         term: term

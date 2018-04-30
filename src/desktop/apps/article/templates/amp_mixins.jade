@@ -70,6 +70,17 @@ mixin amp_embed(section)
     .article-section-embed
       amp-iframe(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
 
+mixin amp_social_embed(section)
+  - var url = _.compact(section.url.split('/'))
+  .article-section-container.responsive-layout-container
+    .article-section-social-embed
+      if section.url.match('instagram')
+        - var shortcode = url.pop()
+        amp-instagram(data-shortcode=shortcode width="300" height="270" layout="responsive")
+      if section.url.match('twitter')
+        - var tweetid = url.pop()
+        amp-twitter(data-tweetid=tweetid width="300" height="270" layout="responsive")
+
 mixin amp_callout(section)
   .article-section-container.responsive-layout-container(data-section-type="callout")
     if section.article && section.article.length > 0
@@ -126,6 +137,9 @@ mixin amp_head
   <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
   <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
   <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  <script async custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js"></script>
+  <script async custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js"></script>
+
   style(amp-boilerplate='').
     body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
   

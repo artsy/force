@@ -8,7 +8,8 @@ block head
 
 block body
   - isAuction = artwork.context && artwork.context.__typename == 'ArtworkContextAuction'
-  
+  - isEcommerceSale = artwork.sale && artwork.sale.is_auction == false
+
   if isAuction
     .artwork-page.main-layout-container
       section.artwork
@@ -19,21 +20,23 @@ block body
             include ../components/actions/index
             include ../components/additional_info/index
             include ../components/artists/index
-            
+
           include ./metadata
-            
+
         .artwork__main__overview__fold( class='js-artwork-fold' )
           include ../client/fold
-        
+
         .artwork__footer( class='js-artwork-footer' )
           include ../client/footer
-  
-  else 
+
+  else
     .artwork-page.main-layout-container
       section.artwork
         .artwork__main
           .artwork__main__overview
-            include ../components/banner/index
+            unless isEcommerceSale
+              include ../components/banner/index
+
             include ../components/images/index
             include ../components/actions/index
             include ../components/additional_info/index

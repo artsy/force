@@ -8,7 +8,7 @@ import { unica } from 'reaction/Assets/Fonts'
 import { Share } from 'reaction/Components/Publishing/Byline/Share'
 import { Text } from 'reaction/Components/Publishing'
 
-export const SectionText = (props) => {
+export const SectionText = props => {
   const { section } = props
 
   return (
@@ -79,8 +79,12 @@ const ShareContainer = styled.div`
   `};
 `
 const Featuring = styled.div`
+<<<<<<< HEAD
   ${unica('s32')};
   line-height: 1.25em;
+=======
+  ${unica('s32')} line-height: 1.25em;
+>>>>>>> 0d57df6430679c85205867f36d2e08a001f0d4d2
   ${pMedia.xs`
     ${unica('s19')}
   `};

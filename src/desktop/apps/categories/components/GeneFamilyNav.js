@@ -35,7 +35,6 @@ const GeneFamilyList = styled(Scrollspy)`
   z-index: 1;
 
   ${avantgarde('s13')};
-  line-height: 1.33em;
 `
 
 const GeneFamilyItem = styled.li`
@@ -55,12 +54,12 @@ const GeneFamilyLink = styled.a`
 `
 
 class GeneFamilyNav extends React.Component {
-  handleClick = (e) => {
+  handleClick = e => {
     e.preventDefault()
     const id = e.target.hash
     const section = document.querySelector(id)
     const scroller = new FrameAnimator(
-      (val) => {
+      val => {
         window.scrollTo(0, val)
       },
       {
@@ -77,11 +76,11 @@ class GeneFamilyNav extends React.Component {
     return (
       <ResponsiveSidebar>
         <GeneFamilyList
-          items={geneFamilies.map((f) => f.id)}
+          items={geneFamilies.map(f => f.id)}
           currentClassName="is-current"
           offset={-1 * TOP_BUFFER}
         >
-          {geneFamilies.map((geneFamily) => (
+          {geneFamilies.map(geneFamily => (
             <GeneFamilyItem key={geneFamily.id}>
               <GeneFamilyLink
                 href={`#${geneFamily.id}`}

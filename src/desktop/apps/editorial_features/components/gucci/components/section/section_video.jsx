@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { pMedia } from 'reaction/Components/Helpers'
-import * as Fonts from 'reaction/Assets/Fonts'
+import { unica } from 'reaction/Assets/Fonts'
 import { Video } from 'reaction/Components/Publishing'
 
-export const SectionVideo = (props) => {
+export const SectionVideo = props => {
   const { section, curation } = props
 
   return (
@@ -59,7 +59,7 @@ const SectionVideoContainer = styled.div`
   }
   .PlayButton {
     background: none;
-    ${Fonts.unica('s80')}
+    ${unica('s80')}
     width: auto;
     height: auto;
     &:after {
@@ -76,7 +76,7 @@ const SectionVideoContainer = styled.div`
   ${pMedia.sm`
     .PlayButton {
       &:after {
-        ${Fonts.unica('s40')}
+        ${unica('s40')}
       }
       &__PlayButtonCaret {
         border-left: 30px solid white;
@@ -95,7 +95,7 @@ const VideoPreview = styled.div`
   height: 59vw;
   max-height: 668px;
   position: relative;
-  background-image: ${(props) => 'url(' + props.backgroundSrc + ')'};
+  background-image: ${props => 'url(' + props.backgroundSrc + ')'};
   background-color: black;
   background-position: 50%;
   background-size: cover;
@@ -103,7 +103,7 @@ const VideoPreview = styled.div`
 `
 
 const ReleaseDate = styled.div`
-  ${Fonts.unica('s80')} color: white;
+  ${unica('s80')} color: white;
   display: flex;
   height: 100%;
   justify-content: flex-start;
@@ -111,7 +111,7 @@ const ReleaseDate = styled.div`
   padding: 15px 30px;
   background: rgba(0, 0, 0, 0.5);
   ${pMedia.sm`
-    ${Fonts.unica('s40')}
+    ${unica('s40')}
     padding: 10px 20px;
   `};
 `

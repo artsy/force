@@ -7,7 +7,6 @@ module.exports =
     '^/artsy-primer'
     '^/collect-art'
     '^/consign'
-    '^/consign2'
     '^/signup'
     '^/login'
     '^/user/edit'
@@ -29,9 +28,12 @@ module.exports =
     '^/news/.*'
     '^/news'
     '^/series/.*'
+    '^/spring-art-fairs'
     '^/video/.*'
     '^/artsy-in-miami'
     '^/armory-week'
+    '^/order'
+    '^/order2'
   ]
 
   check: ->

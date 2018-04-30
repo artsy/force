@@ -25,20 +25,15 @@
 # module.exports = {}
 
 module.exports = {
-  merch_sort_test:
-    key: 'merch_sort_test'
-    outcomes:
-      control: 50
-      experiment: 50
+  artist_merch_test:
+    key: 'artist_merch_test'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'no_header_merch_sort'
+      'merch_sort'
+    ]
     control_group: 'control'
-    edge: 'experiment'
-  gdpr_compliance_test:
-    key: 'gdpr_compliance_test'
-    outcomes: {
-      control: 100
-      combined_checkboxes: 0
-      separated_checkboxes: 0
-    }
-    control_group: 'control'
-    edge: 'combined_checkboxes'
+    edge: 'merch_sort'
 }
+

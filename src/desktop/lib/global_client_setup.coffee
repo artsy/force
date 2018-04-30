@@ -8,6 +8,7 @@ $ = require 'jquery'
 Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
+{ uniqBy } = require 'lodash'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 Raven = require 'raven-js'
@@ -19,6 +20,8 @@ setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
+globalReactModules = require('./global_react_modules')
+{ componentRenderer } = require('@artsy/stitch/iso')
 
 module.exports = ->
   # setupErrorReporting()
@@ -29,6 +32,8 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
+  mountReactionBlocks()
+
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -92,3 +97,17 @@ setupJquery = ->
 setupErrorReporting = ->
   Raven.config(sd.SENTRY_PUBLIC_DSN).install()
   Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
+
+mountReactionBlocks = ->
+  {components, mountOnClient} = componentRenderer({
+    mode: 'client',
+    modules: globalReactModules
+  })
+
+  sd.stitch.renderQueue.forEach (block) ->
+    mountOnClient(block)
+
+  # Mount renderer for runtime client-side templates. NOTE: must be included
+  # in template when rendering data; e.g., html = myTemplate({ data, reaction })
+  sd.stitch.components = components
+

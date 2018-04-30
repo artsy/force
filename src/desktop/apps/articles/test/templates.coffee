@@ -24,6 +24,19 @@ describe 'article figure template', ->
       sd: {}
     html.should.containEql '/article/foobar'
 
+
+describe 'articles template', ->
+
+  it 'shows the news panel', ->
+    html = render('articles')
+      articles: new Articles([_.extend(fixtures.article, {slug: 'foobar', tier: 1})])
+      asset: (url) -> url
+      crop: (url) -> url
+      moment: moment
+      sd: {}
+    html.should.containEql 'news-panel'
+
+
 describe 'section template', ->
 
   it 'renders the section title', ->

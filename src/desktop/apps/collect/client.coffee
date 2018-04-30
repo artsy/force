@@ -25,15 +25,11 @@ sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
 
 module.exports.init = ->
-  # MERCH_SORT_TEST remove after test closes
-  splitTest('merch_sort_test').view()
-  
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
-    fullyQualifiedLocations: fullyQualifiedLocations,
-    merchTestGroup: sd.MERCH_SORT_TEST
+    fullyQualifiedLocations: fullyQualifiedLocations
   filter = new Filter params: params
 
   headlineView = new HeadlineView
@@ -80,13 +76,13 @@ module.exports.init = ->
     el: $('.cf-sidebar__mediums')
     params: params
     aggregations: filter.aggregations
-    alwaysEnabled: true    
+    alwaysEnabled: true
 
   periodsView = new PeriodFilterView
     el: $('.cf-sidebar__periods')
     params: params
     aggregations: filter.aggregations
-    alwaysEnabled: true    
+    alwaysEnabled: true
 
   followedArtistsView = new FollowedArtistFilterView
     el: $('.cf-sidebar__followed_artists')

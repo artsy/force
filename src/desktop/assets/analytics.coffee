@@ -11,13 +11,18 @@ mediator.on 'all', (name, data) ->
 
 # All Reaction events are sent directly to Segment
 Events.onEvent (data) =>
-  analytics.track data.action, _.omit data, 'action'
 
-  # Send Reaction's read more as a Parsely page view
+  # Send Reaction's read more as a page view
   if data.action is 'Clicked read more'
+    pathname = data.pathname || location.pathname
+    href = sd.APP_URL + '/' + pathname
+    analytics.page(
+      { path: pathname },
+      { integrations: { Marketo: false }}
+    )
     if window.PARSELY
       window.PARSELY.beacon.trackPageView
-        url: location.href,
+        url: href,
         js: 1,
         action_name: 'infinite'
     if window.Sailthru
@@ -25,8 +30,13 @@ Events.onEvent (data) =>
         domain: 'horizon.artsy.net',
         spider: true,
         track_url: true,
-        url: sd.APP_URL + '/' + location.pathname,
+        url: href,
         use_stored_tags: true
+
+    # Return early because we don't want to make a Segment call for read more
+    return
+
+  analytics.track data.action, _.omit data, 'action'
 
 require '../analytics/main_layout.js'
 

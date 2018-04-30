@@ -22,19 +22,20 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
-    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), (path) => {
+    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
       if (window.location.pathname.split('/')[1] === path) {
         window.setTimeout(function() {
           const {
             requestStart,
             loadEventEnd,
-            domComplete,
+            domComplete
           } = window.performance.timing
 
           analytics.track('Page load time', {
             requestStart,
             loadEventEnd,
             domComplete,
+            nonInteraction: 1
           })
         }, 0)
       }

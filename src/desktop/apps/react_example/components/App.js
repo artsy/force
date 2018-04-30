@@ -7,14 +7,14 @@ export default class App extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    templates: PropTypes.object,
+    templates: PropTypes.object
   }
 
   componentDidMount() {
     console.log('Component mounted on client!')
   }
 
-  handleButtonClick = (event) => {
+  handleButtonClick = event => {
     console.warn('React Button clicked!', this.props.description)
   }
 
@@ -42,7 +42,7 @@ export default class App extends Component {
 
           <div
             dangerouslySetInnerHTML={{
-              __html: MyJadeView,
+              __html: MyJadeView
             }}
           />
         </div>

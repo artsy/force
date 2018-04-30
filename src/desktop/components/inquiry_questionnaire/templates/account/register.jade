@@ -15,7 +15,8 @@ form.stacked-form
     //- Rendered separately
 
   label.avant-garde-form-label( for='name' )
-    | Full Name
+    | Full Name	
+  
   input.bordered-input(
     id='name'
     name='name'
@@ -49,10 +50,7 @@ form.stacked-form
   .iq-account-sub.iq-account-sub--small
     span
       | By signing up, you agree to our&nbsp;
-      a.fine-faux-underline( href='/terms', target='_blank' ) Terms of Use
-      = ' and '
-      a.fine-faux-underline( href='/privacy', target='_blank' ) Privacy Policy
+      a.fine-faux-underline( href='/terms', target='_blank' ) Terms of Use	
+      = ' and '	
+      a.fine-faux-underline( href='/privacy', target='_blank' ) Privacy Policy	
       | .
-
-  .iq-push-down
-    include ../partials/nevermind

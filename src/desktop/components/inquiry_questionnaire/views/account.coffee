@@ -2,12 +2,16 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
+FormMixin = require '../../mixins/form'
+FormErrorHelpers = require '../../auth_modal/helpers'
 templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
 
 module.exports = class Account extends StepView
+  _.extend @prototype, FormMixin
+  _.extend @prototype, FormErrorHelpers
   className: 'iq-account'
 
   template: ->
@@ -17,11 +21,12 @@ module.exports = class Account extends StepView
     'click button': 'submit'
     'click .js-mode': 'change'
     'click .js-iq-save-skip': 'next'
+    'click #signup-fb': 'fbSignup'
 
   initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
     @modal?.dialog 'bounce-in'
     @active = new Backbone.Model mode: 'auth'
-
+   
     @listenTo @active, 'change:mode', @render
     @listenTo @active, 'change:mode', @forgot
 

@@ -1,4 +1,7 @@
 _ = require 'underscore'
+React = require 'react'
+ReactDOM = require 'react-dom'
+{ NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'
 Articles = require '../../../collections/articles.coffee'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
 EditorialSignupView = require '../../../components/email/client/editorial_signup.coffee'
@@ -18,3 +21,11 @@ module.exports.init = ->
   feedView.render()
   new EditorialSignupView
     el: $('body')
+
+  ReactDOM.render(
+    React.createElement(
+      NewsPanel,
+      {articles: sd.NEWS_ARTICLES}
+    ),
+    document.getElementById('news-panel')
+  )

@@ -1,18 +1,20 @@
 import moment from 'moment'
 import React, { Component, Fragment } from 'react'
-import { flatten } from 'lodash'
+import { flatten, debounce } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import { Article, RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing'
+import {
+  RelatedArticlesCanvas,
+} from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
-import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 import { LoadingSpinner } from './InfiniteScrollArticle'
-
+import { NewsArticle } from './NewsArticle'
+import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
 
 export interface Props {
   article?: ArticleData
@@ -22,46 +24,44 @@ export interface Props {
 }
 
 interface State {
+  activeArticle: string
   articles: ArticleData[]
-  date: any
+  date: string
   display: any[]
-  offset: number
-  omit: string
   error: boolean
-  following: any[]
+  following: object[]
   isEnabled: boolean
   isLoading: boolean
-  relatedArticles: any[]
+  offset: number
+  omit: string
+  relatedArticles: object[]
 }
 
 // FIXME: Rewire
 let positronql = _positronql
 
-const FETCH_TOP_OFFSET = 200
-
-export class InfiniteScrollNewsArticle extends Component<
-  Props,
-  State
-  > {
-
+export class InfiniteScrollNewsArticle extends Component<Props, State> {
   constructor(props) {
     super(props)
 
-    const article = props.articles[0] ? props.articles[0] : {}
+    const article = props.articles[0] || {}
     const date = this.getDateField(article)
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
 
+    this.onDateChange = debounce(this.onDateChange, 200)
+
     this.state = {
-      isLoading: false,
+      activeArticle: '',
       articles: props.articles,
       date,
       display: [],
-      offset,
-      omit,
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
+      isLoading: false,
+      offset,
+      omit,
       relatedArticles: []
     }
   }
@@ -77,7 +77,7 @@ export class InfiniteScrollNewsArticle extends Component<
       following,
       offset,
       omit,
-      relatedArticles
+      relatedArticles,
     } = this.state
 
     this.setState({
@@ -89,7 +89,7 @@ export class InfiniteScrollNewsArticle extends Component<
         query: newsArticlesQuery({
           offset,
           limit: 6,
-          omit
+          omit,
         }),
       })
 
@@ -131,12 +131,7 @@ export class InfiniteScrollNewsArticle extends Component<
 
     if (isEnabled) {
       if (!isLoading) {
-        return (
-          <Waypoint
-            onEnter={this.fetchNextArticles}
-            topOffset={FETCH_TOP_OFFSET}
-          />
-        )
+        return <Waypoint onEnter={this.fetchNextArticles} bottomOffset="-50%" />
       } else if (!error) {
         return (
           <LoadingSpinner>
@@ -147,49 +142,15 @@ export class InfiniteScrollNewsArticle extends Component<
     }
   }
 
-  onEnter = (article, { previousPosition, currentPosition }) => {
-    const { date } = this.state
-    const enteredArticle =
-      previousPosition === 'above' && currentPosition === 'inside'
-    const hasNewDate = article.published_at !== date
-
-    if (enteredArticle && hasNewDate) {
-      // ENTERED AN ARTICLE
-      this.setState({ date: article.published_at })
-    }
-    if (enteredArticle && article === this.props.article) {
-      this.onExpand(article)
+  onDateChange = (date) => {
+    const hasNewDate = !moment(date).isSame(this.state.date, 'day')
+    if (hasNewDate) {
+      this.setState({ date })
     }
   }
 
-  onLeave = (i, { previousPosition, currentPosition }) => {
-    const { date, articles } = this.state
-    const nextArticle = articles[i + 1]
-    const hasNewDate = nextArticle && nextArticle.published_at !== date
-
-    if (
-      nextArticle &&
-      previousPosition === 'inside' &&
-      currentPosition === 'above'
-    ) {
-      // LEFT AN ARTICLE
-      if (hasNewDate) {
-        this.setState({ date: nextArticle.published_at })
-      }
-      document.title = 'News' // todo: replace with actual meta-title
-      window.history.replaceState({}, 'news', `/news`)
-    }
-  }
-
-  onExpand = (article) => {
-    // Set slug/document title when expanding an article
-    document.title = article.thumbnail_title
-    window.history.replaceState({}, article.id, `/news/${article.slug}`)
-  }
-
-  getDateField = (article) => {
-    const { published_at, scheduled_publish_at } = article
-    return published_at || scheduled_publish_at || moment().toISOString()
+  onActiveArticleChange = (id) => {
+    this.setState({ activeArticle: id })
   }
 
   hasNewDate = (article, i) => {
@@ -201,14 +162,14 @@ export class InfiniteScrollNewsArticle extends Component<
     return beforeDate !== currentDate
   }
 
+  getDateField = (article) => {
+    const { published_at, scheduled_publish_at } = article
+    return published_at || scheduled_publish_at || moment().toISOString()
+  }
+
   renderContent = () => {
-    const {
-      articles,
-      display,
-      relatedArticles
-    } = this.state
+    const { activeArticle, articles, display, relatedArticles } = this.state
     const { isMobile } = this.props
-    const marginTop = isMobile ? '100px' : '200px'
 
     let counter = 0
 
@@ -220,49 +181,43 @@ export class InfiniteScrollNewsArticle extends Component<
         if (hasMetaContent) {
           counter++
         }
-
-        const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
         const isTruncated = !this.props.article || i !== 0
+        const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
 
         return (
           <Fragment key={`article-${i}`}>
-            {hasDateDivider &&
-              <NewsDateDivider date={article.published_at} />
-            }
-            <div key={`article-${i}`}>
-              <Article
-                article={article}
-                isTruncated={isTruncated}
-                isMobile={isMobile}
-                marginTop={i === 0 ? marginTop : null}
-                onExpand={() => this.onExpand(article)}
-              />
-              <Waypoint
-                onEnter={(waypointData) => this.onEnter(article, waypointData)}
-                onLeave={(waypointData) => this.onLeave(i, waypointData)}
-                topOffset={FETCH_TOP_OFFSET}
-              />
-            </div>
-            {hasMetaContent && related && (
-              <Fragment>
-                <Break />
-                <RelatedArticlesCanvas
-                  articles={related}
-                  isMobile={isMobile}
-                />
-                <Break />
-              </Fragment>
-            )}
-            {hasMetaContent && displayAd && (
-              <Fragment>
-                <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
-                <Break />
-              </Fragment>
-            )}
-          </Fragment >
+            {hasDateDivider && <NewsDateDivider date={article.published_at} />}
+            <NewsArticle
+              isMobile={isMobile}
+              article={article}
+              isTruncated={isTruncated}
+              isFirstArticle={i === 0}
+              onDateChange={(date) => this.onDateChange(date)}
+              nextArticle={articles[i + 1]}
+              onActiveArticleChange={(id) => this.onActiveArticleChange(id)}
+              isActive={activeArticle === article.id}
+            />
+            {hasMetaContent &&
+              related && (
+                <Fragment>
+                  <Break />
+                  <RelatedArticlesCanvas
+                    articles={related}
+                    isMobile={isMobile}
+                  />
+                  <Break />
+                </Fragment>
+              )}
+            {hasMetaContent &&
+              displayAd && (
+                <Fragment>
+                  <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
+                  <Break />
+                </Fragment>
+              )}
+          </Fragment>
         )
-      }
-      )
+      })
     )
   }
 
@@ -271,10 +226,7 @@ export class InfiniteScrollNewsArticle extends Component<
 
     return (
       <div id="article-root">
-        <NewsNav
-          date={date}
-          positionTop={61}
-        />
+        <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}
       </div>

@@ -2,7 +2,9 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 setup = require './setup'
-Account = benv.requireWithJadeify require.resolve('../../views/account'), [
+{ resolve } = require 'path'
+
+Account = benv.requireWithJadeify resolve(__dirname, '../../views/account'), [
   'templates.login'
   'templates.register'
   'templates.forgot'

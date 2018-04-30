@@ -1,10 +1,11 @@
 module.exports = """
-  query {
+  query($showHeroUnits: Boolean!) {
     home_page {
       artwork_modules(
-        max_rails: 6,
+        max_rails: 7,
         order: [
           ACTIVE_BIDS,
+          RECENTLY_VIEWED_WORKS
           RECOMMENDED_WORKS,
           FOLLOWED_ARTISTS,
           RELATED_ARTISTS,
@@ -21,7 +22,7 @@ module.exports = """
           followed_artist_id
         }
       }
-      hero_units(platform: DESKTOP) {
+      hero_units(platform: DESKTOP) @include(if: $showHeroUnits){
         mode
         heading
         title

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { pMedia } from 'reaction/Components/Helpers'
 import Icon from 'reaction/Components/Icon'
-import * as Fonts from 'reaction/Assets/Fonts'
+import { unica } from 'reaction/Assets/Fonts'
 import { PartnerInline } from 'reaction/Components/Publishing/Partner/PartnerInline'
 
 export class Header extends Component {
@@ -84,7 +84,7 @@ const HeaderMain = styled.div`
     justify-content: flex-end;
     align-items: center;
     a {
-      ${Fonts.unica('s16', 'medium')} text-decoration: none;
+      ${unica('s16', 'medium')} text-decoration: none;
       border-bottom: 2px solid;
     }
   }

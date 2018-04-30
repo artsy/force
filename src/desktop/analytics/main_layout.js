@@ -18,19 +18,20 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
-    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), (path) => {
+    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
       if (window.location.pathname.split('/')[1] === path) {
         window.setTimeout(function() {
           const {
             requestStart,
             loadEventEnd,
-            domComplete,
+            domComplete
           } = window.performance.timing
 
           analytics.track('Page load time', {
             requestStart,
             loadEventEnd,
             domComplete,
+            nonInteraction: 1
           })
         }, 0)
       }
@@ -42,7 +43,7 @@ if (
 setTimeout(function() {
   analytics.track('time on page more than 15 seconds', {
     category: '15 Seconds',
-    message: sd.CURRENT_PATH,
+    message: sd.CURRENT_PATH
   })
 }, 15000)
 
@@ -50,7 +51,7 @@ setTimeout(function() {
 setTimeout(function() {
   analytics.track('time on page more than 3 minutes', {
     category: '3 Minutes',
-    message: sd.CURRENT_PATH,
+    message: sd.CURRENT_PATH
   })
 }, 180000)
 
