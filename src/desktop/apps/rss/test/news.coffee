@@ -55,7 +55,7 @@ describe '/rss', ->
       rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
       rendered.should.containEql '<category>Art</category>'
 
-    it 'renders enclosures', ->
+    it 'renders enclosures on video articles', ->
       article = new Article
         layout: 'video'
         media:
@@ -63,7 +63,27 @@ describe '/rss', ->
           credits: '<p>Director</p><p>Marina Cashdan</p>'
           description: '<p>Sample Description</p>'
       rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
-      rendered.should.containEql '<enclosure url="https://artsymedia.mp4" type="video/mp4">'
+      rendered.should.containEql '<enclosure url="https://artsymedia.mp4" length="0" type="video/mp4">'
+
+    it 'renders enclosures on non-video articles', ->
+      articles = [
+        {
+          layout: 'standard',
+          thumbnail_image: 'artsy.net/jpg.jpg'
+        },
+        {
+          layout: 'standard',
+          thumbnail_image: 'artsy.net/jpeg.jpeg'
+        },
+        {
+          layout: 'standard',
+          thumbnail_image: 'artsy.net/png.png'
+        }
+      ]
+      rendered = newsTemplate(sd: sd, articles: new Articles(articles), moment: moment)
+      rendered.should.containEql '<enclosure url="artsy.net/jpg.jpg" length="0" type="image/jpeg">'
+      rendered.should.containEql '<enclosure url="artsy.net/jpeg.jpeg" length="0" type="image/jpeg">'
+      rendered.should.containEql '<enclosure url="artsy.net/png.png" length="0" type="image/png">'
 
   describe 'article', ->
 
