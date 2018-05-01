@@ -79,7 +79,7 @@ registerOrRender = (sale, req, res, next) ->
   saleArtwork = new SaleArtwork(artwork: new Artwork(id: req.params.artwork), sale: sale)
   bidderPositions = new BidderPositions(null, { saleArtwork: saleArtwork, sale: sale })
 
-  render = _.after 4, ->
+  render = _.after 3, ->
     res.locals.sd.BIDDER_POSITIONS = bidderPositions.toJSON()
     res.locals.sd.SALE = sale.toJSON()
     res.locals.sd.SALE_ARTWORK = saleArtwork.toJSON()
@@ -113,6 +113,11 @@ registerOrRender = (sale, req, res, next) ->
 
   metaphysics
     query: """ {
+      artwork(id: "#{req.params.artwork}") {
+        sale_artwork {
+          bid_increments
+        }
+      }
       me {
         has_qualified_credit_cards
         bidders(sale_id: "#{sale.get('id')}") {
@@ -121,23 +126,10 @@ registerOrRender = (sale, req, res, next) ->
       }
     } """
     req: req
-  .catch(next).then ({ me }) ->
+  .catch(next).then ({ artwork, me }) ->
+    res.locals.bidIncrements = artwork.sale_artwork.bid_increments
     res.locals.sd.REGISTERED = Boolean(me && me.bidders && me.bidders.length > 0)
     res.locals.sd.HAS_VALID_CREDIT_CARD = Boolean(me && me.has_qualified_credit_cards)
-    render()
-
-  # TODO: Refactor all of this junk to use MP, or drop it in favor of
-  # inline bidding component, see: https://github.com/artsy/force/issues/5118
-  metaphysics
-    query: """ {
-      artwork(id: "#{req.params.artwork}") {
-        sale_artwork {
-          bid_increments
-        }
-      }
-    } """
-  .catch(next).then ({ artwork }) ->
-    res.locals.bidIncrements = artwork.sale_artwork.bid_increments
     render()
 
 @buyersPremium = (req, res, next) ->
