@@ -3,7 +3,7 @@
 { SHOW_PATH } = require('sharify').data
 Form = require '../../../../../components/form/index.coffee'
 scrollTo = require '../../../../../components/smooth_scroll/index.coffee'
-AuthModalView = require '../../../../../components/auth_modal/view.coffee'
+mediator = require '../../../../../lib/mediator.coffee'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 template = -> require('../templates/page.jade') arguments...
 
@@ -61,7 +61,7 @@ module.exports = class ProfessionalBuyerLandingView extends View
         analyticsHooks.trigger 'auth:register'
 
   authenticate: (mode) ->
-    new AuthModalView
+    mediator.trigger 'open:auth',
       mode: mode
       width: '500px'
       copy: 'Artsy Professional Buyer Program'

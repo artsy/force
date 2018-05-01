@@ -7,7 +7,6 @@ PersonalizeState = require './state.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 Transition = require '../../../../components/mixins/transition.coffee'
-AuthModalView = require '../../../../components/auth_modal/view.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
 NextStepView = require './views/next_step.coffee'
@@ -95,9 +94,10 @@ module.exports.init = ->
       # Don't let the user close out by hacking the close points
       $('.modal-close').hide()
       $('.modal-backdrop').click (e) -> e.stopPropagation()
-    new AuthModalView
+
+    mediator.trigger 'open:auth',
       mode: 'register'
-      redirectTo: location.href
+      destination: location.href
       width: 500
 
   # Init the personalize flow
