@@ -14,9 +14,6 @@ openSale = fabricate 'sale',
   auction_state: 'open'
   start_at: moment().subtract(1, 'minutes').format()
   end_at: moment().add(3, 'minutes').format()
-routes.__set__ 'metaphysics', sinon.stub().returns(
-  Q.resolve(artwork: sale_artwork: bid_increments: [100])
-)
 
 analyticsConstructorArgs = null
 analyticsTrackArgs = null
@@ -25,6 +22,11 @@ describe '#auctionRegistration', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    metaphysicsStub = sinon.stub()
+    metaphysicsStub.returns(
+      Q.resolve(artwork: sale_artwork: bid_increments: [100])
+    )
+    routes.__set__ 'metaphysics', metaphysicsStub
 
     analytics = class AnalyticsStub
       constructor: -> analyticsConstructorArgs = arguments
@@ -124,26 +126,29 @@ describe '#bid', ->
     @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/auction/awesome-sale/bid/artwork-id"
 
   describe 'with current user', ->
-
     beforeEach ->
-      @resolve = (a, b, c, d) =>
+      metaphysicsStub = sinon.stub()
+      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  me {\n    has_qualified_credit_cards\n    bidders(sale_id: "awesome-sale") {\n      id\n    }\n  }\n} ' })).returns(
+        Q.resolve(me: { has_qualified_credit_cards: true, bidders: ['foo'] })
+      )
+      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  artwork(id: "artwork-id") {\n    sale_artwork {\n      bid_increments\n    }\n  }\n} ' })).returns(
+        Q.resolve(artwork: sale_artwork: bid_increments: [100])
+      )
+      routes.__set__ 'metaphysics', metaphysicsStub
+
+      @resolve = (a, b, c) =>
         Backbone.sync.args[0][2].success a or openSale
         Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
-        Backbone.sync.args[2][2].success c or [{foo: 'bar'}]
-        Backbone.sync.args[3][2].success d or [fabricate('bidder_position')]
+        Backbone.sync.args[2][2].success c or [fabricate('bidder_position')]
       @req.user = new CurrentUser()
       routes.bid @req, @res, @next
 
-    it 'renders with isRegistered: true if is registered', ->
+    it 'renders with isRegistered: true and hasValidCreditCard: true if is registered', ->
       @resolve()
       @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.be.ok()
+      @res.render.args[0][1].isRegistered.should.be.true
+      @res.render.args[0][1].hasValidCreditCard.should.be.true
       @res.render.args[0][1].maxBid.should.equal 500
-
-    it 'renders with isRegistered: true if is not registered', ->
-      @resolve(null, null, [], null)
-      @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.not.be.ok()
 
     it '404 if sale is not auction', ->
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false
@@ -156,5 +161,29 @@ describe '#bid', ->
       @next.args[0][0].message.should.equal 'Not Found'
 
     it 'passes the bidder positions', ->
-      @resolve null, null, null, [fabricate 'bidder_position', moo: 'bar']
+      @resolve null, null, [fabricate 'bidder_position', moo: 'bar']
       @res.locals.sd.BIDDER_POSITIONS[0].moo.should.equal 'bar'
+
+  describe 'when not registered', ->
+    beforeEach ->
+      metaphysicsStub = sinon.stub()
+      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  me {\n    has_qualified_credit_cards\n    bidders(sale_id: "awesome-sale") {\n      id\n    }\n  }\n} ' })).returns(
+        Q.resolve(me: { has_qualified_credit_cards: true, bidders: null })
+      )
+      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  artwork(id: "artwork-id") {\n    sale_artwork {\n      bid_increments\n    }\n  }\n} ' })).returns(
+        Q.resolve(artwork: sale_artwork: bid_increments: [100])
+      )
+      routes.__set__ 'metaphysics', metaphysicsStub
+
+      @resolve = (a, b, c) =>
+        Backbone.sync.args[0][2].success a or openSale
+        Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
+        Backbone.sync.args[2][2].success c or [fabricate('bidder_position')]
+      @req.user = new CurrentUser()
+      routes.bid @req, @res, @next
+
+    it 'renders with isRegistered: false and hasValidCreditCard: true if is not registered but has a valid credit card', ->
+      @resolve()
+      @res.render.args[0][0].should.equal 'bid-form'
+      @res.render.args[0][1].isRegistered.should.not.be.ok()
+      @res.render.args[0][1].hasValidCreditCard.should.be.true

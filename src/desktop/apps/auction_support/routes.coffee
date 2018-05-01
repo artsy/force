@@ -89,6 +89,7 @@ registerOrRender = (sale, req, res, next) ->
       saleArtwork: saleArtwork
       bidderPositions: bidderPositions
       isRegistered: res.locals.sd.REGISTERED
+      hasValidCreditCard: res.locals.sd.HAS_VALID_CREDIT_CARD
       maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
       monthRange: new Order().getMonthRange()
       yearRange: new Order().getYearRange()
@@ -109,12 +110,21 @@ registerOrRender = (sale, req, res, next) ->
         data: { access_token: req.user.get('accessToken') }
         error: res.backboneError
         success: render
-  req.user.checkRegisteredForAuction
-    saleId: sale.get('id')
-    error: res.backboneError
-    success: (registered) ->
-      res.locals.sd.REGISTERED = registered
-      render()
+
+  metaphysics
+    query: """ {
+      me {
+        has_qualified_credit_cards
+        bidders(sale_id: "#{sale.get('id')}") {
+          id
+        }
+      }
+    } """
+    req: req
+  .catch(next).then ({ me }) ->
+    res.locals.sd.REGISTERED = Boolean(me && me.bidders && me.bidders.length > 0)
+    res.locals.sd.HAS_VALID_CREDIT_CARD = Boolean(me && me.has_qualified_credit_cards)
+    render()
 
   # TODO: Refactor all of this junk to use MP, or drop it in favor of
   # inline bidding component, see: https://github.com/artsy/force/issues/5118
