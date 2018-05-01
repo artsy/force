@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
-AuthModalView = require '../../../../components/auth_modal/view.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
@@ -79,7 +79,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     form = new Form $form: @$('.js-artwork-auction-bid')
 
     if not CURRENT_USER?
-      return new AuthModalView
+      return mediator.trigger 'open:auth',
         width: '500px',
         signupIntent: 'bid'
         mode: 'register'

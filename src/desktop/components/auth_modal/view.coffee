@@ -36,7 +36,7 @@ module.exports = class AuthModalView extends ModalView
     return if isEigen.checkWith options
     { @destination, @successCallback, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
-    
+
     @preInitialize options
     super
 
@@ -74,7 +74,7 @@ module.exports = class AuthModalView extends ModalView
     mode = @state.get 'mode'
     if (mode is 'signup' or mode is 'register') and !@destination
       @destination = currentPath unless @redirectTo
-    
+
     switch mode
       when 'login' then postLoginPath
       when 'signup' then postSignupPath

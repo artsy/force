@@ -6,7 +6,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 PurchaseForm = require './purchase_form.coffee'
 SignupForm = require './purchase_signup_form.coffee'
 successTemplate = ->require('../templates/success.jade') arguments...
-AuthModalView = require '../../../components/auth_modal/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 Cookies = require '../../../components/cookies/index.coffee'
 Sticky = require '../../../components/sticky/index.coffee'
@@ -56,9 +55,7 @@ class PurchaseView extends Backbone.View
     }, @purchaseForm.serializeForm()
     Cookies.set 'purchase-inquiry', JSON.stringify formData
 
-# Signup
-  # Submit
-
+  # Signup and submit
   submitSignupForm: (form, options) ->
     # Validate both forms before moving on.
     # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.

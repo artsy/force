@@ -3,7 +3,7 @@ _ = require 'underscore'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
-AuthModalView = require '../../../../components/auth_modal/view.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../../../components/logger/index.coffee'
@@ -47,7 +47,7 @@ module.exports = ->
   # Handle login/out
   $('.js-login').click (e) ->
     e.preventDefault()
-    new AuthModalView width: '500px', mode: 'login'
+    mediator.trigger 'open:auth', width: '500px', mode: 'login'
   $('.js-logout').click (e) ->
     e.preventDefault()
     $.ajax url: '/users/sign_out', type: 'DELETE', success: -> location.reload()
