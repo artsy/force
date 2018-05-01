@@ -6,7 +6,6 @@ Form = require '../mixins/form.coffee'
 Mailcheck = require '../mailcheck/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
-AuthModalView = require '../auth_modal/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
 FormErrorHelpers = require('../auth_modal/helpers')
@@ -44,7 +43,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   triggerLoginModal: (e) ->
     e.stopPropagation()
-    new AuthModalView
+    mediator.trigger 'open:auth',
       width: '500px'
       mode: 'login'
       redirectTo: @afterAuthPath

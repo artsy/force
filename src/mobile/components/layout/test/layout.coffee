@@ -79,7 +79,10 @@ describe 'inquiry cookies', ->
         jQuery: require 'jquery'
 
       @bootstrap = rewire '../bootstrap'
-      @bootstrap.__set__ 'Cookies', @Cookies = { set: sinon.stub() }
+      @bootstrap.__set__ 'Cookies', @Cookies = {
+        set: sinon.stub(),
+        get: sinon.stub()
+      }
       @bootstrap.__set__ 'sd', { APP_URL: 'http://artsy.net' }
       done()
 
@@ -96,3 +99,72 @@ describe 'inquiry cookies', ->
     @bootstrap.__set__ 'doc', { referrer: 'http://m.artsy.net/artwork/foo' }
     @bootstrap()
     @Cookies.set.called.should.not.be.ok()
+
+describe 'postSignupAction', ->
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: require 'jquery'
+
+      @bootstrap = rewire '../bootstrap'
+      @getCookie = sinon.stub()
+      @bootstrap.__set__ 'Cookies', @Cookies = {
+        set: sinon.stub()
+        get: @getCookie
+        expire: sinon.stub()
+      }
+      @bootstrap.__set__ 'CurrentUser', {
+        orNull: sinon.stub().returns({
+          initializeDefaultArtworkCollection: sinon.stub(),
+          defaultArtworkCollection: sinon.stub().returns({
+            saveArtwork: @saveArtwork = sinon.stub()
+          }),
+          follow: @follow = sinon.stub()
+        })
+      }
+      done()
+
+  afterEach ->
+    benv.teardown()
+
+  it 'returns if there is not a user', ->
+    @bootstrap.__set__ 'CurrentUser', {
+      orNull: sinon.stub().returns(false)
+    }
+    @bootstrap()
+    @Cookies.expire.callCount.should.equal 0
+  
+  it 'saves an artwork', ->
+    @getCookie.returns(
+      JSON.stringify({
+        action: 'save',
+        objectId: '123',
+        kind: 'artist'
+      })
+    )
+    @bootstrap()
+    @saveArtwork.args[0][0].should.equal '123'
+
+  it 'follows an entity', ->
+    @getCookie.returns(
+      JSON.stringify({
+        action: 'follow',
+        objectId: '123',
+        kind: 'gallery'
+      })
+    )
+    @bootstrap()
+    @follow.args[0][0].should.equal '123'
+    @follow.args[0][1].should.equal 'gallery'
+
+  it 'expires the cookie afterwards', ->
+    @getCookie.returns(
+      JSON.stringify({
+        action: 'follow',
+        objectId: '123',
+        kind: 'gallery'
+      })
+    )
+    @bootstrap()
+    @Cookies.expire.args[0][0].should.equal 'postSignupAction'

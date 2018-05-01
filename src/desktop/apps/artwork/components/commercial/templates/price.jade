@@ -8,7 +8,8 @@ if artwork.sale_message || isPermanentCollection
         .artwork-commercial__price-label Price
         .artwork-commerical__price
           | #{artwork.sale_message}
-          != stitch.components.Tooltip({message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.' })
+          .react-tooltip-container
+            != stitch.components.Tooltip({message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.' })
           //- span(
           //-   class= artwork.is_price_range ? 'help-tooltip' : ''
           //-   data-message= 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'

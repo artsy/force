@@ -1,7 +1,7 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
 { CURRENT_USER } = require('sharify').data
-AuthModalView = require '../auth_modal/view.coffee'
+mediator = require '../../lib/mediator.coffee'
 ArtworkSaveView = require '../artwork_save/view.coffee'
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View
@@ -16,7 +16,7 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
     if not CURRENT_USER?
       e.preventDefault()
 
-      return new AuthModalView
+      return mediator.trigger 'open:auth',
         width: '500px',
         mode: 'register'
         copy: 'Sign up to bid'

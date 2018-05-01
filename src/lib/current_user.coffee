@@ -281,3 +281,8 @@ module.exports = class CurrentUser extends Backbone.Model
   # This should only be used on the client.
   @orNull: ->
     if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
+
+  # Follow an entity
+  follow: (id, kind, options) ->
+    new Following(null, kind: kind).follow id, _.extend options,
+      access_token: @get 'accessToken'

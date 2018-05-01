@@ -4,13 +4,15 @@ import { ArtworkGrid as _ArtworkGrid } from '@artsy/reaction/dist/Components/Art
 import { Tooltip as _Tooltip } from '@artsy/reaction/dist/Components/Tooltip'
 import { Help } from '@artsy/reaction/dist/Assets/Icons/Help'
 
-export const Tooltip = props => (
-  <_Tooltip {...props}>
-    <span style={{ verticalAlign: 'text-top' }}>
+export const Tooltip = props => {
+  console.log(props)
+  return (
+    <_Tooltip {...props.props}>
       <Help />
-    </span>
-  </_Tooltip>
-)
+    </_Tooltip>
+  )
+}
+
 export const Artwork = props => (
   <_Artwork artwork={artwork} {...props} useRelay={false} />
 )

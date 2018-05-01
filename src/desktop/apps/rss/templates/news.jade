@@ -13,6 +13,17 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom' xmlns:content='http:
         title= article.get('thumbnail_title')
         link #{sd.APP_URL}/article/#{article.get('slug')}
         description= article.get('description')
+        author=article.byline() || "Artsy Editors"
+        if article.get('vertical')
+          category=article.get('vertical').name
+        if article.get('layout') === 'video'
+          - media = article.get('media')
+          enclosure(url=media.url length=0 type="video/mp4")
+        else if article.get('thumbnail_image')
+          - image = article.get('thumbnail_image')
+          - extension = image.split('.').pop()
+          - mimeType = ['jpg', 'jpeg'].includes(extension) ? 'jpeg' : extension
+          enclosure(url=image length=0 type="image/#{mimeType}")
         content:encoded
           | <![CDATA[
           include article
