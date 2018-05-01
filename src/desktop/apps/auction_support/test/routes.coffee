@@ -128,10 +128,10 @@ describe '#bid', ->
   describe 'with current user', ->
     beforeEach ->
       metaphysicsStub = sinon.stub()
-      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  me {\n    has_qualified_credit_cards\n    bidders(sale_id: "awesome-sale") {\n      id\n    }\n  }\n} ' })).returns(
+      metaphysicsStub.withArgs(sinon.match({ query: sinon.match(/has_qualified_credit_cards/) })).returns(
         Q.resolve(me: { has_qualified_credit_cards: true, bidders: ['foo'] })
       )
-      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  artwork(id: "artwork-id") {\n    sale_artwork {\n      bid_increments\n    }\n  }\n} ' })).returns(
+      metaphysicsStub.withArgs(sinon.match({ query: sinon.match(/bid_increments/) })).returns(
         Q.resolve(artwork: sale_artwork: bid_increments: [100])
       )
       routes.__set__ 'metaphysics', metaphysicsStub
@@ -167,10 +167,10 @@ describe '#bid', ->
   describe 'when not registered', ->
     beforeEach ->
       metaphysicsStub = sinon.stub()
-      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  me {\n    has_qualified_credit_cards\n    bidders(sale_id: "awesome-sale") {\n      id\n    }\n  }\n} ' })).returns(
+      metaphysicsStub.withArgs(sinon.match({ query: sinon.match(/has_qualified_credit_cards/) })).returns(
         Q.resolve(me: { has_qualified_credit_cards: true, bidders: null })
       )
-      metaphysicsStub.withArgs(sinon.match({ query: ' {\n  artwork(id: "artwork-id") {\n    sale_artwork {\n      bid_increments\n    }\n  }\n} ' })).returns(
+      metaphysicsStub.withArgs(sinon.match({ query: sinon.match(/bid_increments/) })).returns(
         Q.resolve(artwork: sale_artwork: bid_increments: [100])
       )
       routes.__set__ 'metaphysics', metaphysicsStub
