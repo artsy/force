@@ -11,7 +11,7 @@ app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
-app.get '/reset_password', routes.resetPassword
-app.get '/signup', routes.signUp
-app.get '/login', routes.logIn
-app.get twitterLastStepPath, routes.twitterLastStep
+app.get '/reset_password2', routes.resetPassword
+app.get '/signup2', routes.signUp
+app.get '/login2', routes.logIn
+# app.get twitterLastStepPath, routes.twitterLastStep

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { DesktopModal } from 'reaction/Components/Authorization/DesktopModal'
-import { LoginForm } from 'reaction/Components/Authorization/LoginForm'
-
-console.log(DesktopModal, LoginForm)
+import { DesktopModal } from '@artsy/reaction/dist/Components/Authorization/DesktopModal'
+import { LoginForm } from '@artsy/reaction/dist/Components/Authorization/LoginForm'
 
 export class LoginModal extends Component {
   state = {

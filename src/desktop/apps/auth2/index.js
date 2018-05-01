@@ -1,10 +1,13 @@
 import express from 'express'
 import { index } from './routes.js'
-import adminOnly from '../../lib/admin_only'
+// const { twitterLastStepPath } = require('@artsy/passport').options
 
-export const app = express()
+const app = (module.exports = express())
 
-app.set('views', __dirname)
 app.set('view engine', 'jade')
+app.set('views', `${__dirname}/templates`)
 
-app.get('/experimental', adminOnly, index)
+app.get('/login', index)
+app.get('/signup', index)
+// app.get('/reset_password', index)
+// app.get(twitterLastStepPath, routes.twitterLastStep)
