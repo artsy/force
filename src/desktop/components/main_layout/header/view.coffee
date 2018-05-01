@@ -16,7 +16,9 @@ Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
-
+React = require 'react'
+ReactDOM = require 'react-dom'
+{ AuthModal } = require '../../../apps/auth2/components/AuthModal.tsx'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -107,7 +109,10 @@ module.exports = class HeaderView extends Backbone.View
     if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
       mediator.trigger 'clickHeaderAuth'
       return
-    @modal = new AuthModalView _.extend({ width: '500px' }, options)
+    ReactDOM.render(
+      React.createElement AuthModal, options
+      document.getElementById('react-modal-container')
+    )
 
   signup: (e) ->
     e.preventDefault()

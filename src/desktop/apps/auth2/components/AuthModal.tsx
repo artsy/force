@@ -1,31 +1,34 @@
-// import { render } from 'react-dom'
+import React, { Component } from 'react'
+import { LoginModal } from '../components/LoginModal'
+import { SignupModal } from '../components/SignUpModal'
 
-// import LoginModal from '../components/LoginModal'
-// import SignupModal from '../components/SignUpModal'
+interface Props {
+  mode?: string
+}
 
-// import { LoginForm } from '@artsy/reaction/dist/Components/Authorization/LoginForm'
-// import { RegisterForm } from '@artsy/reaction/dist/Components/Authorization/RegisterForm'
-// export const App = (type = '') => {
-//   let Modal
+export class AuthModal extends Component<Props> {
+  render() {
+    const { mode } = this.props
+    let Modal
 
-//   if (!type) {
-//     return
-//   }
+    if (!mode) {
+      return
+    }
 
-//   switch (type) {
-//     case 'login':
-//       Modal = LoginModal
-//       break
-//     case 'signup':
-//       Modal = SignupModal
-//       break
-//     case 'marketing':
-//     default:
-//       break
-//   }
+    switch (mode) {
+      case 'login':
+        Modal = LoginModal
+        break
+      case 'signup':
+        Modal = SignupModal
+        break
+      default:
+        Modal = SignupModal
+        break
+    }
 
-//   render(
-//     <Modal openedAt={new Date()} />,
-//     document.getElementById('modal-container')
-//   )
-// }
+    return (
+      <Modal />
+    )
+  }
+}

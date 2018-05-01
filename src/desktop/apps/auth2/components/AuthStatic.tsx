@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import AuthForm from '@artsy/reaction/dist/Components/Authorization/AuthForm'
+import { AuthForm } from '@artsy/reaction/dist/Components/Authorization/AuthForm'
+import { DesktopHeader } from '@artsy/reaction/dist/Components/Authorization/DesktopHeader'
 
 interface Props {
   mode: string
+  subtitle?: string
 }
 
-export class App extends React.Component<Props> {
+export class AuthStatic extends React.Component<Props> {
   render() {
     return (
       <AuthFormContainer>
+        <DesktopHeader subtitle={this.props.subtitle} />
         <AuthForm
           {...this.props}
           handleSubmit={() => {

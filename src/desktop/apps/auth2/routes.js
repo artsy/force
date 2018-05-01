@@ -1,5 +1,5 @@
 import { renderLayout } from '@artsy/stitch'
-import { App } from './components/App.tsx'
+import { AuthStatic } from './components/AuthStatic.tsx'
 
 export const index = async (req, res, next) => {
   let mode
@@ -27,7 +27,7 @@ export const index = async (req, res, next) => {
       },
       blocks: {
         head: 'templates/meta.jade',
-        body: App,
+        body: AuthStatic,
       },
       locals: {
         ...res.locals,
