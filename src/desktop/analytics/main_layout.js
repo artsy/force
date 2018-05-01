@@ -41,7 +41,7 @@ if (
 
 // Track 15 second bounce rate
 setTimeout(function() {
-  analytics.track('time on page more than 15 seconds', {
+  analytics.track('Time on page', {
     category: '15 Seconds',
     message: sd.CURRENT_PATH,
   })
@@ -49,7 +49,7 @@ setTimeout(function() {
 
 // Track 30 second bounce rate
 setTimeout(function() {
-  analytics.track('time on page more than 30 seconds', {
+  analytics.track('Time on page', {
     category: '30 Seconds',
     message: sd.CURRENT_PATH,
   })
@@ -57,7 +57,7 @@ setTimeout(function() {
 
 // Track 1 min bounce rate
 setTimeout(function() {
-  analytics.track('time on page more than 1 minute', {
+  analytics.track('Time on page', {
     category: '1 Minute',
     message: sd.CURRENT_PATH,
   })
@@ -65,7 +65,7 @@ setTimeout(function() {
 
 // Track 3 Minute bounce rate
 setTimeout(function() {
-  analytics.track('time on page more than 3 minutes', {
+  analytics.track('Time on page', {
     category: '3 Minutes',
     message: sd.CURRENT_PATH,
   })
