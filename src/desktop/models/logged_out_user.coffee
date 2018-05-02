@@ -70,7 +70,16 @@ module.exports = class LoggedOutUser extends User
 
   signup: (options = {}) ->
     new Backbone.Model()
-      .save @pick('name', 'email', 'password', '_csrf', 'signupIntent', 'accepted_terms_of_service', 'receive_emails'), _.extend {}, options,
+      .save @pick(
+        'name',
+        'email',
+        'password',
+        '_csrf',
+        'signupIntent',
+        'signupReferer',
+        'accepted_terms_of_service',
+        'receive_emails'
+      ), _.extend {}, options,
         url: "#{APP_URL}#{sd.AP.signupPagePath}"
         success: =>
           @__isRecentlyRegistered__ = true

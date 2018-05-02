@@ -57,11 +57,26 @@ describe 'LoggedOutUser', ->
         Backbone.sync.args[0][2].url.should.containEql '/users/sign_in'
         Backbone.sync.args[0][1].attributes
           .should.containEql name: 'Foo Bar', email: 'foo@bar.com', password: 'foobar'
+
       it 'includes a signup intent', ->
         LoggedOutUser.__set__ 'sd', AP: signupPagePath: '/users/sign_in'
-        user = new LoggedOutUser signupIntent: 'baz', email: 'foo@bar.com', name: 'Foo Bar', password: 'foobar'
+        user = new LoggedOutUser
+          signupIntent: 'baz',
+          email: 'foo@bar.com',
+          name: 'Foo Bar',
+          password: 'foobar'
         user.signup()
         Backbone.sync.args[0][1].attributes.should.containEql signupIntent: 'baz'
+
+      it 'includes a signup referer', ->
+        LoggedOutUser.__set__ 'sd', AP: signupPagePath: '/users/sign_in'
+        user = new LoggedOutUser
+          signupReferer: 'baz',
+          email: 'foo@bar.com',
+          name: 'Foo Bar',
+          password: 'foobar'
+        user.signup()
+        Backbone.sync.args[0][1].attributes.should.containEql signupReferer: 'baz'
 
       it 'accepts options and overwrites the default success', (done) ->
         user = new LoggedOutUser email: 'foo@bar.com', name: 'Foo Bar', password: 'foobar'
