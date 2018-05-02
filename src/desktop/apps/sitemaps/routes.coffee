@@ -4,7 +4,7 @@ request = require 'superagent'
 moment = require 'moment'
 async = require 'async'
 PartnerFeaturedCities = require '../../collections/partner_featured_cities'
-{ NODE_ENV, API_URL, POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL, SITEMAP_BASE_URL } = require('sharify').data
+{ API_URL, POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL, ENABLE_WEB_CRAWLING, SITEMAP_BASE_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
 { parse } = require 'url'
@@ -63,8 +63,4 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Sitemap: #{APP_URL}/sitemap-videos.xml
 
   """
-  res.send switch NODE_ENV
-    when 'production'
-      robotsText
-    else
-      "User-agent: *\nNoindex: /"
+  res.send if ENABLE_WEB_CRAWLING then robotsText else "User-agent: *\nNoindex: /"

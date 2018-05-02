@@ -8,7 +8,12 @@ const path = require('path')
 const uuid = require('uuid')
 
 const { NODE_ENV } = process.env
-const { S3_KEY, S3_SECRET, S3_BUCKET } = require('../desktop/config')
+const {
+  ENABLE_MEMORY_PROFILING,
+  S3_KEY,
+  S3_SECRET,
+  S3_BUCKET,
+} = require('../desktop/config')
 
 module.exports = () => {
   // Keep track of heap dumps from specific processes.
@@ -68,7 +73,7 @@ module.exports = () => {
   }
 
   log('Enabling memory profiling')
-  if (NODE_ENV !== 'production' && global.gc) {
+  if (ENABLE_MEMORY_PROFILING && global.gc) {
     startLeaking()
   }
 
@@ -97,7 +102,7 @@ module.exports = () => {
         os.tmpdir(),
         `${profileID}-${moment().format('YYYYMMDDHHmmss')}.heapsnapshot`
       )
-      heapdump.writeSnapshot(pathname, (err) => {
+      heapdump.writeSnapshot(pathname, err => {
         if (err) {
           log(`Failed to generate heap dump ${pathname}: ${err.message}`)
           working = false

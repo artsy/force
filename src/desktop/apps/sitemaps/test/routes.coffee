@@ -24,20 +24,19 @@ describe 'Sitemaps', ->
       @res = set: sinon.stub(), send: sinon.stub()
 
     afterEach ->
-      routes.__set__ 'NODE_ENV', 'test'
+      routes.__set__ 'ENABLE_WEB_CRAWLING', false
 
-    it 'renders a noindex in anything but production', ->
-      routes.__set__ 'NODE_ENV', 'staging'
+    it 'renders a noindex when ENABLE_WEB_CRAWLING is false', ->
+      routes.__set__ 'ENABLE_WEB_CRAWLING', false
       routes.robots null, @res
       @res.send.args[0][0]
         .should.equal  'User-agent: *\nNoindex: /'
 
-    describe 'production', ->
+    describe 'when ENABLE_WEB_CRAWLING is true', ->
       beforeEach ->
-        routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
+        routes.__set__ ENABLE_WEB_CRAWLING: true, APP_URL: 'https://www.artsy.net'
         routes.robots null, @res
-
-      it 'renders the normal robots with sitemap in production', ->
+      it 'renders robots.txt', ->
         @res.send.args[0][0]
           .should.eql """
 User-agent: *
