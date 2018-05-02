@@ -43,11 +43,12 @@ class MarketingSignupModalInner extends Backbone.View
     e.preventDefault()
     queryData =
       'signup-intent': @signupIntent
+      'signup-referer': location.href
       'redirect-to': '/personalize'
       'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
     queryString = $.param(queryData)
     fbUrl = sd.AP.facebookPath + '?' + queryString
-    return window.location.href = fbUrl 
+    return window.location.href = fbUrl
 
   showFormError: (msg) =>
     @$('button').attr 'data-state', 'error'
