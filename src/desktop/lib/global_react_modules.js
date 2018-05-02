@@ -1,15 +1,14 @@
 import React from 'react'
 import { Artwork as _Artwork } from '@artsy/reaction/dist/Components/Artwork'
 import { ArtworkGrid as _ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
-import { Tooltip as _Tooltip } from '@artsy/reaction/dist/Components/Tooltip'
-import { Help } from '@artsy/reaction/dist/Assets/Icons/Help'
+import { Tooltip as ReactionTooltip } from '@artsy/reaction/dist/Components/Tooltip'
+import { Help as ReactionHelpIcon } from '@artsy/reaction/dist/Assets/Icons/Help'
 
 export const Tooltip = props => {
-  console.log(props)
   return (
-    <_Tooltip {...props.props}>
-      <Help />
-    </_Tooltip>
+    <ReactionTooltip {...props.props}>
+      <ReactionHelpIcon />
+    </ReactionTooltip>
   )
 }
 
