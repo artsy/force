@@ -1,7 +1,6 @@
 Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Auctions = require '../../collections/auctions'
-AuctionReminders = require '../../components/auction_reminders/fetch'
 metaphysics = require '../../../lib/metaphysics'
 
 setupUser = (user, auction) ->
@@ -38,10 +37,3 @@ setupUser = (user, auction) ->
 @redirectAuction = (req, res) ->
   res.redirect 301, req.url.replace 'auction', 'auctions'
 
-@reminders = (req, res, next) ->
-  reminders = new AuctionReminders
-  reminders.fetch()
-    .then (response) ->
-      res.send response
-    .catch(next)
-    .done()
