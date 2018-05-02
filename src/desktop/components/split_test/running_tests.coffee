@@ -25,15 +25,12 @@
 # module.exports = {}
 
 module.exports = {
-  artist_merch_test:
-    key: 'artist_merch_test'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'no_header_merch_sort'
-      'merch_sort'
-    ]
+  home_search_test:
+    key: 'home_search_test'
+    outcomes:
+      experiment: 50
+      control: 50
     control_group: 'control'
-    edge: 'merch_sort'
+    edge: 'experiment'
 }
 

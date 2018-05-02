@@ -26,6 +26,7 @@ export const relatedArticles = `
     thumbnail_image
     title
     slug
+    published_at
     media {
       duration
       published
