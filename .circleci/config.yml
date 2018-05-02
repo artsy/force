@@ -55,14 +55,14 @@ workflows:
       - test
       - acceptance
       - build:
-          requires:
-            - test
-            - acceptance
+          # requires:
+          #   - test
+          #   - acceptance
       - push:
-          requires:
-            - build
+          # requires:
+          #   - build
       - deploy:
-          requires:
-            - push
+          # requires:
+          #   - push
 
 
