@@ -1,24 +1,15 @@
-FROM node:6.10
-RUN apt-get update -qq && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+FROM bitnami/node:8
+#FROM circleci/node:8-stretch-browsers
 
-# Set up working directory
-RUN mkdir /app
+#install_packages procps git openssh
 
-# Set up node modules
-WORKDIR /tmp
-ADD package.json package.json
-ADD yarn.lock yarn.lock
-RUN npm i yarn -g
-RUN yarn install
-RUN cp -a /tmp/node_modules /app/
-
-# Finally, add the rest of our app's code
-# (this is done at the end so that changes to our app's code
-# don't bust Docker's cache)
+#ADD . /home/circleci/project
 ADD . /app
 WORKDIR /app
 
-ENV PORT 5000
-EXPOSE 5000
+#WORKDIR /home/circleci/project
+#RUN sudo chown -R circleci:circleci /home/circleci/project
+RUN npm install -g yarn@1.5.1
+RUN yarn install
 
 CMD yarn start
