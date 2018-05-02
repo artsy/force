@@ -8,11 +8,11 @@ append locals
   - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header' + (heroUnits.length && heroUnits[0].mode.match('LIGHT') ? '-white' : '')
 
 block body
-  unless sd.HIDE_HERO_UNITS
+  unless testGroup == 'experiment'
     include hero_units
 
   #home-foreground
-    if sd.HIDE_HERO_UNITS
+    if testGroup == 'experiment'
       h3= 'Collect art from leading galleries and auction houses.'
       include ../../../components/search_bar/templates/index
     else
@@ -23,7 +23,7 @@ block body
 
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
-        unless sd.HIDE_HERO_UNITS
+        unless testGroup == 'experiment'
           include featured_links
         unless user
           include browse
