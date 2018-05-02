@@ -54,15 +54,8 @@ workflows:
     jobs:
       - test
       - acceptance
-      - build:
-          # requires:
-          #   - test
-          #   - acceptance
-      - push:
-          # requires:
-          #   - build
-      - deploy:
-          # requires:
-          #   - push
+      - build
+      - push
+      - deploy
 
 
