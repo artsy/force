@@ -15,6 +15,7 @@ Articles = require '../../../collections/articles'
 Items = require '../../../collections/items'
 featuredArticlesTemplate = -> require('../templates/featured_articles.jade') arguments...
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
+splitTest = require '../../../components/split_test/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 sd = require('sharify').data
 _ = require 'underscore'
@@ -27,13 +28,13 @@ module.exports.HomeView = class HomeView extends Backbone.View
     'blur #main-layout-search-bar-container': 'unhighlightSearch'
     'click #main-layout-search-bar-button': 'performSearch'
 
-  initialize: ->
+  initialize: ({ @testGroup }) ->
     # Set up a router for the /log_in /sign_up and /forgot routes
     new HomeAuthRouter
     Backbone.history.start pushState: true
 
     # Render Featured Sections
-    if sd.HIDE_HERO_UNITS then @setupSearchBar() else @setupHeroUnits()
+    if @testGroup is 'experiment' then @setupSearchBar() else @setupHeroUnits()
     @setupFeaturedShows()
     @setupFeaturedArticles()
 
@@ -72,6 +73,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
       mode: 'suggest'
       limit: 7
       centeredHomepageSearch: true
+      
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
     throttledScroll = _.throttle((=> @onScroll()), 100)
@@ -113,8 +115,8 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
 module.exports.init = ->
   user = CurrentUser.orNull()
-
-  new HomeView el: $('body')
+  splitTest('home_search_test').view()
+  new HomeView el: $('body'), testGroup: sd.HOME_SEARCH_TEST
 
   setupHomePageModules()
   setupArtistsToFollow user
