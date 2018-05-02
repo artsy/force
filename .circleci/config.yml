@@ -58,7 +58,12 @@ workflows:
       - test
       - acceptance
       - build
-      - push
-      - deploy
-
-
+          # requires:
+          #   - test
+          #   - acceptance
+      - push:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - push
