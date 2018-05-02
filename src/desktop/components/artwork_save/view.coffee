@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-AuthModalView = require '../auth_modal/view.coffee'
+mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtworkSaveView extends Backbone.View
@@ -25,7 +25,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
     e.preventDefault()
 
     if not @user.isLoggedIn()
-      return new AuthModalView
+      return mediator.trigger 'open:auth',
         width: '500px',
         mode: 'register'
         copy: 'Sign up to save artworks'
