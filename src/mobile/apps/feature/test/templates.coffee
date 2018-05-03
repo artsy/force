@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 Artwork = require '../../../models/artwork'
 SaleArtwork = require '../../../models/sale_artwork'
 Sale = require '../../../models/sale'
+cheerio = require 'cheerio'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -70,3 +71,36 @@ describe 'Register button', ->
         sd: {}
         accounting: require('accounting')
       ).should.containEql 'Registration Pending'
+
+  it 'should not display a register button if you are not registered but do have a qualified credit card on file', ->
+    template = render('bid_page')(
+      saleArtwork: new SaleArtwork(fabricate 'sale_artwork')
+      artwork: new Artwork(fabricate 'artwork', artist: null)
+      auction: new Sale fabricate 'sale'
+      registered: false
+      qualified: false
+      hasQualifiedCreditCard: true
+      sd: {}
+      accounting: require('accounting')
+      bidIncrements: []
+    )
+    template.should.not.containEql 'Register to bid'
+    $ = cheerio.load template
+    $('.feature-bid-page-max-bid-overlay').length.should.equal 0
+
+  it 'should display a register button if you are not registered and do not have a qualified credit card on file', ->
+    template = render('bid_page')(
+      saleArtwork: new SaleArtwork(fabricate 'sale_artwork')
+      artwork: new Artwork(fabricate 'artwork', artist: null)
+      auction: new Sale fabricate 'sale'
+      registered: false
+      qualified: false
+      hasQualifiedCreditCard: false
+      sd: {}
+      accounting: require('accounting')
+      bidIncrements: []
+    )
+    template.should.containEql 'Register to bid'
+    $ = cheerio.load template
+    $('.feature-bid-page-max-bid-overlay').length.should.equal 1
+
