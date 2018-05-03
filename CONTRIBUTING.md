@@ -44,7 +44,11 @@ Start the server.
 yarn start
 ```
 
-When working with components built in [Reaction](https://github.com/artsy/reaction) and want to keep both environments in sync, run:
+Force should now be running at [http://localhost:5000/](http://localhost:5000/).
+
+## Real-time development with [Reaction](https://github.com/artsy/reaction)
+
+When working with components built in Reaction and want to keep both environments in sync without publishing to NPM, run:
 
 ```sh
 cd reaction
@@ -55,9 +59,7 @@ cd force
 yarn link @artsy/reaction && yarn start
 ```
 
-Force should now be running at [http://localhost:5000/](http://localhost:5000/).
-
-**NOTE:** If you would like spin up Force in production mode, run:
+## Running a local copy of Force in Production mode:
 
 ```sh
 yarn assets && yarn debug:prod

@@ -42,6 +42,7 @@ module.exports = class AuthModalView extends ModalView
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
+    @signupReferer = location.href
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
     @state = new State mode
@@ -50,6 +51,7 @@ module.exports = class AuthModalView extends ModalView
       email: options.email
       setPassword: options.setPassword
       signupIntent: @signupIntent
+      signupReferer: @signupReferer
       copy: @renderCopy(options.copy)
       redirectTo: @currentRedirectTo()
     }, options?.userData
@@ -129,7 +131,9 @@ module.exports = class AuthModalView extends ModalView
     formData = @serializeForm()
     userData = Object.assign {}, formData
     @user.set (data = userData)
-    @user.set(signupIntent: @signupIntent)
+    @user.set
+      signupIntent: @signupIntent
+      signupReferer: @signupReferer
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>

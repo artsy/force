@@ -65,6 +65,16 @@ describe '/rss', ->
       rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
       rendered.should.containEql '<enclosure url="https://artsymedia.mp4" length="0" type="video/mp4">'
 
+    it 'renders enclosures on news articles', ->
+      articles = [
+        {
+          layout: 'news',
+          thumbnail_image: 'artsy.net/jpg.jpg'
+        },
+      ]
+      rendered = newsTemplate(sd: sd, articles: new Articles(articles), moment: moment)
+      rendered.should.containEql '/images/og_image.jpg" length="0" type="image/jpeg">'
+
     it 'renders enclosures on non-video articles', ->
       articles = [
         {

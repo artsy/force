@@ -32,13 +32,13 @@ block body
           disabled=true
         ) Registration Closed
 
-      else
+      else if !hasQualifiedCreditCard
         a#feature-bid-page-register-button.avant-garde-box-button(
           href=registerUrl
         ) Register to bid
 
     .feature-bid-page-max-bid
-      unless (registered && qualified)
+      unless ((registered && qualified) || hasQualifiedCreditCard)
         .feature-bid-page-max-bid-overlay
       .feature-bid-page-max-bid-headers
         h2 Set your max bid
@@ -62,7 +62,7 @@ block body
           if error
             = error.message
         button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button(
-          disabled=registered ? undefined : 'disabled'
+          disabled=(registered || hasQualifiedCreditCard) ? undefined : 'disabled'
         )
           | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
           .loading-spinner
