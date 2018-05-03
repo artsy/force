@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+sd = require('sharify').data
 template = -> require('./template.jade') arguments...
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
@@ -8,7 +9,10 @@ setupSaveControls = require '../save_artworks/index.coffee'
 module.exports = class ArtworkColumnsView extends Backbone.View
   initialize: (options = {}) ->
     { @page, @showId, @artworks } = options
-    setupSaveControls @artworks
+
+    if !sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      setupSaveControls @artworks
+
     $(window).on 'scroll.partner_show.artworks', _.throttle(@infiniteScroll, 150)
 
   fetch: =>
@@ -27,6 +31,8 @@ module.exports = class ArtworkColumnsView extends Backbone.View
                 url(version: "large")
                 width
                 height
+                aspect_ratio
+                placeholder
               }
               partner {
                 href
@@ -66,9 +72,16 @@ module.exports = class ArtworkColumnsView extends Backbone.View
   render: ->
     relatedArticlesHtml = @$('.js-related-articles').html()
     artworkColumns = ViewHelpers.groupByColumnsInOrder(@artworks)
+
     @$el.html template
       artworkColumns: artworkColumns
       ViewHelpers: ViewHelpers
+      artworks: @artworks
+      sd: sd
+
     @$('.artwork-column').first().prepend "<div class='js-related-articles'>#{relatedArticlesHtml}</div>"
-    setupSaveControls @artworks
+
+    if !sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      setupSaveControls @artworks
+
     this
