@@ -36,7 +36,7 @@ module.exports = ->
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
   for attr in ['id', 'type', 'name', 'email', 'phone', 'lab_features',
-               'default_profile_id', 'has_partner_access', 'collector_level']
+               'default_profile_id', 'has_partner_access', 'collector_level', 'recently_viewed_artwork_ids']
 
     # NOTE:
     # If any of the above props have changed between two routes, and the second
