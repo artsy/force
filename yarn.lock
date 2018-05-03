@@ -1141,7 +1141,7 @@ artsy-backbone-mixins@artsy/artsy-backbone-mixins:
 
 artsy-eigen-web-association@artsy/artsy-eigen-web-association:
   version "1.0.7"
-  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/917ef5db99d2ff753d6f96b35bde702d14db5f4d"
+  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/da3a1c5594b024be33905c947c1a153a1edeb27b"
   dependencies:
     express "*"
 
