@@ -9,8 +9,8 @@ if artwork.sale_message || isPermanentCollection
         .artwork-commerical__price
           | #{artwork.sale_message}
           if artwork.is_price_range
-            .react-tooltip-container
-              != stitch.components.Tooltip({message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.', hoverAlign: 'left' })
+            .tooltip-question-container
+              != stitch.components.TooltipQuestion({horizontalAlign: 'left', message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'})
       else if isPermanentCollection
         | Permanent collection
       else
