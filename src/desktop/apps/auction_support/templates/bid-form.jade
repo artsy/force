@@ -38,7 +38,7 @@ block body
               )= display
 
           .auction-bid-errors
-        if isRegistered
+        if isRegistered || hasValidCreditCard
           .registration-form-content
             .auction-bid-form-confirm.avant-garde-button-black.is-block Confirm Bid
         else
