@@ -166,7 +166,7 @@ describe '#bid', ->
   describe 'when not registered', ->
     beforeEach ->
       metaphysicsStub = sinon.stub()
-      metaphysicsStub.withArgs(sinon.match({ query: sinon.match(/has_qualified_credit_cards/) })).returns(
+      metaphysicsStub.returns(
         Q.resolve(
           me: { has_qualified_credit_cards: true, bidders: null }
           artwork: sale_artwork: bid_increments: [100]

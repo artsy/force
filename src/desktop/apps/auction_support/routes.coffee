@@ -112,24 +112,27 @@ registerOrRender = (sale, req, res, next) ->
         success: render
 
   metaphysics
-    query: """ {
-      artwork(id: "#{req.params.artwork}") {
-        sale_artwork {
-          bid_increments
+    query: """
+      query($sale_id: String!, $artwork_id: String!) {
+        artwork(id: $artwork_id) {
+          sale_artwork {
+            bid_increments
+          }
+        }
+        me {
+          has_qualified_credit_cards
+          bidders(sale_id: $sale_id) {
+            id
+          }
         }
       }
-      me {
-        has_qualified_credit_cards
-        bidders(sale_id: "#{sale.get('id')}") {
-          id
-        }
-      }
-    } """
-    req: req
+    """
+    req: req,
+    variables: { sale_id: sale.get('id'), artwork_id: req.params.artwork }
   .catch(next).then ({ artwork, me }) ->
     res.locals.bidIncrements = artwork.sale_artwork.bid_increments
-    res.locals.sd.REGISTERED = Boolean(me && me.bidders && me.bidders.length > 0)
-    res.locals.sd.HAS_VALID_CREDIT_CARD = Boolean(me && me.has_qualified_credit_cards)
+    res.locals.sd.REGISTERED = Boolean(me?.bidders?.length > 0)
+    res.locals.sd.HAS_VALID_CREDIT_CARD = Boolean(me?.has_qualified_credit_cards)
     render()
 
 @buyersPremium = (req, res, next) ->
