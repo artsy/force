@@ -21,7 +21,7 @@ block body
         if showAZLink
           a.fine-faux-underline( href="/#{pluralType.toLowerCase()}-a-z" )
             | A–Z
-        a.fine-faux-underline( href='/#{type}-partnerships' )
+        a.gallery-partnership-link.fine-faux-underline( data-context='galleries header' href='/#{type}-partnerships' )
           | Partner with Artsy
         if type === 'gallery'
           a.fine-faux-underline( href='/gallery-insights' )
