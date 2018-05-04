@@ -13,12 +13,14 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
+    'change .registration-form-section__checkbox': 'handleCheckCOS'
 
   initialize: (options) ->
     @result = deferred.promise
     @success = options.success
     @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
+    @acceptedCos = false
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 
@@ -27,6 +29,16 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     new ModalPageView
       width: '700px'
       pageId: 'auction-info'
+  
+  handleCheckCOS: (e) ->
+    if e.target.checked
+      @enableSubmit()
+    else
+      @disableSubmit()
+  
+  disableSubmit: -> @$submit.addClass('is-disabled')
+  enableSubmit: -> @$submit.removeClass('is-disabled')
+
 
   setUpFields: ->
     @fields =
@@ -40,6 +52,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
       state: { el: @$('input.region'), validator: @isState, label: 'state' }
       zip: { el: @$('input.postal-code'), validator: @isZip }
+      'accept cos': { el: @$('input#accept_cos'), validator: @isChecked }
     @internationalizeFields()
 
   disableForm: ->
