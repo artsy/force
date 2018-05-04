@@ -15,7 +15,6 @@ Raven = require 'raven-js'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
-setupAuctionReminder = require '../components/auction_reminders/index.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
@@ -28,7 +27,6 @@ module.exports = ->
   setupJquery()
   setupReferrerTracking()
   syncAuth()
-  setupAuctionReminder() unless sd.IS_MOBILE
   listenForInvert()
   listenForBounce()
   confirmation.check()

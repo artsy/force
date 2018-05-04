@@ -17,6 +17,7 @@ tbody
             a.auction-lot-details-imagelink(
               href= "/artist/#{artist.id}/auction-result/#{lot.id}"
               data-client
+              data-auction-lot-id="#{lot.id}"
             )
               img.auction-lot-image( src= lot.imageUrl('thumbnail'), alt= lot.get('title') )
           else

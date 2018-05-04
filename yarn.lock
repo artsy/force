@@ -10,9 +10,9 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/passport@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.0.8.tgz#882db08ed25969de6ee3da3b4f51ceee16057452"
+"@artsy/passport@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.0.10.tgz#55c6525103b4d3dfdff6e4babecc5f597759efde"
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -1141,7 +1141,7 @@ artsy-backbone-mixins@artsy/artsy-backbone-mixins:
 
 artsy-eigen-web-association@artsy/artsy-eigen-web-association:
   version "1.0.7"
-  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/917ef5db99d2ff753d6f96b35bde702d14db5f4d"
+  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/da3a1c5594b024be33905c947c1a153a1edeb27b"
   dependencies:
     express "*"
 

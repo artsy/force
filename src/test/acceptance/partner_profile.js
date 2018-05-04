@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { setup, teardown, stubAuctionReminder } from './helpers'
+import { setup, teardown } from './helpers'
 import { server as antigravity } from 'antigravity'
 
 describe('Partner profile page', () => {
@@ -7,7 +7,6 @@ describe('Partner profile page', () => {
 
   before(async () => {
     ;({ gravity, positron, browser } = await setup())
-    stubAuctionReminder()
     gravity.get('/api/v1/shortcut/:id', (req, res) => {
       res.res.sendStatus(404)
     })

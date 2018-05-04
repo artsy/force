@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-AuthModalView = require '../auth_modal/view.coffee'
 State = require './models/state.coffee'
 mediator = require '../../lib/mediator.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'

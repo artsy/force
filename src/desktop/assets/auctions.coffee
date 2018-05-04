@@ -3,7 +3,6 @@ require('backbone').$ = $
 routes =
   '''
   /auctions
-  /auctions/reminders
   ''': require('../apps/auctions/client/index.coffee').init
 
   '''
