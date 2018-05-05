@@ -1,7 +1,7 @@
 section.show-artworks-columns.js-show-artworks-columns
-  .artworks-container
-    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      != stitch.components.ArtworkGrid({ artworks: partner_show.artworks })
-    else
+  if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+    #stitch-shows-artworks
+  else
+    .artworks-container
       if artworkColumns
         include ../components/artwork_columns_metaphysics/template

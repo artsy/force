@@ -1,8 +1,6 @@
 if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-  #stitch-show-artwork_columns_metaphysics
-    - console.log(artworks)
-    != sd.stitch.components.ArtworkGrid({ artworks, mountId: 'stitch-show-artwork_columns_metaphysics' })
-
+  #stitch-shows-artworks
+    != sd.stitch.components.ArtworkGrid({ artworks, onAppendArtworks, mountId: 'stitch-shows-artworks' })
 else
   for column in artworkColumns
     .artwork-column

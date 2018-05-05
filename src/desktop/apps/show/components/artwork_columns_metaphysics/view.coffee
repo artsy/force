@@ -10,8 +10,8 @@ module.exports = class ArtworkColumnsView extends Backbone.View
   initialize: (options = {}) ->
     { @page, @showId, @artworks } = options
 
-    if !sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      setupSaveControls @artworks
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      @render()
 
     $(window).on 'scroll.partner_show.artworks', _.throttle(@infiniteScroll, 150)
 
@@ -61,13 +61,19 @@ module.exports = class ArtworkColumnsView extends Backbone.View
         @page++
         @isFetching = false
         @artworks = @artworks.concat fetchedArtworks
-        @render()
+
+        if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+          @appendArtworksToReactionGrid(@artworks)
+        else
+          @render()
+
 
   infiniteScroll: =>
     return if @isFetching
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.artwork-column').last()
     @fetch() unless fold < $lastItem.offset()?.top + $lastItem.height()
+
 
   render: ->
     relatedArticlesHtml = @$('.js-related-articles').html()
@@ -78,10 +84,12 @@ module.exports = class ArtworkColumnsView extends Backbone.View
       ViewHelpers: ViewHelpers
       artworks: @artworks
       sd: sd
+      onAppendArtworks: (appendArtworksToReactionGrid) =>
+        @appendArtworksToReactionGrid = appendArtworksToReactionGrid
 
     @$('.artwork-column').first().prepend "<div class='js-related-articles'>#{relatedArticlesHtml}</div>"
 
-    if !sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+    unless sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
       setupSaveControls @artworks
 
     this

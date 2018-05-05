@@ -5,8 +5,8 @@ else
   - var columns = helpers.related_artworks.masonry(layer.artworks).columns
   include ../../../../../components/artwork_masonry/index
 
-  if layer.href
-    .artwork-section__jump
-      a.avant-garde-jump-link( href= layer.href )
-        | Go to #{layer.name}
-        i.icon-chevron-small-right
+if layer.href
+  .artwork-section__jump
+    a.avant-garde-jump-link( href= layer.href )
+      | Go to #{layer.name}
+      i.icon-chevron-small-right
