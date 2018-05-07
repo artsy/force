@@ -52,6 +52,7 @@ describe 'RegistrationForm', ->
 
     beforeEach ->
       @submitValidForm = =>
+        @view.$acceptTerms.prop('checked', true)
         @view.$('input[name="card_name"]').val 'Foo Bar'
         @view.$('select[name="card_expiration_month"]').val '1'
         @view.$('select[name="card_expiration_year"]').val '2024'
