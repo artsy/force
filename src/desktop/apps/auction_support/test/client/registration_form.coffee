@@ -9,7 +9,7 @@ Order = require '../../../../models/order'
 Sale = require '../../../../models/sale'
 RegistrationForm = require '../../client/registration_form'
 
-xdescribe 'RegistrationForm', ->
+describe 'RegistrationForm', ->
 
   before (done) ->
     benv.setup =>
@@ -77,7 +77,7 @@ xdescribe 'RegistrationForm', ->
       @view.once 'submitted', =>
         done()
 
-    it 'validates the form and displays errors', (done) ->
+    it 'validates the form and displays errors', ->
       @view.$submit.length.should.be.ok()
       @view.$submit.click()
 
@@ -92,7 +92,6 @@ xdescribe 'RegistrationForm', ->
         html.should.containEql 'Invalid telephone'
         html.should.containEql 'Please review the error(s) above and try again.'
         @view.$submit.hasClass('is-loading').should.be.false()
-        done()
 
     it 'lets the user resubmit a corrected form', ->
       # Submit a bad form

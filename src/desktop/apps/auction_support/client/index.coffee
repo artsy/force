@@ -18,7 +18,7 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
     'auction/:id/bid/:artwork': 'bid'
 
   initialize: (options) ->
-    { @sale, @saleArtwork, @registered, @bidderPositions } = options
+    { @sale, @saleArtwork, @registered, @bidderPositions, @hasValidCreditCard } = options
 
   register: ->
     new RegistrationForm
@@ -28,7 +28,7 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
         window.location = @sale.registrationSuccessUrl()
 
   bid: ->
-    if @registered
+    if @registered || @hasValidCreditCard
       @initBidForm()
     else
       new RegistrationForm
@@ -52,6 +52,7 @@ module.exports.init = ->
     bidderPositions: new BidderPositions(sd.BIDDER_POSITIONS,
       { sale: sale, saleArtwork: saleArtwork })
     registered: sd.REGISTERED
+    hasValidCreditCard: sd.HAS_VALID_CREDIT_CARD
 
   Backbone.history.start(pushState: true)
 
