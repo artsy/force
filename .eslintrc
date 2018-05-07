@@ -15,6 +15,7 @@
     "camelcase": 0,
     "no-mixed-operators": 0,
     "no-new": 0,
-    "react/jsx-indent": 0
+    "react/jsx-indent": 0,
+    "react/prop-types": 0
   }
 }

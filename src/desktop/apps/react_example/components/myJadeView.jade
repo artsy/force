@@ -13,28 +13,74 @@ br
 hr
 br
 
+-
+  var artworks = [1, 2, 3, 4, 5].map(() => {
+    return {
+      __id: 'QXJ0d29yazpiYW5rc3ktd2UtbG92ZS15b3Utc28tbG92ZS11cw==',
+      image: {
+        aspect_ratio: 1,
+        placeholder: '100%',
+        url:
+          'https://d32dm0rphc51dk.cloudfront.net/hoFocUdpgF4mazPIgekpZA/large.jpg',
+      },
+      href: '/artwork/banksy-we-love-you-so-love-us',
+      title: 'We Love You So Love Us',
+      date: '2000',
+      sale_message: 'Contact For Price',
+      cultural_maker: null,
+      artists: [
+        {
+          __id: 'QXJ0aXN0OmJhbmtzeQ==',
+          href: '/artist/banksy',
+          name: 'Banksy',
+        },
+      ],
+      collecting_institution: null,
+      partner: {
+        name: 'EHC Fine Art',
+        href: '/ehc-fine-art',
+        __id: 'UGFydG5lcjplaGMtZmluZS1hcnQ=',
+        type: 'Gallery',
+      },
+      sale: null,
+      _id: '58e1a19d275b247d353ff0d9',
+      is_inquireable: true,
+      sale_artwork: null,
+      id: 'banksy-we-love-you-so-love-us',
+      is_saved: null,
+    }
+  })
+
+
 
 style.
   .reactionArtworkBrick {
     width: 50%;
   }
 
-div(class='reactionArtworkBrick')
-  != stitch.components.ArtworkGrid({ title: name })
+div
+  != stitch.components.TooltipQuestion({ mountId: 'foo', horizontalAlign: 'right', message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'})
 
 br
 hr
 br
 
 div(class='reactionArtworkBrick')
-  != stitch.components.Artwork({ title: name })
+  != stitch.components.ArtworkGrid({ artworks })
+
+br
+hr
+br
+
+div(class='reactionArtworkBrick')
+  != stitch.components.Artwork({ artwork: artworks[0] })
 
 br
 hr
 br
 
 div
-  != stitch.components.Fillwidth({ title: name })
+  != stitch.components.Fillwidth({ artworks })
 
 br
 
