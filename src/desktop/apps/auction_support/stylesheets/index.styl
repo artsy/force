@@ -42,12 +42,13 @@
       display flex
       justify-content center
       align-content center
-    .artsy-checkbox--label
-    .artsy-checkbox--label a
-      garamond()
-      color gray-darker-color
-      display inline-block
-      text-transform initial
+      &--label
+      &--label a
+        garamond()
+        color gray-darker-color
+        display inline-block
+        text-transform initial
+        letter-spacing normal
 
   .bid-input-container
     position relative
@@ -167,6 +168,10 @@
 
 .auction-bid-form-container .registration-form-content:last-child
   margin-top 30px
+
+.registration-form-content
+  .avant-garde-button-black.is-disabled
+    background #c2c2c2
 
 @media (max-width: 600px)
   #auction-registration-page
