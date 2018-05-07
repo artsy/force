@@ -59,25 +59,25 @@ jobs:
       - run: bash .circleci/heroku_setup.sh
       - run:
           name: Deploy
-          command: .circleci/heroku_deploy
+          command: bash .circleci/heroku_deploy.sh
         
 
 workflows:
   version: 2
   default:
     jobs:
-      - test
-      - acceptance
-      - build #:
+      #- test
+      #- acceptance
+      # - build #:
           # requires:
           #   - test
           #   - acceptance
-      - push:
-          requires:
-            - build
-      - deploy_hokusai:
-          requires:
-            - push
-      - deploy_heroku:
-          requires:
-            - push
+      #- push:
+      #    requires:
+      #      - build
+      #- deploy_hokusai:
+      #    requires:
+      #      - push
+      - deploy_heroku #:
+      #    requires:
+      #      - push
