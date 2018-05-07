@@ -13,14 +13,14 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
-    'change .registration-form-section__checkbox': 'handleCheckCOS'
+    'change .registration-form-section__checkbox': 'handleCheckTerms'
 
   initialize: (options) ->
     @result = deferred.promise
     @success = options.success
     @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
-    @acceptedCos = false
+    @$acceptTerms = @$('#accept_cos')
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 
@@ -29,16 +29,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     new ModalPageView
       width: '700px'
       pageId: 'auction-info'
-  
-  handleCheckCOS: (e) ->
-    if e.target.checked
-      @enableSubmit()
-    else
-      @disableSubmit()
-  
-  disableSubmit: -> @$submit.addClass('is-disabled')
-  enableSubmit: -> @$submit.removeClass('is-disabled')
-
 
   setUpFields: ->
     @fields =
@@ -52,7 +42,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
       state: { el: @$('input.region'), validator: @isState, label: 'state' }
       zip: { el: @$('input.postal-code'), validator: @isZip }
-      'accept cos': { el: @$('input#accept_cos'), validator: @isChecked }
     @internationalizeFields()
 
   disableForm: ->
@@ -129,12 +118,27 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     $element.addClass 'is-loading'
     action().finally => $element.removeClass 'is-loading' unless @comboForm
 
+  handleCheckTerms: (e) ->
+    console.log('checking terms')
+    if @$acceptTerms.prop('checked')
+      @enableSubmit()
+    else
+      @disableSubmit()
+  
+  disableSubmit: -> @$submit.addClass('is-disabled')
+  enableSubmit: -> @$submit.removeClass('is-disabled')
+
   onSubmit: =>
-    analyticsHooks.trigger 'registration:submit-address'
-    @loadingLock @$submit, =>
-      (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
-        Q.all [@savePhoneNumber(), @tokenizeCard()]
-      .catch (error) =>
-        @showError error
-      .then =>
-        @trigger('submitted')
+    # @handleCheckTerms() # Shouldn't be necessary
+    if @$submit.hasClass('is-disabled') or !@$acceptTerms.prop('checked')
+      @disableSubmit()
+      @showError 'You must accept the Conditions of Sale.'
+    else
+      analyticsHooks.trigger 'registration:submit-address'
+      @loadingLock @$submit, =>
+        (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
+          Q.all [@savePhoneNumber(), @tokenizeCard()]
+        .catch (error) =>
+          @showError error
+        .then =>
+          @trigger('submitted')
