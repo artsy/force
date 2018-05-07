@@ -6,7 +6,7 @@ import { Help } from '@artsy/reaction/dist/Assets/Icons/Help'
 
 export const TooltipQuestion = props => {
   return (
-    <Tooltip {...props.props}>
+    <Tooltip {...props}>
       <Help />
     </Tooltip>
   )
