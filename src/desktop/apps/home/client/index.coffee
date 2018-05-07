@@ -90,6 +90,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
       @$('#main-layout-header').removeClass('visible')
 
   highlightSearch: (e, onlyOnFocus = true) ->
+    return unless @$input?
     if onlyOnFocus
       @$searchContainer.addClass('focused') if @$input.is(':focus')
     else
