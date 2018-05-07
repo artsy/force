@@ -79,7 +79,7 @@ registerOrRender = (sale, req, res, next) ->
   saleArtwork = new SaleArtwork(artwork: new Artwork(id: req.params.artwork), sale: sale)
   bidderPositions = new BidderPositions(null, { saleArtwork: saleArtwork, sale: sale })
 
-  render = _.after 4, ->
+  render = _.after 3, ->
     res.locals.sd.BIDDER_POSITIONS = bidderPositions.toJSON()
     res.locals.sd.SALE = sale.toJSON()
     res.locals.sd.SALE_ARTWORK = saleArtwork.toJSON()
@@ -89,6 +89,7 @@ registerOrRender = (sale, req, res, next) ->
       saleArtwork: saleArtwork
       bidderPositions: bidderPositions
       isRegistered: res.locals.sd.REGISTERED
+      hasValidCreditCard: res.locals.sd.HAS_VALID_CREDIT_CARD
       maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
       monthRange: new Order().getMonthRange()
       yearRange: new Order().getYearRange()
@@ -109,25 +110,29 @@ registerOrRender = (sale, req, res, next) ->
         data: { access_token: req.user.get('accessToken') }
         error: res.backboneError
         success: render
-  req.user.checkRegisteredForAuction
-    saleId: sale.get('id')
-    error: res.backboneError
-    success: (registered) ->
-      res.locals.sd.REGISTERED = registered
-      render()
 
-  # TODO: Refactor all of this junk to use MP, or drop it in favor of
-  # inline bidding component, see: https://github.com/artsy/force/issues/5118
   metaphysics
-    query: """ {
-      artwork(id: "#{req.params.artwork}") {
-        sale_artwork {
-          bid_increments
+    query: """
+      query($sale_id: String!, $artwork_id: String!) {
+        artwork(id: $artwork_id) {
+          sale_artwork {
+            bid_increments
+          }
+        }
+        me {
+          has_qualified_credit_cards
+          bidders(sale_id: $sale_id) {
+            id
+          }
         }
       }
-    } """
-  .catch(next).then ({ artwork }) ->
+    """
+    req: req,
+    variables: { sale_id: sale.get('id'), artwork_id: req.params.artwork }
+  .catch(next).then ({ artwork, me }) ->
     res.locals.bidIncrements = artwork.sale_artwork.bid_increments
+    res.locals.sd.REGISTERED = Boolean(me?.bidders?.length > 0)
+    res.locals.sd.HAS_VALID_CREDIT_CARD = Boolean(me?.has_qualified_credit_cards)
     render()
 
 @buyersPremium = (req, res, next) ->
