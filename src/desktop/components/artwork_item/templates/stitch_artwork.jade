@@ -1,0 +1,8 @@
+-
+  const artworkItem = artwork.toJSON()
+  const mountId = artwork.id
+  artworkItem.image = artworkItem.images[0]
+  artworkItem.image.url = artworkItem.image.image_urls.medium
+
+figure.artwork-item( data-artwork= artworkItem.id data-id= artworkItem._id id= mountId )
+  != sd.stitch.components.Artwork({ artwork: artworkItem, mountId: mountId })
