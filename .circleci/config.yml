@@ -54,9 +54,9 @@ jobs:
     docker:
       - image: circleci/node:8-stretch-browsers
     steps:
-      - run: bash .circleci/heroku_setup.sh
       - add_ssh_keys
       - checkout
+      - run: bash .circleci/heroku_setup.sh
       - run:
           name: Deploy
           command: .circleci/heroku_deploy
