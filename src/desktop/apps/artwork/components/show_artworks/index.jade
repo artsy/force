@@ -9,5 +9,10 @@ if artwork.show && artwork.show.artworks.length
       a.artwork-artist-artworks__header__jump( href= show.href )
         | View All
 
-    - var columns = helpers.show_artworks.masonry(show.artworks).columns
-    include ../../../../components/artwork_masonry/index
+
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      #stitch-artwork-show-artworks-masonry
+        != sd.stitch.components.ArtworkGrid({ artworks: show.artworks, mountId: 'stitch-artwork-show-artworks-masonry'})
+    else
+      - var columns = helpers.show_artworks.masonry(show.artworks).columns
+      include ../../../../components/artwork_masonry/index

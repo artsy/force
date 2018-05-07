@@ -1,5 +1,9 @@
-- var columns = helpers.related_artworks.masonry(layer.artworks).columns
-include ../../../../../components/artwork_masonry/index
+if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+  #stitch-artwork-related-artworks-masonry
+    != sd.stitch.components.ArtworkGrid({ artworks: layer.artworks, mountId: 'stitch-artwork-related-artworks-masonry'})
+else
+  - var columns = helpers.related_artworks.masonry(layer.artworks).columns
+  include ../../../../../components/artwork_masonry/index
 
 if layer.href
   .artwork-section__jump

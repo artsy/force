@@ -43,6 +43,7 @@ sharify.data = _.extend(
     'EMAIL_SIGNUP_IMAGES_ID',
     'EMBEDLY_KEY',
     'ENABLE_WEB_CRAWLING',
+    'ENABLE_EXPERIMENTAL_STITCH_INJECTION',
     'EOY_2016_ARTICLE',
     'EOY_2016',
     'EF_GUCCI',
