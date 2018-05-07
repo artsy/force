@@ -7,6 +7,7 @@ Artwork = require '../../models/artwork'
 { API_URL } = require '../../config'
 sanitizeRedirect = require '../../components/sanitize_redirect'
 metaphysics = require '../../../lib/metaphysics'
+{ get } = require 'lodash'
 
 module.exports.index = (req, res, next) ->
   new Feature(id: req.params.id).fetch
@@ -44,7 +45,7 @@ module.exports.bid = (req, res, next) ->
   res.locals.error = req.session.error
   req.session.error = null
 
-  saleArtwork = null; auction = null; registered = false; qualified = false;
+  saleArtwork = null; auction = null; registered = false; qualified = false; hasQualifiedCreditCard = false
   artwork = new Artwork id: req.params.artworkId
   fullURL = req.protocol + "://" + req.get('host') + req.url
   render = _.after 3, ->
@@ -54,6 +55,7 @@ module.exports.bid = (req, res, next) ->
       auction: auction
       registered: registered
       qualified: qualified
+      hasQualifiedCreditCard: hasQualifiedCreditCard
       registerUrl: auction.registerUrl(fullURL)
   artwork.fetch
     cache: true
@@ -65,21 +67,8 @@ module.exports.bid = (req, res, next) ->
       auction = a
       res.locals.sd.SALE_ARTWORK = _.extend saleArtwork.toJSON(), sale: auction.toJSON()
       res.locals.sd.AUCTION = auction
+      render()
 
-      if req.user
-        req.user.registeredForAuction auction.get('id'),
-          success: (r) ->
-            registered = r
-            if registered
-              req.user.fetchQualifiedBidder auction.get('id'),
-                success: (q) =>
-                  qualified = q
-                  render()
-            else
-              render()
-          error: res.backboneError
-      else
-        render()
     error: res.backboneError
   # TODO: Refactor all of this junk to use MP, or drop it in favor of
   # inline bidding component, see: https://github.com/artsy/force/issues/5118
@@ -92,6 +81,11 @@ module.exports.bid = (req, res, next) ->
         }
       }
       me {
+        has_qualified_credit_cards
+        bidders(sale_id: "#{req.params.id}") {
+          id
+          qualified_for_bidding
+        }
         lot_standing(
           artwork_id: "#{req.params.artworkId}"
           sale_id: "#{req.params.id}"
@@ -107,6 +101,9 @@ module.exports.bid = (req, res, next) ->
   .then ({ artwork, me }) ->
     res.locals.bidIncrements = artwork.sale_artwork.bid_increments
     res.locals.myLastMaxBid = me?.lot_standing?.most_recent_bid.max_bid.cents
+    registered = Boolean(me?.bidders?.length > 0)
+    qualified = get(me, 'bidders.0.qualified_for_bidding', false)
+    hasQualifiedCreditCard = get(me, 'has_qualified_credit_cards', false)
     render()
   .catch next
 

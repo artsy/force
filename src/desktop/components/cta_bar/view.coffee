@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Form = require '../mixins/form.coffee'
-AuthModalView = require '../auth_modal/view.coffee'
+mediator = require '../../lib/mediator.coffee'
 Cookies = require '../cookies/index.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../models/current_user.coffee'
@@ -68,8 +68,10 @@ module.exports = class CTABarView extends Backbone.View
 
   openModal: (options = {}) ->
     @close()
-    new AuthModalView _.extend {
-      width: '500px', mode: 'register', redirectTo: @linkHref
+    mediator.trigger 'open:auth', _.extend {
+      width: '500px',
+      mode: 'register',
+      redirectTo: @linkHref
     }, @modalOptions, options
 
   render: ->

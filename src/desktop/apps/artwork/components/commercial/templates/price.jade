@@ -8,10 +8,8 @@ if artwork.sale_message || isPermanentCollection
         .artwork-commerical__price
           | #{artwork.sale_message}
           if artwork.is_price_range
-            span.help-tooltip(
-              data-message= 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'
-              data-anchor= 'bottom-right'
-            )
+            .tooltip-question-container
+              != stitch.components.TooltipQuestion({horizontalAlign: 'left', message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'})
       else if isPermanentCollection
         | Permanent collection
       else

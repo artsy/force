@@ -15,7 +15,6 @@ Raven = require 'raven-js'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
-setupAuctionReminder = require '../components/auction_reminders/index.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
@@ -28,17 +27,16 @@ module.exports = ->
   setupJquery()
   setupReferrerTracking()
   syncAuth()
-  setupAuctionReminder() unless sd.IS_MOBILE
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  mountReactionBlocks()
+  mountStitchBlocks()
 
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
   for attr in ['id', 'type', 'name', 'email', 'phone', 'lab_features',
-               'default_profile_id', 'has_partner_access', 'collector_level']
+               'default_profile_id', 'has_partner_access', 'collector_level', 'recently_viewed_artwork_ids']
 
     # NOTE:
     # If any of the above props have changed between two routes, and the second
@@ -98,7 +96,7 @@ setupErrorReporting = ->
   Raven.config(sd.SENTRY_PUBLIC_DSN).install()
   Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
 
-mountReactionBlocks = ->
+mountStitchBlocks = ->
   {components, mountOnClient} = componentRenderer({
     mode: 'client',
     modules: globalReactModules

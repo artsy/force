@@ -8,11 +8,40 @@ describe('Routes', () => {
   let req = {}
   let res = {}
   const published_at = new Date().toISOString()
-  let results = [
-    { id: 1, published_at },
-    { id: 2, published_at },
-    { id: 3, published_at },
-  ]
+  let results = {
+    articles: [
+      {
+        id: '1',
+        published_at,
+        sections: [
+          {
+            type: 'social_embed',
+            url: 'https://instagram.com/image',
+          },
+        ],
+      },
+      {
+        id: '2',
+        published_at,
+        sections: [
+          {
+            type: 'text',
+            body: 'Body Text',
+          },
+        ],
+      },
+      {
+        id: '3',
+        published_at,
+        sections: [
+          {
+            type: 'text',
+            body: 'Body Text 2',
+          },
+        ],
+      },
+    ],
+  }
 
   beforeEach(() => {
     Backbone.sync = sinon.stub()
@@ -28,6 +57,7 @@ describe('Routes', () => {
 
     routes.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: 'foo' })
     routes.__set__('request', request)
+    routes.__set__('positronql', sinon.stub().returns(Promise.resolve(results)))
 
     req = {}
     res = {
@@ -42,7 +72,7 @@ describe('Routes', () => {
       Backbone.sync.args[0][2].success({
         total: 16088,
         count: 2,
-        results,
+        results: results.articles,
       })
       res.render.args[0][0].should.containEql('partner_updates')
       res.render.args[0][1].articles.length.should.eql(3)
@@ -57,30 +87,18 @@ describe('Routes', () => {
         },
       })
       routes.__set__('request', request)
-      routes.news(req, res)
-      await Backbone.sync.args[0][2].success({
-        total: 16088,
-        count: 3,
-        results,
-      })
-      setTimeout(() => {
-        res.render.args[0][0].should.containEql('news')
-        res.render.args[0][1].articles.length.should.eql(3)
-      }, 100)
+      await routes.news(req, res)
+      res.render.args[0][0].should.containEql('news')
+      res.render.args[0][1].articles.length.should.eql(3)
     })
 
     it('renders the rss feed for news', async () => {
       routes.__set__(
         'findArticlesWithEmbeds',
-        sinon.stub().returns(Promise.resolve(new Articles(results)))
+        sinon.stub().returns(Promise.resolve(new Articles(results.articles)))
       )
 
-      routes.news(req, res)
-      await Backbone.sync.args[0][2].success({
-        total: 16088,
-        count: 3,
-        results,
-      })
+      await routes.news(req, res)
       res.render.args[0][0].should.containEql('news')
       res.render.args[0][1].articles.length.should.eql(3)
     })

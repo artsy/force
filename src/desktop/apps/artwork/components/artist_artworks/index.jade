@@ -8,12 +8,12 @@ if artwork.artist && artwork.artist.artworks && artwork.artist.artworks.length
         href='#{artwork.artist.href}/works'
       ) View All
 
-    - var columns = helpers.artist_artworks.masonry(artwork.artist.artworks).columns
-    include ../../../../components/artwork_masonry/index
-
-    //- TODO: Replace columns above with below
-    //- #test-mount
-    //-   != reaction.artworkGrid({ mountId: 'test-mount'})
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      #stitch-artwork-artist-artworks-masonry
+        != sd.stitch.components.ArtworkGrid({ artworks: artwork.artist.artworks, mountId: 'stitch-artwork-artist-artworks-masonry'})
+    else
+      - var columns = helpers.artist_artworks.masonry(artwork.artist.artworks).columns
+      include ../../../../components/artwork_masonry/index
 
     .artwork-section__jump
       a.avant-garde-jump-link( href='#{artwork.artist.href}/works' )

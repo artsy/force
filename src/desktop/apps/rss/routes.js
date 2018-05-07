@@ -1,33 +1,31 @@
 import _request from 'superagent'
 import { data as _sd } from 'sharify'
 import Articles from '../../collections/articles'
-const PAGE_SIZE = 50
 import Q from 'bluebird-q'
+import { news as newsQuery } from './queries/news'
+import { positronql as _positronql } from 'desktop/lib/positronql'
+
+const PAGE_SIZE = 50
 
 // FIXME: Rewire
 let sd = _sd
 let request = _request
+let positronql = _positronql
 
-export const news = (req, res, next) =>
-  new Articles().fetch({
-    data: {
-      channel_id: sd.ARTSY_EDITORIAL_CHANNEL,
-      published: true,
-      sort: '-published_at',
-      exclude_google_news: false,
-      limit: PAGE_SIZE,
-    },
-    error: res.backboneError,
-    success: async data => {
+export const news = (req, res, next) => {
+  const query = { query: newsQuery }
+  return positronql(query)
+    .then(async result => {
       try {
-        const articles = await findArticlesWithEmbeds(data.models)
+        const articles = await findArticlesWithEmbeds(result.articles)
         res.set('Content-Type', 'application/rss+xml')
         return res.render('news', { articles, pretty: true })
       } catch (err) {
         console.error(err)
       }
-    },
-  })
+    })
+    .catch(next)
+}
 
 export const partnerUpdates = (req, res, next) =>
   new Articles().fetch({
@@ -48,7 +46,7 @@ export const findArticlesWithEmbeds = articles => {
   return Q.all(
     articles.map(async (article, i) => {
       const newSections = await findSocialEmbeds(article)
-      article.set('sections', newSections)
+      article.sections = newSections
 
       return article
     })
@@ -59,7 +57,7 @@ export const findArticlesWithEmbeds = articles => {
 
 export const findSocialEmbeds = article => {
   return Q.all(
-    article.get('sections').map(async (section, index) => {
+    article.sections.map(async (section, index) => {
       try {
         const newSection = await maybeFetchSocialEmbed(section)
         return newSection

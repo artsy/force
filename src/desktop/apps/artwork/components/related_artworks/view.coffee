@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
+sd = require('sharify').data
 helpers = require './helpers.coffee'
 template = -> require('./templates/masonry.jade') arguments...
 
@@ -70,6 +71,7 @@ module.exports = class ArtworkRelatedArtworksView extends Backbone.View
           .html template
             layer: artwork.layer
             helpers: related_artworks: helpers
+            sd: sd
 
         @postRender artwork.layer.artworks
 

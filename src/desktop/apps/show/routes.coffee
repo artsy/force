@@ -87,12 +87,15 @@ query = """
       artworks {
         id
         _id
+        __id
         href
         collecting_institution
         image {
           url(version: "large")
           width
           height
+          aspect_ratio
+          placeholder
         }
         partner {
           href

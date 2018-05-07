@@ -161,6 +161,7 @@ export default function(app) {
           'paddle_number',
           'phone',
           'type',
+          'recently_viewed_artwork_ids',
         ],
       })
     )

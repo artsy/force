@@ -64,7 +64,7 @@ export const teardown = async () => {
   try {
     await browser.end()
     await Promise.all(
-      servers.map((server) => new Promise((resolve) => server.close(resolve)))
+      servers.map(server => new Promise(resolve => server.close(resolve)))
     )
   } catch (e) {
     warn(e)
@@ -72,12 +72,12 @@ export const teardown = async () => {
 }
 
 // Convenience Promise wrapped timeout use via `await sleep(1000)`
-export const sleep = (ms) =>
-  new Promise((resolve) => {
+export const sleep = ms =>
+  new Promise(resolve => {
     setTimeout(resolve, ms)
   })
 
-const mixinBrowserHelpers = (browser) => {
+const mixinBrowserHelpers = browser => {
   // Steps to log in through the auth modal
   browser.login = async () => {
     await browser.el('.mlh-login')
@@ -90,16 +90,16 @@ const mixinBrowserHelpers = (browser) => {
   }
 
   // Visits a page and returns a jQuery-like `$` API
-  browser.page = (path) =>
+  browser.page = path =>
     browser
       .goto(`${APP_URL}${path}`)
       .evaluate(() => document.documentElement.innerHTML)
       .then(cheerio.load)
 
   // Wait for an element to appear and return the inner html
-  browser.el = async (selector) => {
+  browser.el = async selector => {
     await browser.wait(selector)
-    const html = await browser.evaluate((selector) => {
+    const html = await browser.evaluate(selector => {
       return document.querySelector(selector).innerHTML
     }, selector)
     return html
@@ -107,13 +107,13 @@ const mixinBrowserHelpers = (browser) => {
   return browser
 }
 
-const warn = (e) => console.log(chalk.red(e))
+const warn = e => console.log(chalk.red(e))
 
-const startForce = (port) =>
+const startForce = port =>
   new Promise((resolve, reject) => {
     const app = require('../../../')
     servers.push(
-      app.listen(port, (err) => {
+      app.listen(port, err => {
         if (err) reject(err)
         else resolve(app)
       })
@@ -127,7 +127,7 @@ const newApp = () => {
   return app
 }
 
-const startGravity = (port) =>
+const startGravity = port =>
   new Promise((resolve, reject) => {
     const app = newApp()
     app.post('/oauth2/access_token', (req, res) => {
@@ -160,25 +160,20 @@ const startGravity = (port) =>
       )
     })
     servers.push(
-      app.listen(port, (err) => {
+      app.listen(port, err => {
         if (err) reject(err)
         else resolve(app)
       })
     )
   })
 
-const startApp = (port) =>
+const startApp = port =>
   new Promise((resolve, reject) => {
     const app = newApp()
     servers.push(
-      app.listen(port, (err) => {
+      app.listen(port, err => {
         if (err) reject(err)
         else resolve(app)
       })
     )
-  })
-
-export const stubAuctionReminder = () =>
-  gravity.get('/api/v1/sales', (req, res) => {
-    res.send([])
   })

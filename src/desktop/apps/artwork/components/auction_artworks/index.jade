@@ -22,8 +22,17 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
     .artwork-auction-artworks__auction-name
       | #{auction.name} #{auctionLabel}
 
-    - var columns = helpers.auction_artworks.masonry(auction.artworks, followed_artist_ids).columns
-    include ../../../../components/artwork_masonry_4_column/index
+
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      #stitch-artwork-auction-artworks-masonry
+        -
+          const artworks = helpers.auction_artworks.prepareMasonry(auction.artworks, followed_artist_ids)
+
+        != sd.stitch.components.ArtworkGrid({ artworks, columnCount: 4, mountId: 'stitch-artwork-auction-artworks-masonry'})
+    else
+      - var columns = helpers.auction_artworks.masonry(auction.artworks, followed_artist_ids).columns
+      include ../../../../components/artwork_masonry_4_column/index
+
 
     .artwork-auction-artworks__view-all
       .artwork-auction-artworks__view-all__mask

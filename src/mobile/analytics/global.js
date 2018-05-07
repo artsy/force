@@ -23,13 +23,13 @@ setTimeout(function() {
   })
 }, 180000)
 
-// Debug tracking calls in development
-if (sd.NODE_ENV !== 'production') {
+// Debug tracking calls
+if (sd.SHOW_ANALYTICS_CALLS) {
   analytics.on('track', function() {
     console.debug('TRACKED: ', arguments[0], JSON.stringify(arguments[1]))
   })
 }
-if (sd.NODE_ENV === 'development') {
+if (sd.SHOW_ANALYTICS_CALLS) {
   analyticsHooks.on('all', function(name, data) {
     console.info('ANALYTICS HOOK: ', name, data)
   })
