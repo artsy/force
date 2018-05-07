@@ -15,6 +15,14 @@ template = -> require('./index.jade') arguments...
 cookieValue = ->
   JSON.parse(Cookies.get(COOKIE_NAME) or '[]')
 
+# If the user is logged in and has any recently viewed artworks associated, use that.
+# Otherwise, use the artwork id's stored in the cookie.
+artworkIds = ->
+  if (ids = CurrentUser.orNull()?.get('recently_viewed_artwork_ids'))
+    return ids if ids.length > 0
+
+  return cookieValue()
+
 module.exports =
   setCookie: (artworkId) ->
     uniqueArtworkIds = _.without(cookieValue(), artworkId)
@@ -23,7 +31,7 @@ module.exports =
     Cookies.set COOKIE_NAME, JSON.stringify(artworkIdsToStore), expires: COOKIE_EXPIRY
 
   shouldShowRVARail: ->
-    !blacklist.check() && cookieValue().length > 0 && location.pathname isnt '/'
+    !blacklist.check() && artworkIds().length > 0 && location.pathname isnt '/'
 
   reInitRVARail: ($el) ->
     return unless $el.find('.rva-container').length > 0
@@ -33,7 +41,7 @@ module.exports =
       dontResizeUp: true
 
   setupRail: ($el) ->
-    send = method: 'post', query: query, variables: ids: cookieValue()
+    send = method: 'post', query: query, variables: ids: artworkIds()
     metaphysics send
       .then (data) ->
         $el.html template
