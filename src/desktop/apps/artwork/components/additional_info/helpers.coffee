@@ -16,7 +16,7 @@ module.exports =
           artwork.signature? or
           artwork.description? or
           artwork.additional_information? or
-          artwork.image_rights?
+          artwork.image_rights?.length
         when 'exhibition_history'
           artwork.exhibition_history?
         when 'bibliography'
