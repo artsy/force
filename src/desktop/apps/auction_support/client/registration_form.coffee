@@ -13,7 +13,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
-    'change .registration-form-section__checkbox': 'handleCheckTerms'
+    'change .registration-form-section__checkbox': 'validateAcceptTerms'
 
   initialize: (options) ->
     @result = deferred.promise
@@ -118,21 +118,22 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     $element.addClass 'is-loading'
     action().finally => $element.removeClass 'is-loading' unless @comboForm
 
-  handleCheckTerms: (e) ->
-    console.log('checking terms')
+  validateAcceptTerms: (e) ->
     if @$acceptTerms.prop('checked')
+      @$('.artsy-checkbox').removeClass('error')
       @enableSubmit()
+      true
     else
+      @$('.artsy-checkbox').addClass('error')
       @disableSubmit()
+      false
   
   disableSubmit: -> @$submit.addClass('is-disabled')
   enableSubmit: -> @$submit.removeClass('is-disabled')
 
   onSubmit: =>
-    # @handleCheckTerms() # Shouldn't be necessary
-    if @$submit.hasClass('is-disabled') or !@$acceptTerms.prop('checked')
-      @disableSubmit()
-      @showError 'You must accept the Conditions of Sale.'
+    # @validateAcceptTerms() # Shouldn't be necessary
+    return unless @validateAcceptTerms()
     else
       analyticsHooks.trigger 'registration:submit-address'
       @loadingLock @$submit, =>
