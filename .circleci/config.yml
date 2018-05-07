@@ -68,18 +68,27 @@ workflows:
   version: 2
   default:
     jobs:
-      #- test
-      #- acceptance
-      # - build #:
-          # requires:
-          #   - test
-          #   - acceptance
-      #- push:
-      #    requires:
-      #      - build
-      #- deploy_hokusai:
-      #    requires:
-      #      - push
-      - deploy_heroku #:
-      #    requires:
-      #      - push
+      - test
+      - acceptance
+      - build:
+          requires:
+            - test
+            - acceptance
+      - push:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+      - deploy_hokusai:
+          filters:
+            branches:
+              only: master
+          requires:
+            - push
+      - deploy_heroku:
+          filters:
+            branches:
+              only: master
+          requires:
+            - push
