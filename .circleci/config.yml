@@ -54,7 +54,9 @@ jobs:
     docker:
       - image: circleci/node:8-stretch-browsers
     steps:
-      - add_ssh_keys
+      - add_ssh_keys:
+          fingerprints:
+            - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
       - checkout
       - run: bash .circleci/heroku_setup.sh
       - run:
