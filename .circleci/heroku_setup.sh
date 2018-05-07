@@ -1,12 +1,13 @@
 #! /bin/bash -ex
 
-if [ "${CIRCLE_BRANCH}" == "master" ]; then
-  app_name=force-staging
-elif [ "${CIRCLE_BRANCH}" == "release" ]; then
-  app_name=force-production
-else
-  exit 0
-fi
+# if [ "${CIRCLE_BRANCH}" == "master" ]; then
+#   app_name=force-staging
+# elif [ "${CIRCLE_BRANCH}" == "release" ]; then
+#   app_name=force-production
+# else
+#   exit 0
+# fi
+app_name=force-staging
 
 git remote add heroku https://git.heroku.com/$app_name.git
 wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
