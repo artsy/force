@@ -75,7 +75,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view = new ArtworkFilterView
       el: @options.el
       artistID: @model.get('id')
-      topOffset: $('.artist-sticky-header-container').height()
+      topOffset: $('.artist-tabs-container').height() + 20
 
     $('body').append @jump.$el
 
