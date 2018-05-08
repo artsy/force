@@ -13,14 +13,14 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
-    'change .registration-form-section__checkbox': 'validateAcceptTerms'
+    'change .registration-form-section__checkbox': 'validateAcceptCOS'
 
   initialize: (options) ->
     @result = deferred.promise
     @success = options.success
     @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
-    @$acceptTerms = @$('#accept_cos')
+    @$acceptCOS = @$('#accept_cos')
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 
@@ -118,21 +118,18 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     $element.addClass 'is-loading'
     action().finally => $element.removeClass 'is-loading' unless @comboForm
 
-  validateAcceptTerms: (e) ->
-    if @$acceptTerms.prop('checked')
+  validateAcceptCOS: (e) ->
+    if @$acceptCOS.prop('checked')
       @$('.artsy-checkbox').removeClass('error')
-      @enableSubmit()
+      @$submit.removeClass('is-disabled')
       true
     else
+      @$submit.addClass('is-disabled')
       @$('.artsy-checkbox').addClass('error')
-      @disableSubmit()
       false
-  
-  disableSubmit: -> @$submit.addClass('is-disabled')
-  enableSubmit: -> @$submit.removeClass('is-disabled')
 
   onSubmit: =>
-    return unless @validateAcceptTerms()
+    return unless @validateAcceptCOS()
     analyticsHooks.trigger 'registration:submit-address'
     @loadingLock @$submit, =>
       (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>

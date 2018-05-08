@@ -26,7 +26,7 @@ describe 'RegistrationForm', ->
     benv.teardown()
 
   beforeEach (done) ->
-    @submitStub = sinon.stub(Backbone, 'sync')#.yieldsTo('success')
+    @submitStub = sinon.stub(Backbone, 'sync')
 
     @order = new Order()
     @sale = new Sale fabricate 'sale'
