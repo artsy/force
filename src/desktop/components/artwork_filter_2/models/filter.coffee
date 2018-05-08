@@ -44,6 +44,11 @@ module.exports = class ArtworkFilter extends Backbone.Model
           @total = filter_artworks.total
         else
           @artworks = @artworks.concat fetchedArtworks
+
+        @set
+          page: @page
+          total: @total
+
         @set allFetched: true if @artworks.length >= @total or fetchedArtworks.length is 0
         @trigger 'fetchedArtworks', { artworks: fetchedArtworks, reset: reset }
         @set isLoading: false

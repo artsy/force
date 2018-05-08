@@ -4,6 +4,7 @@ sd = require('sharify').data
 qs = require 'querystring'
 Backbone = require 'backbone'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+splitTest = require('../../../components/split_test/index.coffee')
 OverviewView = require './views/overview.coffee'
 ArtworkFilterView = require '../../../components/artwork_filter_2/view.coffee'
 CVView = require './views/cv.coffee'
@@ -67,17 +68,27 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view.on 'artist:overview:sync', (artist) =>
       attachCTA new Artist(_.extend({}, artist, @model.attributes))
 
+    # TODO: Remove A/B test
+    # splitTest('artist_page_pagination').view()
+
   cv: ->
     @view = new CVView @options
     @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   works: ->
+    # TODO: Remove A/B split-test
+    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
+
     @view = new ArtworkFilterView
       el: @options.el
       artistID: @model.get('id')
       topOffset: $('.artist-tabs-container').height() + 20
+      infiniteScrollEnabled: infiniteScrollEnabled
 
     $('body').append @jump.$el
+
+    # TODO: Remove A/B test
+    # splitTest('artist_page_pagination').view()
 
   shows: ->
     @view = new ShowsView @options

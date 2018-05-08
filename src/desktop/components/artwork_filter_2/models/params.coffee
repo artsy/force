@@ -4,13 +4,16 @@ qs = require 'querystring'
 aggregationsMap = require '../aggregations_map.coffee'
 
 module.exports = class Params extends Backbone.Model
+  defaults:
+    page: 1
+    size: 40
 
   defaultParams:
     sort: '-partner_updated_at'
 
   initialize: ->
     @filterParamKeys = _.pluck(aggregationsMap, 'param')
-    @whitelisted = @filterParamKeys.concat ['for_sale', 'sort']
+    @whitelisted = @filterParamKeys.concat ['for_sale', 'page', 'sort']
 
   mapped: ->
     _.reduce aggregationsMap, (memo, { param, apiParam }) =>
