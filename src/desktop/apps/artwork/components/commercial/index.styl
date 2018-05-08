@@ -67,6 +67,7 @@
     line-height 1.5
 
   &__consignables
+    color gray-darker-color
     &__consign
       block-margins(gutter / 2)
       color gray-darker-color
@@ -89,9 +90,6 @@
       font-size 15px
       text-decoration underline
 
-  &__consignables
-    color gray-darker-color
-
   &__inquiry-success
     color green-color
 
@@ -102,6 +100,15 @@
 .artwork-inquiry-form
 .artwork-acquire-form
   margin (gutter / 2) 0
+
+// need to add border if artwork missing inquire prompt
+.artwork-commercial__container + .artwork-partner-stub
+  border-top 1px solid gray-lighter-color
+
+// need to add border to the element following partner directly
+.artwork-partner-stub + .artwork-commercial__questions
+.artwork-partner-stub + .artwork-commercial__consignables
+  border-top 1px solid gray-lighter-color
 
 .artwork-edition-sets
   block-margins(gutter / 2)
