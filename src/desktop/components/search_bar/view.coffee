@@ -8,6 +8,8 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
+CurrentUser = require '../../models/current_user.coffee'
+SearchResult = require '../../models/search_result.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   defaults:
@@ -47,7 +49,14 @@ module.exports = class SearchBarView extends Backbone.View
     @setupTypeahead()
     @setupPlaceholder()
 
+    @enableSpotlightAutocomplete = CurrentUser.orNull()?.hasLabFeature('Spotlight Search')
+    @$spotlight = @$('#spotlight-search')
+    @$spotlightInitialText = @$spotlight.find('#spotlight-search__initial-text')
+    @$spotlightRemainingText = @$spotlight.find('#spotlight-search__remaining-text')
+
   events:
+    'blur input': 'hideSpotlight'
+    'keydown input': 'maybeHideSpotlight'
     'keyup input': 'checkSubmission'
     'focus input': 'trackFocusInput'
     'click .empty-item': 'emptyItemClick'
@@ -64,10 +73,42 @@ module.exports = class SearchBarView extends Backbone.View
 
   checkSubmission: (e) ->
     @hideSuggestions()
+
     return if !(e.which is 13) or @selected?
 
     unless @isEmpty()
       @trigger 'search:entered', encodeURIComponent(@$input.val())
+
+  maybeHideSpotlight: (e) ->
+    @hideSpotlight() unless e.which is 37 or e.which is 39 # cursor left, right
+
+  hideSpotlight: ->
+    @$spotlight.css('z-index', '-1')
+
+  showSpotlight: ->
+    @$spotlight.css('z-index', '2')
+
+  # Display spotlight result if:
+  # - more than 4 characters have been typed AND
+  # - query is an exact case-insensitive leading match of the search result AND
+  # - query is more than 30% of the length of the search result
+  shouldShowSpotlightSearch: (searchResult) ->
+    currentQuery = @$input.val()
+    currentQuery.length > 4 &&
+      searchResult.toLowerCase().indexOf(currentQuery.toLowerCase()) is 0 &&
+      (currentQuery.length / searchResult.length) >= 0.3
+
+  displaySpotlightSearch: (result) ->
+    return unless @enableSpotlightAutocomplete
+
+    searchResult = new SearchResult(result).get('display')
+    return @hideSpotlight() unless @shouldShowSpotlightSearch(searchResult)
+
+    currentQuery = @$input.val()
+    remainingText = searchResult.replace(new RegExp(currentQuery, 'i'), '')
+    @$spotlightInitialText.text(currentQuery)
+    @$spotlightRemainingText.text(remainingText)
+    @showSpotlight()
 
   indicateLoading: ->
     @renderFeedback()
@@ -136,6 +177,7 @@ module.exports = class SearchBarView extends Backbone.View
         url: @search.url()
         filter: (results) =>
           @trackSearchResults results
+          @displaySpotlightSearch(results[0]) if results?.length > 0
           @search.parse results
         ajax:
           beforeSend: (xhr) =>

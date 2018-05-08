@@ -61,6 +61,27 @@ search-bar-input-placeholder()
   border none
   placeholder(search-bar-input-placeholder)
 
+#main-layout-header-left
+  #spotlight-search
+    font-size 17px
+    padding-top 8px
+
+#spotlight-search
+  height 100%
+  width 100%
+  position absolute
+  top 0
+  left 0
+  z-index -1
+  padding-left 35px
+  garamond()
+  font-size 20px
+  padding-top 17px
+  &__initial-text
+    visibility hidden
+  &__remaining-text
+    color gray-color
+
 #main-layout-search-bar-icon
   position absolute
   iconfont-styling()
