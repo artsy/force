@@ -88,7 +88,7 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedGenes()
 
     # TODO: Remove A/B split-test
-    infiniteScrollEnabled = sd.ARTIST_PAGE_PAGINATION is 'control'
+    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
 
     # Main section
     @filterView = (new ArtworkFilterView
@@ -98,13 +98,19 @@ module.exports = class OverviewView extends Backbone.View
       infiniteScrollEnabled: infiniteScrollEnabled
     ).render()
 
-    @listenToOnce mediator, 'infinite:scroll:end', =>
-      @$('.artist-related-rail').addClass('is-fade-in')
+    if infiniteScrollEnabled
+      @listenToOnce mediator, 'infinite:scroll:end', =>
+        @showRelatedRail()
+    else
+      @showRelatedRail()
 
     @subViews.push @filterView
 
-  setupRelatedGenes: ->
+  showRelatedRail: ->
+    @$('.artist-related-rail').addClass('is-fade-in')
 
+
+  setupRelatedGenes: ->
     subView = new RelatedGenesView
       id: @model.id
 

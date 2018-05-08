@@ -69,7 +69,7 @@ module.exports = class ArtistRouter extends Backbone.Router
       attachCTA new Artist(_.extend({}, artist, @model.attributes))
 
     # TODO: Remove A/B test
-    splitTest('artist_page_pagination').view()
+    # splitTest('artist_page_pagination').view()
 
   cv: ->
     @view = new CVView @options
@@ -77,7 +77,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   works: ->
     # TODO: Remove A/B split-test
-    infiniteScrollEnabled = sd.ARTIST_PAGE_PAGINATION is 'control'
+    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
 
     @view = new ArtworkFilterView
       el: @options.el
@@ -88,7 +88,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     $('body').append @jump.$el
 
     # TODO: Remove A/B test
-    splitTest('artist_page_pagination').view()
+    # splitTest('artist_page_pagination').view()
 
   shows: ->
     @view = new ShowsView @options

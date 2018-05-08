@@ -10,6 +10,7 @@ Counts = require './models/counts.coffee'
 Params = require './models/params.coffee'
 Filter = require './models/filter.coffee'
 qs = require 'querystring'
+sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkFilterView extends Backbone.View
@@ -52,7 +53,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @params.trigger 'firstSet', @artistID
 
   render: ->
-    @$el.html template
+    @$el.html template({ sd: sd })
     _.defer => @postRender()
     return this
 
@@ -78,7 +79,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$htmlBody.animate { scrollTop: visibleTop - 1 }, 500
 
   infiniteScroll: =>
-    return if @infiniteScrollEnabled
+    return if !@infiniteScrollEnabled
     return if @filter.get 'isLoading' or @filter.get 'allFetched'
 
     threshold = $(window).height() + $(window).scrollTop()
