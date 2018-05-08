@@ -26,7 +26,7 @@ describe 'RegistrationForm', ->
     benv.teardown()
 
   beforeEach (done) ->
-    sinon.stub(Backbone, 'sync')#.yieldsTo('success')
+    @submitStub = sinon.stub(Backbone, 'sync')#.yieldsTo('success')
 
     @order = new Order()
     @sale = new Sale fabricate 'sale'
@@ -51,8 +51,8 @@ describe 'RegistrationForm', ->
   describe '#submit', ->
 
     beforeEach ->
+      @acceptTerms = => @view.$acceptTerms.prop('checked', true)
       @submitValidForm = =>
-        @view.$acceptTerms.prop('checked', true)
         @view.$('input[name="card_name"]').val 'Foo Bar'
         @view.$('select[name="card_expiration_month"]').val '1'
         @view.$('select[name="card_expiration_year"]').val '2024'
@@ -73,6 +73,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'error', { responseJSON: { message: 'Sale is already taken.' } } # bidder creation failure
 
+      @acceptTerms()
       @submitValidForm()
 
       @view.once 'submitted', =>
@@ -115,6 +116,7 @@ describe 'RegistrationForm', ->
         Backbone.sync.onThirdCall().yieldsTo('success')
 
 
+        @acceptTerms()
         @submitValidForm()
         @view.once "submitted", =>
           @Stripe.card.createToken.args[0][1](200, {})
@@ -138,6 +140,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
+      @acceptTerms()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -153,6 +156,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
+      @acceptTerms()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -168,6 +172,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
+      @acceptTerms()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -182,3 +187,12 @@ describe 'RegistrationForm', ->
         Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
 
         done()
+
+    it 'does not submit the form if Conditions of Sale are not accepted', ->
+      spy = sinon.spy(@submitStub)
+      @submitValidForm()
+      spy.called.should.be.false()
+
+    it 'adds an error class on submit if Conditions of Sale are not accepted', ->
+      @submitValidForm()
+      @view.$('.artsy-checkbox').hasClass('error').should.be.true()
