@@ -90,7 +90,7 @@ module.exports = class OverviewView extends Backbone.View
     @filterView = (new ArtworkFilterView
       el: @$('#artwork-section')
       artistID: @model.get('id')
-      topOffset: $('.artist-sticky-header-container').height()
+      topOffset: $('.artist-tabs-container').height() + 20
     ).render()
 
     @listenToOnce mediator, 'infinite:scroll:end', =>
