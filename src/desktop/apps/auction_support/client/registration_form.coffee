@@ -132,14 +132,12 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   enableSubmit: -> @$submit.removeClass('is-disabled')
 
   onSubmit: =>
-    # @validateAcceptTerms() # Shouldn't be necessary
     return unless @validateAcceptTerms()
-    else
-      analyticsHooks.trigger 'registration:submit-address'
-      @loadingLock @$submit, =>
-        (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
-          Q.all [@savePhoneNumber(), @tokenizeCard()]
-        .catch (error) =>
-          @showError error
-        .then =>
-          @trigger('submitted')
+    analyticsHooks.trigger 'registration:submit-address'
+    @loadingLock @$submit, =>
+      (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
+        Q.all [@savePhoneNumber(), @tokenizeCard()]
+      .catch (error) =>
+        @showError error
+      .then =>
+        @trigger('submitted')
