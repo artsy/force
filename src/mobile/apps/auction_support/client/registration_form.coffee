@@ -12,10 +12,13 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-box-button': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
+    'change .registration-form-section__checkbox': 'validateAcceptCOS'
+
 
   initialize: (options) ->
     @success = options.success
     @currentUser = CurrentUser.orNull()
+    @$acceptCOS = @$('#accept_cos')
     @$submit = @$('.registration-form-content .avant-garde-box-button')
     @setUpFields()
 
@@ -103,8 +106,19 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     $element.addClass 'is-loading'
     action().finally => $element.removeClass 'is-loading'
 
+  validateAcceptCOS: (e) ->
+    if @$acceptCOS.prop('checked')
+      @$('.artsy-checkbox').removeClass('error')
+      @$submit.removeClass('is-disabled')
+      true
+    else
+      @$('.artsy-checkbox').addClass('error')
+      @$submit.addClass('is-disabled')
+      false
+
   onSubmit: (event) ->
     event.preventDefault()
+    return unless @validateAcceptCOS()
 
     analyticsHooks.trigger 'registration:submitted-address'
 
