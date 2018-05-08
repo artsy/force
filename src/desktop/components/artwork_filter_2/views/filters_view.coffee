@@ -1,6 +1,8 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+sd = require('sharify').data
 Sticky = require '../../sticky/index.coffee'
+CountView = require './header_count_view.coffee'
 aggregationsMap = require '../aggregations_map.coffee'
 template = -> require('../templates/filters.jade') arguments...
 
@@ -44,6 +46,13 @@ module.exports = class ArtworkFiltersView extends Backbone.View
       @truncate,
       forSaleFilter
     }
+
+    # FIXME: Replace with proper A/B test
+    # if sd.ARTIST_PAGE_PAGINATION is 'control'
+    if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+      countView = new CountView _.extend el: @$('#artwork-filter-left__totals'), { @counts, @params }
+      countView.render()
+
     this
 
   resetPagination: ->
