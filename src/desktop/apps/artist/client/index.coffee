@@ -6,7 +6,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 ArtistRouter = require './router.coffee'
 FollowedArtistsRailView = require '../../home/components/followed_artists/view.coffee'
 
-module.exports.init = ->  
+module.exports.init = ->
   statuses = ARTIST.statuses
   artist = new Artist ARTIST
   user = CurrentUser.orNull()
@@ -16,4 +16,5 @@ module.exports.init = ->
     model: artist,
     statuses: statuses,
     user: user
+
   Backbone.history.start pushState: true
