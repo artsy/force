@@ -113,3 +113,23 @@ describe 'SearchBarView', ->
 
     it 'falls back to the default string', ->
       @view.feedbackString().should.equal 'Search Artsy'
+
+  describe '#shouldShowSpotlightSearch', ->
+    it 'returns false if the query is too short', ->
+      @$input.val('cat')
+      @view.shouldShowSpotlightSearch(null).should.equal false
+
+    it 'returns false if the search result doesnt start with the query', ->
+      @$input.val('percy')
+      searchResult = new SearchResult({name: 'Some other Cat'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal false
+
+    it 'returns false if the query isnt long enough relative to the search result', ->
+      @$input.val('percy')
+      searchResult = new SearchResult({name: 'Percy Z is a really cool cat'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal false
+
+    it 'returns true', ->
+      @$input.val('percy')
+      searchResult = new SearchResult({name: 'Percy Z'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal true
