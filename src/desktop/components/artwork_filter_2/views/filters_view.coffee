@@ -14,6 +14,7 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     'click .js-artwork-filter-toggle'   : 'toggleBool'
     'click .js-artwork-filter-remove'   : 'filterDeselected'
     'click .js-artwork-filter-view-all' : 'seeAllClicked'
+    'click' : 'resetPagination'
 
   initialize: ({ @params, @counts, stickyOffset = 0 }) ->
     @sticky = new Sticky
@@ -44,6 +45,9 @@ module.exports = class ArtworkFiltersView extends Backbone.View
       forSaleFilter
     }
     this
+
+  resetPagination: ->
+    @params.set { page: 1 }, { silent: true }
 
   toggleBool: (e) ->
     e.preventDefault()
