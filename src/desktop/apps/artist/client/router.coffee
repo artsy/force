@@ -32,8 +32,8 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist/:id/biography': 'biography'
     'artist/:id/auction-results': 'auctionResults'
 
-  initialize: ({ @model, @user, @statuses }) ->
-    @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
+  initialize: ({ @model, @user, @statuses, @testGroup }) ->
+    @options = model: @model, user: @user, statuses: @statuses, testGroup: @testGroup, el: $('.artist-page-content')
     @setupUser()
     @setupJump()
     @setupCarousel()

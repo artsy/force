@@ -5,8 +5,14 @@ Artist = require '../../../models/artist.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtistRouter = require './router.coffee'
 FollowedArtistsRailView = require '../../home/components/followed_artists/view.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
 
-module.exports.init = ->  
+testGroup = sd.ARTIST_MARKET_DATA_TEST
+
+module.exports.init = ->
+  # ARTIST_MARKET_DATA_TEST remove after test closes
+  splitTest('artist_market_data_test').view()
+
   statuses = ARTIST.statuses
   artist = new Artist ARTIST
   user = CurrentUser.orNull()
@@ -15,5 +21,6 @@ module.exports.init = ->
   router = new ArtistRouter
     model: artist,
     statuses: statuses,
-    user: user
+    user: user,
+    testGroup: testGroup
   Backbone.history.start pushState: true

@@ -21,7 +21,7 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  initialize: ({ @user, @statuses }) ->
+  initialize: ({ @user, @statuses, @testGroup }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
 
   fetchRelated: ->
@@ -129,6 +129,7 @@ module.exports = class OverviewView extends Backbone.View
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
+      hasOverview: @testGroup is 'control' or @testGroup is 'market_data_no_carousel'
 
     _.defer => @postRender()
     this

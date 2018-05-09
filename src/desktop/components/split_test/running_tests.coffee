@@ -32,5 +32,15 @@ module.exports = {
       control: 50
     control_group: 'control'
     edge: 'experiment'
+  artist_market_data_test:
+    key: 'artist_market_data_test'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'market_data_no_carousel'
+      'market_data_no_carousel_no_overview'
+    ]
+    control_group: 'control'
+    edge: 'market_data_no_carousel_no_overview'
 }
 

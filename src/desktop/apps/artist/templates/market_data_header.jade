@@ -1,0 +1,16 @@
+
+.artist-header-market-data
+  .artist-header-market-data-content
+    .artist-header-image
+    .artist-header-meta
+      h1.artist-header-name.extra-large-garamond-header= artist.name
+
+      - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+      if bday
+        .artist-header-birthdate= bday
+
+      .artist-market-data
+        //- | Market Data info goes here
+
+      .artist-follow
+        button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button

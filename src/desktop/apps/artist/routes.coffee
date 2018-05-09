@@ -35,6 +35,8 @@ sd = require('sharify').data
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
+      testGroup = res.locals.sd.ARTIST_MARKET_DATA_TEST
+  
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
           .then (veniceFeature) ->
@@ -51,6 +53,10 @@ sd = require('sharify').data
               tab: tab
               nav: nav
               currentItem: currentItem
+              showSections:
+                carousel: testGroup is 'control'
+                marketData: testGroup is 'market_data_no_carousel' or testGroup is 'market_data_no_carousel_no_overview'
+                overview: testGroup is 'control' or testGroup is 'market_data_no_carousel'
               jsonLD: JSON.stringify helpers.toJSONLD artist if isReqFromReflection
 
       else
