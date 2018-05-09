@@ -42,12 +42,19 @@
       display flex
       justify-content center
       align-content center
-      &--checkbox
-        margin-right 8px
+      // Vertically align the period.
+      line-height 1.5em
+      color: gray-darker-color
       // unset default hover style that encompasses entire wrapper
       &:hover .artsy-checkbox--checkbox > label:after
         opacity 0
-      
+      // Alignment for checkbox, label and link (next sibling of the checkbox input)
+      > a
+        line-height 1.8em
+      &--label
+        margin-right 1px
+        .artsy-checkbox--checkbox
+          margin-right 8px
       // --label wraps input for this implementation; use it for hover style
       &--label:hover .artsy-checkbox--checkbox > label:after
         opacity .1
@@ -59,6 +66,7 @@
         text-transform initial
         letter-spacing normal
       &.error
+        color red-color
         .artsy-checkbox--checkbox
           background red-color
         .artsy-checkbox--label, a

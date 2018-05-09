@@ -5,8 +5,9 @@
 @import '../components/stylus_lib'
 @import '../components/bid_numbers'
 
+// The default checkbox styling
+// (from /src/desktop/components/main_layout/stylesheets/form_elements.styl)
 checkbox-size = 20px
-
 .artsy-checkbox
   display inline-block
   line-height checkbox-size
@@ -80,10 +81,11 @@ checkbox-size = 20px
     text-transform uppercase
     letter-spacing 2px
 
-  label
-    display block
-    avant-garde()
-    font-size 12px
+  .auction-registration-form
+    label
+      display block
+      avant-garde()
+      font-size 12px
 
   .credit-card-input-section
     margin-top 10px
@@ -124,26 +126,7 @@ checkbox-size = 20px
 
   .error
     color bad-red-color
-  
-  .registration-form-section.accept-cos
-    margin 30px auto
-    .artsy-checkbox
-      display flex
-      justify-content center
-      align-content center
-      &--label
-      &--label a
-        garamond()
-        color gray-darker-color
-        display inline-block
-        text-transform initial
-        letter-spacing normal
-      &.error
-        .artsy-checkbox--checkbox
-            background bad-red-color
-        .artsy-checkbox--label
-        .artsy-checkbox--label a
-            color bad-red-color
+
 
 .card-expiration
   width 62%
@@ -153,3 +136,40 @@ checkbox-size = 20px
   display block
   input
     padding 10px 0 11px 0
+
+.registration-form-section.accept-cos
+  margin 30px auto !important
+  .artsy-checkbox
+    display flex
+    justify-content center
+    align-content center
+    // Vertically align the period.
+    line-height 1.5em
+    color: gray-darker-color
+    // unset default hover style that encompasses entire wrapper
+    &:hover .artsy-checkbox--checkbox > label:after
+      opacity 0
+    // Alignment for checkbox, label and link (next sibling of the checkbox input)
+    > a
+      line-height 1.8em
+    &--label
+      margin-right 1px
+      .artsy-checkbox--checkbox
+        margin-right 8px
+    // --label wraps input for this implementation; use it for hover style
+    &--label:hover .artsy-checkbox--checkbox > label:after
+      opacity .1
+    &--label, a
+      garamond()
+      font-size 14px
+      color gray-darker-color
+      display inline-block
+      text-transform initial
+      letter-spacing normal
+    &.error
+      color bad-red-color
+      .artsy-checkbox--checkbox
+        background bad-red-color
+      .artsy-checkbox--label, a
+          color bad-red-color
+
