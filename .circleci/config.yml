@@ -62,7 +62,7 @@ jobs:
       - run: bash .circleci/heroku_setup.sh
       - run:
           name: Deploy
-          command: bash .circleci/heroku_deploy.sh
+          command: "yarn install && bash .circleci/heroku_deploy.sh"
         
 
 workflows:
