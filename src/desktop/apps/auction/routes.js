@@ -21,13 +21,13 @@ import { renderLayout as _renderLayout } from '@artsy/stitch'
 let metaphysics = _metaphysics
 let renderLayout = _renderLayout
 
-export async function index (req, res, next) {
+export async function index(req, res, next) {
   const saleId = req.params.id
 
   try {
     const { sale } = await metaphysics({
       query: SaleQuery(saleId),
-      req: req
+      req,
     })
 
     res.locals.sd.AUCTION = sale
@@ -36,9 +36,9 @@ export async function index (req, res, next) {
     let articles = []
 
     try {
-      ({ articles } = await metaphysics({
+      ;({ articles } = await metaphysics({
         query: ArticlesQuery(sale._id),
-        req: req
+        req,
       }))
     } catch (error) {
       console.error('(apps/auction/routes.js) Error fetching Articles', error)
@@ -60,9 +60,9 @@ export async function index (req, res, next) {
     let me = {}
 
     if (!isEcommerceSale) {
-      ({ me } = await metaphysics({
+      ;({ me } = await metaphysics({
         query: MeQuery(sale.id),
-        req: req
+        req,
       }))
     }
 
@@ -72,43 +72,49 @@ export async function index (req, res, next) {
     if (isEcommerceSale) {
       artworkBrowserSortOptions = {
         '-searchable_estimate': 'Most Expensive',
-        'searchable_estimate': 'Least Expensive'
+        searchable_estimate: 'Least Expensive',
       }
       sort = '-searchable_estimate'
     }
 
     const store = configureStore(auctionReducer, {
-      app: u({
-        articles: new Articles(articles),
-        auction: auctionModel,
-        footerItems: footerItems,
-        isEcommerceSale,
-        isLiveOpen: auctionModel.isLiveOpen(),
-        isMobile: res.locals.sd.IS_MOBILE,
-        liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
-          isLoggedIn: Boolean(me)
-        }),
-        me
-      }, appInitialState),
-
-      artworkBrowser: u({
-        // FIXME: This is a temporary fix to update UI
-        filterParams: {
-          sale_id: saleId,
-          sort
+      app: u(
+        {
+          articles: new Articles(articles),
+          auction: auctionModel,
+          footerItems: footerItems,
+          isEcommerceSale,
+          isLiveOpen: auctionModel.isLiveOpen(),
+          isMobile: res.locals.sd.IS_MOBILE,
+          liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
+            isLoggedIn: Boolean(me),
+          }),
+          me,
         },
-        isClosed: sale.is_closed,
-        requestID: req.id,
-        sortMap: u.constant(artworkBrowserSortOptions),
-        symbol: sale.symbol,
-        user: res.locals.sd.CURRENT_USER
-      }, auctionWorksInitialState)
+        appInitialState
+      ),
+
+      artworkBrowser: u(
+        {
+          // FIXME: This is a temporary fix to update UI
+          filterParams: {
+            sale_id: saleId,
+            sort,
+          },
+          isClosed: sale.is_closed,
+          requestID: req.id,
+          sortMap: u.constant(artworkBrowserSortOptions),
+          symbol: sale.symbol,
+          user: res.locals.sd.CURRENT_USER,
+        },
+        auctionWorksInitialState
+      ),
     })
 
     // Hydrate store
     await Promise.all([
       req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
-      store.dispatch(actions.fetchArtworks())
+      store.dispatch(actions.fetchArtworks()),
     ])
 
     try {
@@ -116,22 +122,22 @@ export async function index (req, res, next) {
         basePath: res.app.get('views'),
         layout: '../../../../components/main_layout/templates/react_index.jade',
         config: {
-          styledComponents: true
+          styledComponents: true,
         },
         blocks: {
           head: 'meta.jade',
-          body: (props) => <App store={store} {...props} />
+          body: props => <App store={store} {...props} />,
         },
         locals: {
           ...res.locals,
           assetPackage: 'auctions',
-          bodyClass: 'auction-body body-header-fixed body-no-margins'
+          bodyClass: 'auction-body body-header-fixed body-no-margins',
         },
         data: {
           app: store.getState().app,
           artworkBrowser: store.getState().artworkBrowser,
-          sd: res.locals.sd
-        }
+          sd: res.locals.sd,
+        },
       })
 
       res.send(layout)
@@ -143,23 +149,28 @@ export async function index (req, res, next) {
   }
 }
 
-export async function redirectLive (req, res, next) {
+export async function redirectLive(req, res, next) {
   try {
-    const { sale } = await metaphysics({ query: SaleQuery(req.params.id), req: req })
+    const { sale } = await metaphysics({
+      query: SaleQuery(req.params.id),
+      req,
+    })
     const isLiveOpen = get(sale, 'is_live_open')
 
     if (isLiveOpen) {
       const { me } = await metaphysics({
         query: MeQuery(req.params.id),
-        req: req
+        req,
       })
 
       const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
 
       if (qualifiedForBidding) {
-        res.redirect(getLiveAuctionUrl(sale.id, {
-          isLoggedIn: Boolean(me)
-        }))
+        res.redirect(
+          getLiveAuctionUrl(sale.id, {
+            isLoggedIn: Boolean(me),
+          })
+        )
       } else {
         next()
       }
@@ -176,13 +187,17 @@ export async function redirectLive (req, res, next) {
  * route transitions will incidentally trigger a client-side reload.
  * See: https://github.com/artsy/force/blob/master/desktop/lib/global_client_setup.coffee#L37
  */
-async function fetchUser (req, res) {
+async function fetchUser(req, res) {
   if (req.user) {
     try {
-      const user = await req.user.fetch({ headers: { 'X-Request-Id': req.id } })
+      const user = await req.user.fetch({
+        headers: {
+          'X-Request-Id': req.id,
+        },
+      })
       res.locals.sd.CURRENT_USER = {
         ...res.locals.sd.CURRENT_USER,
-        ...user
+        ...user,
       }
     } catch (error) {
       console.log('(auction/routes.js) Error fetching user: ', error)
