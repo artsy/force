@@ -14,7 +14,6 @@ module.exports = class ArtistHeaderView extends Backbone.View
     @setupFollowButton()
     @updateCurrentItem()
     @$window = $ window
-    @$window.on 'scroll', _.throttle(@popLock, 150)
     @$('a').click @navClick
 
   setupShareButtons: ->
@@ -52,15 +51,3 @@ module.exports = class ArtistHeaderView extends Backbone.View
     if e.target.pathname is window.location.pathname
       e.preventDefault()
       @jump.scrollToTop() if @$window.scrollTop() isnt 0
-
-  popLock: =>
-    mainHeaderHeight = $('#main-layout-header').height()
-    bottomOfMenu = @$window.scrollTop() + mainHeaderHeight
-    tabsOffset = @$('.artist-sticky-header').offset()?.top
-    if tabsOffset <= bottomOfMenu
-      @$('.artist-sticky-header').addClass('artist-sticky-header-fixed')
-      responsiveMargin = $('.main-layout-container').offset().left
-
-    else
-      @$('.artist-sticky-header').removeClass('artist-sticky-header-fixed')
-

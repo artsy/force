@@ -1,4 +1,5 @@
 _ = require 'underscore'
+sd = require('sharify').data
 Backbone = require 'backbone'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
@@ -85,21 +86,31 @@ module.exports = class OverviewView extends Backbone.View
   postRender: ->
     # Sub-header
     @setupRelatedGenes()
-    # Main section
 
+    # TODO: Remove A/B split-test
+    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
+
+    # Main section
     @filterView = (new ArtworkFilterView
       el: @$('#artwork-section')
       artistID: @model.get('id')
-      topOffset: $('.artist-sticky-header-container').height()
+      topOffset: $('.artist-tabs-container').height() + 20
+      infiniteScrollEnabled: infiniteScrollEnabled
     ).render()
 
-    @listenToOnce mediator, 'infinite:scroll:end', =>
-      @$('.artist-related-rail').addClass('is-fade-in')
+    if infiniteScrollEnabled
+      @listenToOnce mediator, 'infinite:scroll:end', =>
+        @showRelatedRail()
+    else
+      @showRelatedRail()
 
     @subViews.push @filterView
 
-  setupRelatedGenes: ->
+  showRelatedRail: ->
+    @$('.artist-related-rail').addClass('is-fade-in')
 
+
+  setupRelatedGenes: ->
     subView = new RelatedGenesView
       id: @model.id
 

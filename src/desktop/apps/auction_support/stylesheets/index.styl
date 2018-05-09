@@ -36,9 +36,25 @@
     margin-top: 9px
     margin-bottom: 18px
 
-  .registration-form-section.register
-    margin-top 10px
-    margin-bottom 10px
+  .registration-form-section.accept-cos
+    margin 30px auto
+    .artsy-checkbox
+      display flex
+      justify-content center
+      align-content center
+      &--label
+      &--label a
+        garamond()
+        color gray-darker-color
+        display inline-block
+        text-transform initial
+        letter-spacing normal
+      &.error
+        .artsy-checkbox--checkbox
+            background red-color
+        .artsy-checkbox--label
+        .artsy-checkbox--label a
+            color red-color
 
   .bid-input-container
     position relative
@@ -158,6 +174,10 @@
 
 .auction-bid-form-container .registration-form-content:last-child
   margin-top 30px
+
+.registration-form-content
+  .avant-garde-button-black.is-disabled
+    background #c2c2c2
 
 @media (max-width: 600px)
   #auction-registration-page

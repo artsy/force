@@ -16,3 +16,9 @@
       .link-and-spinner
         .artwork-spinner-container
           .loading-spinner
+
+      //- FIXME: Replace with proper A/B test
+      //- if sd.ARTIST_PAGE_PAGINATION is 'control'
+      if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+        hr
+        #artwork-filter__pagination
