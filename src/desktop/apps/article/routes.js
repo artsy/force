@@ -122,6 +122,10 @@ export async function index(req, res, next) {
     const isMobile = res.locals.sd.IS_MOBILE
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
 
+    // Tooltips a/b/c test
+    const showTooltips = res.locals.sd.ARTICLE_TOOLTIPS !== 'control'
+    const showToolTipMarketData = res.locals.sd.ARTICLE_TOOLTIPS === 'market'
+
     const layout = await renderLayout({
       basePath: res.app.get('views'),
       layout: layoutTemplate,
@@ -144,6 +148,8 @@ export async function index(req, res, next) {
         isSuper,
         isMobile,
         jsonLD,
+        showTooltips,
+        showToolTipMarketData,
         subscribed,
         superArticle,
         superSubArticles,

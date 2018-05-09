@@ -22,6 +22,8 @@ export default class InfiniteScrollArticle extends React.Component {
     isMobile: PropTypes.bool,
     headerHeight: PropTypes.string,
     marginTop: PropTypes.string,
+    showTooltips: PropTypes.bool,
+    showToolTipMarketData: PropTypes.bool,
   }
 
   constructor(props) {
@@ -63,7 +65,7 @@ export default class InfiniteScrollArticle extends React.Component {
 
       // Ignore featured layouts
       const newArticles = data.articles.filter(
-        (article) => article.layout !== 'feature'
+        article => article.layout !== 'feature'
       )
 
       if (newArticles.length) {
@@ -140,6 +142,8 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
+    const { showTooltips, showToolTipMarketData } = this.props
+
     return _.flatten(
       this.state.articles.map((article, i) => {
         return (
@@ -154,11 +158,13 @@ export default class InfiniteScrollArticle extends React.Component {
               display={article.display}
               headerHeight={i === 0 ? this.props.headerHeight : null}
               marginTop={i === 0 ? this.props.marginTop : null}
+              showTooltips={showTooltips}
+              showToolTipMarketData={showToolTipMarketData}
             />
             <Break />
             <Waypoint
-              onEnter={(waypointData) => this.onEnter(article, waypointData)}
-              onLeave={(waypointData) => this.onLeave(i, waypointData)}
+              onEnter={waypointData => this.onEnter(article, waypointData)}
+              onLeave={waypointData => this.onLeave(i, waypointData)}
             />
           </div>
         )
