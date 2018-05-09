@@ -69,11 +69,11 @@ workflows:
   default:
     jobs:
       - test
-      - acceptance
+      # - acceptance FIXME: Re enable once circle fixes their browser image.
       - build:
           requires:
             - test
-            #- acceptance FIXME: Re enable once circle fixes their browser image.
+            #- acceptance 
       - push:
           filters:
             branches:
