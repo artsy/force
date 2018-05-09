@@ -40,5 +40,14 @@ module.exports = {
       control: 50
     control_group: 'control'
     edge: 'experiment'
+
+  article_tooltips:
+    key: 'article_tooltips'
+    weighting: 'equal'
+    outcomes: [
+      'bio',
+      'market',
+      'control'
+    ]
 }
 
