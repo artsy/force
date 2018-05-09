@@ -80,7 +80,18 @@ module.exports = class SearchBarView extends Backbone.View
       @trigger 'search:entered', encodeURIComponent(@$input.val())
 
   maybeHideSpotlight: (e) ->
-    @hideSpotlight() unless e.which is 37 or e.which is 39 # cursor left, right
+    return if e.which is 37 or e.which is 39 # cursor left, right
+
+    letterPressed = String.fromCharCode(e.which).toLowerCase()
+    if letterPressed is @$spotlightRemainingText.text().charAt(0).toLowerCase()
+      return @shiftLetter(letterPressed)
+
+    @hideSpotlight()
+
+  shiftLetter: (letter) ->
+    shiftedInitialText = "#{@$spotlightInitialText.text()}#{letter}"
+    @$spotlightInitialText.text(shiftedInitialText)
+    @$spotlightRemainingText.text(@$spotlightRemainingText.text().slice(1))
 
   hideSpotlight: ->
     @$spotlight.css('z-index', '-1')
