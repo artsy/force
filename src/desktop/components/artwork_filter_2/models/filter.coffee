@@ -6,7 +6,7 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 module.exports = class ArtworkFilter extends Backbone.Model
 
   page: 1
-  size: 9
+  size: 40
   artworks: []
   reset: true
 
