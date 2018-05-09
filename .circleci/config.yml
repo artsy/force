@@ -91,4 +91,4 @@ workflows:
             branches:
               only: master
           requires:
-            - push
+            - test
