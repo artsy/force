@@ -52,12 +52,13 @@ jobs:
           command: hokusai staging deploy $CIRCLE_SHA1
   deploy_heroku:
     docker:
-      - image: circleci/node:8-stretch-browsers
+      - image: artsy/hokusai:0.4.0
     steps:
       - add_ssh_keys:
           fingerprints:
             - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
       - checkout
+      - setup_remote_docker
       - run: bash .circleci/heroku_setup.sh
       - run:
           name: Deploy
