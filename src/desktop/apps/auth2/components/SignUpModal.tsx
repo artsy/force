@@ -2,21 +2,18 @@ import React, { Component } from 'react'
 import { DesktopModal } from '@artsy/reaction/dist/Components/Authorization/DesktopModal'
 import { RegisterForm } from '@artsy/reaction/dist/Components/Authorization/RegisterForm'
 
-export class SignupModal extends Component {
-  state = {
-    show: true,
-  }
-
-  onClose = () => this.setState({ show: false })
-
+interface Props {
+  closeModal: () => void
+}
+export class SignupModal extends Component<Props, null> {
   render() {
     return (
-      <DesktopModal show={this.state.show} onClose={this.onClose}>
+      <DesktopModal show={true} onClose={this.props.closeModal}>
         <RegisterForm
-          handleSubmit={(values) => {
+          handleSubmit={values => {
             console.log('Form submitted', values)
           }}
-          handleChangeMode={(mode) => (_) => {
+          handleChangeMode={mode => _ => {
             console.log('New mode: ', mode)
           }}
           values={{}}

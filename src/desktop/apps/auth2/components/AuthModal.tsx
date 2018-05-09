@@ -4,11 +4,12 @@ import { SignupModal } from '../components/SignUpModal'
 
 interface Props {
   mode?: string
+  closeModal?: () => void
 }
 
 export class AuthModal extends Component<Props> {
   render() {
-    const { mode } = this.props
+    const { mode, closeModal } = this.props
     let Modal
 
     if (!mode) {
@@ -27,8 +28,6 @@ export class AuthModal extends Component<Props> {
         break
     }
 
-    return (
-      <Modal />
-    )
+    return <Modal closeModal={closeModal} />
   }
 }

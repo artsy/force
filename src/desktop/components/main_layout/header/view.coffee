@@ -106,9 +106,12 @@ module.exports = class HeaderView extends Backbone.View
     false
 
   openAuth: (options) ->
+    closeModal = ->
+      ReactDOM.unmountComponentAtNode(document.getElementById('react-modal-container')) 
     if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
       mediator.trigger 'clickHeaderAuth'
       return
+    Object.assign(options, {closeModal: closeModal})
     ReactDOM.render(
       React.createElement AuthModal, options
       document.getElementById('react-modal-container')
