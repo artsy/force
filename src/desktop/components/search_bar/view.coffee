@@ -47,6 +47,7 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:cursorchanged', @ensureResult
 
     @enableSpotlightAutocomplete = CurrentUser.orNull()?.hasLabFeature('Spotlight Search')
+    @autoselect = false if @enableSpotlightAutocomplete
     @setupTypeahead()
     @setupPlaceholder()
 
@@ -76,11 +77,20 @@ module.exports = class SearchBarView extends Backbone.View
 
     return if !(e.which is 13) or @selected?
 
+    if e.which is 13 and @enableSpotlightAutocomplete
+      if @spotlightSearchResult
+        location.assign @spotlightSearchResult.href()
+        @$input.val(@spotlightSearchResult.get('display'))
+        @hideSpotlight()
+      else
+        @emptyItemClick()
+      return
+
     unless @isEmpty()
       @trigger 'search:entered', encodeURIComponent(@$input.val())
 
   maybeHideSpotlight: (e) ->
-    return if e.which is 37 or e.which is 39 # cursor left, right
+    return if e.which is 37 or e.which is 39 or e.which is 13 # cursor left, right, enter
 
     letterPressed = String.fromCharCode(e.which).toLowerCase()
     if letterPressed is @$spotlightRemainingText.text().charAt(0).toLowerCase()
@@ -95,6 +105,7 @@ module.exports = class SearchBarView extends Backbone.View
 
   hideSpotlight: ->
     @$spotlight.css('z-index', '-1')
+    @spotlightSearchResult = null
 
   showSpotlight: ->
     @$spotlight.css('z-index', '2')
@@ -112,11 +123,12 @@ module.exports = class SearchBarView extends Backbone.View
   displaySpotlightSearch: (result) ->
     return unless @enableSpotlightAutocomplete
 
-    searchResult = new SearchResult(result).get('display')
-    return @hideSpotlight() unless @shouldShowSpotlightSearch(searchResult)
+    searchResult = new SearchResult(result)
+    return @hideSpotlight() unless @shouldShowSpotlightSearch(searchResult.get('display'))
 
+    @spotlightSearchResult = searchResult
     currentQuery = @$input.val()
-    remainingText = searchResult.replace(new RegExp(currentQuery, 'i'), '')
+    remainingText = searchResult.get('display').replace(new RegExp(currentQuery, 'i'), '')
     @$spotlightInitialText.text(currentQuery)
     @$spotlightRemainingText.text(remainingText)
     @showSpotlight()
