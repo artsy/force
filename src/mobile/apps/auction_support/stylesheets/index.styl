@@ -144,25 +144,33 @@ checkbox-size = 20px
     justify-content center
     align-content center
     color: gray-darker-color
-    // Alignment for checkbox, label and link (next sibling of the checkbox input)
-      > a, &--label
-        height 20px
-      &--label .artsy-checkbox--checkbox
-          margin-right 8px
-
     // unset default hover style that encompasses entire wrapper
     &:hover .artsy-checkbox--checkbox > label:after
       opacity 0
-    // --label wraps input for this implementation; use it for hover style
-    &--label:hover .artsy-checkbox--checkbox > label:after
-      opacity .1
-    &--label, a
-      garamond()
-      font-size 14px
-      color gray-darker-color
-      display inline-block
-      text-transform initial
-      letter-spacing normal
+    &--label
+      position relative
+      // common styles for label and <a>
+      &, a
+        garamond()
+        font-size 14px
+        color gray-darker-color
+        display inline-block
+        text-transform initial
+        letter-spacing normal
+      .artsy-checkbox--checkbox
+        margin-right 8px
+      // --label wraps input for this implementation; use it for hover style
+      &:hover .artsy-checkbox--checkbox > label:after
+        opacity .1
+      // Cover up the checkbox hover state if hovering on the window
+      & > a.conceal-hover-state:hover::before
+        content: ''
+        width 16px
+        height 16px
+        background white
+        position absolute
+        left 2px
+        top 2px
     &.error
       color bad-red-color
       .artsy-checkbox--checkbox
