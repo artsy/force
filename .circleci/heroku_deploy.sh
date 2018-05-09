@@ -2,8 +2,10 @@
 
 if git remote | grep heroku > /dev/null; then
   git fetch heroku
-  git push --force heroku $CIRCLE_SHA1:master
+  DEPLOY_ENV=staging yarn deploy
+  git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
   heroku restart
+  DEPLOY_ENV=staging yarn sentry
 else
   echo "Heroku is not set up :("
   exit 1
