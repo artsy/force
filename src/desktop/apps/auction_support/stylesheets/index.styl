@@ -42,19 +42,27 @@
       display flex
       justify-content center
       align-content center
-      &--label
-      &--label a
+      &--checkbox
+        margin-right 8px
+      // unset default hover style that encompasses entire wrapper
+      &:hover .artsy-checkbox--checkbox > label:after
+        opacity 0
+      
+      // --label wraps input for this implementation; use it for hover style
+      &--label:hover .artsy-checkbox--checkbox > label:after
+        opacity .1
+      &--label, a
         garamond()
+        font-size 14px
         color gray-darker-color
         display inline-block
         text-transform initial
         letter-spacing normal
       &.error
         .artsy-checkbox--checkbox
-            background red-color
-        .artsy-checkbox--label
-        .artsy-checkbox--label a
-            color red-color
+          background red-color
+        .artsy-checkbox--label, a
+          color red-color
 
   .bid-input-container
     position relative
@@ -177,7 +185,7 @@
 
 .registration-form-content
   .avant-garde-button-black.is-disabled
-    background #c2c2c2
+    background #e5e5e5
 
 @media (max-width: 600px)
   #auction-registration-page
