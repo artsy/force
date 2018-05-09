@@ -46,10 +46,10 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:closed', @hideSuggestions
     @on 'search:cursorchanged', @ensureResult
 
+    @enableSpotlightAutocomplete = CurrentUser.orNull()?.hasLabFeature('Spotlight Search')
     @setupTypeahead()
     @setupPlaceholder()
 
-    @enableSpotlightAutocomplete = CurrentUser.orNull()?.hasLabFeature('Spotlight Search')
     @$spotlight = @$('#spotlight-search')
     @$spotlightInitialText = @$spotlight.find('#spotlight-search__initial-text')
     @$spotlightRemainingText = @$spotlight.find('#spotlight-search__remaining-text')
@@ -205,16 +205,25 @@ module.exports = class SearchBarView extends Backbone.View
     _.each ['opened', 'closed', 'selected', 'cursorchanged'], (action) =>
       @$input.on "typeahead:#{action}", (args...) =>
         @trigger "search:#{action}", args...
+  
+    templateOptions = {
+      suggestion: @suggestionTemplate
+      empty: -> "" # Typeahead won't render the header for empty results unless 'empty' is defined
+    }
 
+    _.extend(templateOptions, @placeHolderItemPlacement())
     @$input.typeahead { autoselect: @autoselect },
       template: 'custom'
-      templates:
-        suggestion: @suggestionTemplate
-        empty: -> "" # Typeahead won't render the header for empty results unless 'empty' is defined
-        header: @emptyItemTemplate
+      templates: templateOptions
       displayKey: 'value'
       name: _.uniqueId 'search'
       source: @setupBloodHound().ttAdapter()
+
+  placeHolderItemPlacement: ->
+    if @enableSpotlightAutocomplete
+      { footer: @emptyItemTemplate }
+    else
+      { header: @emptyItemTemplate }
 
   clear: ->
     @set ''
