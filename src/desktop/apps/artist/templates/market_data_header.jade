@@ -2,6 +2,13 @@
 .artist-header-market-data
   .artist-header-market-data-content
     .artist-header-image
+      - var imageUrl = artist.image && artist.image.square
+      if imageUrl
+        img.artist-header-image-thumbnail(src= imageUrl)
+      else
+        .artist-header-image-thumbnail.no-artist-image
+          = artist.initials
+      
     .artist-header-meta
       h1.artist-header-name.extra-large-garamond-header= artist.name
 
