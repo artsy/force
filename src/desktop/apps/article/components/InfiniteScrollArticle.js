@@ -22,6 +22,8 @@ export default class InfiniteScrollArticle extends React.Component {
     isMobile: PropTypes.bool,
     headerHeight: PropTypes.string,
     marginTop: PropTypes.string,
+    showTooltips: PropTypes.bool,
+    showToolTipMarketData: PropTypes.bool,
   }
 
   constructor(props) {
@@ -42,7 +44,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   fetchNextArticles = async () => {
-    const { articles, offset } = this.state
+    const { articles, following, offset } = this.state
 
     this.setState({
       isLoading: true,
@@ -52,27 +54,20 @@ export default class InfiniteScrollArticle extends React.Component {
       const data = await positronql({
         query: articlesQuery({
           offset,
+          layout: 'standard',
           limit: 3,
           channel: sd.ARTSY_EDITORIAL_CHANNEL,
           omit: this.props.article.id,
         }),
       })
 
-      // TODO:
-      // At some point this could go in a query so as not to fetch unnecessary data
-
-      // Ignore featured layouts
-      const newArticles = data.articles.filter(
-        (article) => article.layout !== 'feature'
-      )
-
-      if (newArticles.length) {
+      if (data.articles.length) {
         this.setState({
-          articles: articles.concat(newArticles),
+          articles: articles.concat(data.articles),
           isLoading: false,
           offset: offset + 3,
         })
-        setupFollowButtons(this.state.following)
+        setupFollowButtons(following)
       } else {
         this.setState({
           isEnabled: false,
@@ -140,6 +135,8 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
+    const { showTooltips, showToolTipMarketData } = this.props
+
     return _.flatten(
       this.state.articles.map((article, i) => {
         return (
@@ -154,11 +151,13 @@ export default class InfiniteScrollArticle extends React.Component {
               display={article.display}
               headerHeight={i === 0 ? this.props.headerHeight : null}
               marginTop={i === 0 ? this.props.marginTop : null}
+              showTooltips={showTooltips}
+              showToolTipMarketData={showToolTipMarketData}
             />
             <Break />
             <Waypoint
-              onEnter={(waypointData) => this.onEnter(article, waypointData)}
-              onLeave={(waypointData) => this.onLeave(i, waypointData)}
+              onEnter={waypointData => this.onEnter(article, waypointData)}
+              onLeave={waypointData => this.onLeave(i, waypointData)}
             />
           </div>
         )

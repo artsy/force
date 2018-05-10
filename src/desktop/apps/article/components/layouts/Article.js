@@ -28,6 +28,8 @@ export default class ArticleLayout extends React.Component {
     isSuper: PropTypes.bool,
     subscribed: PropTypes.bool,
     templates: PropTypes.object,
+    showTooltips: PropTypes.bool,
+    showToolTipMarketData: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -49,7 +51,13 @@ export default class ArticleLayout extends React.Component {
 
   renderArticle = () => {
     let { article } = this.props
-    const { isMobile, isSuper, subscribed } = this.props
+    const {
+      isMobile,
+      isSuper,
+      showTooltips,
+      showToolTipMarketData,
+      subscribed,
+    } = this.props
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
     const headerHeight = `calc(100vh - ${navHeight})`
@@ -83,6 +91,8 @@ export default class ArticleLayout extends React.Component {
           emailSignupUrl={emailSignupUrl}
           headerHeight={headerHeight}
           marginTop={articleMarginTop}
+          showTooltips={showTooltips}
+          showToolTipMarketData={showToolTipMarketData}
         />
       )
     } else {
@@ -93,6 +103,8 @@ export default class ArticleLayout extends React.Component {
           relatedArticlesForPanel={article.relatedArticlesPanel}
           headerHeight={headerHeight}
           marginTop={articleMarginTop}
+          showTooltips={showTooltips}
+          showToolTipMarketData={showToolTipMarketData}
         />
       )
     }
