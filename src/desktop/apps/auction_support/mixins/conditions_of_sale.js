@@ -1,5 +1,5 @@
 module.exports = {
-  validateAcceptCOS() {
+  validateAcceptConditions() {
     if (this.$acceptConditions.prop('checked')) {
       this.$checkbox.removeClass('error')
       this.$submit.removeClass('is-disabled')

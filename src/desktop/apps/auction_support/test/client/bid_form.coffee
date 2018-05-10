@@ -132,7 +132,7 @@ describe 'BidForm', ->
 
   describe '#placeBid while not registered', ->
     beforeEach (done) ->
-      @acceptConditions = => @view.$acceptCOS.prop('checked', true)
+      @acceptConditions = => @view.$acceptConditions.prop('checked', true)
       benv.render resolve(__dirname, '../../templates/bid-form.jade'), {
         sd: {}
         sale: @sale

@@ -4,6 +4,7 @@ SaleArtwork = require '../../../models/sale_artwork.coffee'
 Backbone = require 'backbone'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 AuctionClockView = require '../../../components/auction_clock/view.coffee'
+ConditionsOfSale = require '../../../../desktop/apps/auction_support/mixins/conditions_of_sale.js'
 openSpecialistModal = require '../../../components/specialist_modal/index.coffee'
 Auction = require '../../../models/sale.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -12,7 +13,7 @@ accounting = require 'accounting'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports.BidPageView = class BidPageView extends Backbone.View
-
+  _.extend @prototype, ConditionsOfSale
   timesPolledForBidPlacement: 0
 
   errors:
@@ -21,7 +22,10 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
     "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
 
   initialize: (options) ->
-    { @saleArtwork, @user, @window, @auction } = options
+    { @saleArtwork, @user, @window, @auction, @isRegistered } = options
+    @$checkbox = @$('.artsy-checkbox')
+    @$acceptConditions = @$('#accept_conditions')
+    @$submit = @$('.feature-bid-page-max-bid .avant-garde-box-button')
     @renderUnqualifiedWarning()
 
   inputValCents: ->
@@ -31,11 +35,15 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
     'submit form': 'onSubmit'
     'click .js-contact-specialist' : 'openSpecialistView'
     'change .feature-bid-page-max-bid-select': 'updateButtonText'
+    'change .registration-form-section__checkbox': 'validateAcceptConditions'
 
   openSpecialistView: ->
     openSpecialistModal(@$el)
 
   onSubmit: (e) ->
+    e.preventDefault()
+    unless @isRegistered
+      return unless @validateAcceptConditions()
     @$('button').addClass('avant-garde-box-button-loading')
     if @inputValCents() < @saleArtwork.get('minimum_next_bid_cents')
       @onError "Your bid must be at least #{@saleArtwork.minBid()}"
@@ -114,6 +122,7 @@ module.exports.init = ->
     auction: new Auction sd.AUCTION
     user: new CurrentUser
     window: window
+    isRegistered: sd.REGISTERED
 
   new AuctionClockView(
     model: new Auction sd.AUCTION

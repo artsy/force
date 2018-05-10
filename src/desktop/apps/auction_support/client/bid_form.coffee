@@ -25,14 +25,14 @@ module.exports = class BidForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'
     'click .bidding-question': 'showBiddingDialog'
-    'change .registration-form-section__checkbox': 'validateAcceptCOS'
+    'change .registration-form-section__checkbox': 'validateAcceptConditions'
 
   initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately, @isRegistered }) ->
     @user = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @placeBid() if @submitImmediately
     @$('.max-bid').focus() unless @submitImmediately
-    @$acceptCOS = @$('#accept_cos')
+    @$acceptConditions = @$('#accept_conditions')
     @$checkbox = @$('.artsy-checkbox')
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
 
@@ -48,7 +48,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   placeBid: =>
     unless @isRegistered
-      return unless @validateAcceptCOS()
+      return unless @validateAcceptConditions()
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
     @clearErrors()
