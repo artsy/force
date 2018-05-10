@@ -19,6 +19,12 @@ module.exports = class SearchBarView extends Backbone.View
     displayEmptyItem: false
     shouldDisplaySuggestions: true
 
+  Keys: {
+    Enter: 13
+    Left: 37
+    Right: 39
+  }
+
   initialize: (options) ->
     return unless @$el.length
     { @mode,
@@ -74,23 +80,23 @@ module.exports = class SearchBarView extends Backbone.View
 
   checkSubmission: (e) ->
     @hideSuggestions()
-
-    return if !(e.which is 13) or @selected?
-
-    if e.which is 13 and @enableSpotlightAutocomplete
-      if @spotlightSearchResult
-        location.assign @spotlightSearchResult.href()
-        @$input.val(@spotlightSearchResult.get('display'))
-        @hideSpotlight()
-      else
-        @emptyItemClick()
-      return
+    return if !(e.which is @Keys.Enter) or @selected?
 
     unless @isEmpty()
       @trigger 'search:entered', encodeURIComponent(@$input.val())
 
   maybeHideSpotlight: (e) ->
-    return if e.which is 37 or e.which is 39 or e.which is 13 # cursor left, right, enter
+    return unless @enableSpotlightAutocomplete
+    return if e.which is @Keys.Left or e.which is @Keys.Right
+
+    if e.which is @Keys.Enter
+      if @spotlightSearchResult
+        location.assign @spotlightSearchResult.href()
+        @$input.val(@spotlightSearchResult.get('display'))
+        @hideSpotlight()
+        return
+      else
+        @emptyItemClick()
 
     letterPressed = String.fromCharCode(e.which).toLowerCase()
     if letterPressed is @$spotlightRemainingText.text().charAt(0).toLowerCase()
@@ -147,7 +153,7 @@ module.exports = class SearchBarView extends Backbone.View
   # (rather than actually moving the cursor down
   # which would overwrite the user's typing)
   maybeHighlight: ->
-    @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect
+    @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect or (@enableSpotlightAutocomplete and @spotlightSearchResult)
 
   feedbackString: ->
     @__feedbackString__ ?= if @mode? and @mode isnt 'suggest'
