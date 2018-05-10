@@ -1,23 +1,18 @@
 import React, { Component } from 'react'
 import { DesktopModal } from '@artsy/reaction/dist/Components/Authorization/DesktopModal'
 import { LoginForm } from '@artsy/reaction/dist/Components/Authorization/LoginForm'
+import { ModalProps } from './Types'
 
-export class LoginModal extends Component {
-  state = {
-    show: true
-  }
-
-  onClose = () => this.setState({ show: false })
-
+export class LoginModal extends Component<ModalProps> {
   render() {
     return (
-      <DesktopModal show={this.state.show} onClose={this.onClose}>
+      <DesktopModal show={true} onClose={this.props.onClose}>
         <LoginForm
           handleSubmit={() => {
             console.log('Form submitted')
           }}
-          handleChangeMode={(mode) => (_) => {
-            console.log('New mode: ', mode)
+          handleChangeMode={e => {
+            this.props.onTypeChange(e === 'reset_password' ? e : 'signup')
           }}
           values={{}}
         />
