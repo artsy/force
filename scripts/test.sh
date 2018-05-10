@@ -2,13 +2,12 @@
 
 set -e -x
 
-trap "exit" INT
+#trap "exit" INT
 
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
     yarn assets
-    yarn acceptance src/test/acceptance/*.js
     ;;
   1)
     yarn mocha src/test/lib/*

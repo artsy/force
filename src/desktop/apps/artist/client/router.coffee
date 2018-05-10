@@ -45,7 +45,10 @@ module.exports = class ArtistRouter extends Backbone.Router
     @useNewArtworkFilter = @user?.hasLabFeature('Refactored Artwork Filter')
 
   setupJump: ->
-    @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
+    @jump = new JumpView
+      threshold: $(window).height()
+      direction: 'bottom'
+      duration: 0
 
   setupCarousel: ->
     initCarousel $('.js-artist-carousel'), imagesLoaded: true
