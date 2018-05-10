@@ -13,14 +13,14 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
-    'change .registration-form-section__checkbox': 'validateAcceptCOS'
+    'change .registration-form-section__checkbox': 'validateAcceptConditions'
 
   initialize: (options) ->
     @result = deferred.promise
     @success = options.success
     @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
-    @$acceptCOS = @$('#accept_cos')
+    @$acceptConditions = @$('#accept_conditions')
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 
@@ -118,8 +118,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     $element.addClass 'is-loading'
     action().finally => $element.removeClass 'is-loading' unless @comboForm
 
-  validateAcceptCOS: (e) ->
-    if @$acceptCOS.prop('checked')
+  validateAcceptConditions: (e) ->
+    if @$acceptConditions.prop('checked')
       @$('.artsy-checkbox').removeClass('error')
       @$submit.removeClass('is-disabled')
       true
@@ -129,7 +129,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       false
 
   onSubmit: =>
-    return unless @validateAcceptCOS()
+    return unless @validateAcceptConditions()
     analyticsHooks.trigger 'registration:submit-address'
     @loadingLock @$submit, =>
       (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>

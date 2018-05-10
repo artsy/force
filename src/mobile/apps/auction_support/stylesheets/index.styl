@@ -5,8 +5,9 @@
 @import '../components/stylus_lib'
 @import '../components/bid_numbers'
 
+// The default checkbox styling
+// (from /src/desktop/components/main_layout/stylesheets/form_elements.styl)
 checkbox-size = 20px
-
 .artsy-checkbox
   display inline-block
   line-height checkbox-size
@@ -80,10 +81,11 @@ checkbox-size = 20px
     text-transform uppercase
     letter-spacing 2px
 
-  label
-    display block
-    avant-garde()
-    font-size 12px
+  .auction-registration-form
+    label
+      display block
+      avant-garde()
+      font-size 12px
 
   .credit-card-input-section
     margin-top 10px
@@ -114,7 +116,7 @@ checkbox-size = 20px
     &[disabled], &.is-disabled, &.is-disabled
       &, &:hover
         border none
-        background-color #c2c2c2
+        background-color #e5e5e5
         cursor default
         color rgba(white, 0.75)
         &[data-state='success'], &.is-success
@@ -124,32 +126,56 @@ checkbox-size = 20px
 
   .error
     color bad-red-color
-  
-  .registration-form-section.accept-cos
-    margin 30px auto
+
+  .registration-form-section.accept-conditions
+    margin 30px auto !important
     .artsy-checkbox
       display flex
       justify-content center
       align-content center
+      color: gray-darker-color
+      // unset default hover style that encompasses entire wrapper
+      &:hover .artsy-checkbox--checkbox > label:after
+        opacity 0
+      // override the checkmark hider if hovering on link while + checked
+      .artsy-checkbox--checkbox input:checked + label
+        z-index 3
       &--label
-      &--label a
-        garamond()
-        color gray-darker-color
-        display inline-block
-        text-transform initial
-        letter-spacing normal
-      &.error
+        position relative
+        // common styles for label and <a>
+        &, a
+          garamond()
+          font-size 14px
+          color gray-darker-color
+          display inline-block
+          text-transform initial
+          letter-spacing normal
         .artsy-checkbox--checkbox
-            background bad-red-color
-        .artsy-checkbox--label
-        .artsy-checkbox--label a
+          margin-right 8px
+        // --label wraps input for this implementation; use it for hover style
+        &:hover .artsy-checkbox--checkbox > label:after
+          opacity .1
+        // Cover up the checkmark if hovering on a link
+        & > a:hover::before
+          content: ''
+          z-index 2
+          width 16px
+          height 16px
+          background white
+          position absolute
+          left 2px
+          top 2px
+      &.error
+        color bad-red-color
+        .artsy-checkbox--checkbox
+          background bad-red-color
+        .artsy-checkbox--label, a
             color bad-red-color
+  .card-security-code.credit-card-input-section
+    width 36%
+    display block
+    input
+      padding 10px 0 11px 0
+  .card-expiration
+    width 62%
 
-.card-expiration
-  width 62%
-
-#auction-registration-page .card-security-code.credit-card-input-section
-  width 36%
-  display block
-  input
-    padding 10px 0 11px 0

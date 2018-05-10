@@ -91,9 +91,6 @@ export async function index(req, res, next) {
       superSubArticles.set(superSubData.articles)
     }
 
-    // Email signup
-    const subscribed = typeof res.locals.sd.CURRENT_USER !== 'undefined'
-
     let templates
     if (isSuper) {
       templates = {
@@ -119,8 +116,18 @@ export async function index(req, res, next) {
         '../../../components/main_layout/templates/react_blank_index.jade'
     }
 
-    const isMobile = res.locals.sd.IS_MOBILE
+    const { ARTICLE_TOOLTIPS, CURRENT_USER, IS_MOBILE } = res.locals.sd
+
+    const isMobile = IS_MOBILE
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
+
+    // Email signup
+    const isLoggedIn = typeof CURRENT_USER !== 'undefined'
+
+    // Tooltips a/b/c test
+    const isAdmin = isLoggedIn && CURRENT_USER.type === 'Admin'
+    const showTooltips = ARTICLE_TOOLTIPS !== 'control' && isAdmin
+    const showToolTipMarketData = ARTICLE_TOOLTIPS === 'market'
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -144,7 +151,9 @@ export async function index(req, res, next) {
         isSuper,
         isMobile,
         jsonLD,
-        subscribed,
+        showTooltips,
+        showToolTipMarketData,
+        subscribed: isLoggedIn,
         superArticle,
         superSubArticles,
       },
