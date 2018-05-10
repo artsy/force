@@ -127,54 +127,55 @@ checkbox-size = 20px
   .error
     color bad-red-color
 
-
-.card-expiration
-  width 62%
-
-#auction-registration-page .card-security-code.credit-card-input-section
-  width 36%
-  display block
-  input
-    padding 10px 0 11px 0
-
-.registration-form-section.accept-cos
-  margin 30px auto !important
-  .artsy-checkbox
-    display flex
-    justify-content center
-    align-content center
-    color: gray-darker-color
-    // unset default hover style that encompasses entire wrapper
-    &:hover .artsy-checkbox--checkbox > label:after
-      opacity 0
-    &--label
-      position relative
-      // common styles for label and <a>
-      &, a
-        garamond()
-        font-size 14px
-        color gray-darker-color
-        display inline-block
-        text-transform initial
-        letter-spacing normal
-      .artsy-checkbox--checkbox
-        margin-right 8px
-      // --label wraps input for this implementation; use it for hover style
+  .registration-form-section.accept-cos
+    margin 30px auto !important
+    .artsy-checkbox
+      display flex
+      justify-content center
+      align-content center
+      color: gray-darker-color
+      // unset default hover style that encompasses entire wrapper
       &:hover .artsy-checkbox--checkbox > label:after
-        opacity .1
-      // Cover up the checkbox hover state if hovering on the window
-      & > a.conceal-hover-state:hover::before
-        content: ''
-        width 16px
-        height 16px
-        background white
-        position absolute
-        left 2px
-        top 2px
-    &.error
-      color bad-red-color
-      .artsy-checkbox--checkbox
-        background bad-red-color
-      .artsy-checkbox--label, a
-          color bad-red-color
+        opacity 0
+      // override the checkmark hider if hovering on link while + checked
+      .artsy-checkbox--checkbox input:checked + label
+        z-index 3
+      &--label
+        position relative
+        // common styles for label and <a>
+        &, a
+          garamond()
+          font-size 14px
+          color gray-darker-color
+          display inline-block
+          text-transform initial
+          letter-spacing normal
+        .artsy-checkbox--checkbox
+          margin-right 8px
+        // --label wraps input for this implementation; use it for hover style
+        &:hover .artsy-checkbox--checkbox > label:after
+          opacity .1
+        // Cover up the checkmark if hovering on a link
+        & > a:hover::before
+          content: ''
+          z-index 2
+          width 16px
+          height 16px
+          background white
+          position absolute
+          left 2px
+          top 2px
+      &.error
+        color bad-red-color
+        .artsy-checkbox--checkbox
+          background bad-red-color
+        .artsy-checkbox--label, a
+            color bad-red-color
+  .card-security-code.credit-card-input-section
+    width 36%
+    display block
+    input
+      padding 10px 0 11px 0
+  .card-expiration
+    width 62%
 

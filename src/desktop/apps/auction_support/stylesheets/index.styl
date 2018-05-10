@@ -46,6 +46,9 @@
       // unset default hover style that encompasses entire wrapper
       &:hover .artsy-checkbox--checkbox > label:after
         opacity 0
+      // override the checkmark hider if hovering on link while + checked
+      .artsy-checkbox--checkbox input:checked + label
+        z-index 3
       &--label
         position relative
         // common styles for label and <a>
@@ -61,9 +64,10 @@
         // --label wraps input for this implementation; use it for hover style
         &:hover .artsy-checkbox--checkbox > label:after
           opacity .1
-        // Cover up the checkbox hover state if hovering on the window
-        & > a.conceal-hover-state:hover::before
+        // Cover up the checkbox hover state if hovering on a link
+        & > a:hover::before
           content: ''
+          z-index 2
           width 16px
           height 16px
           background white

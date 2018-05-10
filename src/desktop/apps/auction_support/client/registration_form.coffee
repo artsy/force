@@ -121,12 +121,10 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   validateAcceptCOS: (e) ->
     if @$acceptCOS.prop('checked')
       @$('.artsy-checkbox').removeClass('error')
-      @$('#cos_link').removeClass('conceal-hover-state')
       @$submit.removeClass('is-disabled')
       true
     else
       @$submit.addClass('is-disabled')
-      @$('#cos_link').addClass('conceal-hover-state')
       @$('.artsy-checkbox').addClass('error')
       false
 
