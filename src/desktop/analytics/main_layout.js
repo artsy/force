@@ -4,6 +4,7 @@
 //
 
 import { data as sd } from 'sharify'
+import request from 'superagent'
 
 // Track pageview
 analytics.page(
@@ -18,8 +19,9 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
+    const topLevelPath = window.location.pathname.split('/')[1]
     _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
-      if (window.location.pathname.split('/')[1] === path) {
+      if (topLevelPath === path) {
         window.setTimeout(function() {
           const {
             requestStart,
@@ -33,6 +35,37 @@ if (
             domComplete,
             nonInteraction: 1,
           })
+
+          if (sd.VOLLEY_ENDPOINT) {
+            request
+              .post(sd.VOLLEY_ENDPOINT)
+              .send({
+                serviceName: 'force',
+                metrics: [
+                  {
+                    type: 'timing',
+                    name: 'load-time',
+                    timing: domComplete - requestStart,
+                    tags: [
+                      `page-type:${topLevelPath}`,
+                      'device-type:desktop',
+                      'mark:dom-complete',
+                    ],
+                  },
+                  {
+                    type: 'timing',
+                    name: 'load-time',
+                    timing: loadEventEnd - requestStart,
+                    tags: [
+                      `page-type:${topLevelPath}`,
+                      'device-type:desktop',
+                      'mark:load-event-end',
+                    ],
+                  },
+                ],
+              })
+              .end()
+          }
         }, 0)
       }
     })
