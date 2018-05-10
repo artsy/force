@@ -4,7 +4,7 @@
 //
 
 import { data as sd } from 'sharify'
-import request from 'superagent'
+import { reportLoadTimeToVolley } from 'lib/volley'
 
 // Track pageview
 analytics.page(
@@ -36,36 +36,13 @@ if (
             nonInteraction: 1,
           })
 
-          if (sd.VOLLEY_ENDPOINT) {
-            request
-              .post(sd.VOLLEY_ENDPOINT)
-              .send({
-                serviceName: 'force',
-                metrics: [
-                  {
-                    type: 'timing',
-                    name: 'load-time',
-                    timing: domComplete - requestStart,
-                    tags: [
-                      `page-type:${topLevelPath}`,
-                      'device-type:desktop',
-                      'mark:dom-complete',
-                    ],
-                  },
-                  {
-                    type: 'timing',
-                    name: 'load-time',
-                    timing: loadEventEnd - requestStart,
-                    tags: [
-                      `page-type:${topLevelPath}`,
-                      'device-type:desktop',
-                      'mark:load-event-end',
-                    ],
-                  },
-                ],
-              })
-              .end()
-          }
+          reportLoadTimeToVolley(
+            requestStart,
+            loadEventEnd,
+            domComplete,
+            topLevelPath,
+            'desktop'
+          )
         }, 0)
       }
     })
