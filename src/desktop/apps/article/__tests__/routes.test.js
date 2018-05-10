@@ -316,9 +316,12 @@ describe('Article Routes', () => {
     })
 
     describe('ToolTips test', () => {
-      it('Control: showTooltips and showToolTipMarketData are false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'control'
-        const data = {
+      let data
+      let renderLayout
+
+      beforeEach(() => {
+        res.locals.sd.CURRENT_USER = { type: 'Admin' }
+        data = {
           article: _.extend({}, fixtures.article, {
             slug: 'foobar',
             channel_id: '123',
@@ -329,8 +332,34 @@ describe('Article Routes', () => {
           'positronql',
           sinon.stub().returns(Promise.resolve(data))
         )
-        const renderLayout = sinon.stub()
+        renderLayout = sinon.stub()
         rewire.__set__('renderLayout', renderLayout)
+      })
+
+      it('Logged out user: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        delete res.locals.sd.CURRENT_USER
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+
+      it('Non-admin user: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        res.locals.sd.CURRENT_USER.type = 'Partner'
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+      xit('Control: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'control'
+
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(false)
           renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
@@ -340,19 +369,7 @@ describe('Article Routes', () => {
 
       it('Bio: showTooltips is true, showToolTipMarketData is false', done => {
         res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
-        const data = {
-          article: _.extend({}, fixtures.article, {
-            slug: 'foobar',
-            channel_id: '123',
-            layout: 'standard',
-          }),
-        }
-        rewire.__set__(
-          'positronql',
-          sinon.stub().returns(Promise.resolve(data))
-        )
-        const renderLayout = sinon.stub()
-        rewire.__set__('renderLayout', renderLayout)
+
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(true)
           renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
@@ -362,19 +379,7 @@ describe('Article Routes', () => {
 
       it('Market: showTooltips and showToolTipMarketData are true', done => {
         res.locals.sd.ARTICLE_TOOLTIPS = 'market'
-        const data = {
-          article: _.extend({}, fixtures.article, {
-            slug: 'foobar',
-            channel_id: '123',
-            layout: 'standard',
-          }),
-        }
-        rewire.__set__(
-          'positronql',
-          sinon.stub().returns(Promise.resolve(data))
-        )
-        const renderLayout = sinon.stub()
-        rewire.__set__('renderLayout', renderLayout)
+
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(true)
           renderLayout.args[0][0].data.showToolTipMarketData.should.equal(true)

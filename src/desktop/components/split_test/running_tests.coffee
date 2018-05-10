@@ -45,9 +45,8 @@ module.exports = {
     key: 'article_tooltips'
     weighting: 'equal'
     outcomes: [
-      'bio',
-      'market',
-      'control'
+      'bio'
+      'market'
     ]
 }
 
