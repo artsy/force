@@ -130,19 +130,21 @@ module.exports.init = ->
   # Trigger one change just to render filters
   params.trigger 'change'
 
+  scrollTopDuration = 0
+
   # Whenever params change, scroll to the top
   params.on 'change', ->
     if _.keys(params.changedAttributes())[0] in ['major_periods', 'partner_cities', 'silent']
       delayedScroll()
     else
-      $('html,body').animate { scrollTop: 0 }, 400
+      $('html,body').animate { scrollTop: 0 }, scrollTopDuration
 
   # 1 second delay for checkbox selections
   timer = null
   delayedScroll = ->
     clearTimeout(timer)
     timer = setTimeout ->
-      $('html,body').animate { scrollTop: 0 }, 400
+      $('html,body').animate { scrollTop: 0 }, scrollTopDuration
     , 1000
 
   params.on 'change', ->

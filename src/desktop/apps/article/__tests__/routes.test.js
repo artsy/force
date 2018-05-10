@@ -570,7 +570,7 @@ describe('Article Routes', () => {
       res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
       res.locals.jsonLD.should.containEql('Artsy Editorial')
       res.locals.jsonLD.should.containEql(
-        '"publisher":{"name":"Artsy","logo":{"url":"undefined/images/full_logo.png","height":103,"width":300}}'
+        '"publisher":{"name":"Artsy","logo":{"url":"http://artsy.net/images/full_logo.png","height":103,"width":300}}'
       )
       done()
     })
