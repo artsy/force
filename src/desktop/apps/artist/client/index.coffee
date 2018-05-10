@@ -23,4 +23,5 @@ module.exports.init = ->
     statuses: statuses,
     user: user,
     testGroup: testGroup
+
   Backbone.history.start pushState: true

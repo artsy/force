@@ -40,7 +40,11 @@ if hasOverview
 if artist.statuses.artworks
   include ./works
 
-+rail('Show Highlights', artist.href + '/shows', 'shows')
-+rail('Related Articles', artist.href + '/articles', 'articles')
-+rail('Related Artists', artist.href + '/related-artists', 'artists')
+//- if sd.ARTIST_PAGE_PAGINATION is 'experiment'
+if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+  +rail('Related Artists', artist.href + '/related-artists', 'artists')
+else
+  +rail('Show Highlights', artist.href + '/shows', 'shows')
+  +rail('Related Articles', artist.href + '/articles', 'articles')
+  +rail('Related Artists', artist.href + '/related-artists', 'artists')
 

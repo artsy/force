@@ -6,7 +6,7 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 module.exports = class ArtworkFilter extends Backbone.Model
 
   page: 1
-  size: 9
+  size: 40
   artworks: []
   reset: true
 
@@ -29,10 +29,11 @@ module.exports = class ArtworkFilter extends Backbone.Model
       return if @get 'allFetched'
 
     variables = _.extend(
-      { @artist_id, @size, @page },
       @params.defaultParams,
-      @params.mapped()
+      { @artist_id, @size, @page },
+      @params.mapped(),
     )
+
     send = { query, variables }
     @set isLoading: true
     metaphysics send
@@ -44,6 +45,11 @@ module.exports = class ArtworkFilter extends Backbone.Model
           @total = filter_artworks.total
         else
           @artworks = @artworks.concat fetchedArtworks
+
+        @set
+          page: @page
+          total: @total
+
         @set allFetched: true if @artworks.length >= @total or fetchedArtworks.length is 0
         @trigger 'fetchedArtworks', { artworks: fetchedArtworks, reset: reset }
         @set isLoading: false

@@ -104,7 +104,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   loadingLock: ($element, action) ->
     return if $element.hasClass('is-loading')
     $element.addClass 'is-loading'
-    action().finally => $element.removeClass 'is-loading'
+    action().finally -> $element.removeClass 'is-loading'
 
   validateAcceptCOS: (e) ->
     if @$acceptCOS.prop('checked')
