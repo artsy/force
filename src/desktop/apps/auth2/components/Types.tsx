@@ -1,4 +1,4 @@
-export type ModalType = 'login' | 'signup' | 'reset_password'
+import { ModalType } from '@artsy/reaction/dist/Components/Authorization/Types'
 
 export interface ModalOptions {
   mode: string

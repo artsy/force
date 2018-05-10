@@ -11,9 +11,7 @@ export class LoginModal extends Component<ModalProps> {
           handleSubmit={() => {
             console.log('Form submitted')
           }}
-          handleChangeMode={e => {
-            this.props.onTypeChange(e === 'reset_password' ? e : 'signup')
-          }}
+          handleTypeChange={type => this.props.onTypeChange(type)}
           values={{}}
         />
       </DesktopModal>

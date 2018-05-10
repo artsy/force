@@ -11,7 +11,7 @@ export class ResetPassword extends Component<ModalProps> {
           handleSubmit={values => {
             console.log('Form submitting:', values)
           }}
-          handleChangeMode={e => this.props.onTypeChange(e)}
+          handleTypeChange={type => this.props.onTypeChange(type)}
           values={{}}
         />
       </DesktopModal>

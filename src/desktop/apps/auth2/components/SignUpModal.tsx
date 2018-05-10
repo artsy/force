@@ -11,7 +11,7 @@ export class SignupModal extends Component<ModalProps> {
           handleSubmit={values => {
             console.log('Form submitting:', values)
           }}
-          handleChangeMode={() => this.props.onTypeChange('login')}
+          handleTypeChange={type => this.props.onTypeChange(type)}
           values={{}}
         />
       </DesktopModal>
