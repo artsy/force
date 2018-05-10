@@ -1,14 +1,17 @@
+_ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
+ConditionsOfSale = require '../mixins/conditions_of_sale.js'
 ModalPageView = require '../../../components/modal/page.coffee'
 
 { API_URL, SESSION_ID, STRIPE_PUBLISHABLE_KEY } = require('sharify').data
 
 module.exports = class RegistrationForm extends ErrorHandlingForm
   deferred = Q.defer()
+  _.extend @prototype, ConditionsOfSale
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
@@ -21,6 +24,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
     @$acceptConditions = @$('#accept_conditions')
+    @$checkbox = @$('.artsy-checkbox')
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 
@@ -117,16 +121,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     return if $element.hasClass('is-loading')
     $element.addClass 'is-loading'
     action().finally => $element.removeClass 'is-loading' unless @comboForm
-
-  validateAcceptConditions: (e) ->
-    if @$acceptConditions.prop('checked')
-      @$('.artsy-checkbox').removeClass('error')
-      @$submit.removeClass('is-disabled')
-      true
-    else
-      @$submit.addClass('is-disabled')
-      @$('.artsy-checkbox').addClass('error')
-      false
 
   onSubmit: =>
     return unless @validateAcceptConditions()

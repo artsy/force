@@ -40,7 +40,13 @@ block body
           .auction-bid-errors
         if isRegistered || hasValidCreditCard
           .registration-form-content
-            .auction-bid-form-confirm.avant-garde-button-black.is-block Confirm Bid
+            if isRegistered
+              include ./conditions-of-sale-message.jade
+              .auction-bid-form-confirm.avant-garde-button-black.is-block Confirm Bid
+            else
+              include ./conditions-of-sale-checkbox.jade
+              .auction-bid-form-confirm.avant-garde-button-black.is-block.is-disabled Confirm Bid
+            
         else
           .bid-section-header= sd.BIDDER_H1_COPY
           p.note= sd.BIDDER_H2_COPY
@@ -48,4 +54,4 @@ block body
             .bid-registration-form-contents
               include ./registration-form
               .registration-form-content
-                .auction-bid-form-confirm.avant-garde-button-black.is-block Confirm Bid
+                .auction-bid-form-confirm.avant-garde-button-black.is-block.is-disabled Confirm Bid

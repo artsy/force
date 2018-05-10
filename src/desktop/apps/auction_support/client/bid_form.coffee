@@ -6,10 +6,12 @@ ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
+ConditionsOfSale = require '../mixins/conditions_of_sale.js'
 { SESSION_ID } = require('sharify').data
 { getLiveAuctionUrl } = require '../../../../utils/domain/auctions/urls.js'
 
 module.exports = class BidForm extends ErrorHandlingForm
+  _.extend @prototype, ConditionsOfSale
 
   timesPolledForBidPlacement: 0
   maxTimesPolledForBidPlacement: sd.MAX_POLLS_FOR_MAX_BIDS
@@ -23,12 +25,15 @@ module.exports = class BidForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'
     'click .bidding-question': 'showBiddingDialog'
+    'change .registration-form-section__checkbox': 'validateAcceptCOS'
 
-  initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately }) ->
+  initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately, @isRegistered }) ->
     @user = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @placeBid() if @submitImmediately
     @$('.max-bid').focus() unless @submitImmediately
+    @$acceptCOS = @$('#accept_cos')
+    @$checkbox = @$('.artsy-checkbox')
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
 
   showBiddingDialog: (e) ->
@@ -36,12 +41,14 @@ module.exports = class BidForm extends ErrorHandlingForm
     new ModalPageView
       width: '700px'
       pageId: 'auction-info'
-
+  
   getBidAmount: =>
     val = @$('.max-bid').val()
     @saleArtwork.cleanBidAmount val if val
 
   placeBid: =>
+    unless @isRegistered
+      return unless @validateAcceptCOS()
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
     @clearErrors()
