@@ -56,7 +56,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
+            - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
       - checkout
       - setup_remote_docker
       - run: DEPLOY_ENV=staging bash .circleci/heroku_setup.sh
@@ -69,7 +69,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
+            - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
       - checkout
       - setup_remote_docker
       - run: DEPLOY_ENV=production bash .circleci/heroku_setup.sh
