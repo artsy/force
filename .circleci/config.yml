@@ -59,7 +59,7 @@ jobs:
             - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
       - checkout
       - setup_remote_docker
-      - run: bash .circleci/heroku_setup.sh
+      - run: DEPLOY_ENV=staging bash .circleci/heroku_setup.sh
       - run:
           name: "Deploy to staging"
           command: "yarn install && DEPLOY_ENV=staging bash .circleci/heroku_deploy.sh && git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force"
@@ -72,7 +72,7 @@ jobs:
             - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
       - checkout
       - setup_remote_docker
-      - run: bash .circleci/heroku_setup.sh
+      - run: DEPLOY_ENV=production bash .circleci/heroku_setup.sh
       - run:
           name: "Deploy to production"
           command: "yarn install && DEPLOY_ENV=production bash .circleci/heroku_deploy.sh"
