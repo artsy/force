@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
 _ = require 'underscore'
 query = require '../queries/filter_artworks.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
@@ -34,7 +35,10 @@ module.exports = class ArtworkFilter extends Backbone.Model
       { @artist_id, @size, @page },
     )
 
-    send = { query, variables }
+    req =
+      user: CurrentUser.orNull()
+
+    send = { query, variables, req }
     @set isLoading: true
     metaphysics send
       .then ({ filter_artworks }) =>
