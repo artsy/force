@@ -3,6 +3,7 @@
 //
 
 import { data as sd } from 'sharify'
+import { reportLoadTimeToVolley } from 'lib/volley'
 
 // Disable Parsely firing on non-article/section pages
 if (!location.pathname.match(/^\/article/)) {
@@ -22,8 +23,9 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
+    const topLevelPath = window.location.pathname.split('/')[1]
     _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
-      if (window.location.pathname.split('/')[1] === path) {
+      if (topLevelPath === path) {
         window.setTimeout(function() {
           const {
             requestStart,
@@ -37,6 +39,14 @@ if (
             domComplete,
             nonInteraction: 1,
           })
+
+          reportLoadTimeToVolley(
+            requestStart,
+            loadEventEnd,
+            domComplete,
+            topLevelPath,
+            'mobile'
+          )
         }, 0)
       }
     })

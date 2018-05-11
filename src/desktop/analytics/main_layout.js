@@ -4,6 +4,7 @@
 //
 
 import { data as sd } from 'sharify'
+import { reportLoadTimeToVolley } from 'lib/volley'
 
 // Track pageview
 analytics.page(
@@ -18,8 +19,9 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
+    const topLevelPath = window.location.pathname.split('/')[1]
     _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
-      if (window.location.pathname.split('/')[1] === path) {
+      if (topLevelPath === path) {
         window.setTimeout(function() {
           const {
             requestStart,
@@ -33,6 +35,14 @@ if (
             domComplete,
             nonInteraction: 1,
           })
+
+          reportLoadTimeToVolley(
+            requestStart,
+            loadEventEnd,
+            domComplete,
+            topLevelPath,
+            'desktop'
+          )
         }, 0)
       }
     })
