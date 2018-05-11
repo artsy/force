@@ -41,18 +41,18 @@ module.exports = class ArtworkFilterView extends Backbone.View
       { counts, @params }
 
     unless @infiniteScrollEnabled
-      paginatorTopView = new PaginatorView
+      @paginatorTopView = new PaginatorView
         el: $('#artwork-filter__pagination-top')
         params: @params
         filter: @filter
         hidePageNumbers: true
 
-      paginatorBottomView = new PaginatorView
+      @paginatorBottomView = new PaginatorView
         el: $('#artwork-filter__pagination-bottom .pagination')
         params: @params
         filter: @filter
 
-    @subviews.push paginatorTopView, paginatorBottomView
+    @subviews.push @paginatorTopView, @paginatorBottomView
     @subviews.push new CountView _.extend el: @$('#artwork-filter-right__totals'), { counts, @params }
     @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
     @subviews.push @masonry = new MasonryView el: @$('#artwork-filter-right__columns')
@@ -117,14 +117,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$('#artwork-filter-2').attr('data-state', state)
 
     unless @infiniteScrollEnabled
-      $pagination = $('#artwork-filter__pagination-bottom')
-
       if loading
-        $pagination.hide()
+        @paginatorBottomView.$el.hide()
       else
         # Wait for the grid to fully populate
-        setTimeout ->
-          $pagination.show()
+        setTimeout =>
+          @paginatorBottomView.$el.show()
 
   remove: ->
     $(window).off 'scroll.artwork-filter'
