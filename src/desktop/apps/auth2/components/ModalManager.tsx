@@ -3,12 +3,16 @@ import { LoginModal } from '../components/LoginModal'
 import { ResetPassword } from '../components/ResetPassword'
 import { SignupModal } from '../components/SignUpModal'
 import { ModalProps } from './Types'
+import { ModalType } from '@artsy/reaction/dist/Components/Authorization/Types'
 const mediator = require('../../../lib/mediator')
 
-export class ModalManager extends Component<null> {
+interface State {
+  currentType: ModalType
+}
+
+export class ModalManager extends Component<any, State> {
   state = {
     currentType: null,
-    currentModal: null, // this keeps track of the currently displayed modal
   }
 
   componentDidMount() {
