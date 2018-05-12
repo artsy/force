@@ -1,4 +1,3 @@
-import CurrentUser from 'desktop/models/current_user.coffee'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Artwork as ReactionArtwork } from '@artsy/reaction/dist/Components/Artwork'
@@ -6,6 +5,7 @@ import { ArtworkGrid as ReactionArtworkGrid } from '@artsy/reaction/dist/Compone
 import { ContextProvider } from '@artsy/reaction/dist/Components/Artsy'
 import { Help } from '@artsy/reaction/dist/Assets/Icons/Help'
 import { Tooltip } from '@artsy/reaction/dist/Components/Tooltip'
+import { data as sd } from 'sharify'
 
 export const TooltipQuestion = props => {
   return (
@@ -19,8 +19,6 @@ export class ArtworkGrid extends Component {
   static propTypes = {
     artworks: PropTypes.array.isRequired,
   }
-
-  currentUser = null
 
   constructor(props) {
     super(props)
@@ -37,9 +35,6 @@ export class ArtworkGrid extends Component {
     if (props.onAppendArtworks) {
       props.onAppendArtworks(this.appendArtworks)
     }
-
-    const currentUser = CurrentUser.orNull()
-    this.currentUser = currentUser ? currentUser.toJSON() : null
   }
 
   appendArtworks = artworks => {
@@ -52,7 +47,7 @@ export class ArtworkGrid extends Component {
     const artworks = mapToRelayConnection(this.state.artworks)
 
     return (
-      <ContextProvider currentUser={this.currentUser}>
+      <ContextProvider currentUser={sd.CURRENT_USER}>
         <ReactionArtworkGrid
           {...this.props}
           artworks={artworks}
@@ -70,10 +65,9 @@ export const Fillwidth = props => {
     } = require('@artsy/reaction/dist/Components/Artwork/Fillwidth')
 
     const artworks = mapToRelayConnection(props.artworks) // eslint-disable-line
-    const currentUser = CurrentUser.orNull()
 
     return (
-      <ContextProvider currentUser={currentUser ? currentUser.toJSON() : null}>
+      <ContextProvider currentUser={sd.CURRENT_USER}>
         <ReactionFillWidth {...props} artworks={artworks} useRelay={false} />
       </ContextProvider>
     )
@@ -83,10 +77,8 @@ export const Fillwidth = props => {
 }
 
 export const Artwork = props => {
-  const currentUser = CurrentUser.orNull()
-
   return (
-    <ContextProvider currentUser={currentUser ? currentUser.toJSON() : null}>
+    <ContextProvider currentUser={sd.CURRENT_USER}>
       <ReactionArtwork {...props} useRelay={false} />
     </ContextProvider>
   )
