@@ -4,6 +4,7 @@
 
 @import '../components/stylus_lib'
 @import '../components/bid_numbers'
+@import '../../../../desktop/apps/auction_support/stylesheets/conditions_of_sale'
 
 #feature-bid-page-container
   margin 20px
@@ -32,6 +33,12 @@
     background-color gray-color
     color white
 
+.feature-bid-page-button
+  &.is-disabled
+    border-color gray-color
+    background-color gray-color
+    color white
+
 #feature-bid-page-register-button-info
   text-align center
   color #f0cc49
@@ -43,14 +50,14 @@
     margin-top 15px
 
 #feature-bid-page-errors
-  color bad-red-color
+  color red-color
   margin-bottom 15px
   display none
   text-align center
   avant-garde()
   avant-garde-size('s-headline', true)
   > a
-    color bad-red-color
+    color red-color
 
 #feature-bid-page-legal-copy
   margin-top 15px
@@ -97,7 +104,6 @@
 
 .feature-bid-page-max-bid-select
   background transparent
-  margin-bottom 20px
 
 .feature-bid-page-max-bid
   position relative
