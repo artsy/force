@@ -30,10 +30,10 @@ module.exports = class BidForm extends ErrorHandlingForm
   initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately, @isRegistered }) ->
     @user = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
-    @placeBid() if @submitImmediately
-    @$('.max-bid').focus() unless @submitImmediately
     @$acceptConditions = @$('#accept_conditions')
     @$conditionsCheckbox = @$('.artsy-checkbox')
+    @placeBid() if @submitImmediately
+    @$('.max-bid').focus() unless @submitImmediately
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
 
   showBiddingDialog: (e) ->
