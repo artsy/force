@@ -93,7 +93,8 @@ sharify.data = _.extend(
     'TEAM_BLOGS',
     'TRACK_PAGELOAD_PATHS',
     'VENICE_2015_SECTION',
-    'WEBFONT_URL'
+    'WEBFONT_URL',
+    'VOLLEY_ENDPOINT'
   ),
   {
     JS_EXT: ['production', 'staging'].includes(config.NODE_ENV)

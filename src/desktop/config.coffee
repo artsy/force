@@ -115,6 +115,7 @@ module.exports =
   TWITTER_KEY: null
   TWITTER_SECRET: null
   VANITY_BUCKET: null
+  VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
   WHITELISTED_VANITY_ASSETS: ''
 

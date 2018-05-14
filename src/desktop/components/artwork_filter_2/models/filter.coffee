@@ -1,5 +1,7 @@
 Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
 _ = require 'underscore'
+sd = require('sharify').data
 query = require '../queries/filter_artworks.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 
@@ -28,13 +30,23 @@ module.exports = class ArtworkFilter extends Backbone.Model
     else
       return if @get 'allFetched'
 
+    props = { @artist_id, @size }
+
+    # FIXME: Remove A/B test
+    # sd.ARTIST_PAGE_PAGINATION is 'experiment'
+    unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+      _.extend(props, { @page })
+
     variables = _.extend(
       @params.mapped(),
       @params.defaultParams,
-      { @artist_id, @size, @page },
+      props
     )
 
-    send = { query, variables }
+    req =
+      user: CurrentUser.orNull()
+
+    send = { query, variables, req }
     @set isLoading: true
     metaphysics send
       .then ({ filter_artworks }) =>

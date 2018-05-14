@@ -4,7 +4,7 @@ import benv from 'benv'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
 import { ContextProvider } from 'reaction/Components/Artsy'
 
