@@ -10,7 +10,8 @@ mixin rail(title, viewAllUrl, section)
 
         include ../../../../components/merry_go_round/templates/horizontal_navigation
 
-if hasOverview
+//- TODO: ARTIST_MARKET_DATA_TEST remove after test closes
+if viewHelpers.hasOverview(testGroup)
   .artist-overview-header
     .evenly-bisected-header
       - var artistMeta = viewHelpers.artistMeta(artist)

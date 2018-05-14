@@ -10,7 +10,7 @@ splitTest = require '../../../components/split_test/index.coffee'
 testGroup = sd.ARTIST_MARKET_DATA_TEST
 
 module.exports.init = ->
-  # ARTIST_MARKET_DATA_TEST remove after test closes
+  # TODO: ARTIST_MARKET_DATA_TEST remove after test closes
   splitTest('artist_market_data_test').view()
 
   statuses = ARTIST.statuses

@@ -22,6 +22,7 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
+  # TODO: ARTIST_MARKET_DATA_TEST remove after test closes(@testGroup)
   initialize: ({ @user, @statuses, @testGroup }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
 
@@ -140,7 +141,7 @@ module.exports = class OverviewView extends Backbone.View
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
-      hasOverview: @testGroup is 'control' or @testGroup is 'market_data_no_carousel'
+      testGroup: @testGroup
 
     _.defer => @postRender()
     this
