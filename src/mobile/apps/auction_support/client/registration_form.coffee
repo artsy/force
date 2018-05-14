@@ -22,7 +22,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @success = options.success
     @currentUser = CurrentUser.orNull()
     @$acceptConditions = @$('#accept_conditions')
-    @$checkbox = @$('.artsy-checkbox')
+    @$conditionsCheckbox = @$('.artsy-checkbox')
     @$submit = @$('.registration-form-content .avant-garde-box-button')
     @setUpFields()
 

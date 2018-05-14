@@ -33,7 +33,7 @@ module.exports = class BidForm extends ErrorHandlingForm
     @placeBid() if @submitImmediately
     @$('.max-bid').focus() unless @submitImmediately
     @$acceptConditions = @$('#accept_conditions')
-    @$checkbox = @$('.artsy-checkbox')
+    @$conditionsCheckbox = @$('.artsy-checkbox')
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
 
   showBiddingDialog: (e) ->

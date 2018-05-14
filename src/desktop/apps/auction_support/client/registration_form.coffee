@@ -24,7 +24,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
     @$acceptConditions = @$('#accept_conditions')
-    @$checkbox = @$('.artsy-checkbox')
+    @$conditionsCheckbox = @$('.artsy-checkbox')
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 

@@ -23,7 +23,7 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
 
   initialize: (options) ->
     { @saleArtwork, @user, @window, @auction, @isRegistered } = options
-    @$checkbox = @$('.artsy-checkbox')
+    @$conditionsCheckbox = @$('.artsy-checkbox')
     @$acceptConditions = @$('#accept_conditions')
     @$submit = @$('.feature-bid-page-max-bid .avant-garde-box-button')
     @renderUnqualifiedWarning()
