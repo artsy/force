@@ -357,6 +357,7 @@ describe('Article Routes', () => {
           done()
         })
       })
+
       xit('Control: showTooltips and showToolTipMarketData are false', done => {
         res.locals.sd.ARTICLE_TOOLTIPS = 'control'
 
@@ -383,6 +384,17 @@ describe('Article Routes', () => {
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(true)
           renderLayout.args[0][0].data.showToolTipMarketData.should.equal(true)
+          done()
+        })
+      })
+
+      it('Mobile: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        res.locals.sd.IS_MOBILE = true
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
           done()
         })
       })
@@ -570,7 +582,7 @@ describe('Article Routes', () => {
       res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
       res.locals.jsonLD.should.containEql('Artsy Editorial')
       res.locals.jsonLD.should.containEql(
-        '"publisher":{"name":"Artsy","logo":{"url":"http://artsy.net/images/full_logo.png","height":103,"width":300}}'
+        '/images/full_logo.png","height":103,"width":300}}'
       )
       done()
     })
