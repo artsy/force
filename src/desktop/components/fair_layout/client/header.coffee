@@ -18,7 +18,6 @@ module.exports = class FairHeaderView extends Backbone.View
   initialize: (options) ->
     { @fair } = options
     @currentUser = CurrentUser.orNull()
-    mediator.on 'open:auth', @openAuth, @
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
