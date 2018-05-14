@@ -2,6 +2,7 @@ module.exports = """
   fragment artwork_brick on Artwork {
     __id
     id
+    is_saved
     href
     title
     image {
