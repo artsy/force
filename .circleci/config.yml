@@ -76,7 +76,6 @@ jobs:
       - run:
           name: "Deploy to production"
           command: "yarn install && DEPLOY_ENV=production bash .circleci/heroku_deploy.sh"
-        
 
 workflows:
   version: 2
@@ -85,9 +84,12 @@ workflows:
       - test
       # - acceptance FIXME: Re enable once circle fixes their browser image.
       - build:
+          filters:
+            branches:
+              ignore: staging
           requires:
             - test
-            #- acceptance 
+            #- acceptance
       - push:
           filters:
             branches:
