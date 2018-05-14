@@ -37,6 +37,7 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
 
     key = $el.data('key')
     value = $el.data('value')
+    @params.updateWith 'page', 1
     @params.updateWith key, value
 
   remove: ->
