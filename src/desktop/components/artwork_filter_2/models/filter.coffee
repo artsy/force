@@ -37,8 +37,8 @@ module.exports = class ArtworkFilter extends Backbone.Model
       _.extend(props, { @page })
 
     variables = _.extend(
-      @params.mapped(),
       @params.defaultParams,
+      @params.mapped(),
       props
     )
 
