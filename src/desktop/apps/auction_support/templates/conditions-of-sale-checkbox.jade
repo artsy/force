@@ -1,9 +1,9 @@
-.registration-form-section.accept-cos
+.registration-form-section.accept-conditions
   .artsy-checkbox
-    .artsy-checkbox--checkbox.registration-form-section__checkbox
-      input( id='accept_cos', name='accept_cos', type='checkbox', value='1' )
-      label( for='accept_cos' )
-    label.artsy-checkbox--label( for='accept_cos' )
-      | Agree to&nbsp;
-      a( href="/conditions-of-sale" target="_blank" ) Conditions of Sale
+    label.artsy-checkbox--label( for='accept_conditions' )
+      .artsy-checkbox--checkbox.registration-form-section__checkbox
+        input( id='accept_conditions', name='accept_conditions', type='checkbox', value='1' )
+        label( for='accept_conditions' )
+      |Agree to&nbsp;
+      a( id="conditions_link" href="/conditions-of-sale" target="_blank" ) Conditions of Sale
       |.

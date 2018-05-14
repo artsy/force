@@ -82,7 +82,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$htmlBody ?= $('html, body')
     visibleTop = @$el.offset().top - @siteHeaderHeight
     visibleTop -= @topOffset
-    @$htmlBody.animate { scrollTop: visibleTop - 1 }, 500
+    @$htmlBody.animate { scrollTop: visibleTop - 1 }, 0
 
   infiniteScroll: =>
     return if !@infiniteScrollEnabled

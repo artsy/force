@@ -35,5 +35,6 @@ export const displayFragment = `
     }
     logo
     name
+    pixel_tracking_code
   }
 `

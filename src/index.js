@@ -37,7 +37,7 @@ cache.setup(() => {
           ? `\n\n  [Force] Booting on port ${PORT}... \n`
           : `\n\n  [Force] Started on ${APP_URL}. \n`
 
-      app.listen(PORT, () => console.log(message))
+      app.listen(PORT, '0.0.0.0', () => console.log(message))
     }
   })
 })

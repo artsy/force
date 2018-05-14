@@ -1,0 +1,116 @@
+version: 2.0
+jobs:
+  acceptance:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    parallelism: 1
+    steps:
+      - add_ssh_keys
+      - checkout
+      - run:
+          name: Acceptance Tests
+          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
+  test:
+    docker:
+      - image: artsy/hokusai:0.4.0
+    parallelism: 4
+    steps:
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Test
+          command: "hokusai test"
+  build:
+    docker:
+      - image: artsy/hokusai:0.4.0
+    steps:
+      - run:
+          name: "OK"
+          command: "echo All Tests Pass!"
+  push:
+    docker:
+      - image: artsy/hokusai:0.4.0
+    steps:
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Push
+          command: hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
+  deploy_hokusai:
+    docker:
+      - image: artsy/hokusai:0.4.0
+    steps:
+      - add_ssh_keys
+      - checkout
+      - run:
+          name: Configure
+          command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
+      - run:
+          name: Deploy
+          command: hokusai staging deploy $CIRCLE_SHA1
+  deploy_heroku_staging:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
+      - checkout
+      - setup_remote_docker
+      - run: DEPLOY_ENV=staging bash .circleci/heroku_setup.sh
+      - run:
+          name: "Deploy to staging"
+          command: "yarn install && DEPLOY_ENV=staging bash .circleci/heroku_deploy.sh && git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force"
+  deploy_heroku_production:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
+      - checkout
+      - setup_remote_docker
+      - run: DEPLOY_ENV=production bash .circleci/heroku_setup.sh
+      - run:
+          name: "Deploy to production"
+          command: "yarn install && DEPLOY_ENV=production bash .circleci/heroku_deploy.sh"
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - test
+      # - acceptance FIXME: Re enable once circle fixes their browser image.
+      - build:
+          filters:
+            branches:
+              ignore: staging
+          requires:
+            - test
+            #- acceptance
+      - push:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+      - deploy_hokusai:
+          filters:
+            branches:
+              only: master
+          requires:
+            - push
+      - deploy_heroku_staging:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
+      - deploy_heroku_production:
+          filters:
+            branches:
+              only: release
+          requires:
+            - test
