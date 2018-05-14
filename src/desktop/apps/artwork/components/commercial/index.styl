@@ -115,14 +115,24 @@
     position relative
     top 4px
 
-// need to add border if artwork missing inquire prompt
+// need to adjust borders and spacing for elements following each other
+.artwork-inquiry-form + .artwork-partner-stub
+.artwork-commercial__inquiry-buttons + .artwork-partner-stub
+  padding-top 25px
+
 .artwork-commercial__container + .artwork-partner-stub
+  padding-top 25px
   border-top 1px solid gray-lighter-color
 
-// need to add border to the element following partner directly
 .artwork-partner-stub + .artwork-commercial__questions
 .artwork-partner-stub + .artwork-commercial__consignables
   border-top 1px solid gray-lighter-color
+  margin-top 25px
+
+.artwork-collecting-institution-stub + .artwork-commercial__questions
+.artwork-collecting-institution-stub + .artwork-commercial__consignables
+  border-top 1px solid gray-lighter-color
+  margin 25px 0 0 0
 
 .artwork-edition-sets
   block-margins(gutter / 2)
