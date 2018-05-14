@@ -2,19 +2,19 @@ import { renderLayout } from '@artsy/stitch'
 import { AuthStatic } from './components/AuthStatic.tsx'
 
 export const index = async (req, res, next) => {
-  let mode
+  let type
   switch (req.path) {
     case '/login':
-      mode = 'login'
+      type = 'login'
       break
     case '/signup':
-      mode = 'register'
+      type = 'register'
       break
     case '/reset_password':
-      mode = 'reset_password'
+      type = 'reset_password'
       break
     default:
-      mode = 'login'
+      type = 'login'
       break
   }
 
@@ -34,7 +34,7 @@ export const index = async (req, res, next) => {
         assetPackage: 'auth2',
       },
       data: {
-        mode,
+        type,
       },
     })
 
