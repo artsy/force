@@ -1,5 +1,5 @@
 multiPageView = require '../../../components/multi_page/index.coffee'
-AuthModalView = require '../../../components/auth_modal/view.coffee'
+mediator = require('../../../lib/mediator')
 
 module.exports.init = ->
   view = multiPageView 'auction-faqs'
@@ -17,7 +17,7 @@ module.exports.init = ->
   $('.js-register-button').click (e) ->
     # TODO: remove dead code
     e.preventDefault()
-    new AuthModalView
+    mediator.trigger 'open:auth',
       width: '500px',
       mode: 'register'
       copy: 'Sign up to bid on artworks'
