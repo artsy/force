@@ -96,7 +96,7 @@ module.exports = class SearchBarView extends Backbone.View
         @hideSpotlight()
         return
       else
-        @emptyItemClick()
+        @emptyItemClick() if @isEmpty()
 
     letterPressed = String.fromCharCode(e.which).toLowerCase()
     if letterPressed is @$spotlightRemainingText.text().charAt(0).toLowerCase()
@@ -118,13 +118,30 @@ module.exports = class SearchBarView extends Backbone.View
 
   # Display spotlight result if:
   # - more than 4 characters have been typed AND
-  # - query is an exact case-insensitive leading match of the search result AND
-  # - query is more than 30% of the length of the search result
+  # - query is more than 30% of the length of the search result AND
+  # - query is a case-insensitive leading match of the search result or any token
   shouldShowSpotlightSearch: (searchResult) ->
+    @isSubsequentMatch = false
     currentQuery = @$input.val()
     currentQuery.length > 4 &&
-      searchResult.toLowerCase().indexOf(currentQuery.toLowerCase()) is 0 &&
-      (currentQuery.length / searchResult.length) >= 0.3
+      (currentQuery.length / searchResult.length) >= 0.3 &&
+      @isLeadingMatchOfAnyToken(currentQuery, searchResult)
+
+  # Return true if:
+  #  - result starts with word OR
+  #  - any token in result starts with word (sets isSubsequentMatch to true)
+  isLeadingMatchOfAnyToken: (word, result) ->
+    return true if result.toLowerCase().indexOf(word.toLowerCase()) is 0
+
+    if word.indexOf(' ') > -1
+      regex = new RegExp(word, 'i')
+      return @isSubsequentMatch = true if result.match(regex)
+
+    _.each result.split(' '), (token) =>
+      if token.toLowerCase().indexOf(word.toLowerCase()) is 0
+        return @isSubsequentMatch = true
+
+    return @isSubsequentMatch
 
   displaySpotlightSearch: (result) ->
     return unless @enableSpotlightAutocomplete
@@ -134,7 +151,11 @@ module.exports = class SearchBarView extends Backbone.View
 
     @spotlightSearchResult = searchResult
     currentQuery = @$input.val()
-    remainingText = searchResult.get('display').replace(new RegExp(currentQuery, 'i'), '')
+    if @isSubsequentMatch
+      currentQuery += "  "
+      remainingText = "·  " + searchResult.get('display')
+    else
+      remainingText = searchResult.get('display').replace(new RegExp(currentQuery, 'i'), '')
     @$spotlightInitialText.text(currentQuery)
     @$spotlightRemainingText.text(remainingText)
     @showSpotlight()

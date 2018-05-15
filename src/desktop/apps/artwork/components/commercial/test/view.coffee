@@ -11,6 +11,9 @@ describe 'ArtworkCommercialView', ->
         $: benv.require 'jquery'
         sd:
           FORCED_LOGIN_INQUIRY: 'default'
+        stitch:
+          components:
+            TooltipQuestion: sinon.stub()
       Backbone.$ = $
       done()
 
