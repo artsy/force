@@ -34,17 +34,15 @@ if artwork.is_inquireable
           = ' '
 
     if fair
-      .artsy-checkbox
+      .artsy-checkbox.fair-attend-checkbox
         .artsy-checkbox--checkbox
           input( type='checkbox', name='attending', id='embedded-inquiry-form-attending' )
           label( for='embedded-inquiry-form-attending' )
 
         label.artsy-checkbox--label( for='embedded-inquiry-form-attending' )
           | I #{fair.isNotOver() ? 'will attend' : 'attended'} #{fair.nameSansYear()}
-          span.help-tooltip(
-            data-anchor='bottom-right'
-            data-message='This artwork is part of the art fair—#{fair.nameSansYear()}.Providing this information enables galleries to offer a more customized service, and helps us send better recommendations and event invitations to you.'
-          )
+          .tooltip-question-container
+            != stitch.components.TooltipQuestion({horizontalAlign: 'left', verticalAlign: 'bottom', message: 'This artwork is part of the art fair—'+fair.nameSansYear()+'. Providing this information enables galleries to offer a more customized service, and helps us send better recommendations and event invitations to you.'})
 
     button.avant-garde-button-black(
       class='js-artwork-inquire-button analytics-artwork-contact-seller'

@@ -41,9 +41,10 @@
 .artwork-commercial
   clearfix()
   &__form
-    padding 22px 0
     serif('s-body')
-    line-height 1.25 // compact-line-height
+    border-top 1px solid gray-lighter-color
+    margin-top 30px
+    padding 25px 0
 
   &__sale-message
     garamond-size('l-body')
@@ -59,26 +60,35 @@
     line-height 1.5
   &__container
     block-margins 25px
-    padding 25px 0
-    border-top 1px solid gray-lighter-color
-    border-bottom @border-top
+    padding 0
   &__shipping-info
     garamond-size('l-caption')
     color gray-darker-color
     line-height 1.5
 
   &__consignables
-    margin (gutter + (gutter / 3)) 0
-
+    color gray-darker-color
     &__consign
       block-margins(gutter / 2)
+      color gray-darker-color
+      font-size 15px
       margin-top -((gutter / 2) + 2)
       padding distance(gutter / 2) 0
-      border-top 2px solid black
-      border-bottom @border-top
-
+  
       > a
-        fine-faux-underline()
+        color gray-darker-color
+        font-size 15px
+        text-decoration underline
+  
+  &__questions
+    color gray-darker-color
+    font-size 15px
+    padding-top 25px
+  
+    > a
+      color gray-darker-color
+      font-size 15px
+      text-decoration underline
 
   &__inquiry-success
     color green-color
@@ -91,6 +101,39 @@
 .artwork-acquire-form
   margin (gutter / 2) 0
 
+.fair-attend-checkbox
+  display block
+  position relative
+  .artsy-checkbox--checkbox
+    position absolute
+  .artsy-checkbox--label
+    display inline-block
+    margin 0 20px 0 30px
+  .tooltip-question-container
+    display inline-block
+    left 2px
+    position relative
+    top 4px
+
+// need to adjust borders and spacing for elements following each other
+.artwork-inquiry-form + .artwork-partner-stub
+.artwork-commercial__inquiry-buttons + .artwork-partner-stub
+  padding-top 25px
+
+.artwork-commercial__container + .artwork-partner-stub
+  padding-top 25px
+  border-top 1px solid gray-lighter-color
+
+.artwork-partner-stub + .artwork-commercial__questions
+.artwork-partner-stub + .artwork-commercial__consignables
+  border-top 1px solid gray-lighter-color
+  margin-top 25px
+
+.artwork-collecting-institution-stub + .artwork-commercial__questions
+.artwork-collecting-institution-stub + .artwork-commercial__consignables
+  border-top 1px solid gray-lighter-color
+  margin 25px 0 0 0
+
 .artwork-edition-sets
   block-margins(gutter / 2)
 
@@ -102,7 +145,7 @@
   border-top 1px dotted gray-lighter-color
 
   &:first-child
-    border-top-style solid
+    border-top none
 
   &__radio
   &__details

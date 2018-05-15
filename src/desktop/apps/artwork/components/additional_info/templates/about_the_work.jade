@@ -6,8 +6,14 @@
   if artwork.additional_information
     != artwork.additional_information
 
+  if artwork.series
+    p Series: #{artwork.series}
+
   if artwork.signature
-    p Signature:&nbsp;#{artwork.signature}
+    p Signature: #{artwork.signature}
+
+  if artwork.image_rights || artwork.is_downloadable
+    include ./image
 
   if artwork.publisher
     p Publisher: #{artwork.publisher}
