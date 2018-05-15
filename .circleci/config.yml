@@ -81,12 +81,13 @@ workflows:
   version: 2
   default:
     jobs:
-      - test
-      # - acceptance FIXME: Re enable once circle fixes their browser image.
-      - build:
+      - test:
           filters:
             branches:
               ignore: staging
+
+      # - acceptance FIXME: Re enable once circle fixes their browser image.
+      - build:
           requires:
             - test
             #- acceptance
