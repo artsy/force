@@ -1,11 +1,13 @@
+import { hot } from 'react-hot-loader'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Article } from 'reaction/Components/Publishing'
-import ArticleLayout from './layouts/Article'
+import { ContextProvider } from 'reaction/Components/Artsy'
 import { InfiniteScrollNewsArticle } from './InfiniteScrollNewsArticle.tsx'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
-import { hot } from 'react-hot-loader'
+import ArticleLayout from './layouts/Article'
+import { data as sd } from 'sharify'
 
 export default hot(module)(
   class App extends React.Component {
@@ -51,7 +53,9 @@ export default hot(module)(
       return (
         <Fragment>
           <EditPortal article={article} />
-          {this.getArticleLayout()}
+          <ContextProvider currentUser={sd.CURRENT_USER}>
+            {this.getArticleLayout()}
+          </ContextProvider>
         </Fragment>
       )
     }

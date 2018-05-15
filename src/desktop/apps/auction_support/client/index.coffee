@@ -44,6 +44,7 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
       saleArtwork: @saleArtwork
       bidderPositions: @bidderPositions
       submitImmediately: submitImmediately
+      isRegistered: @registered
 
 module.exports.init = ->
   new AuctionRouter

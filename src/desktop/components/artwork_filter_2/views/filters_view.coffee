@@ -78,6 +78,7 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     e.preventDefault()
     @resetPagination()
     key = ($el = $(e.target)).data('key')
+    @params.set key, null # FIXME: Force an update to the model and then unset key
     @params.unset key
 
   seeAllClicked: (e) =>

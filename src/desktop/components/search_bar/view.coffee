@@ -96,7 +96,7 @@ module.exports = class SearchBarView extends Backbone.View
         @hideSpotlight()
         return
       else
-        @emptyItemClick()
+        @emptyItemClick() if @isEmpty()
 
     letterPressed = String.fromCharCode(e.which).toLowerCase()
     if letterPressed is @$spotlightRemainingText.text().charAt(0).toLowerCase()

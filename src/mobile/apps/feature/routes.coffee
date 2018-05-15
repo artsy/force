@@ -102,6 +102,7 @@ module.exports.bid = (req, res, next) ->
     res.locals.bidIncrements = artwork.sale_artwork.bid_increments
     res.locals.myLastMaxBid = me?.lot_standing?.most_recent_bid.max_bid.cents
     registered = Boolean(me?.bidders?.length > 0)
+    res.locals.sd.REGISTERED = registered
     qualified = get(me, 'bidders.0.qualified_for_bidding', false)
     hasQualifiedCreditCard = get(me, 'has_qualified_credit_cards', false)
     render()

@@ -105,27 +105,14 @@ describe 'Artwork metadata templates', ->
       $ = cheerio.load @html
       $('.artwork-meta-data-black__contact-button').text().should.equal 'Buy'
 
-  describe 'series, medium, dimensions, image rights', ->
-    before ->
-      @html = render('details')(
-        artwork: @artwork
-        sd: {}
-        asset: (->)
-      )
-
-    it 'display series, medium, dimensions, and image rights', ->
-      @html.should.containEql 'The coolest series'
-      @html.should.containEql 'Watercolor on Paper'
-      @html.should.containEql '10 × 20 × 30in, 100 × 200 × 40cm'
-      @html.should.containEql 'Sourced from ARS'
-
   describe 'for sale works partner header', ->
     describe 'gallery - not for sale', ->
       beforeEach ->
         @artwork.is_for_sale = false
-        @artwork.partner.type = 'Gallery'
+        @artwork.collecting_institution = null
+        @artwork.partner = { type: 'Gallery', name: 'Awesome gallery' }
 
-      it 'should display Gallery header', ->
+      it 'should display Gallery name in header', ->
         html = render('partner')(
           artwork: @artwork
           sd: {}
@@ -133,14 +120,15 @@ describe 'Artwork metadata templates', ->
         )
 
         $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Gallery'
+        $('.artwork-meta-data__partner').text().should.equal 'Awesome gallery'
 
     describe 'gallery - for sale', ->
       beforeEach ->
         @artwork.is_for_sale = true
-        @artwork.partner.type = 'Gallery'
+        @artwork.collecting_institution = null
+        @artwork.partner = { type: 'Gallery', name: 'Awesome gallery' }
 
-      it 'should display Offered by when work is for sale', ->
+      it 'should display Gallery name in header', ->
         html = render('partner')(
           artwork: @artwork
           sd: {}
@@ -148,7 +136,7 @@ describe 'Artwork metadata templates', ->
         )
 
         $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Offered by'
+        $('.artwork-meta-data__partner').text().should.equal 'Awesome gallery'
 
     describe 'auction house - not for sale', ->
       beforeEach ->
@@ -164,7 +152,6 @@ describe 'Artwork metadata templates', ->
         )
 
         $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Auction House'
         $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
 
     describe 'auction house - for sale', ->
@@ -181,7 +168,6 @@ describe 'Artwork metadata templates', ->
         )
 
         $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Offered by'
         $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
 
     describe 'e-commerce - for sale', ->
@@ -221,6 +207,7 @@ describe 'Artwork metadata templates', ->
     describe 'gallery - partner', ->
       before ->
         @artwork.partner.href = '/gagosian-gallery'
+        @artwork.partner.is_linkable = true
         @artwork.collecting_institution = null
 
         @html = render('partner')(
@@ -236,6 +223,9 @@ describe 'Artwork metadata templates', ->
       before ->
         @artwork.partner.type = 'Institutional Seller'
         @artwork.collecting_institution = null
+        @artwork.partner.name = 'MOMA'
+        @artwork.partner.href = '/moma'
+        @artwork.partner.is_linkable = true
 
         @html = render('partner')(
           artwork: @artwork
@@ -243,7 +233,8 @@ describe 'Artwork metadata templates', ->
 
       it 'should link to partner\'s page', ->
         $ = cheerio.load(@html)
-        $('.artwork-meta-data__partner .artwork-header').text().should.equal 'Institution'
+        $('.artwork-meta-data__partner').text().should.equal 'MOMA'
+        $('.artwork-partner-link').attr('href').should.equal '/moma'
 
   describe 'auction artwork estimated value', ->
     before ->

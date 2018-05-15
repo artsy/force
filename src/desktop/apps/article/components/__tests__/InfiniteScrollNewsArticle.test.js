@@ -136,6 +136,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       articles: _.times(6, () => {
         return _.extend({}, fixtures.article, {
           slug: 'foobar',
+          layout: 'news',
           channel_id: '123',
           id: '678',
         })

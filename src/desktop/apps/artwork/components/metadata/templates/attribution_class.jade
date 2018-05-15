@@ -1,3 +1,5 @@
 if artwork.attribution_class
-  a.artwork-metadata__attribution-class.js-artwork-metadata-attribution-class.fine-faux-underline
-    = artwork.attribution_class.short_description
+  .artwork-metadata__attribution-class-container
+    a.artwork-metadata__attribution-class.js-artwork-metadata-attribution-class
+      = artwork.attribution_class.short_description
+    | .

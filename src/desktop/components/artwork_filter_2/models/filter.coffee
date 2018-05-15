@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
 _ = require 'underscore'
 sd = require('sharify').data
 query = require '../queries/filter_artworks.coffee'
@@ -37,12 +38,15 @@ module.exports = class ArtworkFilter extends Backbone.Model
       _.extend(props, { @page })
 
     variables = _.extend(
-      @params.mapped(),
       @params.defaultParams,
+      @params.mapped(),
       props
     )
 
-    send = { query, variables }
+    req =
+      user: CurrentUser.orNull()
+
+    send = { query, variables, req }
     @set isLoading: true
     metaphysics send
       .then ({ filter_artworks }) =>

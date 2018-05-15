@@ -3,28 +3,25 @@
 
   .main-side-margin
     .artwork-image-module__details
-      .artwork-image-module__label-icons
-        .artwork-image-module__artwork-label
-          if artists.length
-            for artist in artists
-              a.artist-name(href=artist.href)= artist.name
-          else if artwork.cultural_maker
-            .artist-name= artwork.cultural_maker
-          .artwork-display
-            if artwork.title
-              em= artwork.title
-            if artwork.date
-              | , #{artwork.date}
-
-        .artwork-header-module
-          .artwork-header-module__share-container
+      .artwork-header-module
+        .artwork-header-module__favorites-container
+          if artwork.auction && !artwork.auction.is_closed
+            a.artwork-header-module__watch-button( data-action='save' data-state='unsaved')
+              include ../../../../../../desktop/components/main_layout/public/icons/bell.svg
+          else
+            a.artwork-header-module__favorite-button.circle-border-icon-button( data-action='save' data-state='unsaved')
+              i.icon-heart
+        .artwork-header-module__share-container
             .artwork-header-module__share-button
-          .artwork-header-module__favorites-container
-            if artwork.auction && !artwork.auction.is_closed
-              a.artwork-header-module__watch-button( data-action='save' data-state='unsaved')
-                include ../../../../../../desktop/components/main_layout/public/icons/bell.svg
-            else
-              a.artwork-header-module__favorite-button.circle-border-icon-button( data-action='save' data-state='unsaved')
-                i.icon-heart
 
+      .artwork-image-module__artwork-details
+        if artists.length
+          for artist in artists
+            a.artist-name(href=artist.href)= artist.name
+        else if artwork.cultural_maker
+          .artist-name= artwork.cultural_maker
+        
+        unless artwork.auction || (artwork.auction && artwork.auction.is_auction)
+          include ./details.jade
+  
       include ./attribution_class
