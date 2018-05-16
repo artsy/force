@@ -14,4 +14,4 @@ RUN yarn install
 
 RUN yarn setup_k8s
 
-CMD yarn start
+CMD IS_K8S=true yarn start

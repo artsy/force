@@ -205,7 +205,12 @@ export default function(app) {
   } else {
     // For heroku: point to assets from fingerprinted file (uses `ASSET_MANIFEST` and `CDN_URL`)
     // For k8s: point to assets from public/assets (uses `CDN_URL`)
-    !IS_K8S ? app.use(bucketAssets()) : app.use(localAssets)
+    if (IS_K8S) {
+      app.use(localAssets)
+      app.use(express.static('public'))
+    } else {
+      app.use(bucketAssets())
+    }
   }
 
   app.use(localsMiddleware)
