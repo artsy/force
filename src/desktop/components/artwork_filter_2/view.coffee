@@ -57,11 +57,18 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
     @subviews.push @masonry = new MasonryView el: @$('#artwork-filter-right__columns')
     @params.trigger 'firstSet', @artistID
+    Backbone.history.on 'route', @listenToHistory
+    @updateUrl()
+
 
   render: ->
     @$el.html template({ sd: sd })
     _.defer => @postRender()
     return this
+
+  listenToHistory: (_router, _route, queryString) =>
+    [path, params] = queryString
+    @params.queryStringToParams params
 
   paramsChanged: ->
     @scrollToTop()
@@ -74,9 +81,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
       '?' if query
       query
     ]).join('')
+
     Backbone.history.navigate url,
       trigger: false
-      replace: true
+      replace: false
 
   scrollToTop: ->
     @$htmlBody ?= $('html, body')
