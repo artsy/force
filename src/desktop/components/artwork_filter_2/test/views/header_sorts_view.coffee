@@ -20,7 +20,7 @@ describe 'HeaderCountsView', ->
 
   beforeEach ->
     params = new Backbone.Model
-    params.defaultParams = sort: 'year'
+    params.set('sort', 'year')
     @view = new @HeaderSortsView
       params: params
 
@@ -48,7 +48,7 @@ describe 'HeaderCountsView', ->
 
     it 'renders with default sort', ->
       @view.render().$el.text().should.containEql 'Sort by:Artwork Year (asc.)'
-      @view.params.defaultParams.sort = '-published_at'
+      @view.params.set('sort', '-published_at')
       @view.render().$el.text().should.containEql 'Sort by:Recently Added'
 
   describe 'select', ->
