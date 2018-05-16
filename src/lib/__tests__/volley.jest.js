@@ -12,7 +12,7 @@ jest.mock('sharify', () => ({
   },
 }))
 
-import { reportLoadTimeToVolley } from 'lib/volley'
+import { reportLoadTimeToVolley } from '../volley'
 
 describe('Reporting metrics to Volley', () => {
   beforeEach(() => {
