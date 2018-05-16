@@ -39,8 +39,8 @@ mixin rail(title, viewAllUrl, section)
 if artist.statuses.artworks
   include ./works
 
-//- if sd.ARTIST_PAGE_PAGINATION is 'experiment'
-if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+//- if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+if sd.ARTIST_PAGE_PAGINATION == 'experiment'
   +rail('Related Artists', artist.href + '/related-artists', 'artists')
 else
   +rail('Show Highlights', artist.href + '/shows', 'shows')
