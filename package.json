@@ -17,6 +17,7 @@
     "prepare": "patch-package",
     "prettier-write": "yarn run prettier --write",
     "sentry": "sh scripts/sentry.sh",
+    "setup_k8s": "sh scripts/setup_k8s.sh",
     "start": "sh scripts/start.sh",
     "test": "sh scripts/test.sh",
     "webpack": "webpack"

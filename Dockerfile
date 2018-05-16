@@ -12,4 +12,6 @@ WORKDIR /app
 RUN npm install -g yarn@1.5.1
 RUN yarn install
 
+RUN yarn setup_k8s
+
 CMD yarn start
