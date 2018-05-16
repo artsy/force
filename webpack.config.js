@@ -24,7 +24,7 @@ const config = {
     ...getEntrypoints(),
   },
   output: {
-    filename: isDevelopment ? '[name].js' : '[name].[chunkhash].js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'public/assets'),
     publicPath: '/assets',
     sourceMapFilename: '[file].map?[contenthash]',
@@ -139,6 +139,7 @@ if (isDevelopment) {
         },
       })
     )
+    config.output.filename = '[name].[chunkhash].js'
   }
 }
 
