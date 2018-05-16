@@ -13,11 +13,17 @@ module.exports = class ArtistHeaderView extends Backbone.View
     @setupShareButtons()
     @setupFollowButton()
     @updateCurrentItem()
+    # TODO: ARTIST_MARKET_DATA_TEST remove after test closes
+    @setupMarketDataSummary()
+
     @$window = $ window
     @$('a').click @navClick
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
+
+  setupMarketDataSummary: ->
+    require('./market_data_summary.js').default.renderArtistMarketDataSummary(@model.id)
 
   setupFollowButton: ->
     view = this
