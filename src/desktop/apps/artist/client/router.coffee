@@ -46,8 +46,8 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   setupJump: ->
     # TODO: Remove A/B test
-    # sd.ARTIST_PAGE_PAGINATION is 'experiment'
-    unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
       @jump = new JumpView
         threshold: $(window).height()
         direction: 'bottom'
@@ -59,7 +59,7 @@ module.exports = class ArtistRouter extends Backbone.Router
   setupHeaderView: ->
     @headerView = new HeaderView _.extend {}, @options,
       el: $('#artist-page-header'),
-      jump: @jump unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'experiment'
+      jump: @jump unless sd.ARTIST_PAGE_PAGINATION is 'experiment' # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # TODO: Remove A/B test
 
   execute: ->
     return if @view? # Sets up a view once, depending on route
@@ -74,15 +74,15 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view = new OverviewView @options
 
     # TODO: Remove A/B test
-    # sd.ARTIST_PAGE_PAGINATION is 'experiment'
-    unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
       $('body').append @jump.$el
 
     @view.on 'artist:overview:sync', (artist) =>
       attachCTA new Artist(_.extend({}, artist, @model.attributes))
 
     # TODO: Remove A/B test
-    # splitTest('artist_page_pagination').view()
+    splitTest('artist_page_pagination').view()
 
   cv: ->
     @view = new CVView @options
@@ -90,7 +90,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   works: ->
     # TODO: Remove A/B split-test
-    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
+    infiniteScrollEnabled = sd.ARTIST_PAGE_PAGINATION is 'control' # !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # TODO: Remove A/B test
 
     @view = new ArtworkFilterView
       el: @options.el
@@ -99,12 +99,12 @@ module.exports = class ArtistRouter extends Backbone.Router
       infiniteScrollEnabled: infiniteScrollEnabled
 
     # TODO: Remove A/B test
-    # sd.ARTIST_PAGE_PAGINATION is 'experiment'
-    unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
       $('body').append @jump.$el
 
     # TODO: Remove A/B test
-    # splitTest('artist_page_pagination').view()
+    splitTest('artist_page_pagination').view()
 
   shows: ->
     @view = new ShowsView @options

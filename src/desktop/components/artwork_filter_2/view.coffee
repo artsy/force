@@ -32,6 +32,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.each @params.whitelisted, (param) =>
       @listenTo @params, "change:#{param}", @paramsChanged
 
+    # TODO: Remove A/B split-test
+    if sd.ARTIST_PAGE_PAGINATION is 'experiment'
+      Backbone.history.on 'route', @listenToHistory
+      @updateUrl()
+
   postRender: ->
     counts = new Counts { @params }
 
@@ -57,9 +62,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
     @subviews.push @masonry = new MasonryView el: @$('#artwork-filter-right__columns')
     @params.trigger 'firstSet', @artistID
-    Backbone.history.on 'route', @listenToHistory
-    @updateUrl()
-
 
   render: ->
     @$el.html template({ sd: sd })
