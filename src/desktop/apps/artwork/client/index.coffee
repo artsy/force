@@ -162,7 +162,7 @@ module.exports =
   init: ->
     setCookie(CLIENT._id)
     recordArtworkView(CLIENT._id, CurrentUser.orNull())
-    exec sharedInit
+    exec sharedInit, disableZigZagBanner: window.location.search.indexOf("feature-new-inquiry-flow=true") >= 0
 
     context = CLIENT.context or {}
     { query, init, variables } = setup(context)
