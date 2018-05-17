@@ -23,7 +23,7 @@ if artwork.is_inquireable
         required
       )
 
-    unless artwork.partner.is_pre_qualify
+    unless enableNewInquiryFlow || artwork.partner.is_pre_qualify
       if artwork.contact_message
         textarea.bordered-input(
           rows='4'

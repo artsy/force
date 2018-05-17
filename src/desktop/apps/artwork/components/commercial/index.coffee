@@ -7,7 +7,7 @@ shouldStick = ->
   COMMERCIAL.artwork.is_acquireable or
   COMMERCIAL.artwork.is_inquireable
 
-module.exports = (options = { disableZigZagBanner: false }) ->
+module.exports = ->
   $el = $('.js-artwork-commercial')
 
   return unless $el.length
@@ -19,7 +19,7 @@ module.exports = (options = { disableZigZagBanner: false }) ->
   sticky = new Sticky
   sticky.add $el if shouldStick()
 
-  if not options.disableZigZagBanner and ($target = $el.find '.js-artwork-inquire-button').length and not COMMERCIAL.artwork.is_acquireable
+  if not COMMERCIAL.enableNewInquiryFlow and ($target = $el.find '.js-artwork-inquire-button').length and not COMMERCIAL.artwork.is_acquireable
     new ZigZagBanner
       $target: $target
       name: 'inquiry'
