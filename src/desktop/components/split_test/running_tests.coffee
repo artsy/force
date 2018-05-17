@@ -25,14 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  home_search_test:
-    key: 'home_search_test'
-    outcomes:
-      experiment: 50
-      control: 50
-    control_group: 'control'
-    edge: 'experiment'
-
   artist_page_pagination:
     key: 'artist_page_pagination'
     outcomes:
