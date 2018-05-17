@@ -16,7 +16,7 @@
       if bday
         .artist-header-birthdate= bday
 
-      .market-data-summary(id="market-data-summary-container-" + artist.id)
+      .market-data-summary(id="market-data-summary-container-" + artist.id, data-artist-id=artist.id)
 
       .artist-follow
         button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
