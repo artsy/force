@@ -47,8 +47,8 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     }
 
     # FIXME: Replace with proper A/B test
-    # if sd.ARTIST_PAGE_PAGINATION is 'experiment'
-    if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    # if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    if sd.ARTIST_PAGE_PAGINATION is 'experiment'
       countView = new CountView _.extend el: @$('#artwork-filter-left__totals'), { @counts, @params }
       countView.render()
 
@@ -78,7 +78,6 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     e.preventDefault()
     @resetPagination()
     key = ($el = $(e.target)).data('key')
-    @params.set key, null # FIXME: Force an update to the model and then unset key
     @params.unset key
 
   seeAllClicked: (e) =>

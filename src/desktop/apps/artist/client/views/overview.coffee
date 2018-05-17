@@ -89,7 +89,7 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedGenes()
 
     # TODO: Remove A/B split-test
-    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
+    infiniteScrollEnabled = sd.ARTIST_PAGE_PAGINATION is 'control' #!sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
 
     # Main section
     @filterView = (new ArtworkFilterView
