@@ -1,5 +1,5 @@
 .mgr-cells.js-mgr-cells
-  for installShot in partner_show.install_shots
+  for installShot in show.install_shots
     if installShot.carousel_dimension && installShot.url
       .mgr-cell.js-mgr-cell
         img(
@@ -11,5 +11,5 @@
         if installShot.caption
           .show-installation-shot-caption( style="width: #{installShot.carousel_dimension.width}px")
             = installShot.caption
-- length = partner_show.install_shots.length
+- length = show.install_shots.length
 include ../../../components/merry_go_round/templates/bottom_navigation

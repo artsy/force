@@ -1,13 +1,12 @@
 { NODE_ENV } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json'
-PartnerShow = require '../../models/partner_show'
 metaphysics = require '../../../lib/metaphysics'
 DateHelpers = require '../../components/util/date_helpers'
 ViewHelpers = require './helpers/view_helpers'
 
 query = """
   query($id: String!) {
-    partner_show(id: $id) {
+    show(id: $id) {
       _id
       id
       created_at
@@ -143,11 +142,11 @@ query = """
 
   metaphysics send
     .then (data) ->
-      res.locals.sd.PARTNER_SHOW = data.partner_show # bootstrap
+      res.locals.sd.PARTNER_SHOW = data.show # bootstrap
       res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.PARTNER_SHOW?
       res.locals.ViewHelpers = ViewHelpers
       res.locals.DateHelpers = DateHelpers
-      res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
-      data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
+      res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.show
+      data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.show.artworks)
       res.render 'index', data
     .catch next

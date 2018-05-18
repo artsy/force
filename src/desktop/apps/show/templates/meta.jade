@@ -1,53 +1,53 @@
-- title = ViewHelpers.toPageTitle(partner_show)
-- description = ViewHelpers.toPageDescription(partner_show)
-- location = ViewHelpers.fairOrShowLocation(partner_show)
+- title = ViewHelpers.toPageTitle(show)
+- description = ViewHelpers.toPageDescription(show)
+- location = ViewHelpers.fairOrShowLocation(show)
 
 title= title
 meta( name="description", content= description )
-link( rel="canonical", href="#{sd.APP_URL}#{partner_show.href}" )
+link( rel="canonical", href="#{sd.APP_URL}#{show.href}" )
 
 
 //- Open Graph
 meta( property="og:title", content= title )
 meta( property="og:description", content= description )
 meta( property="og:name", content= title )
-meta( property="og:url", content="#{sd.APP_URL}#{partner_show.href}" )
+meta( property="og:url", content="#{sd.APP_URL}#{show.href}" )
 meta( property="og:type", content="#{sd.FACEBOOK_APP_NAMESPACE}:exhibition" )
-meta( property="og:start_time", content= moment(partner_show.start_at).toISOString() )
-meta( property="og:end_time", content= moment(partner_show.end_at).toISOString() )
+meta( property="og:start_time", content= moment(show.start_at).toISOString() )
+meta( property="og:end_time", content= moment(show.end_at).toISOString() )
 if location
   meta( property="og:location", content= ViewHelpers.bestAddress(location) )
-if partner_show.partner
-  meta( property="og:host", content= partner_show.partner.name )
-if partner_show.meta_image
-  meta( property="og:image", content= partner_show.meta_image.meta_image_url )
+if show.partner
+  meta( property="og:host", content= show.partner.name )
+if show.meta_image
+  meta( property="og:image", content= show.meta_image.meta_image_url )
 
 //- Twitter
 meta( property="twitter:description", content= description )
 meta( property="twitter:card", content="summary" )
 
 //- Sailthru
-meta( name="sailthru.show.slug", content= partner_show.id )
-meta( name="sailthru.show.type", content= ViewHelpers.sailthruShowType(partner_show) )
-meta( name="sailthru.title", content= ViewHelpers.title(partner_show) )
+meta( name="sailthru.show.slug", content= show.id )
+meta( name="sailthru.show.type", content= ViewHelpers.sailthruShowType(show) )
+meta( name="sailthru.title", content= ViewHelpers.title(show) )
 meta( name="sailthru.description", content= description )
-meta( name="sailthru.date", content= moment(partner_show.created_at).format("YYYY-MM-DD HH:mm:ss") )
-meta( name="sailthru.expire_date", content= moment(partner_show.end_at).add(1, 'day').format("YYYY-MM-DD HH:mm:ss") )
-meta( name="sailthru.start_date", content= moment(partner_show.start_at).format("YYYY-MM-DD HH:mm:ss") )
-meta( name="sailthru.end_date", content= moment(partner_show.end_at).format("YYYY-MM-DD HH:mm:ss") )
-meta( name="sailthru.tags", content= ViewHelpers.sailthruTags(partner_show).join(", ") )
-if partner_show.fair && partner_show.location
-  meta( name="sailthru.fair.location", content= partner_show.location.display )
-if partner_show.counts
-  meta( name="sailthru.show.works.number", content= partner_show.counts.eligible_artworks )
-if partner_show.partner
-  meta( name="sailthru.author", content= partner_show.partner.name )
+meta( name="sailthru.date", content= moment(show.created_at).format("YYYY-MM-DD HH:mm:ss") )
+meta( name="sailthru.expire_date", content= moment(show.end_at).add(1, 'day').format("YYYY-MM-DD HH:mm:ss") )
+meta( name="sailthru.start_date", content= moment(show.start_at).format("YYYY-MM-DD HH:mm:ss") )
+meta( name="sailthru.end_date", content= moment(show.end_at).format("YYYY-MM-DD HH:mm:ss") )
+meta( name="sailthru.tags", content= ViewHelpers.sailthruTags(show).join(", ") )
+if show.fair && show.location
+  meta( name="sailthru.fair.location", content= show.location.display )
+if show.counts
+  meta( name="sailthru.show.works.number", content= show.counts.eligible_artworks )
+if show.partner
+  meta( name="sailthru.author", content= show.partner.name )
 if location
   meta( name="sailthru.show.address", content= ViewHelpers.bestAddress(location) )
   meta( name="sailthru.show.location", content= ViewHelpers.getMapsLocation(location) )
-if partner_show.meta_image
-  meta( name="sailthru.image.full", content= partner_show.meta_image.meta_image_url )
-  meta( name="sailthru.image.thumb", content= partner_show.meta_image.meta_thumb_url )
+if show.meta_image
+  meta( name="sailthru.image.full", content= show.meta_image.meta_image_url )
+  meta( name="sailthru.image.thumb", content= show.meta_image.meta_thumb_url )
 
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name="fragment", content="!" )
