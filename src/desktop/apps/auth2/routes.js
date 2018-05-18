@@ -1,5 +1,6 @@
 import { renderLayout } from '@artsy/stitch'
 import { AuthStatic } from './components/AuthStatic.tsx'
+import { AuthenticationMeta } from './meta'
 
 export const index = async (req, res, next) => {
   let type
@@ -18,6 +19,11 @@ export const index = async (req, res, next) => {
       break
   }
 
+  const meta = {
+    description: '',
+    title: type === 'login' ? 'Login to Artsy' : 'Signup for Artsy',
+  }
+
   try {
     const layout = await renderLayout({
       basePath: __dirname,
@@ -26,7 +32,7 @@ export const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: 'templates/meta.jade',
+        head: AuthenticationMeta,
         body: AuthStatic,
       },
       locals: {
@@ -35,6 +41,7 @@ export const index = async (req, res, next) => {
       },
       data: {
         type,
+        meta,
       },
     })
 
