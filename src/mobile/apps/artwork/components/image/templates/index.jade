@@ -21,7 +21,6 @@
         else if artwork.cultural_maker
           .artist-name= artwork.cultural_maker
         
-        unless artwork.auction || (artwork.auction && artwork.auction.is_auction)
-          include ./details.jade
+        include ./details.jade
   
       include ./attribution_class
