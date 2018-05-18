@@ -52,9 +52,8 @@ module.exports = class FollowButton extends Backbone.View
     unless @following
       mediator.trigger 'clickFollowButton'
       return if ARTIST_PAGE_CTA_ENABLED
-      analyticsHooks.trigger 'follow:sign-up'
       mediator.trigger 'open:auth',
-        mode: 'register'
+        mode: 'signup'
         copy: "Sign up to follow #{@label}"
         destination: @href
         afterSignUpAction: {

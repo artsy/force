@@ -1,21 +1,27 @@
 import { renderLayout } from '@artsy/stitch'
 import { AuthStatic } from './components/AuthStatic.tsx'
+import { AuthenticationMeta } from './meta'
 
 export const index = async (req, res, next) => {
-  let mode
+  let type
   switch (req.path) {
     case '/login':
-      mode = 'login'
+      type = 'login'
       break
     case '/signup':
-      mode = 'register'
+      type = 'register'
       break
     case '/reset_password':
-      mode = 'reset_password'
+      type = 'reset_password'
       break
     default:
-      mode = 'login'
+      type = 'login'
       break
+  }
+
+  const meta = {
+    description: '',
+    title: type === 'login' ? 'Login to Artsy' : 'Signup for Artsy',
   }
 
   try {
@@ -26,7 +32,7 @@ export const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: 'templates/meta.jade',
+        head: AuthenticationMeta,
         body: AuthStatic,
       },
       locals: {
@@ -34,7 +40,8 @@ export const index = async (req, res, next) => {
         assetPackage: 'auth2',
       },
       data: {
-        mode,
+        type,
+        meta,
       },
     })
 

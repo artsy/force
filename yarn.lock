@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.2.0.tgz#e74908c42463aefc7671789b6f32e0eb4d973fd8"
+"@artsy/reaction@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.7.0.tgz#cd7a83451a3d9e6c3bb2438fc8b173102b2e3f05"
   dependencies:
     cheerio "^1.0.0-rc.2"
     formik "^0.11.11"
@@ -43,6 +43,7 @@
     prop-types "^15.5.10"
     qs "^6.5.0"
     react-css-transition-replace "^3.0.2"
+    react-html-parser "^2.0.2"
     react-lines-ellipsis "^0.8.0"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
@@ -60,6 +61,7 @@
     relay-runtime "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
     sharify "^0.1.6"
     superagent "^3.6.3"
+    url "^0.11.0"
     yarn "^1.3.2"
     yup "^0.24.1"
 
@@ -5228,7 +5230,7 @@ html-entities@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
 
-htmlparser2@^3.9.1:
+htmlparser2@^3.9.0, htmlparser2@^3.9.1:
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
   dependencies:
@@ -8859,6 +8861,12 @@ react-hot-loader@4.0.0-rc.0:
     hoist-non-react-statics "^2.5.0"
     prop-types "^15.6.0"
     shallowequal "^1.0.2"
+
+react-html-parser@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-html-parser/-/react-html-parser-2.0.2.tgz#6dbe1ddd2cebc1b34ca15215158021db5fc5685e"
+  dependencies:
+    htmlparser2 "^3.9.0"
 
 react-is@^16.3.1:
   version "16.3.2"

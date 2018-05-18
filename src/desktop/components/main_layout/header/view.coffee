@@ -18,7 +18,6 @@ bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
 React = require 'react'
 ReactDOM = require 'react-dom'
-{ AuthModal } = require '../../../apps/auth2/components/AuthModal.tsx'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -45,8 +44,6 @@ module.exports = class HeaderView extends Backbone.View
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
-
-    mediator.on 'open:auth', @openAuth, @
 
     @checkForPersonalizeFlash()
 
@@ -104,15 +101,6 @@ module.exports = class HeaderView extends Backbone.View
       success: (profile) ->
         window.location = profile.href()
     false
-
-  openAuth: (options) ->
-    if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
-      mediator.trigger 'clickHeaderAuth'
-      return
-    ReactDOM.render(
-      React.createElement AuthModal, options
-      document.getElementById('react-modal-container')
-    )
 
   signup: (e) ->
     e.preventDefault()
