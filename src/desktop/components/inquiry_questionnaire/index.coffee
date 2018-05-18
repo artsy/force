@@ -7,6 +7,7 @@ Logger = require '../logger/index.coffee'
 Trail = require './trail.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
+sd = require('sharify').data
 { steps, decisions, views } = require './map.coffee'
 
 module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
@@ -45,6 +46,7 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
     collectorProfile: collectorProfile
     userInterests: userInterests
     trail: trail
+    enableNewInquiryFlow: sd.COMMERCIAL.enableNewInquiryFlow
 
   # Attach/teardown analytics events
   analytics.attach state.context
