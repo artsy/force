@@ -1,7 +1,14 @@
 #auth-page-signup-social
   a.auth-page-facebook.avant-garde-box-button.avant-garde-box-button-black(
-    href="/users/auth/facebook?redirect-to=#{redirectTo ? redirectTo : '/personalize/collect'}"
+    href='#'
+    disabled=true
+    data-redirect-to="redirect-to=#{redirectTo ? redirectTo : '/personalize/collect'}"
+    data-signup-method='facebook'
   ) Facebook
   a.avant-garde-box-button.avant-garde-box-button-black(
-    href="/sign_up?email=1&redirect-to=#{redirectTo ? redirectTo : '/personalize/collect'}"
+    href='#'
+    disabled=true
+    data-redirect-to="redirect-to=#{redirectTo ? redirectTo : '/personalize/collect'}"
+    data-signup-method='email'
   ) Your email address
+include gdpr_checkbox
