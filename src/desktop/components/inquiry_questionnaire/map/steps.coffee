@@ -50,11 +50,6 @@ module.exports = [
           }
         ]
         false: [
-          {
-            enable_new_inquiry_flow: true: [
-              { is_logged_out: true: ['account'] }
-            ]
-          }
           'inquiry'
           {
             enable_new_inquiry_flow: false: [

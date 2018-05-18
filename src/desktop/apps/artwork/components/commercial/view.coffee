@@ -1,5 +1,6 @@
 { pick, extend } = require 'underscore'
 Backbone = require 'backbone'
+qs = require 'querystring'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
 Fair = require '../../../../models/fair.coffee'
@@ -10,6 +11,8 @@ analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 splitTest = require '../../../../components/split_test/index.coffee'
+AuthModalView = require '../../../../../desktop/components/auth_modal/view.coffee'
+sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 
@@ -27,6 +30,11 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     { artwork } = @data
 
     @artwork = new Artwork artwork
+
+
+    params = qs.parse(location.search.substring(1))
+    if params.inquire is 'true'
+      @inquire()
 
   acquire: (e) ->
     e.preventDefault()
@@ -76,44 +84,51 @@ module.exports = class ArtworkCommercialView extends Backbone.View
           .html confirmation()
 
   inquire: (e) =>
-    return @contactGallery(e) if @artwork.is_purchasable
-    e.preventDefault()
-    @inquiry = new ArtworkInquiry notification_delay: 600
+    if e
+      return @contactGallery(e) if @artwork.is_purchasable
+      e.preventDefault()
 
-    form = new Form model: @inquiry, $form: @$('form')
-    return unless form.isReady()
-
-    form.state 'loading'
-
-    { attending } = data = form.serializer.data()
     @user = User.instantiate()
-    @user.set pick data, 'name', 'email'
-    @inquiry.set data
-    if attending
-      @user.related()
-        .collectorProfile.related()
-        .userFairActions
-        .attendFair @data.artwork.fair
 
-    @artwork.fetch().then =>
-      @artwork.related().fairs.add @data.artwork.fair
-      @modal = openInquiryQuestionnaireFor
-        user: @user
-        artwork: @artwork
-        inquiry: @inquiry
+    if @user.isLoggedOut() && sd.COMMERCIAL.enableNewInquiryFlow
+      redirectTo = "#{location.pathname}#{location.search or "?"}&inquire=true"
+      @modal = new AuthModalView { width: '500px', redirectTo }
+    else
+      @inquiry = new ArtworkInquiry notification_delay: 600
 
-      # Stop the spinner once the modal opens
-      @listenToOnce @modal.view, 'opened', ->
-        form.state 'default'
+      form = new Form model: @inquiry, $form: @$('form')
+      return unless form.isReady()
 
-      # Abort or error
-      @listenToOnce @modal.view, 'closed', ->
-        form.reenable true
+      form.state 'loading'
 
-      # Success
-      @listenToOnce @inquiry, 'sync', =>
-        @$('.js-artwork-inquiry-form')
-          .html confirmation()
+      { attending } = data = form.serializer.data()
+      @user.set pick data, 'name', 'email'
+      @inquiry.set data
+      if attending
+        @user.related()
+          .collectorProfile.related()
+          .userFairActions
+          .attendFair @data.artwork.fair
+
+      @artwork.fetch().then =>
+        @artwork.related().fairs.add @data.artwork.fair
+        @modal = openInquiryQuestionnaireFor
+          user: @user
+          artwork: @artwork
+          inquiry: @inquiry
+
+        # Stop the spinner once the modal opens
+        @listenToOnce @modal.view, 'opened', ->
+          form.state 'default'
+
+        # Abort or error
+        @listenToOnce @modal.view, 'closed', ->
+          form.reenable true
+
+        # Success
+        @listenToOnce @inquiry, 'sync', =>
+          @$('.js-artwork-inquiry-form')
+            .html confirmation()
 
   openCollectorModal: (e) ->
     e.preventDefault()
