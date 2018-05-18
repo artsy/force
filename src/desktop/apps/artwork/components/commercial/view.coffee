@@ -1,8 +1,9 @@
 { pick, extend } = require 'underscore'
 Backbone = require 'backbone'
-qs = require 'querystring'
+qs = require 'qs'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
+CurrentUser = require '../../../../models/current_user.coffee'
 Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
@@ -31,9 +32,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     @artwork = new Artwork artwork
 
-
-    params = qs.parse(location.search.substring(1))
-    if params.inquire is 'true'
+    if CurrentUser.orNull() and
+        qs.parse(location.search.substring(1)).inquire is 'true'
       @inquire()
 
   acquire: (e) ->
@@ -90,7 +90,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     @user = User.instantiate()
 
-    if @user.isLoggedOut() && sd.COMMERCIAL.enableNewInquiryFlow
+    if @user.isLoggedOut() && sd.COMMERCIAL?.enableNewInquiryFlow
       redirectTo = "#{location.pathname}#{location.search or "?"}&inquire=true"
       @modal = new AuthModalView { width: '500px', redirectTo }
     else

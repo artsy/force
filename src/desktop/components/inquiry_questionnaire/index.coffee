@@ -46,7 +46,7 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
     collectorProfile: collectorProfile
     userInterests: userInterests
     trail: trail
-    enableNewInquiryFlow: sd.COMMERCIAL.enableNewInquiryFlow
+    enableNewInquiryFlow: sd.COMMERCIAL?.enableNewInquiryFlow
 
   # Attach/teardown analytics events
   analytics.attach state.context

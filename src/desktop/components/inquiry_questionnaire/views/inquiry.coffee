@@ -46,7 +46,7 @@ module.exports = class Inquiry extends StepView
 
     form = new Form model: @inquiry, $form: @$('form')
 
-    unless sd.COMMERCIAL.enableNewInquiryFlow
+    unless sd.COMMERCIAL?.enableNewInquiryFlow
       nudge =
         $input: @$('textarea')
         message: 'We recommend personalizing your message to get a faster answer from the gallery.'
