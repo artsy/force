@@ -20,3 +20,7 @@
 
       .artist-follow
         button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
+        if artist.counts.follows >= 50
+            - var followCount = viewHelpers.displayFollowers(artist)
+            span.artist-header-follow-count(data-count=followCount) Followers
+
