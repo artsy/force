@@ -68,7 +68,7 @@ module.exports.SignUpOptionsView = class SignUpOptionsView extends Backbone.View
     redirectTo = $(e.currentTarget).data('redirect-to')
     signupMethod = $(e.currentTarget).data('signup-method')
     $checkbox = $('.gdpr-signup__form__checkbox__accept-terms input')
-    
+
     if $checkbox.is(':checked')
       $('.gdpr-signup__form__checkbox__accept-terms').removeClass('tos-error')
       window.location = SIGNUP_URLS[signupMethod] + "&#{redirectTo}"
@@ -77,7 +77,7 @@ module.exports.SignUpOptionsView = class SignUpOptionsView extends Backbone.View
 
 module.exports.init = ->
   bootstrap()
-  
+
   if window.location.search?.indexOf('email') > -1
     new SignUpView(el: $("#auth-page"))
   else

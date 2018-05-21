@@ -6,5 +6,5 @@ block body
     if error
       .auth-page-error-message= error
     include signup_buttons
-    p.auth-page-nevermind Already have an account?
+    p.auth-page-nevermind Already have an account?&nbsp;
       a( href='/log_in' + (redirectTo ? '?redirectTo=#{redirectTo}' : '' )) Log in
