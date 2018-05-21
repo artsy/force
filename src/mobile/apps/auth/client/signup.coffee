@@ -71,7 +71,8 @@ module.exports.SignUpOptionsView = class SignUpOptionsView extends Backbone.View
 
     if $checkbox.is(':checked')
       $('.gdpr-signup__form__checkbox__accept-terms').removeClass('tos-error')
-      window.location = SIGNUP_URLS[signupMethod] + "&#{redirectTo}"
+      redirectStr = if signupMethod is 'facebook' then "?#{redirectTo}" else "&#{redirectTo}"
+      window.location = SIGNUP_URLS[signupMethod] + redirectStr
     else
       $('.gdpr-signup__form__checkbox__accept-terms').addClass('tos-error')
 
