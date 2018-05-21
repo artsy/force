@@ -125,30 +125,3 @@ describe 'Login view', ->
       @view.serializeForm = -> { email: 'foo', password: 'foo' }
       @view.check { preventDefault: -> }
       $.ajax.restore()
-
-describe 'Require gdpr checkbox', ->
-
-  beforeEach (done) ->
-    benv.setup =>
-      benv.expose {
-        $: benv.require 'jquery'
-        analyticsHooks: { trigger: sinon.stub() }
-      }
-      Backbone.$ = $
-      sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../templates/signup.jade'), { sd: { AP: {} }, asset: (->) }, =>
-        { SignUpOptionsView } = mod = benv.require resolve(__dirname, '../client/signup')
-        mod.__set__ 'sd', { AP: {} }
-        @view = new SignUpOptionsView el: $('#auth-page')
-        done()
-
-  afterEach ->
-    benv.teardown()
-    Backbone.sync.restore()
-
-  describe 'SignUpOptionsView', ->
-
-      describe '#acceptTermsBeforeSignup', ->
-        it 'adds error class if user does not click gdpr checkbox before creating an account', ->
-          @view.$('#auth-page-signup-social a').first().click()
-          @view.$el.html().should.containEql 'tos-error'
