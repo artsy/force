@@ -1,5 +1,9 @@
 multiPageView = require '../../../components/multi_page/index.coffee'
+<<<<<<< HEAD
 mediator = require('../../../lib/mediator')
+=======
+mediator = require '../../../lib/mediator.coffee'
+>>>>>>> 44144afcc6e9e59746b6d08dee539f4c7b3539cb
 
 module.exports.init = ->
   view = multiPageView 'auction-faqs'

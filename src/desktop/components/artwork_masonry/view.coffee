@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 User = require '../../models/user.coffee'
 masonry = require './index.coffee'
 BrickView = require '../artwork_brick/view.coffee'
+sd = require('sharify').data
 template = -> require('./index.jade') arguments...
 columnTemplate = -> require('./column.jade') arguments...
 
@@ -14,6 +15,7 @@ module.exports = class ArtworkMasonryView extends Backbone.View
 
   postRender: (artworks) ->
     artworks ?= @artworks
+
     @subViews.push artworks.map ({ id }) =>
       $el = @$(".js-artwork-brick[data-id='#{id}']")
 
@@ -38,18 +40,27 @@ module.exports = class ArtworkMasonryView extends Backbone.View
   render: ->
     { columns, @heights } = masonry @artworks
     @$el.html template
-      columns: columns
+      sd: sd
+      artworks: @artworks
+      columns: columns,
+      onAppendArtworks: (appendArtworksToReactionGrid) =>
+        @appendArtworksToReactionGrid = appendArtworksToReactionGrid
 
     @$columns = @$(".artwork-masonry__column")
     @postRender()
     this
 
   appendArtworks: (artworks) ->
-    @artworks.concat artworks
-    { columns, @heights } = masonry artworks, @heights
-    _.each columns, (column, i) =>
-      $(@$columns[i]).append columnTemplate { column }
-    @postRender artworks
+    @artworks = @artworks.concat artworks
+
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
+      @appendArtworksToReactionGrid(@artworks)
+    else
+      { columns, @heights } = masonry artworks, @heights
+      _.each columns, (column, i) =>
+        $(@$columns[i]).append columnTemplate { column }
+
+      @postRender artworks
 
   remove: ->
     invoke @subViews, 'remove'

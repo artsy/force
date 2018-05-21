@@ -113,3 +113,39 @@ describe 'SearchBarView', ->
 
     it 'falls back to the default string', ->
       @view.feedbackString().should.equal 'Search Artsy'
+
+  describe '#shouldShowSpotlightSearch', ->
+    it 'returns false if the query is too short', ->
+      @$input.val('cat')
+      @view.shouldShowSpotlightSearch(null).should.equal false
+      @view.isSubsequentMatch.should.equal false
+
+    it 'returns false if the search result doesnt start with the query', ->
+      @$input.val('percy')
+      searchResult = new SearchResult({name: 'Some other Cat'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal false
+      @view.isSubsequentMatch.should.equal false
+
+    it 'returns false if the query isnt long enough relative to the search result', ->
+      @$input.val('percy')
+      searchResult = new SearchResult({name: 'Percy Z is a really cool cat'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal false
+      @view.isSubsequentMatch.should.equal false
+
+    it 'returns true if search result starts with the query', ->
+      @$input.val('percy')
+      searchResult = new SearchResult({name: 'Percy Z'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal true
+      @view.isSubsequentMatch.should.equal false
+
+    it 'returns true if a subsequent word in the result starts with the query', ->
+      @$input.val('Bartholomeow')
+      searchResult = new SearchResult({name: 'Percy Bartholomeow'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal true
+      @view.isSubsequentMatch.should.equal true
+
+    it 'returns true if subsequent words in the result starts with the query', ->
+      @$input.val('Bartholomeow is')
+      searchResult = new SearchResult({name: 'Percy Bartholomeow is a cool cat'}).get('display')
+      @view.shouldShowSpotlightSearch(searchResult).should.equal true
+      @view.isSubsequentMatch.should.equal true

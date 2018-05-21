@@ -82,16 +82,6 @@ if (Cookies.get('analytics-signup')) {
   }
 }
 
-// Created account on the Inquire via Phone modal (via email)
-analyticsHooks.on('signUpFromPhoneModal', ({ user }) =>
-  trackAccountCreation({
-    signup_service: 'email',
-    email: user.email,
-    user_id: user.id,
-    context: 'show phone number',
-  })
-)
-
 analyticsHooks.on('auth:login', function(options) {
   analytics.track('Successfully logged in')
 })

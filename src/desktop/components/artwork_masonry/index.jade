@@ -1,4 +1,8 @@
-.artwork-masonry
-  for column, i in columns
-    .artwork-masonry__column
-      include ./column
+if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION && artworks
+  #stitch-artwork-masonry
+    != sd.stitch.components.ArtworkGrid({ artworks, onAppendArtworks, mountId: 'stitch-artwork-masonry'})
+else
+  .artwork-masonry
+    for column, i in columns
+      .artwork-masonry__column
+        include ./column

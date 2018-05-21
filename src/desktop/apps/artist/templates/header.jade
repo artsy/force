@@ -32,17 +32,13 @@ header.artist-header
 
   - var sections = nav.sections()
   if sections.length > 1
-    .artist-sticky-header
-      .artist-sticky-header-container
-        .artist-sticky-name
-          a(href= artist.href)= artist.name
-        .artist-tabs
-          nav.artist-tablist.garamond-bordered-tablist
-            for link, i in sections
-              a.garamond-tab(
-                href= link.href
-                class= activeClass(link.href)
-              )= link.name
-              if i !== sections.length - 1
-                span.garamond-tab-separator
-        button.artist-sticky-follow-button.is-small.avant-garde-follow-button-black.follow-button
+    .artist-tabs-container
+      .artist-tabs
+        nav.artist-tablist.garamond-bordered-tablist
+          for link, i in sections
+            a.garamond-tab(
+              href= link.href
+              class= activeClass(link.href)
+            )= link.name
+            if i !== sections.length - 1
+              span.garamond-tab-separator

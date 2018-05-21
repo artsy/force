@@ -26,7 +26,7 @@ describe 'RegistrationForm', ->
     benv.teardown()
 
   beforeEach (done) ->
-    sinon.stub(Backbone, 'sync')#.yieldsTo('success')
+    @submitStub = sinon.stub(Backbone, 'sync')#.yieldsTo('success')
 
     @order = new Order()
     @sale = new Sale fabricate 'sale'
@@ -51,6 +51,7 @@ describe 'RegistrationForm', ->
   describe '#submit', ->
 
     beforeEach ->
+      @acceptTerms = => @view.$acceptConditions.prop('checked', true)
       @submitValidForm = =>
         @view.$('input[name="card_name"]').val 'Foo Bar'
         @view.$('select[name="card_expiration_month"]').val '1'
@@ -77,11 +78,12 @@ describe 'RegistrationForm', ->
       @view.on "submitted", =>
         @view.success.called.should.be.ok()
         done()
-
+      @acceptTerms()
       @submitValidForm()
 
     it 'validates the form and displays errors', (done) ->
       @view.$submit.length.should.be.ok()
+      @acceptTerms()
       @view.$submit.click()
 
       @view.on "submitted", =>
@@ -116,7 +118,7 @@ describe 'RegistrationForm', ->
         # Successfully create the bidder
         Backbone.sync.onThirdCall().yieldsTo('success')
 
-
+        @acceptTerms()
         @submitValidForm()
         @view.on "submitted", =>
           @Stripe.card.createToken.args[0][1](200, {})
@@ -141,7 +143,7 @@ describe 'RegistrationForm', ->
       Backbone.sync.onSecondCall().yieldsTo('success')
       # Successfully create the bidder
       Backbone.sync.onThirdCall().yieldsTo('success')
-
+      @acceptTerms()
       @submitValidForm()
 
       @view.on "submitted", =>
@@ -155,3 +157,12 @@ describe 'RegistrationForm', ->
         # Creates the bidder
         Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
         Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+
+    it 'does not submit the form if Conditions of Sale are not accepted', ->
+      spy = sinon.spy(@submitStub)
+      @submitValidForm()
+      spy.called.should.be.false()
+
+    it 'adds an error class on submit if Conditions of Sale are not accepted', ->
+      @submitValidForm()
+      @view.$('.artsy-checkbox').hasClass('error').should.be.true()

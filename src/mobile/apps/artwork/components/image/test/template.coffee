@@ -83,3 +83,15 @@ describe 'Artwork image templates', ->
     it 'does not display attribution class container', ->
       $ = cheerio.load(@html)
       $('.artwork-image-module__attribution-class').length.should.equal 0
+
+  describe 'medium, dimensions', ->
+    before ->
+      @html = render('details')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+    it 'displays medium and dimensions', ->
+      @html.should.containEql 'Watercolor on Paper'
+      @html.should.containEql '10 × 20 × 30in; 100 × 200 × 40cm'

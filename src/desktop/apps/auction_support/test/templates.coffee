@@ -54,7 +54,7 @@ describe 'Auction', ->
 
   describe 'bid template', ->
 
-    it 'renders the template for unregistred users without errors', ->
+    it 'renders the template for unregistered users without errors', ->
       template = render('bid-form')
         sd: @sd
         sale: @sale
@@ -63,6 +63,7 @@ describe 'Auction', ->
         bidderPositions: new BidderPositions([fabricate 'bidder_position'],
           { saleArtwork: @saleArtwork, sale: @sale })
         isRegistered: false
+        hasValidCreditCard: false
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
@@ -73,7 +74,27 @@ describe 'Auction', ->
       @$template.html().should.not.containEql 'undefined'
       @$template.find('.bid-registration-form-contents').length.should.equal 1
 
-    it 'renders the template for registred users without errors', ->
+    it 'renders the template without a credit card form if hasValidCreditCard is true', ->
+      template = render('bid-form')
+        sd: @sd
+        sale: @sale
+        artwork: @saleArtwork.artwork()
+        saleArtwork: @saleArtwork
+        bidderPositions: new BidderPositions([fabricate 'bidder_position'],
+          { saleArtwork: @saleArtwork, sale: @sale })
+        isRegistered: false
+        hasValidCreditCard: true
+        maxBid: 1234
+        monthRange: @order.getMonthRange()
+        yearRange: @order.getYearRange()
+        accounting: formatMoney: ->
+        bidIncrements: []
+        asset: ->
+      @$template = $(template)
+      @$template.html().should.not.containEql 'undefined'
+      @$template.find('.bid-registration-form-contents').length.should.equal 0
+
+    it 'renders the template for registered users without errors', ->
       template = render('bid-form')
         sd: @sd
         sale: @sale

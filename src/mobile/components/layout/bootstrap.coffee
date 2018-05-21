@@ -18,7 +18,7 @@ Cookies = require 'cookies-js'
 HeaderView = require './client/header_view.coffee'
 doc = window.document
 sharify = require('sharify')
-
+CurrentUser = require '../../models/current_user.coffee'
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -40,14 +40,25 @@ module.exports = ->
   setupErrorReporting()
   setupHeaderView()
   syncAuth()
+  checkForPostSignupAction()
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
-  for attr in ['id', 'type', 'name', 'email', 'phone', 'lab_features',
-               'default_profile_id', 'has_partner_access', 'collector_level']
+  attrs = [
+    'id',
+    'type',
+    'name',
+    'email',
+    'phone',
+    'lab_features',
+    'default_profile_id',
+    'has_partner_access',
+    'collector_level'
+  ]
+  for attr in attrs
     if not _.isEqual data[attr], sd.CURRENT_USER[attr]
       $.ajax('/user/refresh').then -> window.location.reload()
 
@@ -71,3 +82,18 @@ setupErrorReporting = ->
 setupHeaderView = ->
   new HeaderView
     el: $('#main-header')
+
+checkForPostSignupAction = ->
+  postSignupAction = Cookies.get 'postSignupAction'
+  @currentUser = CurrentUser.orNull()
+  if postSignupAction
+    return unless @currentUser
+    { action, objectId, kind } = JSON.parse(postSignupAction)
+    
+    if action is 'save'
+      @currentUser.initializeDefaultArtworkCollection()
+      @currentUser.defaultArtworkCollection().saveArtwork objectId
+    else if action is 'follow' and kind?
+      @currentUser.follow(objectId, kind)
+
+    Cookies.expire 'postSignupAction'

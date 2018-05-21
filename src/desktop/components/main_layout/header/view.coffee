@@ -16,8 +16,6 @@ Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
-React = require 'react'
-ReactDOM = require 'react-dom'
 
 module.exports = class HeaderView extends Backbone.View
   events:

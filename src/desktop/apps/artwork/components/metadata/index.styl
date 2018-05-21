@@ -4,15 +4,19 @@
   garamond()
   font-size 15px
   line-height 1.47
-  color gray-darkest-color
+  color gray-darker-color
 
   &__artist
   &__secondary-metadata
     block-margins(distance(gutter / 2))
 
+  &__attribution-class-container
+    block-margins(distance(gutter))
+
   &__attribution-class
-    block-margins(12.5px)
+    color gray-darker-color
     display inline-block
+    text-decoration underline
 
   &__lot-number
     sans('s-headline')
@@ -21,11 +25,13 @@
   &__artist
     > .entity-link
       garamond()
-      text-transform none
-      letter-spacing 0
       font-size 20px
-      font-weight bold
-      color black
+      font-weight 600
+      letter-spacing 0
+      text-decoration underline
+      text-transform none
+      &:hover
+       border-bottom none
 
     > .entity-follow
       display block
@@ -38,12 +44,3 @@
   // Collapse between margins when these two are next to one another
   &__title + &__secondary-metadata
     margin-top 0
-
-  &__image
-    block-margins(12.5px)
-    serif('s-caption')
-    color gray-dark-color
-
-  &__image__download
-    > a
-      color gray-dark-color

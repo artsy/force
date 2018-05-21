@@ -33,6 +33,9 @@ module.exports =
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_EXPERIMENTAL_STITCH_INJECTION: false
+  ENABLE_EXPERIMENTAL_ARTIST_PAGINATION: false
+  ENABLE_MEMORY_PROFILING: false
+  ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: null
@@ -101,6 +104,7 @@ module.exports =
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_SECRET: 'change-me'
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
+  SHOW_ANALYTICS_CALLS: false
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
@@ -111,6 +115,7 @@ module.exports =
   TWITTER_KEY: null
   TWITTER_SECRET: null
   VANITY_BUCKET: null
+  VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
   WHITELISTED_VANITY_ASSETS: ''
 

@@ -9,7 +9,7 @@ module.exports = class PaginatorView extends Backbone.View
   events:
     'click li a' : 'setPage'
 
-  initialize: ({ @params, @filter }) ->
+  initialize: ({ @params, @filter, @hidePageNumbers = false }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires a filter model' unless @filter?
 
@@ -36,3 +36,14 @@ module.exports = class PaginatorView extends Backbone.View
 
   _postRender: ->
     @$('.bordered-pagination').addClass('bordered-pagination__hide-next') if @totalPages() is 1
+
+    if @hidePageNumbers
+      @$el.find('ul,li').css('list-style', 'none')
+      @$el.find('ul').css('display', 'none')
+      @$el.find('ul:last-child').css('display', 'inline-block')
+
+      if Number(@params.get 'page') > 1
+        @$el.find('ul:first-child').css('display', 'inline-block')
+
+        if Number(@params.get 'page') is @adjustedTotal()
+          @$el.find('ul:last-child').hide()

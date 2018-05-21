@@ -9,7 +9,7 @@ Order = require '../../../../models/order'
 Sale = require '../../../../models/sale'
 RegistrationForm = require '../../client/registration_form'
 
-xdescribe 'RegistrationForm', ->
+describe 'RegistrationForm', ->
 
   before (done) ->
     benv.setup =>
@@ -26,7 +26,7 @@ xdescribe 'RegistrationForm', ->
     benv.teardown()
 
   beforeEach (done) ->
-    sinon.stub(Backbone, 'sync')#.yieldsTo('success')
+    @submitStub = sinon.stub(Backbone, 'sync')
 
     @order = new Order()
     @sale = new Sale fabricate 'sale'
@@ -51,6 +51,7 @@ xdescribe 'RegistrationForm', ->
   describe '#submit', ->
 
     beforeEach ->
+      @acceptConditions = => @view.$acceptConditions.prop('checked', true)
       @submitValidForm = =>
         @view.$('input[name="card_name"]').val 'Foo Bar'
         @view.$('select[name="card_expiration_month"]').val '1'
@@ -72,12 +73,13 @@ xdescribe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'error', { responseJSON: { message: 'Sale is already taken.' } } # bidder creation failure
 
+      @acceptConditions()
       @submitValidForm()
 
       @view.once 'submitted', =>
         done()
 
-    it 'validates the form and displays errors', (done) ->
+    it 'validates the form and displays errors', ->
       @view.$submit.length.should.be.ok()
       @view.$submit.click()
 
@@ -92,7 +94,6 @@ xdescribe 'RegistrationForm', ->
         html.should.containEql 'Invalid telephone'
         html.should.containEql 'Please review the error(s) above and try again.'
         @view.$submit.hasClass('is-loading').should.be.false()
-        done()
 
     it 'lets the user resubmit a corrected form', ->
       # Submit a bad form
@@ -115,6 +116,7 @@ xdescribe 'RegistrationForm', ->
         Backbone.sync.onThirdCall().yieldsTo('success')
 
 
+        @acceptConditions()
         @submitValidForm()
         @view.once "submitted", =>
           @Stripe.card.createToken.args[0][1](200, {})
@@ -138,6 +140,7 @@ xdescribe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
+      @acceptConditions()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -153,6 +156,7 @@ xdescribe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
+      @acceptConditions()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -168,6 +172,7 @@ xdescribe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
+      @acceptConditions()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -182,3 +187,12 @@ xdescribe 'RegistrationForm', ->
         Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
 
         done()
+
+    it 'does not submit the form if Conditions of Sale are not accepted', ->
+      spy = sinon.spy(@submitStub)
+      @submitValidForm()
+      spy.called.should.be.false()
+
+    it 'adds an error class on submit if Conditions of Sale are not accepted', ->
+      @submitValidForm()
+      @view.$('.artsy-checkbox').hasClass('error').should.be.true()

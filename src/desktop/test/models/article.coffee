@@ -195,6 +195,10 @@ describe "Article", ->
       @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
       @article.byline().should.equal 'Molly, Kana and Christina'
 
+    it 'returns multiple authors', ->
+      @article.set 'authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
+      @article.byline().should.equal 'Molly, Kana and Christina'
+
   describe 'contributingByline', ->
 
     it 'returns an empty string when there are no contributing authors', ->

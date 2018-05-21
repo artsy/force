@@ -7,9 +7,11 @@ decisions =
   is_auction: ({ artwork }) ->
     artwork.get('is_in_auction') is true
 
-  pre_qualify: ({ artwork }) ->
-    artwork.related()
-      .partner.get('pre_qualify') is true
+  enable_new_inquiry_flow: ({ enableNewInquiryFlow }) -> enableNewInquiryFlow
+
+  pre_qualify: ({ artwork, enableNewInquiryFlow }) ->
+    not enableNewInquiryFlow and
+      artwork.related().partner.get('pre_qualify') is true
 
   is_collector: ({ user }) ->
     user.isCollector()

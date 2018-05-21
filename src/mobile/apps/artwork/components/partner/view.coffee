@@ -29,3 +29,4 @@ module.exports = class ArtworkPartnerView extends Backbone.View
       city.trim()
     )
     $('.artwork-partner-location').text cities.join(' • ')
+    $('.artwork-partner-locations .content').text cities.join(', ')

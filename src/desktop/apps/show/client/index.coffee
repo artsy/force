@@ -11,6 +11,7 @@ blurb = require '../../../components/gradient_blurb/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
 FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
 FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
+template = require '../components/artwork_columns_metaphysics/template.jade'
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
@@ -22,7 +23,7 @@ module.exports.init = ->
 
   if $('.js-show-installation-shot-carousel').length
     furtherInstallShotsEl = $('.js-show-installation-shot-carousel')
-    new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl 
+    new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl
 
   attachFollowArtists bootstrappedShow.artists
   attachFollowProfile bootstrappedShow.partner.default_profile_id
@@ -45,6 +46,12 @@ module.exports.init = ->
   $('.artwork-column').first().prepend relatedArticlesView.$el
 
   furtherArtworksEl = $('.artworks-container')
-  new FurtherArtworksView showId: bootstrappedShow._id, page: 2, artworks: bootstrappedShow.artworks, el: furtherArtworksEl
+
+  new FurtherArtworksView
+    showId: bootstrappedShow._id,
+    page: 2,
+    artworks: bootstrappedShow.artworks,
+    el: furtherArtworksEl,
+    sd: sd
 
   new ShareView el: $('.js-show-share')

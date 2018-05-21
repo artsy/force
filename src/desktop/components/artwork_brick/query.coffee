@@ -1,10 +1,14 @@
 module.exports = """
   fragment artwork_brick on Artwork {
+    __id
     id
+    is_saved
     href
     title
     image {
+      aspect_ratio
       placeholder
+      url: url(version: ["large"])
       thumb: resized(width: 350, version: ["large", "larger"]) {
         url
         height

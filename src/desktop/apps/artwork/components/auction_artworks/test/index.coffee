@@ -37,6 +37,8 @@ describe 'Auction artworks module', ->
           }
         }
         asset: (->)
+        sd:
+          ENABLE_EXPERIMENTAL_STITCH_INJECTION: false
       )
 
       $ = cheerio.load(html)

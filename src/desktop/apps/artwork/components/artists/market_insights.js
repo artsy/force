@@ -5,14 +5,18 @@ import ReactDOM from 'react-dom'
 import { Contents } from 'reaction/Components/Artist/MarketInsights'
 import { ContextProvider } from 'reaction/Components/Artsy'
 
-const renderMarketInsightsFor = (artistID) => {
+const renderMarketInsightsFor = artistID => {
   const elementID = 'market-insights-container-' + artistID
-  ReactDOM.render(
-    <ContextProvider>
-      <Contents artistID={artistID} />
-    </ContextProvider>,
-    document.getElementById(elementID)
-  )
+  const mountPoint = document.getElementById(elementID)
+
+  if (mountPoint) {
+    ReactDOM.render(
+      <ContextProvider>
+        <Contents artistID={artistID} />
+      </ContextProvider>,
+      mountPoint
+    )
+  }
 }
 
 function setupMarketInsights() {

@@ -32,6 +32,69 @@ describe '/rss', ->
       rendered.should.containEql '<item><title>World</title>'
       rendered.should.containEql '<description>A piece about the Whitney.</description>'
 
+    it 'renders authors', ->
+      article = new Article
+        authors: [
+          {
+            name: "Jun"
+            id: '123'
+          },
+          {
+            name: "Owen"
+            id: '456'
+          }
+        ]
+      rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
+      rendered.should.containEql '<author>Jun and Owen</author>'
+
+    it 'renders categories', ->
+      article = new Article
+        vertical:
+          name: 'Art'
+          id: '123'
+      rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
+      rendered.should.containEql '<category>Art</category>'
+
+    it 'renders enclosures on video articles', ->
+      article = new Article
+        layout: 'video'
+        media:
+          url: 'https://artsymedia.mp4'
+          credits: '<p>Director</p><p>Marina Cashdan</p>'
+          description: '<p>Sample Description</p>'
+      rendered = newsTemplate(sd: sd, articles: new Articles(article), moment: moment)
+      rendered.should.containEql '<enclosure url="https://artsymedia.mp4" length="0" type="video/mp4">'
+
+    it 'renders enclosures on news articles', ->
+      articles = [
+        {
+          layout: 'news',
+          thumbnail_image: 'artsy.net/jpg.jpg'
+        },
+      ]
+      rendered = newsTemplate(sd: sd, articles: new Articles(articles), moment: moment)
+      rendered.should.containEql '/images/og_image.jpg" length="0" type="image/jpeg">'
+
+    it 'renders enclosures on non-video articles', ->
+      articles = [
+        {
+          layout: 'standard',
+          thumbnail_image: 'artsy.net/jpg.jpg'
+        },
+        {
+          layout: 'standard',
+          thumbnail_image: 'artsy.net/jpeg.jpeg'
+        },
+        {
+          layout: 'standard',
+          thumbnail_image: 'artsy.net/png.png'
+        }
+      ]
+      rendered = newsTemplate(sd: sd, articles: new Articles(articles), moment: moment)
+      rendered.should.containEql '<enclosure url="artsy.net/jpg.jpg" length="0" type="image/jpeg">'
+      rendered.should.containEql '<enclosure url="artsy.net/jpeg.jpeg" length="0" type="image/jpeg">'
+      rendered.should.containEql '<enclosure url="artsy.net/png.png" length="0" type="image/png">'
+
   describe 'article', ->
 
     it 'renders the lead paragraph and body text', ->

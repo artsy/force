@@ -25,15 +25,20 @@
 # module.exports = {}
 
 module.exports = {
-  artist_merch_test:
-    key: 'artist_merch_test'
+  artist_page_pagination:
+    key: 'artist_page_pagination'
+    outcomes:
+      experiment: 50
+      control: 50
+    control_group: 'control'
+    edge: 'experiment'
+
+  article_tooltips:
+    key: 'article_tooltips'
     weighting: 'equal'
     outcomes: [
-      'control'
-      'no_header_merch_sort'
-      'merch_sort'
+      'bio'
+      'market'
     ]
-    control_group: 'control'
-    edge: 'merch_sort'
 }
 

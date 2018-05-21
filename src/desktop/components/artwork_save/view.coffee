@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-AuthModalView = require '../auth_modal/view.coffee'
+mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 mediator = require '../../lib/mediator'
 

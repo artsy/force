@@ -32,11 +32,81 @@ describe '#bid', ->
   afterEach ->
     Backbone.sync.restore()
 
-  it 'render the bid page and form'
-  it 'fetches the auction, artwork, and checks if the user is registered'
-  it 'bootstraps the sale artwork'
-  it 'handles logged out users by passing registered: false'
-  it 'passes the current url as the redirect_to register url'
+  it 'handles users who are logged in and registered/unqualified', (done) ->
+    @metaphysics.returns Promise.resolve
+      artwork: sale_artwork: bid_increments: [100, 200]
+      me: {
+        has_qualified_credit_cards: true
+        bidders: [{ id: 'foo', qualified_for_bidding: false }]
+        lot_standing: null
+      }
+    routes.bid @req, @res, done
+    Backbone.sync.args[0][2].success fabricate 'artwork'
+    Backbone.sync.args[1][2].success [fabricate 'sale', is_auction: true]
+    Backbone.sync.args[2][2].success fabricate 'sale_artwork'
+    _.defer =>
+      @res.render.called.should.be.ok()
+      @res.render.args[0][1].registered.should.be.true
+      @res.render.args[0][1].qualified.should.be.true
+      @res.render.args[0][1].hasQualifiedCreditCard.should.be.true
+      done()
+
+  it 'handles users who are logged in and registered/qualified', (done) ->
+    @metaphysics.returns Promise.resolve
+      artwork: sale_artwork: bid_increments: [100, 200]
+      me: {
+        has_qualified_credit_cards: true
+        bidders: [{ id: 'foo', qualified_for_bidding: false }]
+        lot_standing: null
+      }
+    routes.bid @req, @res, done
+    Backbone.sync.args[0][2].success fabricate 'artwork'
+    Backbone.sync.args[1][2].success [fabricate 'sale', is_auction: true]
+    Backbone.sync.args[2][2].success fabricate 'sale_artwork'
+    _.defer =>
+      @res.render.called.should.be.ok()
+      @res.render.args[0][1].registered.should.be.true
+      @res.render.args[0][1].qualified.should.be.false
+      @res.render.args[0][1].hasQualifiedCreditCard.should.be.true
+      done()
+
+  it 'handles users who are logged in but not registered and do not have a qualified credit card', (done) ->
+    @metaphysics.returns Promise.resolve
+      artwork: sale_artwork: bid_increments: [100, 200]
+      me: {
+        has_qualified_credit_cards: false
+        bidders: null
+        lot_standing: null
+      }
+    routes.bid @req, @res, done
+    Backbone.sync.args[0][2].success fabricate 'artwork'
+    Backbone.sync.args[1][2].success [fabricate 'sale', is_auction: true]
+    Backbone.sync.args[2][2].success fabricate 'sale_artwork'
+    _.defer =>
+      @res.render.called.should.be.ok()
+      @res.render.args[0][1].registered.should.be.false
+      @res.render.args[0][1].qualified.should.be.false
+      @res.render.args[0][1].hasQualifiedCreditCard.should.be.false
+      done()
+
+  it 'handles users who are logged in but not registered and do have a qualified credit card', (done) ->
+    @metaphysics.returns Promise.resolve
+      artwork: sale_artwork: bid_increments: [100, 200]
+      me: {
+        has_qualified_credit_cards: true
+        bidders: null
+        lot_standing: null
+      }
+    routes.bid @req, @res, done
+    Backbone.sync.args[0][2].success fabricate 'artwork'
+    Backbone.sync.args[1][2].success [fabricate 'sale', is_auction: true]
+    Backbone.sync.args[2][2].success fabricate 'sale_artwork'
+    _.defer =>
+      @res.render.called.should.be.ok()
+      @res.render.args[0][1].registered.should.be.false
+      @res.render.args[0][1].qualified.should.be.false
+      @res.render.args[0][1].hasQualifiedCreditCard.should.be.true
+      done()
 
   it 'handles empty bidder status from MP', (done) ->
     @metaphysics.returns Promise.resolve

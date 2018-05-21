@@ -32,13 +32,13 @@ block body
           disabled=true
         ) Registration Closed
 
-      else
+      else if !hasQualifiedCreditCard
         a#feature-bid-page-register-button.avant-garde-box-button(
           href=registerUrl
         ) Register to bid
 
     .feature-bid-page-max-bid
-      unless (registered && qualified)
+      unless ((registered && qualified) || hasQualifiedCreditCard)
         .feature-bid-page-max-bid-overlay
       .feature-bid-page-max-bid-headers
         h2 Set your max bid
@@ -61,13 +61,16 @@ block body
         #feature-bid-page-errors
           if error
             = error.message
-        button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button(
-          disabled=registered ? undefined : 'disabled'
-        )
-          | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
-          .loading-spinner
-        .feature-bid-page-conditions
-          | *By placing your bid you agree to Artsy's&nbsp;
-          a( href="/conditions-of-sale" ) Conditions of Sale
+        if registered || hasQualifiedCreditCard
+          if registered
+            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-message.jade
+            button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button
+              | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+              .loading-spinner
+          else
+            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-checkbox.jade
+            button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button.is-disabled
+              | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+              .loading-spinner
     #feature-clock-container.js-auction-clock
       include ../../../components/auction_clock/template

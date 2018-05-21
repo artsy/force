@@ -1,5 +1,6 @@
 @require '../../../components/stylus_lib'
 @require '../../../components/credit_card/stylesheets'
+@require './conditions_of_sale'
 
 #main-layout-footer
   display none
@@ -35,10 +36,6 @@
   p.note
     margin-top: 9px
     margin-bottom: 18px
-
-  .registration-form-section.register
-    margin-top 10px
-    margin-bottom 10px
 
   .bid-input-container
     position relative
@@ -158,6 +155,10 @@
 
 .auction-bid-form-container .registration-form-content:last-child
   margin-top 30px
+
+.registration-form-content
+  .avant-garde-button-black.is-disabled
+    background #e5e5e5
 
 @media (max-width: 600px)
   #auction-registration-page

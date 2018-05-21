@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ stitch, ENABLE_EXPERIMENTAL_STITCH_INJECTION } = require('sharify').data
+sd = require('sharify').data
 AdditionalImage = require '../../models/additional_image.coffee'
 Backbone = require 'backbone'
 CurrentUser = require '../../models/current_user.coffee'
@@ -77,23 +77,18 @@ module.exports = class ArtworkColumns extends Backbone.View
   render: =>
     # Render columns and set some styles according to view params
 
-    if ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      artworks =
-        edges: @collection.toJSON().map (artwork) ->
-          return {
-            node: artwork
-          }
-
+    # FIXME: Shared with /collect and http://localhost:5000/wychwood-art/works?for_sale=
+    # The latter doesn't render
+    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
       @$el
         .html stitchArtworkColumns
-          artworks: artworks
-          stitch: stitch
+          artworks: @collection.toJSON()
+          sd: sd
           buttonLabel: @buttonLabel()
           seeMore: @seeMore
     else
       @$el
         .html artworkColumns
-          artworks: artworks
           numberOfColumns: @numberOfColumns
           buttonLabel: @buttonLabel()
           seeMore: @seeMore
