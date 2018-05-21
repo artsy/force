@@ -18,9 +18,10 @@ unless artwork.is_in_auction
           span.content
             = location
 
-      if partner.acceptsCardPayments
-        .artwork-partner-stub__card
-          span.icon
-            include public/icons/creditcard.svg
-          span.content
-            = 'Accepts credit card'
+      //- TODO: Either uncomment or remove based on Credit Card logo feature timeline
+      //- if partner.acceptsCardPayments
+      //-   .artwork-partner-stub__card
+      //-     span.icon
+      //-       include public/icons/creditcard.svg
+      //-     span.content
+      //-       = 'Accepts credit card'

@@ -1,6 +1,7 @@
 module.exports = """
   partner {
-    acceptsCardPayments
+    # TODO: Either uncomment or remove based on Credit Card logo feature timeline
+    # acceptsCardPayments
     contact_message
     counts {
       artworks
