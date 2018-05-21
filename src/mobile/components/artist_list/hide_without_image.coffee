@@ -3,4 +3,5 @@
 #
 
 module.exports = ->
-  $('.artist-list img').error -> $(@).closest('li').hide()
+  $('.artist-list img').on 'error', ->
+    $(@).closest('li').hide()

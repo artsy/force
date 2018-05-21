@@ -8,15 +8,14 @@ module.exports =
 
   loadGoogleMaps: (cb) ->
     if @googleMapsLoading? and @googleMapsLoading.state() is 'resolved'
-      cb()
-      return
+      return cb()
 
     alreadyLoading = @googleMapsLoading?
 
     @googleMapsLoading ?= $.Deferred()
-    @googleMapsLoading.then cb
     window.googleMapsCallback = =>
       @googleMapsLoading.resolve()
+      return cb()
 
     return if alreadyLoading
 

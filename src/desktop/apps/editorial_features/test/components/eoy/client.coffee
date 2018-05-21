@@ -20,7 +20,6 @@ xdescribe 'EoyView', ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       $.fn.imagesLoaded = sinon.stub()
-      @waypoint = $.waypoints = sinon.stub()
       $.fn.waypoint = sinon.stub()
       window.matchMedia = sinon.stub().returns { matches: true }
       $.fn.scrollY = sinon.stub().returns 0

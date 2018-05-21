@@ -68,12 +68,13 @@ module.exports = class PartnershipsView extends Backbone.View
       setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 1200
 
   setupStickyNav: ->
-    @$nav.waypoint('sticky')
-      # waypoint for the very top section
-      .waypoint (direction) ->
-        backLink = "/#{sd.SUBJECT}-partnerships"
-        Backbone.history.navigate( backLink ,
-          trigger: false, replace: true) if direction is 'up'
+    new Waypoint.Sticky
+      element: @$nav
+    # waypoint for the very top section
+    @$nav.waypoint (direction) ->
+      backLink = "/#{sd.SUBJECT}-partnerships"
+      Backbone.history.navigate( backLink ,
+        trigger: false, replace: true) if direction is 'up'
 
   setupSectionNavHighlighting: ->
     activateNavLink = (el) =>
@@ -81,19 +82,21 @@ module.exports = class PartnershipsView extends Backbone.View
       href = $(el).data('href')
       Backbone.history.navigate href, trigger: false, replace: true
       @$nav.find("a[href='#{href}']").addClass 'is-active'
+
     $nav = @$nav
-    @$sections
-      .waypoint((direction) ->
-        activateNavLink(this) if direction is 'down'
-      , offset: $nav.outerHeight()).waypoint((direction) ->
-        activateNavLink(this) if direction is 'up'
-      , offset: -> -$(this).height() - $nav.outerHeight())
+    @$sections.each (i, el) ->
+      $(el).waypoint((direction) ->
+        activateNavLink(this.element) if direction is 'down'
+      , offset: $nav.outerHeight())
+      $(el).waypoint((direction) ->
+        activateNavLink(this.element) if direction is 'up'
+      , offset: => -$(this).height() - $nav.outerHeight())
 
     # Waypoint for last element, whose top will never be able to reach the top of the window.
     @$sections.last().waypoint((direction) ->
-      activateNavLink(this) if direction is 'down'
-      activateNavLink(this.previousSibling) if direction is 'up'
-    , offset: -> $(window).height() - $(this).outerHeight())
+      activateNavLink(this.element) if direction is 'down'
+      activateNavLink(this.element.previousSibling) if direction is 'up'
+    , offset: -> $(window).height() - $(this.element).outerHeight())
 
   setupHeroUnitSlideshow: ->
     @setupSlideshow @$heroUnitsContainer, @$heroUnitsSlides, 'heroUnit'

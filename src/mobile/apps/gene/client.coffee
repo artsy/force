@@ -74,7 +74,7 @@ module.exports.GeneArtistsView = class GeneArtistsView extends PoliteInfiniteScr
   onSync: =>
     if @collection.length > 0
       @$('#gene-artists-container').html artistTemplate artists: @collection.models
-      @$('#gene-artists-container img').error -> $(@).closest('a').hide()
+      @$('#gene-artists-container img').on 'error', -> $(@).closest('a').hide()
       @$('#gene-artists-empty-message').hide()
     else
       @$('#gene-artists-empty-message').show()

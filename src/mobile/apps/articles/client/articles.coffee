@@ -69,7 +69,7 @@ module.exports.MagazineView = class MagazineView extends Backbone.View
         toSentence: toSentence
         pluck: _.pluck
       @$('.js-articles-feed').append html
-      @$('.js-articles-feed img').error -> $(@).closest('.articles-item').hide()
+      @$('.js-articles-feed img').on 'error', -> $(@).closest('.articles-item').hide()
       @$('#articles-feed-empty-message').hide()
     else
       @$('#articles-feed-empty-message').show()

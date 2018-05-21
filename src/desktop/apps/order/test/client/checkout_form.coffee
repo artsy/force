@@ -91,6 +91,6 @@ describe 'CheckoutForm', ->
 
     it 'clears the inputs', ->
       @view.$('.credit-card-form-hidden').show().find(':input').first().val '401 broadway'
-      @view.$('.credit-card-form-checkbox input').removeAttr('checked')
+      @view.$('.credit-card-form-checkbox input').attr('checked', false)
       @view.toggleShippingAddress()
       @view.$('.credit-card-form-hidden').show().find(':input').first().val().should.equal ''

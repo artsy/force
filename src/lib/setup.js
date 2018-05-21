@@ -63,7 +63,7 @@ const {
   SESSION_SECRET,
 } = config
 
-export default function(app) {
+export default function (app) {
   // Timeout middleware
   if (NODE_ENV === 'production') app.use(timeout(APP_TIMEOUT || '29s'))
 
@@ -112,7 +112,7 @@ export default function(app) {
   superSync.timeout = API_REQUEST_TIMEOUT
   superSync.cacheClient = cache.client
   superSync.defaultCacheTime = DEFAULT_CACHE_TIME
-  Backbone.sync = function(method, model, options) {
+  Backbone.sync = function (method, model, options) {
     if (options.headers == null) {
       options.headers = {}
     }

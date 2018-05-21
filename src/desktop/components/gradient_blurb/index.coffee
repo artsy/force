@@ -43,7 +43,7 @@ module.exports = ($el, options = {}) ->
     $el[0].addEventListener("transitionend", (e) ->
       if e.propertyName is 'max-height'
         options.onExpand() if options.onExpand
-    , false);
+    , false)
 
     $button.one 'click', (e) ->
       e.preventDefault()
@@ -51,7 +51,7 @@ module.exports = ($el, options = {}) ->
       $el
         .addClass 'is-expanded'
         .css 'max-height', 1000000
-      $.waypoints 'refresh'
+      Waypoint.refreshAll()
       options.onClick?()
 
     options.afterApply?()

@@ -35,12 +35,12 @@ module.exports = class QuasiInfiniteView extends Backbone.View
       , offset: 'bottom-in-view'
 
   updateWaypoints: ->
-    $.waypoints 'refresh'
+    Waypoint.refreshAll()
 
   detectEnd: ->
     if @remaining is 0
       @$(@selectors.more).remove()
-      $.waypoints 'destroy'
+      Waypoint.destroyAll()
 
   indicateLoading: ->
     @$(@selectors.more)
@@ -82,5 +82,5 @@ module.exports = class QuasiInfiniteView extends Backbone.View
 
   remove: ->
     invoke @subviews, 'remove'
-    $.waypoints 'destroy'
+    Waypoint.destroyAll()
     super

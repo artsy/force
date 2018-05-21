@@ -93,11 +93,11 @@ describe 'Venice Main', ->
     benv.teardown()
 
   it 'initializes VeniceVideoView', ->
-    @VeniceVideoView.args[0][0].el.selector.should.equal '.venice-video'
+    @VeniceVideoView.args[0][0].el.attr('class').should.equal 'venice-video'
     @VeniceVideoView.args[0][0].video.should.equal 'localhost/vanity/url.mp4'
 
   it 'sets up the carousel', ->
-    @initCarousel.args[0][0].selector.should.equal '.venice-carousel'
+    @initCarousel.args[0][0].attr('class').should.equal 'venice-carousel'
     @initCarousel.args[0][1].advanceBy.should.equal 1
     @initCarousel.args[0][1].wrapAround.should.be.true()
     @initCarousel.args[0][1].initialIndex.should.equal 0

@@ -15,4 +15,3 @@ app.get '/galleries/:city', routes.galleries_institutions
 app.get '/institutions', routes.index
 app.get '/institutions/all', routes.galleries_institutions
 app.get '/institutions/:city', routes.galleries_institutions
-

@@ -96,7 +96,7 @@ const config = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       jade: 'jade/runtime.js',
-      waypoints: 'jquery-waypoints/waypoints.js',
+      waypoints: 'waypoints/lib/jquery.waypoints.js'
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',

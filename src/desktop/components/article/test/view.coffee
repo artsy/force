@@ -170,6 +170,6 @@ describe 'ArticleView', ->
 
   describe '#imgsFillContainer', ->
     it 'returns true if images are narrower than their container', ->
-      container = @view.$('.article-section-artworks ul').width(1400)
+      container = @view.$('.article-section-image-collection ul').width(1000)
       imgsFillContainer = @view.imgsFillContainer([{width: 600}, {width:700}], container, 5)
       imgsFillContainer.isFilled.should.equal true

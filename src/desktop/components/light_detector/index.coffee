@@ -1,4 +1,4 @@
-{ BackgroundCheck } = require('background-check/background-check.js')
+BackgroundCheck = require('background-check/background-check.js')
 
 module.exports = ({ targets, backgroundClass, imageUrl }) ->
 

@@ -53,8 +53,8 @@ describe 'TeamChannelView', ->
 
     it 'sets up the TeamChannelNavView', ->
       @TeamChannelNavView.args[0][0].offset.should.equal -400
-      @TeamChannelNavView.args[0][0].$waypointEl.selector.should.equal '.team-channel-header'
-      @TeamChannelNavView.args[0][0].$content.selector.should.equal '.team-channel-body'
+      @TeamChannelNavView.args[0][0].$waypointEl.attr('class').should.equal 'team-channel-header'
+      @TeamChannelNavView.args[0][0].$content.attr('class').should.equal 'team-channel-body'
 
   describe '#renderGrid', ->
 

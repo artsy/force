@@ -54,11 +54,13 @@ module.exports = class AboutView extends Backbone.View
     @$iphoneBg = @$('.about-section1-phone-bg')
 
   setupStickyNav: ->
-    @$nav.waypoint 'sticky'
+    new Waypoint.Sticky
+      element: @$nav
 
   setupSectionNavHighlighting: ->
     $nav = @$nav
     $sections = @$sections
+
     activateNavLink = (el) ->
       $sections.removeClass 'is-active'
       $section = $(el).addClass 'is-active'
@@ -66,40 +68,43 @@ module.exports = class AboutView extends Backbone.View
       href = $section.data('href')
       Backbone.history.navigate href, trigger: false, replace: true
       $nav.find("a[href='#{href}']").addClass 'is-active'
-    @$sections
-      .waypoint((direction) ->
-        activateNavLink(this) if direction is 'down'
-      ).waypoint (direction) ->
-        activateNavLink(this) if direction is 'up'
-      , offset: -> -$(this).height()
+
+    $sections.each (i, el) ->
+      $(el).waypoint (direction) ->
+        activateNavLink(this.element) if direction is 'down'
+      $(el).waypoint (direction) ->
+        activateNavLink(this.element) if direction is 'up'
+      , offset: => -$(this).height()
 
   setupHeroUnits: ->
     $nav = @$nav
     $heroUnitsContainer = @$heroUnitsContainer
     @$heroUnitNav
       # Fade in/out hero unit nav
-      .waypoint((direction) ->
+      .waypoint (direction) ->
         if direction is 'down'
           $(this).css 'opacity', 0
           $heroUnitsContainer.css 'opacity', 0
         else
           $(this).css 'opacity', 1
           $heroUnitsContainer.css 'opacity', 1
-      # Set a waypoint for the very top section
-      ).waypoint (direction) ->
-        Backbone.history.navigate '/about', trigger: false, replace: true
-        $nav.find('a').removeClass 'is-active'
-      , offset: -> -($(this).height() - 1)
+
+    # Set a waypoint for the very top section
+    @$heroUnitNav.waypoint (direction) ->
+      Backbone.history.navigate '/about', trigger: false, replace: true
+      $nav.find('a').removeClass 'is-active'
+    , offset: => -(@$heroUnitNav.height() - 1)
 
   setupHeroUnitSlideshow: ->
     @heroUnitCycle = new Cycle $el: @$('.about-hero-unit-bgs'), selector: '.about-hero-unit-bg'
     @heroUnitCycle.start()
 
   setupFlipHearts: ->
-    @$("#about-section1-pull-blurb-3-artworks .about-image-container").waypoint
-      handler: (dir) ->
-        $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
-      offset: '50%'
+    @$("#about-section1-pull-blurb-3-artworks .about-image-container").each (i, el) ->
+      $(el).waypoint
+        handler: (dir) ->
+          $(this.element).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
+        offset: '50%'
 
   submitPhoneLink: (e) ->
     e.preventDefault()
@@ -118,10 +123,11 @@ module.exports = class AboutView extends Backbone.View
         $('#about-phone-link button').removeClass 'is-loading'
 
   setupGenes: ->
-    @$genes.waypoint (direction) ->
-      $(this).addClass 'is-active' if direction is 'down'
-      $(this).removeClass 'is-active' if direction is 'up'
-    , offset: '90%'
+    @$genes.each (i, el) ->
+      $(el).waypoint (direction) ->
+        $(this.element).addClass 'is-active' if direction is 'down'
+        $(this.element).removeClass 'is-active' if direction is 'up'
+      , offset: '90%'
 
   loadUptoSection: (selector, callback) ->
     @loadedSections ?= []
@@ -142,7 +148,7 @@ module.exports = class AboutView extends Backbone.View
     $img = $(this)
     src = $img.data 'src'
     $parent = $img.parent()
-    $parent.imagesLoaded -> $.waypoints('refresh')
+    $parent.imagesLoaded -> Waypoint.refreshAll()
     width = $parent.width()
     src = resize(src, width: width * (window.devicePixelRatio or 1))
     $img.attr 'src', src

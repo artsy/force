@@ -44,9 +44,8 @@ describe 'Geo', ->
       _.isUndefined(window.googleMapsCallback).should.be.true()
       Geo.loadGoogleMaps ->
         _.isFunction(window.googleMapsCallback).should.be.true()
+        $.getScript.restore()
         done()
-
-      $.getScript.restore()
 
     it 'only calls $.getScript once', (done) ->
       count = sinon.stub()
@@ -58,9 +57,8 @@ describe 'Geo', ->
       Geo.loadGoogleMaps(->)
       Geo.loadGoogleMaps ->
         count.callCount.should.equal 1
+        $.getScript.restore()
         done()
-
-      $.getScript.restore()
 
     it 'calls back to all callbacks that get attached', (done) ->
       count = sinon.stub()
@@ -74,6 +72,5 @@ describe 'Geo', ->
 
       Geo.loadGoogleMaps ->
         count.callCount.should.equal 4
+        $.getScript.restore()
         done()
-
-      $.getScript.restore()

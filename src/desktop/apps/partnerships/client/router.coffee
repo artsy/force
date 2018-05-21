@@ -28,8 +28,8 @@ module.exports = class PartnershipsRouter extends Backbone.Router
 
   toSection: (slug) ->
     $nav = $ '.partnerships-section-nav'
-    selector = "##{slug}"
-    @jump.scrollToPosition $(selector)?.offset()?.top - $nav.outerHeight() / 2
+    outerHeight = $nav.outerHeight() or 0
+    @jump.scrollToPosition $("##{slug}")?.offset()?.top - outerHeight / 2
 
   toApply: ->
     @toSection('apply')
