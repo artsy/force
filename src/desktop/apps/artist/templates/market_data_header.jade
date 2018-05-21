@@ -23,4 +23,7 @@
         if artist.counts.follows >= 50
             - var followCount = viewHelpers.displayFollowers(artist)
             span.artist-header-follow-count(data-count=followCount) Followers
+  if artist.is_consignable
+    .consignment-cta
+      | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Learn more].
 
