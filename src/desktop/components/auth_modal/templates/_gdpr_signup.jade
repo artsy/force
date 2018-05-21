@@ -24,21 +24,6 @@
       title= '6 characters minimum',
       required
     )
-    .gdpr-signup__form__checkbox.gdpr-signup__form__checkbox__accept-terms.artsy-checkbox
-      .artsy-checkbox--checkbox
-        input(
-          required,
-          name='accepted_terms_of_service',
-          id='accepted_terms_of_service',
-          type='checkbox',
-          tabindex="0"
-        )
-        label(for='accepted_terms_of_service')
-      span Agree to our&nbsp;
-            a( href='/terms', target='_blank' ) Terms of Use
-            | &nbsp;and&nbsp;
-            a( href='/terms', target='_blank') Privacy Policy&nbsp;
-            |, and to receive emails from Artsy.
     .tos-error
     input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
     button.avant-garde-button-black.avant-garde-button-black Sign Up
