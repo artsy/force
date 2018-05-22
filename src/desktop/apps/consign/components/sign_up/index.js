@@ -5,49 +5,61 @@ import { Field, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
 import { renderTextInput } from '../text_input'
-import {
-  signUp,
-  updateAuthFormStateAndClearError
-} from '../../client/actions'
+import { renderCheckboxInput } from '../checkbox_input'
+import { signUp, updateAuthFormStateAndClearError } from '../../client/actions'
+import { GDPRMessage } from 'desktop/components/react/gdpr/GDPRCheckbox'
 
-function validate (values) {
+function validate(values) {
   const {
+    // accepted_terms_of_service,
     email,
     name,
-    password
+    password,
   } = values
   const errors = {}
 
   if (!name) errors.name = 'Required'
   if (!email) errors.email = 'Required'
   if (!password) errors.password = 'Required'
+  // if (!accepted_terms_of_service) errors.accepted_terms_of_service = 'Please agree to our terms to continue'
 
   return errors
 }
 
-function SignUp (props) {
+function SignUp(props) {
   const {
     error,
     handleSubmit,
     isLoading,
     signUpAction,
-    updateAuthFormStateAndClearErrorAction
+    updateAuthFormStateAndClearErrorAction,
   } = props
 
   const b = block('consignments-submission-sign-up')
 
+  const handleCustomSubmit = () => {
+    // if (!accepted_terms_of_service)
+    handleSubmit(signUpAction)
+  }
+
   return (
     <div className={b()}>
-      <div className={b('title')}>
-        Create an Account
-      </div>
+      <div className={b('title')}>Create an Account</div>
       <div className={b('subtitle')}>
-        Already have an account? <span className={b('clickable')} onClick={() => updateAuthFormStateAndClearErrorAction('logIn')}>Log in</span>.
+        Already have an account?{' '}
+        <span
+          className={b('clickable')}
+          onClick={() => updateAuthFormStateAndClearErrorAction('logIn')}
+        >
+          Log in
+        </span>.
       </div>
       <form className={b('form')} onSubmit={handleSubmit(signUpAction)}>
         <div className={b('row')}>
           <div className={b('row-item')}>
-            <Field name='name' component={renderTextInput}
+            <Field
+              name="name"
+              component={renderTextInput}
               item={'name'}
               label={'Full Name'}
               autofocus
@@ -56,47 +68,61 @@ function SignUp (props) {
         </div>
         <div className={b('row')}>
           <div className={b('row-item')}>
-            <Field name='email' component={renderTextInput}
+            <Field
+              name="email"
+              component={renderTextInput}
               item={'email'}
               label={'Email'}
+              type={'email'}
             />
           </div>
         </div>
         <div className={b('row')}>
           <div className={b('row-item')}>
-            <Field name='password' component={renderTextInput}
+            <Field
+              name="password"
+              component={renderTextInput}
               item={'password'}
               label={'Password'}
               type={'password'}
             />
           </div>
         </div>
+        <div className={b('row')}>
+          <div className={b('row-item')}>
+            <Field
+              name="accepted_terms_of_service"
+              component={renderCheckboxInput}
+              item={'accepted_terms_of_service'}
+              label={<GDPRMessage />}
+              value={false}
+            />
+          </div>
+        </div>
         <button
-          className={b.builder()('sign-up-button').mix('avant-garde-button-black')()}
-          type='submit'
+          className={b
+            .builder()('sign-up-button')
+            .mix('avant-garde-button-black')()}
+          type="submit"
         >
-          {
-            isLoading ? <div className='loading-spinner-white' /> : 'Submit'
-          }
+          {isLoading ? <div className="loading-spinner-white" /> : 'Submit'}
         </button>
-        {
-          error && <div className={b('error')}>{error}</div>
-        }
+        {error && <div className={b('error')}>{error}</div>}
       </form>
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     error: state.submissionFlow.error,
-    isLoading: state.submissionFlow.isLoading
+    isLoading: state.submissionFlow.isLoading,
   }
 }
 
 const mapDispatchToProps = {
   signUpAction: signUp,
-  updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError
+  updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError,
 }
 
 SignUp.propTypes = {
@@ -104,16 +130,13 @@ SignUp.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   signUpAction: PropTypes.func.isRequired,
-  updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired
+  updateAuthFormStateAndClearErrorAction: PropTypes.func.isRequired,
 }
 
 export default compose(
   reduxForm({
     form: 'signUp', // a unique identifier for this form
-    validate
+    validate,
   }),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(SignUp)
