@@ -31,6 +31,7 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
+  initModalManager()
   mountStitchBlocks()
 
 
