@@ -6,14 +6,12 @@ module.exports = """
         max_followed_gene_rails: -1,
         order: [
           ACTIVE_BIDS,
-          RECENTLY_VIEWED_WORKS,
-          SIMILAR_TO_RECENTLY_VIEWED,
-          SAVED_WORKS,
-          SIMILAR_TO_SAVED_WORKS,
-          FOLLOWED_ARTISTS,
-          FOLLOWED_GALLERIES,
+          RECENTLY_VIEWED_WORKS
           RECOMMENDED_WORKS,
+          FOLLOWED_ARTISTS,
           RELATED_ARTISTS,
+          FOLLOWED_GALLERIES,
+          SAVED_WORKS,
           LIVE_AUCTIONS,
           CURRENT_FAIRS,
           FOLLOWED_GENES,
