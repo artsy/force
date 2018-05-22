@@ -34,7 +34,7 @@ module.exports = class AuthModalView extends ModalView
 
   initialize: (options) ->
     return if isEigen.checkWith options
-    { @destination, @successCallback, @afterSignUpAction } = options
+    { @destination, @afterSignUpAction } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
 
     @preInitialize options

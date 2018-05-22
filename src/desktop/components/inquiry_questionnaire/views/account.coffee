@@ -4,6 +4,7 @@ StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 FormMixin = require '../../mixins/form'
 FormErrorHelpers = require '../../auth_modal/helpers'
+sd = require('sharify').data
 templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
@@ -58,11 +59,14 @@ module.exports = class Account extends StepView
         @user.repossess user.id,
           error: form.error.bind form
           success: =>
-            @state.get('inquiry').save {},
-              success: =>
-                @next()
-              error: =>
-                @next()
+            if sd.COMMERCIAL.enableNewInquiryFlow
+              @next()
+            else
+              @state.get('inquiry').save {},
+                success: =>
+                  @next()
+                error: =>
+                  @next()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'

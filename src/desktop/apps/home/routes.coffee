@@ -38,9 +38,6 @@ fetchMetaphysicsData = (req, showHeroUnits)->
 
 @index = (req, res, next) ->
   return if metaphysics.debug req, res, { method: 'post', query: query }
-
-  hideHeroUnits = res.locals.sd.HOME_SEARCH_TEST is 'experiment'
-  res.locals.sd.HIDE_HERO_UNITS = hideHeroUnits  
   
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
@@ -56,24 +53,16 @@ fetchMetaphysicsData = (req, showHeroUnits)->
     }
   }
 
-  initialFetch = fetchMetaphysicsData req, false if hideHeroUnits
-
-  unless hideHeroUnits
-    initialFetch = Q
-      .allSettled [
-        fetchMetaphysicsData req, true
-        featuredLinks.fetch cache: true
-      ]
+  initialFetch = Q
+    .allSettled [
+      fetchMetaphysicsData req, true
+      featuredLinks.fetch cache: true
+    ]
   initialFetch
     .then (results) ->
-      if hideHeroUnits
-        homePage = results.home_page
-        heroUnits = []
-      else
-        homePage = results?[0].value.home_page
-        heroUnits = homePage.hero_units
-        heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
-
+      homePage = results?[0].value.home_page
+      heroUnits = homePage.hero_units
+      heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       res.locals.sd.HERO_UNITS = heroUnits
       res.locals.sd.USER_HOME_PAGE = homePage.artwork_modules
@@ -84,7 +73,6 @@ fetchMetaphysicsData = (req, showHeroUnits)->
 
       res.render 'index',
         heroUnits: heroUnits
-        testGroup: res.locals.sd.HOME_SEARCH_TEST
         modules: homePage.artwork_modules
         featuredLinks: featuredLinks
         viewHelpers: viewHelpers
