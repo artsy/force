@@ -72,7 +72,7 @@ module.exports = class ArtistPageView extends Backbone.View
 
   renderArticles: ->
     (articles = new Articles).fetch
-      data: artist_id: @model.get('_id'), published: true, limit: 5
+      data: artist_id: @model.get('_id'), in_editorial_feed: true, published: true, limit: 5
       success: =>
         @$('#artist-page-featured-articles').html articles.map((article) ->
           articleFigureTemplate article: article
