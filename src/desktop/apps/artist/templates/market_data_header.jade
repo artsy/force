@@ -10,13 +10,20 @@
           = artist.initials
       
     .artist-header-meta
-      h1.artist-header-name.extra-large-garamond-header= artist.name
-
-      - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
-      if bday
-        .artist-header-birthdate= bday
+      .artist-header-info
+        h1.artist-header-name.extra-large-garamond-header= artist.name
+        - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+        if bday
+          .artist-header-birthdate= bday
 
       .market-data-summary(id="market-data-summary-container-" + artist.id, data-artist-id=artist.id)
+
+      if currentItem
+        a.current-item-link(href= currentItem.href)
+          if currentItem.type == 'auction'
+            | In current auction – bid now
+          else
+            | In featured show – view now
 
       .artist-follow
         button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
