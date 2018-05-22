@@ -6,7 +6,6 @@ _ = require 'underscore'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-
 describe 'Artwork Client', ->
   before ->
     global.OpenSeadragon = {}
@@ -147,7 +146,7 @@ describe 'Artwork Client', ->
             type: 'Show'
             name: 'Some Show'
             href: '/some-show'
-            counts: { artworks: '2 works' }
+            counts: { eligible_artworks: 100 }
             artworks:  [{ id: 'artwork-4', partner: {}, image: { cell: {}, thumb: { height: 1 }}, title: 'Artwork 4'}]
       $('body').html("""
         <div class="artwork__main__overview__fold js-artwork-fold"></div>
@@ -185,3 +184,4 @@ describe 'Artwork Client', ->
       $('.artwork-section.artwork-show-artworks').html().should.containEql 'Artwork 4'
       $('.artwork-section.artwork-show-artworks').html().should.containEql '/some-show'
       $('.artwork-section.artwork-show-artworks').html().should.containEql 'Other Works from the Show'
+      $('.artwork-section.artwork-show-artworks').html().should.containEql 'View all 100 works'
