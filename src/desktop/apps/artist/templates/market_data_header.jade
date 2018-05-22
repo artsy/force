@@ -1,0 +1,36 @@
+
+.artist-header-market-data
+  .artist-header-market-data-content
+    .artist-header-image
+      - var imageUrl = artist.image && artist.image.square
+      if imageUrl
+        img.artist-header-image-thumbnail(src= imageUrl)
+      else
+        .artist-header-image-thumbnail.no-artist-image
+          = artist.initials
+      
+    .artist-header-meta
+      .artist-header-info
+        h1.artist-header-name.extra-large-garamond-header= artist.name
+        - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+        if bday
+          .artist-header-birthdate= bday
+
+      .market-data-summary(id="market-data-summary-container-" + artist.id, data-artist-id=artist.id)
+
+      if currentItem
+        a.current-item-link(href= currentItem.href)
+          if currentItem.type == 'auction'
+            | In current auction – bid now
+          else
+            | In featured show – view now
+
+      .artist-follow
+        button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
+        if artist.counts.follows >= 50
+            - var followCount = viewHelpers.displayFollowers(artist)
+            span.artist-header-follow-count(data-count=followCount) Followers
+  if artist.is_consignable
+    .consignment-cta
+      | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Learn more].
+

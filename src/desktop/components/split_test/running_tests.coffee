@@ -25,6 +25,16 @@
 # module.exports = {}
 
 module.exports = {
+  artist_market_data_test:
+    key: 'artist_market_data_test'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'market_data_no_carousel'
+      'market_data_no_carousel_no_overview'
+    ]
+    control_group: 'control'
+    edge: 'market_data_no_carousel_no_overview'
   artist_page_pagination:
     key: 'artist_page_pagination'
     outcomes:
@@ -41,4 +51,3 @@ module.exports = {
       'market'
     ]
 }
-

@@ -10,31 +10,33 @@ mixin rail(title, viewAllUrl, section)
 
         include ../../../../components/merry_go_round/templates/horizontal_navigation
 
-.artist-overview-header
-  .evenly-bisected-header
-    - var artistMeta = viewHelpers.artistMeta(artist)
+//- TODO: ARTIST_MARKET_DATA_TEST remove after test closes
+if viewHelpers.hasOverview(testGroup)
+  .artist-overview-header
+    .evenly-bisected-header
+      - var artistMeta = viewHelpers.artistMeta(artist)
 
-    - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
-    - var hasShows = statuses.shows || statuses.cv
+      - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
+      - var hasShows = statuses.shows || statuses.cv
 
-    .bisected-header-cell.js-artist-overview-header-left
-      if hasMeta
-        .artist-blurb.bisected-header-cell-section
-          h2 Biography
-          if artist.biography_blurb && artist.biography_blurb.text
-            .blurb!= artist.biography_blurb.text
-            if artist.biography_blurb.credit
-              .artist-blurb__credit &mdash; #{artist.biography_blurb.credit}
-            if artistMeta.length
-              br
+      .bisected-header-cell.js-artist-overview-header-left
+        if hasMeta
+          .artist-blurb.bisected-header-cell-section
+            h2 Biography
+            if artist.biography_blurb && artist.biography_blurb.text
+              .blurb!= artist.biography_blurb.text
+              if artist.biography_blurb.credit
+                .artist-blurb__credit &mdash; #{artist.biography_blurb.credit}
+              if artistMeta.length
+                br
 
-        if artistMeta.length
-          .artist-meta-detail!= artistMeta
+          if artistMeta.length
+            .artist-meta-detail!= artistMeta
 
-    .bisected-header-cell.js-artist-overview-header-right
-      if hasShows
-        .artist-exhibition-highlights.bisected-header-cell-section
-          //- Rendered client-side
+      .bisected-header-cell.js-artist-overview-header-right
+        if hasShows
+          .artist-exhibition-highlights.bisected-header-cell-section
+            //- Rendered client-side
 
 if artist.statuses.artworks
   include ./works

@@ -9,7 +9,8 @@ append locals
 
 block body
   - carousel = artist.carousel
-  - hasCarousel = carousel && carousel.images.length >= 4
+  //- TODO: ARTIST_MARKET_DATA_TEST remove after test closes (viewHelpers.hasCarousel)
+  - hasCarousel = carousel && carousel.images.length >= 4 && viewHelpers.hasCarousel(testGroup)
 
   #artist-page(
     class=(hasCarousel ? 'has-carousel' : 'has-no-carousel')
@@ -20,6 +21,7 @@ block body
       #artist-page-header: include ./header
       #artist-page-content.artist-page-content
         - var statuses = artist.statuses
+        
         unless tab
           include ./sections/overview
         if tab == 'works' && statuses.artworks
