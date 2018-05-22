@@ -4,6 +4,7 @@ module.exports =
   checkAcceptedTerms: () ->
     input = $('input#accepted_terms_of_service').get(0)
     input.setCustomValidity? ''
+    console.log('here...')
     if $(input).prop('checked')
       $('.tos-error').text ''
       $boxContainer = $('.gdpr-signup__form__checkbox__accept-terms')
@@ -30,7 +31,6 @@ module.exports =
       gdprString = $.param(@gdprData(@serializeForm()))
       gdprFbUrl = fbUrl + "&" + gdprString
       window.location.href = gdprFbUrl
-
 
   gdprData: (formData) ->
     'accepted_terms_of_service': !!formData['accepted_terms_of_service']

@@ -23,6 +23,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     'click .auth-toggle': 'triggerLoginModal'
     'keydown': 'keyAction'
     'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: ({ artist }) ->
     @artist = artist
@@ -37,6 +38,11 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
+    debugger
+    $('#accepted_terms_of_service').on('invalid', =>
+      debugger
+      @checkAcceptedTerms()
+    )
 
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
@@ -99,6 +105,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
     @user.set (data = @serializeForm())
     @user.set(signupIntent: @signupIntent)
+    console.log(@user)
     @user.signup
       success: @onRegisterSuccess
       error: (model, response, options) =>

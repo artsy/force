@@ -34,13 +34,14 @@
           tabindex="0"
         )
         label(for='accepted_terms_of_service')
-      span Agree to our&nbsp;
+      span I agree to Artsy’s&nbsp;
             a( href='/terms', target='_blank' ) Terms of Use
             | &nbsp;and&nbsp;
             a( href='/privacy', target='_blank') Privacy Policy,
             | &nbsp;and to receive emails from Artsy.
     .tos-error
     input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+    input( type="hidden" name="agreed_to_receive_emails" value=true )
     button.avant-garde-button-black.avant-garde-button-black Sign Up
   .gdpr-signup__divider or
   a.avant-garde-button-black.avant-garde-box-button-black.gdpr-signup__modal-fb.gdpr-signup__fb(
@@ -49,6 +50,3 @@
   )
     i.icon-facebook
     | Sign up with Facebook
-
-
-
