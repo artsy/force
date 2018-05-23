@@ -24,6 +24,7 @@ export default class InfiniteScrollArticle extends React.Component {
     marginTop: PropTypes.string,
     showTooltips: PropTypes.bool,
     showToolTipMarketData: PropTypes.bool,
+    onOpenAuthModal: PropTypes.func,
   }
 
   constructor(props) {
@@ -135,7 +136,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
-    const { showTooltips, showToolTipMarketData } = this.props
+    const { showTooltips, showToolTipMarketData, onOpenAuthModal } = this.props
 
     return _.flatten(
       this.state.articles.map((article, i) => {
@@ -153,6 +154,7 @@ export default class InfiniteScrollArticle extends React.Component {
               marginTop={i === 0 ? this.props.marginTop : null}
               showTooltips={showTooltips}
               showToolTipMarketData={showToolTipMarketData}
+              onOpenAuthModal={onOpenAuthModal}
             />
             <Break />
             <Waypoint

@@ -9,6 +9,7 @@ import { Article } from 'reaction/Components/Publishing'
 import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
+import mediator from 'desktop/lib/mediator.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
@@ -48,6 +49,12 @@ export default class ArticleLayout extends React.Component {
       })
     }
   }
+
+  handleOpenAuthModal = (type, config) =>
+    mediator.trigger('open:auth', {
+      mode: type,
+      ...config,
+    })
 
   renderArticle = () => {
     let { article } = this.props
@@ -93,6 +100,7 @@ export default class ArticleLayout extends React.Component {
           marginTop={articleMarginTop}
           showTooltips={showTooltips}
           showToolTipMarketData={showToolTipMarketData}
+          onOpenAuthModal={this.handleOpenAuthModal}
         />
       )
     } else {
@@ -105,6 +113,7 @@ export default class ArticleLayout extends React.Component {
           marginTop={articleMarginTop}
           showTooltips={showTooltips}
           showToolTipMarketData={showToolTipMarketData}
+          onOpenAuthModal={this.handleOpenAuthModal}
         />
       )
     }
