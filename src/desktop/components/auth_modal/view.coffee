@@ -132,11 +132,12 @@ module.exports = class AuthModalView extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     formData = @serializeForm()
-    userData = Object.assign {}, formData, @gdprData(formData)
-    @user.set (data = userData)
-    @user.set
-      signupIntent: @signupIntent
+    data = Object.assign {},
+      formData,
+      @gdprData(formData),
+      signupIntent: @signupIntent,
       signupReferer: @signupReferer
+    @user.set data
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>

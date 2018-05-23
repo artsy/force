@@ -74,6 +74,7 @@ module.exports =
       # Check for any confirmable fields
       if ($confirmables = $form.find('input[data-confirm]')).length
         @validateConfirmables $form, $confirmables
+      console.log('herererere')
       $form[0].checkValidity()
     else # Let the server handle it
       true

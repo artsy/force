@@ -38,11 +38,6 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
-    debugger
-    $('#accepted_terms_of_service').on('invalid', =>
-      debugger
-      @checkAcceptedTerms()
-    )
 
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
@@ -76,6 +71,8 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     analyticsHooks.trigger 'artist_page:cta:shown'
     setTimeout (=> @disableScroll()), 400
 
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
+
   keyAction: (e) =>
     if e.keyCode == 27 || e.which == 27
       @closeOverlay(e)
@@ -103,8 +100,13 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
     @$('button').attr 'data-state', 'loading'
 
-    @user.set (data = @serializeForm())
-    @user.set(signupIntent: @signupIntent)
+    formData = @serializeForm()
+    data = Object.assign {},
+      formData,
+      @gdprData(formData),
+      signupIntent: @signupIntent,
+      signupReferer: location.href
+    @user.set data
     console.log(@user)
     @user.signup
       success: @onRegisterSuccess
