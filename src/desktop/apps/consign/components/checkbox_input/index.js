@@ -4,20 +4,26 @@ import block from 'bem-cn-lite'
 
 export const renderCheckboxInput = ({
   input: { onChange, value },
-  meta: { error },
+  meta: { error, touched },
   ...custom
 }) => (
-  <CheckboxInput {...custom} value={value} onChange={onChange} error={error} />
+  <CheckboxInput
+    {...custom}
+    value={value}
+    onChange={onChange}
+    error={error}
+    touched={touched}
+  />
 )
 
 export default function CheckboxInput(props) {
-  const { error, item, label, onChange, value } = props
+  const { error, item, label, onChange, touched, value } = props
   const b = block('consignments-submission-checkbox-input')
 
   return (
     <div
       className={b
-        .builder()('wrapper')
+        .builder()('wrapper', { error: Boolean(touched && error) })
         .mix('artsy-checkbox')()}
       onClick={() => onChange(!value)}
     >
@@ -38,7 +44,7 @@ export default function CheckboxInput(props) {
       <label className={b('label')} htmlFor={item}>
         {label}
       </label>
-      {error && <div className={b('error')}>{error}</div>}
+      {touched && error && <div className={b('error')}>{error}</div>}
     </div>
   )
 }

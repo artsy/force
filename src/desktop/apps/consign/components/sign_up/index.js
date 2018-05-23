@@ -10,18 +10,14 @@ import { signUp, updateAuthFormStateAndClearError } from '../../client/actions'
 import { GDPRMessage } from 'desktop/components/react/gdpr/GDPRCheckbox'
 
 function validate(values) {
-  const {
-    // accepted_terms_of_service,
-    email,
-    name,
-    password,
-  } = values
+  const { accepted_terms_of_service, email, name, password } = values
   const errors = {}
 
   if (!name) errors.name = 'Required'
   if (!email) errors.email = 'Required'
   if (!password) errors.password = 'Required'
-  // if (!accepted_terms_of_service) errors.accepted_terms_of_service = 'Please agree to our terms to continue'
+  if (!accepted_terms_of_service)
+    errors.accepted_terms_of_service = 'Please agree to our terms to continue'
 
   return errors
 }
@@ -36,11 +32,6 @@ function SignUp(props) {
   } = props
 
   const b = block('consignments-submission-sign-up')
-
-  const handleCustomSubmit = () => {
-    // if (!accepted_terms_of_service)
-    handleSubmit(signUpAction)
-  }
 
   return (
     <div className={b()}>
