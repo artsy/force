@@ -35,6 +35,10 @@ sd = require('sharify').data
 
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
+      # TODO: ARTIST_MARKET_DATA_TEST remove after test closes
+      labFeatureGate = req.user && req.user.hasLabFeature('Artist Market Data Summary')
+      testGroup = if labFeatureGate then res.locals.sd.ARTIST_MARKET_DATA_TEST else 'control'
+  
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         currentVeniceFeature(artist)
           .then (veniceFeature) ->
@@ -51,6 +55,7 @@ sd = require('sharify').data
               tab: tab
               nav: nav
               currentItem: currentItem
+              testGroup: testGroup
               jsonLD: JSON.stringify helpers.toJSONLD artist if isReqFromReflection
 
       else

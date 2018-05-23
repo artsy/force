@@ -1,7 +1,10 @@
 require('backbone').$ = $
 
 routes =
-  '/artist/.*': require('../apps/artist/client/index.coffee').init
+  '/artist/.*': ->
+    require('../apps/artist/client/index.coffee').init()
+    # TODO: ARTIST_MARKET_DATA_TEST remove after test closes
+    require('../apps/artist/client/views/market_data_summary.js').default.setupArtistMarketDataSummary()
 
   '/artists': require('../apps/artists/client/index.coffee').init
 
