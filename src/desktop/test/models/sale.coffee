@@ -352,7 +352,7 @@ describe 'Sale', ->
 
   describe '#upcomingLabel', ->
     it 'renders the correct opening label when EDT', ->
-      time = moment('2016-11-02 12:00:00').utc()
+      time = moment('2016-11-02 12:00:00', 'YYYY-MM-DD HH:mm:ss').utc()
       @sale.isPreviewState = -> true
       @sale.set
         start_at: time
@@ -363,7 +363,7 @@ describe 'Sale', ->
         .containEql 'EDT'
 
     it 'renders the correct opening label when EST', ->
-      time = moment('2016-1-02 12:00:00').utc()
+      time = moment('2016-1-02 12:00:00', 'YYYY-MM-DD HH:mm:ss').utc()
       @sale.isPreviewState = -> true
       @sale.set
         start_at: time
