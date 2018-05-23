@@ -65,6 +65,8 @@ class MarketingSignupModalInner extends Backbone.View
       'name': formData['name']
       'email': formData['email']
       'password': formData['password']
+      'accepted_terms_of_service': true
+      'agreed_to_receive_emails': true
     analyticsData =
       'signup_intent': @signupIntent
       'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
