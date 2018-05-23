@@ -1,5 +1,4 @@
-import moment from 'moment'
-import 'moment-timezone'
+import moment from 'moment-timezone'
 
 function zone(time) {
   return moment(time).tz('America/New_York')
