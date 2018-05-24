@@ -3,7 +3,6 @@ sd = require('sharify').data
 SaleArtwork = require '../../../models/sale_artwork.coffee'
 Backbone = require 'backbone'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
-AuctionClockView = require '../../../components/auction_clock/view.coffee'
 ConditionsOfSale = require '../../../../desktop/apps/auction_support/mixins/conditions_of_sale.js'
 openSpecialistModal = require '../../../components/specialist_modal/index.coffee'
 Auction = require '../../../models/sale.coffee'
@@ -11,6 +10,8 @@ CurrentUser = require '../../../models/current_user.coffee'
 mediator = require '../../../lib/mediator.coffee'
 accounting = require 'accounting'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+ClockView = require '../../../../desktop/apps/artwork/components/clock/view.coffee'
+{ countdownLabel, countdownTimestamp } = require '../../../../desktop/apps/artwork/components/banner/helpers.coffee'
 
 module.exports.BidPageView = class BidPageView extends Backbone.View
   _.extend @prototype, ConditionsOfSale
@@ -124,10 +125,14 @@ module.exports.init = ->
     window: window
     isRegistered: sd.REGISTERED
 
-  new AuctionClockView(
-    model: new Auction sd.AUCTION
-    el: $('.js-auction-clock')
-  ).start()
+  if { start_at, end_at, live_start_at } = sd.AUCTION
+    clockView = new ClockView
+      label: countdownLabel start_at, live_start_at
+      timestamp: countdownTimestamp start_at, end_at, live_start_at
+    clockView.start()
+
+  $('.js-auction-clock')
+    .html clockView.render().$el
 
   mediator.once 'clock:is-almost-over', ->
     $('.js-auction-clock').addClass 'is-almost-over'
