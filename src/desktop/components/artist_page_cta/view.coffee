@@ -107,7 +107,6 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       signupIntent: @signupIntent,
       signupReferer: location.href
     @user.set data
-    console.log(@user)
     @user.signup
       success: @onRegisterSuccess
       error: (model, response, options) =>

@@ -14,6 +14,7 @@ import { topParselyArticles as _topParselyArticles } from 'desktop/components/ut
 import { map, sortBy, first, last, reject } from 'lodash'
 import { PARSELY_KEY, PARSELY_SECRET } from '../../config.coffee'
 import { subscribedToEditorial } from 'desktop/apps/article/routes'
+import { data as sd } from 'sharify'
 
 // FIXME: Rewire
 let positronql = _positronql
@@ -26,7 +27,14 @@ export const articles = (req, res, next) => {
     .then(async result => {
       const articles = new Articles(result.articles)
       res.locals.sd.ARTICLES = articles.toJSON()
-      const onDailyEditorial = await subscribedToEditorial()
+
+      // Email
+      let onDailyEditorial = false
+      // Only need to check subscription on mobile
+      if (sd.IS_MOBILE && sd.CURRENT_USER) {
+        onDailyEditorial = await subscribedToEditorial(sd.CURRENT_USER.email)
+      }
+
       // Fetch News Panel Articles
       positronql({ query: newsPanelQuery() }).then(result => {
         const newsArticles = result.articles

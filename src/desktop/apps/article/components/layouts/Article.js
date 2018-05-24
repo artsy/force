@@ -27,7 +27,6 @@ export default class ArticleLayout extends React.Component {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
-    isLoggedIn: PropTypes.bool,
     onDailyEditorial: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
@@ -35,7 +34,7 @@ export default class ArticleLayout extends React.Component {
   }
 
   componentDidMount() {
-    const { article, isSuper, isLoggedIn, onDailyEditorial } = this.props
+    const { article, isSuper } = this.props
 
     setupFollowButtons(this.state.following)
     if (isSuper) {
@@ -44,12 +43,7 @@ export default class ArticleLayout extends React.Component {
         article: new ArticleModel(article),
       })
     }
-    if (
-      isLoggedIn &&
-      !onDailyEditorial &&
-      !isSuper &&
-      article.layout === 'standard'
-    ) {
+    if (!isSuper && article.layout === 'standard') {
       new EditorialSignupView({
         el: document.querySelector('body'),
       })
