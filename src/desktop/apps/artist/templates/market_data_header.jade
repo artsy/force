@@ -19,8 +19,9 @@
       .market-data-summary(id="market-data-summary-container-" + artist.id, data-artist-id=artist.id)
 
       if currentItem
-        a.current-item-link(href= currentItem.href)
-          if currentItem.type == 'auction'
+        - var isAuction = currentItem.type == 'auction'
+        a.current-item-link(class=(isAuction ? 'auction-link' : 'show-link'), href= currentItem.href)
+          if isAuction
             | In current auction – bid now
           else
             | In featured show – view now
@@ -28,9 +29,8 @@
       .artist-follow
         button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
         if artist.counts.follows >= 50
-            - var followCount = viewHelpers.displayFollowers(artist)
-            span.artist-header-follow-count(data-count=followCount) Followers
+          - var followCount = viewHelpers.displayFollowers(artist)
+          span.artist-header-follow-count(data-count=followCount) Followers
   if artist.is_consignable
     .consignment-cta
       | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Learn more].
-
