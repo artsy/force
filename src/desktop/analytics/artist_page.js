@@ -34,7 +34,7 @@ if (location.pathname.match('/artist/.*') && sd.ARTIST) {
     }
   )
 
-  $('artist-header-market-data .consignment-cta a').click(function() {
+  $('.artist-header-market-data .consignment-cta a').click(function() {
     analytics.track('Click', {
       type: 'Link',
       label: 'Interested in selling a work learn more',
