@@ -50,11 +50,13 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  handleOpenAuthModal = (type, config) =>
+  handleOpenAuthModal = (type, config) => {
+    debugger
     mediator.trigger('open:auth', {
       mode: type,
       ...config,
     })
+  }
 
   renderArticle = () => {
     let { article } = this.props
