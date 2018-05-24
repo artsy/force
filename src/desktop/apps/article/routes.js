@@ -123,6 +123,11 @@ export async function index(req, res, next) {
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== 'undefined'
+    let onDailyEditorial = false
+    // Only need to check subscription on mobile
+    if (isMobile && CURRENT_USER) {
+      onDailyEditorial = await subscribedToEditorial(CURRENT_USER.email)
+    }
 
     // Tooltips a/b/c test
     const isAdmin = isLoggedIn && CURRENT_USER.type === 'Admin'
@@ -149,11 +154,12 @@ export async function index(req, res, next) {
       data: {
         article,
         isSuper,
+        isLoggedIn,
         isMobile,
         jsonLD,
+        onDailyEditorial,
         showTooltips,
         showToolTipMarketData,
-        subscribed: isLoggedIn,
         superArticle,
         superSubArticles,
       },

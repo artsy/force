@@ -6,13 +6,14 @@ import get from 'lodash.get'
 import updeep from 'updeep'
 import { data as sd } from 'sharify'
 import { Article } from 'reaction/Components/Publishing'
-import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
+import _EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
+let EditorialSignupView = _EditorialSignupView
 
 const NAVHEIGHT = '53px'
 
@@ -27,14 +28,14 @@ export default class ArticleLayout extends React.Component {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
-    subscribed: PropTypes.bool,
+    onDailyEditorial: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
     showToolTipMarketData: PropTypes.bool,
   }
 
   componentDidMount() {
-    const { article, isSuper, subscribed } = this.props
+    const { article, isSuper } = this.props
 
     setupFollowButtons(this.state.following)
     if (isSuper) {
@@ -43,7 +44,7 @@ export default class ArticleLayout extends React.Component {
         article: new ArticleModel(article),
       })
     }
-    if (!subscribed && !isSuper && article.layout === 'standard') {
+    if (!isSuper && article.layout === 'standard') {
       new EditorialSignupView({
         el: document.querySelector('body'),
       })
@@ -61,9 +62,9 @@ export default class ArticleLayout extends React.Component {
     const {
       isMobile,
       isSuper,
+      onDailyEditorial,
       showTooltips,
       showToolTipMarketData,
-      subscribed,
     } = this.props
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
@@ -90,7 +91,9 @@ export default class ArticleLayout extends React.Component {
     }
 
     if (!isSuper && !article.seriesArticle) {
-      const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
+      const emailSignupUrl = onDailyEditorial
+        ? `${sd.APP_URL}/signup/editorial`
+        : ''
       return (
         <InfiniteScrollArticle
           isMobile={isMobile}
