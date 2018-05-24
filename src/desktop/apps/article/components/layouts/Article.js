@@ -27,14 +27,15 @@ export default class ArticleLayout extends React.Component {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
-    subscribed: PropTypes.bool,
+    isLoggedIn: PropTypes.bool,
+    onDailyEditorial: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
     showToolTipMarketData: PropTypes.bool,
   }
 
   componentDidMount() {
-    const { article, isSuper, subscribed } = this.props
+    const { article, isSuper, isLoggedIn, onDailyEditorial } = this.props
 
     setupFollowButtons(this.state.following)
     if (isSuper) {
@@ -43,7 +44,12 @@ export default class ArticleLayout extends React.Component {
         article: new ArticleModel(article),
       })
     }
-    if (!subscribed && !isSuper && article.layout === 'standard') {
+    if (
+      isLoggedIn &&
+      !onDailyEditorial &&
+      !isSuper &&
+      article.layout === 'standard'
+    ) {
       new EditorialSignupView({
         el: document.querySelector('body'),
       })
@@ -61,9 +67,9 @@ export default class ArticleLayout extends React.Component {
     const {
       isMobile,
       isSuper,
+      onDailyEditorial,
       showTooltips,
       showToolTipMarketData,
-      subscribed,
     } = this.props
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
@@ -90,7 +96,9 @@ export default class ArticleLayout extends React.Component {
     }
 
     if (!isSuper && !article.seriesArticle) {
-      const emailSignupUrl = subscribed ? '' : `${sd.APP_URL}/signup/editorial`
+      const emailSignupUrl = onDailyEditorial
+        ? `${sd.APP_URL}/signup/editorial`
+        : ''
       return (
         <InfiniteScrollArticle
           isMobile={isMobile}

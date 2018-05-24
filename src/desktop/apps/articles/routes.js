@@ -13,6 +13,7 @@ import Channel from 'desktop/models/channel.coffee'
 import { topParselyArticles as _topParselyArticles } from 'desktop/components/util/parsely.coffee'
 import { map, sortBy, first, last, reject } from 'lodash'
 import { PARSELY_KEY, PARSELY_SECRET } from '../../config.coffee'
+import { subscribedToEditorial } from 'desktop/apps/article/routes'
 
 // FIXME: Rewire
 let positronql = _positronql
@@ -22,13 +23,15 @@ let renderLayout = _renderLayout
 export const articles = (req, res, next) => {
   const query = { query: magazineQuery }
   return positronql(query)
-    .then(result => {
+    .then(async result => {
       const articles = new Articles(result.articles)
       res.locals.sd.ARTICLES = articles.toJSON()
+      const onDailyEditorial = await subscribedToEditorial()
       // Fetch News Panel Articles
       positronql({ query: newsPanelQuery() }).then(result => {
         const newsArticles = result.articles
         res.locals.sd.NEWS_ARTICLES = newsArticles
+        res.locals.sd.ON_DAILY_EDITORIAL = onDailyEditorial
 
         res.render('articles', {
           articles: articles,
