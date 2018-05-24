@@ -8,9 +8,13 @@ export const GDPRMessage = props => {
   return (
     <Text>
       {'I agree to Artsy’s '}
-      <TextLink href="/terms">Terms of Use</TextLink>
+      <TextLink href="/terms" target="_blank">
+        Terms of Use
+      </TextLink>
       {' and '}
-      <TextLink href="/privacy">Privacy Policy</TextLink>
+      <TextLink href="/privacy" target="_blank">
+        Privacy Policy
+      </TextLink>
       {', and to receive emails from Artsy.'}
     </Text>
   )

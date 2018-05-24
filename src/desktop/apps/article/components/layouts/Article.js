@@ -6,13 +6,14 @@ import get from 'lodash.get'
 import updeep from 'updeep'
 import { data as sd } from 'sharify'
 import { Article } from 'reaction/Components/Publishing'
-import EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
+import _EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
+let EditorialSignupView = _EditorialSignupView
 
 const NAVHEIGHT = '53px'
 
