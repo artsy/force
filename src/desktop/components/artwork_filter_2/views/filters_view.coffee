@@ -16,7 +16,6 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     'click .js-artwork-filter-toggle'   : 'toggleBool'
     'click .js-artwork-filter-remove'   : 'filterDeselected'
     'click .js-artwork-filter-view-all' : 'seeAllClicked'
-    'click' : 'resetPagination'
 
   initialize: ({ @params, @counts, stickyOffset = 0 }) ->
     @sticky = new Sticky
@@ -48,8 +47,8 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     }
 
     # FIXME: Replace with proper A/B test
-    # if sd.ARTIST_PAGE_PAGINATION is 'control'
-    if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    # if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    if sd.ARTIST_PAGE_PAGINATION is 'experiment'
       countView = new CountView _.extend el: @$('#artwork-filter-left__totals'), { @counts, @params }
       countView.render()
 
@@ -60,6 +59,7 @@ module.exports = class ArtworkFiltersView extends Backbone.View
 
   toggleBool: (e) ->
     e.preventDefault()
+    @resetPagination()
     key = ($el = $(e.target)).prop('name')
     value = $el.prop('checked')
     if value
@@ -69,17 +69,20 @@ module.exports = class ArtworkFiltersView extends Backbone.View
 
   filterSelected: (e) ->
     e.preventDefault()
+    @resetPagination()
     key = ($el = $(e.target)).data('key')
     value = $el.attr('data-value')
     @params.updateWith key, value
 
   filterDeselected: (e) ->
     e.preventDefault()
+    @resetPagination()
     key = ($el = $(e.target)).data('key')
     @params.unset key
 
   seeAllClicked: (e) =>
     e.preventDefault()
+    @resetPagination()
     key = ($el = $(e.target)).data('key')
     delete @truncate[key]
     @trigger 'filterExpanded'

@@ -7,8 +7,6 @@ module.exports = class Params extends Backbone.Model
   defaults:
     page: 1
     size: 40
-
-  defaultParams:
     sort: '-partner_updated_at'
 
   initialize: ->
@@ -28,8 +26,11 @@ module.exports = class Params extends Backbone.Model
     if @filterParamKeys.includes key
       _.each @filterParamKeys, (key) =>
         @unset key, silent: true
-
     @set key, value
+
+  queryStringToParams: (queryString) ->
+    params = qs.parse(queryString)
+    @set params
 
   currentParamsQueryString: ->
     # Exclude default values of attributes that are not explicitly set

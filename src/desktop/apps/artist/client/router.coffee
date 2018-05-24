@@ -33,8 +33,9 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist/:id/biography': 'biography'
     'artist/:id/auction-results': 'auctionResults'
 
-  initialize: ({ @model, @user, @statuses }) ->
-    @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
+  # TODO: ARTIST_MARKET_DATA_TEST remove after test closes(@testGroup)
+  initialize: ({ @model, @user, @statuses, @testGroup }) ->
+    @options = model: @model, user: @user, statuses: @statuses, testGroup: @testGroup, el: $('.artist-page-content')
     @setupUser()
     @setupJump()
     @setupCarousel()
@@ -45,16 +46,21 @@ module.exports = class ArtistRouter extends Backbone.Router
     @useNewArtworkFilter = @user?.hasLabFeature('Refactored Artwork Filter')
 
   setupJump: ->
-    @jump = new JumpView
-      threshold: $(window).height()
-      direction: 'bottom'
-      duration: 0
+    # TODO: Remove A/B test
+    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
+      @jump = new JumpView
+        threshold: $(window).height()
+        direction: 'bottom'
+        duration: 0
 
   setupCarousel: ->
     initCarousel $('.js-artist-carousel'), imagesLoaded: true
 
   setupHeaderView: ->
-    @headerView = new HeaderView _.extend {}, @options, el: $('#artist-page-header'), jump: @jump
+    @headerView = new HeaderView _.extend {}, @options,
+      el: $('#artist-page-header'),
+      jump: @jump unless sd.ARTIST_PAGE_PAGINATION is 'experiment' # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # TODO: Remove A/B test
 
   execute: ->
     return if @view? # Sets up a view once, depending on route
@@ -67,12 +73,17 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
-    $('body').append @jump.$el
+
+    # TODO: Remove A/B test
+    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
+      $('body').append @jump.$el
+
     @view.on 'artist:overview:sync', (artist) =>
       attachCTA new Artist(_.extend({}, artist, @model.attributes))
 
     # TODO: Remove A/B test
-    # splitTest('artist_page_pagination').view()
+    splitTest('artist_page_pagination').view()
 
   cv: ->
     @view = new CVView @options
@@ -80,7 +91,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   works: ->
     # TODO: Remove A/B split-test
-    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
+    infiniteScrollEnabled = sd.ARTIST_PAGE_PAGINATION is 'control' # !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # TODO: Remove A/B test
 
     @view = new ArtworkFilterView
       el: @options.el
@@ -88,10 +99,13 @@ module.exports = class ArtistRouter extends Backbone.Router
       topOffset: $('.artist-tabs-container').height() + 20
       infiniteScrollEnabled: infiniteScrollEnabled
 
-    $('body').append @jump.$el
+    # TODO: Remove A/B test
+    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
+    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
+      $('body').append @jump.$el
 
     # TODO: Remove A/B test
-    # splitTest('artist_page_pagination').view()
+    splitTest('artist_page_pagination').view()
 
   shows: ->
     @view = new ShowsView @options

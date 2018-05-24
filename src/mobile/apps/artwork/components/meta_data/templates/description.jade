@@ -11,14 +11,17 @@
 
   if artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
     .artwork-meta-data-module__description_sub-section
+      if artwork.series
+        p Series: #{artwork.series}
+
       if artwork.signature
         p Signature: #{artwork.signature}
 
-      if artwork.manufacturer
-        p Manufacturer: #{artwork.manufacturer}
+      if artwork.image_rights
+        p Image rights: #{artwork.image_rights}
 
       if artwork.publisher
         p Publisher: #{artwork.publisher}
 
-      if artwork.series
-        p= artwork.series
+      if artwork.manufacturer
+        p Manufacturer: #{artwork.manufacturer}

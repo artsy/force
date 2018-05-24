@@ -1,7 +1,6 @@
 { COMMERCIAL } = require('sharify').data
 ArtworkCommercialView = require './view.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
-initPartnerStub = require '../partner_stub/index.coffee'
 ZigZagBanner = require '../../../../components/zig_zag_banner/index.coffee'
 
 shouldStick = ->
@@ -20,11 +19,7 @@ module.exports = ->
   sticky = new Sticky
   sticky.add $el if shouldStick()
 
-  initPartnerStub $el
-    .click ->
-      sticky.rebuild()
-
-  if ($target = $el.find '.js-artwork-inquire-button').length and not COMMERCIAL.artwork.is_acquireable
+  if not COMMERCIAL.enableNewInquiryFlow and ($target = $el.find '.js-artwork-inquire-button').length and not COMMERCIAL.artwork.is_acquireable
     new ZigZagBanner
       $target: $target
       name: 'inquiry'

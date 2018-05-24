@@ -16,3 +16,8 @@ if artwork.show && artwork.show.artworks.length
     else
       - var columns = helpers.show_artworks.masonry(show.artworks).columns
       include ../../../../components/artwork_masonry/index
+
+    .artwork-section__jump
+      a.avant-garde-jump-link( href='#{artwork.show.href}' )
+        | View all #{artwork.show.counts.eligible_artworks} works
+        i.icon-chevron-small-right

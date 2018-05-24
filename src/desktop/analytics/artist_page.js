@@ -12,6 +12,37 @@ if (location.pathname.match('/artist/.*') && sd.ARTIST) {
     })
   })
 
+  $('.artist-header-market-data a.current-item-link.auction-link').click(
+    function() {
+      analytics.track('Click', {
+        type: 'Link',
+        label: 'In current auction',
+        context_module: 'Artist header',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+
+  $('.artist-header-market-data a.current-item-link.show-link').click(
+    function() {
+      analytics.track('Click', {
+        type: 'Link',
+        label: 'In featured show',
+        context_module: 'Artist header',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+
+  $('artist-header-market-data .consignment-cta a').click(function() {
+    analytics.track('Click', {
+      type: 'Link',
+      label: 'Interested in selling a work learn more',
+      context_module: 'Artist header',
+      destination_path: $(this).attr('href'),
+    })
+  })
+
   $('.artist-page-content .gradient-blurb-read-more').click(function(e) {
     analytics.track('Clicked to expand artist bio header')
   })

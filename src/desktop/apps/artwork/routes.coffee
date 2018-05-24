@@ -82,7 +82,7 @@ bootstrap = ->
     .then (data) ->
       data.fair = new Fair data.artwork.fair if data.artwork.fair
       extend res.locals.helpers, helpers
-      bootstrap res.locals.sd, data
+      bootstrap res.locals.sd, extend data, { enableNewInquiryFlow: req.query["feature-new-inquiry-flow"] is "true" }
       res.locals.sd.PARAMS = req.params
       res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.locals.sd.QUERY = req.query

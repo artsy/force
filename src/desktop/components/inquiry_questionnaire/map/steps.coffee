@@ -51,7 +51,11 @@ module.exports = [
         ]
         false: [
           'inquiry'
-          { is_logged_out: true: ['account'] }
+          {
+            enable_new_inquiry_flow: false: [
+              { is_logged_out: true: ['account'] }
+            ]
+          }
           { has_completed_profile: false: ['confirmation'] }
           { has_seen_commercial_interest: false: ['commercial_interest'] }
           { has_basic_info: false: ['basic_info'] }

@@ -64,6 +64,7 @@ module.exports =
   TWITTER_CONSUMER_KEY: null
   TWITTER_CONSUMER_SECRET: null
   VENICE_2015_SECTION: null
+  VOLLEY_ENDPOINT: null
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
 # "['foo']" and config will attempt to JSON.parse them into non-string types.

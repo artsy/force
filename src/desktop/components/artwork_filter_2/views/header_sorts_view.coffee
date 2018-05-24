@@ -20,7 +20,6 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
 
   render: ->
     sort = @params.get('sort')
-    sort ?= @params.defaultParams['sort']
     currentSort = @sorts[sort]
     @$el.html template { currentSort, @sorts }
     this
@@ -37,6 +36,7 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
 
     key = $el.data('key')
     value = $el.data('value')
+    @params.updateWith 'page', 1
     @params.updateWith key, value
 
   remove: ->
