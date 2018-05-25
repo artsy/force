@@ -136,11 +136,12 @@ module.exports = class AuthModalView extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     formData = @serializeForm()
-    userData = Object.assign {}, formData
-    @user.set (data = userData)
-    @user.set
-      signupIntent: @signupIntent
+    data = Object.assign {},
+      formData,
+      @gdprData(formData),
+      signupIntent: @signupIntent,
       signupReferer: @signupReferer
+    @user.set data
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>
@@ -149,7 +150,8 @@ module.exports = class AuthModalView extends ModalView
         mediator.trigger 'auth:error', message
 
   onSubmitSuccess: (model, response, options) =>
-    analyticsHooks.trigger "auth:#{@state.get 'mode'}"
+    unless @state.get('mode') is 'login'
+      analyticsHooks.trigger "auth:#{@state.get 'mode'}"
     @reenableForm null, reset: false
 
     if response.error?
@@ -159,6 +161,7 @@ module.exports = class AuthModalView extends ModalView
 
       switch @state.get('mode')
         when 'login'
+          analyticsHooks.trigger 'auth:login', @trackingOptions
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
         when 'register'
           mediator.trigger 'auth:sign_up:success', @trackingOptions

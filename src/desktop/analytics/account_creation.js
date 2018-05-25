@@ -15,7 +15,7 @@ const getUrlParameter = name => {
 const getAcquisitionInitiative = () =>
   getUrlParameter('m-id') || getUrlParameter('acquisition_initiative')
 
-export const trackAccountCreation = options => {
+const trackAccountCreation = options => {
   let properties = _.pick(
     options,
     'acquisition_initiative',
@@ -42,8 +42,8 @@ export const trackAccountCreation = options => {
 $(document).one(
   'submit',
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form, .gdpr-signup form',
-  function(e) {
-    $(document).one('ajaxComplete', (e, xhr, options) => {
+  () => {
+    $(document).one('ajaxComplete', (e, xhr, options) =>
       mediator.trigger('auth:sign_up:email', {
         acquisition_initiative: getAcquisitionInitiative(),
         signup_service: 'email',
@@ -51,7 +51,7 @@ $(document).one(
         context: options.context,
         email: xhr.responseJSON.user.email,
       })
-    })
+    )
   }
 )
 
@@ -86,8 +86,8 @@ if (Cookies.get('analytics-signup')) {
   }
 }
 
-analyticsHooks.on('auth:login', function(options) {
-  analytics.track('Successfully logged in')
+analyticsHooks.on('auth:login', (options = {}) => {
+  analytics.track('Successfully logged in', options)
 })
 
 // Triggered sign up form via save button
@@ -115,18 +115,18 @@ $('.mlh-logout').click(function() {
 })
 
 // Viewed sign up options
-var trackViewSignup = function(options) {
+var trackViewSignup = (options = {}) => {
   analytics.track('Viewed sign up options', options)
 }
 
-analyticsHooks.on('mediator:open:auth', function(options) {
+analyticsHooks.on('mediator:open:auth', (options = {}) => {
   if (options.mode === 'signup') trackViewSignup(options)
 
   analytics.trackLink($('.auth-signup-facebook')[0], 'Created account')
   analytics.trackLink($('.auth-signup-twitter')[0], 'Created account')
 })
 
-analyticsHooks.on('mediator:auth:sign_up:success', function(options) {
+analyticsHooks.on('mediator:auth:sign_up:success', (options = {}) => {
   if (options) trackAccountCreation(options)
 })
 
