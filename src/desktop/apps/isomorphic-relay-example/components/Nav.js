@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'found'
-import { PreloadLink } from 'desktop/lib/isomorphic-relay/PreloadLink'
+import { PreloadLink } from 'desktop/lib/psi/PreloadLink'
 
 export default function Nav() {
   return (
@@ -9,21 +9,13 @@ export default function Nav() {
         <Link to="/isomorphic-relay-example">Home</Link>
       </li>
       <li>
-        <Link to="/isomorphic-relay-example/about">About</Link>
-      </li>
-      <li>
         <PreloadLink to="/isomorphic-relay-example/artsy/pablo-picasso">
-          Artsy
+          Reaction ArtworkGrid Component
         </PreloadLink>
       </li>
       <li>
         <PreloadLink to="/isomorphic-relay-example/artist/pablo-picasso">
-          Pablo Picasso
-        </PreloadLink>
-      </li>
-      <li>
-        <PreloadLink to="/isomorphic-relay-example/artist/pablo-picasso/auction/shared-live-mocktion-k8s">
-          Artist + Artsy Auction (nested queries)
+          Pablo Picasso (loads on link click)
         </PreloadLink>
       </li>
       <li>
@@ -35,13 +27,18 @@ export default function Nav() {
         </PreloadLink>
       </li>
       <li>
+        <PreloadLink to="/isomorphic-relay-example/artist/pablo-picasso/auction/shared-live-mocktion-k8s">
+          Artist + Artsy Auction (nested queries, loads on click)
+        </PreloadLink>
+      </li>
+      <li>
         <Link to="/isomorphic-relay-example/react-loadable/client">
-          React Loadable - Clientside
+          Async bundle splitting - Example 1
         </Link>
       </li>
       <li>
         <Link to="/isomorphic-relay-example/react-loadable/server">
-          React Loadable - SSR
+          Async bundle splitting - Example 2
         </Link>
       </li>
     </ul>

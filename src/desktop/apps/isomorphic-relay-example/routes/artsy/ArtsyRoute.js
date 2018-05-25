@@ -4,7 +4,6 @@ import { ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
 
 export const ArtsyRoute = createFragmentContainer(
   ({ artworks }) => {
-    console.log(artworks)
     return <ArtworkGrid artworks={artworks} />
   },
   graphql`

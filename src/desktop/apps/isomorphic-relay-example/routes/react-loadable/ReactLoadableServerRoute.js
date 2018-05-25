@@ -9,7 +9,7 @@ const Example2 = loadable(() => import('./Example2'), {
 export function ReactLoadableServerRoute() {
   return (
     <div>
-      <h3>ReactLoadableServer!</h3>
+      <h1 style={{ fontSize: 30 }}>Another Example!</h1>
       <Example2 />
     </div>
   )

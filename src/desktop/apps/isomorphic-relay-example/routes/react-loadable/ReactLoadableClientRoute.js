@@ -18,7 +18,7 @@ const Example1 = loadable(
 export function ReactLoadableClientRoute() {
   return (
     <div>
-      <h3>ReactLoadableClient!</h3>
+      <h1 style={{ fontSize: 30 }}>ReactLoadableClient!</h1>
       <Example1 />
     </div>
   )

@@ -6,7 +6,7 @@ export const ArtistRoute = createFragmentContainer(
   ({ artist, children }) => {
     return (
       <div>
-        <h1>{artist.name}</h1>
+        <h1 style={{ fontSize: 30 }}>{artist.name}</h1>
         <p>{artist.bio}</p>
 
         {children}

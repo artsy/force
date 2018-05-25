@@ -1,6 +1,10 @@
 import 'isomorphic-fetch'
 import 'regenerator-runtime/runtime'
+
+import RelayServerSSR from 'react-relay-network-modern-ssr/lib/server'
+import RelayClientSSR from 'react-relay-network-modern-ssr/lib/client'
 import { Environment, RecordSource, Store } from 'relay-runtime'
+
 import {
   RelayNetworkLayer,
   urlMiddleware,
@@ -10,21 +14,9 @@ import {
 
 export function createRelayEnvironment(cache) {
   const isServer = typeof window === 'undefined'
-  let relaySSRMiddleware = null
-
-  if (isServer) {
-    const {
-      default: RelayServerSSR,
-    } = require('react-relay-network-modern-ssr/lib/server')
-
-    relaySSRMiddleware = new RelayServerSSR()
-  } else {
-    const {
-      default: RelayClientSSR,
-    } = require('react-relay-network-modern-ssr/lib/client')
-
-    relaySSRMiddleware = new RelayClientSSR(cache)
-  }
+  const relaySSRMiddleware = isServer
+    ? new RelayServerSSR()
+    : new RelayClientSSR(cache)
 
   relaySSRMiddleware.debug = false
 
@@ -35,10 +27,6 @@ export function createRelayEnvironment(cache) {
     cacheMiddleware({
       size: 100, // max 100 requests
       ttl: 900000, // 15 minutes
-      onInit: cache => {
-        // TODO: Handle this cache
-        // console.log(cache)
-      },
     }),
     urlMiddleware({
       url: process.env.METAPHYSICS_ENDPOINT,

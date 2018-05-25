@@ -56,7 +56,7 @@ export const routes = [
         `,
         children: [
           {
-            path: '/artist/auction/:id',
+            path: '/auction/:id',
             Component: AuctionRoute,
             prepareVariables: params => ({
               id: 'shared-live-mocktion-k8s',

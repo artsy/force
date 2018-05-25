@@ -58,7 +58,7 @@ function ensureRequirementsMet() {
           )
         )
       },
-      runCommand: () => process.exit(0),
+      runCommand: () => process.exit(1),
     },
     {
       test: () => '../data/schema.graphql',

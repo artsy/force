@@ -3,7 +3,7 @@ import React from 'react'
 export function HomeRoute() {
   return (
     <div>
-      <h3>Home</h3>
+      <h1 style={{ fontSize: 30 }}>Home</h1>
       <div>
         Click the links below to explore different kinds of loading strategies
       </div>

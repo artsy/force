@@ -18,8 +18,9 @@ html(
 
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
 
-    if assetPackage
-      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
+    unless styledComponents
+      if assetPackage
+        link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
   body( class=bodyClass )
     //- Global component mixins
@@ -39,6 +40,8 @@ html(
     #scripts
       include scripts
       script( src= asset('/assets/main_layout.js') )
+
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
+
       block scripts
