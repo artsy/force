@@ -104,7 +104,7 @@ module.exports =
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_SECRET: 'change-me'
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
-  SHOW_ANALYTICS_CALLS: false
+  SHOW_ANALYTICS_CALLS: true
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'

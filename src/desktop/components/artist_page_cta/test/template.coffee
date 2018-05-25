@@ -30,6 +30,10 @@ describe 'templates', ->
       text = $template.find('.artist-page-cta-overlay__headline').text()
       text.should.equal 'Join Artsy to discover new works by Seth Clark and more artists you love'
 
+    it 'renders gdpr checkbox', ->
+      $template = $(templates.overlay @data)
+      $template.find('input[type=checkbox]').length.should.equal 1
+
   describe 'when there are null cta artists', ->
     beforeEach ->
       @artist.set cta_artists: []

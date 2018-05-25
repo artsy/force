@@ -1,6 +1,5 @@
 { each } = require 'underscore'
-moment = require 'moment'
-tz = require 'moment-timezone'
+moment = require 'moment-timezone'
 { USER_HOME_PAGE } = require('sharify').data
 User = require '../../../models/user.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'

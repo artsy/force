@@ -334,6 +334,10 @@ describe('Article Routes', () => {
         )
         renderLayout = sinon.stub()
         rewire.__set__('renderLayout', renderLayout)
+        rewire.__set__(
+          'subscribedToEditorial',
+          sinon.stub().returns(Promise.resolve(true))
+        )
       })
 
       it('Control: showTooltips and showToolTipMarketData are false', done => {

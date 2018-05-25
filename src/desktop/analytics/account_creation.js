@@ -1,3 +1,4 @@
+import mediator from '../lib/mediator.coffee'
 //
 // Generic events for tracking events around account creation.
 //
@@ -15,16 +16,16 @@ const getAcquisitionInitiative = () =>
   getUrlParameter('m-id') || getUrlParameter('acquisition_initiative')
 
 export const trackAccountCreation = options => {
-  debugger
-  console.log('trackAccountCreation')
   let properties = _.pick(
     options,
     'acquisition_initiative',
     'signup_service',
     'user_id',
-    'context'
+    'context',
+    'context_module',
+    'intent'
   )
-  debugger
+
   analytics.track(
     'Created account',
     _.extend(properties, { order_id: properties.user_id })
@@ -38,21 +39,18 @@ export const trackAccountCreation = options => {
 }
 
 // Created account (via email)
-$(document).on(
+$(document).one(
   'submit',
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form, .gdpr-signup form',
   function(e) {
-    debugger
     $(document).one('ajaxComplete', (e, xhr, options) => {
-      debugger
-      console.log('document submit')
-      // trackAccountCreation({
-      //   acquisition_initiative: getAcquisitionInitiative(),
-      //   signup_service: 'email',
-      //   user_id: xhr.responseJSON.user.id,
-      //   context: options.context,
-      //   email: xhr.responseJSON.user.email,
-      // })
+      mediator.trigger('auth:sign_up:email', {
+        acquisition_initiative: getAcquisitionInitiative(),
+        signup_service: 'email',
+        user_id: xhr.responseJSON.user.id,
+        context: options.context,
+        email: xhr.responseJSON.user.email,
+      })
     })
   }
 )
@@ -76,7 +74,7 @@ $(document).on('click', '.auth-signup-facebook, .gdpr-signup__fb', function(e) {
 if (Cookies.get('analytics-signup')) {
   var data = JSON.parse(Cookies.get('analytics-signup'))
   Cookies.expire('analytics-signup')
-  debugger
+
   if (sd.CURRENT_USER) {
     trackAccountCreation({
       acquisition_initiative: data.acquisition_initiative,
@@ -118,16 +116,18 @@ $('.mlh-logout').click(function() {
 
 // Viewed sign up options
 var trackViewSignup = function(options) {
-  debugger
-  analytics.track('Viewed sign up options')
+  analytics.track('Viewed sign up options', options)
 }
 
 analyticsHooks.on('mediator:open:auth', function(options) {
-  debugger
   if (options.mode === 'signup') trackViewSignup(options)
 
   analytics.trackLink($('.auth-signup-facebook')[0], 'Created account')
   analytics.trackLink($('.auth-signup-twitter')[0], 'Created account')
+})
+
+analyticsHooks.on('mediator:auth:sign_up:success', function(options) {
+  if (options) trackAccountCreation(options)
 })
 
 $('#auth-footer [href*=sign_up]').click(trackViewSignup)
