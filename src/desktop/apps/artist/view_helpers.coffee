@@ -10,11 +10,12 @@ showHelpers = require '../../components/show_cell/helpers.coffee'
 module.exports =
   capitalize: capitalize
   showHelpers: showHelpers
-  
+
   # TODO:: ARTIST_MARKET_DATA_TEST remove after test closes
+
   hasCarousel: (testGroup) -> testGroup is 'control'
-  hasMarketData: (testGroup) -> testGroup is 'market_data_no_carousel' or testGroup is 'market_data_no_carousel_no_overview'
-  hasOverview: (testGroup) -> testGroup is 'control' or testGroup is 'market_data_no_carousel'
+  hasMarketData: (testGroup) -> testGroup is 'market_data_no_carousel'
+  hasOverview: (testGroup) -> true
 
   nShowsByDate: (shows, n) ->
     _.sortBy(_.take(shows, n), 'start_at').reverse()
