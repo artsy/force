@@ -31,10 +31,9 @@ module.exports = {
     outcomes: [
       'control'
       'market_data_no_carousel'
-      'market_data_no_carousel_no_overview'
     ]
     control_group: 'control'
-    edge: 'market_data_no_carousel_no_overview'
+    edge: 'market_data_no_carousel'
   artist_page_pagination:
     key: 'artist_page_pagination'
     outcomes:
