@@ -2,18 +2,32 @@ import React, { Component } from 'react'
 import { DesktopModal } from '@artsy/reaction/dist/Components/Authorization/DesktopModal'
 import { LoginForm } from '@artsy/reaction/dist/Components/Authorization/LoginForm'
 import { ModalProps } from './Types'
+import fetch from 'isomorphic-fetch'
+import { data as sd } from 'sharify'
 
-const LoggedOutUser = require('desktop/models/logged_out_user.coffee')
+interface LoginModalProps extends ModalProps {
+  redirectUrl?: string
+}
 
-export class LoginModal extends Component<ModalProps> {
+export class LoginModal extends Component<LoginModalProps> {
   loginUser(values) {
-    const user = new LoggedOutUser()
-    user.set({
-      data: values,
-      redirectTo: location.pathname,
-    })
-    user.login({
-      success: () => {},
+    fetch(sd.APP_URL + sd.AP.loginPagePath, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN,
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        // data: {
+        _csrf: sd.CSRF_TOKEN,
+        session_id: sd.SESSION_ID,
+        ...values,
+        // },
+      }),
+    }).then(() => {
+      // window.location.href = this.props.redirectUrl || '/'
     })
   }
 
