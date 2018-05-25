@@ -7,9 +7,11 @@ modalize = require '../modalize/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 Form = require('../mixins/form.coffee')
+FormErrorHelpers = require('../auth_modal/helpers')
 
 class MarketingSignupModalInner extends Backbone.View
   _.extend @prototype, Form
+  _.extend @prototype, FormErrorHelpers
 
   className: 'marketing-signup-modal'
 
@@ -30,6 +32,9 @@ class MarketingSignupModalInner extends Backbone.View
       textColor: @data.textColor
       textOpacity: @data.textOpacity
       copy: @data.copy
+
+    @$('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
+
     this
 
   openLogin: (e) ->
@@ -58,21 +63,25 @@ class MarketingSignupModalInner extends Backbone.View
     @$('.auth-errors').text msg
 
   submit: (e) ->
+    return unless @validateForm()
+    return if @formIsSubmitting()
+
     e.preventDefault()
+
     @$('form button').addClass 'is-loading'
+
     formData = @serializeForm()
-    userData =
-      'name': formData['name']
-      'email': formData['email']
-      'password': formData['password']
-    analyticsData =
-      'signup_intent': @signupIntent
-      'acquisition_initiative': "Marketing Modal #{@acquisitionInitiative}"
-    body = Object.assign {}, userData, analyticsData, formData
+    data = Object.assign {},
+      formData,
+      @gdprData(formData),
+      signupIntent: @signupIntent,
+      signupReferer: @signupReferer
+      acquisition_initiative: "Marketing Modal #{@acquisitionInitiative}"
+
     $.ajax
       url: sd.AP.signupPagePath
       method: 'POST'
-      data: body
+      data: data
       error: (e) =>
         err = e.responseJSON?.error or e.toString()
         @showFormError err

@@ -31,6 +31,7 @@ module.exports = class AuthModalView extends ModalView
     'submit form': 'submit'
     'click #auth-submit': 'submit'
     'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: (options) ->
     return if isEigen.checkWith options
@@ -39,6 +40,8 @@ module.exports = class AuthModalView extends ModalView
 
     @preInitialize options
     super
+
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
 
   preInitialize: (options = {}) ->
     { @copy, @context, @signupIntent } = options
@@ -129,11 +132,12 @@ module.exports = class AuthModalView extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     formData = @serializeForm()
-    userData = Object.assign {}, formData
-    @user.set (data = userData)
-    @user.set
-      signupIntent: @signupIntent
+    data = Object.assign {},
+      formData,
+      @gdprData(formData),
+      signupIntent: @signupIntent,
       signupReferer: @signupReferer
+    @user.set data
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>
@@ -173,4 +177,5 @@ module.exports = class AuthModalView extends ModalView
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
+    $('#accepted_terms_of_service').off()
     super

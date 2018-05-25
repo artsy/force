@@ -15,7 +15,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     @setupAEMagazinePage() if @inAEMagazinePage()
 
   eligibleToSignUp: ->
-    @inAEMagazinePage() and not sd.SUBSCRIBED_TO_EDITORIAL
+    @inAEMagazinePage() and not sd.SUBSCRIBED_TO_EDITORIAL and sd.CURRENT_USER
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'
