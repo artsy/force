@@ -35,13 +35,6 @@ module.exports = {
     ]
     control_group: 'control'
     edge: 'market_data_no_carousel_no_overview'
-  artist_page_pagination:
-    key: 'artist_page_pagination'
-    outcomes:
-      experiment: 50
-      control: 50
-    control_group: 'control'
-    edge: 'experiment'
 
   article_tooltips:
     key: 'article_tooltips'
