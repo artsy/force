@@ -31,10 +31,9 @@ module.exports = {
     outcomes: [
       'control'
       'market_data_no_carousel'
-      'market_data_no_carousel_no_overview'
     ]
     control_group: 'control'
-    edge: 'market_data_no_carousel_no_overview'
+    edge: 'market_data_no_carousel'
 
   article_tooltips:
     key: 'article_tooltips'
