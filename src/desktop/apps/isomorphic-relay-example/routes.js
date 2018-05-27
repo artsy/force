@@ -22,7 +22,6 @@ export const routes = [
       },
       {
         path: '/artsy/:artistID',
-        prepareVariables: params => ({ artistID: 'pablo-picasso' }),
         getComponent: ({ artworks }) => {
           return import('@artsy/reaction/dist/Components/ArtworkGrid').then(
             ({ default: ArtworkGrid }) => props => (
@@ -44,7 +43,6 @@ export const routes = [
       },
       {
         path: '/artist/:id',
-        prepareVariables: params => ({ id: 'pablo-picasso' }),
         Component: ArtistRoute,
         query: graphql`
           query routes_ArtistRouteQuery($id: String!) {
@@ -74,9 +72,6 @@ export const routes = [
       {
         path: '/auction/:id',
         Component: AuctionRoute,
-        prepareVariables: params => ({
-          id: 'shared-live-mocktion-k8s',
-        }),
         query: graphql`
           query routes_TopAuctionRouteQuery($id: String!) {
             sale(id: $id) {

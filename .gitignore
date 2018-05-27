@@ -20,7 +20,6 @@ manifest.json
 
 /data
 
-/src/__generated__
 /src/desktop/public/assets
 /src/mobile/public/assets
 
