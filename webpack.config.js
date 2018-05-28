@@ -3,7 +3,6 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const WebpackManifestPlugin = require('webpack-manifest-plugin')
 const WebpackNotifierPlugin = require('webpack-notifier')
 const fs = require('fs')
 const path = require('path')
@@ -103,7 +102,6 @@ const config = {
       name: 'common',
       minChunks: 10, // lower number for larger "common.js" bundle size
     }),
-    new WebpackManifestPlugin({ publicPath: '/assets/' }),
   ],
   resolve: {
     alias: {
@@ -139,7 +137,6 @@ if (isDevelopment) {
         },
       })
     )
-    config.output.filename = '[name].[chunkhash].js'
   }
 }
 
