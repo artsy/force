@@ -17,7 +17,6 @@
     "prepare": "patch-package",
     "prettier-write": "yarn run prettier --write",
     "sentry": "sh scripts/sentry.sh",
-    "setup_k8s": "sh scripts/setup_k8s.sh",
     "start": "sh scripts/start.sh",
     "test": "sh scripts/test.sh",
     "webpack": "webpack"
@@ -264,7 +263,6 @@
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
-    "webpack-manifest-plugin": "^2.0.2",
     "webpack-notifier": "^1.5.0"
   },
   "license": "MIT",

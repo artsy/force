@@ -33,7 +33,6 @@ import escapedFragmentMiddleware from './middleware/escaped_fragment'
 import hardcodedRedirects from './middleware/hardcoded_redirects'
 import hstsMiddleware from './middleware/hsts'
 import localsMiddleware from './middleware/locals'
-import localAssets from './middleware/local_assets'
 import proxyGravity from './middleware/proxy_to_gravity'
 import proxyReflection from './middleware/proxy_to_reflection'
 import sameOriginMiddleware from './middleware/same_origin'
@@ -53,7 +52,6 @@ const {
   COOKIE_DOMAIN,
   DEFAULT_CACHE_TIME,
   IP_BLACKLIST,
-  IS_K8S,
   NODE_ENV,
   OPENREDIS_URL,
   REQUEST_EXPIRE_MS,
@@ -203,14 +201,7 @@ export default function(app) {
     // manifest. Pass in --debugProd on boot.
     app.use(express.static('public'))
   } else {
-    // For heroku: point to assets from fingerprinted file (uses `ASSET_MANIFEST` and `CDN_URL`)
-    // For k8s: point to assets from public/assets (uses `CDN_URL`)
-    if (IS_K8S) {
-      app.use(localAssets)
-      app.use(express.static('public'))
-    } else {
-      app.use(bucketAssets())
-    }
+    app.use(bucketAssets())
   }
 
   app.use(localsMiddleware)
