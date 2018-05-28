@@ -13,8 +13,6 @@ describe 'OverviewView', ->
       benv.expose
         $: benv.require('jquery'),
         jQuery: benv.require('jquery')
-        sd:
-          ENABLE_EXPERIMENTAL_ARTIST_PAGINATION: false
 
       Backbone.$ = $
       @OverviewView = benv.requireWithJadeify require.resolve('../../client/views/overview'), ['template']

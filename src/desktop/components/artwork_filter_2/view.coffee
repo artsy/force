@@ -32,10 +32,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.each @params.whitelisted, (param) =>
       @listenTo @params, "change:#{param}", @paramsChanged
 
-    # TODO: Remove A/B split-test
-    if sd.ARTIST_PAGE_PAGINATION is 'experiment'
-      Backbone.history.on 'route', @listenToHistory
-      @updateUrl()
+    Backbone.history.on 'route', @listenToHistory
+    @updateUrl()
 
   postRender: ->
     counts = new Counts { @params }

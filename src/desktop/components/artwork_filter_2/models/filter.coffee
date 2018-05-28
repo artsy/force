@@ -32,11 +32,6 @@ module.exports = class ArtworkFilter extends Backbone.Model
 
     props = { @artist_id, @size }
 
-    # TODO: Remove A/B split-test
-    # unless sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
-    unless sd.ARTIST_PAGE_PAGINATION is 'experiment'
-      _.extend(props, { @page })
-
     variables = _.extend(
       @params.mapped(),
       props
