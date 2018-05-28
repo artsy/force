@@ -20,7 +20,6 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
 
   render: ->
     sort = @params.get('sort')
-    sort ?= @params.defaultParams['sort']
     currentSort = @sorts[sort]
     @$el.html template { currentSort, @sorts }
     this

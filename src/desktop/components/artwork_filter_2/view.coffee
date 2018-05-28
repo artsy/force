@@ -32,6 +32,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.each @params.whitelisted, (param) =>
       @listenTo @params, "change:#{param}", @paramsChanged
 
+    Backbone.history.on 'route', @listenToHistory
+    @updateUrl()
+
   postRender: ->
     counts = new Counts { @params }
 
@@ -63,6 +66,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.defer => @postRender()
     return this
 
+  listenToHistory: (_router, _route, queryString) =>
+    [path, params] = queryString
+    @params.queryStringToParams params
+
   paramsChanged: ->
     @scrollToTop()
     @updateUrl()
@@ -74,9 +81,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
       '?' if query
       query
     ]).join('')
+
     Backbone.history.navigate url,
       trigger: false
-      replace: true
+      replace: false
 
   scrollToTop: ->
     @$htmlBody ?= $('html, body')

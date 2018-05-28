@@ -1,7 +1,6 @@
 _ = require 'underscore'
 { API_URL, SECURE_IMAGES_URL } = require('sharify').data
-moment = require 'moment'
-tz = require 'moment-timezone'
+moment = require 'moment-timezone'
 Backbone = require 'backbone'
 { Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
 Clock = require './mixins/clock.coffee'

@@ -1,5 +1,6 @@
-module.exports = (sd, { artwork }) ->
+module.exports = (sd, { artwork, enableNewInquiryFlow }) ->
   sd.COMMERCIAL =
+    enableNewInquiryFlow: enableNewInquiryFlow
     artwork:
       id: artwork.id
       _id: artwork._id

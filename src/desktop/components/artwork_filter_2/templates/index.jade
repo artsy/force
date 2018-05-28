@@ -5,33 +5,20 @@
 
   #artwork-filter-right
     #artwork-filter-right__header
+      #artwork-filter-right__sorts-dropdown
+        //- Rendered separately
 
-      //- FIXME: Replace with proper A/B test
-      //- if sd.ARTIST_PAGE_PAGINATION is 'experiment'
-      if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
-        #artwork-filter-right__sorts-dropdown
-          //- Rendered separately
-
-        #artwork-filter__pagination-top
-          //- Rendered separately
-      else
-        #artwork-filter-right__totals
-          //- Rendered separately
-
-        #artwork-filter-right__sorts-dropdown
-          //- Rendered separately
+      #artwork-filter__pagination-top
+        //- Rendered separately
 
     #artwork-filter-right__results-container
       #artwork-filter-right__columns
         //- Rendered separately
-      .link-and-spinner
-        .artwork-spinner-container
-          .loading-spinner
+    .link-and-spinner
+      .artwork-spinner-container
+        .loading-spinner
 
-      //- FIXME: Replace with proper A/B test
-      //- if sd.ARTIST_PAGE_PAGINATION is 'experiment'
-      if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
-        #artwork-filter__pagination-bottom
-          hr
-          .pagination
-            //- Rendered separately
+      #artwork-filter__pagination-bottom
+        hr
+        .pagination
+          //- Rendered separately
