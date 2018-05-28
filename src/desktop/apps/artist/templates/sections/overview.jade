@@ -41,11 +41,4 @@ if viewHelpers.hasOverview(testGroup)
 if artist.statuses.artworks
   include ./works
 
-//- if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
-if sd.ARTIST_PAGE_PAGINATION == 'experiment'
-  +rail('Related Artists', artist.href + '/related-artists', 'artists')
-else
-  +rail('Show Highlights', artist.href + '/shows', 'shows')
-  +rail('Related Articles', artist.href + '/articles', 'articles')
-  +rail('Related Artists', artist.href + '/related-artists', 'artists')
-
++rail('Related Artists', artist.href + '/related-artists', 'artists')
