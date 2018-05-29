@@ -58,6 +58,7 @@ describe 'EditorialSignupView', ->
     it 'sets up CTA for mobile users', ->
       @EditorialSignupView.__set__ 'sd',
         IS_MOBILE: true
+        CURRENT_USER: 'John'
       view = new @EditorialSignupView el: @$el
       view.setupDesktopCTA.callCount.should.equal 0
       view.setupMobileCTA.callCount.should.equal 1
@@ -75,6 +76,7 @@ describe 'EditorialSignupView', ->
       @EditorialSignupView::showCTA = sinon.spy()
       @EditorialSignupView.__set__ 'sd',
         IS_MOBILE: true
+        CURRENT_USER: 'John'
       @view = new @EditorialSignupView el: @$el
 
     it 'adds the CTA banner to the page', ->
@@ -125,6 +127,7 @@ describe 'EditorialSignupView', ->
     it 'reveals the banner after 2000 ms on mobile', ->
       @EditorialSignupView.__set__ 'sd',
         IS_MOBILE: true
+        CURRENT_USER: 'John'
       view = new @EditorialSignupView el: @$el
       $(window).scroll()
       @clock.tick(2000)
@@ -165,6 +168,7 @@ describe 'EditorialSignupView', ->
     beforeEach ->
       @EditorialSignupView.__set__ 'sd',
         IS_MOBILE: true
+        CURRENT_USER: 'John'
       @view = new @EditorialSignupView el: @$el
       $(window).scroll()
       @clock.tick(2000)

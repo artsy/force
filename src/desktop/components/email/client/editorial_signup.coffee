@@ -27,7 +27,8 @@ module.exports = class EditorialSignupView extends Backbone.View
       email: sd.CURRENT_USER?.email or ''
     return if @ctaBarView.previouslyDismissed() or @fromSailthru()
     if sd.IS_MOBILE
-      @setupMobileCTA()
+      if sd.CURRENT_USER && !sd.ON_DAILY_EDITORIAL
+        @setupMobileCTA()
     else
       @setupDesktopCTA()
     @revealArticlePopup = _.once(@revealArticlePopup)

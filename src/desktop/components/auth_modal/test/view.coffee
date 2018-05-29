@@ -125,6 +125,31 @@ describe 'AuthModalView', ->
       @view.submit $.Event('click')
       Backbone.sync.args[1][1].toJSON()._csrf.should.equal 'csrfoo'
 
+    it 'submits user data with gdpr fields', ->
+      @view.state.set mode: 'register'
+      @view.serializeForm = -> {
+        name: 'Sam'
+        password: 'foo'
+        email: 'foo@bar.com'
+        accepted_terms_of_service: true
+      }
+      @view.submit $.Event('click')
+      Backbone.sync.args[0][1].toJSON().name.should.equal 'Sam'
+      Backbone.sync.args[0][1].toJSON().email.should.equal 'foo@bar.com'
+      Backbone.sync.args[0][1].toJSON().password.should.equal 'foo'
+      Backbone.sync.args[0][1].toJSON().accepted_terms_of_service.should.equal true
+      Backbone.sync.args[0][1].toJSON().agreed_to_receive_emails.should.equal true
+
+    it 'returns early if validateForm has an error', ->
+      @view.$el.html $ "<form>" + render('register')(
+        copy: new Backbone.Model
+        sd: AP: loginPagePath: 'foo'
+      ) + "</form>"
+      @view.state.set mode: 'register'
+      @view.validateForm = -> false
+      @view.submit $.Event('click')
+      Backbone.sync.args.length.should.equal 0
+
   describe '#onSubmitSuccess', ->
     beforeEach ->
       @view.state = new Backbone.Model mode: 'reset'

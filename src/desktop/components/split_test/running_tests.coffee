@@ -31,17 +31,9 @@ module.exports = {
     outcomes: [
       'control'
       'market_data_no_carousel'
-      'market_data_no_carousel_no_overview'
     ]
     control_group: 'control'
-    edge: 'market_data_no_carousel_no_overview'
-  artist_page_pagination:
-    key: 'artist_page_pagination'
-    outcomes:
-      experiment: 50
-      control: 50
-    control_group: 'control'
-    edge: 'experiment'
+    edge: 'market_data_no_carousel'
 
   article_tooltips:
     key: 'article_tooltips'
@@ -51,4 +43,12 @@ module.exports = {
       'control'
       'market'
     ]
+  autosuggest_search:
+    key: 'autosuggest_search'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    edge: 'experiment'
 }
