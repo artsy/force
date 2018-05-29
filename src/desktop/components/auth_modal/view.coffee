@@ -70,7 +70,8 @@ module.exports = class AuthModalView extends ModalView
     mediator.on 'auth:change:mode', @setMode, this
     mediator.on 'auth:error', @showFormError
     mediator.on 'modal:closed', @logClose
-    mediator.on 'auth:sign_up:email', @trackEmailSignup
+    mediator.on 'auth:sign_up:email', @trackSignup
+    mediator.on 'auth:sign_up:fb', @trackFacebookSignup
     @logState()
 
     Cookies.set 'postSignupAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
@@ -179,17 +180,23 @@ module.exports = class AuthModalView extends ModalView
   showError: (msg) =>
     @$('.auth-errors').text msg
 
-  trackEmailSignup: (options) =>
+  trackSignup: (options) =>
     @trackingOptions =  _.extend(
       @trackingOptions,
       options
     )
+
+  trackFacebookSignup: (options) =>
+    @trackSignup(options)
+    Cookies.set('analytics-signup', JSON.stringify(@trackingOptions))
 
   remove: ->
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
     mediator.off 'auth:sign_up:success'
+    mediator.off 'auth:sign_up:email'
+    mediator.off 'auth:sign_up:fb'
     $('#accepted_terms_of_service').off()
     super
 

@@ -23,6 +23,9 @@ describe 'AuthModalView', ->
       benv.expose
         $: benv.require('jquery'),
         jQuery: benv.require('jquery')
+        analyticsHooks: {
+          trigger: sinon.stub()
+        }
       Backbone.$ = $
       @AuthModalView = rewire '../view'
       @AuthModalView.__set__ 'Cookies',
@@ -38,6 +41,7 @@ describe 'AuthModalView', ->
   beforeEach ->
     @view = new @AuthModalView()
     sinon.stub(Backbone, 'sync').yieldsTo 'success', user: accessToken: 'secrets'
+    analyticsHooks.trigger = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
@@ -91,6 +95,11 @@ describe 'AuthModalView', ->
     it 'accepts optional userData that gets passed to the template', ->
       @view.preInitialize userData: email: 'foo@bar.com'
       @view.templateData.email.should.containEql 'foo@bar.com'
+
+    it 'sets up tracking options', ->
+      @view.preInitialize context_module: 'intext tooltips', intent: 'follow artist'
+      @view.trackingOptions.context_module.should.containEql 'intext tooltips'
+      @view.trackingOptions.intent.should.containEql 'follow artist'
 
   describe '#submit', ->
     beforeEach ->
@@ -156,6 +165,7 @@ describe 'AuthModalView', ->
       @view.user = new LoggedOutUser
       sinon.stub @view, 'reenableForm'
       @submitSpy = sinon.spy $.fn, 'submit'
+      mediator.trigger = sinon.stub()
 
     afterEach ->
       @view.reenableForm.restore()
@@ -164,3 +174,37 @@ describe 'AuthModalView', ->
     it 'does not submit form if the the mode is password reset', ->
       @view.onSubmitSuccess @view.user, { success: 200 }
       @submitSpy.should.be.calledOnce
+
+    it 'triggers analytics hook on login', ->
+      @view.trackingOptions = context_module: 'intext tooltips', intent: 'follow artist'
+      @view.state.set mode: 'login'
+      @view.onSubmitSuccess @view.user, { success: 200 }
+
+      analyticsHooks.trigger.args[0][0].should.eql 'auth:login'
+      analyticsHooks.trigger.args[0][1].context_module.should.eql 'intext tooltips'
+      analyticsHooks.trigger.args[0][1].intent.should.eql 'follow artist'
+
+    it 'triggers mediator for analytics with trackingOptions on register', ->
+      @view.preInitialize context_module: 'intext tooltips', intent: 'follow artist'
+      @view.onSubmitSuccess @view.user, { success: 200 }
+
+      mediator.trigger.args[0][0].should.eql 'auth:sign_up:success'
+      mediator.trigger.args[0][1].context_module.should.eql 'intext tooltips'
+      mediator.trigger.args[0][1].intent.should.eql 'follow artist'
+
+  describe '#trackSignup', ->
+    it 'extends trackingOptions with args', ->
+      @view.preInitialize()
+      @view.trackSignup {intent: 'follow artist'}
+
+      @view.trackingOptions.intent.should.eql 'follow artist'
+
+  describe '#trackFacebookSignup', ->
+    it 'calls #trackSignup and sets a cookie with @trackingOptions', ->
+      @view.preInitialize()
+      @view.trackFacebookSignup {intent: 'follow artist'}
+      cookie = _.last(@AuthModalView.__get__('Cookies').set.args)
+
+      @view.trackingOptions.intent.should.eql 'follow artist'
+      cookie[0].should.eql 'analytics-signup'
+      JSON.parse(cookie[1]).intent.should.eql 'follow artist'
