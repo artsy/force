@@ -42,4 +42,12 @@ module.exports = {
       'bio'
       'market'
     ]
+  autosuggest_search:
+    key: 'autosuggest_search'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    edge: 'experiment'
 }
