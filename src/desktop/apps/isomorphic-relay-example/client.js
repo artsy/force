@@ -1,11 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { buildClientApp } from 'desktop/lib/psi/buildClientApp'
+import { buildClientApp } from 'reaction/Router'
 import { routes } from './routes'
 
-buildClientApp(routes).then(({ App }) => {
-  ReactDOM.hydrate(<App />, document.getElementById('react-root'))
-})
+buildClientApp(routes)
+  .then(({ ClientApp }) => {
+    ReactDOM.hydrate(<ClientApp />, document.getElementById('react-root'))
+  })
+  .catch(error => {
+    console.error(error)
+  })
 
 if (module.hot) {
   module.hot.accept()

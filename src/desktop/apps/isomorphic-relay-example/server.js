@@ -1,6 +1,6 @@
 import express from 'express'
 import adminOnly from 'desktop/lib/admin_only'
-import { buildServerApp } from 'desktop/lib/psi/buildServerApp'
+import { buildServerApp } from 'reaction/Router'
 import { routes } from './routes'
 import { renderLayout } from '@artsy/stitch'
 import { Meta } from './components/Meta'
@@ -9,7 +9,15 @@ const app = (module.exports = express())
 
 app.get('/isomorphic-relay-example*', adminOnly, async (req, res, next) => {
   try {
-    const { App } = await buildServerApp(routes, req.url)
+    const { ServerApp, redirect, status } = await buildServerApp(
+      routes,
+      req.url
+    )
+
+    if (redirect) {
+      res.redirect(302, redirect.url)
+      return
+    }
 
     const layout = await renderLayout({
       basePath: __dirname,
@@ -19,7 +27,7 @@ app.get('/isomorphic-relay-example*', adminOnly, async (req, res, next) => {
       },
       blocks: {
         head: Meta,
-        body: App,
+        body: ServerApp,
       },
       locals: {
         ...res.locals,
@@ -28,8 +36,9 @@ app.get('/isomorphic-relay-example*', adminOnly, async (req, res, next) => {
       },
     })
 
-    res.send(layout)
+    res.status(status).send(layout)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 })

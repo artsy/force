@@ -121,6 +121,7 @@ const config = {
     alias: {
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
       react: path.resolve('./node_modules/react'),
+      'styled-components': path.resolve('./node_modules/styled-components'),
     },
     extensions: [
       '.mjs',

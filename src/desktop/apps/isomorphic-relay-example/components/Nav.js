@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'found'
-import { PreloadLink } from 'desktop/lib/psi/PreloadLink'
+import { Link, PreloadLink } from 'reaction/Router'
 
 export default function Nav() {
   return (
