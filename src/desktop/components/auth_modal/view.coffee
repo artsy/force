@@ -194,7 +194,6 @@ module.exports = class AuthModalView extends ModalView
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
-    mediator.off 'auth:sign_up:success'
     mediator.off 'auth:sign_up:email'
     mediator.off 'auth:sign_up:fb'
     $('#accepted_terms_of_service').off()

@@ -25,12 +25,25 @@ describe 'AuthModalView', ->
         jQuery: benv.require('jquery')
         analyticsHooks: {
           trigger: sinon.stub()
-        }
+        },
       Backbone.$ = $
       @AuthModalView = rewire '../view'
       @AuthModalView.__set__ 'Cookies',
         set: sinon.stub()
         get: sinon.stub()
+      @AuthModalView.__set__(
+        'mediator',
+        @mediator = {
+          trigger: sinon.stub(),
+          on: sinon.stub()
+        }
+      )
+      @AuthModalView.__set__(
+        'analyticsHooks',
+        @analyticsHooks = {
+          trigger: sinon.stub()
+        }
+      )
       LoggedOutUser.__set__ 'sd', AP: {}
       sinon.stub @AuthModalView::, 'initialize'
       done()
@@ -41,7 +54,6 @@ describe 'AuthModalView', ->
   beforeEach ->
     @view = new @AuthModalView()
     sinon.stub(Backbone, 'sync').yieldsTo 'success', user: accessToken: 'secrets'
-    analyticsHooks.trigger = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
@@ -165,7 +177,6 @@ describe 'AuthModalView', ->
       @view.user = new LoggedOutUser
       sinon.stub @view, 'reenableForm'
       @submitSpy = sinon.spy $.fn, 'submit'
-      mediator.trigger = sinon.stub()
 
     afterEach ->
       @view.reenableForm.restore()
@@ -179,18 +190,20 @@ describe 'AuthModalView', ->
       @view.trackingOptions = context_module: 'intext tooltips', intent: 'follow artist'
       @view.state.set mode: 'login'
       @view.onSubmitSuccess @view.user, { success: 200 }
+      analyticsArgs = _.last(@analyticsHooks.trigger.args)
 
-      analyticsHooks.trigger.args[0][0].should.eql 'auth:login'
-      analyticsHooks.trigger.args[0][1].context_module.should.eql 'intext tooltips'
-      analyticsHooks.trigger.args[0][1].intent.should.eql 'follow artist'
+      analyticsArgs[0].should.eql 'auth:login'
+      analyticsArgs[1].context_module.should.eql 'intext tooltips'
+      analyticsArgs[1].intent.should.eql 'follow artist'
 
     it 'triggers mediator for analytics with trackingOptions on register', ->
       @view.preInitialize context_module: 'intext tooltips', intent: 'follow artist'
       @view.onSubmitSuccess @view.user, { success: 200 }
+      mediatorArgs = _.last(@mediator.trigger.args)
 
-      mediator.trigger.args[0][0].should.eql 'auth:sign_up:success'
-      mediator.trigger.args[0][1].context_module.should.eql 'intext tooltips'
-      mediator.trigger.args[0][1].intent.should.eql 'follow artist'
+      mediatorArgs[0].should.eql 'auth:sign_up:success'
+      mediatorArgs[1].context_module.should.eql 'intext tooltips'
+      mediatorArgs[1].intent.should.eql 'follow artist'
 
   describe '#trackSignup', ->
     it 'extends trackingOptions with args', ->
