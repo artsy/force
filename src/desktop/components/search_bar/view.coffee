@@ -10,6 +10,7 @@ itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 CurrentUser = require '../../models/current_user.coffee'
 SearchResult = require '../../models/search_result.coffee'
+splitTest = require '../split_test/index.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   defaults:
@@ -52,7 +53,9 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:closed', @hideSuggestions
     @on 'search:cursorchanged', @ensureResult
 
-    @enableSpotlightAutocomplete = CurrentUser.orNull()?.hasLabFeature('Spotlight Search')
+    splitTest('autosuggest_search').view()
+    @enableSpotlightAutocomplete = sd.AUTOSUGGEST_SEARCH is 'experiment'
+
     @autoselect = false if @enableSpotlightAutocomplete
     @setupTypeahead()
     @setupPlaceholder()
