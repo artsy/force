@@ -9,35 +9,41 @@ interface LoginModalProps extends ModalProps {
   redirectUrl?: string
 }
 
-export class LoginModal extends Component<LoginModalProps> {
-  loginUser(values) {
-    fetch(sd.APP_URL + sd.AP.loginPagePath, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN,
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        // data: {
-        _csrf: sd.CSRF_TOKEN,
-        session_id: sd.SESSION_ID,
-        ...values,
-        // },
-      }),
-    }).then(() => {
-      // window.location.href = this.props.redirectUrl || '/'
-    })
+interface LoginModalState {
+  error?: any
+}
+
+export class LoginModal extends Component<LoginModalProps, LoginModalState> {
+  async loginUser(values, formikBag) {
+    try {
+      const res = await fetch(sd.APP_URL + sd.AP.loginPagePath, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          _csrf: sd.CSRF_TOKEN,
+          session_id: sd.SESSION_ID,
+          ...values,
+        }),
+      })
+      console.log('Response headers: ', res.headers)
+      const data = await res.json()
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+      formikBag.setStatus(err)
+    }
   }
 
   render() {
     return (
       <DesktopModal show={true} onClose={this.props.onClose}>
         <LoginForm
-          handleSubmit={values => {
-            console.log('Form submitted', values)
-            this.loginUser(values)
+          handleSubmit={(values, formikBag) => {
+            this.loginUser(values, formikBag)
           }}
           handleTypeChange={type => this.props.onTypeChange(type)}
           values={{}}
