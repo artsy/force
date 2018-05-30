@@ -92,7 +92,7 @@ search-bar-input-placeholder()
   left 9px
   transform translateY(-50%)
 
-html[data-autosuggest-search='experiment']
+html[data-autosuggest-search]
   #main-layout-search-bar-container
     .tt-suggestion
       &:last-child
@@ -105,6 +105,41 @@ html[data-autosuggest-search='experiment']
           background-color black
           *
             color white
+
+html[data-lab-features*='Grouped Search Results']
+  #main-layout-search-bar-container
+    .empty-item
+      line-height suggestion-thumbnail-size
+      height suggestion-height
+      vertical-align top
+      padding-top 10px
+    .mlsb-suggestion
+      display block
+    .tt-suggestions
+      .tt-suggestion
+        border-bottom none
+        &:last-child
+          padding-bottom 10px
+      .tt-suggestion-category
+        &:hover
+          background-color white
+          *
+            color gray-color
+      .tt-cursor
+        .tt-suggestion-category
+          background-color white
+          *
+            color gray-color
+    .tt-suggestion-category
+      color gray-color
+      height 35px
+      line-height 45px
+    .mlsb-suggestion-value, .tt-suggestion-category
+      line-height normal
+      height 25px
+      padding-top 5px
+      padding-left 25px
+      vertical-align top
 
 // Results dropdown
 #main-layout-search-bar-container
