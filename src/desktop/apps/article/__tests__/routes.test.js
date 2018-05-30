@@ -340,7 +340,29 @@ describe('Article Routes', () => {
         )
       })
 
-      it('Control: showTooltips and showToolTipMarketData are false', done => {
+      it('Logged out user: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        delete res.locals.sd.CURRENT_USER
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+
+      it('Non-admin user: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        res.locals.sd.CURRENT_USER.type = 'Partner'
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+
+      xit('Control: showTooltips and showToolTipMarketData are false', done => {
         res.locals.sd.ARTICLE_TOOLTIPS = 'control'
 
         index(req, res, next).then(() => {
@@ -564,7 +586,7 @@ describe('Article Routes', () => {
       res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
       res.locals.jsonLD.should.containEql('Artsy Editorial')
       res.locals.jsonLD.should.containEql(
-        '/images/full_logo.png","height":103,"width":300'
+        '/images/full_logo.png","height":103,"width":300}}'
       )
       done()
     })

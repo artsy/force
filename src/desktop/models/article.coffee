@@ -275,7 +275,7 @@ module.exports = class Article extends Backbone.Model
       "publisher": {
         "name": "Artsy"
         "logo": {
-          "url": "#{APP_URL}/images/full_logo.png"
+          "url": sd.APP_URL + "/images/full_logo.png"
           "height": 103
           "width": 300
         }
