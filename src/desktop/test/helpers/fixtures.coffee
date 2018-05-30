@@ -252,6 +252,7 @@ moment = require 'moment'
 @searchResult =
   model: 'artwork'
   id: 'maya-hayuk-untitled'
+  _id: 'maya-hayuk-untitled'
   display: 'Maya Hayuk - 42 Artworks, Bio & Shows on Artsy'
   image_url: 'https://i.embed.ly/1/display/crop?width=70&heig'
   display_model: 'Artwork'
