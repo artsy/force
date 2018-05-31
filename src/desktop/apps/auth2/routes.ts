@@ -1,5 +1,5 @@
 import { renderLayout } from '@artsy/stitch'
-import { AuthStatic } from './components/AuthStatic.tsx'
+import { AuthStatic } from './components/AuthStatic'
 import { AuthenticationMeta } from './meta'
 
 export const index = async (req, res, next) => {

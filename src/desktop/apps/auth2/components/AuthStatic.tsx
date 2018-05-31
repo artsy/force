@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AuthForm } from '@artsy/reaction/dist/Components/Authorization/AuthForm'
-import { DesktopHeader } from '@artsy/reaction/dist/Components/Authorization/DesktopHeader'
+import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/Desktop/FormSwitcher'
+import { DesktopHeader } from '@artsy/reaction/dist/Components/Authentication/Desktop/Components/DesktopHeader'
 
 interface Props {
   type: string
@@ -13,7 +13,7 @@ export class AuthStatic extends React.Component<Props> {
     return (
       <AuthFormContainer>
         <DesktopHeader subtitle={this.props.subtitle} />
-        <AuthForm
+        <FormSwitcher
           {...this.props}
           type={this.props.type}
           handleSubmit={() => {

@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export const AuthenticationMeta = props => {
+interface MetaProps {
+  meta: {
+    title: string
+    description: string
+  }
+}
+
+export const AuthenticationMeta: React.SFC<MetaProps> = props => {
   const { meta: { description, title } } = props
 
   return (

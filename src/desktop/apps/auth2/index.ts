@@ -1,5 +1,5 @@
 import express from 'express'
-import { index } from './routes.js'
+import { index } from './routes'
 // const { twitterLastStepPath } = require('@artsy/passport').options
 
 const app = (module.exports = express())
