@@ -7,7 +7,7 @@ import merge from 'lodash.merge'
 import queryString from 'query-string'
 
 let renderLayout = _renderLayout
-const SLUG = 'basel-week'
+const SLUG = 'basel-art-week'
 const MARKETING_MODAL_ID = 'ca18'
 
 export class EditableBaselWeekPage extends JSONPage {
