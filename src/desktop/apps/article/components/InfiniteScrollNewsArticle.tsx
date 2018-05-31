@@ -4,9 +4,7 @@ import { flatten, debounce } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import {
-  RelatedArticlesCanvas,
-} from '@artsy/reaction/dist/Components/Publishing'
+import { RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
@@ -21,6 +19,7 @@ export interface Props {
   articles: ArticleData[]
   isMobile: boolean
   marginTop: string
+  renderTime?: string
 }
 
 interface State {
@@ -62,7 +61,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       isLoading: false,
       offset,
       omit,
-      relatedArticles: []
+      relatedArticles: [],
     }
   }
 
@@ -142,14 +141,14 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     }
   }
 
-  onDateChange = (date) => {
+  onDateChange = date => {
     const hasNewDate = !moment(date).isSame(this.state.date, 'day')
     if (hasNewDate) {
       this.setState({ date })
     }
   }
 
-  onActiveArticleChange = (id) => {
+  onActiveArticleChange = id => {
     this.setState({ activeArticle: id })
   }
 
@@ -162,13 +161,19 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     return beforeDate !== currentDate
   }
 
-  getDateField = (article) => {
+  getDateField = article => {
     const { published_at, scheduled_publish_at } = article
     return published_at || scheduled_publish_at || moment().toISOString()
   }
 
   renderContent = () => {
-    const { activeArticle, articles, display, relatedArticles } = this.state
+    const {
+      activeArticle,
+      articles,
+      display,
+      relatedArticles,
+      renderTimes,
+    } = this.state
     const { isMobile } = this.props
 
     let counter = 0
@@ -176,6 +181,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     return flatten(
       articles.map((article, i) => {
         const hasMetaContent = i % 6 === 0 && i !== 0
+        // const renderTime = hasMetaContent &&
         const displayAd = display[counter]
         const related = relatedArticles[counter]
         if (hasMetaContent) {
@@ -192,9 +198,9 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               article={article}
               isTruncated={isTruncated}
               isFirstArticle={i === 0}
-              onDateChange={(date) => this.onDateChange(date)}
+              onDateChange={date => this.onDateChange(date)}
               nextArticle={articles[i + 1]}
-              onActiveArticleChange={(id) => this.onActiveArticleChange(id)}
+              onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
             />
             {hasMetaContent &&
@@ -211,7 +217,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
             {hasMetaContent &&
               displayAd && (
                 <Fragment>
-                  <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
+                  <DisplayCanvas
+                    unit={displayAd.canvas}
+                    campaign={displayAd}
+                    renderTime={renderTime}
+                  />
                   <Break />
                 </Fragment>
               )}
