@@ -9,6 +9,9 @@ if artwork.artists.length
         h2.artwork-artist__name
           | About #{artist.name}
 
+        .artwork-artist__market-insights(id="market-insights-container-" + artist._id)        
+          //- Market insights go here
+
         .artwork-artist__content
           .side-tabs( class='js-artwork-artist-tabs' )
             +nav(tabs, helpers.artists.name)
