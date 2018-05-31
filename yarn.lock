@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.8.9":
-  version "1.8.9"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.8.9.tgz#261609c3372c1a8f7cc34d92d377f12efc1939a8"
+"@artsy/reaction@^1.8.10":
+  version "1.8.10"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.8.10.tgz#26a3ec787f6cababb31118dece471ab32791b32d"
   dependencies:
     cheerio "^1.0.0-rc.2"
     formik "^0.11.11"

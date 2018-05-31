@@ -21,6 +21,7 @@ export interface Props {
   articles: ArticleData[]
   isMobile: boolean
   marginTop: string
+  renderTime?: string
 }
 
 interface State {
@@ -168,7 +169,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   renderContent = () => {
-    const { activeArticle, articles, display, relatedArticles } = this.state
+    const { activeArticle, articles, display, relatedArticles, renderTimes } = this.state
     const { isMobile } = this.props
 
     let counter = 0
@@ -176,6 +177,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     return flatten(
       articles.map((article, i) => {
         const hasMetaContent = i % 6 === 0 && i !== 0
+        // const renderTime = hasMetaContent && 
         const displayAd = display[counter]
         const related = relatedArticles[counter]
         if (hasMetaContent) {
@@ -211,7 +213,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
             {hasMetaContent &&
               displayAd && (
                 <Fragment>
-                  <DisplayCanvas unit={displayAd.canvas} campaign={displayAd} />
+                  <DisplayCanvas
+                    unit={displayAd.canvas}
+                    campaign={displayAd}
+                    renderTime={renderTime}
+                  />
                   <Break />
                 </Fragment>
               )}
