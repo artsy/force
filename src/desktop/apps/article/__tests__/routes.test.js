@@ -340,29 +340,7 @@ describe('Article Routes', () => {
         )
       })
 
-      it('Logged out user: showTooltips and showToolTipMarketData are false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
-        delete res.locals.sd.CURRENT_USER
-
-        index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(false)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
-          done()
-        })
-      })
-
-      it('Non-admin user: showTooltips and showToolTipMarketData are false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
-        res.locals.sd.CURRENT_USER.type = 'Partner'
-
-        index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(false)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
-          done()
-        })
-      })
-
-      xit('Control: showTooltips and showToolTipMarketData are false', done => {
+      it('Control: showTooltips and showToolTipMarketData are false', done => {
         res.locals.sd.ARTICLE_TOOLTIPS = 'control'
 
         index(req, res, next).then(() => {

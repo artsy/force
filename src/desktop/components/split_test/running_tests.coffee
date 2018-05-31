@@ -40,6 +40,7 @@ module.exports = {
     weighting: 'equal'
     outcomes: [
       'bio'
+      'control'
       'market'
     ]
   autosuggest_search:

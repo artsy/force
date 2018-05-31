@@ -130,9 +130,8 @@ export async function index(req, res, next) {
     }
 
     // Tooltips a/b/c test
-    const isAdmin = isLoggedIn && CURRENT_USER.type === 'Admin'
-    const showTooltips = ARTICLE_TOOLTIPS !== 'control' && isAdmin && !isMobile
-    const showToolTipMarketData = ARTICLE_TOOLTIPS === 'market'
+    const showTooltips = !isMobile && ARTICLE_TOOLTIPS !== 'control'
+    const showToolTipMarketData = showTooltips && ARTICLE_TOOLTIPS === 'market'
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),

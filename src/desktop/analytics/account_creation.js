@@ -1,3 +1,4 @@
+import mediator from '../lib/mediator.coffee'
 //
 // Generic events for tracking events around account creation.
 //
@@ -20,8 +21,11 @@ const trackAccountCreation = options => {
     'acquisition_initiative',
     'signup_service',
     'user_id',
-    'context'
+    'context',
+    'context_module',
+    'intent'
   )
+
   analytics.track(
     'Created account',
     _.extend(properties, { order_id: properties.user_id })
@@ -35,12 +39,12 @@ const trackAccountCreation = options => {
 }
 
 // Created account (via email)
-$(document).on(
+$(document).one(
   'submit',
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form, .gdpr-signup form',
-  function() {
+  () => {
     $(document).one('ajaxComplete', (e, xhr, options) =>
-      trackAccountCreation({
+      mediator.trigger('auth:sign_up:email', {
         acquisition_initiative: getAcquisitionInitiative(),
         signup_service: 'email',
         user_id: xhr.responseJSON.user.id,
@@ -54,16 +58,13 @@ $(document).on(
 // Created account (via social)
 
 // 1. Upon clicking the social signup button
-$(document).on('click', '.auth-signup-facebook, .gdpr-signup__fb', function(e) {
+$(document).on('click', '.auth-signup-facebook, .gdpr-signup__fb', e => {
   // 2. Store some data in cookies before being redirected everywhere
-  Cookies.set(
-    'analytics-signup',
-    JSON.stringify({
-      service: 'facebook',
-      acquisition_initiative: getAcquisitionInitiative(),
-      context: $(e.currentTarget).data('context'),
-    })
-  )
+  mediator.trigger('auth:sign_up:fb', {
+    service: 'facebook',
+    acquisition_initiative: getAcquisitionInitiative(),
+    context: $(e.currentTarget).data('context'),
+  })
 })
 
 // 3. After landing back on Artsy send the tracking call and expire the cookie
@@ -77,13 +78,15 @@ if (Cookies.get('analytics-signup')) {
       signup_service: data.service,
       user_id: sd.CURRENT_USER.id,
       context: data.context,
+      context_module: data.context_module,
       email: sd.CURRENT_USER.email,
+      intent: data.intent,
     })
   }
 }
 
-analyticsHooks.on('auth:login', function(options) {
-  analytics.track('Successfully logged in')
+analyticsHooks.on('auth:login', (options = {}) => {
+  analytics.track('Successfully logged in', options)
 })
 
 // Triggered sign up form via save button
@@ -111,15 +114,19 @@ $('.mlh-logout').click(function() {
 })
 
 // Viewed sign up options
-var trackViewSignup = function() {
-  analytics.track('Viewed sign up options')
+var trackViewSignup = (options = {}) => {
+  analytics.track('Viewed sign up options', options)
 }
 
-analyticsHooks.on('mediator:open:auth', function(options) {
-  if (options.mode === 'signup') trackViewSignup()
+analyticsHooks.on('mediator:open:auth', (options = {}) => {
+  if (options.mode === 'signup') trackViewSignup(options)
 
   analytics.trackLink($('.auth-signup-facebook')[0], 'Created account')
   analytics.trackLink($('.auth-signup-twitter')[0], 'Created account')
+})
+
+analyticsHooks.on('mediator:auth:sign_up:success', (options = {}) => {
+  if (options) trackAccountCreation(options)
 })
 
 $('#auth-footer [href*=sign_up]').click(trackViewSignup)

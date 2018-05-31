@@ -2,17 +2,19 @@
 @require '../../../../components/gradient_blurb'
 @require '../../../../components/merry_go_round/index'
 
-.artwork-artists
-  //
-
 .artwork-artist
+  &.artwork-section
+    border-top none
+
   &-header-cell-section
     margin-bottom 20px
-
     h2
       avant-garde-size('body', true)
       margin-bottom 10px
 
+  &__market-insights
+    margin-bottom 30px
+    
   &__name
     serif('headline')
     margin 0 0 distance(gutter) 0
