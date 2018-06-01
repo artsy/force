@@ -60,7 +60,8 @@ describe '#auctionRegistration', ->
       @res.render.args[0][0].should.equal 'registration'
       @res.render.args[0][1].sale.get('name').should.equal 'Awesome Sale'
 
-    it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file', ->
+    it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file and user has accepted conditions', ->
+      @req.query = {'accepted-conditions': 'true' }
       routes.auctionRegistration @req, @res
       Backbone.sync.args[0][2].success openSale
       Backbone.sync.args[1][2].success []
@@ -68,6 +69,21 @@ describe '#auctionRegistration', ->
       Backbone.sync.args[3][2].success [{}]
 
       @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
+
+    it 'redirects to modal if user has credit card on file and has not accepted conditions', ->
+      @req.query = {'accepted-conditions': 'false' } # explicitly passed as false
+      routes.auctionRegistration @req, @res
+      Backbone.sync.args[0][2].success openSale
+      Backbone.sync.args[1][2].success []
+      Backbone.sync.args[2][2].success [{foo: 'bar'}]
+      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/registration-flow"
+
+    it 'redirects to modal if user has credit card on file and has not accepted conditions', ->
+      routes.auctionRegistration @req, @res
+      Backbone.sync.args[0][2].success openSale
+      Backbone.sync.args[1][2].success []
+      Backbone.sync.args[2][2].success [{foo: 'bar'}]
+      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/registration-flow"
 
     it 'renders registration error page if sale is an auction and is not registerable', ->
       routes.auctionRegistration @req, @res
