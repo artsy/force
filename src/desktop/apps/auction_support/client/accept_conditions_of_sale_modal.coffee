@@ -31,6 +31,7 @@ module.exports = class AcceptConditionsOfSaleModal extends ModalView
 
   handleRegister: =>
     if (@validateAcceptConditions())
+      @$submit.addClass('is-loading')
       url = @auction.registerUrl() + '?accepted-conditions=true'
       window.location.assign(url)
 
