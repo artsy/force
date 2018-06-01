@@ -5315,6 +5315,33 @@ fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
   dependencies:
+    babel-runtime "^6.26.0"
+    is-promise "^2.1.0"
+    lodash "^4.17.4"
+    prop-types "^15.6.0"
+    prop-types-extra "^1.0.1"
+    warning "^3.0.0"
+
+found@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.3.11.tgz#2cf9aedc204b03c1da384f3a321a713a251d747b"
+  dependencies:
+    babel-runtime "^6.26.0"
+    farce "^0.2.6"
+    is-promise "^2.1.0"
+    lodash "^4.17.5"
+    path-to-regexp "^1.7.0"
+    prop-types "^15.6.1"
+    prop-types-extra "^1.0.1"
+    react-redux "^5.0.7"
+    react-static-container "^1.0.2"
+    redux "^4.0.0"
+    warning "^3.0.0"
+
+fragment-cache@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
+  dependencies:
     map-cache "^0.2.2"
 
 frameguard@2.0.0:
@@ -10199,6 +10226,21 @@ query-string@^5.0.1:
     decode-uri-component "^0.2.0"
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
+
+query-string@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
+  dependencies:
+    decode-uri-component "^0.2.0"
+    object-assign "^4.1.0"
+    strict-uri-encode "^1.0.0"
+
+query-string@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.1.0.tgz#01e7d69f6a0940dac67a937d6c6325647aa4532a"
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
 
 query-string@^5.1.1:
   version "5.1.1"

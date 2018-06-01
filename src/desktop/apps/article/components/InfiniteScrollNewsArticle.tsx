@@ -94,9 +94,13 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       })
 
       const newArticles = data.articles
-      const newDisplay = extend({}, data.display, {
-        renderTime: getCurrentUnixTimestamp(),
-      })
+
+      let newDisplay
+      if (data.display) {
+        newDisplay = extend({}, data.display, {
+          renderTime: getCurrentUnixTimestamp(),
+        })
+      }
       const newRelatedArticles = [data.relatedArticlesCanvas]
 
       if (newArticles.length) {

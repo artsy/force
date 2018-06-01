@@ -160,7 +160,7 @@ export default class InfiniteScrollArticle extends React.Component {
               showTooltips={showTooltips}
               showToolTipMarketData={showToolTipMarketData}
               onOpenAuthModal={onOpenAuthModal}
-              renderTime={renderTimes[i % 3]}
+              renderTime={renderTimes[Math.floor(i / 3)]}
             />
             <Break />
             <Waypoint
