@@ -26,7 +26,7 @@ export default function Nav() {
         </PreloadLink>
       </li>
 
-      {/* <li>
+      <li>
         <PreloadLink
           immediate
           to="/isomorphic-relay-example/auction/shared-live-mocktion-k8s"
@@ -48,7 +48,7 @@ export default function Nav() {
         <Link to="/isomorphic-relay-example/react-loadable/server">
           Async bundle splitting - Example 2
         </Link>
-      </li> */}
+      </li>
     </ul>
   )
 }
