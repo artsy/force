@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { buildClientApp } from 'reaction/Router'
 import { routes } from './routes'
 
-buildClientApp(routes)
+buildClientApp({ routes })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(<ClientApp />, document.getElementById('react-root'))
   })

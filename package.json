@@ -20,7 +20,7 @@
     "sentry": "sh scripts/sentry.sh",
     "start": "sh scripts/start.sh",
     "start:relay": "yarn relay && concurrently --raw --kill-others 'yarn relay --watch' 'yarn start'",
-    "sync-schema": "rm -rf data && mkdir data && yarn graphql get-schema -e https://metaphysics-staging.artsy.net -o data",
+    "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test": "sh scripts/test.sh",
     "webpack": "webpack"
   },
@@ -240,6 +240,7 @@
     "fork-ts-checker-webpack-plugin": "^0.3.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "graphql-cli": "^2.16.0",
+    "graphql-fetch-schema": "^0.8.0",
     "hulk-editor": "craigspaeth/hulk",
     "husky": "^0.14.3",
     "imagesloaded": "^4.1.1",

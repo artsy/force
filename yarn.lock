@@ -2897,7 +2897,7 @@ commander@^2.11.0, commander@^2.12.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
 
-commander@^2.13.0, commander@^2.7.1:
+commander@^2.13.0, commander@^2.14.1, commander@^2.7.1:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
@@ -5582,6 +5582,15 @@ graphql-config@^1.1.1:
     js-yaml "^3.10.0"
     lodash "^4.17.4"
     minimatch "^3.0.4"
+
+graphql-fetch-schema@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/graphql-fetch-schema/-/graphql-fetch-schema-0.8.0.tgz#0f76951720b263055f09f58658e9ea2640ac711d"
+  dependencies:
+    babel-runtime "^6.26.0"
+    commander "^2.14.1"
+    graphql "^0.13.1"
+    node-fetch "^2.0.0"
 
 graphql-import@0.4.5, graphql-import@^0.4.0, graphql-import@^0.4.4:
   version "0.4.5"

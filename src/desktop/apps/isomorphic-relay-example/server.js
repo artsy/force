@@ -9,10 +9,10 @@ const app = (module.exports = express())
 
 app.get('/isomorphic-relay-example*', adminOnly, async (req, res, next) => {
   try {
-    const { ServerApp, redirect, status } = await buildServerApp(
+    const { ServerApp, redirect, status } = await buildServerApp({
       routes,
-      req.url
-    )
+      url: req.url,
+    })
 
     if (redirect) {
       res.redirect(302, redirect.url)
