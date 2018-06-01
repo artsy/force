@@ -1,3 +1,5 @@
+// FIXME
+import 'regenerator-runtime/runtime'
 require('@babel/polyfill')
 
 const _ = require('underscore')
