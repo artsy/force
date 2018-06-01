@@ -79,11 +79,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   it('fetches more articles at the end of the page', async () => {
     const data = {
-      display: {
-        canvas: {
-          layout: 'standard',
-        },
-      },
       articles: [
         _.extend({}, fixtures.article, {
           slug: 'foobar',
@@ -100,8 +95,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
       .find('#article-root')
       .children()
       .length.should.equal(4)
-
-    Object.keys(rendered.state().display[0]).should.containEql('renderTime')
   })
 
   it('sets up follow buttons', () => {

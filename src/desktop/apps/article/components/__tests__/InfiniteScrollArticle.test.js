@@ -48,7 +48,6 @@ describe('<InfiniteScrollArticle />', () => {
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
     props = {
-      renderTime: 12345,
       article: _.extend({}, fixtures.article, {
         layout: 'standard',
         vertical: {

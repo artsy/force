@@ -32,7 +32,6 @@ export default class ArticleLayout extends React.Component {
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
     showToolTipMarketData: PropTypes.bool,
-    renderTime: PropTypes.string,
   }
 
   componentDidMount() {
@@ -64,7 +63,6 @@ export default class ArticleLayout extends React.Component {
       isMobile,
       isSuper,
       onDailyEditorial,
-      renderTime,
       showTooltips,
       showToolTipMarketData,
     } = this.props
@@ -106,7 +104,6 @@ export default class ArticleLayout extends React.Component {
           showTooltips={showTooltips}
           showToolTipMarketData={showToolTipMarketData}
           onOpenAuthModal={this.handleOpenAuthModal}
-          renderTime={renderTime}
         />
       )
     } else {

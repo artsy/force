@@ -3,7 +3,6 @@ import * as _ from 'underscore'
 import sinon from 'sinon'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
-import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
 
 const rewire = require('rewire')('../routes')
 const { amp, classic, editorialSignup, index, subscribedToEditorial } = rewire
@@ -49,7 +48,6 @@ describe('Article Routes', () => {
 
   describe('#index', () => {
     it('renders the index with the correct data', done => {
-      const time = getCurrentUnixTimestamp()
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
@@ -64,9 +62,6 @@ describe('Article Routes', () => {
         renderLayout.args[0][0].data.article.title.should.equal(
           'Top Ten Booths'
         )
-
-        const timeDifference = time - renderLayout.args[0][0].data.renderTime
-        timeDifference.should.be.below(100)
         renderLayout.args[0][0].locals.assetPackage.should.equal('article')
         done()
       })
