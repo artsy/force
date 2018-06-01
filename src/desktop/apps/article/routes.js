@@ -14,6 +14,7 @@ import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { data as _sd } from 'sharify'
 import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
+import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(
   SAILTHRU_KEY,
@@ -132,6 +133,7 @@ export async function index(req, res, next) {
     // Tooltips a/b/c test
     const showTooltips = !isMobile && ARTICLE_TOOLTIPS !== 'control'
     const showToolTipMarketData = showTooltips && ARTICLE_TOOLTIPS === 'market'
+    const renderTime = getCurrentUnixTimestamp()
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -157,6 +159,7 @@ export async function index(req, res, next) {
         isMobile,
         jsonLD,
         onDailyEditorial,
+        renderTime,
         showTooltips,
         showToolTipMarketData,
         superArticle,
