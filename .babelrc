@@ -25,7 +25,7 @@
         "reaction": "@artsy/reaction/dist"
       }
     }],
-    ["relay", { "artifactDirectory": "./src/__generated__", "extensions": ".ts" }]
+    ["relay", { "artifactDirectory": "./src/__generated__" }]
   ],
   "env": {
     "development": {

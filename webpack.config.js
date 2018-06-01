@@ -8,14 +8,7 @@ const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 
-const {
-  METAPHYSICS_ENDPOINT,
-  NODE_ENV,
-  PORT,
-  SSR_ENABLED,
-  WEBPACK_DEVTOOL,
-} = process.env
-
+const { NODE_ENV, PORT, WEBPACK_DEVTOOL } = process.env
 const isDevelopment = NODE_ENV === 'development'
 const isStaging = NODE_ENV === 'staging'
 const isProduction = NODE_ENV === 'production'
@@ -99,8 +92,6 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        METAPHYSICS_ENDPOINT: JSON.stringify(METAPHYSICS_ENDPOINT), // FIXME: remove
-        SSR_ENABLED: JSON.stringify(SSR_ENABLED), // FIXME: Remove
       },
     }),
     new webpack.NamedModulesPlugin(),
