@@ -1,5 +1,4 @@
 import { renderLayout as _renderLayout } from '@artsy/stitch'
-import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 import App from 'desktop/apps/articles/components/App.tsx'
 import magazineQuery from './queries/editorial_articles.coffee'
 import {
@@ -133,7 +132,6 @@ export const teamChannel = (req, res, next) => {
 
 export async function news(req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
-  const renderTime = getCurrentUnixTimestamp()
 
   try {
     const { articles } = await positronql({
@@ -159,7 +157,6 @@ export async function news(req, res, next) {
       data: {
         articles,
         isMobile,
-        renderTime,
       },
     })
 
