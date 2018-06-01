@@ -145,7 +145,6 @@ export default class InfiniteScrollArticle extends React.Component {
 
     return _.flatten(
       this.state.articles.map((article, i) => {
-        console.log(Math.floor(i / 3))
         return (
           <div key={`article-${i}`}>
             <Article
