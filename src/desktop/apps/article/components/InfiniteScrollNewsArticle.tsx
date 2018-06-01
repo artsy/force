@@ -1,12 +1,13 @@
 import moment from 'moment'
 import React, { Component, Fragment } from 'react'
-import { flatten, debounce } from 'lodash'
+import { flatten, debounce, extend } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
 import {
   RelatedArticlesCanvas,
 } from '@artsy/reaction/dist/Components/Publishing'
+import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
@@ -21,7 +22,7 @@ export interface Props {
   articles: ArticleData[]
   isMobile: boolean
   marginTop: string
-  renderTime?: string
+  renderTime?: number
 }
 
 interface State {
@@ -63,7 +64,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       isLoading: false,
       offset,
       omit,
-      relatedArticles: []
+      relatedArticles: [],
     }
   }
 
@@ -95,7 +96,9 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       })
 
       const newArticles = data.articles
-      const newDisplay = data.display
+      const newDisplay = extend({}, data.display, {
+        renderTime: getCurrentUnixTimestamp()
+      })
       const newRelatedArticles = [data.relatedArticlesCanvas]
 
       if (newArticles.length) {
@@ -169,15 +172,14 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   renderContent = () => {
-    const { activeArticle, articles, display, relatedArticles, renderTimes } = this.state
-    const { isMobile } = this.props
+    const { activeArticle, articles, display, relatedArticles } = this.state
+    const { isMobile, renderTime } = this.props
 
     let counter = 0
 
     return flatten(
       articles.map((article, i) => {
         const hasMetaContent = i % 6 === 0 && i !== 0
-        // const renderTime = hasMetaContent && 
         const displayAd = display[counter]
         const related = relatedArticles[counter]
         if (hasMetaContent) {
@@ -216,7 +218,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
                   <DisplayCanvas
                     unit={displayAd.canvas}
                     campaign={displayAd}
-                    renderTime={renderTime}
+                    renderTime={displayAd.renderTime || renderTime}
                   />
                   <Break />
                 </Fragment>
