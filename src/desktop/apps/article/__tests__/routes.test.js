@@ -49,6 +49,7 @@ describe('Article Routes', () => {
   describe('#index', () => {
     it('renders the index with the correct data', done => {
       const data = {
+        renderTime: 12345,
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
           channel_id: '123',
@@ -62,6 +63,7 @@ describe('Article Routes', () => {
         renderLayout.args[0][0].data.article.title.should.equal(
           'Top Ten Booths'
         )
+        renderLayout.args[0][0].data.renderTime.should.equal(12345)
         renderLayout.args[0][0].locals.assetPackage.should.equal('article')
         done()
       })
