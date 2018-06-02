@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.10.0.tgz#ab38f3077a1ea6ecf4d6711a1ef642f1f5b27847"
+"@artsy/reaction@^1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.10.3.tgz#d9edb7f36cd5b0003d46b286139ec7c9343df99c"
   dependencies:
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
@@ -5708,11 +5708,11 @@ graphql-fetch-schema@^0.8.0:
     graphql "^0.13.1"
     node-fetch "^2.0.0"
 
-graphql@^0.12.3, graphql@^0.13.0, graphql@^0.13.1:
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.12.3.tgz#11668458bbe28261c0dcb6e265f515ba79f6ce07"
+graphql@^0.13.0, graphql@^0.13.1, graphql@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.2.tgz#4c740ae3c222823e7004096f832e7b93b2108270"
   dependencies:
-    iterall "1.1.3"
+    iterall "^1.2.1"
 
 growl@1.9.2:
   version "1.9.2"
@@ -6787,9 +6787,9 @@ istanbul-reports@^1.1.4:
   dependencies:
     handlebars "^4.0.3"
 
-iterall@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.3.tgz#1cbbff96204056dde6656e2ed2e2226d0e6d72c9"
+iterall@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
 
 jade@^1.11.0:
   version "1.11.0"
