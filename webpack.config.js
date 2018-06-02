@@ -7,6 +7,7 @@ const WebpackNotifierPlugin = require('webpack-notifier')
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
+
 const { NODE_ENV, PORT, WEBPACK_DEVTOOL } = process.env
 const isDevelopment = NODE_ENV === 'development'
 const isStaging = NODE_ENV === 'staging'
@@ -19,6 +20,10 @@ const config = {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
       './src/desktop/apps/webpack/client.js',
+    ],
+    relay: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/desktop/apps/isomorphic-relay-example/client.js',
     ],
     ...getEntrypoints(),
   },
@@ -107,8 +112,18 @@ const config = {
     alias: {
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
       react: path.resolve('./node_modules/react'),
+      'styled-components': path.resolve('./node_modules/styled-components'),
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.jade', '.coffee'],
+    extensions: [
+      '.mjs',
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+      '.json',
+      '.jade',
+      '.coffee',
+    ],
     modules: ['node_modules', 'src'],
     symlinks: false,
   },
