@@ -22,7 +22,8 @@
     "start:relay": "yarn relay && concurrently --raw --kill-others 'yarn relay --watch' 'yarn start'",
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test": "sh scripts/test.sh",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "bundle-report": "NODE_ENV=production ANALYZE_BUNDLE=true webpack"
   },
   "prettier": {
     "bracketSpacing": true,
