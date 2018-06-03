@@ -4,11 +4,12 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackNotifierPlugin = require('webpack-notifier')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 
-const { NODE_ENV, PORT, WEBPACK_DEVTOOL } = process.env
+const { NODE_ENV, PORT, WEBPACK_DEVTOOL, ANALYZE_BUNDLE } = process.env
 const isDevelopment = NODE_ENV === 'development'
 const isStaging = NODE_ENV === 'staging'
 const isProduction = NODE_ENV === 'production'
@@ -152,6 +153,10 @@ if (isDevelopment) {
         },
       })
     )
+  }
+
+  if (ANALYZE_BUNDLE) {
+    config.plugins.push(new BundleAnalyzerPlugin())
   }
 }
 
