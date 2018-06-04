@@ -17,8 +17,12 @@ npm-debug.log
 dump.rdb
 manifest.json
 .cache-loader
+
+/data
+
 /src/desktop/public/assets
 /src/mobile/public/assets
+
 /node_modules
 node_modules
 /public
