@@ -28,9 +28,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.10.3":
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.10.3.tgz#d9edb7f36cd5b0003d46b286139ec7c9343df99c"
+"@artsy/reaction@^1.10.4":
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.10.4.tgz#9417e4c87343d3e41cca8a1c6c4e6bd4270b1d4a"
   dependencies:
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
@@ -1058,7 +1058,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -5287,33 +5286,6 @@ forwarded@~0.1.2:
 found-relay@^0.3.0-alpha.13:
   version "0.3.0-alpha.13"
   resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.3.0-alpha.13.tgz#a40dc687e329e6fca02213b697c76dd281203ea5"
-  dependencies:
-    babel-runtime "^6.26.0"
-    is-promise "^2.1.0"
-    lodash "^4.17.4"
-    prop-types "^15.6.0"
-    prop-types-extra "^1.0.1"
-    warning "^3.0.0"
-
-found@^0.3.11:
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.3.11.tgz#2cf9aedc204b03c1da384f3a321a713a251d747b"
-  dependencies:
-    babel-runtime "^6.26.0"
-    farce "^0.2.6"
-    is-promise "^2.1.0"
-    lodash "^4.17.5"
-    path-to-regexp "^1.7.0"
-    prop-types "^15.6.1"
-    prop-types-extra "^1.0.1"
-    react-redux "^5.0.7"
-    react-static-container "^1.0.2"
-    redux "^4.0.0"
-    warning "^3.0.0"
-
-fragment-cache@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
   dependencies:
     babel-runtime "^6.26.0"
     is-promise "^2.1.0"
@@ -10226,21 +10198,6 @@ query-string@^5.0.1:
     decode-uri-component "^0.2.0"
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
-
-query-string@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
-  dependencies:
-    decode-uri-component "^0.2.0"
-    object-assign "^4.1.0"
-    strict-uri-encode "^1.0.0"
-
-query-string@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.1.0.tgz#01e7d69f6a0940dac67a937d6c6325647aa4532a"
-  dependencies:
-    decode-uri-component "^0.2.0"
-    strict-uri-encode "^2.0.0"
 
 query-string@^5.1.1:
   version "5.1.1"
