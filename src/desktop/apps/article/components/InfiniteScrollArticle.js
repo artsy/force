@@ -9,6 +9,7 @@ import { positronql as _positronql } from 'desktop/lib/positronql'
 import { Article } from 'reaction/Components/Publishing'
 import { articlesQuery } from 'desktop/apps/article/queries/articles'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
+import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
 
 // FIXME: Rewire
 let positronql = _positronql
@@ -25,6 +26,7 @@ export default class InfiniteScrollArticle extends React.Component {
     showTooltips: PropTypes.bool,
     showToolTipMarketData: PropTypes.bool,
     onOpenAuthModal: PropTypes.func,
+    renderTime: PropTypes.number,
   }
 
   constructor(props) {
@@ -32,11 +34,12 @@ export default class InfiniteScrollArticle extends React.Component {
 
     this.state = {
       isLoading: false,
-      articles: [this.props.article],
+      articles: [props.article],
       offset: 0,
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
+      renderTimes: [props.renderTime],
     }
   }
 
@@ -45,7 +48,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   fetchNextArticles = async () => {
-    const { articles, following, offset } = this.state
+    const { articles, following, offset, renderTimes } = this.state
 
     this.setState({
       isLoading: true,
@@ -65,6 +68,7 @@ export default class InfiniteScrollArticle extends React.Component {
       if (data.articles.length) {
         this.setState({
           articles: articles.concat(data.articles),
+          renderTimes: renderTimes.concat([getCurrentUnixTimestamp()]),
           isLoading: false,
           offset: offset + 3,
         })
@@ -137,6 +141,7 @@ export default class InfiniteScrollArticle extends React.Component {
 
   renderContent = () => {
     const { showTooltips, showToolTipMarketData, onOpenAuthModal } = this.props
+    const { renderTimes } = this.state
 
     return _.flatten(
       this.state.articles.map((article, i) => {
@@ -155,6 +160,7 @@ export default class InfiniteScrollArticle extends React.Component {
               showTooltips={showTooltips}
               showToolTipMarketData={showToolTipMarketData}
               onOpenAuthModal={onOpenAuthModal}
+              renderTime={renderTimes[Math.floor(i / 3)]}
             />
             <Break />
             <Waypoint
