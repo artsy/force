@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 316 254.9" style="enable-background:new 0 0 316 254.9;" xml:space="preserve">
 <style type="text/css">
-	.st0{filter:url(#Adobe_OpacityMaskFilter);}
-	.st1{fill:#FFFFFF;}
-	.st2{mask:url(#mask-2_2_);}
-	.st3{filter:url(#Adobe_OpacityMaskFilter_1_);}
-	.st4{mask:url(#mask-4_2_);}
+	.wechat__primary-filter{filter:url(#WeChat_OpacityMaskFilter);}
+	.wechat__fill{fill:#FFFFFF;}
+	.wechat__primary-mask{mask:url(#mask-2_2_);}
+	.wechat__secondary-filter{filter:url(#WeChat_OpacityMaskFilter_1_);}
+	.wechat__secondary-mask{mask:url(#mask-4_2_);}
 </style>
-<g id="Page-1_1_">
-	<g id="Group-11_1_" transform="translate(-917.000000, -213.000000)">
-		<g id="Page-1-Copy_1_" transform="translate(917.000000, 213.000000)">
-			<g id="Group-3_1_" transform="translate(8.970000, 6.420123)">
-				<g id="Clip-2_1_">
+<g class="WeChat__Page-1_1_">
+	<g class="WeChat__Group-11_1_" transform="translate(-917.000000, -213.000000)">
+		<g class="WeChat__Page-1-Copy_1_" transform="translate(917.000000, 213.000000)">
+			<g class="WeChat__Group-3_1_" transform="translate(8.970000, 6.420123)">
+				<g class="WeChat__Clip-2_1_">
 				</g>
 				<defs>
-					<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="116.3" y="81.1" width="190.7" height="167.4">
+					<filter id="WeChat_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="116.3" y="81.1" width="190.7" height="167.4">
 						<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
 					</filter>
 				</defs>
 				<mask maskUnits="userSpaceOnUse" x="116.3" y="81.1" width="190.7" height="167.4" id="mask-2_2_">
-					<g class="st0">
-						<polygon id="path-1_2_" class="st1" points="116.3,81.1 307,81.1 307,248.4 116.3,248.4 						"/>
+					<g class="wechat__primary-filter">
+						<polygon class="WeChat__path-1_2_" class="wechat__fill" points="116.3,81.1 307,81.1 307,248.4 116.3,248.4 						"/>
 					</g>
 				</mask>
-				<path id="Fill-1_1_" class="st2" d="M243,147.8c-7.2,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9
+				<path class="WeChat__Fill-1_1_" class="wechat__primary-mask" d="M243,147.8c-7.2,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9
 					C256,142,250.2,147.8,243,147.8 M179.8,147.8c-7.2,0-12.9-5.8-12.9-12.9c0-7.1,5.8-12.9,12.9-12.9c7.1,0,12.9,5.8,12.9,12.9
 					C192.8,142,187,147.8,179.8,147.8 M273.4,220.6c20.5-14.5,33.6-36.2,33.6-60.3c0-43.7-42.7-79.2-95.4-79.2
 					c-52.7,0-95.4,35.5-95.4,79.2c0,43.7,42.7,79.2,95.4,79.2c11.4,0,22.3-1.7,32.5-4.7c1.8-0.5,3.7-0.3,5.3,0.6l20.7,11.9
 					c4.6,2.6,7.2,0.6,5.9-4.5l-4.5-17C271,223.8,271.8,221.8,273.4,220.6"/>
 			</g>
-			<g id="Group-6_1_" transform="translate(0.000000, 0.010484)">
-				<g id="Clip-5_1_">
+			<g class="WeChat__Group-6_1_" transform="translate(0.000000, 0.010484)">
+				<g class="WeChat__Clip-5_1_">
 				</g>
 				<defs>
-					<filter id="Adobe_OpacityMaskFilter_1_" filterUnits="userSpaceOnUse" x="0" y="0" width="227.8" height="200.8">
+					<filter class="WeChat_OpacityMaskFilter_1_" filterUnits="userSpaceOnUse" x="0" y="0" width="227.8" height="200.8">
 						<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
 					</filter>
 				</defs>
 				<mask maskUnits="userSpaceOnUse" x="0" y="0" width="227.8" height="200.8" id="mask-4_2_">
-					<g class="st3">
-						<polygon id="path-3_2_" class="st1" points="0,0 227.8,0 227.8,200.8 0,200.8 						"/>
+					<g class="wechat__secondary-filter">
+						<polygon class="WeChat__path-3_2_" class="wechat__fill" points="0,0 227.8,0 227.8,200.8 0,200.8 						"/>
 					</g>
 				</mask>
-				<path id="Fill-4_1_" class="st4" d="M76.1,79.6c-8.4,0-15.2-6.8-15.2-15.2c0-8.4,6.8-15.2,15.2-15.2S91.4,56,91.4,64.4
+				<path class="WeChat__Fill-4_1_" class="wechat__secondary-mask" d="M76.1,79.6c-8.4,0-15.2-6.8-15.2-15.2c0-8.4,6.8-15.2,15.2-15.2S91.4,56,91.4,64.4
 					C91.4,72.8,84.5,79.6,76.1,79.6 M152.7,49.2c8.4,0,15.2,6.8,15.2,15.2s-6.8,15.2-15.2,15.2c-8.4,0-15.2-6.8-15.2-15.2
 					S144.2,49.2,152.7,49.2 M221.7,79.9c2,0,4,0,6,0.1C219.2,34.7,171.8,0,114.6,0C51.3,0,0,42.5,0,94.9c0,28.8,15.5,54.6,40,72
 					c2.3,1.6,3.4,4.5,2.6,7.2l-5.4,20c-1.6,6,1.5,8.4,6.9,5.3l24.5-14.3c2.2-1.3,4.9-1.6,7.3-0.9c12.1,3.6,25.1,5.5,38.6,5.5
