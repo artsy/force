@@ -10,6 +10,7 @@ import _EditorialSignupView from 'desktop/components/email/client/editorial_sign
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
+import splitTest from 'desktop/components/split_test/index.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
@@ -32,13 +33,16 @@ export default class ArticleLayout extends React.Component {
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
     showToolTipMarketData: PropTypes.bool,
-    renderTime: PropTypes.string,
+    renderTime: PropTypes.number,
   }
 
   componentDidMount() {
     const { article, isSuper } = this.props
-
+    // TODO: Replace with relay follow
     setupFollowButtons(this.state.following)
+    // Track a/b/c test group
+    splitTest('article_tooltips').view()
+
     if (isSuper) {
       new SuperArticleView({
         el: document.querySelector('body'),

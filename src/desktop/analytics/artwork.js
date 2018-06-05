@@ -55,6 +55,131 @@ import { data as sd } from 'sharify'
       })
     })
 
+  // Other works by artist
+  $('.artwork-artist-artworks a.artwork-artist-artworks__header__jump').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Link',
+        label: 'View all',
+        context_module: 'Other works by artist',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  $('.artwork-artist-artworks .artwork-section__jump a').click(function() {
+    analytics.track('Click', {
+      flow: 'Artwork suggested inventory rails',
+      type: 'Link',
+      label: 'View all bottom link',
+      context_module: 'Other works by artist',
+      destination_path: $(this).attr('href'),
+    })
+  })
+  $('.artwork-artist-artworks .artwork-brick .artwork-brick__image a').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Artwork brick',
+        context_module: 'Other works by artist',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  // Other works from show
+  $('.artwork-show-artworks a.artwork-show-artworks__header__jump').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Link',
+        label: 'View all',
+        context_module: 'Other works from show',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  $('.artwork-show-artworks .artwork-section__jump a').click(function() {
+    analytics.track('Click', {
+      flow: 'Artwork suggested inventory rails',
+      type: 'Link',
+      label: 'View all bottom link',
+      context_module: 'Other works from show',
+      destination_path: $(this).attr('href'),
+    })
+  })
+  $('.artwork-show-artworks .artwork-brick .artwork-brick__image a').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Artwork brick',
+        context_module: 'Other works from show',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  // Other works from gallery
+  $('.artwork-partner-artworks a.artwork-partner-artworks__header__jump').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Link',
+        label: 'View all',
+        context_module: 'Other works from gallery',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  $('.artwork-partner-artworks .artwork-section__jump a').click(function() {
+    analytics.track('Click', {
+      flow: 'Artwork suggested inventory rails',
+      type: 'Link',
+      label: 'View all bottom link',
+      context_module: 'Other works from gallery',
+      destination_path: $(this).attr('href'),
+    })
+  })
+  $('.artwork-partner-artworks .artwork-brick .artwork-brick__image a').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Artwork brick',
+        context_module: 'Other works from gallery',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  // Other works in auction
+  $('.artwork-auction-artworks a.artwork-auction-artworks__header__jump').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Link',
+        label: 'View all',
+        context_module: 'Other works in auction',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+  $('.artwork-auction-artworks .artwork-section__jump a').click(function() {
+    analytics.track('Click', {
+      flow: 'Artwork suggested inventory rails',
+      type: 'Link',
+      label: 'View all bottom link',
+      context_module: 'Other works in auction',
+      destination_path: $(this).attr('href'),
+    })
+  })
+  $('.artwork-auction-artworks .artwork-brick .artwork-brick__image a').click(
+    function() {
+      analytics.track('Click', {
+        flow: 'Artwork suggested inventory rails',
+        type: 'Artwork brick',
+        context_module: 'Other works in auction',
+        destination_path: $(this).attr('href'),
+      })
+    }
+  )
+
   analyticsHooks
     .on('artwork:contact-gallery', function(context) {
       analytics.track("Clicked 'Contact Gallery'", {
