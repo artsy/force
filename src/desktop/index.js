@@ -1,4 +1,5 @@
 import * as modules from './lib/global_react_modules'
+import { data as sd } from 'sharify'
 const app = (module.exports = require('express')())
 
 // NOTE:
@@ -48,8 +49,11 @@ app.use(require('./apps/tag'))
 app.use(require('./apps/unsubscribe'))
 app.use(require('./apps/unsupported_browser'))
 app.use(require('./apps/style_guide'))
-app.use(require('./apps/auth'))
-app.use(require('./apps/auth2'))
+if (sd.NEW_AUTH_MODAL) {
+  app.use(require('./apps/auth2'))
+} else {
+  app.use(require('./apps/auth'))
+}
 app.use(require('./apps/static'))
 app.use(require('./apps/clear_cache'))
 app.use(require('./apps/sitemaps'))

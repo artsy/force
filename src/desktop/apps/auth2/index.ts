@@ -9,5 +9,5 @@ app.set('views', `${__dirname}/templates`)
 
 app.get('/login', index)
 app.get('/signup', index)
-// app.get('/reset_password', index)
+app.get('/reset_password', index)
 // app.get(twitterLastStepPath, routes.twitterLastStep)
