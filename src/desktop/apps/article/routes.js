@@ -14,6 +14,7 @@ import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { data as _sd } from 'sharify'
 import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
+import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(
   SAILTHRU_KEY,
@@ -123,11 +124,16 @@ export async function index(req, res, next) {
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== 'undefined'
+    let onDailyEditorial = false
+    // Only need to check subscription on mobile
+    if (isMobile && CURRENT_USER) {
+      onDailyEditorial = await subscribedToEditorial(CURRENT_USER.email)
+    }
 
     // Tooltips a/b/c test
-    const isAdmin = isLoggedIn && CURRENT_USER.type === 'Admin'
-    const showTooltips = ARTICLE_TOOLTIPS !== 'control' && isAdmin && !isMobile
-    const showToolTipMarketData = ARTICLE_TOOLTIPS === 'market'
+    const showTooltips = !isMobile && ARTICLE_TOOLTIPS !== 'control'
+    const showToolTipMarketData = showTooltips && ARTICLE_TOOLTIPS === 'market'
+    const renderTime = getCurrentUnixTimestamp()
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -149,11 +155,13 @@ export async function index(req, res, next) {
       data: {
         article,
         isSuper,
+        isLoggedIn,
         isMobile,
         jsonLD,
+        onDailyEditorial,
+        renderTime,
         showTooltips,
         showToolTipMarketData,
-        subscribed: isLoggedIn,
         superArticle,
         superSubArticles,
       },

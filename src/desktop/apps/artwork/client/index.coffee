@@ -1,7 +1,7 @@
 { extend, map, compact } = require 'underscore'
 { AUCTION, CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
-{ recordArtworkView } = require 'lib/components/record_artwork_view'
+{ recordArtworkView } = require '../../../../lib/components/record_artwork_view'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'

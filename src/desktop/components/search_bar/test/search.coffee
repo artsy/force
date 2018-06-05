@@ -41,3 +41,10 @@ describe 'Search', ->
       search = new Search
       parsed = search.parse(@items)
       parsed.length.should.equal @items.length
+
+    it 'can flatten out aggregations', ->
+      search = new Search
+      items = {auction: @items, artist: @items}
+      parsed = search.parse(items, aggregations: true)
+      parsed[0].get('displayHeading').should.equal true
+      parsed[0].get('category').should.equal 'Artists'

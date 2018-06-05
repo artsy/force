@@ -39,6 +39,8 @@ describe('<Article />', () => {
   const { Article } = require('reaction/Components/Publishing')
   const SuperArticleView = sinon.stub()
   rewire.__set__('SuperArticleView', SuperArticleView)
+  const EditorialSignupView = sinon.stub()
+  rewire.__set__('EditorialSignupView', EditorialSignupView)
 
   const getWrapper = props => {
     return mount(
@@ -156,6 +158,11 @@ describe('<Article />', () => {
     html.should.containEql('class="Canvas')
     html.should.containEql('Campaign 1')
     html.should.containEql('Ad Headline')
+  })
+
+  it('initiates EditorialSignupView for non-super, standard articles', () => {
+    getWrapper(props)
+    EditorialSignupView.called.should.be.true()
   })
 
   // FIXME: DOES NOT TEST ANTHING

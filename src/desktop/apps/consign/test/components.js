@@ -128,7 +128,7 @@ describe('React components', () => {
     })
 
     describe('sign up', () => {
-      it('the forgot password form', () => {
+      it('the signup form', () => {
         initialStore.dispatch(actions.updateAuthFormState('signUp'))
         const wrapper = shallow(<CreateAccount store={initialStore} />)
         const rendered = wrapper.render()

@@ -10,6 +10,11 @@ module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
   initialize: (options) ->
+
+    @set
+      slug: @get('id')
+      id: @get('_id')
+
     @set
       display: @display()
       image_url: @imageUrl()
@@ -33,17 +38,17 @@ module.exports = class SearchResult extends Backbone.Model
     if @get('href')
       @get('href')
     else if @get('model') is 'profile' || @get('model') is 'page'
-      "/#{@get('id')}"
+      "/#{@get('slug')}"
     else if @get('model') is 'fair'
       "/#{@get('profile_id')}"
     else if @get('model') is 'partnershow'
-      "/show/#{@get('id')}"
+      "/show/#{@get('slug')}"
     else if @get('model') is 'sale'
-      "/auction/#{@get('id')}"
+      "/auction/#{@get('slug')}"
     else if @get('model') is 'city'
-      "/shows/#{@get('id')}"
+      "/shows/#{@get('slug')}"
     else
-      "/#{@get('model')}/#{@get('id')}"
+      "/#{@get('model')}/#{@get('slug')}"
 
   displayModel: ->
     model =

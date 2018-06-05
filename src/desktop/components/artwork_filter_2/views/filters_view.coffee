@@ -46,11 +46,8 @@ module.exports = class ArtworkFiltersView extends Backbone.View
       forSaleFilter
     }
 
-    # FIXME: Replace with proper A/B test
-    # if sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION
-    if sd.ARTIST_PAGE_PAGINATION is 'experiment'
-      countView = new CountView _.extend el: @$('#artwork-filter-left__totals'), { @counts, @params }
-      countView.render()
+    countView = new CountView _.extend el: @$('#artwork-filter-left__totals'), { @counts, @params }
+    countView.render()
 
     this
 

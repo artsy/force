@@ -6,6 +6,9 @@ export async function index(req, res, next) {
     const layout = await renderLayout({
       basePath: req.app.get('views'),
       layout: '../../../components/main_layout/templates/react_index.jade',
+      config: {
+        styledComponents: true,
+      },
       blocks: {
         head: 'meta.jade',
         body: App,
