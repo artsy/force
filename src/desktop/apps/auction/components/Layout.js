@@ -1,6 +1,6 @@
 import ArtworksByFollowedArtists from 'desktop/apps/auction/components/artwork_browser/ArtworksByFollowedArtists'
 import PromotedSaleArtworks from 'desktop/apps/auction/components/artwork_browser/PromotedSaleArtworks'
-import ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
+import _ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
 import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
 import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
 import _Banner from 'desktop/apps/auction/components/layout/Banner'
@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 
 // FIXME: Rewire
 let Banner = _Banner
+let ArtworkBrowser = _ArtworkBrowser
 
 function Layout(props) {
   const {
@@ -63,7 +64,7 @@ Layout.propTypes = {
   showFooter: PropTypes.bool.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
     app: { articles, auction, me, isEcommerceSale, isMobile, showInfoWindow },
   } = state

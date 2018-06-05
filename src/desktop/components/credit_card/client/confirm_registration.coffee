@@ -35,8 +35,13 @@ module.exports = class ConfirmRegistrationModal extends ModalView
 
         @updatePosition()
         @isLoaded()
-
-  close: (event) ->
+        @cleanLocation()
+  
+  cleanLocation: ->
     replaceModalTriggerPath = location.pathname.replace('/confirm-registration', '')
     history.replaceState({}, document.title, replaceModalTriggerPath)
+
+
+  close: (event) ->
+    @cleanLocation()
     super

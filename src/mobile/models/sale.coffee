@@ -31,6 +31,9 @@ module.exports = class Sale extends Backbone.Model
     else
       "#{@href()}/confirm-registration"
 
+  registrationFlowUrl: ->
+    "#{@href()}/registration-flow"
+
   buyersPremiumUrl: ->
     "#{@href()}/buyers-premium"
 

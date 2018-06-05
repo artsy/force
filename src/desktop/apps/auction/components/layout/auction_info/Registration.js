@@ -4,7 +4,7 @@ import block from 'bem-cn-lite'
 import get from 'lodash.get'
 import { connect } from 'react-redux'
 
-function Registration (props) {
+function Registration(props) {
   const {
     isClosed,
     isEcommerceSale,
@@ -12,8 +12,7 @@ function Registration (props) {
     isQualifiedForBidding,
     isRegistrationEnded,
     numBidders,
-    registerUrl,
-    showContactInfo
+    showContactInfo,
   } = props
 
   const b = block('auction-Registration')
@@ -30,7 +29,7 @@ function Registration (props) {
         } else if (!isQualifiedForBidding) {
           return (
             <div className={b('wrapper')}>
-              <button className='avant-garde-button-black is-block is-disabled'>
+              <button className="avant-garde-button-black is-block is-disabled">
                 Registration pending
               </button>
               <div className={b('small', { warning: true })}>
@@ -41,61 +40,48 @@ function Registration (props) {
         } else if (numBidders > 0) {
           return (
             <div className={b('approved')}>
-              <span className='icon-check' />
+              <span className="icon-check" />
               Approved to Bid
             </div>
           )
         } else if (isRegistrationEnded) {
           return (
             <div className={b('wrapper')}>
-              <button className='avant-garde-button-black is-block is-disabled'>
+              <button className="avant-garde-button-black is-block is-disabled">
                 Registration closed
               </button>
-              <div className={b('small')}>
-                Registration required to bid
-              </div>
+              <div className={b('small')}>Registration required to bid</div>
             </div>
           )
         } else {
           return (
             <div className={b('wrapper')}>
-              <a href={registerUrl} className='avant-garde-button-black is-block js-register-button'>
+              <button className="avant-garde-button-black is-block js-register-button">
                 Register to bid
-              </a>
-              <div className={b('small')}>
-                Registration required to bid
-              </div>
+              </button>
+              <div className={b('small')}>Registration required to bid</div>
             </div>
           )
         }
       })()}
 
-      {
-        showContactInfo && // Desktop only
-          <div>
-            <div className={b('how-to-bid')}>
-              <strong>
-                Questions?
-              </strong>
-              <br />
-              <a href='/how-auctions-work'>
-                How to Bid on Artsy
-              </a>
-            </div>
-
-            <div className={b('question')}>
-              <strong>
-                 Contact us
-              </strong>
-              <br />
-              <a href='mailto:specialist@artsy.net'>
-                specialist@artsy.net
-              </a>
-              <br />
-              +1.646.712.8154
-            </div>
+      {showContactInfo && ( // Desktop only
+        <div>
+          <div className={b('how-to-bid')}>
+            <strong>Questions?</strong>
+            <br />
+            <a href="/how-auctions-work">How to Bid on Artsy</a>
           </div>
-      }
+
+          <div className={b('question')}>
+            <strong>Contact us</strong>
+            <br />
+            <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>
+            <br />
+            +1.646.712.8154
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -107,11 +93,10 @@ Registration.propTypes = {
   isQualifiedForBidding: PropTypes.bool.isRequired,
   isRegistrationEnded: PropTypes.bool.isRequired,
   numBidders: PropTypes.number.isRequired,
-  registerUrl: PropTypes.string.isRequired,
-  showContactInfo: PropTypes.bool.isRequired
+  showContactInfo: PropTypes.bool.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { auction, isEcommerceSale, isMobile, me } = state.app
   const numBidders = get(me, 'bidders.length', 0)
   const isQualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding', true)
@@ -125,14 +110,11 @@ const mapStateToProps = (state) => {
     isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),
     numBidders,
-    registerUrl: auction.registerUrl(),
-    showContactInfo
+    showContactInfo,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(Registration)
+export default connect(mapStateToProps)(Registration)
 
 // Helpers
 
