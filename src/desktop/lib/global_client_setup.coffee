@@ -31,7 +31,6 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  console.log(sd.NEW_AUTH_MODAL)
   initModalManager() if sd.NEW_AUTH_MODAL
   mountStitchBlocks()
 
