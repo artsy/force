@@ -26,6 +26,14 @@ const config = {
       'webpack-hot-middleware/client?reload=true',
       './src/desktop/apps/isomorphic-relay-example/client.js',
     ],
+    artist2: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/desktop/apps/artist2/client.js',
+    ],
+    artwork2: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/desktop/apps/artwork2/client.js',
+    ],
     ...getEntrypoints(),
   },
   output: {
