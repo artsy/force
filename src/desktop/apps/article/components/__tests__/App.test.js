@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
 
 describe('<App />', () => {
-  before((done) => {
+  before(done => {
     benv.setup(() => {
       benv.expose({
         $: benv.require('jquery'),
@@ -39,7 +39,7 @@ describe('<App />', () => {
   } = require('reaction/Components/Publishing/Fixtures/Articles')
   const ArticleLayout = require('../layouts/Article').default
 
-  it('renders a standard article', () => {
+  xit('renders a standard article', () => {
     const rendered = mount(
       <App article={Fixtures.StandardArticle} templates={{}} />
     )

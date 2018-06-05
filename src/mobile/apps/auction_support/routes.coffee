@@ -8,15 +8,18 @@ registerOrRender = (sale, req, res, next) ->
     error: res.backboneError
     success: (creditCards) ->
       if creditCards.length > 0
-        req.user.createBidder
-          saleId: sale.get('id')
-          success: ->
-            if req.query.redirect_uri?
-              return res.redirect req.query.redirect_uri
-            else
-              return res.redirect sale.registrationSuccessUrl()
-          error: ->
-            res.backboneError
+        if req.query['accepted-conditions'] != 'true'
+          res.redirect sale.registrationFlowUrl()
+        else
+          req.user.createBidder
+            saleId: sale.get('id')
+            success: ->
+              if req.query.redirect_uri?
+                return res.redirect req.query.redirect_uri
+              else
+                return res.redirect sale.registrationSuccessUrl()
+            error: ->
+              res.backboneError
       else
         order = new Order()
         res.render 'registration',

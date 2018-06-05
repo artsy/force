@@ -5,12 +5,13 @@
   "tasks": [
     {
       "type": "shell",
-      "label": "mocha: watch current file",
-      "command": "yarn mocha --watch ${fileDirname}/${fileBasename}",
+      "label": "mocha: test current file",
+      "command": "yarn mocha ${fileDirname}/${fileBasename}",
       "group": {
         "kind": "build",
         "isDefault": true
-      }
+      },
+      "problemMatcher": []
     }
   ]
 }
