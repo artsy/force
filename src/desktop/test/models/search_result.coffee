@@ -21,11 +21,11 @@ describe 'SearchResult', ->
 
       it 'has a location attribute when it is an article', ->
         model = new SearchResult(fabricate('article', model: 'article'))
-        model.href().should.containEql '/article/' + model.id
+        model.href().should.containEql '/article/' + model.get('slug')
 
       it 'has a location attribute when it is a page', ->
         model = new SearchResult(fabricate('page', model: 'page'))
-        model.href().should.containEql '/' + model.id
+        model.href().should.containEql '/' + model.get('slug')
 
       it 'has a location attribute when it is a fair', ->
         model = new SearchResult(fabricate('fair', model: 'fair', profile_id: 'foo-profile'))

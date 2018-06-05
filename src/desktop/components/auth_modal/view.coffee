@@ -31,6 +31,7 @@ module.exports = class AuthModalView extends ModalView
     'submit form': 'submit'
     'click #auth-submit': 'submit'
     'click #signup-fb': 'fbSignup'
+    'change #accepted_terms_of_service': 'checkAcceptedTerms'
 
   initialize: (options) ->
     return if isEigen.checkWith options
@@ -40,8 +41,11 @@ module.exports = class AuthModalView extends ModalView
     @preInitialize options
     super
 
+    $('#accepted_terms_of_service').on('invalid', @checkAcceptedTerms)
+
   preInitialize: (options = {}) ->
-    { @copy, @context, @signupIntent } = options
+    { @copy, @context, @context_module, @intent, @signupIntent } = options
+
     @signupReferer = location.href
     @user = new LoggedOutUser
     mode = mode: options.mode if options.mode
@@ -55,7 +59,10 @@ module.exports = class AuthModalView extends ModalView
       copy: @renderCopy(options.copy)
       redirectTo: @currentRedirectTo()
     }, options?.userData
-
+    @trackingOptions = {
+      context_module: @context_module
+      intent: @intent
+    }
     @listenTo @state, 'change:mode', @updateTemplateAndRender
     @listenTo @state, 'change:mode', @logState
     @on 'rerendered', @initializeMailcheck
@@ -63,7 +70,8 @@ module.exports = class AuthModalView extends ModalView
     mediator.on 'auth:change:mode', @setMode, this
     mediator.on 'auth:error', @showFormError
     mediator.on 'modal:closed', @logClose
-
+    mediator.on 'auth:sign_up:email', @trackSignup
+    mediator.on 'auth:sign_up:fb', @trackFacebookSignup
     @logState()
 
     Cookies.set 'postSignupAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
@@ -129,11 +137,12 @@ module.exports = class AuthModalView extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     formData = @serializeForm()
-    userData = Object.assign {}, formData
-    @user.set (data = userData)
-    @user.set
-      signupIntent: @signupIntent
+    data = Object.assign {},
+      formData,
+      @gdprData(formData),
+      signupIntent: @signupIntent,
       signupReferer: @signupReferer
+    @user.set data
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>
@@ -142,7 +151,8 @@ module.exports = class AuthModalView extends ModalView
         mediator.trigger 'auth:error', message
 
   onSubmitSuccess: (model, response, options) =>
-    analyticsHooks.trigger "auth:#{@state.get 'mode'}"
+    unless @state.get('mode') is 'login'
+      analyticsHooks.trigger "auth:#{@state.get 'mode'}"
     @reenableForm null, reset: false
 
     if response.error?
@@ -152,9 +162,10 @@ module.exports = class AuthModalView extends ModalView
 
       switch @state.get('mode')
         when 'login'
+          analyticsHooks.trigger 'auth:login', @trackingOptions
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
         when 'register'
-          mediator.trigger 'auth:sign_up:success'
+          mediator.trigger 'auth:sign_up:success', @trackingOptions
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
 
@@ -169,8 +180,22 @@ module.exports = class AuthModalView extends ModalView
   showError: (msg) =>
     @$('.auth-errors').text msg
 
+  trackSignup: (options) =>
+    @trackingOptions =  _.extend(
+      @trackingOptions,
+      options
+    )
+
+  trackFacebookSignup: (options) =>
+    @trackSignup(options)
+    Cookies.set('analytics-signup', JSON.stringify(@trackingOptions))
+
   remove: ->
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
+    mediator.off 'auth:sign_up:email'
+    mediator.off 'auth:sign_up:fb'
+    $('#accepted_terms_of_service').off()
     super
+

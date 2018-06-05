@@ -6,9 +6,11 @@
 var trackViewLogin = function() {
   analytics.track('Viewed login form')
 }
-analyticsHooks.on('mediator:open:auth', function(options) {
-  if (options.mode === 'login') trackViewLogin()
+
+analyticsHooks.on('mediator:open:auth', (options = {}) => {
+  if (options.mode === 'login') trackViewLogin(options)
 })
+
 $('#auth-footer [href*=log_in]').click(trackViewLogin)
 
 // Clicked login via the header

@@ -10,6 +10,7 @@ itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 CurrentUser = require '../../models/current_user.coffee'
 SearchResult = require '../../models/search_result.coffee'
+splitTest = require '../split_test/index.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   defaults:
@@ -42,7 +43,8 @@ module.exports = class SearchBarView extends Backbone.View
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
 
-    @search = new Search restrictType: @restrictType, mode: @mode, fairId: @fairId, size: @limit
+    @enableAggregations = CurrentUser.orNull()?.hasLabFeature('Grouped Search Results')
+    @search = new Search restrictType: @restrictType, mode: @mode, fairId: @fairId, size: @limit, agg: @enableAggregations
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
@@ -52,7 +54,9 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:closed', @hideSuggestions
     @on 'search:cursorchanged', @ensureResult
 
-    @enableSpotlightAutocomplete = CurrentUser.orNull()?.hasLabFeature('Spotlight Search')
+    splitTest('autosuggest_search').view()
+    @enableSpotlightAutocomplete = !@enableAggregations and sd.AUTOSUGGEST_SEARCH is 'experiment'
+
     @autoselect = false if @enableSpotlightAutocomplete
     @setupTypeahead()
     @setupPlaceholder()
@@ -202,7 +206,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$el.removeClass 'is-display-suggestions'
 
   suggestionTemplate: (item) =>
-    itemTemplate item: item, displayKind: @displayKind
+    itemTemplate item: item, displayKind: @displayKind, enableAggregations: @enableAggregations
 
   emptyItemTemplate: (options) =>
     if @displayEmptyItem
@@ -213,7 +217,7 @@ module.exports = class SearchBarView extends Backbone.View
     mediator.trigger 'search:skrillex' if query is 'skrillex'
 
   trackSearchResults: (results) ->
-    string = "Searched from header, with #{if results?.length then 'results' else 'no results'}"
+    string = "Searched from header, with #{if Object.keys(results).length then 'results' else 'no results'}"
     analyticsHooks.trigger 'search:header',
       message: string
       query: @$input.val()
@@ -228,7 +232,7 @@ module.exports = class SearchBarView extends Backbone.View
         filter: (results) =>
           @trackSearchResults results
           @displaySpotlightSearch(results[0]) if results?.length > 0
-          @search.parse results
+          @search.parse(results, aggregations: @enableAggregations)
         ajax:
           beforeSend: (xhr) =>
             xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN

@@ -16,6 +16,8 @@
       "displayName": true
     }],
     "inline-react-svg",
+    "lodash",
+    "loadable-components/babel",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
       "root": ["./src"],
@@ -23,7 +25,7 @@
         "reaction": "@artsy/reaction/dist"
       }
     }],
-    "relay"
+    ["relay", { "artifactDirectory": "./src/__generated__" }]
   ],
   "env": {
     "development": {

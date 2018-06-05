@@ -3,10 +3,12 @@ Backbone = require 'backbone'
 openMultiPage = require '../../../../components/multi_page/index.coffee'
 ModalView = require '../../../../components/modal/view.coffee'
 Sale = require '../../../../models/sale.coffee'
-AuctionClockView = require '../../../../components/auction_clock/view.coffee'
+ClockView = require '../../../../../desktop/apps/artwork/components/clock/view.coffee'
 Artwork = require '../../../../models/artwork.coffee'
 SaleArtwork = require '../../../../models/sale_artwork.coffee'
 updateCurrentBid = require './index.coffee'
+{ ARTWORK } = require('sharify').data
+{ countdownLabel, countdownTimestamp } = require '../../../../../desktop/apps/artwork/components/banner/helpers.coffee'
 
 module.exports = class ArtworkBidView extends Backbone.View
 
@@ -16,7 +18,7 @@ module.exports = class ArtworkBidView extends Backbone.View
   initialize: ({ @artwork }) ->
     return unless @artwork.auction
     sale = new Sale @artwork.auction
-    @setupAuctionClock(sale)
+    @setupDesktopAuctionClock(sale)
     updateCurrentBid()
 
   openMultiPage: (e) ->
@@ -28,8 +30,11 @@ module.exports = class ArtworkBidView extends Backbone.View
     @$el.append modal.$el
     modal.insertModalContent pages.$el
 
-  setupAuctionClock: (sale) ->
-    @auctionClockView = new AuctionClockView
-      model: sale
-      el: @$('.artwork-auction-bid-module__clock')
-    @auctionClockView.start()
+  setupDesktopAuctionClock: (sale) ->
+    if { start_at, end_at, live_start_at } = ARTWORK.auction
+      clockView = new ClockView
+        label: countdownLabel start_at, live_start_at
+        timestamp: countdownTimestamp start_at, end_at, live_start_at
+      clockView.start()
+    $('.artwork-auction-bid-module__clock')
+      .html clockView.render().$el

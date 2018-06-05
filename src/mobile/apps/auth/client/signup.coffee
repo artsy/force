@@ -48,9 +48,38 @@ module.exports.SignUpView = class SignUpView extends Backbone.View
       acquisition_initiative: qs.parse(location.search).acquisition_initiative
       redirectTo: @$("input[name='redirect-to']").val()
       _csrf: @$("input[name='_csrf']").val()
+      accepted_terms_of_service: true
+      agreed_to_receive_emails: true
     @signup data
     false
 
+module.exports.SignUpOptionsView = class SignUpOptionsView extends Backbone.View
+  SIGNUP_URLS = {
+    facebook: '/users/auth/facebook',
+    email: '/sign_up?email=1'
+  }
+
+  events:
+    'click #auth-page-signup-social a': 'acceptTermsBeforeSignup'
+
+  acceptTermsBeforeSignup: (e) ->
+    e.preventDefault()
+
+    redirectTo = $(e.currentTarget).data('redirect-to')
+    signupMethod = $(e.currentTarget).data('signup-method')
+    $checkbox = $('.gdpr-signup__form__checkbox__accept-terms input')
+
+    if $checkbox.is(':checked')
+      $('.gdpr-signup__form__checkbox__accept-terms').removeClass('tos-error')
+      redirectStr = if signupMethod is 'facebook' then "?#{redirectTo}" else "&#{redirectTo}"
+      window.location = SIGNUP_URLS[signupMethod] + redirectStr
+    else
+      $('.gdpr-signup__form__checkbox__accept-terms').addClass('tos-error')
+
 module.exports.init = ->
   bootstrap()
-  new SignUpView(el: $("#auth-page")) if window.location.search?.indexOf('email') > -1
+
+  if window.location.search?.indexOf('email') > -1
+    new SignUpView(el: $("#auth-page"))
+  else
+    new SignUpOptionsView(el: $("#auth-page"))

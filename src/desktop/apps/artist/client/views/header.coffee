@@ -13,6 +13,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
     @setupShareButtons()
     @setupFollowButton()
     @updateCurrentItem()
+
     @$window = $ window
     @$('a').click @navClick
 

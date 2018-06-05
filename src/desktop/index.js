@@ -62,6 +62,7 @@ app.use(require('./apps/marketing_signup_modals'))
 app.use(require('./apps/artsy_in_miami').default)
 app.use(require('./apps/armory_week').default)
 app.use(require('./apps/frieze_week').default)
+app.use(require('./apps/basel_week').default)
 
 // Non-profile dynamic vanity url apps
 app.use(require('./apps/galleries_institutions'))
@@ -83,3 +84,4 @@ app.use(require('./apps/user'))
 
 // Examples
 app.use(require('./apps/react_example'))
+app.use(require('./apps/isomorphic-relay-example/server'))

@@ -39,6 +39,7 @@ describe 'EditorialSignupView', ->
     it 'checks if in article or magazine', ->
       @EditorialSignupView.__set__ 'sd',
         SUBSCRIBED_TO_EDITORIAL: false
+        CURRENT_USER: 'John'
         CURRENT_PATH: '/articles'
       @view.eligibleToSignUp().should.be.ok()
 
@@ -74,6 +75,7 @@ describe 'EditorialSignupView', ->
     it 'sets up modal for /articles', ->
       @EditorialSignupView.__set__ 'sd',
         SUBSCRIBED_TO_EDITORIAL: false
+        CURRENT_USER: 'John'
         CURRENT_PATH: '/articles'
       @view.setupAEMagazinePage()
       @view.$el.html().should.containEql 'cta-bar-magazine'

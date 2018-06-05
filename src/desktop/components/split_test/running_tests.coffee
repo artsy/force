@@ -25,20 +25,30 @@
 # module.exports = {}
 
 module.exports = {
-  artist_page_pagination:
-    key: 'artist_page_pagination'
-    outcomes:
-      experiment: 50
-      control: 50
+  artist_market_data_test:
+    key: 'artist_market_data_test'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'market_data_no_carousel'
+    ]
     control_group: 'control'
-    edge: 'experiment'
+    edge: 'market_data_no_carousel'
 
   article_tooltips:
     key: 'article_tooltips'
     weighting: 'equal'
     outcomes: [
       'bio'
+      'control'
       'market'
     ]
+  autosuggest_search:
+    key: 'autosuggest_search'
+    weighting: 'equal'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    edge: 'experiment'
 }
-

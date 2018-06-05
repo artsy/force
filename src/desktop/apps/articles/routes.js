@@ -1,4 +1,5 @@
 import { renderLayout as _renderLayout } from '@artsy/stitch'
+import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 import App from 'desktop/apps/articles/components/App.tsx'
 import magazineQuery from './queries/editorial_articles.coffee'
 import {
@@ -13,6 +14,8 @@ import Channel from 'desktop/models/channel.coffee'
 import { topParselyArticles as _topParselyArticles } from 'desktop/components/util/parsely.coffee'
 import { map, sortBy, first, last, reject } from 'lodash'
 import { PARSELY_KEY, PARSELY_SECRET } from '../../config.coffee'
+import { subscribedToEditorial } from 'desktop/apps/article/routes'
+import { data as sd } from 'sharify'
 
 // FIXME: Rewire
 let positronql = _positronql
@@ -22,13 +25,22 @@ let renderLayout = _renderLayout
 export const articles = (req, res, next) => {
   const query = { query: magazineQuery }
   return positronql(query)
-    .then(result => {
+    .then(async result => {
       const articles = new Articles(result.articles)
       res.locals.sd.ARTICLES = articles.toJSON()
+
+      // Email
+      let onDailyEditorial = false
+      // Only need to check subscription on mobile
+      if (sd.IS_MOBILE && sd.CURRENT_USER) {
+        onDailyEditorial = await subscribedToEditorial(sd.CURRENT_USER.email)
+      }
+
       // Fetch News Panel Articles
       positronql({ query: newsPanelQuery() }).then(result => {
         const newsArticles = result.articles
         res.locals.sd.NEWS_ARTICLES = newsArticles
+        res.locals.sd.ON_DAILY_EDITORIAL = onDailyEditorial
 
         res.render('articles', {
           articles: articles,
@@ -121,6 +133,7 @@ export const teamChannel = (req, res, next) => {
 
 export async function news(req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
+  const renderTime = getCurrentUnixTimestamp()
 
   try {
     const { articles } = await positronql({
@@ -146,6 +159,7 @@ export async function news(req, res, next) {
       data: {
         articles,
         isMobile,
+        renderTime,
       },
     })
 
