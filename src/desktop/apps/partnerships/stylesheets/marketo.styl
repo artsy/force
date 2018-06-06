@@ -39,7 +39,7 @@
     margin-top 10px
   label
     position absolute !important
-    margin-top -22px !important
+    // margin-top -22px !important
     avant-garde()
     avant-garde-size('s-headline')
     color black
@@ -66,3 +66,36 @@
     text-align center !important
   .mktoAsterix
     display none !important
+  .mktoFormRow:nth-of-type(4n)
+    .mktoFormCol
+      width 100% !important
+      select
+        width 100% !important
+        background-color transparent
+        color gray-darker-color
+        font-size 17px !important
+        transition border-color 0.25s
+
+        appearance none
+        padding 12px !important
+        min-height 44px !important
+        border 2px solid gray-lighter-color
+        border-radius 0
+        background-image: url('/icons/arrow-down.svg')
+        background-repeat no-repeat
+        background-position top 50% right 10px
+        background-size 10px auto
+        &:focus
+        &:active
+        &.is-active
+          border-color purple-color
+          outline none
+          transition border-color 0.5s
+  .mktoFormRow:nth-of-type(9n)
+    .mktoFormCol
+      width 100% !important
+      input[type="checkbox"]
+        width auto !important
+      label
+        position auto
+        padding-left 8px
