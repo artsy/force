@@ -13,6 +13,8 @@ module.exports = class FooterView extends Backbone.View
     'click .mlf-auction-faq': 'openAuctionModal'
     'click .mlf-login': 'login'
     'click .mlf-signup': 'signup'
+    'mouseover .mlf-icon-wechat': 'showWeChatQrCode'
+    'mouseout .mlf-icon-wechat': 'hideWeChatQrCode'
 
   initialize: ->
     @listenTo mediator, 'infinite:scroll:start', @hide
@@ -48,3 +50,11 @@ module.exports = class FooterView extends Backbone.View
   login: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth', mode: 'login'
+
+  showWeChatQrCode: (e) ->
+    e.preventDefault()
+    $('.mlf-wechat-qr-code-container').css('display', 'flex')
+
+  hideWeChatQrCode: (e) ->
+    e.preventDefault()
+    $('.mlf-wechat-qr-code-container').css('display', 'none')
