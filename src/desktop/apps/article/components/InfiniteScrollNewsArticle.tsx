@@ -208,7 +208,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
                 <Fragment>
                   <Break />
                   <RelatedArticlesCanvas
-                    articles={related}
+                    articles={related as any}
                     isMobile={isMobile}
                   />
                   <Break />

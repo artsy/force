@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom'
 import Cookies from 'cookies-js'
 import { AuthStatic } from 'desktop/apps/auth2/components/AuthStatic'
 import { ModalManager } from '@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager'
+import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
 import { data as sd } from 'sharify'
 
 const mediator = require('../../../lib/mediator.coffee')
+const LoggedOutUser = require('../../../models/logged_out_user.coffee')
 
 export const init = () => {
   // Rehydrate data from Server
@@ -23,6 +25,7 @@ export const initModalManager = () => {
 
   const Container: React.SFC<any> = () => {
     let manager: ModalManager | null
+    const user = new LoggedOutUser()
 
     mediator.on('open:auth', options => {
       if (options.afterSignUpAction) {
@@ -51,7 +54,27 @@ export const initModalManager = () => {
           signup: sd.AP.signupPagePath,
         }}
         csrf={sd.CSRF_TOKEN}
-        redirectUrl="/"
+        handleSubmit={(type, values) => {
+          user.set(values)
+          const options = {
+            success: () => {
+              document.location.hash = '/'
+            },
+            error: (_, response) => {
+              console.log(response)
+              const message = response.error
+              mediator.trigger('auth:error', message)
+            },
+          }
+          switch (type) {
+            case ModalType.login:
+              user.login(options)
+              break
+            case ModalType.signup:
+              user.signup(options)
+              break
+          }
+        }}
       />
     )
   }

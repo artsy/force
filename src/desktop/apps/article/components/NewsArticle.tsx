@@ -24,13 +24,13 @@ export class NewsArticle extends Component<Props, State> {
 
     this.state = {
       isTruncated: props.isTruncated || false,
-      bottomOffset: "200px"
+      bottomOffset: '200px',
     }
   }
 
   componentDidMount() {
     this.setState({
-      bottomOffset: `${window.innerHeight / 2}px`
+      bottomOffset: `${window.innerHeight / 2}px`,
     })
   }
 
@@ -38,7 +38,7 @@ export class NewsArticle extends Component<Props, State> {
     const { article } = this.props
     this.setMetadata(article)
     this.setState({
-      isTruncated: false
+      isTruncated: false,
     })
   }
 
@@ -54,7 +54,7 @@ export class NewsArticle extends Component<Props, State> {
       article,
       onActiveArticleChange,
       onDateChange,
-      isMobile
+      isMobile,
     } = this.props
     const { isTruncated } = this.state
 
@@ -80,7 +80,7 @@ export class NewsArticle extends Component<Props, State> {
       nextArticle,
       onDateChange,
       isMobile,
-      onActiveArticleChange
+      onActiveArticleChange,
     } = this.props
 
     if (currentPosition === 'above' && previousPosition === 'inside') {
@@ -99,7 +99,7 @@ export class NewsArticle extends Component<Props, State> {
       isActive,
       isMobile,
       isTruncated,
-      isFirstArticle
+      isFirstArticle,
     } = this.props
     const { bottomOffset } = this.state
     const marginTop = isMobile ? '100px' : '200px'
@@ -107,8 +107,8 @@ export class NewsArticle extends Component<Props, State> {
     return (
       <Fragment>
         <Waypoint
-          onEnter={(waypointData) => this.onEnter(waypointData)}
-          onLeave={(waypointData) => this.onLeave(waypointData)}
+          onEnter={waypointData => this.onEnter(waypointData)}
+          onLeave={waypointData => this.onLeave(waypointData)}
           topOffset="-10px"
           bottomOffset={bottomOffset}
         >
