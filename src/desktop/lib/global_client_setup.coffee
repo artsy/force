@@ -31,9 +31,8 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  initModalManager()
+  initModalManager() if sd.NEW_AUTH_MODAL
   mountStitchBlocks()
-
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
