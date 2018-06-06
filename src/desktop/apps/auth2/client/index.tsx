@@ -54,16 +54,16 @@ export const initModalManager = () => {
           signup: sd.AP.signupPagePath,
         }}
         csrf={sd.CSRF_TOKEN}
-        handleSubmit={(type, values) => {
+        handleSubmit={(type, values, formikBag) => {
           user.set(values)
           const options = {
             success: () => {
               document.location.hash = '/'
             },
             error: (_, response) => {
-              console.log(response)
-              const message = response.error
-              mediator.trigger('auth:error', message)
+              const error = response.error
+              formikBag.setStatus(error)
+              mediator.trigger('auth:error', error.message)
             },
           }
           switch (type) {
