@@ -58,7 +58,7 @@ export const initModalManager = () => {
           user.set(values)
           const options = {
             success: () => {
-              document.location.hash = '/'
+              window.location = '/' as any
             },
             error: (_, response) => {
               const error = response.error
