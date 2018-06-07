@@ -1,4 +1,9 @@
-import 'jsdom-global/register'
+// Include JSDom if running from Mocha. Jest automatically injects.
+const isMocha = typeof jest === 'undefined'
+if (isMocha) {
+  require('jsdom-global/register')
+}
+
 import Articles from 'desktop/collections/articles.coffee'
 import Auction from 'desktop/models/auction.coffee'
 import CurrentUser from 'desktop/models/current_user.coffee'
@@ -12,7 +17,13 @@ import { isEmpty } from 'underscore'
 import { merge, cloneDeep } from 'lodash'
 import { mount, render, shallow } from 'enzyme'
 
-export default function renderTestComponent ({ Component, data = {}, props = {}, options = {}, store = {} }) {
+export default function renderTestComponent({
+  Component,
+  data = {},
+  props = {},
+  options = {},
+  store = {},
+}) {
   const reduxData = merge(cloneDeep(bootstrap), data)
   const auctionModel = new Auction(reduxData.app.auction)
   const auctionArticles = new Articles(reduxData.app.articles)
@@ -50,6 +61,6 @@ export default function renderTestComponent ({ Component, data = {}, props = {},
 
   return {
     store,
-    wrapper
+    wrapper,
   }
 }
