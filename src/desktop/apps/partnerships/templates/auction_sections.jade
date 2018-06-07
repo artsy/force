@@ -111,13 +111,6 @@ mixin auction_apply(section)
       script.
         MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
 
-    .gallery-partnerships-privacy
-      | By clicking apply, you accept our&nbsp;
-      a( href='/terms' ) Terms of Use
-      | &nbsp;and&nbsp;
-      a( href='/privacy' ) Privacy Policy
-      | .
-
 section.partnerships-section( id= sections[0].slug, data-href="/auction-partnerships/#{sections[0].slug}" ): +experience(sections[0])
 section.partnerships-section( id= sections[1].slug, data-href="/auction-partnerships/#{sections[1].slug}" ): +auction_audience(sections[1])
 section.partnerships-section( id= sections[2].slug, data-href="/auction-partnerships/#{sections[2].slug}" ): +access(sections[2])
