@@ -64,7 +64,7 @@ class DOM extends Component {
 
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)
-    } else if (me.has_qualified_credit_cards) {
+    } else if (me.has_credit_cards) {
       this.showAcceptConditions()
 
       // Redirect to credit card registration form
