@@ -43,7 +43,8 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
-    mediator.on 'open:auth', @openAuth, @
+    if !sd.NEW_AUTH_MODAL
+      mediator.on 'open:auth', @openAuth, @
 
     @checkForPersonalizeFlash()
 
@@ -103,10 +104,10 @@ module.exports = class HeaderView extends Backbone.View
     false
 
   openAuth: (options) ->
-    if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
-      mediator.trigger 'clickHeaderAuth'
-      return
-    @modal = new AuthModalView _.extend({ width: '500px' }, options)
+     if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
+       mediator.trigger 'clickHeaderAuth'
+       return
+     @modal = new AuthModalView _.extend({ width: '500px' }, options)
 
   signup: (e) ->
     e.preventDefault()

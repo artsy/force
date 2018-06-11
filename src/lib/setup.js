@@ -129,10 +129,11 @@ export default function(app) {
   app.use(
     session({
       secret: SESSION_SECRET,
-      domain: COOKIE_DOMAIN,
+      domain: NODE_ENV === 'development' ? '' : COOKIE_DOMAIN,
       name: SESSION_COOKIE_KEY,
       maxAge: SESSION_COOKIE_MAX_AGE,
       secure: NODE_ENV === 'production' || NODE_ENV === 'staging',
+      httpOnly: false,
     })
   )
 

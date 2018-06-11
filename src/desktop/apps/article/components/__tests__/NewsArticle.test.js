@@ -11,7 +11,7 @@ describe('<NewsArticle />', () => {
   let props
   let article
 
-  before((done) => {
+  before(done => {
     benv.setup(() => {
       benv.expose({ $: benv.require('jquery'), jQuery: benv.require('jquery') })
       sd.APP_URL = 'http://artsy.net'

@@ -10,7 +10,6 @@ const Headline = styled.h1`
 
 const Description = styled.p`
   ${garamond('s23')};
-  font-size: 25px;
   line-height: 1.4em;
   margin: 35px 0;
 `
