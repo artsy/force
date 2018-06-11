@@ -45,7 +45,7 @@ describe('DOM Interactions', () => {
         me: {
           id: 'user',
           bidders: [],
-          has_qualified_credit_cards: true,
+          has_credit_cards: true,
         },
       })
 
@@ -66,7 +66,7 @@ describe('DOM Interactions', () => {
         me: {
           id: 'user',
           bidders: ['SOME BIDDER OBJECT'],
-          has_qualified_credit_cards: true,
+          has_credit_cards: true,
         },
       })
 
@@ -111,7 +111,7 @@ describe('DOM Interactions', () => {
         me: {
           id: 'user',
           bidders: [],
-          has_qualified_credit_cards: false,
+          has_credit_cards: false,
         },
       })
 
