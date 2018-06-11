@@ -60,8 +60,8 @@ export const initModalManager = () => {
             success: () => {
               window.location = '/' as any
             },
-            error: (_, response) => {
-              const error = response.error
+            error: (_, res) => {
+              const error = res.responseJSON
               formikBag.setStatus(error)
               mediator.trigger('auth:error', error.message)
             },
