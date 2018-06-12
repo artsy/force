@@ -21,6 +21,7 @@ describe('Article Routes', () => {
       body: {},
       params: { slug: 'foobar' },
       path: '/article/foobar',
+      url: '',
     }
     res = {
       app: { get: sinon.stub().returns('components') },
@@ -135,6 +136,24 @@ describe('Article Routes', () => {
       rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
       index(req, res, next).then(() => {
         res.redirect.args[0][0].should.equal('/series/foobar')
+      })
+    })
+
+    it('does not strip utms from redirects', () => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'news',
+        }),
+      }
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      req.url =
+        '/article/artsy-editorial-museums-embrace-activists?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V'
+      index(req, res, next).then(() => {
+        res.redirect.args[0][0].should.equal(
+          '/news/foobar?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V'
+        )
       })
     })
 

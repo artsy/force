@@ -38,7 +38,9 @@ export async function index(req, res, next) {
     const article = data.article
     const articleModel = new Article(data.article)
     const utm =
-      req.url.split('?') && req.url.split('?')[1] && `?${req.url.split('?')[1]}`
+      req.url.split('?') && req.url.split('?')[1]
+        ? `?${req.url.split('?')[1]}`
+        : ''
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
