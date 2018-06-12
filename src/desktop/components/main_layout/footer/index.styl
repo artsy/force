@@ -19,6 +19,8 @@ mlf-upper-column-width = ((100% - mlf-upper-column-aside-width) / 4)
 
   .mlf-lower
     position relative
+    .main-layout-container
+      display flex
 
   // Upper
   .mlf-upper-column
@@ -55,7 +57,6 @@ mlf-upper-column-width = ((100% - mlf-upper-column-aside-width) / 4)
 
   // Lower
   #main-layout-footer-internal
-    float left
     a
     span
       display inline-block
@@ -73,10 +74,9 @@ mlf-upper-column-width = ((100% - mlf-upper-column-aside-width) / 4)
     margin-right 20px
 
   #main-layout-footer-external
-    float right
     display flex
     position relative
-    overflow hidden
+    margin-left auto
 
   .mlf-social
     display inline-block
@@ -88,30 +88,33 @@ mlf-upper-column-width = ((100% - mlf-upper-column-aside-width) / 4)
 
   .mlf-wechat-qr-code-container
     display none
-    background-color white
-    border 1px solid gray-lighter-color
-    box-shadow 0px 10px 20px gray-color
-    width 150px
-    height 150px
-    position absolute
-    right 37px
-    bottom 75px
-    align-items center
-    justify-content center
-    .mlf-wechat-qr-code
-      display block
-      background-image url('http://files.artsy.net/images/wechat_qr_logo.png')
-      width 125px
-      height 125px
-    .mlf-wechat-qr-code-triangle-down
-      width 0
-      height 0
-      border-left 8px solid transparent
-      border-right 8px solid transparent
-      border-top 10px solid white
+  .mlf-icon-wechat:hover
+    .mlf-wechat-qr-code-container
+      display flex
+      background-color white
+      border 1px solid gray-lighter-color
+      box-shadow 0px 10px 20px gray-color
+      width 150px
+      height 150px
       position absolute
-      right 65px
-      bottom -9px
+      left: -66px
+      bottom 75px
+      align-items center
+      justify-content center
+      .mlf-wechat-qr-code
+        display block
+        background-image url('http://files.artsy.net/images/wechat_qr_logo.png')
+        width 125px
+        height 125px
+      .mlf-wechat-qr-code-triangle-down
+        width 0
+        height 0
+        border-left 8px solid transparent
+        border-right 8px solid transparent
+        border-top 10px solid white
+        position absolute
+        right 65px
+        bottom -9px
 
 .mlf__mobile
   background-color black

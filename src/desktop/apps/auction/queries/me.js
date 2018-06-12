@@ -2,7 +2,7 @@ export default function MeQuery(sale_id, live = true) {
   return `{
     me {
       id
-      has_qualified_credit_cards
+      has_credit_cards
       bidders(sale_id: "${sale_id}") {
         qualified_for_bidding
       }
