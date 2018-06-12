@@ -117,9 +117,10 @@ export async function index(req, res, next) {
         '../../../components/main_layout/templates/react_blank_index.jade'
     }
 
-    const { ARTICLE_TOOLTIPS, CURRENT_USER, IS_MOBILE } = res.locals.sd
+    const { ARTICLE_TOOLTIPS, CURRENT_USER, IS_MOBILE, IS_IPAD } = res.locals.sd
 
     const isMobile = IS_MOBILE
+    const isIpad = IS_IPAD
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
 
     // Email signup
@@ -131,7 +132,7 @@ export async function index(req, res, next) {
     }
 
     // Tooltips a/b/c test
-    const showTooltips = !isMobile && ARTICLE_TOOLTIPS !== 'control'
+    const showTooltips = !isMobile && !isIpad && ARTICLE_TOOLTIPS !== 'control'
     const showToolTipMarketData = showTooltips && ARTICLE_TOOLTIPS === 'market'
     const renderTime = getCurrentUnixTimestamp()
 

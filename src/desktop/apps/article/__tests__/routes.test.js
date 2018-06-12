@@ -385,6 +385,17 @@ describe('Article Routes', () => {
           done()
         })
       })
+
+      it('iPad: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        res.locals.sd.IS_IPAD = true
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
     })
   })
 
