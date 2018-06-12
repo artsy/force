@@ -37,13 +37,15 @@ export async function index(req, res, next) {
     })
     const article = data.article
     const articleModel = new Article(data.article)
+    const utm =
+      req.url.split('?') && req.url.split('?')[1] && `?${req.url.split('?')[1]}`
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
     }
 
     if (articleId !== article.slug) {
-      return res.redirect(`/article/${article.slug}`)
+      return res.redirect(`/article/${article.slug}${utm}`)
     }
 
     if (
@@ -58,7 +60,7 @@ export async function index(req, res, next) {
       !_.includes(['standard', 'feature'], article.layout) &&
       req.path.includes('/article')
     ) {
-      return res.redirect(`/${article.layout}/${article.slug}`)
+      return res.redirect(`/${article.layout}/${article.slug}${utm}`)
     }
 
     if (
@@ -66,7 +68,7 @@ export async function index(req, res, next) {
       !req.path.includes(`/series/${article.seriesArticle.slug}/`)
     ) {
       return res.redirect(
-        `/series/${article.seriesArticle.slug}/${article.slug}`
+        `/series/${article.seriesArticle.slug}/${article.slug}${utm}`
       )
     }
 
