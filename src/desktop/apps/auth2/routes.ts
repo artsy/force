@@ -1,27 +1,28 @@
 import { renderLayout } from '@artsy/stitch'
 import { AuthStatic } from './components/AuthStatic'
+import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
 import { AuthenticationMeta } from './meta'
 
 export const index = async (req, res, next) => {
-  let type
+  let type: ModalType
   switch (req.path) {
     case '/login':
-      type = 'login'
+      type = ModalType.login
       break
     case '/signup':
-      type = 'register'
+      type = ModalType.signup
       break
     case '/reset_password':
-      type = 'reset_password'
+      type = ModalType.resetPassword
       break
     default:
-      type = 'login'
+      type = ModalType.login
       break
   }
 
   const meta = {
     description: '',
-    title: type === 'login' ? 'Login to Artsy' : 'Signup for Artsy',
+    title: type === ModalType.login ? 'Login to Artsy' : 'Signup for Artsy',
   }
 
   try {

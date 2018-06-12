@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom'
 import Cookies from 'cookies-js'
 import { AuthStatic } from 'desktop/apps/auth2/components/AuthStatic'
 import { ModalManager } from '@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager'
-import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
+import { handleSubmit } from '../helpers'
 import { data as sd } from 'sharify'
 
 const mediator = require('../../../lib/mediator.coffee')
-const LoggedOutUser = require('../../../models/logged_out_user.coffee')
 
 export const init = () => {
   // Rehydrate data from Server
@@ -25,7 +24,6 @@ export const initModalManager = () => {
 
   const Container: React.SFC<any> = () => {
     let manager: ModalManager | null
-    const user = new LoggedOutUser()
 
     mediator.on('open:auth', options => {
       if (options.afterSignUpAction) {
@@ -54,27 +52,7 @@ export const initModalManager = () => {
           signup: sd.AP.signupPagePath,
         }}
         csrf={sd.CSRF_TOKEN}
-        handleSubmit={(type, values, formikBag) => {
-          user.set(values)
-          const options = {
-            success: () => {
-              window.location = '/' as any
-            },
-            error: (_, res) => {
-              const error = res.responseJSON
-              formikBag.setStatus(error)
-              mediator.trigger('auth:error', error.message)
-            },
-          }
-          switch (type) {
-            case ModalType.login:
-              user.login(options)
-              break
-            case ModalType.signup:
-              user.signup(options)
-              break
-          }
-        }}
+        handleSubmit={handleSubmit}
       />
     )
   }
