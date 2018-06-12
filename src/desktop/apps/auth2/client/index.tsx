@@ -39,6 +39,11 @@ export const initModalManager = () => {
         })
       }
 
+      // TODO: remember to swap 'register' with 'signup' in triggers
+      if (options.mode === 'register') {
+        options.mode = 'signup'
+      }
+
       if (manager) {
         manager.openModal(options)
       }
