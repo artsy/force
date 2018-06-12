@@ -50,8 +50,12 @@ module.exports = (req, res, next) ->
     (ua.match(/BB10/i)) ||
     (ua.match(/BlackBerry/i))
   )
-  res.locals.sd.IS_IPAD = Boolean(
-    (ua.match(/iPad/i) && ua.match(/Mobile/i))
+  res.locals.sd.IS_TABLET = Boolean(
+    (ua.match(/iPad/i) && ua.match(/Mobile/i)) ||
+    # specifically targets Vivo
+    (ua.match(/vivo/i) && ua.match(/Mobile/i)) ||
+    # targets android devices that are not mobile
+    (ua.match(/Android/i) && ua.match(/Mobile/i))
   )
 
   next()

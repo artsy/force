@@ -386,9 +386,9 @@ describe('Article Routes', () => {
         })
       })
 
-      it('iPad: showTooltips and showToolTipMarketData are false', done => {
+      it('Tablet: showTooltips and showToolTipMarketData are false', done => {
         res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
-        res.locals.sd.IS_IPAD = true
+        res.locals.sd.IS_TABLET = true
 
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(false)
