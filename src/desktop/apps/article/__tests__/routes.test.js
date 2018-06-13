@@ -36,7 +36,10 @@ describe('Article Routes', () => {
     sailthruApiGet = sinon.stub()
 
     rewires.push(
-      rewire.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: '123' }),
+      rewire.__set__('sd', {
+        ARTSY_EDITORIAL_CHANNEL: '123',
+        APP_URL: 'https://artsy.net',
+      }),
       rewire.__set__('sailthru', {
         apiPost: sailthruApiPost,
         apiGet: sailthruApiGet,
@@ -139,7 +142,7 @@ describe('Article Routes', () => {
       })
     })
 
-    it('does not strip utms from redirects', () => {
+    it('does not strip search params from redirects', () => {
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
