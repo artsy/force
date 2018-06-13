@@ -1,5 +1,6 @@
 import * as _ from 'underscore'
 import embed from 'particle'
+import { URL } from 'url'
 import markdown from 'desktop/components/util/markdown.coffee'
 import App from 'desktop/apps/article/components/App'
 import ArticleQuery from 'desktop/apps/article/queries/article'
@@ -37,13 +38,14 @@ export async function index(req, res, next) {
     })
     const article = data.article
     const articleModel = new Article(data.article)
+    const search = new URL(sd.APP_URL + req.url).search
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
     }
 
     if (articleId !== article.slug) {
-      return res.redirect(`/article/${article.slug}`)
+      return res.redirect(`/article/${article.slug}${search}`)
     }
 
     if (
@@ -58,7 +60,7 @@ export async function index(req, res, next) {
       !_.includes(['standard', 'feature'], article.layout) &&
       req.path.includes('/article')
     ) {
-      return res.redirect(`/${article.layout}/${article.slug}`)
+      return res.redirect(`/${article.layout}/${article.slug}${search}`)
     }
 
     if (
@@ -66,7 +68,7 @@ export async function index(req, res, next) {
       !req.path.includes(`/series/${article.seriesArticle.slug}/`)
     ) {
       return res.redirect(
-        `/series/${article.seriesArticle.slug}/${article.slug}`
+        `/series/${article.seriesArticle.slug}/${article.slug}${search}`
       )
     }
 
