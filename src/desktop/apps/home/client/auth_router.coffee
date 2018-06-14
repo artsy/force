@@ -2,7 +2,6 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 mediator = require '../../../lib/mediator.coffee'
 qs = require 'qs'
-sd = require('sharify').data
 
 module.exports = class HomeAuthRouter extends Backbone.Router
 
@@ -53,8 +52,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
       redirectTo: if redirectTo then redirectTo else null
 
   forgot: ->
-    mode = if sd.NEW_AUTH_MODAL then 'reset_password' else 'forgot'
     email = @parsedLocation.email
     setPassword = @parsedLocation.set_password
     redirectTo = @parsedLocation.reset_password_redirect_to
-    mediator.trigger 'open:auth', mode: mode, email: email, setPassword: setPassword, redirectTo: redirectTo
+    mediator.trigger 'open:auth', mode: 'forgot', email: email, setPassword: setPassword, redirectTo: redirectTo

@@ -13,7 +13,6 @@ export const index = async (req, res, next) => {
       type = ModalType.signup
       break
     case '/forgot':
-    case '/reset_password':
       type = ModalType.resetPassword
       break
     default:
