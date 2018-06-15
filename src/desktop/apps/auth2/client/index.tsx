@@ -17,7 +17,6 @@ export const init = () => {
 
   if (el) {
     // Start app
-    // ReactDOM.hydrate(<AuthStatic {...bootstrapData} />, el)
     ReactDOM.hydrate(<Component {...bootstrapData} />, el)
   }
 }
