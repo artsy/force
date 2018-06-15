@@ -8,6 +8,7 @@ import { handleSubmit } from '../helpers'
 interface Props {
   type: string
   subtitle?: string
+  options?: object
 }
 
 export class AuthStatic extends React.Component<Props> {

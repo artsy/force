@@ -14,6 +14,8 @@ export const init = () => {
   const el = document.getElementById('react-root')
 
   if (el) {
+    setCookies(bootstrapData.options)
+
     // Start app
     ReactDOM.hydrate(<AuthStatic {...bootstrapData} />, el)
   }
@@ -26,18 +28,7 @@ export const initModalManager = () => {
     let manager: ModalManager | null
 
     mediator.on('open:auth', options => {
-      if (options.afterSignUpAction) {
-        Cookies.set(
-          'postSignupAction',
-          JSON.stringify(options.afterSignUpAction)
-        )
-      }
-
-      if (options.destination) {
-        Cookies.set('destination', options.destination, {
-          expires: 60 * 60 * 24,
-        })
-      }
+      setCookies(options)
 
       // TODO: remember to swap 'register' with 'signup' in triggers
       if (options.mode === 'register') {
@@ -64,5 +55,19 @@ export const initModalManager = () => {
 
   if (el) {
     ReactDOM.render(<Container />, el)
+  }
+}
+
+export const setCookies = options => {
+  const { afterSignUpAction, destination } = options
+
+  if (afterSignUpAction) {
+    Cookies.set('afterSignUpAction', JSON.stringify(afterSignUpAction))
+  }
+
+  if (destination) {
+    Cookies.set('destination', destination, {
+      expires: 60 * 60 * 24,
+    })
   }
 }

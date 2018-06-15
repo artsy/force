@@ -48,7 +48,7 @@ module.exports = class HeaderView extends Backbone.View
 
     @checkForPersonalizeFlash()
 
-    @checkForPostSignupAction()
+    @checkForAfterSignUpAction()
 
     activatePulldowns()
 
@@ -104,10 +104,10 @@ module.exports = class HeaderView extends Backbone.View
     false
 
   openAuth: (options) ->
-     if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
-       mediator.trigger 'clickHeaderAuth'
-       return
-     @modal = new AuthModalView _.extend({ width: '500px' }, options)
+    if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
+      mediator.trigger 'clickHeaderAuth'
+      return
+    @modal = new AuthModalView _.extend({ width: '500px' }, options)
 
   signup: (e) ->
     e.preventDefault()
@@ -137,11 +137,11 @@ module.exports = class HeaderView extends Backbone.View
     else if document.referrer.match '/artsy-primer-personalize/'
       new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
 
-  checkForPostSignupAction: ->
-    postSignupAction = Cookies.get 'postSignupAction'
-    if postSignupAction
+  checkForAfterSignUpAction: ->
+    afterSignUpAction = Cookies.get 'afterSignUpAction'
+    if afterSignUpAction
       return unless @currentUser
-      { action, objectId, kind } = JSON.parse(postSignupAction)
+      { action, objectId, kind } = JSON.parse(afterSignUpAction)
       if action is 'save'
         @currentUser.initializeDefaultArtworkCollection()
         @currentUser.defaultArtworkCollection().saveArtwork objectId
@@ -149,7 +149,7 @@ module.exports = class HeaderView extends Backbone.View
         following = new Following [], kind: kind
         following.follow objectId
 
-      Cookies.expire 'postSignupAction'
+      Cookies.expire 'afterSignUpAction'
 
   highlightSearch: (e) ->
     if $('#main-layout-search-bar-input').is(':focus')
