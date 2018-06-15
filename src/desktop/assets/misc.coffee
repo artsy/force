@@ -24,9 +24,9 @@ routes =
 
   '/consign': require('../apps/consign/client/index.js').default
 
-  '/users/auth': require('../apps/auth/client/index.coffee').init
-
   '/reset_password': require('../apps/auth/client/index.coffee').init
+
+  '/reset_password2': requre('../apps/auth2/client/reset_password.coffee').init
 
   '/signup': require('../apps/auth/client/auth.coffee').init
 

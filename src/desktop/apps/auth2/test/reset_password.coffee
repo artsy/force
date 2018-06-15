@@ -5,7 +5,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ PasswordResetView } = require '../client/index'
+{ PasswordResetView } = require '../client/reset_password'
 
 describe 'PasswordResetView', ->
   before (done) ->
