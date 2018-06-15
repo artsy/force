@@ -72,7 +72,7 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
-  NEW_AUTH_MODAL: true
+  NEW_AUTH_MODAL: false
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
