@@ -24,6 +24,8 @@ export const index = async (req, res, next) => {
     description: '',
     title: type === ModalType.login ? 'Login to Artsy' : 'Signup for Artsy',
   }
+  const { action, destination, redirectTo } = req.query
+  const options = { action, destination, redirectTo }
 
   try {
     const layout = await renderLayout({
@@ -43,6 +45,7 @@ export const index = async (req, res, next) => {
       data: {
         type,
         meta,
+        options,
       },
     })
 
