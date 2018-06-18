@@ -1,4 +1,4 @@
-export default function SaleQuery (id) {
+export default function SaleQuery(id) {
   return `{
     sale(id: "${id}") {
       _id
@@ -39,6 +39,8 @@ export default function SaleQuery (id) {
             }
             artists {
               id
+              href
+              name
             }
             partner {
               name
