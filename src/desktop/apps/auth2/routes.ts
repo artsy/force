@@ -2,9 +2,12 @@ import { renderLayout } from '@artsy/stitch'
 import { AuthStatic } from './components/AuthStatic'
 import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
 import { AuthenticationMeta } from './meta'
+import { MobileAuthStatic } from './components/MobileAuthStatic'
 
 export const index = async (req, res, next) => {
   let type: ModalType
+  const template = res.locals.sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
+
   switch (req.path) {
     case '/login':
       type = ModalType.login
@@ -41,7 +44,7 @@ export const index = async (req, res, next) => {
       },
       blocks: {
         head: AuthenticationMeta,
-        body: AuthStatic,
+        body: template,
       },
       locals: {
         ...res.locals,

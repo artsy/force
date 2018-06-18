@@ -75,10 +75,6 @@ hash =
   '^/auctions': ->
     require('../apps/auctions/client/auctions.coffee').init()
 
-  '^/auction/.*': ->
-    return if location.pathname.match 'subscribe'
-    require('../apps/auction/client/index.coffee').init()
-
   '^/auction-registration/.*': ->
     require('../apps/auction_support/client/index.coffee').init()
 
