@@ -74,7 +74,7 @@ module.exports = class AuthModalView extends ModalView
     mediator.on 'auth:sign_up:fb', @trackFacebookSignup
     @logState()
 
-    Cookies.set 'postSignupAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
+    Cookies.set 'afterSignUpAction', JSON.stringify(@afterSignUpAction) if @afterSignUpAction
     Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
 
   currentRedirectTo: ->

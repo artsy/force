@@ -100,7 +100,7 @@ describe 'inquiry cookies', ->
     @bootstrap()
     @Cookies.set.called.should.not.be.ok()
 
-describe 'postSignupAction', ->
+describe 'afterSignUpAction', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose
@@ -167,4 +167,4 @@ describe 'postSignupAction', ->
       })
     )
     @bootstrap()
-    @Cookies.expire.args[0][0].should.equal 'postSignupAction'
+    @Cookies.expire.args[0][0].should.equal 'afterSignUpAction'
