@@ -1,0 +1,48 @@
+mixin printArtistName(artist)
+  if artist.slug
+    a(href='/artist/' + artist.slug )= artist.name
+  else
+    |= artist.name
+
+mixin image(image)
+  figure.article-section.article-section-image
+    img( src= resize(image.url, { width: 1080 }), alt=(image.caption || '') )
+    if image.caption
+      figcaption
+        != image.caption
+
+mixin artwork(image)
+  .artwork-columns-artwork
+    a( href='/artwork/' + artwork.slug )
+      img( src=artwork.image data-id=artwork.id )
+
+    .artwork-columns-artwork-details
+
+      p.artwork-item-artist
+        if artwork.artists
+          for artist, i in artwork.artists
+            +printArtistName(artist)
+        else if artwork.artist && artwork.artist.name
+          +printArtistName(artwork.artist)
+
+      if artwork.title
+        p.artwork-item-title
+          a(href='/artwork/' + artwork.slug)
+            em= artwork.title
+            if artwork.date
+              | ,&nbsp
+              = artwork.date
+
+      if artwork.partner && artwork.partner.name
+        p.artwork-item-partner
+          if artwork.partner.slug
+            a(href='/' + artwork.partner.slug)= artwork.partner.name
+          else
+            = artwork.partner.name
+
+ul
+  for image, i in images
+    if image.type == 'artwork'
+      +artwork(image)
+    else
+      +image(image)

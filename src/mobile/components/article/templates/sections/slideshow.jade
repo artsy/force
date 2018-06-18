@@ -6,11 +6,9 @@ if section.items.length > 0
     - item = section.items[0]
     case item.type
       when 'image'
-        - image = item
-        include ../sections/image
+        +image(item)
       when 'artwork'
-        - artworks = { ids: [item.id] }
-        include ../sections/artworks
+        +artwork(item)
       when 'video'
         - video = item
         include ../sections/video
