@@ -5,14 +5,14 @@ mixin printArtistName(artist)
     |= artist.name
 
 mixin image(image)
-  figure.article-section.article-section-image
+  li.article-section.article-section-image
     img( src= resize(image.url, { width: 1080 }), alt=(image.caption || '') )
     if image.caption
       figcaption
         != image.caption
 
-mixin artwork(image)
-  .artwork-columns-artwork
+mixin artwork(artwork)
+  li.artwork-columns-artwork
     a( href='/artwork/' + artwork.slug )
       img( src=artwork.image data-id=artwork.id )
 
@@ -40,7 +40,7 @@ mixin artwork(image)
           else
             = artwork.partner.name
 
-ul
+ul.article-section-image-collection
   for image, i in images
     if image.type == 'artwork'
       +artwork(image)
