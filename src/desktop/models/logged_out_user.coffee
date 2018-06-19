@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 User = require './user.coffee'
 sd = require('sharify').data
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
+$ = require 'jquery'
 
 syncWithSessionId = ->
   unless Backbone.__SESSION_SYNC_WRAPPED__ or IS_TEST_ENV

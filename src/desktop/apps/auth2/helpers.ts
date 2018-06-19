@@ -4,6 +4,7 @@ import {
   ModalOptions,
 } from '@artsy/reaction/dist/Components/Authentication/Types'
 import { data as sd } from 'sharify'
+import { pickBy, identity } from 'lodash'
 
 const mediator = require('../../lib/mediator.coffee')
 const LoggedOutUser = require('../../models/logged_out_user.coffee')
@@ -20,7 +21,7 @@ export const handleSubmit = (
     copy,
     destination,
     redirectTo,
-    signupIntent,
+    intent,
     signupReferer,
     trigger,
     triggerSeconds,
@@ -28,7 +29,7 @@ export const handleSubmit = (
 
   const userAttributes = Object.assign({}, values, {
     _csrf: sd.CSRF_TOKEN,
-    signupIntent,
+    signupIntent: intent,
     signupReferer,
   })
 
@@ -38,20 +39,20 @@ export const handleSubmit = (
     success: (_, res) => {
       formikBag.setSubmitting(false)
       if (window.analytics) {
-        window.analytics.track({
+        const properties = {
           action:
-            modalOptions.mode === 'signup'
-              ? 'Created account'
-              : 'Successfully logged in',
-          user_id: res.user.id,
+            type === 'signup' ? 'Created account' : 'Successfully logged in',
+          user_id: res.user && res.user.id,
           trigger,
           trigger_seconds: triggerSeconds,
-          signup_intent: signupIntent,
+          intent,
           context_module: contextModule,
           modal_copy: copy,
-          signup_redirect: redirectTo || destination,
-        })
+          auth_redirect: redirectTo || destination,
+        }
+        window.analytics.track(pickBy(properties, identity))
       }
+
       const defaultRedirect = type === 'signup' ? '/personalize' : '/'
       window.location = modalOptions.redirectTo || (defaultRedirect as any)
     },
