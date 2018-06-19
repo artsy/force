@@ -10,9 +10,9 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-1.4.2.tgz#1d1ac01fe97ef30a80ae0e48126a0680f56eb067"
+"@artsy/palette@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.0.2.tgz#329323e1d451ce94ca98d2089b2959710ab7241c"
   dependencies:
     react "^16.3.2"
     react-primitives "^0.5.0"
@@ -40,11 +40,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.14.0.tgz#8a7d58ea76401da76973bbda604f2e8603ea4715"
+"@artsy/reaction@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.14.2.tgz#4382fdf7918414deb9482b18948f562b0c809775"
   dependencies:
-    "@artsy/palette" "^1.4.2"
+    "@artsy/palette" "^2.0.2"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -10688,8 +10688,8 @@ react-slick@^0.14.11:
     slick-carousel "^1.6.0"
 
 react-spring@^5.3.15:
-  version "5.3.15"
-  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-5.3.15.tgz#95c775f55f36e48db01cdcce9f5718b172817a09"
+  version "5.3.17"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-5.3.17.tgz#7419a5cfc8c64e987830eaeeb6370a72315ab77e"
   dependencies:
     "@babel/runtime" "7.0.0-beta.49"
 

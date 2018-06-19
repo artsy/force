@@ -20,6 +20,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom' xmlns:content='http:
           - media = article.get('media')
           enclosure(url=media.url length=0 type="video/mp4")
         else if article.get('layout') === 'news'
+          enclosure(url="#{sd.APP_URL}/images/og_image.jpg" length=0 type="image/jpeg")
           meta(property="og:image" content="#{sd.APP_URL}/images/og_image.jpg")
         else if article.get('thumbnail_image')
           - image = article.get('thumbnail_image')
