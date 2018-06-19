@@ -25,3 +25,48 @@ describe('#setCookies', () => {
     expect(cookie[2].expires).toBe(86400)
   })
 })
+// import { handleSubmit } from "../helpers"
+// import Backbone from 'backbone'
+// const LoggedOutUser = require("../../../models/logged_out_user.coffee")
+
+// jest.mock('backbone')
+
+// describe("Authentication Helpers", () => {
+//   describe("#handleSubmit", () => {
+//     beforeEach() {
+//       const formikBag = {
+//         setSubmitting: jest.fn(),
+//         setStatus: jest.fn(),
+//       }
+// Backbone.sync = jest.fn()
+// }
+
+// it("makes an analytics call on success for login", () => {
+// handleSubmit("login", {
+//   contextModule: "Header",
+//   copy: "Log in yo",
+//   destination: "/articles",
+//   redirectTo: "/",
+//   trigger: "click"
+// }, {
+//     email: "foo@foo.com"
+//   }, formikBag)
+// })
+
+// it("makes an analytics call on success for signup", () => {
+
+// })
+
+// it("can login a user", () => {
+
+// })
+
+// it("can signup a user", () => {
+
+// })
+
+// it("can handle errors", () => {
+
+// })
+//   })
+// })
