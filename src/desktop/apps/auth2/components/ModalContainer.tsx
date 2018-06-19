@@ -7,11 +7,11 @@ const mediator = require('../../../lib/mediator.coffee')
 export const ModalContainer: React.SFC<any> = () => {
   let manager: ModalManager | null
 
-  mediator.on('open:auth', (options = {}) => {
+  mediator.on('open:auth', options => {
     setCookies(options)
 
     // TODO: remember to swap 'register' with 'signup' in triggers
-    if (options.mode === 'register') {
+    if (options && options.mode === 'register') {
       options.mode = 'signup'
     }
 

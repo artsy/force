@@ -1,14 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Cookies from 'cookies-js'
 import { AuthStatic } from '../components/AuthStatic'
 import { MobileAuthStatic } from '../components/MobileAuthStatic'
 import { ModalContainer } from '../components/ModalContainer'
-import { ModalManager } from '@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager'
-import { handleSubmit, setCookies } from '../helpers'
+import { setCookies } from '../helpers'
 import { data as sd } from 'sharify'
-
-const mediator = require('../../../lib/mediator.coffee')
 
 export const init = () => {
   // Rehydrate data from Server

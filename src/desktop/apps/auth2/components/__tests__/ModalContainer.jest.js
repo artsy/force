@@ -44,7 +44,7 @@ describe('ModalContainer', () => {
   })
 
   it('Sets a cookie when opening the modal', () => {
-    const component = mount(<ModalContainer />)
+    mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'login', destination: 'foo' })
     const cookie = Cookies.set.mock.calls[0]
 
