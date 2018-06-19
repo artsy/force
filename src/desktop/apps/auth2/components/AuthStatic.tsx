@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/Desktop/FormSwitcher'
 import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
 import { DesktopHeader } from '@artsy/reaction/dist/Components/Authentication/Desktop/Components/DesktopHeader'
+import { handleSubmit } from '../helpers'
 
 interface Props {
   type: string
   subtitle?: string
+  options?: object
 }
 
 export class AuthStatic extends React.Component<Props> {
@@ -17,9 +19,7 @@ export class AuthStatic extends React.Component<Props> {
         <FormSwitcher
           {...this.props}
           type={this.props.type as ModalType}
-          handleSubmit={() => {
-            console.log('here.')
-          }}
+          handleSubmit={handleSubmit.bind(this, this.props.type)}
         />
       </AuthFormContainer>
     )

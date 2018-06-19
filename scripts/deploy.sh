@@ -12,3 +12,8 @@ if [ -z "$CIRCLE_SHA1" ]; then
 else
   git push --force heroku $CIRCLE_SHA1:refs/heads/master
 fi
+
+if [ "$DEPLOY_ENV" = 'production' ]
+  git tag "production-$(date +%Y-%m-%d-%H-%M)"
+  git push -q https://$GITHUB_API_TOKEN@github.com/artsy/force.git --tags
+fi

@@ -5,7 +5,6 @@ import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
 import { RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
-import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
@@ -98,7 +97,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       let newDisplay
       if (data.display) {
         newDisplay = extend({}, data.display, {
-          renderTime: getCurrentUnixTimestamp(),
+          renderTime: moment().unix(),
         })
       }
       const newRelatedArticles = [data.relatedArticlesCanvas]

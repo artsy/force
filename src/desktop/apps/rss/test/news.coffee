@@ -73,7 +73,7 @@ describe '/rss', ->
         },
       ]
       rendered = newsTemplate(sd: sd, articles: new Articles(articles), moment: moment)
-      rendered.should.containEql '/images/og_image.jpg" length="0" type="image/jpeg">'
+      rendered.should.containEql '/images/og_image.jpg'
 
     it 'renders enclosures on non-video articles', ->
       articles = [

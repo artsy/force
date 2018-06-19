@@ -2,21 +2,24 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Cookies from 'cookies-js'
 import { AuthStatic } from 'desktop/apps/auth2/components/AuthStatic'
+import { MobileAuthStatic } from 'desktop/apps/auth2/components/MobileAuthStatic'
 import { ModalManager } from '@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager'
-import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
+import { handleSubmit } from '../helpers'
 import { data as sd } from 'sharify'
 
 const mediator = require('../../../lib/mediator.coffee')
-const LoggedOutUser = require('../../../models/logged_out_user.coffee')
 
 export const init = () => {
   // Rehydrate data from Server
   const bootstrapData = (window as any).__BOOTSTRAP__
   const el = document.getElementById('react-root')
+  const Component = sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
 
   if (el) {
+    setCookies(bootstrapData.options)
+
     // Start app
-    ReactDOM.hydrate(<AuthStatic {...bootstrapData} />, el)
+    ReactDOM.hydrate(<Component {...bootstrapData} />, el)
   }
 }
 
@@ -25,20 +28,13 @@ export const initModalManager = () => {
 
   const Container: React.SFC<any> = () => {
     let manager: ModalManager | null
-    const user = new LoggedOutUser()
 
     mediator.on('open:auth', options => {
-      if (options.afterSignUpAction) {
-        Cookies.set(
-          'postSignupAction',
-          JSON.stringify(options.afterSignUpAction)
-        )
-      }
+      setCookies(options)
 
-      if (options.destination) {
-        Cookies.set('destination', options.destination, {
-          expires: 60 * 60 * 24,
-        })
+      // TODO: remember to swap 'register' with 'signup' in triggers
+      if (options.mode === 'register') {
+        options.mode = 'signup'
       }
 
       if (manager) {
@@ -54,32 +50,26 @@ export const initModalManager = () => {
           signup: sd.AP.signupPagePath,
         }}
         csrf={sd.CSRF_TOKEN}
-        handleSubmit={(type, values, formikBag) => {
-          user.set(values)
-          const options = {
-            success: () => {
-              window.location = '/' as any
-            },
-            error: (_, response) => {
-              const error = response.error
-              formikBag.setStatus(error)
-              mediator.trigger('auth:error', error.message)
-            },
-          }
-          switch (type) {
-            case ModalType.login:
-              user.login(options)
-              break
-            case ModalType.signup:
-              user.signup(options)
-              break
-          }
-        }}
+        handleSubmit={handleSubmit}
       />
     )
   }
 
   if (el) {
     ReactDOM.render(<Container />, el)
+  }
+}
+
+export const setCookies = options => {
+  const { afterSignUpAction, destination } = options
+
+  if (afterSignUpAction) {
+    Cookies.set('afterSignUpAction', JSON.stringify(afterSignUpAction))
+  }
+
+  if (destination) {
+    Cookies.set('destination', destination, {
+      expires: 60 * 60 * 24,
+    })
   }
 }
