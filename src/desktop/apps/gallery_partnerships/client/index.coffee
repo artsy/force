@@ -8,6 +8,9 @@ module.exports.init = ->
     $('.gallery-partnerships2__chat__video').hide()
     $('.gallery-partnerships2__chat__fallback_image').show()
 
+  if sd.INTERCOM_ENABLED && sd.INTERCOM_APP_ID
+    intercom = require('./intercom')
+
   initCarousel $('.js-partner-stats-slideshow'), { autoPlay: 2500, wrapAround: true, draggable: false }
   initCarousel $('.js-partner-testimonials-slideshow'), { autoPlay: 8000, wrapAround: true, prevNextButtons: false }
 

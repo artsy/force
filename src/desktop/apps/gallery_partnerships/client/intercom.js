@@ -1,5 +1,7 @@
+import { data as sd } from 'sharify'
+
 window.intercomSettings = {
-  app_id: 'q6qkoxl8',
+  app_id: sd.INTERCOM_APP_ID,
 }
 ;(function() {
   var w = window
@@ -21,7 +23,7 @@ window.intercomSettings = {
       var s = d.createElement('script')
       s.type = 'text/javascript'
       s.async = true
-      s.src = 'https://widget.intercom.io/widget/q6qkoxl8'
+      s.src = `https://widget.intercom.io/widget/${sd.INTERCOM_APP_ID}`
       var x = d.getElementsByTagName('script')[0]
       x.parentNode.insertBefore(s, x)
     }
