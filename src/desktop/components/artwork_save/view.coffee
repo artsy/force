@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
+mediator = require '../../lib/mediator'
 
 module.exports = class ArtworkSaveView extends Backbone.View
   tagName: 'a'
@@ -27,6 +28,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
     if not @user.isLoggedIn()
       return mediator.trigger 'open:auth',
         width: '500px',
+        # TODO: make sure to consistently use signup instead of register 
         mode: 'register'
         copy: 'Sign up to save artworks'
         afterSignUpAction: {

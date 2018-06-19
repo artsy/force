@@ -7,7 +7,7 @@ import * as Fixtures from '@artsy/reaction/dist/Components/Publishing/Fixtures/C
 import Article from 'desktop/models/article.coffee'
 import fixtures from 'desktop/test/helpers/fixtures.coffee'
 
-const render = (templateName) => {
+const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)
   return jade.compile(fs.readFileSync(filename), { filename })
 }
@@ -18,9 +18,9 @@ describe('AMP Templates', () => {
   beforeEach(() => {
     res = {
       article: new Article(fixtures.article),
-      crop: (url) => url,
+      crop: url => url,
       embed,
-      resize: (url) => url,
+      resize: url => url,
       moment: () => {},
       asset: () => {},
       sd: {},

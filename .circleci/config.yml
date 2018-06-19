@@ -50,25 +50,41 @@ jobs:
       - run:
           name: Deploy
           command: hokusai staging deploy $CIRCLE_SHA1
-  deploy_heroku:
+  deploy_heroku_staging:
     docker:
       - image: circleci/node:8-stretch-browsers
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "1b:84:4f:fe:ad:ef:fc:d1:80:fb:be:ec:0c:03:36:73"
+            - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
       - checkout
-      - run: bash .circleci/heroku_setup.sh
+      - setup_remote_docker
+      - run: DEPLOY_ENV=staging bash .circleci/heroku_setup.sh
       - run:
-          name: Deploy
-          command: bash .circleci/heroku_deploy.sh
-        
+          name: "Deploy to staging"
+          command: "yarn install && DEPLOY_ENV=staging bash .circleci/heroku_deploy.sh && git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force"
+  deploy_heroku_production:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
+      - checkout
+      - setup_remote_docker
+      - run: DEPLOY_ENV=production bash .circleci/heroku_setup.sh
+      - run:
+          name: "Deploy to production"
+          command: "yarn install && DEPLOY_ENV=production bash .circleci/heroku_deploy.sh"
 
 workflows:
   version: 2
   default:
     jobs:
-      - test
+      - test:
+          filters:
+            branches:
+              ignore: staging
       - acceptance
       - build:
           requires:
@@ -86,9 +102,15 @@ workflows:
               only: master
           requires:
             - push
-      - deploy_heroku:
+      - deploy_heroku_staging:
           filters:
             branches:
               only: master
           requires:
-            - push
+            - test
+      - deploy_heroku_production:
+          filters:
+            branches:
+              only: release
+          requires:
+            - test

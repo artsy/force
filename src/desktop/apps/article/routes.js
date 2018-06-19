@@ -1,5 +1,6 @@
 import * as _ from 'underscore'
 import embed from 'particle'
+import { URL } from 'url'
 import markdown from 'desktop/components/util/markdown.coffee'
 import App from 'desktop/apps/article/components/App'
 import ArticleQuery from 'desktop/apps/article/queries/article'
@@ -14,6 +15,7 @@ import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { data as _sd } from 'sharify'
 import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
+import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(
   SAILTHRU_KEY,
@@ -36,13 +38,14 @@ export async function index(req, res, next) {
     })
     const article = data.article
     const articleModel = new Article(data.article)
+    const search = new URL(sd.APP_URL + req.url).search
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       return classic(req, res, next)
     }
 
     if (articleId !== article.slug) {
-      return res.redirect(`/article/${article.slug}`)
+      return res.redirect(`/article/${article.slug}${search}`)
     }
 
     if (
@@ -57,7 +60,7 @@ export async function index(req, res, next) {
       !_.includes(['standard', 'feature'], article.layout) &&
       req.path.includes('/article')
     ) {
-      return res.redirect(`/${article.layout}/${article.slug}`)
+      return res.redirect(`/${article.layout}/${article.slug}${search}`)
     }
 
     if (
@@ -65,7 +68,7 @@ export async function index(req, res, next) {
       !req.path.includes(`/series/${article.seriesArticle.slug}/`)
     ) {
       return res.redirect(
-        `/series/${article.seriesArticle.slug}/${article.slug}`
+        `/series/${article.seriesArticle.slug}/${article.slug}${search}`
       )
     }
 
@@ -90,9 +93,6 @@ export async function index(req, res, next) {
       const superSubData = await positronql({ query })
       superSubArticles.set(superSubData.articles)
     }
-
-    // Email signup
-    const subscribed = typeof res.locals.sd.CURRENT_USER !== 'undefined'
 
     let templates
     if (isSuper) {
@@ -119,8 +119,30 @@ export async function index(req, res, next) {
         '../../../components/main_layout/templates/react_blank_index.jade'
     }
 
-    const isMobile = res.locals.sd.IS_MOBILE
+    const {
+      ARTICLE_TOOLTIPS,
+      CURRENT_USER,
+      IS_MOBILE,
+      IS_TABLET,
+    } = res.locals.sd
+
+    const isMobile = IS_MOBILE
+    const isTablet = IS_TABLET
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
+
+    // Email signup
+    const isLoggedIn = typeof CURRENT_USER !== 'undefined'
+    let onDailyEditorial = false
+    // Only need to check subscription on mobile
+    if (isMobile && CURRENT_USER) {
+      onDailyEditorial = await subscribedToEditorial(CURRENT_USER.email)
+    }
+
+    // Tooltips a/b/c test
+    const showTooltips =
+      !isMobile && !isTablet && ARTICLE_TOOLTIPS !== 'control'
+    const showToolTipMarketData = showTooltips && ARTICLE_TOOLTIPS === 'market'
+    const renderTime = getCurrentUnixTimestamp()
 
     const layout = await renderLayout({
       basePath: res.app.get('views'),
@@ -142,9 +164,13 @@ export async function index(req, res, next) {
       data: {
         article,
         isSuper,
+        isLoggedIn,
         isMobile,
         jsonLD,
-        subscribed,
+        onDailyEditorial,
+        renderTime,
+        showTooltips,
+        showToolTipMarketData,
         superArticle,
         superSubArticles,
       },

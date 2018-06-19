@@ -522,10 +522,6 @@ background-size-cover()
     @media screen and (max-width: 768px)
       padding-bottom 90px
 
-  &__privacy
-    text-align center
-    margin-bottom 20px
-
   &__marketo-form
     width 740px
     @media screen and (max-width: 768px)
@@ -547,7 +543,7 @@ background-size-cover()
     .mktoForm
       @media screen and (max-width: 768px)
         padding 0
-    form, input, .mktoFormCol, input, .mktoFieldWrap
+    form, .mktoFormCol, input, .mktoFieldWrap
       width 100% !important
     .mktoButtonRow
       margin-top 30px !important
@@ -606,7 +602,7 @@ background-size-cover()
         @media screen and (max-width: 768px)
           margin-left 0
 
-    .mktoFormRow:nth-child(4n)
+    .mktoFormRow:nth-of-type(3n)
       .mktoFormCol:first-child
         .mktoFieldWrap
           @extends .bordered-select
@@ -619,6 +615,13 @@ background-size-cover()
             margin-top 6px
           select
             padding 12px 10px 11px
+
+    .mktoFormRow:nth-of-type(10n)
+      input[type="checkbox"]
+        width auto !important
+        + label
+          margin-left 22px
+
     .mktoAsterix
       display none !important
 

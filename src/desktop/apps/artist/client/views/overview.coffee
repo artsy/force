@@ -22,7 +22,8 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  initialize: ({ @user, @statuses }) ->
+  # TODO: ARTIST_MARKET_DATA_TEST remove after test closes(@testGroup)
+  initialize: ({ @user, @statuses, @testGroup }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
 
   fetchRelated: ->
@@ -87,23 +88,15 @@ module.exports = class OverviewView extends Backbone.View
     # Sub-header
     @setupRelatedGenes()
 
-    # TODO: Remove A/B split-test
-    infiniteScrollEnabled = !sd.ENABLE_EXPERIMENTAL_ARTIST_PAGINATION # sd.ARTIST_PAGE_PAGINATION is 'control'
-
     # Main section
     @filterView = (new ArtworkFilterView
       el: @$('#artwork-section')
       artistID: @model.get('id')
       topOffset: $('.artist-tabs-container').height() + 20
-      infiniteScrollEnabled: infiniteScrollEnabled
+      infiniteScrollEnabled: false
     ).render()
 
-    if infiniteScrollEnabled
-      @listenToOnce mediator, 'infinite:scroll:end', =>
-        @showRelatedRail()
-    else
-      @showRelatedRail()
-
+    @showRelatedRail()
     @subViews.push @filterView
 
   showRelatedRail: ->
@@ -140,6 +133,7 @@ module.exports = class OverviewView extends Backbone.View
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
+      testGroup: @testGroup
 
     _.defer => @postRender()
     this

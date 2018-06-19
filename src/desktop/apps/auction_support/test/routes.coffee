@@ -15,8 +15,11 @@ openSale = fabricate 'sale',
   start_at: moment().subtract(1, 'minutes').format()
   end_at: moment().add(3, 'minutes').format()
 
-analyticsConstructorArgs = null
-analyticsTrackArgs = null
+analyticsConstructorArgs = []
+analyticsTrackArgs = []
+resetAnalytics = ->
+  analyticsTrackArgs = []
+  analyticsConstructorArgs = []
 
 describe '#auctionRegistration', ->
 
@@ -33,7 +36,7 @@ describe '#auctionRegistration', ->
       track: -> analyticsTrackArgs = arguments
     routes.__set__('Analytics', analytics)
 
-    @req = { params: { id: 'awesome-sale' } }
+    @req = { params: { id: 'awesome-sale' }, query: {} }
     @res =
       status: sinon.stub()
       render: sinon.stub()
@@ -47,6 +50,8 @@ describe '#auctionRegistration', ->
 
   afterEach ->
     Backbone.sync.restore()
+    resetAnalytics()
+    @req.query = {}
 
   it 'redirects to login without user', ->
     routes.auctionRegistration @req, @res
@@ -76,7 +81,8 @@ describe '#auctionRegistration', ->
       @res.render.args[0][0].should.equal 'registration'
       @res.render.args[0][1].sale.get('name').should.equal 'Awesome Sale'
 
-    it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file', ->
+    it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file and user accepted conditions', ->
+      @req.query = {'accepted-conditions': 'true' }
       routes.auctionRegistration @req, @res
       Backbone.sync.args[0][2].success openSale
       Backbone.sync.args[1][2].success []
@@ -89,6 +95,16 @@ describe '#auctionRegistration', ->
       sentAnalytics['properties']['auction_slug'].should.equal 'whtney-art-party'
 
       @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
+
+    it 'redirects to registration flow if sale is registerable and user has credit card on file but user did not accept conditions', ->
+      routes.auctionRegistration @req, @res
+      Backbone.sync.args[0][2].success openSale
+      Backbone.sync.args[1][2].success []
+      Backbone.sync.args[2][2].success [{foo: 'bar'}]
+
+      # no analytics
+      analyticsTrackArgs.should.be.empty()
+      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/registration-flow"
 
     it 'renders registration error page if sale is an auction and is not registerable', ->
       routes.auctionRegistration @req, @res

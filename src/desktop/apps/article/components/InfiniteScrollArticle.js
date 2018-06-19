@@ -9,6 +9,7 @@ import { positronql as _positronql } from 'desktop/lib/positronql'
 import { Article } from 'reaction/Components/Publishing'
 import { articlesQuery } from 'desktop/apps/article/queries/articles'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
+import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
 
 // FIXME: Rewire
 let positronql = _positronql
@@ -22,6 +23,10 @@ export default class InfiniteScrollArticle extends React.Component {
     isMobile: PropTypes.bool,
     headerHeight: PropTypes.string,
     marginTop: PropTypes.string,
+    showTooltips: PropTypes.bool,
+    showToolTipMarketData: PropTypes.bool,
+    onOpenAuthModal: PropTypes.func,
+    renderTime: PropTypes.number,
   }
 
   constructor(props) {
@@ -29,11 +34,12 @@ export default class InfiniteScrollArticle extends React.Component {
 
     this.state = {
       isLoading: false,
-      articles: [this.props.article],
+      articles: [props.article],
       offset: 0,
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
+      renderTimes: [props.renderTime],
     }
   }
 
@@ -42,7 +48,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   fetchNextArticles = async () => {
-    const { articles, offset } = this.state
+    const { articles, following, offset, renderTimes } = this.state
 
     this.setState({
       isLoading: true,
@@ -52,27 +58,21 @@ export default class InfiniteScrollArticle extends React.Component {
       const data = await positronql({
         query: articlesQuery({
           offset,
+          layout: 'standard',
           limit: 3,
           channel: sd.ARTSY_EDITORIAL_CHANNEL,
           omit: this.props.article.id,
         }),
       })
 
-      // TODO:
-      // At some point this could go in a query so as not to fetch unnecessary data
-
-      // Ignore featured layouts
-      const newArticles = data.articles.filter(
-        (article) => article.layout !== 'feature'
-      )
-
-      if (newArticles.length) {
+      if (data.articles.length) {
         this.setState({
-          articles: articles.concat(newArticles),
+          articles: articles.concat(data.articles),
+          renderTimes: renderTimes.concat([getCurrentUnixTimestamp()]),
           isLoading: false,
           offset: offset + 3,
         })
-        setupFollowButtons(this.state.following)
+        setupFollowButtons(following)
       } else {
         this.setState({
           isEnabled: false,
@@ -140,6 +140,9 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
+    const { showTooltips, showToolTipMarketData, onOpenAuthModal } = this.props
+    const { renderTimes } = this.state
+
     return _.flatten(
       this.state.articles.map((article, i) => {
         return (
@@ -154,11 +157,15 @@ export default class InfiniteScrollArticle extends React.Component {
               display={article.display}
               headerHeight={i === 0 ? this.props.headerHeight : null}
               marginTop={i === 0 ? this.props.marginTop : null}
+              showTooltips={showTooltips}
+              showToolTipMarketData={showToolTipMarketData}
+              onOpenAuthModal={onOpenAuthModal}
+              renderTime={renderTimes[Math.floor(i / 3)]}
             />
             <Break />
             <Waypoint
-              onEnter={(waypointData) => this.onEnter(article, waypointData)}
-              onLeave={(waypointData) => this.onLeave(i, waypointData)}
+              onEnter={waypointData => this.onEnter(article, waypointData)}
+              onLeave={waypointData => this.onLeave(i, waypointData)}
             />
           </div>
         )

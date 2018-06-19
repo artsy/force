@@ -78,7 +78,7 @@ module.exports = class LoggedOutUser extends User
         'signupIntent',
         'signupReferer',
         'accepted_terms_of_service',
-        'receive_emails'
+        'agreed_to_receive_emails'
       ), _.extend {}, options,
         url: "#{APP_URL}#{sd.AP.signupPagePath}"
         success: =>

@@ -61,13 +61,16 @@ block body
         #feature-bid-page-errors
           if error
             = error.message
-        button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button(
-          disabled=(registered || hasQualifiedCreditCard) ? undefined : 'disabled'
-        )
-          | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
-          .loading-spinner
-        .feature-bid-page-conditions
-          | *By placing your bid you agree to Artsy's&nbsp;
-          a( href="/conditions-of-sale" ) Conditions of Sale
+        if registered || hasQualifiedCreditCard
+          if registered
+            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-message.jade
+            button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button
+              | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+              .loading-spinner
+          else
+            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-checkbox.jade
+            button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button.is-disabled
+              | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+              .loading-spinner
     #feature-clock-container.js-auction-clock
-      include ../../../components/auction_clock/template
+      include ../../../../desktop/components/clock/template

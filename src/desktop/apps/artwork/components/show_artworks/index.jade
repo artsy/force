@@ -6,7 +6,7 @@ if artwork.show && artwork.show.artworks.length
       h3.artwork-show-artworks__header__name
         | Other Works from the #{show.type}
 
-      a.artwork-artist-artworks__header__jump( href= show.href )
+      a.artwork-show-artworks__header__jump( href= show.href )
         | View All
 
 
@@ -16,3 +16,8 @@ if artwork.show && artwork.show.artworks.length
     else
       - var columns = helpers.show_artworks.masonry(show.artworks).columns
       include ../../../../components/artwork_masonry/index
+
+    .artwork-section__jump
+      a.avant-garde-jump-link( href='#{artwork.show.href}' )
+        | View all #{artwork.show.counts.eligible_artworks} works
+        i.icon-chevron-small-right

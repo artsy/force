@@ -122,30 +122,34 @@ export const FairWeekPageScaffold = ({
         </Col>
       </ResponsiveRow>
 
-      <ResponsiveRow paddingBottom={45}>
-        <Col lg={4} md={4} sm={12} xs={12}>
-          <SectionTitle titleSize="large">{event.title}</SectionTitle>
-        </Col>
-        <Col lg={8} md={8} sm={12} xs={12}>
-          <img
-            style={{ marginBottom: 10, width: '100%' }}
-            src={event.banner_image_url}
-          />
+      {event && (
+        <ResponsiveRow paddingBottom={45}>
+          <Col lg={4} md={4} sm={12} xs={12}>
+            <SectionTitle titleSize="large">{event.title}</SectionTitle>
+          </Col>
+          <Col lg={8} md={8} sm={12} xs={12}>
+            <img
+              style={{ marginBottom: 10, width: '100%' }}
+              src={event.banner_image_url}
+            />
 
-          <ResponsiveRow>
-            <Col lg={7} md={8} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text textSize="medium">{event.description}</Text>
-            </Col>
-            <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text
-                textSize="medium"
-                color={colors.grayDark}
-                dangerouslySetInnerHTML={{ __html: event.public_viewing_date }}
-              />
-            </Col>
-          </ResponsiveRow>
-        </Col>
-      </ResponsiveRow>
+            <ResponsiveRow>
+              <Col lg={7} md={8} sm={12} xs={12} style={{ marginBottom: 25 }}>
+                <Text textSize="medium">{event.description}</Text>
+              </Col>
+              <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
+                <Text
+                  textSize="medium"
+                  color={colors.grayDark}
+                  dangerouslySetInnerHTML={{
+                    __html: event.public_viewing_date,
+                  }}
+                />
+              </Col>
+            </ResponsiveRow>
+          </Col>
+        </ResponsiveRow>
+      )}
 
       <ResponsiveRow>
         <Col lg={4} md={4} sm={12} xs={12}>

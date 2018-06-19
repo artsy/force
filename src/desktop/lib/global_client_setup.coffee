@@ -21,6 +21,7 @@ listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 globalReactModules = require('./global_react_modules')
 { componentRenderer } = require('@artsy/stitch/iso')
+{ initModalManager } = require('../../desktop/apps/auth2/client/index')
 
 module.exports = ->
   setupErrorReporting()
@@ -30,8 +31,8 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
+  initModalManager() if sd.NEW_AUTH_MODAL
   mountStitchBlocks()
-
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER

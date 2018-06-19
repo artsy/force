@@ -23,11 +23,27 @@ describe 'AuthModalView', ->
       benv.expose
         $: benv.require('jquery'),
         jQuery: benv.require('jquery')
+        analyticsHooks: {
+          trigger: sinon.stub()
+        },
       Backbone.$ = $
       @AuthModalView = rewire '../view'
       @AuthModalView.__set__ 'Cookies',
         set: sinon.stub()
         get: sinon.stub()
+      @AuthModalView.__set__(
+        'mediator',
+        @mediator = {
+          trigger: sinon.stub(),
+          on: sinon.stub()
+        }
+      )
+      @AuthModalView.__set__(
+        'analyticsHooks',
+        @analyticsHooks = {
+          trigger: sinon.stub()
+        }
+      )
       LoggedOutUser.__set__ 'sd', AP: {}
       sinon.stub @AuthModalView::, 'initialize'
       done()
@@ -92,6 +108,11 @@ describe 'AuthModalView', ->
       @view.preInitialize userData: email: 'foo@bar.com'
       @view.templateData.email.should.containEql 'foo@bar.com'
 
+    it 'sets up tracking options', ->
+      @view.preInitialize context_module: 'intext tooltips', intent: 'follow artist'
+      @view.trackingOptions.context_module.should.containEql 'intext tooltips'
+      @view.trackingOptions.intent.should.containEql 'follow artist'
+
   describe '#submit', ->
     beforeEach ->
       sinon.stub location, 'assign'
@@ -125,6 +146,31 @@ describe 'AuthModalView', ->
       @view.submit $.Event('click')
       Backbone.sync.args[1][1].toJSON()._csrf.should.equal 'csrfoo'
 
+    it 'submits user data with gdpr fields', ->
+      @view.state.set mode: 'register'
+      @view.serializeForm = -> {
+        name: 'Sam'
+        password: 'foo'
+        email: 'foo@bar.com'
+        accepted_terms_of_service: true
+      }
+      @view.submit $.Event('click')
+      Backbone.sync.args[0][1].toJSON().name.should.equal 'Sam'
+      Backbone.sync.args[0][1].toJSON().email.should.equal 'foo@bar.com'
+      Backbone.sync.args[0][1].toJSON().password.should.equal 'foo'
+      Backbone.sync.args[0][1].toJSON().accepted_terms_of_service.should.equal true
+      Backbone.sync.args[0][1].toJSON().agreed_to_receive_emails.should.equal true
+
+    it 'returns early if validateForm has an error', ->
+      @view.$el.html $ "<form>" + render('register')(
+        copy: new Backbone.Model
+        sd: AP: loginPagePath: 'foo'
+      ) + "</form>"
+      @view.state.set mode: 'register'
+      @view.validateForm = -> false
+      @view.submit $.Event('click')
+      Backbone.sync.args.length.should.equal 0
+
   describe '#onSubmitSuccess', ->
     beforeEach ->
       @view.state = new Backbone.Model mode: 'reset'
@@ -139,3 +185,39 @@ describe 'AuthModalView', ->
     it 'does not submit form if the the mode is password reset', ->
       @view.onSubmitSuccess @view.user, { success: 200 }
       @submitSpy.should.be.calledOnce
+
+    it 'triggers analytics hook on login', ->
+      @view.trackingOptions = context_module: 'intext tooltips', intent: 'follow artist'
+      @view.state.set mode: 'login'
+      @view.onSubmitSuccess @view.user, { success: 200 }
+      analyticsArgs = _.last(@analyticsHooks.trigger.args)
+
+      analyticsArgs[0].should.eql 'auth:login'
+      analyticsArgs[1].context_module.should.eql 'intext tooltips'
+      analyticsArgs[1].intent.should.eql 'follow artist'
+
+    it 'triggers mediator for analytics with trackingOptions on register', ->
+      @view.preInitialize context_module: 'intext tooltips', intent: 'follow artist'
+      @view.onSubmitSuccess @view.user, { success: 200 }
+      mediatorArgs = _.last(@mediator.trigger.args)
+
+      mediatorArgs[0].should.eql 'auth:sign_up:success'
+      mediatorArgs[1].context_module.should.eql 'intext tooltips'
+      mediatorArgs[1].intent.should.eql 'follow artist'
+
+  describe '#trackSignup', ->
+    it 'extends trackingOptions with args', ->
+      @view.preInitialize()
+      @view.trackSignup {intent: 'follow artist'}
+
+      @view.trackingOptions.intent.should.eql 'follow artist'
+
+  describe '#trackFacebookSignup', ->
+    it 'calls #trackSignup and sets a cookie with @trackingOptions', ->
+      @view.preInitialize()
+      @view.trackFacebookSignup {intent: 'follow artist'}
+      cookie = _.last(@AuthModalView.__get__('Cookies').set.args)
+
+      @view.trackingOptions.intent.should.eql 'follow artist'
+      cookie[0].should.eql 'analytics-signup'
+      JSON.parse(cookie[1]).intent.should.eql 'follow artist'

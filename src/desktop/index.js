@@ -1,4 +1,5 @@
 import * as modules from './lib/global_react_modules'
+import { data as sd } from 'sharify'
 const app = (module.exports = require('express')())
 
 // NOTE:
@@ -15,12 +16,14 @@ app.use(require('./apps/apply'))
 app.use(require('./apps/auctions'))
 app.use(require('./apps/auctions2'))
 app.use(require('./apps/artist'))
+app.use(require('./apps/artist2/server'))
 app.use(require('./apps/artists'))
 app.use(require('./apps/auction'))
 app.use(require('./apps/auction_support'))
 app.use(require('./apps/auction_lots'))
 app.use(require('./apps/artwork_purchase'))
 app.use(require('./apps/artwork'))
+app.use(require('./apps/artwork2/server'))
 app.use(require('./apps/about'))
 app.use(require('./apps/collect_art'))
 app.use(require('./apps/collect'))
@@ -48,7 +51,11 @@ app.use(require('./apps/tag'))
 app.use(require('./apps/unsubscribe'))
 app.use(require('./apps/unsupported_browser'))
 app.use(require('./apps/style_guide'))
-app.use(require('./apps/auth'))
+if (sd.NEW_AUTH_MODAL) {
+  app.use(require('./apps/auth2'))
+} else {
+  app.use(require('./apps/auth'))
+}
 app.use(require('./apps/static'))
 app.use(require('./apps/clear_cache'))
 app.use(require('./apps/sitemaps'))
@@ -61,6 +68,7 @@ app.use(require('./apps/marketing_signup_modals'))
 app.use(require('./apps/artsy_in_miami').default)
 app.use(require('./apps/armory_week').default)
 app.use(require('./apps/frieze_week').default)
+app.use(require('./apps/basel_week').default)
 
 // Non-profile dynamic vanity url apps
 app.use(require('./apps/galleries_institutions'))
@@ -82,3 +90,4 @@ app.use(require('./apps/user'))
 
 // Examples
 app.use(require('./apps/react_example'))
+app.use(require('./apps/isomorphic-relay-example/server'))

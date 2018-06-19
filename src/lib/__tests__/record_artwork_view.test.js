@@ -11,7 +11,7 @@ describe('Recording an artwork view', () => {
   })
 
   afterEach(() => {
-    rewires.forEach((reset) => reset())
+    rewires.forEach(reset => reset())
   })
 
   it('records an artwork view for a user', () => {

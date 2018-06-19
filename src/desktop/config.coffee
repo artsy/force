@@ -33,7 +33,6 @@ module.exports =
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_EXPERIMENTAL_STITCH_INJECTION: false
-  ENABLE_EXPERIMENTAL_ARTIST_PAGINATION: false
   ENABLE_MEMORY_PROFILING: false
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
@@ -73,6 +72,7 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
+  NEW_AUTH_MODAL: false
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
@@ -115,6 +115,7 @@ module.exports =
   TWITTER_KEY: null
   TWITTER_SECRET: null
   VANITY_BUCKET: null
+  VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
   WHITELISTED_VANITY_ASSETS: ''
 

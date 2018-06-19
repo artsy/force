@@ -51,7 +51,7 @@ describe 'RegistrationForm', ->
   describe '#submit', ->
 
     beforeEach ->
-      @acceptTerms = => @view.$acceptCOS.prop('checked', true)
+      @acceptConditions = => @view.$acceptConditions.prop('checked', true)
       @submitValidForm = =>
         @view.$('input[name="card_name"]').val 'Foo Bar'
         @view.$('select[name="card_expiration_month"]').val '1'
@@ -73,7 +73,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'error', { responseJSON: { message: 'Sale is already taken.' } } # bidder creation failure
 
-      @acceptTerms()
+      @acceptConditions()
       @submitValidForm()
 
       @view.once 'submitted', =>
@@ -116,7 +116,7 @@ describe 'RegistrationForm', ->
         Backbone.sync.onThirdCall().yieldsTo('success')
 
 
-        @acceptTerms()
+        @acceptConditions()
         @submitValidForm()
         @view.once "submitted", =>
           @Stripe.card.createToken.args[0][1](200, {})
@@ -140,7 +140,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
-      @acceptTerms()
+      @acceptConditions()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -156,7 +156,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
-      @acceptTerms()
+      @acceptConditions()
       @submitValidForm()
 
       @view.once "submitted", =>
@@ -172,7 +172,7 @@ describe 'RegistrationForm', ->
         .onCall 2
         .yieldsTo 'success', {}
 
-      @acceptTerms()
+      @acceptConditions()
       @submitValidForm()
 
       @view.once "submitted", =>

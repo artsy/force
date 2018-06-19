@@ -4,10 +4,12 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackNotifierPlugin = require('webpack-notifier')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-const { NODE_ENV, PORT, WEBPACK_DEVTOOL } = process.env
+
+const { NODE_ENV, PORT, WEBPACK_DEVTOOL, ANALYZE_BUNDLE } = process.env
 const isDevelopment = NODE_ENV === 'development'
 const isStaging = NODE_ENV === 'staging'
 const isProduction = NODE_ENV === 'production'
@@ -19,6 +21,18 @@ const config = {
     webpack: [
       'webpack-hot-middleware/client?reload=true',
       './src/desktop/apps/webpack/client.js',
+    ],
+    relay: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/desktop/apps/isomorphic-relay-example/client.js',
+    ],
+    artist2: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/desktop/apps/artist2/client.js',
+    ],
+    artwork2: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/desktop/apps/artwork2/client.js',
     ],
     ...getEntrypoints(),
   },
@@ -107,8 +121,18 @@ const config = {
     alias: {
       'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
       react: path.resolve('./node_modules/react'),
+      'styled-components': path.resolve('./node_modules/styled-components'),
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.jade', '.coffee'],
+    extensions: [
+      '.mjs',
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+      '.json',
+      '.jade',
+      '.coffee',
+    ],
     modules: ['node_modules', 'src'],
     symlinks: false,
   },
@@ -137,6 +161,10 @@ if (isDevelopment) {
         },
       })
     )
+  }
+
+  if (ANALYZE_BUNDLE) {
+    config.plugins.push(new BundleAnalyzerPlugin())
   }
 }
 

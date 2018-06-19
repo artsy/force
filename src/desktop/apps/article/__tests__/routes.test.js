@@ -3,6 +3,7 @@ import * as _ from 'underscore'
 import sinon from 'sinon'
 import Article from 'desktop/models/article.coffee'
 import Channel from 'desktop/models/channel.coffee'
+import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
 
 const rewire = require('rewire')('../routes')
 const { amp, classic, editorialSignup, index, subscribedToEditorial } = rewire
@@ -20,6 +21,7 @@ describe('Article Routes', () => {
       body: {},
       params: { slug: 'foobar' },
       path: '/article/foobar',
+      url: '',
     }
     res = {
       app: { get: sinon.stub().returns('components') },
@@ -34,7 +36,10 @@ describe('Article Routes', () => {
     sailthruApiGet = sinon.stub()
 
     rewires.push(
-      rewire.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: '123' }),
+      rewire.__set__('sd', {
+        ARTSY_EDITORIAL_CHANNEL: '123',
+        APP_URL: 'https://artsy.net',
+      }),
       rewire.__set__('sailthru', {
         apiPost: sailthruApiPost,
         apiGet: sailthruApiGet,
@@ -48,6 +53,7 @@ describe('Article Routes', () => {
 
   describe('#index', () => {
     it('renders the index with the correct data', done => {
+      const time = getCurrentUnixTimestamp()
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: 'foobar',
@@ -62,6 +68,9 @@ describe('Article Routes', () => {
         renderLayout.args[0][0].data.article.title.should.equal(
           'Top Ten Booths'
         )
+
+        const timeDifference = time - renderLayout.args[0][0].data.renderTime
+        timeDifference.should.be.below(100)
         renderLayout.args[0][0].locals.assetPackage.should.equal('article')
         done()
       })
@@ -130,6 +139,24 @@ describe('Article Routes', () => {
       rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
       index(req, res, next).then(() => {
         res.redirect.args[0][0].should.equal('/series/foobar')
+      })
+    })
+
+    it('does not strip search params from redirects', () => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: 'foobar',
+          channel_id: '123',
+          layout: 'news',
+        }),
+      }
+      rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+      req.url =
+        '/article/artsy-editorial-museums-embrace-activists?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V'
+      index(req, res, next).then(() => {
+        res.redirect.args[0][0].should.equal(
+          '/news/foobar?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V'
+        )
       })
     })
 
@@ -312,6 +339,84 @@ describe('Article Routes', () => {
       index(req, res, next).then(() => {
         renderLayout.args[0][0].layout.should.containEql('react_blank_index')
         done()
+      })
+    })
+
+    describe('ToolTips test', () => {
+      let data
+      let renderLayout
+
+      beforeEach(() => {
+        res.locals.sd.CURRENT_USER = { type: 'Admin' }
+        data = {
+          article: _.extend({}, fixtures.article, {
+            slug: 'foobar',
+            channel_id: '123',
+            layout: 'standard',
+          }),
+        }
+        rewire.__set__(
+          'positronql',
+          sinon.stub().returns(Promise.resolve(data))
+        )
+        renderLayout = sinon.stub()
+        rewire.__set__('renderLayout', renderLayout)
+        rewire.__set__(
+          'subscribedToEditorial',
+          sinon.stub().returns(Promise.resolve(true))
+        )
+      })
+
+      it('Control: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'control'
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+
+      it('Bio: showTooltips is true, showToolTipMarketData is false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(true)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+
+      it('Market: showTooltips and showToolTipMarketData are true', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'market'
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(true)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(true)
+          done()
+        })
+      })
+
+      it('Mobile: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        res.locals.sd.IS_MOBILE = true
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
+      })
+
+      it('Tablet: showTooltips and showToolTipMarketData are false', done => {
+        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+        res.locals.sd.IS_TABLET = true
+
+        index(req, res, next).then(() => {
+          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
+          done()
+        })
       })
     })
   })
@@ -497,7 +602,7 @@ describe('Article Routes', () => {
       res.locals.jsonLD.should.containEql('Top Ten Booths at miart 2014')
       res.locals.jsonLD.should.containEql('Artsy Editorial')
       res.locals.jsonLD.should.containEql(
-        '"publisher":{"name":"Artsy","logo":{"url":"http://artsy.net/images/full_logo.png","height":103,"width":300}}'
+        '/images/full_logo.png","height":103,"width":300}}'
       )
       done()
     })

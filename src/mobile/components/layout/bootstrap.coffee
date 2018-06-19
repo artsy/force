@@ -40,7 +40,7 @@ module.exports = ->
   setupErrorReporting()
   setupHeaderView()
   syncAuth()
-  checkForPostSignupAction()
+  checkForAfterSignUpAction()
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
@@ -83,12 +83,12 @@ setupHeaderView = ->
   new HeaderView
     el: $('#main-header')
 
-checkForPostSignupAction = ->
-  postSignupAction = Cookies.get 'postSignupAction'
+checkForAfterSignUpAction = ->
+  afterSignUpAction = Cookies.get 'afterSignUpAction'
   @currentUser = CurrentUser.orNull()
-  if postSignupAction
+  if afterSignUpAction
     return unless @currentUser
-    { action, objectId, kind } = JSON.parse(postSignupAction)
+    { action, objectId, kind } = JSON.parse(afterSignUpAction)
     
     if action is 'save'
       @currentUser.initializeDefaultArtworkCollection()
@@ -96,4 +96,4 @@ checkForPostSignupAction = ->
     else if action is 'follow' and kind?
       @currentUser.follow(objectId, kind)
 
-    Cookies.expire 'postSignupAction'
+    Cookies.expire 'afterSignUpAction'

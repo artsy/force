@@ -3,9 +3,11 @@ import benv from 'benv'
 import React from 'react'
 import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
+import sinon from 'sinon'
+import rewire from 'rewire'
 
 describe('<App />', () => {
-  before((done) => {
+  before(done => {
     benv.setup(() => {
       benv.expose({
         $: benv.require('jquery'),
@@ -31,13 +33,20 @@ describe('<App />', () => {
     }
   }
 
-  const App = require('desktop/apps/article/components/App').default
+  const ArticleLayoutRewire = rewire('../layouts/Article')
+  const EditorialSignupView = sinon.stub()
+  ArticleLayoutRewire.__set__('EditorialSignupView', EditorialSignupView)
+  const ArticleLayout = ArticleLayoutRewire.default
+
+  const AppRewire = rewire('../App')
+  AppRewire.__set__('ArticleLayout', ArticleLayout)
+  const App = AppRewire.default
+
   const { Article, Fixtures } = require('reaction/Components/Publishing')
   // TODO: Export News to Fixtures
   const {
     NewsArticle,
   } = require('reaction/Components/Publishing/Fixtures/Articles')
-  const ArticleLayout = require('../layouts/Article').default
 
   it('renders a standard article', () => {
     const rendered = mount(

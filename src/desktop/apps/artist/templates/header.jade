@@ -1,34 +1,38 @@
 include ../../../components/util/activator
 
 header.artist-header
-  .artist-header-flex
-    .artist-header-meta
-      h1.artist-header-name.extra-large-garamond-header= artist.name
+  //- TODO: ARTIST_MARKET_DATA_TEST remove after test closes
+  if viewHelpers.hasMarketData(testGroup)
+    include ./market_data_header
+  else
+    .artist-header-flex
+      .artist-header-meta
+        h1.artist-header-name.extra-large-garamond-header= artist.name
 
-      - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+        - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
 
-      if bday
-        .artist-header-birthdate= bday
+        if bday
+          .artist-header-birthdate= bday
 
-      unless artist.statuses.artworks
-        .artist-header-empty
-          | There are no #{artist.name} works on Artsy yet.
-          br
-          | Follow the artist to get alerts when works are added.
+        unless artist.statuses.artworks
+          .artist-header-empty
+            | There are no #{artist.name} works on Artsy yet.
+            br
+            | Follow the artist to get alerts when works are added.
 
-      .artist-follow
-        button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
-        if artist.counts.follows >= 50
-          - var followCount = viewHelpers.displayFollowers(artist)
-          span.artist-header-follow-count(data-count=followCount) Followers
+        .artist-follow
+          button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
+          if artist.counts.follows >= 50
+            - var followCount = viewHelpers.displayFollowers(artist)
+            span.artist-header-follow-count(data-count=followCount) Followers
 
-    if artist.is_consignable
-      .consignment-cta
-        | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Consign with Artsy.]
+      if artist.is_consignable
+        .consignment-cta
+          | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Consign with Artsy.]
 
-    if currentItem
-      .current-item-container
-        include ../components/current_item/index
+      if currentItem
+        .current-item-container
+          include ../components/current_item/index
 
   - var sections = nav.sections()
   if sections.length > 1

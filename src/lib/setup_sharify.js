@@ -44,7 +44,6 @@ sharify.data = _.extend(
     'EMBEDLY_KEY',
     'ENABLE_WEB_CRAWLING',
     'ENABLE_EXPERIMENTAL_STITCH_INJECTION',
-    'ENABLE_EXPERIMENTAL_ARTIST_PAGINATION',
     'EOY_2016_ARTICLE',
     'EOY_2016',
     'EF_GUCCI',
@@ -73,6 +72,7 @@ sharify.data = _.extend(
     'MOBILE_MARKETING_SIGNUP_MODALS',
     'MOBILE_MEDIA_QUERY',
     'MOBILE_URL',
+    'NEW_AUTH_MODAL',
     'NODE_ENV',
     'PARSELY_KEY',
     'PC_ARTSY_CHANNEL',
@@ -93,7 +93,8 @@ sharify.data = _.extend(
     'TEAM_BLOGS',
     'TRACK_PAGELOAD_PATHS',
     'VENICE_2015_SECTION',
-    'WEBFONT_URL'
+    'WEBFONT_URL',
+    'VOLLEY_ENDPOINT'
   ),
   {
     JS_EXT: ['production', 'staging'].includes(config.NODE_ENV)

@@ -43,11 +43,12 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
-    mediator.on 'open:auth', @openAuth, @
+    if !sd.NEW_AUTH_MODAL
+      mediator.on 'open:auth', @openAuth, @
 
     @checkForPersonalizeFlash()
 
-    @checkForPostSignupAction()
+    @checkForAfterSignUpAction()
 
     activatePulldowns()
 
@@ -136,11 +137,11 @@ module.exports = class HeaderView extends Backbone.View
     else if document.referrer.match '/artsy-primer-personalize/'
       new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
 
-  checkForPostSignupAction: ->
-    postSignupAction = Cookies.get 'postSignupAction'
-    if postSignupAction
+  checkForAfterSignUpAction: ->
+    afterSignUpAction = Cookies.get 'afterSignUpAction'
+    if afterSignUpAction
       return unless @currentUser
-      { action, objectId, kind } = JSON.parse(postSignupAction)
+      { action, objectId, kind } = JSON.parse(afterSignUpAction)
       if action is 'save'
         @currentUser.initializeDefaultArtworkCollection()
         @currentUser.defaultArtworkCollection().saveArtwork objectId
@@ -148,7 +149,7 @@ module.exports = class HeaderView extends Backbone.View
         following = new Following [], kind: kind
         following.follow objectId
 
-      Cookies.expire 'postSignupAction'
+      Cookies.expire 'afterSignUpAction'
 
   highlightSearch: (e) ->
     if $('#main-layout-search-bar-input').is(':focus')

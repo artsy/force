@@ -1,6 +1,8 @@
+require('regenerator-runtime/runtime')
 require('coffeescript/register')
 require('@babel/register')({
   extensions: ['.ts', '.js', '.tsx', '.jsx'],
+  plugins: ['babel-plugin-dynamic-import-node'],
 })
 
 global.Promise = require('bluebird')
@@ -37,7 +39,7 @@ cache.setup(() => {
           ? `\n\n  [Force] Booting on port ${PORT}... \n`
           : `\n\n  [Force] Started on ${APP_URL}. \n`
 
-      app.listen(PORT, "0.0.0.0", () => console.log(message))
+      app.listen(PORT, '0.0.0.0', () => console.log(message))
     }
   })
 })

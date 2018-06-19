@@ -4,9 +4,11 @@
 
 @import '../components/stylus_lib'
 @import '../components/bid_numbers'
+@import '../../../../desktop/apps/auction_support/stylesheets/conditions_of_sale_checkbox'
 
+// The default checkbox styling
+// (from /src/desktop/components/main_layout/stylesheets/form_elements.styl)
 checkbox-size = 20px
-
 .artsy-checkbox
   display inline-block
   line-height checkbox-size
@@ -80,10 +82,11 @@ checkbox-size = 20px
     text-transform uppercase
     letter-spacing 2px
 
-  label
-    display block
-    avant-garde()
-    font-size 12px
+  .auction-registration-form
+    label
+      display block
+      avant-garde()
+      font-size 12px
 
   .credit-card-input-section
     margin-top 10px
@@ -114,7 +117,7 @@ checkbox-size = 20px
     &[disabled], &.is-disabled, &.is-disabled
       &, &:hover
         border none
-        background-color #c2c2c2
+        background-color #e5e5e5
         cursor default
         color rgba(white, 0.75)
         &[data-state='success'], &.is-success
@@ -123,33 +126,13 @@ checkbox-size = 20px
           background-color red-color
 
   .error
-    color bad-red-color
-  
-  .registration-form-section.accept-cos
-    margin 30px auto
-    .artsy-checkbox
-      display flex
-      justify-content center
-      align-content center
-      &--label
-      &--label a
-        garamond()
-        color gray-darker-color
-        display inline-block
-        text-transform initial
-        letter-spacing normal
-      &.error
-        .artsy-checkbox--checkbox
-            background bad-red-color
-        .artsy-checkbox--label
-        .artsy-checkbox--label a
-            color bad-red-color
+    color red-color
 
-.card-expiration
-  width 62%
+  .card-security-code.credit-card-input-section
+    width 36%
+    display block
+    input
+      padding 10px 0 11px 0
+  .card-expiration
+    width 62%
 
-#auction-registration-page .card-security-code.credit-card-input-section
-  width 36%
-  display block
-  input
-    padding 10px 0 11px 0

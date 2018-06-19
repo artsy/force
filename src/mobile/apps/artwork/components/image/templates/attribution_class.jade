@@ -1,6 +1,8 @@
 if artwork.attribution_class
   .artwork-tab-item.artwork-image-module__attribution-class
-    a.artwork-tab-link.chevron-arrow-button(data-id='attribution-class' class='js-artwork-tab-link')
-      = artwork.attribution_class.short_description
+    .attribution-class-container
+      a.artwork-tab-link(data-id='attribution-class' class='js-artwork-tab-link')
+        = artwork.attribution_class.short_description
+      | .
     .artwork-tab(data-id='attribution-class' class='js-artwork-item')
       = artwork.attribution_class.long_description

@@ -32,6 +32,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.each @params.whitelisted, (param) =>
       @listenTo @params, "change:#{param}", @paramsChanged
 
+    Backbone.history.on 'route', @listenToHistory
+    @updateUrl()
+
   postRender: ->
     counts = new Counts { @params }
 
@@ -41,18 +44,18 @@ module.exports = class ArtworkFilterView extends Backbone.View
       { counts, @params }
 
     unless @infiniteScrollEnabled
-      paginatorTopView = new PaginatorView
+      @paginatorTopView = new PaginatorView
         el: $('#artwork-filter__pagination-top')
         params: @params
         filter: @filter
         hidePageNumbers: true
 
-      paginatorBottomView = new PaginatorView
+      @paginatorBottomView = new PaginatorView
         el: $('#artwork-filter__pagination-bottom .pagination')
         params: @params
         filter: @filter
 
-    @subviews.push paginatorTopView, paginatorBottomView
+    @subviews.push @paginatorTopView, @paginatorBottomView
     @subviews.push new CountView _.extend el: @$('#artwork-filter-right__totals'), { counts, @params }
     @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
     @subviews.push @masonry = new MasonryView el: @$('#artwork-filter-right__columns')
@@ -62,6 +65,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$el.html template({ sd: sd })
     _.defer => @postRender()
     return this
+
+  listenToHistory: (_router, _route, queryString) =>
+    [path, params] = queryString
+    @params.queryStringToParams params
 
   paramsChanged: ->
     @scrollToTop()
@@ -74,15 +81,16 @@ module.exports = class ArtworkFilterView extends Backbone.View
       '?' if query
       query
     ]).join('')
+
     Backbone.history.navigate url,
       trigger: false
-      replace: true
+      replace: false
 
   scrollToTop: ->
     @$htmlBody ?= $('html, body')
     visibleTop = @$el.offset().top - @siteHeaderHeight
     visibleTop -= @topOffset
-    @$htmlBody.animate { scrollTop: visibleTop - 1 }, 500
+    @$htmlBody.animate { scrollTop: visibleTop - 1 }, 0
 
   infiniteScroll: =>
     return if !@infiniteScrollEnabled
@@ -117,14 +125,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$('#artwork-filter-2').attr('data-state', state)
 
     unless @infiniteScrollEnabled
-      $pagination = $('#artwork-filter__pagination-bottom')
-
       if loading
-        $pagination.hide()
+        @paginatorBottomView.$el.hide()
       else
         # Wait for the grid to fully populate
-        setTimeout ->
-          $pagination.show()
+        setTimeout =>
+          @paginatorBottomView.$el.show()
 
   remove: ->
     $(window).off 'scroll.artwork-filter'

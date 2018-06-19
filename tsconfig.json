@@ -13,7 +13,10 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "target": "es2016"
+    "target": "es2016",
+    "paths": {
+      "reaction/*": ["../node_modules/@artsy/reaction/dist/*"]
+    }
   },
   "files": ["./node_modules/@artsy/reaction/dist"],
   "include": ["./src"]

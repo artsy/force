@@ -7,9 +7,9 @@
 # else
 #   exit 0
 # fi
-app_name=force-staging
+# app_name=force-staging
 
-git remote add heroku https://git.heroku.com/$app_name.git
+git remote add heroku https://git.heroku.com/force-$DEPLOY_ENV.git
 wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
 mkdir -p /usr/local/lib /usr/local/bin
 sudo tar -xzf heroku-linux-amd64.tar.gz -C /usr/local/lib

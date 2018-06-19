@@ -44,7 +44,7 @@ describe('Routes', () => {
   }
 
   beforeEach(() => {
-    Backbone.sync = sinon.stub()
+    sinon.stub(Backbone, 'sync')
     request.get = sinon.stub().returns({
       end: cb => {
         cb(null, {
@@ -64,6 +64,10 @@ describe('Routes', () => {
       render: sinon.stub(),
       set: sinon.stub(),
     }
+  })
+
+  afterEach(() => {
+    Backbone.sync.restore()
   })
 
   describe('#partnerUpdates', () => {

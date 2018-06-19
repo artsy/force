@@ -15,6 +15,7 @@ module.exports.init = ->
       .animate { scrollTop: $faq.offset().top }, 'fast'
 
   $('.js-register-button').click (e) ->
+    # TODO: remove dead code
     e.preventDefault()
     mediator.trigger 'open:auth',
       width: '500px',
