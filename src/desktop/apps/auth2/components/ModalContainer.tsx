@@ -20,6 +20,12 @@ export const ModalContainer: React.SFC<any> = () => {
     }
   })
 
+  mediator.on('auth:error', err => {
+    if (manager) {
+      manager.setError(err)
+    }
+  })
+
   return (
     <ModalManager
       ref={ref => (manager = ref)}
