@@ -27,6 +27,10 @@ export const handleSubmit = (
     triggerSeconds,
   } = modalOptions
 
+  /*
+   * These are the attributes that will be saved on the user. We are moving
+   * towards using `intent` on analytics, but Gravity expects `signupIntent`
+   */
   const userAttributes = Object.assign({}, values, {
     _csrf: sd.CSRF_TOKEN,
     signupIntent: intent,
@@ -38,7 +42,8 @@ export const handleSubmit = (
   const options = {
     success: (_, res) => {
       formikBag.setSubmitting(false)
-      if (window.analytics) {
+      const analytics = (window as any).analytics
+      if (analytics) {
         const properties = {
           action:
             type === 'signup' ? 'Created account' : 'Successfully logged in',
@@ -50,7 +55,7 @@ export const handleSubmit = (
           modal_copy: copy,
           auth_redirect: redirectTo || destination,
         }
-        window.analytics.track(pickBy(properties, identity))
+        analytics.track(pickBy(properties, identity))
       }
 
       const defaultRedirect = type === 'signup' ? '/personalize' : '/'
