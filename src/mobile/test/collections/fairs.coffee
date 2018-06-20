@@ -12,7 +12,7 @@ describe 'Fairs', ->
     it 'should not display upcoming fairs', ->
       fairs = new Fairs([
         fabricate('fair',
-          { id: 'fair1', end_at: moment().utc(), has_full_feature: true })
+          { id: 'fair1', end_at: moment().utc().subtract(1, 'milliseconds'), has_full_feature: true })
         fabricate('fair',
           { id: 'fair1', end_at: moment().utc().add(7, 'days'), has_full_feature: true })
         fabricate('fair',
