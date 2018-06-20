@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Push
           command: hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
-  deploy_hokusai:
+  deploy_hokusai_staging:
     docker:
       - image: artsy/hokusai:0.4.0
     steps:
@@ -50,6 +50,18 @@ jobs:
       - run:
           name: Deploy
           command: hokusai staging deploy $CIRCLE_SHA1
+  deploy_hokusai_production:
+    docker:
+      - image: artsy/hokusai:0.4.0
+    steps:
+      - add_ssh_keys
+      - checkout
+      - run:
+          name: Configure
+          command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
+      - run:
+          name: Deploy
+          command: hokusai production deploy $CIRCLE_SHA1
   deploy_heroku_staging:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -93,13 +105,21 @@ workflows:
       - push:
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - release
           requires:
             - build
-      - deploy_hokusai:
+      - deploy_hokusai_staging:
           filters:
             branches:
               only: master
+          requires:
+            - push
+      - deploy_hokusai_production:
+          filters:
+            branches:
+              only: release
           requires:
             - push
       - deploy_heroku_staging:
