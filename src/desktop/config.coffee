@@ -61,6 +61,8 @@ module.exports =
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   GOOGLE_MAPS_API_KEY: null
+  INTERCOM_APP_ID: null
+  INTERCOM_ENABLED: false
   IMAGE_PROXY: 'GEMINI'
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   IP_BLACKLIST: ''
