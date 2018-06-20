@@ -27,7 +27,7 @@ routes =
   '/reset_password': require('../apps/auth/client/index.coffee').init
 
   # TODO: remove 2 after auth2
-  '/reset_password2': requre('../apps/auth2/client/reset_password.coffee').init
+  '/reset_password2': require('../apps/auth2/client/reset_password.coffee').init
 
   '/signup': require('../apps/auth/client/auth.coffee').init
 

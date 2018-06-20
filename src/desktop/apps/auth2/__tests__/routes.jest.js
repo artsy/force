@@ -150,9 +150,7 @@ describe('Routes', () => {
     beforeEach(() => {
       res = {
         locals: {
-          sd: {
-            IS_MOBILE: false,
-          },
+          sd: {},
         },
         redirect: jest.fn(),
         render: jest.fn(),
