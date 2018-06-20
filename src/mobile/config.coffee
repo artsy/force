@@ -30,8 +30,6 @@ module.exports =
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
   GOOGLE_ANALYTICS_ID: 'UA-12450662-6'
   GOOGLE_MAPS_API_KEY: null
-  INTERCOM_APP_ID: null
-  INTERCOM_ENABLED: false
   IMAGE_PROXY: 'GEMINI'
   MAILCHIMP_AUCTION_LIST_ID: 'b7b9959ee0'
   MAILCHIMP_KEY: null
