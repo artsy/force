@@ -27,12 +27,9 @@
           when 'text'
             - text = section
             include sections/text
-          when 'image'
-            - image = section
-            include sections/image
-          when 'artworks'
-            - artworks = section
-            include sections/artworks
+          when 'image_collection'
+            - images = section.images
+            include sections/images
           when 'video'
             - video = section
             include sections/video

@@ -49,17 +49,23 @@ describe 'article page', ->
     @$('h1').first().text().should.equal 'Top Ten Booths'
 
   it 'renders the sections', ->
-    @article.get('sections').length.should.equal 6
-    @$('section').length.should.equal 6
+    @article.get('sections').length.should.equal 5
+    @$('section').length.should.equal 5
+
+  it 'renders slideshows', ->
+    @$('.article-section-slideshow').length.should.equal 1
+
+  it 'renders image collections', ->
+    @$('.article-section-image-collection').length.should.equal 1
 
   it 'renders artworks', ->
-    @$('.article-section-artworks').should.have.lengthOf 1
-    @$('.article-section-artworks').html().should.containEql '/artwork/govinda-sah-azad-in-between-1'
-    @$('.article-section-artworks').html().should.containEql 'https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg'
+    @$('.article-section-image-collection').should.have.lengthOf 1
+    @$('.article-section-image-collection').html().should.containEql '/artwork/govinda-sah-azad-in-between-1'
+    @$('.article-section-image-collection').html().should.containEql 'https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg'
 
   it 'can render artworks with two artists', ->
-    @$('.article-section-artworks').html().should.containEql 'Govinda Sah'
-    @$('.article-section-artworks').html().should.containEql 'Andy Warhol'
+    @$('.article-section-image-collection').html().should.containEql 'Govinda Sah'
+    @$('.article-section-image-collection').html().should.containEql 'Andy Warhol'
 
   it 'renders video with a cover', ->
     @$('.article-video-container').eq(1).html().should.containEql 'https://artsy.net/video_cover_image.jpg'
