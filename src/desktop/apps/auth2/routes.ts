@@ -23,6 +23,7 @@ export const index = async (req, res, next) => {
       break
   }
 
+  // TODO: meta title for reset password?
   const meta = {
     description: '',
     title: type === ModalType.login ? 'Login to Artsy' : 'Signup for Artsy',
