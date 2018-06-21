@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e -x
+set -ex
 
 rm -rf public
 mkdir public

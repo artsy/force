@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e -x
+set -ex
 
 if [ ! -f "./.env" ]; then
   echo -e "\033[1;31m WARNING: Missing .env file, see CONTRIBUTING.md. \033[0m"

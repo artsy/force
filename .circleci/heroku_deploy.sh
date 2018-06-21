@@ -1,4 +1,6 @@
-#! /bin/bash -ex
+#! /bin/bash
+
+set -ex
 
 if git remote | grep heroku > /dev/null; then
   git fetch heroku

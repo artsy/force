@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e -x
+set -ex
 
 mocha \
   --retries 5 \

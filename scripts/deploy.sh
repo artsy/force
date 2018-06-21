@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e -x
+set -ex
 
 yarn assets
 gzip -S .cgz $(find public/assets -name '*.css')
