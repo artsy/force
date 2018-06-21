@@ -1,6 +1,6 @@
-# !/usr/bin/bash
+#! /bin/bash
 
-set -e -x
+set -ex
 
 node \
   --require test.config.js \

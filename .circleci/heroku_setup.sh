@@ -1,4 +1,6 @@
-#! /bin/bash -ex
+#! /bin/bash
+
+set -ex
 
 # if [ "${CIRCLE_BRANCH}" == "master" ]; then
 #   app_name=force-staging

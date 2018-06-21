@@ -1,7 +1,7 @@
 import { renderLayout } from '@artsy/stitch'
 import { AuthStatic } from './components/AuthStatic'
 import { ModalType } from '@artsy/reaction/dist/Components/Authentication/Types'
-import { AuthenticationMeta } from './meta'
+import { AuthenticationMeta } from './components/meta'
 import { MobileAuthStatic } from './components/MobileAuthStatic'
 
 export const index = async (req, res, next) => {
@@ -23,6 +23,7 @@ export const index = async (req, res, next) => {
       break
   }
 
+  // TODO: meta title for reset password?
   const meta = {
     description: '',
     title: type === ModalType.login ? 'Login to Artsy' : 'Signup for Artsy',
