@@ -8,4 +8,4 @@ if git remote | grep heroku > /dev/null; then
 else
   echo "Heroku is not set up :("
   exit 1
-fi 
+fi
