@@ -15,6 +15,7 @@ describe('AuthStatic', () => {
       type: 'login',
       subtitle: 'A sub title',
       handleSubmit: jest.fn(),
+      options: {},
     }
   })
 
