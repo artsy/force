@@ -1,9 +1,8 @@
 import Cookies from 'cookies-js'
 import { handleSubmit, setCookies } from '../helpers'
 import Backbone from 'backbone'
-const $ = require('jquery')
+import $ from 'jquery'
 
-jest.mock('jquery')
 jest.mock('cookies-js')
 jest.mock('sharify', () => {
   return {
@@ -44,6 +43,7 @@ describe('Authentication Helpers', () => {
     beforeEach(() => {
       Backbone.sync = jest.fn()
       window.analytics = { track: jest.fn() }
+      global.$ = global.jQuery = $
     })
 
     it('can login a user', () => {
