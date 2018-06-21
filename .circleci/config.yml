@@ -59,10 +59,10 @@ jobs:
             - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
       - checkout
       - setup_remote_docker
-      - run: DEPLOY_ENV=staging bash .circleci/heroku_setup.sh
+      - run: DEPLOY_ENV=staging .circleci/heroku_setup.sh
       - run:
           name: "Deploy to staging"
-          command: "yarn install && DEPLOY_ENV=staging bash .circleci/heroku_deploy.sh && git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force"
+          command: "yarn install && DEPLOY_ENV=staging .circleci/heroku_deploy.sh && git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force"
   deploy_heroku_production:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -72,10 +72,10 @@ jobs:
             - "ed:85:78:e9:d9:4b:3e:e7:78:15:1a:a4:6a:e7:b8:32"
       - checkout
       - setup_remote_docker
-      - run: DEPLOY_ENV=production bash .circleci/heroku_setup.sh
+      - run: DEPLOY_ENV=production .circleci/heroku_setup.sh
       - run:
           name: "Deploy to production"
-          command: "yarn install && DEPLOY_ENV=production bash .circleci/heroku_deploy.sh"
+          command: "yarn install && DEPLOY_ENV=production .circleci/heroku_deploy.sh"
 
 workflows:
   version: 2
