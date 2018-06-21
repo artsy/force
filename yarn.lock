@@ -22,9 +22,9 @@
     styled-system "^2.2.5"
     yarn "^1.3.2"
 
-"@artsy/palette@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.0.2.tgz#329323e1d451ce94ca98d2089b2959710ab7241c"
+"@artsy/palette@^2.1.6":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.3.1.tgz#f762b3e67823b07261f20f8281cfe51bc7351916"
   dependencies:
     react "^16.3.2"
     react-primitives "^0.5.0"
@@ -52,11 +52,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.14.2.tgz#4382fdf7918414deb9482b18948f562b0c809775"
+"@artsy/reaction@^1.15.7":
+  version "1.15.7"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.15.7.tgz#a8b43d0e75d94c271ab4870d51dabc6dd29ea36e"
   dependencies:
-    "@artsy/palette" "^2.0.2"
+    "@artsy/palette" "^2.1.6"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -12506,7 +12506,7 @@ styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
+"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
