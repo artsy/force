@@ -1,4 +1,5 @@
 import React from 'react'
+import { Artist } from '@artsy/reaction/dist/Styleguide/Pages/Artist'
 
 export const routes = [
   {
@@ -7,7 +8,9 @@ export const routes = [
     children: [
       {
         path: '/',
-        Component: () => <div>New artist page! :)</div>,
+        Component: () => {
+          return <Artist />
+        },
       },
       {
         path: '/:artistID',

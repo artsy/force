@@ -21,7 +21,7 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
 
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_index.jade',
+      layout: '../../components/main_layout/templates/react_redesign.jade',
       config: {
         styledComponents: true,
       },
