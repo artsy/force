@@ -1,4 +1,6 @@
+import React from 'react'
 import express from 'express'
+import styled from 'styled-components'
 import adminOnly from 'desktop/lib/admin_only'
 import { buildServerApp } from 'reaction/Router'
 import { routes } from './routes'
@@ -19,6 +21,11 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
       return
     }
 
+    const Container = styled.div`
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+    `
     const layout = await renderLayout({
       basePath: __dirname,
       layout: '../../components/main_layout/templates/react_redesign.jade',
@@ -27,7 +34,11 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
       },
       blocks: {
         head: Meta,
-        body: ServerApp,
+        body: () => (
+          <Container>
+            <ServerApp />
+          </Container>
+        ),
       },
       locals: {
         ...res.locals,

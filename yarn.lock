@@ -52,9 +52,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.15.7":
-  version "1.15.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.15.7.tgz#a8b43d0e75d94c271ab4870d51dabc6dd29ea36e"
+"@artsy/reaction@^1.15.9":
+  version "1.15.9"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.15.9.tgz#b9671873efb050261bcebc17fcd3b2c4dde411af"
   dependencies:
     "@artsy/palette" "^2.1.6"
     cheerio "^1.0.0-rc.2"
@@ -1094,6 +1094,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -12505,7 +12506,7 @@ styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
+"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
