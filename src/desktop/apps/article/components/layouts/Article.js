@@ -42,6 +42,7 @@ export default class ArticleLayout extends React.Component {
     setupFollowButtons(this.state.following)
     // Track a/b/c test group
     splitTest('article_tooltips').view()
+    splitTest('article_infinite_scroll').view()
 
     if (isSuper) {
       new SuperArticleView({
@@ -75,6 +76,8 @@ export default class ArticleLayout extends React.Component {
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
     const headerHeight = `calc(100vh - ${navHeight})`
+    const isExperimentInfiniteScroll =
+      sd.ARTICLE_INFINITE_SCROLL === 'experiment'
 
     /**
      * FIXME:
@@ -96,7 +99,11 @@ export default class ArticleLayout extends React.Component {
       )
     }
 
-    if (!isSuper && !article.seriesArticle) {
+    if (
+      !isSuper &&
+      !article.seriesArticle &&
+      sd.ARTICLE_INFINITE_SCROLL === 'control'
+    ) {
       const emailSignupUrl = onDailyEditorial
         ? `${sd.APP_URL}/signup/editorial`
         : ''
@@ -124,6 +131,10 @@ export default class ArticleLayout extends React.Component {
           showTooltips={showTooltips}
           showToolTipMarketData={showToolTipMarketData}
           onOpenAuthModal={this.handleOpenAuthModal}
+          relatedArticlesForCanvas={
+            isExperimentInfiniteScroll && article.relatedArticlesCanvas
+          }
+          display={isExperimentInfiniteScroll && article.display}
         />
       )
     }
