@@ -18,6 +18,9 @@ module.exports.init = ->
     # TODO: remove dead code
     e.preventDefault()
     mediator.trigger 'open:auth',
-      width: '500px',
-      mode: 'register'
+      mode: 'signup'
       copy: 'Sign up to bid on artworks'
+      intent: 'register to bid'
+      trigger: 'click'
+      destination: location.href
+

@@ -29,7 +29,7 @@ describe('ModalContainer', () => {
 
   it('Mediator can open a signup modal', () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger('open:auth', { mode: 'register' })
+    mediator.trigger('open:auth', { mode: 'signup' })
     const form = component.find(ModalManager).instance().state
 
     expect(form.currentType).toBe('signup')

@@ -43,8 +43,18 @@ module.exports = class FooterView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', mode: 'signup'
+    mediator.trigger 'open:auth',
+      mode: 'signup'
+      trigger: 'click'
+      contextModule: 'Footer'
+      destination: location.href
+      intent: 'signup'
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', mode: 'login'
+    mediator.trigger 'open:auth',
+      mode: 'login'
+      trigger: 'click'
+      contextModule: 'Footer'
+      destination: location.href
+      intent: 'signup'

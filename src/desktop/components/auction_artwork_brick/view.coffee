@@ -17,9 +17,10 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
       e.preventDefault()
 
       return mediator.trigger 'open:auth',
-        width: '500px',
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to bid'
+        intent: 'bid'
+        trigger: 'click'
         redirectTo: $(e.currentTarget).attr 'href'
 
     else

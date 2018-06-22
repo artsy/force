@@ -41,7 +41,10 @@ class MarketingSignupModalInner extends Backbone.View
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'login'
-      signupIntent: @signupIntent
+      intent: @signupIntent
+      trigger: 'click'
+      destination: location.href
+
     @trigger 'close'
 
   fbSignup: (e) ->

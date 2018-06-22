@@ -32,8 +32,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$body = $('body')
     @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
-    @afterAuthPath = "/personalize"
-    @signupIntent = "landing full page modal"
+    @signupIntent = 'Artist CTA Banner'
 
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
@@ -45,10 +44,11 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   triggerLoginModal: (e) ->
     e.stopPropagation()
     mediator.trigger 'open:auth',
-      width: '500px'
       mode: 'login'
-      redirectTo: @afterAuthPath
-      signupIntent: @signupIntent
+      trigger: 'click'
+      context_module: 'Header'
+      destination: location.href
+      intent: @signupIntent
 
   currentParams: ->
     qs.parse(location.search.replace(/^\?/, ''))
