@@ -10,9 +10,9 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.1.6.tgz#942a8118f230a4a83886fa318d43759c452878d5"
+"@artsy/palette@^2.0.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.3.2.tgz#382485a4cdec21dd71b2f5a3ff4b7a6e873f8009"
   dependencies:
     react "^16.3.2"
     react-primitives "^0.5.0"
@@ -1094,7 +1094,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -12502,11 +12501,11 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3:
+styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3, "styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
+styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
