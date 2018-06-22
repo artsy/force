@@ -10,9 +10,9 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.0.2.tgz#329323e1d451ce94ca98d2089b2959710ab7241c"
+"@artsy/palette@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.1.6.tgz#942a8118f230a4a83886fa318d43759c452878d5"
   dependencies:
     react "^16.3.2"
     react-primitives "^0.5.0"

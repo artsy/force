@@ -28,7 +28,7 @@ export const ModalContainer: React.SFC<any> = () => {
         signup: sd.AP.signupPagePath,
       }}
       csrf={sd.CSRF_TOKEN}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleSubmit as any}
     />
   )
 }
