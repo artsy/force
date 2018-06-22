@@ -114,9 +114,11 @@ workflows:
               only: master
           requires:
             - test
+            - acceptance
       - deploy_heroku_production:
           filters:
             branches:
               only: release
           requires:
             - test
+            - acceptance
