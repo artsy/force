@@ -63,9 +63,10 @@ module.exports = class ProfessionalBuyerLandingView extends View
   authenticate: (mode) ->
     mediator.trigger 'open:auth',
       mode: mode
-      width: '500px'
       copy: 'Artsy Professional Buyer Program'
       redirectTo: "#{SHOW_PATH}/complete"
+      trigger: 'click'
+      intent: mode
 
   redirectTo: (path) ->
     location.assign path

@@ -31,13 +31,15 @@ module.exports = class SaveControls extends Backbone.View
     unless @artworkCollection
       analyticsHooks.trigger 'save:sign-up'
       mediator.trigger 'open:auth',
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to save artworks'
         afterSignUpAction: {
           action: 'save',
           objectId: @model.id
         }
-        signupIntent: 'save artwork'
+        intent: 'save artwork'
+        trigger: 'click'
+        destination: location.href
       return false
 
     trackedProperties = {

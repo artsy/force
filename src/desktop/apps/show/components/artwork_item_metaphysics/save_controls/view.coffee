@@ -29,8 +29,11 @@ module.exports = class SaveControls extends Backbone.View
     unless @artworkCollection
       analyticsHooks.trigger 'save:sign-up'
       mediator.trigger 'open:auth',
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to save artworks'
+        intent: 'save artwork'
+        trigger: 'click'
+        destination: location.href
         afterSignUpAction: {
           action: 'save',
           objectId: @artwork.id

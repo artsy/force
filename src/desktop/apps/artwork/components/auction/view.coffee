@@ -80,11 +80,11 @@ module.exports = class ArtworkAuctionView extends Backbone.View
 
     if not CURRENT_USER?
       return mediator.trigger 'open:auth',
-        width: '500px',
-        signupIntent: 'bid'
-        mode: 'register'
+        intent: 'bid'
+        mode: 'signup'
         copy: 'Sign up to bid'
         redirectTo: form.action()
+        trigger: 'prompted'
 
     return unless form.isReady()
 

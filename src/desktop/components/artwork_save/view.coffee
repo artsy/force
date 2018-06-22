@@ -27,15 +27,14 @@ module.exports = class ArtworkSaveView extends Backbone.View
 
     if not @user.isLoggedIn()
       return mediator.trigger 'open:auth',
-        width: '500px',
-        # TODO: make sure to consistently use signup instead of register 
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to save artworks'
         afterSignUpAction: {
           action: 'save',
           objectId: @id
         }
-        signupIntent: 'save artwork'
+        intent: 'save artwork'
+        trigger: 'click'
 
     if @saved
       save = @savedArtworks.get @id

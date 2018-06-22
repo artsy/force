@@ -42,8 +42,10 @@ module.exports = class SaleArtworkView extends Backbone.View
     unless @currentUser
       e.preventDefault()
       mediator.trigger 'open:auth',
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to bid'
+        intent: 'bid'
+        trigger: 'click'
         redirectTo: @sale.redirectUrl @model
 
   hideBidStatuses: ->

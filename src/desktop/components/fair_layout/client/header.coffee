@@ -22,23 +22,24 @@ module.exports = class FairHeaderView extends Backbone.View
 
   openAuth: (options) ->
     if !sd.NEW_AUTH_MODAL
-      @modal = new AuthModalView _.extend({ width: '500px' }, options)
+      @modal = new AuthModalView options
 
   signup: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'signup',
       destination: location.href
-      signupIntent: 'signup'
+      intent: 'signup'
       trigger: 'click'
-      contextModule: 'header'
+      contextModule: 'Header'
 
   login: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth',
       mode: 'login'
       trigger: 'click'
-      contextModule: 'header'
+      intent: 'login'
+      contextModule: 'Header'
 
   logout: (e) ->
     e.preventDefault()
