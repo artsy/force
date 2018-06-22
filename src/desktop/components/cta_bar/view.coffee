@@ -69,9 +69,10 @@ module.exports = class CTABarView extends Backbone.View
   openModal: (options = {}) ->
     @close()
     mediator.trigger 'open:auth', _.extend {
-      width: '500px',
-      mode: 'register',
-      redirectTo: @linkHref
+      mode: 'signup'
+      trigger: 'click'
+      intent: 'signup'
+      destination: location.href
     }, @modalOptions, options
 
   render: ->

@@ -56,7 +56,12 @@ module.exports = class AuctionResultsView extends Backbone.View
 
   signUp: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to see full auction records — for free'
+    mediator.trigger 'open:auth',
+      mode: 'signup',
+      copy: 'Sign up to see full auction records — for free'
+      trigger: 'click'
+      intent: 'view auction results'
+      destination: location.href
 
   onRowClick: (e) =>
     return if @user

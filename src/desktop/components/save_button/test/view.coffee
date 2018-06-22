@@ -24,7 +24,7 @@ xdescribe 'SaveButton', ->
       sinon.spy mediator, 'trigger'
       @view.$el.click()
       mediator.trigger.args[0][0].should.equal 'open:auth'
-      mediator.trigger.args[0][1].mode.should.equal 'register'
+      mediator.trigger.args[0][1].mode.should.equal 'signup'
       mediator.trigger.restore()
 
     describe 'logged in behavior', ->
