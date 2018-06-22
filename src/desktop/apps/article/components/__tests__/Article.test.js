@@ -16,6 +16,7 @@ describe('<Article />', () => {
       sd.CURRENT_PATH =
         '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
       sd.CURRENT_USER = { id: '123' }
+      sd.ARTICLE_INFINITE_SCROLL = 'control'
       done()
     })
   })

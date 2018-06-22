@@ -99,11 +99,7 @@ export default class ArticleLayout extends React.Component {
       )
     }
 
-    if (
-      !isSuper &&
-      !article.seriesArticle &&
-      sd.ARTICLE_INFINITE_SCROLL === 'control'
-    ) {
+    if (!isSuper && !article.seriesArticle && !isExperimentInfiniteScroll) {
       const emailSignupUrl = onDailyEditorial
         ? `${sd.APP_URL}/signup/editorial`
         : ''
