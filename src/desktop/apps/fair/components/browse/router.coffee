@@ -45,9 +45,12 @@ module.exports = class BrowseRouter extends Backbone.Router
     return unless validActions[action]
 
     mediator.trigger 'open:auth',
-      mode: 'register'
+      mode: 'signup'
       copy: "Sign up to receive updates about #{@fair.nameSansYear()}"
       destination: "#{@fair.href()}/capture/#{action}"
+      intent: 'signup'
+      trigger: 'timed'
+      triggerSeconds: 0
 
   capture: (id, action)=>
     signupSuccess fair: @fair, action: action, user: CurrentUser.orNull()

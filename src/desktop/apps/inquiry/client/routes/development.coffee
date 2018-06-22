@@ -47,7 +47,12 @@ module.exports = ->
   # Handle login/out
   $('.js-login').click (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', width: '500px', mode: 'login'
+    mediator.trigger 'open:auth',
+      mode: 'login'
+      trigger: 'click'
+      intent: 'inquire'
+      redirectTo: location.href
+
   $('.js-logout').click (e) ->
     e.preventDefault()
     $.ajax url: '/users/sign_out', type: 'DELETE', success: -> location.reload()

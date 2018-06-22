@@ -46,9 +46,11 @@ module.exports.FairsView = class FairsView extends Backbone.View
   triggerOpenAuth: (e)->
     e.preventDefault()
     mediator.trigger 'open:auth',
-      mode: 'register'
+      mode: 'signup'
       copy: "Sign up to follow fairs"
-      signupIntent: 'sign up to follow fairs'
+      intent: 'signup'
+      destination: location.href
+      trigger: 'click'
 
   renderPastFairs: (fairs)->
     @$('#fairs-see-more').removeClass 'is-loading'
