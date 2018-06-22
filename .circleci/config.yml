@@ -85,11 +85,17 @@ workflows:
           filters:
             branches:
               ignore: staging
-      - acceptance
+      - acceptance:
+          filters:
+            branches:
+              ignore: staging
       - build:
+          filters:
+            branches:
+              ignore: staging
           requires:
             - test
-            - acceptance 
+            - acceptance
       - push:
           filters:
             branches:
