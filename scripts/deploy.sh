@@ -1,6 +1,6 @@
-# !/usr/bin/bash
+#! /bin/bash
 
-set -e -x
+set -ex
 
 yarn assets
 gzip -S .cgz $(find public/assets -name '*.css')
@@ -13,7 +13,7 @@ else
   git push --force heroku $CIRCLE_SHA1:refs/heads/master
 fi
 
-if [ "$DEPLOY_ENV" = 'production' ]
+if [ "$DEPLOY_ENV" = 'production' ]; then
   git tag "production-$(date +%Y-%m-%d-%H-%M)"
   git push -q https://$GITHUB_API_TOKEN@github.com/artsy/force.git --tags
 fi

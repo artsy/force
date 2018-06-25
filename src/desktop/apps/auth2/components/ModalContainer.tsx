@@ -20,6 +20,12 @@ export const ModalContainer: React.SFC<any> = () => {
     }
   })
 
+  mediator.on('auth:error', err => {
+    if (manager) {
+      manager.setError(err)
+    }
+  })
+
   return (
     <ModalManager
       ref={ref => (manager = ref)}
@@ -28,7 +34,7 @@ export const ModalContainer: React.SFC<any> = () => {
         signup: sd.AP.signupPagePath,
       }}
       csrf={sd.CSRF_TOKEN}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleSubmit as any}
     />
   )
 }

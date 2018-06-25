@@ -46,38 +46,40 @@ moment = require 'moment'
       ]
     }
     {
-      type: 'image',
-      url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
-    }
-    {
       type: 'text',
       body: '<p><h1>10. Lisson Gallery</h1></p><p>Mia Bergeron merges the <em>personal</em> and <em>universal</em>...',
     }
     {
-      type: 'artworks',
+      type: 'image_collection',
       ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
       layout: 'overflow_fillwidth'
-      artworks: [
-        type: 'artwork'
-        id: '570faa047622dd65850017e2'
-        slug: "govinda-sah-azad-in-between-1",
-        date: "2015",
-        title: "In Between",
-        image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
-        partner: {
-          name: "October Gallery",
-          slug: "october-gallery"
-        }
-        artists: [
-          {
-            name: "Govinda Sah 'Azad'",
-            slug: "govinda-sah-azad"
-          },
-          {
-            name: "Andy Warhol",
-            slug: "andy-warhol"
+      images: [
+        {
+          type: 'image',
+          url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+        },
+        {
+          type: 'artwork'
+          id: '570faa047622dd65850017e2'
+          slug: "govinda-sah-azad-in-between-1",
+          date: "2015",
+          title: "In Between",
+          image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
+          partner: {
+            name: "October Gallery",
+            slug: "october-gallery"
           }
-        ]
+          artists: [
+            {
+              name: "Govinda Sah 'Azad'",
+              slug: "govinda-sah-azad"
+            },
+            {
+              name: "Andy Warhol",
+              slug: "andy-warhol"
+            }
+          ]
+        }
       ]
     }
     {
