@@ -12501,7 +12501,7 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3, "styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3":
+styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3:
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 

@@ -14,23 +14,32 @@ interface Props {
 export class AuthStatic extends React.Component<Props> {
   render() {
     return (
-      <AuthFormContainer>
-        <DesktopHeader subtitle={this.props.subtitle} />
-        <FormSwitcher
-          {...this.props}
-          type={this.props.type as ModalType}
-          handleSubmit={handleSubmit.bind(
-            this,
-            this.props.type,
-            this.props.options
-          )}
-        />
-      </AuthFormContainer>
+      <Wrapper>
+        <AuthFormContainer>
+          <DesktopHeader subtitle={this.props.subtitle} />
+          <FormSwitcher
+            {...this.props}
+            type={this.props.type as ModalType}
+            handleSubmit={handleSubmit.bind(
+              this,
+              this.props.type,
+              this.props.options
+            )}
+          />
+        </AuthFormContainer>
+      </Wrapper>
     )
   }
 }
 
 const AuthFormContainer = styled.div`
   max-width: 400px;
-  margin: auto;
+  padding: 20px 0;
+`
+
+const Wrapper = styled.div`
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
