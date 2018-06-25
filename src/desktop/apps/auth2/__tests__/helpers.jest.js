@@ -93,6 +93,27 @@ describe('Authentication Helpers', () => {
       expect(formikBag.setSubmitting.mock.calls[0][0]).toBe(false)
     })
 
+    it('can handle forgotten passwords', () => {
+      handleSubmit(
+        'forgot',
+        {
+          contextModule: 'Header',
+          copy: 'Forgot Password',
+          destination: '/articles',
+          trigger: 'timed',
+          triggerSeconds: 2,
+          intent: 'follow artist',
+        },
+        {
+          email: 'foo@foo.com',
+        },
+        formikBag
+      )
+
+      Backbone.sync.mock.calls[0][2].success()
+      expect(formikBag.setSubmitting.mock.calls[0][0]).toBe(false)
+    })
+
     it('can handle errors', () => {
       handleSubmit(
         'login',

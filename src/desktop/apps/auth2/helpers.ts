@@ -60,7 +60,7 @@ export const handleSubmit = (
       if (analytics) {
         const properties = {
           action,
-          user_id: res.user && res.user.id,
+          user_id: res && res.user && res.user.id,
           trigger,
           trigger_seconds: triggerSeconds,
           intent,
