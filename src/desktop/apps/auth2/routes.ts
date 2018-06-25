@@ -16,18 +16,30 @@ export const index = async (req, res, next) => {
       type = ModalType.signup
       break
     case '/forgot':
-      type = ModalType.resetPassword
+      type = ModalType.forgot
       break
     default:
       type = ModalType.login
       break
   }
 
-  // TODO: meta title for reset password?
+  let title = ''
+  switch (type) {
+    case ModalType.login:
+      title = 'Login to Artsy'
+      break
+    case ModalType.signup:
+      title = 'Signup for Artsy'
+      break
+    case ModalType.forgot:
+      title = 'Forgot Password'
+      break
+  }
   const meta = {
     description: '',
-    title: type === ModalType.login ? 'Login to Artsy' : 'Signup for Artsy',
+    title,
   }
+
   const {
     afterSignUpAction,
     destination,
@@ -76,7 +88,7 @@ export const resetPassword = (req, res) => {
     req.session.set_password = req.query.set_password
     req.session.reset_password_redirect_to =
       req.query.reset_password_redirect_to
-    res.redirect('/reset_password')
+    res.redirect('/reset_password2')
   } else {
     res.locals.sd.RESET_PASWORD_REDIRECT_TO =
       req.session.reset_password_redirect_to

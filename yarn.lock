@@ -10,21 +10,9 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@^2.0.2":
+"@artsy/palette@^2.0.2", "@artsy/palette@^2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.3.2.tgz#382485a4cdec21dd71b2f5a3ff4b7a6e873f8009"
-  dependencies:
-    react "^16.3.2"
-    react-primitives "^0.5.0"
-    styled-bootstrap-grid damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3
-    styled-components "^3.2.6"
-    styled-reset "^1.3.4"
-    styled-system "^2.2.5"
-    yarn "^1.3.2"
-
-"@artsy/palette@^2.1.6":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.3.1.tgz#f762b3e67823b07261f20f8281cfe51bc7351916"
   dependencies:
     react "^16.3.2"
     react-primitives "^0.5.0"
@@ -52,11 +40,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.15.11":
-  version "1.15.11"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.15.11.tgz#ec56020cdd2e27545e8674ec77eb076f98697eb3"
+"@artsy/reaction@^1.15.13":
+  version "1.15.13"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.15.13.tgz#a1ff46cccbfebde9dc85f05291b2eae390b606ad"
   dependencies:
-    "@artsy/palette" "^2.1.6"
+    "@artsy/palette" "^2.3.2"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -83,7 +71,7 @@
     react-responsive-decorator "^0.0.1"
     react-router "^4.2.0"
     react-sizeme "^2.4.4"
-    react-slick "^0.14.11"
+    react-slick "^0.23.1"
     react-spring "^5.3.15"
     react-styled-flexboxgrid "^2.2.0"
     react-tracking "^4.2.1"
@@ -10687,17 +10675,15 @@ react-sizeme@^2.4.4:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
 
-react-slick@^0.14.11:
-  version "0.14.11"
-  resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.14.11.tgz#c2cbdbe3728c66a2ff4929be96d457e3ea0d80f3"
+react-slick@^0.23.1:
+  version "0.23.1"
+  resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.23.1.tgz#15791c4107f0ba3a5688d5bd97b7b7ceaa0dd181"
   dependencies:
-    can-use-dom "^0.1.0"
     classnames "^2.2.5"
-    create-react-class "^15.5.2"
     enquire.js "^2.1.6"
     json2mq "^0.2.0"
-    object-assign "^4.1.0"
-    slick-carousel "^1.6.0"
+    lodash.debounce "^4.0.8"
+    resize-observer-polyfill "^1.5.0"
 
 react-spring@^5.3.15:
   version "5.3.17"
@@ -11390,6 +11376,10 @@ reselect@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
 
+resize-observer-polyfill@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.0.tgz#660ff1d9712a2382baa2cad450a4716209f9ca69"
+
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -11985,10 +11975,6 @@ sliced@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/sliced/-/sliced-1.0.1.tgz#0b3a662b5d04c3177b1926bea82b03f837a2ef41"
 
-slick-carousel@^1.6.0:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/slick-carousel/-/slick-carousel-1.8.1.tgz#a4bfb29014887bb66ce528b90bd0cda262cc8f8d"
-
 slide@^1.1.3, slide@^1.1.6, slide@~1.1.3, slide@~1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
@@ -12501,11 +12487,11 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3, "styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3":
+styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e14265edc6dd3:
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
+"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
