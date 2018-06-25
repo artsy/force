@@ -29,13 +29,6 @@ if (
             domComplete,
           } = window.performance.timing
 
-          analytics.track('Page load time', {
-            requestStart,
-            loadEventEnd,
-            domComplete,
-            nonInteraction: 1,
-          })
-
           reportLoadTimeToVolley(
             requestStart,
             loadEventEnd,
