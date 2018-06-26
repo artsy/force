@@ -53,6 +53,7 @@ fetchMetaphysicsData = (req, showHeroUnits)->
     }
   }
 
+  res.locals.sd.PAGE_TYPE = 'home'
   initialFetch = Q
     .allSettled [
       fetchMetaphysicsData req, true

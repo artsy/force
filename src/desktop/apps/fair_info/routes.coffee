@@ -11,6 +11,7 @@ Articles = require '../../collections/articles'
 
 @assignFair = (req, res, next) ->
   return next() unless res.locals.profile?.isFair()
+  res.locals.sd.PAGE_TYPE = 'fair'
   fair = new Fair res.locals.profile.get('owner')
   infoMenu = new InfoMenu fair: fair
   Q.all([
