@@ -54,20 +54,12 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:closed', @hideSuggestions
     @on 'search:cursorchanged', @ensureResult
 
-    splitTest('autosuggest_search').view()
-    @enableSpotlightAutocomplete = !@enableAggregations and sd.AUTOSUGGEST_SEARCH is 'experiment'
-
+    
     @autoselect = false if @enableSpotlightAutocomplete
     @setupTypeahead()
     @setupPlaceholder()
 
-    @$spotlight = @$('#spotlight-search')
-    @$spotlightInitialText = @$spotlight.find('#spotlight-search__initial-text')
-    @$spotlightRemainingText = @$spotlight.find('#spotlight-search__remaining-text')
-
   events:
-    'blur input': 'hideSpotlight'
-    'keydown input': 'maybeHideSpotlight'
     'keyup input': 'checkSubmission'
     'focus input': 'trackFocusInput'
     'click .empty-item': 'emptyItemClick'
@@ -89,81 +81,6 @@ module.exports = class SearchBarView extends Backbone.View
     unless @isEmpty()
       @trigger 'search:entered', encodeURIComponent(@$input.val())
 
-  maybeHideSpotlight: (e) ->
-    return unless @enableSpotlightAutocomplete
-    return if e.which is @Keys.Left or e.which is @Keys.Right
-
-    if e.which is @Keys.Enter
-      if @spotlightSearchResult
-        location.assign @spotlightSearchResult.href()
-        @$input.val(@spotlightSearchResult.get('display'))
-        @hideSpotlight()
-        return
-      else
-        @emptyItemClick() if @isEmpty()
-
-    letterPressed = String.fromCharCode(e.which).toLowerCase()
-    if letterPressed is @$spotlightRemainingText.text().charAt(0).toLowerCase()
-      return @shiftLetter(letterPressed)
-
-    @hideSpotlight()
-
-  shiftLetter: (letter) ->
-    shiftedInitialText = "#{@$spotlightInitialText.text()}#{letter}"
-    @$spotlightInitialText.text(shiftedInitialText)
-    @$spotlightRemainingText.text(@$spotlightRemainingText.text().slice(1))
-
-  hideSpotlight: ->
-    @$spotlight.css('z-index', '-1')
-    @spotlightSearchResult = null
-
-  showSpotlight: ->
-    @$spotlight.css('z-index', '2')
-
-  # Display spotlight result if:
-  # - more than 4 characters have been typed AND
-  # - query is more than 30% of the length of the search result AND
-  # - query is a case-insensitive leading match of the search result or any token
-  shouldShowSpotlightSearch: (searchResult) ->
-    @isSubsequentMatch = false
-    currentQuery = @$input.val()
-    currentQuery.length > 4 &&
-      (currentQuery.length / searchResult.length) >= 0.3 &&
-      @isLeadingMatchOfAnyToken(currentQuery, searchResult)
-
-  # Return true if:
-  #  - result starts with word OR
-  #  - any token in result starts with word (sets isSubsequentMatch to true)
-  isLeadingMatchOfAnyToken: (word, result) ->
-    return true if result.toLowerCase().indexOf(word.toLowerCase()) is 0
-
-    if word.indexOf(' ') > -1
-      regex = new RegExp(word, 'i')
-      return @isSubsequentMatch = true if result.match(regex)
-
-    _.each result.split(' '), (token) =>
-      if token.toLowerCase().indexOf(word.toLowerCase()) is 0
-        return @isSubsequentMatch = true
-
-    return @isSubsequentMatch
-
-  displaySpotlightSearch: (result) ->
-    return unless @enableSpotlightAutocomplete
-
-    searchResult = new SearchResult(result)
-    return @hideSpotlight() unless @shouldShowSpotlightSearch(searchResult.get('display'))
-
-    @spotlightSearchResult = searchResult
-    currentQuery = @$input.val()
-    if @isSubsequentMatch
-      currentQuery += "  "
-      remainingText = "·  " + searchResult.get('display')
-    else
-      remainingText = searchResult.get('display').replace(new RegExp(currentQuery, 'i'), '')
-    @$spotlightInitialText.text(currentQuery)
-    @$spotlightRemainingText.text(remainingText)
-    @showSpotlight()
-
   indicateLoading: ->
     @renderFeedback()
     @$el.addClass 'is-loading'
@@ -178,7 +95,7 @@ module.exports = class SearchBarView extends Backbone.View
   # (rather than actually moving the cursor down
   # which would overwrite the user's typing)
   maybeHighlight: ->
-    @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect or (@enableSpotlightAutocomplete and @spotlightSearchResult)
+    @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect
 
   feedbackString: ->
     @__feedbackString__ ?= if @mode? and @mode isnt 'suggest'
@@ -231,7 +148,6 @@ module.exports = class SearchBarView extends Backbone.View
         url: @search.url()
         filter: (results) =>
           @trackSearchResults results
-          @displaySpotlightSearch(results[0]) if results?.length > 0
           @search.parse(results, aggregations: @enableAggregations)
         ajax:
           beforeSend: (xhr) =>
@@ -263,10 +179,7 @@ module.exports = class SearchBarView extends Backbone.View
       source: @setupBloodHound().ttAdapter()
 
   placeHolderItemPlacement: ->
-    if @enableSpotlightAutocomplete
-      { footer: @emptyItemTemplate }
-    else
-      { header: @emptyItemTemplate }
+    { header: @emptyItemTemplate }
 
   clear: ->
     @set ''
