@@ -7,6 +7,7 @@ import sinon from 'sinon'
 import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
 import { ContextProvider } from 'reaction/Components/Artsy'
+import { DisplayPanel } from 'reaction/Components/Publishing/Display/DisplayPanel'
 
 describe('<Article />', () => {
   before(done => {
@@ -210,8 +211,10 @@ describe('<Article /> without infinite scroll', () => {
   const ArticleLayout = rewire.default
   const InfiniteScrollArticle = require('desktop/apps/article/components/InfiniteScrollArticle')
     .default
-  const { Article } = require('reaction/Components/Publishing')
   const SuperArticleView = sinon.stub()
+  const {
+    DisplayCanvas,
+  } = require('reaction/Components/Publishing/Display/Canvas')
   rewire.__set__('SuperArticleView', SuperArticleView)
   const EditorialSignupView = sinon.stub()
   rewire.__set__('EditorialSignupView', EditorialSignupView)
@@ -268,8 +271,9 @@ describe('<Article /> without infinite scroll', () => {
 
     const html = rendered.html()
     html.should.containEql('DisplayPanel')
-    html.should.containEql('class="Canvas')
+    rendered.find(DisplayPanel).length.should.equal(1)
     html.should.containEql('Campaign 1')
     html.should.containEql('Ad Headline')
+    rendered.find(DisplayCanvas).length.should.equal(1)
   })
 })
