@@ -88,9 +88,7 @@ describe('Routes', () => {
         it('Returns the correct modal.type for /forgot path', done => {
           req.path = '/forgot'
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe(
-              'reset_password'
-            )
+            expect(renderLayout.mock.calls[0][0].data.type).toBe('forgot')
             done()
           })
         })
@@ -187,7 +185,7 @@ describe('Routes', () => {
 
       it('redirects to /reset_password', () => {
         resetPassword(req, res)
-        expect(res.redirect.mock.calls[0][0]).toBe('/reset_password')
+        expect(res.redirect.mock.calls[0][0]).toBe('/reset_password2')
       })
     })
 
