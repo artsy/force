@@ -10,14 +10,15 @@ export const ModalContainer: React.SFC<any> = () => {
   mediator.on('open:auth', options => {
     setCookies(options)
 
-    // TODO: remember to swap 'register' with 'signup' in triggers
     if (options && options.mode === 'register') {
       options.mode = 'signup'
     }
 
-    if (manager) {
-      manager.openModal(options)
-    }
+    setTimeout(() => {
+      if (manager) {
+        manager.openModal(options)
+      }
+    }, document.readyState === 'complete' ? 0 : 500)
   })
 
   mediator.on('auth:error', err => {
@@ -28,10 +29,13 @@ export const ModalContainer: React.SFC<any> = () => {
 
   return (
     <ModalManager
+      blurContainerSelector="#main-layout-header, #main-layout-container"
       ref={ref => (manager = ref)}
       submitUrls={{
         login: sd.AP.loginPagePath,
         signup: sd.AP.signupPagePath,
+        facebook: sd.AP.facebookPath,
+        twitter: sd.AP.twitterPath,
       }}
       csrf={sd.CSRF_TOKEN}
       handleSubmit={handleSubmit as any}
