@@ -42,7 +42,8 @@ export default class ArticleLayout extends React.Component {
     setupFollowButtons(this.state.following)
     // Track a/b/c test group
     splitTest('article_tooltips').view()
-    splitTest('article_infinite_scroll').view()
+    // Comment until we are ready to launch the test
+    // splitTest('article_infinite_scroll').view()
 
     if (isSuper) {
       new SuperArticleView({
