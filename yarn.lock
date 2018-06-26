@@ -12491,7 +12491,7 @@ styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
+styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
