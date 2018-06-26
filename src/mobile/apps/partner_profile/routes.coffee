@@ -18,6 +18,10 @@ partnerFromProfile = (req) ->
   else
     false
 
+module.exports.requirePartner = (req, res, next) ->
+  res.locals.sd.PAGE_TYPE = 'partner' if req.profile?.isPartner()
+  next()
+
 module.exports.fetchArtworksAndRender = (label) ->
   return (req, res, next) ->
     return next() unless partner = partnerFromProfile(req)

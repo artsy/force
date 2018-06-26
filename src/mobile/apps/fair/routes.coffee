@@ -24,6 +24,10 @@ fairFromProfile = (req) ->
   else
     false
 
+module.exports.requireFair = (req, res, next) ->
+  res.locals.sd.PAGE_TYPE = 'fair' if req.profile?.isFair()
+  next()
+
 module.exports.mainPage = (req, res, next) ->
   return next() unless fair = fairFromProfile(req)
   fair.fetch

@@ -22,6 +22,7 @@ representation = (fair) ->
   # go to normal fair page when this fair switches to open or an admin adds
   # a microsite=true param
   return next() if not res.locals.fairOrg
+  res.locals.sd.PAGE_TYPE = 'fair-organizer'
   res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 

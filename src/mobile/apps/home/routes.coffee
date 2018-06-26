@@ -17,6 +17,7 @@ query = """
 """
 
 module.exports.index = (req, res, next) ->
+  res.locals.sd.PAGE_TYPE = 'home'
   metaphysics(query: query)
     .then ({ home_page  }) ->
       res.render 'page', heroUnits: home_page.hero_units, resize: resize

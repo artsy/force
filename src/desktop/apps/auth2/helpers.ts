@@ -43,11 +43,24 @@ export const handleSubmit = (
     success: (_, res) => {
       formikBag.setSubmitting(false)
       const analytics = (window as any).analytics
+
+      let action
+      switch (type) {
+        case ModalType.login:
+          action = 'Successfully logged in'
+          break
+        case ModalType.signup:
+          action = 'Created account'
+          break
+        case ModalType.forgot:
+          action = 'Forgot Password'
+          break
+      }
+
       if (analytics) {
         const properties = {
-          action:
-            type === 'signup' ? 'Created account' : 'Successfully logged in',
-          user_id: res.user && res.user.id,
+          action,
+          user_id: res && res.user && res.user.id,
           trigger,
           trigger_seconds: triggerSeconds,
           intent,
@@ -58,7 +71,8 @@ export const handleSubmit = (
         analytics.track(pickBy(properties, identity))
       }
 
-      const defaultRedirect = type === 'signup' ? '/personalize' : '/'
+      const defaultRedirect =
+        type === 'signup' ? '/personalize' : window.location
       window.location = modalOptions.redirectTo || (defaultRedirect as any)
     },
     error: (_, res) => {
@@ -68,12 +82,16 @@ export const handleSubmit = (
       mediator.trigger('auth:error', error.message)
     },
   }
+
   switch (type) {
     case ModalType.login:
       user.login(options)
       break
     case ModalType.signup:
       user.signup(options)
+      break
+    case ModalType.forgot:
+      user.forgot(options)
       break
   }
 }
