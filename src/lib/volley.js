@@ -1,14 +1,14 @@
 import { data as sd } from 'sharify'
 import request from 'superagent'
 
-function metricPayload(topLevelPath, deviceType, name, start, end) {
+function metricPayload(pageType, deviceType, name, start, end) {
   return start > 0 && end > 0 && end - start > 0
     ? {
         type: 'timing',
         name: 'load-time',
         timing: end - start,
         tags: [
-          `page-type:${topLevelPath}`,
+          `page-type:${pageType}`,
           `device-type:${deviceType}`,
           `mark:${name}`,
         ],
@@ -20,20 +20,20 @@ export async function reportLoadTimeToVolley(
   requestStart,
   loadEventEnd,
   domComplete,
-  topLevelPath,
+  pageType,
   deviceType
 ) {
   if (sd.VOLLEY_ENDPOINT) {
     const metrics = [
       metricPayload(
-        topLevelPath,
+        pageType,
         deviceType,
         'dom-complete',
         requestStart,
         domComplete
       ),
       metricPayload(
-        topLevelPath,
+        pageType,
         deviceType,
         'load-event-end',
         requestStart,
