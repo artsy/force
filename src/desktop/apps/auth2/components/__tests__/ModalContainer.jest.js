@@ -19,28 +19,37 @@ describe('ModalContainer', () => {
     sd.CSRF_TOKEN = 'sample-token'
   })
 
-  it('Mediator can open a login modal', () => {
+  it('Mediator can open a login modal', done => {
     const component = mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'login' })
-    const form = component.find(ModalManager).instance().state
 
-    expect(form.currentType).toBe('login')
+    setTimeout(() => {
+      const form = component.find(ModalManager).instance().state
+      expect(form.currentType).toBe('login')
+      done()
+    }, 800)
   })
 
-  it('Mediator can open a signup modal', () => {
+  it('Mediator can open a signup modal', done => {
     const component = mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'register' })
-    const form = component.find(ModalManager).instance().state
 
-    expect(form.currentType).toBe('signup')
+    setTimeout(() => {
+      const form = component.find(ModalManager).instance().state
+      expect(form.currentType).toBe('signup')
+      done()
+    }, 800)
   })
 
-  it('Mediator can open a reset_password modal', () => {
+  it('Mediator can open a reset_password modal', done => {
     const component = mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'reset_password' })
-    const form = component.find(ModalManager).instance().state
 
-    expect(form.currentType).toBe('reset_password')
+    setTimeout(() => {
+      const form = component.find(ModalManager).instance().state
+      expect(form.currentType).toBe('reset_password')
+      done()
+    }, 800)
   })
 
   it('Sets a cookie when opening the modal', () => {
