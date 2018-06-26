@@ -96,6 +96,8 @@ module.exports = class LoggedOutUser extends User
     new Backbone.Model()
       .save attrs, _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
+        success: _.wrap options.success, (success, args...) =>
+          success? args...
 
   repossess: (subsequent_user_id, options = {}) ->
     # Only valid for recently logged in LoggedOutUsers
