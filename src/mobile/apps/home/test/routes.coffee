@@ -7,7 +7,7 @@ describe '#index', ->
 
   beforeEach ->
     @req = {}
-    @res = { render: sinon.stub() }
+    @res = { render: sinon.stub(), locals: { sd: {} } }
     @next = sinon.stub()
     routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
     @metaphysics.returns Promise.resolve home_page: hero_units: [{

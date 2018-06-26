@@ -12,6 +12,7 @@ Article = require '../../models/article.coffee'
 
 module.exports.assignFair = (req, res, next) ->
   return next() unless req.profile?.isFair()
+  res.locals.sd.PAGE_TYPE = 'fair'
   fair = new Fair req.profile.get('owner')
   infoMenu = new InfoMenu fair: fair
   Q.all([

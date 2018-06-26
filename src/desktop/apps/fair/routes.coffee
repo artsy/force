@@ -145,6 +145,7 @@ InfoMenu = require '../../components/info_menu/index.coffee'
   profile = res.locals.profile
 
   return next() unless profile?.isFair()
+  res.locals.sd.PAGE_TYPE = 'fair'
 
   fair = new Fair id: profile.fairOwnerId()
 

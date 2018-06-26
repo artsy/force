@@ -20,6 +20,7 @@ representation = (fair) ->
 
 module.exports.overview = (req, res, next) ->
   return next() if (not res.locals.fairOrg)
+  res.locals.sd.PAGE_TYPE = 'fair-organizer'
   res.render 'index'
 
 #

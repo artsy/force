@@ -23,25 +23,24 @@ if (
   sd.TRACK_PAGELOAD_PATHS
 ) {
   window.addEventListener('load', function() {
-    const topLevelPath = window.location.pathname.split('/')[1]
-    _.each(sd.TRACK_PAGELOAD_PATHS.split('|'), path => {
-      if (topLevelPath === path) {
-        window.setTimeout(function() {
-          const {
-            requestStart,
-            loadEventEnd,
-            domComplete,
-          } = window.performance.timing
+    const pageType =
+      window.sd.PAGE_TYPE || window.location.pathname.split('/')[1]
+    if (sd.TRACK_PAGELOAD_PATHS.split('|').includes(pageType)) {
+      window.setTimeout(function() {
+        const {
+          requestStart,
+          loadEventEnd,
+          domComplete,
+        } = window.performance.timing
 
-          reportLoadTimeToVolley(
-            requestStart,
-            loadEventEnd,
-            domComplete,
-            topLevelPath,
-            'mobile'
-          )
-        }, 0)
-      }
-    })
+        reportLoadTimeToVolley(
+          requestStart,
+          loadEventEnd,
+          domComplete,
+          pageType,
+          'mobile'
+        )
+      }, 0)
+    }
   })
 }
