@@ -15,6 +15,10 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
     const { ServerApp, redirect, status } = await buildServerApp({
       routes,
       url: req.url,
+      user: {
+        accessToken: req.user.get('accessToken'),
+        id: req.user.get('id'),
+      },
     })
 
     if (redirect) {

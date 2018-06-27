@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { buildClientApp } from 'reaction/Router'
 import { routes } from 'reaction/Styleguide/Pages/Artist/routes'
+import { data as sd } from 'sharify'
 
-buildClientApp({ routes })
+buildClientApp({ routes, user: sd.CURRENT_USER })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
