@@ -81,16 +81,26 @@ describe('Authentication Helpers', () => {
           intent: 'follow artist',
         },
         {
+          name: 'foo',
           email: 'foo@foo.com',
+          password: 'password',
+          accepted_terms_of_service: true,
         },
         formikBag
       )
+
+      const user = Backbone.sync.mock.calls[0][1]
 
       Backbone.sync.mock.calls[0][2].success()
       Backbone.sync.mock.calls[1][2].success({
         user: { id: 123, accessToken: 'foobar' },
       })
       expect(formikBag.setSubmitting.mock.calls[0][0]).toBe(false)
+      expect(user.get('name')).toBe('foo')
+      expect(user.get('email')).toBe('foo@foo.com')
+      expect(user.get('password')).toBe('password')
+      expect(user.get('accepted_terms_of_service')).toBe(true)
+      expect(user.get('agreed_to_receive_emails')).toBe(true)
     })
 
     it('can handle forgotten passwords', () => {
