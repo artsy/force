@@ -1,11 +1,12 @@
+import { Theme } from '@artsy/palette'
 import React from 'react'
 import express from 'express'
 import styled from 'styled-components'
 import adminOnly from 'desktop/lib/admin_only'
 import { buildServerApp } from 'reaction/Router'
-import { routes } from './routes'
 import { renderLayout } from '@artsy/stitch'
 import { Meta } from './components/Meta'
+import { routes } from '@artsy/reaction/dist/Styleguide/Pages/Artist/routes'
 
 const app = (module.exports = express())
 
@@ -36,7 +37,9 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
         head: Meta,
         body: () => (
           <Container>
-            <ServerApp />
+            <Theme>
+              <ServerApp />
+            </Theme>
           </Container>
         ),
       },
@@ -48,6 +51,7 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
     })
 
     res.status(status).send(layout)
+    // res.send(layout)
   } catch (error) {
     console.log(error)
     next(error)

@@ -2,13 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { buildClientApp } from 'reaction/Router'
-import { routes } from './routes'
-
-const Container = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
-`
+import { routes } from 'reaction/Styleguide/Pages/Artist/routes'
 
 buildClientApp({ routes })
   .then(({ ClientApp }) => {
@@ -16,6 +10,7 @@ buildClientApp({ routes })
       <Container>
         <ClientApp />
       </Container>,
+
       document.getElementById('react-root')
     )
   })
@@ -26,3 +21,9 @@ buildClientApp({ routes })
 if (module.hot) {
   module.hot.accept()
 }
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 1192px;
+  margin: auto;
+`
