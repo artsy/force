@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/Desktop/FormSwitcher'
+import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
 import {
   ModalType,
   ModalOptions,

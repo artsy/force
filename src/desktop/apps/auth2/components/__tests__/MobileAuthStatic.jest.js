@@ -1,6 +1,6 @@
 import { mount } from 'enzyme'
 import React from 'react'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/Mobile/FormSwitcher'
+import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
 import { MobileAuthStatic } from '../MobileAuthStatic'
 
 describe('MobileAuthStatic', () => {

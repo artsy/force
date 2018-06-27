@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Colors from '@artsy/reaction/dist/Assets/Colors'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/Mobile/FormSwitcher'
+import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
 import { handleSubmit } from '../helpers'
 import {
   ModalType,
@@ -11,7 +11,7 @@ import {
 interface Props {
   type: string
   subtitle?: string
-  options?: ModalOptions
+  options: ModalOptions
 }
 
 export class MobileAuthStatic extends React.Component<Props> {
