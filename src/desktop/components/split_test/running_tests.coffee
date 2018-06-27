@@ -43,4 +43,8 @@ module.exports = {
       'control'
       'market'
     ]
+  article_infinite_scroll:
+    key: 'article_infinite_scroll'
+    outcomes:
+      control: 100
 }
