@@ -5,12 +5,13 @@ import styled from 'styled-components'
 import adminOnly from 'desktop/lib/admin_only'
 import { buildServerApp } from 'reaction/Router'
 import { renderLayout } from '@artsy/stitch'
-import { Meta } from './components/Meta'
+import { Meta, query } from './components/Meta'
 import { routes } from '@artsy/reaction/dist/Styleguide/Pages/Artist/routes'
+import metaphysics from 'lib/metaphysics.coffee'
 
 const app = (module.exports = express())
 
-app.get('/artist2*', adminOnly, async (req, res, next) => {
+app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 
@@ -33,6 +34,14 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
       max-width: 1200px;
       margin: auto;
     `
+    const send = {
+      method: 'post',
+      query,
+      variables: { artistID: req.params.artistID },
+    }
+
+    const { artist } = await metaphysics(send).then(data => data)
+
     const layout = await renderLayout({
       basePath: __dirname,
       layout: '../../components/main_layout/templates/react_redesign.jade',
@@ -40,7 +49,7 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: Meta,
+        head: () => <Meta sd={res.locals.sd} artist={artist} />,
         body: () => (
           <Container>
             <Theme>
@@ -57,6 +66,7 @@ app.get('/artist2*', adminOnly, async (req, res, next) => {
     })
 
     res.status(status).send(layout)
+
     // res.send(layout)
   } catch (error) {
     console.log(error)
