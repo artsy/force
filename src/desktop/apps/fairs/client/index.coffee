@@ -49,6 +49,7 @@ module.exports.FairsView = class FairsView extends Backbone.View
       mode: 'signup'
       copy: "Sign up to follow fairs"
       intent: 'signup'
+      signupIntent: 'signup'
       destination: location.href
       trigger: 'click'
 

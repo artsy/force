@@ -101,6 +101,7 @@ module.exports.init = ->
       trigger: 'timed'
       triggerSeconds: 0
       intent: 'signup'
+      signupIntent: 'signup'
 
   # Init the personalize flow
   else

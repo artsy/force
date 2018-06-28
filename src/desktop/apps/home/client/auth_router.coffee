@@ -37,22 +37,19 @@ module.exports = class HomeAuthRouter extends Backbone.Router
       mediator.trigger 'open:auth',
         mode: 'login'
         intent: 'login'
+        signupIntent: 'login'
         trigger: 'timed'
         triggerSeconds: 0
         redirectTo: redirectTo
 
       mediator.trigger 'auth:error', msg
 
-      # # Sometimes the previous trigger gets overridden so we trigger again
-      # _.defer =>
-      #   mediator.trigger 'open:auth', mode: 'login'
-      #   mediator.trigger 'auth:error', msg
-
     else
       mediator.trigger 'open:auth',
         mode: 'login'
         redirectTo: redirectTo
         intent: 'login'
+        signupIntent: 'login'
         trigger: 'timed'
         triggerSeconds: 0
 
@@ -62,6 +59,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
       mode: 'signup',
       redirectTo: if redirectTo then redirectTo else null
       intent: 'signup'
+      signupIntent: 'signup'
       trigger: 'timed'
       triggerSeconds: 0
 
@@ -75,6 +73,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
       setPassword: setPassword,
       redirectTo: redirectTo
       intent: 'forgot'
+      signupIntent: 'forgot'
       trigger: 'timed'
       triggerSeconds: 0
 

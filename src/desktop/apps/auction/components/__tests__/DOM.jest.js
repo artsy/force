@@ -95,6 +95,7 @@ describe('DOM Interactions', () => {
         mode: 'register',
         redirectTo: '/auction/auction-id/registration-flow',
         signupIntent: 'register to bid',
+        intent: 'register to bid',
         trigger: 'click',
       })
     })

@@ -33,6 +33,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
       mode: 'signup',
       copy: "Sign up to receive alerts when new works are available by artists you follow.",
       intent: 'artists you follow filter'
+      signupIntent: 'artists you follow filter'
       trigger: 'click'
       destination: location.href
 

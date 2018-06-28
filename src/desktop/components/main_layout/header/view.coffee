@@ -114,6 +114,7 @@ module.exports = class HeaderView extends Backbone.View
     mediator.trigger 'open:auth',
       mode: 'signup',
       intent: 'signup'
+      signupIntent: 'signup'
       trigger: 'click'
       contextModule: 'Header'
       destination: location.href
@@ -121,8 +122,9 @@ module.exports = class HeaderView extends Backbone.View
   login: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth',
-      mode: 'login',
+      mode: 'login'
       intent: 'login'
+      signupIntent: 'login'
       trigger: 'click'
       contextModule: 'Header'
       destination: location.href

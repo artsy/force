@@ -67,6 +67,7 @@ module.exports = class ProfessionalBuyerLandingView extends View
       redirectTo: "#{SHOW_PATH}/complete"
       trigger: 'click'
       intent: mode
+      signupIntent: mode
 
   redirectTo: (path) ->
     location.assign path

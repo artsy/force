@@ -52,6 +52,7 @@ module.exports = class FooterView extends Backbone.View
       contextModule: 'Footer'
       destination: location.href
       intent: 'signup'
+      signupIntent: 'signup'
 
   login: (e) ->
     e.preventDefault()
@@ -60,4 +61,5 @@ module.exports = class FooterView extends Backbone.View
       trigger: 'click'
       contextModule: 'Footer'
       destination: location.href
-      intent: 'signup'
+      signupIntent: 'login'
+      intent: 'login'

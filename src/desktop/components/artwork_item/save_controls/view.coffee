@@ -38,6 +38,7 @@ module.exports = class SaveControls extends Backbone.View
           objectId: @model.id
         }
         intent: 'save artwork'
+        signupIntent: 'save artwork'
         trigger: 'click'
         destination: location.href
       return false

@@ -62,6 +62,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       mediator.trigger('open:auth', {
         mode: 'signup'
         intent: 'signup'
+        signupIntent: 'signup'
         trigger: 'timed'
         triggerSeconds: 2
         copy: 'Sign up for the Best Stories in Art and Visual Culture'

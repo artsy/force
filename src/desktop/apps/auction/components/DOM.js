@@ -56,6 +56,7 @@ class DOM extends Component {
         mode: 'signup',
         redirectTo: auction.registrationFlowUrl(),
         intent: 'register to bid',
+        signupIntent: 'register to bid',
         trigger: 'click',
       })
 

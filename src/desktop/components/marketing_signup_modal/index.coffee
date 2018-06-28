@@ -42,6 +42,7 @@ class MarketingSignupModalInner extends Backbone.View
     mediator.trigger 'open:auth',
       mode: 'login'
       intent: @signupIntent
+      signupIntent: @signupIntent
       trigger: 'click'
       destination: location.href
 

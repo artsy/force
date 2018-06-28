@@ -72,6 +72,7 @@ module.exports = class CTABarView extends Backbone.View
       mode: 'signup'
       trigger: 'click'
       intent: 'signup'
+      signupIntent: 'signup'
       destination: location.href
     }, @modalOptions, options
 

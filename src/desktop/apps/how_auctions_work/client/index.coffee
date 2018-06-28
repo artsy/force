@@ -20,6 +20,7 @@ module.exports.init = ->
     mediator.trigger 'open:auth',
       mode: 'signup'
       copy: 'Sign up to bid on artworks'
+      signupIntent: 'register to bid'
       intent: 'register to bid'
       trigger: 'click'
       destination: location.href

@@ -49,6 +49,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       context_module: 'Header'
       destination: location.href
       intent: @signupIntent
+      signupIntent: @signupIntent
 
   currentParams: ->
     qs.parse(location.search.replace(/^\?/, ''))

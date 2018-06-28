@@ -37,4 +37,5 @@ module.exports.init = ->
       mode: 'signup'
       trigger: 'click'
       intent: 'signup'
+      signupIntent: 'signup'
       destination: location.href

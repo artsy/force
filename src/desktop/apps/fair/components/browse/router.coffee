@@ -49,6 +49,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       copy: "Sign up to receive updates about #{@fair.nameSansYear()}"
       destination: "#{@fair.href()}/capture/#{action}"
       intent: 'signup'
+      signupIntent: 'signup'
       trigger: 'timed'
       triggerSeconds: 0
 
