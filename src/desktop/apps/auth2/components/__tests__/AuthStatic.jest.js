@@ -1,7 +1,7 @@
 import { mount } from 'enzyme'
 import React from 'react'
 import { DesktopHeader } from '@artsy/reaction/dist/Components/Authentication/Desktop/Components/DesktopHeader'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/Desktop/FormSwitcher'
+import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
 import { AuthStatic } from '../AuthStatic'
 
 xdescribe('AuthStatic', () => {

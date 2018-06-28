@@ -43,12 +43,8 @@ module.exports = {
       'control'
       'market'
     ]
-  autosuggest_search:
-    key: 'autosuggest_search'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    edge: 'experiment'
+  article_infinite_scroll:
+    key: 'article_infinite_scroll'
+    outcomes:
+      control: 100
 }

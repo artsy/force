@@ -35,6 +35,7 @@ export const handleSubmit = (
     _csrf: sd.CSRF_TOKEN,
     signupIntent: intent,
     signupReferer,
+    agreed_to_receive_emails: values.accepted_terms_of_service,
   })
 
   user.set(userAttributes)

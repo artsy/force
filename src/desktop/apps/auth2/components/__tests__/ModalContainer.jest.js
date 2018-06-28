@@ -8,6 +8,7 @@ const mediator = require('../../../../lib/mediator.coffee')
 
 jest.mock('sharify')
 jest.mock('cookies-js')
+jest.useFakeTimers()
 
 describe('ModalContainer', () => {
   beforeEach(() => {
@@ -22,24 +23,25 @@ describe('ModalContainer', () => {
   it('Mediator can open a login modal', () => {
     const component = mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'login' })
+    jest.runTimersToTime(1000)
     const form = component.find(ModalManager).instance().state
-
     expect(form.currentType).toBe('login')
   })
 
   it('Mediator can open a signup modal', () => {
     const component = mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'register' })
+    jest.runTimersToTime(1000)
     const form = component.find(ModalManager).instance().state
-
     expect(form.currentType).toBe('signup')
   })
 
   it('Mediator can open a reset_password modal', () => {
     const component = mount(<ModalContainer />)
     mediator.trigger('open:auth', { mode: 'reset_password' })
-    const form = component.find(ModalManager).instance().state
 
+    jest.runTimersToTime(1000)
+    const form = component.find(ModalManager).instance().state
     expect(form.currentType).toBe('reset_password')
   })
 
