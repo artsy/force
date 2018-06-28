@@ -145,7 +145,8 @@ block body
             for section in sections.questions.sections
               .consignments-section__questions__sections__section
                 h4= section.sub_headline
-                p= section.description
+                p
+                  != markdown(section.description)
             .consignments-section__questions__sections__section
               h4 Want to learn more? Read our <a id='consignments-open-faq-modal' href='#'>full FAQ</a> or&nbsp;
                 a( href='mailto:consign@artsy.net' ) contact us.
