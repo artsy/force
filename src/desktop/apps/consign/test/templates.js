@@ -1,10 +1,11 @@
-import OrderedSets from '../../../collections/ordered_sets'
+import { extend } from 'underscore'
 import fs from 'fs'
 import jade from 'jade'
-import jsonData from './fixture.json'
 import moment from 'moment'
 import path from 'path'
-import { extend } from 'underscore'
+import jsonData from './fixture.json'
+import markdown from '../../../components/util/markdown'
+import OrderedSets from '../../../collections/ordered_sets'
 
 describe('landing page', () => {
   let data
@@ -16,12 +17,13 @@ describe('landing page', () => {
 
   before(() => {
     data = extend(jsonData, {
+      asset: () => {},
+      inDemand: new OrderedSets([]),
+      markdown,
+      moment,
+      recentlySold: [],
       sales: [],
       sd: {},
-      recentlySold: [],
-      inDemand: new OrderedSets([]),
-      moment,
-      asset: () => {},
     })
   })
 
@@ -40,5 +42,10 @@ describe('landing page', () => {
     data.sales = [{ name: 'Sarah Evening Sale', start_at: moment.now() }]
     const html = render('landing', data)
     html.should.containEql('consignments-upcoming-sales__sales__sale')
+  })
+
+  it('can render question sections with markdown', () => {
+    const html = render('landing', data)
+    html.should.containEql('collection-artsy">buy and sell</a>')
   })
 })
