@@ -51,9 +51,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.16.2":
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.17.1.tgz#b58c9a5e431da3399f6eb7eb8ef1a68b07df623b"
+"@artsy/reaction@^1.17.2":
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.17.2.tgz#4ee067195448a898c462fb8d0107d4fc26bfa648"
   dependencies:
     "@artsy/palette" "^2.3.3"
     cheerio "^1.0.0-rc.2"
@@ -11107,7 +11107,7 @@ styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
+"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
