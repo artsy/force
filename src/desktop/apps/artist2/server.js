@@ -12,13 +12,15 @@ const app = (module.exports = express())
 
 app.get('/artist2*', adminOnly, async (req, res, next) => {
   try {
+    const user = req.user && req.user.toJSON()
+
     const { ServerApp, redirect, status } = await buildServerApp({
+      boot: {
+        breakpoint: res.locals.sd.IS_MOBILE ? 'xs' : false,
+      },
       routes,
       url: req.url,
-      user: {
-        accessToken: req.user.get('accessToken'),
-        id: req.user.get('id'),
-      },
+      user,
     })
 
     if (redirect) {
