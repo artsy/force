@@ -42,6 +42,14 @@ app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
 
     const { artist } = await metaphysics(send).then(data => data)
 
+    const isExternalReferer =
+      res.locals.sd.REFERRER &&
+      !res.locals.sd.REFERRER.includes(res.locals.sd.APP_URL)
+
+    // Since this page is admin-only now, need to swap this in to test.
+    // res.locals.sd.ARTIST_PAGE_CTA_ENABLED = true
+    res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !user && isExternalReferer
+    res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = req.params.artistID
     const layout = await renderLayout({
       basePath: __dirname,
       layout: '../../components/main_layout/templates/react_redesign.jade',
@@ -61,7 +69,6 @@ app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: 'artist2',
-        styledComponents: true,
       },
     })
 
