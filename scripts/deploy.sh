@@ -7,6 +7,7 @@ gzip -S .cgz $(find public/assets -name '*.css')
 gzip -S .jgz $(find public/assets -name '*.js')
 bucket-assets --bucket artsy-force-$DEPLOY_ENV
 heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV
+hokusai $DEPLOY_ENV env set ASSET_MANIFEST=$(cat manifest.json)
 if [ -z "$CIRCLE_SHA1" ]; then
   git push --force heroku master
 else
