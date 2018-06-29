@@ -28,6 +28,7 @@ export class AuthStatic extends React.Component<Props> {
               this.props.type,
               this.props.options
             )}
+            isStatic
           />
         </AuthFormContainer>
       </Wrapper>
