@@ -122,12 +122,14 @@ workflows:
               only: master
           requires:
             - push
+            - deploy_heroku_staging
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
             - push
+            - deploy_heroku_production
       - deploy_heroku_staging:
           filters:
             branches:
