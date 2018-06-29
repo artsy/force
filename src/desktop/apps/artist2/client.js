@@ -4,12 +4,13 @@ import styled from 'styled-components'
 import { buildClientApp } from 'reaction/Router'
 import { routes } from 'reaction/Styleguide/Pages/Artist/routes'
 import { data as sd } from 'sharify'
+import mediator from 'desktop/lib/mediator.coffee'
 
 buildClientApp({ routes, user: sd.CURRENT_USER })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
-        <ClientApp />
+        <ClientApp force={{ mediator }} />
       </Container>,
 
       document.getElementById('react-root')
