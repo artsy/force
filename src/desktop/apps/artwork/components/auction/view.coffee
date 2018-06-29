@@ -85,7 +85,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
         mode: 'signup'
         copy: 'Sign up to bid'
         redirectTo: form.action()
-        trigger: 'prompted'
+        trigger: 'click'
 
     return unless form.isReady()
 
