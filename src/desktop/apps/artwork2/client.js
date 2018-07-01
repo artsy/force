@@ -1,7 +1,7 @@
+import { buildClientApp } from 'reaction/Router'
+import { routes } from 'reaction/Apps/Artwork/routes'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { buildClientApp } from 'reaction/Router'
-import { routes } from './routes'
 
 buildClientApp({ routes })
   .then(({ ClientApp }) => {

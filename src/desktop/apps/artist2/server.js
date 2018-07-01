@@ -1,13 +1,12 @@
-import { Theme } from '@artsy/palette'
-import React from 'react'
-import express from 'express'
-import styled from 'styled-components'
-import adminOnly from 'desktop/lib/admin_only'
 import { buildServerApp } from 'reaction/Router'
-import { renderLayout } from '@artsy/stitch'
 import { Meta, query } from './components/Meta'
-import { routes } from '@artsy/reaction/dist/Styleguide/Pages/Artist/routes'
+import { renderLayout } from '@artsy/stitch'
+import { routes } from 'reaction/Apps/Artist/routes'
+import adminOnly from 'desktop/lib/admin_only'
+import express from 'express'
 import metaphysics from 'lib/metaphysics.coffee'
+import React from 'react'
+import styled from 'styled-components'
 
 const app = (module.exports = express())
 
@@ -29,11 +28,13 @@ app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
       return
     }
 
+    // FIXME: Move this to Reaction
     const Container = styled.div`
       width: 100%;
-      max-width: 1200px;
+      max-width: 1192px;
       margin: auto;
     `
+
     const send = {
       method: 'post',
       query,
@@ -50,6 +51,8 @@ app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
     // res.locals.sd.ARTIST_PAGE_CTA_ENABLED = true
     res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !user && isExternalReferer
     res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = req.params.artistID
+
+    // Render layout
     const layout = await renderLayout({
       basePath: __dirname,
       layout: '../../components/main_layout/templates/react_redesign.jade',
@@ -60,9 +63,7 @@ app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
         head: () => <Meta sd={res.locals.sd} artist={artist} />,
         body: () => (
           <Container>
-            <Theme>
-              <ServerApp />
-            </Theme>
+            <ServerApp />
           </Container>
         ),
       },
@@ -73,8 +74,6 @@ app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
     })
 
     res.status(status).send(layout)
-
-    // res.send(layout)
   } catch (error) {
     console.log(error)
     next(error)
