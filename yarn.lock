@@ -49,9 +49,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.18.3":
-  version "1.18.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.18.3.tgz#0fbcaee52128ac92c5c8c1698f34fb235f0cf095"
+"@artsy/reaction@^1.18.5":
+  version "1.18.5"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.18.5.tgz#7b18cfa32414920fd8c6a4831b5e59fa88ff7c9c"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
@@ -1071,6 +1071,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
