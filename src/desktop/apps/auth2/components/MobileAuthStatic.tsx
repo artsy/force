@@ -29,8 +29,6 @@ export class MobileAuthStatic extends React.Component<Props> {
               this.props.type,
               this.props.options
             )}
-            isMobile
-            isStatic
           />
         </MobileContainer>
       </AuthFormContainer>
