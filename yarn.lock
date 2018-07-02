@@ -23,8 +23,8 @@
     yarn "^1.3.2"
 
 "@artsy/palette@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.3.4.tgz#fbb56c092453786852e9ee10859213dc8b647969"
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.4.1.tgz#6416976dd94cd3145228ed6b521136e9855b96b0"
   dependencies:
     react "^16.3.2"
     react-primitives "^0.5.0"

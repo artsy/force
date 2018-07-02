@@ -48,9 +48,11 @@ module.exports = class AuctionArtworksView extends Backbone.View
       location.assign $(e.target).attr('href')
     else
       mediator.trigger 'open:auth',
-        width: '500px'
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to bid'
+        intent: 'bid'
+        signupIntent: 'bid'
+        trigger: 'click'
         redirectTo: $(e.currentTarget).attr('href')
     return true
 

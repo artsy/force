@@ -34,5 +34,8 @@ module.exports.init = ->
   $('.js-sign-up-button').click (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth',
-      width: '500px',
-      mode: 'register'
+      mode: 'signup'
+      trigger: 'click'
+      intent: 'signup'
+      signupIntent: 'signup'
+      destination: location.href

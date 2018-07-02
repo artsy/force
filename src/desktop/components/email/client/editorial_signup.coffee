@@ -60,8 +60,13 @@ module.exports = class EditorialSignupView extends Backbone.View
       analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
     else
       mediator.trigger('open:auth', {
-        mode: 'register',
+        mode: 'signup'
+        intent: 'signup'
+        signupIntent: 'signup'
+        trigger: 'timed'
+        triggerSeconds: 2
         copy: 'Sign up for the Best Stories in Art and Visual Culture'
+        destination: location.href
       })
 
   hideEditorialCTA: (e) ->

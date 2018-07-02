@@ -48,6 +48,8 @@ class PurchaseView extends Backbone.View
       mode: 'login'
       redirectTo: @artwork.href + '/checkout'
       copy: copy
+      intent: 'purchase'
+      signupIntent: 'purchase'
 
     formData = _.extend {
       artwork_id: @artwork.id,
