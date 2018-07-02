@@ -43,14 +43,8 @@ const config = {
     namedModules: true,
     noEmitOnErrors: true,
     splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          chunks: "initial",
-          name: "vendor",
-          enforce: true,
-        },
-      },
+      chunks: "all",
+      name: "common",
     },
   },
   output: {
@@ -189,21 +183,6 @@ if (isDevelopment) {
   // Staging
 } else if (isDeploy) {
   config.devtool = "#source-map"
-
-  // Prod
-  if (isProduction) {
-    // config.plugins.push(
-    //   new UglifyJsPlugin({
-    //     sourceMap: true,
-    //     uglifyOptions: {
-    //       ecma: 8,
-    //       compress: {
-    //         warnings: false,
-    //       },
-    //     },
-    //   })
-    // )
-  }
 
   if (ANALYZE_BUNDLE) {
     config.plugins.push(new BundleAnalyzerPlugin())
