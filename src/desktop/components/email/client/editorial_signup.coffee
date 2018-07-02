@@ -66,6 +66,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         trigger: 'timed'
         triggerSeconds: 2
         copy: 'Sign up for the Best Stories in Art and Visual Culture'
+        destination: location.href
       })
 
   hideEditorialCTA: (e) ->

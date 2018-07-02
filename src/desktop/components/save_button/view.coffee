@@ -40,6 +40,8 @@ module.exports = class SaveButton extends Backbone.View
         trigger: 'click'
         intent: 'save artwork'
         signupIntent: 'save artwork'
+        destination: location.href
+
       return false
 
     trackedProperties = {

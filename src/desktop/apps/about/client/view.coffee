@@ -39,7 +39,7 @@ module.exports = class AboutView extends Backbone.View
       intent: 'save artwork'
       signupIntent: 'save artwork'
       trigger: 'click',
-      destination: window.location.href
+      destination: location.href
 
   intercept: (e) ->
     e.preventDefault()

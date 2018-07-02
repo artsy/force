@@ -42,6 +42,7 @@ module.exports = class FairHeaderView extends Backbone.View
       intent: 'login'
       signupIntent: 'login'
       contextModule: 'Header'
+      destination: location.href
 
   logout: (e) ->
     e.preventDefault()
