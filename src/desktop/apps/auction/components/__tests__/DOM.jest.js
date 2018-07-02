@@ -92,7 +92,7 @@ describe('DOM Interactions', () => {
 
       expect(AcceptConditionsOfSaleModal).not.toHaveBeenCalled()
       expect(mediator.trigger).toHaveBeenCalledWith('open:auth', {
-        mode: 'register',
+        mode: 'signup',
         redirectTo: '/auction/auction-id/registration-flow',
         signupIntent: 'register to bid',
         intent: 'register to bid',
