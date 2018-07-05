@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 2
+  replicas: 3
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -28,6 +28,10 @@ spec:
           imagePullPolicy: Always
           ports:
           - containerPort: 5000
+          resources:
+            requests:
+              cpu: "1"
+              memory: "1Gi"
 ---
 apiVersion: v1
 kind: Service
