@@ -96,9 +96,12 @@ module.exports.init = ->
       $('.modal-backdrop').click (e) -> e.stopPropagation()
 
     mediator.trigger 'open:auth',
-      mode: 'register'
+      mode: 'signup'
       destination: location.href
-      width: 500
+      trigger: 'timed'
+      triggerSeconds: 0
+      intent: 'signup'
+      signupIntent: 'signup'
 
   # Init the personalize flow
   else

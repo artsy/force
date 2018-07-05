@@ -1,13 +1,13 @@
 import express from 'express'
 import adminOnly from 'desktop/lib/admin_only'
 import { buildServerApp } from 'reaction/Router'
-import { routes } from './routes'
+import { routes } from 'reaction/Apps/Artwork/routes'
 import { renderLayout } from '@artsy/stitch'
 import { Meta } from './components/Meta'
 
 const app = (module.exports = express())
 
-app.get('/artwork2*', adminOnly, async (req, res, next) => {
+app.get('/artwork2/:artworkID*', adminOnly, async (req, res, next) => {
   try {
     const { ServerApp, redirect, status } = await buildServerApp({
       routes,
@@ -21,7 +21,7 @@ app.get('/artwork2*', adminOnly, async (req, res, next) => {
 
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_index.jade',
+      layout: '../../components/main_layout/templates/react_redesign.jade',
       config: {
         styledComponents: true,
       },

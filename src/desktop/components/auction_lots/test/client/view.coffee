@@ -58,7 +58,7 @@ describe 'Auction results client-side code', ->
       @view.user = null
       @view.$('.auction-lot').first().click()
       @mediatorStub.trigger.args[0][0].should.equal 'open:auth'
-      @mediatorStub.trigger.args[0][1].mode.should.equal 'register'
+      @mediatorStub.trigger.args[0][1].mode.should.equal 'signup'
       @view.$('.auction-lot').first().click()
       @mediatorStub.trigger.calledTwice.should.be.true()
       # 'logged in'

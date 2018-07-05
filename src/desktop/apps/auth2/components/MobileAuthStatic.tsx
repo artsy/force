@@ -22,13 +22,13 @@ export class MobileAuthStatic extends React.Component<Props> {
           <FormSwitcher
             {...this.props}
             type={this.props.type as ModalType}
+            isMobile
+            isStatic
             handleSubmit={handleSubmit.bind(
               this,
               this.props.type,
               this.props.options
             )}
-            isMobile
-            isStatic
           />
         </MobileContainer>
       </AuthFormContainer>

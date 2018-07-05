@@ -58,10 +58,10 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  handleOpenAuthModal = (type, config) =>
+  handleOpenAuthModal = (mode, options) =>
     mediator.trigger('open:auth', {
-      mode: type,
-      ...config,
+      mode,
+      ...options,
     })
 
   renderArticle = () => {

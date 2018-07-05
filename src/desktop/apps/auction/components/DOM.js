@@ -53,9 +53,11 @@ class DOM extends Component {
     // If there is no user, log in and redirect to this flow
     if (!me) {
       mediator.trigger('open:auth', {
-        mode: 'register',
+        mode: 'signup',
         redirectTo: auction.registrationFlowUrl(),
+        intent: 'register to bid',
         signupIntent: 'register to bid',
+        trigger: 'click',
       })
 
       // If the user is already registered, just ignore this and fix the url.
