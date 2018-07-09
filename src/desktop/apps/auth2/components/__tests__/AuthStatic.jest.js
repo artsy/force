@@ -1,10 +1,10 @@
 import { mount } from 'enzyme'
 import React from 'react'
-import { DesktopHeader } from '@artsy/reaction/dist/Components/Authentication/Desktop/Components/DesktopHeader'
+import { ModalHeader } from '@artsy/reaction/dist/Components/Modal/ModalHeader'
 import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
 import { AuthStatic } from '../AuthStatic'
 
-xdescribe('AuthStatic', () => {
+describe('AuthStatic', () => {
   const getWrapper = props => {
     return mount(<AuthStatic {...props} />)
   }
@@ -13,7 +13,9 @@ xdescribe('AuthStatic', () => {
   beforeEach(() => {
     props = {
       type: 'login',
-      subtitle: 'A sub title',
+      meta: {
+        title: 'A sub title',
+      },
       handleSubmit: jest.fn(),
       options: {},
     }
@@ -26,6 +28,6 @@ xdescribe('AuthStatic', () => {
 
   it('Renders the DesktopHeader', () => {
     const component = getWrapper(props)
-    expect(component.find(DesktopHeader).text()).toMatch('A sub title')
+    expect(component.find(ModalHeader).text()).toMatch('A sub title')
   })
 })
