@@ -48,7 +48,7 @@ const config = {
       },
       {
         test: /(\.(js|ts)x?$)/,
-        include: /src/,
+        include: path.resolve('./src'),
         use: [
           { loader: 'cache-loader' },
           {

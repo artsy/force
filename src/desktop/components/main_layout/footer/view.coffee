@@ -17,6 +17,9 @@ module.exports = class FooterView extends Backbone.View
   initialize: ->
     @listenTo mediator, 'infinite:scroll:start', @hide
     @listenTo mediator, 'infinite:scroll:end', @show
+    @listenTo mediator, 'openCollectorFAQModal', @openCollectorModal
+    @listenTo mediator, 'openAuctionFAQModal', @openAuctionModal
+    @listenTo mediator, 'openFeedbackModal', @openFeedback
     @$recentlyViewedArtworks = $('#recently-viewed-artworks')
     if shouldShowRVARail() && @$recentlyViewedArtworks.length > 0
       setupRail @$recentlyViewedArtworks
@@ -30,21 +33,33 @@ module.exports = class FooterView extends Backbone.View
     reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail() && @$recentlyViewedArtworks.length > 0
 
   openFeedback: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
     openFeedbackModal()
 
   openCollectorModal: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
     openMultiPageModal 'collector-faqs'
 
   openAuctionModal: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
     openMultiPageModal 'auction-faqs'
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', mode: 'signup'
+    mediator.trigger 'open:auth',
+      mode: 'signup'
+      trigger: 'click'
+      contextModule: 'Footer'
+      destination: location.href
+      intent: 'signup'
+      signupIntent: 'signup'
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', mode: 'login'
+    mediator.trigger 'open:auth',
+      mode: 'login'
+      trigger: 'click'
+      contextModule: 'Footer'
+      destination: location.href
+      signupIntent: 'login'
+      intent: 'login'

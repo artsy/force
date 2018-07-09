@@ -86,7 +86,7 @@ jobs:
           name: "Deploy to staging"
           command: "yarn install && DEPLOY_ENV=staging .circleci/heroku_deploy.sh && git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force"
       - run: mkdir -p workspace
-      - run: cp manifest.js workspace/manifest.js
+      - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:
           root: workspace
           paths:
@@ -105,7 +105,7 @@ jobs:
           name: "Deploy to production"
           command: "yarn install && DEPLOY_ENV=production .circleci/heroku_deploy.sh"
       - run: mkdir -p workspace
-      - run: cp manifest.js workspace/manifest.js
+      - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:
           root: workspace
           paths:

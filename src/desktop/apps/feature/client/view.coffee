@@ -83,6 +83,9 @@ module.exports = class FeatureView extends Backbone.View
     unless @currentUser
       e.preventDefault()
       mediator.trigger 'open:auth',
-        mode: 'register'
+        mode: 'signup'
         copy: 'Sign up to bid on artworks'
         redirectTo: @sale.registerUrl()
+        signupIntent: 'bid'
+        intent: 'bid'
+        trigger: 'click'

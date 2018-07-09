@@ -23,6 +23,7 @@ export class AuthStatic extends React.Component<Props> {
           <FormSwitcher
             {...this.props}
             type={this.props.type as ModalType}
+            isStatic
             handleSubmit={handleSubmit.bind(
               this,
               this.props.type,
