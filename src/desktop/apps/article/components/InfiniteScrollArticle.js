@@ -24,7 +24,6 @@ export default class InfiniteScrollArticle extends React.Component {
     headerHeight: PropTypes.string,
     marginTop: PropTypes.string,
     showTooltips: PropTypes.bool,
-    showToolTipMarketData: PropTypes.bool,
     onOpenAuthModal: PropTypes.func,
     renderTime: PropTypes.number,
   }
@@ -140,7 +139,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
-    const { showTooltips, showToolTipMarketData, onOpenAuthModal } = this.props
+    const { showTooltips, onOpenAuthModal } = this.props
     const { renderTimes } = this.state
 
     return _.flatten(
@@ -158,7 +157,6 @@ export default class InfiniteScrollArticle extends React.Component {
               headerHeight={i === 0 ? this.props.headerHeight : null}
               marginTop={i === 0 ? this.props.marginTop : null}
               showTooltips={showTooltips}
-              showToolTipMarketData={showToolTipMarketData}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
             />

@@ -35,14 +35,6 @@ module.exports = {
     control_group: 'control'
     edge: 'market_data_no_carousel'
 
-  article_tooltips:
-    key: 'article_tooltips'
-    weighting: 'equal'
-    outcomes: [
-      'bio'
-      'control'
-      'market'
-    ]
   article_infinite_scroll:
     key: 'article_infinite_scroll'
     outcomes:
