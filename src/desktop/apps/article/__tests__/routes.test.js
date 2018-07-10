@@ -342,7 +342,7 @@ describe('Article Routes', () => {
       })
     })
 
-    describe('ToolTips test', () => {
+    describe('ToolTips', () => {
       let data
       let renderLayout
 
@@ -367,54 +367,27 @@ describe('Article Routes', () => {
         )
       })
 
-      it('Control: showTooltips and showToolTipMarketData are false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'control'
-
-        index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(false)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
-          done()
-        })
-      })
-
-      it('Bio: showTooltips is true, showToolTipMarketData is false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
-
+      it('Shows tooltips if desktop UA', done => {
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(true)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
           done()
         })
       })
 
-      it('Market: showTooltips and showToolTipMarketData are true', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'market'
-
-        index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(true)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(true)
-          done()
-        })
-      })
-
-      it('Mobile: showTooltips and showToolTipMarketData are false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+      it('Hides tooltips for mobile UA', done => {
         res.locals.sd.IS_MOBILE = true
 
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(false)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
           done()
         })
       })
 
-      it('Tablet: showTooltips and showToolTipMarketData are false', done => {
-        res.locals.sd.ARTICLE_TOOLTIPS = 'bio'
+      it('Hides tooltips for tablet UA', done => {
         res.locals.sd.IS_TABLET = true
 
         index(req, res, next).then(() => {
           renderLayout.args[0][0].data.showTooltips.should.equal(false)
-          renderLayout.args[0][0].data.showToolTipMarketData.should.equal(false)
           done()
         })
       })

@@ -10,7 +10,6 @@ import _EditorialSignupView from 'desktop/components/email/client/editorial_sign
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
-import splitTest from 'desktop/components/split_test/index.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
@@ -32,7 +31,6 @@ export default class ArticleLayout extends React.Component {
     onDailyEditorial: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
-    showToolTipMarketData: PropTypes.bool,
     renderTime: PropTypes.number,
   }
 
@@ -40,8 +38,6 @@ export default class ArticleLayout extends React.Component {
     const { article, isSuper } = this.props
     // TODO: Replace with relay follow
     setupFollowButtons(this.state.following)
-    // Track a/b/c test group
-    splitTest('article_tooltips').view()
     // Comment until we are ready to launch the test
     // splitTest('article_infinite_scroll').view()
 
@@ -72,7 +68,6 @@ export default class ArticleLayout extends React.Component {
       onDailyEditorial,
       renderTime,
       showTooltips,
-      showToolTipMarketData,
     } = this.props
     const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
     const navHeight = isSuper ? '0px' : NAVHEIGHT
@@ -112,7 +107,6 @@ export default class ArticleLayout extends React.Component {
           headerHeight={headerHeight}
           marginTop={articleMarginTop}
           showTooltips={showTooltips}
-          showToolTipMarketData={showToolTipMarketData}
           onOpenAuthModal={this.handleOpenAuthModal}
           renderTime={renderTime}
         />
@@ -126,7 +120,6 @@ export default class ArticleLayout extends React.Component {
           headerHeight={headerHeight}
           marginTop={articleMarginTop}
           showTooltips={showTooltips}
-          showToolTipMarketData={showToolTipMarketData}
           onOpenAuthModal={this.handleOpenAuthModal}
           relatedArticlesForCanvas={
             isExperimentInfiniteScroll && article.relatedArticlesCanvas
