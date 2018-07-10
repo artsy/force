@@ -6,6 +6,7 @@ import {
   ModalOptions,
 } from '@artsy/reaction/dist/Components/Authentication/Types'
 import { ModalHeader } from '@artsy/reaction/dist/Components/Modal/ModalHeader'
+import { data as sd } from 'sharify'
 import { handleSubmit } from '../helpers'
 
 interface Props {
@@ -27,7 +28,18 @@ export class AuthStatic extends React.Component<Props> {
             {...this.props}
             type={type as ModalType}
             isStatic
-            handleSubmit={handleSubmit.bind(this, type, options)}
+            handleSubmit={handleSubmit.bind(
+              this,
+              this.props.type,
+              this.props.options
+            )}
+            submitUrls={{
+              login: sd.AP.loginPagePath,
+              signup: sd.AP.signupPagePath,
+              forgot: '/forgot_password',
+              facebook: sd.AP.facebookPath,
+              twitter: sd.AP.twitterPath,
+            }}
           />
         </AuthFormContainer>
       </Wrapper>
