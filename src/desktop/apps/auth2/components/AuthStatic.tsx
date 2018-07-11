@@ -19,7 +19,7 @@ interface Props {
 
 export class AuthStatic extends React.Component<Props> {
   render() {
-    const { type, options, meta: { title } } = this.props
+    const { type, meta: { title } } = this.props
     return (
       <Wrapper>
         <AuthFormContainer>

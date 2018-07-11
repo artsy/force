@@ -58,9 +58,12 @@ $(document).on('click', '.auth-signup-facebook, .gdpr-signup__fb', e => {
 // 3. After landing back on Artsy send the tracking call and expire the cookie
 if (Cookies.get('analytics-signup')) {
   var data = JSON.parse(Cookies.get('analytics-signup'))
-  Cookies.expire('analytics-signup')
 
-  if (sd.CURRENT_USER) {
+  if (data.type === 'signup') {
+    Cookies.expire('analytics-signup')
+  }
+
+  if (sd.CURRENT_USER && data.type === 'signup') {
     trackAccountCreation({
       ...data,
       user_id: sd.CURRENT_USER.id,
