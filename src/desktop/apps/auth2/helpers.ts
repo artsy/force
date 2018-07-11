@@ -68,6 +68,7 @@ export const handleSubmit = (
           context_module: contextModule,
           modal_copy: copy,
           auth_redirect: redirectTo || destination,
+          service: 'email',
         }
         analytics.track(pickBy(properties, identity))
       }
