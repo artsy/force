@@ -16,19 +16,34 @@ interface Props {
 
 export class MobileAuthStatic extends React.Component<Props> {
   render() {
+    const submitUrls = {
+      facebook: '/users/auth/facebook',
+      login: '/log_in',
+      signup: '/sign_up',
+      twitter: '/users/auth/twitter',
+    }
+
+    const authQueryData = {}
+
     return (
       <AuthFormContainer>
         <MobileContainer>
           <FormSwitcher
             {...this.props}
             type={this.props.type as ModalType}
-            isMobile
-            isStatic
             handleSubmit={handleSubmit.bind(
               this,
               this.props.type,
               this.props.options
             )}
+            onFacebookLogin={() =>
+              (window.location.href = submitUrls.facebook + `?${authQueryData}`)
+            }
+            onTwitterLogin={() =>
+              (window.location.href = submitUrls.twitter + `?${authQueryData}`)
+            }
+            isMobile
+            isStatic
           />
         </MobileContainer>
       </AuthFormContainer>
