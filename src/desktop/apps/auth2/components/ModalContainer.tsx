@@ -58,9 +58,13 @@ export const ModalContainer: React.SFC<any> = () => {
           service: data.service,
         }
 
-        Cookies.set('analytics-signup', JSON.stringify(analyticsOptions), {
-          expires: 60 * 60 * 24,
-        })
+        Cookies.set(
+          `analytics-${data.mode}`,
+          JSON.stringify(analyticsOptions),
+          {
+            expires: 60 * 60 * 24,
+          }
+        )
       }}
     />
   )

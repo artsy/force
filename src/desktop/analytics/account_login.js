@@ -37,14 +37,11 @@ analyticsHooks.on('mediator:auth:error', function(message) {
 })
 
 // Track social auth login
-if (Cookies.get('analytics-signup')) {
-  var data = JSON.parse(Cookies.get('analytics-signup'))
+if (Cookies.get('analytics-login')) {
+  var data = JSON.parse(Cookies.get('analytics-login'))
+  Cookies.expire('analytics-login')
 
-  if (data.type === 'login') {
-    Cookies.expire('analytics-signup')
-  }
-
-  if (sd.CURRENT_USER && data.type === 'login') {
+  if (sd.CURRENT_USER) {
     trackLogin({
       ...data,
       user_id: sd.CURRENT_USER.id,
