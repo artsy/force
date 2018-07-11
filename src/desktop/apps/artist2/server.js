@@ -11,9 +11,6 @@ const app = (module.exports = express())
 
 app.get('/artist2/:artistID*', async (req, res, next) => {
   try {
-    if (!req.query.new_artist_page) {
-      return next()
-    }
     const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
