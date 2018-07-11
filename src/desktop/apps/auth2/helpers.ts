@@ -70,7 +70,7 @@ export const handleSubmit = (
           auth_redirect: redirectTo || destination,
           service: 'email',
         }
-        analytics.track(pickBy(properties, identity))
+        analytics.track(action, pickBy(properties, identity))
       }
 
       const defaultRedirect =
