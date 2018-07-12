@@ -32,7 +32,6 @@ export const ModalContainer: React.SFC<any> = () => {
 
   return (
     <ModalManager
-      blurContainerSelector="#main-layout-header, #main-layout-container"
       ref={ref => (manager = ref)}
       submitUrls={{
         login: sd.AP.loginPagePath,
