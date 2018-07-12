@@ -48,7 +48,7 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.3":
+"@artsy/reaction@^1.20.7":
   version "1.20.7"
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.7.tgz#8478b125a98f44a041d39bbcd22436da9108835d"
   dependencies:

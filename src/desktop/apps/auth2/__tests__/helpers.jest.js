@@ -189,7 +189,7 @@ describe('Authentication Helpers', () => {
           accessToken: 'foobar',
         },
       })
-      expect(window.analytics.track).toBeCalledWith({
+      expect(window.analytics.track).toBeCalledWith('Successfully logged in', {
         action: 'Successfully logged in',
         user_id: 123,
         trigger: 'click',
@@ -224,7 +224,7 @@ describe('Authentication Helpers', () => {
           accessToken: 'foobar',
         },
       })
-      expect(window.analytics.track).toBeCalledWith({
+      expect(window.analytics.track).toBeCalledWith('Created account', {
         action: 'Created account',
         user_id: 123,
         trigger: 'timed',
