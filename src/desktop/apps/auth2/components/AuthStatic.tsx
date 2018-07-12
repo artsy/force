@@ -5,30 +5,41 @@ import {
   ModalType,
   ModalOptions,
 } from '@artsy/reaction/dist/Components/Authentication/Types'
-import { DesktopHeader } from '@artsy/reaction/dist/Components/Authentication/Desktop/Components/DesktopHeader'
+import { ModalHeader } from '@artsy/reaction/dist/Components/Modal/ModalHeader'
+import { data as sd } from 'sharify'
 import { handleSubmit } from '../helpers'
 
 interface Props {
   type: string
-  subtitle?: string
+  meta: {
+    title?: string
+  }
   options: ModalOptions
 }
 
 export class AuthStatic extends React.Component<Props> {
   render() {
+    const { type, meta: { title } } = this.props
     return (
       <Wrapper>
         <AuthFormContainer>
-          <DesktopHeader subtitle={this.props.subtitle} />
+          <ModalHeader title={title} hasLogo />
           <FormSwitcher
             {...this.props}
-            type={this.props.type as ModalType}
+            type={type as ModalType}
             isStatic
             handleSubmit={handleSubmit.bind(
               this,
               this.props.type,
               this.props.options
             )}
+            submitUrls={{
+              login: sd.AP.loginPagePath,
+              signup: sd.AP.signupPagePath,
+              forgot: '/forgot_password',
+              facebook: sd.AP.facebookPath,
+              twitter: sd.AP.twitterPath,
+            }}
           />
         </AuthFormContainer>
       </Wrapper>

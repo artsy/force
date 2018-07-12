@@ -7,6 +7,7 @@ import {
   ModalType,
   ModalOptions,
 } from '@artsy/reaction/dist/Components/Authentication/Types'
+import { data as sd } from 'sharify'
 
 interface Props {
   type: string
@@ -29,6 +30,13 @@ export class MobileAuthStatic extends React.Component<Props> {
               this.props.type,
               this.props.options
             )}
+            submitUrls={{
+              login: sd.AP.loginPagePath,
+              forgot: '/forgot_password',
+              signup: sd.AP.signupPagePath,
+              facebook: sd.AP.facebookPath,
+              twitter: sd.AP.twitterPath,
+            }}
           />
         </MobileContainer>
       </AuthFormContainer>

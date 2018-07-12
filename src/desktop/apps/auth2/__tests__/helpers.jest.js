@@ -6,7 +6,11 @@ import $ from 'jquery'
 jest.mock('cookies-js')
 jest.mock('sharify', () => {
   return {
-    data: { AP: { loginPagePath: 'foo' } },
+    data: {
+      AP: {
+        loginPagePath: 'foo',
+      },
+    },
   }
 })
 
@@ -17,7 +21,9 @@ describe('Authentication Helpers', () => {
     })
 
     it('Sets a cookie for afterSignUpAction ', () => {
-      setCookies({ afterSignUpAction: 'an action' })
+      setCookies({
+        afterSignUpAction: 'an action',
+      })
       const cookie = Cookies.set.mock.calls[0]
 
       expect(cookie[0]).toBe('afterSignUpAction')
@@ -25,7 +31,9 @@ describe('Authentication Helpers', () => {
     })
 
     it('Sets a cookie with expiration for destination', () => {
-      setCookies({ destination: '/foo' })
+      setCookies({
+        destination: '/foo',
+      })
       const cookie = Cookies.set.mock.calls[0]
 
       expect(cookie[0]).toBe('destination')
@@ -42,7 +50,9 @@ describe('Authentication Helpers', () => {
 
     beforeEach(() => {
       Backbone.sync = jest.fn()
-      window.analytics = { track: jest.fn() }
+      window.analytics = {
+        track: jest.fn(),
+      }
       global.$ = global.jQuery = $
     })
 
@@ -63,7 +73,10 @@ describe('Authentication Helpers', () => {
       )
 
       Backbone.sync.mock.calls[0][2].success({
-        user: { id: 123, accessToken: 'foobar' },
+        user: {
+          id: 123,
+          accessToken: 'foobar',
+        },
       })
 
       expect(formikBag.setSubmitting.mock.calls[0][0]).toBe(false)
@@ -93,7 +106,10 @@ describe('Authentication Helpers', () => {
 
       Backbone.sync.mock.calls[0][2].success()
       Backbone.sync.mock.calls[1][2].success({
-        user: { id: 123, accessToken: 'foobar' },
+        user: {
+          id: 123,
+          accessToken: 'foobar',
+        },
       })
       expect(formikBag.setSubmitting.mock.calls[0][0]).toBe(false)
       expect(user.get('name')).toBe('foo')
@@ -168,15 +184,19 @@ describe('Authentication Helpers', () => {
       )
 
       Backbone.sync.mock.calls[0][2].success({
-        user: { id: 123, accessToken: 'foobar' },
+        user: {
+          id: 123,
+          accessToken: 'foobar',
+        },
       })
-      expect(window.analytics.track).toBeCalledWith({
+      expect(window.analytics.track).toBeCalledWith('Successfully logged in', {
         action: 'Successfully logged in',
         user_id: 123,
         trigger: 'click',
         context_module: 'Header',
         modal_copy: 'Log in yo',
         auth_redirect: '/',
+        service: 'email',
       })
     })
 
@@ -199,9 +219,12 @@ describe('Authentication Helpers', () => {
 
       Backbone.sync.mock.calls[0][2].success()
       Backbone.sync.mock.calls[1][2].success({
-        user: { id: 123, accessToken: 'foobar' },
+        user: {
+          id: 123,
+          accessToken: 'foobar',
+        },
       })
-      expect(window.analytics.track).toBeCalledWith({
+      expect(window.analytics.track).toBeCalledWith('Created account', {
         action: 'Created account',
         user_id: 123,
         trigger: 'timed',
@@ -210,6 +233,7 @@ describe('Authentication Helpers', () => {
         modal_copy: 'Sign up please',
         auth_redirect: '/articles',
         intent: 'follow artist',
+        service: 'email',
       })
     })
   })

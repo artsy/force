@@ -119,12 +119,7 @@ export async function index(req, res, next) {
         '../../../components/main_layout/templates/react_blank_index.jade'
     }
 
-    const {
-      ARTICLE_TOOLTIPS,
-      CURRENT_USER,
-      IS_MOBILE,
-      IS_TABLET,
-    } = res.locals.sd
+    const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
 
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
@@ -138,10 +133,7 @@ export async function index(req, res, next) {
       onDailyEditorial = await subscribedToEditorial(CURRENT_USER.email)
     }
 
-    // Tooltips a/b/c test
-    const showTooltips =
-      !isMobile && !isTablet && ARTICLE_TOOLTIPS !== 'control'
-    const showToolTipMarketData = showTooltips && ARTICLE_TOOLTIPS === 'market'
+    const showTooltips = !isMobile && !isTablet
     const renderTime = getCurrentUnixTimestamp()
 
     const layout = await renderLayout({
@@ -170,7 +162,6 @@ export async function index(req, res, next) {
         onDailyEditorial,
         renderTime,
         showTooltips,
-        showToolTipMarketData,
         superArticle,
         superSubArticles,
       },

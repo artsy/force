@@ -2,7 +2,6 @@ import { buildServerApp } from 'reaction/Router'
 import { Meta, query } from './components/Meta'
 import { renderLayout } from '@artsy/stitch'
 import { routes } from 'reaction/Apps/Artist/routes'
-import adminOnly from 'desktop/lib/admin_only'
 import express from 'express'
 import metaphysics from 'lib/metaphysics.coffee'
 import React from 'react'
@@ -10,7 +9,7 @@ import styled from 'styled-components'
 
 const app = (module.exports = express())
 
-app.get('/artist2/:artistID*', adminOnly, async (req, res, next) => {
+app.get('/artist2/:artistID*', async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 

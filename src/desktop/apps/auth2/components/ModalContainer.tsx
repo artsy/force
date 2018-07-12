@@ -1,3 +1,4 @@
+import Cookies from 'cookies-js'
 import React from 'react'
 import { ModalManager } from '@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager'
 import { handleSubmit, setCookies } from '../helpers'
@@ -8,6 +9,8 @@ export const ModalContainer: React.SFC<any> = () => {
   let manager: ModalManager | null
 
   mediator.on('open:auth', options => {
+    options.destination = options.destination || location.href
+
     setCookies(options)
 
     if (options && options.mode === 'register') {
@@ -39,6 +42,30 @@ export const ModalContainer: React.SFC<any> = () => {
       }}
       csrf={sd.CSRF_TOKEN}
       handleSubmit={handleSubmit as any}
+      onSocialAuthEvent={data => {
+        const analyticsOptions = {
+          action:
+            data.mode === 'signup'
+              ? 'Created account'
+              : 'Successfully logged in',
+          type: data.mode,
+          context_module: data.contextModule,
+          modal_copy: data.copy,
+          trigger: data.trigger || 'click',
+          trigger_seconds: data.triggerSeconds,
+          intent: data.intent,
+          auth_redirect: data.redirectTo || data.destination,
+          service: data.service,
+        }
+
+        Cookies.set(
+          `analytics-${data.mode}`,
+          JSON.stringify(analyticsOptions),
+          {
+            expires: 60 * 60 * 24,
+          }
+        )
+      }}
     />
   )
 }
