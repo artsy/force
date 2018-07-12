@@ -7,7 +7,6 @@ import {
   ModalType,
   ModalOptions,
 } from '@artsy/reaction/dist/Components/Authentication/Types'
-import { data as sd } from 'sharify'
 
 interface Props {
   type: string
@@ -18,13 +17,14 @@ interface Props {
 export class MobileAuthStatic extends React.Component<Props> {
   render() {
     const submitUrls = {
-      login: sd.AP.loginPagePath,
+      login: '/log_in',
       forgot: '/forgot_password',
-      signup: sd.AP.signupPagePath,
-      facebook: sd.AP.facebookPath,
-      twitter: sd.AP.twitterPath,
+      signup: '/sign_up',
+      facebook: '/users/auth/facebook',
+      twitter: '/users/auth/twitter',
     }
 
+    // TODO: pull analytics data
     const authQueryData = {}
 
     return (
@@ -38,12 +38,16 @@ export class MobileAuthStatic extends React.Component<Props> {
               this.props.type,
               this.props.options
             )}
-            onFacebookLogin={() =>
-              (window.location.href = submitUrls.facebook + `?${authQueryData}`)
-            }
-            onTwitterLogin={() =>
-              (window.location.href = submitUrls.twitter + `?${authQueryData}`)
-            }
+            onFacebookLogin={() => {
+              if (typeof window !== 'undefined') {
+                window.location.href = submitUrls.facebook + `?${authQueryData}`
+              }
+            }}
+            onTwitterLogin={() => {
+              if (typeof window !== 'undefined') {
+                window.location.href = submitUrls.twitter + `?${authQueryData}`
+              }
+            }}
             submitUrls={submitUrls}
             isMobile
             isStatic
