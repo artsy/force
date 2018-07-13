@@ -49,8 +49,8 @@
     underscore.string "^3.2.2"
 
 "@artsy/reaction@^1.20.9":
-  version "1.20.9"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.9.tgz#30849e72bd56380e9614d47808d4af3fec8f598d"
+  version "1.20.10"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.10.tgz#29ba82e5484dfcdf7421f3cf8f17cb7360d31b36"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
