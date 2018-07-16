@@ -185,7 +185,7 @@ describe('Routes', () => {
 
       it('redirects to /reset_password', () => {
         resetPassword(req, res)
-        expect(res.redirect.mock.calls[0][0]).toBe('/reset_password2')
+        expect(res.redirect.mock.calls[0][0]).toBe('/reset_password')
       })
     })
 

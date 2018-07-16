@@ -22,10 +22,7 @@ routes =
 
   '/consign': require('../apps/consign/client/index.js').default
 
-  '/reset_password': require('../apps/auth/client/index.coffee').init
-
-  # TODO: remove 2 after auth2
-  '/reset_password2': require('../apps/auth2/client/reset_password.coffee').init
+  '/reset_password': require('../apps/auth2/client/reset_password.coffee').init
 
   '/signup': require('../apps/auth/client/auth.coffee').init
 

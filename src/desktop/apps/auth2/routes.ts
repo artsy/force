@@ -88,7 +88,7 @@ export const resetPassword = (req, res) => {
     req.session.set_password = req.query.set_password
     req.session.reset_password_redirect_to =
       req.query.reset_password_redirect_to
-    res.redirect('/reset_password2')
+    res.redirect('/reset_password')
   } else {
     res.locals.sd.RESET_PASWORD_REDIRECT_TO =
       req.session.reset_password_redirect_to
