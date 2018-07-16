@@ -1,5 +1,4 @@
-Force
-=====
+# Force
 
 [Force](https://github.com/artsy/force) is the Artsy website, [www.artsy.net](https://www.artsy.net).
 
@@ -7,30 +6,27 @@ Are you an Engineer? Don't know what Artsy is? Check out [this overview](https:/
 
 Want to know more about Artsy tech? Read the [Artsy Engineering Blog](http://artsy.github.io).
 
-Meta
-----
+## Meta
 
-* __State:__ production
-* __Production:__ [https://www.artsy.net](https://www.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
-* __Staging:__ [https://staging.artsy.net](https://staging.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
-* __Github:__ [https://github.com/artsy/force](https://github.com/artsy/force)
-* __CI/Deploys:__ [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
-* __BrowserStack:__ For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
-* __Point People:__ [@kanaabe](https://github.com/kanaabe), [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
+* **State:** production
+* **Production:** [https://www.artsy.net](https://www.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
+* **Staging:** [https://staging.artsy.net](https://staging.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
+* **Github:** [https://github.com/artsy/force](https://github.com/artsy/force)
+* **CI/Deploys:** [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
+* **BrowserStack:** For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
+* **Point People:** [@kanaabe](https://github.com/kanaabe), [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
 
 [![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
 
-History
--------
+## History
 
 Force was [open-sourced in 2014](http://artsy.github.io/blog/2014/09/05/we-open-sourced-our-isomorphic-javascript-website) and was an early successful implementation of [an isomorphic JavaScript application, rendering both the server and client side](http://artsy.github.io/blog/2013/11/30/rendering-on-the-server-and-client-in-node-dot-js). It is developed in the open since August 2016.
 
-Set-Up
-------
+## Set-Up
 
 See [CONTRIBUTING](CONTRIBUTING.md).
 
-````
+```
                   ._,.
             ."..-..pf
             -L   ..#'
@@ -52,9 +48,8 @@ See [CONTRIBUTING](CONTRIBUTING.md).
                               .~......'#'  May the Force be with you.
                               '..,,.,_]`
                               .L..`..``.
-````
+```
 
-License
--------
+## License
 
 MIT License. See [LICENSE](LICENSE).
