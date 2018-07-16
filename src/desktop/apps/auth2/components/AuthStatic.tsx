@@ -18,7 +18,7 @@ interface Props {
 
 export class AuthStatic extends React.Component<Props> {
   render() {
-    const { type, options, meta: { title } } = this.props
+    const { type, meta: { title } } = this.props
     return (
       <Wrapper>
         <AuthFormContainer>
@@ -27,7 +27,18 @@ export class AuthStatic extends React.Component<Props> {
             {...this.props}
             type={type as ModalType}
             isStatic
-            handleSubmit={handleSubmit.bind(this, type, options)}
+            handleSubmit={handleSubmit.bind(
+              this,
+              this.props.type,
+              this.props.options
+            )}
+            submitUrls={{
+              login: '/log_in',
+              forgot: '/forgot_password',
+              signup: '/sign_up',
+              facebook: '/users/auth/facebook',
+              twitter: '/users/auth/twitter',
+            }}
           />
         </AuthFormContainer>
       </Wrapper>
