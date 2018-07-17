@@ -75,6 +75,8 @@ export default class ArticleLayout extends React.Component {
     const isExperimentInfiniteScroll =
       sd.ARTICLE_INFINITE_SCROLL === 'experiment'
 
+    const isInfiniteScroll =
+      !isSuper && !article.seriesArticle && !isExperimentInfiniteScroll
     /**
      * FIXME:
      * Patch missing canvas cover images with display cover images. Needed
@@ -95,7 +97,7 @@ export default class ArticleLayout extends React.Component {
       )
     }
 
-    if (!isSuper && !article.seriesArticle && !isExperimentInfiniteScroll) {
+    if (isInfiniteScroll) {
       const emailSignupUrl = onDailyEditorial
         ? `${sd.APP_URL}/signup/editorial`
         : ''
@@ -104,8 +106,8 @@ export default class ArticleLayout extends React.Component {
           isMobile={isMobile}
           article={article}
           emailSignupUrl={emailSignupUrl}
-          headerHeight={headerHeight}
-          marginTop={articleMarginTop}
+          // headerHeight={headerHeight}
+          // marginTop={articleMarginTop}
           showTooltips={showTooltips}
           onOpenAuthModal={this.handleOpenAuthModal}
           renderTime={renderTime}
@@ -117,14 +119,14 @@ export default class ArticleLayout extends React.Component {
           isMobile={isMobile}
           article={article}
           relatedArticlesForPanel={article.relatedArticlesPanel}
-          headerHeight={headerHeight}
-          marginTop={articleMarginTop}
+          // headerHeight={headerHeight}
+          // marginTop={articleMarginTop}
           showTooltips={showTooltips}
           onOpenAuthModal={this.handleOpenAuthModal}
           relatedArticlesForCanvas={
             isExperimentInfiniteScroll && article.relatedArticlesCanvas
           }
-          display={isExperimentInfiniteScroll && article.display}
+          // display={isExperimentInfiniteScroll && article.display}
         />
       )
     }
