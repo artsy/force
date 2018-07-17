@@ -68,13 +68,6 @@ const config = {
   plugins: [
     // TODO: Add webpack typechecker
     new ProgressBarPlugin(),
-
-    // Remove moment.js localization files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
-    // Don't bundle cheerio with client bundle
-    new webpack.IgnorePlugin(/cheerio/),
-
     new ForkTsCheckerWebpackPlugin({
       formatter: 'codeframe',
       formatterOptions: 'highlightCode',
