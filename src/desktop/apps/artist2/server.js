@@ -14,9 +14,7 @@ app.get('/artist2/:artistID*', async (req, res, next) => {
     const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
-      boot: {
-        breakpoint: res.locals.sd.IS_MOBILE ? 'xs' : false,
-      },
+      initialBreakpoint: res.locals.sd.IS_MOBILE ? 'xs' : false,
       routes,
       url: req.url,
       user,
