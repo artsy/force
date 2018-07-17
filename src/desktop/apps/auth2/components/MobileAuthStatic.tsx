@@ -16,6 +16,7 @@ interface Props {
 
 export class MobileAuthStatic extends React.Component<Props> {
   render() {
+    const { options } = this.props
     const submitUrls = {
       login: '/log_in',
       forgot: '/forgot_password',
@@ -23,9 +24,6 @@ export class MobileAuthStatic extends React.Component<Props> {
       facebook: '/users/auth/facebook',
       twitter: '/users/auth/twitter',
     }
-
-    // TODO: pull analytics data
-    const authQueryData = {}
 
     return (
       <AuthFormContainer>
@@ -38,15 +36,8 @@ export class MobileAuthStatic extends React.Component<Props> {
               this.props.type,
               this.props.options
             )}
-            onFacebookLogin={() => {
-              if (typeof window !== 'undefined') {
-                window.location.href = submitUrls.facebook + `?${authQueryData}`
-              }
-            }}
-            onTwitterLogin={() => {
-              if (typeof window !== 'undefined') {
-                window.location.href = submitUrls.twitter + `?${authQueryData}`
-              }
+            onBackButtonClicked={() => {
+              window.location.href = options.redirectTo || '/'
             }}
             submitUrls={submitUrls}
             isMobile
