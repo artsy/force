@@ -15,7 +15,7 @@ export interface Props {
   article?: ArticleData
   articles: ArticleData[]
   isMobile: boolean
-  renderTime?: number
+  renderTime?: string
 }
 
 interface State {

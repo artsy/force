@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Article } from 'reaction/Components/Publishing/Article'
 import Waypoint from 'react-waypoint'
+import { RelatedArticlesCanvasProps } from 'reaction/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
 
 interface Props {
   article: any
@@ -12,8 +13,8 @@ interface Props {
   nextArticle: any
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
-  relatedArticlesForCanvas?: any
-  renderTime?: any
+  relatedArticlesForCanvas?: RelatedArticlesCanvasProps
+  renderTime?: string
 }
 
 interface State {
