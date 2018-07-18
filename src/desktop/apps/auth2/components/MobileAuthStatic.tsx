@@ -37,7 +37,9 @@ export class MobileAuthStatic extends React.Component<Props> {
               this.props.options
             )}
             onBackButtonClicked={() => {
-              window.location.href = options.redirectTo || '/'
+              if (typeof window !== 'undefined') {
+                window.location.href = options.redirectTo || '/'
+              }
             }}
             submitUrls={submitUrls}
             isMobile
