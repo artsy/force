@@ -73,8 +73,7 @@ export const handleSubmit = (
         analytics.track(action, pickBy(properties, identity))
       }
 
-      const defaultRedirect =
-        type === 'signup' ? '/personalize' : window.location
+      const defaultRedirect = getRedirect(type)
       window.location = modalOptions.redirectTo || (defaultRedirect as any)
     },
     error: (_, res) => {
@@ -109,5 +108,22 @@ export const setCookies = options => {
     Cookies.set('destination', destination, {
       expires: 60 * 60 * 24,
     })
+  }
+}
+
+export const getRedirect = type => {
+  const { location } = window
+  switch (type) {
+    case 'login':
+    case 'forgot':
+      if (['/login', '/forgot'].includes(location.pathname)) {
+        return '/'
+      } else {
+        return location
+      }
+    case 'signup':
+      return '/personalize'
+    default:
+      return window.location
   }
 }

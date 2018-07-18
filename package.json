@@ -303,6 +303,7 @@
     ],
     "roots": [
       "<rootDir>/src"
-    ]
+    ],
+    "testURL": "https://artsy.net"
   }
 }
