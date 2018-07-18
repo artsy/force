@@ -4,12 +4,9 @@ import { flatten, debounce, extend } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import { RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
-import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
-import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
 import { LoadingSpinner } from './InfiniteScrollArticle'
 import { NewsArticle } from './NewsArticle'
 import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
@@ -18,8 +15,7 @@ export interface Props {
   article?: ArticleData
   articles: ArticleData[]
   isMobile: boolean
-  marginTop: string
-  renderTime?: number
+  renderTime?: string
 }
 
 interface State {
@@ -188,6 +184,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         }
         const isTruncated = !this.props.article || i !== 0
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
+        const relatedArticlesCanvas = hasMetaContent && related
+        const displayCanvas = hasMetaContent && displayAd
+        const hasRenderTime =
+          hasMetaContent && ((displayAd && displayAd.renderTime) || renderTime)
 
         return (
           <Fragment key={`article-${i}`}>
@@ -201,29 +201,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               nextArticle={articles[i + 1]}
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
+              relatedArticlesForCanvas={relatedArticlesCanvas as any}
+              display={displayCanvas}
+              renderTime={hasRenderTime}
             />
-            {hasMetaContent &&
-              related && (
-                <Fragment>
-                  <Break />
-                  <RelatedArticlesCanvas
-                    articles={related as any}
-                    isMobile={isMobile}
-                  />
-                  <Break />
-                </Fragment>
-              )}
-            {hasMetaContent &&
-              displayAd && (
-                <Fragment>
-                  <DisplayCanvas
-                    unit={displayAd.canvas}
-                    campaign={displayAd}
-                    renderTime={displayAd.renderTime || renderTime}
-                  />
-                  <Break />
-                </Fragment>
-              )}
           </Fragment>
         )
       })

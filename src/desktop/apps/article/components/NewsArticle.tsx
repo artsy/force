@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { Article } from 'reaction/Components/Publishing/Article'
 import Waypoint from 'react-waypoint'
+import { RelatedArticlesCanvasProps } from 'reaction/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
 
 interface Props {
   article: any
+  display?: any
   isActive: boolean
   isFirstArticle: boolean
   isMobile: boolean
@@ -11,6 +13,8 @@ interface Props {
   nextArticle: any
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
+  relatedArticlesForCanvas?: RelatedArticlesCanvasProps
+  renderTime?: string
 }
 
 interface State {
@@ -96,10 +100,13 @@ export class NewsArticle extends Component<Props, State> {
   render() {
     const {
       article,
+      display,
       isActive,
       isMobile,
       isTruncated,
       isFirstArticle,
+      relatedArticlesForCanvas,
+      renderTime,
     } = this.props
     const { bottomOffset } = this.state
     const marginTop = isMobile ? '100px' : '200px'
@@ -120,6 +127,9 @@ export class NewsArticle extends Component<Props, State> {
               marginTop={isFirstArticle ? marginTop : null}
               onExpand={this.onExpand}
               isHovered={isMobile && isActive}
+              relatedArticlesForCanvas={relatedArticlesForCanvas}
+              display={display}
+              renderTime={renderTime}
             />
           </div>
         </Waypoint>
