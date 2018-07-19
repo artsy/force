@@ -23,11 +23,10 @@
     yarn "^1.3.2"
 
 "@artsy/palette@^2.3.4":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.5.1.tgz#2437354414cff47c37f510b60ac326aef0e15f00"
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.6.3.tgz#dc2efcd875ab1aaba5bf361d9e305451f4c76b9b"
   dependencies:
     react "^16.3.2"
-    react-primitives "^0.5.0"
     styled-system "^2.2.5"
 
 "@artsy/passport@^1.0.11":
@@ -48,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.18":
-  version "1.20.18"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.18.tgz#339c84bbdd8e9d9038283a55c4fef725aae4a18f"
+"@artsy/reaction@^1.20.19":
+  version "1.20.19"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.19.tgz#1e29045b153496be9c1bd865466f5b83f47a9971"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
@@ -9589,8 +9588,8 @@ react-themeable@^1.1.0:
     object-assign "^3.0.0"
 
 react-timer-mixin@^0.13.3:
-  version "0.13.3"
-  resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
 
 react-tracking@^4.2.1:
   version "4.2.1"

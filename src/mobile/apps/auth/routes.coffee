@@ -24,13 +24,18 @@ module.exports.login = (req, res) ->
     redirectTo: redirectUrl(req)
     action: req.query.action
 
-  if locals.action
+  if res.locals.sd.NEW_AUTH_MODAL
+    res.redirect "/login?#{qs.stringify(locals)}"
+  else if locals.action
     res.render 'call_to_action', locals
   else
     res.render 'login', locals
 
 module.exports.forgotPassword = (req, res) ->
-  res.render 'forgot_password'
+  if res.locals.sd.NEW_AUTH_MODAL
+    res.redirect '/forgot'
+  else
+    res.render 'forgot_password'
 
 module.exports.submitForgotPassword = (req, res, next) ->
   new Backbone.Model().save null,
@@ -50,7 +55,10 @@ module.exports.signUp = (req, res) ->
     action: req.query.action
     error: err?.body.error
     prefill: req.query.prefill
-  if locals.action
+  
+  if res.locals.sd.NEW_AUTH_MODAL
+    res.redirect "/signup?#{qs.stringify(locals)}"
+  else if locals.action
     res.render 'call_to_action', locals
   else if req.query.email
     res.render 'signup_email', locals
