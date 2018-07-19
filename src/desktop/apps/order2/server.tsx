@@ -34,12 +34,12 @@ app.get('/order2/:orderID*', async (req, res, next) => {
     // Render layout
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_redesign.jade',
+      layout:
+        '../../components/main_layout/templates/react_minimal_header.jade',
       config: {
         styledComponents: true,
       },
       blocks: {
-        head: () => <div>head</div>,
         body: () => (
           <Container>
             <ServerApp />

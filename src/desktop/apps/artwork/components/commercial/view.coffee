@@ -50,8 +50,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         priceCents: 500000, quantity: 1
       .then (data) ->
         order = data?.createOrder?.result?.order
-        alert("created order with id: #{order.id}")
-        location.assign("/order2/#{order.id}")
+        location.assign("/order2/#{order.id}/shipping")
 
     else
       order = new PendingOrder
