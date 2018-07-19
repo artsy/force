@@ -48,6 +48,11 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         currencyCode: "usd"
         artworkId: @artwork.get('_id')
         priceCents: 500000, quantity: 1
+      .then (data) ->
+        order = data?.createOrder?.result?.order
+        alert("created order with id: #{order.id}")
+        location.assign("/order2/#{order.id}")
+
     else
       order = new PendingOrder
       @form = new Form $form: @$('form'), model: order

@@ -13,7 +13,7 @@ interface CreateOrderInput {
   quantity: number
 }
 
-export const createOrder = (input: CreateOrderInput) => {
+export const createOrder = async (input: CreateOrderInput) => {
   const {
     user,
     partnerId,
@@ -22,6 +22,7 @@ export const createOrder = (input: CreateOrderInput) => {
     priceCents,
     quantity,
   } = input
+
   if (user == null) {
     return
   }
@@ -31,10 +32,5 @@ export const createOrder = (input: CreateOrderInput) => {
     req: { user },
   }
 
-  metaphysics(send)
-    .then(({ createOrder: { result: { order } } }) => {
-      alert(`created order with id: ${order.id}`)
-      location.assign(`/order2/${order.id}/shipping`)
-    })
-    .catch(console.error.bind(console))
+  return metaphysics(send).catch(console.error.bind(console))
 }
