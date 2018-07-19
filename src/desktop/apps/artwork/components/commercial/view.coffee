@@ -41,8 +41,13 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     e.preventDefault()
 
     loggedInUser = CurrentUser.orNull()
-    if loggedInUser && loggedInUser.hasLabFeature('New Buy Now Flow')
-      createOrder(loggedInUser, @artwork.get('partner_id'), "usd", @artwork.get('_id'), 500000, 1)
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      createOrder
+        user: loggedInUser
+        partnerId: @artwork.get('partner_id')
+        currencyCode: "usd"
+        artworkId: @artwork.get('_id')
+        priceCents: 500000, quantity: 1
     else
       order = new PendingOrder
       @form = new Form $form: @$('form'), model: order
