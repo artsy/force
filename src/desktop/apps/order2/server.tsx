@@ -1,8 +1,11 @@
-import { App } from './Components/App'
-import React from 'react'
 import { renderLayout } from '@artsy/stitch'
+import express from 'express'
+import React from 'react'
+import { App } from './Components/App'
 
-export async function index(_req, res, _next) {
+const app = (module.exports = express())
+
+app.get('/order2/:orderID*', async (req, res, next) => {
   try {
     const layout = await renderLayout({
       basePath: __dirname,
@@ -24,4 +27,6 @@ export async function index(_req, res, _next) {
   } catch (error) {
     console.log('(apps/order2) Error: ', error)
   }
-}
+})
+
+export default app

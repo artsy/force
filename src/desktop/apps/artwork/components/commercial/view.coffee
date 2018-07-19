@@ -16,6 +16,7 @@ AuthModalView = require '../../../../../desktop/components/auth_modal/view.coffe
 sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
+{ createOrder } = require '../../../../../lib/components/create_order'
 
 module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
@@ -39,14 +40,18 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   acquire: (e) ->
     e.preventDefault()
 
-    order = new PendingOrder
-    @form = new Form $form: @$('form'), model: order
+    loggedInUser = CurrentUser.orNull()
+    if loggedInUser && loggedInUser.hasLabFeature('New Buy Now Flow')
+      createOrder(loggedInUser, @artwork.get('partner_id'), "usd", @artwork.get('_id'), 500000, 1)
+    else
+      order = new PendingOrder
+      @form = new Form $form: @$('form'), model: order
 
-    @form.submit e, success: ->
-      location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
+      @form.submit e, success: ->
+        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
 
-    analyticsHooks
-      .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
+      analyticsHooks
+        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
 
   purchase: (e) ->
     e.preventDefault()
