@@ -84,9 +84,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
           .html confirmation()
 
   inquire: (e) =>
-    if e
-      return @contactGallery(e) if @artwork.is_purchasable
-      e.preventDefault()
+    e.preventDefault() if e
 
     @user = User.instantiate()
 

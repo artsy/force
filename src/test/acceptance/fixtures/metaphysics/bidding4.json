@@ -192,7 +192,6 @@
       },
       "is_acquireable": false,
       "is_inquireable": true,
-      "is_purchasable": false,
       "availability": "for sale",
       "contact_message": "Hello, I am interested in placing a bid on this work. Please send me more information.",
       "is_price_range": false,

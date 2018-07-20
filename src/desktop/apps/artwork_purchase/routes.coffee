@@ -13,7 +13,6 @@ Fair = require '../../models/fair.coffee'
       artwork(id: $id) {
         id
         _id
-        is_purchasable
         title
         date
         sale_message
@@ -42,16 +41,7 @@ Fair = require '../../models/fair.coffee'
       cookie = req.cookies['purchase-inquiry']
       cachedData = JSON.parse cookie if cookie
       purchase = cachedData if cachedData?.artwork_id is artwork.id
-      return res.redirect "/artwork/#{req.params.id}" unless artwork.is_purchasable
-      fair = new Fair artwork.fair if artwork.fair
-      res.locals.sd.ARTWORK = artwork
-      res.render 'index', {
-        artwork,
-        fair,
-        purchase,
-        user: req.user
-      }
-
+      res.redirect "/artwork/#{req.params.id}"
     .catch next
 
 @thankYou = (req, res, next) ->
@@ -60,7 +50,6 @@ Fair = require '../../models/fair.coffee'
       artwork(id: $id) {
         id
         _id
-        is_purchasable
         href
         partner{
           name
@@ -76,7 +65,5 @@ Fair = require '../../models/fair.coffee'
   send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->
-      return res.redirect "/artwork/#{req.params.id}" unless artwork.is_purchasable
-      res.locals.sd.ARTWORK = artwork
-      res.render 'success', { artwork }
+      res.redirect "/artwork/#{req.params.id}"
     .catch next

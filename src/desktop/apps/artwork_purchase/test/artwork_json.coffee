@@ -1,6 +1,5 @@
 module.exports = {
   "id": "foo-bar-id",
-  "is_purchasable": true,
   "title": "Foo Bar",
   "date": "2011",
   "sale_message": "€9,500",
