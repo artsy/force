@@ -10,7 +10,7 @@ const app = (module.exports = express())
 
 app.get('/order2/:orderID*', async (req, res, next) => {
   try {
-    const user = (req as any).user && (req as any).user.toJSON()
+    const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
       initialBreakpoint: res.locals.sd.IS_MOBILE ? 'xs' : false,
@@ -20,7 +20,7 @@ app.get('/order2/:orderID*', async (req, res, next) => {
     })
 
     if (redirect) {
-      res.redirect(302, (redirect as any).url)
+      res.redirect(302, redirect.url)
       return
     }
 
@@ -39,7 +39,6 @@ app.get('/order2/:orderID*', async (req, res, next) => {
       config: {
         styledComponents: true,
       },
-      //@ts-ignore
       blocks: {
         body: () => (
           <Container>
@@ -53,7 +52,7 @@ app.get('/order2/:orderID*', async (req, res, next) => {
       },
     })
 
-    res.status(status as any).send(layout)
+    res.status(status).send(layout)
   } catch (error) {
     console.log('(apps/order2) Error: ', error)
     next(error)
