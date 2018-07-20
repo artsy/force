@@ -40,6 +40,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   acquire: (e) ->
     e.preventDefault()
 
+    # Show the new buy now flow if you have the lab feature enabled
     loggedInUser = CurrentUser.orNull()
     if loggedInUser?.hasLabFeature('New Buy Now Flow')
       createOrder

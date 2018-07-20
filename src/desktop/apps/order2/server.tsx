@@ -39,6 +39,7 @@ app.get('/order2/:orderID*', async (req, res, next) => {
       config: {
         styledComponents: true,
       },
+      //@ts-ignore
       blocks: {
         body: () => (
           <Container>

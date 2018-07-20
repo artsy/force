@@ -1,4 +1,6 @@
+//@ts-ignore
 import _metaphysics from 'lib/metaphysics.coffee'
+
 import query from './mutation'
 
 // FIXME: Rewire
