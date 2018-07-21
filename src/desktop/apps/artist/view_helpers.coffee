@@ -11,12 +11,6 @@ module.exports =
   capitalize: capitalize
   showHelpers: showHelpers
 
-  # TODO:: ARTIST_MARKET_DATA_TEST remove after test closes
-
-  hasCarousel: (testGroup) -> testGroup is 'control'
-  hasMarketData: (testGroup) -> testGroup is 'market_data_no_carousel'
-  hasOverview: (testGroup) -> true
-
   nShowsByDate: (shows, n) ->
     _.sortBy(_.take(shows, n), 'start_at').reverse()
 
