@@ -9,8 +9,7 @@ append locals
 
 block body
   - carousel = artist.carousel
-  //- TODO: ARTIST_MARKET_DATA_TEST remove after test closes (viewHelpers.hasCarousel)
-  - hasCarousel = carousel && carousel.images.length >= 4 && viewHelpers.hasCarousel(testGroup)
+  - hasCarousel = carousel && carousel.images.length >= 4
 
   #artist-page(
     class=(hasCarousel ? 'has-carousel' : 'has-no-carousel')
