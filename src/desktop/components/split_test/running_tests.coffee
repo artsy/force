@@ -25,16 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_market_data_test:
-    key: 'artist_market_data_test'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'market_data_no_carousel'
-    ]
-    control_group: 'control'
-    edge: 'market_data_no_carousel'
-
   article_infinite_scroll:
     key: 'article_infinite_scroll'
     outcomes:

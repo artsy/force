@@ -5,7 +5,6 @@ module.exports = """
       id
       href
       name
-      initials
       gender
       alternate_names
       nationality
@@ -45,7 +44,6 @@ module.exports = """
     image {
       versions
       large: url(version:"large")
-      square: url(version:"square")
     }
   }
 

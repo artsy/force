@@ -23,11 +23,10 @@
     yarn "^1.3.2"
 
 "@artsy/palette@^2.3.4":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.5.1.tgz#2437354414cff47c37f510b60ac326aef0e15f00"
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.6.3.tgz#dc2efcd875ab1aaba5bf361d9e305451f4c76b9b"
   dependencies:
     react "^16.3.2"
-    react-primitives "^0.5.0"
     styled-system "^2.2.5"
 
 "@artsy/passport@^1.0.11":
@@ -48,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.18":
-  version "1.20.18"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.18.tgz#339c84bbdd8e9d9038283a55c4fef725aae4a18f"
+"@artsy/reaction@^1.20.22":
+  version "1.20.22"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.22.tgz#70d3a0e07431f427fdd957dfe356cf071fdccc6b"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
@@ -1061,6 +1060,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -4490,7 +4490,11 @@ extend@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.0.tgz#5a474353b9f3353ddd8176dfd37b91c83a46f1d4"
 
-extend@^3.0.0, extend@~3.0.0, extend@~3.0.1:
+extend@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+
+extend@~3.0.0, extend@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
@@ -7664,11 +7668,21 @@ mime-db@~1.27.0:
   version "1.27.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.27.0.tgz#820f572296bbd20ec25ed55e5b5de869e5436eb1"
 
-mime-types@^2.1.10, mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.16, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
+mime-db@~1.35.0:
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
+
+mime-types@^2.1.10, mime-types@^2.1.11, mime-types@~2.1.16, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
   version "2.1.18"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
   dependencies:
     mime-db "~1.33.0"
+
+mime-types@^2.1.12:
+  version "2.1.19"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
+  dependencies:
+    mime-db "~1.35.0"
 
 mime-types@^2.1.3, mime-types@~2.1.11, mime-types@~2.1.15:
   version "2.1.15"
@@ -8915,8 +8929,8 @@ propagate@0.4.0:
   resolved "https://registry.yarnpkg.com/propagate/-/propagate-0.4.0.tgz#f3fcca0a6fe06736a7ba572966069617c130b481"
 
 property-expr@^1.2.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-1.3.2.tgz#2df60082c243e79118924ecb8f7ae7183b4fc43e"
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-1.5.0.tgz#05cda8be960720a8b3dc337c77a2a914c0e84c5f"
 
 proxy-addr@~1.1.4:
   version "1.1.4"
@@ -9589,8 +9603,8 @@ react-themeable@^1.1.0:
     object-assign "^3.0.0"
 
 react-timer-mixin@^0.13.3:
-  version "0.13.3"
-  resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
 
 react-tracking@^4.2.1:
   version "4.2.1"
@@ -11094,7 +11108,7 @@ styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
+"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
