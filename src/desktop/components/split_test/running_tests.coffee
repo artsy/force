@@ -32,7 +32,7 @@ module.exports = {
 
   # Used for cookie-ing and gradual roll out.
   # We'll start at 1 and work our way up, users in groups
-  # less than that amount will receive the new artist page.
+  # less than that number will receive the new artist page.
   new_artist_page:
     key: 'new_artist_page',
     outcomes: [
