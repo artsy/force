@@ -11,7 +11,7 @@ describe '#forgotPassword', ->
       render: @render = sinon.stub(),
       locals:
         sd:
-          NEW_AUTH_MODAL: false
+          MOBILE_NEW_AUTH_MODAL: false
     routes.forgotPassword {}, @res
     @render.args[0][0].should.equal 'forgot_password'
 
@@ -23,7 +23,7 @@ describe '#submitForgotPassword', ->
       render: @render = sinon.stub(),
       locals:
         sd:
-          NEW_AUTH_MODAL: false
+          MOBILE_NEW_AUTH_MODAL: false
 
   afterEach ->
     Backbone.sync.restore()
@@ -56,7 +56,7 @@ describe '#resetPassword', ->
       render: @render = sinon.stub(),
       locals:
         sd:
-          NEW_AUTH_MODAL: false
+          MOBILE_NEW_AUTH_MODAL: false
     routes.resetPassword {}, @res
     @render.args[0][0].should.equal 'reset_password'
 
@@ -74,7 +74,7 @@ describe '#login', ->
       render: @render = sinon.stub(),
       locals:
         sd:
-          NEW_AUTH_MODAL: false
+          MOBILE_NEW_AUTH_MODAL: false
     
   it 'renders the login page', ->
     routes.login @req, @res
@@ -122,7 +122,7 @@ describe '#login', ->
       redirect: @redirect = sinon.stub()
       locals:
         sd:
-          NEW_AUTH_MODAL: true
+          MOBILE_NEW_AUTH_MODAL: true
 
     routes.login req, res
     @redirect.args[0][0].should.equal '/login?redirectTo=%2F&action='
@@ -134,7 +134,7 @@ describe '#signUp', ->
       render: @render = sinon.stub()
       locals:
         sd:
-          NEW_AUTH_MODAL: false
+          MOBILE_NEW_AUTH_MODAL: false
     sinon.stub Backbone, 'sync'
 
   afterEach ->
@@ -184,7 +184,7 @@ describe '#signUp', ->
       redirect: @redirect = sinon.stub()
       locals:
         sd:
-          NEW_AUTH_MODAL: true
+          MOBILE_NEW_AUTH_MODAL: true
 
     routes.signUp req, res
     @redirect.args[0][0].should.equal '/signup?redirectTo=%2F&action=&error=&prefill='
