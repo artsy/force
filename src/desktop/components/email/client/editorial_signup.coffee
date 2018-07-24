@@ -61,7 +61,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     else
       mediator.trigger('open:auth', {
         mode: 'signup'
-        intent: 'signup'
+        intent: 'Viewed editorial'
         signupIntent: 'signup'
         trigger: 'timed'
         triggerSeconds: 2

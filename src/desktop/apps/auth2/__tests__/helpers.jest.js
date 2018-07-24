@@ -1,5 +1,5 @@
 import Cookies from 'cookies-js'
-import { handleSubmit, setCookies } from '../helpers'
+import { handleSubmit, setCookies, getRedirect } from '../helpers'
 import Backbone from 'backbone'
 import $ from 'jquery'
 
@@ -235,6 +235,30 @@ describe('Authentication Helpers', () => {
         intent: 'follow artist',
         service: 'email',
       })
+    })
+  })
+  describe('#getRedirect', () => {
+    it('Returns home if type is login and path is login', () => {
+      window.history.pushState({}, '', '/login')
+      const redirectTo = getRedirect('login')
+      expect(redirectTo).toBe('/')
+    })
+
+    it('Returns home if type is forgot', () => {
+      window.history.pushState({}, '', '/forgot')
+      const redirectTo = getRedirect('forgot')
+      expect(redirectTo).toBe('/')
+    })
+
+    it('Returns /personalize if type is signup', () => {
+      const redirectTo = getRedirect('signup')
+      expect(redirectTo).toBe('/personalize')
+    })
+
+    it('Returns window.location by default', () => {
+      window.history.pushState({}, '', '/magazine')
+      const redirectTo = getRedirect('login')
+      expect(redirectTo).toBe(window.location)
     })
   })
 })
