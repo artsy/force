@@ -39,10 +39,10 @@ app.get('/artist2/:artistID*', async (req, res, next) => {
     }
 
     const { artist } = await metaphysics(send).then(data => data)
-
-    const isExternalReferer =
-      res.locals.sd.REFERRER &&
-      !res.locals.sd.REFERRER.includes(res.locals.sd.APP_URL)
+    const { REFERRER } = res.locals.sd
+    const isExternalReferer = !(
+      REFERRER && REFERRER.includes(res.locals.sd.APP_URL)
+    )
 
     res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !user && isExternalReferer
     res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = req.params.artistID
