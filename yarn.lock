@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.23":
-  version "1.20.23"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.23.tgz#d9ab8856a30e86ee8cae37cdb668d8574608ab57"
+"@artsy/reaction@^1.20.28":
+  version "1.20.28"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.28.tgz#82f8a22304b6ccdcd916ac9a54e55f66a8466f42"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
@@ -64,6 +64,7 @@
     lodash "^4.17.4"
     moment-timezone "^0.5.13"
     numeral "^2.0.4"
+    openseadragon "^2.3.1"
     prop-types "^15.5.10"
     qs "^6.5.0"
     react-css-transition-replace "^3.0.2"
@@ -80,7 +81,7 @@
     react-sizeme "^2.4.4"
     react-slick "^0.21.0"
     react-styled-flexboxgrid "^2.2.0"
-    react-tracking "^4.2.1"
+    react-tracking "^5.3.0"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
@@ -3454,6 +3455,10 @@ deep-is@~0.1.3:
 deep-object-diff@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/deep-object-diff/-/deep-object-diff-1.1.0.tgz#d6fabf476c2ed1751fc94d5ca693d2ed8c18bc5a"
+
+deepmerge@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.1.1.tgz#e862b4e45ea0555072bf51e7fd0d9845170ae768"
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -8329,6 +8334,10 @@ openseadragon@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.2.1.tgz#5f8ef0fdb7e0aa79e0fb0d927701466cf816bb2f"
 
+openseadragon@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.0.tgz#d0b28b37a953602c82432a0dbd8a3779dadf756f"
+
 optimist@0.2:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.2.8.tgz#e981ab7e268b457948593b55674c099a815cac31"
@@ -9606,11 +9615,12 @@ react-timer-mixin@^0.13.3:
   version "0.13.4"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
 
-react-tracking@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-4.2.1.tgz#c34619ddd205609ea46281a6c8c8e1243e910e81"
+react-tracking@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.3.0.tgz#6107db448084745bc50604d1f3f1f582c0073def"
   dependencies:
-    lodash.merge "^4.6.0"
+    deepmerge "^2.1.0"
+    hoist-non-react-statics "^2.5.0"
 
 react-transition-group@^2.2.0, react-transition-group@^2.3.0:
   version "2.4.0"
