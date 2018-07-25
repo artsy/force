@@ -139,26 +139,36 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
-    const { showTooltips, onOpenAuthModal } = this.props
+    const {
+      article: { slug },
+      emailSignupUrl,
+      headerHeight,
+      isMobile,
+      marginTop,
+      showTooltips,
+      onOpenAuthModal,
+    } = this.props
     const { renderTimes } = this.state
 
     return _.flatten(
       this.state.articles.map((article, i) => {
+        const isFirstInScroll = i === 0
         return (
           <div key={`article-${i}`}>
             <Article
               article={article}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
-              isTruncated={i !== 0}
-              isMobile={this.props.isMobile}
-              emailSignupUrl={this.props.emailSignupUrl}
+              isTruncated={!isFirstInScroll}
+              isMobile={isMobile}
+              emailSignupUrl={emailSignupUrl}
               display={article.display}
-              headerHeight={i === 0 ? this.props.headerHeight : null}
-              marginTop={i === 0 ? this.props.marginTop : null}
+              headerHeight={isFirstInScroll ? headerHeight : null}
+              marginTop={isFirstInScroll ? marginTop : null}
               showTooltips={showTooltips}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
+              infiniteScrollEntrySlug={slug}
             />
             <Break />
             <Waypoint
