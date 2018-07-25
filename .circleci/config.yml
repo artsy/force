@@ -49,7 +49,7 @@ jobs:
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Build Assets
-          command: hokusai dev run 'yarn publish_assets'
+          command: hokusai dev run 'DEPLOY_ENV=staging yarn publish_assets'
       - run:
           name: Asset Manifest
           command: hokusai staging env set ASSET_MANIFEST=$(cat manifest.json)
@@ -67,7 +67,7 @@ jobs:
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Build Assets
-          command: hokusai dev run 'yarn publish_assets'
+          command: hokusai dev run 'DEPLOY_ENV=production yarn publish_assets'
       - run:
           name: Asset Manifest
           command: hokusai production env set ASSET_MANIFEST=$(cat manifest.json)
