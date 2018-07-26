@@ -44,6 +44,7 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
+      - setup_remote_docker
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
@@ -62,6 +63,7 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
+      - setup_remote_docker
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
