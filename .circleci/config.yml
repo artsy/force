@@ -108,25 +108,13 @@ workflows:
               only: master
           requires:
             - push
-            - deploy_heroku_staging
+            - test
+            - acceptance
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
             - push
-            - deploy_heroku_production
-      - deploy_heroku_staging:
-          filters:
-            branches:
-              only: master
-          requires:
-            - test
-            - acceptance
-      - deploy_heroku_production:
-          filters:
-            branches:
-              only: release
-          requires:
             - test
             - acceptance
