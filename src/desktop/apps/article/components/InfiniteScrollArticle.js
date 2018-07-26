@@ -140,10 +140,10 @@ export default class InfiniteScrollArticle extends React.Component {
 
   renderContent = () => {
     const { showTooltips, onOpenAuthModal } = this.props
-    const { renderTimes } = this.state
+    const { renderTimes, articles } = this.state
 
     return _.flatten(
-      this.state.articles.map((article, i) => {
+      articles.map((article, i) => {
         return (
           <div key={`article-${i}`}>
             <Article
@@ -152,10 +152,7 @@ export default class InfiniteScrollArticle extends React.Component {
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
               isMobile={this.props.isMobile}
-              emailSignupUrl={this.props.emailSignupUrl}
               display={article.display}
-              headerHeight={i === 0 ? this.props.headerHeight : null}
-              marginTop={i === 0 ? this.props.marginTop : null}
               showTooltips={showTooltips}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}

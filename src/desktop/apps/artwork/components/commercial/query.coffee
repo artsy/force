@@ -16,6 +16,7 @@ module.exports = """
       is_consignable
     }
     partner {
+      _id
       id
       name
       type

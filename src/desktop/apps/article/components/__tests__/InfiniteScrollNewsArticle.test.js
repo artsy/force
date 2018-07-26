@@ -43,10 +43,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   let rewire = require('rewire')('../InfiniteScrollNewsArticle.tsx')
   let { InfiniteScrollNewsArticle } = rewire
-  const { RelatedArticlesCanvas } = require('reaction/Components/Publishing')
-  const {
-    DisplayCanvas,
-  } = require('reaction/Components/Publishing/Display/Canvas')
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
@@ -134,7 +130,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     await rendered.instance().fetchNextArticles()
     rendered.update()
-    rendered.find(DisplayCanvas).length.should.equal(1)
     rendered.html().should.containEql('Sponsored by BMW')
   })
 
@@ -160,7 +155,6 @@ describe('<InfiniteScrollNewsArticle />', () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     await rendered.instance().fetchNextArticles()
     rendered.update()
-    rendered.find(RelatedArticlesCanvas).length.should.equal(1)
     rendered.html().should.containEql('More from Artsy Editorial')
   })
 

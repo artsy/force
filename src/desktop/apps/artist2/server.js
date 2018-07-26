@@ -39,15 +39,17 @@ app.get('/artist2/:artistID*', async (req, res, next) => {
     }
 
     const { artist } = await metaphysics(send).then(data => data)
+    const { REFERRER } = res.locals.sd
+    const isExternalReferer = !(
+      REFERRER && REFERRER.includes(res.locals.sd.APP_URL)
+    )
 
-    const isExternalReferer =
-      res.locals.sd.REFERRER &&
-      !res.locals.sd.REFERRER.includes(res.locals.sd.APP_URL)
-
-    // Since this page is admin-only now, need to swap this in to test.
-    // res.locals.sd.ARTIST_PAGE_CTA_ENABLED = true
     res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !user && isExternalReferer
     res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = req.params.artistID
+
+    // While we are rolling out the new page, override the default (`artist`)
+    // type inferred from the URL, for tracking and comparison purposes.
+    res.locals.sd.PAGE_TYPE = 'new-artist'
 
     // Render layout
     const layout = await renderLayout({

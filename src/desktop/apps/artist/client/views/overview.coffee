@@ -8,8 +8,6 @@ RelatedGenesView = require '../../../../components/related_links/types/artist_ge
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtworkFilterView = require '../../../../components/artwork_filter_2/view.coffee'
-FollowButton = require '../../../../components/follow_button/view.coffee'
-splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
@@ -22,8 +20,7 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  # TODO: ARTIST_MARKET_DATA_TEST remove after test closes(@testGroup)
-  initialize: ({ @user, @statuses, @testGroup }) ->
+  initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
 
   fetchRelated: ->
@@ -133,7 +130,6 @@ module.exports = class OverviewView extends Backbone.View
       artist: @model.toJSON()
       viewHelpers: viewHelpers
       statuses: @statuses
-      testGroup: @testGroup
 
     _.defer => @postRender()
     this

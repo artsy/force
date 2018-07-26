@@ -1,14 +1,17 @@
 import moment from 'moment'
+import styled from 'styled-components'
 import React, { Component, Fragment } from 'react'
 import { flatten, debounce, extend } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-// import { RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
-import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
+import {
+  ArticleData,
+  RelatedArticleData,
+  DisplayData,
+} from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
-// import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 import { LoadingSpinner } from './InfiniteScrollArticle'
 import { NewsArticle } from './NewsArticle'
 import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
@@ -17,7 +20,6 @@ export interface Props {
   article?: ArticleData
   articles: ArticleData[]
   isMobile: boolean
-  marginTop: string
   renderTime?: number
 }
 
@@ -25,14 +27,14 @@ interface State {
   activeArticle: string
   articles: ArticleData[]
   date: string
-  display: any[]
+  display: DisplayData[]
   error: boolean
   following: object[]
   isEnabled: boolean
   isLoading: boolean
   offset: number
   omit: string
-  relatedArticles: object[]
+  relatedArticles: RelatedArticleData[]
 }
 
 // FIXME: Rewire
@@ -187,6 +189,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         }
         const isTruncated = !this.props.article || i !== 0
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
+        const relatedArticlesCanvas = hasMetaContent && related
+        const displayCanvas = hasMetaContent && displayAd
+        const hasRenderTime =
+          hasMetaContent && ((displayAd && displayAd.renderTime) || renderTime)
 
         return (
           <Fragment key={`article-${i}`}>
@@ -195,31 +201,14 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               isMobile={isMobile}
               article={article}
               isTruncated={isTruncated}
-              isFirstArticle={i === 0}
               onDateChange={date => this.onDateChange(date)}
-              nextArticle={articles[i + 1]}
+              nextArticle={articles[i + 1] as any}
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
+              relatedArticlesForCanvas={relatedArticlesCanvas as any}
+              display={displayCanvas as any}
+              renderTime={hasRenderTime as any}
             />
-            {/* {hasMetaContent &&
-              related && (
-                <Fragment>
-                  <RelatedArticlesCanvas
-                    articles={related as any}
-                    isMobile={isMobile}
-                  />
-                </Fragment>
-              )}
-            {hasMetaContent &&
-              displayAd && (
-                <Fragment>
-                  <DisplayCanvas
-                    unit={displayAd.canvas}
-                    campaign={displayAd}
-                    renderTime={displayAd.renderTime || renderTime}
-                  />
-                </Fragment>
-              )} */}
           </Fragment>
         )
       })
@@ -227,14 +216,19 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   render() {
+    const { isMobile } = this.props
     const { date } = this.state
 
     return (
-      <div id="article-root">
+      <NewsContainer isMobile={isMobile}>
         <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}
-      </div>
+      </NewsContainer>
     )
   }
 }
+
+const NewsContainer = styled.div.attrs<{ isMobile: boolean }>({})`
+  margin-top: ${props => (props.isMobile ? '100' : '200')}px;
+`
