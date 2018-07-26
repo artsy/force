@@ -150,10 +150,12 @@ workflows:
             branches:
               only: master
           requires:
+            - push
             - publish_staging_assets
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
+            - push
             - publish_release_assets
