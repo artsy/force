@@ -15,8 +15,6 @@ import mediator from 'desktop/lib/mediator.coffee'
 let SuperArticleView = _SuperArticleView
 let EditorialSignupView = _EditorialSignupView
 
-const NAVHEIGHT = '53px'
-
 export default class ArticleLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -28,7 +26,6 @@ export default class ArticleLayout extends React.Component {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
-    onDailyEditorial: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
     renderTime: PropTypes.number,
@@ -62,16 +59,7 @@ export default class ArticleLayout extends React.Component {
 
   renderArticle = () => {
     let { article } = this.props
-    const {
-      isMobile,
-      isSuper,
-      onDailyEditorial,
-      renderTime,
-      showTooltips,
-    } = this.props
-    const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
-    const navHeight = isSuper ? '0px' : NAVHEIGHT
-    const headerHeight = `calc(100vh - ${navHeight})`
+    const { isMobile, isSuper, renderTime, showTooltips } = this.props
     const isExperimentInfiniteScroll =
       sd.ARTICLE_INFINITE_SCROLL === 'experiment'
 
@@ -98,16 +86,10 @@ export default class ArticleLayout extends React.Component {
     }
 
     if (isInfiniteScroll) {
-      const emailSignupUrl = onDailyEditorial
-        ? `${sd.APP_URL}/signup/editorial`
-        : ''
       return (
         <InfiniteScrollArticle
           isMobile={isMobile}
           article={article}
-          emailSignupUrl={emailSignupUrl}
-          // headerHeight={headerHeight}
-          // marginTop={articleMarginTop}
           showTooltips={showTooltips}
           onOpenAuthModal={this.handleOpenAuthModal}
           renderTime={renderTime}
@@ -118,15 +100,13 @@ export default class ArticleLayout extends React.Component {
         <Article
           isMobile={isMobile}
           article={article}
+          display={isExperimentInfiniteScroll && article.display}
           relatedArticlesForPanel={article.relatedArticlesPanel}
-          // headerHeight={headerHeight}
-          // marginTop={articleMarginTop}
-          showTooltips={showTooltips}
-          onOpenAuthModal={this.handleOpenAuthModal}
           relatedArticlesForCanvas={
             isExperimentInfiniteScroll && article.relatedArticlesCanvas
           }
-          // display={isExperimentInfiniteScroll && article.display}
+          onOpenAuthModal={this.handleOpenAuthModal}
+          showTooltips={showTooltips}
         />
       )
     }

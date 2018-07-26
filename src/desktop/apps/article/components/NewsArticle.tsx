@@ -99,10 +99,10 @@ export class NewsArticle extends Component<Props, State> {
       isActive,
       isMobile,
       isTruncated,
-      isFirstArticle,
+      // isFirstArticle,
     } = this.props
     const { bottomOffset } = this.state
-    const marginTop = isMobile ? '100px' : '200px'
+    // const marginTop = isMobile ? '100px' : '200px'
 
     return (
       <Fragment>
@@ -117,7 +117,6 @@ export class NewsArticle extends Component<Props, State> {
               article={article}
               isTruncated={isTruncated}
               isMobile={isMobile}
-              marginTop={isFirstArticle ? marginTop : null}
               onExpand={this.onExpand}
               isHovered={isMobile && isActive}
             />

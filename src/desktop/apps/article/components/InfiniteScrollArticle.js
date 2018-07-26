@@ -160,7 +160,6 @@ export default class InfiniteScrollArticle extends React.Component {
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
             />
-            <Break />
             <Waypoint
               onEnter={waypointData => this.onEnter(article, waypointData)}
               onLeave={waypointData => this.onLeave(i, waypointData)}
@@ -184,9 +183,4 @@ export default class InfiniteScrollArticle extends React.Component {
 export const LoadingSpinner = styled.div`
   position: relative;
   padding: 100px;
-`
-export const Break = styled.div`
-  border-top: 1px solid ${colors.grayRegular};
-  width: 100%;
-  margin-top: 80px;
 `

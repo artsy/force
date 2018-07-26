@@ -4,12 +4,11 @@ import { flatten, debounce, extend } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import { RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
+// import { RelatedArticlesCanvas } from '@artsy/reaction/dist/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
 import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
-import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
-import { Break } from 'desktop/apps/article/components/InfiniteScrollArticle'
+// import { DisplayCanvas } from '@artsy/reaction/dist/Components/Publishing/Display/Canvas'
 import { LoadingSpinner } from './InfiniteScrollArticle'
 import { NewsArticle } from './NewsArticle'
 import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
@@ -202,15 +201,13 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
             />
-            {hasMetaContent &&
+            {/* {hasMetaContent &&
               related && (
                 <Fragment>
-                  <Break />
                   <RelatedArticlesCanvas
                     articles={related as any}
                     isMobile={isMobile}
                   />
-                  <Break />
                 </Fragment>
               )}
             {hasMetaContent &&
@@ -221,9 +218,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
                     campaign={displayAd}
                     renderTime={displayAd.renderTime || renderTime}
                   />
-                  <Break />
                 </Fragment>
-              )}
+              )} */}
           </Fragment>
         )
       })
