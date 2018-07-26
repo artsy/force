@@ -51,87 +51,66 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  handleOpenAuthModal = (mode, options) =>
+  handleOpenAuthModal = (mode, options) => {
     mediator.trigger('open:auth', {
       mode,
       ...options,
     })
-
-  renderArticle = () => {
-    let { article } = this.props
-    const { isMobile, isSuper, renderTime, showTooltips } = this.props
-    const isExperimentInfiniteScroll =
-      sd.ARTICLE_INFINITE_SCROLL === 'experiment'
-
-    const isInfiniteScroll =
-      !isSuper && !article.seriesArticle && !isExperimentInfiniteScroll
-    /**
-     * FIXME:
-     * Patch missing canvas cover images with display cover images. Needed
-     * until support is added in Positron.
-     */
-    const cover_image_url = get(article, 'display.panel.cover_image_url', false)
-
-    if (cover_image_url) {
-      article = updeep(
-        {
-          display: {
-            canvas: {
-              cover_image_url,
-            },
-          },
-        },
-        article
-      )
-    }
-
-    if (isInfiniteScroll) {
-      return (
-        <InfiniteScrollArticle
-          isMobile={isMobile}
-          article={article}
-          showTooltips={showTooltips}
-          onOpenAuthModal={this.handleOpenAuthModal}
-          renderTime={renderTime}
-        />
-      )
-    } else {
-      return (
-        <Article
-          isMobile={isMobile}
-          article={article}
-          display={isExperimentInfiniteScroll && article.display}
-          relatedArticlesForPanel={article.relatedArticlesPanel}
-          relatedArticlesForCanvas={
-            isExperimentInfiniteScroll && article.relatedArticlesCanvas
-          }
-          onOpenAuthModal={this.handleOpenAuthModal}
-          showTooltips={showTooltips}
-        />
-      )
-    }
   }
 
   render() {
     const {
+      article,
+      isSuper,
+      isMobile,
+      renderTime,
+      showTooltips,
       templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
 
+    const isExperimentInfiniteScroll =
+      sd.ARTICLE_INFINITE_SCROLL === 'experiment'
+    const hasNav = isSuper || article.seriesArticle
+
+    const notScrolling = isExperimentInfiniteScroll || hasNav
     return (
       <div>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: SuperArticleHeader,
-          }}
-        />
+        {isSuper && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: SuperArticleHeader,
+            }}
+          />
+        )}
 
-        {this.renderArticle()}
+        {notScrolling ? (
+          <Article
+            article={article}
+            display={article.display}
+            isMobile={isMobile}
+            onOpenAuthModal={this.handleOpenAuthModal}
+            relatedArticlesForPanel={article.relatedArticlesPanel}
+            relatedArticlesForCanvas={article.relatedArticlesCanvas}
+            renderTime={renderTime}
+            showTooltips={showTooltips}
+          />
+        ) : (
+          <InfiniteScrollArticle
+            article={article}
+            isMobile={isMobile}
+            onOpenAuthModal={this.handleOpenAuthModal}
+            renderTime={renderTime}
+            showTooltips={showTooltips}
+          />
+        )}
 
-        <div
-          dangerouslySetInnerHTML={{
-            __html: SuperArticleFooter,
-          }}
-        />
+        {isSuper && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: SuperArticleFooter,
+            }}
+          />
+        )}
       </div>
     )
   }

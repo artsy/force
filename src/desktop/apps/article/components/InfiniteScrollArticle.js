@@ -19,10 +19,7 @@ const FETCH_TOP_OFFSET = 200
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
-    emailSignupUrl: PropTypes.string,
     isMobile: PropTypes.bool,
-    headerHeight: PropTypes.string,
-    marginTop: PropTypes.string,
     showTooltips: PropTypes.bool,
     onOpenAuthModal: PropTypes.func,
     renderTime: PropTypes.number,
