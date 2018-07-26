@@ -49,7 +49,7 @@ jobs:
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Build Assets
-          command: docker-compose -f hokusai/test.yml build && docker-compose -f hokusai/test.yml run force 'DEPLOY_ENV=staging yarn publish_assets'
+          command: docker-compose -f hokusai/test.yml build && docker-compose -f hokusai/test.yml run -e S3_KEY=$S3_KEY -e S3_SECRET=$S3_SECRET -e DEPLOY_ENV=staging -v $(pwd):/app force bash -c 'yarn publish_assets'
       - run:
           name: Asset Manifest
           command: hokusai staging env set ASSET_MANIFEST=$(cat manifest.json)
@@ -67,7 +67,7 @@ jobs:
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Build Assets
-          command: docker-compose -f hokusai/test.yml build && docker-compose -f hokusai/test.yml run force 'DEPLOY_ENV=production yarn publish_assets'
+          command: docker-compose -f hokusai/test.yml build && docker-compose -f hokusai/test.yml run -e S3_KEY=$S3_KEY -e S3_SECRET=$S3_SECRET -e DEPLOY_ENV=production -v $(pwd):/app force bash -c 'yarn publish_assets'
       - run:
           name: Asset Manifest
           command: hokusai production env set ASSET_MANIFEST=$(cat manifest.json)
