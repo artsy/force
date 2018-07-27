@@ -105,7 +105,7 @@ describe('<InfiniteScrollArticle />', () => {
     rendered.should.containEql('RelatedArticlesCanvas')
   })
 
-  it('renders the email signup when user is not subscribed', () => {
+  xit('renders the email signup when user is not subscribed', () => {
     props.emailSignupUrl = '/signup/editorial'
     const rendered = getWrapper(props)
 
