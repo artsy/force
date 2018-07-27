@@ -220,7 +220,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const { date } = this.state
 
     return (
-      <NewsContainer isMobile={isMobile}>
+      <NewsContainer isMobile={isMobile} id="article-root">
         <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}
