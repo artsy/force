@@ -83,6 +83,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       articles: [
         _.extend({}, fixtures.article, {
           slug: 'foobar',
+          layout: 'news',
           channel_id: '123',
           id: '678',
         }),

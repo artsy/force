@@ -1,10 +1,15 @@
 import moment from 'moment'
+import styled from 'styled-components'
 import React, { Component, Fragment } from 'react'
 import { flatten, debounce, extend } from 'lodash'
 import Waypoint from 'react-waypoint'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
-import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
+import {
+  ArticleData,
+  RelatedArticleData,
+  DisplayData,
+} from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { LoadingSpinner } from './InfiniteScrollArticle'
@@ -15,21 +20,21 @@ export interface Props {
   article?: ArticleData
   articles: ArticleData[]
   isMobile: boolean
-  renderTime?: string
+  renderTime?: number
 }
 
 interface State {
   activeArticle: string
   articles: ArticleData[]
   date: string
-  display: any[]
+  display: DisplayData[]
   error: boolean
   following: object[]
   isEnabled: boolean
   isLoading: boolean
   offset: number
   omit: string
-  relatedArticles: object[]
+  relatedArticles: RelatedArticleData[]
 }
 
 // FIXME: Rewire
@@ -196,14 +201,13 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               isMobile={isMobile}
               article={article}
               isTruncated={isTruncated}
-              isFirstArticle={i === 0}
               onDateChange={date => this.onDateChange(date)}
-              nextArticle={articles[i + 1]}
+              nextArticle={articles[i + 1] as any}
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
               relatedArticlesForCanvas={relatedArticlesCanvas as any}
-              display={displayCanvas}
-              renderTime={hasRenderTime}
+              display={displayCanvas as any}
+              renderTime={hasRenderTime as any}
             />
           </Fragment>
         )
@@ -212,14 +216,19 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   render() {
+    const { isMobile } = this.props
     const { date } = this.state
 
     return (
-      <div id="article-root">
+      <NewsContainer isMobile={isMobile} id="article-root">
         <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}
-      </div>
+      </NewsContainer>
     )
   }
 }
+
+const NewsContainer = styled.div.attrs<{ isMobile: boolean }>({})`
+  margin-top: ${props => (props.isMobile ? '100' : '200')}px;
+`

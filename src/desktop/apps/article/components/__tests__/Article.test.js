@@ -125,7 +125,7 @@ describe('<Article />', () => {
       SuperArticleFooter: 'sa-footer',
       SuperArticleHeader: 'sa-header',
     }
-    props.superArticle = true
+    props.isSuper = true
     const rendered = getWrapper(props)
 
     rendered.html().should.containEql('sa-footer')

@@ -21,8 +21,6 @@ export default class InfiniteScrollArticle extends React.Component {
     article: PropTypes.object,
     emailSignupUrl: PropTypes.string,
     isMobile: PropTypes.bool,
-    headerHeight: PropTypes.string,
-    marginTop: PropTypes.string,
     showTooltips: PropTypes.bool,
     onOpenAuthModal: PropTypes.func,
     renderTime: PropTypes.number,
@@ -140,27 +138,24 @@ export default class InfiniteScrollArticle extends React.Component {
 
   renderContent = () => {
     const { showTooltips, onOpenAuthModal } = this.props
-    const { renderTimes } = this.state
+    const { renderTimes, articles } = this.state
 
     return _.flatten(
-      this.state.articles.map((article, i) => {
+      articles.map((article, i) => {
         return (
           <div key={`article-${i}`}>
             <Article
               article={article}
+              emailSignupUrl={this.props.emailSignupUrl}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
               isMobile={this.props.isMobile}
-              emailSignupUrl={this.props.emailSignupUrl}
               display={article.display}
-              headerHeight={i === 0 ? this.props.headerHeight : null}
-              marginTop={i === 0 ? this.props.marginTop : null}
               showTooltips={showTooltips}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
             />
-            <Break />
             <Waypoint
               onEnter={waypointData => this.onEnter(article, waypointData)}
               onLeave={waypointData => this.onLeave(i, waypointData)}
@@ -184,9 +179,4 @@ export default class InfiniteScrollArticle extends React.Component {
 export const LoadingSpinner = styled.div`
   position: relative;
   padding: 100px;
-`
-export const Break = styled.div`
-  border-top: 1px solid ${colors.grayRegular};
-  width: 100%;
-  margin-top: 80px;
 `
