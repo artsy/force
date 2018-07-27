@@ -38,21 +38,49 @@ jobs:
       - run:
           name: Push
           command: hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
+  publish_staging_assets:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
+      - run: yarn install && DEPLOY_ENV=staging yarn publish_assets
+      - run: mkdir -p workspace
+      - run: cp manifest.json workspace/manifest.json
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - manifest.json
+  publish_release_assets:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
+      - run: yarn install && DEPLOY_ENV=release yarn publish_assets
+      - run: mkdir -p workspace
+      - run: cp manifest.json workspace/manifest.json
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - manifest.json
   deploy_hokusai_staging:
     docker:
       - image: artsy/hokusai:0.4.5
     steps:
       - add_ssh_keys
       - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
-          name: Build Assets
-          command: hokusai dev run 'DEPLOY_ENV=staging yarn publish_assets'
-      - run:
           name: Asset Manifest
-          command: hokusai staging env set ASSET_MANIFEST=$(cat manifest.json)
+          command: hokusai staging env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Deploy
           command: hokusai staging deploy $CIRCLE_SHA1 --git-remote origin
@@ -62,12 +90,15 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Build Assets
-          command: hokusai dev run 'DEPLOY_ENV=production yarn publish_assets'
+          command: docker-compose -f hokusai/test.yml build && docker-compose -f hokusai/test.yml run -e S3_KEY=$S3_KEY -e S3_SECRET=$S3_SECRET -e DEPLOY_ENV=production -v $(pwd):/app force bash -c 'yarn publish_assets'
       - run:
           name: Asset Manifest
           command: hokusai production env set ASSET_MANIFEST=$(cat manifest.json)
@@ -102,19 +133,29 @@ workflows:
                 - release
           requires:
             - build
+      - publish_staging_assets:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+      - publish_release_assets:
+          filters:
+            branches:
+              only: release
+          requires:
+            - build
       - deploy_hokusai_staging:
           filters:
             branches:
               only: master
           requires:
             - push
-            - test
-            - acceptance
+            - publish_staging_assets
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
             - push
-            - test
-            - acceptance
+            - publish_release_assets
