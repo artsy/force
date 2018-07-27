@@ -23,7 +23,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   className: 'artwork-commercial'
 
   events:
-    'click .js-artwork-purchase-button' : 'purchase'
     'click .js-artwork-inquire-button'  : 'inquire'
     'click .js-artwork-acquire-button'  : 'acquire'
     'click .collector-faq'              : 'openCollectorModal'
@@ -62,41 +61,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       analyticsHooks
         .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
-
-  purchase: (e) ->
-    e.preventDefault()
-    location.assign "#{@artwork.href()}/checkout"
-
-  # Used in the test group of the Purchase flow. Invokes inquiry
-  # modal when there is no pre-filled form in the side bar.
-  contactGallery: (e) ->
-    e.preventDefault()
-
-    $button = @$ '.js-artwork-inquire-button'
-    $button.attr 'data-state', 'loading'
-    # Defer submit disable so as to allow
-    # event handlers to finish propagating
-    _.defer ->
-      $button.prop 'disabled', true
-
-    @inquiry = new ArtworkInquiry notification_delay: 600
-    @user = User.instantiate()
-    @artwork.fetch().then =>
-      @artwork.related().fairs.add @data.artwork.fair
-      @modal = openInquiryQuestionnaireFor
-        user: @user
-        artwork: @artwork
-        inquiry: @inquiry
-
-      # Stop the spinner once the modal opens
-      @listenToOnce @modal.view, 'opened', ->
-        $button.attr 'data-state', ''
-        $button.prop 'disabled', false
-
-      # Success
-      @listenToOnce @inquiry, 'sync', =>
-        @$('.artwork-commercial__inquiry-buttons')
-          .html confirmation()
 
   inquire: (e) =>
     e.preventDefault() if e
