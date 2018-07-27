@@ -140,6 +140,7 @@ workflows:
   version: 2
   default:
     jobs:
+      - update-cache
       - test:
           filters:
             branches:
