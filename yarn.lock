@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.28":
-  version "1.20.28"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.28.tgz#82f8a22304b6ccdcd916ac9a54e55f66a8466f42"
+"@artsy/reaction@^1.20.31":
+  version "1.20.31"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.31.tgz#78cf6f993d55e54b4a607f252ce748c6cdbf6bcd"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
@@ -69,7 +69,7 @@
     qs "^6.5.0"
     react-css-transition-replace "^3.0.2"
     react-html-parser "^2.0.2"
-    react-lines-ellipsis "0.11.0"
+    react-lines-ellipsis alloy/react-lines-ellipsis#dont-setState-on-unmounted-component
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
@@ -9422,9 +9422,9 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-lines-ellipsis@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.11.0.tgz#ea0262afd43a3c41f6792bd76bf7f563c04ba1bd"
+"react-lines-ellipsis@github:alloy/react-lines-ellipsis#dont-setState-on-unmounted-component":
+  version "0.13.0"
+  resolved "https://codeload.github.com/alloy/react-lines-ellipsis/tar.gz/ff6a63a8b4b6b625f46fb753c7acb70a2ccc4541"
 
 react-markdown@^2.5.0:
   version "2.5.1"
