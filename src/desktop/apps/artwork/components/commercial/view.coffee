@@ -16,6 +16,7 @@ AuthModalView = require '../../../../../desktop/components/auth_modal/view.coffe
 sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
+{ createOrder } = require '../../../../../lib/components/create_order'
 
 module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
@@ -39,14 +40,28 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   acquire: (e) ->
     e.preventDefault()
 
-    order = new PendingOrder
-    @form = new Form $form: @$('form'), model: order
+    # Show the new buy now flow if you have the lab feature enabled
+    loggedInUser = CurrentUser.orNull()
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      createOrder
+        user: loggedInUser
+        partnerId: @artwork.get('partner_id')
+        currencyCode: "usd"
+        artworkId: @artwork.get('_id')
+        priceCents: 500000, quantity: 1
+      .then (data) ->
+        order = data?.createOrder?.result?.order
+        location.assign("/order2/#{order.id}/shipping")
 
-    @form.submit e, success: ->
-      location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
+    else
+      order = new PendingOrder
+      @form = new Form $form: @$('form'), model: order
 
-    analyticsHooks
-      .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
+      @form.submit e, success: ->
+        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
+
+      analyticsHooks
+        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
 
   purchase: (e) ->
     e.preventDefault()

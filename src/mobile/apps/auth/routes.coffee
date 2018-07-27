@@ -24,7 +24,7 @@ module.exports.login = (req, res) ->
     redirectTo: redirectUrl(req)
     action: req.query.action
 
-  if res.locals.sd.NEW_AUTH_MODAL
+  if res.locals.sd.MOBILE_NEW_AUTH_MODAL
     res.redirect "/login?#{qs.stringify(locals)}"
   else if locals.action
     res.render 'call_to_action', locals
@@ -32,7 +32,7 @@ module.exports.login = (req, res) ->
     res.render 'login', locals
 
 module.exports.forgotPassword = (req, res) ->
-  if res.locals.sd.NEW_AUTH_MODAL
+  if res.locals.sd.MOBILE_NEW_AUTH_MODAL
     res.redirect '/forgot'
   else
     res.render 'forgot_password'
@@ -56,7 +56,7 @@ module.exports.signUp = (req, res) ->
     error: err?.body.error
     prefill: req.query.prefill
   
-  if res.locals.sd.NEW_AUTH_MODAL
+  if res.locals.sd.MOBILE_NEW_AUTH_MODAL
     res.redirect "/signup?#{qs.stringify(locals)}"
   else if locals.action
     res.render 'call_to_action', locals

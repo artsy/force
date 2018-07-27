@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.19":
-  version "1.20.19"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.19.tgz#1e29045b153496be9c1bd865466f5b83f47a9971"
+"@artsy/reaction@^1.20.28":
+  version "1.20.28"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.28.tgz#82f8a22304b6ccdcd916ac9a54e55f66a8466f42"
   dependencies:
     "@artsy/palette" "^2.3.4"
     cheerio "^1.0.0-rc.2"
@@ -64,6 +64,7 @@
     lodash "^4.17.4"
     moment-timezone "^0.5.13"
     numeral "^2.0.4"
+    openseadragon "^2.3.1"
     prop-types "^15.5.10"
     qs "^6.5.0"
     react-css-transition-replace "^3.0.2"
@@ -80,7 +81,7 @@
     react-sizeme "^2.4.4"
     react-slick "^0.21.0"
     react-styled-flexboxgrid "^2.2.0"
-    react-tracking "^4.2.1"
+    react-tracking "^5.3.0"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
@@ -1060,6 +1061,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -3454,6 +3456,10 @@ deep-object-diff@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/deep-object-diff/-/deep-object-diff-1.1.0.tgz#d6fabf476c2ed1751fc94d5ca693d2ed8c18bc5a"
 
+deepmerge@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.1.1.tgz#e862b4e45ea0555072bf51e7fd0d9845170ae768"
+
 default-require-extensions@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/default-require-extensions/-/default-require-extensions-1.0.0.tgz#f37ea15d3e13ffd9b437d33e1a75b5fb97874cb8"
@@ -4489,7 +4495,11 @@ extend@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.0.tgz#5a474353b9f3353ddd8176dfd37b91c83a46f1d4"
 
-extend@^3.0.0, extend@~3.0.0, extend@~3.0.1:
+extend@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+
+extend@~3.0.0, extend@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
@@ -7663,11 +7673,21 @@ mime-db@~1.27.0:
   version "1.27.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.27.0.tgz#820f572296bbd20ec25ed55e5b5de869e5436eb1"
 
-mime-types@^2.1.10, mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.16, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
+mime-db@~1.35.0:
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
+
+mime-types@^2.1.10, mime-types@^2.1.11, mime-types@~2.1.16, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
   version "2.1.18"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
   dependencies:
     mime-db "~1.33.0"
+
+mime-types@^2.1.12:
+  version "2.1.19"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
+  dependencies:
+    mime-db "~1.35.0"
 
 mime-types@^2.1.3, mime-types@~2.1.11, mime-types@~2.1.15:
   version "2.1.15"
@@ -8314,6 +8334,10 @@ openseadragon@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.2.1.tgz#5f8ef0fdb7e0aa79e0fb0d927701466cf816bb2f"
 
+openseadragon@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.0.tgz#d0b28b37a953602c82432a0dbd8a3779dadf756f"
+
 optimist@0.2:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.2.8.tgz#e981ab7e268b457948593b55674c099a815cac31"
@@ -8914,8 +8938,8 @@ propagate@0.4.0:
   resolved "https://registry.yarnpkg.com/propagate/-/propagate-0.4.0.tgz#f3fcca0a6fe06736a7ba572966069617c130b481"
 
 property-expr@^1.2.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-1.3.2.tgz#2df60082c243e79118924ecb8f7ae7183b4fc43e"
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-1.5.0.tgz#05cda8be960720a8b3dc337c77a2a914c0e84c5f"
 
 proxy-addr@~1.1.4:
   version "1.1.4"
@@ -9591,11 +9615,12 @@ react-timer-mixin@^0.13.3:
   version "0.13.4"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
 
-react-tracking@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-4.2.1.tgz#c34619ddd205609ea46281a6c8c8e1243e910e81"
+react-tracking@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.3.0.tgz#6107db448084745bc50604d1f3f1f582c0073def"
   dependencies:
-    lodash.merge "^4.6.0"
+    deepmerge "^2.1.0"
+    hoist-non-react-statics "^2.5.0"
 
 react-transition-group@^2.2.0, react-transition-group@^2.3.0:
   version "2.4.0"
@@ -11093,7 +11118,7 @@ styled-bootstrap-grid@damassi/styled-bootstrap-grid#5a115a48a7f4d5608bc73097d52e
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/5a115a48a7f4d5608bc73097d52e14265edc6dd3"
 
-styled-bootstrap-grid@damassi/styled-bootstrap-grid#respect-padding-in-fluid:
+"styled-bootstrap-grid@github:damassi/styled-bootstrap-grid#respect-padding-in-fluid":
   version "1.0.3-2"
   resolved "https://codeload.github.com/damassi/styled-bootstrap-grid/tar.gz/f4908956cb3b31ef811c729d3a50784efafe62da"
 
