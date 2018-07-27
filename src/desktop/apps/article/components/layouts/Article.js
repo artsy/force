@@ -15,8 +15,6 @@ import mediator from 'desktop/lib/mediator.coffee'
 let SuperArticleView = _SuperArticleView
 let EditorialSignupView = _EditorialSignupView
 
-const NAVHEIGHT = '53px'
-
 export default class ArticleLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -28,7 +26,6 @@ export default class ArticleLayout extends React.Component {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
     isSuper: PropTypes.bool,
-    onDailyEditorial: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
     renderTime: PropTypes.number,
@@ -54,102 +51,66 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  handleOpenAuthModal = (mode, options) =>
+  handleOpenAuthModal = (mode, options) => {
     mediator.trigger('open:auth', {
       mode,
       ...options,
     })
-
-  renderArticle = () => {
-    let { article } = this.props
-    const {
-      isMobile,
-      isSuper,
-      onDailyEditorial,
-      renderTime,
-      showTooltips,
-    } = this.props
-    const articleMarginTop = article.layout === 'standard' ? '100px' : '0px'
-    const navHeight = isSuper ? '0px' : NAVHEIGHT
-    const headerHeight = `calc(100vh - ${navHeight})`
-    const isExperimentInfiniteScroll =
-      sd.ARTICLE_INFINITE_SCROLL === 'experiment'
-
-    /**
-     * FIXME:
-     * Patch missing canvas cover images with display cover images. Needed
-     * until support is added in Positron.
-     */
-    const cover_image_url = get(article, 'display.panel.cover_image_url', false)
-
-    if (cover_image_url) {
-      article = updeep(
-        {
-          display: {
-            canvas: {
-              cover_image_url,
-            },
-          },
-        },
-        article
-      )
-    }
-
-    if (!isSuper && !article.seriesArticle && !isExperimentInfiniteScroll) {
-      const emailSignupUrl = onDailyEditorial
-        ? `${sd.APP_URL}/signup/editorial`
-        : ''
-      return (
-        <InfiniteScrollArticle
-          isMobile={isMobile}
-          article={article}
-          emailSignupUrl={emailSignupUrl}
-          headerHeight={headerHeight}
-          marginTop={articleMarginTop}
-          showTooltips={showTooltips}
-          onOpenAuthModal={this.handleOpenAuthModal}
-          renderTime={renderTime}
-        />
-      )
-    } else {
-      return (
-        <Article
-          isMobile={isMobile}
-          article={article}
-          relatedArticlesForPanel={article.relatedArticlesPanel}
-          headerHeight={headerHeight}
-          marginTop={articleMarginTop}
-          showTooltips={showTooltips}
-          onOpenAuthModal={this.handleOpenAuthModal}
-          relatedArticlesForCanvas={
-            isExperimentInfiniteScroll && article.relatedArticlesCanvas
-          }
-          display={isExperimentInfiniteScroll && article.display}
-        />
-      )
-    }
   }
 
   render() {
     const {
+      article,
+      isSuper,
+      isMobile,
+      renderTime,
+      showTooltips,
       templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
 
+    const isExperimentInfiniteScroll =
+      sd.ARTICLE_INFINITE_SCROLL === 'experiment'
+    const hasNav = isSuper || article.seriesArticle
+
+    const notScrolling = isExperimentInfiniteScroll || hasNav
     return (
       <div>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: SuperArticleHeader,
-          }}
-        />
+        {isSuper && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: SuperArticleHeader,
+            }}
+          />
+        )}
 
-        {this.renderArticle()}
+        {notScrolling ? (
+          <Article
+            article={article}
+            display={article.display}
+            isMobile={isMobile}
+            onOpenAuthModal={this.handleOpenAuthModal}
+            relatedArticlesForPanel={article.relatedArticlesPanel}
+            relatedArticlesForCanvas={article.relatedArticlesCanvas}
+            renderTime={renderTime}
+            showTooltips={showTooltips}
+          />
+        ) : (
+          <InfiniteScrollArticle
+            article={article}
+            isMobile={isMobile}
+            onOpenAuthModal={this.handleOpenAuthModal}
+            renderTime={renderTime}
+            showTooltips={showTooltips}
+          />
+        )}
 
-        <div
-          dangerouslySetInnerHTML={{
-            __html: SuperArticleFooter,
-          }}
-        />
+        {isSuper && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: SuperArticleFooter,
+            }}
+          />
+        )}
       </div>
     )
   }
