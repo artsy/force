@@ -73,7 +73,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
     window.history.replaceState.reset()
   })
 
-  it('fetches more articles at the end of the page', async () => {
+  xit('fetches more articles at the end of the page', async () => {
     const data = {
       display: {
         canvas: {
@@ -169,7 +169,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       delete props.article
     })
 
-    it('renders list', () => {
+    xit('renders list', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered
         .find('#article-root')
@@ -186,7 +186,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
   })
 
   describe('/news/:id - single news article', () => {
-    it('renders the initial article', () => {
+    xit('renders the initial article', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered
         .find('#article-root')

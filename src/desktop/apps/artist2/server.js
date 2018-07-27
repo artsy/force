@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 const app = (module.exports = express())
 
-app.get('/artist2/:artistID*', async (req, res, next) => {
+app.get('/artist/:artistID*', async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 

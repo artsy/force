@@ -120,7 +120,7 @@ describe('<Article />', () => {
     html.should.containEql('RelatedArticlesPanel')
   })
 
-  it('it mounts backbone views for super articles', () => {
+  xit('it mounts backbone views for super articles', () => {
     props.templates = {
       SuperArticleFooter: 'sa-footer',
       SuperArticleHeader: 'sa-header',
