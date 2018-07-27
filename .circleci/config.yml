@@ -44,6 +44,8 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
+      - <<: *restore_cache
+      - <<: *verify_dependencies
       - run:
           name: Test
           command: "hokusai test"
