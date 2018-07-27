@@ -22,9 +22,9 @@
     styled-system "^2.2.5"
     yarn "^1.3.2"
 
-"@artsy/palette@^2.3.4":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.6.3.tgz#dc2efcd875ab1aaba5bf361d9e305451f4c76b9b"
+"@artsy/palette@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.8.0.tgz#81d0fc100d056dbca306fc8ace99c2c1fd2856ea"
   dependencies:
     react "^16.3.2"
     styled-system "^2.2.5"
@@ -47,11 +47,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.31":
-  version "1.20.31"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.31.tgz#78cf6f993d55e54b4a607f252ce748c6cdbf6bcd"
+"@artsy/reaction@^1.21.2":
+  version "1.21.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.21.2.tgz#41cf5d6ce166109965e2a906252dcb5acd832349"
   dependencies:
-    "@artsy/palette" "^2.3.4"
+    "@artsy/palette" "^2.8.0"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
