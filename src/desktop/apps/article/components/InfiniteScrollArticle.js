@@ -19,6 +19,7 @@ const FETCH_TOP_OFFSET = 200
 export default class InfiniteScrollArticle extends React.Component {
   static propTypes = {
     article: PropTypes.object,
+    emailSignupUrl: PropTypes.string,
     isMobile: PropTypes.bool,
     showTooltips: PropTypes.bool,
     onOpenAuthModal: PropTypes.func,
@@ -145,6 +146,7 @@ export default class InfiniteScrollArticle extends React.Component {
           <div key={`article-${i}`}>
             <Article
               article={article}
+              emailSignupUrl={this.props.emailSignupUrl}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
