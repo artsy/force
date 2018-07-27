@@ -12,6 +12,10 @@ mediator.on('artist:filter:changed', filters => {
   onFilterChange(filters)
 })
 
+mediator.on('artist:tabclick', ({ to }) => {
+  window.analytics.page({ path: to }, { integrations: { Marketo: false } })
+})
+
 buildClientApp({ routes, user: sd.CURRENT_USER })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
