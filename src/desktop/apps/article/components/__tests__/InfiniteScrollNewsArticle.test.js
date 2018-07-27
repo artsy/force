@@ -73,7 +73,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
     window.history.replaceState.reset()
   })
 
-  xit('fetches more articles at the end of the page', async () => {
+  it('fetches more articles at the end of the page', async () => {
     const data = {
       display: {
         canvas: {
@@ -83,6 +83,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       articles: [
         _.extend({}, fixtures.article, {
           slug: 'foobar',
+          layout: 'news',
           channel_id: '123',
           id: '678',
         }),
@@ -169,7 +170,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
       delete props.article
     })
 
-    xit('renders list', () => {
+    it('renders list', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered
         .find('#article-root')
@@ -186,7 +187,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
   })
 
   describe('/news/:id - single news article', () => {
-    xit('renders the initial article', () => {
+    it('renders the initial article', () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered
         .find('#article-root')
