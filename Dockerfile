@@ -1,5 +1,5 @@
-FROM bitnami/node:8
-#FROM circleci/node:8-stretch-browsers
+# FROM bitnami/node:8
+FROM circleci/node:8
 
 RUN install_packages libsecret-1-dev libglib2.0-dev
 
