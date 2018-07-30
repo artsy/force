@@ -14,7 +14,7 @@ interface Props {
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
   relatedArticlesForCanvas?: RelatedArticlesCanvasProps
-  renderTime?: string
+  renderTime?: number
 }
 
 interface State {
