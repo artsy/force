@@ -59,7 +59,7 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=release yarn publish_assets
+      - run: yarn install && DEPLOY_ENV=production yarn publish_assets
       - run: mkdir -p workspace
       - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:
@@ -79,6 +79,9 @@ jobs:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
+          name: Echo Manifest
+          command: cat /tmp/workspace/manifest.json
+      - run:
           name: Asset Manifest
           command: hokusai staging env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
@@ -96,6 +99,9 @@ jobs:
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux      
+      - run:
+          name: Echo Manifest
+          command: cat /tmp/workspace/manifest.json
       - run:
           name: Asset Manifest
           command: hokusai production env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
