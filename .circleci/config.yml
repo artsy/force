@@ -98,7 +98,7 @@ jobs:
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux      
       - run:
           name: Asset Manifest
-          command: hokusai production env set ASSET_MANIFEST=$(cat manifest.json)
+          command: hokusai production env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin
