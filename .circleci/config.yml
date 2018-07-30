@@ -1,5 +1,29 @@
+save_cache: &save_cache
+  save_cache:
+    key: yarn-deps-{{ checksum "yarn.lock" }}
+    paths:
+      - ./node_modules
+
+restore_cache: &restore_cache
+  restore_cache:
+    keys:
+    - yarn-deps-{{ checksum "yarn.lock" }}
+    - yarn-deps-
+      
+verify_dependencies: &verify_dependencies
+  run: yarn --check-files
+
 version: 2.0
 jobs:
+  update-cache:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - add_ssh_keys
+      - checkout
+      - <<: *restore_cache
+      - <<: *verify_dependencies
+      - <<: *save_cache
   acceptance:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -7,9 +31,11 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
+      - <<: *restore_cache
+      - <<: *verify_dependencies
       - run:
           name: Acceptance Tests
-          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
+          command: "yarn acceptance src/test/acceptance/*.js"
   test:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -18,6 +44,8 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
+      - <<: *restore_cache
+      - <<: *verify_dependencies
       - run:
           name: Test
           command: "hokusai test"
@@ -45,7 +73,9 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=staging yarn publish_assets
+      - <<: *restore_cache
+      - <<: *verify_dependencies
+      - run: DEPLOY_ENV=staging yarn publish_assets
       - run: mkdir -p workspace
       - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:
@@ -59,7 +89,9 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=release yarn publish_assets
+      - <<: *restore_cache
+      - <<: *verify_dependencies
+      - run: DEPLOY_ENV=release yarn publish_assets
       - run: mkdir -p workspace
       - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:
@@ -107,6 +139,7 @@ workflows:
   version: 2
   default:
     jobs:
+      - update-cache
       - test:
           filters:
             branches:
