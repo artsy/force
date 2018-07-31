@@ -68,6 +68,10 @@ const config = {
   plugins: [
     // TODO: Add webpack typechecker
     new ProgressBarPlugin(),
+
+    // Remove moment.js localization files
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
     new ForkTsCheckerWebpackPlugin({
       formatter: 'codeframe',
       formatterOptions: 'highlightCode',

@@ -1,4 +1,21 @@
 if (location.pathname.match('/artist/.*') && sd.ARTIST) {
+  // These that rely on the mediator are not yet supported in Reaction, so keep
+  // them here, for now.
+
+  analyticsHooks.on('artist_page:cta:shown', function() {
+    analytics.track('Show artist page sign up prompt')
+  })
+
+  analyticsHooks.on('artist_page:cta:hidden', function() {
+    analytics.track('Click', {
+      context_module: 'artist page signup prompt',
+      type: 'dismiss',
+    })
+  })
+
+  // TODO: Remove these once we’ve fully switched over to new artist page that
+  //       exists in Reaction.
+
   $('.artist-tabs a').click(function(e) {
     const tab = $(e.target).text()
     analytics.track('Clicked artist page tab', { tab: tab })
@@ -45,16 +62,5 @@ if (location.pathname.match('/artist/.*') && sd.ARTIST) {
 
   $('.artist-page-content .gradient-blurb-read-more').click(function(e) {
     analytics.track('Clicked to expand artist bio header')
-  })
-
-  analyticsHooks.on('artist_page:cta:shown', function() {
-    analytics.track('Show artist page sign up prompt')
-  })
-
-  analyticsHooks.on('artist_page:cta:hidden', function() {
-    analytics.track('Click', {
-      context_module: 'artist page signup prompt',
-      type: 'dismiss',
-    })
   })
 }

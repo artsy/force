@@ -25,18 +25,29 @@
 # module.exports = {}
 
 module.exports = {
-  artist_market_data_test:
-    key: 'artist_market_data_test'
-    weighting: 'equal'
-    outcomes: [
-      'control'
-      'market_data_no_carousel'
-    ]
-    control_group: 'control'
-    edge: 'market_data_no_carousel'
-
   article_infinite_scroll:
     key: 'article_infinite_scroll'
     outcomes:
       control: 100
+
+  # Used for cookie-ing and gradual roll out.
+  # We'll start at 1 and work our way up, users in groups
+  # less than that number will receive the new artist page.
+  new_artist_page:
+    key: 'new_artist_page',
+    outcomes: [
+      0
+      1
+      2
+      3
+      4
+      5
+      6
+      7
+      8
+      9
+    ]
+    weighting: 'equal'
+    edge: 0
+    control_group: 9
 }

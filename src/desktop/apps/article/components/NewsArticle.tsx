@@ -1,19 +1,22 @@
 import React, { Component, Fragment } from 'react'
 import { Article } from 'reaction/Components/Publishing/Article'
 import Waypoint from 'react-waypoint'
-import { RelatedArticlesCanvasProps } from 'reaction/Components/Publishing/RelatedArticles/RelatedArticlesCanvas'
+import {
+  ArticleData,
+  DisplayData,
+  RelatedArticleData,
+} from '@artsy/reaction/dist/Components/Publishing/Typings'
 
 interface Props {
-  article: any
-  display?: any
+  article: ArticleData
+  display?: DisplayData
   isActive: boolean
-  isFirstArticle: boolean
   isMobile: boolean
   isTruncated: boolean
-  nextArticle: any
+  nextArticle: ArticleData
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
-  relatedArticlesForCanvas?: RelatedArticlesCanvasProps
+  relatedArticlesForCanvas?: RelatedArticleData[]
   renderTime?: number
 }
 
@@ -64,7 +67,7 @@ export class NewsArticle extends Component<Props, State> {
 
     if (currentPosition === 'inside') {
       if (previousPosition === 'above') {
-        onDateChange(article.published_at)
+        article.published_at && onDateChange(article.published_at)
       }
 
       if (!isTruncated) {
@@ -89,7 +92,7 @@ export class NewsArticle extends Component<Props, State> {
 
     if (currentPosition === 'above' && previousPosition === 'inside') {
       if (nextArticle) {
-        onDateChange(nextArticle.published_at)
+        nextArticle.published_at && onDateChange(nextArticle.published_at)
         if (isMobile) {
           onActiveArticleChange(nextArticle.id)
         }
@@ -104,12 +107,10 @@ export class NewsArticle extends Component<Props, State> {
       isActive,
       isMobile,
       isTruncated,
-      isFirstArticle,
       relatedArticlesForCanvas,
       renderTime,
     } = this.props
     const { bottomOffset } = this.state
-    const marginTop = isMobile ? '100px' : '200px'
 
     return (
       <Fragment>
@@ -124,7 +125,6 @@ export class NewsArticle extends Component<Props, State> {
               article={article}
               isTruncated={isTruncated}
               isMobile={isMobile}
-              marginTop={isFirstArticle ? marginTop : null}
               onExpand={this.onExpand}
               isHovered={isMobile && isActive}
               relatedArticlesForCanvas={relatedArticlesForCanvas}

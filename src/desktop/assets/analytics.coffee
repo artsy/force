@@ -11,7 +11,38 @@ mediator.on 'all', (name, data) ->
 
 # All Reaction events are sent directly to Segment
 Events.onEvent (data) =>
-  analytics.track data.action, _.omit data, 'action'
+  # TODO: This is old schema
+  if data.action
+    # Send Reaction's read more as a page view
+    if data.action is 'Clicked read more'
+      pathname = data.pathname || location.pathname
+      href = sd.APP_URL + '/' + pathname
+      analytics.page(
+        { path: pathname },
+        { integrations: { Marketo: false }}
+      )
+      if window.PARSELY
+        window.PARSELY.beacon.trackPageView
+          url: href,
+          js: 1,
+          action_name: 'infinite'
+      if window.Sailthru
+        window.Sailthru.track
+          domain: 'horizon.artsy.net',
+          spider: true,
+          track_url: true,
+          url: href,
+          use_stored_tags: true
+
+      # Return early because we don't want to make a Segment call for read more
+      return
+
+    analytics.track data.action, _.omit data, 'action'
+  else if data.action_type
+    # New analytics schema
+    analytics.track data.action_type, _.omit data, 'action_type'
+  else
+    console.error("Unknown analytics schema being used: #{JSON.stringify(data)}")
 
 require '../analytics/main_layout.js'
 
@@ -45,7 +76,6 @@ $ -> analytics.ready ->
   require '../analytics/notifications.js'
   require '../analytics/artists.js'
   require '../analytics/artwork.js'
-  require '../analytics/artwork_purchase.js'
   require '../analytics/fair.js'
   require '../analytics/following.js'
   require '../analytics/follow_widget.js'

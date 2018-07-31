@@ -9,12 +9,12 @@ import styled from 'styled-components'
 
 const app = (module.exports = express())
 
-app.get('/artist2/:artistID*', async (req, res, next) => {
+app.get('/artist/:artistID*', async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
-      initialBreakpoint: res.locals.sd.IS_MOBILE ? 'xs' : false,
+      initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ['xs'] : undefined,
       routes,
       url: req.url,
       user,
@@ -39,15 +39,17 @@ app.get('/artist2/:artistID*', async (req, res, next) => {
     }
 
     const { artist } = await metaphysics(send).then(data => data)
+    const { REFERRER } = res.locals.sd
+    const isExternalReferer = !(
+      REFERRER && REFERRER.includes(res.locals.sd.APP_URL)
+    )
 
-    const isExternalReferer =
-      res.locals.sd.REFERRER &&
-      !res.locals.sd.REFERRER.includes(res.locals.sd.APP_URL)
-
-    // Since this page is admin-only now, need to swap this in to test.
-    // res.locals.sd.ARTIST_PAGE_CTA_ENABLED = true
     res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !user && isExternalReferer
     res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = req.params.artistID
+
+    // While we are rolling out the new page, override the default (`artist`)
+    // type inferred from the URL, for tracking and comparison purposes.
+    res.locals.sd.PAGE_TYPE = 'new-artist'
 
     // Render layout
     const layout = await renderLayout({

@@ -22,9 +22,9 @@
     styled-system "^2.2.5"
     yarn "^1.3.2"
 
-"@artsy/palette@^2.3.4":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.6.3.tgz#dc2efcd875ab1aaba5bf361d9e305451f4c76b9b"
+"@artsy/palette@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.9.0.tgz#f3d4882b8af01333fec46badccb81aefa2013bf8"
   dependencies:
     react "^16.3.2"
     styled-system "^2.2.5"
@@ -47,11 +47,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^1.20.20":
-  version "1.20.20"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-1.20.20.tgz#5334283e89de605519367cf36bade844bd31b6cf"
+"@artsy/reaction@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-2.0.4.tgz#840a66822147902f5266f2978482e30cb9876394"
   dependencies:
-    "@artsy/palette" "^2.3.4"
+    "@artsy/palette" "^2.9.0"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -64,11 +64,12 @@
     lodash "^4.17.4"
     moment-timezone "^0.5.13"
     numeral "^2.0.4"
+    openseadragon "^2.3.1"
     prop-types "^15.5.10"
     qs "^6.5.0"
     react-css-transition-replace "^3.0.2"
     react-html-parser "^2.0.2"
-    react-lines-ellipsis "0.11.0"
+    react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
@@ -80,7 +81,7 @@
     react-sizeme "^2.4.4"
     react-slick "^0.21.0"
     react-styled-flexboxgrid "^2.2.0"
-    react-tracking "^4.2.1"
+    react-tracking "^5.3.0"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
@@ -780,8 +781,8 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
 "@types/node@*":
-  version "10.5.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.2.tgz#f19f05314d5421fe37e74153254201a7bf00a707"
+  version "10.5.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.4.tgz#6eccc158504357d1da91434d75e86acde94bb10b"
 
 "@types/node@^6.0.46":
   version "6.0.78"
@@ -1060,6 +1061,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -2449,8 +2451,8 @@ center-align@^0.1.1:
     type-detect "^1.0.0"
 
 chain-function@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/chain-function/-/chain-function-1.0.0.tgz#0d4ab37e7e18ead0bdc47b920764118ce58733dc"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/chain-function/-/chain-function-1.0.1.tgz#c63045e5b4b663fb86f1c6e186adaf1de402a1cc"
 
 chalk@0.5.1:
   version "0.5.1"
@@ -3453,6 +3455,10 @@ deep-is@~0.1.3:
 deep-object-diff@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/deep-object-diff/-/deep-object-diff-1.1.0.tgz#d6fabf476c2ed1751fc94d5ca693d2ed8c18bc5a"
+
+deepmerge@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.1.1.tgz#e862b4e45ea0555072bf51e7fd0d9845170ae768"
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -7823,17 +7829,13 @@ moment-twitter@^0.2.0:
   dependencies:
     moment "~2.4.0"
 
-"moment@>= 2.9.0":
+"moment@>= 2.9.0", moment@^2.11.1, moment@^2.22.2, moment@~2.4.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
-moment@^2.11.1, moment@~2.16.0:
+moment@~2.16.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.16.0.tgz#f38f2c97c9889b0ee18fc6cc392e1e443ad2da8e"
-
-moment@~2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.4.0.tgz#06dd8dfbbfdb53a03510080ac788163c9490e75d"
 
 morgan@^1.8.1:
   version "1.8.1"
@@ -8327,6 +8329,10 @@ opener@^1.4.3:
 openseadragon@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.2.1.tgz#5f8ef0fdb7e0aa79e0fb0d927701466cf816bb2f"
+
+openseadragon@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.0.tgz#d0b28b37a953602c82432a0dbd8a3779dadf756f"
 
 optimist@0.2:
   version "0.2.8"
@@ -9412,9 +9418,9 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-lines-ellipsis@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.11.0.tgz#ea0262afd43a3c41f6792bd76bf7f563c04ba1bd"
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+  version "0.13.0"
+  resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-markdown@^2.5.0:
   version "2.5.1"
@@ -9605,11 +9611,12 @@ react-timer-mixin@^0.13.3:
   version "0.13.4"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
 
-react-tracking@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-4.2.1.tgz#c34619ddd205609ea46281a6c8c8e1243e910e81"
+react-tracking@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.3.0.tgz#6107db448084745bc50604d1f3f1f582c0073def"
   dependencies:
-    lodash.merge "^4.6.0"
+    deepmerge "^2.1.0"
+    hoist-non-react-statics "^2.5.0"
 
 react-transition-group@^2.2.0, react-transition-group@^2.3.0:
   version "2.4.0"

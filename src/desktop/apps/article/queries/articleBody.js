@@ -99,6 +99,7 @@ export const articleBody = `
       type
       title
       url
+      deck
     }
     ... on SeriesHeader {
       url
