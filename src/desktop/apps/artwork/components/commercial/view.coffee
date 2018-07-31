@@ -7,6 +7,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
+Serializer = require '../../../../components/form/serializer.coffee'
 PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
@@ -42,14 +43,16 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     # Show the new buy now flow if you have the lab feature enabled
     loggedInUser = CurrentUser.orNull()
     if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      serializer = new Serializer @$('form')
+      data = serializer.data()
+
       createOrder
-        user: loggedInUser
-        partnerId: @artwork.get('partner_id')
-        currencyCode: "usd"
         artworkId: @artwork.get('_id')
-        priceCents: 500000, quantity: 1
+        editionSetId: data.edition_set_id
+        quantity: 1
+        user: loggedInUser
       .then (data) ->
-        order = data?.createOrder?.result?.order
+        order = data?.createOrderWithArtwork?.result?.order
         location.assign("/order2/#{order.id}/shipping")
 
     else
