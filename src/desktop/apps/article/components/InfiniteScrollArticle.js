@@ -148,7 +148,6 @@ export default class InfiniteScrollArticle extends React.Component {
 
     return _.flatten(
       this.state.articles.map((article, i) => {
-        const isFirstInScroll = i === 0
         return (
           <div key={`article-${i}`}>
             <Article
@@ -156,7 +155,7 @@ export default class InfiniteScrollArticle extends React.Component {
               emailSignupUrl={emailSignupUrl}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
-              isTruncated={!isFirstInScroll}
+              isTruncated={i !== 0}
               isMobile={isMobile}
               display={article.display}
               showTooltips={showTooltips}
