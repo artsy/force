@@ -5,6 +5,13 @@ module.exports = [
       { is_logged_out: true: ['account'] }
     ]
     false: [
+      {
+        ask_specialist: {
+          true: [
+            'specialist'
+          ]
+        }
+      }
       pre_qualify: {
         true: [
           { has_seen_commercial_interest: false: ['commercial_interest'] }

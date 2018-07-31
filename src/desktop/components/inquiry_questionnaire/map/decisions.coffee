@@ -7,6 +7,9 @@ decisions =
   is_auction: ({ artwork }) ->
     artwork.get('is_in_auction') is true
 
+  ask_specialist: ({ ask_specialist }) ->
+    ask_specialist
+
   enable_new_inquiry_flow: ({ enableNewInquiryFlow }) -> enableNewInquiryFlow
 
   pre_qualify: ({ artwork, enableNewInquiryFlow }) ->
