@@ -15,7 +15,6 @@ form
   input( name='full_name' )
   input( name='something_else' )
   button
-
 ```
 
 ```coffeescript

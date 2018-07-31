@@ -7,30 +7,21 @@ import query from './mutation'
 let metaphysics = _metaphysics
 
 interface CreateOrderInput {
-  user: any
-  partnerId: string
-  currencyCode: string
   artworkId: string
-  priceCents: number
+  editionSetId: string
   quantity: number
+  user: object
 }
 
 export const createOrder = async (input: CreateOrderInput) => {
-  const {
-    user,
-    partnerId,
-    currencyCode,
-    artworkId,
-    priceCents,
-    quantity,
-  } = input
+  const { artworkId, editionSetId, quantity, user } = input
 
   if (user == null) {
     return
   }
   const send = {
     query,
-    variables: { partnerId, currencyCode, artworkId, priceCents, quantity },
+    variables: { artworkId, editionSetId, quantity },
     req: { user },
   }
 
