@@ -629,7 +629,6 @@
       "context": null,
       "is_acquireable": false,
       "is_inquireable": true,
-      "is_purchasable": false,
       "availability": "not for sale",
       "contact_message": null,
       "is_price_range": false,

@@ -55,7 +55,6 @@ export const worksByFollowedArtists = `
             name
           }
           href
-          is_purchasable
           is_acquireable
         }
       }
