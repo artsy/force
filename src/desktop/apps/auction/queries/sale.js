@@ -46,7 +46,6 @@ export default function SaleQuery(id) {
               name
             }
             href
-            is_purchasable
             is_acquireable
           }
         }

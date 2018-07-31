@@ -36,13 +36,6 @@ import { data as sd } from 'sharify'
         context_type: context.context_type,
       })
     })
-    .on('click', '.analytics-artwork-purchase', function() {
-      var context = $(this).data()
-      analytics.track('Clicked "Purchase"', {
-        artwork_id: context.artwork_id,
-        context_type: context.context_type,
-      })
-    })
     .on('click', '.artwork-auction__live-button a', function() {
       analytics.track('click', {
         type: 'button',
