@@ -57,6 +57,7 @@ export function Meta(props) {
       {artist.deathyear && (
         <meta property="og:deathyear" content={artist.deathyear} />
       )}
+      <meta property="fragment" content="!" />
       {renderImageMetaTags(artist)}
       {maybeRenderNoIndex(artist)}
     </Fragment>
