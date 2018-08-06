@@ -144,10 +144,10 @@ export default class InfiniteScrollArticle extends React.Component {
       showTooltips,
       onOpenAuthModal,
     } = this.props
-    const { renderTimes } = this.state
+    const { articles, renderTimes } = this.state
 
     return _.flatten(
-      this.state.articles.map((article, i) => {
+      articles.map((article, i) => {
         return (
           <div key={`article-${i}`}>
             <Article
