@@ -1,4 +1,6 @@
 export const canvasBody = `
+  id
+  layout
   slug
   thumbnail_title
   thumbnail_image
@@ -13,6 +15,8 @@ export const canvasBody = `
 
 export const relatedArticles = `
   relatedArticlesPanel {
+    id
+    layout
     slug
     thumbnail_title
     thumbnail_image
@@ -22,6 +26,7 @@ export const relatedArticles = `
   }
   relatedArticles {
     description
+    layout
     thumbnail_title
     thumbnail_image
     title
