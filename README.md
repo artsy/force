@@ -9,8 +9,8 @@ Want to know more about Artsy tech? Read the [Artsy Engineering Blog](http://art
 ## Meta
 
 * **State:** production
-* **Production:** [https://www.artsy.net](https://www.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
-* **Staging:** [https://staging.artsy.net](https://staging.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
+* **Production:** [https://www.artsy.net](https://www.artsy.net) | [k8s](https://kubernetes.artsy.net/#!/search?q=force&namespace=default)
+* **Staging:** [https://staging.artsy.net](https://staging.artsy.net) | [k8s](https://kubernetes-staging.artsy.net/#!/search?q=force&namespace=default)
 * **Github:** [https://github.com/artsy/force](https://github.com/artsy/force)
 * **CI/Deploys:** [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
 * **BrowserStack:** For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
