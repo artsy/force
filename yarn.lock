@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^2.1.8":
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-2.1.8.tgz#45842be1147a2394af9d83ba08c7c3ee81e28885"
+"@artsy/reaction@^2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-2.1.9.tgz#21a4dc99d86dc09f11ead2f71ade5263fa3c3535"
   dependencies:
     "@artsy/palette" "^2.9.0"
     cheerio "^1.0.0-rc.2"
