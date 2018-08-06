@@ -18,6 +18,5 @@
       "reaction/*": ["../node_modules/@artsy/reaction/dist/*"]
     }
   },
-  "files": ["./node_modules/@artsy/reaction/dist"],
   "include": ["./src"]
 }
