@@ -15,6 +15,7 @@
     "mocha": "scripts/mocha.sh",
     "precommit": "lint-staged",
     "prepare": "patch-package",
+    "prepush": "yarn type-check",
     "prettier-write": "yarn run prettier --write",
     "publish_assets": "scripts/publish_assets.sh",
     "relay": "node scripts/relayCompiler.js",
