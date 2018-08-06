@@ -61,18 +61,16 @@ export default class ArticleLayout extends React.Component {
   render() {
     const {
       article,
+      isExperimentInfiniteScroll,
       isSuper,
       isMobile,
       renderTime,
       showTooltips,
       templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
-
-    const isExperimentInfiniteScroll =
-      sd.ARTICLE_INFINITE_SCROLL === 'experiment'
     const hasNav = isSuper || article.seriesArticle
+    const isStatic = isExperimentInfiniteScroll || hasNav
 
-    const notScrolling = isExperimentInfiniteScroll || hasNav
     return (
       <div>
         {isSuper && (
@@ -83,7 +81,7 @@ export default class ArticleLayout extends React.Component {
           />
         )}
 
-        {notScrolling ? (
+        {isStatic ? (
           <Article
             article={article}
             display={article.display}
