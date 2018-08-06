@@ -8,6 +8,7 @@ import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
 import { ContextProvider } from 'reaction/Components/Artsy'
 import { DisplayPanel } from 'reaction/Components/Publishing/Display/DisplayPanel'
+import { FeatureArticle } from '../../../../../../node_modules/@artsy/reaction/dist/Components/Publishing/Fixtures/Articles'
 
 describe('<Article />', () => {
   before(done => {
@@ -17,7 +18,6 @@ describe('<Article />', () => {
       sd.CURRENT_PATH =
         '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
       sd.CURRENT_USER = { id: '123' }
-      sd.ARTICLE_INFINITE_SCROLL = 'control'
       done()
     })
   })
@@ -244,10 +244,20 @@ describe('<Article /> without infinite scroll', () => {
   })
 
   it('renders a standard article without infinite scroll', () => {
+    props.isExperimentInfiniteScroll = true
     const rendered = getWrapper(props)
 
     rendered.find(InfiniteScrollArticle).length.should.equal(0)
     rendered.html().should.containEql('StandardLayout')
+  })
+
+  it('renders a feature article without infinite scroll', () => {
+    props.isExperimentInfiniteScroll = true
+    props.article = FeatureArticle
+    const rendered = getWrapper(props)
+
+    rendered.find(InfiniteScrollArticle).length.should.equal(0)
+    rendered.html().should.containEql('FeatureLayout')
   })
 
   it('renders a standard article with ads', () => {
