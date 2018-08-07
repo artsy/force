@@ -30,8 +30,21 @@ spec:
           - containerPort: 5000
           resources:
             requests:
-              cpu: "1"
-              memory: "1Gi"
+              cpu: 700m
+              memory: 1Gi
+            limits:
+              memory: 1.5Gi
+      dnsPolicy: Default
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+
 ---
 apiVersion: v1
 kind: Service
