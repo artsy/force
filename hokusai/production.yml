@@ -32,6 +32,17 @@ spec:
             requests:
               cpu: "1"
               memory: "1Gi"
+      dnsPolicy: Default
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+
 ---
 apiVersion: v1
 kind: Service
