@@ -2,14 +2,12 @@ import ArticleModel from 'desktop/models/article.coffee'
 import InfiniteScrollArticle from '../InfiniteScrollArticle'
 import PropTypes from 'prop-types'
 import React from 'react'
-import get from 'lodash.get'
-import updeep from 'updeep'
-import { data as sd } from 'sharify'
 import { Article } from 'reaction/Components/Publishing'
 import _EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
+import splitTest from 'desktop/components/split_test/index.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
@@ -32,11 +30,11 @@ export default class ArticleLayout extends React.Component {
   }
 
   componentDidMount() {
+    splitTest('article_infinite_scroll').view()
+
     const { article, isSuper } = this.props
     // TODO: Replace with relay follow
     setupFollowButtons(this.state.following)
-    // Comment until we are ready to launch the test
-    // splitTest('article_infinite_scroll').view()
 
     if (isSuper) {
       new SuperArticleView({
