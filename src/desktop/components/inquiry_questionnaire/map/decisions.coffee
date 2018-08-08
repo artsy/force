@@ -4,11 +4,8 @@ hasSeen = (steps...) -> ({ logger }) -> logger.hasLogged steps...
 hasSeenThisSession = (steps...) -> ({ logger }) -> logger.hasLoggedThisSession steps...
 
 decisions =
-  is_auction: ({ artwork }) ->
-    artwork.get('is_in_auction') is true
-
-  ask_specialist: ({ ask_specialist }) ->
-    ask_specialist
+  ask_specialist: ({ artwork, ask_specialist }) ->
+    artwork.get('is_in_auction') is true || ask_specialist
 
   enable_new_inquiry_flow: ({ enableNewInquiryFlow }) -> enableNewInquiryFlow
 
