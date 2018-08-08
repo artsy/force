@@ -10,8 +10,7 @@ module.exports = """
     contact_message
     is_price_range
     price
-    domesticShipping
-    internationalShipping
+    shippingInfo
     artists {
       name
       is_consignable

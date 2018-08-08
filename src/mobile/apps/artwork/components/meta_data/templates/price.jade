@@ -4,14 +4,4 @@ if artwork.sale_message
       .sale_message= artwork.sale_message
     if artwork.price && artwork.availability !== 'sold'
       .shipping-info
-        - var noShippingInfo = !artwork.domesticShipping && !artwork.internationalShipping
-        - var complimentaryShipping = artwork.domesticShipping == '$0' && artwork.internationalShipping == '$0'
-        - var domesticShippingOnly = artwork.domesticShipping && artwork.domesticShipping != '$0' && !artwork.internationalShipping
-        if noShippingInfo
-          | Shipping, tax, and service quoted by seller
-        else if complimentaryShipping
-          | Free shipping worldwide
-        else if domesticShippingOnly
-          | Shipping: #{artwork.domesticShipping} Continental US only
-        else
-          | Shipping: #{artwork.domesticShipping} Continental US, #{artwork.internationalShipping} rest of the world
+        | #{artwork.shippingInfo}
