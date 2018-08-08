@@ -8,7 +8,7 @@ import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
 import { ContextProvider } from 'reaction/Components/Artsy'
 import { DisplayPanel } from 'reaction/Components/Publishing/Display/DisplayPanel'
-import { FeatureArticle } from '../../../../../../node_modules/@artsy/reaction/dist/Components/Publishing/Fixtures/Articles'
+import { FeatureArticle } from '@artsy/reaction/dist/Components/Publishing/Fixtures/Articles'
 
 describe('<Article />', () => {
   before(done => {
