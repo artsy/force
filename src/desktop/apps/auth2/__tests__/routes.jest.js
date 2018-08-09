@@ -141,6 +141,29 @@ describe('Routes', () => {
           done()
         })
       })
+
+      it('Sets afterSignUpAction cookie if corresponding query params are present', done => {
+        req.query = {
+          action: 'follow',
+          objectId: '123',
+          kind: 'artist',
+          destination: '/foo',
+          redirectTo: '/bar',
+          signupIntent: 'follow artist',
+          signupReferer: 'referrer',
+        }
+
+        res.cookie = jest.fn()
+
+        index(req, res, next).then(() => {
+          res.cookie.toHaveBeenCalledWith({
+            action: 'follow',
+            objectId: '123',
+            kind: 'artist',
+          })
+          done()
+        })
+      })
     })
   })
 
