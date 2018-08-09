@@ -1,5 +1,5 @@
 module.exports = [
-  is_auction: {
+  ask_specialist: {
     true: [
       'specialist'
       { is_logged_out: true: ['account'] }

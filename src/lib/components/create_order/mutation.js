@@ -1,21 +1,12 @@
 module.exports = `
-  mutation createOrder($partnerId: String!, $currencyCode: String!, $artworkId: String!, $priceCents: Int!, $quantity: Int!){
-    createOrder(
-      input: {
-        partnerId: $partnerId,
-        currencyCode: $currencyCode,
-        lineItems: [{
-          artworkId: $artworkId,
-          priceCents: $priceCents,
-          quantity: $quantity
-        }]
+mutation createOrder($artworkId: String!, $editionSetId: String, $quantity: Int){
+  createOrderWithArtwork(input: { artworkId: $artworkId, editionSetId: $editionSetId, quantity: $quantity}){
+    result{
+      order{
+        id
       }
-    ) {
-      result {
-        order {
-          id
-        }
-      }
+      errors
     }
+  }
 }
 `

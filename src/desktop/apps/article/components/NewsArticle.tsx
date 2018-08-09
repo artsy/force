@@ -4,7 +4,7 @@ import Waypoint from 'react-waypoint'
 import {
   ArticleData,
   DisplayData,
-  RelatedArticleData,
+  RelatedArticleCanvasData,
 } from '@artsy/reaction/dist/Components/Publishing/Typings'
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   nextArticle: ArticleData
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
-  relatedArticlesForCanvas?: RelatedArticleData[]
+  relatedArticlesForCanvas?: RelatedArticleCanvasData[]
   renderTime?: number
 }
 

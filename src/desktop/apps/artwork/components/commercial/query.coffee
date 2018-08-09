@@ -4,7 +4,6 @@ module.exports = """
     id
     is_acquireable
     is_inquireable
-    is_purchasable
     is_in_auction
     sale_message
     availability

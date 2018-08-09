@@ -3,7 +3,6 @@ import _ from 'underscore'
 import PropTypes from 'prop-types'
 import Waypoint from 'react-waypoint'
 import styled from 'styled-components'
-import colors from 'reaction/Assets/Colors'
 import { data as sd } from 'sharify'
 import { positronql as _positronql } from 'desktop/lib/positronql'
 import { Article } from 'reaction/Components/Publishing'
@@ -137,8 +136,14 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   renderContent = () => {
-    const { showTooltips, onOpenAuthModal } = this.props
-    const { renderTimes, articles } = this.state
+    const {
+      article: { slug },
+      emailSignupUrl,
+      isMobile,
+      showTooltips,
+      onOpenAuthModal,
+    } = this.props
+    const { articles, renderTimes } = this.state
 
     return _.flatten(
       articles.map((article, i) => {
@@ -146,15 +151,16 @@ export default class InfiniteScrollArticle extends React.Component {
           <div key={`article-${i}`}>
             <Article
               article={article}
-              emailSignupUrl={this.props.emailSignupUrl}
+              emailSignupUrl={emailSignupUrl}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
-              isMobile={this.props.isMobile}
+              isMobile={isMobile}
               display={article.display}
               showTooltips={showTooltips}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
+              infiniteScrollEntrySlug={slug}
             />
             <Waypoint
               onEnter={waypointData => this.onEnter(article, waypointData)}

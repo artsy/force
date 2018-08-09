@@ -7,7 +7,7 @@ import { positronql as _positronql } from 'desktop/lib/positronql'
 import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
 import {
   ArticleData,
-  RelatedArticleData,
+  RelatedArticleCanvasData,
   DisplayData,
 } from '@artsy/reaction/dist/Components/Publishing/Typings'
 import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
@@ -34,7 +34,7 @@ interface State {
   isLoading: boolean
   offset: number
   omit: string
-  relatedArticles: RelatedArticleData[]
+  relatedArticles: RelatedArticleCanvasData[]
 }
 
 // FIXME: Rewire

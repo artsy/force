@@ -7,6 +7,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
+Serializer = require '../../../../components/form/serializer.coffee'
 PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
@@ -23,7 +24,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   className: 'artwork-commercial'
 
   events:
-    'click .js-artwork-purchase-button' : 'purchase'
     'click .js-artwork-inquire-button'  : 'inquire'
     'click .js-artwork-acquire-button'  : 'acquire'
     'click .collector-faq'              : 'openCollectorModal'
@@ -43,14 +43,16 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     # Show the new buy now flow if you have the lab feature enabled
     loggedInUser = CurrentUser.orNull()
     if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      serializer = new Serializer @$('form')
+      data = serializer.data()
+
       createOrder
-        user: loggedInUser
-        partnerId: @artwork.get('partner_id')
-        currencyCode: "usd"
         artworkId: @artwork.get('_id')
-        priceCents: 500000, quantity: 1
+        editionSetId: data.edition_set_id
+        quantity: 1
+        user: loggedInUser
       .then (data) ->
-        order = data?.createOrder?.result?.order
+        order = data?.createOrderWithArtwork?.result?.order
         location.assign("/order2/#{order.id}/shipping")
 
     else
@@ -63,45 +65,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       analyticsHooks
         .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
 
-  purchase: (e) ->
-    e.preventDefault()
-    location.assign "#{@artwork.href()}/checkout"
-
-  # Used in the test group of the Purchase flow. Invokes inquiry
-  # modal when there is no pre-filled form in the side bar.
-  contactGallery: (e) ->
-    e.preventDefault()
-
-    $button = @$ '.js-artwork-inquire-button'
-    $button.attr 'data-state', 'loading'
-    # Defer submit disable so as to allow
-    # event handlers to finish propagating
-    _.defer ->
-      $button.prop 'disabled', true
-
-    @inquiry = new ArtworkInquiry notification_delay: 600
-    @user = User.instantiate()
-    @artwork.fetch().then =>
-      @artwork.related().fairs.add @data.artwork.fair
-      @modal = openInquiryQuestionnaireFor
-        user: @user
-        artwork: @artwork
-        inquiry: @inquiry
-
-      # Stop the spinner once the modal opens
-      @listenToOnce @modal.view, 'opened', ->
-        $button.attr 'data-state', ''
-        $button.prop 'disabled', false
-
-      # Success
-      @listenToOnce @inquiry, 'sync', =>
-        @$('.artwork-commercial__inquiry-buttons')
-          .html confirmation()
-
   inquire: (e) =>
-    if e
-      return @contactGallery(e) if @artwork.is_purchasable
-      e.preventDefault()
+    e.preventDefault() if e
 
     @user = User.instantiate()
 
