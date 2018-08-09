@@ -90,6 +90,18 @@ describe 'map', ->
           @state.next().should.equal 'done'
           @state.isEnd().should.be.true()
 
+    describe 'the work should only show the specialist modal', ->
+      beforeEach ->
+        @state.inject ask_specialist: true
+
+      afterEach ->
+        @state.inject ask_specialist: false
+
+      it 'and ends after the specialist step', ->
+        @state.current().should.equal 'specialist'
+        @state.next().should.equal 'done'
+        @state.isEnd().should.be.true()
+
     describe 'A user that has previously seen some steps', ->
       beforeEach ->
         @logger.log 'artists_in_collection'

@@ -10,7 +10,7 @@ openErrorFlash = require './error.coffee'
 sd = require('sharify').data
 { steps, decisions, views } = require './map.coffee'
 
-module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
+module.exports = ({ user, artwork, inquiry, bypass, state_attrs, ask_specialist }) ->
   { collectorProfile } = user.related()
   { userInterests } = collectorProfile.related()
 
@@ -47,6 +47,7 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
     userInterests: userInterests
     trail: trail
     enableNewInquiryFlow: sd.COMMERCIAL?.enableNewInquiryFlow
+    ask_specialist: ask_specialist
 
   # Attach/teardown analytics events
   analytics.attach state.context
