@@ -114,7 +114,7 @@ describe 'ArtworkImageView', ->
 
       it 'adds link to signup page', ->
         @view.renderSave()
-        @view.$('.artwork-header-module__watch-button').attr('href').should.containEql "/sign_up?action=artwork-save"
+        @view.$('.artwork-header-module__watch-button').attr('href').should.containEql "/sign_up?action=save"
 
     describe '#watchArtwork', ->
 
