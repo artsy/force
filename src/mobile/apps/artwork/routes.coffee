@@ -20,6 +20,7 @@ query = (user) -> """
       availability
       sale_message
       price
+      shippingInfo
       is_for_sale
       medium
       edition_of
