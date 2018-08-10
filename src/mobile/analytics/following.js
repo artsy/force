@@ -19,7 +19,7 @@
     })
   })
 
-  analyticsHooks.on('follow:login', function(options) {
-    analytics.track('Triggered login form via follow button')
+  analyticsHooks.on('follow:signup', function(options) {
+    analytics.track('Triggered signup form via follow button')
   })
 })()

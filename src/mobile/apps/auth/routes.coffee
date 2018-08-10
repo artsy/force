@@ -20,9 +20,8 @@ redirectUrl = (req) ->
   sanitizeRedirect(url)
 
 module.exports.login = (req, res) ->
-  locals =
+  locals = _.extend {}, req.query,
     redirectTo: redirectUrl(req)
-    action: req.query.action
 
   if res.locals.sd.MOBILE_NEW_AUTH_MODAL
     res.redirect "/login?#{qs.stringify(locals)}"
@@ -50,11 +49,8 @@ module.exports.resetPassword = (req, res) ->
   res.render 'reset_password'
 
 module.exports.signUp = (req, res) ->
-  locals =
+  locals = _.extend {}, req.query,
     redirectTo: redirectUrl(req)
-    action: req.query.action
-    error: err?.body.error
-    prefill: req.query.prefill
   
   if res.locals.sd.MOBILE_NEW_AUTH_MODAL
     res.redirect "/signup?#{qs.stringify(locals)}"
