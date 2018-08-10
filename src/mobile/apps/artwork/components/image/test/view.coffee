@@ -51,7 +51,7 @@ describe 'ArtworkImageView', ->
 
       it 'adds link to signup page', ->
         @view.renderSave()
-        @view.$('.artwork-header-module__favorite-button').attr('href').should.containEql "/sign_up?action=save&objectId=skull9&kind=artwork&redirect-to=about:blank"
+        @view.$('.artwork-header-module__favorite-button').attr('href').should.containEql "/sign_up?action=save&objectId=#{@view.artwork.id}&kind=artwork&redirect-to=about:blank"
 
     describe '#saveArtwork', ->
 
