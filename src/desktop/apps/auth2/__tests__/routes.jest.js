@@ -17,6 +17,7 @@ describe('Routes', () => {
       req = {
         path: '/',
         query: {},
+        header: () => 'referrer',
       }
       res = {
         locals: {
@@ -156,11 +157,13 @@ describe('Routes', () => {
         res.cookie = jest.fn()
 
         index(req, res, next).then(() => {
-          res.cookie.toHaveBeenCalledWith({
-            action: 'follow',
-            objectId: '123',
-            kind: 'artist',
-          })
+          expect(res.cookie.mock.calls[0][1]).toBe(
+            JSON.stringify({
+              action: 'follow',
+              objectId: '123',
+              kind: 'artist',
+            })
+          )
           done()
         })
       })
