@@ -63,7 +63,6 @@ const {
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
-  DD_API_KEY,
   DD_APM_ENABLED,
 } = config
 
@@ -217,10 +216,12 @@ export default function(app) {
   app.use(unsupportedBrowserCheck)
   app.use(splitTestMiddleware)
 
-  if (DD_API_KEY && DD_APM_ENABLED) {
+  if (DD_APM_ENABLED) {
     // DataDog automatically hooks into Express
     // https://datadog.github.io/dd-trace-js/index.html
-    ddTracer.init({ service: 'force' })
+    // and we use all the defaults from:
+    // https://github.com/DataDog/dd-trace-js/blob/master/docs/API.md#tracer-settings
+    ddTracer.init({})
   }
 
   // Sets up mobile marketing signup modal
