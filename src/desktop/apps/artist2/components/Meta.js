@@ -7,7 +7,7 @@ function renderImageMetaTags(artist) {
       <Fragment>
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="og:image" content={artist.image.large} />
-        <meta property="thumbnail" content={artist.image.square} />
+        <meta name="thumbnail" content={artist.image.square} />
       </Fragment>
     )
   } else {
@@ -35,7 +35,7 @@ export function Meta(props) {
     <Fragment>
       <title>{artist.meta.title}</title>
       <meta property="og:title" content={artist.meta.title} />
-      <meta property="description" content={artist.meta.description} />
+      <meta name="description" content={artist.meta.description} />
       <meta property="og:description" content={artist.meta.description} />
       <meta property="twitter:description" content={artist.meta.description} />
       <meta property="canonical" href={`${sd.APP_URL}/artist/${artist.id}`} />
