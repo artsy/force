@@ -3,7 +3,7 @@ include ../../../components/layout/templates/login-signup
 
 block body
   #content
-    mixin login-signup
+    mixin login-signup("Fair Search Results")
     header#fair-header
       form#fair-header-search-form( action="#{profile.get('id')}/search", method='GET' )
         input#fair-search-input.bordered-input(
@@ -56,4 +56,4 @@ block body
               span#search-term= term
               | &rdquo; 
             | on Artsy
-    mixin login-signup
+    mixin login-signup("Fair Search Results")
