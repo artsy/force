@@ -37,7 +37,7 @@ module.exports = class ArtworkImageView extends Backbone.View
               'data-state': 'saved'
               'data-action': 'remove'
     else
-      @$('.artwork-header-module__favorites-container a').attr("href", "/sign_up?action=save&objectId=#{@artwork.id}&kind=artwork&redirect-to=#{window.location}")
+      @$('.artwork-header-module__favorites-container a').attr("href", "/sign_up?action=save&objectId=#{@artwork.id}&kind=artwork&redirect-to=#{window.location}&signupIntent=save+artwork&trigger=click&contextModule=Artwork+Page")
       @$('.artwork-header-module__favorites-container').click( (e) ->
         analyticsHooks.trigger 'save:sign-up'
       )

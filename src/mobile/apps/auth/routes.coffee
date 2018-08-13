@@ -51,6 +51,13 @@ module.exports.resetPassword = (req, res) ->
 module.exports.signUp = (req, res) ->
   locals = _.extend {}, req.query,
     redirectTo: redirectUrl(req)
+    action: req.query.action
+    error: err?.body.error
+    prefill: req.query.prefill
+    intent: req.query.intent
+    signupIntent: req.query.signupIntent
+    trigger: req.query.trigger
+    contextModule: req.query.contextModule
   
   if res.locals.sd.MOBILE_NEW_AUTH_MODAL
     res.redirect "/signup?#{qs.stringify(locals)}"

@@ -52,6 +52,6 @@ module.exports = class FollowButtonView extends Backbone.View
         setTimeout (=> @$el.removeClass 'is-clicked'), 1500
     else
       analyticsHooks.trigger 'follow:signup'
-      location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&redirect-to=#{window.location}"
+      location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&redirect-to=#{window.location}&signupIntent=follow&trigger=click&contextModule=#{@context_module}"
 
     false

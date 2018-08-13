@@ -43,11 +43,14 @@ export const index = async (req, res, next) => {
   const {
     action,
     afterSignUpAction,
+    contextModule,
     destination,
     error,
     kind,
     objectId,
     signupIntent,
+    intent,
+    trigger,
   } = req.query
 
   const redirectTo = req.query.redirectTo || '/'
@@ -85,10 +88,13 @@ export const index = async (req, res, next) => {
         error,
         options: {
           afterSignUpAction,
+          contextModule,
           destination,
+          intent,
           redirectTo,
           signupIntent,
           signupReferer,
+          trigger,
         },
       },
     })
