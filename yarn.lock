@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-2.2.2.tgz#a4aaece80db5b9d195f95b63b0ef82be52ec2b0f"
+"@artsy/reaction@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-2.3.3.tgz#7e75c9f1a602844f1971f813086473fd439978dd"
   dependencies:
     "@artsy/palette" "^2.9.1"
     cheerio "^1.0.0-rc.2"
@@ -69,6 +69,7 @@
     qs "^6.5.0"
     react-css-transition-replace "^3.0.2"
     react-html-parser "^2.0.2"
+    react-lazy-load-image-component "^1.1.1"
     react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
@@ -9414,6 +9415,13 @@ react-is@^16.3.1:
 react-is@^16.3.2:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
+
+react-lazy-load-image-component@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.1.1.tgz#41e10defa52adf7c0ab9212cf0a94d46899ceff4"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
