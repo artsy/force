@@ -125,7 +125,7 @@ describe '#login', ->
           MOBILE_NEW_AUTH_MODAL: true
 
     routes.login req, res
-    @redirect.args[0][0].should.equal '/login?redirectTo=%2F&action='
+    @redirect.args[0][0].should.equal '/login?redirect-to=%2F&redirectTo=%2F'
 
 describe '#signUp', ->
   beforeEach ->
@@ -187,5 +187,5 @@ describe '#signUp', ->
           MOBILE_NEW_AUTH_MODAL: true
 
     routes.signUp req, res
-    @redirect.args[0][0].should.equal '/signup?redirectTo=%2F&action=&error=&prefill='
+    @redirect.args[0][0].should.equal '/signup?redirect-to=%2F&redirectTo=%2F'
 

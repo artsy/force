@@ -41,12 +41,28 @@ export const index = async (req, res, next) => {
   }
 
   const {
+    action,
     afterSignUpAction,
     destination,
-    redirectTo,
+    error,
+    kind,
+    objectId,
     signupIntent,
-    signupReferer,
   } = req.query
+
+  const redirectTo = req.query.redirectTo || '/'
+  const signupReferer = req.header('Referer') || req.host
+
+  if (action && objectId && kind) {
+    res.cookie(
+      'afterSignUpAction',
+      JSON.stringify({
+        action,
+        objectId,
+        kind,
+      })
+    )
+  }
 
   try {
     const layout = await renderLayout({
@@ -66,6 +82,7 @@ export const index = async (req, res, next) => {
       data: {
         type,
         meta,
+        error,
         options: {
           afterSignUpAction,
           destination,

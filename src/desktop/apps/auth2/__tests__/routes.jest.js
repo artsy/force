@@ -17,6 +17,7 @@ describe('Routes', () => {
       req = {
         path: '/',
         query: {},
+        header: () => 'referrer',
       }
       res = {
         locals: {
@@ -138,6 +139,31 @@ describe('Routes', () => {
           expect(redirectTo).toBe(req.query.redirectTo)
           expect(signupIntent).toBe(req.query.signupIntent)
           expect(signupReferer).toBe(req.query.signupReferer)
+          done()
+        })
+      })
+
+      it('Sets afterSignUpAction cookie if corresponding query params are present', done => {
+        req.query = {
+          action: 'follow',
+          objectId: '123',
+          kind: 'artist',
+          destination: '/foo',
+          redirectTo: '/bar',
+          signupIntent: 'follow artist',
+          signupReferer: 'referrer',
+        }
+
+        res.cookie = jest.fn()
+
+        index(req, res, next).then(() => {
+          expect(res.cookie.mock.calls[0][1]).toBe(
+            JSON.stringify({
+              action: 'follow',
+              objectId: '123',
+              kind: 'artist',
+            })
+          )
           done()
         })
       })

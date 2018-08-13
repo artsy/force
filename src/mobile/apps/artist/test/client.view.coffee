@@ -124,7 +124,7 @@ describe 'ArtistPageView', ->
         @view.followButtonView.onToggle(@e)
         spy.called.should.be.false()
         @view.followArtists.follow.restore()
-        location.href.should.containEql "/log_in?redirect-to="
+        location.href.should.containEql "/sign_up?action=follow&objectId=#{@view.model.id}&kind=artist&redirect-to=about:blank"
 
   describe '#resetArtworks', ->
 
