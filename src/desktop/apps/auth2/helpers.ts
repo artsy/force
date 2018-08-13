@@ -65,6 +65,7 @@ export const handleSubmit = (
           trigger,
           trigger_seconds: triggerSeconds,
           intent,
+          type,
           context_module: contextModule,
           modal_copy: copy,
           auth_redirect: redirectTo || destination,
