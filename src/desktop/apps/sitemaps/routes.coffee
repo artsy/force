@@ -63,4 +63,4 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Sitemap: #{APP_URL}/sitemap-videos.xml
 
   """
-  res.send if ENABLE_WEB_CRAWLING then robotsText else "User-agent: *\nNoindex: /"
+  res.send if ENABLE_WEB_CRAWLING then robotsText else "User-agent: *\nDisallow: /"
