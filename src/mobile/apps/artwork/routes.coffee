@@ -21,6 +21,7 @@ query = (user) -> """
       sale_message
       price
       shippingInfo
+      shippingOrigin
       is_for_sale
       medium
       edition_of

@@ -11,6 +11,7 @@ module.exports = """
     is_price_range
     price
     shippingInfo
+    shippingOrigin
     artists {
       name
       is_consignable

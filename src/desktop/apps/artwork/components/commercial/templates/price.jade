@@ -14,6 +14,9 @@ if artwork.sale_message || isPermanentCollection
           //- TODO: remove labFeature check once BNMO goes live to everybody
           if user && user.hasLabFeature('New Buy Now Flow')
             | #{artwork.shippingInfo}
+            if artwork.shippingOrigin
+              br
+              | Ships from #{artwork.shippingOrigin}
           else
             | Shipping, tax, and service quoted by seller
       else if isPermanentCollection
