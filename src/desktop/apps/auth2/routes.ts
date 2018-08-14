@@ -53,6 +53,12 @@ export const index = async (req, res, next) => {
     trigger,
   } = req.query
 
+  if (type === ModalType.forgot) {
+    res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
+      req.query.reset_password_redirect_to
+    res.locals.sd.SET_PASSWORD = req.query.set_password
+  }
+
   const redirectTo = req.query.redirectTo || '/'
   const signupReferer = req.header('Referer') || req.host
 
