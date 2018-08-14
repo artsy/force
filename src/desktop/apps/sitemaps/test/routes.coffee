@@ -30,7 +30,7 @@ describe 'Sitemaps', ->
       routes.__set__ 'ENABLE_WEB_CRAWLING', false
       routes.robots null, @res
       @res.send.args[0][0]
-        .should.equal  'User-agent: *\nNoindex: /'
+        .should.equal  'User-agent: *\nDisallow: /'
 
     describe 'when ENABLE_WEB_CRAWLING is true', ->
       beforeEach ->
