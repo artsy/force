@@ -197,6 +197,7 @@ describe('Authentication Helpers', () => {
         modal_copy: 'Log in yo',
         auth_redirect: '/',
         service: 'email',
+        type: 'login',
       })
     })
 
@@ -234,6 +235,7 @@ describe('Authentication Helpers', () => {
         auth_redirect: '/articles',
         intent: 'follow artist',
         service: 'email',
+        type: 'signup',
       })
     })
   })
