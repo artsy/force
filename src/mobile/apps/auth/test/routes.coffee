@@ -187,5 +187,5 @@ describe '#signUp', ->
           MOBILE_NEW_AUTH_MODAL: true
 
     routes.signUp req, res
-    @redirect.args[0][0].should.equal '/signup?redirect-to=%2F&redirectTo=%2F'
+    @redirect.args[0][0].should.containEql '/signup?redirect-to=%2F&redirectTo=%2F'
 

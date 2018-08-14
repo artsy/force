@@ -1,8 +1,10 @@
 //
-// Sets up intial project settings, middleware, mounted apps, and
+// Sets up initial project settings, middleware, mounted apps, and
 // global configuration such as overriding Backbone.sync and
 // populating sharify data
 //
+
+import ddTracer from 'dd-trace'
 import _ from 'underscore'
 import addRequestId from 'express-request-id'
 import artsyPassport from '@artsy/passport'
@@ -61,6 +63,7 @@ const {
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
+  DD_APM_ENABLED,
 } = config
 
 export default function(app) {
@@ -212,6 +215,14 @@ export default function(app) {
   app.use(logger)
   app.use(unsupportedBrowserCheck)
   app.use(splitTestMiddleware)
+
+  if (DD_APM_ENABLED) {
+    // DataDog automatically hooks into Express
+    // https://datadog.github.io/dd-trace-js/index.html
+    // and we use all the defaults from:
+    // https://github.com/DataDog/dd-trace-js/blob/master/docs/API.md#tracer-settings
+    ddTracer.init({})
+  }
 
   // Sets up mobile marketing signup modal
   app.use(marketingModals)

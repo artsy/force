@@ -3,7 +3,7 @@ include ../../../components/layout/templates/login-signup
 
 block body
   #content
-    mixin login-signup
+    mixin login-signup("Fair Organizer Profile")
     #fair-organization-page
       if newestFair.imageUrl('large_rectangle')
         .fair-organization-page__header-image
@@ -34,4 +34,4 @@ block body
         .avant-garde-tabs-list#fair-organization__about(data-list="about" class= pastFairs && pastFairs.length ? '' : 'avant-garde-tabs-list--active')
           p!= fairOrg.mdToHtml('about')
 
-    mixin login-signup
+    mixin login-signup("Fair Organizer Profile")

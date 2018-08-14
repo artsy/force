@@ -34,11 +34,11 @@ export function Meta(props) {
   return (
     <Fragment>
       <title>{artist.meta.title}</title>
+      <link rel="canonical" href={`${sd.APP_URL}/artist/${artist.id}`} />
       <meta property="og:title" content={artist.meta.title} />
       <meta name="description" content={artist.meta.description} />
       <meta property="og:description" content={artist.meta.description} />
       <meta property="twitter:description" content={artist.meta.description} />
-      <meta property="canonical" href={`${sd.APP_URL}/artist/${artist.id}`} />
       <meta property="og:url" href={`${sd.APP_URL}/artist/${artist.id}`} />
       <meta property="og:type" href={`${sd.FACEBOOK_APP_NAMESPACE}:artist`} />
       {artist.alternate_names && (
@@ -86,5 +86,5 @@ query ArtistMetaQuery($artistID: String!) {
     }
     blurb
   }
-} 
+}
 `
