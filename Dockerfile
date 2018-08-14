@@ -1,4 +1,7 @@
-FROM bitnami/node:8
+# The bitnami images are stripped down and offer things like install_packages
+# that avoid crufting up the image with lots of dependencies. 
+# 
+FROM bitnami/node:8.11.3
 #FROM circleci/node:8-stretch-browsers
 
 RUN install_packages libsecret-1-dev libglib2.0-dev
