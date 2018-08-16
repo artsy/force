@@ -33,7 +33,11 @@ mediator.on('openOrdersContactArtsyModal', options => {
   }
 })
 
-buildClientApp({ routes, user: sd.CURRENT_USER })
+buildClientApp({
+  routes,
+  user: sd.CURRENT_USER,
+  historyOptions: { useBeforeUnload: true },
+})
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
