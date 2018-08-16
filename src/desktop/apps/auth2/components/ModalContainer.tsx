@@ -65,6 +65,9 @@ export const ModalContainer: React.SFC<any> = () => {
           }
         )
       }}
+      onModalClose={() => {
+        mediator.trigger('modal:closed')
+      }}
     />
   )
 }
