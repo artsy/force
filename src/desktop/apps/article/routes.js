@@ -120,7 +120,7 @@ export async function index(req, res, next) {
     }
 
     const {
-      ARTICLE_INFINITE_SCROLL,
+      REVISED_ARTICLE_INFINITE_SCROLL,
       CURRENT_USER,
       IS_MOBILE,
       IS_TABLET,
@@ -131,7 +131,8 @@ export async function index(req, res, next) {
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
 
     // Infinite scroll a/b test
-    const isExperimentInfiniteScroll = ARTICLE_INFINITE_SCROLL === 'experiment'
+    const isExperimentInfiniteScroll =
+      REVISED_ARTICLE_INFINITE_SCROLL === 'experiment'
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== 'undefined'

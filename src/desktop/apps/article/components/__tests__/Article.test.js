@@ -190,7 +190,7 @@ describe('<Article /> without infinite scroll', () => {
       sd.CURRENT_PATH =
         '/article/artsy-editorial-surprising-reason-men-women-selfies-differently'
       sd.CURRENT_USER = { id: '123' }
-      sd.ARTICLE_INFINITE_SCROLL = 'experiment'
+      sd.REVISED_ARTICLE_INFINITE_SCROLL = 'experiment'
       done()
     })
   })

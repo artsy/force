@@ -25,8 +25,8 @@
 # module.exports = {}
 
 module.exports = {
-  article_infinite_scroll:
-    key: 'article_infinite_scroll'
+  revised_article_infinite_scroll:
+    key: 'revised_article_infinite_scroll'
     outcomes: [
       'control'
       'experiment'
