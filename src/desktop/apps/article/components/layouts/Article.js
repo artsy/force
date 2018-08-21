@@ -30,7 +30,7 @@ export default class ArticleLayout extends React.Component {
   }
 
   componentDidMount() {
-    splitTest('article_infinite_scroll').view()
+    splitTest('revised_article_infinite_scroll').view()
 
     const { article, isSuper } = this.props
     // TODO: Replace with relay follow
