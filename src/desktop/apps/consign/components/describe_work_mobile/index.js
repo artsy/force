@@ -5,25 +5,28 @@ import block from 'bem-cn-lite'
 import { Field, formValueSelector, reduxForm } from 'redux-form'
 import { compose } from 'underscore'
 import { connect } from 'react-redux'
-import { dispatchAndScrollToError, numberWarning, validate } from '../../client/validate'
+import {
+  dispatchAndScrollToError,
+  numberWarning,
+  validate,
+} from '../../client/validate'
 import { renderCheckboxInput } from '../checkbox_input'
 import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
 import { renderTextInput } from '../text_input'
-import {
-  submitDescribeWork
-} from '../../client/actions'
+import { submitDescribeWork } from '../../client/actions'
 
-export function makeDescribeWorkMobile (initialValues = {}) {
-  function DescribeWorkMobile (props) {
+export function makeDescribeWorkMobile(initialValues = {}) {
+  function DescribeWorkMobile(props) {
     const {
       artistName,
       categoryOptions,
       error,
       hasEditionValue,
+      hasMinimumPrice,
       isLoading,
       handleSubmit,
-      submitDescribeWorkAction
+      submitDescribeWorkAction,
     } = props
 
     const b = block('consignments-submission-describe-work-mobile')
@@ -33,12 +36,19 @@ export function makeDescribeWorkMobile (initialValues = {}) {
         <div className={b('title')}>
           Enter details about the work by {artistName}
         </div>
-        <form className={b('form')} onSubmit={handleSubmit(submitDescribeWorkAction)}>
+        <form
+          className={b('form')}
+          onSubmit={handleSubmit(submitDescribeWorkAction)}
+        >
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='title' component={renderTextInput}
+              <Field
+                name="title"
+                component={renderTextInput}
                 item={'title'}
-                instructions={'If the title is unknown, please enter your best guess.'}
+                instructions={
+                  'If the title is unknown, please enter your best guess.'
+                }
                 label={'Title*'}
                 autofocus
               />
@@ -46,7 +56,9 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='year' component={renderTextInput}
+              <Field
+                name="year"
+                component={renderTextInput}
                 item={'year'}
                 label={'Year*'}
               />
@@ -54,7 +66,9 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='category' component={renderSelectInput}
+              <Field
+                name="category"
+                component={renderSelectInput}
                 item={'category'}
                 label={'Category*'}
                 options={categoryOptions}
@@ -63,7 +77,9 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='medium' component={renderTextInput}
+              <Field
+                name="medium"
+                component={renderTextInput}
                 item={'medium'}
                 label={'Medium*'}
               />
@@ -71,14 +87,18 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='height' component={renderTextInput}
+              <Field
+                name="height"
+                component={renderTextInput}
                 item={'height'}
                 label={'Height*'}
                 warn={numberWarning}
               />
             </div>
             <div className={b('row-item')}>
-              <Field name='width' component={renderTextInput}
+              <Field
+                name="width"
+                component={renderTextInput}
                 item={'width'}
                 label={'Width*'}
                 warn={numberWarning}
@@ -87,109 +107,173 @@ export function makeDescribeWorkMobile (initialValues = {}) {
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='depth' component={renderTextInput}
+              <Field
+                name="depth"
+                component={renderTextInput}
                 item={'depth'}
                 label={'Depth'}
                 warn={numberWarning}
               />
             </div>
             <div className={b('row-item')}>
-              <Field name='dimensions_metric' component={renderSelectInput}
+              <Field
+                name="dimensions_metric"
+                component={renderSelectInput}
                 item={'dimensions_metric'}
                 label={'Units*'}
                 options={['in', 'cm']}
               />
             </div>
           </div>
-          {
-            hasEditionValue && (
-              <div>
-                <div className={b('row')}>
-                  <div className={b('row-item')}>
-                    <Field name='edition_number' component={renderTextInput}
-                      item={'edition_number'}
-                      label={'Edition Number*'}
-                    />
-                  </div>
-                </div>
-                <div className={b('row')}>
-                  <div className={b('row-item')}>
-                    <Field name='edition_size' component={renderTextInput}
-                      item={'edition_size'}
-                      label={'Size of Edition*'}
-                      warn={numberWarning}
-                    />
-                  </div>
+          {hasEditionValue && (
+            <div>
+              <div className={b('row')}>
+                <div className={b('row-item')}>
+                  <Field
+                    name="edition_number"
+                    component={renderTextInput}
+                    item={'edition_number'}
+                    label={'Edition Number*'}
+                  />
                 </div>
               </div>
-            )
-          }
-          <div className={b('row', {'border-bottom': true})}>
+              <div className={b('row')}>
+                <div className={b('row-item')}>
+                  <Field
+                    name="edition_size"
+                    component={renderTextInput}
+                    item={'edition_size'}
+                    label={'Size of Edition*'}
+                    warn={numberWarning}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          <div className={b('row', { 'border-bottom': true })}>
             <div className={b('row-item')}>
-              <Field name='edition' component={renderCheckboxInput}
+              <Field
+                name="edition"
+                component={renderCheckboxInput}
                 item={'edition'}
                 label={'This is an edition'}
                 value={false}
               />
             </div>
           </div>
-          <div className={b('small-row', {'border-bottom': true})}>
+          <div className={b('small-row', { 'border-bottom': true })}>
             <div className={b('row-item')}>
-              <Field name='signature' component={renderRadioInput}
+              <Field
+                name="signature"
+                component={renderRadioInput}
                 item={'signature'}
                 label={'Is this work signed?*'}
-                options={[{ label: 'yes', val: true }, { label: 'no', val: false }]}
+                options={[
+                  { label: 'yes', val: true },
+                  { label: 'no', val: false },
+                ]}
               />
             </div>
           </div>
-          <div className={b('small-row', {'border-bottom': true})}>
+          <div className={b('small-row', { 'border-bottom': true })}>
             <div className={b('row-item')}>
-              <Field name='authenticity_certificate' component={renderRadioInput}
+              <Field
+                name="authenticity_certificate"
+                component={renderRadioInput}
                 item={'authenticity_certificate'}
-                label={'Does this work come with a certificate of authenticity?*'}
-                options={[{ label: 'yes', val: true }, { label: 'no', val: false }]}
+                label={
+                  'Does this work come with a certificate of authenticity?*'
+                }
+                options={[
+                  { label: 'yes', val: true },
+                  { label: 'no', val: false },
+                ]}
               />
             </div>
           </div>
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='provenance' component={renderTextInput}
+              <Field
+                name="provenance"
+                component={renderTextInput}
                 item={'provenance'}
                 instructions={'Where did you acquire this work?'}
                 label={'Provenance'}
               />
             </div>
           </div>
-          <div className={b('row', {'border-bottom': true})}>
+          <div className={b('row', { 'border-bottom': true })}>
             <div className={b('row-item')}>
-              <div className={b('instructions')}>What city is the work located in?*</div>
-              <Field name='location' component={LocationAutocomplete} />
+              <div className={b('instructions')}>
+                What city is the work located in?*
+              </div>
+              <Field name="location" component={LocationAutocomplete} />
             </div>
           </div>
+          <div className={b('small-row', { 'border-bottom': true })}>
+            <div className={b('row-item')}>
+              <Field
+                name="minimum_price_yesno"
+                component={renderRadioInput}
+                item={'minimum_price_yesno'}
+                label={'Do you have a price in mind?'}
+                options={[
+                  { label: 'yes', val: true },
+                  { label: 'no', val: false },
+                ]}
+              />
+            </div>
+          </div>
+          {hasMinimumPrice && (
+            <div className={b('row')}>
+              <div className={b('row-item-1')}>
+                <Field
+                  name="dimensions_metric"
+                  component={renderSelectInput}
+                  item={'dimensions_metric'}
+                  label={'Price'}
+                  options={['USD', 'GBP']}
+                />
+              </div>
+              <div className={b('row-item-3')}>
+                <Field
+                  name="minimum_price_dollars"
+                  component={renderTextInput}
+                  item={'minimum_price_dollars'}
+                  label={'\u00A0'}
+                  warn={numberWarning}
+                />
+              </div>
+            </div>
+          )}{' '}
           <div className={b('row')}>
             <div className={b('row-item')}>
-              <Field name='phone' component={renderTextInput} label={'Mobile Number*'} item={'phone'} />
+              <Field
+                name="phone"
+                component={renderTextInput}
+                label={'Mobile Number*'}
+                item={'phone'}
+              />
             </div>
           </div>
           <button
-            className={b.builder()('next-button').mix('avant-garde-button-black')()}
-            type='submit'
+            className={b
+              .builder()('next-button')
+              .mix('avant-garde-button-black')()}
+            type="submit"
           >
-            {
-              isLoading ? <div className='loading-spinner-white' /> : 'Submit'
-            }
+            {isLoading ? <div className="loading-spinner-white" /> : 'Submit'}
           </button>
-          {
-            error && <div className={b('error')}>{error}</div>
-          }
+          {error && <div className={b('error')}>{error}</div>}
         </form>
       </div>
     )
   }
 
-  const mapStateToProps = (state) => {
+  const mapStateToProps = state => {
     const selector = formValueSelector('describeWork')
     const hasEditionValue = selector(state, 'edition')
+    const hasMinimumPrice = selector(state, 'minimum_price_yesno')
 
     return {
       artistName: state.submissionFlow.artistName,
@@ -198,13 +282,15 @@ export function makeDescribeWorkMobile (initialValues = {}) {
       isMobile: state.submissionFlow.isMobile,
       isLoading: state.submissionFlow.isLoading,
       hasEditionValue,
-      locationAutocompleteFrozen: state.submissionFlow.locationAutocompleteFrozen,
-      locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
+      hasMinimumPrice,
+      locationAutocompleteFrozen:
+        state.submissionFlow.locationAutocompleteFrozen,
+      locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue,
     }
   }
 
   const mapDispatchToProps = {
-    submitDescribeWorkAction: submitDescribeWork
+    submitDescribeWorkAction: submitDescribeWork,
   }
 
   DescribeWorkMobile.propTypes = {
@@ -212,9 +298,10 @@ export function makeDescribeWorkMobile (initialValues = {}) {
     categoryOptions: PropTypes.array.isRequired,
     error: PropTypes.string,
     hasEditionValue: PropTypes.bool,
+    hasMinimumPrice: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    submitDescribeWorkAction: PropTypes.func.isRequired
+    submitDescribeWorkAction: PropTypes.func.isRequired,
   }
 
   return compose(
@@ -223,11 +310,8 @@ export function makeDescribeWorkMobile (initialValues = {}) {
       validate,
       initialValues,
       onSubmitFail: dispatchAndScrollToError,
-      enableReinitialize: true
+      enableReinitialize: true,
     }),
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )
+    connect(mapStateToProps, mapDispatchToProps)
   )(DescribeWorkMobile)
 }

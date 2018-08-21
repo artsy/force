@@ -6,9 +6,13 @@ import { makeDescribeWorkDesktop } from '../describe_work_desktop'
 import { makeDescribeWorkMobile } from '../describe_work_mobile'
 import { isEmpty, pick } from 'underscore'
 
-function DescribeWorkContainer (props) {
+function DescribeWorkContainer(props) {
   const { isMobile, phone, submission } = props
-  const location = formattedLocation(submission.location_city, submission.location_state, submission.location_country)
+  const location = formattedLocation(
+    submission.location_city,
+    submission.location_state,
+    submission.location_country
+  )
   const populatedSubmission = isEmpty(submission)
     ? { signature: true, authenticity_certificate: true, phone }
     : { ...submission, location, phone }
@@ -26,6 +30,7 @@ function DescribeWorkContainer (props) {
     'id',
     'location',
     'medium',
+    'minimum_price_dollars',
     'phone',
     'provenance',
     'signature',
@@ -34,27 +39,25 @@ function DescribeWorkContainer (props) {
     'year'
   )
 
-  const DescribeWorkForm = isMobile ? makeDescribeWorkMobile(relevantInputs) : makeDescribeWorkDesktop(relevantInputs)
+  const DescribeWorkForm = isMobile
+    ? makeDescribeWorkMobile(relevantInputs)
+    : makeDescribeWorkDesktop(relevantInputs)
 
-  return (
-    <DescribeWorkForm />
-  )
+  return <DescribeWorkForm />
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isMobile: state.submissionFlow.isMobile,
     phone: state.submissionFlow.user.phone,
-    submission: state.submissionFlow.submission
+    submission: state.submissionFlow.submission,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(DescribeWorkContainer)
+export default connect(mapStateToProps)(DescribeWorkContainer)
 
 DescribeWorkContainer.propTypes = {
   isMobile: PropTypes.bool.isRequired,
   phone: PropTypes.string,
-  submission: PropTypes.object
+  submission: PropTypes.object,
 }
