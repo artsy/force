@@ -2,6 +2,7 @@ require('backbone').$ = $
 require('jquery-ui')
 require('blueimp-file-upload')
 require('jquery.iframe-transport')
+{ CURRENT_USER } = require('sharify').data
 
 routes =
   '/about': ->
@@ -28,7 +29,10 @@ routes =
 
   '/login': require('../apps/auth/client/auth.coffee').init
 
-  '/works-for-you': require('../apps/notifications/client/index.coffee').init
+  '/works-for-you': ->
+    require('../apps/notifications/client/index.coffee').init()
+    if CURRENT_USER?.lab_features.indexOf('New Works For You Grid') != -1
+      require('../apps/notifications/client/react_grid.js').default.setupReactGrid()
 
   '/profile/.*': require('../apps/user/client/index.coffee').init
 
