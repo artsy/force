@@ -11,7 +11,7 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-name' : 'toggleArtist'
     'click .filter-artist-clear' : 'clearArtistWorks'
 
-  initialize: ({@filterState, @following}) ->
+  initialize: ({@filterState, @following, @useReactionGrid}) ->
     if @filterState.get 'artist'
       @$selectedArtist = @$(".filter-artist[data-artist=#{@filterState.get('artist')}]")
       @$selectedArtist.attr 'data-state', 'selected'
@@ -23,30 +23,39 @@ module.exports = class SidebarView extends Backbone.View
 
   toggleForSale: (e) ->
     forSale = $(e.currentTarget).prop('checked')
-    @filterState.set
-      forSale: forSale
-      loading: true
-      empty: false
-      initialLoad: false
+    if @useReactionGrid
+      require('./react_grid.js').default.setupReactGrid({forSale: forSale, artistID: @$selectedArtist?.attr('data-artist')})
+    else
+      @filterState.set
+        forSale: forSale
+        loading: true
+        empty: false
+        initialLoad: false
 
   toggleArtist: (e) ->
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    @filterState.set
-      artist: @$selectedArtist.attr('data-artist')
-      loading: true
-      empty: false
-      initialLoad: false
-
+    if @useReactionGrid
+      require('./react_grid.js').default.setupReactGrid({forSale: @filterState.get('forSale'), artistID: @$selectedArtist.attr('data-artist')})
+    else
+      @filterState.set
+        artist: @$selectedArtist.attr('data-artist')
+        loading: true
+        empty: false
+        initialLoad: false
+    
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    @filterState.set
-      artist: null
-      loading: true
-      empty: false
-      initialLoad: false
+    if @useReactionGrid
+      require('./react_grid.js').default.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
+    else
+      @filterState.set
+        artist: null
+        loading: true
+        empty: false
+        initialLoad: false
 
   setupSearch: (options = {}) ->
     @typeahead = new TypeaheadView

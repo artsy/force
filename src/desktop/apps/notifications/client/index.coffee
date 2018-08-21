@@ -32,11 +32,15 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       empty: false
       initialLoad: true
 
+    useReactionGrid = @user?.hasLabFeature('New Works For You Grid')
+
     @sidebarView = new SidebarView
       el: @$('#notifications-filter')
       filterState: @filterState
       following: @following
-    if @user?.hasLabFeature('New Works For You Grid')
+      useReactionGrid: useReactionGrid
+
+    if useReactionGrid
       @$('#notifications-spinner').hide()
     else
       @recentlyAddedWorksView = new RecentlyAddedWorksView
