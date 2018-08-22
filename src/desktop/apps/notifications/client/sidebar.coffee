@@ -23,39 +23,38 @@ module.exports = class SidebarView extends Backbone.View
 
   toggleForSale: (e) ->
     forSale = $(e.currentTarget).prop('checked')
+    artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
     if @useReactionGrid
-      require('./react_grid.js').default.setupReactGrid({forSale: forSale, artistID: @$selectedArtist?.attr('data-artist')})
-    else
-      @filterState.set
-        forSale: forSale
-        loading: true
-        empty: false
-        initialLoad: false
+      require('./react_grid.js').default.setupReactGrid({forSale: forSale, artistID: artist})
+    @filterState.set
+      forSale: forSale
+      loading: true
+      empty: false
+      initialLoad: false
 
   toggleArtist: (e) ->
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
+    artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
     if @useReactionGrid
-      require('./react_grid.js').default.setupReactGrid({forSale: @filterState.get('forSale'), artistID: @$selectedArtist.attr('data-artist')})
-    else
-      @filterState.set
-        artist: @$selectedArtist.attr('data-artist')
-        loading: true
-        empty: false
-        initialLoad: false
+      require('./react_grid.js').default.setupReactGrid({forSale: @filterState.get('forSale'), artistID: artist})
+    @filterState.set
+      artist: artist
+      loading: true
+      empty: false
+      initialLoad: false
     
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
     if @useReactionGrid
       require('./react_grid.js').default.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
-    else
-      @filterState.set
-        artist: null
-        loading: true
-        empty: false
-        initialLoad: false
+    @filterState.set
+      artist: null
+      loading: true
+      empty: false
+      initialLoad: false
 
   setupSearch: (options = {}) ->
     @typeahead = new TypeaheadView
@@ -73,4 +72,5 @@ module.exports = class SidebarView extends Backbone.View
         id: model.get('id')
         name: model.get('name')
         published_artworks_count: model.get('published_artworks_count')
+        forsale_artworks_count: model.get('forsale_artworks_count')
     @$(".filter-artist[data-artist=#{model.get('id')}]").children('.filter-artist-name').click()
