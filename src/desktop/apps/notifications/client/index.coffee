@@ -48,9 +48,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
         notifications: @notifications
         filterState: @filterState
         following: @following
-    @artistWorksView = new ArtistWorksView
-      el: @$('#notifications-artist-works')
-      filterState: @filterState
+      @artistWorksView = new ArtistWorksView
+        el: @$('#notifications-artist-works')
+        filterState: @filterState
 
     @filterState.on 'change', @render
     @setupJumpView()
