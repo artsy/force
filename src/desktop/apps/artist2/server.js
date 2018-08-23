@@ -1,5 +1,5 @@
 import { buildServerApp } from 'reaction/Router'
-import { Meta, query } from './components/Meta'
+import { Meta, query, toJSONLD } from './components/Meta'
 import { renderLayout } from '@artsy/stitch'
 import { routes } from 'reaction/Apps/Artist/routes'
 import express from 'express'
@@ -39,10 +39,9 @@ app.get('/artist/:artistID*', async (req, res, next) => {
     }
 
     const { artist } = await metaphysics(send).then(data => data)
-    const { IS_MOBILE, REFERRER } = res.locals.sd
-    const isExternalReferer = !(
-      REFERRER && REFERRER.includes(res.locals.sd.APP_URL)
-    )
+    const { APP_URL, IS_MOBILE, REFERRER } = res.locals.sd
+    const isExternalReferer = !(REFERRER && REFERRER.includes(APP_URL))
+    const jsonLD = toJSONLD(artist, APP_URL)
 
     res.locals.sd.ARTIST_PAGE_CTA_ENABLED =
       !user && isExternalReferer && !IS_MOBILE
@@ -70,6 +69,9 @@ app.get('/artist/:artistID*', async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: 'artist2',
+      },
+      data: {
+        jsonLD,
       },
     })
 
