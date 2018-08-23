@@ -1,12 +1,28 @@
 module.exports = `
-mutation createOrder($artworkId: String!, $editionSetId: String, $quantity: Int){
-  createOrderWithArtwork(input: { artworkId: $artworkId, editionSetId: $editionSetId, quantity: $quantity}){
-    result{
-      order{
-        id
+  mutation createOrder(
+    $artworkId: String!
+    $editionSetId: String
+    $quantity: Int
+  ) {
+    createOrderWithArtwork(
+      input: {
+        artworkId: $artworkId
+        editionSetId: $editionSetId
+        quantity: $quantity
       }
-      errors
+    ) {
+      orderOrError {
+        ... on OrderWithMutationSuccess {
+          order {
+            id
+          }
+        }
+        ... on OrderWithMutationFailure {
+          error {
+            description
+          }
+        }
+      }
     }
   }
-}
 `
