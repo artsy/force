@@ -5,7 +5,7 @@ imagesLoaded.makeJQueryPlugin($)
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Contents as WorksForYouContent } from 'reaction/Styleguide/Components/WorksForYou'
+import { Contents as WorksForYouContent } from 'reaction/Apps/WorksForYou'
 
 import { ContextProvider } from 'reaction/Components/Artsy'
 

@@ -40,9 +40,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       following: @following
       useReactionGrid: useReactionGrid
 
-    if useReactionGrid
-      @$('#notifications-spinner').hide()
-    else
+    unless useReactionGrid
       @recentlyAddedWorksView = new RecentlyAddedWorksView
         el: @$('#notifications-works')
         notifications: @notifications
