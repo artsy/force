@@ -32,18 +32,23 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       empty: false
       initialLoad: true
 
+    useReactionGrid = @user?.hasLabFeature('New Works For You Grid')
+
     @sidebarView = new SidebarView
       el: @$('#notifications-filter')
       filterState: @filterState
       following: @following
-    @recentlyAddedWorksView = new RecentlyAddedWorksView
-      el: @$('#notifications-works')
-      notifications: @notifications
-      filterState: @filterState
-      following: @following
-    @artistWorksView = new ArtistWorksView
-      el: @$('#notifications-artist-works')
-      filterState: @filterState
+      useReactionGrid: useReactionGrid
+
+    unless useReactionGrid
+      @recentlyAddedWorksView = new RecentlyAddedWorksView
+        el: @$('#notifications-works')
+        notifications: @notifications
+        filterState: @filterState
+        following: @following
+      @artistWorksView = new ArtistWorksView
+        el: @$('#notifications-artist-works')
+        filterState: @filterState
 
     @filterState.on 'change', @render
     @setupJumpView()

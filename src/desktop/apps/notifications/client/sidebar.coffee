@@ -11,7 +11,7 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-name' : 'toggleArtist'
     'click .filter-artist-clear' : 'clearArtistWorks'
 
-  initialize: ({@filterState, @following}) ->
+  initialize: ({@filterState, @following, @useReactionGrid}) ->
     if @filterState.get 'artist'
       @$selectedArtist = @$(".filter-artist[data-artist=#{@filterState.get('artist')}]")
       @$selectedArtist.attr 'data-state', 'selected'
@@ -23,6 +23,9 @@ module.exports = class SidebarView extends Backbone.View
 
   toggleForSale: (e) ->
     forSale = $(e.currentTarget).prop('checked')
+    artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
+    if @useReactionGrid
+      require('./react_grid.js').default.setupReactGrid({forSale: forSale, artistID: artist})
     @filterState.set
       forSale: forSale
       loading: true
@@ -33,15 +36,20 @@ module.exports = class SidebarView extends Backbone.View
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
+    artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
+    if @useReactionGrid
+      require('./react_grid.js').default.setupReactGrid({forSale: @filterState.get('forSale'), artistID: artist})
     @filterState.set
-      artist: @$selectedArtist.attr('data-artist')
+      artist: artist
       loading: true
       empty: false
       initialLoad: false
-
+    
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
+    if @useReactionGrid
+      require('./react_grid.js').default.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
     @filterState.set
       artist: null
       loading: true
@@ -64,4 +72,5 @@ module.exports = class SidebarView extends Backbone.View
         id: model.get('id')
         name: model.get('name')
         published_artworks_count: model.get('published_artworks_count')
+        forsale_artworks_count: model.get('forsale_artworks_count')
     @$(".filter-artist[data-artist=#{model.get('id')}]").children('.filter-artist-name').click()
