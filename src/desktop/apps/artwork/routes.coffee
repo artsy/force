@@ -7,6 +7,8 @@ request = require 'superagent'
 sd = require('sharify').data
 splitTest = require '../../components/split_test/index.coffee'
 { extend } = require 'underscore'
+{ stringifyJSONForWeb } = require('../../components/util/json.coffee')
+{ convertArtworkToJSONLD } = require('./helper.js')
 
 query = """
   query artwork($id: String!) {
@@ -86,6 +88,8 @@ bootstrap = ->
       res.locals.sd.PARAMS = req.params
       res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.locals.sd.QUERY = req.query
+      res.locals.jsonLD = stringifyJSONForWeb(convertArtworkToJSONLD(data.artwork))
+
 
       # If a saleId is found, then check to see if user has been qualified for
       # bidding so that bid button UI is correct from the server down.
