@@ -6,7 +6,7 @@ import sinon from 'sinon'
 import React from 'react'
 import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 
 describe('<InfiniteScrollArticle />', () => {
   before(done => {

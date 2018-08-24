@@ -1,4 +1,4 @@
-import { buildClientApp } from 'reaction/Router'
+import { buildClientApp } from 'reaction/Artsy/Router'
 import { data as sd } from 'sharify'
 import { routes } from 'reaction/Apps/Order/routes'
 import mediator from 'desktop/lib/mediator.coffee'
@@ -35,8 +35,14 @@ mediator.on('openOrdersContactArtsyModal', options => {
 
 buildClientApp({
   routes,
-  user: sd.CURRENT_USER,
-  historyOptions: { useBeforeUnload: true },
+  context: {
+    user: sd.CURRENT_USER,
+  },
+  history: {
+    options: {
+      useBeforeUnload: true,
+    },
+  },
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(

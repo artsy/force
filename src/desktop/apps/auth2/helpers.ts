@@ -2,7 +2,7 @@ import Cookies from 'cookies-js'
 import {
   ModalType,
   ModalOptions,
-} from '@artsy/reaction/dist/Components/Authentication/Types'
+} from 'reaction/Components/Authentication/Types'
 import { data as sd } from 'sharify'
 import { pickBy, identity } from 'lodash'
 

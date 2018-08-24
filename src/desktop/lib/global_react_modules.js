@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Artwork as ReactionArtwork } from '@artsy/reaction/dist/Components/Artwork'
-import { ArtworkGrid as ReactionArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
-import { ContextProvider } from '@artsy/reaction/dist/Components/Artsy'
-import { Help } from '@artsy/reaction/dist/Assets/Icons/Help'
-import { Tooltip } from '@artsy/reaction/dist/Components/Tooltip'
+import { Artwork as ReactionArtwork } from 'reaction/Components/Artwork'
+import { ArtworkGrid as ReactionArtworkGrid } from 'reaction/Components/ArtworkGrid'
+import { ContextProvider } from 'reaction/Artsy'
+import { Help } from 'reaction/Assets/Icons/Help'
+import { Tooltip } from 'reaction/Components/Tooltip'
 import { data as sd } from 'sharify'
 
 export const TooltipQuestion = props => {
@@ -62,7 +62,7 @@ export const Fillwidth = props => {
   if (typeof window !== 'undefined') {
     const {
       Fillwidth: ReactionFillWidth,
-    } = require('@artsy/reaction/dist/Components/Artwork/Fillwidth')
+    } = require('reaction/Components/Artwork/Fillwidth')
 
     const artworks = mapToRelayConnection(props.artworks) // eslint-disable-line
 

@@ -9,7 +9,7 @@ import { data as sd } from 'sharify'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Contents } from 'reaction/Components/Gene'
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 
 import Gene from '../../models/gene.coffee'
 import CurrentUser from '../../models/current_user.coffee'
@@ -21,7 +21,7 @@ import ShareView from '../../components/share/view.coffee'
 import RelatedGenesView from '../../components/related_links/types/gene_genes.coffee'
 import blurb from '../../components/gradient_blurb/index.coffee'
 
-const relatedArtistsTemplate = (args) => {
+const relatedArtistsTemplate = args => {
   return require('./templates/related_artists.jade')(args)
 }
 
@@ -68,7 +68,7 @@ function setupGenePage() {
 
   // Load related artists
   const gene = new Gene(sd.GENE)
-  gene.relatedArtists.on('sync', (artists) => {
+  gene.relatedArtists.on('sync', artists => {
     const html = relatedArtistsTemplate({
       artists: artists.models,
     })
