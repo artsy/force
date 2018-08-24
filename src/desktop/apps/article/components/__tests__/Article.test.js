@@ -6,7 +6,7 @@ import fixtures from 'desktop/test/helpers/fixtures.coffee'
 import sinon from 'sinon'
 import { mount } from 'enzyme'
 import { data as sd } from 'sharify'
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 import { DisplayPanel } from 'reaction/Components/Publishing/Display/DisplayPanel'
 import { FeatureArticle } from '@artsy/reaction/dist/Components/Publishing/Fixtures/Articles'
 

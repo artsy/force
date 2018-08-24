@@ -3,7 +3,7 @@ import express from 'express'
 import React from 'react'
 import { routes } from 'reaction/Apps/Order/routes'
 
-import { buildServerApp } from 'reaction/Router'
+import { buildServerApp } from 'reaction/Artsy/Router'
 import styled from 'styled-components'
 
 const app = (module.exports = express())

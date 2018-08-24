@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { buildClientApp } from 'reaction/Router'
+import { buildClientApp } from 'reaction/Artsy/Router'
 import { routes } from './routes'
 
 buildClientApp({ routes })

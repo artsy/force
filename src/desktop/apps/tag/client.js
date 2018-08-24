@@ -4,7 +4,7 @@ import { data as sd } from 'sharify'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Contents } from 'reaction/Components/Tag'
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 
 import Tag from '../../models/tag.coffee'
 import CurrentUser from '../../models/current_user.coffee'

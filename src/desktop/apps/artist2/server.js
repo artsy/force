@@ -1,4 +1,4 @@
-import { buildServerApp } from 'reaction/Router'
+import { buildServerApp } from 'reaction/Artsy/Router'
 import { Meta, query } from './components/Meta'
 import { renderLayout } from '@artsy/stitch'
 import { routes } from 'reaction/Apps/Artist/routes'

@@ -7,7 +7,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Contents as WorksForYouContent } from 'reaction/Apps/WorksForYou'
 
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 
 import CurrentUser from '../../../models/current_user.coffee'
 

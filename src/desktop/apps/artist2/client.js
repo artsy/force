@@ -1,4 +1,4 @@
-import { buildClientApp } from 'reaction/Router'
+import { buildClientApp } from 'reaction/Artsy/Router'
 import { data as sd } from 'sharify'
 import { routes } from 'reaction/Apps/Artist/routes'
 import mediator from 'desktop/lib/mediator.coffee'
