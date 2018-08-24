@@ -13,10 +13,14 @@ app.get('/order2/:orderID*', async (req, res, next) => {
     const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
-      initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ['xs'] : undefined,
       routes,
       url: req.url,
-      user,
+      context: {
+        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
+          ? ['xs']
+          : undefined,
+        user,
+      },
     })
 
     if (redirect) {

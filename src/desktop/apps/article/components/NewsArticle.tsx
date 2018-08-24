@@ -5,7 +5,7 @@ import {
   ArticleData,
   DisplayData,
   RelatedArticleCanvasData,
-} from '@artsy/reaction/dist/Components/Publishing/Typings'
+} from 'reaction/Components/Publishing/Typings'
 
 interface Props {
   article: ArticleData

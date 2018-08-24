@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
+import { FormSwitcher } from 'reaction/Components/Authentication/FormSwitcher'
 import {
   ModalType,
   ModalOptions,
-} from '@artsy/reaction/dist/Components/Authentication/Types'
-import { ModalHeader } from '@artsy/reaction/dist/Components/Modal/ModalHeader'
+} from 'reaction/Components/Authentication/Types'
+import { ModalHeader } from 'reaction/Components/Modal/ModalHeader'
 import { handleSubmit } from '../helpers'
 
 interface Props {

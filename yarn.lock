@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.0.0.tgz#049504db2eb25dad7c70a71815eb085f88a14df4"
+"@artsy/reaction@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.0.1.tgz#92ad81586da2f87cb6a7b46da19341e16ec7778e"
   dependencies:
     "@artsy/palette" "^2.9.3"
     cheerio "^1.0.0-rc.2"
@@ -86,6 +86,7 @@
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
+    relay-mock-network-layer "^1.2.0"
     relay-runtime "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
     serialize-javascript "^1.5.0"
     sharify "^0.1.6"
