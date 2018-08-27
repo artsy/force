@@ -60,7 +60,7 @@ function setupGenePage() {
   )
   const user = CurrentUser.orNull()
   ReactDOM.render(
-    <ContextProvider currentUser={user ? user.toJSON() : null}>
+    <ContextProvider user={user ? user.toJSON() : null}>
       <Contents {...options} onStateChange={onStateChange} />
     </ContextProvider>,
     document.getElementById('gene-filter')

@@ -16,7 +16,7 @@ function setupReactGrid(options = {}) {
   const { artistID, forSale } = options
 
   ReactDOM.render(
-    <ContextProvider currentUser={user ? user.toJSON() : null}>
+    <ContextProvider user={user ? user.toJSON() : null}>
       <WorksForYouContent forSale={forSale} artistID={artistID || ''} />
     </ContextProvider>,
     document.getElementById('notifications-react-works')
