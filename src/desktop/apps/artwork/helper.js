@@ -36,13 +36,13 @@ export const convertArtworkToJSONLD = artwork => {
       ...artworkMetaData,
       category: artwork.category,
       productionDate: artwork.date,
-      offers: {
+      offers: compactObject({
         '@type': 'Offer',
         price: artwork.price,
         priceCurrency: artwork.price_currency, // not available in mp
         availability: artwork.availability,
         seller: artwork.partner.name,
-      },
+      }),
     })
   }
   return jsonLD
