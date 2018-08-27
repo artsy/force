@@ -47,7 +47,7 @@ export class ArtworkGrid extends Component {
     const artworks = mapToRelayConnection(this.state.artworks)
 
     return (
-      <ContextProvider currentUser={sd.CURRENT_USER}>
+      <ContextProvider user={sd.CURRENT_USER}>
         <ReactionArtworkGrid
           {...this.props}
           artworks={artworks}
@@ -67,7 +67,7 @@ export const Fillwidth = props => {
     const artworks = mapToRelayConnection(props.artworks) // eslint-disable-line
 
     return (
-      <ContextProvider currentUser={sd.CURRENT_USER}>
+      <ContextProvider user={sd.CURRENT_USER}>
         <ReactionFillWidth {...props} artworks={artworks} useRelay={false} />
       </ContextProvider>
     )
@@ -78,7 +78,7 @@ export const Fillwidth = props => {
 
 export const Artwork = props => {
   return (
-    <ContextProvider currentUser={sd.CURRENT_USER}>
+    <ContextProvider user={sd.CURRENT_USER}>
       <ReactionArtwork {...props} useRelay={false} />
     </ContextProvider>
   )

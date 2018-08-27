@@ -38,7 +38,7 @@ describe('<InfiniteScrollArticle />', () => {
 
   const getWrapper = props => {
     return mount(
-      <ContextProvider currentUser={null}>
+      <ContextProvider user={null}>
         <InfiniteScrollArticle {...props} />
       </ContextProvider>
     )

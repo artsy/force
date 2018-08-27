@@ -46,7 +46,7 @@ describe('<Article />', () => {
 
   const getWrapper = props => {
     return mount(
-      <ContextProvider currentUser={null}>
+      <ContextProvider user={null}>
         <ArticleLayout {...props} />
       </ContextProvider>
     )
@@ -221,7 +221,7 @@ describe('<Article /> without infinite scroll', () => {
 
   const getWrapper = props => {
     return mount(
-      <ContextProvider currentUser={null}>
+      <ContextProvider user={null}>
         <ArticleLayout {...props} />
       </ContextProvider>
     )

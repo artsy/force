@@ -56,7 +56,7 @@ export default hot(module)(
       return (
         <Fragment>
           <EditPortal article={article} />
-          <ContextProvider currentUser={sd.CURRENT_USER}>
+          <ContextProvider user={sd.CURRENT_USER}>
             {this.getArticleLayout()}
           </ContextProvider>
         </Fragment>
