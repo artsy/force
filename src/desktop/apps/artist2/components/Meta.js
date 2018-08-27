@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { compactObject } from 'desktop/models/mixins/compact_object.coffee'
-const { stringifyJSONForWeb } = require('desktop/components/util/json.coffee')
+import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 
 function renderImageMetaTags(artist) {
   const hasImage = artist.image && artist.image.versions.length
@@ -98,14 +98,14 @@ export const toJSONLD = (artist, APP_URL) => {
     '@context': 'http://schema.org',
     '@type': 'Person',
     additionalType: 'Artist',
-    image: artist.image.large || '',
+    image: artist.image ? artist.image.large : '',
     name: artist.name,
     url: `${APP_URL}${artist.href}`,
     gender: artist.gender,
     birthDate: artist.birthday,
     deathDate: artist.deathday,
     mainEntityOfPage: `${APP_URL}${artist.href}`,
-    description: artist.meta.description,
+    description: artist.meta ? artist.meta.description : '',
     nationality: {
       '@type': 'Country',
       name: artist.nationality,

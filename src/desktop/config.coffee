@@ -77,7 +77,7 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
-  NEW_ARTIST_PAGE_THRESHOLD: 10 # by default/not set no users will get the new page.
+  NEW_ARTIST_PAGE_THRESHOLD: 0 # by default/not set no users will get the new page.
   NEW_AUTH_MODAL: false
   NODE_ENV: 'development'
   OPENREDIS_URL: null
