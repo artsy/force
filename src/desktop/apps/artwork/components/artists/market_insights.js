@@ -3,7 +3,7 @@ import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Contents } from 'reaction/Components/Artist/MarketInsights'
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 
 const renderMarketInsightsFor = artistID => {
   const elementID = 'market-insights-container-' + artistID

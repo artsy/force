@@ -1,6 +1,6 @@
 import Cookies from 'cookies-js'
 import React from 'react'
-import { ModalManager } from '@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager'
+import { ModalManager } from 'reaction/Components/Authentication/Desktop/ModalManager'
 import { handleSubmit, setCookies } from '../helpers'
 import { data as sd } from 'sharify'
 const mediator = require('../../../lib/mediator.coffee')
@@ -64,6 +64,9 @@ export const ModalContainer: React.SFC<any> = () => {
             expires: 60 * 60 * 24,
           }
         )
+      }}
+      onModalClose={() => {
+        mediator.trigger('modal:closed')
       }}
     />
   )

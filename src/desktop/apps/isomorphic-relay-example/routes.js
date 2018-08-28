@@ -23,7 +23,7 @@ export const routes = [
       {
         path: '/artsy/:artistID',
         getComponent: ({ artworks }) => {
-          return import('@artsy/reaction/dist/Components/ArtworkGrid').then(
+          return import('reaction/Components/ArtworkGrid').then(
             ({ default: ArtworkGrid }) => props => (
               <div>
                 <ArtworkGrid {...props.artist} />

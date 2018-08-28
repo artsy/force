@@ -80,7 +80,13 @@ export default function(app) {
   app.use(compression())
 
   // Blacklist IPs
-  app.use(ipfilter(IP_BLACKLIST.split(','), { log: false, mode: 'deny' }))
+  app.use(
+    ipfilter(IP_BLACKLIST.split(','), {
+      allowedHeaders: ['x-forwarded-for'],
+      log: false,
+      mode: 'deny',
+    })
+  )
 
   // Rate limiting
   if (OPENREDIS_URL && cache.client) {

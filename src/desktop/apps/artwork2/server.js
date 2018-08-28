@@ -1,6 +1,6 @@
 import express from 'express'
 import adminOnly from 'desktop/lib/admin_only'
-import { buildServerApp } from 'reaction/Router'
+import { buildServerApp } from 'reaction/Artsy/Router'
 import { routes } from 'reaction/Apps/Artwork/routes'
 import { renderLayout } from '@artsy/stitch'
 import { Meta } from './components/Meta'
