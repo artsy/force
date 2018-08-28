@@ -30,6 +30,10 @@ setup(app)
 
 // Connect to Redis
 cache.setup(() => {
+  // if we can't get an xapp token, just exit and let the whole system try
+  // again - this prevents a sustained broken state when gravity returns a
+  // 502 during force startup.
+  artsyXapp.on('error', process.exit)
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
