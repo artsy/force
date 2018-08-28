@@ -47,9 +47,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.1.0.tgz#0239abb1a9e8b2c6f7fce6d1395643c04c578952"
+"@artsy/reaction@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.1.2.tgz#7212f758016ac7d8a6e64bdfc4e7e7b68db4fc25"
   dependencies:
     "@artsy/palette" "^2.9.3"
     cheerio "^1.0.0-rc.2"
@@ -81,6 +81,7 @@
     react-router "^4.2.0"
     react-sizeme "^2.4.4"
     react-slick "^0.21.0"
+    react-stripe-elements "^2.0.1"
     react-styled-flexboxgrid "^2.2.0"
     react-tracking "^5.3.0"
     react-transition-group "^2.3.0"
@@ -9797,6 +9798,12 @@ react-slick@^0.21.0:
 react-static-container@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-static-container/-/react-static-container-1.0.2.tgz#30a4f7548860be1d55d5eb4c20645b835c2bdf34"
+
+react-stripe-elements@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-stripe-elements/-/react-stripe-elements-2.0.1.tgz#197db4762c57bf73a07d852564ebdbac52954094"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-styled-flexboxgrid@^2.2.0:
   version "2.4.0"
