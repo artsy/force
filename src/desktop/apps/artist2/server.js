@@ -1,4 +1,4 @@
-import { buildServerApp } from 'reaction/Router'
+import { buildServerApp } from 'reaction/Artsy/Router'
 import { Meta, query, toJSONLD } from './components/Meta'
 import { renderLayout } from '@artsy/stitch'
 import { routes } from 'reaction/Apps/Artist/routes'
@@ -14,10 +14,14 @@ app.get('/artist/:artistID*', async (req, res, next) => {
     const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
-      initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ['xs'] : undefined,
       routes,
       url: req.url,
-      user,
+      context: {
+        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
+          ? ['xs']
+          : undefined,
+        user,
+      },
     })
 
     if (redirect) {

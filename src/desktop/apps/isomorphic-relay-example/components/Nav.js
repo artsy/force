@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Link, PreloadLink } from 'reaction/Router'
+import { Link, PreloadLink } from 'reaction/Artsy/Router'
 
 export default function Nav() {
   return (

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Checkbox } from '@artsy/reaction/dist/Components/Checkbox'
+import { Checkbox } from 'reaction/Components/Checkbox'
 import styled from 'styled-components'
-import colors from '@artsy/reaction/dist/Assets/Colors'
-import { garamond } from '@artsy/reaction/dist/Assets/Fonts'
+import colors from 'reaction/Assets/Colors'
+import { garamond } from 'reaction/Assets/Fonts'
 
 export const GDPRMessage = props => {
   return (

@@ -1,4 +1,4 @@
-import { buildClientApp } from 'reaction/Router'
+import { buildClientApp } from 'reaction/Artsy/Router'
 import { data as sd } from 'sharify'
 import { routes } from 'reaction/Apps/Artist/routes'
 import mediator from 'desktop/lib/mediator.coffee'
@@ -16,7 +16,12 @@ mediator.on('artist:tabclick', ({ to }) => {
   window.analytics.page({ path: to }, { integrations: { Marketo: false } })
 })
 
-buildClientApp({ routes, user: sd.CURRENT_USER })
+buildClientApp({
+  routes,
+  context: {
+    user: sd.CURRENT_USER,
+  },
+})
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>

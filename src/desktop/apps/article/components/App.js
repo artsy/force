@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Article } from 'reaction/Components/Publishing'
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 import { InfiniteScrollNewsArticle } from './InfiniteScrollNewsArticle.tsx'
 import { EditButton } from 'desktop/apps/article/components/EditButton'
 import _ArticleLayout from './layouts/Article'
@@ -56,7 +56,7 @@ export default hot(module)(
       return (
         <Fragment>
           <EditPortal article={article} />
-          <ContextProvider currentUser={sd.CURRENT_USER}>
+          <ContextProvider user={sd.CURRENT_USER}>
             {this.getArticleLayout()}
           </ContextProvider>
         </Fragment>

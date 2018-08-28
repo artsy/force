@@ -4,7 +4,7 @@ import { Router } from 'react-router'
 import createHistory from 'history/createBrowserHistory'
 import Cookies from 'cookies-js'
 
-import { ContextProvider } from 'reaction/Components/Artsy'
+import { ContextProvider } from 'reaction/Artsy'
 import { Wizard } from 'reaction/Components/Onboarding/Wizard'
 
 export const init = () => {
@@ -23,7 +23,7 @@ export const init = () => {
 
   const history = createHistory()
 
-  history.listen((ev) => {
+  history.listen(ev => {
     window.scrollTo(0, 0)
 
     // track pageviews when react-router updates the url

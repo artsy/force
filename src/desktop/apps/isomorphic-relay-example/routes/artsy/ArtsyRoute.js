@@ -1,6 +1,6 @@
 import React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
-import { ArtworkGrid } from '@artsy/reaction/dist/Components/ArtworkGrid'
+import { ArtworkGrid } from 'reaction/Components/ArtworkGrid'
 
 export const ArtsyRoute = createFragmentContainer(
   ({ artworks }) => {
