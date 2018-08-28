@@ -88,6 +88,9 @@ export default function(app) {
     })
   )
 
+  // health check mounted as /_health
+  app.use(createHealthcheckMiddleware())
+
   // Rate limiting
   if (OPENREDIS_URL && cache.client) {
     const limiter = require('express-limiter')(app, cache.client)

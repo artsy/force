@@ -132,6 +132,7 @@
     "glob": "^7.1.1",
     "graceful-fs": "^4.1.2",
     "graphql": "^0.13.2",
+    "healthcheck-ping": "^2.0.1",
     "heapdump": "^0.3.7",
     "helmet": "^2.3.0",
     "history": "^4.6.1",
