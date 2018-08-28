@@ -15,7 +15,7 @@ import { crop, resize } from 'desktop/components/resizer/index.coffee'
 import { data as _sd } from 'sharify'
 import { renderLayout as _renderLayout } from '@artsy/stitch'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
-import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
+import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require('config')
 const sailthru = require('sailthru-client').createSailthruClient(
   SAILTHRU_KEY,

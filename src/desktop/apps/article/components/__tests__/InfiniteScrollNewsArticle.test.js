@@ -96,7 +96,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
     rendered
       .find('#article-root')
       .children()
-      .length.should.equal(4)
+      .length.should.equal(5)
 
     Object.keys(rendered.state().display[0]).should.containEql('renderTime')
   })

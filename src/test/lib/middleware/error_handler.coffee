@@ -2,6 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 rewire = require 'rewire'
 errorHandler = rewire '../../../lib/middleware/error_handler'
+{ IpDeniedError } = require('express-ipfilter')
 
 describe 'errorHandler', ->
   beforeEach ->
@@ -32,3 +33,8 @@ describe 'errorHandler', ->
     _.isUndefined(@renderStub.render.args[0][1].message).should.be.ok()
     @renderStub.render.args[0][1].code.should.equal 420
     _.isUndefined(@renderStub.render.args[0][1].detail).should.be.ok()
+
+  it 'returns a 401 when an IP is blacklisted', ->
+    errorHandler(new IpDeniedError("You've been blocked"), {}, @res, {})
+    @res.status.args[0][0].should.equal 401
+    @renderStub.render.args[0][1].code.should.equal 401

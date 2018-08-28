@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader'
-import { ArticleData } from '@artsy/reaction/dist/Components/Publishing/Typings'
+import { ArticleData } from 'reaction/Components/Publishing/Typings'
 import { InfiniteScrollNewsArticle } from 'desktop/apps/article/components/InfiniteScrollNewsArticle'
 
 export interface Props {
@@ -10,15 +10,9 @@ export interface Props {
 }
 
 export default hot(module)(
-  class App extends Component<
-    Props,
-    any
-    > {
-
+  class App extends Component<Props, any> {
     render() {
-      return (
-        <InfiniteScrollNewsArticle {...this.props} />
-      )
+      return <InfiniteScrollNewsArticle {...this.props} />
     }
   }
 )

@@ -9,12 +9,12 @@ import {
   ArticleData,
   RelatedArticleCanvasData,
   DisplayData,
-} from '@artsy/reaction/dist/Components/Publishing/Typings'
-import { NewsNav } from '@artsy/reaction/dist/Components/Publishing/Nav/NewsNav'
+} from 'reaction/Components/Publishing/Typings'
+import { NewsNav } from 'reaction/Components/Publishing/Nav/NewsNav'
 import { setupFollows, setupFollowButtons } from './FollowButton.js'
 import { LoadingSpinner } from './InfiniteScrollArticle'
 import { NewsArticle } from './NewsArticle'
-import { NewsDateDivider } from '@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider'
+import { NewsDateDivider } from 'reaction/Components/Publishing/News/NewsDateDivider'
 
 export interface Props {
   article?: ArticleData

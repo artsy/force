@@ -1,4 +1,4 @@
-import { buildClientApp } from 'reaction/Router'
+import { buildClientApp } from 'reaction/Artsy/Router'
 import { routes } from 'reaction/Apps/Artwork/routes'
 import React from 'react'
 import ReactDOM from 'react-dom'

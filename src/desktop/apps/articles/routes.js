@@ -1,5 +1,5 @@
 import { renderLayout as _renderLayout } from '@artsy/stitch'
-import { getCurrentUnixTimestamp } from '@artsy/reaction/dist/Components/Publishing/Constants'
+import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
 import App from 'desktop/apps/articles/components/App.tsx'
 import magazineQuery from './queries/editorial_articles.coffee'
 import {

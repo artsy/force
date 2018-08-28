@@ -3,7 +3,7 @@ import express from 'express'
 import React from 'react'
 import { routes } from 'reaction/Apps/Order/routes'
 
-import { buildServerApp } from 'reaction/Router'
+import { buildServerApp } from 'reaction/Artsy/Router'
 import styled from 'styled-components'
 
 const app = (module.exports = express())
@@ -13,10 +13,14 @@ app.get('/order2/:orderID*', async (req, res, next) => {
     const user = req.user && req.user.toJSON()
 
     const { ServerApp, redirect, status } = await buildServerApp({
-      initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ['xs'] : undefined,
       routes,
       url: req.url,
-      user,
+      context: {
+        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
+          ? ['xs']
+          : undefined,
+        user,
+      },
     })
 
     if (redirect) {

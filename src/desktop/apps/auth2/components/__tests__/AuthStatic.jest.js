@@ -1,7 +1,7 @@
 import { mount } from 'enzyme'
 import React from 'react'
-import { ModalHeader } from '@artsy/reaction/dist/Components/Modal/ModalHeader'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
+import { ModalHeader } from 'reaction/Components/Modal/ModalHeader'
+import { FormSwitcher } from 'reaction/Components/Authentication/FormSwitcher'
 import { AuthStatic } from '../AuthStatic'
 
 describe('AuthStatic', () => {

@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import Colors from '@artsy/reaction/dist/Assets/Colors'
-import { FormSwitcher } from '@artsy/reaction/dist/Components/Authentication/FormSwitcher'
+import Colors from 'reaction/Assets/Colors'
+import { FormSwitcher } from 'reaction/Components/Authentication/FormSwitcher'
 import { handleSubmit } from '../helpers'
 import {
   ModalType,
   ModalOptions,
-} from '@artsy/reaction/dist/Components/Authentication/Types'
+} from 'reaction/Components/Authentication/Types'
 
 interface Props {
   type: string
