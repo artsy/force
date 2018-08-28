@@ -46,6 +46,7 @@ import splitTestMiddleware from '../desktop/components/split_test/middleware'
 import marketingModals from './middleware/marketing_modals'
 import config from '../config'
 import compression from 'compression'
+import createHealthcheckMiddleware from 'healthcheck-ping'
 
 const {
   API_REQUEST_TIMEOUT,
@@ -87,6 +88,9 @@ export default function(app) {
       mode: 'deny',
     })
   )
+
+  // health check mounted as /_health
+  app.use(createHealthcheckMiddleware())
 
   // Rate limiting
   if (OPENREDIS_URL && cache.client) {
