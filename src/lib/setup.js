@@ -270,8 +270,10 @@ export default function(app) {
   }
 
   // Routes for pinging system time and up
-  app.get('/system/time', (req, res) => res.send(200, { time: Date.now() }))
-  app.get('/system/up', (req, res) => res.send(200, { nodejs: true }))
+  app.get('/system/time', (req, res) =>
+    res.status(200).send({ time: Date.now() })
+  )
+  app.get('/system/up', (req, res) => res.status(200).send({ nodejs: true }))
 
   // Ensure CurrentUser is set for Artsy Passport
   // TODO: Investigate race condition b/t reaction's use of AP
