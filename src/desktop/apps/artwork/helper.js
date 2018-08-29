@@ -1,14 +1,8 @@
-import _ from 'underscore'
+import { pickBy, identity } from 'lodash'
 const { APP_URL } = require('sharify').data
 
 export const compactObject = o => {
-  const clone = _.clone(o)
-  _.each(clone, (v, k) => {
-    if (!v) {
-      delete clone[k]
-    }
-  })
-  return clone
+  return pickBy(o, identity)
 }
 
 export const convertArtworkToJSONLD = artwork => {
