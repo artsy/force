@@ -5,7 +5,7 @@ import { display, displayFragment } from 'desktop/apps/article/queries/display'
 
 export default function ArticleQuery(id) {
   return `
-    {
+    query ArticleQuery {
       article(id: "${id}") {
         ${articleBody}
         ${relatedArticles}

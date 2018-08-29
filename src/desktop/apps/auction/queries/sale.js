@@ -1,5 +1,6 @@
 export default function SaleQuery(id) {
-  return `{
+  return `
+  query SaleQuery {
     sale(id: "${id}") {
       _id
       associated_sale {

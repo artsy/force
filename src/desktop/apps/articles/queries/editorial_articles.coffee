@@ -1,6 +1,6 @@
 module.exports =
   """
-  {
+  query EditorialArticlesQuery {
     articles(published: true, limit: 50, sort: "-published_at", featured: true ) {
       slug
       thumbnail_title

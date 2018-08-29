@@ -1,5 +1,5 @@
 module.exports = '''
-  query($page: Int) {
+  query FairsQuery($page: Int) {
     featured_fairs: ordered_sets(key: "art-fairs:featured") {
       fairs: items {
         ... on FeaturedLinkItem {

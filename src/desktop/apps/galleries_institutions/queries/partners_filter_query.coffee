@@ -1,6 +1,6 @@
 module.exports =
   """
-  query partners_results($includeAggregations: Boolean!, $includeResults: Boolean!, $near: String, $category: [String], $type: [PartnerClassification], $page: Int, $term: String) {
+  query GalleriesInstitutionsPartnersQuery($includeAggregations: Boolean!, $includeResults: Boolean!, $near: String, $category: [String], $type: [PartnerClassification], $page: Int, $term: String) {
     category: filter_partners(eligible_for_listing:true, aggregations:[CATEGORY, TOTAL] size:0, near: $near, type: $type, default_profile_public:true, term: $term) @include(if: $includeAggregations) {
       total
       aggregations {
