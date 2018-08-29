@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { compactObject } from 'desktop/models/mixins/compact_object.coffee'
+import { pickBy, identity } from 'lodash'
 import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 
 function renderImageMetaTags(artist) {
@@ -111,5 +111,6 @@ export const toJSONLD = (artist, APP_URL) => {
       name: artist.nationality,
     },
   }
-  return stringifyJSONForWeb(compactObject(json))
+  const cleanedJSON = pickBy(json, identity)
+  return stringifyJSONForWeb(cleanedJSON)
 }

@@ -1,4 +1,4 @@
-import { toJSONLD } from 'desktop/apps/artist2/components/Meta.js'
+import { toJSONLD } from 'desktop/apps/artist2/components/Meta'
 
 describe('Meta', () => {
   const artist = {
