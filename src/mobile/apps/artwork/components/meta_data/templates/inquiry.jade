@@ -1,4 +1,4 @@
-if artwork.is_acquireable
+if artwork.is_acquireable && user && user.hasLabFeature("New Buy Now Flow")
   a.artwork-meta-data-black__contact-button.js-purchase Buy
 
 unless artwork.auction
