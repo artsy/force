@@ -53,6 +53,9 @@ app.get('/order2/:orderID*', async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: 'order2',
+        options: {
+          stripev3: true,
+        },
       },
     })
 
