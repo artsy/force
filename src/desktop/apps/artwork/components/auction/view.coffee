@@ -71,7 +71,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       data = serializer.data()
 
       createOrder
-        artworkId: @artwork.get('_id')
+        artworkId: @data.artwork.get('_id')
         editionSetId: data.edition_set_id
         quantity: 1
         user: loggedInUser
