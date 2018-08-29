@@ -1,4 +1,6 @@
 Backbone = require 'backbone'
+CurrentUser = require '../../../../models/current_user.coffee'
+{ createOrder } = require '../../../../../lib/components/create_order'
 { acquireArtwork } = require('../../../../components/acquire/view.coffee')
 
 module.exports = class MetaDataView extends Backbone.View
@@ -14,4 +16,15 @@ module.exports = class MetaDataView extends Backbone.View
     @editionSetId = $(e.target).val()
 
   buy: (e) ->
-    acquireArtwork @model, $(e.target), @editionSetId
+    loggedInUser = CurrentUser.orNull()
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      createOrder
+        artworkId: @model.get('_id')
+        editionSetId: @editionSetId
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        order = data?.createOrderWithArtwork?.orderOrError?.order
+        location.assign("/order2/#{order.id}/shipping")
+    else
+      acquireArtwork @model, $(e.target), @editionSetId
