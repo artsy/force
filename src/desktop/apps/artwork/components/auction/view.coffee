@@ -9,6 +9,8 @@ inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
+Serializer = require '../../../../components/form/serializer.coffee'
+CurrentUser = require '../../../../models/current_user.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 LOT_STANDING_MAX_POLLS = 10
@@ -62,13 +64,30 @@ module.exports = class ArtworkAuctionView extends Backbone.View
   acquire: (e) ->
     e.preventDefault()
 
-    $target = $(e.currentTarget)
-    $target.attr 'data-state', 'loading'
+    # Show the new buy now flow if you have the lab feature enabled
+    loggedInUser = CurrentUser.orNull()
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      serializer = new Serializer @$('.js-artwork-auction-buy-now-form')
+      data = serializer.data()
 
-    acquire AUCTION.artwork_id
-      .catch ->
-        $target.attr 'data-state', 'error'
-        location.reload()
+      createOrder
+        artworkId: @artwork.get('_id')
+        editionSetId: data.edition_set_id
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        order = data?.createOrderWithArtwork?.orderOrError?.order
+        location.assign("/order2/#{order.id}/shipping")
+
+    # Legacy purchase flow flow
+    else
+      $target = $(e.currentTarget)
+      $target.attr 'data-state', 'loading'
+
+      acquire AUCTION.artwork_id
+        .catch ->
+          $target.attr 'data-state', 'error'
+          location.reload()
 
   redirectTo: (path) ->
     location.assign path
