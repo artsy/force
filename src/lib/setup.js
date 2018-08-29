@@ -227,7 +227,11 @@ export default function(app) {
     // https://datadog.github.io/dd-trace-js/index.html
     // and we use all the defaults from:
     // https://github.com/DataDog/dd-trace-js/blob/master/docs/API.md#tracer-settings
-    ddTracer.init({})
+    console.log(Object.keys(process.env))
+    ddTracer.init({
+      hostname: process.env.DD_TRACE_AGENT_HOSTNAME,
+      service: 'force',
+    })
   }
 
   // Sets up mobile marketing signup modal
