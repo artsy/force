@@ -13,9 +13,12 @@ export const compactObject = o => {
 
 export const convertArtworkToJSONLD = artwork => {
   let jsonLD
+  const imageUrl =
+    artwork.images && artwork.images.length ? artwork.images[0].url : ''
+
   const artworkMetaData = {
     name: artwork.title,
-    image: artwork.images[0].url || '',
+    image: imageUrl,
     description: artwork.meta.description,
     url: `${APP_URL}${artwork.href}`,
     depth: artwork.depth,
