@@ -1,5 +1,5 @@
 module.exports = """
-  {
+  query AuctionRegistrationsQuery {
     me {
       sale_registrations(published: true, is_auction: true, sort: CREATED_AT_DESC) {
         is_registered

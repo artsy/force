@@ -1,5 +1,6 @@
-export function pastAuctions () {
-  return `{
+export function pastAuctions() {
+  return `
+  query Auctions2PastAuctionsQuery {
     sales(is_auction: true) {
       id
       name
@@ -9,8 +10,9 @@ export function pastAuctions () {
   }`
 }
 
-export function currentAuctions () {
-  return `{
+export function currentAuctions() {
+  return `
+  query Auctions2CurrentAuctionsQuery {
     sales(live: true, is_auction: true) {
       id
       name
@@ -28,8 +30,9 @@ export function currentAuctions () {
   }`
 }
 
-export function upcomingAuctions () {
-  return `{
+export function upcomingAuctions() {
+  return `
+  query Auctions2UpcomingAuctionsQuery {
     sales(is_auction: true) {
       id
       name
@@ -38,8 +41,9 @@ export function upcomingAuctions () {
   }`
 }
 
-export function promoAuctions () {
-  return `{
+export function promoAuctions() {
+  return `
+  query Auctions2PromoAuctionsQuery {
     sales(is_auction: true) {
       id
       name
@@ -48,8 +52,9 @@ export function promoAuctions () {
   }`
 }
 
-export function bidderPositions () {
-  return `{
+export function bidderPositions() {
+  return `
+  query Auctions2BidderPositionsQuery {
     me {
       bidder_positions {
         id

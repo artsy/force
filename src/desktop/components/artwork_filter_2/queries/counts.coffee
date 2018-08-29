@@ -1,6 +1,6 @@
 module.exports =
   """
-  query filterArtworks(
+  query ArtworkFilter2CountsQuery(
     $artist_id: String!,
     $aggregations: [ArtworkAggregation]!
   ) {

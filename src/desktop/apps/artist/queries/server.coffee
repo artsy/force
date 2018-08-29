@@ -1,5 +1,5 @@
 module.exports = """
-  query artist($artist_id: String!, $includeBlurb: Boolean!, $includeJSONLD: Boolean!) {
+  query ArtistServerQuery($artist_id: String!, $includeBlurb: Boolean!, $includeJSONLD: Boolean!) {
     artist(id: $artist_id){
       _id
       id

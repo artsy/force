@@ -3,7 +3,7 @@ import { articleBody } from '../../article/queries/articleBody'
 import { sectionFragments } from 'desktop/apps/article/queries/sectionFragments'
 
 export const news = `
-  {
+  query RSSNewsQuery {
     articles(
       published: true,
       channel_id: "${sd.ARTSY_EDITORIAL_CHANNEL}",

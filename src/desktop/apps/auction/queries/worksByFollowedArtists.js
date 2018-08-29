@@ -1,5 +1,5 @@
 export const worksByFollowedArtists = `
-  query filterSaleArtworks(
+  query AuctionWorksByFollowedArtistsQuery(
     $page: Int,
     $size: Int,
     $sale_id: ID
