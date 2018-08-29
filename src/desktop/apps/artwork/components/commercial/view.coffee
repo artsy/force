@@ -8,7 +8,6 @@ Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
 Serializer = require '../../../../components/form/serializer.coffee'
-PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
@@ -54,16 +53,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       .then (data) ->
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
-
-    else
-      order = new PendingOrder
-      @form = new Form $form: @$('form'), model: order
-
-      @form.submit e, success: ->
-        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
-
-      analyticsHooks
-        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
 
   inquire: (e) =>
     e.preventDefault() if e
