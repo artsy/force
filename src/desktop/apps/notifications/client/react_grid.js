@@ -5,7 +5,7 @@ imagesLoaded.makeJQueryPlugin($)
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Contents as WorksForYouContent } from 'reaction/Apps/WorksForYou'
+import { WorksForYou } from 'reaction/Apps/WorksForYou'
 
 import { ContextProvider } from 'reaction/Artsy'
 
@@ -17,7 +17,7 @@ function setupReactGrid(options = {}) {
 
   ReactDOM.render(
     <ContextProvider user={user ? user.toJSON() : null}>
-      <WorksForYouContent forSale={forSale} artistID={artistID || ''} />
+      <WorksForYou forSale={forSale} artistID={artistID || ''} />
     </ContextProvider>,
     document.getElementById('notifications-react-works')
   )

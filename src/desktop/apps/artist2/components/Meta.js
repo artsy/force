@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import { pickBy, identity } from 'lodash'
+import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
 
 function renderImageMetaTags(artist) {
   const hasImage = artist.image && artist.image.versions.length
@@ -71,6 +73,8 @@ query ArtistMetaQuery($artistID: String!) {
     nationality
     birthday
     deathday
+    gender
+    href
     meta {
       title
       description
@@ -88,3 +92,25 @@ query ArtistMetaQuery($artistID: String!) {
   }
 }
 `
+
+export const toJSONLD = (artist, APP_URL) => {
+  const json = {
+    '@context': 'http://schema.org',
+    '@type': 'Person',
+    additionalType: 'Artist',
+    image: artist.image ? artist.image.large : '',
+    name: artist.name,
+    url: `${APP_URL}${artist.href}`,
+    gender: artist.gender,
+    birthDate: artist.birthday,
+    deathDate: artist.deathday,
+    mainEntityOfPage: `${APP_URL}${artist.href}`,
+    description: artist.meta ? artist.meta.description : '',
+    nationality: {
+      '@type': 'Country',
+      name: artist.nationality,
+    },
+  }
+  const cleanedJSON = pickBy(json, identity)
+  return stringifyJSONForWeb(cleanedJSON)
+}

@@ -1,4 +1,4 @@
-- defaultOptions = {stripe: false, sailthru: true, marketo: true, quantcast: true}
+- defaultOptions = {stripe: false, stripev3: false, sailthru: true, marketo: true, quantcast: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
@@ -120,6 +120,9 @@ if sharify
 //- Stripe
 if options.stripe
   script( type="text/javascript", src="https://js.stripe.com/v2/" )
+
+if options.stripev3
+  script(async, id="stripe-js", src="https://js.stripe.com/v3/")
 
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other'
