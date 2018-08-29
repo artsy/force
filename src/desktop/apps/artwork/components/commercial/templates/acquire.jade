@@ -1,4 +1,4 @@
-if artwork.is_acquireable
+if artwork.is_acquireable && user && user.hasLabFeature("New Buy Now Flow")
   .artwork-acquire-form
     input( type='hidden', name='artwork_id', value= artwork.id )
 
