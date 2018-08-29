@@ -23,6 +23,7 @@ export default class ArticleLayout extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
+    isLoggedIn: PropTypes.bool,
     isSuper: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
@@ -61,6 +62,7 @@ export default class ArticleLayout extends React.Component {
       article,
       isExperimentInfiniteScroll,
       isSuper,
+      isLoggedIn,
       isMobile,
       renderTime,
       showTooltips,
@@ -84,6 +86,7 @@ export default class ArticleLayout extends React.Component {
             article={article}
             display={article.display}
             isMobile={isMobile}
+            isLoggedIn={isLoggedIn}
             onOpenAuthModal={this.handleOpenAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
