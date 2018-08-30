@@ -79,7 +79,8 @@ export const submissionFlowWithFetch = async (req, res, next) => {
 }
 
 function ArtistQuery(artistId) {
-  return `{
+  return `
+  query ConsignArtistQuery {
     artist(id: "${artistId}") {
       id
       name
@@ -89,7 +90,7 @@ function ArtistQuery(artistId) {
 
 function RecentlySoldQuery(id) {
   return `
-    {
+    query ConsignRecentlySoldQuery {
       ordered_set(id: "${id}") {
         id
         name
@@ -119,7 +120,8 @@ function RecentlySoldQuery(id) {
 }
 
 function SalesQuery() {
-  return `{
+  return `
+  query ConsignSalesQuery {
     sales(live: true, published: true, is_auction: true, size: 3) {
       _id
       auction_state
