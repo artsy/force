@@ -8,12 +8,9 @@ import styled from 'styled-components'
 import qs from 'querystring'
 import { clone, isArray } from 'underscore'
 
+// TODO: remove in favor of serializing filters from reaction
 mediator.on('artist:filter:changed', filters => {
   onFilterChange(filters)
-})
-
-mediator.on('artist:tabclick', ({ to }) => {
-  window.analytics.page({ path: to }, { integrations: { Marketo: false } })
 })
 
 buildClientApp({
