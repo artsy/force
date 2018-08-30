@@ -1,6 +1,6 @@
 module.exports =
   """
-  query artist($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
+  query ArtistRelatedArtistsQuery($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
     artist(id: $artist_id) {
       contemporary (size: 24) @include(if: $contemporary){
         ... artistCell

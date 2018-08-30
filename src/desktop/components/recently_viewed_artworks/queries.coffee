@@ -1,6 +1,6 @@
 module.exports =
   artworks: """
-    query artworks($ids: [String]) {
+    query RecentlyViewedArtworksQuery($ids: [String]) {
       artworks(ids: $ids) {
         _id
         id
@@ -15,7 +15,7 @@ module.exports =
   """
 
   me: """
-    query {
+    query RecentlyViewedArtworkIdsQuery {
       me {
         recentlyViewedArtworkIds
       }

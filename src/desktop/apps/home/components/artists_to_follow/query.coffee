@@ -1,5 +1,5 @@
 module.exports = """
-  query($type: HomePageArtistModuleTypes){
+  query HomeArtistsToFollowQuery($type: HomePageArtistModuleTypes){
     home_page {
       artist_module(key: $type){
         key

@@ -1,6 +1,6 @@
 module.exports =
   """
-  query filterArtworks(
+  query ArtworkFilter2ArtworksQuery(
     $artist_id: String!,
     $page: Int,
     $size: Int,

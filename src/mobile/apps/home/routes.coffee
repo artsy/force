@@ -2,7 +2,7 @@
 metaphysics = require '../../../lib/metaphysics.coffee'
 
 query = """
-  query {
+  query HomePageModulesQuery {
     home_page {
       hero_units(platform: MARTSY) {
         mode

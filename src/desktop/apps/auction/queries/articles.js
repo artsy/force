@@ -1,5 +1,6 @@
 export default function ArticlesQuery(saleId) {
-  return `{
+  return `
+  query AuctionArticlesQuery {
     articles(published: true, auction_id: "${saleId}" ) {
       slug
       thumbnail_title

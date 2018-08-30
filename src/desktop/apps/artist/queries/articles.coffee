@@ -1,6 +1,6 @@
 module.exports =
   """
-  query artist($artist_id: String!) {
+  query ArtistArticlesQuery($artist_id: String!) {
     artist(id: $artist_id) {
       articles (limit: 99, in_editorial_feed: true, sort: PUBLISHED_AT_DESC) {
         href

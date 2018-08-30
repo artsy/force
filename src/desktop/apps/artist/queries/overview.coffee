@@ -1,6 +1,6 @@
 module.exports =
   """
-  query artist($artist_id: String!, $shows: Boolean!, $artists: Boolean!, $articles: Boolean!, $loggedOut: Boolean!) {
+  query ArtistOverviewQuery($artist_id: String!, $shows: Boolean!, $artists: Boolean!, $articles: Boolean!, $loggedOut: Boolean!) {
     artist(id: $artist_id) {
       counts {
         shows: partner_shows

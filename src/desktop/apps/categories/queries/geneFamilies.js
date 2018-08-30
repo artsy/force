@@ -1,6 +1,6 @@
-export default function GeneFamiliesQuery () {
+export default function GeneFamiliesQuery() {
   return `
-  {
+  query GeneFamiliesQuery {
     gene_families(first: 20) {
       edges {
         node {

@@ -1,5 +1,5 @@
 module.exports = """
-  query($showHeroUnits: Boolean!) {
+  query HomePageQuery($showHeroUnits: Boolean!) {
     home_page {
       artwork_modules(
         max_rails: -1,

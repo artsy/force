@@ -1,7 +1,7 @@
 module.exports =
 
   """
-  query partnerCategories($category_type: CategoryType, $type: [PartnerClassification]){
+  query GalleriesInstitutionsPartnerCategoriesQuery($category_type: CategoryType, $type: [PartnerClassification]){
     partner_categories(category_type: $category_type, size: 30, internal: false){
       name
       id

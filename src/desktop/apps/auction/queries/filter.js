@@ -1,5 +1,5 @@
 export const filterQuery = `
-  query filterSaleArtworks(
+  query AuctionFilterSaleArtworks(
     $aggregations: [SaleArtworkAggregation],
     $page: Int,
     $size: Int,
