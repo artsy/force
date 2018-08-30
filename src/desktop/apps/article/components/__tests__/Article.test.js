@@ -41,8 +41,6 @@ describe('<Article />', () => {
   const { Article } = require('reaction/Components/Publishing')
   const SuperArticleView = sinon.stub()
   rewire.__set__('SuperArticleView', SuperArticleView)
-  const EditorialSignupView = sinon.stub()
-  rewire.__set__('EditorialSignupView', EditorialSignupView)
 
   const getWrapper = props => {
     return mount(
@@ -162,11 +160,6 @@ describe('<Article />', () => {
     html.should.containEql('Ad Headline')
   })
 
-  it('initiates EditorialSignupView for non-super, standard articles', () => {
-    getWrapper(props)
-    EditorialSignupView.called.should.be.true()
-  })
-
   // FIXME: DOES NOT TEST ANTHING
   xit('sets up follow buttons', () => {
     const article = _.extend({}, fixtures.article, {
@@ -216,8 +209,6 @@ describe('<Article /> without infinite scroll', () => {
     DisplayCanvas,
   } = require('reaction/Components/Publishing/Display/Canvas')
   rewire.__set__('SuperArticleView', SuperArticleView)
-  const EditorialSignupView = sinon.stub()
-  rewire.__set__('EditorialSignupView', EditorialSignupView)
 
   const getWrapper = props => {
     return mount(
