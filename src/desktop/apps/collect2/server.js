@@ -1,4 +1,4 @@
-import { buildServerApp } from 'reaction/Router'
+import { buildServerApp } from 'reaction/Artsy/Router'
 import { renderLayout } from '@artsy/stitch'
 import { routes } from 'reaction/Apps/Collect/routes'
 import express from 'express'
@@ -10,12 +10,21 @@ const app = (module.exports = express())
 app.get('/collect2', async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
-    const { ServerApp } = await buildServerApp({
-      initialMatchingMediaQueries: undefined,
+    const { ServerApp, redirect } = await buildServerApp({
       routes,
       url: req.url,
-      user,
+      context: {
+        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
+          ? ['xs']
+          : undefined,
+        user,
+      },
     })
+
+    if (redirect) {
+      res.redirect(302, redirect.url)
+      return
+    }
 
     // FIXME: Move this to Reaction
     const Container = styled.div`
