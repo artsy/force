@@ -1,6 +1,6 @@
-export default function FeaturedGenesQuery () {
+export default function FeaturedGenesQuery() {
   return `
-  {
+  query FeaturedGenesQuery {
     gene_families: ordered_sets(key: "browse:gene-category", size: 20) {
       name
       genes: items {

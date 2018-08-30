@@ -1,5 +1,6 @@
 export default function MeQuery(sale_id, live = true) {
-  return `{
+  return `
+  query AuctionsMeQuery {
     me {
       id
       has_credit_cards

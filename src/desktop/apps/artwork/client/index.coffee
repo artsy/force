@@ -35,7 +35,7 @@ module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
-        query artwork(
+        query ArtworkInAuctionQuery(
           $id: String!,
           $isClosed: Boolean!,
           $auctionId: ID,
@@ -79,7 +79,7 @@ module.exports =
 
     else if context.__typename is 'ArtworkContextFair'
       query: """
-          query artwork($id: String!) {
+          query ArtworkAtFairQuery($id: String!) {
             artwork(id: $id) {
               ... fair_artworks
               ... partner
@@ -103,7 +103,7 @@ module.exports =
 
     else if context.__typename is 'ArtworkContextPartnerShow'
       query: """
-          query artwork($id: String!) {
+          query ArtworkInShowQuery($id: String!) {
             artwork(id: $id) {
               ... partner
               ... show_artworks
@@ -130,7 +130,7 @@ module.exports =
 
     else
       query: """
-          query artwork($id: String!) {
+          query ArtworkElsewhereQuery($id: String!) {
             artwork(id: $id) {
               ... partner
               ... artist_artworks

@@ -1,5 +1,5 @@
 module.exports = """
-  query my_active_bids($live: Boolean!, $sale_id: String) {
+  query MyActiveBidsQuery($live: Boolean!, $sale_id: String) {
     me {
       lot_standings(live: $live, sale_id: $sale_id) {
         active_bid {

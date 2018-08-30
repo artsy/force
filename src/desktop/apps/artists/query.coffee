@@ -1,5 +1,5 @@
 module.exports = """
-  {
+  query ArtistsQuery {
     featured_artists: ordered_sets(key: "homepage:featured-artists") {
       name
       artists: items {

@@ -20,6 +20,9 @@ module.exports = class Filter extends Backbone.Model
 
   includeAggregations: ->
     @params.get('page') is 1 or @aggregations.length == 0
+    
+  includeMerchandisableArtists: ->
+    _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
 
   aggregationSelector: ->
     if @includeAggregations()
@@ -34,20 +37,28 @@ module.exports = class Filter extends Backbone.Model
       ''
 
   merchandisableArtists: ->
-    if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
+    if @includeMerchandisableArtists()
       require '../queries/merchandisable_artists.coffee'
     else
       ''
 
   artistFragment: ->
-    if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
+    if @includeMerchandisableArtists()
       require '../queries/artist.coffee'
     else
       ''
 
+  queryName: ->
+    options = _.compact([
+      if @includeAggregations() then 'Aggregations' else null,
+      if @includeMerchandisableArtists() then 'MerchandisableArtists' else null
+    ])
+    options = if options.length > 0 then """With#{options.join("And")}""" else ''
+    """CommercialFilter#{options}Query"""
+
   query: ->
     query = """
-      query filterArtworks(
+      query #{@queryName()}(
         $aggregations: [ArtworkAggregation],
         $for_sale: Boolean,
         $height: String,
