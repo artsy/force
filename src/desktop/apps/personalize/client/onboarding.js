@@ -6,6 +6,7 @@ import Cookies from 'cookies-js'
 
 import { ContextProvider } from 'reaction/Artsy'
 import { Wizard } from 'reaction/Components/Onboarding/Wizard'
+import { data as sd } from 'sharify'
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
@@ -36,7 +37,7 @@ export const init = () => {
   // Start app
   ReactDOM.hydrate(
     <Router history={history}>
-      <ContextProvider {...bootstrapData}>
+      <ContextProvider {...bootstrapData} user={sd.CURRENT_USER}>
         <Wizard redirectTo={redirectTo} />
       </ContextProvider>
     </Router>,
