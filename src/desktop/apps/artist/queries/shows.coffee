@@ -1,6 +1,6 @@
 module.exports =
   """
-  query artist($artist_id: String!) {
+  query ArtistShowsQuery($artist_id: String!) {
     artist(id: $artist_id) {
       upcoming_shows: shows(status:"upcoming", sort: start_at_asc, size: 99) {
         ... relatedShow

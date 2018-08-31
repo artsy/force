@@ -34,8 +34,6 @@ describe('<App />', () => {
   }
 
   const ArticleLayoutRewire = rewire('../layouts/Article')
-  const EditorialSignupView = sinon.stub()
-  ArticleLayoutRewire.__set__('EditorialSignupView', EditorialSignupView)
   const ArticleLayout = ArticleLayoutRewire.default
 
   const AppRewire = rewire('../App')

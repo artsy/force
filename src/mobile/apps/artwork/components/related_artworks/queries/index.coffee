@@ -33,4 +33,5 @@ module.exports = """
     type
   }
   is_buy_nowable
+  is_for_sale
 """

@@ -1,5 +1,5 @@
 module.exports = """
-  query artwork($id: String!) {
+  query ArtworkDogeQuery($id: String!) {
     artwork(id: $id) {
       layers {
         name

@@ -33,7 +33,14 @@ cache.setup(() => {
   // if we can't get an xapp token, just exit and let the whole system try
   // again - this prevents a sustained broken state when gravity returns a
   // 502 during force startup.
-  artsyXapp.on('error', process.exit)
+  artsyXapp.on('error', err => {
+    error(`
+Could not start Force because it could not set up the xapp token, this is likely
+due to \`API_URL\`, \`CLIENT_ID\` and \`CLIENT_SECRET\` not being set, but 
+also could be gravity being down.`)
+    error(err)
+    process.exit()
+  })
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server

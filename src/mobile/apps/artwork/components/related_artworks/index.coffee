@@ -11,7 +11,7 @@ module.exports = ->
   context = ARTWORK.context || {}
   if context.__typename is 'ArtworkContextAuction'
     query = """
-      query artwork($id: String!, $isOpen: Boolean!) {
+      query RelatedArtworksInAuctionQuery($id: String!, $isOpen: Boolean!) {
         artwork(id: $id) {
           ... auction_artworks @include(if: $isOpen)
           ... artist_artworks @skip(if: $isOpen)
@@ -24,7 +24,7 @@ module.exports = ->
     """
   else if context.__typename is 'ArtworkContextFair'
     query = """
-      query artwork($id: String!, $isFairPartner: Boolean!) {
+      query RelatedArtworksAtFairQuery($id: String!, $isFairPartner: Boolean!) {
         artwork(id: $id) {
           ... fair_artworks
           ... artist_artworks
@@ -39,7 +39,7 @@ module.exports = ->
     """
   else if context.__typename is 'ArtworkContextPartnerShow'
     query = """
-      query artwork($id: String!) {
+      query RelatedArtworksInShowQuery($id: String!) {
         artwork(id: $id) {
           ... show_artworks
           ... artist_artworks
@@ -54,7 +54,7 @@ module.exports = ->
     """
   else
     query = """
-      query artwork($id: String!) {
+      query RelatedArtworksOtherQuery($id: String!) {
         artwork(id: $id) {
           ... artist_artworks
           ... partner_artworks

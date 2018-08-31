@@ -1,18 +1,16 @@
+import { buildServerApp } from 'reaction/Artsy/Router'
 import { renderLayout } from '@artsy/stitch'
+import { routes } from 'reaction/Apps/Collect/routes'
 import express from 'express'
 import React from 'react'
-import { routes } from 'reaction/Apps/Order/routes'
-
-import { buildServerApp } from 'reaction/Artsy/Router'
 import styled from 'styled-components'
 
 const app = (module.exports = express())
 
-app.get('/order2/:orderID*', async (req, res, next) => {
+app.get('/collect2', async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
-
-    const { ServerApp, redirect, status } = await buildServerApp({
+    const { ServerApp, redirect } = await buildServerApp({
       routes,
       url: req.url,
       context: {
@@ -38,12 +36,12 @@ app.get('/order2/:orderID*', async (req, res, next) => {
     // Render layout
     const layout = await renderLayout({
       basePath: __dirname,
-      layout:
-        '../../components/main_layout/templates/react_minimal_header.jade',
+      layout: '../../components/main_layout/templates/react_redesign.jade',
       config: {
         styledComponents: true,
       },
       blocks: {
+        head: () => null,
         body: () => (
           <Container>
             <ServerApp />
@@ -52,16 +50,13 @@ app.get('/order2/:orderID*', async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'order2',
-        options: {
-          stripev3: true,
-        },
+        assetPackage: 'collect2',
       },
     })
 
-    res.status(status).send(layout)
+    res.send(layout)
   } catch (error) {
-    console.log('(apps/order2) Error: ', error)
+    console.log(error)
     next(error)
   }
 })

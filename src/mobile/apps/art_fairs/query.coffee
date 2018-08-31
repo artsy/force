@@ -1,5 +1,5 @@
 module.exports = """
-  query($page: Int, $size: Int) {
+  query FairsMobileQuery($page: Int, $size: Int) {
     fairs(page: $page, size: $size, has_listing: true, sort: START_AT_DESC) {
       href
       id

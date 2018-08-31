@@ -227,7 +227,10 @@ export default function(app) {
     // https://datadog.github.io/dd-trace-js/index.html
     // and we use all the defaults from:
     // https://github.com/DataDog/dd-trace-js/blob/master/docs/API.md#tracer-settings
-    ddTracer.init({})
+    ddTracer.init({
+      hostname: process.env.DD_TRACE_AGENT_HOSTNAME,
+      service: 'force',
+    })
   }
 
   // Sets up mobile marketing signup modal
@@ -270,8 +273,10 @@ export default function(app) {
   }
 
   // Routes for pinging system time and up
-  app.get('/system/time', (req, res) => res.send(200, { time: Date.now() }))
-  app.get('/system/up', (req, res) => res.send(200, { nodejs: true }))
+  app.get('/system/time', (req, res) =>
+    res.status(200).send({ time: Date.now() })
+  )
+  app.get('/system/up', (req, res) => res.status(200).send({ nodejs: true }))
 
   // Ensure CurrentUser is set for Artsy Passport
   // TODO: Investigate race condition b/t reaction's use of AP
