@@ -48,6 +48,7 @@ module.exports =
   FACEBOOK_APP_NAMESPACE: "artsyinc"
   FACEBOOK_DOMAIN_VERIFICATION: 'yeg3dqrlq548zc77ggvfipouil1l1e'
   FACEBOOK_ID: null
+  FACEBOOK_PIXEL_ID: null
   FACEBOOK_SECRET: null
   GALAXY_PUBLISHABLE_TOKEN: null
   GALAXY_TOKEN: null
