@@ -9,7 +9,6 @@ inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
 { createOrder } = require '../../../../../lib/components/create_order'
 template = -> require('./templates/index.jade') arguments...
 
@@ -68,12 +67,11 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     $target.attr 'data-state', 'loading'
 
     # Show the new buy now flow if you have the lab feature enabled
-    loggedInUser = CurrentUser.orNull()
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    if CURRENT_USER?.hasLabFeature('New Buy Now Flow')
       createOrder
         artworkId: AUCTION.artwork_id
         quantity: 1
-        user: loggedInUser
+        user: CURRENT_USER
       .then (data) ->
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
