@@ -2,6 +2,9 @@
 
 set -ex
 
+# used for loading correct manifest
+export COMMIT_HASH=`cat COMMIT_HASH.txt
+`
 if [ "$NODE_ENV" = "production" ]; then
   node --max_old_space_size=4096 ./src
 else

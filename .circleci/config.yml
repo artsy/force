@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Acceptance Tests
-          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
+          command: 'yarn install && yarn acceptance src/test/acceptance/*.js'
   test:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -20,14 +20,14 @@ jobs:
       - setup_remote_docker
       - run:
           name: Test
-          command: "hokusai test"
+          command: 'hokusai test'
   build:
     docker:
       - image: artsy/hokusai:0.4.5
     steps:
       - run:
-          name: "OK"
-          command: "echo All Tests Pass!"
+          name: 'OK'
+          command: 'echo All Tests Pass!'
   push:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -79,12 +79,6 @@ jobs:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
-          name: Echo Manifest
-          command: cat /tmp/workspace/manifest.json
-      - run:
-          name: Asset Manifest
-          command: hokusai staging env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
-      - run:
           name: Update staging branch
           command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
       - run:
@@ -102,12 +96,6 @@ jobs:
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
-      - run:
-          name: Echo Manifest
-          command: cat /tmp/workspace/manifest.json
-      - run:
-          name: Asset Manifest
-          command: hokusai production env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin

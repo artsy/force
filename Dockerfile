@@ -10,6 +10,8 @@ RUN install_packages libsecret-1-dev libglib2.0-dev
 ADD . /app
 WORKDIR /app
 
+RUN git rev-parse HEAD > COMMIT_HASH.txt && rm -rf .git
+
 #WORKDIR /home/circleci/project
 #RUN sudo chown -R circleci:circleci /home/circleci/project
 RUN rm -f /usr/local/bin/yarn && \
