@@ -223,13 +223,18 @@ export default function(app) {
   app.use(splitTestMiddleware)
 
   if (DD_APM_ENABLED) {
-    // DataDog automatically hooks into Express
-    // https://datadog.github.io/dd-trace-js/index.html
-    // and we use all the defaults from:
-    // https://github.com/DataDog/dd-trace-js/blob/master/docs/API.md#tracer-settings
     ddTracer.init({
       hostname: process.env.DD_TRACE_AGENT_HOSTNAME,
       service: 'force',
+      plugins: false,
+    })
+    ddTracer.use('express', {
+      // We want the root spans of MP to be labelled as just `service`
+      service: 'force',
+      recordHeaders: ['User-Agent'],
+    })
+    ddTracer.use('http', {
+      service: `force.http-client`,
     })
   }
 
