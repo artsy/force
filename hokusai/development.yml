@@ -1,4 +1,3 @@
----
 version: '2'
 services:
   force:
@@ -6,17 +5,16 @@ services:
       file: common.yml
       service: force
     environment:
-    - NODE_ENV=development
-    - REDIS_URL=redis://force-redis:6379/0
-    - PORT=5000
-    - S3_KEY
-    - S3_SECRET
-    - DEPLOY_ENV
+      - NODE_ENV=development
+      - REDIS_URL=redis://force-redis:6379/0
+      - PORT=5000
+      - S3_KEY
+      - S3_SECRET
+      - DEPLOY_ENV
     env_file: ../.env
     ports:
-    - 5000:5000
-    command: npm start
+      - 5000:5000
   force-redis:
     image: redis:3.2-alpine
     ports:
-    - 6379:6379
+      - 6379:6379
