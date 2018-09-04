@@ -3,7 +3,6 @@ import InfiniteScrollArticle from '../InfiniteScrollArticle'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Article } from 'reaction/Components/Publishing'
-import _EditorialSignupView from 'desktop/components/email/client/editorial_signup.coffee'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
@@ -11,7 +10,6 @@ import splitTest from 'desktop/components/split_test/index.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
-let EditorialSignupView = _EditorialSignupView
 
 export default class ArticleLayout extends React.Component {
   constructor(props) {
@@ -23,6 +21,7 @@ export default class ArticleLayout extends React.Component {
   static propTypes = {
     article: PropTypes.object,
     isMobile: PropTypes.bool,
+    isLoggedIn: PropTypes.bool,
     isSuper: PropTypes.bool,
     templates: PropTypes.object,
     showTooltips: PropTypes.bool,
@@ -42,11 +41,6 @@ export default class ArticleLayout extends React.Component {
         article: new ArticleModel(article),
       })
     }
-    if (!isSuper && article.layout === 'standard') {
-      new EditorialSignupView({
-        el: document.querySelector('body'),
-      })
-    }
   }
 
   handleOpenAuthModal = (mode, options) => {
@@ -61,6 +55,7 @@ export default class ArticleLayout extends React.Component {
       article,
       isExperimentInfiniteScroll,
       isSuper,
+      isLoggedIn,
       isMobile,
       renderTime,
       showTooltips,
@@ -84,6 +79,7 @@ export default class ArticleLayout extends React.Component {
             article={article}
             display={article.display}
             isMobile={isMobile}
+            isLoggedIn={isLoggedIn}
             onOpenAuthModal={this.handleOpenAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
