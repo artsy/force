@@ -6,7 +6,6 @@ import { Article } from 'reaction/Components/Publishing'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
-import splitTest from 'desktop/components/split_test/index.coffee'
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
@@ -29,8 +28,6 @@ export default class ArticleLayout extends React.Component {
   }
 
   componentDidMount() {
-    splitTest('revised_article_infinite_scroll').view()
-
     const { article, isSuper } = this.props
     // TODO: Replace with relay follow
     setupFollowButtons(this.state.following)
@@ -53,7 +50,6 @@ export default class ArticleLayout extends React.Component {
   render() {
     const {
       article,
-      isExperimentInfiniteScroll,
       isSuper,
       isLoggedIn,
       isMobile,
@@ -62,7 +58,7 @@ export default class ArticleLayout extends React.Component {
       templates: { SuperArticleFooter, SuperArticleHeader } = {},
     } = this.props
     const hasNav = isSuper || article.seriesArticle
-    const isStatic = isExperimentInfiniteScroll || hasNav
+    const isStatic = hasNav
 
     return (
       <div>
