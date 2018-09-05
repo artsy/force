@@ -17,7 +17,7 @@
   #notifications-works, #notifications-artist-works, #notifications-empty
     display none
   #notifications-spinner
-    display block
+    display none
 
 #notifications-page[data-state=artist]
   #notifications-works, #notifications-spinner
@@ -182,13 +182,6 @@
     margin-left 5px
     margin-top 0
 
-html[data-lab-features*='New Works For You Grid']
-  #notifications-page[data-state=loading]
-    #notifications-spinner
-      display none
-  #notifications-spinner
-    display none
-  #notifications-react-headline
-    display block
-    border-bottom 1px solid #e5e5e5
-    padding-bottom 20px
+#notifications-spinner
+  display none
+
