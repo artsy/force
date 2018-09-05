@@ -1,11 +1,11 @@
-# The bitnami images are stripped down and offer things like install_packages
-# that avoid crufting up the image with lots of dependencies. 
-# 
-FROM bitnami/node:8.11.3
+FROM node:8.11.3
 ARG commit_hash
-RUN install_packages libsecret-1-dev libglib2.0-dev
 
-#ADD . /home/circleci/project
+# The key bits here are making sure we install, libsecret-1-dev libglib2.0-dev
+RUN apt-get update -qq && apt-get install -y \
+  libsecret-1-dev libglib2.0-dev && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 ADD . /app
 WORKDIR /app
 
