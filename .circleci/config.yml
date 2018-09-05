@@ -18,7 +18,7 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: echo $commit_hash && export commit_hash=`git rev-parse HEAD`
+      - run: export commit_hash=`git rev-parse HEAD` && echo $commit_hash
       - run:
           name: Test
           command: 'hokusai test'
