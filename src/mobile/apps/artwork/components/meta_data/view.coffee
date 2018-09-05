@@ -17,7 +17,9 @@ module.exports = class MetaDataView extends Backbone.View
 
   buy: (e) ->
     loggedInUser = CurrentUser.orNull()
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    isAuctionPartner = @model.get('partner').type == 'Auction' or @model.get('partner').type == 'Auction House'
+    console.log isAuctionPartner
+    if loggedInUser?.hasLabFeature('New Buy Now Flow') and not isAuctionPartner
       createOrder
         artworkId: @model.get('_id')
         editionSetId: @editionSetId

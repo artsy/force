@@ -8,6 +8,7 @@ Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
 Serializer = require '../../../../components/form/serializer.coffee'
+PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
@@ -39,9 +40,19 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   acquire: (e) ->
     e.preventDefault()
 
-    # Show the new buy now flow if you have the lab feature enabled
     loggedInUser = CurrentUser.orNull()
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    if artwork.partner.type == "Auction" or artwork.partner.type == "Auction House"
+      order = new PendingOrder
+      @form = new Form $form: @$('form'), model: order
+
+      @form.submit e, success: ->
+        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
+
+      analyticsHooks
+        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
+
+    # Show the new buy now flow if you have the lab feature enabled
+    else if loggedInUser?.hasLabFeature('New Buy Now Flow')
       serializer = new Serializer @$('form')
       data = serializer.data()
 
