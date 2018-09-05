@@ -1,5 +1,7 @@
----
 version: '2'
 services:
   force:
-    build: ../
+    build:
+      context: ../
+      args:
+        - commit_hash
