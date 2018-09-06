@@ -6,7 +6,7 @@ request = require 'superagent'
 ip = require 'ip'
 
 resolveIPv4 = (ipAddress) ->
-  if ip.isV6Format(ipAddress)? and ~ipAddress.indexOf('::ffff')
+  if ip.isV6Format(ipAddress)? and ipAddress.indexOf('::ffff') >= 0
     return ipAddress.split('::ffff:')[1]
   return ipAddress
 
