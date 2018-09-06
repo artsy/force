@@ -15,12 +15,6 @@ if artwork.auction
 
         .artwork-auction-bid-module__clock
           include ../../../../../desktop/apps/artwork/components/clock/index
-        
-        if artwork.is_acquireable
-          .artwork-auction-bid-buy-now
-            .artwork-auction-bid-buy-now-label Buy Now
-            include ../meta_data/templates/price.jade
-            include ../meta_data/templates/inquiry.jade
 
         .artwork-auction-bid-module__auction-links.chevron-nav-list
           a.js-auction-multipage(data-id="auction-faqs") AUCTION FAQ
