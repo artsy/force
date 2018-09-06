@@ -55,7 +55,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
 
-    else if artwork.partner.type == "Auction" or artwork.partner.type == "Auction House"
+    else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
       order = new PendingOrder
       @form = new Form $form: @$('form'), model: order
 
