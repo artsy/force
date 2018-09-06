@@ -92,45 +92,18 @@ describe 'Artwork metadata templates', ->
       $('.artwork-meta-data-black__contact-button').text().should.equal 'Contact Gallery'
 
   describe 'buy button', ->
-    beforeEach ->
+    before ->
       @artwork.is_acquireable = true
 
-    it 'should not display when new buy now flow lab feature is disabled and is not auction', ->
       @html = render('inquiry')(
         artwork: @artwork
         sd: {}
         asset: (->)
       )
-      $ = cheerio.load @html
-      $('.js-purchase').text().should.equal ''
 
-    it 'should display buy now button when in auction', ->
-      @html = render('inquiry')(
-        artwork: _.extend({}, @artwork, { auction: is_auction: true })
-        sd: {}
-        asset: (->)
-      )
+    it 'display buy button', ->
       $ = cheerio.load @html
-      $('.js-purchase').text().should.equal 'Buy Now'
-
-    it 'should display buy now butten for auction partners', ->
-      @html = render('inquiry')(
-        artwork: _.extend({}, @artwork, { partner: type: 'Auction' })
-        sd: {}
-        asset: (->)
-      )
-      $ = cheerio.load @html
-      $('.js-purchase').text().should.equal 'Buy'
-
-    it 'should display buy button when ecommerce flag and buy now lab feature enabled', ->
-      @html = render('inquiry')(
-        artwork: @artwork
-        user: hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
-        sd: {}
-        asset: (->)
-      )
-      $ = cheerio.load @html
-      $('.js-purchase').text().should.equal 'Buy'
+      $('.artwork-meta-data-black__contact-button').text().should.equal 'Buy'
 
   describe 'for sale works partner header', ->
     describe 'gallery - not for sale', ->
@@ -196,6 +169,17 @@ describe 'Artwork metadata templates', ->
 
         $ = cheerio.load(html)
         $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
+
+    describe 'e-commerce - for sale', ->
+      beforeEach ->
+        @artwork.is_acquireable = true
+
+      it 'should render a "Buy" button', ->
+        html = render('index')(
+          artwork: @artwork
+        )
+
+        html.should.containEql 'Buy'
 
     describe 'collecting institution', ->
       beforeEach ->

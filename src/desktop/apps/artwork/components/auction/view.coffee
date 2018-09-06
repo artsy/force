@@ -9,7 +9,6 @@ inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
-{ createOrder } = require '../../../../../lib/components/create_order'
 template = -> require('./templates/index.jade') arguments...
 
 LOT_STANDING_MAX_POLLS = 10
@@ -66,22 +65,10 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     $target = $(e.currentTarget)
     $target.attr 'data-state', 'loading'
 
-    # Show the new buy now flow if you have the lab feature enabled
-    if CURRENT_USER?.hasLabFeature('New Buy Now Flow')
-      createOrder
-        artworkId: AUCTION.artwork_id
-        quantity: 1
-        user: CURRENT_USER
-      .then (data) ->
-        order = data?.createOrderWithArtwork?.orderOrError?.order
-        location.assign("/order2/#{order.id}/shipping")
-
-    # Legacy purchase flow
-    else
-      acquire AUCTION.artwork_id
-        .catch ->
-          $target.attr 'data-state', 'error'
-          location.reload()
+    acquire AUCTION.artwork_id
+      .catch ->
+        $target.attr 'data-state', 'error'
+        location.reload()
 
   redirectTo: (path) ->
     location.assign path
