@@ -20,12 +20,13 @@ buildClientApp({
   routes,
   context: {
     user: sd.CURRENT_USER,
+    mediator,
   },
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
-        <ClientApp mediator={mediator} />
+        <ClientApp />
       </Container>,
 
       document.getElementById('react-root')
