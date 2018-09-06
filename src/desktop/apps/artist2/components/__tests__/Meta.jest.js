@@ -1,6 +1,12 @@
-import { toJSONLD } from 'desktop/apps/artist2/components/Meta'
+import {
+  artistToJsonOffers,
+  productFromArtistArtwork,
+  sellerFromPartner,
+  toJSONLD,
+} from 'desktop/apps/artist2/components/Meta'
 
 describe('Meta', () => {
+  const APP_URL = 'https://artsy.net'
   const artist = {
     id: 'claes-oldenburg',
     name: 'Claes Oldenburg',
@@ -46,7 +52,7 @@ describe('Meta', () => {
 
   describe('#toJSONLD', () => {
     it('Constructs a json object from data', () => {
-      const jsonLD = toJSONLD(artist, 'https://artsy.net')
+      const jsonLD = toJSONLD(artist, APP_URL)
 
       expect(JSON.parse(jsonLD)).toEqual({
         '@context': 'http://schema.org',
@@ -99,8 +105,77 @@ describe('Meta', () => {
     })
 
     it('Omits empty keys', () => {
-      const jsonLD = toJSONLD(artist, 'https://artsy.net')
+      const jsonLD = toJSONLD(artist, APP_URL)
       expect(Object.keys(jsonLD).includes('deathday')).toBe(false)
+    })
+
+    it('#artistToJsonOffers constructs offers array from artist', () => {
+      const json = artistToJsonOffers(artist, APP_URL)
+      expect(json).toEqual([
+        {
+          '@type': 'Offer',
+          availability: 'InStock',
+          itemOffered: {
+            '@type': 'Product',
+            additionalType: 'Drawing, Collage or other Work on Paper',
+            brand: {
+              '@type': 'Person',
+              name: 'Claes Oldenburg',
+            },
+            image: {
+              '@type': 'ImageObject',
+              thumbnailUrl:
+                'https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg',
+            },
+            name:
+              "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
+            url:
+              'https://artsy.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel',
+          },
+          priceCurrency: 'USD',
+          seller: {
+            '@context': 'http://schema.org',
+            '@type': 'ArtGallery',
+            name: 'VINCE fine arts/ephemera',
+            url: 'https://artsy.net/vince-fine-arts-slash-ephemera',
+          },
+        },
+      ])
+    })
+
+    it('#productFromArtistArtwork construct product object from artist/artwork', () => {
+      const artwork = artist.artworks_connection.edges[0].node
+      const json = productFromArtistArtwork(artist, artwork, APP_URL)
+
+      expect(json).toEqual({
+        '@type': 'Product',
+        additionalType: 'Drawing, Collage or other Work on Paper',
+        productionDate: undefined,
+        name:
+          "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
+        url:
+          'https://artsy.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel',
+        image: {
+          '@type': 'ImageObject',
+          thumbnailUrl:
+            'https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg',
+        },
+        brand: {
+          '@type': 'Person',
+          name: 'Claes Oldenburg',
+        },
+      })
+    })
+
+    it('#sellerFromPartner constructs seller object from partner', () => {
+      const partner = artist.artworks_connection.edges[0].node.partner
+      const json = sellerFromPartner(partner, APP_URL)
+      expect(json).toEqual({
+        '@context': 'http://schema.org',
+        '@type': 'ArtGallery',
+        name: 'VINCE fine arts/ephemera',
+        url: 'https://artsy.net/vince-fine-arts-slash-ephemera',
+      })
     })
   })
 })
