@@ -83,4 +83,13 @@ describe 'Commercial template', ->
     $ = cheerio.load html
     $('.js-artwork-acquire-button').length.should.eql 0
 
+  it 'shows the buy button when ecommerce and the partner is an auction partner', ->
+    html = renderArtwork
+      artwork: acquireableArtwork
+      artworkOptions:
+        partner:
+          type: 'Auction'
+    $ = cheerio.load html
+    $('.js-artwork-acquire-button').length.should.eql 1
+
 
