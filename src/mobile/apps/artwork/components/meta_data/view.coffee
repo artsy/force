@@ -17,8 +17,11 @@ module.exports = class MetaDataView extends Backbone.View
 
   buy: (e) ->
     loggedInUser = CurrentUser.orNull()
-    isAuctionPartner = @model.get('partner').type == 'Auction' or @model.get('partner').type == 'Auction House'
-    if loggedInUser?.hasLabFeature('New Buy Now Flow') and not isAuctionPartner
+    isAuctionPartner =
+      @model.get('partner').type == 'Auction' or
+      @model.get('partner').type == 'Auction House'
+
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
       createOrder
         artworkId: @model.get('_id')
         editionSetId: @editionSetId
@@ -27,5 +30,5 @@ module.exports = class MetaDataView extends Backbone.View
       .then (data) ->
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
-    else
+    else if isAuctionPartner
       acquireArtwork @model, $(e.target), @editionSetId

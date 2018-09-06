@@ -41,18 +41,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     e.preventDefault()
 
     loggedInUser = CurrentUser.orNull()
-    if artwork.partner.type == "Auction" or artwork.partner.type == "Auction House"
-      order = new PendingOrder
-      @form = new Form $form: @$('form'), model: order
-
-      @form.submit e, success: ->
-        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
-
-      analyticsHooks
-        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
-
     # Show the new buy now flow if you have the lab feature enabled
-    else if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
       serializer = new Serializer @$('form')
       data = serializer.data()
 
@@ -64,6 +54,17 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       .then (data) ->
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
+
+    else if artwork.partner.type == "Auction" or artwork.partner.type == "Auction House"
+      order = new PendingOrder
+      @form = new Form $form: @$('form'), model: order
+
+      @form.submit e, success: ->
+        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
+
+      analyticsHooks
+        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
+
 
   inquire: (e) =>
     e.preventDefault() if e
