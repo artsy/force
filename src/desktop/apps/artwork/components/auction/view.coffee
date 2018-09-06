@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
+CurrentUser = require '../../../../models/current_user.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
@@ -66,12 +67,13 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     $target = $(e.currentTarget)
     $target.attr 'data-state', 'loading'
 
+    loggedInUser = CurrentUser.orNull()
     # Show the new buy now flow if you have the lab feature enabled
-    if CURRENT_USER?.hasLabFeature('New Buy Now Flow')
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
       createOrder
         artworkId: AUCTION.artwork_id
         quantity: 1
-        user: CURRENT_USER
+        user: loggedInUser
       .then (data) ->
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
