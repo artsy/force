@@ -113,6 +113,15 @@ describe 'Artwork metadata templates', ->
       $ = cheerio.load @html
       $('.js-purchase').text().should.equal 'Buy Now'
 
+    it 'should display buy now butten for auction partners', ->
+      @html = render('inquiry')(
+        artwork: _.extend({}, @artwork, { partner: type: 'Auction' })
+        sd: {}
+        asset: (->)
+      )
+      $ = cheerio.load @html
+      $('.js-purchase').text().should.equal 'Buy'
+
     it 'should display buy button when ecommerce flag and buy now lab feature enabled', ->
       @html = render('inquiry')(
         artwork: @artwork
