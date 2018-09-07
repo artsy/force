@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Test
           command: |
-            export commit_hash=`git rev-parse HEAD` && echo $commit_hash
+            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai test
   build:
     docker:
@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Push
           command: |
-            export commit_hash=`git rev-parse HEAD` && echo $commit_hash
+            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
   publish_staging_assets:
     docker:
