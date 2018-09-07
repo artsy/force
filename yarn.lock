@@ -54,9 +54,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.5.0.tgz#58f36b9e29de14553917431add42823aad719c8b"
+"@artsy/reaction@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.6.0.tgz#a04ccfe1b1cc6430bd85b5b6e0f6fe285fc2dfd1"
   dependencies:
     "@artsy/palette" "^2.9.3"
     cheerio "^1.0.0-rc.2"
@@ -3403,7 +3403,7 @@ dd-trace@artsy/dd-trace-js#artsy:
     safe-buffer "^5.1.1"
     semver "^5.5.0"
     shimmer "^1.2.0"
-    url-parse "^1.4.3"
+    url-parse "^1.2.0"
   optionalDependencies:
     "@airbnb/node-memwatch" "^1.0.2"
 
@@ -12357,7 +12357,7 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-parse@^1.4.3:
+url-parse@^1.2.0:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
   dependencies:
