@@ -50,6 +50,12 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: yarn install && DEPLOY_ENV=staging yarn publish_assets
+      - run: mkdir -p workspace
+      - run: cp manifest.json workspace/manifest.json
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - manifest.json
   publish_release_assets:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -58,6 +64,12 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: yarn install && DEPLOY_ENV=production yarn publish_assets
+      - run: mkdir -p workspace
+      - run: cp manifest.json workspace/manifest.json
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - manifest.json
   deploy_hokusai_staging:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -65,9 +77,17 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
+      - run:
+          name: Echo Manifest
+          command: cat /tmp/workspace/manifest.json
+      - run:
+          name: Asset Manifest
+          command: hokusai staging env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Update staging branch
           command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
@@ -81,6 +101,14 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Echo Manifest
+          command: cat /tmp/workspace/manifest.json
+      - run:
+          name: Asset Manifest
+          command: hokusai production env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
