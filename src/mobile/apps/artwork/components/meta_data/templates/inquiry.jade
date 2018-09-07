@@ -1,5 +1,14 @@
-if artwork.is_acquireable
-  a.artwork-meta-data-black__contact-button.js-purchase Buy
+- var isAuction = artwork.auction && artwork.auction.is_auction
+- var newBuyNowFlow = user && user.hasLabFeature("New Buy Now Flow")
+- var buyable = artwork.is_buy_nowable || artwork.is_acquireable
+- var isAuctionPartner = artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
+
+if buyable && (isAuction || newBuyNowFlow || isAuctionPartner)
+  a.artwork-meta-data-black__contact-button.js-purchase
+    if isAuction
+      | Buy Now
+    else
+      | Buy
 
 unless artwork.auction
   if artwork.is_inquireable

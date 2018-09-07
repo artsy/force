@@ -4,11 +4,13 @@ Backbone = require 'backbone'
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
+CurrentUser = require '../../../../models/current_user.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
+{ createOrder } = require '../../../../../lib/components/create_order'
 template = -> require('./templates/index.jade') arguments...
 
 LOT_STANDING_MAX_POLLS = 10
@@ -65,10 +67,23 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     $target = $(e.currentTarget)
     $target.attr 'data-state', 'loading'
 
-    acquire AUCTION.artwork_id
-      .catch ->
-        $target.attr 'data-state', 'error'
-        location.reload()
+    loggedInUser = CurrentUser.orNull()
+    # Show the new buy now flow if you have the lab feature enabled
+    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+      createOrder
+        artworkId: AUCTION.artwork_id
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        order = data?.createOrderWithArtwork?.orderOrError?.order
+        location.assign("/order2/#{order.id}/shipping")
+
+    # Legacy purchase flow
+    else
+      acquire AUCTION.artwork_id
+        .catch ->
+          $target.attr 'data-state', 'error'
+          location.reload()
 
   redirectTo: (path) ->
     location.assign path
