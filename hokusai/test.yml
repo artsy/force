@@ -1,4 +1,3 @@
----
 version: '2'
 services:
   force:
@@ -12,4 +11,3 @@ services:
     #environment:
     #- NODE_ENV=test
     #env_file: ../.env.test
-    
