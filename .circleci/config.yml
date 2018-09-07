@@ -18,10 +18,11 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: export commit_hash=`git rev-parse HEAD` && echo $commit_hash
       - run:
           name: Test
-          command: 'hokusai test'
+          command: |
+            export commit_hash=`git rev-parse HEAD` && echo $commit_hash
+            hokusai test
   build:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -38,7 +39,9 @@ jobs:
       - setup_remote_docker
       - run:
           name: Push
-          command: hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
+          command: |
+            export commit_hash=`git rev-parse HEAD` && echo $commit_hash
+            hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
   publish_staging_assets:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -47,12 +50,6 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: yarn install && DEPLOY_ENV=staging yarn publish_assets
-      - run: mkdir -p workspace
-      - run: cp manifest.json workspace/manifest.json
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - manifest.json
   publish_release_assets:
     docker:
       - image: circleci/node:8-stretch-browsers
@@ -61,12 +58,6 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: yarn install && DEPLOY_ENV=production yarn publish_assets
-      - run: mkdir -p workspace
-      - run: cp manifest.json workspace/manifest.json
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - manifest.json
   deploy_hokusai_staging:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -74,8 +65,6 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - attach_workspace:
-          at: /tmp/workspace
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
@@ -92,8 +81,6 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - attach_workspace:
-          at: /tmp/workspace
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
