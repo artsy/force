@@ -4,15 +4,12 @@ import _StepMarker from '../step_marker'
 import block from 'bem-cn-lite'
 import _stepsConfig from '../../client/steps_config'
 import { connect } from 'react-redux'
-import {
-  resizeWindow
-} from '../../client/actions'
 
 // FIXME: Rewire
 let StepMarker = _StepMarker
 let stepsConfig = _stepsConfig
 
-function SubmissionFlow (props) {
+function SubmissionFlow(props) {
   const b = block('consignments-submission-flow')
   const { CurrentStepComponent } = props
 
@@ -26,27 +23,16 @@ function SubmissionFlow (props) {
   )
 }
 
-const mapStateToProps = (state) => {
-  const {
-    submissionFlow: {
-      currentStep
-    }
-  } = state
+const mapStateToProps = state => {
+  const { submissionFlow: { currentStep } } = state
 
   return {
-    CurrentStepComponent: stepsConfig[currentStep].component
+    CurrentStepComponent: stepsConfig[currentStep].component,
   }
 }
 
-const mapDispatchToProps = {
-  responsiveWindowAction: resizeWindow
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SubmissionFlow)
+export default connect(mapStateToProps, mapDispatchToProps)(SubmissionFlow)
 
 SubmissionFlow.propTypes = {
-  CurrentStepComponent: PropTypes.func.isRequired
+  CurrentStepComponent: PropTypes.func.isRequired,
 }
