@@ -228,6 +228,7 @@
     "@types/enzyme": "^3.1.6",
     "@types/express": "^4.11.0",
     "@types/isomorphic-fetch": "^0.0.34",
+    "@types/jest": "^23.3.2",
     "@types/lodash": "^4.14.93",
     "@types/node": "^9.3.0",
     "@types/prop-types": "^15.5.5",
@@ -236,12 +237,13 @@
     "@types/styled-components": "^3.0.0",
     "@types/webpack": "^4.4.11",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "benv": "^3.3.0",
     "cache-loader": "^1.2.0",
     "coffee-loader": "^0.8.0",
     "electron": "1.7.8",
     "enzyme": "^3.4.4",
-    "enzyme-adapter-react-16": "^1.2.0",
+    "enzyme-adapter-react-16": "^1.5.0",
     "eslint": "^3.18.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^7.1.0",
@@ -257,7 +259,7 @@
     "husky": "^0.14.3",
     "imagesloaded": "^4.1.1",
     "inquirer": "^1.2.3",
-    "jest": "^22.4.2",
+    "jest": "^23.5.2",
     "jest-coffee-preprocessor": "^1.0.0",
     "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
@@ -282,7 +284,6 @@
     "tslint-config-prettier": "^1.7.0",
     "tslint-config-standard": "^7.0.0",
     "tslint-react": "^3.4.0",
-    "typescript-babel-jest": "^1.0.5",
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
@@ -295,9 +296,8 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.coffee$": "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
-      ".(ts|tsx)": "typescript-babel-jest"
+      ".(ts|tsx|js|jsx)": "babel-jest"
     },
     "moduleFileExtensions": [
       "coffee",

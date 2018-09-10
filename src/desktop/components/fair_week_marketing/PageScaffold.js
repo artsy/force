@@ -16,12 +16,12 @@ const Container = styled.div`
   }
 `
 
-const SectionTitle = Title.extend`
+const SectionTitle = styled(Title)`
   margin-top: 0;
   line-height: 1;
 `
 
-const IntroductionText = Text.extend`
+const IntroductionText = styled(Text)`
   line-height: 31px;
   margin-bottom: 20px;
   color: ${colors.grayDark};
