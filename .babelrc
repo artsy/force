@@ -1,31 +1,54 @@
 {
   "presets": [
-    ["@babel/env", {
-      "targets": {
-        "browsers": ["last 2 versions"]
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ]
+        }
       }
-    }],
+    ],
     "@babel/react",
-    "@babel/preset-typescript",
-    "@babel/stage-3"
+    "@babel/preset-typescript"
   ],
   "plugins": [
+    "@babel/plugin-proposal-class-properties",
     "@babel/plugin-transform-runtime",
-    ["babel-plugin-styled-components", {
-      "ssr": true,
-      "displayName": true
-    }],
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": true,
+        "displayName": true
+      }
+    ],
     "inline-react-svg",
     "lodash",
     "loadable-components/babel",
-    ["module-resolver", {
-      "extensions": [".js", ".jsx", ".ts", ".tsx"],
-      "root": ["./src"],
-      "alias": {
-        "reaction": "@artsy/reaction/dist"
+    [
+      "module-resolver",
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "reaction": "@artsy/reaction/dist"
+        }
       }
-    }],
-    ["relay", { "artifactDirectory": "./src/__generated__" }]
+    ],
+    [
+      "relay",
+      {
+        "artifactDirectory": "./src/__generated__"
+      }
+    ]
   ],
   "env": {
     "development": {
