@@ -6,7 +6,7 @@ DateHelpers = require '../../components/util/date_helpers'
 ViewHelpers = require './helpers/view_helpers'
 
 query = """
-  query($id: String!) {
+  query ShowMetadataQuery($id: String!) {
     partner_show(id: $id) {
       _id
       id

@@ -39,7 +39,7 @@ page = new JSONPage name: 'cool-page'
 
 ## Development
 
-Ensure you have the .env vars: `S3_KEY`, `S3_SECRET` set.
+Ensure you have the .env vars: `S3_KEY`, `S3_SECRET`, `S3_BUCKET` set.
 
 To sync data with the bucket:
 

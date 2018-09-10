@@ -3,17 +3,13 @@ import React, { Component } from 'react'
 import { Artwork as ReactionArtwork } from 'reaction/Components/Artwork'
 import { ArtworkGrid as ReactionArtworkGrid } from 'reaction/Components/ArtworkGrid'
 import { ContextProvider } from 'reaction/Artsy'
-import { Help } from 'reaction/Assets/Icons/Help'
-import { Tooltip } from 'reaction/Components/Tooltip'
 import { data as sd } from 'sharify'
 
-export const TooltipQuestion = props => {
-  return (
-    <Tooltip {...props}>
-      <Help />
-    </Tooltip>
-  )
-}
+import { ReactionTooltipQuestion } from '../components/react/stitch_components/ReactionTooltipQuestion'
+import { ReactionArtworkDetails } from '../components/react/stitch_components/ReactionArtworkDetails'
+
+export const TooltipQuestion = ReactionTooltipQuestion
+export const ArtworkDetails = ReactionArtworkDetails
 
 export class ArtworkGrid extends Component {
   static propTypes = {

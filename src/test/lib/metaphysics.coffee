@@ -157,3 +157,16 @@ describe 'metaphysics', ->
               ['Accept', 'application/json']
               ['X-Request-Id', 'foo']
             ]
+
+    describe 'x forwarded for', ->
+      it 'optionally accepts a req object, from which it constructs the x-forwarded-for header if the request has a remote address', ->
+        @request.end.yields null, ok: true, body: data: {}
+
+        metaphysics req: connection: remoteAddress: '::ffff:127.0.0.1'
+          .then =>
+            @request.set.args
+              .should.eql [
+                ['Accept', 'application/json']
+                ['X-Request-Id', 'implement-me']
+                ['X-Forwarded-For', '127.0.0.1']
+              ]

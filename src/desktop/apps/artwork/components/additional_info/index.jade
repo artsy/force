@@ -11,7 +11,10 @@ if tabs.length
         +tab(tab, i)
           case tab
             when 'about_the_work'
-              include ./templates/about_the_work
+              if user && user.hasLabFeature('New Buy Now Flow')
+                != stitch.components.ArtworkDetails({artworkID: artwork.id})
+              else  
+                include ./templates/about_the_work
             when 'exhibition_history'
               include ./templates/exhibition_history
             when 'bibliography'
