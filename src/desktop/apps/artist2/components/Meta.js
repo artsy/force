@@ -89,11 +89,34 @@ query ArtistMetaQuery($artistID: String!) {
       artworks
     }
     blurb
+    artworks_connection(first: 10, filter: IS_FOR_SALE, published: true) {
+      edges {
+        node {
+          title
+          date
+          description
+          category
+          price_currency
+          is_price_range
+          availability
+          href
+          image {
+            small: url(version: "small")
+          }
+          partner {
+            name
+            href
+          }
+        }
+      }
+    }
   }
 }
 `
 
 export const toJSONLD = (artist, APP_URL) => {
+  const makesOffer = artistToJsonOffers(artist, APP_URL)
+
   const json = {
     '@context': 'http://schema.org',
     '@type': 'Person',
@@ -110,7 +133,63 @@ export const toJSONLD = (artist, APP_URL) => {
       '@type': 'Country',
       name: artist.nationality,
     },
+    makesOffer,
   }
   const cleanedJSON = pickBy(json, identity)
   return stringifyJSONForWeb(cleanedJSON)
+}
+
+export const artistToJsonOffers = (artist, APP_URL) => {
+  const { edges } = artist.artworks_connection
+
+  const offers =
+    edges &&
+    edges.map(({ node }) => {
+      const seller = sellerFromPartner(node.partner, APP_URL)
+      const itemOffered = productFromArtistArtwork(artist, node, APP_URL)
+      const availability =
+        node.availability === 'for sale' ? 'InStock' : 'OutOfStock'
+
+      return {
+        '@type': 'Offer',
+        availability,
+        priceCurrency: node.price_currency,
+        // TODO: price and price range
+        seller,
+        itemOffered,
+      }
+    })
+  return offers
+}
+
+export const productFromArtistArtwork = (artist, artwork, APP_URL) => {
+  const thumbnailUrl = artwork.image && artwork.image.small
+  const image = thumbnailUrl && {
+    '@type': 'ImageObject',
+    thumbnailUrl,
+  }
+
+  return {
+    '@type': 'Product',
+    additionalType: artwork.category,
+    productionDate: artwork.date,
+    name: artwork.title,
+    url: `${APP_URL}${artwork.href}`,
+    image,
+    brand: {
+      '@type': 'Person',
+      name: artist.name,
+    },
+  }
+}
+
+export const sellerFromPartner = (partner, APP_URL) => {
+  if (partner) {
+    return {
+      '@context': 'http://schema.org',
+      '@type': 'ArtGallery',
+      name: partner.name,
+      url: `${APP_URL}${partner.href}`,
+    }
+  }
 }
