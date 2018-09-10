@@ -12,11 +12,8 @@ Artist = require '../../../../models/artist.coffee'
 Artists = require '../../../../collections/artists.coffee'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 SidebarView = null
-RecentlyAddedWorksView = null
-ArtistWorksView = null
 
-# FIXME: Reenable
-xdescribe 'NotificationsView', ->
+describe 'NotificationsView', ->
   before (done) ->
     benv.setup ->
       benv.expose
@@ -24,8 +21,6 @@ xdescribe 'NotificationsView', ->
         jQuery: benv.require 'jquery'
       Backbone.$ = $
       SidebarView = require '../../client/sidebar.coffee'
-      RecentlyAddedWorksView = require '../../client/recently_added_works.coffee'
-      ArtistWorksView = require '../../client/artist_works.coffee'
       done()
 
   after ->
@@ -39,8 +34,6 @@ xdescribe 'NotificationsView', ->
     benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) , artists: artists }, =>
       { @NotificationsView } = mod = rewire '../../client/index.coffee'
       mod.__set__ 'SidebarView', sinon.stub()
-      mod.__set__ 'RecentlyAddedWorksView', sinon.stub()
-      mod.__set__ 'ArtistWorksView', sinon.stub()
       mod.__set__ 'scrollFrame', sinon.stub()
       mod.__set__ 'UrlUpdater', sinon.stub()
       mod.__set__ 'Cookies', { expire: (->) }

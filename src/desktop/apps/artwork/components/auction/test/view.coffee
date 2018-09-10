@@ -427,14 +427,15 @@ describe 'auction', ->
       preventDefault: -> null
       currentTarget: null
 
-    # FIXME: Reenable
-    xit 'should create a new order when the buy now lab feature enabled', ->
+    it 'should create a new order when the buy now lab feature enabled', ->
       createOrderStub = sinon.stub().returns({ then: -> null })
       @ArtworkAuctionView.__set__
-        CURRENT_USER:
-          hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
         AUCTION: data
         createOrder: createOrderStub
+        CurrentUser:
+          orNull: ->
+            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
+
       view = new @ArtworkAuctionView data: data
       view.acquire(fakeEvent)
       createOrderStub.callCount.should.equal(1)

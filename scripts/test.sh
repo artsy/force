@@ -1,13 +1,13 @@
 #! /bin/bash
 
-# set -ex
+set -ex
 
 #trap "exit" INT
 
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    # yarn assets
+    yarn assets
     ;;
   1)
     yarn mocha src/test/lib/*
