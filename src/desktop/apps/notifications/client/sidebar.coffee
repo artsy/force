@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 qs = require 'querystring'
 TypeaheadView = require '../../../components/typeahead/view.coffee'
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
+grid = require('./react_grid.js').default
 
 module.exports = class SidebarView extends Backbone.View
 
@@ -11,7 +12,7 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-name' : 'toggleArtist'
     'click .filter-artist-clear' : 'clearArtistWorks'
 
-  initialize: ({@filterState, @following, @useReactionGrid}) ->
+  initialize: ({@filterState, @following}) ->
     if @filterState.get 'artist'
       @$selectedArtist = @$(".filter-artist[data-artist=#{@filterState.get('artist')}]")
       @$selectedArtist.attr 'data-state', 'selected'
@@ -24,8 +25,7 @@ module.exports = class SidebarView extends Backbone.View
   toggleForSale: (e) ->
     forSale = $(e.currentTarget).prop('checked')
     artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
-    if @useReactionGrid
-      require('./react_grid.js').default.setupReactGrid({forSale: forSale, artistID: artist})
+    grid.setupReactGrid({forSale: forSale, artistID: artist})
     @filterState.set
       forSale: forSale
       loading: true
@@ -37,8 +37,7 @@ module.exports = class SidebarView extends Backbone.View
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
     artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
-    if @useReactionGrid
-      require('./react_grid.js').default.setupReactGrid({forSale: @filterState.get('forSale'), artistID: artist})
+    grid.setupReactGrid({forSale: @filterState.get('forSale'), artistID: artist})
     @filterState.set
       artist: artist
       loading: true
@@ -48,8 +47,7 @@ module.exports = class SidebarView extends Backbone.View
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    if @useReactionGrid
-      require('./react_grid.js').default.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
+    grid.default.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
     @filterState.set
       artist: null
       loading: true

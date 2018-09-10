@@ -2,7 +2,9 @@ accounting = require 'accounting'
 benv = require 'benv'
 moment = require 'moment'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
+_ = require 'underscore'
 
 describe 'auction', ->
   before (done) ->
@@ -393,3 +395,57 @@ describe 'auction', ->
 
         view.$('.artwork-auction__bid-status__closed')
           .should.have.lengthOf 1
+
+  describe '#acquire', ->
+    stub = {}
+    data =
+      accounting: accounting
+      artwork:
+        id: 'peter-alexander-wedge-with-puff'
+        is_in_auction: true
+        is_buy_nowable: true
+        sale:
+          id: 'los-angeles-modern-auctions-march-2015'
+          name: 'Los Angeles Modern Auctions - March 2015'
+          is_open: true
+          is_preview: false
+          is_closed: false
+          is_auction: true
+          is_auction_promo: false
+          is_with_buyers_premium: true
+        sale_artwork:
+          id: 'peter-alexander-wedge-with-puff'
+          estimate: '$7,000–$9,000'
+          current_bid: amount: '$55,000'
+          counts: bidder_positions: 0
+          bid_increments: [100, 200]
+          minimum_next_bid:
+            amount: '$60,000'
+            cents: 6000000
+
+    fakeEvent =
+      preventDefault: -> null
+      currentTarget: null
+
+    it 'should create a new order when the buy now lab feature enabled', ->
+      createOrderStub = sinon.stub().returns({ then: -> null })
+      @ArtworkAuctionView.__set__
+        CURRENT_USER: 
+          hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
+        AUCTION: data
+        createOrder: createOrderStub 
+      view = new @ArtworkAuctionView data: data
+      view.acquire(fakeEvent)
+      createOrderStub.callCount.should.equal(1)
+
+    it 'should follow legacy purchase flow when buy now lab feature disabled', ->
+      createOrderStub = sinon.stub().returns({ then: -> null })
+      acquireStub = sinon.stub().returns(Promise.resolve())
+      @ArtworkAuctionView.__set__
+        AUCTION: data
+        createOrder: createOrderStub 
+        acquire: acquireStub
+      view = new @ArtworkAuctionView data: data
+      view.acquire(fakeEvent)
+      createOrderStub.callCount.should.equal(0)
+      acquireStub.callCount.should.equal(1)

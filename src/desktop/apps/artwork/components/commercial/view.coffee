@@ -40,8 +40,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   acquire: (e) ->
     e.preventDefault()
 
-    # Show the new buy now flow if you have the lab feature enabled
     loggedInUser = CurrentUser.orNull()
+    # Show the new buy now flow if you have the lab feature enabled
     if loggedInUser?.hasLabFeature('New Buy Now Flow')
       serializer = new Serializer @$('form')
       data = serializer.data()
@@ -55,7 +55,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         order = data?.createOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
 
-    else
+    else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
       order = new PendingOrder
       @form = new Form $form: @$('form'), model: order
 
@@ -64,6 +64,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       analyticsHooks
         .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
+
 
   inquire: (e) =>
     e.preventDefault() if e
