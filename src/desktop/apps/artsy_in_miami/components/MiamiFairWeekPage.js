@@ -15,12 +15,12 @@ const Container = styled.div`
   }
 `
 
-const SectionTitle = Title.extend`
+const SectionTitle = styled(Title)`
   margin-top: 0;
   line-height: 1;
 `
 
-const IntroductionText = Text.extend`
+const IntroductionText = styled(Text)`
   line-height: 31px;
   @media (max-width: 24em) {
     font-size: 20px;
@@ -99,7 +99,7 @@ export default ({
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           <Row style={{ marginBottom: 20 }}>
-            {fair_coverage.fairs.map((fair) => (
+            {fair_coverage.fairs.map(fair => (
               <Col lg={3} md={3} sm={3} xs={6} key={fair.logo_url}>
                 {fair.site_url && fair.site_url.startsWith('http') ? (
                   <a href={fair.site_url} target="_blank">
@@ -148,7 +148,7 @@ export default ({
           </SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          {prepare_for_fairs.articles.map((article) => (
+          {prepare_for_fairs.articles.map(article => (
             <Row style={{ marginBottom: 25 }} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
                 <a href={article.article_url} target="_blank">

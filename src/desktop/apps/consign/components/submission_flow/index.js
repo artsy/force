@@ -31,7 +31,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionFlow)
+export default connect(mapStateToProps)(SubmissionFlow)
 
 SubmissionFlow.propTypes = {
   CurrentStepComponent: PropTypes.func.isRequired,
