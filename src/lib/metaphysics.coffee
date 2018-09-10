@@ -3,6 +3,19 @@ qs = require 'qs'
 request = require 'superagent'
 { extend, some } = require 'underscore'
 { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT, REQUEST_ID } = require('sharify').data
+ip = require 'ip'
+
+resolveIPv4 = (ipAddress) ->
+  if ip.isV6Format(ipAddress)? and ipAddress.indexOf('::ffff') >= 0
+    return ipAddress.split('::ffff:')[1]
+  return ipAddress
+
+resolveProxies = (req) ->
+  ipAddress = resolveIPv4(req.connection.remoteAddress)
+  if req?.headers?["x-forwarded-for"]?
+    return req.headers["x-forwarded-for"] + ", " + ipAddress
+  else
+    return ipAddress
 
 metaphysics = ({ query, variables, req } = {}) ->
   sentRequestId = REQUEST_ID || req?.id || 'implement-me'
@@ -16,6 +29,9 @@ metaphysics = ({ query, variables, req } = {}) ->
     if (token = req?.user?.get?('accessToken') or req?.user?.accessToken)?
       post.set 'X-ACCESS-TOKEN': token
       post.set 'X-USER-ID': req.user.id
+
+    if req?.connection?.remoteAddress?
+      post.set 'X-Forwarded-For', resolveProxies req
 
     post
       .send

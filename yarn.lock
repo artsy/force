@@ -6039,7 +6039,7 @@ ip6@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/ip6/-/ip6-0.0.4.tgz#44c5a9db79e39d405201b4d78d13b3870e48db31"
 
-ip@~1.1.0:
+ip@^1.1.5, ip@~1.1.0:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
 
