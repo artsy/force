@@ -25,6 +25,47 @@ describe('metadata template', () => {
       $('.artwork-metadata-stub__partner').length.should.eql(0)
     })
   })
+
+  describe('gallery work', () => {
+    let artwork
+    beforeEach(() => {
+      artwork = {
+        is_acquireable: false,
+        is_inquireable: true,
+        date: '2007',
+        title: 'My Artwork',
+        partner: { type: 'Gallery', href: '/partner/auction-partner' },
+      }
+    })
+
+    it('shows an inquiry CTA if the artwork is inquireable', () => {
+      const $ = cheerio.load(render({ artwork }))
+      $.text().should.containEql('My Artwork, 2007')
+      $('.artwork-metadata-stub__contact')
+        .text()
+        .should.eql('Contact gallery')
+    })
+  })
+
+  describe('non-auction work by auction partner', () => {
+    let artwork
+    beforeEach(() => {
+      artwork = {
+        is_acquireable: true,
+        is_inquireable: true,
+        date: '2007',
+        title: 'My Artwork',
+        partner: { type: 'Auction House', href: '/partner/auction-partner' },
+      }
+    })
+
+    it('shows an inquiry CTA if the artwork is inquireable', () => {
+      const $ = cheerio.load(render({ artwork }))
+      $.text().should.containEql('My Artwork, 2007')
+      $('.artwork-metadata-stub__contact').length.should.eql(0)
+    })
+  })
+
   describe('auction artwork', () => {
     let auctionArtwork
     beforeEach(() => {
