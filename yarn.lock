@@ -29,12 +29,14 @@
     styled-system "^2.2.5"
     yarn "^1.3.2"
 
-"@artsy/palette@^2.9.3":
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.13.1.tgz#abddb25649cc20ee9303cb91f638fcf095ce55ed"
+"@artsy/palette@^2.14.2":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.16.0.tgz#2956ea81729fb05cb0644f7892fbfdd4ce88e9d7"
   dependencies:
-    react "^16.3.2"
-    styled-system "^2.2.5"
+    rc-slider "^8.6.2"
+    react "^16.5.0"
+    styled-reset "^1.3.7"
+    styled-system "^3.0.3"
 
 "@artsy/passport@^1.0.11":
   version "1.0.11"
@@ -54,11 +56,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^3.6.1":
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.6.1.tgz#7a7afb5018b188cdcdbd4065dd48ee8de02ee398"
+"@artsy/reaction@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.7.1.tgz#f8914ce89163547b1a6aedb14cbcdfa45886be4a"
   dependencies:
-    "@artsy/palette" "^2.9.3"
+    "@artsy/palette" "^2.14.2"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -1208,6 +1210,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -3509,7 +3512,7 @@ dd-trace@artsy/dd-trace-js#artsy:
     safe-buffer "^5.1.1"
     semver "^5.5.0"
     shimmer "^1.2.0"
-    url-parse "^1.4.3"
+    url-parse "^1.2.0"
   optionalDependencies:
     "@airbnb/node-memwatch" "^1.0.2"
 
@@ -9866,7 +9869,7 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
@@ -11679,6 +11682,10 @@ styled-reset@^1.3.4:
 styled-reset@^1.3.5:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-1.3.7.tgz#8c9b6bad083d284eeb7b7916cdc4a7a15d9c85cb"
+
+styled-reset@^1.3.7:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-1.4.0.tgz#e1ae072b1d37eb321ec6cb1690db139aec353ecc"
 
 styled-system@^2.2.5:
   version "2.3.6"
