@@ -68,6 +68,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     $target.attr 'data-state', 'loading'
 
     loggedInUser = CurrentUser.orNull()
+
     # Show the new buy now flow if you have the lab feature enabled
     if loggedInUser?.hasLabFeature('New Buy Now Flow')
       createOrder

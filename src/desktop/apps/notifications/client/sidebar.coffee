@@ -43,11 +43,11 @@ module.exports = class SidebarView extends Backbone.View
       loading: true
       empty: false
       initialLoad: false
-    
+
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    grid.default.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
+    grid.setupReactGrid({artistID: "", forSale: @filterState.get('forSale')})
     @filterState.set
       artist: null
       loading: true

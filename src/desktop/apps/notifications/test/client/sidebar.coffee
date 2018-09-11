@@ -7,8 +7,7 @@ Notifications = require '../../../../collections/notifications.coffee'
 SidebarView = null
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
-# FIXME Reenable
-xdescribe 'SidebarView', ->
+describe 'SidebarView', ->
   before (done) ->
     benv.setup ->
       benv.expose
@@ -40,6 +39,8 @@ xdescribe 'SidebarView', ->
       @view = new @SidebarView
         el: $('#notifications-filter')
         filterState: @filterState
+      @SidebarView.__set__ 'grid',
+        setupReactGrid: -> 'hello'
       done()
 
   afterEach ->
