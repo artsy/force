@@ -59,7 +59,7 @@ describe('metadata template', () => {
       }
     })
 
-    it('shows an inquiry CTA if the artwork is inquireable', () => {
+    it('does not show an inquiry CTA if the artwork is inquireable', () => {
       const $ = cheerio.load(render({ artwork }))
       $.text().should.containEql('My Artwork, 2007')
       $('.artwork-metadata-stub__contact').length.should.eql(0)

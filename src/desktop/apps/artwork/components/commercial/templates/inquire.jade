@@ -1,56 +1,57 @@
-- var auctionPartner = artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
+- var auctionPartner = artwork.partner && artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
 - var newBuyNowFlow = user && user.hasLabFeature("New Buy Now Flow")
 
 //- TODO BNMO: Update to hide if the artwork is acquireable
-if artwork.is_inquireable && !((artwork.is_acquireable && auctionPartner) || newBuyNowFlow)
-  .artwork-inquiry-form.stacked-form( class='js-artwork-inquiry-form' )
-    input( type='hidden', name='artwork', value= artwork.id )
-    //- Only button is displayed for pre-qualification
+unless artwork.is_acquireable && (auctionPartner || newBuyNowFlow)
+  if artwork.is_inquireable
+    .artwork-inquiry-form.stacked-form( class='js-artwork-inquiry-form' )
+      input( type='hidden', name='artwork', value= artwork.id )
+      //- Only button is displayed for pre-qualification
 
-    .form-errors.js-form-errors
-      //- Rendered client-side
+      .form-errors.js-form-errors
+        //- Rendered client-side
 
-    if user && user.isWithAnonymousSession()
-      input( type='hidden', name='anonymous_session_id', value= user.id )
+      if user && user.isWithAnonymousSession()
+        input( type='hidden', name='anonymous_session_id', value= user.id )
 
-    unless enableNewInquiryFlow || (user && user.get('name') && user.get('email'))
-      input.bordered-input(
-        type='text'
-        name='name'
-        placeholder='Your full name'
-        required
-      )
-      input.bordered-input(
-        type='email'
-        name='email'
-        placeholder='Your email address'
-        required
-      )
-
-    unless enableNewInquiryFlow || artwork.partner.is_pre_qualify
-      if artwork.contact_message
-        textarea.bordered-input(
-          rows='4'
-          name='message'
+      unless enableNewInquiryFlow || (user && user.get('name') && user.get('email'))
+        input.bordered-input(
+          type='text'
+          name='name'
+          placeholder='Your full name'
           required
         )
-          = artwork.contact_message
-          = ' '
+        input.bordered-input(
+          type='email'
+          name='email'
+          placeholder='Your email address'
+          required
+        )
 
-    if fair
-      .artsy-checkbox.fair-attend-checkbox
-        .artsy-checkbox--checkbox
-          input( type='checkbox', name='attending', id='embedded-inquiry-form-attending' )
-          label( for='embedded-inquiry-form-attending' )
+      unless enableNewInquiryFlow || artwork.partner.is_pre_qualify
+        if artwork.contact_message
+          textarea.bordered-input(
+            rows='4'
+            name='message'
+            required
+          )
+            = artwork.contact_message
+            = ' '
 
-        label.artsy-checkbox--label( for='embedded-inquiry-form-attending' )
-          | I #{fair.isNotOver() ? 'will attend' : 'attended'} #{fair.nameSansYear()}
-          .tooltip-question-container
-            != stitch.components.TooltipQuestion({horizontalAlign: 'left', verticalAlign: 'bottom', message: 'This artwork is part of the art fair—'+fair.nameSansYear()+'. Providing this information enables galleries to offer a more customized service, and helps us send better recommendations and event invitations to you.'})
+      if fair
+        .artsy-checkbox.fair-attend-checkbox
+          .artsy-checkbox--checkbox
+            input( type='checkbox', name='attending', id='embedded-inquiry-form-attending' )
+            label( for='embedded-inquiry-form-attending' )
 
-    button.avant-garde-button-black(
-      class='js-artwork-inquire-button analytics-artwork-contact-seller'
-      data-artwork_id= artwork._id
-      data-context_type='sidebar'
-    )
-      | Contact #{artwork.partner.type}
+          label.artsy-checkbox--label( for='embedded-inquiry-form-attending' )
+            | I #{fair.isNotOver() ? 'will attend' : 'attended'} #{fair.nameSansYear()}
+            .tooltip-question-container
+              != stitch.components.TooltipQuestion({horizontalAlign: 'left', verticalAlign: 'bottom', message: 'This artwork is part of the art fair—'+fair.nameSansYear()+'. Providing this information enables galleries to offer a more customized service, and helps us send better recommendations and event invitations to you.'})
+
+      button.avant-garde-button-black(
+        class='js-artwork-inquire-button analytics-artwork-contact-seller'
+        data-artwork_id= artwork._id
+        data-context_type='sidebar'
+      )
+        | Contact #{artwork.partner.type}
