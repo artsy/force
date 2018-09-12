@@ -22,6 +22,6 @@ export const AuthenticationMeta: React.SFC<MetaProps> = props => {
   )
 }
 
-AuthenticationMeta.propTypes = {
-  meta: PropTypes.object,
-}
+// AuthenticationMeta.propTypes = {
+//   meta: PropTypes.object,
+// }

@@ -9,7 +9,7 @@ import qs from 'querystring'
 import { clone, isArray } from 'underscore'
 
 // TODO: remove in favor of serializing filters from reaction
-mediator.on('artist:filter:changed', filters => {
+mediator.on('collect:filter:changed', filters => {
   onFilterChange(filters)
 })
 
@@ -17,12 +17,13 @@ buildClientApp({
   routes,
   context: {
     user: sd.CURRENT_USER,
+    mediator,
   },
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
-        <ClientApp mediator={mediator} />
+        <ClientApp />
       </Container>,
 
       document.getElementById('react-root')
@@ -48,7 +49,12 @@ const onFilterChange = filters => {
     }
   })
 
-  const fragment = '?' + qs.stringify(params)
+  let route = null
+  if (params.medium) {
+    route = '/collect2/' + params.medium
+    delete params.medium
+  }
+  const fragment = route + '?' + qs.stringify(params)
   window.history.pushState({}, null, fragment)
 }
 
