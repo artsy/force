@@ -3,6 +3,7 @@ module.exports = """
     _id
     href
     is_inquireable
+    is_acquireable
     sale {
       href
       is_auction
