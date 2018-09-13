@@ -29,9 +29,9 @@
     styled-system "^2.2.5"
     yarn "^1.3.2"
 
-"@artsy/palette@^2.14.2":
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.16.0.tgz#2956ea81729fb05cb0644f7892fbfdd4ce88e9d7"
+"@artsy/palette@^2.17.0":
+  version "2.17.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.17.0.tgz#0086c9134811c0ffc84f004968fec12248e8e7be"
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
@@ -56,11 +56,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^3.7.1":
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.7.1.tgz#f8914ce89163547b1a6aedb14cbcdfa45886be4a"
+"@artsy/reaction@^3.7.4":
+  version "3.7.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.7.4.tgz#c7b6da7d2b02b381cbb5f0df41281421e9631fa6"
   dependencies:
-    "@artsy/palette" "^2.14.2"
+    "@artsy/palette" "^2.17.0"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -3512,7 +3512,7 @@ dd-trace@artsy/dd-trace-js#artsy:
     safe-buffer "^5.1.1"
     semver "^5.5.0"
     shimmer "^1.2.0"
-    url-parse "^1.2.0"
+    url-parse "^1.4.3"
   optionalDependencies:
     "@airbnb/node-memwatch" "^1.0.2"
 
@@ -12566,7 +12566,7 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-parse@^1.4.3:
+url-parse@^1.2.0:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
   dependencies:
