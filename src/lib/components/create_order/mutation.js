@@ -19,7 +19,9 @@ module.exports = `
         }
         ... on OrderWithMutationFailure {
           error {
-            description
+            type
+            code
+            data
           }
         }
       }
