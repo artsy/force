@@ -21,13 +21,7 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(
-      <Container>
-        <ClientApp />
-      </Container>,
-
-      document.getElementById('react-root')
-    )
+    ReactDOM.hydrate(<ClientApp />, document.getElementById('react-root'))
   })
   .catch(error => {
     console.error(error)
@@ -57,10 +51,3 @@ const onFilterChange = filters => {
   const fragment = route + '?' + qs.stringify(params)
   window.history.pushState({}, null, fragment)
 }
-
-// FIXME: Move this to Reaction
-const Container = styled.div`
-  width: 100%;
-  max-width: 1192px;
-  margin: auto;
-`

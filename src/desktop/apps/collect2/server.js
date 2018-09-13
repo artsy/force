@@ -4,7 +4,6 @@ import { routes } from 'reaction/Apps/Collect/routes'
 import mediator from 'desktop/lib/mediator.coffee'
 import express from 'express'
 import React from 'react'
-import styled from 'styled-components'
 
 const app = (module.exports = express())
 
@@ -28,13 +27,6 @@ export const index = async (req, res, next) => {
       return
     }
 
-    // FIXME: Move this to Reaction
-    const Container = styled.div`
-      width: 100%;
-      max-width: 1192px;
-      margin: auto;
-    `
-
     // Render layout
     const layout = await renderLayout({
       basePath: __dirname,
@@ -44,11 +36,7 @@ export const index = async (req, res, next) => {
       },
       blocks: {
         head: () => null,
-        body: () => (
-          <Container>
-            <ServerApp />
-          </Container>
-        ),
+        body: () => <ServerApp />,
       },
       locals: {
         ...res.locals,
