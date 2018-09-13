@@ -12,7 +12,7 @@ app.get('/order2/:orderID*', async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 
-    const { ServerApp, redirect, status } = await buildServerApp({
+    const { ServerApp, redirect, status, headTags } = await buildServerApp({
       routes,
       url: req.url,
       context: {
@@ -44,6 +44,7 @@ app.get('/order2/:orderID*', async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
+        head: () => headTags,
         body: () => (
           <Container>
             <ServerApp />
