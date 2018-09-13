@@ -57,8 +57,8 @@
     underscore.string "^3.2.2"
 
 "@artsy/reaction@^3.7.4":
-  version "3.7.4"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.7.4.tgz#c7b6da7d2b02b381cbb5f0df41281421e9631fa6"
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-3.8.0.tgz#b02090511b070ac4ac5efad78119c97d3223db0d"
   dependencies:
     "@artsy/palette" "^2.17.0"
     cheerio "^1.0.0-rc.2"
@@ -78,6 +78,7 @@
     qs "^6.5.0"
     rc-slider "^8.6.2"
     react-css-transition-replace "^3.0.2"
+    react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
     react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
@@ -763,6 +764,12 @@
     mkdirp "^0.5.1"
     pirates "^4.0.0"
     source-map-support "^0.5.9"
+
+"@babel/runtime@7.0.0-rc.1":
+  version "7.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-rc.1.tgz#42f36fc5817911c89ea75da2b874054922967616"
+  dependencies:
+    regenerator-runtime "^0.12.0"
 
 "@babel/runtime@^7.0.0":
   version "7.0.0"
@@ -3366,10 +3373,11 @@ csrf@~3.0.3:
     tsscmp "1.0.5"
     uid-safe "2.1.4"
 
-css-animation@^1.3.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/css-animation/-/css-animation-1.3.2.tgz#df515820ef5903733ad2db0999403b3037b8b880"
+css-animation@^1.3.2:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/css-animation/-/css-animation-1.4.1.tgz#5b8813125de0fbbbb0bbe1b472ae84221469b7a8"
   dependencies:
+    babel-runtime "6.x"
     component-classes "^1.2.5"
 
 css-color-keywords@^1.0.0:
@@ -3571,10 +3579,10 @@ debug@^1.0.2:
     ms "0.6.2"
 
 debug@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.5.tgz#c2418fbfd7a29f4d4f70ff4cea604d4b64c46407"
   dependencies:
-    ms "2.0.0"
+    ms "^2.1.1"
 
 decache@^4.4.0:
   version "4.4.0"
@@ -5174,15 +5182,15 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
 
 found-relay@^0.3.0-alpha.13:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.3.0.tgz#9b58ac52d0f4efc3662bc44a584642b45d25411c"
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.3.1.tgz#b525339595e5b3aa24af555423e60fdb33a5cb16"
   dependencies:
     babel-runtime "^6.26.0"
     is-promise "^2.1.0"
-    lodash "^4.17.4"
-    prop-types "^15.6.0"
-    prop-types-extra "^1.0.1"
-    warning "^3.0.0"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
+    prop-types-extra "^1.1.0"
+    warning "^4.0.2"
 
 found@^0.3.11:
   version "0.3.14"
@@ -7511,8 +7519,8 @@ lodash-es@^4.17.3, lodash-es@^4.2.0, lodash-es@^4.2.1:
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
 
 lodash-es@^4.17.5:
-  version "4.17.10"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
 
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
@@ -7739,9 +7747,13 @@ lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.3, lodash@^4.2.1, lodash@~4.17.2:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.1:
+lodash@^4.13.1, lodash@^4.17.10, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.1:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+
+lodash@^4.15.0, lodash@^4.17.0, lodash@^4.17.4, lodash@^4.17.5:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
 lodash@~3.10.1:
   version "3.10.1"
@@ -8210,6 +8222,10 @@ ms@0.7.2, ms@^0.7.1:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
+ms@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
 msgpack-lite@^0.1.26:
   version "0.1.26"
@@ -9287,25 +9303,17 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types-extra@^1.0.1:
+prop-types-extra@^1.0.1, prop-types-extra@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/prop-types-extra/-/prop-types-extra-1.1.0.tgz#32609910ea2dcf190366bacd3490d5a6412a605f"
   dependencies:
     react-is "^16.3.2"
     warning "^3.0.0"
 
-prop-types@15.x, prop-types@^15.0.0, prop-types@^15.5.1, prop-types@^15.5.10, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@15.x, prop-types@^15.0.0, prop-types@^15.5.1, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
-prop-types@^15.5.4, prop-types@^15.5.6:
-  version "15.6.1"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
-  dependencies:
-    fbjs "^0.8.16"
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
@@ -9680,11 +9688,12 @@ rc-align@^2.4.0:
     rc-util "^4.0.4"
 
 rc-animate@2.x:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.3.6.tgz#4177a2822c67adf4fd5b908ceba7cee8d13c1fac"
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.4.4.tgz#a05a784c747beef140d99ff52b6117711bef4b1e"
   dependencies:
-    css-animation "^1.3.0"
-    prop-types "^15.5.6"
+    babel-runtime "6.x"
+    css-animation "^1.3.2"
+    prop-types "15.x"
 
 rc-slider@^7.0.8:
   version "7.0.8"
@@ -9746,7 +9755,7 @@ rc-trigger@^2.2.2:
     rc-animate "2.x"
     rc-util "^4.4.0"
 
-rc-util@4.x, rc-util@^4.0.4:
+rc-util@4.x:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.0.4.tgz#99813dd90aee7e29b64939a70ac176ead3f4ff39"
   dependencies:
@@ -9754,7 +9763,7 @@ rc-util@4.x, rc-util@^4.0.4:
     babel-runtime "6.x"
     shallowequal "^0.2.2"
 
-rc-util@^4.4.0:
+rc-util@^4.0.4, rc-util@^4.4.0:
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.5.1.tgz#0e435057174c024901c7600ba8903dd03da3ab39"
   dependencies:
@@ -9830,6 +9839,13 @@ react-dom@^16.5.0:
     prop-types "^15.6.2"
     schedule "^0.3.0"
 
+react-head@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-head/-/react-head-3.0.0.tgz#065283a556aec182a6bb6a0b2a3fb143c2b511ec"
+  dependencies:
+    "@babel/runtime" "7.0.0-rc.1"
+    tiny-invariant "^1.0.0"
+
 react-hot-loader@4.0.0-rc.0:
   version "4.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.0.0-rc.0.tgz#54d931dafeface5119c741d44ccc3e75fbb432e8"
@@ -9851,8 +9867,8 @@ react-is@^16.3.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.2.tgz#f4d3d0e2f5fbb6ac46450641eb2e25bf05d36b22"
 
 react-is@^16.3.2:
-  version "16.5.0"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.0.tgz#2ec7c192709698591efe13722fab3ef56144ba55"
+  version "16.5.1"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.1.tgz#c6e8734fd548a22e1cef4fd0833afbeb433b85ee"
 
 react-is@^16.4.2:
   version "16.4.2"
@@ -9869,7 +9885,7 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
@@ -9960,8 +9976,8 @@ react-relay-network-modern-ssr@^1.1.2:
   resolved "https://registry.yarnpkg.com/react-relay-network-modern-ssr/-/react-relay-network-modern-ssr-1.2.1.tgz#3cb0391f9827c78b5f9bf6dff021d9f1bb4a3351"
 
 react-relay-network-modern@^2.3.1:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.3.3.tgz#9f2059a6f237885a9f37a00ae2b11724578ba99a"
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.3.4.tgz#a921d724ac336cd6e3945f0fd48633f9966757ed"
 
 "react-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz", "react-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
@@ -11679,11 +11695,7 @@ styled-reset@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-1.3.5.tgz#d1da44f93d1c58bec2ac32069e05e001c6637250"
 
-styled-reset@^1.3.5:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-1.3.7.tgz#8c9b6bad083d284eeb7b7916cdc4a7a15d9c85cb"
-
-styled-reset@^1.3.7:
+styled-reset@^1.3.5, styled-reset@^1.3.7:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-1.4.0.tgz#e1ae072b1d37eb321ec6cb1690db139aec353ecc"
 
@@ -11694,8 +11706,8 @@ styled-system@^2.2.5:
     prop-types "^15.6.0"
 
 styled-system@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-3.0.3.tgz#8ca3938fa382564e059f181d37d563b753cc9f41"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-3.1.0.tgz#d221c6f0343bbcdcb49976a7e24973d6a59488b5"
   dependencies:
     prop-types "^15.6.2"
 
@@ -12029,6 +12041,10 @@ timers-browserify@^2.0.4:
 timespan@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/timespan/-/timespan-2.3.0.tgz#4902ce040bd13d845c8f59b27e9d59bad6f39929"
+
+tiny-invariant@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.0.0.tgz#03f96fef4d3ba911f97ed467e1b88bca3d4d9d9f"
 
 tmp@^0.0.29:
   version "0.0.29"
@@ -12566,7 +12582,7 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-parse@^1.2.0:
+url-parse@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
   dependencies:
@@ -12717,6 +12733,12 @@ warning@^3.0.0:
   dependencies:
     loose-envify "^1.0.0"
 
+warning@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.2.tgz#aa6876480872116fa3e11d434b0d0d8d91e44607"
+  dependencies:
+    loose-envify "^1.0.0"
+
 watch@~0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/watch/-/watch-0.18.0.tgz#28095476c6df7c90c963138990c0a5423eb4b986"
@@ -12839,8 +12861,8 @@ whatwg-encoding@^1.0.3:
     iconv-lite "0.4.19"
 
 whatwg-fetch@>=0.10.0:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
 
 whatwg-url@^4.3.0:
   version "4.8.0"
@@ -13151,7 +13173,7 @@ yauzl@2.4.1:
 
 yup@^0.24.1:
   version "0.24.1"
-  resolved "https://registry.yarnpkg.com/yup/-/yup-0.24.1.tgz#2c8a81b5f929ef29aaf77a8b7c9acfa52ab6a7d1"
+  resolved "http://registry.npmjs.org/yup/-/yup-0.24.1.tgz#2c8a81b5f929ef29aaf77a8b7c9acfa52ab6a7d1"
   dependencies:
     case "^1.2.1"
     fn-name "~1.0.1"
