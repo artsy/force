@@ -82,9 +82,6 @@ describe('auction/components/layout/Footer.test', () => {
       })
 
       it('(serverside) shows the articles and the extra footer item', () => {
-        const window = global.window
-        global.window = undefined
-
         const { wrapper } = renderTestComponent({
           Component: Footer,
           data: {
@@ -112,7 +109,6 @@ describe('auction/components/layout/Footer.test', () => {
           .find('.auction-Footer__auction-app-promo-wrapper')
           .length.should.equal(1)
         wrapper.html().should.containEql('Bid from your phone')
-        global.window = window
       })
     })
   })

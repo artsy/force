@@ -1,8 +1,5 @@
 import $ from 'jquery'
 
-import imagesLoaded from 'imagesloaded'
-imagesLoaded.makeJQueryPlugin($)
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { WorksForYou } from 'reaction/Apps/WorksForYou'

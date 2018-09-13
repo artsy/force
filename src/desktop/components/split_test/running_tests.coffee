@@ -25,14 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  revised_article_infinite_scroll:
-    key: 'revised_article_infinite_scroll'
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    weighting: 'equal'
-
   # Used for cookie-ing and gradual roll out.
   # We'll start at 1 and work our way up, users in groups
   # less than that number will receive the new artist page.

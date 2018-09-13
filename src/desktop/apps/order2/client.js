@@ -37,6 +37,7 @@ buildClientApp({
   routes,
   context: {
     user: sd.CURRENT_USER,
+    mediator,
   },
   history: {
     options: {
@@ -47,7 +48,7 @@ buildClientApp({
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
-        <ClientApp mediator={mediator} />
+        <ClientApp />
       </Container>,
 
       document.getElementById('react-root')

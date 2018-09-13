@@ -39,6 +39,8 @@ describe 'SidebarView', ->
       @view = new @SidebarView
         el: $('#notifications-filter')
         filterState: @filterState
+      @SidebarView.__set__ 'grid',
+        setupReactGrid: -> 'hello'
       done()
 
   afterEach ->

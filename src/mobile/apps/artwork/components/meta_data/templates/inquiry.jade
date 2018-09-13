@@ -1,12 +1,20 @@
-if artwork.is_acquireable
-  a.artwork-meta-data-black__contact-button.js-purchase Buy
+- var isAuction = artwork.auction && artwork.auction.is_auction
+- var newBuyNowFlow = user && user.hasLabFeature("New Buy Now Flow")
+- var buyable = artwork.is_buy_nowable || artwork.is_acquireable
+- var isAuctionPartner = artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
 
-unless artwork.auction
-  if artwork.is_inquireable
-    a.artwork-meta-data-black__contact-button(
-      href="/inquiry/#{artwork.id}"
-    )
-      if artwork.partner && artwork.partner.type == 'Gallery'
-        | Contact Gallery
-      else
-        | Contact Seller
+if buyable && (isAuction || newBuyNowFlow || isAuctionPartner)
+  a.artwork-meta-data-black__contact-button.js-purchase
+    if isAuction
+      | Buy Now
+    else
+      | Buy
+else if artwork.is_inquireable
+  //- TODO BNMO: Update to hide inquiry flow if the artwork is acquireable
+  a.artwork-meta-data-black__contact-button(
+    href="/inquiry/#{artwork.id}"
+  )
+    if artwork.partner && artwork.partner.type == 'Gallery'
+      | Contact Gallery
+    else
+      | Contact Seller
