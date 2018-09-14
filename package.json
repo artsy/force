@@ -30,7 +30,7 @@
   "prettier": {
     "bracketSpacing": true,
     "semi": false,
-    "singleQuote": true,
+    "singleQuote": false,
     "trailingComma": "es5"
   },
   "lint-staged": {
