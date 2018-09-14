@@ -9,13 +9,12 @@ if buyable && (isAuction || newBuyNowFlow || isAuctionPartner)
       | Buy Now
     else
       | Buy
-
-unless artwork.auction
-  if artwork.is_inquireable
-    a.artwork-meta-data-black__contact-button(
-      href="/inquiry/#{artwork.id}"
-    )
-      if artwork.partner && artwork.partner.type == 'Gallery'
-        | Contact Gallery
-      else
-        | Contact Seller
+else if artwork.is_inquireable
+  //- TODO BNMO: Update to hide inquiry flow if the artwork is acquireable
+  a.artwork-meta-data-black__contact-button(
+    href="/inquiry/#{artwork.id}"
+  )
+    if artwork.partner && artwork.partner.type == 'Gallery'
+      | Contact Gallery
+    else
+      | Contact Seller
