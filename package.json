@@ -30,7 +30,7 @@
   "prettier": {
     "bracketSpacing": true,
     "semi": false,
-    "singleQuote": true,
+    "singleQuote": false,
     "trailingComma": "es5"
   },
   "lint-staged": {
@@ -241,6 +241,7 @@
     "benv": "^3.3.0",
     "cache-loader": "^1.2.0",
     "coffee-loader": "^0.8.0",
+    "danger": "^4.0.1",
     "electron": "1.7.8",
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.5.0",
