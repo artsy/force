@@ -200,6 +200,10 @@ export const sellerFromPartner = (partner, APP_URL) => {
 }
 
 export const getThumbnailImage = item => {
+  if (!item) {
+    return null
+  }
+
   const thumbnailUrl = item.image && item.image.small
   const image = thumbnailUrl && {
     "@type": "ImageObject",
