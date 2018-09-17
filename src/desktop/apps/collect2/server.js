@@ -1,13 +1,13 @@
 import { buildServerApp } from 'reaction/Artsy/Router'
 import { renderLayout } from '@artsy/stitch'
 import { routes } from 'reaction/Apps/Collect/routes'
+import mediator from 'desktop/lib/mediator.coffee'
 import express from 'express'
 import React from 'react'
-import styled from 'styled-components'
 
 const app = (module.exports = express())
 
-app.get('/collect2', async (req, res, next) => {
+export const index = async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
     const { ServerApp, redirect } = await buildServerApp({
@@ -18,6 +18,7 @@ app.get('/collect2', async (req, res, next) => {
           ? ['xs']
           : undefined,
         user,
+        mediator,
       },
     })
 
@@ -25,13 +26,6 @@ app.get('/collect2', async (req, res, next) => {
       res.redirect(302, redirect.url)
       return
     }
-
-    // FIXME: Move this to Reaction
-    const Container = styled.div`
-      width: 100%;
-      max-width: 1192px;
-      margin: auto;
-    `
 
     // Render layout
     const layout = await renderLayout({
@@ -42,11 +36,7 @@ app.get('/collect2', async (req, res, next) => {
       },
       blocks: {
         head: () => null,
-        body: () => (
-          <Container>
-            <ServerApp />
-          </Container>
-        ),
+        body: () => <ServerApp />,
       },
       locals: {
         ...res.locals,
@@ -59,6 +49,8 @@ app.get('/collect2', async (req, res, next) => {
     console.log(error)
     next(error)
   }
-})
+}
+
+app.get('/collect2/:medium?', index)
 
 export default app
