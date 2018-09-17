@@ -1,8 +1,10 @@
 import ArticleModel from 'desktop/models/article.coffee'
 import InfiniteScrollArticle from '../InfiniteScrollArticle'
+import { once } from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Article } from 'reaction/Components/Publishing'
+import Cookies from 'desktop/components/cookies/index.coffee'
 import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
 import { setupFollows, setupFollowButtons } from '../FollowButton.js'
 import mediator from 'desktop/lib/mediator.coffee'
@@ -37,6 +39,43 @@ export default class ArticleLayout extends React.Component {
         el: document.querySelector('body'),
         article: new ArticleModel(article),
       })
+    }
+
+    const editorialAuthDismissedCookie = Cookies.get(
+      'editorial-signup-dismissed'
+    )
+
+    if (!this.props.isLoggedIn && !editorialAuthDismissedCookie) {
+      this.showAuthModal()
+    }
+
+    // setup listener for dismissal cookie
+    mediator.on('modal:closed', this.dismissAuthModal)
+  }
+
+  dismissAuthModal() {
+    Cookies.set('editorial-signup-dismissed', 1, { expires: 864000 })
+  }
+
+  showAuthModal() {
+    if (!this.props.isLoggedIn && !this.props.isMobile) {
+      window.addEventListener(
+        'scroll',
+        once(() => {
+          setTimeout(() => {
+            this.handleOpenAuthModal('register', {
+              mode: 'signup',
+              intent: 'Viewed editorial',
+              signupIntent: 'signup',
+              trigger: 'timed',
+              triggerSeconds: 2,
+              copy: 'Sign up for the Best Stories in Art and Visual Culture',
+              destination: location.href,
+            })
+          }, 2000)
+        }),
+        { once: true }
+      )
     }
   }
 
