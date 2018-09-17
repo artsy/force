@@ -201,6 +201,10 @@ export const sellerFromPartner = (partner, APP_URL) => {
 }
 
 export const getThumbnailImage = item => {
+  if (!item) {
+    return null
+  }
+
   const thumbnailUrl = item.image && item.image.small
   const url = item.image && item.image.large
 
