@@ -1,13 +1,13 @@
-import { buildServerApp } from 'reaction/Artsy/Router'
-import { renderLayout } from '@artsy/stitch'
-import { routes } from 'reaction/Apps/Collect/routes'
-import mediator from 'desktop/lib/mediator.coffee'
-import express from 'express'
-import React from 'react'
+import { buildServerApp } from "reaction/Artsy/Router"
+import { renderLayout } from "@artsy/stitch"
+import { routes } from "reaction/Apps/Collect/routes"
+import express from "express"
+import React from "react"
+import maybeShowOldCollect from "./maybe_show_old_collect"
 
 const app = (module.exports = express())
 
-export const index = async (req, res, next) => {
+const index = async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
     const { ServerApp, redirect } = await buildServerApp({
@@ -15,7 +15,7 @@ export const index = async (req, res, next) => {
       url: req.url,
       context: {
         initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
-          ? ['xs']
+          ? ["xs"]
           : undefined,
         user,
         mediator,
@@ -30,7 +30,7 @@ export const index = async (req, res, next) => {
     // Render layout
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_redesign.jade',
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       config: {
         styledComponents: true,
       },
@@ -40,7 +40,7 @@ export const index = async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'collect2',
+        assetPackage: "collect2",
       },
     })
 
@@ -51,6 +51,7 @@ export const index = async (req, res, next) => {
   }
 }
 
-app.get('/collect2/:medium?', index)
+app.get("/collect", maybeShowOldCollect, index)
+app.get("/collect/:medium?", maybeShowOldCollect, index)
 
 export default app
