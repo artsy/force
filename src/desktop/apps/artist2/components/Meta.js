@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
-import { pickBy, identity } from 'lodash'
-import { stringifyJSONForWeb } from 'desktop/components/util/json.coffee'
+import React, { Fragment } from "react"
+import { pickBy, identity } from "lodash"
+import { stringifyJSONForWeb } from "desktop/components/util/json.coffee"
 
 function renderImageMetaTags(artist) {
   const hasImage = artist.image && artist.image.versions.length
-  if (hasImage && artist.image.versions.indexOf('large') !== -1) {
+  if (hasImage && artist.image.versions.indexOf("large") !== -1) {
     return (
       <Fragment>
         <meta property="twitter:card" content="summary_large_image" />
@@ -46,7 +46,7 @@ export function Meta(props) {
       {artist.alternate_names && (
         <meta
           name="skos:prefLabel"
-          content={artist.alternate_names.join('; ')}
+          content={artist.alternate_names.join("; ")}
         />
       )}
 
@@ -106,6 +106,11 @@ query ArtistMetaQuery($artistID: String!) {
           partner {
             name
             href
+            profile {
+              image {
+                small: url(version: "small")
+              }
+            }
           }
         }
       }
@@ -118,19 +123,19 @@ export const toJSONLD = (artist, APP_URL) => {
   const makesOffer = artistToJsonOffers(artist, APP_URL)
 
   const json = {
-    '@context': 'http://schema.org',
-    '@type': 'Person',
-    additionalType: 'Artist',
-    image: artist.image ? artist.image.large : '',
+    "@context": "http://schema.org",
+    "@type": "Person",
+    additionalType: "Artist",
+    image: artist.image ? artist.image.large : "",
     name: artist.name,
     url: `${APP_URL}${artist.href}`,
     gender: artist.gender,
     birthDate: artist.birthday,
     deathDate: artist.deathday,
     mainEntityOfPage: `${APP_URL}${artist.href}`,
-    description: artist.meta ? artist.meta.description : '',
+    description: artist.meta ? artist.meta.description : "",
     nationality: {
-      '@type': 'Country',
+      "@type": "Country",
       name: artist.nationality,
     },
     makesOffer,
@@ -148,10 +153,10 @@ export const artistToJsonOffers = (artist, APP_URL) => {
       const seller = sellerFromPartner(node.partner, APP_URL)
       const itemOffered = productFromArtistArtwork(artist, node, APP_URL)
       const availability =
-        node.availability === 'for sale' ? 'InStock' : 'OutOfStock'
+        node.availability === "for sale" ? "InStock" : "OutOfStock"
 
       return {
-        '@type': 'Offer',
+        "@type": "Offer",
         availability,
         priceCurrency: node.price_currency,
         // TODO: price and price range
@@ -163,21 +168,17 @@ export const artistToJsonOffers = (artist, APP_URL) => {
 }
 
 export const productFromArtistArtwork = (artist, artwork, APP_URL) => {
-  const thumbnailUrl = artwork.image && artwork.image.small
-  const image = thumbnailUrl && {
-    '@type': 'ImageObject',
-    thumbnailUrl,
-  }
+  const image = getThumbnailImage(artwork)
 
   return {
-    '@type': 'Product',
+    "@type": "Product",
     additionalType: artwork.category,
     productionDate: artwork.date,
     name: artwork.title,
     url: `${APP_URL}${artwork.href}`,
     image,
     brand: {
-      '@type': 'Person',
+      "@type": "Person",
       name: artist.name,
     },
   }
@@ -185,11 +186,24 @@ export const productFromArtistArtwork = (artist, artwork, APP_URL) => {
 
 export const sellerFromPartner = (partner, APP_URL) => {
   if (partner) {
+    const { profile } = partner
+    const image = getThumbnailImage(profile)
+
     return {
-      '@context': 'http://schema.org',
-      '@type': 'ArtGallery',
+      "@context": "http://schema.org",
+      "@type": "ArtGallery",
       name: partner.name,
       url: `${APP_URL}${partner.href}`,
+      image,
     }
   }
+}
+
+export const getThumbnailImage = item => {
+  const thumbnailUrl = item.image && item.image.small
+  const image = thumbnailUrl && {
+    "@type": "ImageObject",
+    thumbnailUrl,
+  }
+  return image
 }
