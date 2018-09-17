@@ -47,6 +47,8 @@ describe("Meta", () => {
                 image: {
                   small:
                     "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+                  large:
+                    "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
                 },
               },
             },
@@ -108,6 +110,8 @@ describe("Meta", () => {
                 "@type": "ImageObject",
                 thumbnailUrl:
                   "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+                url:
+                  "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
               },
             },
           },
@@ -153,6 +157,8 @@ describe("Meta", () => {
               "@type": "ImageObject",
               thumbnailUrl:
                 "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+              url:
+                "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
             },
           },
         },
@@ -194,6 +200,8 @@ describe("Meta", () => {
         image: {
           "@type": "ImageObject",
           thumbnailUrl:
+            "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+          url:
             "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
         },
       })
