@@ -18,12 +18,10 @@ export const Meta = (props: Props) => {
       <meta name="description" content={description} />
       <meta property="og:description" content={description} />
       <meta property="twitter:description" content={description} />
-
       <meta property="og:url" content={`${appUrl}/collect`} />
       <meta property="og:image" content={`${appUrl}/images/og_image.jpg`} />
       <meta property="og:type" content="website" />
       <meta property="twitter:card" content="summary" />
-      <meta name="fragment" content="!" />
     </Fragment>
   )
 }
