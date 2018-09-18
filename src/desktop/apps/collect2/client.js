@@ -1,15 +1,14 @@
-import { buildClientApp } from 'reaction/Artsy/Router'
-import { data as sd } from 'sharify'
-import { routes } from 'reaction/Apps/Collect/routes'
-import mediator from 'desktop/lib/mediator.coffee'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import styled from 'styled-components'
-import qs from 'querystring'
-import { clone, isArray } from 'underscore'
+import { buildClientApp } from "reaction/Artsy/Router"
+import { data as sd } from "sharify"
+import { routes } from "reaction/Apps/Collect/routes"
+import mediator from "desktop/lib/mediator.coffee"
+import React from "react"
+import ReactDOM from "react-dom"
+import qs from "querystring"
+import { clone, isArray } from "underscore"
 
 // TODO: remove in favor of serializing filters from reaction
-mediator.on('collect:filter:changed', filters => {
+mediator.on("collect:filter:changed", filters => {
   onFilterChange(filters)
 })
 
@@ -21,7 +20,7 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(<ClientApp />, document.getElementById('react-root'))
+    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
   })
   .catch(error => {
     console.error(error)
@@ -45,9 +44,9 @@ const onFilterChange = filters => {
 
   let route = null
   if (params.medium) {
-    route = '/collect2/' + params.medium
+    route = "/collect2/" + params.medium
     delete params.medium
   }
-  const fragment = route + '?' + qs.stringify(params)
+  const fragment = route + "?" + qs.stringify(params)
   window.history.pushState({}, null, fragment)
 }
