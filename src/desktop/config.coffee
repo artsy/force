@@ -50,6 +50,7 @@ module.exports =
   FACEBOOK_ID: null
   FACEBOOK_PIXEL_ID: null
   FACEBOOK_SECRET: null
+  FORCE_CLOUDFRONT_URL: 'https://d3vpvtm3t56z1n.cloudfront.net'
   GALAXY_PUBLISHABLE_TOKEN: null
   GALAXY_TOKEN: null
   GALAXY_URL: null
