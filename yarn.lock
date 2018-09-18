@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@airbnb/node-memwatch@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@airbnb/node-memwatch/-/node-memwatch-1.0.2.tgz#a82e311ae27e05df4fb2cf8e4fbc75caaf7190a4"
-  dependencies:
-    bindings "^1.3.0"
-    nan "^2.9.2"
-
 "@artsy/express-reloadable@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.3.1.tgz#206adcc56ebcf999aece7efcc34eaf1460cf90a7"
@@ -1226,6 +1219,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -2167,10 +2161,6 @@ binary-extensions@^1.0.0:
 bindings@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
-
-bindings@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.3.0.tgz#b346f6ecf6a95f5a815c5839fc7cdb22502f1ed7"
 
 bl@~1.1.2:
   version "1.1.2"
@@ -3537,7 +3527,7 @@ date-now@^0.1.4:
 
 dd-trace@artsy/dd-trace-js#artsy:
   version "0.6.0"
-  resolved "https://codeload.github.com/artsy/dd-trace-js/tar.gz/31b194b04ad02e90ae82f95b22d340b347fa60fd"
+  resolved "https://codeload.github.com/artsy/dd-trace-js/tar.gz/9945be573c86a5827a00b8e258cdcf88af7a0cbd"
   dependencies:
     async-hook-jl "^1.7.6"
     int64-buffer "^0.1.9"
@@ -3557,8 +3547,6 @@ dd-trace@artsy/dd-trace-js#artsy:
     semver "^5.5.0"
     shimmer "^1.2.0"
     url-parse "^1.4.3"
-  optionalDependencies:
-    "@airbnb/node-memwatch" "^1.0.2"
 
 debounce@~1.0.0:
   version "1.0.2"
@@ -8375,10 +8363,6 @@ nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
 
-nan@^2.9.2:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.0.tgz#574e360e4d954ab16966ec102c0c049fd961a099"
-
 nanomatch@^1.2.5, nanomatch@^1.2.9:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.9.tgz#879f7150cb2dab7a471259066c104eee6e0fa7c2"
@@ -9190,8 +9174,8 @@ path-to-regexp@^1.7.0:
     isarray "0.0.1"
 
 path-to-regexp@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.2.1.tgz#90b617025a16381a879bc82a38d4e8bdeb2bcf45"
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.4.0.tgz#35ce7f333d5616f1c1e1bfe266c3aba2e5b2e704"
 
 path-type@^1.0.0:
   version "1.1.0"
