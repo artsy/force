@@ -2,11 +2,12 @@ import React, { Fragment } from "react"
 
 interface Props {
   appUrl: string
-  title: string
 }
 
 export const Meta = (props: Props) => {
-  const { appUrl, title } = props
+  const { appUrl } = props
+  // TODO: custom page title / description based on params
+  const title = "Collect | Artsy"
   const description =
     "Find artworks by subject matter, style/technique, movement, price, and gallery/institution."
 
