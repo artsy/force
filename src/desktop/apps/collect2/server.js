@@ -3,9 +3,9 @@ import { renderLayout } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collect/routes"
 import express from "express"
 import React from "react"
-import maybeShowOldCollect from "./maybe_show_old_collect"
+import { maybeShowOldCollect } from "./maybeShowOldCollect"
 import mediator from "desktop/lib/mediator.coffee"
-import { Meta } from "./meta.tsx"
+import { Meta } from "./meta"
 
 const app = (module.exports = express())
 

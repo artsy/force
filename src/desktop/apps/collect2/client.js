@@ -6,6 +6,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import qs from "querystring"
 import { clone, isArray } from "underscore"
+import splitTest from "desktop/components/split_test/index.coffee"
 
 // TODO: remove in favor of serializing filters from reaction
 mediator.on("collect:filter:changed", filters => {
@@ -20,6 +21,7 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
+    splitTest("new_collect_page").view()
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
   })
   .catch(error => {
@@ -31,7 +33,7 @@ if (module.hot) {
 }
 
 // Update URL with current filters and sort.
-const onFilterChange = filters => {
+export const onFilterChange = filters => {
   const params = clone(filters)
   Object.keys(params).forEach(filter => {
     if (
@@ -49,4 +51,6 @@ const onFilterChange = filters => {
   }
   const fragment = route + "?" + qs.stringify(params)
   window.history.pushState({}, null, fragment)
+
+  return fragment
 }
