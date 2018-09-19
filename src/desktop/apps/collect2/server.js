@@ -4,6 +4,7 @@ import { routes } from "reaction/Apps/Collect/routes"
 import express from "express"
 import React from "react"
 import maybeShowOldCollect from "./maybe_show_old_collect"
+import mediator from "desktop/lib/mediator.coffee"
 
 const app = (module.exports = express())
 
