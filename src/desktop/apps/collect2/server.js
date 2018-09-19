@@ -5,19 +5,20 @@ import express from "express"
 import React from "react"
 import maybeShowOldCollect from "./maybe_show_old_collect"
 import mediator from "desktop/lib/mediator.coffee"
+import { Meta } from "./meta.tsx"
 
 const app = (module.exports = express())
 
 const index = async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
+    const { APP_URL, IS_MOBILE } = res.locals.sd
+
     const { ServerApp, redirect } = await buildServerApp({
       routes,
       url: req.url,
       context: {
-        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
-          ? ["xs"]
-          : undefined,
+        initialMatchingMediaQueries: IS_MOBILE ? ["xs"] : undefined,
         user,
         mediator,
       },
@@ -36,7 +37,7 @@ const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => null,
+        head: () => <Meta appUrl={APP_URL} />,
         body: () => <ServerApp />,
       },
       locals: {

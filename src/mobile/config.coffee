@@ -26,6 +26,7 @@ module.exports =
   FACEBOOK_ID: null
   FACEBOOK_SECRET: null
   FAIR_CHANNEL_ID: '5759e4f3b5989e6f98f77998'
+  FORCE_CLOUDFRONT_URL: 'https://d3vpvtm3t56z1n.cloudfront.net'
   GALLERY_INSIGHTS_LIST: '95ac2900c4'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
   GOOGLE_ANALYTICS_ID: 'UA-12450662-6'
