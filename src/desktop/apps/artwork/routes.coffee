@@ -89,7 +89,7 @@ bootstrap = ->
       res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.locals.sd.QUERY = req.query
       res.locals.jsonLD = stringifyJSONForWeb(convertArtworkToJSONLD(data.artwork))
-
+      res.locals.sd.ARTWORK = data.artwork
 
       # If a saleId is found, then check to see if user has been qualified for
       # bidding so that bid button UI is correct from the server down.
