@@ -1,73 +1,74 @@
-import * as actions from './actions'
-import u from 'updeep'
-import { combineReducers } from 'redux'
-import { composeReducers } from '../../../components/react/utils/composeReducers'
-import { data as sd } from 'sharify'
-import { contains } from 'underscore'
-import { reducer as formReducer } from 'redux-form'
-import { responsiveWindowReducer } from '../../../components/react/responsive_window'
-import { routerReducer } from 'react-router-redux'
+import * as actions from "./actions"
+import u from "updeep"
+import { combineReducers } from "redux"
+import { composeReducers } from "../../../components/react/utils/composeReducers"
+import { data as sd } from "sharify"
+import { contains } from "underscore"
+import { reducer as formReducer } from "redux-form"
+import { responsiveWindowReducer } from "../../../components/react/responsive_window"
+import { routerReducer } from "react-router-redux"
 
-const createAccountStep = 'createAccount'
-const chooseArtistStep = 'chooseArtist'
-const describeWorkStep = 'describeWork'
-const uploadPhotosStep = 'uploadPhotos'
+const createAccountStep = "createAccount"
+const chooseArtistStep = "chooseArtist"
+const describeWorkStep = "describeWork"
+const uploadPhotosStep = "uploadPhotos"
 
 const initialState = {
   artistAutocompleteSuggestions: [],
-  artistAutocompleteValue: '',
-  artistName: sd.SUBMISSION_ARTIST_NAME || '',
+  artistAutocompleteValue: "",
+  artistName: sd.SUBMISSION_ARTIST_NAME || "",
   assetIds: [],
-  authFormState: 'signUp',
+  authFormState: "signUp",
   categoryOptions: [
-    'Painting',
-    'Sculpture',
-    'Photography',
-    'Print',
-    'Drawing, Collage or other Work on Paper',
-    'Mixed Media',
-    'Performance Art',
-    'Installation',
-    'Video/Film/Animation',
-    'Architecture',
-    'Fashion Design and Wearable Art',
-    'Jewelry',
-    'Design/Decorative Art',
-    'Textile Arts',
-    'Other',
+    "Painting",
+    "Sculpture",
+    "Photography",
+    "Print",
+    "Drawing, Collage or other Work on Paper",
+    "Mixed Media",
+    "Performance Art",
+    "Installation",
+    "Video/Film/Animation",
+    "Architecture",
+    "Fashion Design and Wearable Art",
+    "Jewelry",
+    "Design/Decorative Art",
+    "Textile Arts",
+    "Other",
   ],
-  currencyOptions: ['USD', 'GBP'],
+  currencyOptions: ["USD", "GBP"],
   currentStep: createAccountStep,
   error: null,
   erroredImages: [],
   inputs: {
-    artist_id: '',
+    artist_id: "",
     authenticity_certificate: false,
-    category: 'Painting',
-    depth: '',
-    dimensions_metric: 'in',
+    category: "Painting",
+    currency: "USD",
+    depth: "",
+    dimensions_metric: "in",
     edition: false,
-    edition_number: '',
+    edition_number: "",
     edition_size: 0,
-    height: '',
-    location_city: '',
-    location_state: '',
-    location_country: '',
-    medium: '',
+    height: "",
+    location_city: "",
+    location_state: "",
+    location_country: "",
+    medium: "",
     minimum_price_yesno: false,
-    minimum_price_dollars: '',
-    phone: '',
-    provenance: '',
+    minimum_price_dollars: "",
+    phone: "",
+    provenance: "",
     signature: false,
-    title: '',
-    width: '',
-    year: '',
+    title: "",
+    width: "",
+    year: "",
   },
   isMobile: false,
   isLoading: false,
   locationAutocompleteFrozen: false,
   locationAutocompleteSuggestions: [],
-  locationAutocompleteValue: '',
+  locationAutocompleteValue: "",
   notConsigningArtist: false,
   processingImages: [],
   progressBars: {},
@@ -124,9 +125,9 @@ function submissionFlow(state = initialState, action) {
       return u(
         {
           inputs: {
-            location_city: '',
-            location_country: '',
-            location_state: '',
+            location_city: "",
+            location_country: "",
+            location_state: "",
           },
         },
         state
@@ -257,7 +258,7 @@ function submissionFlow(state = initialState, action) {
       return u(
         {
           locationAutocompleteFrozen: false,
-          locationAutocompleteValue: '',
+          locationAutocompleteValue: "",
         },
         state
       )

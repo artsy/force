@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
-import { formattedLocation } from '../../helpers'
-import { makeDescribeWorkDesktop } from '../describe_work_desktop'
-import { makeDescribeWorkMobile } from '../describe_work_mobile'
-import { isEmpty, pick } from 'underscore'
+import PropTypes from "prop-types"
+import React from "react"
+import { connect } from "react-redux"
+import { formattedLocation } from "../../helpers"
+import { makeDescribeWorkDesktop } from "../describe_work_desktop"
+import { makeDescribeWorkMobile } from "../describe_work_mobile"
+import { isEmpty, pick } from "underscore"
 
 function DescribeWorkContainer(props) {
   const { isMobile, phone, submission } = props
@@ -18,25 +18,26 @@ function DescribeWorkContainer(props) {
     : { ...submission, location, phone }
   const relevantInputs = pick(
     populatedSubmission,
-    'artist_id',
-    'authenticity_certificate',
-    'category',
-    'depth',
-    'dimensions_metric',
-    'edition',
-    'edition_number',
-    'edition_size',
-    'height',
-    'id',
-    'location',
-    'medium',
-    'minimum_price_dollars',
-    'phone',
-    'provenance',
-    'signature',
-    'title',
-    'width',
-    'year'
+    "artist_id",
+    "authenticity_certificate",
+    "category",
+    "currency",
+    "depth",
+    "dimensions_metric",
+    "edition",
+    "edition_number",
+    "edition_size",
+    "height",
+    "id",
+    "location",
+    "medium",
+    "minimum_price_dollars",
+    "phone",
+    "provenance",
+    "signature",
+    "title",
+    "width",
+    "year"
   )
 
   const DescribeWorkForm = isMobile
