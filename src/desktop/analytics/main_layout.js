@@ -11,7 +11,9 @@ const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
 var properties = { path: location.pathname }
 
 if (pageType == "artwork") {
-  properties["ecommerce"] = sd.ARTWORK.is_acquireable
+  properties["acquireable"] = sd.ARTWORK.is_acquireable
+  properties["availability"] = sd.ARTWORK.availability
+  properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
 }
 
 analytics.page(properties, { integrations: { Marketo: false } })
