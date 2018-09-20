@@ -21,6 +21,7 @@ function DescribeWorkContainer(props) {
     "artist_id",
     "authenticity_certificate",
     "category",
+    "currency",
     "depth",
     "dimensions_metric",
     "edition",

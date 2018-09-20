@@ -224,9 +224,9 @@ export function makeDescribeWorkDesktop(initialValues = {}) {
             <div className={b("row")}>
               <div className={b("row-item-1")}>
                 <Field
-                  name="dimensions_metric"
+                  name="currency"
                   component={renderSelectInput}
-                  item={"dimensions_metric"}
+                  item={"currency"}
                   label={"Price"}
                   options={["USD", "GBP"]}
                 />

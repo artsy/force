@@ -44,6 +44,7 @@ const initialState = {
     artist_id: "",
     authenticity_certificate: false,
     category: "Painting",
+    currency: "USD",
     depth: "",
     dimensions_metric: "in",
     edition: false,
