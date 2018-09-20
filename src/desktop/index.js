@@ -25,7 +25,9 @@ app.use(require("./apps/artwork"))
 app.use(require("./apps/artwork2/server"))
 app.use(require("./apps/about"))
 app.use(require("./apps/collect_art"))
-app.use(require("./apps/collect2/server"))
+if (sd.NEW_COLLECT_PAGE_ENABLED) {
+  app.use(require("./apps/collect2/server"))
+}
 app.use(require("./apps/collect"))
 app.use(require("./apps/categories"))
 app.use(require("./apps/consign"))
