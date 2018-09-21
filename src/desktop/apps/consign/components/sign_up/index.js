@@ -1,23 +1,23 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import { Field, reduxForm } from 'redux-form'
-import { compose } from 'underscore'
-import { connect } from 'react-redux'
-import { renderTextInput } from '../text_input'
-import { renderCheckboxInput } from '../checkbox_input'
-import { signUp, updateAuthFormStateAndClearError } from '../../client/actions'
-import { GDPRMessage } from 'desktop/components/react/gdpr/GDPRCheckbox'
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import { Field, reduxForm } from "redux-form"
+import { compose } from "underscore"
+import { connect } from "react-redux"
+import { renderTextInput } from "../text_input"
+import { renderCheckboxInput } from "../checkbox_input"
+import { signUp, updateAuthFormStateAndClearError } from "../../client/actions"
+import { GDPRMessage } from "desktop/components/react/gdpr/GDPRCheckbox"
 
 function validate(values) {
   const { accepted_terms_of_service, email, name, password } = values
   const errors = {}
 
-  if (!name) errors.name = 'Required'
-  if (!email) errors.email = 'Required'
-  if (!password) errors.password = 'Required'
+  if (!name) errors.name = "Required"
+  if (!email) errors.email = "Required"
+  if (!password) errors.password = "Required"
   if (!accepted_terms_of_service)
-    errors.accepted_terms_of_service = 'Please agree to our terms to continue'
+    errors.accepted_terms_of_service = "Please agree to our terms to continue"
 
   return errors
 }
@@ -31,60 +31,60 @@ function SignUp(props) {
     updateAuthFormStateAndClearErrorAction,
   } = props
 
-  const b = block('consignments-submission-sign-up')
+  const b = block("consignments-submission-sign-up")
 
   return (
     <div className={b()}>
-      <div className={b('title')}>Create an Account</div>
-      <div className={b('subtitle')}>
-        Already have an account?{' '}
+      <div className={b("title")}>Create an Account</div>
+      <div className={b("subtitle")}>
+        Already have an account?{" "}
         <span
-          className={b('clickable')}
-          onClick={() => updateAuthFormStateAndClearErrorAction('logIn')}
+          className={b("clickable")}
+          onClick={() => updateAuthFormStateAndClearErrorAction("logIn")}
         >
           Log in
         </span>.
       </div>
-      <form className={b('form')} onSubmit={handleSubmit(signUpAction)}>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
+      <form className={b("form")} onSubmit={handleSubmit(signUpAction)}>
+        <div className={b("row")}>
+          <div className={b("row-item")}>
             <Field
               name="name"
               component={renderTextInput}
-              item={'name'}
-              label={'Full Name'}
+              item={"name"}
+              label={"Full Name"}
               autofocus
             />
           </div>
         </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
+        <div className={b("row")}>
+          <div className={b("row-item")}>
             <Field
               name="email"
               component={renderTextInput}
-              item={'email'}
-              label={'Email'}
-              type={'email'}
+              item={"email"}
+              label={"Email"}
+              type={"email"}
             />
           </div>
         </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
+        <div className={b("row")}>
+          <div className={b("row-item")}>
             <Field
               name="password"
               component={renderTextInput}
-              item={'password'}
-              label={'Password'}
-              type={'password'}
+              item={"password"}
+              label={"Password"}
+              type={"password"}
             />
           </div>
         </div>
-        <div className={b('row')}>
-          <div className={b('row-item')}>
+        <div className={b("row")}>
+          <div className={b("row-item")}>
             <Field
               name="accepted_terms_of_service"
               component={renderCheckboxInput}
-              item={'accepted_terms_of_service'}
+              item={"accepted_terms_of_service"}
               label={<GDPRMessage />}
               value={false}
             />
@@ -92,13 +92,13 @@ function SignUp(props) {
         </div>
         <button
           className={b
-            .builder()('sign-up-button')
-            .mix('avant-garde-button-black')()}
+            .builder()("sign-up-button")
+            .mix("avant-garde-button-black")()}
           type="submit"
         >
-          {isLoading ? <div className="loading-spinner-white" /> : 'Submit'}
+          {isLoading ? <div className="loading-spinner-white" /> : "Submit"}
         </button>
-        {error && <div className={b('error')}>{error}</div>}
+        {error && <div className={b("error")}>{error}</div>}
       </form>
     </div>
   )
@@ -126,7 +126,7 @@ SignUp.propTypes = {
 
 export default compose(
   reduxForm({
-    form: 'signUp', // a unique identifier for this form
+    form: "signUp", // a unique identifier for this form
     validate,
   }),
   connect(mapStateToProps, mapDispatchToProps)

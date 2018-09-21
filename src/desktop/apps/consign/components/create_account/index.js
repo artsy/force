@@ -1,10 +1,10 @@
-import _ForgotPassword from '../forgot_password'
-import _LogIn from '../log_in'
-import PropTypes from 'prop-types'
-import React from 'react'
-import _SignUp from '../sign_up'
-import block from 'bem-cn-lite'
-import { connect } from 'react-redux'
+import _ForgotPassword from "../forgot_password"
+import _LogIn from "../log_in"
+import PropTypes from "prop-types"
+import React from "react"
+import _SignUp from "../sign_up"
+import block from "bem-cn-lite"
+import { connect } from "react-redux"
 
 // FIXME: Rewire
 let ForgotPassword = _ForgotPassword
@@ -12,7 +12,7 @@ let LogIn = _LogIn
 let SignUp = _SignUp
 
 function CreateAccount({ CurrentStateComponent }) {
-  const b = block('consignments-submission-create-account')
+  const b = block("consignments-submission-create-account")
 
   return (
     <div className={b()}>

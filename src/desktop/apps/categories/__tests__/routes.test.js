@@ -1,7 +1,7 @@
-import sinon from 'sinon'
-import App from 'desktop/apps/categories/components/App'
+import sinon from "sinon"
+import App from "desktop/apps/categories/components/App"
 
-const rewire = require('rewire')('../routes')
+const rewire = require("rewire")("../routes")
 const { index } = rewire
 
 let req
@@ -10,14 +10,14 @@ let next
 let geneFamiliesQuery
 let renderLayout
 
-describe('#index', () => {
+describe("#index", () => {
   beforeEach(() => {
     req = {
       app: {
         get: sinon
           .stub()
-          .withArgs('views')
-          .returns('components'),
+          .withArgs("views")
+          .returns("components"),
       },
     }
     res = {}
@@ -27,16 +27,16 @@ describe('#index', () => {
         edges: [
           {
             node: {
-              id: 'materials',
-              name: 'Materials',
+              id: "materials",
+              name: "Materials",
               genes: [
                 {
-                  id: 'silver',
-                  name: 'Silver',
+                  id: "silver",
+                  name: "Silver",
                 },
                 {
-                  id: 'gold',
-                  name: 'Gold',
+                  id: "gold",
+                  name: "Gold",
                 },
               ],
             },
@@ -46,34 +46,34 @@ describe('#index', () => {
     }
 
     rewire.__set__(
-      'metaphysics',
+      "metaphysics",
       sinon.stub().returns(Promise.resolve(geneFamiliesQuery))
     )
 
     renderLayout = sinon.stub()
-    rewire.__set__('renderLayout', renderLayout)
+    rewire.__set__("renderLayout", renderLayout)
   })
 
-  it('renders the categories app', () => {
+  it("renders the categories app", () => {
     index(req, res, next).then(() => {
       renderLayout.args[0][0].blocks.body.should.equal(App)
-      renderLayout.args[0][0].locals.assetPackage.should.equal('categories')
+      renderLayout.args[0][0].locals.assetPackage.should.equal("categories")
     })
   })
-  it('passes the correct variables', () => {
+  it("passes the correct variables", () => {
     index(req, res, next).then(() => {
       const expectedFamilies = [
         {
-          id: 'materials',
-          name: 'Materials',
+          id: "materials",
+          name: "Materials",
           genes: [
             {
-              id: 'silver',
-              name: 'Silver',
+              id: "silver",
+              name: "Silver",
             },
             {
-              id: 'gold',
-              name: 'Gold',
+              id: "gold",
+              name: "Gold",
             },
           ],
         },

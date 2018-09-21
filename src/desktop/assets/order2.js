@@ -1,1 +1,1 @@
-import 'desktop/apps/order2/client'
+import "desktop/apps/order2/client"

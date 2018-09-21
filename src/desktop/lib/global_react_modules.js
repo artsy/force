@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { Artwork as ReactionArtwork } from 'reaction/Components/Artwork'
-import { ArtworkGrid as ReactionArtworkGrid } from 'reaction/Components/ArtworkGrid'
-import { ContextProvider } from 'reaction/Artsy'
-import { data as sd } from 'sharify'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import { Artwork as ReactionArtwork } from "reaction/Components/Artwork"
+import { ArtworkGrid as ReactionArtworkGrid } from "reaction/Components/ArtworkGrid"
+import { ContextProvider } from "reaction/Artsy"
+import { data as sd } from "sharify"
 
-import { ReactionTooltipQuestion } from '../components/react/stitch_components/ReactionTooltipQuestion'
-import { ReactionArtworkDetails } from '../components/react/stitch_components/ReactionArtworkDetails'
+import { ReactionTooltipQuestion } from "../components/react/stitch_components/ReactionTooltipQuestion"
+import { ReactionArtworkDetails } from "../components/react/stitch_components/ReactionArtworkDetails"
 
 export const TooltipQuestion = ReactionTooltipQuestion
 export const ArtworkDetails = ReactionArtworkDetails
@@ -55,10 +55,10 @@ export class ArtworkGrid extends Component {
 }
 
 export const Fillwidth = props => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const {
       Fillwidth: ReactionFillWidth,
-    } = require('reaction/Components/Artwork/Fillwidth')
+    } = require("reaction/Components/Artwork/Fillwidth")
 
     const artworks = mapToRelayConnection(props.artworks) // eslint-disable-line
 
@@ -68,7 +68,7 @@ export const Fillwidth = props => {
       </ContextProvider>
     )
   } else {
-    return ''
+    return ""
   }
 }
 

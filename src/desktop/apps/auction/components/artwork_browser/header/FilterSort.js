@@ -1,49 +1,58 @@
-import _ from 'underscore'
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import { connect } from 'react-redux'
-import { updateSort } from 'desktop/apps/auction/actions/artworkBrowser'
+import _ from "underscore"
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import { connect } from "react-redux"
+import { updateSort } from "desktop/apps/auction/actions/artworkBrowser"
 
-function FilterSort (props) {
-  const {
-    filterParams,
-    sortMap,
-    updateSortAction
-  } = props
+function FilterSort(props) {
+  const { filterParams, sortMap, updateSortAction } = props
 
   const selectedSort = filterParams.sort
   const itemHeight = 37
   const itemIndex = Object.keys(sortMap).indexOf(selectedSort)
-  const optionsOffset = (itemIndex) * itemHeight
+  const optionsOffset = itemIndex * itemHeight
 
-  const b = block('auction-FilterSort')
+  const b = block("auction-FilterSort")
 
   return (
     <div className={b()}>
-      <span className={b.builder()('label').mix('bordered-pulldown-label')()}>Sort by:</span>
-      <div className='bordered-pulldown'>
-        <a className='bordered-pulldown-toggle' href='#'>
-          <span className='bordered-pulldown-text'>{ sortMap[selectedSort] }</span>
-          <div className='bordered-pulldown-toggle-caret'>
-            <span className='caret' />
+      <span
+        className={b
+          .builder()("label")
+          .mix("bordered-pulldown-label")()}
+      >
+        Sort by:
+      </span>
+      <div className="bordered-pulldown">
+        <a className="bordered-pulldown-toggle" href="#">
+          <span className="bordered-pulldown-text">
+            {sortMap[selectedSort]}
+          </span>
+          <div className="bordered-pulldown-toggle-caret">
+            <span className="caret" />
           </div>
         </a>
-        <div className='bordered-pulldown-options' style={{ top: -optionsOffset }}>
-          {
-            _.map(sortMap, (sortName, sort) => {
-              const selected = sort === selectedSort
-              return <a
-                href='#'
-                className={selected ? 'borderd-pulldown-active' : ''}
+        <div
+          className="bordered-pulldown-options"
+          style={{ top: -optionsOffset }}
+        >
+          {_.map(sortMap, (sortName, sort) => {
+            const selected = sort === selectedSort
+            return (
+              <a
+                href="#"
+                className={selected ? "borderd-pulldown-active" : ""}
                 key={sort}
-                onClick={(event) => {
+                onClick={event => {
                   event.preventDefault()
                   updateSortAction(sort)
                 }}
-              >{sortName}</a>
-            })
-          }
+              >
+                {sortName}
+              </a>
+            )
+          })}
         </div>
       </div>
     </div>
@@ -53,21 +62,18 @@ function FilterSort (props) {
 FilterSort.propTypes = {
   filterParams: PropTypes.object.isRequired,
   sortMap: PropTypes.object.isRequired,
-  updateSortAction: PropTypes.func.isRequired
+  updateSortAction: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sortMap: state.artworkBrowser.sortMap,
-    filterParams: state.artworkBrowser.filterParams
+    filterParams: state.artworkBrowser.filterParams,
   }
 }
 
 const mapDispatchToProps = {
-  updateSortAction: updateSort
+  updateSortAction: updateSort,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FilterSort)
+export default connect(mapStateToProps, mapDispatchToProps)(FilterSort)

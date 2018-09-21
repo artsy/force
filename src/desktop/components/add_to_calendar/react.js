@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import AddToCalendarView from 'desktop/components/add_to_calendar/index.coffee'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import AddToCalendarView from "desktop/components/add_to_calendar/index.coffee"
 
 export default class AddToCalendar extends Component {
   static propTypes = {
@@ -13,11 +13,11 @@ export default class AddToCalendar extends Component {
   }
 
   componentDidMount() {
-    this.$ = require('jquery')
+    this.$ = require("jquery")
 
     this.setState(() => {
       this.view = new AddToCalendarView({
-        el: this.props.el || this.$('.add-to-calendar'),
+        el: this.props.el || this.$(".add-to-calendar"),
       })
 
       return {

@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import Scrollspy from 'react-scrollspy'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import Scrollspy from "react-scrollspy"
 
-import colors from 'reaction/Assets/Colors'
-import { avantgarde } from 'reaction/Assets/Fonts'
-import FrameAnimator from 'desktop/components/frame_animator'
+import colors from "reaction/Assets/Colors"
+import { avantgarde } from "reaction/Assets/Fonts"
+import FrameAnimator from "desktop/components/frame_animator"
 
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired,
@@ -34,7 +34,7 @@ const GeneFamilyList = styled(Scrollspy)`
   background: white;
   z-index: 1;
 
-  ${avantgarde('s13')};
+  ${avantgarde("s13")};
 `
 
 const GeneFamilyItem = styled.li`

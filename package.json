@@ -16,6 +16,7 @@
     "precommit": "lint-staged",
     "prepare": "patch-package",
     "prepush": "yarn type-check",
+    "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
     "prettier-write": "yarn run prettier --write",
     "publish_assets": "scripts/publish_assets.sh",
     "relay": "node scripts/relayCompiler.js",

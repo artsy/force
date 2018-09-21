@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { partition, take } from 'underscore'
-import AuctionBlock from '../auction_block/auction_block'
+import PropTypes from "prop-types"
+import React from "react"
+import { partition, take } from "underscore"
+import AuctionBlock from "../auction_block/auction_block"
 
 export default function CurrentAuctions({ auctionContextId, sales }) {
   const sortedSales = sortSales(sales, auctionContextId)
@@ -15,7 +15,7 @@ export default function CurrentAuctions({ auctionContextId, sales }) {
       </div>
 
       <div className="artwork-current-auctions__sales">
-        {sortedSales.map((sale) => {
+        {sortedSales.map(sale => {
           return <AuctionBlock key={sale.id} sale={sale} />
         })}
       </div>
@@ -34,15 +34,15 @@ CurrentAuctions.propTypes = {
 }
 
 CurrentAuctions.defaultProps = {
-  auctionContextId: '',
+  auctionContextId: "",
 }
 
 // Helpers
 
-function sortSales(sales, auctionContextId = '', CAP = 4) {
+function sortSales(sales, auctionContextId = "", CAP = 4) {
   const [currentSale, rest] = partition(
     sales,
-    (sale) => sale.id === auctionContextId
+    sale => sale.id === auctionContextId
   )
   const sorted = take(currentSale.concat(rest), CAP)
   return sorted

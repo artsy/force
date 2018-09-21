@@ -1,4 +1,4 @@
-import * as easingFunctions from './easing'
+import * as easingFunctions from "./easing"
 
 export default class FrameAnimator {
   /**
@@ -15,7 +15,7 @@ export default class FrameAnimator {
       duration = 500,
       startValue = 0,
       endValue = 1,
-      easing = 'cubicInOut',
+      easing = "cubicInOut",
     } = options
 
     this._animatorFunction = this._createAnimatorFunction(callback, {
@@ -29,7 +29,7 @@ export default class FrameAnimator {
   _createAnimatorFunction(callback, options) {
     const { duration, startValue, endValue, easing } = options
     const startedAt = window.performance.now()
-    const animatorFunction = (timestamp) => {
+    const animatorFunction = timestamp => {
       const elapsed = timestamp - startedAt
       if (elapsed <= duration) {
         const t = elapsed / duration

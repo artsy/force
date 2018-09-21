@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
-import GridArtwork from 'desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork'
-import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
-import React, { Fragment } from 'react'
-import get from 'lodash.get'
-import { Artwork } from 'reaction/Components/Artwork'
-import { ArtworkRail } from '../artwork_rail/ArtworkRail'
-import { connect } from 'react-redux'
+import PropTypes from "prop-types"
+import GridArtwork from "desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork"
+import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
+import React, { Fragment } from "react"
+import get from "lodash.get"
+import { Artwork } from "reaction/Components/Artwork"
+import { ArtworkRail } from "../artwork_rail/ArtworkRail"
+import { connect } from "react-redux"
 
 function ArtworksByFollwedArtists(props) {
   const { isMobile, saleArtworksByFollowedArtists } = props
@@ -25,7 +25,7 @@ function ArtworksByFollwedArtists(props) {
           columnCount={2}
           items={saleArtworksByFollowedArtists}
           getAspectRatio={({ artwork }) => {
-            return get(artwork, 'images.0.aspect_ratio')
+            return get(artwork, "images.0.aspect_ratio")
           }}
           getDisplayComponent={({ artwork }) => {
             return (

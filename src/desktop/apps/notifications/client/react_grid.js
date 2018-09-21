@@ -1,12 +1,12 @@
-import $ from 'jquery'
+import $ from "jquery"
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { WorksForYou } from 'reaction/Apps/WorksForYou'
+import React from "react"
+import ReactDOM from "react-dom"
+import { WorksForYou } from "reaction/Apps/WorksForYou"
 
-import { ContextProvider } from 'reaction/Artsy'
+import { ContextProvider } from "reaction/Artsy"
 
-import CurrentUser from '../../../models/current_user.coffee'
+import CurrentUser from "../../../models/current_user.coffee"
 
 function setupReactGrid(options = {}) {
   const user = CurrentUser.orNull()
@@ -14,9 +14,9 @@ function setupReactGrid(options = {}) {
 
   ReactDOM.render(
     <ContextProvider user={user ? user.toJSON() : null}>
-      <WorksForYou forSale={forSale} artistID={artistID || ''} />
+      <WorksForYou forSale={forSale} artistID={artistID || ""} />
     </ContextProvider>,
-    document.getElementById('notifications-react-works')
+    document.getElementById("notifications-react-works")
   )
 }
 

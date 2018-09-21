@@ -1,29 +1,29 @@
-import React from 'react'
-import { graphql } from 'react-relay'
-import { Layout } from './components/Layout'
-import { HomeRoute } from './routes/home/HomeRoute'
-import { ArtistRoute } from './routes/artist/ArtistRoute'
-import { AuctionRoute } from './routes/auction/AuctionRoute'
-import { ReactLoadableClientRoute } from './routes/react-loadable/ReactLoadableClientRoute'
-import { ReactLoadableServerRoute } from './routes/react-loadable/ReactLoadableServerRoute'
+import React from "react"
+import { graphql } from "react-relay"
+import { Layout } from "./components/Layout"
+import { HomeRoute } from "./routes/home/HomeRoute"
+import { ArtistRoute } from "./routes/artist/ArtistRoute"
+import { AuctionRoute } from "./routes/auction/AuctionRoute"
+import { ReactLoadableClientRoute } from "./routes/react-loadable/ReactLoadableClientRoute"
+import { ReactLoadableServerRoute } from "./routes/react-loadable/ReactLoadableServerRoute"
 
 export const routes = [
   {
     Component: Layout,
-    path: '/isomorphic-relay-example',
+    path: "/isomorphic-relay-example",
     children: [
       {
-        path: '/',
+        path: "/",
         Component: HomeRoute,
       },
       {
-        path: '/about',
+        path: "/about",
         Component: () => <div>About page!</div>,
       },
       {
-        path: '/artsy/:artistID',
+        path: "/artsy/:artistID",
         getComponent: ({ artworks }) => {
-          return import('reaction/Components/ArtworkGrid').then(
+          return import("reaction/Components/ArtworkGrid").then(
             ({ default: ArtworkGrid }) => props => (
               <div>
                 <ArtworkGrid {...props.artist} />
@@ -42,7 +42,7 @@ export const routes = [
         `,
       },
       {
-        path: '/artist/:id',
+        path: "/artist/:id",
         Component: ArtistRoute,
         query: graphql`
           query routes_ArtistRouteQuery($id: String!) {
@@ -54,10 +54,10 @@ export const routes = [
         `,
         children: [
           {
-            path: '/auction/:id',
+            path: "/auction/:id",
             Component: AuctionRoute,
             prepareVariables: params => ({
-              id: 'shared-live-mocktion-k8s',
+              id: "shared-live-mocktion-k8s",
             }),
             query: graphql`
               query routes_AuctionRouteQuery($id: String!) {
@@ -70,7 +70,7 @@ export const routes = [
         ],
       },
       {
-        path: '/auction/:id',
+        path: "/auction/:id",
         Component: AuctionRoute,
         query: graphql`
           query routes_TopAuctionRouteQuery($id: String!) {
@@ -81,15 +81,15 @@ export const routes = [
         `,
       },
       {
-        path: '/react-loadable/client',
+        path: "/react-loadable/client",
         Component: ReactLoadableClientRoute,
       },
       {
-        path: '/react-loadable/server',
+        path: "/react-loadable/server",
         Component: ReactLoadableServerRoute,
       },
       {
-        path: '*',
+        path: "*",
         Component: () => <div>NOT FOUND!</div>,
       },
     ],

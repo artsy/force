@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import TAGPIntro from './TAGPIntro'
-import GeneFamilies from './GeneFamilies'
+import TAGPIntro from "./TAGPIntro"
+import GeneFamilies from "./GeneFamilies"
 
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired,
-  allFeaturedGenesByFamily: PropTypes.array.isRequired
+  allFeaturedGenesByFamily: PropTypes.array.isRequired,
 }
 
 const ResponsiveContent = styled.main`
@@ -22,7 +22,10 @@ const TAGPContent = ({ geneFamilies, allFeaturedGenesByFamily }) => {
   return (
     <ResponsiveContent>
       <TAGPIntro />
-      <GeneFamilies geneFamilies={geneFamilies} allFeaturedGenesByFamily={allFeaturedGenesByFamily} />
+      <GeneFamilies
+        geneFamilies={geneFamilies}
+        allFeaturedGenesByFamily={allFeaturedGenesByFamily}
+      />
     </ResponsiveContent>
   )
 }

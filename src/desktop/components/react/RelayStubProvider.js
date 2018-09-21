@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import { Component } from 'react'
-import { Environment, Network, RecordSource, Store } from 'relay-runtime'
+import PropTypes from "prop-types"
+import { Component } from "react"
+import { Environment, Network, RecordSource, Store } from "relay-runtime"
 
 export class RelayStubProvider extends Component {
   static propTypes = {
@@ -11,7 +11,7 @@ export class RelayStubProvider extends Component {
   static defaultProps = {
     relay: {
       environment: new Environment({
-        network: Network.create((x) => x),
+        network: Network.create(x => x),
         store: new Store(new RecordSource()),
       }),
       variables: {},

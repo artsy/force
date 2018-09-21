@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from 'desktop/apps/articles/components/App'
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "desktop/apps/articles/components/App"
 
 export const init = () => {
   // Rehydrate data from Server
@@ -9,6 +9,6 @@ export const init = () => {
   // Start app
   ReactDOM.hydrate(
     <App {...bootstrapData} />,
-    document.getElementById('react-root')
+    document.getElementById("react-root")
   )
 }

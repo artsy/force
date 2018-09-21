@@ -1,9 +1,9 @@
-require('@babel/polyfill')
+require("@babel/polyfill")
 
-const _ = require('underscore')
-const $ = require('jquery')
-const imagesLoaded = require('imagesloaded')
-const jqueryFillwidthLite = require('jquery-fillwidth-lite')
+const _ = require("underscore")
+const $ = require("jquery")
+const imagesLoaded = require("imagesloaded")
+const jqueryFillwidthLite = require("jquery-fillwidth-lite")
 
 window._ = _
 window.$ = $

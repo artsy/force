@@ -1,10 +1,10 @@
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import Colors from 'reaction/Assets/Colors'
-import { pMedia } from 'reaction/Components/Helpers'
-import { SectionsNav } from './sections_nav.jsx'
-import { Header } from './header.jsx'
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import Colors from "reaction/Assets/Colors"
+import { pMedia } from "reaction/Components/Helpers"
+import { SectionsNav } from "./sections_nav.jsx"
+import { Header } from "./header.jsx"
 
 export class FixedHeader extends Component {
   static propTypes = {
@@ -22,7 +22,7 @@ export class FixedHeader extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll)
+    window.addEventListener("scroll", this.onScroll)
 
     let isOpen = false
     if (this.props.isOpen) {
@@ -96,7 +96,7 @@ const FixedHeaderContainer = styled.div`
   position: fixed;
   z-index: 100;
   transition: opacity 0.25s;
-  opacity: ${(props) => (props.isVisible ? '1' : '0')};
+  opacity: ${props => (props.isVisible ? "1" : "0")};
   border-bottom: 1px solid ${Colors.grayRegular};
   ${pMedia.sm`
     .SeriesNav {

@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import FeaturedGene from './FeaturedGene'
+import FeaturedGene from "./FeaturedGene"
 
 const propTypes = {
-  featuredGenes: PropTypes.object
+  featuredGenes: PropTypes.object,
 }
 
 const Layout = styled.div`

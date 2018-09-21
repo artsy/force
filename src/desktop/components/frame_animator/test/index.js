@@ -1,10 +1,10 @@
-import 'jsdom-global/register'
-import sinon from 'sinon'
+import "jsdom-global/register"
+import sinon from "sinon"
 
-const rewire = require('rewire')('../index')
+const rewire = require("rewire")("../index")
 const FrameAnimator = rewire.default
 
-describe('FrameAnimator', () => {
+describe("FrameAnimator", () => {
   beforeEach(() => {
     window.requestAnimationFrame = () => {}
     window.performance = {
@@ -13,7 +13,7 @@ describe('FrameAnimator', () => {
     window.performance.now.onCall(0).returns(0)
   })
 
-  it('fires the callback within the requested duration', () => {
+  it("fires the callback within the requested duration", () => {
     const duration = 100
     const timestampWithinDuration = 99
     const callback = sinon.spy()
@@ -24,7 +24,7 @@ describe('FrameAnimator', () => {
     callback.callCount.should.equal(1)
   })
 
-  it('does not fire the callback after the duration is up', () => {
+  it("does not fire the callback after the duration is up", () => {
     const duration = 100
     const timestampAfterDuration = 101
     const callback = sinon.spy()
@@ -35,7 +35,7 @@ describe('FrameAnimator', () => {
     callback.callCount.should.equal(0)
   })
 
-  it('animates from the starting value', () => {
+  it("animates from the starting value", () => {
     const duration = 100
     const startValue = 42
     const endValue = 420
@@ -53,7 +53,7 @@ describe('FrameAnimator', () => {
     callback.getCall(0).args[0].should.equal(42)
   })
 
-  it('animates to the ending value', () => {
+  it("animates to the ending value", () => {
     const duration = 100
     const startValue = 42
     const endValue = 420
@@ -71,7 +71,7 @@ describe('FrameAnimator', () => {
     callback.getCall(0).args[0].should.equal(420)
   })
 
-  it('queues itself again with requestAnimationFrame', () => {
+  it("queues itself again with requestAnimationFrame", () => {
     const duration = 100
     const startValue = 42
     const endValue = 420
@@ -84,7 +84,7 @@ describe('FrameAnimator', () => {
     window.performance.now.onCall(4).returns(120) // finishes
 
     // stub requestAnimationFrame itself
-    sinon.stub(window, 'requestAnimationFrame', (fn) => {
+    sinon.stub(window, "requestAnimationFrame", fn => {
       const currentTimestamp = window.performance.now()
       fn(currentTimestamp)
     })
@@ -99,7 +99,7 @@ describe('FrameAnimator', () => {
     callback.callCount.should.equal(3)
   })
 
-  it('uses sensible defaults', () => {
+  it("uses sensible defaults", () => {
     const callback = sinon.spy()
     const animator = new FrameAnimator(callback)
 
@@ -110,7 +110,7 @@ describe('FrameAnimator', () => {
     callback.args.should.match([[0], [1]])
   })
 
-  describe('easing function', () => {
+  describe("easing function", () => {
     let easingFunctions
     let resetRewire
 
@@ -119,24 +119,24 @@ describe('FrameAnimator', () => {
         sinInOut: sinon.spy(),
         cubicInOut: sinon.spy(),
       }
-      resetRewire = rewire.__set__('easingFunctions', easingFunctions)
+      resetRewire = rewire.__set__("easingFunctions", easingFunctions)
     })
 
     afterEach(() => {
       resetRewire()
     })
 
-    it('defaults to cubicInOut', () => {
+    it("defaults to cubicInOut", () => {
       const callback = sinon.spy()
       const animator = new FrameAnimator(callback)
       animator._animatorFunction(0)
       easingFunctions.cubicInOut.callCount.should.equal(1)
     })
 
-    it('can be configured by supplying a function name', () => {
+    it("can be configured by supplying a function name", () => {
       const callback = sinon.spy()
       const animator = new FrameAnimator(callback, {
-        easing: 'sinInOut',
+        easing: "sinInOut",
       })
       animator._animatorFunction(0)
       easingFunctions.sinInOut.callCount.should.equal(1)
