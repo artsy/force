@@ -1,21 +1,21 @@
-import { buildClientApp } from 'reaction/Artsy/Router'
-import { data as sd } from 'sharify'
-import { routes } from 'reaction/Apps/Order/routes'
-import mediator from 'desktop/lib/mediator.coffee'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import styled from 'styled-components'
-import openMultiPageModal from 'desktop/components/multi_page_modal/index.coffee'
-import User from 'desktop/models/user.coffee'
-import Artwork from 'desktop/models/artwork.coffee'
-import ArtworkInquiry from 'desktop/models/artwork_inquiry.coffee'
-import openInquiryQuestionnaireFor from 'desktop/components/inquiry_questionnaire/index.coffee'
+import { buildClientApp } from "reaction/Artsy/Router/client"
+import { data as sd } from "sharify"
+import { routes } from "reaction/Apps/Order/routes"
+import mediator from "desktop/lib/mediator.coffee"
+import React from "react"
+import ReactDOM from "react-dom"
+import styled from "styled-components"
+import openMultiPageModal from "desktop/components/multi_page_modal/index.coffee"
+import User from "desktop/models/user.coffee"
+import Artwork from "desktop/models/artwork.coffee"
+import ArtworkInquiry from "desktop/models/artwork_inquiry.coffee"
+import openInquiryQuestionnaireFor from "desktop/components/inquiry_questionnaire/index.coffee"
 
-mediator.on('openOrdersBuyerFAQModal', options => {
-  openMultiPageModal('collector-faqs')
+mediator.on("openOrdersBuyerFAQModal", options => {
+  openMultiPageModal("collector-faqs")
 })
 
-mediator.on('openOrdersContactArtsyModal', options => {
+mediator.on("openOrdersContactArtsyModal", options => {
   const artworkId = options.artworkId
   if (artworkId) {
     const user = User.instantiate()
@@ -51,7 +51,7 @@ buildClientApp({
         <ClientApp />
       </Container>,
 
-      document.getElementById('react-root')
+      document.getElementById("react-root")
     )
   })
   .catch(error => {
