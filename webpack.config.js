@@ -10,11 +10,12 @@ const fs = require("fs")
 const path = require("path")
 const webpack = require("webpack")
 
-const { NODE_ENV, PORT, WEBPACK_DEVTOOL, ANALYZE_BUNDLE } = process.env
+const { CI, NODE_ENV, PORT, WEBPACK_DEVTOOL, ANALYZE_BUNDLE } = process.env
 const isDevelopment = NODE_ENV === "development"
 const isStaging = NODE_ENV === "staging"
 const isProduction = NODE_ENV === "production"
 const isDeploy = isStaging || isProduction
+const isCI = !!CI
 
 const cacheDirectory = path.resolve(__dirname, ".cache")
 
@@ -39,12 +40,12 @@ const config = {
         test: /\.coffee$/,
         include: /src/,
         use: [
-          {
+          ...notOnCI({
             loader: "cache-loader",
             options: {
               cacheDirectory: path.join(cacheDirectory, "coffee"),
             },
-          },
+          }),
           { loader: "coffee-loader" },
         ],
       },
@@ -52,12 +53,12 @@ const config = {
         test: /\.(jade|pug)$/,
         include: /src/,
         use: [
-          {
+          ...notOnCI({
             loader: "cache-loader",
             options: {
               cacheDirectory: path.join(cacheDirectory, "pug"),
             },
-          },
+          }),
           {
             loader: "pug-loader",
             options: {
@@ -74,7 +75,7 @@ const config = {
           {
             loader: "babel-loader",
             options: {
-              cacheDirectory: path.join(cacheDirectory, "babel"),
+              cacheDirectory: isCI ? false : path.join(cacheDirectory, "babel"),
             },
           },
         ],
@@ -87,16 +88,18 @@ const config = {
   },
   plugins: [
     // TODO: Add webpack typechecker
-    new SimpleProgressWebpackPlugin({ format: "compact" }),
+    ...notOnCI(new SimpleProgressWebpackPlugin({ format: "compact" })),
+    ...notOnCI(
+      new HardSourceWebpackPlugin({
+        cacheDirectory: path.join(cacheDirectory, "hard-source"),
+        info: {
+          mode: "none",
+          level: "error",
+        },
+      })
+    ),
     // Remove moment.js localization files
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new HardSourceWebpackPlugin({
-      cacheDirectory: path.join(cacheDirectory, "hard-source"),
-      info: {
-        mode: "none",
-        level: "error",
-      },
-    }),
     new ForkTsCheckerWebpackPlugin({
       formatter: "codeframe",
       formatterOptions: "highlightCode",
@@ -196,6 +199,10 @@ if (isDevelopment) {
 }
 
 // Helpers
+
+function notOnCI(value) {
+  return isCI ? [] : [value]
+}
 
 function getEntrypoints() {
   return {
