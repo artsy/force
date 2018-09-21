@@ -15,7 +15,7 @@ const isDevelopment = NODE_ENV === "development"
 const isStaging = NODE_ENV === "staging"
 const isProduction = NODE_ENV === "production"
 const isDeploy = isStaging || isProduction
-const isCI = !!CI
+const isCI = CI === "true"
 
 const cacheDirectory = path.resolve(__dirname, ".cache")
 
