@@ -548,7 +548,7 @@ describe("<Layout />", () => {
           data: emptyData,
         })
 
-        wrapper.html().should.not.containEql("Buy Now")
+        wrapper.html().should.not.containEql("Buy now")
       })
 
       it("renders a desktop rail", () => {
@@ -558,7 +558,7 @@ describe("<Layout />", () => {
           data,
         })
 
-        wrapper.html().should.containEql("Buy Now")
+        wrapper.html().should.containEql("Buy now")
         wrapper
           .html()
           .should.containEql("/artwork/torkil-gudnason-hothouse-flowers")
@@ -575,7 +575,7 @@ describe("<Layout />", () => {
           },
         })
 
-        wrapper.html().should.containEql("Buy Now")
+        wrapper.html().should.containEql("Buy now")
         wrapper
           .html()
           .should.containEql("/artwork/torkil-gudnason-hothouse-flowers")

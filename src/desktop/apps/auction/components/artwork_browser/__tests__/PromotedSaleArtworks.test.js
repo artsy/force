@@ -29,7 +29,7 @@ describe("auction/components/artwork_browser/PromotedSaleArtworks", () => {
       },
     })
 
-    wrapper.html().should.containEql("Buy Now")
+    wrapper.html().should.containEql("Buy now")
     wrapper.find(ArtworkRail).length.should.eql(1)
   })
 
@@ -45,7 +45,7 @@ describe("auction/components/artwork_browser/PromotedSaleArtworks", () => {
       },
     })
 
-    wrapper.html().should.containEql("Buy Now")
+    wrapper.html().should.containEql("Buy now")
     wrapper.find(MasonryGrid).length.should.eql(1)
   })
 

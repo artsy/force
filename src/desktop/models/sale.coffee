@@ -54,7 +54,7 @@ module.exports = class Sale extends Backbone.Model
 
   buyButtonState: (user, artwork) ->
     if @isOpen() and artwork.get('acquireable') and not artwork.get('sold')
-      label: 'Buy Now', enabled: true, classes: 'js-acquire-button', href: ''
+      label: 'Buy now', enabled: true, classes: 'js-acquire-button', href: ''
     else if @isOpen() and artwork.get('acquireable') and artwork.get('sold')
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
 

@@ -21,7 +21,7 @@ function PromotedSaleArtworks(props) {
       {isMobile ? (
         <MasonryGrid
           mask
-          title="Buy Now"
+          title="Buy now"
           columnCount={2}
           items={promotedSaleArtworks}
           getAspectRatio={({ artwork }) => {
@@ -38,7 +38,7 @@ function PromotedSaleArtworks(props) {
       ) : (
         // Desktop
         <ArtworkRail
-          title="Buy Now"
+          title="Buy now"
           artworks={promotedSaleArtworks}
           getDisplayComponent={({ artwork }) => {
             return (

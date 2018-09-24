@@ -24,7 +24,7 @@ describe("auction/components/artwork_rail/ArtworkRail", () => {
       options: { renderMode: "mount" },
       data,
       props: {
-        title: "Buy Now",
+        title: "Buy now",
         artworks: promotedSaleArtworks,
         getDisplayComponent: ({ artwork }) => {
           // eslint-disable-line
@@ -33,7 +33,7 @@ describe("auction/components/artwork_rail/ArtworkRail", () => {
       },
     })
 
-    wrapper.html().should.containEql("Buy Now")
+    wrapper.html().should.containEql("Buy now")
     wrapper.html().should.containEql("auction-ArtworkRail__page-left")
     wrapper.html().should.containEql("auction-ArtworkRail__page-right")
 
