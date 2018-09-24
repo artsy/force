@@ -5,10 +5,7 @@
 
 if buyable && (isAuction || newBuyNowFlow || isAuctionPartner)
   a.artwork-meta-data-black__contact-button.js-purchase
-    if isAuction
-      | Buy Now
-    else
-      | Buy
+    | Buy Now
 else if artwork.is_inquireable
   //- TODO BNMO: Update to hide inquiry flow if the artwork is acquireable
   a.artwork-meta-data-black__contact-button(
