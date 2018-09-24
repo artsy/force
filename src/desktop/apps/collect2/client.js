@@ -47,7 +47,7 @@ export const onFilterChange = filters => {
 
   let route = null
   if (params.medium) {
-    route = "/collect/" + params.medium
+    route = "/collect" + (params.medium !== "*" ? "/" + params.medium : "")
     delete params.medium
   }
   const fragment = route + "?" + qs.stringify(params)
