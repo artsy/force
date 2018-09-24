@@ -1,4 +1,4 @@
-import { buildServerApp } from "reaction/Artsy/Router"
+import { buildServerApp } from "reaction/Artsy/Router/server"
 import { renderLayout } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collect/routes"
 import express from "express"

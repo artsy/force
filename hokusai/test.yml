@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   force:
     command: yarn test
@@ -6,6 +6,7 @@ services:
       file: common.yml
       service: force
     environment:
+      - CI=true
       - CIRCLE_NODE_INDEX
     env_file: ../.env.test
     #environment:

@@ -1,18 +1,18 @@
-import { buildClientApp } from 'reaction/Artsy/Router'
-import { data as sd } from 'sharify'
-import { routes } from 'reaction/Apps/Artist/routes'
-import mediator from 'desktop/lib/mediator.coffee'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import styled from 'styled-components'
-import qs from 'querystring'
-import { clone, isArray } from 'underscore'
+import { buildClientApp } from "reaction/Artsy/Router/client"
+import { data as sd } from "sharify"
+import { routes } from "reaction/Apps/Artist/routes"
+import mediator from "desktop/lib/mediator.coffee"
+import React from "react"
+import ReactDOM from "react-dom"
+import styled from "styled-components"
+import qs from "querystring"
+import { clone, isArray } from "underscore"
 
-mediator.on('artist:filter:changed', filters => {
+mediator.on("artist:filter:changed", filters => {
   onFilterChange(filters)
 })
 
-mediator.on('artist:tabclick', ({ to }) => {
+mediator.on("artist:tabclick", ({ to }) => {
   window.analytics.page({ path: to }, { integrations: { Marketo: false } })
 })
 
@@ -29,7 +29,7 @@ buildClientApp({
         <ClientApp />
       </Container>,
 
-      document.getElementById('react-root')
+      document.getElementById("react-root")
     )
   })
   .catch(error => {
@@ -52,7 +52,7 @@ const onFilterChange = filters => {
     }
   })
 
-  const fragment = '?' + qs.stringify(params)
+  const fragment = "?" + qs.stringify(params)
   window.history.pushState({}, null, fragment)
 }
 
