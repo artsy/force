@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import styled from 'styled-components'
-import Waypoint from 'react-waypoint'
-import { pMedia } from 'reaction/Components/Helpers'
-import { SectionVideo } from './section_video.jsx'
-import { SectionText } from './section_text.jsx'
+import PropTypes from "prop-types"
+import React from "react"
+import styled from "styled-components"
+import Waypoint from "react-waypoint"
+import { pMedia } from "reaction/Components/Helpers"
+import { SectionVideo } from "./section_video.jsx"
+import { SectionText } from "./section_text.jsx"
 
-export const Section = (props) => {
+export const Section = props => {
   const { section, onEnterSection, onLeaveSection, index } = props
 
   return (
@@ -14,8 +14,8 @@ export const Section = (props) => {
       <SectionVideo section={section} />
       <SectionText section={section} />
       <Waypoint
-        onEnter={(waypointData) => onEnterSection(index, waypointData)}
-        onLeave={(waypointData) => onLeaveSection(index, waypointData)}
+        onEnter={waypointData => onEnterSection(index, waypointData)}
+        onLeave={waypointData => onLeaveSection(index, waypointData)}
         bottomOffset="50px"
       />
     </SectionContainer>

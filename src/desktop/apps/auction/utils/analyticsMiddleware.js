@@ -1,6 +1,6 @@
-import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
-import _analyticsHooks from 'desktop/lib/analytics_hooks.coffee'
-import { isEqual } from 'underscore'
+import * as actions from "desktop/apps/auction/actions/artworkBrowser"
+import _analyticsHooks from "desktop/lib/analytics_hooks.coffee"
+import { isEqual } from "underscore"
 
 // FIXME: Rewire
 let analyticsHooks = _analyticsHooks
@@ -24,37 +24,38 @@ const analyticsMiddleware = store => next => action => {
       return result
     }
     case actions.UPDATE_ESTIMATE_RANGE: {
-      trackParamChange({
-        price: nextState.artworkBrowser.filterParams.estimate_range
-      }, nextState)
+      trackParamChange(
+        {
+          price: nextState.artworkBrowser.filterParams.estimate_range,
+        },
+        nextState
+      )
       return result
     }
-    default: return result
+    default:
+      return result
   }
 }
 
-function trackableArtistIds (changed, filterParams) {
-  if (isEqual(changed, { artist: 'artists-you-follow' })) {
-    return ['artists-you-follow']
+function trackableArtistIds(changed, filterParams) {
+  if (isEqual(changed, { artist: "artists-you-follow" })) {
+    return ["artists-you-follow"]
   } else {
     return filterParams.artist_ids
   }
 }
 
-function trackParamChange (changed, newState) {
+function trackParamChange(changed, newState) {
   const { filterParams } = newState.artworkBrowser
-  analyticsHooks.trigger(
-    'auction:artworks:params:change',
-    {
-      current: [
-        { artists: trackableArtistIds(changed, filterParams) },
-        { medium: filterParams.gene_ids },
-        { sort: filterParams.sort },
-        { price: filterParams.estimate_range }
-      ],
-      changed
-    }
-  )
+  analyticsHooks.trigger("auction:artworks:params:change", {
+    current: [
+      { artists: trackableArtistIds(changed, filterParams) },
+      { medium: filterParams.gene_ids },
+      { sort: filterParams.sort },
+      { price: filterParams.estimate_range },
+    ],
+    changed,
+  })
 }
 
 export default analyticsMiddleware

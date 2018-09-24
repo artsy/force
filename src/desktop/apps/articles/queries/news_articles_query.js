@@ -1,5 +1,5 @@
-import { articleBody } from 'desktop/apps/article/queries/articleBody'
-import { sectionFragments } from 'desktop/apps/article/queries/sectionFragments'
+import { articleBody } from "desktop/apps/article/queries/articleBody"
+import { sectionFragments } from "desktop/apps/article/queries/sectionFragments"
 
 export const newsArticlesQuery = ({ limit, offset }) => {
   return `

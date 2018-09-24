@@ -1,27 +1,27 @@
-import Backbone from 'backbone'
-import metaphysics from 'lib/metaphysics.coffee'
-import CurrentUser from 'desktop/models/current_user.coffee'
+import Backbone from "backbone"
+import metaphysics from "lib/metaphysics.coffee"
+import CurrentUser from "desktop/models/current_user.coffee"
 // import {
 //   fabricate
 // } from 'antigravity'
-import * as routes from '../routes'
+import * as routes from "../routes"
 
-jest.mock('backbone')
-jest.mock('lib/metaphysics.coffee')
+jest.mock("backbone")
+jest.mock("lib/metaphysics.coffee")
 
-jest.mock('@artsy/stitch', () => ({
-  renderLayout: () => '<html />',
+jest.mock("@artsy/stitch", () => ({
+  renderLayout: () => "<html />",
 }))
-jest.mock('desktop/apps/auction/actions/artworkBrowser', () => ({
+jest.mock("desktop/apps/auction/actions/artworkBrowser", () => ({
   fetchArtworksByFollowedArtists: () => ({
-    type: 'GET_ARTWORKS_SUCCESS',
+    type: "GET_ARTWORKS_SUCCESS",
   }),
   fetchArtworks: () => ({
-    type: 'GET_ARTWORKS_SUCCESS',
+    type: "GET_ARTWORKS_SUCCESS",
   }),
 }))
 
-describe('routes', () => {
+describe("routes", () => {
   beforeEach(() => {
     Backbone.sync = jest.fn()
   })
@@ -29,7 +29,7 @@ describe('routes', () => {
     // Backbone.sync.restore()
   })
 
-  describe('#index', () => {
+  describe("#index", () => {
     let req
     let res
     let next
@@ -38,15 +38,15 @@ describe('routes', () => {
       req = {
         body: {},
         params: {
-          id: 'foobar',
+          id: "foobar",
         },
         user: new CurrentUser({
-          name: 'user',
+          name: "user",
         }),
       }
       res = {
         app: {
-          get: jest.fn(() => 'components/page'),
+          get: jest.fn(() => "components/page"),
         },
         locals: {
           sd: {},
@@ -58,21 +58,21 @@ describe('routes', () => {
       next = jest.fn()
     })
 
-    it('renders the index with the correct variables', async () => {
+    it("renders the index with the correct variables", async () => {
       const mockAuctionQueries = {
         sale: {
-          id: 'foo',
+          id: "foo",
           is_auction: true,
-          auction_state: 'open',
+          auction_state: "open",
           is_live_open: true,
         },
         me: {
           bidders: [
             {
-              id: 'me',
+              id: "me",
               qualified_for_bidding: true,
               sale: {
-                id: 'foo',
+                id: "foo",
               },
             },
           ],
@@ -83,11 +83,11 @@ describe('routes', () => {
 
       // FIXME: Need to write more robust output test
       await routes.index(req, res, next)
-      expect(res.send).toBeCalledWith('<html />')
+      expect(res.send).toBeCalledWith("<html />")
     })
   })
 
-  describe('#redirectLive', async () => {
+  describe("#redirectLive", async () => {
     let req
     let res
     let next
@@ -96,10 +96,10 @@ describe('routes', () => {
       req = {
         body: {},
         params: {
-          id: 'foobar',
+          id: "foobar",
         },
         user: new CurrentUser({
-          name: 'user',
+          name: "user",
         }),
       }
       res = {
@@ -108,21 +108,21 @@ describe('routes', () => {
       next = jest.fn()
     })
 
-    it('redirects on confirm if the auction is live and bidder is qualified', async () => {
+    it("redirects on confirm if the auction is live and bidder is qualified", async () => {
       const mockAuctionQueries = {
         sale: {
-          id: 'foo',
+          id: "foo",
           is_auction: true,
-          auction_state: 'open',
+          auction_state: "open",
           is_live_open: true,
         },
         me: {
           bidders: [
             {
-              id: 'me',
+              id: "me",
               qualified_for_bidding: true,
               sale: {
-                id: 'foo',
+                id: "foo",
               },
             },
           ],
@@ -132,24 +132,24 @@ describe('routes', () => {
       metaphysics.mockResolvedValue(mockAuctionQueries)
 
       await routes.redirectLive(req, res, next)
-      expect(res.redirect).toBeCalledWith('undefined/foo/login')
+      expect(res.redirect).toBeCalledWith("undefined/foo/login")
     })
 
-    it('does not redirect if bidder is not qualified', async () => {
+    it("does not redirect if bidder is not qualified", async () => {
       const mockAuctionQueries = {
         sale: {
-          id: 'foo',
+          id: "foo",
           is_auction: true,
-          auction_state: 'open',
+          auction_state: "open",
           is_live_open: true,
         },
         me: {
           bidders: [
             {
-              id: 'me',
+              id: "me",
               qualified_for_bidding: false,
               sale: {
-                id: 'foo',
+                id: "foo",
               },
             },
           ],
@@ -163,21 +163,21 @@ describe('routes', () => {
       expect(next).toBeCalled()
     })
 
-    it('does not redirect if the auction is not live', async () => {
+    it("does not redirect if the auction is not live", async () => {
       const mockAuctionQueries = {
         sale: {
-          id: 'foo',
+          id: "foo",
           is_auction: true,
-          auction_state: 'open',
+          auction_state: "open",
           is_live_open: false,
         },
         me: {
           bidders: [
             {
-              id: 'me',
+              id: "me",
               qualified_for_bidding: false,
               sale: {
-                id: 'foo',
+                id: "foo",
               },
             },
           ],

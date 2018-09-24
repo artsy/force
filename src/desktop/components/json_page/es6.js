@@ -1,12 +1,12 @@
-import express from 'express'
-import JsonPage from './index'
-import routes from './routes'
+import express from "express"
+import JsonPage from "./index"
+import routes from "./routes"
 
 export default class JSONPage {
   constructor(options) {
     // TODO: Convert this class to TypeScript so you can take advantage of its type system
     if (this.registerRoutes === undefined) {
-      throw new TypeError('registerRoutes() must be implemented.')
+      throw new TypeError("registerRoutes() must be implemented.")
     }
 
     this.jsonPage = new JsonPage(options)

@@ -11,12 +11,12 @@ var visibleArtworkIds = function() {
       return belowViewportTop && aboveViewportBottom
     })
     .map(function() {
-      return $(this).attr('data-id')
+      return $(this).attr("data-id")
     })
     .toArray()
 
   // Add the artwork page as an impression
-  if ($('#artwork-page-main-image-container').length && sd.ARTWORK)
+  if ($("#artwork-page-main-image-container").length && sd.ARTWORK)
     ids.push(sd.ARTWORK._id)
 
   // Don't double track the same impressions
@@ -30,9 +30,9 @@ var visibleArtworkIds = function() {
 var trackImpressions = function() {
   var ids = visibleArtworkIds()
   if (ids.length > 0) {
-    analytics.track('Artwork impressions', { ids: ids, nonInteraction: 1 })
+    analytics.track("Artwork impressions", { ids: ids, nonInteraction: 1 })
   }
 }
 
 trackImpressions()
-$(window).on('scroll', _.debounce(trackImpressions, 500))
+$(window).on("scroll", _.debounce(trackImpressions, 500))

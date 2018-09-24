@@ -1,6 +1,6 @@
-import moment from 'moment'
-import PropTypes from 'prop-types'
-import React from 'react'
+import moment from "moment"
+import PropTypes from "prop-types"
+import React from "react"
 
 function liveDate(auction) {
   if (moment(auction.registration_ends_at) > moment()) {
@@ -8,7 +8,7 @@ function liveDate(auction) {
   } else if (moment(auction.live_start_at) > moment()) {
     return formatDate(auction.live_start_at)
   } else {
-    return <div className='date'>In Progress</div>
+    return <div className="date">In Progress</div>
   }
 }
 
@@ -23,17 +23,20 @@ function timedDate(auction) {
 function formatDate(date, isStarted, isRegister) {
   let formatted
   if (isStarted) {
-    formatted = moment(date).fromNow().replace('in ', '') + ' left'
+    formatted =
+      moment(date)
+        .fromNow()
+        .replace("in ", "") + " left"
   } else if (isRegister) {
-    if (moment().diff(moment(date), 'hours') > -24) {
-      formatted = 'Register by ' + moment(date).format('ha')
+    if (moment().diff(moment(date), "hours") > -24) {
+      formatted = "Register by " + moment(date).format("ha")
     } else {
-      formatted = 'Register by ' + moment(date).format('MMM D, ha')
+      formatted = "Register by " + moment(date).format("MMM D, ha")
     }
   } else {
-    formatted = 'Live ' + moment(date).fromNow()
+    formatted = "Live " + moment(date).fromNow()
   }
-  return <div className='date'>{formatted}</div>
+  return <div className="date">{formatted}</div>
 }
 
 function formatImage(auction, isMobile) {
@@ -41,9 +44,11 @@ function formatImage(auction, isMobile) {
     if (isMobile) {
       return (
         <div
-          className='auctions-block__image'
-          style={{backgroundImage: 'url(' + auction.cover_image.cropped.url + ')'}}>
-        </div>
+          className="auctions-block__image"
+          style={{
+            backgroundImage: "url(" + auction.cover_image.cropped.url + ")",
+          }}
+        />
       )
     } else {
       return <img src={auction.cover_image.cropped.url} />
@@ -51,20 +56,25 @@ function formatImage(auction, isMobile) {
   }
 }
 
-function AuctionsItem({auction, liveIntegration, isMobile}) {
-  const color = '#666' // TODO - AVG COLOR
+function AuctionsItem({ auction, liveIntegration, isMobile }) {
+  const color = "#666" // TODO - AVG COLOR
   return (
     <a
       href={auction.id}
-      className='auctions-block__item'
-      style={{backgroundColor: color}}>
+      className="auctions-block__item"
+      style={{ backgroundColor: color }}
+    >
       {isMobile && formatImage(auction, isMobile)}
-      <div className='auctions-block__item-body'>
-        <div className='auctions-block__item-upper'>
-          {liveIntegration && <div className='live' style={{color: color}}>Live</div>}
+      <div className="auctions-block__item-body">
+        <div className="auctions-block__item-upper">
+          {liveIntegration && (
+            <div className="live" style={{ color: color }}>
+              Live
+            </div>
+          )}
           {auction.name}
         </div>
-        <div className='auctions-block__item-lower'>
+        <div className="auctions-block__item-lower">
           {!isMobile && formatImage(auction, isMobile)}
           {liveIntegration ? liveDate(auction) : timedDate(auction)}
         </div>
@@ -78,5 +88,5 @@ export default AuctionsItem
 AuctionsItem.propTypes = {
   auction: PropTypes.object.isRequired,
   liveIntegration: PropTypes.bool,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
 }

@@ -1,26 +1,30 @@
 var trackedIds = []
 
-var visibleArtworkIds = function () {
+var visibleArtworkIds = function() {
   // Find all of the "artwork item" components that are visible
   // Extra verbose for clarity's sake
-  var ids = $('.artwork-item').filter(function () {
-    var viewportTop = $(window).scrollTop()
-    var viewportBottom = viewportTop + $(window).height()
-    var artworkTop = $(this).offset().top
-    var artworkBottom = artworkTop + $(this).outerHeight()
+  var ids = $(".artwork-item")
+    .filter(function() {
+      var viewportTop = $(window).scrollTop()
+      var viewportBottom = viewportTop + $(window).height()
+      var artworkTop = $(this).offset().top
+      var artworkBottom = artworkTop + $(this).outerHeight()
 
-    // Either artwork top or artwork bottom is below the top
-    // of the browser and above the fold.
-    var topInView = artworkTop > viewportTop && artworkTop < viewportBottom
-    var bottomInView = artworkBottom > viewportTop && artworkBottom < viewportBottom
+      // Either artwork top or artwork bottom is below the top
+      // of the browser and above the fold.
+      var topInView = artworkTop > viewportTop && artworkTop < viewportBottom
+      var bottomInView =
+        artworkBottom > viewportTop && artworkBottom < viewportBottom
 
-    return topInView || bottomInView
-  }).map(function () {
-    return $(this).attr('data-id')
-  }).toArray()
+      return topInView || bottomInView
+    })
+    .map(function() {
+      return $(this).attr("data-id")
+    })
+    .toArray()
 
   // Add the artwork page as an impression
-  if ($('#artwork-page').length && sd.ARTWORK) ids.push(sd.ARTWORK._id)
+  if ($("#artwork-page").length && sd.ARTWORK) ids.push(sd.ARTWORK._id)
 
   // Don't double track the same impressions
   ids = _.difference(ids, trackedIds)
@@ -30,14 +34,15 @@ var visibleArtworkIds = function () {
   return ids.join()
 }
 
-var trackImpressions = function () {
+var trackImpressions = function() {
   var ids = visibleArtworkIds()
   if (ids.length > 0) {
-    analytics.track('Artwork impressions', {
-      ids: ids, nonInteraction: 1
+    analytics.track("Artwork impressions", {
+      ids: ids,
+      nonInteraction: 1,
     })
   }
 }
 
 trackImpressions()
-$(window).on('scroll', _.throttle(trackImpressions, 200))
+$(window).on("scroll", _.throttle(trackImpressions, 200))

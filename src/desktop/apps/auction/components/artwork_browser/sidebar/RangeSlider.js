@@ -1,12 +1,15 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import { Range } from 'rc-slider'
-import { connect } from 'react-redux'
-import { formatMoney } from 'accounting'
-import { updateEstimateRange, updateEstimateDisplay } from 'desktop/apps/auction/actions/artworkBrowser'
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import { Range } from "rc-slider"
+import { connect } from "react-redux"
+import { formatMoney } from "accounting"
+import {
+  updateEstimateRange,
+  updateEstimateDisplay,
+} from "desktop/apps/auction/actions/artworkBrowser"
 
-function RangeSlider (props) {
+function RangeSlider(props) {
   const {
     formattedMaxDisplay,
     formattedMinDisplay,
@@ -17,23 +20,21 @@ function RangeSlider (props) {
     minEstimate,
     minEstimateRangeDisplay,
     updateEstimateDisplayAction,
-    updateEstimateRangeAction
+    updateEstimateRangeAction,
   } = props
 
-  const b = block('auction-RangeSlider')
+  const b = block("auction-RangeSlider")
 
   return (
     <div className={b()}>
-      <div className={b('metadata')}>
-        <div className={b('title')}>
-          Price
-        </div>
+      <div className={b("metadata")}>
+        <div className={b("title")}>Price</div>
 
-        <div className={b('caption')}>
-          {
-            `${formattedMinDisplay} - ${formattedMaxDisplay}${isAbsoluteMax ? '+' : ''}`
-          }
-      </div>
+        <div className={b("caption")}>
+          {`${formattedMinDisplay} - ${formattedMaxDisplay}${
+            isAbsoluteMax ? "+" : ""
+          }`}
+        </div>
       </div>
       <Range
         allowCross={false}
@@ -44,11 +45,9 @@ function RangeSlider (props) {
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}
         onAfterChange={([min, max]) => updateEstimateRangeAction(min, max)}
       />
-      {isAuction &&
-        <div className={b('info')}>
-          Based on the estimate for the lot
-        </div>
-      }
+      {isAuction && (
+        <div className={b("info")}>Based on the estimate for the lot</div>
+      )}
     </div>
   )
 }
@@ -63,27 +62,31 @@ RangeSlider.propTypes = {
   minEstimateRangeDisplay: PropTypes.number.isRequired,
   maxEstimateRangeDisplay: PropTypes.number.isRequired,
   updateEstimateDisplayAction: PropTypes.func.isRequired,
-  updateEstimateRangeAction: PropTypes.func.isRequired
+  updateEstimateRangeAction: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
-    app: {
-      auction
-    },
+    app: { auction },
     artworkBrowser: {
       filterParams,
       maxEstimateRangeDisplay,
       minEstimateRangeDisplay,
-      symbol
-    }
+      symbol,
+    },
   } = state
 
   const minEstimate = filterParams.ranges.estimate_range.min
-  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol, precision: 0 })
+  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, {
+    symbol,
+    precision: 0,
+  })
   const maxEstimate = filterParams.ranges.estimate_range.max
   const isAbsoluteMax = maxEstimate === maxEstimateRangeDisplay
-  const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
+  const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, {
+    symbol: "",
+    precision: 0,
+  })
 
   return {
     formattedMaxDisplay,
@@ -93,16 +96,13 @@ const mapStateToProps = (state) => {
     maxEstimate,
     maxEstimateRangeDisplay,
     minEstimate,
-    minEstimateRangeDisplay
+    minEstimateRangeDisplay,
   }
 }
 
 const mapDispatchToProps = {
   updateEstimateRangeAction: updateEstimateRange,
-  updateEstimateDisplayAction: updateEstimateDisplay
+  updateEstimateDisplayAction: updateEstimateDisplay,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RangeSlider)
+export default connect(mapStateToProps, mapDispatchToProps)(RangeSlider)

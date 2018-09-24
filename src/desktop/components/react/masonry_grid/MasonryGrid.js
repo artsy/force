@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import _ from 'underscore'
-import styled from 'styled-components'
-import { Reveal } from './Reveal'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import _ from "underscore"
+import styled from "styled-components"
+import { Reveal } from "./Reveal"
 
 export default class MasonryGrid extends Component {
   static propTypes = {
@@ -20,7 +20,7 @@ export default class MasonryGrid extends Component {
 
   static defaultProps = {
     items: [],
-    className: '',
+    className: "",
     columnCount: 3,
     columnMargin: 20,
     mask: false,
@@ -38,7 +38,7 @@ export default class MasonryGrid extends Component {
       gridRatioSums.push(0)
     })
 
-    items.forEach((artwork) => {
+    items.forEach(artwork => {
       // Find section with lowest *inverted* aspect ratio sum, which is the
       // shortest column.
       let lowestRatioSum = Number.MAX_VALUE
@@ -78,7 +78,7 @@ export default class MasonryGrid extends Component {
     const grid = this.createGrid(items, columnCount)
     const sections = []
 
-    _(columnCount).times((i) => {
+    _(columnCount).times(i => {
       const displayComponents = []
       const rows = grid[i]
 
@@ -137,9 +137,9 @@ export default class MasonryGrid extends Component {
           <div
             className={className}
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
               ...style,
             }}
           >

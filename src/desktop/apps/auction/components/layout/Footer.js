@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import renderTemplate from '../../utils/renderTemplate'
-import { connect } from 'react-redux'
-import { first } from 'underscore'
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import renderTemplate from "../../utils/renderTemplate"
+import { connect } from "react-redux"
+import { first } from "underscore"
 
 function Footer(props) {
   const { articles, footerItem, showArticles, showFooterItems, sd } = props
 
-  const b = block('auction-Footer')
+  const b = block("auction-Footer")
 
   if (!showArticles) {
     return null
@@ -18,29 +18,29 @@ function Footer(props) {
     <footer
       className={b
         .builder()({ without: false })
-        .mix('auction-page-section')
-        .mix(articles.length ? 'has-articles' : 'has-no-articles')()}
+        .mix("auction-page-section")
+        .mix(articles.length ? "has-articles" : "has-no-articles")()}
     >
       {showArticles && (
-        <div className={b('auction-articles')}>
+        <div className={b("auction-articles")}>
           {articles.models.map((article, key) => {
             let articleFigureHTML
 
             // Serverside
-            if (typeof window === 'undefined') {
-              const path = require('path')
+            if (typeof window === "undefined") {
+              const path = require("path")
 
               articleFigureHTML = renderTemplate(
                 path.resolve(
                   __dirname,
-                  '../../../../components/article_figure/template.jade'
+                  "../../../../components/article_figure/template.jade"
                 ),
                 { locals: { article, sd } }
               )
 
               // Client
             } else {
-              articleFigureHTML = require('../../../../components/article_figure/template.jade')(
+              articleFigureHTML = require("../../../../components/article_figure/template.jade")(
                 { article, ...sd }
               )
             }
@@ -56,16 +56,16 @@ function Footer(props) {
       )}
 
       {showFooterItems && (
-        <div className={b('auction-app-promo-wrapper')}>
-          <a className={b('auction-app-promo')}>
-            <div className={b('auction-app-promo-image')}>
+        <div className={b("auction-app-promo-wrapper")}>
+          <a className={b("auction-app-promo")}>
+            <div className={b("auction-app-promo-image")}>
               <img src={footerItem.src} alt={footerItem.alt} />
             </div>
-            <div className={b('auction-app-promo-metadata')}>
-              <div className={b('auction-app-promo-title')}>
+            <div className={b("auction-app-promo-metadata")}>
+              <div className={b("auction-app-promo-title")}>
                 {footerItem.title}
               </div>
-              <div className={b('auction-app-promo-subtitle')}>
+              <div className={b("auction-app-promo-subtitle")}>
                 {footerItem.subtitle}
               </div>
             </div>
@@ -89,7 +89,7 @@ Footer.defaultProps = {
   footerItems: [],
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { auction, articles, footerItems, sd } = state.app
   const footerItem = first(footerItems)
   const showArticles = Boolean(articles.length)

@@ -1,8 +1,8 @@
-import { Reveal } from '../Reveal'
-import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
+import { Reveal } from "../Reveal"
+import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 
-describe('components/react/masonry_grid/MasonryGrid', () => {
-  it('hides revealer if isEnabled is false', () => {
+describe("components/react/masonry_grid/MasonryGrid", () => {
+  it("hides revealer if isEnabled is false", () => {
     const { wrapper } = renderTestComponent({
       Component: Reveal,
       props: {
@@ -10,10 +10,10 @@ describe('components/react/masonry_grid/MasonryGrid', () => {
       },
     })
 
-    wrapper.find('Revealer').length.should.eql(0)
+    wrapper.find("Revealer").length.should.eql(0)
   })
 
-  it('shows revealer if isEnabled is true', () => {
+  it("shows revealer if isEnabled is true", () => {
     const { wrapper } = renderTestComponent({
       Component: Reveal,
       props: {
@@ -21,10 +21,10 @@ describe('components/react/masonry_grid/MasonryGrid', () => {
       },
     })
 
-    wrapper.find('Revealer').length.should.eql(1)
+    wrapper.find("Revealer").length.should.eql(1)
   })
 
-  it('reveals hidden area when button is clicked', () => {
+  it("reveals hidden area when button is clicked", () => {
     const { wrapper } = renderTestComponent({
       Component: Reveal,
       props: {
@@ -32,11 +32,11 @@ describe('components/react/masonry_grid/MasonryGrid', () => {
       },
     })
 
-    const revealer = () => wrapper.find('Revealer')
-    const button = wrapper.find('Button')
+    const revealer = () => wrapper.find("Revealer")
+    const button = wrapper.find("Button")
     revealer().length.should.eql(1)
     button.length.should.eql(1)
-    button.simulate('click')
+    button.simulate("click")
     revealer().length.should.eql(0)
   })
 })

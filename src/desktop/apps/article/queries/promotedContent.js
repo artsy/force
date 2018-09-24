@@ -1,4 +1,4 @@
-export const partnerQuery = (id) => {
+export const partnerQuery = id => {
   return `
     {
       partner(id: "${id}")
@@ -20,7 +20,7 @@ export const partnerQuery = (id) => {
   `
 }
 
-export const auctionQuery = (id) => {
+export const auctionQuery = id => {
   return `
     {
       sale(id: "${id}")

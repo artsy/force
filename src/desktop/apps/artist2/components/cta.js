@@ -1,7 +1,7 @@
-import cta from 'desktop/apps/artist/client/cta.coffee'
-import metaphysics from 'lib/metaphysics.coffee'
-import Artist from 'desktop/models/artist.coffee'
-import { data as sd } from 'sharify'
+import cta from "desktop/apps/artist/client/cta.coffee"
+import metaphysics from "lib/metaphysics.coffee"
+import Artist from "desktop/models/artist.coffee"
+import { data as sd } from "sharify"
 
 const query = `
 query ArtistCTAQuery($artistID: String!) {
@@ -25,7 +25,7 @@ query ArtistCTAQuery($artistID: String!) {
 }
 `
 const send = {
-  method: 'post',
+  method: "post",
   query,
   variables: { artistID: sd.ARTIST_PAGE_CTA_ARTIST_ID },
 }

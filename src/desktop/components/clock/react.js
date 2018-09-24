@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import ClockView from 'desktop/components/clock/view.coffee'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import ClockView from "desktop/components/clock/view.coffee"
 
 export default class Clock extends Component {
   static propTypes = {
@@ -11,8 +11,8 @@ export default class Clock extends Component {
   }
 
   static defaultProps = {
-    className: 'auction-clock white-overlay-clock js-auction-clock',
-    modelName: 'Auction',
+    className: "auction-clock white-overlay-clock js-auction-clock",
+    modelName: "Auction",
   }
 
   state = {
@@ -20,13 +20,13 @@ export default class Clock extends Component {
   }
 
   componentDidMount() {
-    this.$ = require('jquery')
+    this.$ = require("jquery")
 
     const { closedText, model, modelName } = this.props
 
     this.setState(() => {
       this.backboneView = new ClockView({
-        el: this.$('.auction-clock'),
+        el: this.$(".auction-clock"),
         closedText,
         model,
         modelName,

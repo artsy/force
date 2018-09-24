@@ -1,14 +1,14 @@
-import { articleBody } from 'desktop/apps/article/queries/articleBody'
-import { sectionFragments } from 'desktop/apps/article/queries/sectionFragments'
+import { articleBody } from "desktop/apps/article/queries/articleBody"
+import { sectionFragments } from "desktop/apps/article/queries/sectionFragments"
 import {
   relatedArticles,
   relatedArticlesNews,
-} from 'desktop/apps/article/queries/relatedArticles'
+} from "desktop/apps/article/queries/relatedArticles"
 import {
   display,
   displayCanvas,
   displayFragment,
-} from 'desktop/apps/article/queries/display'
+} from "desktop/apps/article/queries/display"
 
 export const articlesQuery = ({ offset, limit, channel, omit }) => {
   return `

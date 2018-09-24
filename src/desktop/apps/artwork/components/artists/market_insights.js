@@ -1,12 +1,12 @@
-import $ from 'jquery'
+import $ from "jquery"
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Contents } from 'reaction/Components/Artist/MarketInsights'
-import { ContextProvider } from 'reaction/Artsy'
+import React from "react"
+import ReactDOM from "react-dom"
+import { Contents } from "reaction/Components/Artist/MarketInsights"
+import { ContextProvider } from "reaction/Artsy"
 
 const renderMarketInsightsFor = artistID => {
-  const elementID = 'market-insights-container-' + artistID
+  const elementID = "market-insights-container-" + artistID
   const mountPoint = document.getElementById(elementID)
 
   if (mountPoint) {
@@ -20,8 +20,8 @@ const renderMarketInsightsFor = artistID => {
 }
 
 function setupMarketInsights() {
-  $('section.artwork-section.artwork-artist[data-artist-id]').each((i, el) => {
-    renderMarketInsightsFor($(el).data('artist-id'))
+  $("section.artwork-section.artwork-artist[data-artist-id]").each((i, el) => {
+    renderMarketInsightsFor($(el).data("artist-id"))
   })
 }
 

@@ -1,10 +1,10 @@
-import AcceptConditionsOfSaleModal from 'desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee'
-import ConfirmRegistrationModal from 'desktop/components/credit_card/client/confirm_registration.coffee'
-import PropTypes from 'prop-types'
-import mediator from 'desktop/lib/mediator.coffee'
-import scrollToTop from 'desktop/apps/auction/utils/scrollToTop'
-import { Component } from 'react'
-import { connect } from 'react-redux'
+import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
+import ConfirmRegistrationModal from "desktop/components/credit_card/client/confirm_registration.coffee"
+import PropTypes from "prop-types"
+import mediator from "desktop/lib/mediator.coffee"
+import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
+import { Component } from "react"
+import { connect } from "react-redux"
 
 class DOM extends Component {
   static propTypes = {
@@ -19,14 +19,14 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount() {
-    const FastClick = require('fastclick')
+    const FastClick = require("fastclick")
 
     // removes 300ms delay
     if (FastClick.attach) {
       FastClick.attach(document.body)
     }
 
-    this.$ = require('jquery')
+    this.$ = require("jquery")
     this.addEventListeners()
     this.maybeShowConfirmRegistrationModal()
     this.maybeStartRegistrationFlow()
@@ -37,27 +37,27 @@ class DOM extends Component {
   }
 
   addEventListeners() {
-    this.$body = this.$('body')
-    this.$body.find('.Sidebar').on('click', '.artsy-checkbox', scrollToTop)
-    this.$registerBtn = this.$body.find('.js-register-button')
-    this.$registerBtn.on('click', this.handleRegister)
+    this.$body = this.$("body")
+    this.$body.find(".Sidebar").on("click", ".artsy-checkbox", scrollToTop)
+    this.$registerBtn = this.$body.find(".js-register-button")
+    this.$registerBtn.on("click", this.handleRegister)
   }
 
   removeEventListeners() {
-    this.$body.off('click')
-    this.$registerBtn.off('click', this.handleRegister)
+    this.$body.off("click")
+    this.$registerBtn.off("click", this.handleRegister)
   }
 
   handleRegister = event => {
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     if (!me) {
-      mediator.trigger('open:auth', {
-        mode: 'signup',
+      mediator.trigger("open:auth", {
+        mode: "signup",
         redirectTo: auction.registrationFlowUrl(),
-        intent: 'register to bid',
-        signupIntent: 'register to bid',
-        trigger: 'click',
+        intent: "register to bid",
+        signupIntent: "register to bid",
+        trigger: "click",
       })
 
       // If the user is already registered, just ignore this and fix the url.
@@ -76,14 +76,14 @@ class DOM extends Component {
   }
 
   maybeStartRegistrationFlow() {
-    if (location.pathname.match('/registration-flow')) {
+    if (location.pathname.match("/registration-flow")) {
       this.handleRegister()
     }
   }
 
   maybeShowConfirmRegistrationModal() {
     const { auction, user } = this.props
-    if (user && location.pathname.match('/confirm-registration')) {
+    if (user && location.pathname.match("/confirm-registration")) {
       new ConfirmRegistrationModal({
         auction,
       })

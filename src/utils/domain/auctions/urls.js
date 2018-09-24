@@ -1,4 +1,4 @@
-const sd = require('sharify').data
+const sd = require("sharify").data
 
 /**
  * Get the live auction url with /login appended when a user is present
@@ -28,7 +28,7 @@ export const getLiveAuctionUrl = (id, options = {}) => {
  * @return {String}
  */
 export function getBidRedirectActionUrl(bidderStatus, artwork, auction) {
-  if (bidderStatus === 'logged-out' || bidderStatus === 'qualified-to-bid') {
+  if (bidderStatus === "logged-out" || bidderStatus === "qualified-to-bid") {
     return `/auction/${auction.id}/bid/${artwork.id}`
   } else {
     return `/artwork/${artwork.id}`

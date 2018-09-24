@@ -1,12 +1,12 @@
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import React from 'react'
-import Waypoint from 'react-waypoint'
-import { pMedia } from 'reaction/Components/Helpers'
-import { Header } from '../nav/header.jsx'
-import { SectionsNav } from '../nav/sections_nav.jsx'
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import React from "react"
+import Waypoint from "react-waypoint"
+import { pMedia } from "reaction/Components/Helpers"
+import { Header } from "../nav/header.jsx"
+import { SectionsNav } from "../nav/sections_nav.jsx"
 
-export const SeriesHeader = (props) => {
+export const SeriesHeader = props => {
   const { curation, inBody, isMobile, onChangeSection } = props
 
   const { name, partner_logo_primary, partner_link_url } = curation

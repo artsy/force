@@ -1,16 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import Gene from './Gene'
-import { alphabetizeGenes } from '../utils.js'
-import FeaturedGenes from './FeaturedGenes'
+import Gene from "./Gene"
+import { alphabetizeGenes } from "../utils.js"
+import FeaturedGenes from "./FeaturedGenes"
 
 const propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   genes: PropTypes.array.isRequired,
-  featuredGenes: PropTypes.object
+  featuredGenes: PropTypes.object,
 }
 
 const GeneFamilyName = styled.h2`
@@ -34,9 +34,7 @@ const GeneFamily = ({ id, name, genes, featuredGenes }) => {
   const sortedGenes = alphabetizeGenes(publishedGenes)
   return (
     <div id={id}>
-      <GeneFamilyName>
-        {name}
-      </GeneFamilyName>
+      <GeneFamilyName>{name}</GeneFamilyName>
       <FeaturedGenes featuredGenes={featuredGenes} />
       <GeneList>
         {sortedGenes.map(gene => <Gene key={gene.id} {...gene} />)}

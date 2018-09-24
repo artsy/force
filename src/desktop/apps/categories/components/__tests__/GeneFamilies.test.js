@@ -1,8 +1,8 @@
-import React from 'react'
-import { shallow } from 'enzyme'
-import GeneFamilies from '../GeneFamilies'
+import React from "react"
+import { shallow } from "enzyme"
+import GeneFamilies from "../GeneFamilies"
 
-describe('GeneFamilies', () => {
+describe("GeneFamilies", () => {
   let component
   let geneFamilies
   let allFeaturedGenesByFamily
@@ -10,39 +10,44 @@ describe('GeneFamilies', () => {
   beforeEach(() => {
     geneFamilies = [
       {
-        id: 'materials',
-        name: 'Materials',
+        id: "materials",
+        name: "Materials",
         genes: [
           /* … */
-        ]
+        ],
       },
       {
-        id: 'styles',
-        name: 'Styles',
+        id: "styles",
+        name: "Styles",
         genes: [
           /* … */
-        ]
-      }
+        ],
+      },
     ]
 
     allFeaturedGenesByFamily = [
       {
-        name: 'Materials',
+        name: "Materials",
         genes: [
           /* … */
-        ]
+        ],
       },
       {
-        name: 'Styles',
+        name: "Styles",
         genes: [
           /* … */
-        ]
-      }
+        ],
+      },
     ]
-    component = shallow(<GeneFamilies geneFamilies={geneFamilies} allFeaturedGenesByFamily={allFeaturedGenesByFamily} />)
+    component = shallow(
+      <GeneFamilies
+        geneFamilies={geneFamilies}
+        allFeaturedGenesByFamily={allFeaturedGenesByFamily}
+      />
+    )
   })
 
-  it('renders each GeneFamily', () => {
-    component.find('GeneFamily').length.should.equal(geneFamilies.length)
+  it("renders each GeneFamily", () => {
+    component.find("GeneFamily").length.should.equal(geneFamilies.length)
   })
 })

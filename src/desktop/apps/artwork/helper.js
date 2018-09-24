@@ -1,5 +1,5 @@
-import { pickBy, identity } from 'lodash'
-const { APP_URL } = require('sharify').data
+import { pickBy, identity } from "lodash"
+const { APP_URL } = require("sharify").data
 
 export const compactObject = o => {
   return pickBy(o, identity)
@@ -8,7 +8,7 @@ export const compactObject = o => {
 export const convertArtworkToJSONLD = artwork => {
   let jsonLD
   const imageUrl =
-    artwork.images && artwork.images.length ? artwork.images[0].url : ''
+    artwork.images && artwork.images.length ? artwork.images[0].url : ""
 
   const artworkMetaData = {
     name: artwork.title,
@@ -20,21 +20,21 @@ export const convertArtworkToJSONLD = artwork => {
     height: artwork.height,
   }
 
-  if (artwork.partner.type === 'Institution') {
+  if (artwork.partner.type === "Institution") {
     jsonLD = compactObject({
-      '@context': 'http://schema.org',
-      '@type': 'CreativeWork',
+      "@context": "http://schema.org",
+      "@type": "CreativeWork",
       ...artworkMetaData,
     })
   } else {
     jsonLD = compactObject({
-      '@context': 'http://schema.org',
-      '@type': 'Product',
+      "@context": "http://schema.org",
+      "@type": "Product",
       ...artworkMetaData,
       category: artwork.category,
       productionDate: artwork.date,
       offers: compactObject({
-        '@type': 'Offer',
+        "@type": "Offer",
         price: artwork.price,
         priceCurrency: artwork.price_currency, // not available in mp
         availability: artwork.availability,

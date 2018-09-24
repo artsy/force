@@ -1,15 +1,15 @@
-import ArtworksByFollowedArtists from 'desktop/apps/auction/components/artwork_browser/ArtworksByFollowedArtists'
-import PromotedSaleArtworks from 'desktop/apps/auction/components/artwork_browser/PromotedSaleArtworks'
-import _ArtworkBrowser from 'desktop/apps/auction/components/artwork_browser/ArtworkBrowser'
-import AuctionBlock from 'desktop/components/react/auction_block/auction_block'
-import AuctionInfoContainer from 'desktop/apps/auction/components/layout/auction_info'
-import _Banner from 'desktop/apps/auction/components/layout/Banner'
-import Footer from 'desktop/apps/auction/components/layout/Footer'
-import MyActiveBids from 'desktop/apps/auction/components/layout/active_bids/MyActiveBids'
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import { connect } from 'react-redux'
+import ArtworksByFollowedArtists from "desktop/apps/auction/components/artwork_browser/ArtworksByFollowedArtists"
+import PromotedSaleArtworks from "desktop/apps/auction/components/artwork_browser/PromotedSaleArtworks"
+import _ArtworkBrowser from "desktop/apps/auction/components/artwork_browser/ArtworkBrowser"
+import AuctionBlock from "desktop/components/react/auction_block/auction_block"
+import AuctionInfoContainer from "desktop/apps/auction/components/layout/auction_info"
+import _Banner from "desktop/apps/auction/components/layout/Banner"
+import Footer from "desktop/apps/auction/components/layout/Footer"
+import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import { connect } from "react-redux"
 
 // FIXME: Rewire
 let Banner = _Banner
@@ -25,12 +25,12 @@ function Layout(props) {
     showFooter,
   } = props
 
-  const b = block('auction-Layout')
+  const b = block("auction-Layout")
 
   return (
     <div className={b()}>
       <Banner />
-      <div className={b('container', 'responsive-layout-container')}>
+      <div className={b("container", "responsive-layout-container")}>
         <AuctionInfoContainer />
 
         {showAssociatedAuctions && (

@@ -1,42 +1,40 @@
-import PropTypes from 'prop-types'
-import { Component } from 'react'
-import { connect } from 'react-redux'
+import PropTypes from "prop-types"
+import { Component } from "react"
+import { connect } from "react-redux"
 
 class DOM extends Component {
   static propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
   }
 
   // Selectors
   $ = null
   $body = null
 
-  componentDidMount () {
-    const FastClick = require('fastclick')
+  componentDidMount() {
+    const FastClick = require("fastclick")
 
     // removes 300ms delay
     if (FastClick.attach) {
       FastClick.attach(document.body)
     }
 
-    this.$ = require('jquery')
+    this.$ = require("jquery")
     this.addEventListeners()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.removeEventListeners()
   }
 
-  addEventListeners () {}
-  removeEventListeners () {}
+  addEventListeners() {}
+  removeEventListeners() {}
 
-  render () {
+  render() {
     return this.props.children
   }
 }
 
-const mapStateToProps = (state) => state
+const mapStateToProps = state => state
 
-export default connect(
-  mapStateToProps
-)(DOM)
+export default connect(mapStateToProps)(DOM)

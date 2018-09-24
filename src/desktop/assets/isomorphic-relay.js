@@ -1,1 +1,1 @@
-import 'desktop/apps/isomorphic-relay-example/client'
+import "desktop/apps/isomorphic-relay-example/client"

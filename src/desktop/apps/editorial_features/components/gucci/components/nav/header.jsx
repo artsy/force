@@ -1,10 +1,10 @@
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { pMedia } from 'reaction/Components/Helpers'
-import Icon from 'reaction/Components/Icon'
-import { unica } from 'reaction/Assets/Fonts'
-import { PartnerInline } from 'reaction/Components/Publishing/Partner/PartnerInline'
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import { pMedia } from "reaction/Components/Helpers"
+import Icon from "reaction/Components/Icon"
+import { unica } from "reaction/Assets/Fonts"
+import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInline"
 
 export class Header extends Component {
   static propTypes = {
@@ -32,7 +32,7 @@ export class Header extends Component {
           url={partner_url}
           logo={partner_logo}
           trackingData={{
-            type: 'external link',
+            type: "external link",
             destination_path: partner_url,
           }}
         />
@@ -49,9 +49,9 @@ export class Header extends Component {
           onOpenMenu && (
             <div className="menu" onClick={onOpenMenu}>
               <Icon
-                name={isOpen ? 'close' : 'list'}
+                name={isOpen ? "close" : "list"}
                 color="black"
-                fontSize={isOpen ? '25px' : '32px'}
+                fontSize={isOpen ? "25px" : "32px"}
               />
             </div>
           )}
@@ -84,7 +84,7 @@ const HeaderMain = styled.div`
     justify-content: flex-end;
     align-items: center;
     a {
-      ${unica('s16', 'medium')} text-decoration: none;
+      ${unica("s16", "medium")} text-decoration: none;
       border-bottom: 2px solid;
     }
   }

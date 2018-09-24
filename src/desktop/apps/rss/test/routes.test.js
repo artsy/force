@@ -1,42 +1,42 @@
-import Articles from '../../../collections/articles.coffee'
-import Backbone from 'backbone'
-import sinon from 'sinon'
-const request = require('rewire')('superagent')
-const routes = require('rewire')('../routes.js')
+import Articles from "../../../collections/articles.coffee"
+import Backbone from "backbone"
+import sinon from "sinon"
+const request = require("rewire")("superagent")
+const routes = require("rewire")("../routes.js")
 
-describe('Routes', () => {
+describe("Routes", () => {
   let req = {}
   let res = {}
   const published_at = new Date().toISOString()
   let results = {
     articles: [
       {
-        id: '1',
+        id: "1",
         published_at,
         sections: [
           {
-            type: 'social_embed',
-            url: 'https://instagram.com/image',
+            type: "social_embed",
+            url: "https://instagram.com/image",
           },
         ],
       },
       {
-        id: '2',
+        id: "2",
         published_at,
         sections: [
           {
-            type: 'text',
-            body: 'Body Text',
+            type: "text",
+            body: "Body Text",
           },
         ],
       },
       {
-        id: '3',
+        id: "3",
         published_at,
         sections: [
           {
-            type: 'text',
-            body: 'Body Text 2',
+            type: "text",
+            body: "Body Text 2",
           },
         ],
       },
@@ -44,7 +44,7 @@ describe('Routes', () => {
   }
 
   beforeEach(() => {
-    sinon.stub(Backbone, 'sync')
+    sinon.stub(Backbone, "sync")
     request.get = sinon.stub().returns({
       end: cb => {
         cb(null, {
@@ -55,9 +55,9 @@ describe('Routes', () => {
       },
     })
 
-    routes.__set__('sd', { ARTSY_EDITORIAL_CHANNEL: 'foo' })
-    routes.__set__('request', request)
-    routes.__set__('positronql', sinon.stub().returns(Promise.resolve(results)))
+    routes.__set__("sd", { ARTSY_EDITORIAL_CHANNEL: "foo" })
+    routes.__set__("request", request)
+    routes.__set__("positronql", sinon.stub().returns(Promise.resolve(results)))
 
     req = {}
     res = {
@@ -70,76 +70,76 @@ describe('Routes', () => {
     Backbone.sync.restore()
   })
 
-  describe('#partnerUpdates', () => {
-    it('renders articles', () => {
+  describe("#partnerUpdates", () => {
+    it("renders articles", () => {
       routes.partnerUpdates(req, res)
       Backbone.sync.args[0][2].success({
         total: 16088,
         count: 2,
         results: results.articles,
       })
-      res.render.args[0][0].should.containEql('partner_updates')
+      res.render.args[0][0].should.containEql("partner_updates")
       res.render.args[0][1].articles.length.should.eql(3)
     })
   })
 
-  describe('#news', () => {
-    it('renders the rss feed if #findArticlesWithEmbeds rejects', async () => {
+  describe("#news", () => {
+    it("renders the rss feed if #findArticlesWithEmbeds rejects", async () => {
       request.get = sinon.stub().returns({
         end: cb => {
           cb(new Error())
         },
       })
-      routes.__set__('request', request)
+      routes.__set__("request", request)
       await routes.news(req, res)
-      res.render.args[0][0].should.containEql('news')
+      res.render.args[0][0].should.containEql("news")
       res.render.args[0][1].articles.length.should.eql(3)
     })
 
-    it('renders the rss feed for news', async () => {
+    it("renders the rss feed for news", async () => {
       routes.__set__(
-        'findArticlesWithEmbeds',
+        "findArticlesWithEmbeds",
         sinon.stub().returns(Promise.resolve(new Articles(results.articles)))
       )
 
       await routes.news(req, res)
-      res.render.args[0][0].should.containEql('news')
+      res.render.args[0][0].should.containEql("news")
       res.render.args[0][1].articles.length.should.eql(3)
     })
   })
 
-  describe('#maybeFetchSocialEmbed', () => {
+  describe("#maybeFetchSocialEmbed", () => {
     let section = {}
 
-    it('Returns the section if not social_embed', async () => {
-      section.type = 'text'
+    it("Returns the section if not social_embed", async () => {
+      section.type = "text"
       const newSection = await routes.maybeFetchSocialEmbed(section)
-      newSection.type.should.eql('text')
+      newSection.type.should.eql("text")
     })
 
-    it('Returns fetched oembed data if social_embed', async () => {
+    it("Returns fetched oembed data if social_embed", async () => {
       section = {
-        type: 'social_embed',
-        url: 'https://twitter.com/artsy/status/978997552061272064',
+        type: "social_embed",
+        url: "https://twitter.com/artsy/status/978997552061272064",
       }
 
       const newSection = await routes.maybeFetchSocialEmbed(section)
       request.get.args[0][0].should.eql(
-        'https://publish.twitter.com/oembed?url=https://twitter.com/artsy/status/978997552061272064'
+        "https://publish.twitter.com/oembed?url=https://twitter.com/artsy/status/978997552061272064"
       )
       newSection.url.should.eql('<blockquote class="twitter-tweet">')
-      newSection.type.should.eql('social_embed')
+      newSection.type.should.eql("social_embed")
     })
 
-    it('Fetches from instagram', async () => {
+    it("Fetches from instagram", async () => {
       section = {
-        type: 'social_embed',
-        url: 'https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy',
+        type: "social_embed",
+        url: "https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy",
       }
 
       await routes.maybeFetchSocialEmbed(section)
       request.get.args[0][0].should.eql(
-        'https://api.instagram.com/oembed?url=https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy'
+        "https://api.instagram.com/oembed?url=https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy"
       )
     })
   })
