@@ -134,7 +134,7 @@ describe 'Sale', ->
       it 'returns the correct button attributes', ->
         @sale.set sale_type: 'default', auction_state: 'open'
         @artwork.set acquireable: true, sold: false
-        @sale.buyButtonState(@user, @artwork).label.should.equal 'Buy Now'
+        @sale.buyButtonState(@user, @artwork).label.should.equal 'Buy now'
         @artwork.set 'sold', true
         @sale.buyButtonState(@user, @artwork).label.should.equal 'Sold'
 
