@@ -1,14 +1,15 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { renderLayout } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collect/routes"
-import { Meta } from "./meta.tsx"
-import mediator from "desktop/lib/mediator.coffee"
 import express from "express"
 import React from "react"
+import { maybeShowOldCollect } from "./maybeShowOldCollect"
+import mediator from "desktop/lib/mediator.coffee"
+import { Meta } from "./meta"
 
 const app = (module.exports = express())
 
-export const index = async (req, res, next) => {
+const index = async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
     const { APP_URL, IS_MOBILE } = res.locals.sd
@@ -52,6 +53,7 @@ export const index = async (req, res, next) => {
   }
 }
 
-app.get("/collect2/:medium?", index)
+app.get("/collect", maybeShowOldCollect, index)
+app.get("/collect/:medium?", maybeShowOldCollect, index)
 
 export default app
