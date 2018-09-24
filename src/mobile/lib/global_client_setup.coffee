@@ -3,7 +3,7 @@
 # to include in this file can actually live somewhere else like a relavent app
 # or component.
 #
-globalReactModules = require('../../desktop/lib/global_react_modules')
+globalReactModules = require('./global_react_modules')
 { componentRenderer } = require('@artsy/stitch/iso')
 
 module.exports = ->
