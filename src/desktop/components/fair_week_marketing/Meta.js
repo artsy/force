@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import PropTypes from "prop-types"
+import React from "react"
 
 export const FairWeekMeta = props => {
   const { meta: { description, title } } = props

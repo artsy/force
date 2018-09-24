@@ -1,11 +1,11 @@
-import _request from 'superagent'
-import gemup from 'gemup'
-import get from 'lodash.get'
-import stepsConfig from './steps_config'
-import { data as _sd } from 'sharify'
-import { fetchToken as _fetchToken, formattedLocation } from '../helpers'
-import { find } from 'underscore'
-import { push } from 'react-router-redux'
+import _request from "superagent"
+import gemup from "gemup"
+import get from "lodash.get"
+import stepsConfig from "./steps_config"
+import { data as _sd } from "sharify"
+import { fetchToken as _fetchToken, formattedLocation } from "../helpers"
+import { find } from "underscore"
+import { push } from "react-router-redux"
 
 // FIXME: Rewire
 let request = _request
@@ -13,51 +13,51 @@ let sd = _sd
 let fetchToken = _fetchToken
 
 // Action types
-export const ADD_ASSET_ID = 'ADD_ASSET_ID'
-export const ADD_IMAGE_TO_UPLOADED_IMAGES = 'ADD_IMAGE_TO_UPLOADED_IMAGES'
-export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
-export const CLEAR_ERROR = 'CLEAR_ERROR'
-export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
-export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
-export const ERROR_ON_IMAGE = 'ERROR_ON_IMAGE'
-export const FREEZE_LOCATION_INPUT = 'FREEZE_LOCATION_INPUT'
-export const HIDE_LOADER = 'HIDE_LOADER'
-export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
-export const IGNORE_REDIRECT_ON_AUTH = 'IGNORE_REDIRECT_ON_AUTH'
-export const REMOVE_ERRORED_IMAGE = 'REMOVE_ERRORED_IMAGE'
-export const REMOVE_UPLOADED_IMAGE = 'REMOVE_UPLOADED_IMAGE'
-export const SHOW_LOADER = 'SHOW_LOADER'
-export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
+export const ADD_ASSET_ID = "ADD_ASSET_ID"
+export const ADD_IMAGE_TO_UPLOADED_IMAGES = "ADD_IMAGE_TO_UPLOADED_IMAGES"
+export const CLEAR_ARTIST_SUGGESTIONS = "CLEAR_ARTIST_SUGGESTIONS"
+export const CLEAR_ERROR = "CLEAR_ERROR"
+export const CLEAR_LOCATION_DATA = "CLEAR_LOCATION_DATA"
+export const CLEAR_LOCATION_SUGGESTIONS = "CLEAR_LOCATION_SUGGESTIONS"
+export const ERROR_ON_IMAGE = "ERROR_ON_IMAGE"
+export const FREEZE_LOCATION_INPUT = "FREEZE_LOCATION_INPUT"
+export const HIDE_LOADER = "HIDE_LOADER"
+export const HIDE_NOT_CONSIGNING_MESSAGE = "HIDE_NOT_CONSIGNING_MESSAGE"
+export const IGNORE_REDIRECT_ON_AUTH = "IGNORE_REDIRECT_ON_AUTH"
+export const REMOVE_ERRORED_IMAGE = "REMOVE_ERRORED_IMAGE"
+export const REMOVE_UPLOADED_IMAGE = "REMOVE_UPLOADED_IMAGE"
+export const SHOW_LOADER = "SHOW_LOADER"
+export const SHOW_NOT_CONSIGNING_MESSAGE = "SHOW_NOT_CONSIGNING_MESSAGE"
 export const SHOW_RESET_PASSWORD_SUCCESS_MESSAGE =
-  'SHOW_RESET_PASSWORD_SUCCESS_MESSAGE'
-export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
-export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
-export const SUBMISSION_CREATED = 'SUBMISSION_CREATED'
-export const SUBMISSION_COMPLETED = 'SUBMISSION_COMPLETED'
-export const SUBMISSION_ERROR = 'SUBMISSION_ERROR'
-export const SUBMIT_ARTIST = 'SUBMIT_ARTIST'
-export const UNFREEZE_LOCATION_INPUT = 'UNFREEZE_LOCATION_INPUT'
+  "SHOW_RESET_PASSWORD_SUCCESS_MESSAGE"
+export const START_PROCESSING_IMAGE = "START_PROCESSING_IMAGE"
+export const STOP_PROCESSING_IMAGE = "STOP_PROCESSING_IMAGE"
+export const SUBMISSION_CREATED = "SUBMISSION_CREATED"
+export const SUBMISSION_COMPLETED = "SUBMISSION_COMPLETED"
+export const SUBMISSION_ERROR = "SUBMISSION_ERROR"
+export const SUBMIT_ARTIST = "SUBMIT_ARTIST"
+export const UNFREEZE_LOCATION_INPUT = "UNFREEZE_LOCATION_INPUT"
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE =
-  'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
-export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
-export const UPDATE_ARTIST_NAME = 'UPDATE_ARTIST_NAME'
-export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
-export const UPDATE_AUTH_FORM_STATE = 'UPDATE_AUTH_FORM_STATE'
-export const UPDATE_CURRENT_STEP = 'UPDATE_CURRENT_STEP'
-export const UPDATE_ERROR = 'UPDATE_ERROR'
-export const UPDATE_INPUTS = 'UPDATE_INPUTS'
+  "UPDATE_ARTIST_AUTOCOMPLETE_VALUE"
+export const UPDATE_ARTIST_ID = "UPDATE_ARTIST_ID"
+export const UPDATE_ARTIST_NAME = "UPDATE_ARTIST_NAME"
+export const UPDATE_ARTIST_SUGGESTIONS = "UPDATE_ARTIST_SUGGESTIONS"
+export const UPDATE_AUTH_FORM_STATE = "UPDATE_AUTH_FORM_STATE"
+export const UPDATE_CURRENT_STEP = "UPDATE_CURRENT_STEP"
+export const UPDATE_ERROR = "UPDATE_ERROR"
+export const UPDATE_INPUTS = "UPDATE_INPUTS"
 export const UPDATE_LOCATION_AUTOCOMPLETE_VALUE =
-  'UPDATE_LOCATION_AUTOCOMPLETE_VALUE'
-export const UPDATE_LOCATION_CITY_VALUE = 'UPDATE_LOCATION_CITY_VALUE'
-export const UPDATE_LOCATION_SUGGESTIONS = 'UPDATE_LOCATION_SUGGESTIONS'
-export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
-export const UPDATE_PROGRESS_BAR = 'UPDATE_PROGRESS_BAR'
-export const UPDATE_SKIP_PHOTO_SUBMISSION = 'UPDATE_SKIP_PHOTO_SUBMISSION'
-export const UPDATE_STEPS_WITH_USER = 'UPDATE_STEPS_WITH_USER'
-export const UPDATE_STEPS_WITHOUT_USER = 'UPDATE_STEPS_WITHOUT_USER'
-export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
-export const UPDATE_USER = 'UPDATE_USER'
-export const UPDATE_USER_PHONE = 'UPDATE_USER_PHONE'
+  "UPDATE_LOCATION_AUTOCOMPLETE_VALUE"
+export const UPDATE_LOCATION_CITY_VALUE = "UPDATE_LOCATION_CITY_VALUE"
+export const UPDATE_LOCATION_SUGGESTIONS = "UPDATE_LOCATION_SUGGESTIONS"
+export const UPDATE_LOCATION_VALUES = "UPDATE_LOCATION_VALUES"
+export const UPDATE_PROGRESS_BAR = "UPDATE_PROGRESS_BAR"
+export const UPDATE_SKIP_PHOTO_SUBMISSION = "UPDATE_SKIP_PHOTO_SUBMISSION"
+export const UPDATE_STEPS_WITH_USER = "UPDATE_STEPS_WITH_USER"
+export const UPDATE_STEPS_WITHOUT_USER = "UPDATE_STEPS_WITHOUT_USER"
+export const UPDATE_SUBMISSION = "UPDATE_SUBMISSION"
+export const UPDATE_USER = "UPDATE_USER"
+export const UPDATE_USER_PHONE = "UPDATE_USER_PHONE"
 
 // Action creators
 export function addAssetId(assetId) {
@@ -97,20 +97,20 @@ export function chooseLocation(location) {
   return async (dispatch, getState) => {
     const parseDetails = (place, status) => {
       if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
-        console.error('Unable to reach maps API', status)
+        console.error("Unable to reach maps API", status)
       } else {
         const { address_components } = place
         const city = find(
           address_components,
-          comp => comp.types[0] === 'locality'
+          comp => comp.types[0] === "locality"
         )
         const state = find(
           address_components,
-          comp => comp.types[0] === 'administrative_area_level_1'
+          comp => comp.types[0] === "administrative_area_level_1"
         )
         const country = find(
           address_components,
-          comp => comp.types[0] === 'country'
+          comp => comp.types[0] === "country"
         )
 
         const cityDisplay = city && city.long_name
@@ -127,7 +127,7 @@ export function chooseLocation(location) {
     try {
       if (window.google) {
         const placesService = new window.google.maps.places.PlacesService(
-          document.createElement('div')
+          document.createElement("div")
         )
         await placesService.getDetails(
           { placeId: location.place_id },
@@ -136,7 +136,7 @@ export function chooseLocation(location) {
       }
     } catch (err) {
       console.error(
-        '(consignments/client/actions.js @ chooseLocation) Error:',
+        "(consignments/client/actions.js @ chooseLocation) Error:",
         err
       )
     }
@@ -178,8 +178,8 @@ export function completeSubmission() {
       const submissionQueryParam = submission.id || submissionIdFromServer
       const submissionResponse = await request
         .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submissionQueryParam}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ state: 'submitted' })
+        .set("Authorization", `Bearer ${token}`)
+        .send({ state: "submitted" })
 
       dispatch(updateSubmission(submissionResponse.body))
       dispatch(submissionCompleted())
@@ -187,17 +187,17 @@ export function completeSubmission() {
       dispatch(
         push(
           stepsConfig.thankYou.submissionPath.replace(
-            ':id',
+            ":id",
             submissionResponse.body.id
           )
         )
       )
     } catch (err) {
       dispatch(hideLoader())
-      dispatch(submissionError('convection_complete_submission'))
-      dispatch(updateError('Unable to submit at this time.'))
+      dispatch(submissionError("convection_complete_submission"))
+      dispatch(updateError("Unable to submit at this time."))
       console.error(
-        '(consignments/client/actions.js @ completeSubmission) Error:',
+        "(consignments/client/actions.js @ completeSubmission) Error:",
         err
       )
     }
@@ -213,12 +213,12 @@ export function createSubmission() {
       if (submission.id) {
         submissionBody = await request
           .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submission.id}`)
-          .set('Authorization', `Bearer ${token}`)
+          .set("Authorization", `Bearer ${token}`)
           .send(inputs)
       } else {
         submissionBody = await request
           .post(`${sd.CONVECTION_APP_URL}/api/submissions`)
-          .set('Authorization', `Bearer ${token}`)
+          .set("Authorization", `Bearer ${token}`)
           .send(inputs)
       }
       let userBody
@@ -226,7 +226,7 @@ export function createSubmission() {
       if (user.phone !== inputs.phone) {
         userBody = await request
           .put(`${sd.API_URL}/api/v1/me`)
-          .set('X-ACCESS-TOKEN', user.accessToken)
+          .set("X-ACCESS-TOKEN", user.accessToken)
           .send({ phone: inputs.phone })
         dispatch(updateUserPhone(userBody.body.phone))
       }
@@ -237,7 +237,7 @@ export function createSubmission() {
       dispatch(
         push(
           stepsConfig.describeWork.submissionPath.replace(
-            ':id',
+            ":id",
             submissionBody.body.id
           )
         )
@@ -245,17 +245,17 @@ export function createSubmission() {
       dispatch(
         push(
           stepsConfig.uploadPhotos.submissionPath.replace(
-            ':id',
+            ":id",
             submissionBody.body.id
           )
         )
       )
     } catch (err) {
       dispatch(hideLoader())
-      dispatch(submissionError('convection_create'))
-      dispatch(updateError('Unable to submit at this time.'))
+      dispatch(submissionError("convection_create"))
+      dispatch(updateError("Unable to submit at this time."))
       console.error(
-        '(consignments/client/actions.js @ createSubmission) Error:',
+        "(consignments/client/actions.js @ createSubmission) Error:",
         err
       )
     }
@@ -277,13 +277,13 @@ export function fetchArtistSuggestions(value) {
       const { submissionFlow: { user } } = getState()
       const res = await request
         .get(`${sd.API_URL}/api/v1/match/artists`)
-        .query({ visible_to_public: 'true', term: value })
-        .set('X-ACCESS-TOKEN', user.accessToken)
+        .query({ visible_to_public: "true", term: value })
+        .set("X-ACCESS-TOKEN", user.accessToken)
       dispatch(updateArtistSuggestions(res.body))
       dispatch(hideNotConsigningMessage())
     } catch (err) {
       console.error(
-        '(consignments/client/actions.js @ fetchArtistSuggestions) Error:',
+        "(consignments/client/actions.js @ fetchArtistSuggestions) Error:",
         err
       )
     }
@@ -294,7 +294,7 @@ export function fetchLocationSuggestions(value) {
   return async (dispatch, getState) => {
     const displaySuggestions = (predictions, status) => {
       if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
-        console.error('Unable to reach maps API', status)
+        console.error("Unable to reach maps API", status)
       } else {
         dispatch(updateLocationSuggestions(predictions))
       }
@@ -304,13 +304,13 @@ export function fetchLocationSuggestions(value) {
       if (window.google) {
         const autocompleteService = new window.google.maps.places.AutocompleteService()
         await autocompleteService.getPlacePredictions(
-          { input: value, types: ['(cities)'] },
+          { input: value, types: ["(cities)"] },
           displaySuggestions
         )
       }
     } catch (err) {
       console.error(
-        '(consignments/client/actions.js @ fetchLocationSuggestions) Error:',
+        "(consignments/client/actions.js @ fetchLocationSuggestions) Error:",
         err
       )
     }
@@ -326,9 +326,9 @@ export function freezeLocationInput() {
 export function handleImageUpload(file) {
   return async (dispatch, getState) => {
     try {
-      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+      if (file.type === "image/jpeg" || file.type === "image/png") {
         const options = {
-          acl: 'private',
+          acl: "private",
           app: sd.CONVECTION_GEMINI_APP,
           key: sd.GEMINI_S3_ACCESS_KEY,
           fail: _err => {
@@ -353,7 +353,7 @@ export function handleImageUpload(file) {
       }
     } catch (err) {
       console.error(
-        '(consignments/client/actions.js @ handleImageUpload) Error:',
+        "(consignments/client/actions.js @ handleImageUpload) Error:",
         err
       )
     }
@@ -386,9 +386,9 @@ export function logIn(values, accountCreated = false) {
       }
       const user = await request
         .post(sd.AP.loginPagePath)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('X-Requested-With', 'XMLHttpRequest')
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        .set("X-Requested-With", "XMLHttpRequest")
         .send(options)
 
       dispatch(updateUser(user.body.user, accountCreated))
@@ -396,10 +396,10 @@ export function logIn(values, accountCreated = false) {
       dispatch(clearError())
       dispatch(hideLoader())
     } catch (err) {
-      const errorMessage = get(err, 'response.body.error', false)
+      const errorMessage = get(err, "response.body.error", false)
       dispatch(updateError(errorMessage))
       dispatch(hideLoader())
-      console.error('(consignments/client/actions.js @ logIn) Error:', err)
+      console.error("(consignments/client/actions.js @ logIn) Error:", err)
     }
   }
 }
@@ -438,9 +438,9 @@ export function resetPassword(values) {
       }
       await request
         .post(`${sd.API_URL}/api/v1/users/send_reset_password_instructions`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        .set("X-XAPP-TOKEN", sd.ARTSY_XAPP_TOKEN)
         .send(options)
       dispatch(clearError())
       dispatch(showResetPasswordSuccessMessage())
@@ -493,16 +493,16 @@ export function signUp(values) {
       }
       await request
         .post(sd.AP.signupPagePath)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('X-Requested-With', 'XMLHttpRequest')
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        .set("X-Requested-With", "XMLHttpRequest")
         .send(options)
       dispatch(logIn(values, true))
     } catch (err) {
-      const errorMessage = get(err, 'response.body.error', false)
+      const errorMessage = get(err, "response.body.error", false)
       dispatch(updateError(errorMessage))
       dispatch(hideLoader())
-      console.error('(consignments/client/actions.js @ signUp) Error:', err)
+      console.error("(consignments/client/actions.js @ signUp) Error:", err)
     }
   }
 }
@@ -590,9 +590,9 @@ export function submitPhoto() {
       dispatch(completeSubmission())
     } catch (err) {
       dispatch(hideLoader())
-      dispatch(updateError('Unable to submit at this time.'))
+      dispatch(updateError("Unable to submit at this time."))
       console.error(
-        '(consignments/client/actions.js @ submitPhoto) Error:',
+        "(consignments/client/actions.js @ submitPhoto) Error:",
         err
       )
     }
@@ -677,7 +677,7 @@ export function updateCurrentStep(step) {
 
 export function updateInputs(inputs) {
   if (inputs.edition === false) {
-    inputs.edition_number = ''
+    inputs.edition_number = ""
     inputs.edition_size = 0
   }
 
@@ -825,7 +825,7 @@ export function uploadImageToConvection(geminiToken, fileName) {
       }
       const assetResponse = await request
         .post(`${sd.CONVECTION_APP_URL}/api/assets`)
-        .set('Authorization', `Bearer ${token}`)
+        .set("Authorization", `Bearer ${token}`)
         .send(inputs)
       const assetId = assetResponse.body.id
 
@@ -834,7 +834,7 @@ export function uploadImageToConvection(geminiToken, fileName) {
     } catch (err) {
       dispatch(errorOnImage(fileName))
       console.error(
-        '(consignments/client/actions.js @ uploadImageToConvection) Error:',
+        "(consignments/client/actions.js @ uploadImageToConvection) Error:",
         err
       )
     }
@@ -855,13 +855,13 @@ export function uploadImageToGemini(key, bucket, fileName) {
           source_bucket: bucket,
           metadata: {
             id: submissionId,
-            _type: 'Consignment',
+            _type: "Consignment",
           },
         },
       }
       const response = await request
         .post(`${sd.GEMINI_APP}/entries.json`)
-        .set('Authorization', `Basic ${encode(sd.CONVECTION_GEMINI_APP, '')}`)
+        .set("Authorization", `Basic ${encode(sd.CONVECTION_GEMINI_APP, "")}`)
         .send(inputs)
 
       const token = response.body.token
@@ -870,7 +870,7 @@ export function uploadImageToGemini(key, bucket, fileName) {
     } catch (err) {
       dispatch(errorOnImage(fileName))
       console.error(
-        '(consignments/client/actions.js @ uploadImageToGemini) Error:',
+        "(consignments/client/actions.js @ uploadImageToGemini) Error:",
         err
       )
     }
@@ -879,5 +879,5 @@ export function uploadImageToGemini(key, bucket, fileName) {
 
 // helpers
 function encode(key, secret) {
-  return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
+  return btoa(unescape(encodeURIComponent([key, secret].join(":"))))
 }

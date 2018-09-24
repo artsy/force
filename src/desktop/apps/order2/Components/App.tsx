@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import { Layout } from './Layout'
+import React, { Component } from "react"
+import styled from "styled-components"
+import { Layout } from "./Layout"
 
 interface Props {}
 
 export class App extends Component<Props> {
   componentDidMount() {
-    console.log('mounted on client')
+    console.log("mounted on client")
   }
 
   render() {

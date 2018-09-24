@@ -1,1 +1,1 @@
-import 'desktop/apps/artwork2/client'
+import "desktop/apps/artwork2/client"

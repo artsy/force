@@ -1,6 +1,6 @@
-import JumpView from './view.coffee'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import JumpView from "./view.coffee"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
 
 export default class Jump extends Component {
   static propTypes = {
@@ -11,12 +11,12 @@ export default class Jump extends Component {
   }
 
   static defaultProps = {
-    direction: 'bottom',
-    offset: '.mlh-navbar',
+    direction: "bottom",
+    offset: ".mlh-navbar",
   }
 
   componentDidMount() {
-    this.$ = require('jquery')
+    this.$ = require("jquery")
 
     const { threshold, direction, element, offset } = this.props
 
@@ -27,7 +27,7 @@ export default class Jump extends Component {
       offset: this.$(offset),
     })
 
-    this.$('body').append(this.backboneView.$el)
+    this.$("body").append(this.backboneView.$el)
   }
 
   componentWillUnmount() {

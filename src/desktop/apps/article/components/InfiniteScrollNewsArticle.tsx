@@ -1,20 +1,20 @@
-import moment from 'moment'
-import styled from 'styled-components'
-import React, { Component, Fragment } from 'react'
-import { flatten, debounce, extend } from 'lodash'
-import Waypoint from 'react-waypoint'
-import { positronql as _positronql } from 'desktop/lib/positronql'
-import { newsArticlesQuery } from 'desktop/apps/article/queries/articles'
+import moment from "moment"
+import styled from "styled-components"
+import React, { Component, Fragment } from "react"
+import { flatten, debounce, extend } from "lodash"
+import Waypoint from "react-waypoint"
+import { positronql as _positronql } from "desktop/lib/positronql"
+import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
   RelatedArticleCanvasData,
   DisplayData,
-} from 'reaction/Components/Publishing/Typings'
-import { NewsNav } from 'reaction/Components/Publishing/Nav/NewsNav'
-import { setupFollows, setupFollowButtons } from './FollowButton.js'
-import { LoadingSpinner } from './InfiniteScrollArticle'
-import { NewsArticle } from './NewsArticle'
-import { NewsDateDivider } from 'reaction/Components/Publishing/News/NewsDateDivider'
+} from "reaction/Components/Publishing/Typings"
+import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
+import { setupFollows, setupFollowButtons } from "./FollowButton.js"
+import { LoadingSpinner } from "./InfiniteScrollArticle"
+import { NewsArticle } from "./NewsArticle"
+import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
 
 export interface Props {
   article?: ArticleData
@@ -52,7 +52,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     this.onDateChange = debounce(this.onDateChange, 200)
 
     this.state = {
-      activeArticle: '',
+      activeArticle: "",
       articles: props.articles,
       date,
       display: [],
@@ -120,7 +120,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       }
     } catch (error) {
       console.error(
-        '(apps/article/InfiniteScrollNewsArticle) Error fetching next article set: ',
+        "(apps/article/InfiniteScrollNewsArticle) Error fetching next article set: ",
         error
       )
 
@@ -149,7 +149,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   onDateChange = date => {
-    const hasNewDate = !moment(date).isSame(this.state.date, 'day')
+    const hasNewDate = !moment(date).isSame(this.state.date, "day")
     if (hasNewDate) {
       this.setState({ date })
     }
@@ -230,5 +230,5 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 }
 
 const NewsContainer = styled.div.attrs<{ isMobile: boolean }>({})`
-  margin-top: ${props => (props.isMobile ? '100' : '200')}px;
+  margin-top: ${props => (props.isMobile ? "100" : "200")}px;
 `

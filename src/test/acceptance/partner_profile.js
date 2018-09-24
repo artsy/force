@@ -1,13 +1,13 @@
 /* eslint-env mocha */
-import { setup, teardown } from './helpers'
-import { server as antigravity } from 'antigravity'
+import { setup, teardown } from "./helpers"
+import { server as antigravity } from "antigravity"
 
-describe('Partner profile page', () => {
+describe("Partner profile page", () => {
   let gravity, positron, browser
 
   before(async () => {
     ;({ gravity, positron, browser } = await setup())
-    gravity.get('/api/v1/shortcut/:id', (req, res) => {
+    gravity.get("/api/v1/shortcut/:id", (req, res) => {
       res.res.sendStatus(404)
     })
     gravity.use(antigravity)
@@ -15,9 +15,9 @@ describe('Partner profile page', () => {
 
   after(teardown)
 
-  context('desktop', () => {
-    it('shows the overview', async () => {
-      const $ = await browser.page('/gagosian-gallery')
+  context("desktop", () => {
+    it("shows the overview", async () => {
+      const $ = await browser.page("/gagosian-gallery")
       $.html().should.containEql(
         '<h1 class="partner-name">Gagosian Gallery</h1>'
       )
@@ -25,43 +25,43 @@ describe('Partner profile page', () => {
     })
   })
 
-  context('iPhone', () => {
+  context("iPhone", () => {
     before(() => {
-      browser.useragent('iPhone')
-      positron.get('/api/articles', (req, res) => {
-        res.send(require('./fixtures/gravity/home'))
+      browser.useragent("iPhone")
+      positron.get("/api/articles", (req, res) => {
+        res.send(require("./fixtures/gravity/home"))
       })
     })
 
-    it('shows the overview', async () => {
-      const $ = await browser.page('/gagosian-gallery?_')
+    it("shows the overview", async () => {
+      const $ = await browser.page("/gagosian-gallery?_")
       $.html().should.containEql(
         '<h1 class="avant-garde-header">Gagosian Gallery</h1>'
       )
-      $.html().should.containEql('Living the dream as')
+      $.html().should.containEql("Living the dream as")
     })
 
-    it('shows the list of shows', async () => {
-      const $ = await browser.page('/gagosian-gallery/shows')
-      $.html().should.containEql('Upcoming Shows')
+    it("shows the list of shows", async () => {
+      const $ = await browser.page("/gagosian-gallery/shows")
+      $.html().should.containEql("Upcoming Shows")
     })
 
-    it('shows partner articles', async () => {
-      const $ = await browser.page('/gagosian-gallery/articles')
-      $.html().should.containEql('Articles')
+    it("shows partner articles", async () => {
+      const $ = await browser.page("/gagosian-gallery/articles")
+      $.html().should.containEql("Articles")
     })
 
-    it('does not show contact information for non-active partner', async () => {
-      const $ = await browser.page('/gagosian-gallery/contact')
+    it("does not show contact information for non-active partner", async () => {
+      const $ = await browser.page("/gagosian-gallery/contact")
       $.html().should.containEql(
-        'Sorry, the page you were looking for doesn&#x2019;t exist at this URL.'
+        "Sorry, the page you were looking for doesn&#x2019;t exist at this URL."
       )
     })
 
-    it('show contact information for active partner', async () => {
-      const $ = await browser.page('/pace-gallery/contact')
-      $.html().should.containEql('Contact')
-      $.html().should.containEql('New York')
+    it("show contact information for active partner", async () => {
+      const $ = await browser.page("/pace-gallery/contact")
+      $.html().should.containEql("Contact")
+      $.html().should.containEql("New York")
     })
   })
 })

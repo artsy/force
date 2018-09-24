@@ -1,7 +1,7 @@
-import moment from 'moment-timezone'
+import moment from "moment-timezone"
 
 function zone(time) {
-  return moment(time).tz('America/New_York')
+  return moment(time).tz("America/New_York")
 }
 
 export default function upcomingLabel(
@@ -12,18 +12,18 @@ export default function upcomingLabel(
   isLiveOpen,
   isPreview
 ) {
-  const timeFormat = 'MMM D, h:mm A z'
+  const timeFormat = "MMM D, h:mm A z"
 
   if (isPreview) {
     return `Auction opens ${zone(startAt).format(timeFormat)}`
   } else if (isClosed) {
-    return 'Auction closed'
+    return "Auction closed"
   } else if (liveStartAt && !isLiveOpen) {
     return `Auction opens for live bidding ${zone(liveStartAt).format(
       timeFormat
     )}`
   } else if (liveStartAt) {
-    return 'Auction open for live bidding'
+    return "Auction open for live bidding"
   } else {
     return `Auction closes ${zone(endAt).format(timeFormat)}`
   }

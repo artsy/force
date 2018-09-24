@@ -2,8 +2,8 @@
 // Analytics code that needs to run before page load and analytics.ready
 //
 
-import { data as sd } from 'sharify'
-import { reportLoadTimeToVolley } from 'lib/volley'
+import { data as sd } from "sharify"
+import { reportLoadTimeToVolley } from "lib/volley"
 
 // Disable Parsely firing on non-article/section pages
 if (!location.pathname.match(/^\/article/)) {
@@ -22,10 +22,10 @@ if (
   window.performance.timing &&
   sd.TRACK_PAGELOAD_PATHS
 ) {
-  window.addEventListener('load', function() {
+  window.addEventListener("load", function() {
     const pageType =
-      window.sd.PAGE_TYPE || window.location.pathname.split('/')[1]
-    if (sd.TRACK_PAGELOAD_PATHS.split('|').includes(pageType)) {
+      window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
+    if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
       window.setTimeout(function() {
         const {
           requestStart,
@@ -38,7 +38,7 @@ if (
           loadEventEnd,
           domComplete,
           pageType,
-          'mobile'
+          "mobile"
         )
       }, 0)
     }

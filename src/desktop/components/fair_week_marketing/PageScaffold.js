@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import PropTypes from "prop-types"
+import React from "react"
+import styled, { ThemeProvider } from "styled-components"
 
-import colors from 'reaction/Assets/Colors'
-import { Row, Col } from 'reaction/Components/Grid'
-import Text from 'reaction/Components/Text'
-import Title from 'reaction/Components/Title'
+import colors from "reaction/Assets/Colors"
+import { Row, Col } from "reaction/Components/Grid"
+import Text from "reaction/Components/Text"
+import Title from "reaction/Components/Title"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -94,7 +94,7 @@ export const FairWeekPageScaffold = ({
               {introduction.description}
             </IntroductionText>
             <img
-              style={{ marginTop: 30, marginBottom: 20, maxWidth: '100%' }}
+              style={{ marginTop: 30, marginBottom: 20, maxWidth: "100%" }}
               src={introduction.image}
             />
           </ReveredColumnOnMobile>
@@ -109,7 +109,7 @@ export const FairWeekPageScaffold = ({
           <ResponsiveRow paddingBottom={20}>
             {fair_coverage.fairs.map(fair => (
               <Col lg={3} md={3} sm={3} xs={6} key={fair.logo_url}>
-                {fair.site_url && fair.site_url.startsWith('http') ? (
+                {fair.site_url && fair.site_url.startsWith("http") ? (
                   <a href={fair.site_url} target="_blank">
                     <FairLogo src={fair.logo_url} />
                   </a>
@@ -129,7 +129,7 @@ export const FairWeekPageScaffold = ({
           </Col>
           <Col lg={8} md={8} sm={12} xs={12}>
             <img
-              style={{ marginBottom: 10, width: '100%' }}
+              style={{ marginBottom: 10, width: "100%" }}
               src={event.banner_image_url}
             />
 
@@ -163,7 +163,7 @@ export const FairWeekPageScaffold = ({
               <Col lg={7} md={7} sm={6} xs={12}>
                 <a href={article.article_url} target="_blank">
                   <img
-                    style={{ marginBottom: 10, width: '100%' }}
+                    style={{ marginBottom: 10, width: "100%" }}
                     src={article.image_url}
                   />
                 </a>
@@ -171,12 +171,12 @@ export const FairWeekPageScaffold = ({
               <Col lg={5} md={5} sm={6} xs={12}>
                 <a
                   href={article.article_url}
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                   target="_blank"
                 >
                   <Title
                     titleSize="small"
-                    style={{ margin: '0 0 5px', lineHeight: 1 }}
+                    style={{ margin: "0 0 5px", lineHeight: 1 }}
                   >
                     {article.title}
                   </Title>

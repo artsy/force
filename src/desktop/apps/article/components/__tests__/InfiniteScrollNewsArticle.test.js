@@ -1,16 +1,16 @@
-import 'jsdom-global/register'
-import _ from 'underscore'
-import benv from 'benv'
-import moment from 'moment'
-import sinon from 'sinon'
-import React from 'react'
-import { shallow } from 'enzyme'
-import { data as sd } from 'sharify'
-import fixtures from 'desktop/test/helpers/fixtures.coffee'
-import { UnitCanvasImage } from 'reaction/Components/Publishing/Fixtures/Components'
-import { NewsArticle } from 'reaction/Components/Publishing/Fixtures/Articles'
+import "jsdom-global/register"
+import _ from "underscore"
+import benv from "benv"
+import moment from "moment"
+import sinon from "sinon"
+import React from "react"
+import { shallow } from "enzyme"
+import { data as sd } from "sharify"
+import fixtures from "desktop/test/helpers/fixtures.coffee"
+import { UnitCanvasImage } from "reaction/Components/Publishing/Fixtures/Components"
+import { NewsArticle } from "reaction/Components/Publishing/Fixtures/Articles"
 
-describe('<InfiniteScrollNewsArticle />', () => {
+describe("<InfiniteScrollNewsArticle />", () => {
   let props
   let article
   let nextArticle
@@ -18,11 +18,11 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
   before(done => {
     benv.setup(() => {
-      benv.expose({ $: benv.require('jquery'), jQuery: benv.require('jquery') })
-      sd.APP_URL = 'http://artsy.net'
+      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
+      sd.APP_URL = "http://artsy.net"
       sd.CURRENT_PATH =
-        '/news/artsy-editorial-surprising-reason-men-women-selfies-differently'
-      sd.CURRENT_USER = { id: '123' }
+        "/news/artsy-editorial-surprising-reason-men-women-selfies-differently"
+      sd.CURRENT_USER = { id: "123" }
       clock = sinon.useFakeTimers()
       done()
     })
@@ -41,30 +41,30 @@ describe('<InfiniteScrollNewsArticle />', () => {
     }
   }
 
-  let rewire = require('rewire')('../InfiniteScrollNewsArticle.tsx')
+  let rewire = require("rewire")("../InfiniteScrollNewsArticle.tsx")
   let { InfiniteScrollNewsArticle } = rewire
 
   beforeEach(() => {
     window.history.replaceState = sinon.stub()
     article = _.extend(
       {
-        slug: 'news-article',
+        slug: "news-article",
         isTruncated: false,
       },
       NewsArticle
     )
     nextArticle = {
-      layout: 'news',
-      id: '456',
-      slug: 'next-news-article',
-      published_at: '2017-05-19T13:09:18.567Z',
-      contributing_authors: [{ name: 'Kana' }],
+      layout: "news",
+      id: "456",
+      slug: "next-news-article",
+      published_at: "2017-05-19T13:09:18.567Z",
+      contributing_authors: [{ name: "Kana" }],
     }
 
     props = {
       article,
       articles: [article],
-      marginTop: '50px',
+      marginTop: "50px",
       isMobile: false,
     }
   })
@@ -73,130 +73,130 @@ describe('<InfiniteScrollNewsArticle />', () => {
     window.history.replaceState.reset()
   })
 
-  it('fetches more articles at the end of the page', async () => {
+  it("fetches more articles at the end of the page", async () => {
     const data = {
       display: {
         canvas: {
-          layout: 'standard',
+          layout: "standard",
         },
       },
       articles: [
         _.extend({}, fixtures.article, {
-          slug: 'foobar',
-          layout: 'news',
-          channel_id: '123',
-          id: '678',
+          slug: "foobar",
+          layout: "news",
+          channel_id: "123",
+          id: "678",
         }),
       ],
     }
-    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     await rendered.instance().fetchNextArticles()
     rendered.update()
     rendered
-      .find('#article-root')
+      .find("#article-root")
       .children()
       .length.should.equal(5)
 
-    Object.keys(rendered.state().display[0]).should.containEql('renderTime')
+    Object.keys(rendered.state().display[0]).should.containEql("renderTime")
   })
 
-  it('sets up follow buttons', () => {
+  it("sets up follow buttons", () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    rendered.state('following').length.should.exist
+    rendered.state("following").length.should.exist
   })
 
-  it('#hasNewDate returns true if article date is different from previous article', () => {
+  it("#hasNewDate returns true if article date is different from previous article", () => {
     props.articles.push(nextArticle)
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     const hasNewDate = rendered.instance().hasNewDate(nextArticle, 1)
     hasNewDate.should.equal(true)
   })
 
-  it('injects a canvas ad after the sixth article', async () => {
+  it("injects a canvas ad after the sixth article", async () => {
     const data = {
       articles: _.times(6, () => {
         return _.extend({}, NewsArticle, {
-          slug: 'foobar',
-          channel_id: '123',
-          id: '678',
+          slug: "foobar",
+          channel_id: "123",
+          id: "678",
         })
       }),
       display: {
-        name: 'BMW',
+        name: "BMW",
         canvas: UnitCanvasImage,
       },
     }
-    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     await rendered.instance().fetchNextArticles()
     rendered.update()
-    rendered.html().should.containEql('Sponsored by BMW')
+    rendered.html().should.containEql("Sponsored by BMW")
   })
 
-  it('injects read more after the sixth article', async () => {
+  it("injects read more after the sixth article", async () => {
     const data = {
       articles: _.times(6, () => {
         return _.extend({}, fixtures.article, {
-          slug: 'foobar',
-          layout: 'news',
-          channel_id: '123',
-          id: '678',
+          slug: "foobar",
+          layout: "news",
+          channel_id: "123",
+          id: "678",
         })
       }),
       relatedArticlesCanvas: _.times(4, () => {
         return _.extend({}, fixtures.article, {
-          slug: 'related-article',
-          channel_id: '123',
-          id: '456',
+          slug: "related-article",
+          channel_id: "123",
+          id: "456",
         })
       }),
     }
-    rewire.__set__('positronql', sinon.stub().returns(Promise.resolve(data)))
+    rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     await rendered.instance().fetchNextArticles()
     rendered.update()
-    rendered.html().should.containEql('More from Artsy Editorial')
+    rendered.html().should.containEql("More from Artsy Editorial")
   })
 
-  it('#onActiveArticleChange sets the activeArticle', () => {
+  it("#onActiveArticleChange sets the activeArticle", () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-    rendered.instance().onActiveArticleChange('1234')
-    rendered.state('activeArticle').should.equal('1234')
+    rendered.instance().onActiveArticleChange("1234")
+    rendered.state("activeArticle").should.equal("1234")
   })
 
-  describe('/news - news index', () => {
+  describe("/news - news index", () => {
     beforeEach(() => {
       delete props.article
     })
 
-    it('renders list', () => {
+    it("renders list", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered
-        .find('#article-root')
+        .find("#article-root")
         .children()
         .length.should.equal(3)
-      rendered.html().should.containEql('NewsLayout')
+      rendered.html().should.containEql("NewsLayout")
     })
 
-    it('sets up state without props.article', () => {
+    it("sets up state without props.article", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered.state().offset.should.eql(6)
       rendered.state().date.should.eql(props.articles[0].published_at)
     })
   })
 
-  describe('/news/:id - single news article', () => {
-    it('renders the initial article', () => {
+  describe("/news/:id - single news article", () => {
+    it("renders the initial article", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered
-        .find('#article-root')
+        .find("#article-root")
         .children()
         .length.should.equal(3)
-      rendered.html().should.containEql('NewsLayout')
+      rendered.html().should.containEql("NewsLayout")
     })
 
-    it('sets up state for a single article', () => {
+    it("sets up state for a single article", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered.state().offset.should.eql(0)
       rendered.state().omit.should.eql(props.article.id)
@@ -204,14 +204,14 @@ describe('<InfiniteScrollNewsArticle />', () => {
     })
   })
 
-  describe('#getDateField', () => {
-    it('Returns published_at if present', () => {
+  describe("#getDateField", () => {
+    it("Returns published_at if present", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       const getDateField = rendered.instance().getDateField(article)
 
       getDateField.should.equal(article.published_at)
     })
-    it('Returns scheduled_publish_at if no published_at', () => {
+    it("Returns scheduled_publish_at if no published_at", () => {
       const published_at = article.published_at
       article.scheduled_publish_at = published_at
       delete article.published_at
@@ -220,7 +220,7 @@ describe('<InfiniteScrollNewsArticle />', () => {
 
       getDateField.should.equal(published_at)
     })
-    it('Returns today for articles with no date field', () => {
+    it("Returns today for articles with no date field", () => {
       const today = moment()
         .toISOString()
         .substring(0, 10)
@@ -235,18 +235,18 @@ describe('<InfiniteScrollNewsArticle />', () => {
     })
   })
 
-  describe('#onDateChange', () => {
-    it('it sets date if it has a new one', () => {
+  describe("#onDateChange", () => {
+    it("it sets date if it has a new one", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
-      rendered.instance().onDateChange('2018-07-20T17:19:55.909Z')
+      rendered.instance().onDateChange("2018-07-20T17:19:55.909Z")
       clock.tick(200)
-      rendered.state('date').should.equal('2018-07-20T17:19:55.909Z')
+      rendered.state("date").should.equal("2018-07-20T17:19:55.909Z")
     })
 
     it("it doesn't set date if it hasn't changed", () => {
       const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
       rendered.setState = sinon.stub()
-      rendered.instance().onDateChange('2018-07-19T17:19:55.909Z')
+      rendered.instance().onDateChange("2018-07-19T17:19:55.909Z")
       rendered.setState.callCount.should.equal(0)
     })
   })

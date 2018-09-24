@@ -1,18 +1,18 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import u from 'updeep'
-import { composeReducers } from 'desktop/components/react/utils/composeReducers'
-import { connect } from 'react-redux'
-import { debounce } from 'underscore'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import u from "updeep"
+import { composeReducers } from "desktop/components/react/utils/composeReducers"
+import { connect } from "react-redux"
+import { debounce } from "underscore"
 
 // Set responsive-breakpoint width. Must match value found at
 // desktop/components/stylus_lib/index.styl#25 (responsive-mobile-width - 1).
 const MOBILE_BREAKPOINT = 767
 
 // Actions
-const RESIZE_WINDOW = 'RESIZE_WINDOW'
+const RESIZE_WINDOW = "RESIZE_WINDOW"
 
-const responsiveWindowAction = (windowSize) => ({
+const responsiveWindowAction = windowSize => ({
   type: RESIZE_WINDOW,
   payload: {
     windowSize,
@@ -42,11 +42,11 @@ class ResponsiveWindow extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResizeEvent)
+    window.addEventListener("resize", this.handleResizeEvent)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResizeEvent)
+    window.removeEventListener("resize", this.handleResizeEvent)
   }
 
   handleResizeEvent = () => {
@@ -58,9 +58,9 @@ class ResponsiveWindow extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   const onChange = debounce(
-    (innerWidth) => dispatch(responsiveWindowAction(innerWidth)),
+    innerWidth => dispatch(responsiveWindowAction(innerWidth)),
     10,
     true
   )

@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { BannerPopUp } from 'desktop/components/fair_week_marketing/BannerPopUp'
+import React from "react"
+import ReactDOM from "react-dom"
+import { BannerPopUp } from "desktop/components/fair_week_marketing/BannerPopUp"
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
@@ -15,6 +15,6 @@ export const init = () => {
     <BannerPopUp
       {...{ ctaTitle, ctaImageUrl, overlayModalTitle, overlayModalImageUrl }}
     />,
-    document.getElementById('react-root-for-cta')
+    document.getElementById("react-root-for-cta")
   )
 }

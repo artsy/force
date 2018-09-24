@@ -1,39 +1,39 @@
-import PromotedSaleArtworks from '../PromotedSaleArtworks'
-import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
-import renderTestComponent from 'desktop/apps/auction/__tests__/utils/renderTestComponent'
-import { ArtworkRail } from '../../artwork_rail/ArtworkRail'
-import { promotedSaleArtworks } from '../__tests__/fixtures/promotedSaleArtworks'
-import { cloneDeep } from 'lodash'
+import PromotedSaleArtworks from "../PromotedSaleArtworks"
+import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
+import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
+import { ArtworkRail } from "../../artwork_rail/ArtworkRail"
+import { promotedSaleArtworks } from "../__tests__/fixtures/promotedSaleArtworks"
+import { cloneDeep } from "lodash"
 
-describe('auction/components/artwork_browser/PromotedSaleArtworks', () => {
+describe("auction/components/artwork_browser/PromotedSaleArtworks", () => {
   const data = {
     app: {
       isMobile: false,
       auction: {
-        name: 'An Auction',
-        sale_type: 'auction promo',
+        name: "An Auction",
+        sale_type: "auction promo",
         eligible_sale_artworks_count: 0,
         promoted_sale: {
-          sale_artworks: promotedSaleArtworks
-        }
-      }
-    }
+          sale_artworks: promotedSaleArtworks,
+        },
+      },
+    },
   }
 
-  it('renders a <ArtworkRail /> on desktop', () => {
+  it("renders a <ArtworkRail /> on desktop", () => {
     const { wrapper } = renderTestComponent({
       Component: PromotedSaleArtworks,
       data,
       props: {
-        promotedSaleArtworks
-      }
+        promotedSaleArtworks,
+      },
     })
 
-    wrapper.html().should.containEql('Buy Now')
+    wrapper.html().should.containEql("Buy Now")
     wrapper.find(ArtworkRail).length.should.eql(1)
   })
 
-  it('renders a <MasonryGrid /> on mobile', () => {
+  it("renders a <MasonryGrid /> on mobile", () => {
     let mobileData = cloneDeep(data)
     mobileData.app.isMobile = true
 
@@ -41,15 +41,15 @@ describe('auction/components/artwork_browser/PromotedSaleArtworks', () => {
       Component: PromotedSaleArtworks,
       data: mobileData,
       props: {
-        promotedSaleArtworks
-      }
+        promotedSaleArtworks,
+      },
     })
 
-    wrapper.html().should.containEql('Buy Now')
+    wrapper.html().should.containEql("Buy Now")
     wrapper.find(MasonryGrid).length.should.eql(1)
   })
 
-  it('does not render if sale is closed in desktop', () => {
+  it("does not render if sale is closed in desktop", () => {
     let updatedData = cloneDeep(data)
     updatedData.app.auction.is_closed = true
 
@@ -57,14 +57,14 @@ describe('auction/components/artwork_browser/PromotedSaleArtworks', () => {
       Component: PromotedSaleArtworks,
       data: updatedData,
       props: {
-        promotedSaleArtworks
-      }
+        promotedSaleArtworks,
+      },
     })
 
     wrapper.find(ArtworkRail).length.should.eql(0)
   })
 
-  it('does not render if sale is closed in mobile', () => {
+  it("does not render if sale is closed in mobile", () => {
     let mobileData = cloneDeep(data)
     mobileData.app.isMobile = true
     mobileData.app.auction.is_closed = true
@@ -73,8 +73,8 @@ describe('auction/components/artwork_browser/PromotedSaleArtworks', () => {
       Component: PromotedSaleArtworks,
       data: mobileData,
       props: {
-        promotedSaleArtworks
-      }
+        promotedSaleArtworks,
+      },
     })
 
     wrapper.find(MasonryGrid).length.should.eql(0)

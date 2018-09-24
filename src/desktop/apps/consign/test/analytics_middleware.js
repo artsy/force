@@ -1,134 +1,134 @@
-import reducers from '../client/reducers'
-import { applyMiddleware, createStore } from 'redux'
-import sinon from 'sinon'
+import reducers from "../client/reducers"
+import { applyMiddleware, createStore } from "redux"
+import sinon from "sinon"
 
-const rewire = require('rewire')('../client/analytics_middleware')
+const rewire = require("rewire")("../client/analytics_middleware")
 const analyticsMiddleware = rewire.default
 
-describe('analytics middleware', () => {
+describe("analytics middleware", () => {
   let triggerStub
 
   beforeEach(() => {
     triggerStub = sinon.spy()
-    rewire.__set__('analyticsHooks', {
+    rewire.__set__("analyticsHooks", {
       trigger: triggerStub,
     })
   })
 
-  it('tracks a login', () => {
+  it("tracks a login", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: 'UPDATE_USER',
+      type: "UPDATE_USER",
       payload: {
-        user: { id: 'sarah', email: 'sarah@test.com' },
+        user: { id: "sarah", email: "sarah@test.com" },
         accountCreated: false,
       },
     })
 
     triggerStub.callCount.should.eql(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:account:created')
+    analyticsArgs[0].should.eql("consignment:account:created")
     analyticsArgs[1].should.containEql({
-      id: 'sarah',
-      email: 'sarah@test.com',
+      id: "sarah",
+      email: "sarah@test.com",
       accountCreated: false,
     })
   })
 
-  it('tracks a signup', () => {
+  it("tracks a signup", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: 'UPDATE_USER',
+      type: "UPDATE_USER",
       payload: {
-        user: { id: 'sarah', email: 'sarah@test.com' },
+        user: { id: "sarah", email: "sarah@test.com" },
         accountCreated: true,
       },
     })
 
     triggerStub.callCount.should.eql(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:account:created')
+    analyticsArgs[0].should.eql("consignment:account:created")
     analyticsArgs[1].should.containEql({
-      id: 'sarah',
-      email: 'sarah@test.com',
+      id: "sarah",
+      email: "sarah@test.com",
       accountCreated: true,
     })
   })
 
-  it('tracks an artist confirmed action', () => {
+  it("tracks an artist confirmed action", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: 'UPDATE_ARTIST_ID',
-      payload: { artistId: 'andy-warhol' },
+      type: "UPDATE_ARTIST_ID",
+      payload: { artistId: "andy-warhol" },
     })
-    store.dispatch({ type: 'SUBMIT_ARTIST' })
+    store.dispatch({ type: "SUBMIT_ARTIST" })
 
     triggerStub.callCount.should.eql(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:artist:confirmed')
+    analyticsArgs[0].should.eql("consignment:artist:confirmed")
     analyticsArgs[1].should.containEql({
-      artistId: 'andy-warhol',
+      artistId: "andy-warhol",
     })
   })
 
-  it('tracks an error on submission creation', () => {
+  it("tracks an error on submission creation", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: 'SUBMISSION_ERROR',
-      payload: { errorType: 'convection_create' },
-    })
-
-    triggerStub.callCount.should.eql(1)
-    const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:submission:error')
-    analyticsArgs[1].should.containEql({
-      type: 'convection_create',
-      errors: 'Error creating submission',
-    })
-  })
-
-  it('tracks an error on submission completion', () => {
-    const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
-    store.dispatch({
-      type: 'SUBMISSION_ERROR',
-      payload: { errorType: 'convection_complete_submission' },
+      type: "SUBMISSION_ERROR",
+      payload: { errorType: "convection_create" },
     })
 
     triggerStub.callCount.should.eql(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:submission:error')
+    analyticsArgs[0].should.eql("consignment:submission:error")
     analyticsArgs[1].should.containEql({
-      type: 'convection_complete_submission',
-      errors: 'Error completing submission',
+      type: "convection_create",
+      errors: "Error creating submission",
     })
   })
 
-  it('tracks a submission created with no assets', () => {
+  it("tracks an error on submission completion", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: 'SUBMISSION_CREATED',
+      type: "SUBMISSION_ERROR",
+      payload: { errorType: "convection_complete_submission" },
+    })
+
+    triggerStub.callCount.should.eql(1)
+    const analyticsArgs = triggerStub.firstCall.args
+    analyticsArgs[0].should.eql("consignment:submission:error")
+    analyticsArgs[1].should.containEql({
+      type: "convection_complete_submission",
+      errors: "Error completing submission",
+    })
+  })
+
+  it("tracks a submission created with no assets", () => {
+    const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
+    store.dispatch({
+      type: "SUBMISSION_CREATED",
       payload: { submissionId: 123 },
     })
 
     triggerStub.callCount.should.eql(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:submitted')
+    analyticsArgs[0].should.eql("consignment:submitted")
     analyticsArgs[1].should.containEql({
       submissionId: 123,
     })
   })
 
-  it('tracks a submission completed with no assets', () => {
+  it("tracks a submission completed with no assets", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: 'UPDATE_SUBMISSION',
+      type: "UPDATE_SUBMISSION",
       payload: { submission: { id: 123 } },
     })
-    store.dispatch({ type: 'SUBMISSION_COMPLETED' })
+    store.dispatch({ type: "SUBMISSION_COMPLETED" })
 
     triggerStub.callCount.should.eql(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql('consignment:completed')
+    analyticsArgs[0].should.eql("consignment:completed")
     analyticsArgs[1].should.containEql({
       submissionId: 123,
       assetIds: [],

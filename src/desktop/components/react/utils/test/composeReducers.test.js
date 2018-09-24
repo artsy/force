@@ -1,12 +1,12 @@
-import { composeReducers } from '../composeReducers'
-import u from 'updeep'
+import { composeReducers } from "../composeReducers"
+import u from "updeep"
 
-describe('components/react/utils/composeReducers.js', () => {
-  it('composes multiple reducer fns together', () => {
+describe("components/react/utils/composeReducers.js", () => {
+  it("composes multiple reducer fns together", () => {
     const initialState = {
-      firstName: '',
-      middleName: 's',
-      lastName: '',
+      firstName: "",
+      middleName: "s",
+      lastName: "",
     }
 
     const firstName = (state, action) =>
@@ -16,8 +16,8 @@ describe('components/react/utils/composeReducers.js', () => {
     const reducer = composeReducers(firstName, lastName)
 
     const expected = {
-      firstName: 'william',
-      lastName: 'burroughs',
+      firstName: "william",
+      lastName: "burroughs",
     }
 
     const state = reducer(initialState, {

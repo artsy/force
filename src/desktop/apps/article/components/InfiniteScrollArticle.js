@@ -1,14 +1,14 @@
-import * as React from 'react'
-import _ from 'underscore'
-import PropTypes from 'prop-types'
-import Waypoint from 'react-waypoint'
-import styled from 'styled-components'
-import { data as sd } from 'sharify'
-import { positronql as _positronql } from 'desktop/lib/positronql'
-import { Article } from 'reaction/Components/Publishing'
-import { articlesQuery } from 'desktop/apps/article/queries/articles'
-import { setupFollows, setupFollowButtons } from './FollowButton.js'
-import { getCurrentUnixTimestamp } from 'reaction/Components/Publishing/Constants'
+import * as React from "react"
+import _ from "underscore"
+import PropTypes from "prop-types"
+import Waypoint from "react-waypoint"
+import styled from "styled-components"
+import { data as sd } from "sharify"
+import { positronql as _positronql } from "desktop/lib/positronql"
+import { Article } from "reaction/Components/Publishing"
+import { articlesQuery } from "desktop/apps/article/queries/articles"
+import { setupFollows, setupFollowButtons } from "./FollowButton.js"
+import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 
 // FIXME: Rewire
 let positronql = _positronql
@@ -54,7 +54,7 @@ export default class InfiniteScrollArticle extends React.Component {
       const data = await positronql({
         query: articlesQuery({
           offset,
-          layout: 'standard',
+          layout: "standard",
           limit: 3,
           channel: sd.ARTSY_EDITORIAL_CHANNEL,
           omit: this.props.article.id,
@@ -77,7 +77,7 @@ export default class InfiniteScrollArticle extends React.Component {
       }
     } catch (error) {
       console.error(
-        '(apps/article/InfiniteScrollArticle) Error fetching next article set: ',
+        "(apps/article/InfiniteScrollArticle) Error fetching next article set: ",
         error
       )
 
@@ -112,7 +112,7 @@ export default class InfiniteScrollArticle extends React.Component {
   }
 
   onEnter = (article, { previousPosition, currentPosition }) => {
-    if (previousPosition === 'above' && currentPosition === 'inside') {
+    if (previousPosition === "above" && currentPosition === "inside") {
       document.title = article.thumbnail_title
       window.history.replaceState({}, article.id, `/article/${article.slug}`)
     }
@@ -123,8 +123,8 @@ export default class InfiniteScrollArticle extends React.Component {
 
     if (
       nextArticle &&
-      previousPosition === 'inside' &&
-      currentPosition === 'above'
+      previousPosition === "inside" &&
+      currentPosition === "above"
     ) {
       document.title = nextArticle.thumbnail_title
       window.history.replaceState(

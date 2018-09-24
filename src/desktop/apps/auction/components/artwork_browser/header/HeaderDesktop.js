@@ -1,45 +1,44 @@
-import FilterSort from './FilterSort'
-import Grid from '../../../../../components/main_layout/public/icons/grid.svg'
-import List from '../../../../../components/main_layout/public/icons/list.svg'
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import classNames from 'classnames'
-import { connect } from 'react-redux'
-import { toggleListView } from 'desktop/apps/auction/actions/artworkBrowser'
+import FilterSort from "./FilterSort"
+import Grid from "../../../../../components/main_layout/public/icons/grid.svg"
+import List from "../../../../../components/main_layout/public/icons/list.svg"
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import classNames from "classnames"
+import { connect } from "react-redux"
+import { toggleListView } from "desktop/apps/auction/actions/artworkBrowser"
 
-function HeaderDesktop (props) {
-  const {
-    toggleListViewAction,
-    totalLabel,
-    displayType
-  } = props
+function HeaderDesktop(props) {
+  const { toggleListViewAction, totalLabel, displayType } = props
 
-  const b = block('auction-artworks-HeaderDesktop')
+  const b = block("auction-artworks-HeaderDesktop")
 
   const displayButtonClass = (buttonType, displayType) => {
-    return classNames(
-      String(b(buttonType)),
-      { active: displayType === buttonType }
-    )
+    return classNames(String(b(buttonType)), {
+      active: displayType === buttonType,
+    })
   }
 
   return (
     <div className={b()}>
-      <div className={b('left')}>
-        <div className={b('total')}>
-          { totalLabel }
-        </div>
+      <div className={b("left")}>
+        <div className={b("total")}>{totalLabel}</div>
       </div>
-      <div className={b('right')}>
-        <div className={b('sort')}>
+      <div className={b("right")}>
+        <div className={b("sort")}>
           <FilterSort />
         </div>
-        <div className={b('switch')}>
-          <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
+        <div className={b("switch")}>
+          <div
+            className={displayButtonClass("grid", displayType)}
+            onClick={() => toggleListViewAction(false)}
+          >
             <Grid />
           </div>
-          <div className={displayButtonClass('list', displayType)} onClick={() => toggleListViewAction(true)}>
+          <div
+            className={displayButtonClass("list", displayType)}
+            onClick={() => toggleListViewAction(true)}
+          >
             <List />
           </div>
         </div>
@@ -51,35 +50,28 @@ function HeaderDesktop (props) {
 HeaderDesktop.propTypes = {
   displayType: PropTypes.string.isRequired,
   toggleListViewAction: PropTypes.func.isRequired,
-  totalLabel: PropTypes.string.isRequired
+  totalLabel: PropTypes.string.isRequired,
 }
 
-const mapStateToProps = (state) => {
-  const {
-    isFetchingArtworks,
-    isListView,
-    total
-  } = state.artworkBrowser
+const mapStateToProps = state => {
+  const { isFetchingArtworks, isListView, total } = state.artworkBrowser
 
-  const displayType = isListView ? 'list' : 'grid'
+  const displayType = isListView ? "list" : "grid"
 
   const totalLabel = isFetchingArtworks
-    ? 'Loading results.'
+    ? "Loading results."
     : `${total} Artworks`
 
   return {
     displayType,
-    totalLabel
+    totalLabel,
   }
 }
 
 const mapDispatchToProps = {
-  toggleListViewAction: toggleListView
+  toggleListViewAction: toggleListView,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeaderDesktop)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderDesktop)
 
 // Helpers

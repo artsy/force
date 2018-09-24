@@ -1,28 +1,28 @@
-import App from 'desktop/apps/react_example/components/App'
-import { renderLayout } from '@artsy/stitch'
+import App from "desktop/apps/react_example/components/App"
+import { renderLayout } from "@artsy/stitch"
 
 export async function index(req, res, next) {
   try {
     const layout = await renderLayout({
-      basePath: req.app.get('views'),
-      layout: '../../../components/main_layout/templates/react_index.jade',
+      basePath: req.app.get("views"),
+      layout: "../../../components/main_layout/templates/react_index.jade",
       config: {
         styledComponents: true,
       },
       blocks: {
-        head: 'meta.jade',
+        head: "meta.jade",
         body: App,
       },
       locals: {
         ...res.locals,
-        assetPackage: 'react_example',
+        assetPackage: "react_example",
       },
       data: {
-        name: 'Leif',
-        description: 'hello hi how are you',
+        name: "Leif",
+        description: "hello hi how are you",
       },
       templates: {
-        MyJadeView: 'myJadeView.jade',
+        MyJadeView: "myJadeView.jade",
       },
     })
 

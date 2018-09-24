@@ -1,7 +1,7 @@
 // @ts-ignore
-import _metaphysics from 'lib/metaphysics.coffee'
+import _metaphysics from "lib/metaphysics.coffee"
 
-import query from './mutation'
+import query from "./mutation"
 
 // FIXME: Rewire
 let metaphysics = _metaphysics

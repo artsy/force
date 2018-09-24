@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react'
-import { Article } from 'reaction/Components/Publishing/Article'
-import Waypoint from 'react-waypoint'
+import React, { Component, Fragment } from "react"
+import { Article } from "reaction/Components/Publishing/Article"
+import Waypoint from "react-waypoint"
 import {
   ArticleData,
   DisplayData,
   RelatedArticleCanvasData,
-} from 'reaction/Components/Publishing/Typings'
+} from "reaction/Components/Publishing/Typings"
 
 interface Props {
   article: ArticleData
@@ -31,7 +31,7 @@ export class NewsArticle extends Component<Props, State> {
 
     this.state = {
       isTruncated: props.isTruncated || false,
-      bottomOffset: '200px',
+      bottomOffset: "200px",
     }
   }
 
@@ -50,9 +50,9 @@ export class NewsArticle extends Component<Props, State> {
   }
 
   setMetadata = (article: any = null) => {
-    const id = article ? article.id : 'news'
-    const path = article ? `/news/${article.slug}` : '/news'
-    document.title = article ? article.thumbnail_title : 'News'
+    const id = article ? article.id : "news"
+    const path = article ? `/news/${article.slug}` : "/news"
+    document.title = article ? article.thumbnail_title : "News"
     window.history.replaceState({}, id, path)
   }
 
@@ -65,8 +65,8 @@ export class NewsArticle extends Component<Props, State> {
     } = this.props
     const { isTruncated } = this.state
 
-    if (currentPosition === 'inside') {
-      if (previousPosition === 'above') {
+    if (currentPosition === "inside") {
+      if (previousPosition === "above") {
         article.published_at && onDateChange(article.published_at)
       }
 
@@ -90,7 +90,7 @@ export class NewsArticle extends Component<Props, State> {
       onActiveArticleChange,
     } = this.props
 
-    if (currentPosition === 'above' && previousPosition === 'inside') {
+    if (currentPosition === "above" && previousPosition === "inside") {
       if (nextArticle) {
         nextArticle.published_at && onDateChange(nextArticle.published_at)
         if (isMobile) {

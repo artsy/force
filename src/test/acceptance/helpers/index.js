@@ -1,12 +1,12 @@
-import express from 'express'
-import Nightmare from 'nightmare'
-import moment from 'moment'
-import cheerio from 'cheerio'
-import url from 'url'
-import chalk from 'chalk'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import { fabricate } from 'antigravity'
+import express from "express"
+import Nightmare from "nightmare"
+import moment from "moment"
+import cheerio from "cheerio"
+import url from "url"
+import chalk from "chalk"
+import bodyParser from "body-parser"
+import cors from "cors"
+import { fabricate } from "antigravity"
 
 const {
   ACCEPTANCE_TIMEOUT,
@@ -46,15 +46,15 @@ export const setup = async () => {
   )
 
   // Make sure cancelling the process cleans up the servers/Electron
-  process.on('exit', teardown)
+  process.on("exit", teardown)
 
   // Nightmare bubbles uncaught errors to the process causing intermittent
   // ECONNX errors for open requests despite using `browser.end()` below.
   // To bring some sanity back to the situation we are turning these into
   // warnings instead of failing tests.
-  browser.on('page', warn)
-  process.removeAllListeners('uncaughtException')
-  process.on('uncaughtException', warn)
+  browser.on("page", warn)
+  process.removeAllListeners("uncaughtException")
+  process.on("uncaughtException", warn)
 
   return { force, gravity, metaphysics, positron, browser }
 }
@@ -80,13 +80,13 @@ export const sleep = ms =>
 const mixinBrowserHelpers = browser => {
   // Steps to log in through the auth modal
   browser.login = async () => {
-    await browser.el('.mlh-login')
+    await browser.el(".mlh-login")
     await browser
-      .click('.mlh-login')
-      .type('#auth-body [name=email]', 'craig@craig.com')
-      .type('#auth-body [name=password]', 'foobar')
-      .click('#auth-submit')
-    await browser.el('.mlh-user-name')
+      .click(".mlh-login")
+      .type("#auth-body [name=email]", "craig@craig.com")
+      .type("#auth-body [name=password]", "foobar")
+      .click("#auth-submit")
+    await browser.el(".mlh-user-name")
   }
 
   // Visits a page and returns a jQuery-like `$` API
@@ -111,7 +111,7 @@ const warn = e => console.log(chalk.red(e))
 
 const startForce = port =>
   new Promise((resolve, reject) => {
-    const app = require('../../../')
+    const app = require("../../../")
     servers.push(
       app.listen(port, err => {
         if (err) reject(err)
@@ -130,31 +130,31 @@ const newApp = () => {
 const startGravity = port =>
   new Promise((resolve, reject) => {
     const app = newApp()
-    app.post('/oauth2/access_token', (req, res) => {
-      res.send(require('../fixtures/gravity/access_token.json'))
+    app.post("/oauth2/access_token", (req, res) => {
+      res.send(require("../fixtures/gravity/access_token.json"))
     })
-    app.get('/api/v1/me/authentications', (req, res) => {
-      res.send(require('../fixtures/gravity/authentications.json'))
+    app.get("/api/v1/me/authentications", (req, res) => {
+      res.send(require("../fixtures/gravity/authentications.json"))
     })
-    app.get('/api/v1/me', (req, res) => {
-      res.send(require('../fixtures/gravity/me.json'))
+    app.get("/api/v1/me", (req, res) => {
+      res.send(require("../fixtures/gravity/me.json"))
     })
-    app.get('/api/v1/xapp_token', (req, res) => {
+    app.get("/api/v1/xapp_token", (req, res) => {
       res.send({
-        xapp_token: 'xapp-token',
+        xapp_token: "xapp-token",
         expires_in: moment()
-          .add(100, 'days')
+          .add(100, "days")
           .utc()
           .format(),
       })
     })
-    app.get('/api/v1/profile/pace-gallery', (req, res) => {
+    app.get("/api/v1/profile/pace-gallery", (req, res) => {
       res.send(
-        fabricate('profile', {
-          owner_type: 'PartnerGallery',
-          owner: fabricate('partner', {
-            id: 'pace-gallery',
-            profile_layout: 'gallery_one',
+        fabricate("profile", {
+          owner_type: "PartnerGallery",
+          owner: fabricate("partner", {
+            id: "pace-gallery",
+            profile_layout: "gallery_one",
           }),
         })
       )

@@ -1,21 +1,21 @@
-import * as actions from 'desktop/apps/auction/actions/artworkBrowser'
-import App from 'desktop/apps/auction/components/App'
-import Articles from 'desktop/collections/articles.coffee'
-import ArticlesQuery from 'desktop/apps/auction/queries/articles'
-import Auction from 'desktop/models/auction.coffee'
-import MeQuery from 'desktop/apps/auction/queries/me'
-import React from 'react'
-import SaleQuery from 'desktop/apps/auction/queries/sale'
-import auctionReducer from 'desktop/apps/auction/reducers'
-import configureStore from 'desktop/components/react/utils/configureStore'
-import footerItems from 'desktop/apps/auction/utils/footerItems'
-import get from 'lodash.get'
-import _metaphysics from 'lib/metaphysics.coffee'
-import u from 'updeep'
-import { initialState as appInitialState } from 'desktop/apps/auction/reducers/app'
-import { initialState as auctionWorksInitialState } from 'desktop/apps/auction/reducers/artworkBrowser'
-import { getLiveAuctionUrl } from 'utils/domain/auctions/urls'
-import { renderLayout as _renderLayout } from '@artsy/stitch'
+import * as actions from "desktop/apps/auction/actions/artworkBrowser"
+import App from "desktop/apps/auction/components/App"
+import Articles from "desktop/collections/articles.coffee"
+import ArticlesQuery from "desktop/apps/auction/queries/articles"
+import Auction from "desktop/models/auction.coffee"
+import MeQuery from "desktop/apps/auction/queries/me"
+import React from "react"
+import SaleQuery from "desktop/apps/auction/queries/sale"
+import auctionReducer from "desktop/apps/auction/reducers"
+import configureStore from "desktop/components/react/utils/configureStore"
+import footerItems from "desktop/apps/auction/utils/footerItems"
+import get from "lodash.get"
+import _metaphysics from "lib/metaphysics.coffee"
+import u from "updeep"
+import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
+import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
+import { getLiveAuctionUrl } from "utils/domain/auctions/urls"
+import { renderLayout as _renderLayout } from "@artsy/stitch"
 
 // FIXME: Metaphysics
 let metaphysics = _metaphysics
@@ -41,7 +41,7 @@ export async function index(req, res, next) {
         req,
       }))
     } catch (error) {
-      console.error('(apps/auction/routes.js) Error fetching Articles', error)
+      console.error("(apps/auction/routes.js) Error fetching Articles", error)
     }
 
     // TODO: Refactor out Backbone
@@ -71,10 +71,10 @@ export async function index(req, res, next) {
     let sort = auctionWorksInitialState.filterParams.sort
     if (isEcommerceSale) {
       artworkBrowserSortOptions = {
-        '-searchable_estimate': 'Most Expensive',
-        searchable_estimate: 'Least Expensive',
+        "-searchable_estimate": "Most Expensive",
+        searchable_estimate: "Least Expensive",
       }
-      sort = '-searchable_estimate'
+      sort = "-searchable_estimate"
     }
 
     const store = configureStore(auctionReducer, {
@@ -86,7 +86,7 @@ export async function index(req, res, next) {
           isEcommerceSale,
           isLiveOpen: auctionModel.isLiveOpen(),
           isMobile: res.locals.sd.IS_MOBILE,
-          liveAuctionUrl: getLiveAuctionUrl(auctionModel.get('id'), {
+          liveAuctionUrl: getLiveAuctionUrl(auctionModel.get("id"), {
             isLoggedIn: Boolean(me),
           }),
           me,
@@ -119,19 +119,19 @@ export async function index(req, res, next) {
 
     try {
       const layout = await renderLayout({
-        basePath: res.app.get('views'),
-        layout: '../../../../components/main_layout/templates/react_index.jade',
+        basePath: res.app.get("views"),
+        layout: "../../../../components/main_layout/templates/react_index.jade",
         config: {
           styledComponents: true,
         },
         blocks: {
-          head: 'meta.jade',
+          head: "meta.jade",
           body: props => <App store={store} {...props} />,
         },
         locals: {
           ...res.locals,
-          assetPackage: 'auctions',
-          bodyClass: 'auction-body body-header-fixed body-no-margins',
+          assetPackage: "auctions",
+          bodyClass: "auction-body body-header-fixed body-no-margins",
         },
         data: {
           app: store.getState().app,
@@ -155,7 +155,7 @@ export async function redirectLive(req, res, next) {
       query: SaleQuery(req.params.id),
       req,
     })
-    const isLiveOpen = get(sale, 'is_live_open')
+    const isLiveOpen = get(sale, "is_live_open")
 
     if (isLiveOpen) {
       const { me } = await metaphysics({
@@ -163,7 +163,7 @@ export async function redirectLive(req, res, next) {
         req,
       })
 
-      const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
+      const qualifiedForBidding = get(me, "bidders.0.qualified_for_bidding")
 
       if (qualifiedForBidding) {
         res.redirect(
@@ -192,7 +192,7 @@ async function fetchUser(req, res) {
     try {
       const user = await req.user.fetch({
         headers: {
-          'X-Request-Id': req.id,
+          "X-Request-Id": req.id,
         },
       })
       res.locals.sd.CURRENT_USER = {
@@ -200,7 +200,7 @@ async function fetchUser(req, res) {
         ...user,
       }
     } catch (error) {
-      console.log('(auction/routes.js) Error fetching user: ', error)
+      console.log("(auction/routes.js) Error fetching user: ", error)
     }
   }
 }
