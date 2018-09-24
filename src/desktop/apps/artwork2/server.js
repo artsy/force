@@ -1,13 +1,13 @@
-import express from 'express'
-import adminOnly from 'desktop/lib/admin_only'
-import { buildServerApp } from 'reaction/Artsy/Router'
-import { routes } from 'reaction/Apps/Artwork/routes'
-import { renderLayout } from '@artsy/stitch'
-import { Meta } from './components/Meta'
+import express from "express"
+import adminOnly from "desktop/lib/admin_only"
+import { buildServerApp } from "reaction/Artsy/Router/server"
+import { routes } from "reaction/Apps/Artwork/routes"
+import { renderLayout } from "@artsy/stitch"
+import { Meta } from "./components/Meta"
 
 const app = (module.exports = express())
 
-app.get('/artwork2/:artworkID*', adminOnly, async (req, res, next) => {
+app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
   try {
     const { ServerApp, redirect, status } = await buildServerApp({
       routes,
@@ -21,7 +21,7 @@ app.get('/artwork2/:artworkID*', adminOnly, async (req, res, next) => {
 
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_redesign.jade',
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       config: {
         styledComponents: true,
       },
@@ -31,7 +31,7 @@ app.get('/artwork2/:artworkID*', adminOnly, async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'artwork2',
+        assetPackage: "artwork2",
         styledComponents: true,
       },
     })

@@ -17,7 +17,7 @@ npm-debug.log
 .DS_Store
 dump.rdb
 manifest.json
-.cache-loader
+.cache
 COMMIT_HASH.txt
 
 /data

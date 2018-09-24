@@ -1,83 +1,111 @@
-const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const WebpackNotifierPlugin = require('webpack-notifier')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const fs = require('fs')
-const path = require('path')
-const webpack = require('webpack')
+const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin")
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const WebpackNotifierPlugin = require("webpack-notifier")
+const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin")
+const fs = require("fs")
+const path = require("path")
+const webpack = require("webpack")
 
-const { NODE_ENV, PORT, WEBPACK_DEVTOOL, ANALYZE_BUNDLE } = process.env
-const isDevelopment = NODE_ENV === 'development'
-const isStaging = NODE_ENV === 'staging'
-const isProduction = NODE_ENV === 'production'
+const { CI, NODE_ENV, PORT, WEBPACK_DEVTOOL, ANALYZE_BUNDLE } = process.env
+const isDevelopment = NODE_ENV === "development"
+const isStaging = NODE_ENV === "staging"
+const isProduction = NODE_ENV === "production"
 const isDeploy = isStaging || isProduction
+const isCI = CI === "true"
+
+const cacheDirectory = path.resolve(__dirname, ".cache")
 
 const config = {
-  devtool: WEBPACK_DEVTOOL || 'cheap-module-source-map',
+  devtool: WEBPACK_DEVTOOL || "cheap-module-source-map",
   entry: {
     webpack: [
-      'webpack-hot-middleware/client?reload=true',
-      './src/desktop/apps/webpack/client.js',
+      "webpack-hot-middleware/client?reload=true",
+      "./src/desktop/apps/webpack/client.js",
     ],
     ...getEntrypoints(),
   },
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'public/assets'),
-    publicPath: '/assets',
-    sourceMapFilename: '[file].map?[contenthash]',
+    filename: "[name].js",
+    path: path.resolve(__dirname, "public/assets"),
+    publicPath: "/assets",
+    sourceMapFilename: "[file].map?[contenthash]",
   },
   module: {
     rules: [
       {
         test: /\.coffee$/,
         include: /src/,
-        use: [{ loader: 'coffee-loader' }],
+        use: [
+          ...notOnCI({
+            loader: "cache-loader",
+            options: {
+              cacheDirectory: path.join(cacheDirectory, "coffee"),
+            },
+          }),
+          { loader: "coffee-loader" },
+        ],
       },
       {
         test: /\.(jade|pug)$/,
         include: /src/,
-        loader: 'pug-loader',
-        options: {
-          doctype: 'html',
-          root: __dirname,
-        },
+        use: [
+          ...notOnCI({
+            loader: "cache-loader",
+            options: {
+              cacheDirectory: path.join(cacheDirectory, "pug"),
+            },
+          }),
+          {
+            loader: "pug-loader",
+            options: {
+              doctype: "html",
+              root: __dirname,
+            },
+          },
+        ],
       },
       {
         test: /(\.(js|ts)x?$)/,
-        include: path.resolve('./src'),
+        include: path.resolve("./src"),
         use: [
-          { loader: 'cache-loader' },
           {
-            loader: 'babel-loader',
-            query: {
-              cacheDirectory: true,
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: isCI ? false : path.join(cacheDirectory, "babel"),
             },
           },
         ],
       },
       {
         test: /\.json$/,
-        loader: 'json-loader',
+        loader: "json-loader",
       },
     ],
   },
   plugins: [
     // TODO: Add webpack typechecker
-    new ProgressBarPlugin(),
-
+    ...notOnCI(new SimpleProgressWebpackPlugin({ format: "compact" })),
+    ...notOnCI(
+      new HardSourceWebpackPlugin({
+        cacheDirectory: path.join(cacheDirectory, "hard-source"),
+        info: {
+          mode: "none",
+          level: "error",
+        },
+      })
+    ),
     // Remove moment.js localization files
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
     new ForkTsCheckerWebpackPlugin({
-      formatter: 'codeframe',
-      formatterOptions: 'highlightCode',
+      formatter: "codeframe",
+      formatterOptions: "highlightCode",
       tslint: false,
       checkSyntacticErrors: true,
-      watch: ['./src'],
+      watch: ["./src"],
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
       excludeWarnings: true,
@@ -91,45 +119,55 @@ const config = {
     }),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      jade: 'jade/runtime.js',
-      waypoints: 'jquery-waypoints/waypoints.js',
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      jade: "jade/runtime.js",
+      waypoints: "jquery-waypoints/waypoints.js",
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
+      name: "common",
       minChunks: 10, // lower number for larger "common.js" bundle size
     }),
   ],
   resolve: {
     alias: {
-      'jquery.ui.widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
-      react: path.resolve('./node_modules/react'),
-      'styled-components': path.resolve('./node_modules/styled-components'),
+      "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
+      react: path.resolve("./node_modules/react"),
+      "styled-components": path.resolve("./node_modules/styled-components"),
     },
     extensions: [
-      '.mjs',
-      '.js',
-      '.jsx',
-      '.ts',
-      '.tsx',
-      '.json',
-      '.jade',
-      '.coffee',
+      ".mjs",
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".json",
+      ".jade",
+      ".coffee",
     ],
-    modules: ['node_modules', 'src'],
+    modules: [
+      path.resolve(__dirname, "src"),
+      "node_modules",
+      // TODO: The problem with including /all/ node_modules directories is that
+      //       when using npm-link it can bring in dev dependencies that we
+      //       don’t need or worse are duplicates and lead to bugs. However,
+      //       ignoring all non-hoisted modules now would probably lead to bugs
+      //       as well.
+      // path.resolve(__dirname, "node_modules"),
+      // path.resolve(__dirname, "node_modules/@artsy/reaction/node_modules"),
+    ],
     symlinks: false,
   },
   externals: {
-    request: 'request',
+    request: "request",
   },
 }
 
@@ -138,7 +176,7 @@ if (isDevelopment) {
 
   // Staging
 } else if (isDeploy) {
-  config.devtool = '#source-map'
+  config.devtool = "#source-map"
 
   // Prod
   if (isProduction) {
@@ -162,10 +200,14 @@ if (isDevelopment) {
 
 // Helpers
 
+function notOnCI(value) {
+  return isCI ? [] : [value]
+}
+
 function getEntrypoints() {
   return {
-    ...findAssets('src/desktop/assets'),
-    ...findAssets('src/mobile/assets'),
+    ...findAssets("src/desktop/assets"),
+    ...findAssets("src/mobile/assets"),
   }
 }
 
@@ -174,7 +216,7 @@ function findAssets(basePath) {
 
   // Filter out .styl files
   const validAssets = file => {
-    const whitelist = ['.js', '.coffee']
+    const whitelist = [".js", ".coffee"]
 
     const isValid = whitelist.some(
       extension => extension === path.extname(file)
@@ -193,10 +235,10 @@ function findAssets(basePath) {
     }
 
     // Load oldschool global module dependencies
-    asset[fileName].unshift('./src/lib/global_modules')
+    asset[fileName].unshift("./src/lib/global_modules")
 
     if (isDevelopment) {
-      asset[fileName].unshift('webpack-hot-middleware/client?reload=true')
+      asset[fileName].unshift("webpack-hot-middleware/client?reload=true")
     }
 
     return {

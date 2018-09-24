@@ -1,15 +1,15 @@
-import { buildServerApp } from 'reaction/Artsy/Router'
-import { Meta, query, toJSONLD } from './components/Meta'
-import { renderLayout } from '@artsy/stitch'
-import { routes } from 'reaction/Apps/Artist/routes'
-import express from 'express'
-import metaphysics from 'lib/metaphysics.coffee'
-import React from 'react'
-import styled from 'styled-components'
+import { buildServerApp } from "reaction/Artsy/Router/server"
+import { Meta, query, toJSONLD } from "./components/Meta"
+import { renderLayout } from "@artsy/stitch"
+import { routes } from "reaction/Apps/Artist/routes"
+import express from "express"
+import metaphysics from "lib/metaphysics.coffee"
+import React from "react"
+import styled from "styled-components"
 
 const app = (module.exports = express())
 
-app.get('/artist/:artistID*', async (req, res, next) => {
+app.get("/artist/:artistID*", async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 
@@ -18,7 +18,7 @@ app.get('/artist/:artistID*', async (req, res, next) => {
       url: req.url,
       context: {
         initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
-          ? ['xs']
+          ? ["xs"]
           : undefined,
         user,
       },
@@ -37,7 +37,7 @@ app.get('/artist/:artistID*', async (req, res, next) => {
     `
 
     const send = {
-      method: 'post',
+      method: "post",
       query,
       variables: { artistID: req.params.artistID },
     }
@@ -53,12 +53,12 @@ app.get('/artist/:artistID*', async (req, res, next) => {
 
     // While we are rolling out the new page, override the default (`artist`)
     // type inferred from the URL, for tracking and comparison purposes.
-    res.locals.sd.PAGE_TYPE = 'new-artist'
+    res.locals.sd.PAGE_TYPE = "new-artist"
 
     // Render layout
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_redesign.jade',
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       config: {
         styledComponents: true,
       },
@@ -72,7 +72,7 @@ app.get('/artist/:artistID*', async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'artist2',
+        assetPackage: "artist2",
       },
       data: {
         jsonLD,
