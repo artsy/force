@@ -47,10 +47,15 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       serializer = new Serializer @$('form')
       data = serializer.data()
+      editionSetId: data.edition_set_id
+
+      # If this artwork has an edition set of 1, send that in the mutation as well
+      if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
+        editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
       createOrder
         artworkId: @artwork.get('_id')
-        editionSetId: data.edition_set_id
+        editionSetId: editionSetId
         quantity: 1
         user: loggedInUser
       .then (data) ->
