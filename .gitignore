@@ -9,6 +9,7 @@ lib-cov
 *.projectile
 *.DS_Store
 .env
+.env.*
 pids
 logs
 results
@@ -16,7 +17,8 @@ npm-debug.log
 .DS_Store
 dump.rdb
 manifest.json
-.cache-loader
+.cache
+COMMIT_HASH.txt
 
 /data
 

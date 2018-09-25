@@ -1,4 +1,4 @@
-const { stringifyJSONForWeb } = require('desktop/components/util/json.coffee')
+const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 
 export const SuperSubArticlesQuery = ids => {
   return `

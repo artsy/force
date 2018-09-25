@@ -6,6 +6,6 @@
 //
 module.exports = Object.assign(
   {},
-  require('./desktop/config'),
-  require('./mobile/config')
+  require("./desktop/config"),
+  require("./mobile/config")
 )

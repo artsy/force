@@ -1,12 +1,12 @@
-import AuctionBlock from './auction_block'
-import invariant from 'invariant'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { isEmpty, isString } from 'underscore'
+import AuctionBlock from "./auction_block"
+import invariant from "invariant"
+import React from "react"
+import ReactDOM from "react-dom"
+import { isEmpty, isString } from "underscore"
 
 export { AuctionBlock }
 
-export default function mount(data, selector = '#react-mount-auction-block') {
+export default function mount(data, selector = "#react-mount-auction-block") {
   const { relatedAuction, sale } = data
   const shouldMount = !isEmpty(sale.id) && isString(selector)
 

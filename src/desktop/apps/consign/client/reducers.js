@@ -1,70 +1,74 @@
-import * as actions from './actions'
-import u from 'updeep'
-import { combineReducers } from 'redux'
-import { composeReducers } from '../../../components/react/utils/composeReducers'
-import { data as sd } from 'sharify'
-import { contains } from 'underscore'
-import { reducer as formReducer } from 'redux-form'
-import { responsiveWindowReducer } from '../../../components/react/responsive_window'
-import { routerReducer } from 'react-router-redux'
+import * as actions from "./actions"
+import u from "updeep"
+import { combineReducers } from "redux"
+import { composeReducers } from "../../../components/react/utils/composeReducers"
+import { data as sd } from "sharify"
+import { contains } from "underscore"
+import { reducer as formReducer } from "redux-form"
+import { responsiveWindowReducer } from "../../../components/react/responsive_window"
+import { routerReducer } from "react-router-redux"
 
-const createAccountStep = 'createAccount'
-const chooseArtistStep = 'chooseArtist'
-const describeWorkStep = 'describeWork'
-const uploadPhotosStep = 'uploadPhotos'
+const createAccountStep = "createAccount"
+const chooseArtistStep = "chooseArtist"
+const describeWorkStep = "describeWork"
+const uploadPhotosStep = "uploadPhotos"
 
 const initialState = {
   artistAutocompleteSuggestions: [],
-  artistAutocompleteValue: '',
-  artistName: sd.SUBMISSION_ARTIST_NAME || '',
+  artistAutocompleteValue: "",
+  artistName: sd.SUBMISSION_ARTIST_NAME || "",
   assetIds: [],
-  authFormState: 'signUp',
+  authFormState: "signUp",
   categoryOptions: [
-    'Painting',
-    'Sculpture',
-    'Photography',
-    'Print',
-    'Drawing, Collage or other Work on Paper',
-    'Mixed Media',
-    'Performance Art',
-    'Installation',
-    'Video/Film/Animation',
-    'Architecture',
-    'Fashion Design and Wearable Art',
-    'Jewelry',
-    'Design/Decorative Art',
-    'Textile Arts',
-    'Other'
+    "Painting",
+    "Sculpture",
+    "Photography",
+    "Print",
+    "Drawing, Collage or other Work on Paper",
+    "Mixed Media",
+    "Performance Art",
+    "Installation",
+    "Video/Film/Animation",
+    "Architecture",
+    "Fashion Design and Wearable Art",
+    "Jewelry",
+    "Design/Decorative Art",
+    "Textile Arts",
+    "Other",
   ],
+  currencyOptions: ["USD", "GBP"],
   currentStep: createAccountStep,
   error: null,
   erroredImages: [],
   inputs: {
-    artist_id: '',
+    artist_id: "",
     authenticity_certificate: false,
-    category: 'Painting',
-    depth: '',
-    dimensions_metric: 'in',
+    category: "Painting",
+    currency: "USD",
+    depth: "",
+    dimensions_metric: "in",
     edition: false,
-    edition_number: '',
+    edition_number: "",
     edition_size: 0,
-    height: '',
-    location_city: '',
-    location_state: '',
-    location_country: '',
-    medium: '',
-    phone: '',
-    provenance: '',
+    height: "",
+    location_city: "",
+    location_state: "",
+    location_country: "",
+    medium: "",
+    minimum_price_yesno: false,
+    minimum_price_dollars: "",
+    phone: "",
+    provenance: "",
     signature: false,
-    title: '',
-    width: '',
-    year: ''
+    title: "",
+    width: "",
+    year: "",
   },
   isMobile: false,
   isLoading: false,
   locationAutocompleteFrozen: false,
   locationAutocompleteSuggestions: [],
-  locationAutocompleteValue: '',
+  locationAutocompleteValue: "",
   notConsigningArtist: false,
   processingImages: [],
   progressBars: {},
@@ -75,256 +79,375 @@ const initialState = {
   submission: sd.SUBMISSION || {},
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: [],
-  user: sd.CURRENT_USER
+  user: sd.CURRENT_USER,
 }
 
-function submissionFlow (state = initialState, action) {
+function submissionFlow(state = initialState, action) {
   switch (action.type) {
     case actions.ADD_ASSET_ID: {
-      return u({
-        assetIds: state.assetIds.concat(action.payload.assetId)
-      }, state)
+      return u(
+        {
+          assetIds: state.assetIds.concat(action.payload.assetId),
+        },
+        state
+      )
     }
     case actions.ADD_IMAGE_TO_UPLOADED_IMAGES: {
       const newImage = {
         fileName: action.payload.fileName,
         processing: true,
-        src: action.payload.src
+        src: action.payload.src,
       }
-      return u({
-        uploadedImages: state.uploadedImages.concat(newImage)
-      }, state)
+      return u(
+        {
+          uploadedImages: state.uploadedImages.concat(newImage),
+        },
+        state
+      )
     }
     case actions.CLEAR_ARTIST_SUGGESTIONS: {
-      return u({
-        artistAutocompleteSuggestions: []
-      }, state)
+      return u(
+        {
+          artistAutocompleteSuggestions: [],
+        },
+        state
+      )
     }
     case actions.CLEAR_ERROR: {
-      return u({
-        error: null
-      }, state)
+      return u(
+        {
+          error: null,
+        },
+        state
+      )
     }
     case actions.CLEAR_LOCATION_DATA: {
-      return u({
-        inputs: {
-          location_city: '',
-          location_country: '',
-          location_state: ''
-        }
-      }, state)
+      return u(
+        {
+          inputs: {
+            location_city: "",
+            location_country: "",
+            location_state: "",
+          },
+        },
+        state
+      )
     }
     case actions.CLEAR_LOCATION_SUGGESTIONS: {
-      return u({
-        locationAutocompleteSuggestions: []
-      }, state)
+      return u(
+        {
+          locationAutocompleteSuggestions: [],
+        },
+        state
+      )
     }
     case actions.ERROR_ON_IMAGE: {
       const fileName = action.payload.fileName
       if (!contains(state.erroredImages, fileName)) {
-        return u({
-          erroredImages: state.erroredImages.concat(fileName)
-        }, state)
+        return u(
+          {
+            erroredImages: state.erroredImages.concat(fileName),
+          },
+          state
+        )
       }
       return state
     }
     case actions.FREEZE_LOCATION_INPUT: {
-      return u({
-        locationAutocompleteFrozen: true
-      }, state)
+      return u(
+        {
+          locationAutocompleteFrozen: true,
+        },
+        state
+      )
     }
     case actions.HIDE_LOADER: {
-      return u({
-        isLoading: false
-      }, state)
+      return u(
+        {
+          isLoading: false,
+        },
+        state
+      )
     }
     case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
-      return u({
-        notConsigningArtist: false
-      }, state)
+      return u(
+        {
+          notConsigningArtist: false,
+        },
+        state
+      )
     }
     case actions.IGNORE_REDIRECT_ON_AUTH: {
-      return u({
-        redirectOnAuth: false
-      }, state)
+      return u(
+        {
+          redirectOnAuth: false,
+        },
+        state
+      )
     }
     case actions.REMOVE_ERRORED_IMAGE: {
       const fileName = action.payload.fileName
       if (contains(state.erroredImages, fileName)) {
-        return u({
-          erroredImages: u.reject((ff) => ff === fileName)
-        }, state)
+        return u(
+          {
+            erroredImages: u.reject(ff => ff === fileName),
+          },
+          state
+        )
       }
       return state
     }
     case actions.REMOVE_UPLOADED_IMAGE: {
       const fileName = action.payload.fileName
-      return u({
-        uploadedImages: u.reject((ff) => ff.fileName === fileName)
-      }, state)
+      return u(
+        {
+          uploadedImages: u.reject(ff => ff.fileName === fileName),
+        },
+        state
+      )
     }
     case actions.SHOW_LOADER: {
-      return u({
-        isLoading: true
-      }, state)
+      return u(
+        {
+          isLoading: true,
+        },
+        state
+      )
     }
     case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
-      return u({
-        notConsigningArtist: true
-      }, state)
+      return u(
+        {
+          notConsigningArtist: true,
+        },
+        state
+      )
     }
     case actions.SHOW_RESET_PASSWORD_SUCCESS_MESSAGE: {
-      return u({
-        resetPasswordSuccess: true
-      }, state)
+      return u(
+        {
+          resetPasswordSuccess: true,
+        },
+        state
+      )
     }
     case actions.START_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName
       if (!contains(state.processingImages, fileName)) {
-        return u({
-          processingImages: state.processingImages.concat(fileName)
-        }, state)
+        return u(
+          {
+            processingImages: state.processingImages.concat(fileName),
+          },
+          state
+        )
       }
       return state
     }
     case actions.STOP_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName
       if (contains(state.processingImages, fileName)) {
-        return u({
-          processingImages: u.reject((ff) => ff === fileName)
-        }, state)
+        return u(
+          {
+            processingImages: u.reject(ff => ff === fileName),
+          },
+          state
+        )
       }
       return state
     }
     case actions.UNFREEZE_LOCATION_INPUT: {
-      return u({
-        locationAutocompleteFrozen: false,
-        locationAutocompleteValue: ''
-      }, state)
+      return u(
+        {
+          locationAutocompleteFrozen: false,
+          locationAutocompleteValue: "",
+        },
+        state
+      )
     }
     case actions.UPDATE_ARTIST_AUTOCOMPLETE_VALUE: {
-      return u({
-        artistAutocompleteValue: action.payload.value
-      }, state)
+      return u(
+        {
+          artistAutocompleteValue: action.payload.value,
+        },
+        state
+      )
     }
     case actions.UPDATE_ARTIST_ID: {
-      return u({
-        inputs: {
-          artist_id: action.payload.artistId
-        }
-      }, state)
+      return u(
+        {
+          inputs: {
+            artist_id: action.payload.artistId,
+          },
+        },
+        state
+      )
     }
     case actions.UPDATE_ARTIST_NAME: {
-      return u({
-        artistName: action.payload.artistName
-      }, state)
+      return u(
+        {
+          artistName: action.payload.artistName,
+        },
+        state
+      )
     }
     case actions.UPDATE_ARTIST_SUGGESTIONS: {
-      return u({
-        artistAutocompleteSuggestions: action.payload.suggestions
-      }, state)
+      return u(
+        {
+          artistAutocompleteSuggestions: action.payload.suggestions,
+        },
+        state
+      )
     }
     case actions.UPDATE_AUTH_FORM_STATE: {
-      return u({
-        authFormState: action.payload.state
-      }, state)
+      return u(
+        {
+          authFormState: action.payload.state,
+        },
+        state
+      )
     }
     case actions.UPDATE_CURRENT_STEP: {
-      return u({
-        currentStep: action.payload.step
-      }, state)
+      return u(
+        {
+          currentStep: action.payload.step,
+        },
+        state
+      )
     }
     case actions.UPDATE_ERROR: {
-      return u({
-        error: action.payload.error
-      }, state)
+      return u(
+        {
+          error: action.payload.error,
+        },
+        state
+      )
     }
     case actions.UPDATE_INPUTS: {
-      return u({
-        inputs: {
-          ...state.inputs,
-          ...action.payload.inputs
-        }
-      }, state)
+      return u(
+        {
+          inputs: {
+            ...state.inputs,
+            ...action.payload.inputs,
+          },
+        },
+        state
+      )
     }
     case actions.UPDATE_LOCATION_AUTOCOMPLETE_VALUE: {
-      return u({
-        locationAutocompleteValue: action.payload.value
-      }, state)
+      return u(
+        {
+          locationAutocompleteValue: action.payload.value,
+        },
+        state
+      )
     }
     case actions.UPDATE_LOCATION_CITY_VALUE: {
-      return u({
-        inputs: {
-          location_city: action.payload.city
-        }
-      }, state)
+      return u(
+        {
+          inputs: {
+            location_city: action.payload.city,
+          },
+        },
+        state
+      )
     }
     case actions.UPDATE_LOCATION_SUGGESTIONS: {
-      return u({
-        locationAutocompleteSuggestions: action.payload.suggestions
-      }, state)
+      return u(
+        {
+          locationAutocompleteSuggestions: action.payload.suggestions,
+        },
+        state
+      )
     }
     case actions.UPDATE_LOCATION_VALUES: {
-      return u({
-        inputs: {
-          location_city: action.payload.city,
-          location_country: action.payload.country,
-          location_state: action.payload.state
-        }
-      }, state)
+      return u(
+        {
+          inputs: {
+            location_city: action.payload.city,
+            location_country: action.payload.country,
+            location_state: action.payload.state,
+          },
+        },
+        state
+      )
     }
     case actions.UPDATE_PROGRESS_BAR: {
-      const updatedProgress = { [action.payload.fileName]: action.payload.percent }
-      return u({
-        progressBars: {
-          ...state.progressBars,
-          ...updatedProgress
-        }
-      }, state)
+      const updatedProgress = {
+        [action.payload.fileName]: action.payload.percent,
+      }
+      return u(
+        {
+          progressBars: {
+            ...state.progressBars,
+            ...updatedProgress,
+          },
+        },
+        state
+      )
     }
     case actions.UPDATE_SKIP_PHOTO_SUBMISSION: {
-      return u({
-        skipPhotoSubmission: action.payload.skip
-      }, state)
+      return u(
+        {
+          skipPhotoSubmission: action.payload.skip,
+        },
+        state
+      )
     }
     case actions.UPDATE_STEPS_WITH_USER: {
-      return u({
-        currentStep: chooseArtistStep,
-        steps: [chooseArtistStep, describeWorkStep, uploadPhotosStep]
-      }, state)
+      return u(
+        {
+          currentStep: chooseArtistStep,
+          steps: [chooseArtistStep, describeWorkStep, uploadPhotosStep],
+        },
+        state
+      )
     }
     case actions.UPDATE_STEPS_WITHOUT_USER: {
-      return u({
-        currentStep: createAccountStep,
-        steps: [createAccountStep, chooseArtistStep, describeWorkStep, uploadPhotosStep]
-      }, state)
+      return u(
+        {
+          currentStep: createAccountStep,
+          steps: [
+            createAccountStep,
+            chooseArtistStep,
+            describeWorkStep,
+            uploadPhotosStep,
+          ],
+        },
+        state
+      )
     }
     case actions.UPDATE_SUBMISSION: {
-      return u({
-        submission: action.payload.submission
-      }, state)
+      return u(
+        {
+          submission: action.payload.submission,
+        },
+        state
+      )
     }
     case actions.UPDATE_USER: {
-      return u({
-        user: action.payload.user
-      }, state)
+      return u(
+        {
+          user: action.payload.user,
+        },
+        state
+      )
     }
     case actions.UPDATE_USER_PHONE: {
-      return u({
-        user: {
-          phone: action.payload.phone
-        }
-      }, state)
+      return u(
+        {
+          user: {
+            phone: action.payload.phone,
+          },
+        },
+        state
+      )
     }
-    default: return state
+    default:
+      return state
   }
 }
 
 export default combineReducers({
-  submissionFlow: composeReducers(
-    responsiveWindowReducer,
-    submissionFlow
-  ),
+  submissionFlow: composeReducers(responsiveWindowReducer, submissionFlow),
   router: routerReducer,
-  form: formReducer
+  form: formReducer,
 })

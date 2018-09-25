@@ -1,13 +1,13 @@
-import Cookies from 'cookies-js'
+import Cookies from "cookies-js"
 import {
   ModalType,
   ModalOptions,
-} from 'reaction/Components/Authentication/Types'
-import { data as sd } from 'sharify'
-import { pickBy, identity } from 'lodash'
+} from "reaction/Components/Authentication/Types"
+import { data as sd } from "sharify"
+import { pickBy, identity } from "lodash"
 
-const mediator = require('../../lib/mediator.coffee')
-const LoggedOutUser = require('../../models/logged_out_user.coffee')
+const mediator = require("../../lib/mediator.coffee")
+const LoggedOutUser = require("../../models/logged_out_user.coffee")
 
 export const handleSubmit = (
   type: ModalType,
@@ -48,13 +48,13 @@ export const handleSubmit = (
       let action
       switch (type) {
         case ModalType.login:
-          action = 'Successfully logged in'
+          action = "Successfully logged in"
           break
         case ModalType.signup:
-          action = 'Created account'
+          action = "Created account"
           break
         case ModalType.forgot:
-          action = 'Forgot Password'
+          action = "Forgot Password"
           break
       }
 
@@ -69,7 +69,7 @@ export const handleSubmit = (
           context_module: contextModule,
           modal_copy: copy,
           auth_redirect: redirectTo || destination,
-          service: 'email',
+          service: "email",
         }
         analytics.track(action, pickBy(properties, identity))
       }
@@ -81,7 +81,7 @@ export const handleSubmit = (
       const error = res.responseJSON
       formikBag.setStatus(error)
       formikBag.setSubmitting(false)
-      mediator.trigger('auth:error', error.message)
+      mediator.trigger("auth:error", error.message)
     },
   }
 
@@ -102,11 +102,11 @@ export const setCookies = options => {
   const { afterSignUpAction, destination } = options
 
   if (afterSignUpAction) {
-    Cookies.set('afterSignUpAction', JSON.stringify(afterSignUpAction))
+    Cookies.set("afterSignUpAction", JSON.stringify(afterSignUpAction))
   }
 
   if (destination) {
-    Cookies.set('destination', destination, {
+    Cookies.set("destination", destination, {
       expires: 60 * 60 * 24,
     })
   }
@@ -115,15 +115,15 @@ export const setCookies = options => {
 export const getRedirect = type => {
   const { location } = window
   switch (type) {
-    case 'login':
-    case 'forgot':
-      if (['/login', '/forgot'].includes(location.pathname)) {
-        return '/'
+    case "login":
+    case "forgot":
+      if (["/login", "/forgot"].includes(location.pathname)) {
+        return "/"
       } else {
         return location
       }
-    case 'signup':
-      return '/personalize'
+    case "signup":
+      return "/personalize"
     default:
       return window.location
   }

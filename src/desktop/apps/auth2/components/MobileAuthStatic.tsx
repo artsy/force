@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
-import Colors from 'reaction/Assets/Colors'
-import { FormSwitcher } from 'reaction/Components/Authentication/FormSwitcher'
-import { handleSubmit } from '../helpers'
+import React from "react"
+import styled from "styled-components"
+import Colors from "reaction/Assets/Colors"
+import { FormSwitcher } from "reaction/Components/Authentication/FormSwitcher"
+import { handleSubmit } from "../helpers"
 import {
   ModalType,
   ModalOptions,
-} from 'reaction/Components/Authentication/Types'
+} from "reaction/Components/Authentication/Types"
 
 interface Props {
   type: string
@@ -18,11 +18,11 @@ export class MobileAuthStatic extends React.Component<Props> {
   render() {
     const { options } = this.props
     const submitUrls = {
-      login: '/log_in',
-      forgot: '/forgot_password',
-      signup: '/sign_up',
-      facebook: '/users/auth/facebook',
-      twitter: '/users/auth/twitter',
+      login: "/log_in",
+      forgot: "/forgot_password",
+      signup: "/sign_up",
+      facebook: "/users/auth/facebook",
+      twitter: "/users/auth/twitter",
     }
 
     return (
@@ -37,8 +37,8 @@ export class MobileAuthStatic extends React.Component<Props> {
               this.props.options
             )}
             onBackButtonClicked={() => {
-              if (typeof window !== 'undefined') {
-                window.location.href = options.redirectTo || '/'
+              if (typeof window !== "undefined") {
+                window.location.href = options.redirectTo || "/"
               }
             }}
             submitUrls={submitUrls}

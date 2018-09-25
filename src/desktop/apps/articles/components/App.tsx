@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { hot } from 'react-hot-loader'
-import { ArticleData } from 'reaction/Components/Publishing/Typings'
-import { InfiniteScrollNewsArticle } from 'desktop/apps/article/components/InfiniteScrollNewsArticle'
+import React, { Component } from "react"
+import { hot } from "react-hot-loader"
+import { ArticleData } from "reaction/Components/Publishing/Typings"
+import { InfiniteScrollNewsArticle } from "desktop/apps/article/components/InfiniteScrollNewsArticle"
 
 export interface Props {
   articles: ArticleData[]

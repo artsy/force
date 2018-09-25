@@ -1,13 +1,13 @@
-import ArticleModel from 'desktop/models/article.coffee'
-import InfiniteScrollArticle from '../InfiniteScrollArticle'
-import { once } from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { Article } from 'reaction/Components/Publishing'
-import Cookies from 'desktop/components/cookies/index.coffee'
-import _SuperArticleView from 'desktop/components/article/client/super_article.coffee'
-import { setupFollows, setupFollowButtons } from '../FollowButton.js'
-import mediator from 'desktop/lib/mediator.coffee'
+import ArticleModel from "desktop/models/article.coffee"
+import InfiniteScrollArticle from "../InfiniteScrollArticle"
+import { once } from "lodash"
+import PropTypes from "prop-types"
+import React from "react"
+import { Article } from "reaction/Components/Publishing"
+import Cookies from "desktop/components/cookies/index.coffee"
+import _SuperArticleView from "desktop/components/article/client/super_article.coffee"
+import { setupFollows, setupFollowButtons } from "../FollowButton.js"
+import mediator from "desktop/lib/mediator.coffee"
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
@@ -36,13 +36,13 @@ export default class ArticleLayout extends React.Component {
 
     if (isSuper) {
       new SuperArticleView({
-        el: document.querySelector('body'),
+        el: document.querySelector("body"),
         article: new ArticleModel(article),
       })
     }
 
     const editorialAuthDismissedCookie = Cookies.get(
-      'editorial-signup-dismissed'
+      "editorial-signup-dismissed"
     )
 
     if (!this.props.isLoggedIn && !editorialAuthDismissedCookie) {
@@ -50,26 +50,26 @@ export default class ArticleLayout extends React.Component {
     }
 
     // setup listener for dismissal cookie
-    mediator.on('modal:closed', this.dismissAuthModal)
+    mediator.on("modal:closed", this.dismissAuthModal)
   }
 
   dismissAuthModal() {
-    Cookies.set('editorial-signup-dismissed', 1, { expires: 864000 })
+    Cookies.set("editorial-signup-dismissed", 1, { expires: 864000 })
   }
 
   showAuthModal() {
     if (!this.props.isLoggedIn && !this.props.isMobile) {
       window.addEventListener(
-        'scroll',
+        "scroll",
         once(() => {
           setTimeout(() => {
-            this.handleOpenAuthModal('register', {
-              mode: 'signup',
-              intent: 'Viewed editorial',
-              signupIntent: 'signup',
-              trigger: 'timed',
+            this.handleOpenAuthModal("register", {
+              mode: "signup",
+              intent: "Viewed editorial",
+              signupIntent: "signup",
+              trigger: "timed",
               triggerSeconds: 2,
-              copy: 'Sign up for the Best Stories in Art and Visual Culture',
+              copy: "Sign up for the Best Stories in Art and Visual Culture",
               destination: location.href,
             })
           }, 2000)
@@ -80,7 +80,7 @@ export default class ArticleLayout extends React.Component {
   }
 
   handleOpenAuthModal = (mode, options) => {
-    mediator.trigger('open:auth', {
+    mediator.trigger("open:auth", {
       mode,
       ...options,
     })

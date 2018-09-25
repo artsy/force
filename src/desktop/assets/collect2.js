@@ -1,1 +1,1 @@
-import 'desktop/apps/collect2/client'
+import "desktop/apps/collect2/client"

@@ -1,7 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from 'desktop/apps/editorial_features/components/gucci/components/App.jsx'
-import { data as sd } from 'sharify'
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "desktop/apps/editorial_features/components/gucci/components/App.jsx"
+import { data as sd } from "sharify"
 
 export default () => {
   ReactDOM.render(
@@ -10,6 +10,6 @@ export default () => {
       curation={sd.CURATION}
       isMobile={sd.IS_MOBILE}
     />,
-    document.getElementById('react-root')
+    document.getElementById("react-root")
   )
 }

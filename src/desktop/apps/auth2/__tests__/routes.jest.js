@@ -1,23 +1,23 @@
-import { renderLayout } from '@artsy/stitch'
-import { AuthStatic } from '../components/AuthStatic'
-import { MobileAuthStatic } from '../components/MobileAuthStatic'
-import { index, resetPassword } from '../routes'
+import { renderLayout } from "@artsy/stitch"
+import { AuthStatic } from "../components/AuthStatic"
+import { MobileAuthStatic } from "../components/MobileAuthStatic"
+import { index, resetPassword } from "../routes"
 
-jest.mock('@artsy/stitch', () => ({
+jest.mock("@artsy/stitch", () => ({
   renderLayout: jest.fn(),
 }))
 
-describe('Routes', () => {
+describe("Routes", () => {
   let req
   let res
   let next
 
-  describe('#index', () => {
+  describe("#index", () => {
     beforeEach(() => {
       req = {
-        path: '/',
+        path: "/",
         query: {},
-        header: () => 'referrer',
+        header: () => "referrer",
       }
       res = {
         locals: {
@@ -31,9 +31,9 @@ describe('Routes', () => {
       renderLayout.mockReset()
     })
 
-    it('calls next if #renderLayout returns an error', done => {
+    it("calls next if #renderLayout returns an error", done => {
       renderLayout.mockImplementationOnce(() => {
-        throw new Error('A new error')
+        throw new Error("A new error")
       })
 
       index(req, res, next).then(() => {
@@ -42,15 +42,15 @@ describe('Routes', () => {
       })
     })
 
-    describe('Component', () => {
-      it('Returns AuthStatic component if UA is desktop', done => {
+    describe("Component", () => {
+      it("Returns AuthStatic component if UA is desktop", done => {
         index(req, res, next).then(() => {
           expect(renderLayout.mock.calls[0][0].blocks.body).toBe(AuthStatic)
           done()
         })
       })
 
-      it('Returns MobileAuthStatic component if sd.IS_MOBILE', done => {
+      it("Returns MobileAuthStatic component if sd.IS_MOBILE", done => {
         res.locals.sd.IS_MOBILE = true
         index(req, res, next).then(() => {
           expect(renderLayout.mock.calls[0][0].blocks.body).toBe(
@@ -61,68 +61,68 @@ describe('Routes', () => {
       })
     })
 
-    describe('Data', () => {
-      describe('Type', () => {
-        it('Returns login type by default', done => {
+    describe("Data", () => {
+      describe("Type", () => {
+        it("Returns login type by default", done => {
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe('login')
+            expect(renderLayout.mock.calls[0][0].data.type).toBe("login")
             done()
           })
         })
 
-        it('Returns the correct modal.type for /login path', done => {
-          req.path = '/login'
+        it("Returns the correct modal.type for /login path", done => {
+          req.path = "/login"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe('login')
+            expect(renderLayout.mock.calls[0][0].data.type).toBe("login")
             done()
           })
         })
 
-        it('Returns the correct modal.type for /signup path', done => {
-          req.path = '/signup'
+        it("Returns the correct modal.type for /signup path", done => {
+          req.path = "/signup"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe('signup')
+            expect(renderLayout.mock.calls[0][0].data.type).toBe("signup")
             done()
           })
         })
 
-        it('Returns the correct modal.type for /forgot path', done => {
-          req.path = '/forgot'
+        it("Returns the correct modal.type for /forgot path", done => {
+          req.path = "/forgot"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe('forgot')
-            done()
-          })
-        })
-      })
-
-      describe('Meta', () => {
-        it('returns the correct title for login', done => {
-          index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.meta.title).toBe(
-              'Login to Artsy'
-            )
-            done()
-          })
-        })
-
-        it('returns the correct title for signup', done => {
-          req.path = '/signup'
-          index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.meta.title).toBe(
-              'Signup for Artsy'
-            )
+            expect(renderLayout.mock.calls[0][0].data.type).toBe("forgot")
             done()
           })
         })
       })
 
-      it('Options returns all expected fields from query', done => {
+      describe("Meta", () => {
+        it("returns the correct title for login", done => {
+          index(req, res, next).then(() => {
+            expect(renderLayout.mock.calls[0][0].data.meta.title).toBe(
+              "Login to Artsy"
+            )
+            done()
+          })
+        })
+
+        it("returns the correct title for signup", done => {
+          req.path = "/signup"
+          index(req, res, next).then(() => {
+            expect(renderLayout.mock.calls[0][0].data.meta.title).toBe(
+              "Signup for Artsy"
+            )
+            done()
+          })
+        })
+      })
+
+      it("Options returns all expected fields from query", done => {
         req.query = {
-          afterSignUpAction: 'after signup',
-          destination: '/foo',
-          redirectTo: '/bar',
-          signupIntent: 'follow artist',
-          signupReferer: 'referrer',
+          afterSignUpAction: "after signup",
+          destination: "/foo",
+          redirectTo: "/bar",
+          signupIntent: "follow artist",
+          signupReferer: "referrer",
         }
 
         index(req, res, next).then(() => {
@@ -143,15 +143,15 @@ describe('Routes', () => {
         })
       })
 
-      it('Sets afterSignUpAction cookie if corresponding query params are present', done => {
+      it("Sets afterSignUpAction cookie if corresponding query params are present", done => {
         req.query = {
-          action: 'follow',
-          objectId: '123',
-          kind: 'artist',
-          destination: '/foo',
-          redirectTo: '/bar',
-          signupIntent: 'follow artist',
-          signupReferer: 'referrer',
+          action: "follow",
+          objectId: "123",
+          kind: "artist",
+          destination: "/foo",
+          redirectTo: "/bar",
+          signupIntent: "follow artist",
+          signupReferer: "referrer",
         }
 
         res.cookie = jest.fn()
@@ -159,9 +159,9 @@ describe('Routes', () => {
         index(req, res, next).then(() => {
           expect(res.cookie.mock.calls[0][1]).toBe(
             JSON.stringify({
-              action: 'follow',
-              objectId: '123',
-              kind: 'artist',
+              action: "follow",
+              objectId: "123",
+              kind: "artist",
             })
           )
           done()
@@ -170,7 +170,7 @@ describe('Routes', () => {
     })
   })
 
-  describe('#resetPassword', () => {
+  describe("#resetPassword", () => {
     beforeEach(() => {
       res = {
         locals: {
@@ -185,16 +185,16 @@ describe('Routes', () => {
       }
     })
 
-    describe('Has reset_password_token', () => {
+    describe("Has reset_password_token", () => {
       beforeEach(() => {
         req.query = {
-          reset_password_token: 'foobar',
-          reset_password_redirect_to: '/articles',
-          set_password: 'set password',
+          reset_password_token: "foobar",
+          reset_password_redirect_to: "/articles",
+          set_password: "set password",
         }
       })
 
-      it('matches session params to query params', () => {
+      it("matches session params to query params", () => {
         const {
           reset_password_token,
           reset_password_redirect_to,
@@ -209,31 +209,31 @@ describe('Routes', () => {
         expect(req.session.set_password).toBe(set_password)
       })
 
-      it('redirects to /reset_password', () => {
+      it("redirects to /reset_password", () => {
         resetPassword(req, res)
-        expect(res.redirect.mock.calls[0][0]).toBe('/reset_password')
+        expect(res.redirect.mock.calls[0][0]).toBe("/reset_password")
       })
     })
 
-    describe('Without reset_password_token', () => {
+    describe("Without reset_password_token", () => {
       beforeEach(() => {
         req.session = {
-          reset_password_token: 'foobar',
-          reset_password_redirect_to: '/articles',
-          set_password: 'set password',
+          reset_password_token: "foobar",
+          reset_password_redirect_to: "/articles",
+          set_password: "set password",
         }
       })
 
-      it('sets sd.RESET_PASWORD_REDIRECT_TO', () => {
+      it("sets sd.RESET_PASWORD_REDIRECT_TO", () => {
         resetPassword(req, res)
-        expect(res.locals.sd.RESET_PASWORD_REDIRECT_TO).toBe('/articles')
+        expect(res.locals.sd.RESET_PASWORD_REDIRECT_TO).toBe("/articles")
       })
 
-      it('renders reset_password with expected args', () => {
+      it("renders reset_password with expected args", () => {
         resetPassword(req, res)
-        expect(res.render.mock.calls[0][0]).toBe('reset_password')
-        expect(res.render.mock.calls[0][1].reset_password_token).toBe('foobar')
-        expect(res.render.mock.calls[0][1].set_password).toBe('set password')
+        expect(res.render.mock.calls[0][0]).toBe("reset_password")
+        expect(res.render.mock.calls[0][1].reset_password_token).toBe("foobar")
+        expect(res.render.mock.calls[0][1].set_password).toBe("set password")
       })
     })
   })

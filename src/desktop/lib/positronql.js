@@ -1,19 +1,19 @@
-import request from 'superagent'
+import request from "superagent"
 
-const { POSITRON_URL } = require('sharify').data
-const POSITRON_GRAPHQL_URL = POSITRON_URL + '/api/graphql'
+const { POSITRON_URL } = require("sharify").data
+const POSITRON_GRAPHQL_URL = POSITRON_URL + "/api/graphql"
 
-export const positronql = (options) => {
-  const { method = 'get', query, variables, req } = options
+export const positronql = options => {
+  const { method = "get", query, variables, req } = options
 
   return new Promise((resolve, reject) => {
     const r = request[method](POSITRON_GRAPHQL_URL).set(
-      'Accept',
-      'application/json'
+      "Accept",
+      "application/json"
     )
 
     if (req && req.user) {
-      r.set('X-Access-Token', req.user.get('accessToken'))
+      r.set("X-Access-Token", req.user.get("accessToken"))
     }
 
     r.query({

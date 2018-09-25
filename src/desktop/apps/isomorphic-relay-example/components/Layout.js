@@ -1,7 +1,7 @@
-import Nav from './Nav'
-import PropTypes from 'prop-types'
-import React from 'react'
-import styled from 'styled-components'
+import Nav from "./Nav"
+import PropTypes from "prop-types"
+import React from "react"
+import styled from "styled-components"
 
 export function Layout(props) {
   return (

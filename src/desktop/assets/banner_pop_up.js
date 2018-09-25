@@ -1,3 +1,3 @@
-import { $ } from 'backbone'
+import { $ } from "backbone"
 
-$(() => require('../apps/armory_week/client/initializer').init())
+$(() => require("../apps/armory_week/client/initializer").init())

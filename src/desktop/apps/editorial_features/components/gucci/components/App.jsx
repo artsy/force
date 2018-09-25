@@ -1,12 +1,12 @@
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { debounce } from 'lodash'
-import { pMedia } from 'reaction/Components/Helpers'
-import { FixedHeader } from './nav/fixed_header.jsx'
-import { SeriesHeader } from './series/series_header.jsx'
-import { SeriesFooter } from './series/series_footer.jsx'
-import { Section } from './section/section.jsx'
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import { debounce } from "lodash"
+import { pMedia } from "reaction/Components/Helpers"
+import { FixedHeader } from "./nav/fixed_header.jsx"
+import { SeriesHeader } from "./series/series_header.jsx"
+import { SeriesFooter } from "./series/series_footer.jsx"
+import { Section } from "./section/section.jsx"
 
 export default class App extends Component {
   static propTypes = {
@@ -24,7 +24,7 @@ export default class App extends Component {
   componentDidMount() {
     // setup window isMobile
     this.checkWindowSize()
-    window.addEventListener('resize', debounce(this.checkWindowSize, 30))
+    window.addEventListener("resize", debounce(this.checkWindowSize, 30))
     let showHeader = false
     // if landing on slug, go to section and show header
     if (this.props.activeSection) {
@@ -45,11 +45,11 @@ export default class App extends Component {
     this.setState({ isMobile })
   }
 
-  inBody = (showHeader) => {
+  inBody = showHeader => {
     this.setState({ showHeader })
   }
 
-  onChangeSection = (index) => {
+  onChangeSection = index => {
     const section = this.props.curation.sections[index]
     this.setState({ activeSection: index })
     document.getElementById(section.slug).scrollIntoView()
@@ -57,7 +57,7 @@ export default class App extends Component {
 
   onEnterSection = (index, { previousPosition, currentPosition }) => {
     const section = this.props.curation.sections[index]
-    if (previousPosition === 'above' && currentPosition === 'inside') {
+    if (previousPosition === "above" && currentPosition === "inside") {
       this.setState({ activeSection: index })
       document.title = section.title
       window.history.pushState(
@@ -72,8 +72,8 @@ export default class App extends Component {
     const nextSection = this.props.curation.sections[index + 1]
     if (
       nextSection &&
-      previousPosition === 'inside' &&
-      currentPosition === 'above'
+      previousPosition === "inside" &&
+      currentPosition === "above"
     ) {
       this.setState({ activeSection: index + 1 })
       document.title = nextSection.title
@@ -110,7 +110,7 @@ export default class App extends Component {
 
         <GucciBody>
           {curation.sections.map((section, index) => (
-            <div id={section.slug} key={'section-' + index}>
+            <div id={section.slug} key={"section-" + index}>
               <Section
                 section={section}
                 index={index}

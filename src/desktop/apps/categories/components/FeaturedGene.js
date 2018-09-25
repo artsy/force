@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { avantgarde } from 'reaction/Assets/Fonts'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { avantgarde } from "reaction/Assets/Fonts"
 
 const propTypes = {
   title: PropTypes.string,
@@ -24,7 +24,7 @@ const GeneName = styled.span`
   color: white;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 
-  ${avantgarde('s13')};
+  ${avantgarde("s13")};
   font-weight: bold;
 `
 

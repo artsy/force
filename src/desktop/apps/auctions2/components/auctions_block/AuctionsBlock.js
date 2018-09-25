@@ -1,23 +1,29 @@
-import AuctionsItem from 'desktop/apps/auctions2/components/auctions_block/AuctionsItem'
-import PropTypes from 'prop-types'
-import React from 'react'
+import AuctionsItem from "desktop/apps/auctions2/components/auctions_block/AuctionsItem"
+import PropTypes from "prop-types"
+import React from "react"
 
-function AuctionsBlock({auctions, liveIntegration, isFetchingAuctions, isMobile}) {
+function AuctionsBlock({
+  auctions,
+  liveIntegration,
+  isFetchingAuctions,
+  isMobile,
+}) {
   if (isFetchingAuctions) {
-    return <div className='auctions-block loading'></div>
+    return <div className="auctions-block loading" />
   } else {
     return (
-      <div className='auctions-block'>
-        <div className='auctions-block__title'>
-          {liveIntegration ? 'Ongoing Live Auctions'  : 'Ongoing Timed Auctions'}
+      <div className="auctions-block">
+        <div className="auctions-block__title">
+          {liveIntegration ? "Ongoing Live Auctions" : "Ongoing Timed Auctions"}
         </div>
-        <div className='auctions-block__list'>
-          {auctions.map((auction) => (
+        <div className="auctions-block__list">
+          {auctions.map(auction => (
             <AuctionsItem
               auction={auction}
               liveIntegration={liveIntegration}
               key={auction.id}
-              isMobile={isMobile} />
+              isMobile={isMobile}
+            />
           ))}
         </div>
       </div>
@@ -31,5 +37,5 @@ AuctionsBlock.propTypes = {
   auctions: PropTypes.array.isRequired,
   liveIntegration: PropTypes.bool,
   isFetchingAuctions: PropTypes.bool,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
 }

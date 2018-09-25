@@ -1,1 +1,1 @@
-module.exports = require('./server').default
+module.exports = require("./server").default

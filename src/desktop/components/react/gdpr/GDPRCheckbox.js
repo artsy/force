@@ -1,21 +1,21 @@
-import React from 'react'
-import { Checkbox } from 'reaction/Components/Checkbox'
-import styled from 'styled-components'
-import colors from 'reaction/Assets/Colors'
-import { garamond } from 'reaction/Assets/Fonts'
+import React from "react"
+import { Checkbox } from "reaction/Components/Checkbox"
+import styled from "styled-components"
+import colors from "reaction/Assets/Colors"
+import { garamond } from "reaction/Assets/Fonts"
 
 export const GDPRMessage = props => {
   return (
     <Text>
-      {'I agree to Artsy’s '}
+      {"I agree to Artsy’s "}
       <TextLink href="/terms" target="_blank">
         Terms of Use
       </TextLink>
-      {' and '}
+      {" and "}
       <TextLink href="/privacy" target="_blank">
         Privacy Policy
       </TextLink>
-      {', and to receive emails from Artsy.'}
+      {", and to receive emails from Artsy."}
     </Text>
   )
 }
@@ -33,7 +33,7 @@ const StyledCheckbox = styled(Checkbox)`
 `
 
 const Text = styled.span`
-  ${garamond('s16')};
+  ${garamond("s16")};
   color: ${colors.grayDark};
   text-transform: none;
   letter-spacing: normal;

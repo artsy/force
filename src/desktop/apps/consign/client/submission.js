@@ -1,17 +1,17 @@
-import analyticsMiddleware from './analytics_middleware'
-import ResponsiveWindow from '../../../components/react/responsive_window'
-import React from 'react'
-import SubmissionFlow from '../components/submission_flow'
-import geo from '../../../components/geo/index.coffee'
-import reducers from './reducers'
-import createHistory from 'history/createBrowserHistory'
-import createLogger from 'redux-logger'
-import stepsConfig from './steps_config'
-import thunkMiddleware from 'redux-thunk'
-import { Provider } from 'react-redux'
-import { Redirect, Router, Route, Switch } from 'react-router'
-import { createStore, applyMiddleware } from 'redux'
-import { data as sd } from 'sharify'
+import analyticsMiddleware from "./analytics_middleware"
+import ResponsiveWindow from "../../../components/react/responsive_window"
+import React from "react"
+import SubmissionFlow from "../components/submission_flow"
+import geo from "../../../components/geo/index.coffee"
+import reducers from "./reducers"
+import createHistory from "history/createBrowserHistory"
+import createLogger from "redux-logger"
+import stepsConfig from "./steps_config"
+import thunkMiddleware from "redux-thunk"
+import { Provider } from "react-redux"
+import { Redirect, Router, Route, Switch } from "react-router"
+import { createStore, applyMiddleware } from "redux"
+import { data as sd } from "sharify"
 import {
   ignoreRedirectOnAuth,
   updateAuthFormStateAndClearError,
@@ -19,9 +19,9 @@ import {
   updateLocationFromSubmissionAndFreeze,
   updateStepsWithUser,
   updateStepsWithoutUser,
-} from './actions'
-import { render } from 'react-dom'
-import { routerMiddleware } from 'react-router-redux'
+} from "./actions"
+import { render } from "react-dom"
+import { routerMiddleware } from "react-router-redux"
 
 function setupSubmissionFlow() {
   // load google maps for autocomplete
@@ -34,7 +34,7 @@ function setupSubmissionFlow() {
   middleware.push(routerMiddleware(history))
   middleware.push(analyticsMiddleware) // middleware to help us track previous and future states
 
-  if (sd.NODE_ENV === 'development' || sd.NODE_ENV === 'staging') {
+  if (sd.NODE_ENV === "development" || sd.NODE_ENV === "staging") {
     middleware.push(
       createLogger({
         // middleware that logs actions
@@ -54,7 +54,7 @@ function setupSubmissionFlow() {
   }
 
   // track pageviews when react-router updates the url
-  history.listen((ev) => {
+  history.listen(ev => {
     window.analytics.page(
       { path: ev.pathname },
       { integrations: { Marketo: false } }
@@ -83,7 +83,7 @@ function setupSubmissionFlow() {
               path={stepsConfig.createAccount.path}
               render={() => {
                 store.dispatch(updateStepsWithoutUser())
-                store.dispatch(updateCurrentStep('createAccount'))
+                store.dispatch(updateCurrentStep("createAccount"))
                 return <SubmissionFlow />
               }}
             />
@@ -91,7 +91,7 @@ function setupSubmissionFlow() {
               path={stepsConfig.chooseArtist.path}
               render={() => {
                 determineSteps()
-                store.dispatch(updateCurrentStep('chooseArtist'))
+                store.dispatch(updateCurrentStep("chooseArtist"))
                 return <SubmissionFlow />
               }}
             />
@@ -99,7 +99,7 @@ function setupSubmissionFlow() {
               path={stepsConfig.describeWork.path}
               render={() => {
                 determineSteps()
-                store.dispatch(updateCurrentStep('describeWork'))
+                store.dispatch(updateCurrentStep("describeWork"))
                 return <SubmissionFlow />
               }}
             />
@@ -107,7 +107,7 @@ function setupSubmissionFlow() {
               path={stepsConfig.uploadPhotos.submissionPath}
               render={() => {
                 determineSteps()
-                store.dispatch(updateCurrentStep('uploadPhotos'))
+                store.dispatch(updateCurrentStep("uploadPhotos"))
                 return <SubmissionFlow />
               }}
             />
@@ -115,7 +115,7 @@ function setupSubmissionFlow() {
               path={stepsConfig.describeWork.submissionPath}
               render={() => {
                 determineSteps()
-                store.dispatch(updateCurrentStep('describeWork'))
+                store.dispatch(updateCurrentStep("describeWork"))
                 store.dispatch(updateLocationFromSubmissionAndFreeze())
                 return <SubmissionFlow />
               }}
@@ -124,7 +124,7 @@ function setupSubmissionFlow() {
               path={stepsConfig.uploadLanding.submissionPath}
               render={() => {
                 const Component = stepsConfig.uploadLanding.component
-                store.dispatch(updateAuthFormStateAndClearError('logIn'))
+                store.dispatch(updateAuthFormStateAndClearError("logIn"))
                 store.dispatch(ignoreRedirectOnAuth())
                 return <Component />
               }}
@@ -137,7 +137,7 @@ function setupSubmissionFlow() {
         </Router>
       </ResponsiveWindow>
     </Provider>,
-    document.getElementById('consignments-submission__flow')
+    document.getElementById("consignments-submission__flow")
   )
 }
 

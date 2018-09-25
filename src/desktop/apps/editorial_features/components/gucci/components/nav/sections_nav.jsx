@@ -1,9 +1,9 @@
-import styled, { keyframes } from 'styled-components'
-import PropTypes from 'prop-types'
-import React from 'react'
-import Colors from 'reaction/Assets/Colors'
-import { pMedia } from 'reaction/Components/Helpers'
-import { unica } from 'reaction/Assets/Fonts'
+import styled, { keyframes } from "styled-components"
+import PropTypes from "prop-types"
+import React from "react"
+import Colors from "reaction/Assets/Colors"
+import { pMedia } from "reaction/Components/Helpers"
+import { unica } from "reaction/Assets/Fonts"
 
 export const SectionsNav = props => {
   const { animated, activeSection, sections, onClick } = props
@@ -13,7 +13,7 @@ export const SectionsNav = props => {
       {sections.map((section, index) => (
         <Title
           className="SectionsNav__item"
-          key={'nav-' + index}
+          key={"nav-" + index}
           onClick={() => onClick(index)}
           isActive={activeSection === index}
         >
@@ -72,12 +72,12 @@ const SectionsNavContainer = styled.div`
 `
 const Title = styled.div`
   cursor: pointer;
-  ${unica('s80')};
-  color: ${props => (props.isActive ? 'black' : Colors.grayRegular)};
+  ${unica("s80")};
+  color: ${props => (props.isActive ? "black" : Colors.grayRegular)};
 
   ${pMedia.lg`
     margin: 0 30px;
-    ${unica('s40')};
+    ${unica("s40")};
   `} ${pMedia.sm`
     margin: 0;
     &:nth-child(2) {

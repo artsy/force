@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
-import { FormSwitcher } from 'reaction/Components/Authentication/FormSwitcher'
+import React from "react"
+import styled from "styled-components"
+import { FormSwitcher } from "reaction/Components/Authentication/FormSwitcher"
 import {
   ModalType,
   ModalOptions,
-} from 'reaction/Components/Authentication/Types'
-import { ModalHeader } from 'reaction/Components/Modal/ModalHeader'
-import { handleSubmit } from '../helpers'
+} from "reaction/Components/Authentication/Types"
+import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
+import { handleSubmit } from "../helpers"
 
 interface Props {
   type: string
@@ -33,11 +33,11 @@ export class AuthStatic extends React.Component<Props> {
               this.props.options
             )}
             submitUrls={{
-              login: '/log_in',
-              forgot: '/forgot_password',
-              signup: '/sign_up',
-              facebook: '/users/auth/facebook',
-              twitter: '/users/auth/twitter',
+              login: "/log_in",
+              forgot: "/forgot_password",
+              signup: "/sign_up",
+              facebook: "/users/auth/facebook",
+              twitter: "/users/auth/twitter",
             }}
           />
         </AuthFormContainer>

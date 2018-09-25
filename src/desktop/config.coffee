@@ -50,6 +50,7 @@ module.exports =
   FACEBOOK_ID: null
   FACEBOOK_PIXEL_ID: null
   FACEBOOK_SECRET: null
+  FORCE_CLOUDFRONT_URL: 'https://d3vpvtm3t56z1n.cloudfront.net'
   GALAXY_PUBLISHABLE_TOKEN: null
   GALAXY_TOKEN: null
   GALAXY_URL: null
@@ -78,8 +79,9 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
-  NEW_ARTIST_PAGE_THRESHOLD: 0 # by default/not set no users will get the new page.
+  NEW_ARTIST_PAGE_THRESHOLD: 10 # all users will get the new page.
   NEW_AUTH_MODAL: false
+  NEW_COLLECT_PAGE_ENABLED: false
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'

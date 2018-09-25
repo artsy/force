@@ -45,4 +45,13 @@ module.exports = {
     weighting: 'equal'
     edge: 0
     control_group: 9
+  new_collect_page:
+    key: 'new_collect_page',
+    outcomes: [
+      'old'
+      'new'
+    ]
+    weighting: 'equal'
+    edge: 'new'
+    control_group: 'old'
 }

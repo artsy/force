@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
-import Icon from 'reaction/Components/Icon'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import styled, { css } from "styled-components"
+import Icon from "reaction/Components/Icon"
 
 export class Reveal extends Component {
   static propTypes = {
@@ -66,7 +66,7 @@ export class Reveal extends Component {
                 color="black"
                 fontSize="24px"
                 style={{
-                  fontWeight: 'bold',
+                  fontWeight: "bold",
                 }}
               />
             </Button>
@@ -78,7 +78,7 @@ export class Reveal extends Component {
 }
 
 const BottomBorder = css`
-  content: '';
+  content: "";
   border-bottom: 1px solid #e5e5e5;
   bottom: 50%;
   width: 120%;
@@ -91,7 +91,7 @@ const OuterContainer = styled.div`
 `
 
 const InnerContainer = styled.div`
-  ${(props) => {
+  ${props => {
     if (props.isEnabled) {
       return `
         overflow: hidden;
@@ -139,7 +139,7 @@ const Button = styled.div`
   }
 `
 
-OuterContainer.displayName = 'OuterContainer'
-InnerContainer.displayName = 'InnerContainer'
-Revealer.displayName = 'Revealer'
-Button.displayName = 'Button'
+OuterContainer.displayName = "OuterContainer"
+InnerContainer.displayName = "InnerContainer"
+Revealer.displayName = "Revealer"
+Button.displayName = "Button"

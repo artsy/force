@@ -1,13 +1,13 @@
-import { hot } from 'react-hot-loader'
-import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
-import ReactDOM from 'react-dom'
-import { Article } from 'reaction/Components/Publishing'
-import { ContextProvider } from 'reaction/Artsy'
-import { InfiniteScrollNewsArticle } from './InfiniteScrollNewsArticle.tsx'
-import { EditButton } from 'desktop/apps/article/components/EditButton'
-import _ArticleLayout from './layouts/Article'
-import { data as sd } from 'sharify'
+import { hot } from "react-hot-loader"
+import PropTypes from "prop-types"
+import React, { Fragment } from "react"
+import ReactDOM from "react-dom"
+import { Article } from "reaction/Components/Publishing"
+import { ContextProvider } from "reaction/Artsy"
+import { InfiniteScrollNewsArticle } from "./InfiniteScrollNewsArticle.tsx"
+import { EditButton } from "desktop/apps/article/components/EditButton"
+import _ArticleLayout from "./layouts/Article"
+import { data as sd } from "sharify"
 
 // FIXME: Rewire
 let ArticleLayout = _ArticleLayout
@@ -22,7 +22,7 @@ export default hot(module)(
       const { article } = this.props
 
       switch (article.layout) {
-        case 'video': {
+        case "video": {
           return (
             <Article
               {...this.props}
@@ -31,7 +31,7 @@ export default hot(module)(
             />
           )
         }
-        case 'series': {
+        case "series": {
           return (
             <Article
               {...this.props}
@@ -39,7 +39,7 @@ export default hot(module)(
             />
           )
         }
-        case 'news': {
+        case "news": {
           return (
             <InfiniteScrollNewsArticle articles={[article]} {...this.props} />
           )
@@ -72,7 +72,7 @@ class EditPortal extends React.Component {
 
   render() {
     const { article } = this.props
-    const positionTop = article.layout === 'news' ? 125 : null
+    const positionTop = article.layout === "news" ? 125 : null
 
     try {
       return ReactDOM.createPortal(
@@ -81,7 +81,7 @@ class EditPortal extends React.Component {
           slug={article.slug}
           positionTop={positionTop}
         />,
-        document.getElementById('react-portal')
+        document.getElementById("react-portal")
       )
     } catch (e) {
       return false

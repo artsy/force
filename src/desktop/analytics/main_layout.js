@@ -3,14 +3,20 @@
 // or any other actions that occur on each page.
 //
 
-import { data as sd } from 'sharify'
-import { reportLoadTimeToVolley } from 'lib/volley'
+import { data as sd } from "sharify"
+import { reportLoadTimeToVolley } from "lib/volley"
 
 // Track pageview
-analytics.page(
-  { path: location.pathname },
-  { integrations: { Marketo: false } }
-)
+const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
+var properties = { path: location.pathname }
+
+if (pageType == "artwork") {
+  properties["acquireable"] = sd.ARTWORK.is_acquireable
+  properties["availability"] = sd.ARTWORK.availability
+  properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
+}
+
+analytics.page(properties, { integrations: { Marketo: false } })
 
 // Track pageload speed
 if (
@@ -18,10 +24,8 @@ if (
   window.performance.timing &&
   sd.TRACK_PAGELOAD_PATHS
 ) {
-  window.addEventListener('load', function() {
-    const pageType =
-      window.sd.PAGE_TYPE || window.location.pathname.split('/')[1]
-    if (sd.TRACK_PAGELOAD_PATHS.split('|').includes(pageType)) {
+  window.addEventListener("load", function() {
+    if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
       window.setTimeout(function() {
         const {
           requestStart,
@@ -34,7 +38,7 @@ if (
           loadEventEnd,
           domComplete,
           pageType,
-          'desktop'
+          "desktop"
         )
       }, 0)
     }
@@ -43,45 +47,45 @@ if (
 
 // Track 15 second bounce rate
 setTimeout(function() {
-  analytics.track('Time on page', {
-    category: '15 Seconds',
+  analytics.track("Time on page", {
+    category: "15 Seconds",
     message: sd.CURRENT_PATH,
   })
 }, 15000)
 
 // Track 30 second bounce rate
 setTimeout(function() {
-  analytics.track('Time on page', {
-    category: '30 Seconds',
+  analytics.track("Time on page", {
+    category: "30 Seconds",
     message: sd.CURRENT_PATH,
   })
 }, 30000)
 
 // Track 1 min bounce rate
 setTimeout(function() {
-  analytics.track('Time on page', {
-    category: '1 Minute',
+  analytics.track("Time on page", {
+    category: "1 Minute",
     message: sd.CURRENT_PATH,
   })
 }, 60000)
 
 // Track 3 Minute bounce rate
 setTimeout(function() {
-  analytics.track('Time on page', {
-    category: '3 Minutes',
+  analytics.track("Time on page", {
+    category: "3 Minutes",
     message: sd.CURRENT_PATH,
   })
 }, 180000)
 
 // debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {
-  analytics.on('track', function() {
-    console.info('TRACKED: ', arguments[0], JSON.stringify(arguments[1]))
+  analytics.on("track", function() {
+    console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
   })
 }
 
 if (sd.SHOW_ANALYTICS_CALLS) {
-  analyticsHooks.on('all', function(name, data) {
-    console.info('ANALYTICS HOOK: ', name, data)
+  analyticsHooks.on("all", function(name, data) {
+    console.info("ANALYTICS HOOK: ", name, data)
   })
 }

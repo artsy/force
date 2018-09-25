@@ -7,9 +7,9 @@ export function buildBodyClass(sd, baseClass) {
 
   // Flags that show up in Sharify data
   const flagMap = {
-    MICROSITE: 'is-microsite',
-    EIGEN: 'body-eigen',
-    IS_RESPONSIVE: 'body-responsive',
+    MICROSITE: "is-microsite",
+    EIGEN: "body-eigen",
+    IS_RESPONSIVE: "body-responsive",
   }
 
   Object.keys(flagMap).forEach(flag => {
@@ -20,6 +20,6 @@ export function buildBodyClass(sd, baseClass) {
     }
   })
 
-  const bodyClass = classes.join(' ')
+  const bodyClass = classes.join(" ")
   return bodyClass
 }

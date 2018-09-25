@@ -1,5 +1,5 @@
-import React from 'react'
-import { createFragmentContainer, graphql } from 'react-relay'
+import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export const ArtistArtworks = createFragmentContainer(
   props => {

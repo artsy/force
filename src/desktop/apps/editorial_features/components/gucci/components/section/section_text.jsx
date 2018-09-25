@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import styled from 'styled-components'
-import { data as sd } from 'sharify'
-import { pMedia } from 'reaction/Components/Helpers'
-import { Col, Row } from 'reaction/Components/Grid'
-import { unica } from 'reaction/Assets/Fonts'
-import { Share } from 'reaction/Components/Publishing/Byline/Share'
-import { Text } from 'reaction/Components/Publishing'
+import PropTypes from "prop-types"
+import React from "react"
+import styled from "styled-components"
+import { data as sd } from "sharify"
+import { pMedia } from "reaction/Components/Helpers"
+import { Col, Row } from "reaction/Components/Grid"
+import { unica } from "reaction/Assets/Fonts"
+import { Share } from "reaction/Components/Publishing/Byline/Share"
+import { Text } from "reaction/Components/Publishing"
 
 export const SectionText = props => {
   const { section } = props
@@ -49,9 +49,9 @@ const SectionTextContainer = styled.div`
 `
 
 const Title = styled.div`
-  ${unica('s16', 'medium')} line-height: 1.85em;
+  ${unica("s16", "medium")} line-height: 1.85em;
   ${pMedia.xs`
-    ${unica('s14', 'medium')}
+    ${unica("s14", "medium")}
   `};
 `
 const ShareContainer = styled.div`
@@ -78,8 +78,8 @@ const ShareContainer = styled.div`
   `};
 `
 const Featuring = styled.div`
-  ${unica('s32')} line-height: 1.25em;
+  ${unica("s32")} line-height: 1.25em;
   ${pMedia.xs`
-    ${unica('s19')}
+    ${unica("s19")}
   `};
 `
