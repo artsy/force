@@ -1,4 +1,9 @@
+import * as modules from "./lib/global_react_modules"
 const app = (module.exports = require("express")())
+
+// TODO: Move to src/lib/middleware/locals once done developing; this is just so
+// we can get hot module reloading which only works in /desktop and /mobile
+app.use(require("@artsy/stitch/iso").middleware(modules))
 
 app.use(require("./apps/auth"))
 app.use(require("./apps/page"))

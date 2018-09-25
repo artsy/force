@@ -1,27 +1,29 @@
 .artwork-meta-data-module__description
-  if artwork.description || artwork.additional_information || artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
+  if user && user.hasLabFeature('New Buy Now Flow')
+    != stitch.components.ArtworkDetails({artworkID: artwork.id})
+  else if artwork.description || artwork.additional_information || artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
     h2.artwork-header About the Work
 
-  if artwork.description
-    != artwork.description
+    if artwork.description
+      != artwork.description
 
-  if artwork.additional_information
-    .artwork-meta-data-module__description-additional-info
-      != artwork.additional_information
+    if artwork.additional_information
+      .artwork-meta-data-module__description-additional-info
+        != artwork.additional_information
 
-  if artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
-    .artwork-meta-data-module__description_sub-section
-      if artwork.series
-        p Series: #{artwork.series}
+    if artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
+      .artwork-meta-data-module__description_sub-section
+        if artwork.series
+          p Series: #{artwork.series}
 
-      if artwork.signature
-        p Signature: #{artwork.signature}
+        if artwork.signature
+          p Signature: #{artwork.signature}
 
-      if artwork.image_rights
-        p Image rights: #{artwork.image_rights}
+        if artwork.image_rights
+          p Image rights: #{artwork.image_rights}
 
-      if artwork.publisher
-        p Publisher: #{artwork.publisher}
+        if artwork.publisher
+          p Publisher: #{artwork.publisher}
 
-      if artwork.manufacturer
-        p Manufacturer: #{artwork.manufacturer}
+        if artwork.manufacturer
+          p Manufacturer: #{artwork.manufacturer}
