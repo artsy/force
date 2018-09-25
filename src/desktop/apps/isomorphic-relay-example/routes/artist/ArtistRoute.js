@@ -1,6 +1,6 @@
-import React from 'react'
-import { ArtistArtworks } from './ArtistArtworks'
-import { createFragmentContainer, graphql } from 'react-relay'
+import React from "react"
+import { ArtistArtworks } from "./ArtistArtworks"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export const ArtistRoute = createFragmentContainer(
   ({ artist, children }) => {

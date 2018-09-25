@@ -1,11 +1,11 @@
-import App from 'desktop/apps/auction/components/App'
-import Articles from 'desktop/collections/articles.coffee'
-import Auction from 'desktop/models/auction.coffee'
-import CurrentUser from 'desktop/models/current_user.coffee'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import auctionReducer from 'desktop/apps/auction/reducers'
-import configureStore from 'desktop/components/react/utils/configureStore'
+import App from "desktop/apps/auction/components/App"
+import Articles from "desktop/collections/articles.coffee"
+import Auction from "desktop/models/auction.coffee"
+import CurrentUser from "desktop/models/current_user.coffee"
+import React from "react"
+import ReactDOM from "react-dom"
+import auctionReducer from "desktop/apps/auction/reducers"
+import configureStore from "desktop/components/react/utils/configureStore"
 
 export default () => {
   const bootstrapData = window.__BOOTSTRAP__
@@ -27,6 +27,6 @@ export default () => {
   // Start app
   ReactDOM.hydrate(
     <App store={store} templateComponents={templateComponents} />,
-    document.getElementById('react-root')
+    document.getElementById("react-root")
   )
 }

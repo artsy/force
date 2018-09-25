@@ -1,55 +1,55 @@
-import { mount } from 'enzyme'
-import { data as sd } from 'sharify'
-import Cookies from 'cookies-js'
-import React from 'react'
-import { ModalManager } from 'reaction/Components/Authentication/Desktop/ModalManager'
-import { ModalContainer } from '../ModalContainer'
-const mediator = require('../../../../lib/mediator.coffee')
+import { mount } from "enzyme"
+import { data as sd } from "sharify"
+import Cookies from "cookies-js"
+import React from "react"
+import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
+import { ModalContainer } from "../ModalContainer"
+const mediator = require("../../../../lib/mediator.coffee")
 
-jest.mock('sharify')
-jest.mock('cookies-js')
+jest.mock("sharify")
+jest.mock("cookies-js")
 jest.useFakeTimers()
 
-describe('ModalContainer', () => {
+describe("ModalContainer", () => {
   beforeEach(() => {
     Cookies.set = jest.fn()
     sd.AP = {
-      loginPagePath: '/login',
-      signupPagePath: '/signup',
+      loginPagePath: "/login",
+      signupPagePath: "/signup",
     }
-    sd.CSRF_TOKEN = 'sample-token'
+    sd.CSRF_TOKEN = "sample-token"
   })
 
-  it('Mediator can open a login modal', () => {
+  it("Mediator can open a login modal", () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger('open:auth', { mode: 'login' })
+    mediator.trigger("open:auth", { mode: "login" })
     jest.runTimersToTime(1000)
     const form = component.find(ModalManager).instance().state
-    expect(form.currentType).toBe('login')
+    expect(form.currentType).toBe("login")
   })
 
-  it('Mediator can open a signup modal', () => {
+  it("Mediator can open a signup modal", () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger('open:auth', { mode: 'signup' })
+    mediator.trigger("open:auth", { mode: "signup" })
     jest.runTimersToTime(1000)
     const form = component.find(ModalManager).instance().state
-    expect(form.currentType).toBe('signup')
+    expect(form.currentType).toBe("signup")
   })
 
-  it('Mediator can open a reset_password modal', () => {
+  it("Mediator can open a reset_password modal", () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger('open:auth', { mode: 'reset_password' })
+    mediator.trigger("open:auth", { mode: "reset_password" })
 
     jest.runTimersToTime(1000)
     const form = component.find(ModalManager).instance().state
-    expect(form.currentType).toBe('reset_password')
+    expect(form.currentType).toBe("reset_password")
   })
 
-  it('Sets a cookie when opening the modal', () => {
+  it("Sets a cookie when opening the modal", () => {
     mount(<ModalContainer />)
-    mediator.trigger('open:auth', { mode: 'login', destination: 'foo' })
+    mediator.trigger("open:auth", { mode: "login", destination: "foo" })
     const cookie = Cookies.set.mock.calls[0]
 
-    expect(cookie[0]).toBe('destination')
+    expect(cookie[0]).toBe("destination")
   })
 })

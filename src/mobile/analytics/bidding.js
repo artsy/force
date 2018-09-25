@@ -6,8 +6,8 @@ var AUCTION_ID =
   (sd.AUCTION && sd.AUCTION.id) ||
   (sd.SALE && sd.SALE.id) ||
   (sd.UPCOMING_AUCTIONS && sd.UPCOMING_AUCTIONS[0].id) ||
-  location.pathname.replace('/auction/', '').split('/')[0] ||
-  location.search.replace('?auction_id=', '') ||
+  location.pathname.replace("/auction/", "").split("/")[0] ||
+  location.search.replace("?auction_id=", "") ||
   null
 var USER_AUCTION = {}
 if (sd.CURRENT_USER) USER_AUCTION.user_id = sd.CURRENT_USER.id
@@ -22,38 +22,38 @@ if (AUCTION_ID) USER_AUCTION.auction_slug = AUCTION_ID
 
 // Clicked "Register" in the Thank You / Auction modal
 analytics.trackLink(
-  $('.auction-subscribed-thank-you [href*=sign_up]')[0],
-  'Clicked “Register to bid” on the auction feature page',
+  $(".auction-subscribed-thank-you [href*=sign_up]")[0],
+  "Clicked “Register to bid” on the auction feature page",
   USER_AUCTION
 )
 
 // Successful registration on auction feature page
-analyticsHooks.on('auth:signup', function(data) {
+analyticsHooks.on("auth:signup", function(data) {
   analytics.track(
-    'Successful registration on auction feature page',
+    "Successful registration on auction feature page",
     USER_AUCTION
   )
 })
 
 // Registration submitted
-analyticsHooks.on('registration:submitted', function() {
-  analytics.track('Registration submitted', USER_AUCTION)
+analyticsHooks.on("registration:submitted", function() {
+  analytics.track("Registration submitted", USER_AUCTION)
 })
 
 // Registration submit billing address
-analyticsHooks.on('registration:submitted-address', function(options) {
-  analytics.track('Registration submit billing address', USER_AUCTION)
+analyticsHooks.on("registration:submitted-address", function(options) {
+  analytics.track("Registration submit billing address", USER_AUCTION)
 })
 
 // Registration card validated
-analyticsHooks.on('registration:validated', function(options) {
-  analytics.track('Registration card validated', USER_AUCTION)
+analyticsHooks.on("registration:validated", function(options) {
+  analytics.track("Registration card validated", USER_AUCTION)
 })
 
 // Clicked “Bid” on the artwork page
 analytics.trackLink(
-  $('.artwork-bid-button')[0],
-  'Clicked “Bid” on the artwork page',
+  $(".artwork-bid-button")[0],
+  "Clicked “Bid” on the artwork page",
   USER_AUCTION
 )
 
@@ -61,20 +61,20 @@ analytics.trackLink(
 // Does not exist in MG, just list item links
 
 // Clicked “Confirm Bid” on bid page
-$('#feature-bid-page-container .avant-garde-box-button-black').click(
+$("#feature-bid-page-container .avant-garde-box-button-black").click(
   function() {
-    analytics.track('Clicked “Confirm Bid” on bid page', USER_AUCTION)
+    analytics.track("Clicked “Confirm Bid” on bid page", USER_AUCTION)
 
     // Error placing your bid
-    $(document).one('ajaxError', function(e, jqXHR, settings, error) {
-      analytics.track('Error placing your bid', jqXHR.responseText)
+    $(document).one("ajaxError", function(e, jqXHR, settings, error) {
+      analytics.track("Error placing your bid", jqXHR.responseText)
     })
   }
 )
 
 // Confirmed bid on bid page
-analyticsHooks.on('confirm:bid', function(bidderPosition) {
-  analytics.track('Confirmed bid on bid page', {
+analyticsHooks.on("confirm:bid", function(bidderPosition) {
+  analytics.track("Confirmed bid on bid page", {
     user_id: USER_AUCTION.user_id,
     auction_slug: USER_AUCTION.auction_slug,
     bidder_position_id: bidderPosition.id,
@@ -83,10 +83,10 @@ analyticsHooks.on('confirm:bid', function(bidderPosition) {
 
 // Auction Page Pageview
 if (
-  location.pathname.match(new RegExp('auction/.*')) &&
-  !location.pathname.match(new RegExp('auction/.*/'))
+  location.pathname.match(new RegExp("auction/.*")) &&
+  !location.pathname.match(new RegExp("auction/.*/"))
 ) {
-  analytics.track('Auction Page Pageview', {
+  analytics.track("Auction Page Pageview", {
     slug: AUCTION_ID,
     preview: sd.AUCTION.auction_state,
     nonInteraction: 1,
@@ -98,12 +98,12 @@ if (
 // -----------------------------------------------------------------------------
 
 // Clicked "Register" in the Thank You / Auction modal
-$(document).on('click', '.auction-subscribed-register', function() {
+$(document).on("click", ".auction-subscribed-register", function() {
   analytics.track('Clicked "Register" in the Thank You / Auction modal')
 })
 
 // Clicked "Skip" in the Thank You / Auction modal
-$(document).on('click', '.auction-subscribed-skip', function() {
+$(document).on("click", ".auction-subscribed-skip", function() {
   analytics.track('Clicked "Skip" in the Thank You / Auction modal')
 })
 
@@ -113,8 +113,8 @@ if (location.pathname.match(/artwork\/.*\/bid/))
 
 // Trigged login for bid registrations
 if (
-  location.pathname.indexOf('/log_in') !== -1 &&
-  location.search.indexOf('?redirect_uri=/auction-registration/') !== -1
+  location.pathname.indexOf("/log_in") !== -1 &&
+  location.search.indexOf("?redirect_uri=/auction-registration/") !== -1
 ) {
-  analytics.track('Trigged login form via register to bid button')
+  analytics.track("Trigged login form via register to bid button")
 }

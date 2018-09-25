@@ -75,6 +75,12 @@ html[data-useragent*="iPad"]
   #main-layout-header-home-logo
     border-right 1px solid gray-lighter-color
 
+// FIXME: Reduce the header margin on whitelisted pages, merge this back into .minimal-header 
+// rule above once other consumers are confirmed.
+.minimal-header.minimal-header-margin
+  #main-layout-container
+    margin-top 42px !important
+
 // Simply hides the header
 .body-no-header
   #main-layout-header

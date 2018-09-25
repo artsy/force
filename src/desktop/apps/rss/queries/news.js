@@ -1,6 +1,6 @@
-import { data as sd } from 'sharify'
-import { articleBody } from '../../article/queries/articleBody'
-import { sectionFragments } from 'desktop/apps/article/queries/sectionFragments'
+import { data as sd } from "sharify"
+import { articleBody } from "../../article/queries/articleBody"
+import { sectionFragments } from "desktop/apps/article/queries/sectionFragments"
 
 export const news = `
   query RSSNewsQuery {

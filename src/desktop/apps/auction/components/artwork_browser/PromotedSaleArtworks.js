@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
-import MasonryGrid from 'desktop/components/react/masonry_grid/MasonryGrid'
-import React, { Fragment } from 'react'
-import get from 'lodash.get'
-import { Artwork } from 'reaction/Components/Artwork'
-import { ArtworkRail } from '../artwork_rail/ArtworkRail'
-import { connect } from 'react-redux'
+import PropTypes from "prop-types"
+import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
+import React, { Fragment } from "react"
+import get from "lodash.get"
+import { Artwork } from "reaction/Components/Artwork"
+import { ArtworkRail } from "../artwork_rail/ArtworkRail"
+import { connect } from "react-redux"
 
 function PromotedSaleArtworks(props) {
   const { isClosed, isMobile, promotedSaleArtworks } = props
@@ -21,11 +21,11 @@ function PromotedSaleArtworks(props) {
       {isMobile ? (
         <MasonryGrid
           mask
-          title="Buy Now"
+          title="Buy now"
           columnCount={2}
           items={promotedSaleArtworks}
           getAspectRatio={({ artwork }) => {
-            return get(artwork, 'images.0.aspect_ratio')
+            return get(artwork, "images.0.aspect_ratio")
           }}
           getDisplayComponent={({ artwork }) => {
             return (
@@ -38,7 +38,7 @@ function PromotedSaleArtworks(props) {
       ) : (
         // Desktop
         <ArtworkRail
-          title="Buy Now"
+          title="Buy now"
           artworks={promotedSaleArtworks}
           getDisplayComponent={({ artwork }) => {
             return (
@@ -69,7 +69,7 @@ const mapStateToProps = state => {
   const auctionData = auction.toJSON()
   const promotedSaleArtworks = get(
     auctionData,
-    'promoted_sale.sale_artworks',
+    "promoted_sale.sale_artworks",
     []
   )
 

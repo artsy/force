@@ -1,21 +1,21 @@
-import { renderLayout } from '@artsy/stitch'
-import { AuthStatic } from './components/AuthStatic'
-import { ModalType } from 'reaction/Components/Authentication/Types'
-import { AuthenticationMeta } from './components/meta'
-import { MobileAuthStatic } from './components/MobileAuthStatic'
+import { renderLayout } from "@artsy/stitch"
+import { AuthStatic } from "./components/AuthStatic"
+import { ModalType } from "reaction/Components/Authentication/Types"
+import { AuthenticationMeta } from "./components/meta"
+import { MobileAuthStatic } from "./components/MobileAuthStatic"
 
 export const index = async (req, res, next) => {
   let type: ModalType
   const template = res.locals.sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
 
   switch (req.path) {
-    case '/login':
+    case "/login":
       type = ModalType.login
       break
-    case '/signup':
+    case "/signup":
       type = ModalType.signup
       break
-    case '/forgot':
+    case "/forgot":
       type = ModalType.forgot
       break
     default:
@@ -23,20 +23,20 @@ export const index = async (req, res, next) => {
       break
   }
 
-  let title = ''
+  let title = ""
   switch (type) {
     case ModalType.login:
-      title = 'Login to Artsy'
+      title = "Login to Artsy"
       break
     case ModalType.signup:
-      title = 'Signup for Artsy'
+      title = "Signup for Artsy"
       break
     case ModalType.forgot:
-      title = 'Forgot Password'
+      title = "Forgot Password"
       break
   }
   const meta = {
-    description: '',
+    description: "",
     title,
   }
 
@@ -59,12 +59,12 @@ export const index = async (req, res, next) => {
     res.locals.sd.SET_PASSWORD = req.query.set_password
   }
 
-  const redirectTo = req.query.redirectTo || '/'
-  const signupReferer = req.header('Referer') || req.host
+  const redirectTo = req.query.redirectTo || "/"
+  const signupReferer = req.header("Referer") || req.host
 
   if (action && objectId && kind) {
     res.cookie(
-      'afterSignUpAction',
+      "afterSignUpAction",
       JSON.stringify({
         action,
         objectId,
@@ -76,7 +76,7 @@ export const index = async (req, res, next) => {
   try {
     const layout = await renderLayout({
       basePath: __dirname,
-      layout: '../../components/main_layout/templates/react_blank_index.jade',
+      layout: "../../components/main_layout/templates/react_blank_index.jade",
       config: {
         styledComponents: true,
       },
@@ -86,7 +86,7 @@ export const index = async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: 'auth2',
+        assetPackage: "auth2",
       },
       data: {
         type,
@@ -117,11 +117,11 @@ export const resetPassword = (req, res) => {
     req.session.set_password = req.query.set_password
     req.session.reset_password_redirect_to =
       req.query.reset_password_redirect_to
-    res.redirect('/reset_password')
+    res.redirect("/reset_password")
   } else {
     res.locals.sd.RESET_PASWORD_REDIRECT_TO =
       req.session.reset_password_redirect_to
-    res.render('reset_password', {
+    res.render("reset_password", {
       reset_password_token: req.session.reset_password_token,
       set_password: req.session.set_password,
     })

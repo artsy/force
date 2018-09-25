@@ -1,36 +1,39 @@
-import ActiveBidItem from 'desktop/apps/auction/components/layout/active_bids/ActiveBidItem'
-import BidStatus from 'desktop/components/bid_status/react'
-import MeQuery from 'desktop/apps/auction/queries/me'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import block from 'bem-cn-lite'
-import get from 'lodash.get'
-import metaphysics from 'lib/metaphysics.coffee'
-import { connect } from 'react-redux'
-import { data as sd } from 'sharify'
+import ActiveBidItem from "desktop/apps/auction/components/layout/active_bids/ActiveBidItem"
+import BidStatus from "desktop/components/bid_status/react"
+import MeQuery from "desktop/apps/auction/queries/me"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import block from "bem-cn-lite"
+import get from "lodash.get"
+import metaphysics from "lib/metaphysics.coffee"
+import { connect } from "react-redux"
+import { data as sd } from "sharify"
 
 class MyActiveBids extends Component {
   static propTypes = {
     lotStandings: PropTypes.array,
     saleId: PropTypes.string.isRequired,
-    user: PropTypes.object
+    user: PropTypes.object,
   }
 
   state = {
-    lotStandings: []
+    lotStandings: [],
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.setState({
-      lotStandings: this.props.lotStandings
+      lotStandings: this.props.lotStandings,
     })
   }
 
-  componentDidMount () {
-    this.pollInterval = setInterval(this.getFreshData, sd.ACTIVE_BIDS_POLL_INTERVAL)
+  componentDidMount() {
+    this.pollInterval = setInterval(
+      this.getFreshData,
+      sd.ACTIVE_BIDS_POLL_INTERVAL
+    )
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.clearInterval(this.pollInterval)
   }
 
@@ -41,24 +44,26 @@ class MyActiveBids extends Component {
       const { me } = await metaphysics({
         query: MeQuery(saleId),
         req: {
-          user
-        }
+          user,
+        },
       })
 
       this.setState({
-        lotStandings: me.lot_standings
+        lotStandings: me.lot_standings,
       })
     } catch (error) {
       console.error(
-        'auction/components/layout/active_bids/MyActiveBids.js',
-        'Error fetching active bid: ', error
+        "auction/components/layout/active_bids/MyActiveBids.js",
+        "Error fetching active bid: ",
+        error
       )
     }
   }
 
-  render () {
-    const lotStandings = get(this.state, 'lotStandings', false) || this.props.lotStandings || []
-    const b = block('auction-MyActiveBids')
+  render() {
+    const lotStandings =
+      get(this.state, "lotStandings", false) || this.props.lotStandings || []
+    const b = block("auction-MyActiveBids")
 
     if (!lotStandings.length) {
       return null
@@ -66,37 +71,31 @@ class MyActiveBids extends Component {
 
     return (
       <div className={b()}>
-        <h2>
-          Your Active Bids
-        </h2>
+        <h2>Your Active Bids</h2>
 
-        { lotStandings
-          .filter(bid => bid.sale_artwork)
-          .map((bid, key) => {
-            return (
-              <ActiveBidItem
-                {...bid.sale_artwork}
-                BidStatus={BidStatus}
-                bid={bid}
-                key={key}
-              />
-            )
-          })}
+        {lotStandings.filter(bid => bid.sale_artwork).map((bid, key) => {
+          return (
+            <ActiveBidItem
+              {...bid.sale_artwork}
+              BidStatus={BidStatus}
+              bid={bid}
+              key={key}
+            />
+          )
+        })}
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { app } = state
 
   return {
     lotStandings: app.me.lot_standings,
-    saleId: app.auction.get('id'),
-    user: app.user
+    saleId: app.auction.get("id"),
+    user: app.user,
   }
 }
 
-export default connect(
-  mapStateToProps
-)(MyActiveBids)
+export default connect(mapStateToProps)(MyActiveBids)

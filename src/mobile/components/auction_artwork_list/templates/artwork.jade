@@ -43,7 +43,7 @@ a.auction-artwork-list-item( href= auction.isAuctionPromo() ? ('/auction-artwork
 
           if artwork.get('acquireable') && artwork.saleMessage()
             .aali-buy-now
-              | Buy Now: #{artwork.saleMessage()}
+              | Buy now: #{artwork.saleMessage()}
         else
           .aali-sold
             = artwork.saleMessage()

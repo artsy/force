@@ -1,8 +1,8 @@
-import React from 'react'
-import { shallow } from 'enzyme'
-import App from '../App'
+import React from "react"
+import { shallow } from "enzyme"
+import App from "../App"
 
-describe('Categories App', () => {
+describe("Categories App", () => {
   let app
   let geneFamilies
   let allFeaturedGenesByFamily
@@ -10,44 +10,49 @@ describe('Categories App', () => {
   beforeEach(() => {
     geneFamilies = [
       {
-        id: 'materials',
-        name: 'Materials',
+        id: "materials",
+        name: "Materials",
         genes: [
           /* … */
-        ]
+        ],
       },
       {
-        id: 'styles',
-        name: 'Styles',
+        id: "styles",
+        name: "Styles",
         genes: [
           /* … */
-        ]
-      }
+        ],
+      },
     ]
 
     allFeaturedGenesByFamily = [
       {
-        name: 'Materials',
+        name: "Materials",
         genes: [
           /* … */
-        ]
+        ],
       },
       {
-        name: 'Styles',
+        name: "Styles",
         genes: [
           /* … */
-        ]
-      }
+        ],
+      },
     ]
 
-    app = shallow(<App geneFamilies={geneFamilies} allFeaturedGenesByFamily={allFeaturedGenesByFamily} />)
+    app = shallow(
+      <App
+        geneFamilies={geneFamilies}
+        allFeaturedGenesByFamily={allFeaturedGenesByFamily}
+      />
+    )
   })
 
-  it('renders navigation', () => {
-    app.find('GeneFamilyNav').length.should.equal(1)
+  it("renders navigation", () => {
+    app.find("GeneFamilyNav").length.should.equal(1)
   })
 
-  it('renders TAGP content', () => {
-    app.find('TAGPContent').length.should.equal(1)
+  it("renders TAGP content", () => {
+    app.find("TAGPContent").length.should.equal(1)
   })
 })

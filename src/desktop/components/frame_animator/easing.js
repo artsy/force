@@ -33,15 +33,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 const pi = Math.PI
-export const sinIn = (t) => 1 - Math.cos(t * pi / 2)
-export const sinOut = (t) => Math.sin(t * pi / 2)
-export const sinInOut = (t) => (1 - Math.cos(pi * t)) / 2
+export const sinIn = t => 1 - Math.cos(t * pi / 2)
+export const sinOut = t => Math.sin(t * pi / 2)
+export const sinInOut = t => (1 - Math.cos(pi * t)) / 2
 
-export const quadIn = (t) => t * t
-export const quadOut = (t) => t * (2 - t)
-export const quadInOut = (t) => ((t *= 2) <= 1 ? t * t : --t * (2 - t) + 1) / 2
+export const quadIn = t => t * t
+export const quadOut = t => t * (2 - t)
+export const quadInOut = t => ((t *= 2) <= 1 ? t * t : --t * (2 - t) + 1) / 2
 
-export const cubicIn = (t) => t * t * t
-export const cubicOut = (t) => --t * t * t + 1
-export const cubicInOut = (t) =>
+export const cubicIn = t => t * t * t
+export const cubicOut = t => --t * t * t + 1
+export const cubicInOut = t =>
   ((t *= 2) <= 1 ? t * t * t : (t -= 2) * t * t + 2) / 2

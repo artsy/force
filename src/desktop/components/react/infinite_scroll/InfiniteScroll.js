@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { throttle } from 'underscore'
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import { throttle } from "underscore"
 
 const THROTTLE_MS = 200
 
@@ -19,7 +19,7 @@ export default class InfiniteScroll extends Component {
   componentDidMount() {
     const { triggerElement } = this.props
 
-    this.$ = require('jquery')
+    this.$ = require("jquery")
     this.$(window).on(`scroll${triggerElement}`, this.handleScroll())
 
     this.setState(() => {

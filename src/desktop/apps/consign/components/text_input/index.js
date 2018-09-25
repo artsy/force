@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
 
-export const renderTextInput = ({ input: { onChange, value }, meta: { error, touched, warning }, ...custom }) => (
+export const renderTextInput = ({
+  input: { onChange, value },
+  meta: { error, touched, warning },
+  ...custom
+}) => (
   <TextInput
     {...custom}
     value={value}
@@ -13,7 +17,7 @@ export const renderTextInput = ({ input: { onChange, value }, meta: { error, tou
   />
 )
 
-function TextInput (props) {
+function TextInput(props) {
   const {
     autofocus,
     error,
@@ -24,28 +28,27 @@ function TextInput (props) {
     touched,
     type,
     warning,
-    value
+    value,
   } = props
 
-  const b = block('consignments-submission-text-input')
+  const b = block("consignments-submission-text-input")
   return (
-    <div className={b({error: Boolean(touched && error)})} name={item}>
-      { label && <div className={b('label')}>{ label }</div> }
-      { instructions && <div className={b('instructions')}>{ instructions }</div> }
+    <div className={b({ error: Boolean(touched && error) })} name={item}>
+      {label && <div className={b("label")}>{label}</div>}
+      {instructions && <div className={b("instructions")}>{instructions}</div>}
       <input
         autoFocus={autofocus}
         data={item}
-        className={b.builder()('input').mix('bordered-input')()}
-        type={type || 'text'}
-        onKeyUp={(e) => onChange(e.target.value)}
+        className={b
+          .builder()("input")
+          .mix("bordered-input")()}
+        type={type || "text"}
+        onKeyUp={e => onChange(e.target.value)}
         defaultValue={value}
       />
-      {
-        touched && (
-          (warning && <div className={b('warning')}>{warning}</div>) ||
-          (error && <div className={b('error')}>{error}</div>)
-        )
-      }
+      {touched &&
+        ((warning && <div className={b("warning")}>{warning}</div>) ||
+          (error && <div className={b("error")}>{error}</div>))}
     </div>
   )
 }
@@ -60,8 +63,5 @@ TextInput.propTypes = {
   touched: PropTypes.bool,
   type: PropTypes.string,
   warning: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

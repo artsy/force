@@ -1,9 +1,9 @@
-import _request from 'superagent'
-import { data as _sd } from 'sharify'
-import Articles from '../../collections/articles'
-import Q from 'bluebird-q'
-import { news as newsQuery } from './queries/news'
-import { positronql as _positronql } from 'desktop/lib/positronql'
+import _request from "superagent"
+import { data as _sd } from "sharify"
+import Articles from "../../collections/articles"
+import Q from "bluebird-q"
+import { news as newsQuery } from "./queries/news"
+import { positronql as _positronql } from "desktop/lib/positronql"
 
 const PAGE_SIZE = 50
 
@@ -18,8 +18,8 @@ export const news = (req, res, next) => {
     .then(async result => {
       try {
         const articles = await findArticlesWithEmbeds(result.articles)
-        res.set('Content-Type', 'application/rss+xml')
-        return res.render('news', { articles, pretty: true })
+        res.set("Content-Type", "application/rss+xml")
+        return res.render("news", { articles, pretty: true })
       } catch (err) {
         console.error(err)
       }
@@ -32,13 +32,13 @@ export const partnerUpdates = (req, res, next) =>
     data: {
       channel_id: sd.GALLERY_PARTNER_UPDATES_CHANNEL,
       published: true,
-      sort: '-published_at',
+      sort: "-published_at",
       limit: PAGE_SIZE,
     },
     error: res.backboneError,
     success: articles => {
-      res.set('Content-Type', 'application/rss+xml')
-      return res.render('partner_updates', { articles, pretty: true })
+      res.set("Content-Type", "application/rss+xml")
+      return res.render("partner_updates", { articles, pretty: true })
     },
   })
 
@@ -72,13 +72,13 @@ export const findSocialEmbeds = article => {
 
 export const maybeFetchSocialEmbed = section => {
   return new Promise((resolve, reject) => {
-    if (section.type !== 'social_embed') {
+    if (section.type !== "social_embed") {
       return resolve(section)
     } else {
       const { url } = section
-      const service = url.includes('twitter')
-        ? 'publish.twitter'
-        : 'api.instagram'
+      const service = url.includes("twitter")
+        ? "publish.twitter"
+        : "api.instagram"
 
       request
         .get(`https://${service}.com/oembed?url=${url}`)

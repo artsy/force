@@ -1,11 +1,11 @@
-import Alert from '../../../../components/main_layout/public/icons/alert.svg'
-import Close from '../../../../components/main_layout/public/icons/close.svg'
-import PropTypes from 'prop-types'
-import React from 'react'
-import block from 'bem-cn-lite'
-import { connect } from 'react-redux'
-import { contains } from 'underscore'
-import { removeImage } from '../../client/actions'
+import Alert from "../../../../components/main_layout/public/icons/alert.svg"
+import Close from "../../../../components/main_layout/public/icons/close.svg"
+import PropTypes from "prop-types"
+import React from "react"
+import block from "bem-cn-lite"
+import { connect } from "react-redux"
+import { contains } from "underscore"
+import { removeImage } from "../../client/actions"
 
 export function UploadedImage(props) {
   const {
@@ -15,7 +15,7 @@ export function UploadedImage(props) {
     progressBars,
     removeImageAction,
   } = props
-  const b = block('consignments-submission-uploaded-image')
+  const b = block("consignments-submission-uploaded-image")
   const processing = contains(processingImages, file.fileName)
   const errored = contains(erroredImages, file.fileName)
   const processingPercentage = progressBars[file.fileName]
@@ -23,16 +23,16 @@ export function UploadedImage(props) {
     : 0
 
   const errorBlock = (
-    <div className={b('error')}>
-      <div className={b('error-alert')}>
+    <div className={b("error")}>
+      <div className={b("error-alert")}>
         <Alert />
       </div>
-      <div className={b('error-content')}>
+      <div className={b("error-content")}>
         {file.fileName} failed to upload.<br />
         <b>The image file should be JPG or PNG and should be less than 30mb.</b>
       </div>
       <div
-        className={b('error-close')}
+        className={b("error-close")}
         onClick={() => removeImageAction(file.fileName)}
       >
         <Close />
@@ -45,17 +45,17 @@ export function UploadedImage(props) {
       {errored ? (
         errorBlock
       ) : (
-        <div className={b('image-wrapper', { processing })}>
-          <img className={b('image')} src={file.src} />
+        <div className={b("image-wrapper", { processing })}>
+          <img className={b("image")} src={file.src} />
           {processing ? (
-            <div className={b('progress-wrapper')}>
+            <div className={b("progress-wrapper")}>
               <div
-                className={b('progress')}
+                className={b("progress")}
                 style={{ width: `${processingPercentage}%` }}
               />
             </div>
           ) : (
-            <div className={b('filename')}>{file.fileName}</div>
+            <div className={b("filename")}>{file.fileName}</div>
           )}
         </div>
       )}
@@ -63,7 +63,7 @@ export function UploadedImage(props) {
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     erroredImages: state.submissionFlow.erroredImages,
     processingImages: state.submissionFlow.processingImages,

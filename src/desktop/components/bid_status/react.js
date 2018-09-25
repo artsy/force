@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import BidStatusArrowIcon from './public/icons/bid-status-arrow.svg'
-import block from 'bem-cn-lite'
+import PropTypes from "prop-types"
+import React from "react"
+import BidStatusArrowIcon from "./public/icons/bid-status-arrow.svg"
+import block from "bem-cn-lite"
 
 export default function BidStatus(props) {
-  const b = block('bid-status')
+  const b = block("bid-status")
 
   const {
     bid,
@@ -13,7 +13,7 @@ export default function BidStatus(props) {
   } = props
 
   const leadingBidder = bid.is_leading_bidder
-  const reserveNotMet = saleArtwork.reserve_status === 'reserve_not_met'
+  const reserveNotMet = saleArtwork.reserve_status === "reserve_not_met"
   const isWinning = leadingBidder && !reserveNotMet
   const isReserve = leadingBidder && reserveNotMet
 
@@ -30,7 +30,7 @@ export default function BidStatus(props) {
       {(() => {
         if (isWinning) {
           return (
-            <div className={b('is-winning')}>
+            <div className={b("is-winning")}>
               <p>
                 {winningMessage} <Arrow direction="up" />
               </p>
@@ -38,7 +38,7 @@ export default function BidStatus(props) {
           )
         } else if (isReserve) {
           return (
-            <div className={b('is-winning-reserve-not-met')}>
+            <div className={b("is-winning-reserve-not-met")}>
               <p>
                 {reserveMessage} <Arrow direction="up" />
               </p>
@@ -46,7 +46,7 @@ export default function BidStatus(props) {
           )
         } else {
           return (
-            <div className={b('is-losing')}>
+            <div className={b("is-losing")}>
               <p>
                 {losingMessage} <Arrow direction="down" />
               </p>
@@ -70,8 +70,8 @@ BidStatus.propTypes = {
 
 BidStatus.defaultProps = {
   messages: {
-    losingMessage: 'Outbid',
-    reserveMessage: 'Highest Bid',
-    winningMessage: 'Highest Bid',
+    losingMessage: "Outbid",
+    reserveMessage: "Highest Bid",
+    winningMessage: "Highest Bid",
   },
 }

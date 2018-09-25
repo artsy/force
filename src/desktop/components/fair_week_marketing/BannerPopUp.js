@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import styled from 'styled-components'
-import colors from 'reaction/Assets/Colors'
-import InvertedButton from 'reaction/Components/Buttons/Inverted'
-import MarketingModal from 'desktop/components/marketing_signup_modal/index.coffee'
+import PropTypes from "prop-types"
+import React from "react"
+import styled from "styled-components"
+import colors from "reaction/Assets/Colors"
+import InvertedButton from "reaction/Components/Buttons/Inverted"
+import MarketingModal from "desktop/components/marketing_signup_modal/index.coffee"
 
 const StickyFooter = styled.div`
   position: fixed;

@@ -1,9 +1,9 @@
-import sinon from 'sinon'
+import sinon from "sinon"
 
-const rewire = require('rewire')('../routes')
+const rewire = require("rewire")("../routes")
 const { index } = rewire
 
-describe('Personalize routes', () => {
+describe("Personalize routes", () => {
   let req
   let res
   let next
@@ -12,7 +12,7 @@ describe('Personalize routes', () => {
   beforeEach(() => {
     req = {
       body: {},
-      params: { slug: 'interests' },
+      params: { slug: "interests" },
       redirect: sinon.stub(),
     }
     res = {
@@ -22,12 +22,12 @@ describe('Personalize routes', () => {
   })
 
   renderLayout = sinon.stub()
-  rewire.__set__('renderLayout', renderLayout)
+  rewire.__set__("renderLayout", renderLayout)
 
-  it('renders the personalize app', () => {
+  it("renders the personalize app", () => {
     index(req, res, next).then(() => {
-      renderLayout.args[0][0].data.title.should.eql('Personalize | Artsy')
-      renderLayout.args[0][0].locals.assetPackage.should.eql('onboarding')
+      renderLayout.args[0][0].data.title.should.eql("Personalize | Artsy")
+      renderLayout.args[0][0].locals.assetPackage.should.eql("onboarding")
     })
   })
 })

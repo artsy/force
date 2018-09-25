@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import upcomingLabel from './utils/upcoming_label'
+import PropTypes from "prop-types"
+import React from "react"
+import upcomingLabel from "./utils/upcoming_label"
 
 export default function AuctionBlock(props) {
   const { relatedAuction, sale } = props
@@ -20,7 +20,7 @@ export default function AuctionBlock(props) {
 
   const image =
     (cover_image && cover_image.cropped && cover_image.cropped.url) ||
-    '/images/missing_image.png'
+    "/images/missing_image.png"
 
   const statusLabel = upcomingLabel(
     start_at,

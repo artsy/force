@@ -1,7 +1,7 @@
-import DOM from './DOM'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import DOM from "./DOM"
+import PropTypes from "prop-types"
+import React, { Component } from "react"
+import styled from "styled-components"
 
 export default class App extends Component {
   static propTypes = {
@@ -11,11 +11,11 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log('Component mounted on client!')
+    console.log("Component mounted on client!")
   }
 
   handleButtonClick = event => {
-    console.warn('React Button clicked!', this.props.description)
+    console.warn("React Button clicked!", this.props.description)
   }
 
   render() {

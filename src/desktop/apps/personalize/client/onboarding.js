@@ -1,21 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Router } from 'react-router'
-import createHistory from 'history/createBrowserHistory'
-import Cookies from 'cookies-js'
+import React from "react"
+import ReactDOM from "react-dom"
+import { Router } from "react-router"
+import createHistory from "history/createBrowserHistory"
+import Cookies from "cookies-js"
 
-import { ContextProvider } from 'reaction/Artsy'
-import { Wizard } from 'reaction/Components/Onboarding/Wizard'
-import { data as sd } from 'sharify'
+import { ContextProvider } from "reaction/Artsy"
+import { Wizard } from "reaction/Components/Onboarding/Wizard"
+import { data as sd } from "sharify"
 
 export const init = () => {
   const bootstrapData = window.__BOOTSTRAP__
 
-  let redirectTo = '/'
+  let redirectTo = "/"
   // Check the cookie for a destination
-  if (Cookies.get('destination')) {
-    redirectTo = Cookies.get('destination')
-    Cookies.expire('destination')
+  if (Cookies.get("destination")) {
+    redirectTo = Cookies.get("destination")
+    Cookies.expire("destination")
 
     // Also check the redirectTo from query params
   } else if (bootstrapData.redirectTo) {
@@ -41,6 +41,6 @@ export const init = () => {
         <Wizard redirectTo={redirectTo} />
       </ContextProvider>
     </Router>,
-    document.getElementById('react-root')
+    document.getElementById("react-root")
   )
 }
