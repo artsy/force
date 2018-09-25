@@ -60,12 +60,6 @@ describe("FixedHeader", () => {
     component.find(SectionsNav).length.should.eql(0)
   })
 
-  it("Sets up a scroll listener on mount", () => {
-    window.addEventListener = sinon.spy()
-    mount(<FixedHeader {...props} />)
-    window.addEventListener.args[0][0].should.eql("scroll")
-  })
-
   it("#onScroll opens menu if scrolling up", () => {
     const component = mount(<FixedHeader {...props} />)
     component.setState({ scrollPosition: 201 })
