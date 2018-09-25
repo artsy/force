@@ -59,7 +59,7 @@ module.exports = class Account extends StepView
         @user.repossess user.id,
           error: form.error.bind form
           success: =>
-            if sd.COMMERCIAL.enableNewInquiryFlow
+            if sd.COMMERCIAL?.enableNewInquiryFlow
               @next()
             else
               @state.get('inquiry').save {},
