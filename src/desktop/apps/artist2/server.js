@@ -6,6 +6,7 @@ import express from "express"
 import metaphysics from "lib/metaphysics.coffee"
 import React from "react"
 import styled from "styled-components"
+import { buildServerAppContext } from "desktop/lib/build_server_app_context"
 
 const app = (module.exports = express())
 
@@ -16,12 +17,7 @@ app.get("/artist/:artistID*", async (req, res, next) => {
     const { ServerApp, redirect, status } = await buildServerApp({
       routes,
       url: req.url,
-      context: {
-        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
-          ? ["xs"]
-          : undefined,
-        user,
-      },
+      context: buildServerAppContext(req, res),
     })
 
     if (redirect) {

@@ -4,6 +4,7 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { routes } from "./routes"
 import { renderLayout } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
+import { buildServerAppContext } from "desktop/lib/build_server_app_context"
 
 const app = (module.exports = express())
 
@@ -12,6 +13,7 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
     const { ServerApp, redirect, status } = await buildServerApp({
       routes,
       url: req.url,
+      context: buildServerAppContext(req, res),
     })
 
     if (redirect) {
