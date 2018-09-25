@@ -1,20 +1,18 @@
 import { buildServerAppContext } from "../build_server_app_context"
-import { Request, Response } from "express"
 
 describe("buildServerAppContext", () => {
-  let req: Request
-  let res: Response
+  let req, res
   beforeEach(() => {
     req = {
       user: {
         toJSON: () => ({ id: "user-id" }),
       },
-    } as any
+    }
     res = {
       locals: {
         sd: { EIGEN: false, IS_MOBILE: false },
       },
-    } as any
+    }
   })
   it("includes a mediator", () => {
     const subject = buildServerAppContext(req, res)

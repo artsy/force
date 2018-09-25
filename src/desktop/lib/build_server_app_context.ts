@@ -1,5 +1,11 @@
+// @ts-ignore
 import mediator from "desktop/lib/mediator.coffee"
-import { Request, Response } from "express"
+import { Request as ExpressRequest, Response as ExpressResponse } from "express"
+
+interface Request extends ExpressRequest {
+  user: any
+}
+type Response = ExpressResponse
 
 /**
  * Builds initial context for Reaction components from server load. Put commonly
