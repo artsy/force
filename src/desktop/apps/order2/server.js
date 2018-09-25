@@ -53,7 +53,6 @@ app.get("/order2/:orderID*", async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: "order2",
-        bodyClass: (res.locals.bodyClass || "") + " minimal-header-margin",
         // header logo should link back to originating artwork
         headerLogoHref: res.locals.sd.REFERRER,
         options: {
