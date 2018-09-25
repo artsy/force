@@ -19,6 +19,16 @@ const isCI = CI === "true"
 
 const cacheDirectory = path.resolve(__dirname, ".cache")
 
+if (!fs.existsSync(cacheDirectory)) {
+  console.log(
+    require("chalk").yellow(
+      "\n[!] Bugger. No existing `.cache` directory detected, this initial " +
+        "launch will take a while. Perhaps make yourself a nice cuppa tea " +
+        "first, champ?\n"
+    )
+  )
+}
+
 const config = {
   devtool: WEBPACK_DEVTOOL || "cheap-module-source-map",
   entry: {
