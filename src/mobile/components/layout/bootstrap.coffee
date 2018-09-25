@@ -59,7 +59,8 @@ ensureFreshUser = (data) ->
     'collector_level'
   ]
   for attr in attrs
-    if not _.isEqual data[attr], sd.CURRENT_USER[attr]
+    if (data[attr] or sd.CURRENT_USER[attr]) and not _.isEqual data[attr], sd.CURRENT_USER[attr]
+      RavenClient.captureException("Forced to refresh user", { extra: { attr: attr, session: sd.CURRENT_USER[attr], current: data[attr] } } )
       $.ajax('/user/refresh').then -> window.location.reload()
 
 syncAuth = module.exports.syncAuth = ->
