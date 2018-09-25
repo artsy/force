@@ -19,7 +19,10 @@ HeaderView = require './client/header_view.coffee'
 doc = window.document
 sharify = require('sharify')
 CurrentUser = require '../../models/current_user.coffee'
-globalClientSetup = require '../../lib/global_client_setup.coffee'
+# The conditional check below is for tests not to fail.
+# window.matchMedia is not recognized by specs
+if (window && window.matchMedia)
+  globalClientSetup = require '../../lib/global_client_setup.coffee'
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -42,7 +45,8 @@ module.exports = ->
   setupHeaderView()
   syncAuth()
   checkForAfterSignUpAction()
-  globalClientSetup()
+  if globalClientSetup
+    globalClientSetup()
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
