@@ -5,7 +5,7 @@ import express from "express"
 import React from "react"
 import { maybeShowOldCollect } from "./maybeShowOldCollect"
 import { Meta } from "./meta"
-import { buildServerAppContext } from "desktop/lib/build_server_app_context"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
 const app = (module.exports = express())
 

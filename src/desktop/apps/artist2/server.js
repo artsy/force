@@ -6,7 +6,7 @@ import express from "express"
 import metaphysics from "lib/metaphysics.coffee"
 import React from "react"
 import styled from "styled-components"
-import { buildServerAppContext } from "desktop/lib/build_server_app_context"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
 const app = (module.exports = express())
 

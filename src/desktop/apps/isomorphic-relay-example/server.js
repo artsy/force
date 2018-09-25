@@ -4,7 +4,7 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { routes } from "./routes"
 import { renderLayout } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
-import { buildServerAppContext } from "desktop/lib/build_server_app_context"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
 const app = (module.exports = express())
 

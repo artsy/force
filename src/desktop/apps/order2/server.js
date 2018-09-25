@@ -4,7 +4,7 @@ import React from "react"
 import { routes } from "reaction/Apps/Order/routes"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import styled from "styled-components"
-import { buildServerAppContext } from "desktop/lib/build_server_app_context"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
 const app = (module.exports = express())
 

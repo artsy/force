@@ -1,4 +1,4 @@
-import { buildServerAppContext } from "../build_server_app_context"
+import { buildServerAppContext } from "../buildServerAppContext"
 
 describe("buildServerAppContext", () => {
   let req, res
