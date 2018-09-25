@@ -4,22 +4,16 @@ import React from "react"
 import { routes } from "reaction/Apps/Order/routes"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import styled from "styled-components"
+import { buildServerAppContext } from "desktop/lib/build_server_app_context"
 
 const app = (module.exports = express())
 
 app.get("/order2/:orderID*", async (req, res, next) => {
   try {
-    const user = req.user && req.user.toJSON()
-
     const { ServerApp, redirect, status, headTags } = await buildServerApp({
       routes,
       url: req.url,
-      context: {
-        initialMatchingMediaQueries: res.locals.sd.IS_MOBILE
-          ? ["xs"]
-          : undefined,
-        user,
-      },
+      context: buildServerAppContext(req, res),
     })
 
     if (redirect) {
