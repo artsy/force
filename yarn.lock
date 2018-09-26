@@ -46,9 +46,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.4.0.tgz#ff00786379b6d283dad70fb302cd4cbfe6a22906"
+"@artsy/reaction@^4.4.1":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.5.0.tgz#1b43e0681797794341f5eedcb09ee3efdd7bd880"
   dependencies:
     "@artsy/palette" "^2.18.0"
     cheerio "^1.0.0-rc.2"
@@ -3571,8 +3571,6 @@ dd-trace@artsy/dd-trace-js#artsy:
     semver "^5.5.0"
     shimmer "^1.2.0"
     url-parse "^1.4.3"
-  optionalDependencies:
-    "@airbnb/node-memwatch" "^1.0.2"
 
 debounce@~1.0.0:
   version "1.0.2"
