@@ -28,9 +28,11 @@ describe 'ArtworkCommercialView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    sinon.stub location, 'assign'
 
   afterEach ->
     Backbone.sync.restore()
+    location.assign.restore()
 
   describe 'an ecommerce work', ->
     beforeEach ->
@@ -45,24 +47,47 @@ describe 'ArtworkCommercialView', ->
           .should.have.lengthOf 1
 
     describe '#acquire', ->
-      # FIXME: Reenable
-      xit 'purchases the work by creating a new PendingOrder', ->
+      it 'purchases an artwork by creating a new order', ->
         ArtworkCommercialView.__set__ 'CurrentUser',
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
+        createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
+        ArtworkCommercialView.__set__ 'createOrder', createOrderStub
+
         @view.$('.js-artwork-acquire-button').click()
+        createOrderStub.calledOnce.should.be.ok()
+        createOrderStub
+          .calledWith
+            artworkId: '56e86588b202a366da000571'
+            editionSetId: undefined
+            quantity: 1
+            user: sinon.match.any
+          .should.be.ok()
 
-        Backbone.sync.args[0][0]
-          .should.equal 'create'
 
-        Backbone.sync.args[0][1].attributes.should.eql
-          artwork_id: 'yee-wong-exploding-powder-movement-blue-and-pink'
-          edition_set_id: '56e866cd275b241d87000510'
-          quantity: null
-          replace_order: true
-          session_id: undefined
+  describe 'an ecommerce work with a single edition set', ->
+    beforeEach ->
+      @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork_single_edition.json'
+      @view.render()
+    describe '#acquire', ->
+      it 'purchases an artwork with a single edition set', ->
+        ArtworkCommercialView.__set__ 'CurrentUser',
+          orNull: ->
+            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
+        createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
+        ArtworkCommercialView.__set__ 'createOrder', createOrderStub
+
+        @view.$('.js-artwork-acquire-button').click()
+        createOrderStub.calledOnce.should.be.ok()
+        createOrderStub
+          .calledWith
+            artworkId: '56e86588b202a366da000571'
+            editionSetId: '56e866cd275b241d87000510'
+            quantity: 1
+            user: sinon.match.any
+          .should.be.ok()
 
   describe 'an inquireable work, not in a fair', ->
     beforeEach ->
