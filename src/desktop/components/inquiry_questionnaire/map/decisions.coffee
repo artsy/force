@@ -5,7 +5,7 @@ hasSeenThisSession = (steps...) -> ({ logger }) -> logger.hasLoggedThisSession s
 
 decisions =
   ask_specialist: ({ artwork, ask_specialist }) ->
-    artwork.get('is_in_auction') is true || ask_specialist is true || artwork.get('ecommerce') is true
+    artwork.get('is_in_auction') is true || ask_specialist is true
 
   enable_new_inquiry_flow: ({ enableNewInquiryFlow }) -> !!enableNewInquiryFlow
 

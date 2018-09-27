@@ -41,7 +41,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   
   inquireSpecialist: (e) ->
     e.preventDefault()
-    inquireSpecialist @artwork.get('_id')
+    inquireSpecialist @artwork.get('_id'), ask_specialist: true
 
   acquire: (e) ->
     e.preventDefault()
