@@ -28,7 +28,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     'click .js-artwork-inquire-button'      : 'inquire'
     'click .js-artwork-acquire-button'      : 'acquire'
     'click .collector-faq'                  : 'openCollectorModal'
-    'click .js-artwork-nbmo-ask-specialist' : 'inquireSpecialist'
+    'click .js-artwork-bnmo-ask-specialist' : 'inquireSpecialist'
 
   initialize: ({ @data }) ->
     { artwork } = @data
@@ -53,10 +53,15 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       serializer = new Serializer @$('form')
       data = serializer.data()
+      editionSetId: data.edition_set_id
+
+      # If this artwork has an edition set of 1, send that in the mutation as well
+      if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
+        editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
       createOrder
         artworkId: @artwork.get('_id')
-        editionSetId: data.edition_set_id
+        editionSetId: editionSetId
         quantity: 1
         user: loggedInUser
       .then (data) ->
@@ -72,7 +77,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       analyticsHooks
         .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
-
 
   inquire: (e) =>
     e.preventDefault() if e
