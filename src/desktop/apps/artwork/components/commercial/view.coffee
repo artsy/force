@@ -18,15 +18,17 @@ sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 { createOrder } = require '../../../../../lib/components/create_order'
+inquireSpecialist = require '../../lib/inquire.coffee'
 
 module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
   className: 'artwork-commercial'
 
   events:
-    'click .js-artwork-inquire-button'  : 'inquire'
-    'click .js-artwork-acquire-button'  : 'acquire'
-    'click .collector-faq'              : 'openCollectorModal'
+    'click .js-artwork-inquire-button'      : 'inquire'
+    'click .js-artwork-acquire-button'      : 'acquire'
+    'click .collector-faq'                  : 'openCollectorModal'
+    'click .js-artwork-nbmo-ask-specialist' : 'inquireSpecialist'
 
   initialize: ({ @data }) ->
     { artwork } = @data
@@ -36,6 +38,10 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if CurrentUser.orNull() and
         qs.parse(location.search.substring(1)).inquire is 'true'
       @inquire()
+  
+  inquireSpecialist: (e) ->
+    e.preventDefault()
+    inquireSpecialist @artwork.get('_id')
 
   acquire: (e) ->
     e.preventDefault()
