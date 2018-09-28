@@ -9,6 +9,12 @@ import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 const app = (module.exports = express())
 
 app.get("/order2/:orderID*", async (req, res, next) => {
+  if (!res.locals.sd.CURRENT_USER) {
+    console.warn("no user D:")
+    return res.redirect(
+      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+    )
+  }
   try {
     const { ServerApp, redirect, status, headTags } = await buildServerApp({
       routes,
