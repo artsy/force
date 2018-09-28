@@ -46,9 +46,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.5.2.tgz#61a75b31b871d775dd0138f8d8aa8c3f3c6372d4"
+"@artsy/reaction@^4.6.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.6.0.tgz#9224bda2675dc3afe444b2d0d7604c572c2d9be1"
   dependencies:
     "@artsy/palette" "^2.18.0"
     cheerio "^1.0.0-rc.2"
@@ -852,6 +852,12 @@
 "@types/cheerio@*":
   version "0.22.7"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.7.tgz#4a92eafedfb2b9f4437d3a4410006d81114c66ce"
+
+"@types/dd-trace@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@types/dd-trace/-/dd-trace-0.6.0.tgz#6323324e6f1228290dac84df15da2267dc87ac4a"
+  dependencies:
+    opentracing ">=0.14.1"
 
 "@types/enzyme@^3.1.6":
   version "3.1.6"
@@ -3549,9 +3555,9 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
-dd-trace@artsy/dd-trace-js#artsy:
+dd-trace@^0.6.0:
   version "0.6.0"
-  resolved "https://codeload.github.com/artsy/dd-trace-js/tar.gz/9945be573c86a5827a00b8e258cdcf88af7a0cbd"
+  resolved "https://registry.yarnpkg.com/dd-trace/-/dd-trace-0.6.0.tgz#c80fb7ddaa83d5873b0ff9d0e50ca1343d248235"
   dependencies:
     async-hook-jl "^1.7.6"
     int64-buffer "^0.1.9"
@@ -8932,6 +8938,10 @@ opentracing@0.14.1:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.1.tgz#40d278beea417660a35dd9d3ee76511ffa911dcd"
 
+opentracing@>=0.14.1:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.3.tgz#23e3ad029fa66a653926adbe57e834469f8550aa"
+
 optimist@0.2:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.2.8.tgz#e981ab7e268b457948593b55674c099a815cac31"
@@ -10141,7 +10151,7 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
