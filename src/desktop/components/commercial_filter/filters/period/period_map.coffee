@@ -15,7 +15,6 @@ module.exports =
     'Late 19th Century',
     'Mid 19th Century',
     'Early 19th Century',
-    '18th Century & Earlier',
   ],
   displayPeriods: [
     '2010',
