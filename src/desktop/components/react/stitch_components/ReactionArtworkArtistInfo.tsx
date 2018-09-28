@@ -1,14 +1,14 @@
 import React from "react"
 import { Theme } from "@artsy/palette"
 import { ContextProvider } from "reaction/Artsy"
-import { ArtworkDetailsQueryRenderer } from "reaction/Apps/Artwork/Components/ArtworkDetails"
+import { ArtistInfoQueryRenderer } from "reaction/Apps/Artwork/Components/ArtistInfo"
 import { data as sd } from "sharify"
 
-export const ReactionArtworkDetails = props => {
+export const ReactionArtworkArtistInfo = _props => {
   return (
     <Theme>
       <ContextProvider user={sd.CURRENT_USER}>
-        <ArtworkDetailsQueryRenderer artworkID={props.artworkID} />
+        <ArtistInfoQueryRenderer artistID={"pablo-picasso"} />
       </ContextProvider>
     </Theme>
   )
