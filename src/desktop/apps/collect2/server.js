@@ -4,8 +4,8 @@ import { routes } from "reaction/Apps/Collect/routes"
 import express from "express"
 import React from "react"
 import { maybeShowOldCollect } from "./maybeShowOldCollect"
-import mediator from "desktop/lib/mediator.coffee"
 import { Meta } from "./meta"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
 const app = (module.exports = express())
 
@@ -17,11 +17,7 @@ const index = async (req, res, next) => {
     const { ServerApp, redirect } = await buildServerApp({
       routes,
       url: req.url,
-      context: {
-        initialMatchingMediaQueries: IS_MOBILE ? ["xs"] : undefined,
-        user,
-        mediator,
-      },
+      context: buildServerAppContext(req, res),
     })
 
     if (redirect) {

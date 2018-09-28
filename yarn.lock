@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@airbnb/node-memwatch@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@airbnb/node-memwatch/-/node-memwatch-1.0.2.tgz#a82e311ae27e05df4fb2cf8e4fbc75caaf7190a4"
-  dependencies:
-    bindings "^1.3.0"
-    nan "^2.9.2"
-
 "@artsy/express-reloadable@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.3.1.tgz#206adcc56ebcf999aece7efcc34eaf1460cf90a7"
@@ -26,7 +19,7 @@
     styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
-"@artsy/palette@^2.17.5":
+"@artsy/palette@^2.18.0":
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.18.0.tgz#c0842e3ab545f8633df7f21100dea75907bd1c70"
   dependencies:
@@ -53,11 +46,11 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^4.0.8":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.0.9.tgz#2205ac88bfcde24fc64034d1ce852892622ceb2f"
+"@artsy/reaction@^4.6.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.6.0.tgz#9224bda2675dc3afe444b2d0d7604c572c2d9be1"
   dependencies:
-    "@artsy/palette" "^2.17.5"
+    "@artsy/palette" "^2.18.0"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -859,6 +852,12 @@
 "@types/cheerio@*":
   version "0.22.7"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.7.tgz#4a92eafedfb2b9f4437d3a4410006d81114c66ce"
+
+"@types/dd-trace@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@types/dd-trace/-/dd-trace-0.6.0.tgz#6323324e6f1228290dac84df15da2267dc87ac4a"
+  dependencies:
+    opentracing ">=0.14.1"
 
 "@types/enzyme@^3.1.6":
   version "3.1.6"
@@ -2170,10 +2169,6 @@ binary-extensions@^1.0.0:
 bindings@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
-
-bindings@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.3.0.tgz#b346f6ecf6a95f5a815c5839fc7cdb22502f1ed7"
 
 bl@~1.1.2:
   version "1.1.2"
@@ -3560,9 +3555,9 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
-dd-trace@artsy/dd-trace-js#artsy:
+dd-trace@^0.6.0:
   version "0.6.0"
-  resolved "https://codeload.github.com/artsy/dd-trace-js/tar.gz/9945be573c86a5827a00b8e258cdcf88af7a0cbd"
+  resolved "https://registry.yarnpkg.com/dd-trace/-/dd-trace-0.6.0.tgz#c80fb7ddaa83d5873b0ff9d0e50ca1343d248235"
   dependencies:
     async-hook-jl "^1.7.6"
     int64-buffer "^0.1.9"
@@ -3582,8 +3577,6 @@ dd-trace@artsy/dd-trace-js#artsy:
     semver "^5.5.0"
     shimmer "^1.2.0"
     url-parse "^1.4.3"
-  optionalDependencies:
-    "@airbnb/node-memwatch" "^1.0.2"
 
 debounce@~1.0.0:
   version "1.0.2"
@@ -8466,10 +8459,6 @@ nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
 
-nan@^2.9.2:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.0.tgz#574e360e4d954ab16966ec102c0c049fd961a099"
-
 nanomatch@^1.2.5, nanomatch@^1.2.9:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.9.tgz#879f7150cb2dab7a471259066c104eee6e0fa7c2"
@@ -8948,6 +8937,10 @@ openseadragon@^2.3.1:
 opentracing@0.14.1:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.1.tgz#40d278beea417660a35dd9d3ee76511ffa911dcd"
+
+opentracing@>=0.14.1:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.3.tgz#23e3ad029fa66a653926adbe57e834469f8550aa"
 
 optimist@0.2:
   version "0.2.8"

@@ -9,6 +9,7 @@ module.exports = (sd, { artwork, enableNewInquiryFlow }) ->
       is_inquireable: artwork.is_inquireable
       partner_id: artwork.partner._id
       partner_type: artwork.partner?.type
+      edition_sets: artwork.edition_sets
   if artwork.fair?
     sd.COMMERCIAL.artwork.fair =
       id: artwork.fair.id
