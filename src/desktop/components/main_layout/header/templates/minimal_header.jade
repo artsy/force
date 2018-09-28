@@ -1,4 +1,5 @@
 nav#main-layout-minimal-header
-  unless options.hideLogo
-    a.logo( href='#{ headerLogoHref || "/" }')
-      include ../../public/icons/logotype.svg
+  .logo
+    unless options.hideLogo
+      a( href='#{ headerLogoHref || "/" }')
+        include ../../public/icons/logotype.svg
