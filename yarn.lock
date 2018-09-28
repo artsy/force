@@ -46,9 +46,9 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^4.6.0":
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.6.0.tgz#9224bda2675dc3afe444b2d0d7604c572c2d9be1"
+"@artsy/reaction@^4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.8.1.tgz#a2fff568aacfad551568c6f0680ea198f825f7f5"
   dependencies:
     "@artsy/palette" "^2.18.0"
     cheerio "^1.0.0-rc.2"
@@ -10151,7 +10151,7 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
