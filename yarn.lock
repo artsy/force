@@ -102,11 +102,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-1.6.0.tgz#7b53b51002930653a8044a0b79723a16a2b20aad"
+"@artsy/stitch@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-2.0.0.tgz#c0a44186b3eac779bd3c7a6b0030c7ad7acff754"
   dependencies:
-    "@babel/runtime" "^7.0.0-beta.46"
     consolidate "^0.14.5"
     lodash "^4.17.4"
 
@@ -760,13 +759,6 @@
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
   dependencies:
     regenerator-runtime "^0.12.0"
-
-"@babel/runtime@^7.0.0-beta.46":
-  version "7.0.0-beta.46"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
-  dependencies:
-    core-js "^2.5.3"
-    regenerator-runtime "^0.11.1"
 
 "@babel/template@^7.0.0":
   version "7.0.0"
@@ -3267,10 +3259,6 @@ core-js@^1.0.0:
 core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
-
-core-js@^2.5.3:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
