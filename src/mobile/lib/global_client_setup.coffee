@@ -4,7 +4,7 @@
 # or component.
 #
 globalReactModules = require('./global_react_modules')
-{ componentRenderer } = require('@artsy/stitch/iso')
+{ componentRenderer } = require('@artsy/stitch/dist/server')
 
 module.exports = ->
   mountStitchBlocks()

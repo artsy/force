@@ -7,7 +7,7 @@ const app = (module.exports = require("express")())
 
 // TODO: Move to src/lib/middleware/locals once done developing; this is just so
 // we can get hot module reloading which only works in /desktop and /mobile
-app.use(require("@artsy/stitch/iso").middleware(modules))
+app.use(require("@artsy/stitch/dist/server").middleware(modules))
 
 // Apps with hardcoded routes or "RESTful" routes
 app.use(require("./apps/home"))
