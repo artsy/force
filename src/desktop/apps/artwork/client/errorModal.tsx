@@ -4,7 +4,7 @@ import { ErrorModal } from "@artsy/reaction/dist/Components/Modal/ErrorModal"
 
 export const render = ({
   headerText = "An error occurred",
-  detailText = "",
+  detailText = "Something went wrong. Please try again or contact orders@artsy.net.",
 } = {}) => {
   const el = document.getElementById("react-modal-container")
   const onClose = () => {
