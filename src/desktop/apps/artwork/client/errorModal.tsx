@@ -8,9 +8,7 @@ export const render = ({
 } = {}) => {
   const el = document.getElementById("react-modal-container")
   const onClose = () => {
-    ReactDOM.render(<ErrorModal show={false} />, el, () => {
-      ReactDOM.unmountComponentAtNode(el)
-    })
+    ReactDOM.unmountComponentAtNode(el)
   }
   ReactDOM.render(
     <ErrorModal
