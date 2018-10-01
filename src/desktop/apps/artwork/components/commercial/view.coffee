@@ -19,6 +19,7 @@ template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 { createOrder } = require '../../../../../lib/components/create_order'
 inquireSpecialist = require '../../lib/inquire.coffee'
+errorModal = require '../../client/errorModal'
 
 module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
@@ -65,8 +66,13 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        order = data?.createOrderWithArtwork?.orderOrError?.order
-        location.assign("/order2/#{order.id}/shipping")
+        { order, error } = data?.createOrderWithArtwork?.orderOrError?
+        if order
+          location.assign("/order2/#{order.id}/shipping")
+        else
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        errorModal.render()
 
     else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
       order = new PendingOrder
