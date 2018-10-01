@@ -20,7 +20,7 @@ listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 globalReactModules = require('./global_react_modules.tsx')
-{ componentRenderer } = require('@artsy/stitch/iso')
+{ componentRenderer } = require('@artsy/stitch/dist/server')
 { initModalManager } = require('../../desktop/apps/auth2/client/index')
 
 module.exports = ->
