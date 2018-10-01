@@ -66,7 +66,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        { order, error } = data?.createOrderWithArtwork?.orderOrError?
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError?
         if order
           location.assign("/order2/#{order.id}/shipping")
         else
