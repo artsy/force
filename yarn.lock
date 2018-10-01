@@ -10,18 +10,18 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@^2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.18.0.tgz#c0842e3ab545f8633df7f21100dea75907bd1c70"
+"@artsy/palette@^2.18.1":
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.18.1.tgz#876055f1cb85f32f18a1953aeef8a18aefee8bc6"
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
     styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
-"@artsy/palette@^2.18.1":
-  version "2.18.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.18.1.tgz#876055f1cb85f32f18a1953aeef8a18aefee8bc6"
+"@artsy/palette@^2.18.2":
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.0.tgz#0c1cbe4797e1f4e085e3bed2a6bcab812ce4a4eb"
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
@@ -47,10 +47,10 @@
     underscore.string "^3.2.2"
 
 "@artsy/reaction@^4.9.0":
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.9.0.tgz#6b1be27ff31a2bfacf4dae8178e17654fb491d85"
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-4.9.4.tgz#9121dc56953d6fd556260bd4c84252571a8b4b4d"
   dependencies:
-    "@artsy/palette" "^2.18.0"
+    "@artsy/palette" "^2.18.2"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -901,8 +901,8 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
 "@types/node@*":
-  version "10.10.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.10.3.tgz#09c75a4ad84d6a3d286790bdd9489a4f8ee9906c"
+  version "10.11.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.3.tgz#c055536ac8a5e871701aa01914be5731539d01ee"
 
 "@types/node@^6.0.46":
   version "6.0.78"
@@ -1726,7 +1726,7 @@ babel-plugin-syntax-class-properties@^6.8.0:
 
 babel-plugin-syntax-dynamic-import@^6.18.0:
   version "6.18.0"
-  resolved "http://registry.npmjs.org/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
 
 babel-plugin-syntax-flow@^6.18.0, babel-plugin-syntax-flow@^6.8.0:
   version "6.18.0"
@@ -5239,7 +5239,7 @@ formidable@~1.0.14:
 
 formik@^0.11.11:
   version "0.11.11"
-  resolved "http://registry.npmjs.org/formik/-/formik-0.11.11.tgz#4b02838133c0196b1ef443aa973766cd097ec4a5"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-0.11.11.tgz#4b02838133c0196b1ef443aa973766cd097ec4a5"
   dependencies:
     lodash.clonedeep "^4.5.0"
     lodash.isequal "4.5.0"
@@ -5823,7 +5823,7 @@ hawk@~6.0.2:
 
 he@0.5.0:
   version "0.5.0"
-  resolved "http://registry.npmjs.org/he/-/he-0.5.0.tgz#2c05ffaef90b68e860f3fd2b54ef580989277ee2"
+  resolved "https://registry.yarnpkg.com/he/-/he-0.5.0.tgz#2c05ffaef90b68e860f3fd2b54ef580989277ee2"
 
 heapdump@^0.3.7:
   version "0.3.9"
@@ -7989,7 +7989,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   dependencies:
@@ -9962,8 +9962,8 @@ rc-align@^2.4.0:
     rc-util "^4.0.4"
 
 rc-animate@2.x:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.5.3.tgz#a84636b50d4198184c34efa325824f14a2218d0d"
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.5.4.tgz#3b308c42e137a2e3fb578650fdb145c2100fcc35"
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.6"
@@ -10022,8 +10022,8 @@ rc-trigger@1.x:
     rc-util "4.x"
 
 rc-trigger@^2.2.2:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/rc-trigger/-/rc-trigger-2.6.1.tgz#8a312c92440b58f26b5d4f8126e421d890e01532"
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/rc-trigger/-/rc-trigger-2.6.2.tgz#a9c09ba5fad63af3b2ec46349c7db6cb46657001"
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.6"
@@ -10190,7 +10190,7 @@ react-redux@^5.0.2:
 
 react-redux@^5.0.7:
   version "5.0.7"
-  resolved "http://registry.npmjs.org/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
   dependencies:
     hoist-non-react-statics "^2.5.0"
     invariant "^2.0.0"
@@ -10308,11 +10308,11 @@ react-tracking@^5.3.0:
     hoist-non-react-statics "^3.0.1"
 
 react-transition-group@^2.2.0, react-transition-group@^2.3.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.4.0.tgz#1d9391fabfd82e016f26fabd1eec329dbd922b5a"
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.0.tgz#70bca0e3546102c4dc5cf3f5f57f73447cce6874"
   dependencies:
     dom-helpers "^3.3.1"
-    loose-envify "^1.3.1"
+    loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
@@ -13448,7 +13448,7 @@ yauzl@2.4.1:
 
 yup@^0.24.1:
   version "0.24.1"
-  resolved "http://registry.npmjs.org/yup/-/yup-0.24.1.tgz#2c8a81b5f929ef29aaf77a8b7c9acfa52ab6a7d1"
+  resolved "https://registry.yarnpkg.com/yup/-/yup-0.24.1.tgz#2c8a81b5f929ef29aaf77a8b7c9acfa52ab6a7d1"
   dependencies:
     case "^1.2.1"
     fn-name "~1.0.1"

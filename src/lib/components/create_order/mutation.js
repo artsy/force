@@ -4,7 +4,7 @@ module.exports = `
     $editionSetId: String
     $quantity: Int
   ) {
-    createOrderWithArtwork(
+    ecommerceCreateOrderWithArtwork(
       input: {
         artworkId: $artworkId
         editionSetId: $editionSetId
