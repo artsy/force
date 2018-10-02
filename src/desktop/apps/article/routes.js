@@ -13,7 +13,7 @@ import {
 import { positronql as _positronql } from "desktop/lib/positronql"
 import { crop, resize } from "desktop/components/resizer/index.coffee"
 import { data as _sd } from "sharify"
-import { renderLayout as _renderLayout } from "@artsy/stitch"
+import { stitch as _stitch } from "@artsy/stitch"
 import { stringifyJSONForWeb } from "desktop/components/util/json.coffee"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
@@ -26,7 +26,7 @@ const sailthru = require("sailthru-client").createSailthruClient(
 let sd = _sd
 let positronql = _positronql
 let Article = _Article
-let renderLayout = _renderLayout
+let stitch = _stitch
 
 export async function index(req, res, next) {
   const articleId = req.params.slug
@@ -136,7 +136,7 @@ export async function index(req, res, next) {
     const showTooltips = !isMobile && !isTablet
     const renderTime = getCurrentUnixTimestamp()
 
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: res.app.get("views"),
       layout: layoutTemplate,
       config: {

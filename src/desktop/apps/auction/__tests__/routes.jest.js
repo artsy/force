@@ -10,7 +10,7 @@ jest.mock("backbone")
 jest.mock("lib/metaphysics.coffee")
 
 jest.mock("@artsy/stitch", () => ({
-  renderLayout: () => "<html />",
+  stitch: () => "<html />",
 }))
 jest.mock("desktop/apps/auction/actions/artworkBrowser", () => ({
   fetchArtworksByFollowedArtists: () => ({

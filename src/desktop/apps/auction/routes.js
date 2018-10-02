@@ -15,11 +15,11 @@ import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
 import { getLiveAuctionUrl } from "utils/domain/auctions/urls"
-import { renderLayout as _renderLayout } from "@artsy/stitch"
+import { stitch as _stitch } from "@artsy/stitch"
 
 // FIXME: Metaphysics
 let metaphysics = _metaphysics
-let renderLayout = _renderLayout
+let stitch = _stitch
 
 export async function index(req, res, next) {
   const saleId = req.params.id
@@ -118,7 +118,7 @@ export async function index(req, res, next) {
     ])
 
     try {
-      const layout = await renderLayout({
+      const layout = await stitch({
         basePath: res.app.get("views"),
         layout: "../../../../components/main_layout/templates/react_index.jade",
         config: {

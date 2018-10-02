@@ -1,9 +1,9 @@
 import App from "desktop/apps/react_example/components/App"
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 
 export async function index(req, res, next) {
   try {
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: req.app.get("views"),
       layout: "../../../components/main_layout/templates/react_index.jade",
       config: {

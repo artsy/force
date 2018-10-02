@@ -1,7 +1,7 @@
 import React from "react"
 import queryString from "query-string"
 import merge from "lodash.merge"
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 
 import adminOnly from "../../lib/admin_only"
 import JSONPage from "../../components/json_page/es6"
@@ -29,7 +29,7 @@ class EditableMiamFairWeekPage extends JSONPage {
       }
 
       const data = await this.jsonPage.get()
-      const layout = await renderLayout({
+      const layout = await stitch({
         basePath: __dirname,
         layout: "../../components/main_layout/templates/react_index.jade",
         config: {
