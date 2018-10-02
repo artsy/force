@@ -49,9 +49,9 @@ app.get("/order2/:orderID*", async (req, res, next) => {
         assetPackage: "order2",
         // header logo should link back to originating artwork
         headerLogoHref: res.locals.sd.REFERRER,
+        hideLogoForEigen: res.locals.sd.EIGEN,
         options: {
           stripev3: true,
-          hideLogo: res.locals.sd.EIGEN,
         },
       },
     })
