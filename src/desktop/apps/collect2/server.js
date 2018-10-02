@@ -1,5 +1,5 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collect/routes"
 import express from "express"
 import React from "react"
@@ -26,7 +26,7 @@ const index = async (req, res, next) => {
     }
 
     // Render layout
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_redesign.jade",
       config: {

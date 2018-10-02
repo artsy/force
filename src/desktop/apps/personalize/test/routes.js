@@ -7,7 +7,7 @@ describe("Personalize routes", () => {
   let req
   let res
   let next
-  let renderLayout
+  let stitch
 
   beforeEach(() => {
     req = {
@@ -21,13 +21,13 @@ describe("Personalize routes", () => {
     next = sinon.stub()
   })
 
-  renderLayout = sinon.stub()
-  rewire.__set__("renderLayout", renderLayout)
+  stitch = sinon.stub()
+  rewire.__set__("stitch", stitch)
 
   it("renders the personalize app", () => {
     index(req, res, next).then(() => {
-      renderLayout.args[0][0].data.title.should.eql("Personalize | Artsy")
-      renderLayout.args[0][0].locals.assetPackage.should.eql("onboarding")
+      stitch.args[0][0].data.title.should.eql("Personalize | Artsy")
+      stitch.args[0][0].locals.assetPackage.should.eql("onboarding")
     })
   })
 })

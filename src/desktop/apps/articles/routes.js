@@ -1,4 +1,4 @@
-import { renderLayout as _renderLayout } from "@artsy/stitch"
+import { stitch as _stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import App from "desktop/apps/articles/components/App.tsx"
 import magazineQuery from "./queries/editorial_articles.coffee"
@@ -20,7 +20,7 @@ import { data as sd } from "sharify"
 // FIXME: Rewire
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
-let renderLayout = _renderLayout
+let stitch = _stitch
 
 export const articles = (req, res, next) => {
   const query = { query: magazineQuery }
@@ -140,7 +140,7 @@ export async function news(req, res, next) {
       query: newsArticlesQuery({ limit: 6 }),
     })
 
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: res.app.get("views"),
       layout: "../../../components/main_layout/templates/react_index.jade",
       config: {

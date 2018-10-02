@@ -1,4 +1,4 @@
-import { renderLayout as _renderLayout } from "@artsy/stitch"
+import { stitch as _stitch } from "@artsy/stitch"
 import adminOnly from "../../lib/admin_only"
 import JSONPage from "../../components/json_page/es6"
 import { FairWeekPageScaffold } from "desktop/components/fair_week_marketing/PageScaffold"
@@ -6,7 +6,7 @@ import { FairWeekMeta } from "desktop/components/fair_week_marketing/Meta"
 import merge from "lodash.merge"
 import queryString from "query-string"
 
-let renderLayout = _renderLayout
+let stitch = _stitch
 const SLUG = "london-art-fair-week"
 const MARKETING_MODAL_ID = "ca18"
 
@@ -31,7 +31,7 @@ export class EditableFriezeWeekPage extends JSONPage {
       }
 
       const data = await this.jsonPage.get()
-      const layout = await renderLayout({
+      const layout = await stitch({
         basePath: __dirname,
         layout: "../../components/main_layout/templates/react_index.jade",
         config: {

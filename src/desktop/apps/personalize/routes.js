@@ -1,12 +1,12 @@
 import * as _ from "underscore"
-import { renderLayout as _renderLayout } from "@artsy/stitch"
+import { stitch as _stitch } from "@artsy/stitch"
 import { App } from "desktop/apps/personalize/components/App"
 
-let renderLayout = _renderLayout
+let stitch = _stitch
 
 export const index = async (req, res, next) => {
   try {
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: req.app.get("views"),
       config: {
         styledComponents: true,

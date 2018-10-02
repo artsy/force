@@ -2,12 +2,12 @@ import App from "./components/App"
 import GeneFamiliesQuery from "./queries/geneFamilies"
 import FeaturedGenesQuery from "./queries/featuredGenes"
 import _metaphysics from "lib/metaphysics.coffee"
-import { renderLayout as _renderLayout } from "@artsy/stitch"
+import { stitch as _stitch } from "@artsy/stitch"
 import { geneFamiliesFromConnection } from "./utils"
 
 // FIXME: Rewire
 let metaphysics = _metaphysics
-let renderLayout = _renderLayout
+let stitch = _stitch
 
 export const index = async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ export const index = async (req, res, next) => {
       query: FeaturedGenesQuery(),
     })
 
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: req.app.get("views"),
       config: {
         styledComponents: true,
