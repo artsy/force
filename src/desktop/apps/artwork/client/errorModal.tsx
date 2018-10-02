@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { ErrorModal } from "@artsy/reaction/dist/Components/Modal/ErrorModal"
+import { ErrorModal } from "reaction/Components/Modal/ErrorModal"
 
 export const render = ({
   headerText = "An error occurred",
