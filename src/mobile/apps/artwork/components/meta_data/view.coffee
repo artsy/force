@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user.coffee'
 { createOrder } = require '../../../../../lib/components/create_order'
 { acquireArtwork } = require('../../../../components/acquire/view.coffee')
+errorModal = require '../../../../../desktop/apps/artwork/client/errorModal.tsx'
 
 module.exports = class MetaDataView extends Backbone.View
 
@@ -33,6 +34,12 @@ module.exports = class MetaDataView extends Backbone.View
         user: loggedInUser
       .then (data) ->
         order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
-        location.assign("/order2/#{order.id}/shipping")
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError?
+        if order
+          location.assign("/order2/#{order.id}/shipping")
+        else
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        errorModal.render()
     else if isAuctionPartner
       acquireArtwork @model, $(e.target), @editionSetId
