@@ -19,7 +19,7 @@ const isCI = CI === "true"
 
 const cacheDirectory = path.resolve(__dirname, ".cache")
 
-if (!fs.existsSync(cacheDirectory)) {
+if (!isCI && !fs.existsSync(cacheDirectory)) {
   console.log(
     require("chalk").yellow(
       "\n[!] Bugger. No existing `.cache` directory detected, this initial " +
