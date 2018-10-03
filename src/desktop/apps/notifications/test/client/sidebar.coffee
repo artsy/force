@@ -13,6 +13,11 @@ describe 'SidebarView', ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
+        matchMedia: () ->
+          media: ""
+          matches: false
+          addListener: () => null
+          removeListener: () => null
       Backbone.$ = $
       SidebarView = require '../../client/sidebar.coffee'
       done()

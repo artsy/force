@@ -1,6 +1,6 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { Meta, query, toJSONLD } from "./components/Meta"
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Artist/routes"
 import express from "express"
 import metaphysics from "lib/metaphysics.coffee"
@@ -52,7 +52,7 @@ app.get("/artist/:artistID*", async (req, res, next) => {
     res.locals.sd.PAGE_TYPE = "new-artist"
 
     // Render layout
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_redesign.jade",
       config: {

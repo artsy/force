@@ -1,4 +1,4 @@
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import { AuthStatic } from "./components/AuthStatic"
 import { ModalType } from "reaction/Components/Authentication/Types"
 import { AuthenticationMeta } from "./components/meta"
@@ -74,7 +74,7 @@ export const index = async (req, res, next) => {
   }
 
   try {
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_blank_index.jade",
       config: {

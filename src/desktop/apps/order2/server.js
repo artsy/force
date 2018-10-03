@@ -1,4 +1,4 @@
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import express from "express"
 import React from "react"
 import { routes } from "reaction/Apps/Order/routes"
@@ -29,7 +29,7 @@ app.get("/order2/:orderID*", async (req, res, next) => {
     `
 
     // Render layout
-    const layout = await renderLayout({
+    const layout = await stitch({
       basePath: __dirname,
       layout:
         "../../components/main_layout/templates/react_minimal_header.jade",
@@ -49,6 +49,7 @@ app.get("/order2/:orderID*", async (req, res, next) => {
         assetPackage: "order2",
         // header logo should link back to originating artwork
         headerLogoHref: res.locals.sd.REFERRER,
+        hideLogoForEigen: res.locals.sd.EIGEN,
         options: {
           stripev3: true,
         },
