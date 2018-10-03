@@ -4064,10 +4064,9 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
-dd-trace@^0.6.0:
+dd-trace@artsy/dd-trace-js#artsy:
   version "0.6.0"
-  resolved "https://registry.yarnpkg.com/dd-trace/-/dd-trace-0.6.0.tgz#c80fb7ddaa83d5873b0ff9d0e50ca1343d248235"
-  integrity sha512-A4bGFMjuW4Zb2hKSiyrSlBY4P8Z0B6aemLlxdF6yqQzsfa42vjr00HGbZbkbHAat1qsN4sFi0/z0NhKOue3G+w==
+  resolved "https://codeload.github.com/artsy/dd-trace-js/tar.gz/8331e739b8878eb17600c02b49e7ac55c1de771d"
   dependencies:
     async-hook-jl "^1.7.6"
     int64-buffer "^0.1.9"
