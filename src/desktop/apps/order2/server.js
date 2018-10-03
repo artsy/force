@@ -1,7 +1,7 @@
 import express from "express"
-import { checkoutFlow } from "desktop/apps/order2"
+import { checkoutFlow } from "desktop/apps/order2/routes"
 
-const app = express()
+const app = (module.exports = express())
 
 app.get("/order2/:orderID*", checkoutFlow)
 
