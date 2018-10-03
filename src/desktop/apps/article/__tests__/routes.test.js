@@ -62,16 +62,14 @@ describe("Article Routes", () => {
         }),
       }
       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].data.article.title.should.equal(
-          "Top Ten Booths"
-        )
+        stitch.args[0][0].data.article.title.should.equal("Top Ten Booths")
 
-        const timeDifference = time - renderLayout.args[0][0].data.renderTime
+        const timeDifference = time - stitch.args[0][0].data.renderTime
         timeDifference.should.be.below(100)
-        renderLayout.args[0][0].locals.assetPackage.should.equal("article")
+        stitch.args[0][0].locals.assetPackage.should.equal("article")
         done()
       })
     })
@@ -84,13 +82,13 @@ describe("Article Routes", () => {
         }),
       }
       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].data.jsonLD.should.containEql(
+        stitch.args[0][0].data.jsonLD.should.containEql(
           "Top Ten Booths at miart 2014"
         )
-        renderLayout.args[0][0].data.jsonLD.should.containEql("Fair Coverage")
+        stitch.args[0][0].data.jsonLD.should.containEql("Fair Coverage")
         done()
       })
     })
@@ -223,15 +221,13 @@ describe("Article Routes", () => {
         .onCall(1)
         .returns(Promise.resolve(superSubArticles))
       rewire.__set__("positronql", positronql)
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].data.isSuper.should.be.true()
-        renderLayout.args[0][0].data.superArticle
-          .get("slug")
-          .should.equal("foobar")
-        renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
-        renderLayout.args[0][0].data.superSubArticles
+        stitch.args[0][0].data.isSuper.should.be.true()
+        stitch.args[0][0].data.superArticle.get("slug").should.equal("foobar")
+        stitch.args[0][0].data.superSubArticles.length.should.equal(1)
+        stitch.args[0][0].data.superSubArticles
           .first()
           .get("slug")
           .should.equal("sub-article")
@@ -274,16 +270,16 @@ describe("Article Routes", () => {
         .onCall(2)
         .returns(Promise.resolve(superSubArticles))
       rewire.__set__("positronql", positronql)
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].data.isSuper.should.be.true()
-        renderLayout.args[0][0].data.superSubArticles.length.should.equal(1)
-        renderLayout.args[0][0].data.superSubArticles
+        stitch.args[0][0].data.isSuper.should.be.true()
+        stitch.args[0][0].data.superSubArticles.length.should.equal(1)
+        stitch.args[0][0].data.superSubArticles
           .first()
           .get("slug")
           .should.equal("sub-article")
-        renderLayout.args[0][0].data.superArticle
+        stitch.args[0][0].data.superArticle
           .get("title")
           .should.equal("Super Article Title")
       })
@@ -298,10 +294,10 @@ describe("Article Routes", () => {
         }),
       }
       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].layout.should.containEql("react_index")
+        stitch.args[0][0].layout.should.containEql("react_index")
         done()
       })
     })
@@ -315,11 +311,11 @@ describe("Article Routes", () => {
         }),
       }
       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       req.path = "/video/foobar"
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].layout.should.containEql("react_blank_index")
+        stitch.args[0][0].layout.should.containEql("react_blank_index")
         done()
       })
     })
@@ -333,18 +329,18 @@ describe("Article Routes", () => {
         }),
       }
       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      const renderLayout = sinon.stub()
-      rewire.__set__("renderLayout", renderLayout)
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
       req.path = "/series/foobar"
       index(req, res, next).then(() => {
-        renderLayout.args[0][0].layout.should.containEql("react_blank_index")
+        stitch.args[0][0].layout.should.containEql("react_blank_index")
         done()
       })
     })
 
     describe("ToolTips", () => {
       let data
-      let renderLayout
+      let stitch
 
       beforeEach(() => {
         res.locals.sd.CURRENT_USER = { type: "Admin" }
@@ -359,8 +355,8 @@ describe("Article Routes", () => {
           "positronql",
           sinon.stub().returns(Promise.resolve(data))
         )
-        renderLayout = sinon.stub()
-        rewire.__set__("renderLayout", renderLayout)
+        stitch = sinon.stub()
+        rewire.__set__("stitch", stitch)
         rewire.__set__(
           "subscribedToEditorial",
           sinon.stub().returns(Promise.resolve(true))
@@ -369,7 +365,7 @@ describe("Article Routes", () => {
 
       it("Shows tooltips if desktop UA", done => {
         index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(true)
+          stitch.args[0][0].data.showTooltips.should.equal(true)
           done()
         })
       })
@@ -378,7 +374,7 @@ describe("Article Routes", () => {
         res.locals.sd.IS_MOBILE = true
 
         index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          stitch.args[0][0].data.showTooltips.should.equal(false)
           done()
         })
       })
@@ -387,7 +383,7 @@ describe("Article Routes", () => {
         res.locals.sd.IS_TABLET = true
 
         index(req, res, next).then(() => {
-          renderLayout.args[0][0].data.showTooltips.should.equal(false)
+          stitch.args[0][0].data.showTooltips.should.equal(false)
           done()
         })
       })

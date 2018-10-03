@@ -39,7 +39,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if CurrentUser.orNull() and
         qs.parse(location.search.substring(1)).inquire is 'true'
       @inquire()
-  
+
   inquireSpecialist: (e) ->
     e.preventDefault()
     inquireSpecialist @artwork.get('_id'), ask_specialist: true
@@ -66,7 +66,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError?
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
         if order
           location.assign("/order2/#{order.id}/shipping")
         else

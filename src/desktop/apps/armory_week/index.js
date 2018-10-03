@@ -1,4 +1,4 @@
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import adminOnly from "desktop/lib/admin_only"
 import JSONPage from "desktop/components/json_page/es6"
 import { FairWeekPageScaffold } from "desktop/components/fair_week_marketing/PageScaffold"
@@ -28,7 +28,7 @@ class EditableArmoryWeekPage extends JSONPage {
       }
 
       const data = await this.jsonPage.get()
-      const layout = await renderLayout({
+      const layout = await stitch({
         basePath: __dirname,
         layout: "../../components/main_layout/templates/react_index.jade",
         config: {
