@@ -48,8 +48,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     loggedInUser = CurrentUser.orNull()
 
-    # Show the new buy now flow if you have the lab feature enabled
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    # Show the new buy now flow if the feature flag is enabled
+    if sd.ENABLE_NEW_BUY_NOW_FLOW
 
       serializer = new Serializer @$('form')
       data = serializer.data()
