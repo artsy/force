@@ -33,8 +33,7 @@ module.exports = class MetaDataView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
-        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError?
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
         if order
           location.assign("/order2/#{order.id}/shipping")
         else
