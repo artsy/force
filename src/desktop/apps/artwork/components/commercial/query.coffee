@@ -8,8 +8,10 @@ module.exports = """
     sale_message
     availability
     contact_message
+    is_price_hidden
     is_price_range
     price
+    price_currency
     shippingInfo
     shippingOrigin
     artists {

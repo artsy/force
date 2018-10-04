@@ -4,10 +4,11 @@ Artwork = require '../../../models/artwork.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 openInquiryQuestionnaireFor = require '../../../components/inquiry_questionnaire/index.coffee'
 
-module.exports = (id) ->
+module.exports = (id, options = {}) ->
   user = User.instantiate()
   inquiry = new ArtworkInquiry notification_delay: 600
   artwork = new Artwork id: id
+  ask_specialist = options.ask_specialist || false
 
   Promise artwork.fetch()
     .then ->
@@ -16,4 +17,5 @@ module.exports = (id) ->
       openInquiryQuestionnaireFor
         user: user
         artwork: artwork
-        inquiry: inquiry
+        inquiry: inquiry,
+        ask_specialist: ask_specialist

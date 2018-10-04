@@ -8,7 +8,7 @@ let req
 let res
 let next
 let geneFamiliesQuery
-let renderLayout
+let stitch
 
 describe("#index", () => {
   beforeEach(() => {
@@ -50,14 +50,14 @@ describe("#index", () => {
       sinon.stub().returns(Promise.resolve(geneFamiliesQuery))
     )
 
-    renderLayout = sinon.stub()
-    rewire.__set__("renderLayout", renderLayout)
+    stitch = sinon.stub()
+    rewire.__set__("stitch", stitch)
   })
 
   it("renders the categories app", () => {
     index(req, res, next).then(() => {
-      renderLayout.args[0][0].blocks.body.should.equal(App)
-      renderLayout.args[0][0].locals.assetPackage.should.equal("categories")
+      stitch.args[0][0].blocks.body.should.equal(App)
+      stitch.args[0][0].locals.assetPackage.should.equal("categories")
     })
   })
   it("passes the correct variables", () => {
@@ -78,7 +78,7 @@ describe("#index", () => {
           ],
         },
       ]
-      renderLayout.args[0][0].data.geneFamilies.should.eql(expectedFamilies)
+      stitch.args[0][0].data.geneFamilies.should.eql(expectedFamilies)
     })
   })
 })

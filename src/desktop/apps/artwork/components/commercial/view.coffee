@@ -18,15 +18,17 @@ sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 { createOrder } = require '../../../../../lib/components/create_order'
+inquireSpecialist = require '../../lib/inquire.coffee'
 
 module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
   className: 'artwork-commercial'
 
   events:
-    'click .js-artwork-inquire-button'  : 'inquire'
-    'click .js-artwork-acquire-button'  : 'acquire'
-    'click .collector-faq'              : 'openCollectorModal'
+    'click .js-artwork-inquire-button'      : 'inquire'
+    'click .js-artwork-acquire-button'      : 'acquire'
+    'click .collector-faq'                  : 'openCollectorModal'
+    'click .js-artwork-bnmo-ask-specialist' : 'inquireSpecialist'
 
   initialize: ({ @data }) ->
     { artwork } = @data
@@ -36,6 +38,10 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if CurrentUser.orNull() and
         qs.parse(location.search.substring(1)).inquire is 'true'
       @inquire()
+
+  inquireSpecialist: (e) ->
+    e.preventDefault()
+    inquireSpecialist @artwork.get('_id'), ask_specialist: true
 
   acquire: (e) ->
     e.preventDefault()
@@ -59,7 +65,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        order = data?.createOrderWithArtwork?.orderOrError?.order
+        order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
 
     else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
@@ -71,7 +77,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       analyticsHooks
         .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
-
 
   inquire: (e) =>
     e.preventDefault() if e

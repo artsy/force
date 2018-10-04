@@ -32,7 +32,7 @@ module.exports = class MetaDataView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        order = data?.createOrderWithArtwork?.orderOrError?.order
+        order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
         location.assign("/order2/#{order.id}/shipping")
     else if isAuctionPartner
       acquireArtwork @model, $(e.target), @editionSetId

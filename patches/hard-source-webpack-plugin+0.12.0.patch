@@ -1,0 +1,17 @@
+patch-package
+--- a/node_modules/hard-source-webpack-plugin/lib/util/serial.js
++++ b/node_modules/hard-source-webpack-plugin/lib/util/serial.js
+@@ -196,7 +196,12 @@ const constructed = (exports.constructed = (Type, args) => ({
+     for (const key in args) {
+       newArgs.push(args[key].thaw(frozen[key], frozen, extra, methods));
+     }
+-    return new Type(...newArgs);
++    if (newArgs.length > 1) {
++      return new Type(...newArgs);
++    } else {
++      const { request, userRequest, rawRequest, loaders, resource, parser } = newArgs[0];
++      return new Type(request, userRequest, rawRequest, loaders, resource, parser);
++    }
+   },
+ }));
+ 

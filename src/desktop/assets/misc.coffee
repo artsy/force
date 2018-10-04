@@ -31,8 +31,8 @@ routes =
 
   '/works-for-you': ->
     require('../apps/notifications/client/index.coffee').init()
-    { artist } = qs.parse(location.search.substring(1))
-    require('../apps/notifications/client/react_grid.js').default.setupReactGrid({artistID: artist})
+    { artist, artist_id } = qs.parse(location.search.substring(1))
+    require('../apps/notifications/client/react_grid.js').default.setupReactGrid({ artistID: (artist || artist_id) })
 
   '/profile/.*': require('../apps/user/client/index.coffee').init
 

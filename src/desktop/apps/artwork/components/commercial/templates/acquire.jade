@@ -1,5 +1,3 @@
-- var newBuyNowFlow = user && user.hasLabFeature("New Buy Now Flow")
-- var auctionPartner = artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
 if artwork.is_acquireable && (newBuyNowFlow || auctionPartner)
   .artwork-acquire-form
     input( type='hidden', name='artwork_id', value= artwork.id )

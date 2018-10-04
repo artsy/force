@@ -20,6 +20,7 @@ module.exports = """
       id
       estimate
       reserve_status
+      lot_label
       current_bid {
         amount
       }

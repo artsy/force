@@ -95,4 +95,21 @@ describe 'Commercial template', ->
     $('.js-artwork-acquire-button').length.should.eql 1
     $('.artwork-inquiry-form').length.should.eql 0
 
+  it 'displays ask a specialist for bnmo artworks', ->
+    html = renderArtwork
+      artwork: acquireableArtwork
+      artworkOptions:
+        is_for_sale: true
+      templateOptions:
+        user:
+          hasLabFeature: (feature) -> feature == "New Buy Now Flow"
+    $ = cheerio.load html
+    $('.js-artwork-bnmo-ask-specialist').length.should.eql 1
 
+  it 'does not display ask a specialist for non acquireable artwork', ->
+    html = renderArtwork
+      artwork: inquireableArtwork
+      artworkOptions:
+          is_for_sale: true
+    $ = cheerio.load html
+    $('.js-artwork-bnmo-ask-specialist').length.should.eql 0

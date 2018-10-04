@@ -1,10 +1,10 @@
-import { renderLayout } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import { AuthStatic } from "../components/AuthStatic"
 import { MobileAuthStatic } from "../components/MobileAuthStatic"
 import { index, resetPassword } from "../routes"
 
 jest.mock("@artsy/stitch", () => ({
-  renderLayout: jest.fn(),
+  stitch: jest.fn(),
 }))
 
 describe("Routes", () => {
@@ -28,11 +28,11 @@ describe("Routes", () => {
         send: jest.fn(),
       }
       next = jest.fn()
-      renderLayout.mockReset()
+      stitch.mockReset()
     })
 
-    it("calls next if #renderLayout returns an error", done => {
-      renderLayout.mockImplementationOnce(() => {
+    it("calls next if #stitch returns an error", done => {
+      stitch.mockImplementationOnce(() => {
         throw new Error("A new error")
       })
 
@@ -45,7 +45,7 @@ describe("Routes", () => {
     describe("Component", () => {
       it("Returns AuthStatic component if UA is desktop", done => {
         index(req, res, next).then(() => {
-          expect(renderLayout.mock.calls[0][0].blocks.body).toBe(AuthStatic)
+          expect(stitch.mock.calls[0][0].blocks.body).toBe(AuthStatic)
           done()
         })
       })
@@ -53,9 +53,7 @@ describe("Routes", () => {
       it("Returns MobileAuthStatic component if sd.IS_MOBILE", done => {
         res.locals.sd.IS_MOBILE = true
         index(req, res, next).then(() => {
-          expect(renderLayout.mock.calls[0][0].blocks.body).toBe(
-            MobileAuthStatic
-          )
+          expect(stitch.mock.calls[0][0].blocks.body).toBe(MobileAuthStatic)
           done()
         })
       })
@@ -65,7 +63,7 @@ describe("Routes", () => {
       describe("Type", () => {
         it("Returns login type by default", done => {
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe("login")
+            expect(stitch.mock.calls[0][0].data.type).toBe("login")
             done()
           })
         })
@@ -73,7 +71,7 @@ describe("Routes", () => {
         it("Returns the correct modal.type for /login path", done => {
           req.path = "/login"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe("login")
+            expect(stitch.mock.calls[0][0].data.type).toBe("login")
             done()
           })
         })
@@ -81,7 +79,7 @@ describe("Routes", () => {
         it("Returns the correct modal.type for /signup path", done => {
           req.path = "/signup"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe("signup")
+            expect(stitch.mock.calls[0][0].data.type).toBe("signup")
             done()
           })
         })
@@ -89,7 +87,7 @@ describe("Routes", () => {
         it("Returns the correct modal.type for /forgot path", done => {
           req.path = "/forgot"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.type).toBe("forgot")
+            expect(stitch.mock.calls[0][0].data.type).toBe("forgot")
             done()
           })
         })
@@ -98,7 +96,7 @@ describe("Routes", () => {
       describe("Meta", () => {
         it("returns the correct title for login", done => {
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.meta.title).toBe(
+            expect(stitch.mock.calls[0][0].data.meta.title).toBe(
               "Login to Artsy"
             )
             done()
@@ -108,7 +106,7 @@ describe("Routes", () => {
         it("returns the correct title for signup", done => {
           req.path = "/signup"
           index(req, res, next).then(() => {
-            expect(renderLayout.mock.calls[0][0].data.meta.title).toBe(
+            expect(stitch.mock.calls[0][0].data.meta.title).toBe(
               "Signup for Artsy"
             )
             done()
@@ -132,7 +130,7 @@ describe("Routes", () => {
             redirectTo,
             signupIntent,
             signupReferer,
-          } = renderLayout.mock.calls[0][0].data.options
+          } = stitch.mock.calls[0][0].data.options
 
           expect(afterSignUpAction).toBe(req.query.afterSignUpAction)
           expect(destination).toBe(req.query.destination)
