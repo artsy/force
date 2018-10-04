@@ -24,12 +24,21 @@ describe("Artwork helpers", () => {
       image: "/images/pic.jpg",
       description: "Some contemporary artwork!",
       url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      brand: {
+        "@type": "Person",
+        name: "Professor Paint",
+      },
       productionDate: "1999",
       offers: {
         "@type": "Offer",
-        price: "$150",
-        availability: "for sale",
-        seller: "Artstar",
+        minPrice: "150",
+        maxPrice: "1,250",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "ArtGallery",
+          name: "Artstar",
+        },
       },
     }
 
@@ -45,6 +54,10 @@ describe("Artwork helpers", () => {
       image: "/images/pic.jpg",
       description: "Some contemporary artwork!",
       url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      brand: {
+        "@type": "Person",
+        name: "Professor Paint",
+      },
     }
 
     helper.convertArtworkToJSONLD(data.artwork).should.eql(jsonLD)
@@ -53,12 +66,23 @@ describe("Artwork helpers", () => {
   it("safeguards against missing images", () => {
     const artwork = {
       id: "yee-wong-exploding-powder-movement-blue-and-pink",
-      sale_message: "$150 - 1,250",
+      sale_message: "$150",
       price: "$150",
-      meta: { description: "Some contemporary artwork!" },
+      price_currency: "USD",
+      is_price_range: false,
+      meta: {
+        description: "Some contemporary artwork!",
+      },
       availability: "for sale",
       date: "1999",
       href: "/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      artists: [
+        {
+          id: "abcde",
+          name: "Professor Paint",
+          href: "internet.com",
+        },
+      ],
       partner: {
         id: "artstar",
         name: "Artstar",
@@ -72,12 +96,73 @@ describe("Artwork helpers", () => {
       "@type": "Product",
       description: "Some contemporary artwork!",
       url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      brand: {
+        "@type": "Person",
+        name: "Professor Paint",
+      },
       productionDate: "1999",
       offers: {
         "@type": "Offer",
         price: "$150",
-        availability: "for sale",
-        seller: "Artstar",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "ArtGallery",
+          name: "Artstar",
+        },
+      },
+    }
+
+    helper.convertArtworkToJSONLD(artwork).should.eql(jsonLD)
+  })
+
+  it("displays sale message when the price is not a range", () => {
+    const artwork = {
+      id: "yee-wong-exploding-powder-movement-blue-and-pink",
+      sale_message: "Contact for price",
+      price: "",
+      price_currency: "USD",
+      is_price_range: false,
+      meta: {
+        description: "Some contemporary artwork!",
+      },
+      availability: "for sale",
+      date: "1999",
+      href: "/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      artists: [
+        {
+          id: "abcde",
+          name: "Professor Paint",
+          href: "internet.com",
+        },
+      ],
+      partner: {
+        id: "artstar",
+        name: "Artstar",
+        type: "Gallery",
+        is_pre_qualify: false,
+      },
+    }
+
+    const jsonLD = {
+      "@context": "http://schema.org",
+      "@type": "Product",
+      description: "Some contemporary artwork!",
+      url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      brand: {
+        "@type": "Person",
+        name: "Professor Paint",
+      },
+      productionDate: "1999",
+      offers: {
+        "@type": "Offer",
+        price: "Contact for price",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "ArtGallery",
+          name: "Artstar",
+        },
       },
     }
 
