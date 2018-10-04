@@ -1,5 +1,5 @@
 .artwork-meta-data-module__description
-  if sd.ENABLE_NEW_BUY_NOW_FLOW
+  if user && user.hasLabFeature('New Buy Now Flow')
     != stitch.components.ArtworkDetails({artworkID: artwork.id})
   else if artwork.description || artwork.additional_information || artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
     h2.artwork-header About the Work

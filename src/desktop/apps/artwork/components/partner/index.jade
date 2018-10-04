@@ -1,4 +1,4 @@
-if sd.ENABLE_NEW_BUY_NOW_FLOW
+if user && user.hasLabFeature('New Buy Now Flow')
   //- Hide old Partner / Gallery info section in favor of ArtworkDetails
 else
   if helpers.partner.isDisplayable(artwork.partner)

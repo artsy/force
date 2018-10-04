@@ -1,6 +1,6 @@
 - var partner = artwork.partner
 
-if !sd.ENABLE_NEW_BUY_NOW_FLOW
+if !user || !user.hasLabFeature('New Buy Now Flow')
   .artwork-meta-data__partner
     if partner.type == 'Auction' || partner.type == 'Auction House'
       .artwork-partner-name= partner.name
