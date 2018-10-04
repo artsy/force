@@ -61,7 +61,6 @@ describe 'Metadata', ->
       createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
       locationMock = assign: sinon.spy()
       @MetaDataView.__set__
-        errorModal: errorModalMock
         createOrder: createOrderStub
         location: locationMock
         CurrentUser:
