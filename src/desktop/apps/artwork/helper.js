@@ -14,7 +14,7 @@ export const compactObject = o => {
 const displayPrice = artwork => {
   const { is_price_hidden, is_price_range, price, sale_message } = artwork
 
-  if (is_price_range && !is_price_hidden) {
+  if (is_price_range && !is_price_hidden && price) {
     const minAndMaxPrice = price.split("-")
     return {
       minPrice: trim(minAndMaxPrice[0]).replace("$", ""),
@@ -33,7 +33,9 @@ export const convertArtworkToJSONLD = artwork => {
     artwork.images && artwork.images.length ? artwork.images[0].url : ""
 
   const artistsName =
-    artwork.artists.length && toSentence(map(artwork.artists, "name"))
+    artwork.artists &&
+    artwork.artists.length &&
+    toSentence(map(artwork.artists, "name"))
 
   const partnerName = artwork.partner && artwork.partner.name
 
