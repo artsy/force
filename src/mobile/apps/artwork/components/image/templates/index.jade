@@ -15,6 +15,9 @@
             .artwork-header-module__share-button
 
       .artwork-image-module__artwork-details
+        if artwork.auction && artwork.auction.sale_artwork && artwork.auction.sale_artwork.lot_label
+          .lot-number
+            | Lot #{artwork.auction.sale_artwork.lot_label}
         if artists.length
           for artist in artists
             a.artist-name(href=artist.href)= artist.name

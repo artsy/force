@@ -6,8 +6,10 @@
       "is_acquireable": true,
       "is_inquireable": false,
       "is_in_auction": false,
+      "is_price_range": true,
       "sale_message": "$150 - 1,250",
-      "price": "$150",
+      "price": "$150 - 1,250",
+      "price_currency": "USD",
       "meta": { "description": "Some contemporary artwork!" },
       "availability": "for sale",
       "date": "1999",
@@ -17,6 +19,11 @@
           "url": "/images/pic.jpg"
         }
       ],
+      "artists": [{
+        "id": "abcde",
+        "name": "Professor Paint",
+        "href": "internet.com"
+      }],
       "partner": {
         "id": "artstar",
         "name": "Artstar",

@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 SettingsTabsView = require '../components/tabs/view.coffee'
-SettingsSectionsView = require '../components/sections/view.coffee'
 SettingsView = require '../pages/settings/index.coffee'
 ProfileView = require '../pages/profile/index.coffee'
 DeleteView = require '../pages/delete/index.coffee'
@@ -34,7 +33,6 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     @$sections = @$el.find '.js-settings-page__content__sections'
 
     @tabs = new SettingsTabsView el: @$el
-    @sections = new SettingsSectionsView el: @$sections
 
     @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
     $('body').append @jump.$el
@@ -43,7 +41,6 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     @view?.remove()
     @tabs.update()
     super
-    @sections.update view: @view
 
   saves: ->
     @view = new SavesView user: @user
