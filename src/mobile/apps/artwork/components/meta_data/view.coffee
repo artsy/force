@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user.coffee'
 { createOrder } = require '../../../../../lib/components/create_order'
 { acquireArtwork } = require('../../../../components/acquire/view.coffee')
+sd = require('sharify').data
 
 module.exports = class MetaDataView extends Backbone.View
 

@@ -12,7 +12,7 @@ if artwork.sale_message || isPermanentCollection
               != stitch.components.TooltipQuestion({horizontalAlign: 'left', message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'})
         .artwork-commercial__shipping-info
           //- TODO: remove labFeature check once BNMO goes live to everybody
-          if sd.ENABLE_NEW_BUY_NOW_FLOW || user && user.hasLabFeature('New Buy Now Flow')
+          if sd.ENABLE_NEW_BUY_NOW_FLOW || (user && user.hasLabFeature('New Buy Now Flow'))
             | #{artwork.shippingInfo}
             if artwork.shippingOrigin
               br
