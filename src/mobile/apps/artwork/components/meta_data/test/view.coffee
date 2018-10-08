@@ -78,7 +78,7 @@ describe 'Metadata', ->
 
       return promisedResult.then( ->
         locationMock.assign.callCount.should.equal(1, 'Expected location.assign to be called once')
-        locationMock.assign.calledWith('/order2/1234/shipping').should.be.ok()
+        locationMock.assign.calledWith('/orders/1234/shipping').should.be.ok()
       )
 
     it 'should show an error modal when buy now mutation fails', ->

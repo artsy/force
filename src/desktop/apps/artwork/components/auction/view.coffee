@@ -79,7 +79,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       .then (data) ->
         { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
         if order
-          location.assign("/order2/#{order.id}/shipping")
+          location.assign("/orders/#{order.id}/shipping")
         else
           errorModal.renderBuyNowError(error)
       .catch (err) ->
