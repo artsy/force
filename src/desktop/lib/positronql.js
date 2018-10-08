@@ -4,7 +4,7 @@ const { POSITRON_URL } = require("sharify").data
 const POSITRON_GRAPHQL_URL = POSITRON_URL + "/api/graphql"
 
 export const positronql = options => {
-  const { method = "get", query, variables, req } = options
+  const { method = "post", query, variables, req } = options
 
   return new Promise((resolve, reject) => {
     const r = request[method](POSITRON_GRAPHQL_URL).set(
@@ -16,7 +16,7 @@ export const positronql = options => {
       r.set("X-Access-Token", req.user.get("accessToken"))
     }
 
-    r.query({
+    r.send({
       query,
       variables: JSON.stringify(variables),
     })
