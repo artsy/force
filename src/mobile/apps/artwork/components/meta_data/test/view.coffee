@@ -2,6 +2,7 @@ benv = require 'benv'
 moment = require 'moment'
 sinon = require 'sinon'
 rewire = require 'rewire'
+rewire = require 'rewire'
 Backbone = require 'backbone'
 _ = require 'underscore'
 
@@ -20,7 +21,7 @@ describe 'Metadata', ->
     benv.teardown()
 
   beforeEach ->
-    @MetaDataView = benv.require('../view.coffee')
+    @MetaDataView = rewire('../view.coffee')
     @model =
       get: (key) => @model[key]
       id: 'peter-alexander-wedge-with-puff'
@@ -67,7 +68,6 @@ describe 'Metadata', ->
       @MetaDataView.__set__
         createOrder: createOrderStub
         location: locationMock
-        aquireArtwork: -> {}
         CurrentUser:
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
