@@ -66,7 +66,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         user: loggedInUser
       .then (data) ->
         order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
-        location.assign("/order2/#{order.id}/shipping")
+        location.assign("/orders/#{order.id}/shipping")
 
     else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
       order = new PendingOrder
