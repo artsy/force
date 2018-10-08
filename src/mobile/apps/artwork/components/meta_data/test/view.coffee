@@ -9,8 +9,8 @@ describe 'Metadata', ->
   fakeEvent =
     preventDefault: -> null
     currentTarget: null
+
   before (done) ->
-    sinon.stub global, 'setTimeout'
     benv.setup ->
       benv.expose $: benv.require('jquery')
       Backbone.$ = $
@@ -18,7 +18,6 @@ describe 'Metadata', ->
 
   after ->
     benv.teardown()
-    global.setTimeout.restore()
 
   beforeEach ->
     @MetaDataView = benv.require('../view.coffee')
@@ -56,13 +55,19 @@ describe 'Metadata', ->
         CurrentUser:
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
+        errorModal:
+          render: () -> {}
+          renderBuyNowError: () -> {}
+        acquireArtwork: () -> {}
 
     it 'should reroute to the buy now form when the buy now feature flag is enabled', ->
-      createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
+      promisedResult = Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234")
+      createOrderStub = sinon.stub().returns(promisedResult)
       locationMock = assign: sinon.spy()
       @MetaDataView.__set__
         createOrder: createOrderStub
         location: locationMock
+        aquireArtwork: -> {}
         CurrentUser:
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
@@ -71,10 +76,14 @@ describe 'Metadata', ->
       view.buy(fakeEvent)
       createOrderStub.callCount.should.equal(1)
 
-      setTimeout (() -> locationMock.assign.calledWith('/order2/1234/shipping').should.be.ok()), 0
+      return promisedResult.then( ->
+        locationMock.assign.callCount.should.equal(1, 'Expected location.assign to be called once')
+        locationMock.assign.calledWith('/order2/1234/shipping').should.be.ok()
+      )
 
     it 'should show an error modal when buy now mutation fails', ->
-      createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: error: code: "1234"))
+      promisedResult = Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: error: code: "1234")
+      createOrderStub = sinon.stub().returns(promisedResult)
       errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
       @MetaDataView.__set__
         errorModal: errorModalMock
@@ -86,5 +95,6 @@ describe 'Metadata', ->
       view = new @MetaDataView model: @model
       view.buy(fakeEvent)
       createOrderStub.callCount.should.equal(1)
-
-      setTimeout (() -> errorModalMock.renderBuyNowError.calledOnce.should.be.ok()), 0
+      return promisedResult.then( -> 
+        errorModalMock.renderBuyNowError.calledOnce.should.be.ok()
+      )
