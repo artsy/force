@@ -66,27 +66,38 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     e.preventDefault()
 
     $target = $(e.currentTarget)
-    $target.attr 'data-state', 'loading'
 
     loggedInUser = CurrentUser.orNull()
 
     # Show the new buy now flow if you have the lab feature enabled
     if ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
-      createOrder
-        artworkId: AUCTION.artwork_id
-        quantity: 1
-        user: loggedInUser
-      .then (data) ->
-        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
-        if order
-          location.assign("/orders/#{order.id}/shipping")
-        else
-          errorModal.renderBuyNowError(error)
-      .catch (err) ->
-        errorModal.render()
+      if loggedInUser
+        $target.attr 'data-state', 'loading'
+
+        createOrder
+          artworkId: AUCTION.artwork_id
+          quantity: 1
+          user: loggedInUser
+        .then (data) ->
+          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+          if order
+            location.assign("/orders/#{order.id}/shipping")
+          else
+            errorModal.renderBuyNowError(error)
+        .catch (err) ->
+          $target.attr 'data-state', 'error'
+          errorModal.render()
+      else
+        return mediator.trigger 'open:auth',
+          intent: 'buy now'
+          signupIntent: 'buy now'
+          mode: 'login'
+          trigger: 'click'
+
 
     # Legacy purchase flow
     else
+      $target.attr 'data-state', 'loading'
       acquire AUCTION.artwork_id
         .catch ->
           $target.attr 'data-state', 'error'

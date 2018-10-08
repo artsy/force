@@ -427,6 +427,21 @@ describe 'auction', ->
       preventDefault: -> null
       currentTarget: null
 
+    it 'should show an auth modal if the user is not logged in', ->
+      createOrderStub = sinon.stub()
+      mediatorStub = trigger: sinon.stub()
+      @ArtworkAuctionView.__set__
+        AUCTION: data
+        mediator: mediatorStub
+        createOrder: createOrderStub
+        ENABLE_NEW_BUY_NOW_FLOW: true
+
+      view = new @ArtworkAuctionView data: data
+      view.acquire(fakeEvent)
+      createOrderStub.callCount.should.equal(0)
+      mediatorStub.trigger.args[0][0].should.equal 'open:auth'
+      mediatorStub.trigger.args[0][1].mode.should.equal 'login'
+
     it 'should create a new order when the buy now lab feature enabled', ->
       createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
       @ArtworkAuctionView.__set__
