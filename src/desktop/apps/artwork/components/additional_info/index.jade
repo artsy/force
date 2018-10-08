@@ -1,6 +1,6 @@
 include ../../../../components/side_tabs/mixins
 
-if user && user.hasLabFeature('New Buy Now Flow')
+if sd.ENABLE_NEW_BUY_NOW_FLOW || (user && user.hasLabFeature('New Buy Now Flow'))
   != stitch.components.ArtworkDetails({artworkID: artwork.id})
 else
   - var tabs = helpers.additional_info.build(artwork)

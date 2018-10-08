@@ -1,6 +1,6 @@
 { defer, extend, before, isEqual } = require 'underscore'
 Backbone = require 'backbone'
-{ AUCTION, CURRENT_USER } = require('sharify').data
+{ AUCTION, CURRENT_USER, ENABLE_NEW_BUY_NOW_FLOW } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
@@ -70,7 +70,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     loggedInUser = CurrentUser.orNull()
 
     # Show the new buy now flow if you have the lab feature enabled
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    if ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
       createOrder
         artworkId: AUCTION.artwork_id
         quantity: 1
