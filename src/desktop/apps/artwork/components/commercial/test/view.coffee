@@ -64,7 +64,23 @@ describe 'ArtworkCommercialView', ->
             quantity: 1
             user: sinon.match.any
           .should.be.ok()
+      
+      it 'shows an error modal when create order mutation fails', ->
 
+        ArtworkCommercialView.__set__ 'CurrentUser',
+          orNull: ->
+            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
+
+        createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: error: code: "failed"))
+        ArtworkCommercialView.__set__ 'createOrder', createOrderStub
+
+        errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
+        ArtworkCommercialView.__set__ 'errorModal', errorModalMock
+
+        @view.$('.js-artwork-acquire-button').click()
+        createOrderStub.calledOnce.should.be.ok()
+
+        setTimeout (() -> errorModalMock.renderBuyNowError.calledOnce.should.be.ok()), 0
 
   describe 'an ecommerce work with a single edition set', ->
     beforeEach ->

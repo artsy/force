@@ -10,6 +10,7 @@ inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
+errorModal = require '../../client/errorModal'
 { createOrder } = require '../../../../../lib/components/create_order'
 template = -> require('./templates/index.jade') arguments...
 
@@ -76,8 +77,13 @@ module.exports = class ArtworkAuctionView extends Backbone.View
         quantity: 1
         user: loggedInUser
       .then (data) ->
-        order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
-        location.assign("/orders/#{order.id}/shipping")
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/shipping")
+        else
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        errorModal.render()
 
     # Legacy purchase flow
     else
