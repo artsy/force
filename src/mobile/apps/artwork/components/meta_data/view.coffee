@@ -4,6 +4,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 { acquireArtwork } = require('../../../../components/acquire/view.coffee')
 errorModal = require '../../../../../desktop/apps/artwork/client/errorModal.tsx'
 sd = require('sharify').data
+mediator = require '../../../../lib/mediator.coffee'
 
 module.exports = class MetaDataView extends Backbone.View
 
@@ -28,18 +29,22 @@ module.exports = class MetaDataView extends Backbone.View
       if @model.get('edition_sets')?.length && @model.get('edition_sets').length == 1
         singleEditionSetId = @model.get('edition_sets')[0] && @model.get('edition_sets')[0].id
 
-      createOrder
-        artworkId: @model.get('_id')
-        editionSetId: @editionSetId || singleEditionSetId
-        quantity: 1
-        user: loggedInUser
-      .then (data) ->
-        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
-        if order
-          location.assign("/orders/#{order.id}/shipping")
-        else
-          errorModal.renderBuyNowError(error)
-      .catch (err) ->
-        errorModal.render()
+      if not loggedInUser
+        return location.assign "/login?redirectTo=#{@model.href()}&signupIntent=buy+now&intent=buy+now&trigger=click"
+      else
+        createOrder
+          artworkId: @model.get('_id')
+          editionSetId: @editionSetId || singleEditionSetId
+          quantity: 1
+          user: loggedInUser
+        .then (data) ->
+          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+          if order
+            location.assign("/orders/#{order.id}/shipping")
+          else
+            errorModal.renderBuyNowError(error)
+        .catch (err) ->
+          errorModal.render()
+
     else if isAuctionPartner
       acquireArtwork @model, $(e.target), @editionSetId

@@ -47,6 +47,23 @@ describe 'ArtworkCommercialView', ->
           .should.have.lengthOf 1
 
     describe '#acquire', ->
+      it 'should show an auth modal if the user is not logged in', ->
+        createOrderStub = sinon.stub()
+        mediatorStub = trigger: sinon.stub()
+        ArtworkCommercialView.__set__
+          mediator: mediatorStub
+          createOrder: createOrderStub
+          sd:
+            ENABLE_NEW_BUY_NOW_FLOW: true
+          CurrentUser:
+            orNull: ->
+              null
+
+        @view.$('.js-artwork-acquire-button').click()
+        createOrderStub.callCount.should.equal(0)
+        mediatorStub.trigger.args[0][0].should.equal 'open:auth'
+        mediatorStub.trigger.args[0][1].mode.should.equal 'login'
+
       it 'purchases an artwork by creating a new order', ->
         ArtworkCommercialView.__set__ 'CurrentUser',
           orNull: ->
@@ -64,9 +81,8 @@ describe 'ArtworkCommercialView', ->
             quantity: 1
             user: sinon.match.any
           .should.be.ok()
-      
-      it 'shows an error modal when create order mutation fails', ->
 
+      it 'shows an error modal when create order mutation fails', ->
         ArtworkCommercialView.__set__ 'CurrentUser',
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'

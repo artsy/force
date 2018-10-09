@@ -20,6 +20,7 @@ confirmation = -> require('./templates/confirmation.jade') arguments...
 { createOrder } = require '../../../../../lib/components/create_order'
 inquireSpecialist = require '../../lib/inquire.coffee'
 errorModal = require '../../client/errorModal'
+mediator = require '../../../../lib/mediator.coffee'
 
 module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
@@ -51,28 +52,37 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     # Show the new buy now flow if you have the lab feature or feature flag enabled
     if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
-
       serializer = new Serializer @$('form')
       data = serializer.data()
       editionSetId: data.edition_set_id
+      $target = $(e.currentTarget)
 
       # If this artwork has an edition set of 1, send that in the mutation as well
       if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
         editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
-      createOrder
-        artworkId: @artwork.get('_id')
-        editionSetId: editionSetId
-        quantity: 1
-        user: loggedInUser
-      .then (data) ->
-        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
-        if order
-          location.assign("/orders/#{order.id}/shipping")
-        else
-          errorModal.renderBuyNowError(error)
-      .catch (err) ->
-        errorModal.render()
+      if loggedInUser
+        $target.attr 'data-state', 'loading'
+        createOrder
+          artworkId: @artwork.get('_id')
+          editionSetId: editionSetId
+          quantity: 1
+          user: loggedInUser
+        .then (data) ->
+          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+          if order
+            location.assign("/orders/#{order.id}/shipping")
+          else
+            errorModal.renderBuyNowError(error)
+        .catch (err) ->
+          $target.attr 'data-state', 'error'
+          errorModal.render()
+      else
+        return mediator.trigger 'open:auth',
+          intent: 'buy now'
+          signupIntent: 'buy now'
+          mode: 'login'
+          trigger: 'click'
 
     else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
       order = new PendingOrder
