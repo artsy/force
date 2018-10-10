@@ -258,7 +258,6 @@
     "fork-ts-checker-webpack-plugin": "^0.4.3",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "graphql-fetch-schema": "^0.8.0",
-    "hard-source-webpack-plugin": "^0.12.0",
     "hulk-editor": "craigspaeth/hulk",
     "husky": "^0.14.3",
     "imagesloaded": "^4.1.1",
