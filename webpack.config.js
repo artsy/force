@@ -5,7 +5,6 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
-const HardSourceWebpackPlugin = require("hard-source-webpack-plugin")
 const fs = require("fs")
 const path = require("path")
 const webpack = require("webpack")
@@ -99,15 +98,6 @@ const config = {
   plugins: [
     // TODO: Add webpack typechecker
     ...notOnCI(new SimpleProgressWebpackPlugin({ format: "compact" })),
-    ...notOnCI(
-      new HardSourceWebpackPlugin({
-        cacheDirectory: path.join(cacheDirectory, "hard-source"),
-        info: {
-          mode: "none",
-          level: "error",
-        },
-      })
-    ),
     // Remove moment.js localization files
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ForkTsCheckerWebpackPlugin({
