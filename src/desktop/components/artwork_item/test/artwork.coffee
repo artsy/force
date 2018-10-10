@@ -188,18 +188,23 @@ describe 'Artwork Item template', ->
 
   describe 'buy button', ->
 
-    it 'renders a buy button if the work is acquirable and purchase is allowed', ->
-      @artwork = new Artwork fabricate 'artwork', { acquireable: true }
+    it 'renders a buy button if the work is acquirable and purchase is allowed, and not a contact CTA', ->
+      # Check that initially we have a contact CTA and no buy button
+      @artwork = new Artwork fabricate 'artwork', { forsale: true }
       $ = cheerio.load render('artwork')
         artwork: @artwork
         sd: {}
       $('.artwork-item-buy').should.have.lengthOf 0
+      $('.artwork-item-contact-seller').text().should.equal 'Contact gallery'
 
+      # Check that now there is a buy button and no contact CTA
+      @artwork.set('acquireable', true)
       $ = cheerio.load render('artwork')
         artwork: @artwork
         displayPurchase: true
         sd: {}
       $('.artwork-item-buy').should.have.lengthOf 1
+      $('.artwork-item-contact-seller').should.have.lengthOf 0
 
   describe 'sold', ->
 
