@@ -16,6 +16,10 @@ if (pageType == "artwork") {
   properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
 }
 
+if (pageType === "order2") {
+  properties[""]
+}
+
 analytics.page(properties, { integrations: { Marketo: false } })
 
 // Track pageload speed
