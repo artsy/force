@@ -50,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.3.9":
-  version "5.3.9"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.3.9.tgz#16c8be35c0b342f2816003ec3b5b9842c82020d0"
-  integrity sha512-dq0wyiMNHVGCw5fESFrrYS7rRuNPaE+rUUZfT4ZdGUBWChaVHU3NquofJOJZjj8e+q8tHQ+y2E184cXvI9VAoQ==
+"@artsy/reaction@^5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.4.2.tgz#497cec2acceb8c8b4fe05dfc3f3407959d3023e0"
+  integrity sha512-/MPslMOze4/Z9elTURLmx0/Z6SRLA4Hc7+y2DPPEzrDgjlgFxftF5uEdyfY+qPalAis8S91Z3zc29ePP13OQjA==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -4087,6 +4087,8 @@ dd-trace@artsy/dd-trace-js#artsy:
     semver "^5.5.0"
     shimmer "^1.2.0"
     url-parse "^1.4.3"
+  optionalDependencies:
+    "@airbnb/node-memwatch" "^1.0.2"
 
 debounce@~1.0.0:
   version "1.0.2"
@@ -11696,7 +11698,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
