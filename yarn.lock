@@ -50,17 +50,17 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.5.0":
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.5.0.tgz#c23b6de393dc132fb65512ad0b59f880c0a95c67"
-  integrity sha512-G6oVe4MIzmE7+kgGN5PxTUXUKXLkKrD1gFEyQpc3CKdkI9y03Qa3F6KXeU9ZLyn2CP4m2/sJC/HWNN5DL/1zVw==
+"@artsy/reaction@^5.5.2":
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.5.2.tgz#13100ee3aaa6b6beb8edeef772fd3f5f0cd1d6dc"
+  integrity sha512-GAek2tC/V9VtKy/ZbgFLJTX3zZjYJElV3tQNQ+dWqMuon4WwIsb9FbnRxSppq9Tg8BmDRZIzvbYTYX1Q+jZVUw==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
-    found "^0.3.11"
-    found-relay "^0.3.0-alpha.13"
+    found "^0.3.14"
+    found-relay "^0.3.1"
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
     jsonp "^0.2.1"
@@ -1375,7 +1375,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -4068,6 +4067,8 @@ dd-trace@artsy/dd-trace-js#artsy:
     semver "^5.5.0"
     shimmer "^1.2.0"
     url-parse "^1.4.3"
+  optionalDependencies:
+    "@airbnb/node-memwatch" "^1.0.2"
 
 debounce@~1.0.0:
   version "1.0.2"
@@ -5979,7 +5980,7 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-found-relay@^0.3.0-alpha.13:
+found-relay@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.3.1.tgz#b525339595e5b3aa24af555423e60fdb33a5cb16"
   integrity sha512-N9lADMedKGkl+PNY/L/qf0rDy+3HRbO9IX8Gcvjpy2tgRmPy6Z2QM/zVOufCvvD8rYGP84CuqtmTWJvJrLPFYw==
@@ -5991,7 +5992,7 @@ found-relay@^0.3.0-alpha.13:
     prop-types-extra "^1.1.0"
     warning "^4.0.2"
 
-found@^0.3.11:
+found@^0.3.14:
   version "0.3.14"
   resolved "https://registry.yarnpkg.com/found/-/found-0.3.14.tgz#0bfe2e7433951bf2df223e65c73756565d97ba8c"
   integrity sha512-Z4Ag0L8whIJwVf0MyNTkx9q3ekmbqK5RkCvlcVU7Dn3ruKfKSxbPReUiQi7mWGMTAut2JnkwiobSD/FQRhk9Vw==
@@ -11579,7 +11580,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
