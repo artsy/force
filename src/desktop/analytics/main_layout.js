@@ -49,37 +49,45 @@ if (
   })
 }
 
-// Track 15 second bounce rate
-setTimeout(function() {
-  analytics.track("Time on page", {
-    category: "15 Seconds",
-    message: sd.CURRENT_PATH,
-  })
-}, 15000)
+class PageTimeTracker {
+  constructor(path, delay, description) {
+    this.path = path
+    this.delay = delay
+    this.description = description
+    this.timer = null
+    this.track()
+  }
 
-// Track 30 second bounce rate
-setTimeout(function() {
-  analytics.track("Time on page", {
-    category: "30 Seconds",
-    message: sd.CURRENT_PATH,
-  })
-}, 30000)
+  setPath(newPath) {
+    this.path = newPath
+  }
 
-// Track 1 min bounce rate
-setTimeout(function() {
-  analytics.track("Time on page", {
-    category: "1 Minute",
-    message: sd.CURRENT_PATH,
-  })
-}, 60000)
+  track() {
+    this.timer = setTimeout(() => {
+      window.analytics.track("Time on page", {
+        category: this.description,
+        message: this.path,
+      })
+    }, this.delay)
+  }
 
-// Track 3 Minute bounce rate
-setTimeout(function() {
-  analytics.track("Time on page", {
-    category: "3 Minutes",
-    message: sd.CURRENT_PATH,
-  })
-}, 180000)
+  clear() {
+    if (this.timer) clearTimeout(this.delay)
+  }
+
+  reset(newPath = null) {
+    this.clear()
+    if (newPath) this.setPath(newPath)
+    this.track()
+  }
+}
+
+window.desktopPageTimeTrackers = [
+  new PageTimeTracker(sd.CURRENT_PATH, 15000, "15 seconds"),
+  new PageTimeTracker(sd.CURRENT_PATH, 30000, "30 seconds"),
+  new PageTimeTracker(sd.CURRENT_PATH, 60000, "1 minute"),
+  new PageTimeTracker(sd.CURRENT_PATH, 180000, "3 minutes"),
+]
 
 // debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {

@@ -46,6 +46,11 @@ orderCheckoutFlowEvents.map(eventName => {
       { path: window.location.pathname },
       { integrations: { Marketo: false } }
     )
+    // Reset timers that track time on page since we're tracking each order
+    // checkout view as a separate page.
+    window.desktopPageTimeTrackers.forEach(tracker =>
+      tracker.reset(window.location.pathname)
+    )
   })
 })
 
