@@ -83,9 +83,12 @@ module.exports = class ArtworkAuctionView extends Backbone.View
           if order
             location.assign("/orders/#{order.id}/shipping")
           else
+            console.error('createOrder', error)
+            $target.attr 'data-state', 'loaded'
             errorModal.renderBuyNowError(error)
         .catch (err) ->
-          $target.attr 'data-state', 'error'
+          console.error('createOrder', err)
+          $target.attr 'data-state', 'loaded'
           errorModal.render()
       else
         return mediator.trigger 'open:auth',
