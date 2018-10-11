@@ -96,6 +96,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
           signupIntent: 'buy now'
           mode: 'login'
           trigger: 'click'
+          redirectTo: location.href
 
 
     # Legacy purchase flow

@@ -86,6 +86,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
           signupIntent: 'buy now'
           mode: 'login'
           trigger: 'click'
+          redirectTo: location.href
 
     else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
       order = new PendingOrder
