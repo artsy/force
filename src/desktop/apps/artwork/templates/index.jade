@@ -6,6 +6,7 @@ append locals
 block head
   include ../components/meta/index
   include ../components/facebook/index
+  include ../components/google/index
 
 block body
   - isAuction = artwork.context && artwork.context.__typename == 'ArtworkContextAuction'

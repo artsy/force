@@ -68,6 +68,7 @@ sharify.data = _.extend(
     "GEODATA_URL",
     "GOOGLE_ANALYTICS_ID",
     "GOOGLE_MAPS_API_KEY",
+    "GOOGLE_ADWORDS_ID",
     "IMAGE_PROXY",
     "INTERCOM_APP_ID",
     "INTERCOM_ENABLED",

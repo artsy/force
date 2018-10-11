@@ -19,8 +19,6 @@ if (pageType == "artwork") {
   properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
 }
 
-console.log(properties)
-
 // Track pageview
 analytics.page(properties, { integrations: { Marketo: false } })
 
@@ -30,9 +28,9 @@ if (
   window.performance.timing &&
   sd.TRACK_PAGELOAD_PATHS
 ) {
-  window.addEventListener("load", function() {
+  window.addEventListener("load", function () {
     if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
-      window.setTimeout(function() {
+      window.setTimeout(function () {
         const {
           requestStart,
           loadEventEnd,
