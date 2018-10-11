@@ -15,7 +15,7 @@ if [ "$NODE_ENV" != "production" ]; then
   if [ ! -f "./.env" ]; then
     echo -e "\033[1;31m WARNING: Missing .env file, see CONTRIBUTING.md. \033[0m"
   fi
-  OPT+=(-r dotenv/config)
+  OPT+=(-r dotenv/config --preserve-symlinks)
   if [ "$TERM_PROGRAM" == "vscode" ] && \
      [ ! -z "$TERM_PROGRAM_VERSION" ] && \
      [ $(version $TERM_PROGRAM_VERSION) -ge $(version "1.22.2") ]
