@@ -26,9 +26,9 @@ figure.artwork-item( data-artwork= artwork.get('id') data-id= artwork.get('_id')
     include ./partials/auction_info
     if hasAuctionPartner && !isAuction
       include ./partials/bid_now
-    if showContact && !hasAuctionPartner
-      include ./partials/contact
     if showBuyButton
       include ./partials/buy_button
-    if showBuyLink
+    else if showBuyLink
       include ./partials/buy_link
+    else if showContact && !hasAuctionPartner
+      include ./partials/contact
