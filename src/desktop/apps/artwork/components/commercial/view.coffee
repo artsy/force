@@ -54,7 +54,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
       serializer = new Serializer @$('form')
       data = serializer.data()
-      editionSetId: data.edition_set_id
+      editionSetId = data.edition_set_id
       $target = $(e.currentTarget)
 
       # If this artwork has an edition set of 1, send that in the mutation as well
@@ -73,9 +73,12 @@ module.exports = class ArtworkCommercialView extends Backbone.View
           if order
             location.assign("/orders/#{order.id}/shipping")
           else
+            console.error('createOrder', error)
+            $target.attr 'data-state', 'loaded'
             errorModal.renderBuyNowError(error)
         .catch (err) ->
-          $target.attr 'data-state', 'error'
+          console.error('createOrder', err)
+          $target.attr 'data-state', 'loaded'
           errorModal.render()
       else
         return mediator.trigger 'open:auth',

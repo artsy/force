@@ -42,8 +42,10 @@ module.exports = class MetaDataView extends Backbone.View
           if order
             location.assign("/orders/#{order.id}/shipping")
           else
+            console.error('createOrder', error)
             errorModal.renderBuyNowError(error)
         .catch (err) ->
+          console.error('createOrder', err)
           errorModal.render()
 
     else if isAuctionPartner

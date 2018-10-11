@@ -34,7 +34,7 @@ describe 'ArtworkCommercialView', ->
     Backbone.sync.restore()
     location.assign.restore()
 
-  describe 'an ecommerce work', ->
+  describe 'an ecommerce work with multiple edition sets', ->
     beforeEach ->
       @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork.json'
       @view.render()
@@ -69,7 +69,7 @@ describe 'ArtworkCommercialView', ->
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
-        createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
+        createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
         ArtworkCommercialView.__set__ 'createOrder', createOrderStub
 
         @view.$('.js-artwork-acquire-button').click()
@@ -77,7 +77,7 @@ describe 'ArtworkCommercialView', ->
         createOrderStub
           .calledWith
             artworkId: '56e86588b202a366da000571'
-            editionSetId: undefined
+            editionSetId: '56e866cd275b241d87000510'
             quantity: 1
             user: sinon.match.any
           .should.be.ok()
@@ -87,7 +87,7 @@ describe 'ArtworkCommercialView', ->
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
-        createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: error: code: "failed"))
+        createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: error: code: "failed"))
         ArtworkCommercialView.__set__ 'createOrder', createOrderStub
 
         errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
@@ -108,15 +108,36 @@ describe 'ArtworkCommercialView', ->
           orNull: ->
             hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
-        createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
+        createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
         ArtworkCommercialView.__set__ 'createOrder', createOrderStub
-
         @view.$('.js-artwork-acquire-button').click()
         createOrderStub.calledOnce.should.be.ok()
         createOrderStub
           .calledWith
             artworkId: '56e86588b202a366da000571'
             editionSetId: '56e866cd275b241d87000510'
+            quantity: 1
+            user: sinon.match.any
+          .should.be.ok()
+
+  describe 'an ecommerce work without edition set', ->
+    beforeEach ->
+      @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork_no_edition.json'
+      @view.render()
+    describe '#acquire', ->
+      it 'purchases an artwork without edition set', ->
+        ArtworkCommercialView.__set__ 'CurrentUser',
+          orNull: ->
+            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
+
+        createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
+        ArtworkCommercialView.__set__ 'createOrder', createOrderStub
+        @view.$('.js-artwork-acquire-button').click()
+        createOrderStub.calledOnce.should.be.ok()
+        createOrderStub
+          .calledWith
+            artworkId: '56e86588b202a366da000571'
+            editionSetId: undefined
             quantity: 1
             user: sinon.match.any
           .should.be.ok()
