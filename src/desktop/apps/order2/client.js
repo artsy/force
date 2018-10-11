@@ -48,9 +48,11 @@ orderCheckoutFlowEvents.map(eventName => {
     )
     // Reset timers that track time on page since we're tracking each order
     // checkout view as a separate page.
-    window.desktopPageTimeTrackers.forEach(tracker =>
-      tracker.reset(window.location.pathname)
-    )
+    window.desktopPageTimeTrackers.forEach(tracker => {
+      // No need to reset the tracker if we're on the same page.
+      if (window.location.pathname !== tracker.path)
+        tracker.reset(window.location.pathname)
+    })
   })
 })
 
