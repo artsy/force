@@ -210,6 +210,7 @@ describe 'Artwork metadata templates', ->
       it 'should drop institution header', ->
         html = render('partner')(
           artwork: @artwork
+          sd: {}
         )
 
         $ = cheerio.load(html)
@@ -218,6 +219,7 @@ describe 'Artwork metadata templates', ->
       it 'should display collecting institution as link text', ->
         html = render('partner')(
           artwork: @artwork
+          sd: {}
         )
 
         $ = cheerio.load(html)
@@ -232,6 +234,7 @@ describe 'Artwork metadata templates', ->
 
         @html = render('partner')(
           artwork: @artwork
+          sd: {}
         )
 
       it 'should link to partner\'s page', ->
@@ -249,6 +252,7 @@ describe 'Artwork metadata templates', ->
 
         @html = render('partner')(
           artwork: @artwork
+          sd: {}
         )
 
       it 'should link to partner\'s page', ->
@@ -267,6 +271,7 @@ describe 'Artwork metadata templates', ->
 
       @html = render('index')(
         artwork: @artwork
+        sd: {}
       )
 
     it 'displays estimation', ->

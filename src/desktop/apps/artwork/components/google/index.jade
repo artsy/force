@@ -1,0 +1,11 @@
+<!-- Global site tag - AdWords -->
+script(type='text/javascript' async src="https://www.googletagmanager.com/gtag/js?id=#{sd.GOOGLE_ADWORDS_ID}")
+script(type='text/javascript').
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', "#{sd.GOOGLE_ADWORDS_ID}");
+  gtag('event', 'page_view', {
+    'send_to': "#{sd.GOOGLE_ADWORDS_ID}",
+    'dynx_itemid': "#{artwork._id}"
+  });

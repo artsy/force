@@ -7,7 +7,7 @@ block content
 
   include ../components/image/templates/index.jade
   include ../components/meta_data/templates/index.jade
-  if !user || !user.hasLabFeature('New Buy Now Flow')
+  if !sd.ENABLE_NEW_BUY_NOW_FLOW && !(user && user.hasLabFeature('New Buy Now Flow'))
     include ../components/tabs/templates/index.jade
   include ../components/highlights/templates/index.jade
   include ../components/artist/templates/index.jade

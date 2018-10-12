@@ -2,6 +2,9 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user.coffee'
 { createOrder } = require '../../../../../lib/components/create_order'
 { acquireArtwork } = require('../../../../components/acquire/view.coffee')
+errorModal = require '../../../../../desktop/apps/artwork/client/errorModal.tsx'
+sd = require('sharify').data
+mediator = require '../../../../lib/mediator.coffee'
 
 module.exports = class MetaDataView extends Backbone.View
 
@@ -21,18 +24,29 @@ module.exports = class MetaDataView extends Backbone.View
       @model.get('partner').type == 'Auction' or
       @model.get('partner').type == 'Auction House'
 
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
+    if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
       # If this artwork has an edition set of 1, send that in the mutation as well
       if @model.get('edition_sets')?.length && @model.get('edition_sets').length == 1
         singleEditionSetId = @model.get('edition_sets')[0] && @model.get('edition_sets')[0].id
 
-      createOrder
-        artworkId: @model.get('_id')
-        editionSetId: @editionSetId || singleEditionSetId
-        quantity: 1
-        user: loggedInUser
-      .then (data) ->
-        order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
-        location.assign("/order2/#{order.id}/shipping")
+      if not loggedInUser
+        return location.assign "/login?redirectTo=#{@model.href()}&signupIntent=buy+now&intent=buy+now&trigger=click"
+      else
+        createOrder
+          artworkId: @model.get('_id')
+          editionSetId: @editionSetId || singleEditionSetId
+          quantity: 1
+          user: loggedInUser
+        .then (data) ->
+          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+          if order
+            location.assign("/orders/#{order.id}/shipping")
+          else
+            console.error('createOrder', error)
+            errorModal.renderBuyNowError(error)
+        .catch (err) ->
+          console.error('createOrder', err)
+          errorModal.render()
+
     else if isAuctionPartner
       acquireArtwork @model, $(e.target), @editionSetId

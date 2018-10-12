@@ -16,11 +16,11 @@ describe("Request for order", () => {
   let next
   const sendMock = jest.fn()
 
-  describe("/order2/:orderID", () => {
+  describe("/orders/:orderID", () => {
     beforeEach(() => {
       req = {
-        path: "/order2/123",
-        originalUrl: "/order2/123",
+        path: "/orders/123",
+        originalUrl: "/orders/123",
         query: {},
         header: () => "referrer",
       }
@@ -42,7 +42,7 @@ describe("Request for order", () => {
     it("redirects an unauthenticated user to log in", done => {
       checkoutFlow(req, res, next).then(() => {
         expect(res.redirect).toHaveBeenCalledWith(
-          "/login?redirectTo=%2Forder2%2F123"
+          "/login?redirectTo=%2Forders%2F123"
         )
         done()
       })

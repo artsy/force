@@ -427,8 +427,23 @@ describe 'auction', ->
       preventDefault: -> null
       currentTarget: null
 
+    it 'should show an auth modal if the user is not logged in', ->
+      createOrderStub = sinon.stub()
+      mediatorStub = trigger: sinon.stub()
+      @ArtworkAuctionView.__set__
+        AUCTION: data
+        mediator: mediatorStub
+        createOrder: createOrderStub
+        ENABLE_NEW_BUY_NOW_FLOW: true
+
+      view = new @ArtworkAuctionView data: data
+      view.acquire(fakeEvent)
+      createOrderStub.callCount.should.equal(0)
+      mediatorStub.trigger.args[0][0].should.equal 'open:auth'
+      mediatorStub.trigger.args[0][1].mode.should.equal 'login'
+
     it 'should create a new order when the buy now lab feature enabled', ->
-      createOrderStub = sinon.stub().returns({ then: -> null })
+      createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
       @ArtworkAuctionView.__set__
         AUCTION: data
         createOrder: createOrderStub
@@ -440,8 +455,25 @@ describe 'auction', ->
       view.acquire(fakeEvent)
       createOrderStub.callCount.should.equal(1)
 
+    it 'should show an error modal when buy now flag enabled but mutation fails', ->
+      createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: error: code: "1234"))
+      errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
+      @ArtworkAuctionView.__set__
+        errorModal: errorModalMock
+        AUCTION: data
+        createOrder: createOrderStub
+        CurrentUser:
+          orNull: ->
+            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
+
+      view = new @ArtworkAuctionView data: data
+      view.acquire(fakeEvent)
+      createOrderStub.callCount.should.equal(1)
+
+      setTimeout (() -> errorModalMock.renderBuyNowError.calledOnce.should.be.ok()), 0
+
     it 'should follow legacy purchase flow when buy now lab feature disabled', ->
-      createOrderStub = sinon.stub().returns({ then: -> null })
+      createOrderStub = sinon.stub().returns(Promise.resolve())
       acquireStub = sinon.stub().returns(Promise.resolve())
       @ArtworkAuctionView.__set__
         AUCTION: data

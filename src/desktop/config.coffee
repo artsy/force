@@ -66,6 +66,7 @@ module.exports =
   GENOME_URL: 'https://helix.artsy.net'
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
+  GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
   INTERCOM_APP_ID: null
   INTERCOM_ENABLED: false
@@ -81,7 +82,7 @@ module.exports =
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
   NEW_ARTIST_PAGE_THRESHOLD: 10 # all users will get the new page.
-  NEW_AUTH_MODAL: false
+  NEW_AUTH_MODAL: true
   NEW_COLLECT_PAGE_ENABLED: false
   NODE_ENV: 'development'
   OPENREDIS_URL: null

@@ -1,6 +1,6 @@
 { defer, extend, before, isEqual } = require 'underscore'
 Backbone = require 'backbone'
-{ AUCTION, CURRENT_USER } = require('sharify').data
+{ AUCTION, CURRENT_USER, ENABLE_NEW_BUY_NOW_FLOW } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
@@ -10,6 +10,7 @@ inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
+errorModal = require '../../client/errorModal'
 { createOrder } = require '../../../../../lib/components/create_order'
 template = -> require('./templates/index.jade') arguments...
 
@@ -65,22 +66,42 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     e.preventDefault()
 
     $target = $(e.currentTarget)
-    $target.attr 'data-state', 'loading'
 
     loggedInUser = CurrentUser.orNull()
 
     # Show the new buy now flow if you have the lab feature enabled
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
-      createOrder
-        artworkId: AUCTION.artwork_id
-        quantity: 1
-        user: loggedInUser
-      .then (data) ->
-        order = data?.ecommerceCreateOrderWithArtwork?.orderOrError?.order
-        location.assign("/order2/#{order.id}/shipping")
+    if ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
+      if loggedInUser
+        $target.attr 'data-state', 'loading'
+
+        createOrder
+          artworkId: AUCTION.artwork_id
+          quantity: 1
+          user: loggedInUser
+        .then (data) ->
+          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+          if order
+            location.assign("/orders/#{order.id}/shipping")
+          else
+            console.error('createOrder', error)
+            $target.attr 'data-state', 'loaded'
+            errorModal.renderBuyNowError(error)
+        .catch (err) ->
+          console.error('createOrder', err)
+          $target.attr 'data-state', 'loaded'
+          errorModal.render()
+      else
+        return mediator.trigger 'open:auth',
+          intent: 'buy now'
+          signupIntent: 'buy now'
+          mode: 'login'
+          trigger: 'click'
+          redirectTo: location.href
+
 
     # Legacy purchase flow
     else
+      $target.attr 'data-state', 'loading'
       acquire AUCTION.artwork_id
         .catch ->
           $target.attr 'data-state', 'error'
