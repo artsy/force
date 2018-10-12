@@ -68,7 +68,7 @@ class PageTimeTracker {
   }
 
   clear() {
-    if (this.timer) clearTimeout(this.delay)
+    if (this.timer) clearTimeout(this.timer)
   }
 
   reset(newPath = null) {
