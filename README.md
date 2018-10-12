@@ -4,7 +4,7 @@
 
 Are you an Engineer? Don't know what Artsy is? Check out [this overview](https://github.com/artsy/meta/blob/master/meta/what_is_artsy.md) and [more](https://github.com/artsy/meta/blob/master/README.md).
 
-Want to know more about Artsy tech? Read the [Artsy Engineering Blog](http://artsy.github.io).
+Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://artsy.github.io).
 
 ## Meta
 
