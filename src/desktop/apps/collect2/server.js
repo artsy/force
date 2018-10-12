@@ -11,8 +11,7 @@ const app = (module.exports = express())
 
 const index = async (req, res, next) => {
   try {
-    const user = req.user && req.user.toJSON()
-    const { APP_URL, IS_MOBILE } = res.locals.sd
+    const { APP_URL } = res.locals.sd
 
     const { ServerApp, redirect } = await buildServerApp({
       routes,
@@ -25,6 +24,8 @@ const index = async (req, res, next) => {
       return
     }
 
+    const medium = req.params.medium && req.params.medium.replace(/-/gi, " ")
+
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
@@ -33,7 +34,7 @@ const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => <Meta appUrl={APP_URL} />,
+        head: () => <Meta appUrl={APP_URL} medium={medium} />,
         body: () => <ServerApp />,
       },
       locals: {
