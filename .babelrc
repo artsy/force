@@ -7,7 +7,8 @@
           "browsers": [
             "last 2 versions"
           ]
-        }
+        },
+        "useBuiltIns": "usage"
       }
     ],
     "@babel/react",

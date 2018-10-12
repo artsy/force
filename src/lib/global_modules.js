@@ -1,5 +1,3 @@
-require("@babel/polyfill")
-
 const _ = require("underscore")
 const $ = require("jquery")
 const imagesLoaded = require("imagesloaded")
