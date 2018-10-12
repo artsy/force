@@ -30,12 +30,22 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
 
 const config = {
   devtool: WEBPACK_DEVTOOL || "cheap-module-source-map",
+  mode: NODE_ENV,
   entry: {
     webpack: [
       "webpack-hot-middleware/client?reload=true",
       "./src/desktop/apps/webpack/client.js",
     ],
     ...getEntrypoints(),
+  },
+  // See https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366 and
+  optimization: {
+    namedModules: true,
+    noEmitOnErrors: true,
+    splitChunks: {
+      chunks: "all",
+      name: "common",
+    },
   },
   output: {
     filename: "[name].js",
@@ -89,9 +99,11 @@ const config = {
           },
         ],
       },
+      // ESM support. See: https://github.com/apollographql/react-apollo/issues/1737#issuecomment-371178602
       {
-        test: /\.json$/,
-        loader: "json-loader",
+        type: "javascript/auto",
+        test: /\.mjs$/,
+        use: [],
       },
     ],
   },
@@ -123,18 +135,12 @@ const config = {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common",
-      minChunks: 10, // lower number for larger "common.js" bundle size
     }),
   ],
   resolve: {
@@ -177,21 +183,6 @@ if (isDevelopment) {
   // Staging
 } else if (isDeploy) {
   config.devtool = "#source-map"
-
-  // Prod
-  if (isProduction) {
-    config.plugins.push(
-      new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
-        },
-      })
-    )
-  }
 
   if (ANALYZE_BUNDLE) {
     config.plugins.push(new BundleAnalyzerPlugin())
