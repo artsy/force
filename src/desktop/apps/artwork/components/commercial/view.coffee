@@ -58,9 +58,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     # Show the new buy now flow if you have the lab feature or feature flag enabled
     if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
-    # Show the new buy now flow if you have the lab feature enabled
-    if loggedInUser?.hasLabFeature('New Buy Now Flow')
-
       analytics.track('Click', {
         subject: 'buy now',
         type: 'button',
