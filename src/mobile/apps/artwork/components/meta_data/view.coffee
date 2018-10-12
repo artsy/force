@@ -26,9 +26,9 @@ module.exports = class MetaDataView extends Backbone.View
 
     if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
       analytics.track('Click', {
-        subject: 'buy now',
+        subject: 'buy',
         type: 'button',
-        flow: 'buy'
+        flow: 'buy now'
       })
 
       # If this artwork has an edition set of 1, send that in the mutation as well
