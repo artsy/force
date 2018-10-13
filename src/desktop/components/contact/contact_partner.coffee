@@ -31,7 +31,7 @@ module.exports = class ContactPartnerView extends ContactView
 
   defaults: -> _.extend super,
     url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
-    successMessage: 'Thank you. Your inquiry has been sent.'
+    successMessage: 'Thank you. Your Message Has Been Sent.'
 
   initialize: ({ @artwork, @partner }) ->
     @partner.related().locations.fetch complete: =>
