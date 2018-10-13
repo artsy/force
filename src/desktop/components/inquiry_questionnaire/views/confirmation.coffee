@@ -5,7 +5,7 @@ module.exports = class Confirmation extends Backbone.View
   initialize: ({ @modal, @state }) ->
     @modal.dialog 'slide-out', =>
       flash = new FlashMessage
-        message: 'Your inquiry has been sent'
+        message: 'Your Message Has Been Sent'
         backdrop: false
 
       @listenToOnce flash, 'closed', =>

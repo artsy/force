@@ -6,7 +6,7 @@ module.exports = class Done extends Backbone.View
     @modal.dialog 'slide-out', =>
       message = {
         true: 'Thank you for completing your profile'
-        false: 'Your inquiry has been sent'
+        false: 'Your Message Has Been Sent'
       }[@logger.hasLoggedThisSession 'confirmation']
 
       flash = new FlashMessage

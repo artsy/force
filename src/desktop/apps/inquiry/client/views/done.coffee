@@ -18,7 +18,7 @@ module.exports = class Done extends StepView
     choose = @logger.hasLoggedThisSession 'confirmation'
     @message = {
       true: 'Thank you for completing your profile'
-      false: 'Your inquiry has been sent'
+      false: 'Your Message Has Been Sent'
     }[choose]
 
     @__interval__ = _.delay =>
