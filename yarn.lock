@@ -50,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.6.3":
-  version "5.6.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.6.3.tgz#e9709a76366577f2e44a875cb5288a174256e686"
-  integrity sha512-MSYgvfh/O1Vr4UJwIVF5DFUiH4BLJhgF4Ha1x3e7lMpJva0T4fJEO9pfxVZV1zsBO0dHFOvkglHhlTSja0iBNQ==
+"@artsy/reaction@^5.7.2":
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.7.2.tgz#7572b6c0192525699de5224be933b2d3df930b17"
+  integrity sha512-5JmPo+tNkL0a1d8Qo10wnVBG1hl6KASMxGtCoYOuJ3nGlScwl9NjA94rAKDusrvMoNfquoyWSPhvtRuD0NznlA==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -3137,11 +3137,6 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
-  dependencies:
-    arr-union "^3.1.0"
-    define-property "^0.2.5"
-    isobject "^3.0.0"
-    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"

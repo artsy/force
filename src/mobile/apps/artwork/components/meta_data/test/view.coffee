@@ -15,7 +15,7 @@ describe 'Metadata', ->
 
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require('jquery')
+      benv.expose $: benv.require('jquery'), analytics: track: sinon.stub()
       Backbone.$ = $
       done()
 

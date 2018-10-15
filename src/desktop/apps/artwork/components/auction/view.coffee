@@ -71,6 +71,11 @@ module.exports = class ArtworkAuctionView extends Backbone.View
 
     # Show the new buy now flow if you have the lab feature enabled
     if ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
+      analytics.track('Click', {
+        subject: 'buy',
+        type: 'button',
+        flow: 'buy now'
+      })
       if loggedInUser
         $target.attr 'data-state', 'loading'
 
