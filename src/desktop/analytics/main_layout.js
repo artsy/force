@@ -16,7 +16,12 @@ if (pageType == "artwork") {
   properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
 }
 
-analytics.page(properties, { integrations: { Marketo: false } })
+// We exclude 'orders' routes from analytics.page calls because they're already
+// taken care of in another place.
+const excludedRoutes = ["orders"]
+if (!excludedRoutes.includes(pageType)) {
+  analytics.page(properties, { integrations: { Marketo: false } })
+}
 
 // Track pageload speed
 if (
