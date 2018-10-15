@@ -39,6 +39,7 @@ const orderCheckoutFlowEvents = [
   "order:shipping",
   "order:payment",
   "order:review",
+  "order:status",
 ]
 orderCheckoutFlowEvents.map(eventName => {
   mediator.on(eventName, () => {
