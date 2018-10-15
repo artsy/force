@@ -25,6 +25,12 @@ module.exports = class MetaDataView extends Backbone.View
       @model.get('partner').type == 'Auction House'
 
     if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
+      analytics.track('Click', {
+        subject: 'buy',
+        type: 'button',
+        flow: 'buy now'
+      })
+
       # If this artwork has an edition set of 1, send that in the mutation as well
       if @model.get('edition_sets')?.length && @model.get('edition_sets').length == 1
         singleEditionSetId = @model.get('edition_sets')[0] && @model.get('edition_sets')[0].id

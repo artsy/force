@@ -30,6 +30,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     'click .js-artwork-inquire-button'      : 'inquire'
     'click .js-artwork-acquire-button'      : 'acquire'
     'click .collector-faq'                  : 'openCollectorModal'
+    'click .js-artwork-bnmo-collector-faq'  : 'trackOpenCollectorModal'
     'click .js-artwork-bnmo-ask-specialist' : 'inquireSpecialist'
 
   initialize: ({ @data }) ->
@@ -43,6 +44,11 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
   inquireSpecialist: (e) ->
     e.preventDefault()
+    analytics.track('Click', {
+      subject: 'ask a specialist',
+      type: 'button',
+      flow: 'buy now'
+    })
     inquireSpecialist @artwork.get('_id'), ask_specialist: true
 
   acquire: (e) ->
@@ -52,6 +58,12 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     # Show the new buy now flow if you have the lab feature or feature flag enabled
     if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
+      analytics.track('Click', {
+        subject: 'buy',
+        type: 'button',
+        flow: 'buy now'
+      })
+
       serializer = new Serializer @$('form')
       data = serializer.data()
       editionSetId = data.edition_set_id
@@ -146,6 +158,14 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   openCollectorModal: (e) ->
     e.preventDefault()
     openMultiPageModal 'collector-faqs'
+
+  trackOpenCollectorModal: (e) ->
+    e.preventDefault()
+    analytics.track('Click', {
+      subject: 'read faq',
+      type: 'button',
+      flow: 'buy now'
+    })
 
   render: ->
     if @data.artwork.fair

@@ -50,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.6.3":
-  version "5.6.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.6.3.tgz#e9709a76366577f2e44a875cb5288a174256e686"
-  integrity sha512-MSYgvfh/O1Vr4UJwIVF5DFUiH4BLJhgF4Ha1x3e7lMpJva0T4fJEO9pfxVZV1zsBO0dHFOvkglHhlTSja0iBNQ==
+"@artsy/reaction@^5.7.1":
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.7.1.tgz#39ea94d80516e98cd1f37ea0b485c3a4cac7f508"
+  integrity sha512-8OSt3Rpw8kNZxYjR+5UUh4FtmHV5uRHIXrlxFPEPU61rTv+eIxSuhmWv4ogeHRsQhK6AkwCbEEg2FbZZPsszkQ==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"

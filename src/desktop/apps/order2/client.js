@@ -33,6 +33,30 @@ mediator.on("openOrdersContactArtsyModal", options => {
   }
 })
 
+// Track page views for order checkout flow: shipping, payment and review.
+// These events are triggered from Reaction.
+const orderCheckoutFlowEvents = [
+  "order:shipping",
+  "order:payment",
+  "order:review",
+  "order:status",
+]
+orderCheckoutFlowEvents.map(eventName => {
+  mediator.on(eventName, () => {
+    window.analytics.page(
+      { path: window.location.pathname },
+      { integrations: { Marketo: false } }
+    )
+    // Reset timers that track time on page since we're tracking each order
+    // checkout view as a separate page.
+    window.desktopPageTimeTrackers.forEach(tracker => {
+      // No need to reset the tracker if we're on the same page.
+      if (window.location.pathname !== tracker.path)
+        tracker.reset(window.location.pathname)
+    })
+  })
+})
+
 buildClientApp({
   routes,
   context: {

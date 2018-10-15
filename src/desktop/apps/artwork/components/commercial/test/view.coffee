@@ -14,6 +14,7 @@ describe 'ArtworkCommercialView', ->
     benv.setup ->
       benv.expose
         $: benv.require 'jquery'
+        analytics: track: sinon.stub()
         user: user
         sd:
           FORCED_LOGIN_INQUIRY: 'default'
