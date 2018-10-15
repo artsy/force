@@ -75,7 +75,7 @@ module.exports = class ShowInquiryModal extends ContactView
         if user.isLoggedIn()
           @model.save null, success: =>
             @close()
-            new FlashMessage message: 'Your inquiry has been sent'
+            new FlashMessage message: 'Your Message Has Been Sent'
         else
           @close()
           @modal = openInquiryQuestionnaireFor

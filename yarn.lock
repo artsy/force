@@ -2,14 +2,6 @@
 # yarn lockfile v1
 
 
-"@airbnb/node-memwatch@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@airbnb/node-memwatch/-/node-memwatch-1.0.2.tgz#a82e311ae27e05df4fb2cf8e4fbc75caaf7190a4"
-  integrity sha512-2R+MEEMSTUdKwQ6NFWkyA/UNoSjL1tMldZqJbZpgXSwNMBzlNlkUWEXKu9RqTTMkDqJRfGJ2VDs8gPlPK2APDQ==
-  dependencies:
-    bindings "^1.3.0"
-    nan "^2.9.2"
-
 "@artsy/express-reloadable@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.3.1.tgz#206adcc56ebcf999aece7efcc34eaf1460cf90a7"
@@ -58,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.6.0":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.6.0.tgz#ed3992ad2b3211a15016ca544793992b556da621"
-  integrity sha512-OlSVO8zqowXRLdvOrWsly+vw/koAxDCxGhv4efXq5ZXX0gdPCRv39k96TWyshdTIgeECHHiAxsou+aqlILmV5A==
+"@artsy/reaction@^5.6.3":
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.6.3.tgz#e9709a76366577f2e44a875cb5288a174256e686"
+  integrity sha512-MSYgvfh/O1Vr4UJwIVF5DFUiH4BLJhgF4Ha1x3e7lMpJva0T4fJEO9pfxVZV1zsBO0dHFOvkglHhlTSja0iBNQ==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -98,7 +90,7 @@
     react-spring "^5.7.2"
     react-stripe-elements "^2.0.1"
     react-styled-flexboxgrid "^2.2.0"
-    react-tracking "^5.3.0"
+    react-tracking "^5.4.1"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
@@ -1383,6 +1375,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -2463,11 +2456,6 @@ bindings@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
   integrity sha1-FK1hE4EtLTfXLme0ystLtyZQXxE=
-
-bindings@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.3.0.tgz#b346f6ecf6a95f5a815c5839fc7cdb22502f1ed7"
-  integrity sha512-DpLh5EzMR2kzvX1KIlVC0VkC3iZtHKTgdtZ0a3pglBZdaQFjt5S9g9xd1lE+YvXyfd6mtCeRnrUfOLYiTMlNSw==
 
 bl@~1.1.2:
   version "1.1.2"
@@ -4080,8 +4068,6 @@ dd-trace@artsy/dd-trace-js#artsy:
     semver "^5.5.0"
     shimmer "^1.2.0"
     url-parse "^1.4.3"
-  optionalDependencies:
-    "@airbnb/node-memwatch" "^1.0.2"
 
 debounce@~1.0.0:
   version "1.0.2"
@@ -9670,11 +9656,6 @@ nan@^2.3.0, nan@^2.3.2:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
   integrity sha1-5P805slf37WuzAjeZZb0NgWn20U=
 
-nan@^2.9.2:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
-  integrity sha512-iji6k87OSXa0CcrLl9z+ZiYSuR2o+c0bGuNmXdrhTQTakxytAFsC56SArGYoiHlJlFoHSnvmhpceZJaXkVuOtA==
-
 nanomatch@^1.2.5, nanomatch@^1.2.9:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.9.tgz#879f7150cb2dab7a471259066c104eee6e0fa7c2"
@@ -11775,7 +11756,7 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
-react-tracking@^5.3.0:
+react-tracking@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.4.1.tgz#2a85793326aadefa9c3955332181279904fa72c4"
   integrity sha512-945FcLuEjUSFCWF9zRPVLU9pNZf3lDO2GNhICWv3ZtqTkeI6eo2vzvrOSb5SaMYevesdwAIFmmQGCx8tmnZI6Q==

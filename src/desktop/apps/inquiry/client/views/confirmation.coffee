@@ -5,7 +5,7 @@ module.exports = class Confirmation extends StepView
   className: 'iqm-alert'
 
   template: ->
-    'Your inquiry has been sent'
+    'Your Message Has Been Sent'
 
   __events__:
     'click': 'next'
