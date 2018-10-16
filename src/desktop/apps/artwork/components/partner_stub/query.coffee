@@ -11,8 +11,6 @@ module.exports = """
       is_linkable
       href
       name
-      # TODO: Either uncomment or remove based on Credit Card logo feature timeline
-      # acceptsCardPayments
       locations {
         city
       }
