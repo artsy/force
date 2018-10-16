@@ -4,6 +4,7 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "reaction/Apps/Order/routes"
 import { stitch } from "@artsy/stitch"
+import metaphysics from "lib/metaphysics.coffee"
 
 export const checkoutFlow = async (req, res, next) => {
   if (!res.locals.sd.CURRENT_USER) {
@@ -30,6 +31,8 @@ export const checkoutFlow = async (req, res, next) => {
       margin: auto;
     `
 
+    const headerLogoHref = await getArtworkHref(req)
+
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
@@ -50,7 +53,7 @@ export const checkoutFlow = async (req, res, next) => {
         ...res.locals,
         assetPackage: "order2",
         // header logo should link back to originating artwork
-        headerLogoHref: res.locals.sd.REFERRER,
+        headerLogoHref,
         hideLogoForEigen: res.locals.sd.EIGEN,
         options: {
           stripev3: true,
@@ -63,4 +66,35 @@ export const checkoutFlow = async (req, res, next) => {
     console.log("(apps/order2) Error: ", error)
     next(error)
   }
+}
+
+async function getArtworkHref(req) {
+  try {
+    const { order } = await metaphysics({
+      query: OrderHeaderQuery(req.params.orderID),
+      req,
+    })
+    return order.lineItems.edges[0].node.artwork.href
+  } catch (e) {
+    console.error(e)
+    return "/"
+  }
+}
+
+function OrderHeaderQuery(orderId) {
+  return `
+  query OrderHeaderQuery {
+    order(id: "${orderId}") {
+      id
+      lineItems {
+        edges {
+          node {
+            artwork {
+              href
+            }
+          }
+        }
+      }
+    }
+  }`
 }
