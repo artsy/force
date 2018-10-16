@@ -1,16 +1,8 @@
 {
-  // See http://go.microsoft.com/fwlink/?LinkId=827846
-  // for the documentation about the extensions.json format
   "recommendations": [
+    "artsy.artsy-studio-extension-pack",
     "sysoev.language-stylus",
-    "Orta.vscode-danger",
-    "mikestead.dotenv",
-    "dbaeumer.vscode-eslint",
     "lkytal.coffeelinter",
-    "christian-kohler.path-intellisense",
-    "christian-kohler.npm-intellisense",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "jpoissonnier.vscode-styled-components"
+    "dbaeumer.vscode-eslint"
   ]
 }
