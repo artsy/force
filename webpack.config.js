@@ -48,26 +48,12 @@ const config = {
       {
         test: /\.coffee$/,
         include: /src/,
-        use: [
-          ...notOnCI({
-            loader: "cache-loader",
-            options: {
-              cacheDirectory: path.join(cacheDirectory, "coffee"),
-            },
-          }),
-          { loader: "coffee-loader" },
-        ],
+        use: [{ loader: "coffee-loader" }],
       },
       {
         test: /\.(jade|pug)$/,
         include: /src/,
         use: [
-          ...notOnCI({
-            loader: "cache-loader",
-            options: {
-              cacheDirectory: path.join(cacheDirectory, "pug"),
-            },
-          }),
           {
             loader: "pug-loader",
             options: {
@@ -81,6 +67,12 @@ const config = {
         test: /(\.(js|ts)x?$)/,
         include: path.resolve("./src"),
         use: [
+          ...notOnCI({
+            loader: "cache-loader",
+            options: {
+              cacheDirectory: path.join(cacheDirectory),
+            },
+          }),
           {
             loader: "babel-loader",
             options: {
