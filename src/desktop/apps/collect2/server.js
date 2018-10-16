@@ -3,7 +3,6 @@ import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collect/routes"
 import express from "express"
 import React from "react"
-import { maybeShowOldCollect } from "./maybeShowOldCollect"
 import { Meta } from "./meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
@@ -49,7 +48,7 @@ const index = async (req, res, next) => {
   }
 }
 
-app.get("/collect", maybeShowOldCollect, index)
-app.get("/collect/:medium?", maybeShowOldCollect, index)
+app.get("/collect", index)
+app.get("/collect/:medium?", index)
 
 export default app

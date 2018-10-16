@@ -83,7 +83,6 @@ module.exports =
   MOBILE_URL: 'https://m.artsy.net'
   NEW_ARTIST_PAGE_THRESHOLD: 10 # all users will get the new page.
   NEW_AUTH_MODAL: true
-  NEW_COLLECT_PAGE_ENABLED: false
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
