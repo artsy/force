@@ -5,7 +5,11 @@ if artwork.is_for_sale
   .artwork-commercial__questions
     | Have a question?&nbsp;
     if isBuyNowWork
-      a.collector-faq-buy-now( class=isBNMOArtwork ? 'js-artwork-bnmo-collector-faq' : '' href='https://www.artsy.net/buy-now-feature-faq' target="_blank" onclick='' ) Read our FAQ
+      a.collector-faq-buy-now(
+        href="https://www.artsy.net/buy-now-feature-faq"
+        class= isBNMOArtwork ? 'js-artwork-bnmo-collector-faq' : ''
+        target="_blank"
+      ) Read our FAQ
     else
       a.collector-faq( href='/#' ) Read our FAQ
     if isBuyNowWork
