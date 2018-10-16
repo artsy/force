@@ -21,7 +21,6 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
-    splitTest("new_collect_page").view()
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
   })
   .catch(error => {

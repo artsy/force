@@ -67,12 +67,6 @@ const config = {
         test: /(\.(js|ts)x?$)/,
         include: path.resolve("./src"),
         use: [
-          ...notOnCI({
-            loader: "cache-loader",
-            options: {
-              cacheDirectory: path.join(cacheDirectory),
-            },
-          }),
           {
             loader: "babel-loader",
             options: {

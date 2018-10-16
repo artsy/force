@@ -14,5 +14,17 @@
   },
   "editor.formatOnSave": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "debug.node.autoAttach": "on"
+  "debug.node.autoAttach": "on",
+  "cSpell.ignoreWords": [],
+  "cSpell.diagnosticLevel": "Hint",
+  "cSpell.ignorePaths": [
+    "**/package-lock.json",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/**",
+    ".vscode",
+    "typings",
+    "**/*.snap",
+    "**/*.story.tsx"
+  ]
 }
