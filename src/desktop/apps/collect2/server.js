@@ -50,5 +50,6 @@ const index = async (req, res, next) => {
 
 app.get("/collect", index)
 app.get("/collect/:medium?", index)
+app.get("/collection/:slug", index)
 
 export default app
