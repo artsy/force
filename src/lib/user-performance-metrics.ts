@@ -104,7 +104,7 @@ export function getFirstContentfulPaint() {
 /**
  * The time it took for the load event to complete
  */
-export function getOnLoad() {
+export function getLoadEventEnd() {
   if (!timingAvailable) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.loadEventEnd)
 }
