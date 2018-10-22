@@ -2,12 +2,17 @@
 
 declare let PerformancePaintTiming: any
 
+/**
+ * `window.performance` or `null`
+ */
 const perf = typeof window !== "undefined" ? window.performance : null
 
-const sanitizedMetrics = (start, end) =>
+/**
+ * Returns a duration if both inputs are valid and start occurs before end,
+ * otherwise returns `null`.
+ */
+const sanitizedMetrics = (start: number, end: number): number | null =>
   start > 0 && end > 0 && end - start > 0 ? end - start : null
-
-// user timing helpers
 
 export function mark(markName) {
   if (perf && perf.mark) {
@@ -25,17 +30,25 @@ export function measure(measureName, startMarkName) {
   }
 }
 
-// default metrics
-
-// export function getEffectiveConnectionType() {
-//   const conn =
-//     typeof navigator !== "undefined"
-//       ? navigator.connection ||
-//         navigator.mozConnection ||
-//         navigator.webkitConnection
-//       : null
-//   return conn ? conn.effectiveType : null
-// }
+export function getUserTiming() {
+  if (!perf || typeof PerformanceMark === "undefined") return null
+  const marks = perf.getEntriesByType("mark").map(mark => {
+    return {
+      type: "mark",
+      name: mark.name,
+      startTime: Math.round(mark.startTime),
+    }
+  })
+  const measures = perf.getEntriesByType("measure").map(measure => {
+    return {
+      type: "measure",
+      name: measure.name,
+      startTime: Math.round(measure.startTime),
+      duration: Math.round(measure.duration),
+    }
+  })
+  return marks.concat(measures)
+}
 
 export function getFirstPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
@@ -79,44 +92,6 @@ export function getDeviceMemory() {
     typeof navigator !== "undefined" ? navigator.deviceMemory : undefined
   if (deviceMemory === undefined) return null
   return deviceMemory > 1 ? "full" : "lite"
-}
-
-export function getUserTiming() {
-  if (!perf || typeof PerformanceMark === "undefined") return null
-  const marks = perf.getEntriesByType("mark").map(mark => {
-    return {
-      type: "mark",
-      name: mark.name,
-      startTime: Math.round(mark.startTime),
-    }
-  })
-  const measures = perf.getEntriesByType("measure").map(measure => {
-    return {
-      type: "measure",
-      name: measure.name,
-      startTime: Math.round(measure.startTime),
-      duration: Math.round(measure.duration),
-    }
-  })
-  return marks.concat(measures)
-}
-
-export function getResources() {
-  if (!perf || typeof PerformanceResourceTiming === "undefined") return null
-  return perf
-    .getEntriesByType("navigation")
-    .concat(perf.getEntriesByType("resource"))
-    .map(entry => {
-      return {
-        url: entry.name,
-        // @ts-ignore
-        type: entry.initiatorType,
-        // @ts-ignore
-        size: entry.transferSize,
-        startTime: Math.round(entry.startTime),
-        duration: Math.round(entry.duration),
-      }
-    })
 }
 
 /**
