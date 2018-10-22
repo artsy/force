@@ -52,6 +52,9 @@ export function measure(
   }
 }
 
+/**
+ * Aggregates all marks and measures into a single report
+ */
 export function getUserTiming() {
   if (!perf || typeof PerformanceMark === "undefined") return null
   const marks = perf.getEntriesByType("mark").map(mark => {
@@ -72,6 +75,10 @@ export function getUserTiming() {
   return marks.concat(measures)
 }
 
+/**
+ * The time it takes to render something visually different then what was on
+ * the screen during the last navigation
+ */
 export function getFirstPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
   const firstPaint = perf
@@ -80,6 +87,9 @@ export function getFirstPaint() {
   return firstPaint ? Math.round(firstPaint.startTime) : null
 }
 
+/**
+ * The time it takes to render the first bit of visible content in the dom
+ */
 export function getFirstContentfulPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
   const firstContentfulPaint = perf
@@ -90,12 +100,47 @@ export function getFirstContentfulPaint() {
     : null
 }
 
+/**
+ * The time it took for the load event to complete
+ */
 export function getOnLoad() {
   if (!perf || !perf.timing) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.loadEventEnd)
 }
 
-export function getDomContentLoaded() {
+/**
+ * Time it takes for the dom to finish parsing and building the initial dom tree.
+ * Subresources like css, images will start processing after this event
+ *
+ * https://varvy.com/performance/dominteractive.html
+ */
+export function getDomInteractive() {
+  if (!perf || !perf.timing) return null
+  return sanitizedMetrics(perf.timing.requestStart, perf.timing.domInteractive)
+}
+
+/**
+ * The domInteractive phase has finished, the dom and CSSOM are complete, and
+ * _all parser blocking javascript has been executed_.
+ *
+ *
+ * https://varvy.com/performance/domcontentloaded.html
+ */
+export function getDomContentLoadedStart() {
+  if (!perf || !perf.timing) return null
+  return sanitizedMetrics(
+    perf.timing.requestStart,
+    perf.timing.domContentLoadedEventStart
+  )
+}
+
+/**
+ * DomContentLoaded has finished executing any queued tasks on the event loop
+ * TODO: Determine if this metric is valuable and remove it if it is not
+ *
+ * https://varvy.com/performance/domcontentloaded.html
+ */
+export function getDomContentLoadedEnd() {
   if (!perf || !perf.timing) return null
   return sanitizedMetrics(
     perf.timing.requestStart,
@@ -103,17 +148,15 @@ export function getDomContentLoaded() {
   )
 }
 
+/**
+ * Time it takes for all of the processing to complete and all of the resources
+ * on the page (images, etc.) to finish downloading
+ *
+ * https://varvy.com/performance/domcomplete.html
+ */
 export function getDomComplete() {
   if (!perf || !perf.timing) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domComplete)
-}
-
-export function getDeviceMemory() {
-  const deviceMemory =
-    // @ts-ignore
-    typeof navigator !== "undefined" ? navigator.deviceMemory : undefined
-  if (deviceMemory === undefined) return null
-  return deviceMemory > 1 ? "full" : "lite"
 }
 
 /**

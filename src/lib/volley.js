@@ -5,7 +5,8 @@ import {
   getOnLoad,
   getFirstPaint,
   getFirstContentfulPaint,
-  getDomContentLoaded,
+  getDomContentLoadedEnd,
+  getDomContentLoadedStart,
 } from "./user-performance-metrics"
 
 const metricPayload = (pageType, deviceType) => (name, duration) =>
@@ -27,7 +28,8 @@ export async function reportLoadTimeToVolley(pageType, deviceType) {
     const reportMetric = metricPayload(pageType, deviceType)
     const metrics = [
       reportMetric("dom-complete", getDomComplete()),
-      reportMetric("dom-content-loaded", getDomContentLoaded()),
+      reportMetric("dom-content-loaded-start", getDomContentLoadedStart()),
+      reportMetric("dom-content-loaded-end", getDomContentLoadedEnd()),
       reportMetric("load-event-end", getOnLoad()),
       reportMetric("first-paint", getFirstPaint()),
       reportMetric("first-contentful-paint", getFirstContentfulPaint()),
