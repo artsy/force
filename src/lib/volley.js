@@ -1,46 +1,39 @@
 import { data as sd } from "sharify"
 import request from "superagent"
+import {
+  getDomComplete,
+  getOnLoad,
+  getFirstPaint,
+  getFirstContentfulPaint,
+} from "./user-performance-metrics"
 
-function metricPayload(pageType, deviceType, name, start, end) {
-  return start > 0 && end > 0 && end - start > 0
-    ? {
-        type: "timing",
-        name: "load-time",
-        timing: end - start,
-        tags: [
-          `page-type:${pageType}`,
-          `device-type:${deviceType}`,
-          `mark:${name}`,
-        ],
-      }
-    : null
+function metricPayload(pageType, deviceType, name, duration) {
+  if (!duration) return null
+  return {
+    type: "timing",
+    name: "load-time",
+    timing: duration,
+    tags: [
+      `page-type:${pageType}`,
+      `device-type:${deviceType}`,
+      `mark:${name}`,
+    ],
+  }
 }
 
-export async function reportLoadTimeToVolley(
-  requestStart,
-  loadEventEnd,
-  domComplete,
-  pageType,
-  deviceType
-) {
+export async function reportLoadTimeToVolley(pageType, deviceType) {
   if (sd.VOLLEY_ENDPOINT) {
     const metrics = [
+      metricPayload(pageType, deviceType, "dom-complete", getDomComplete()),
+      metricPayload(pageType, deviceType, "load-event-end", getOnLoad()),
+      metricPayload(pageType, deviceType, "first-paint", getFirstPaint()),
       metricPayload(
         pageType,
         deviceType,
-        "dom-complete",
-        requestStart,
-        domComplete
-      ),
-      metricPayload(
-        pageType,
-        deviceType,
-        "load-event-end",
-        requestStart,
-        loadEventEnd
+        "first-contentful-paint",
+        getFirstContentfulPaint()
       ),
     ].filter(metric => metric != null)
-
     if (metrics.length > 0) {
       return await request.post(sd.VOLLEY_ENDPOINT).send({
         serviceName: "force",
