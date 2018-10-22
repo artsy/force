@@ -14,16 +14,38 @@ const perf = typeof window !== "undefined" ? window.performance : null
 const sanitizedMetrics = (start: number, end: number): number | null =>
   start > 0 && end > 0 && end - start > 0 ? end - start : null
 
-export function mark(markName) {
+/**
+ * Marks a specific point in execution time to signify when something happened
+ * or to be used as the start or end of a measurement later
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
+ */
+export function mark(markName: string) {
   if (perf && perf.mark) {
     perf.mark(markName)
   }
 }
 
-export function measure(measureName, startMarkName) {
+/**
+ * Provides a duration between two marks, a starting mark and when measure is called,
+ * or since the start of the page load and when measure is called.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure
+ *
+ * @param measureName The name of this measurement
+ * @param startMarkName A string representing the name of the measure's starting mark. May also be the name of a PerformanceTiming property.
+ * @param endMarkName A string representing the name of the measure's ending mark. May also be the name of a PerformanceTiming property.
+ */
+export function measure(
+  measureName: string,
+  startMarkName?: string,
+  endMarkName?: string
+) {
   if (perf && perf.measure) {
+    // If the start mark or end mark are specified but don't exist then then
+    // measure will throw an exception.
     try {
-      perf.measure(measureName, startMarkName)
+      perf.measure(measureName, startMarkName, endMarkName)
     } catch (err) {
       console.error(err)
     }
@@ -103,10 +125,8 @@ export function getDeviceMemory() {
  * g.o.observe({entryTypes:['longtask']})}}();
  */
 export function getLongTasks() {
-  // @ts-ignore
-  if (typeof window.__lt === "undefined") return null
-  // @ts-ignore
-  return window.__lt.e.map(longTask => ({
+  if (typeof (window as any).__lt === "undefined") return null
+  return (window as any).__lt.e.map(longTask => ({
     startTime: Math.round(longTask.startTime),
     duration: Math.round(longTask.duration),
   }))
