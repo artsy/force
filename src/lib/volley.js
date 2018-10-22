@@ -5,34 +5,32 @@ import {
   getOnLoad,
   getFirstPaint,
   getFirstContentfulPaint,
+  getDomContentLoaded,
 } from "./user-performance-metrics"
 
-function metricPayload(pageType, deviceType, name, duration) {
-  if (!duration) return null
-  return {
-    type: "timing",
-    name: "load-time",
-    timing: duration,
-    tags: [
-      `page-type:${pageType}`,
-      `device-type:${deviceType}`,
-      `mark:${name}`,
-    ],
-  }
-}
+const metricPayload = (pageType, deviceType) => (name, duration) =>
+  !duration
+    ? null
+    : {
+        type: "timing",
+        name: "load-time",
+        timing: duration,
+        tags: [
+          `page-type:${pageType}`,
+          `device-type:${deviceType}`,
+          `mark:${name}`,
+        ],
+      }
 
 export async function reportLoadTimeToVolley(pageType, deviceType) {
   if (sd.VOLLEY_ENDPOINT) {
+    const reportMetric = metricPayload(pageType, deviceType)
     const metrics = [
-      metricPayload(pageType, deviceType, "dom-complete", getDomComplete()),
-      metricPayload(pageType, deviceType, "load-event-end", getOnLoad()),
-      metricPayload(pageType, deviceType, "first-paint", getFirstPaint()),
-      metricPayload(
-        pageType,
-        deviceType,
-        "first-contentful-paint",
-        getFirstContentfulPaint()
-      ),
+      reportMetric("dom-complete", getDomComplete()),
+      reportMetric("dom-content-loaded", getDomContentLoaded()),
+      reportMetric("load-event-end", getOnLoad()),
+      reportMetric("first-paint", getFirstPaint()),
+      reportMetric("first-contentful-paint", getFirstContentfulPaint()),
     ].filter(metric => metric != null)
     if (metrics.length > 0) {
       return await request.post(sd.VOLLEY_ENDPOINT).send({
