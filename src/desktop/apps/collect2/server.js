@@ -38,6 +38,7 @@ const index = async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: "collect2",
+        bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
       },
     })
 
