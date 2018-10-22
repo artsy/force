@@ -6,6 +6,7 @@ declare let PerformancePaintTiming: any
  * `window.performance` or `null`
  */
 const perf = typeof window !== "undefined" ? window.performance : null
+const timingAvailable = perf && perf.timing
 
 /**
  * Returns a duration if both inputs are valid and start occurs before end,
@@ -56,7 +57,7 @@ export function measure(
  * Aggregates all marks and measures into a single report
  */
 export function getUserTiming() {
-  if (!perf || typeof PerformanceMark === "undefined") return null
+  if (typeof PerformanceMark === "undefined") return null
   const marks = perf.getEntriesByType("mark").map(mark => {
     return {
       type: "mark",
@@ -104,7 +105,7 @@ export function getFirstContentfulPaint() {
  * The time it took for the load event to complete
  */
 export function getOnLoad() {
-  if (!perf || !perf.timing) return null
+  if (!timingAvailable) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.loadEventEnd)
 }
 
@@ -115,7 +116,7 @@ export function getOnLoad() {
  * https://varvy.com/performance/dominteractive.html
  */
 export function getDomInteractive() {
-  if (!perf || !perf.timing) return null
+  if (!timingAvailable) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domInteractive)
 }
 
@@ -127,7 +128,7 @@ export function getDomInteractive() {
  * https://varvy.com/performance/domcontentloaded.html
  */
 export function getDomContentLoadedStart() {
-  if (!perf || !perf.timing) return null
+  if (!timingAvailable) return null
   return sanitizedMetrics(
     perf.timing.requestStart,
     perf.timing.domContentLoadedEventStart
@@ -141,7 +142,7 @@ export function getDomContentLoadedStart() {
  * https://varvy.com/performance/domcontentloaded.html
  */
 export function getDomContentLoadedEnd() {
-  if (!perf || !perf.timing) return null
+  if (!timingAvailable) return null
   return sanitizedMetrics(
     perf.timing.requestStart,
     perf.timing.domContentLoadedEventEnd
@@ -155,22 +156,6 @@ export function getDomContentLoadedEnd() {
  * https://varvy.com/performance/domcomplete.html
  */
 export function getDomComplete() {
-  if (!perf || !perf.timing) return null
+  if (!timingAvailable) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domComplete)
-}
-
-/**
- * In order for this method to work you'll need to inject this snippet of JS in
- * the head section of the site markup
- *
- * !function(){if('PerformanceLongTaskTiming' in window){var g=window.__lt={e:[]};
- * g.o=new PerformanceObserver(function(l){g.e=g.e.concat(l.getEntries())});
- * g.o.observe({entryTypes:['longtask']})}}();
- */
-export function getLongTasks() {
-  if (typeof (window as any).__lt === "undefined") return null
-  return (window as any).__lt.e.map(longTask => ({
-    startTime: Math.round(longTask.startTime),
-    duration: Math.round(longTask.duration),
-  }))
 }
