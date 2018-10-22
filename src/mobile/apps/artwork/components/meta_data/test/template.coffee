@@ -96,15 +96,6 @@ describe 'Artwork metadata templates', ->
       @artwork.is_acquireable = true
       @artwork.is_inquireable = true
 
-    it 'should not display when new New Buy Now Flow lab feature is disabled and is not auction', ->
-      @html = render('inquiry')(
-        artwork: @artwork
-        sd: {}
-        asset: (->)
-      )
-      $ = cheerio.load @html
-      $('.js-purchase').text().should.equal ''
-
     it 'should display buy now button when in auction', ->
       @html = render('inquiry')(
         artwork: _.extend({}, @artwork, { auction: is_auction: true })
@@ -125,10 +116,9 @@ describe 'Artwork metadata templates', ->
       $('.js-purchase').text().should.equal 'Buy now'
       $('.artwork-meta-data-black__contact-button').length.should.equal 1
 
-    it 'should display buy button when ecommerce flag and New Buy Now Flow lab feature enabled', ->
+    it 'should display buy button when artwork is acquireable', ->
       @html = render('inquiry')(
         artwork: @artwork
-        user: hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
         sd: {}
         asset: (->)
       )

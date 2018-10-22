@@ -434,7 +434,6 @@ describe 'auction', ->
         AUCTION: data
         mediator: mediatorStub
         createOrder: createOrderStub
-        ENABLE_NEW_BUY_NOW_FLOW: true
 
       view = new @ArtworkAuctionView data: data
       view.acquire(fakeEvent)
@@ -447,9 +446,6 @@ describe 'auction', ->
       @ArtworkAuctionView.__set__
         AUCTION: data
         createOrder: createOrderStub
-        CurrentUser:
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
       view = new @ArtworkAuctionView data: data
       view.acquire(fakeEvent)
@@ -462,9 +458,6 @@ describe 'auction', ->
         errorModal: errorModalMock
         AUCTION: data
         createOrder: createOrderStub
-        CurrentUser:
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
       view = new @ArtworkAuctionView data: data
       view.acquire(fakeEvent)

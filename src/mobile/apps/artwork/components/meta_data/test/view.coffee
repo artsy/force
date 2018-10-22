@@ -55,9 +55,6 @@ describe 'Metadata', ->
   describe 'buy', ->
     beforeEach ->
       @MetaDataView.__set__
-        CurrentUser:
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
         sd: {}
         errorModal:
           render: () -> {}
@@ -69,8 +66,6 @@ describe 'Metadata', ->
       @MetaDataView.__set__
         createOrder: sinon.stub()
         location: locationMock
-        sd:
-          ENABLE_NEW_BUY_NOW_FLOW: true
         CurrentUser:
           orNull: ->
             null
@@ -87,9 +82,6 @@ describe 'Metadata', ->
       @MetaDataView.__set__
         createOrder: createOrderStub
         location: locationMock
-        CurrentUser:
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
       view = new @MetaDataView model: @model
       view.buy(fakeEvent)
@@ -107,9 +99,6 @@ describe 'Metadata', ->
       @MetaDataView.__set__
         errorModal: errorModalMock
         createOrder: createOrderStub
-        CurrentUser:
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
 
       view = new @MetaDataView model: @model
       view.buy(fakeEvent)

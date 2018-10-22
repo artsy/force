@@ -1,8 +1,6 @@
 - var auctionPartner = artwork.partner && artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
-- var newBuyNowFlow = sd.ENABLE_NEW_BUY_NOW_FLOW || (user && user.hasLabFeature("New Buy Now Flow"))
 
-//- TODO BNMO: Update to hide if the artwork is acquireable
-unless artwork.is_acquireable && (auctionPartner || newBuyNowFlow)
+unless artwork.is_acquireable
   if artwork.is_inquireable
     .artwork-inquiry-form.stacked-form( class='js-artwork-inquiry-form' )
       input( type='hidden', name='artwork', value= artwork.id )

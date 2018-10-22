@@ -71,9 +71,7 @@ describe 'Commercial template', ->
   it 'shows the buy button when ecommerce and the buy now flow lab feature are enabled', ->
     html = renderArtwork
       artwork: acquireableArtwork
-      templateOptions:
-        user:
-          hasLabFeature: (feature) -> feature == "New Buy Now Flow"
+
     $ = cheerio.load html
     $('.js-artwork-acquire-button').length.should.eql 1
     $('.artwork-inquiry-form').length.should.eql 0
@@ -100,9 +98,6 @@ describe 'Commercial template', ->
       artwork: acquireableArtwork
       artworkOptions:
         is_for_sale: true
-      templateOptions:
-        user:
-          hasLabFeature: (feature) -> feature == "New Buy Now Flow"
     $ = cheerio.load html
     $('.js-artwork-bnmo-ask-specialist').length.should.eql 1
 
