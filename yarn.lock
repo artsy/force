@@ -50,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.7.13":
-  version "5.7.13"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.7.13.tgz#e041e86cd4e7c38cb3dc62078223a44ab10f2973"
-  integrity sha512-1R/x//vAz1uXcKrBdzA67057k/z/OIZ7FGus5GfLcdKsPIQwFGDIgaw916/Ef9ObC7jt83ePQpqtbYimXeH+vw==
+"@artsy/reaction@^5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.8.1.tgz#c344dc5c25bff51f55f4c041a80c39c3f4446dfe"
+  integrity sha512-xGJl4s3p6aBZpVl3Cc8lsjUGuLFJjf4ZytVC4wGkiU6AV/F0W82EPWhyoR/CzrLvdT7Jgvo1QEvsGtI9hqo24g==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -13982,7 +13982,7 @@ standard@^9.0.0:
     eslint-plugin-standard "~2.0.1"
     standard-engine "~5.4.0"
 
-static-extend@^0.1.1, static-extend@^0.1.2:
+static-extend@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=
