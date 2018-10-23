@@ -6,9 +6,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import qs from "querystring"
 import { clone, isArray } from "underscore"
-import splitTest from "desktop/components/split_test/index.coffee"
 
-// TODO: remove in favor of serializing filters from reaction
 mediator.on("collect:filter:changed", filters => {
   onFilterChange(filters)
 })
@@ -43,13 +41,21 @@ export const onFilterChange = filters => {
     }
   })
 
-  let route = null
-  if (params.medium) {
-    route = "/collect" + (params.medium !== "*" ? "/" + params.medium : "")
-    delete params.medium
-  }
-  const fragment = route + "?" + qs.stringify(params)
-  window.history.pushState({}, null, fragment)
+  let fragment = ""
 
+  if (location.pathname.indexOf("/collection/") === 0) {
+    // for /collection/:id
+    fragment = location.pathname + "?" + qs.stringify(params)
+  } else {
+    // for /collect
+    let route = null
+    if (params.medium) {
+      route = "/collect" + (params.medium !== "*" ? "/" + params.medium : "")
+      delete params.medium
+    }
+    fragment = route + "?" + qs.stringify(params)
+  }
+
+  window.history.pushState({}, null, fragment)
   return fragment
 }

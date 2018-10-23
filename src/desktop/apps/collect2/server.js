@@ -38,6 +38,7 @@ const index = async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: "collect2",
+        bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
       },
     })
 
@@ -50,5 +51,6 @@ const index = async (req, res, next) => {
 
 app.get("/collect", index)
 app.get("/collect/:medium?", index)
+app.get("/collection/:slug", index)
 
 export default app
