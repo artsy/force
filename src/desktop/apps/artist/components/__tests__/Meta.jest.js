@@ -3,7 +3,7 @@ import {
   productFromArtistArtwork,
   sellerFromPartner,
   toJSONLD,
-} from "desktop/apps/artist2/components/Meta"
+} from "desktop/apps/artist/components/Meta"
 
 describe("Meta", () => {
   const APP_URL = "https://artsy.net"

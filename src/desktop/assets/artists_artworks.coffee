@@ -1,9 +1,6 @@
 require('backbone').$ = $
 
 routes =
-  '/artist/.*': ->
-    require('../apps/artist/client/index.coffee').init()
-
   '/artists': require('../apps/artists/client/index.coffee').init
 
   '/artwork': ->
