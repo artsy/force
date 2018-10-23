@@ -71,7 +71,14 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
       editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
-    if loggedInUser
+    if not loggedInUser
+      return mediator.trigger 'open:auth',
+        intent: 'buy now'
+        signupIntent: 'buy now'
+        mode: 'login'
+        trigger: 'click'
+        redirectTo: location.href
+    else
       $target.attr 'data-state', 'loading'
       createOrder
         artworkId: @artwork.get('_id')
@@ -90,16 +97,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         console.error('createOrder', err)
         $target.attr 'data-state', 'loaded'
         errorModal.render()
-
-    else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
-      order = new PendingOrder
-      @form = new Form $form: @$('form'), model: order
-
-      @form.submit e, success: ->
-        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
-
-      analyticsHooks
-        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
 
   inquire: (e) =>
     e.preventDefault() if e
