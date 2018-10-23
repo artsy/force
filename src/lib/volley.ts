@@ -7,7 +7,7 @@ import {
   getFirstContentfulPaint,
   getDomContentLoadedEnd,
   getDomContentLoadedStart,
-} from "./user-performance-metrics"
+} from "./userPerformanceMetrics"
 
 interface MetricMap {
   [metricName: string]: () => number | null
