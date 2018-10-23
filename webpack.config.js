@@ -21,15 +21,16 @@ const cacheDirectory = path.resolve(__dirname, ".cache")
 if (!isCI && !fs.existsSync(cacheDirectory)) {
   console.log(
     require("chalk").yellow(
-      "\n[!] Bugger. No existing `.cache` directory detected, this initial " +
-        "launch will take a while. Perhaps make yourself a nice cuppa tea " +
-        "first, champ?\n"
+      "\n[!] No existing `.cache` directory detected, initial " +
+        "launch will take a while.\n"
     )
   )
 }
 
 const config = {
+  mode: NODE_ENV,
   devtool: WEBPACK_DEVTOOL || "cheap-module-source-map",
+  stats: "errors-only",
   entry: {
     webpack: [
       "webpack-hot-middleware/client?reload=true",
@@ -75,17 +76,43 @@ const config = {
           },
         ],
       },
+      // ESM support. See: https://github.com/apollographql/react-apollo/issues/1737#issuecomment-371178602
       {
-        test: /\.json$/,
-        loader: "json-loader",
+        type: "javascript/auto",
+        test: /\.mjs$/,
+        use: [],
       },
     ],
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        sourceMap: true,
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+          },
+        },
+      }),
+    ],
+    runtimeChunk: {
+      name: "common",
+    },
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: "common",
+          chunks: "initial",
+          minChunks: 10,
+          test: /[\\/]node_modules[\\/]/,
+        },
+      },
+    },
+  },
   plugins: [
-    // TODO: Add webpack typechecker
     ...notOnCI(new SimpleProgressWebpackPlugin({ format: "compact" })),
-    // Remove moment.js localization files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Remove moment.js localization files
     new ForkTsCheckerWebpackPlugin({
       formatter: "codeframe",
       formatterOptions: "highlightCode",
@@ -110,7 +137,6 @@ const config = {
       },
     }),
     new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -118,16 +144,12 @@ const config = {
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common",
-      minChunks: 10, // lower number for larger "common.js" bundle size
-    }),
   ],
   resolve: {
     alias: {
       "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
-      react: path.resolve("./node_modules/react"),
-      "styled-components": path.resolve("./node_modules/styled-components"),
+      react: require.resolve("react"),
+      "styled-components": require.resolve("styled-components"),
     },
     extensions: [
       ".mjs",
@@ -139,17 +161,14 @@ const config = {
       ".jade",
       ".coffee",
     ],
-    modules: [
-      path.resolve(__dirname, "src"),
-      "node_modules",
-      // TODO: The problem with including /all/ node_modules directories is that
-      //       when using npm-link it can bring in dev dependencies that we
-      //       don’t need or worse are duplicates and lead to bugs. However,
-      //       ignoring all non-hoisted modules now would probably lead to bugs
-      //       as well.
-      // path.resolve(__dirname, "node_modules"),
-      // path.resolve(__dirname, "node_modules/@artsy/reaction/node_modules"),
-    ],
+    // TODO: The problem with including /all/ node_modules directories is that
+    //       when using npm-link it can bring in dev dependencies that we
+    //       don’t need or worse are duplicates and lead to bugs. However,
+    //       ignoring all non-hoisted modules now would probably lead to bugs
+    //       as well.
+    // path.resolve(__dirname, "node_modules"),
+    // path.resolve(__dirname, "node_modules/@artsy/reaction/node_modules"),
+    modules: [path.resolve(__dirname, "src"), "node_modules"],
     symlinks: false,
   },
   externals: {
@@ -159,25 +178,9 @@ const config = {
 
 if (isDevelopment) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
-
-  // Staging
+  // Staging / Prod
 } else if (isDeploy) {
   config.devtool = "#source-map"
-
-  // Prod
-  if (isProduction) {
-    config.plugins.push(
-      new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
-        },
-      })
-    )
-  }
 
   if (ANALYZE_BUNDLE) {
     config.plugins.push(new BundleAnalyzerPlugin())

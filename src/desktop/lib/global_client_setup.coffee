@@ -77,7 +77,8 @@ setupJquery = ->
   require 'jquery-on-infinite-scroll'
   require 'jquery-waypoints/waypoints.js'
   require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
-  require '../../../node_modules/jquery-touch-events/src/jquery.mobile-events.min.js'
+  loadTouchEvents = require('jquery-touch-events')
+  loadTouchEvents($)
   require('artsy-gemini-upload') $
 
   # For drop down menus that appear on hover you may want that menu to close
