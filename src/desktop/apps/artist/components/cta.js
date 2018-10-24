@@ -1,7 +1,8 @@
-import cta from "desktop/apps/artist/client/cta.coffee"
+import $ from "jquery"
 import metaphysics from "lib/metaphysics.coffee"
 import Artist from "desktop/models/artist.coffee"
 import { data as sd } from "sharify"
+import ArtistPageCTAView from "desktop/components/artist_page_cta/view.coffee"
 
 const query = `
 query ArtistCTAQuery($artistID: String!) {
@@ -31,7 +32,13 @@ const send = {
 }
 
 if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
-  metaphysics(send).then(({ artist }) => {
-    cta(new Artist(artist))
+  metaphysics(send).then(({ artist: artistData }) => {
+    const artist = new Artist(artistData)
+    const view = new ArtistPageCTAView({ artist })
+    $("body").append(view.render().$el)
+    view.initializeMailcheck()
+    setTimeout(() => {
+      view.$el.removeClass("initial")
+    }, 500)
   })
 }

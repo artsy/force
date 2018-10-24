@@ -32,19 +32,7 @@ if (
   window.addEventListener("load", function() {
     if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
       window.setTimeout(function() {
-        const {
-          requestStart,
-          loadEventEnd,
-          domComplete,
-        } = window.performance.timing
-
-        reportLoadTimeToVolley(
-          requestStart,
-          loadEventEnd,
-          domComplete,
-          pageType,
-          "desktop"
-        )
+        reportLoadTimeToVolley(pageType, "desktop")
       }, 0)
     }
   })
