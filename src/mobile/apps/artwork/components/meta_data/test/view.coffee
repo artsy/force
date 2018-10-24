@@ -23,6 +23,8 @@ describe 'Metadata', ->
     benv.teardown()
 
   beforeEach ->
+    benv.setup ->
+      location.assign = sinon.stub()
     @MetaDataView = rewire('../view.coffee')
     @model =
       new Artwork fabricate 'artwork',
@@ -51,6 +53,10 @@ describe 'Metadata', ->
           minimum_next_bid:
             amount: '$60,000'
             cents: 6000000
+  
+  afterEach ->
+    @MetaDataView.__set__
+      createOrder: null
 
   describe 'buy', ->
     beforeEach ->
@@ -62,47 +68,41 @@ describe 'Metadata', ->
         acquireArtwork: () -> {}
 
     it 'reroutes to login form when user is not logged in', ->
-      locationMock = assign: sinon.spy()
       @MetaDataView.__set__
         createOrder: sinon.stub()
-        location: locationMock
         CurrentUser:
           orNull: ->
             null
 
       view = new @MetaDataView model: @model
       view.buy(fakeEvent)
-      locationMock.assign.callCount.should.equal(1)
-      locationMock.assign.calledWith('/login?redirectTo=/artwork/peter-alexander-wedge-with-puff&signupIntent=buy+now&intent=buy+now&trigger=click').should.be.ok()
+      location.assign.callCount.should.equal(1)
+      location.assign.calledWith('/login?redirectTo=/artwork/peter-alexander-wedge-with-puff&signupIntent=buy+now&intent=buy+now&trigger=click').should.be.ok()
 
-    it 'should reroute to the buy now form when the buy now feature flag is enabled', ->
-      promisedResult = Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234")
-      createOrderStub = sinon.stub().returns(promisedResult)
-      locationMock = assign: sinon.spy()
+    it 'should reroute to the buy now form', ->
+      createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
       @MetaDataView.__set__
         createOrder: createOrderStub
-        location: locationMock
+        CurrentUser:
+          orNull: -> { id: 'userid' }
 
       view = new @MetaDataView model: @model
-      view.buy(fakeEvent)
-      createOrderStub.callCount.should.equal(1)
-
-      return promisedResult.then( ->
-        locationMock.assign.callCount.should.equal(1, 'Expected location.assign to be called once')
-        locationMock.assign.calledWith('/orders/1234/shipping').should.be.ok()
-      )
+      view.buy(fakeEvent).then ->
+        createOrderStub.callCount.should.equal(1)
+        location.assign.callCount.should.equal(1)
+        location.assign.calledWith('/orders/1234/shipping').should.be.ok()
 
     it 'should show an error modal when buy now mutation fails', ->
-      promisedResult = Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: error: code: "1234")
-      createOrderStub = sinon.stub().returns(promisedResult)
+      createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: error: code: "1234"))
       errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
       @MetaDataView.__set__
         errorModal: errorModalMock
         createOrder: createOrderStub
+        CurrentUser:
+          orNull: -> { id: 'userid' }
 
       view = new @MetaDataView model: @model
-      view.buy(fakeEvent)
-      createOrderStub.callCount.should.equal(1)
-      return promisedResult.then( ->
+      view.buy(fakeEvent).then ->
+        createOrderStub.callCount.should.equal(1)
+        location.assign.callCount.should.equal(0)
         errorModalMock.renderBuyNowError.calledOnce.should.be.ok()
-      )
