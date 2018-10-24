@@ -20,6 +20,7 @@ describe 'ArtworkCommercialView', ->
           components:
             TooltipQuestion: sinon.stub()
       Backbone.$ = $
+      location.assign = sinon.stub()
       done()
 
   after ->
@@ -27,16 +28,18 @@ describe 'ArtworkCommercialView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    sinon.stub location, 'assign'
 
   afterEach ->
     Backbone.sync.restore()
-    location.assign.restore()
 
   describe 'an ecommerce work with multiple edition sets', ->
     beforeEach ->
       @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork.json'
       @view.render()
+      ArtworkCommercialView.__set__ 
+        CurrentUser:
+          orNull: ->
+            { id: 'userid' }
 
     describe '#render', ->
       it 'correctly renders the template', ->
@@ -63,7 +66,8 @@ describe 'ArtworkCommercialView', ->
 
       it 'purchases an artwork by creating a new order', ->
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
-        ArtworkCommercialView.__set__ 'createOrder', createOrderStub
+        ArtworkCommercialView.__set__ 
+          createOrder: createOrderStub
 
         @view.$('.js-artwork-acquire-button').click()
         createOrderStub.calledOnce.should.be.ok()

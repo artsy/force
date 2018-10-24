@@ -12,6 +12,7 @@ describe 'auction', ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery'), analytics: track: sinon.stub()
       Backbone.$ = $
+      location.assign = sinon.stub()
       done()
 
   after ->
@@ -441,38 +442,31 @@ describe 'auction', ->
       mediatorStub.trigger.args[0][0].should.equal 'open:auth'
       mediatorStub.trigger.args[0][1].mode.should.equal 'login'
 
-    it 'should create a new order when the buy now lab feature enabled', ->
-      createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: order: id: "1234"))
+    it 'should create a new order', ->
+      createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
       @ArtworkAuctionView.__set__
         AUCTION: data
         createOrder: createOrderStub
+        CurrentUser:
+          orNull: -> { id: 'userid' }
 
       view = new @ArtworkAuctionView data: data
-      view.acquire(fakeEvent)
-      createOrderStub.callCount.should.equal(1)
+      view.acquire(fakeEvent).then ->
+        createOrderStub.callCount.should.equal(1)
+        location.assign.args[0][0].should.containEql("/orders/1234/shipping")
 
     it 'should show an error modal when buy now flag enabled but mutation fails', ->
-      createOrderStub = sinon.stub().returns(Promise.resolve(createOrderWithArtwork: orderOrError: error: code: "1234"))
+      createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: error: code: "1234"))
       errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
+      console.error = sinon.stub()
       @ArtworkAuctionView.__set__
         errorModal: errorModalMock
         AUCTION: data
         createOrder: createOrderStub
+        CurrentUser:
+          orNull: -> { id: 'userid' }
 
       view = new @ArtworkAuctionView data: data
-      view.acquire(fakeEvent)
-      createOrderStub.callCount.should.equal(1)
-
-      setTimeout (() -> errorModalMock.renderBuyNowError.calledOnce.should.be.ok()), 0
-
-    it 'should follow legacy purchase flow when buy now lab feature disabled', ->
-      createOrderStub = sinon.stub().returns(Promise.resolve())
-      acquireStub = sinon.stub().returns(Promise.resolve())
-      @ArtworkAuctionView.__set__
-        AUCTION: data
-        createOrder: createOrderStub
-        acquire: acquireStub
-      view = new @ArtworkAuctionView data: data
-      view.acquire(fakeEvent)
-      createOrderStub.callCount.should.equal(0)
-      acquireStub.callCount.should.equal(1)
+      view.acquire(fakeEvent).then ->
+        createOrderStub.callCount.should.equal(1)
+        errorModalMock.renderBuyNowError.calledOnce.should.be.ok()
