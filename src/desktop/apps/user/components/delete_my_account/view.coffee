@@ -54,11 +54,7 @@ module.exports = class DeleteMyAccountView extends Backbone.View
         href: '/user/delete'
         autoclose: false
         safe: false
-        message: """
-          An error prevented us from deleting your account through this form.
-          Please <a href='javascript:window.location.reload()'>reload the page and try again</a>.
-          If the problem persists, contact <a href='mailto:support@artsy.net'>support@artsy.net</a>.
-        """
+        message: err.responseJSON.message
 
   render: ->
     @$el.html template()

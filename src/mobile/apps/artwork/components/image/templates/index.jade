@@ -19,11 +19,15 @@
           .lot-number
             | Lot #{artwork.auction.sale_artwork.lot_label}
         if artists.length
-          for artist in artists
+          for artist, index in artists
+            - var addCommaAfterName = artists.length > 1 && index < artists.length - 1
             a.artist-name(href=artist.href)= artist.name
+            if addCommaAfterName
+              span
+                |, &nbsp;
         else if artwork.cultural_maker
           .artist-name= artwork.cultural_maker
-        
+
         include ./details.jade
-  
+
       include ./attribution_class
