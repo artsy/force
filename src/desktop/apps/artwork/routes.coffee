@@ -55,7 +55,6 @@ helpers = extend [
   {}
   actions: require './components/actions/helpers'
   additional_info: require './components/additional_info/helpers'
-  artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
   images: require './components/images/helpers'
