@@ -71,14 +71,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
       editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
-    if not loggedInUser
-      return mediator.trigger 'open:auth',
-        intent: 'buy now'
-        signupIntent: 'buy now'
-        mode: 'login'
-        trigger: 'click'
-        redirectTo: location.href
-    else
+    if loggedInUser
       $target.attr 'data-state', 'loading'
       createOrder
         artworkId: @artwork.get('_id')
@@ -97,6 +90,13 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         console.error('createOrder', err)
         $target.attr 'data-state', 'loaded'
         errorModal.render()
+    else
+      return mediator.trigger 'open:auth',
+        intent: 'buy now'
+        signupIntent: 'buy now'
+        mode: 'login'
+        trigger: 'click'
+        redirectTo: location.href
 
   inquire: (e) =>
     e.preventDefault() if e
