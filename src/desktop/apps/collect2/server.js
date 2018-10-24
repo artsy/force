@@ -24,8 +24,6 @@ const index = async (req, res, next) => {
       return
     }
 
-    console.log(headTags)
-
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
