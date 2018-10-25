@@ -1,12 +1,22 @@
 extends ../../../components/layout/templates/main
 
+-var hometown = artist.hometown || (typeof artist.get === 'function' ? artist.get('hometown') : null)
+-var years = artist.years || (typeof artist.get === 'function' ? artist.get('years') : null)
+-var name = artist.name || (typeof artist.get === 'function' ? artist.get('name') : null)
+
 block content
   .main-side-margin
     nav.slash-breadcrumbs
       a( href="/#{profile.get('id')}" )= profile.get('owner').name
       span
         a( href="/#{profile.get('id')}/artists") Artists
-  include ../../artist/templates/header
+  header#artist-page-header
+    h1.artist-page-large-header.avant-garde-header-center= name
+    h2
+      = hometown
+      if years && hometown
+        | ,
+      = years
   #artist-content
     .artist-actions-container
       a.artist-action.artist-follow.circle-border-icon-button( data-state='unfollowed' )

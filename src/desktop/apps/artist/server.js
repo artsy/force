@@ -47,10 +47,6 @@ app.get("/artist/:artistID*", async (req, res, next) => {
       !user && isExternalReferer && !IS_MOBILE
     res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = req.params.artistID
 
-    // While we are rolling out the new page, override the default (`artist`)
-    // type inferred from the URL, for tracking and comparison purposes.
-    res.locals.sd.PAGE_TYPE = "new-artist"
-
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
@@ -68,7 +64,7 @@ app.get("/artist/:artistID*", async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: "artist2",
+        assetPackage: "artist",
       },
       data: {
         jsonLD,

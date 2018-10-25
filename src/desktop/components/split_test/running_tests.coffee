@@ -24,25 +24,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {
-  # Used for cookie-ing and gradual roll out.
-  # We'll start at 1 and work our way up, users in groups
-  # less than that number will receive the new artist page.
-  new_artist_page:
-    key: 'new_artist_page',
-    outcomes: [
-      0
-      1
-      2
-      3
-      4
-      5
-      6
-      7
-      8
-      9
-    ]
-    weighting: 'equal'
-    edge: 0
-    control_group: 9
-}
+module.exports = {}
