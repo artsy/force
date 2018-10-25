@@ -1,6 +1,4 @@
-- var buyable = artwork.is_buy_nowable || artwork.is_acquireable
-
-if buyable
+if artwork.is_acquireable
   a.artwork-meta-data-black__contact-button.js-purchase
     | Buy now
 else if artwork.is_inquireable
