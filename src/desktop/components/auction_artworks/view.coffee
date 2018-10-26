@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 State = require './models/state.coffee'
 mediator = require '../../lib/mediator.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
-{ acquireArtwork } = require '../acquire/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
@@ -62,17 +61,6 @@ module.exports = class AuctionArtworksView extends Backbone.View
     artwork = @collection.get $(e.currentTarget).data('id')
 
     new ContactPartnerView artwork: artwork, partner: artwork.related().partner
-
-  acquire: (e) ->
-    e.preventDefault()
-
-    $target = $(e.currentTarget).addClass 'is-loading'
-    artwork = @collection.get $target.data('id')
-
-    # Redirect to artwork page if artwork has multiple editions
-    return window.location = artwork.href() if artwork.get 'edition_sets_count' > 1
-
-    acquireArtwork artwork, $target
 
   render: ->
     @$el.html template

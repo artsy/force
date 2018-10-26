@@ -8,10 +8,10 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
 BidderPositions = require '../../../collections/bidder_positions'
-Order = require '../../../models/order'
 SaleArtwork = require '../../../models/sale_artwork'
 Sale = require '../../../models/sale'
 cheerio = require 'cheerio'
+DateHelpers = require '../../../components/util/date_helpers.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -34,7 +34,6 @@ describe 'Auction', ->
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
-      @order = new Order()
       @saleArtwork = new SaleArtwork fabricate 'sale_artwork',
         highest_bid: amount_cents: 100
       @sale = new Sale(fabricate 'sale')
@@ -46,8 +45,8 @@ describe 'Auction', ->
       template = render('registration')
         sd: @sd
         sale: @sale
-        monthRange: @order.getMonthRange()
-        yearRange: @order.getYearRange()
+        monthRange: DateHelpers.getMonthRange()
+        yearRange: DateHelpers.getYearRange()
         asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
@@ -65,8 +64,8 @@ describe 'Auction', ->
         isRegistered: false
         hasValidCreditCard: false
         maxBid: 1234
-        monthRange: @order.getMonthRange()
-        yearRange: @order.getYearRange()
+        monthRange: DateHelpers.getMonthRange()
+        yearRange: DateHelpers.getYearRange()
         accounting: formatMoney: ->
         bidIncrements: []
         asset: ->
@@ -85,8 +84,8 @@ describe 'Auction', ->
         isRegistered: false
         hasValidCreditCard: true
         maxBid: 1234
-        monthRange: @order.getMonthRange()
-        yearRange: @order.getYearRange()
+        monthRange: DateHelpers.getMonthRange()
+        yearRange: DateHelpers.getYearRange()
         accounting: formatMoney: ->
         bidIncrements: []
         asset: ->
@@ -104,8 +103,8 @@ describe 'Auction', ->
           { saleArtwork: @saleArtwork, sale: @sale })
         isRegistered: true
         maxBid: 1234
-        monthRange: @order.getMonthRange()
-        yearRange: @order.getYearRange()
+        monthRange: DateHelpers.getMonthRange()
+        yearRange: DateHelpers.getYearRange()
         accounting: formatMoney: ->
         bidIncrements: []
         asset: ->

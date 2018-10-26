@@ -1,6 +1,5 @@
 Artwork = require '../../models/artwork'
 Fair = require '../../models/fair'
-PendingOrder = require '../../models/pending_order'
 get = require 'lodash.get'
 metaphysics = require '../../../lib/metaphysics'
 request = require 'superagent'

@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 sinon = require 'sinon'
 CurrentUser = require '../../../../models/current_user'
-Order = require '../../../../models/order'
 Sale = require '../../../../models/sale'
 SaleArtwork = require '../../../../models/sale_artwork'
 BidderPositions = require '../../../../collections/bidder_positions'
@@ -12,6 +11,7 @@ Artwork = require '../../../../models/artwork'
 BidForm = rewire '../../client/bid_form'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+DateHelpers = require '../../../../components/util/date_helpers.coffee'
 
 describe 'BidForm', ->
   before (done) ->
@@ -26,7 +26,6 @@ describe 'BidForm', ->
   beforeEach ->
     sinon.stub(Backbone, 'sync')
     sinon.stub _, 'delay', (cb) -> cb()
-    @order = new Order()
     @sale = new Sale fabricate 'sale'
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork',
       minimum_next_bid_cents: 10000
@@ -45,8 +44,8 @@ describe 'BidForm', ->
       benv.render resolve(__dirname, '../../templates/bid-form.jade'), {
         sd: {}
         sale: @sale
-        monthRange: @order.getMonthRange()
-        yearRange: @order.getYearRange()
+        monthRange: DateHelpers.getMonthRange()
+        yearRange: DateHelpers.getYearRange()
         artwork: @artwork
         saleArtwork: @saleArtwork
         bidderPositions: @bidderPositions
@@ -136,8 +135,8 @@ describe 'BidForm', ->
       benv.render resolve(__dirname, '../../templates/bid-form.jade'), {
         sd: {}
         sale: @sale
-        monthRange: @order.getMonthRange()
-        yearRange: @order.getYearRange()
+        monthRange: DateHelpers.getMonthRange()
+        yearRange: DateHelpers.getYearRange()
         artwork: @artwork
         saleArtwork: @saleArtwork
         bidderPositions: @bidderPositions

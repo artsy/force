@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Sale = require '../../models/sale.coffee'
-Order = require '../../models/order.coffee'
 sanitizeRedirect = require '../../components/sanitize_redirect'
+DateHelpers = require '../../components/util/date_helpers.coffee'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
@@ -21,11 +21,10 @@ registerOrRender = (sale, req, res, next) ->
             error: ->
               res.backboneError
       else
-        order = new Order()
         res.render 'registration',
           sale: sale
-          monthRange: [1..12]
-          yearRange: order.getYearRange()
+          monthRange: DateHelpers.getMonthRange()
+          yearRange: DateHelpers.getYearRange()
 
 module.exports.auctionRegistration = (req, res, next) ->
   unless req.user

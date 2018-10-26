@@ -16,7 +16,6 @@ mediator = require '../desktop/lib/mediator.coffee'
 Genes = require '../desktop/collections/genes.coffee'
 Artworks = require '../desktop/collections/artworks.coffee'
 Genes = require '../desktop/collections/genes.coffee'
-Order = require '../desktop/models/order.coffee'
 User = require '../desktop/models/user.coffee'
 ArtworkCollection = require '../desktop/models/artwork_collection.coffee'
 SaleArtwork = require '../mobile/models/sale_artwork.coffee'
@@ -191,21 +190,6 @@ module.exports = class CurrentUser extends Backbone.Model
         bidder = bidders.find (b) -> b.get('sale').id is auctionId
         return options.success false unless bidder
         options.success?(bidder?.get('qualified_for_bidding'))
-
-  addToPendingOrder: (options) =>
-    data =
-      edition_set_id: options.editionSetId
-      artwork_id: options.artworkId
-      replace_order: true
-      quantity: options.quantity
-    unless @get('accessToken')
-      data.session_id = sd.SESSION_ID
-
-    model = new Backbone.Model data
-    model.save null,
-      url: "#{@url()}/order/pending/items"
-      success: options.success
-      error: options.error
 
   # Creates a bidder associated with a sale
   #

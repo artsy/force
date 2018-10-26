@@ -65,7 +65,6 @@ describe 'Metadata', ->
         errorModal:
           render: () -> {}
           renderBuyNowError: () -> {}
-        acquireArtwork: () -> {}
 
     it 'reroutes to login form when user is not logged in', ->
       @MetaDataView.__set__

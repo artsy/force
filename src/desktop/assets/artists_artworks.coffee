@@ -11,7 +11,5 @@ routes =
 
   '/inquiry': require('../apps/inquiry/client/index.coffee')
 
-  '/order': require('../apps/order/client/index.coffee').init
-
 for path, init of routes
   $(init) if location.pathname.match path
