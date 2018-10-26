@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 Artworks = require '../../../models/artwork.coffee'
 sd = require('sharify').data
 ShareView = require '../../share/view.coffee'
-AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
 SaveControls = require '../../artwork_item/save_controls.coffee'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 artworkColumns = -> require('../../artwork_columns/template.jade') arguments...
@@ -72,13 +71,3 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
       @artworkCollection.addRepoArtworks @model.artworks()
       @artworkCollection.syncSavedArtworks()
 
-  acquire: (event) ->
-    $target = $(event.target)
-    id = $target.attr('data-id')
-    new Artwork(id: id).fetch
-      success: (artwork) =>
-        # redirect to artwork page if artwork has multiple editions
-        if artwork.get('edition_sets_count') > 1
-          window.location.href = artwork.href()
-        AcquireArtwork artwork, $target
-    false

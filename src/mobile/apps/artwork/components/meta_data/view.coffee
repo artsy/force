@@ -1,7 +1,6 @@
 Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user.coffee'
 { createOrder } = require '../../../../../lib/components/create_order'
-{ acquireArtwork } = require('../../../../components/acquire/view.coffee')
 errorModal = require '../../../../../desktop/apps/artwork/client/errorModal.tsx'
 sd = require('sharify').data
 mediator = require '../../../../lib/mediator.coffee'
