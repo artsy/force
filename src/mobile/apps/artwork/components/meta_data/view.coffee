@@ -41,6 +41,7 @@ module.exports = class MetaDataView extends Backbone.View
       .then (data) ->
         { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
         if order
+          analytics.track('created_order', { order_id: order.id })
           location.assign("/orders/#{order.id}/shipping")
         else
           console.error('createOrder', error)
