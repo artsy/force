@@ -62,7 +62,7 @@ query = (user) -> """
         width
       }
       images {
-        url
+        url(version: "large")
         height
         width
         is_default
