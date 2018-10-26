@@ -9,8 +9,6 @@ CurrentUser = require '../../../../../models/current_user.coffee'
 describe 'ArtworkCommercialView', ->
   before (done) ->
     user = new CurrentUser fabricate('user')
-    user.hasLabFeature = (feature) ->
-      feature == 'New Buy Now Flow'
     benv.setup ->
       benv.expose
         $: benv.require 'jquery'
@@ -22,6 +20,7 @@ describe 'ArtworkCommercialView', ->
           components:
             TooltipQuestion: sinon.stub()
       Backbone.$ = $
+      location.assign = sinon.stub()
       done()
 
   after ->
@@ -29,16 +28,18 @@ describe 'ArtworkCommercialView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    sinon.stub location, 'assign'
 
   afterEach ->
     Backbone.sync.restore()
-    location.assign.restore()
 
   describe 'an ecommerce work with multiple edition sets', ->
     beforeEach ->
       @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork.json'
       @view.render()
+      ArtworkCommercialView.__set__ 
+        CurrentUser:
+          orNull: ->
+            { id: 'userid' }
 
     describe '#render', ->
       it 'correctly renders the template', ->
@@ -54,8 +55,6 @@ describe 'ArtworkCommercialView', ->
         ArtworkCommercialView.__set__
           mediator: mediatorStub
           createOrder: createOrderStub
-          sd:
-            ENABLE_NEW_BUY_NOW_FLOW: true
           CurrentUser:
             orNull: ->
               null
@@ -66,12 +65,9 @@ describe 'ArtworkCommercialView', ->
         mediatorStub.trigger.args[0][1].mode.should.equal 'login'
 
       it 'purchases an artwork by creating a new order', ->
-        ArtworkCommercialView.__set__ 'CurrentUser',
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
-
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
-        ArtworkCommercialView.__set__ 'createOrder', createOrderStub
+        ArtworkCommercialView.__set__ 
+          createOrder: createOrderStub
 
         @view.$('.js-artwork-acquire-button').click()
         createOrderStub.calledOnce.should.be.ok()
@@ -84,10 +80,6 @@ describe 'ArtworkCommercialView', ->
           .should.be.ok()
 
       it 'shows an error modal when create order mutation fails', ->
-        ArtworkCommercialView.__set__ 'CurrentUser',
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
-
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: error: code: "failed"))
         ArtworkCommercialView.__set__ 'createOrder', createOrderStub
 
@@ -105,10 +97,6 @@ describe 'ArtworkCommercialView', ->
       @view.render()
     describe '#acquire', ->
       it 'purchases an artwork with a single edition set', ->
-        ArtworkCommercialView.__set__ 'CurrentUser',
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
-
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
         ArtworkCommercialView.__set__ 'createOrder', createOrderStub
         @view.$('.js-artwork-acquire-button').click()
@@ -127,10 +115,6 @@ describe 'ArtworkCommercialView', ->
       @view.render()
     describe '#acquire', ->
       it 'purchases an artwork without edition set', ->
-        ArtworkCommercialView.__set__ 'CurrentUser',
-          orNull: ->
-            hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
-
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
         ArtworkCommercialView.__set__ 'createOrder', createOrderStub
         @view.$('.js-artwork-acquire-button').click()

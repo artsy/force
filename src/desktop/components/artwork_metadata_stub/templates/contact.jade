@@ -22,8 +22,7 @@ if artwork.sale && artwork.sale.is_auction
           | #{sa.opening_bid.display}
       else if artwork.sale.is_closed
         | Auction closed
-else if artwork.is_inquireable && !(artwork.is_acquireable && (auctionPartner || sd.ENABLE_NEW_BUY_NOW_FLOW))
-  //- TODO BNMO: Update to hide if the artwork is acquireable
+else if artwork.is_inquireable && !artwork.is_acquireable
   .artwork-metadata-stub__contact.artwork-metadata-stub__line
     a(
       class='analytics-artwork-contact-seller'

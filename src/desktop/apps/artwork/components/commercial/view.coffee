@@ -56,59 +56,47 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     loggedInUser = CurrentUser.orNull()
 
-    # Show the new buy now flow if you have the lab feature or feature flag enabled
-    if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
-      analytics.track('Click', {
-        subject: 'buy',
-        type: 'button',
-        flow: 'buy now'
-      })
+    analytics.track('Click', {
+      subject: 'buy',
+      type: 'button',
+      flow: 'buy now'
+    })
 
-      serializer = new Serializer @$('form')
-      data = serializer.data()
-      editionSetId = data.edition_set_id
-      $target = $(e.currentTarget)
+    serializer = new Serializer @$('form')
+    data = serializer.data()
+    editionSetId = data.edition_set_id
+    $target = $(e.currentTarget)
 
-      # If this artwork has an edition set of 1, send that in the mutation as well
-      if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
-        editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
+    # If this artwork has an edition set of 1, send that in the mutation as well
+    if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
+      editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
-      if loggedInUser
-        $target.attr 'data-state', 'loading'
-        createOrder
-          artworkId: @artwork.get('_id')
-          editionSetId: editionSetId
-          quantity: 1
-          user: loggedInUser
-        .then (data) ->
-          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
-          if order
-            location.assign("/orders/#{order.id}/shipping")
-          else
-            console.error('createOrder', error)
-            $target.attr 'data-state', 'loaded'
-            errorModal.renderBuyNowError(error)
-        .catch (err) ->
-          console.error('createOrder', err)
+    if loggedInUser
+      $target.attr 'data-state', 'loading'
+      createOrder
+        artworkId: @artwork.get('_id')
+        editionSetId: editionSetId
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/shipping")
+        else
+          console.error('createOrder', error)
           $target.attr 'data-state', 'loaded'
-          errorModal.render()
-      else
-        return mediator.trigger 'open:auth',
-          intent: 'buy now'
-          signupIntent: 'buy now'
-          mode: 'login'
-          trigger: 'click'
-          redirectTo: location.href
-
-    else if @artwork.get('partner_type') == "Auction" or @artwork.get('partner_type') == "Auction House"
-      order = new PendingOrder
-      @form = new Form $form: @$('form'), model: order
-
-      @form.submit e, success: ->
-        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
-
-      analyticsHooks
-        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        console.error('createOrder', err)
+        $target.attr 'data-state', 'loaded'
+        errorModal.render()
+    else
+      return mediator.trigger 'open:auth',
+        intent: 'buy now'
+        signupIntent: 'buy now'
+        mode: 'login'
+        trigger: 'click'
+        redirectTo: location.href
 
   inquire: (e) =>
     e.preventDefault() if e

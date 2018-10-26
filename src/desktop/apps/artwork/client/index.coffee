@@ -22,7 +22,6 @@ sharedInit = [
   require '../components/actions/index.coffee'
   require '../components/additional_info/index.coffee'
   require '../components/auction/index.coffee'
-  require '../components/artists/index.coffee'
   require '../components/banner/index.coffee'
   require '../components/commercial/index.coffee'
   require '../components/images/index.coffee'
