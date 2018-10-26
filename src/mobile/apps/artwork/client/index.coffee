@@ -4,7 +4,6 @@ bootstrap = require '../../../components/layout/bootstrap.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 MetaDataView = require '../components/meta_data/view.coffee'
 BidView = require '../components/bid/view.coffee'
-ArtworkArtistView = require '../components/artist/view.coffee'
 ArtworkPartnerView = require '../components/partner/view.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
@@ -32,10 +31,6 @@ module.exports.init = ->
     artwork: sd.ARTWORK
     el: $('.artwork-auction-bid-module')
     user: user
-
-  new ArtworkArtistView
-    artwork: sd.ARTWORK
-    el: $('.artwork-artist-module')
 
   new ArtworkPartnerView
     artwork: sd.ARTWORK

@@ -20,39 +20,32 @@ module.exports = class MetaDataView extends Backbone.View
 
   buy: (e) ->
     loggedInUser = CurrentUser.orNull()
-    isAuctionPartner =
-      @model.get('partner').type == 'Auction' or
-      @model.get('partner').type == 'Auction House'
 
-    if sd.ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
-      analytics.track('Click', {
-        subject: 'buy',
-        type: 'button',
-        flow: 'buy now'
-      })
+    analytics.track('Click', {
+      subject: 'buy',
+      type: 'button',
+      flow: 'buy now'
+    })
 
-      # If this artwork has an edition set of 1, send that in the mutation as well
-      if @model.get('edition_sets')?.length && @model.get('edition_sets').length == 1
-        singleEditionSetId = @model.get('edition_sets')[0] && @model.get('edition_sets')[0].id
+    # If this artwork has an edition set of 1, send that in the mutation as well
+    if @model.get('edition_sets')?.length && @model.get('edition_sets').length == 1
+      singleEditionSetId = @model.get('edition_sets')[0] && @model.get('edition_sets')[0].id
 
-      if not loggedInUser
-        return location.assign "/login?redirectTo=#{@model.href()}&signupIntent=buy+now&intent=buy+now&trigger=click"
-      else
-        createOrder
-          artworkId: @model.get('_id')
-          editionSetId: @editionSetId || singleEditionSetId
-          quantity: 1
-          user: loggedInUser
-        .then (data) ->
-          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
-          if order
-            location.assign("/orders/#{order.id}/shipping")
-          else
-            console.error('createOrder', error)
-            errorModal.renderBuyNowError(error)
-        .catch (err) ->
-          console.error('createOrder', err)
-          errorModal.render()
-
-    else if isAuctionPartner
-      acquireArtwork @model, $(e.target), @editionSetId
+    if not loggedInUser
+      return location.assign "/login?redirectTo=#{@model.href()}&signupIntent=buy+now&intent=buy+now&trigger=click"
+    else
+      createOrder
+        artworkId: @model.get('_id')
+        editionSetId: @editionSetId || singleEditionSetId
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/shipping")
+        else
+          console.error('createOrder', error)
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        console.error('createOrder', err)
+        errorModal.render()
