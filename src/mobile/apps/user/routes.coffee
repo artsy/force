@@ -1,15 +1,16 @@
 CurrentUser = require '../../models/current_user'
 
-module.exports.refresh = (req, res) ->
-  return res.redirect("/") unless req.user
-  req.user.fetch
-    error: res.backboneError
-    success: ->
-      req.login req.user, (error) ->
-        if (error)
-          next error
-        else
-          res.json req.user.attributes
+module.exports.refresh = (req, res, next) ->
+  user = req.user
+  return res.redirect("/") unless user
+
+  user
+    .fetch()
+    .then ->
+      req.login user, (error) ->
+        return next error if error?
+        res.json user.attributes
+    .catch next
 
 module.exports.settings = (req, res) ->
   return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
