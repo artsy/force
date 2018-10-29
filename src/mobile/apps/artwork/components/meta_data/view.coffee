@@ -10,6 +10,7 @@ module.exports = class MetaDataView extends Backbone.View
   events:
     'click #artwork-page-edition-sets input[type=radio]': 'addEditionToOrder'
     'click .js-purchase': 'buy'
+    'click .js-offer': 'offer'
 
   initialize: ->
     @editionSetId = @$('#artwork-page-edition-sets li').first().find('input').val()
@@ -49,3 +50,16 @@ module.exports = class MetaDataView extends Backbone.View
       .catch (err) ->
         console.error('createOrder', err)
         errorModal.render()
+
+  offer: (e) ->
+    loggedInUser = CurrentUser.orNull()
+
+    # If this artwork has an edition set of 1, send that in the mutation as well
+    if @model.get('edition_sets')?.length && @model.get('edition_sets').length == 1
+      singleEditionSetId = @model.get('edition_sets')[0] && @model.get('edition_sets')[0].id
+
+    if not loggedInUser
+      return location.assign "/login?redirectTo=#{@model.href()}&signupIntent=make+offer&intent=make+offer&trigger=click"
+    else
+      console.log("making offer!")
+
