@@ -1,6 +1,6 @@
 CurrentUser = require '../../models/current_user'
 
-module.exports.refresh = (req, res) ->
+module.exports.refresh = (req, res, next) ->
   return res.redirect("/") unless req.user
   req.user.fetch
     error: res.backboneError
@@ -11,8 +11,10 @@ module.exports.refresh = (req, res) ->
         else
           # Avoid race condition where this returns _before_
           # session is actually saved, by setting something explicitly.
-          req.session.userRefresh = new Date()
-          res.json req.user.attributes
+          req.session.save()
+            .then ->
+              res.json req.user.attributes
+            .catch next
 
 module.exports.settings = (req, res) ->
   return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
