@@ -9,6 +9,9 @@ module.exports.refresh = (req, res) ->
         if (error)
           next error
         else
+          # Avoid race condition where this returns _before_
+          # session is actually saved, by setting something explicitly.
+          req.session.userRefresh = new Date()
           res.json req.user.attributes
 
 module.exports.settings = (req, res) ->
