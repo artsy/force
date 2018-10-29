@@ -16,6 +16,7 @@ describe 'Metadata', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), analytics: track: sinon.stub()
+      analytics: track: sinon.stub()
       Backbone.$ = $
       done()
 
@@ -78,7 +79,7 @@ describe 'Metadata', ->
       location.assign.callCount.should.equal(1)
       location.assign.calledWith('/login?redirectTo=/artwork/peter-alexander-wedge-with-puff&signupIntent=buy+now&intent=buy+now&trigger=click').should.be.ok()
 
-    it 'should reroute to the buy now form', ->
+    it 'should track the successfully created order and reroute to the buy now form', ->
       createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
       @MetaDataView.__set__
         createOrder: createOrderStub
@@ -89,6 +90,7 @@ describe 'Metadata', ->
       view.buy(fakeEvent).then ->
         createOrderStub.callCount.should.equal(1)
         location.assign.callCount.should.equal(1)
+        analytics.track.calledWith('created_order', { order_id: '1234' }).should.be.ok()
         location.assign.calledWith('/orders/1234/shipping').should.be.ok()
 
     it 'should show an error modal when buy now mutation fails', ->
