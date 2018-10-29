@@ -42,9 +42,9 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     User-agent: *
     Noindex: ?sort=
     Noindex: ?dimension_range=
-    Disallow: ?dns_source=
-    Disallow: ?microsite=
-    Disallow: ?from-show-guide=
+    Disallow: /*?dns_source=
+    Disallow: /*?microsite=
+    Disallow: /*?from-show-guide=
     Sitemap: #{APP_URL}/sitemap-articles.xml
     Sitemap: #{APP_URL}/sitemap-artists.xml
     Sitemap: #{APP_URL}/sitemap-artist-images.xml
