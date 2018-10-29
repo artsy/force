@@ -9,12 +9,7 @@ module.exports.refresh = (req, res, next) ->
         if (error)
           next error
         else
-          # Avoid race condition where this returns _before_
-          # session is actually saved, by setting something explicitly.
-          req.session.save()
-            .then ->
-              res.json req.user.attributes
-            .catch next
+          res.json req.user.attributes
 
 module.exports.settings = (req, res) ->
   return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
