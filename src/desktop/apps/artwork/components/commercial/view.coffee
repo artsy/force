@@ -28,6 +28,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   events:
     'click .js-artwork-inquire-button'      : 'inquire'
     'click .js-artwork-acquire-button'      : 'acquire'
+    'click .js-artwork-offer-button'        : 'offer'
     'click .collector-faq'                  : 'openCollectorModal'
     'click .js-artwork-bnmo-collector-faq'  : 'trackOpenCollectorFAQ'
     'click .js-artwork-bnmo-ask-specialist' : 'inquireSpecialist'
@@ -94,6 +95,30 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       return mediator.trigger 'open:auth',
         intent: 'buy now'
         signupIntent: 'buy now'
+        mode: 'login'
+        trigger: 'click'
+        redirectTo: location.href
+
+  offer: (e) ->
+    e.preventDefault()
+
+    loggedInUser = CurrentUser.orNull()
+
+    serializer = new Serializer @$('form')
+    data = serializer.data()
+    editionSetId = data.edition_set_id
+    $target = $(e.currentTarget)
+
+    # If this artwork has an edition set of 1, send that in the mutation as well
+    if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
+      editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
+
+    if loggedInUser
+      console.log("making offer!")
+    else
+      return mediator.trigger 'open:auth',
+        intent: 'make offer'
+        signupIntent: 'make offer'
         mode: 'login'
         trigger: 'click'
         redirectTo: location.href

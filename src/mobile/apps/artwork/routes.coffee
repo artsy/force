@@ -17,6 +17,7 @@ query = (user) -> """
       is_sold
       is_inquireable
       is_acquireable
+      is_offerable
       availability
       sale_message
       price
@@ -45,6 +46,7 @@ query = (user) -> """
       edition_sets {
         id
         is_acquireable
+        is_offerable
         edition_of
         price
         dimensions {
