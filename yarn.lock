@@ -50,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.9.5":
-  version "5.9.5"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.9.5.tgz#2c6c6d22bccff3906cd6884c677b6a11bfa9dcd0"
-  integrity sha512-U4q8v5f7rTJV/wsrSBXSZc8sAcO/7WW8GBuvvr5QkazndNV/8ihvQgQXADbzSHULt3vmvSqiSgSBCFcT3GnCBg==
+"@artsy/reaction@^5.9.7":
+  version "5.9.7"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.9.7.tgz#474ea283958864a787ea894ca8a334d53f4117ee"
+  integrity sha512-PVZQL4GTVrDJsqWr0+AKw3N5l1kGO3UBKkUGNX/X6/LQxOW7/4tR7q1uv3DKLFGxxOImvnWz1gNz2hYwT0w9JA==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -91,7 +91,7 @@
     react-spring "^5.7.2"
     react-stripe-elements "^2.0.1"
     react-styled-flexboxgrid "^2.2.0"
-    react-tracking "^5.4.1"
+    react-tracking "^5.6.0"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
@@ -12169,7 +12169,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
@@ -12347,10 +12347,10 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
-react-tracking@^5.4.1:
-  version "5.5.4"
-  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.5.4.tgz#cc82bd2f3e4c7faa9a5afc21ff370d9ab9a1b25d"
-  integrity sha512-8ZCr7Cilp8GqNFZe39FlBI8e3JgLcZR5RsjRG8mnzmndc8HJjLTOGllEEUrgckgrxo2+NcOmysvytsf5JKwJJw==
+react-tracking@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.6.0.tgz#b093e88b161252457307fff1bec622eecc7894b4"
+  integrity sha512-S+BylXekrspRlJ6CTfrrSO/CAlyQv0pl6iEiiNLLQwmFpBNpg6O8fyC1tC6y8o/Ta5Mv9YS6sB6LseRwiQmEyQ==
   dependencies:
     deepmerge "^2.2.1"
     hoist-non-react-statics "^3.0.1"
