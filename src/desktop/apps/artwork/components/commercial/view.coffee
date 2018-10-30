@@ -98,7 +98,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         mode: 'login'
         trigger: 'click'
         redirectTo: location.href
-  
+
   offer: (e) ->
     e.preventDefault()
 
@@ -117,8 +117,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       console.log("making offer!")
     else
       return mediator.trigger 'open:auth',
-        intent: 'buy now'
-        signupIntent: 'buy now'
+        intent: 'make offer'
+        signupIntent: 'make offer'
         mode: 'login'
         trigger: 'click'
         redirectTo: location.href
