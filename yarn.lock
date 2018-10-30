@@ -51,9 +51,9 @@
     underscore.string "^3.2.2"
 
 "@artsy/reaction@^5.9.7":
-  version "5.9.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.9.7.tgz#474ea283958864a787ea894ca8a334d53f4117ee"
-  integrity sha512-PVZQL4GTVrDJsqWr0+AKw3N5l1kGO3UBKkUGNX/X6/LQxOW7/4tR7q1uv3DKLFGxxOImvnWz1gNz2hYwT0w9JA==
+  version "5.9.8"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.9.8.tgz#646aa4b0d92b41cd29575f3e56e0d4904330e04c"
+  integrity sha512-5YP0t4B21/nQop83hvEC1NDnvLmZ301GaV/TRsIkHqGC1K90K//tIwbciw1zTx5MuxYAxG3cSTBeGDF2zQPvaw==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -3876,14 +3876,15 @@ cookie-parser@^1.4.0:
     cookie "0.3.1"
     cookie-signature "1.0.6"
 
-cookie-session@^2.0.0-alpha.1:
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/cookie-session/-/cookie-session-2.0.0-beta.1.tgz#d7fa15c629ee48032745b11f23f488a6e60b1dfd"
-  integrity sha1-1/oVxinuSAMnRbEfI/SIpuYLHf0=
+cookie-session@^2.0.0-beta.3:
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/cookie-session/-/cookie-session-2.0.0-beta.3.tgz#4e446bd9f85bd7e27d3e226f4e99af12011a4386"
+  integrity sha512-zyqm5tA0z9yMEB/xyP7lnRnqp8eLR2e0dap+9+rBwVigla9yPKn8XTL1jJymog8xjfrowqW2o5LUjixQChkqrw==
   dependencies:
-    cookies "0.7.0"
-    debug "2.6.1"
+    cookies "0.7.1"
+    debug "3.1.0"
     on-headers "~1.0.1"
+    safe-buffer "5.1.1"
 
 cookie-signature@1.0.6:
   version "1.0.6"
@@ -3915,13 +3916,13 @@ cookies-js@^1.2.3:
   resolved "https://registry.yarnpkg.com/cookies-js/-/cookies-js-1.2.3.tgz#03315049e7c52bee3f73186a69167eab0ddb2d31"
   integrity sha1-AzFQSefFK+4/cxhqaRZ+qw3bLTE=
 
-cookies@0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/cookies/-/cookies-0.7.0.tgz#0bc961d910c35254980fc7c9eff5da12011bbf00"
-  integrity sha1-C8lh2RDDUlSYD8fJ7/XaEgEbvwA=
+cookies@0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/cookies/-/cookies-0.7.1.tgz#7c8a615f5481c61ab9f16c833731bcb8f663b99b"
+  integrity sha1-fIphX1SBxhq58WyDNzG8uPZjuZs=
   dependencies:
-    depd "~1.1.0"
-    keygrip "~1.0.1"
+    depd "~1.1.1"
+    keygrip "~1.0.2"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -8956,10 +8957,10 @@ keyboard-code@0.0.2:
   resolved "https://registry.yarnpkg.com/keyboard-code/-/keyboard-code-0.0.2.tgz#5562cd1b36798a1698a547a85ee6ff0aeb938488"
   integrity sha1-VWLNGzZ5ihaYpUeoXub/CuuThIg=
 
-keygrip@~1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.1.tgz#b02fa4816eef21a8c4b35ca9e52921ffc89a30e9"
-  integrity sha1-sC+kgW7vIajEs1yp5Skh/8iaMOk=
+keygrip@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
+  integrity sha512-/PpesirAIfaklxUzp4Yb7xBper9MwP6hNRA6BGGUFCgbJ+BM5CKBtsoxinNXkLHAr+GXS1/lSlF2rP7cv5Fl+g==
 
 keypress@0.1.x:
   version "0.1.0"
