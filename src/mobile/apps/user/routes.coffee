@@ -9,6 +9,8 @@ module.exports.refresh = (req, res, next) ->
         if (error)
           next error
         else
+          # Make sure we modify the session to force a `Set-Cooke` header.
+          req.session.userRefresh = new Date()
           res.json req.user.attributes
 
 module.exports.settings = (req, res) ->
