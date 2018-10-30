@@ -17,6 +17,7 @@ sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 { createOrder } = require '../../../../../lib/components/create_order'
+{ createOfferOrder } = require '../../../../../lib/components/create_offer_order'
 inquireSpecialist = require '../../lib/inquire.coffee'
 errorModal = require '../../client/errorModal'
 mediator = require '../../../../lib/mediator.coffee'
@@ -114,7 +115,24 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
 
     if loggedInUser
-      console.log("making offer!")
+      $target.attr 'data-state', 'loading'
+      createOfferOrder
+        artworkId: @artwork.get('_id')
+        editionSetId: editionSetId
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        { order, error } = data?.ecommerceCreateOfferOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/offer")
+        else
+          console.error('createOfferOrder', error)
+          $target.attr 'data-state', 'loaded'
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        console.error('createOfferOrder', err)
+        $target.attr 'data-state', 'loaded'
+        errorModal.render()
     else
       return mediator.trigger 'open:auth',
         intent: 'make offer'
