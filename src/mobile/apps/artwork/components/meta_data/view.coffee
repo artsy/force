@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user.coffee'
 { createOrder } = require '../../../../../lib/components/create_order'
+{ createOfferOrder } = require '../../../../../lib/components/create_offer_order'
 errorModal = require '../../../../../desktop/apps/artwork/client/errorModal.tsx'
 sd = require('sharify').data
 mediator = require '../../../../lib/mediator.coffee'
@@ -61,5 +62,19 @@ module.exports = class MetaDataView extends Backbone.View
     if not loggedInUser
       return location.assign "/login?redirectTo=#{@model.href()}&signupIntent=make+offer&intent=make+offer&trigger=click"
     else
-      console.log("making offer!")
+      createOfferOrder
+        artworkId: @model.get('_id')
+        editionSetId: @editionSetId || singleEditionSetId
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        { order, error } = data?.ecommerceCreateOfferOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/offer")
+        else
+          console.error('createOfferOrder', error)
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        console.error('createOfferOrder', err)
+        errorModal.render()
 
