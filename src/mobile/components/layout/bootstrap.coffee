@@ -67,7 +67,8 @@ ensureFreshUser = (data) ->
   for attr in attrs
     if (data[attr] or sd.CURRENT_USER[attr]) and not _.isEqual data[attr], sd.CURRENT_USER[attr]
       RavenClient.captureException("Forced to refresh user", { extra: { attr: attr, session: sd.CURRENT_USER[attr], current: data[attr] } } )
-      $.ajax('/user/refresh').then -> window.location.reload()
+      $.ajax('/user/refresh').then ->
+        setTimeout  (=> window.location.reload()), 500
 
 syncAuth = module.exports.syncAuth = ->
   # Log out of Microgravity if you're not logged in to Gravity

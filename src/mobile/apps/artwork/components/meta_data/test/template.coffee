@@ -126,6 +126,38 @@ describe 'Artwork metadata templates', ->
       $ = cheerio.load @html
       $('.js-purchase').text().should.equal 'Buy now'
       $('.artwork-meta-data-black__contact-button').length.should.equal 1
+  
+  describe 'offer button', ->
+    it 'should display buy now and offer buttons when both enabled', ->
+      @artwork.is_acquireable = true
+      @artwork.is_inquireable = true
+      @artwork.is_offerable = true
+
+      @html = render('inquiry')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+      $ = cheerio.load @html
+      $('.js-purchase').text().should.equal 'Buy now'
+      $('.js-offer').text().should.equal 'Make offer'
+      $('.artwork-meta-data-black__contact-button').length.should.equal 1
+      $('.artwork-meta-data-white__contact-button').length.should.equal 1
+
+    it 'should display offer button only when enabled', ->
+      @artwork.is_acquireable = false
+      @artwork.is_inquireable = true
+      @artwork.is_offerable = true
+
+      @html = render('inquiry')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+      $ = cheerio.load @html
+      $('.js-offer').text().should.equal 'Make offer'
+      $('.artwork-meta-data-black__contact-button').length.should.equal 1
+      $('.artwork-meta-data-white__contact-button').length.should.equal 0
 
   describe 'auction artwork estimated value', ->
     before ->

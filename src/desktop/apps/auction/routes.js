@@ -60,10 +60,17 @@ export async function index(req, res, next) {
     let me = {}
 
     if (!isEcommerceSale) {
-      ;({ me } = await metaphysics({
-        query: MeQuery(sale.id),
-        req,
-      }))
+      try {
+        ;({ me } = await metaphysics({
+          query: MeQuery(sale.id),
+          req,
+        }))
+      } catch (error) {
+        console.error(
+          "(apps/auction/routes.js) Error fetching LotStandings",
+          error
+        )
+      }
     }
 
     // If an e-commerce sale, remove all sort options that are Auction related

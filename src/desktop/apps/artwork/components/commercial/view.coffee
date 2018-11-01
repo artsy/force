@@ -8,7 +8,6 @@ Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
 Serializer = require '../../../../components/form/serializer.coffee'
-PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
@@ -18,6 +17,7 @@ sd = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 { createOrder } = require '../../../../../lib/components/create_order'
+{ createOfferOrder } = require '../../../../../lib/components/create_offer_order'
 inquireSpecialist = require '../../lib/inquire.coffee'
 errorModal = require '../../client/errorModal'
 mediator = require '../../../../lib/mediator.coffee'
@@ -29,6 +29,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   events:
     'click .js-artwork-inquire-button'      : 'inquire'
     'click .js-artwork-acquire-button'      : 'acquire'
+    'click .js-artwork-offer-button'        : 'offer'
     'click .collector-faq'                  : 'openCollectorModal'
     'click .js-artwork-bnmo-collector-faq'  : 'trackOpenCollectorFAQ'
     'click .js-artwork-bnmo-ask-specialist' : 'inquireSpecialist'
@@ -81,6 +82,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       .then (data) ->
         { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
         if order
+          analytics.track('created_order', { order_id: order.id })
           location.assign("/orders/#{order.id}/shipping")
         else
           console.error('createOrder', error)
@@ -94,6 +96,47 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       return mediator.trigger 'open:auth',
         intent: 'buy now'
         signupIntent: 'buy now'
+        mode: 'login'
+        trigger: 'click'
+        redirectTo: location.href
+
+  offer: (e) ->
+    e.preventDefault()
+
+    loggedInUser = CurrentUser.orNull()
+
+    serializer = new Serializer @$('form')
+    data = serializer.data()
+    editionSetId = data.edition_set_id
+    $target = $(e.currentTarget)
+
+    # If this artwork has an edition set of 1, send that in the mutation as well
+    if @artwork.get('edition_sets')?.length && @artwork.get('edition_sets').length == 1
+      editionSetId = @artwork.get('edition_sets')[0] && @artwork.get('edition_sets')[0].id
+
+    if loggedInUser
+      $target.attr 'data-state', 'loading'
+      createOfferOrder
+        artworkId: @artwork.get('_id')
+        editionSetId: editionSetId
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        { order, error } = data?.ecommerceCreateOfferOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/offer")
+        else
+          console.error('createOfferOrder', error)
+          $target.attr 'data-state', 'loaded'
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        console.error('createOfferOrder', err)
+        $target.attr 'data-state', 'loaded'
+        errorModal.render()
+    else
+      return mediator.trigger 'open:auth',
+        intent: 'make offer'
+        signupIntent: 'make offer'
         mode: 'login'
         trigger: 'click'
         redirectTo: location.href

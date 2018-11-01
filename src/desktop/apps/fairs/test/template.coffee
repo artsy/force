@@ -64,7 +64,7 @@ describe 'Fairs template', ->
     after ->
       benv.teardown()
 
-    it 'renders correctly, with a fair promo', ->
+    xit 'renders correctly, with a fair promo', ->
       $('.fairs__promo').length.should.equal 1
       $('.fairs__past-fairs h1.fair-header').text().should.equal 'Past Fairs'
       $('.fairs__past-fair').length.should.equal 4

@@ -5,6 +5,7 @@
       "id": "yee-wong-exploding-powder-movement-blue-and-pink",
       "is_acquireable": true,
       "is_inquireable": true,
+      "is_offerable": true,
       "is_in_auction": false,
       "sale_message": "$150 - 1,250",
       "partner": {

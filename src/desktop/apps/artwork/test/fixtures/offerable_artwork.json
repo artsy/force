@@ -3,7 +3,7 @@
     "artwork": {
       "_id": "56e86588b202a366da000571",
       "id": "yee-wong-exploding-powder-movement-blue-and-pink",
-      "is_acquireable": true,
+      "is_acquireable": false,
       "is_inquireable": true,
       "is_offerable": true,
       "is_in_auction": false,

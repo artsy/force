@@ -16,7 +16,9 @@ describe 'Metadata', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), analytics: track: sinon.stub()
+      analytics: track: sinon.stub()
       Backbone.$ = $
+      console.error = sinon.stub()
       done()
 
   after ->
@@ -53,7 +55,7 @@ describe 'Metadata', ->
           minimum_next_bid:
             amount: '$60,000'
             cents: 6000000
-  
+
   afterEach ->
     @MetaDataView.__set__
       createOrder: null
@@ -65,7 +67,6 @@ describe 'Metadata', ->
         errorModal:
           render: () -> {}
           renderBuyNowError: () -> {}
-        acquireArtwork: () -> {}
 
     it 'reroutes to login form when user is not logged in', ->
       @MetaDataView.__set__
@@ -79,7 +80,7 @@ describe 'Metadata', ->
       location.assign.callCount.should.equal(1)
       location.assign.calledWith('/login?redirectTo=/artwork/peter-alexander-wedge-with-puff&signupIntent=buy+now&intent=buy+now&trigger=click').should.be.ok()
 
-    it 'should reroute to the buy now form', ->
+    it 'should track the successfully created order and reroute to the buy now form', ->
       createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
       @MetaDataView.__set__
         createOrder: createOrderStub
@@ -90,6 +91,7 @@ describe 'Metadata', ->
       view.buy(fakeEvent).then ->
         createOrderStub.callCount.should.equal(1)
         location.assign.callCount.should.equal(1)
+        analytics.track.calledWith('created_order', { order_id: '1234' }).should.be.ok()
         location.assign.calledWith('/orders/1234/shipping').should.be.ok()
 
     it 'should show an error modal when buy now mutation fails', ->
@@ -104,5 +106,53 @@ describe 'Metadata', ->
       view = new @MetaDataView model: @model
       view.buy(fakeEvent).then ->
         createOrderStub.callCount.should.equal(1)
+        location.assign.callCount.should.equal(0)
+        errorModalMock.renderBuyNowError.calledOnce.should.be.ok()
+
+  describe 'offer', ->
+    beforeEach ->
+      @MetaDataView.__set__
+        sd: {}
+        errorModal:
+          render: () -> {}
+          renderBuyNowError: () -> {}
+
+    it 'reroutes to login form when user is not logged in', ->
+      @MetaDataView.__set__
+        createOfferOrder: sinon.stub()
+        CurrentUser:
+          orNull: ->
+            null
+
+      view = new @MetaDataView model: @model
+      view.offer(fakeEvent)
+      location.assign.callCount.should.equal(1)
+      location.assign.calledWith('/login?redirectTo=/artwork/peter-alexander-wedge-with-puff&signupIntent=make+offer&intent=make+offer&trigger=click').should.be.ok()
+
+    it 'should reroute to the offer form', ->
+      createOfferOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOfferOrderWithArtwork: orderOrError: order: id: "1234"))
+      @MetaDataView.__set__
+        createOfferOrder: createOfferOrderStub
+        CurrentUser:
+          orNull: -> { id: 'userid' }
+
+      view = new @MetaDataView model: @model
+      view.offer(fakeEvent).then ->
+        createOfferOrderStub.callCount.should.equal(1)
+        location.assign.callCount.should.equal(1)
+        location.assign.calledWith('/orders/1234/offer').should.be.ok()
+
+    it 'should show an error modal when make offer mutation fails', ->
+      createOfferOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOfferOrderWithArtwork: orderOrError: error: code: "1234"))
+      errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
+      @MetaDataView.__set__
+        errorModal: errorModalMock
+        createOfferOrder: createOfferOrderStub
+        CurrentUser:
+          orNull: -> { id: 'userid' }
+
+      view = new @MetaDataView model: @model
+      view.offer(fakeEvent).then ->
+        createOfferOrderStub.callCount.should.equal(1)
         location.assign.callCount.should.equal(0)
         errorModalMock.renderBuyNowError.calledOnce.should.be.ok()

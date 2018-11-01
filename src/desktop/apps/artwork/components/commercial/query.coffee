@@ -3,6 +3,7 @@ module.exports = """
     _id
     id
     is_acquireable
+    is_offerable
     is_inquireable
     is_in_auction
     sale_message
@@ -32,6 +33,7 @@ module.exports = """
     edition_sets {
       id
       is_acquireable
+      is_offerable
       edition_of
       sale_message
       dimensions {

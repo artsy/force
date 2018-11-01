@@ -8,6 +8,8 @@ Backbone = require 'backbone'
 helpers = require '../helpers.coffee'
 inquireableArtwork = (require '../../../test/fixtures/inquireable_artwork.json').data.artwork
 acquireableArtwork = (require '../../../test/fixtures/acquireable_artwork.json').data.artwork
+offerableArtwork = (require '../../../test/fixtures/offerable_artwork.json').data.artwork
+acquireableOnlyArtwork = (require '../../../test/fixtures/acquireable_only_artwork.json').data.artwork
 render = (templateName) ->
   filename = path.resolve __dirname, "../index.jade"
   jade.compile(
@@ -70,9 +72,25 @@ describe 'Commercial template', ->
 
   it 'shows the buy button when ecommerce', ->
     html = renderArtwork
+      artwork: acquireableOnlyArtwork
+    $ = cheerio.load html
+    $('.js-artwork-acquire-button').length.should.eql 1
+    $('.artwork-inquiry-form').length.should.eql 0
+  
+  it 'shows the buy button and make offer button when both are enabled', ->
+    html = renderArtwork
       artwork: acquireableArtwork
     $ = cheerio.load html
     $('.js-artwork-acquire-button').length.should.eql 1
+    $('.js-artwork-offer-button').length.should.eql 1
+    $('.artwork-inquiry-form').length.should.eql 0
+  
+  it 'shows the offer button when offerable', ->
+    html = renderArtwork
+      artwork: offerableArtwork
+    $ = cheerio.load html
+    $('.js-artwork-acquire-button').length.should.eql 0
+    $('.js-artwork-offer-button').length.should.eql 1
     $('.artwork-inquiry-form').length.should.eql 0
 
   it 'displays ask a specialist for bnmo artworks', ->

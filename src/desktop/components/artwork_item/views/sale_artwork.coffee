@@ -1,7 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 mediator = require '../../../lib/mediator.coffee'
 
@@ -29,14 +28,6 @@ module.exports = class SaleArtworkView extends Backbone.View
   contactSeller: (e) ->
     e.preventDefault()
     new ContactPartnerView artwork: @model, partner: @model.related().partner
-
-  acquire: (e) ->
-    e.preventDefault()
-    $(e.currentTarget).attr 'data-state', 'loading'
-    # Redirect to artwork page if artwork has multiple editions
-    if @model.get 'edition_sets_count' > 1
-      return window.location.href = @model.href()
-    AcquireArtwork @model, $(e.target)
 
   bid: (e) ->
     unless @currentUser

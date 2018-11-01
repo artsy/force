@@ -1,4 +1,4 @@
-{ extend } = require 'underscore'
+{ defer, extend } = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -21,6 +21,7 @@ describe 'ArtworkCommercialView', ->
             TooltipQuestion: sinon.stub()
       Backbone.$ = $
       location.assign = sinon.stub()
+      console.error = sinon.stub()
       done()
 
   after ->
@@ -36,7 +37,7 @@ describe 'ArtworkCommercialView', ->
     beforeEach ->
       @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork.json'
       @view.render()
-      ArtworkCommercialView.__set__ 
+      ArtworkCommercialView.__set__
         CurrentUser:
           orNull: ->
             { id: 'userid' }
@@ -66,7 +67,7 @@ describe 'ArtworkCommercialView', ->
 
       it 'purchases an artwork by creating a new order', ->
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))
-        ArtworkCommercialView.__set__ 
+        ArtworkCommercialView.__set__
           createOrder: createOrderStub
 
         @view.$('.js-artwork-acquire-button').click()
@@ -89,7 +90,54 @@ describe 'ArtworkCommercialView', ->
         @view.$('.js-artwork-acquire-button').click()
         createOrderStub.calledOnce.should.be.ok()
 
-        setTimeout (() -> errorModalMock.renderBuyNowError.calledOnce.should.be.ok()), 0
+        defer ->
+          errorModalMock.renderBuyNowError.calledOnce.should.be.ok()
+
+    describe '#offer', ->
+      it 'should show an auth modal if the user is not logged in', ->
+        createOfferOrderStub = sinon.stub()
+        mediatorStub = trigger: sinon.stub()
+        ArtworkCommercialView.__set__
+          mediator: mediatorStub
+          createOfferOrder: createOfferOrderStub
+          CurrentUser:
+            orNull: ->
+              null
+
+        @view.$('.js-artwork-offer-button').click()
+        createOfferOrderStub.callCount.should.equal(0)
+        mediatorStub.trigger.args[0][0].should.equal 'open:auth'
+        mediatorStub.trigger.args[0][1].mode.should.equal 'login'
+
+      it 'purchases an artwork by creating a new offer order', ->
+        createOfferOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOfferOrderWithArtwork: orderOrError: order: id: "1234"))
+        ArtworkCommercialView.__set__
+          createOfferOrder: createOfferOrderStub
+
+        @view.$('.js-artwork-offer-button').click()
+        defer ->
+          createOfferOrderStub.calledOnce.should.be.ok()
+          createOfferOrderStub
+            .calledWith
+              artworkId: '56e86588b202a366da000571'
+              editionSetId: '56e866cd275b241d87000510'
+              quantity: 1
+              user: sinon.match.any
+            .should.be.ok()
+          location.assign.calledWith("/orders/1234/offer").should.be.ok()
+
+      it 'shows an error modal when create offer order mutation fails', ->
+        createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOfferOrderWithArtwork: orderOrError: error: code: "failed"))
+        ArtworkCommercialView.__set__ 'createOfferOrder', createOrderStub
+
+        errorModalMock = { render: sinon.spy(), renderBuyNowError: sinon.spy() }
+        ArtworkCommercialView.__set__ 'errorModal', errorModalMock
+
+        @view.$('.js-artwork-offer-button').click()
+
+        defer ->
+          createOrderStub.calledOnce.should.be.ok()
+          errorModalMock.renderBuyNowError.calledOnce.should.be.ok()
 
   describe 'an ecommerce work with a single edition set', ->
     beforeEach ->
@@ -109,10 +157,38 @@ describe 'ArtworkCommercialView', ->
             user: sinon.match.any
           .should.be.ok()
 
+    describe '#offer', ->
+      it 'purchases an artwork with a single edition set', ->
+        createOfferOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOfferOrderWithArtwork: orderOrError: order: id: "1234"))
+        ArtworkCommercialView.__set__ 'createOfferOrder', createOfferOrderStub
+        @view.$('.js-artwork-offer-button').click()
+        createOfferOrderStub.calledOnce.should.be.ok()
+        createOfferOrderStub
+          .calledWith
+            artworkId: '56e86588b202a366da000571'
+            editionSetId: '56e866cd275b241d87000510'
+            quantity: 1
+            user: sinon.match.any
+          .should.be.ok()
+
   describe 'an ecommerce work without edition set', ->
     beforeEach ->
       @view = new ArtworkCommercialView require '../../../test/fixtures/acquireable_artwork_no_edition.json'
       @view.render()
+    describe '#acquire', ->
+      it 'purchases an artwork without edition set', ->
+        createOfferOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOfferOrderWithArtwork: orderOrError: order: id: "1234"))
+        ArtworkCommercialView.__set__ 'createOfferOrder', createOfferOrderStub
+        @view.$('.js-artwork-offer-button').click()
+        createOfferOrderStub.calledOnce.should.be.ok()
+        createOfferOrderStub
+          .calledWith
+            artworkId: '56e86588b202a366da000571'
+            editionSetId: undefined
+            quantity: 1
+            user: sinon.match.any
+          .should.be.ok()
+
     describe '#acquire', ->
       it 'purchases an artwork without edition set', ->
         createOrderStub = sinon.stub().returns(Promise.resolve(ecommerceCreateOrderWithArtwork: orderOrError: order: id: "1234"))

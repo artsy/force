@@ -2,12 +2,12 @@ _ = require 'underscore'
 Analytics = require 'analytics-node'
 Feature = require '../../models/feature.coffee'
 Sale = require '../../models/sale.coffee'
-Order = require '../../models/order.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaleArtwork = require '../../models/sale_artwork.coffee'
 BidderPositions = require '../../collections/bidder_positions.coffee'
 buyersPremium = require '../../components/buyers_premium/index.coffee'
 metaphysics = require '../../../lib/metaphysics'
+DateHelpers = require '../../components/util/date_helpers.coffee'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
@@ -37,11 +37,10 @@ registerOrRender = (sale, req, res, next) ->
               res.redirect sale.registrationSuccessUrl()
       else
         # Render the full registration + credit card form
-        order = new Order()
         res.render 'registration',
           sale: sale
-          monthRange: order.getMonthRange()
-          yearRange: order.getYearRange()
+          monthRange: DateHelpers.getMonthRange()
+          yearRange: DateHelpers.getYearRange()
 
 
 @auctionRegistration = (req, res, next) ->
@@ -97,8 +96,8 @@ registerOrRender = (sale, req, res, next) ->
       isRegistered: res.locals.sd.REGISTERED
       hasValidCreditCard: res.locals.sd.HAS_VALID_CREDIT_CARD
       maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
-      monthRange: new Order().getMonthRange()
-      yearRange: new Order().getYearRange()
+      monthRange: DateHelpers.getMonthRange()
+      yearRange: DateHelpers.getYearRange()
 
   sale.fetch
     error: res.backboneError
