@@ -1,12 +1,15 @@
-- var newBuyNowFlow = sd.ENABLE_NEW_BUY_NOW_FLOW || (user && user.hasLabFeature("New Buy Now Flow"))
 - var auctionPartner = artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
 
 .artwork-commercial( class='js-artwork-commercial' )
   form.artwork-commercial__form
     include editions
     include price
-    include acquire
-    include inquire
+
+    if artwork.is_acquireable || artwork.is_offerable
+      include acquire
+    else if artwork.is_inquireable
+      include inquire
+
     include partner
     include questions
     include consign

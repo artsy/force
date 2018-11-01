@@ -1,36 +1,3 @@
-include ../../../../components/side_tabs/mixins
-
 if artwork.artists.length
   for artist in artwork.artists
-    if sd.ENABLE_NEW_BUY_NOW_FLOW || (user && user.hasLabFeature('New Buy Now Flow'))
-      != stitch.components.ArtworkArtistInfo({ artistID: artist.id })
-    else
-      - var tabs = helpers.artists.build(artist)
-
-      if tabs.length
-        section.artwork-section.artwork-artist(data-artist-id=artist._id)
-          h2.artwork-artist__name
-            | About #{artist.name}
-
-          .artwork-artist__market-insights(id="market-insights-container-" + artist._id)
-            //- Market insights go here
-
-          .artwork-artist__content
-            .side-tabs( class='js-artwork-artist-tabs' )
-              +nav(tabs, helpers.artists.name)
-
-              .side-tabs__content
-                for tab, i in tabs
-                  +tab(tab, i)
-                    case tab
-                      when 'biography'
-                        include ./templates/biography
-                      when 'exhibition_highlights'
-                        include ./templates/exhibition
-                      when 'articles'
-                        include ./templates/articles
-
-                .artwork-section__jump
-                  a.avant-garde-jump-link( href= artist.href )
-                    | Go to #{artist.name}’s Artist Page
-                    i.icon-chevron-small-right
+    != stitch.components.ArtworkArtistInfo({ artistID: artist.id })

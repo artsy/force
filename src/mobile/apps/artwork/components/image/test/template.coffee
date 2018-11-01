@@ -14,7 +14,6 @@ render = (templateName) ->
   )
 
 describe 'Artwork image templates', ->
-
   beforeEach ->
     @artwork = fabricate 'artwork', artists: [fabricate 'artist']
 
@@ -35,8 +34,29 @@ describe 'Artwork image templates', ->
     $ = cheerio.load(@html)
     $('.artwork-display').text().should.equal 'Skull, 1999'
 
-describe 'Artwork image templates', ->
+describe 'Artwork image templates (multiple artists)', ->
+  beforeEach ->
+    @artwork = fabricate 'artwork',
+      artists: [
+        {
+          name: 'Pablo Picasso',
+        },
+        {
+          name: 'Andy Warhol',
+        }
+      ]
 
+    @html = render('index')(
+      artwork: @artwork
+      sd: {}
+      asset: (->)
+    )
+
+  it 'contain artist\'s name', ->
+    $ = cheerio.load(@html)
+    $('.artist-name').parent().html().should.containEql '<a class="artist-name">Pablo Picasso</a><span>, &#xA0;</span><a class="artist-name">Andy Warhol</a>'
+
+describe 'Artwork image templates', ->
   beforeEach ->
     @artwork = fabricate 'artwork', { artists: [], cultural_maker: 'Kanye West' }
 

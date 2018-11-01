@@ -13,7 +13,7 @@ const index = async (req, res, next) => {
     const user = req.user && req.user.toJSON()
     const { APP_URL, IS_MOBILE } = res.locals.sd
 
-    const { ServerApp, redirect } = await buildServerApp({
+    const { headTags, ServerApp, redirect } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -32,12 +32,13 @@ const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => <Meta appUrl={APP_URL} />,
+        head: () => <Meta appUrl={APP_URL} headTags={headTags} />,
         body: () => <ServerApp />,
       },
       locals: {
         ...res.locals,
         assetPackage: "collect2",
+        bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
       },
     })
 
@@ -50,5 +51,6 @@ const index = async (req, res, next) => {
 
 app.get("/collect", index)
 app.get("/collect/:medium?", index)
+app.get("/collection/:slug", index)
 
 export default app

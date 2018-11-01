@@ -5,6 +5,7 @@ path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
+sinon = require 'sinon'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -96,15 +97,6 @@ describe 'Artwork metadata templates', ->
       @artwork.is_acquireable = true
       @artwork.is_inquireable = true
 
-    it 'should not display when new New Buy Now Flow lab feature is disabled and is not auction', ->
-      @html = render('inquiry')(
-        artwork: @artwork
-        sd: {}
-        asset: (->)
-      )
-      $ = cheerio.load @html
-      $('.js-purchase').text().should.equal ''
-
     it 'should display buy now button when in auction', ->
       @html = render('inquiry')(
         artwork: _.extend({}, @artwork, { auction: is_auction: true })
@@ -125,140 +117,47 @@ describe 'Artwork metadata templates', ->
       $('.js-purchase').text().should.equal 'Buy now'
       $('.artwork-meta-data-black__contact-button').length.should.equal 1
 
-    it 'should display buy button when ecommerce flag and New Buy Now Flow lab feature enabled', ->
+    it 'should display buy button when artwork is acquireable', ->
       @html = render('inquiry')(
         artwork: @artwork
-        user: hasLabFeature: (feature) -> feature == 'New Buy Now Flow'
         sd: {}
         asset: (->)
       )
       $ = cheerio.load @html
       $('.js-purchase').text().should.equal 'Buy now'
       $('.artwork-meta-data-black__contact-button').length.should.equal 1
+  
+  describe 'offer button', ->
+    it 'should display buy now and offer buttons when both enabled', ->
+      @artwork.is_acquireable = true
+      @artwork.is_inquireable = true
+      @artwork.is_offerable = true
 
-  describe 'for sale works partner header', ->
-    describe 'gallery - not for sale', ->
-      beforeEach ->
-        @artwork.is_for_sale = false
-        @artwork.collecting_institution = null
-        @artwork.partner = { type: 'Gallery', name: 'Awesome gallery' }
+      @html = render('inquiry')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+      $ = cheerio.load @html
+      $('.js-purchase').text().should.equal 'Buy now'
+      $('.js-offer').text().should.equal 'Make offer'
+      $('.artwork-meta-data-black__contact-button').length.should.equal 1
+      $('.artwork-meta-data-white__contact-button').length.should.equal 1
 
-      it 'should display Gallery name in header', ->
-        html = render('partner')(
-          artwork: @artwork
-          sd: {}
-          asset: (->)
-        )
+    it 'should display offer button only when enabled', ->
+      @artwork.is_acquireable = false
+      @artwork.is_inquireable = true
+      @artwork.is_offerable = true
 
-        $ = cheerio.load(html)
-        $('.artwork-meta-data__partner').text().should.equal 'Awesome gallery'
-
-    describe 'gallery - for sale', ->
-      beforeEach ->
-        @artwork.is_for_sale = true
-        @artwork.collecting_institution = null
-        @artwork.partner = { type: 'Gallery', name: 'Awesome gallery' }
-
-      it 'should display Gallery name in header', ->
-        html = render('partner')(
-          artwork: @artwork
-          sd: {}
-          asset: (->)
-        )
-
-        $ = cheerio.load(html)
-        $('.artwork-meta-data__partner').text().should.equal 'Awesome gallery'
-
-    describe 'auction house - not for sale', ->
-      beforeEach ->
-        @artwork.is_for_sale = false
-        @artwork.partner.type = 'Auction House'
-        @artwork.partner.name = 'Phillips'
-
-      it 'should display Gallery header', ->
-        html = render('partner')(
-          artwork: @artwork
-          sd: {}
-          asset: (->)
-        )
-
-        $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
-
-    describe 'auction house - for sale', ->
-      beforeEach ->
-        @artwork.is_for_sale = true
-        @artwork.partner.type = 'Auction House'
-        @artwork.partner.name = 'Phillips'
-
-      it 'should display Offered by when work is for sale', ->
-        html = render('partner')(
-          artwork: @artwork
-          sd: {}
-          asset: (->)
-        )
-
-        $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-partner-name').text().should.equal 'Phillips'
-
-    describe 'collecting institution', ->
-      beforeEach ->
-        @artwork.is_for_sale = true
-        @artwork.partner.type = 'Institution'
-        @artwork.collecting_institution = "Marcel Broodthaers: A Retrospective at Museum of Modern Art, New York"
-
-      it 'should drop institution header', ->
-        html = render('partner')(
-          artwork: @artwork
-          sd: {}
-        )
-
-        $ = cheerio.load(html)
-        $('.artwork-meta-data__partner .artwork-header').text().should.equal ""
-
-      it 'should display collecting institution as link text', ->
-        html = render('partner')(
-          artwork: @artwork
-          sd: {}
-        )
-
-        $ = cheerio.load(html)
-        $('.artwork-partner-link').text().should.equal "Marcel Broodthaers: A Retrospective at Museum of Modern Art, New York"
-
-  describe 'partner', ->
-    describe 'gallery - partner', ->
-      before ->
-        @artwork.partner.href = '/gagosian-gallery'
-        @artwork.partner.is_linkable = true
-        @artwork.collecting_institution = null
-
-        @html = render('partner')(
-          artwork: @artwork
-          sd: {}
-        )
-
-      it 'should link to partner\'s page', ->
-        $ = cheerio.load(@html)
-        $('.artwork-partner-link').text().should.equal 'Gagosian Gallery'
-        $('.artwork-partner-link').attr('href').should.equal '/gagosian-gallery'
-
-    describe 'gallery - institution', ->
-      before ->
-        @artwork.partner.type = 'Institutional Seller'
-        @artwork.collecting_institution = null
-        @artwork.partner.name = 'MOMA'
-        @artwork.partner.href = '/moma'
-        @artwork.partner.is_linkable = true
-
-        @html = render('partner')(
-          artwork: @artwork
-          sd: {}
-        )
-
-      it 'should link to partner\'s page', ->
-        $ = cheerio.load(@html)
-        $('.artwork-meta-data__partner').text().should.equal 'MOMA'
-        $('.artwork-partner-link').attr('href').should.equal '/moma'
+      @html = render('inquiry')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+      $ = cheerio.load @html
+      $('.js-offer').text().should.equal 'Make offer'
+      $('.artwork-meta-data-black__contact-button').length.should.equal 1
+      $('.artwork-meta-data-white__contact-button').length.should.equal 0
 
   describe 'auction artwork estimated value', ->
     before ->
@@ -272,6 +171,7 @@ describe 'Artwork metadata templates', ->
       @html = render('index')(
         artwork: @artwork
         sd: {}
+        stitch: components: ArtworkDetails: sinon.stub()
       )
 
     it 'displays estimation', ->

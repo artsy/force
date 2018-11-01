@@ -37,7 +37,6 @@ module.exports =
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_EXPERIMENTAL_STITCH_INJECTION: false
   ENABLE_MEMORY_PROFILING: false
-  ENABLE_NEW_BUY_NOW_FLOW: null
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
@@ -81,7 +80,6 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
-  NEW_ARTIST_PAGE_THRESHOLD: 10 # all users will get the new page.
   NEW_AUTH_MODAL: true
   NODE_ENV: 'development'
   OPENREDIS_URL: null

@@ -1,6 +1,5 @@
 Artwork = require '../../models/artwork'
 Fair = require '../../models/fair'
-PendingOrder = require '../../models/pending_order'
 get = require 'lodash.get'
 metaphysics = require '../../../lib/metaphysics'
 request = require 'superagent'
@@ -55,7 +54,6 @@ helpers = extend [
   {}
   actions: require './components/actions/helpers'
   additional_info: require './components/additional_info/helpers'
-  artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
   images: require './components/images/helpers'
@@ -102,25 +100,6 @@ bootstrap = ->
           .catch next
       else
         res.render 'index', extend data
-    .catch next
-
-@acquire = (req, res, next) ->
-  headers = if req.user?
-    'X-ACCESS-TOKEN': req.user.get 'accessToken'
-  else
-    {}
-
-  order = new PendingOrder
-  order
-    .save {
-      artwork_id: req.body.artwork_id
-      edition_set_id: req.body.edition_set_id
-      session_id: req.session.id
-    }, headers: headers
-
-    .then ->
-      res.redirect "/order/#{order.id}/resume?token=#{order.get 'token'}"
-
     .catch next
 
 @download = (req, res, next) ->

@@ -1,13 +1,12 @@
 { defer, extend, before, isEqual } = require 'underscore'
 Backbone = require 'backbone'
-{ AUCTION, CURRENT_USER, ENABLE_NEW_BUY_NOW_FLOW } = require('sharify').data
+{ AUCTION, CURRENT_USER } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 inquire = require '../../lib/inquire.coffee'
-acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 errorModal = require '../../client/errorModal'
@@ -64,53 +63,41 @@ module.exports = class ArtworkAuctionView extends Backbone.View
 
   acquire: (e) ->
     e.preventDefault()
-
     $target = $(e.currentTarget)
 
     loggedInUser = CurrentUser.orNull()
 
-    # Show the new buy now flow if you have the lab feature enabled
-    if ENABLE_NEW_BUY_NOW_FLOW || loggedInUser?.hasLabFeature('New Buy Now Flow')
-      analytics.track('Click', {
-        subject: 'buy',
-        type: 'button',
-        flow: 'buy now'
-      })
-      if loggedInUser
-        $target.attr 'data-state', 'loading'
-
-        createOrder
-          artworkId: AUCTION.artwork_id
-          quantity: 1
-          user: loggedInUser
-        .then (data) ->
-          { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
-          if order
-            location.assign("/orders/#{order.id}/shipping")
-          else
-            console.error('createOrder', error)
-            $target.attr 'data-state', 'loaded'
-            errorModal.renderBuyNowError(error)
-        .catch (err) ->
-          console.error('createOrder', err)
-          $target.attr 'data-state', 'loaded'
-          errorModal.render()
-      else
-        return mediator.trigger 'open:auth',
-          intent: 'buy now'
-          signupIntent: 'buy now'
-          mode: 'login'
-          trigger: 'click'
-          redirectTo: location.href
-
-
-    # Legacy purchase flow
-    else
+    analytics.track('Click', {
+      subject: 'buy',
+      type: 'button',
+      flow: 'buy now'
+    })
+    if loggedInUser
       $target.attr 'data-state', 'loading'
-      acquire AUCTION.artwork_id
-        .catch ->
-          $target.attr 'data-state', 'error'
-          location.reload()
+
+      createOrder
+        artworkId: AUCTION.artwork_id
+        quantity: 1
+        user: loggedInUser
+      .then (data) ->
+        { order, error } = data?.ecommerceCreateOrderWithArtwork?.orderOrError || {}
+        if order
+          location.assign("/orders/#{order.id}/shipping")
+        else
+          console.error('createOrder', error)
+          $target.attr 'data-state', 'loaded'
+          errorModal.renderBuyNowError(error)
+      .catch (err) ->
+        console.error('createOrder', err)
+        $target.attr 'data-state', 'loaded'
+        errorModal.render()
+    else
+      return mediator.trigger 'open:auth',
+        intent: 'buy now'
+        signupIntent: 'buy now'
+        mode: 'login'
+        trigger: 'click'
+        redirectTo: location.href
 
   redirectTo: (path) ->
     location.assign path

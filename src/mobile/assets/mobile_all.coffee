@@ -21,12 +21,6 @@ hash =
   '^/how-auctions-work[/]?.*': ->
     require('../apps/how_auctions_work/client/index.coffee').init()
 
-  '^/artist/.*/auction-results': ->
-    require('../apps/artist/client/auction_results.coffee').init()
-
-  '^/artist/.*': ->
-    require '../apps/artist/client/index.coffee'
-
   '^/gene/.*': ->
     require('../apps/gene/client.coffee').init()
 

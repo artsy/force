@@ -4,11 +4,7 @@ if artwork.sale_message
       .sale_message= artwork.sale_message
     if artwork.price && artwork.availability !== 'sold'
       .shipping-info
-        //- TODO: remove labFeature check once BNMO goes live to everybody
-        if sd.ENABLE_NEW_BUY_NOW_FLOW || (user && user.hasLabFeature('New Buy Now Flow'))
-          | #{artwork.shippingInfo}
-          if artwork.shippingOrigin
-            br
-            | Ships from #{artwork.shippingOrigin}
-        else
-          | Shipping, tax, and service quoted by seller
+        | #{artwork.shippingInfo}
+        if artwork.shippingOrigin
+          br
+          | Ships from #{artwork.shippingOrigin}

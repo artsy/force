@@ -1,6 +1,6 @@
 CurrentUser = require '../../models/current_user'
 
-module.exports.refresh = (req, res) ->
+module.exports.refresh = (req, res, next) ->
   return res.redirect("/") unless req.user
   req.user.fetch
     error: res.backboneError
@@ -9,6 +9,8 @@ module.exports.refresh = (req, res) ->
         if (error)
           next error
         else
+          # Make sure we modify the session to force a `Set-Cooke` header.
+          req.session.userRefresh = new Date()
           res.json req.user.attributes
 
 module.exports.settings = (req, res) ->

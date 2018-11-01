@@ -22,9 +22,22 @@ describe("Collect/Client", () => {
     })
 
     it("serializes filters into a URL correctly", () => {
+      // location = "https://www.artsy.net/collect"
+      history.replaceState({}, "Collect", "/collect")
+
       expect(onFilterChange(filters)).toEqual(
         "/collect/painting?page=1&sort=-decayed_merch&price_range=50-47250"
       )
+    })
+
+    it("serializes filters for collections based on current href", () => {
+      history.replaceState({}, "Collection", "/collection/kaws-companions")
+
+      expect(onFilterChange(filters)).toEqual(
+        "/collection/kaws-companions?medium=painting&page=1&sort=-decayed_merch&price_range=50-47250"
+      )
+
+      console.log(document.location.href)
     })
   })
 })

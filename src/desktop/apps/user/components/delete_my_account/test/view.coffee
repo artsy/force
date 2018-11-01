@@ -86,11 +86,11 @@ describe 'DeleteMyAccountFormView', ->
         $.ajax
           .onCall 0
           .returns Promise.reject('There was an error')
-
+          .returns Promise.reject(responseJSON: {message: 'Sorry, this account cannot be deleted.'})
       it 'displays the error message', ->
         @view.submit $.Event()
           .then =>
             @view.$('.js-form-errors').text()
               .should.containEql 'There was an error'
             @FlashMessage.args[0][0].message
-              .should.containEql 'An error prevented us from deleting your account through this form.'
+              .should.containEql 'Sorry, this account cannot be deleted.'

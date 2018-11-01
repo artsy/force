@@ -189,27 +189,6 @@ describe 'CurrentUser', ->
       @user.followArtist 'andy-foobar', {}
       _.last(Backbone.sync.args)[2].access_token.should.equal 'xfoobar'
 
-  describe '#addToPendingOrder', ->
-    it 'includes session_id if user does not have access_token', ->
-      # @user.set accessToken: null
-      @user.addToPendingOrder
-        editionSetId: '123'
-        artworkId: 'artwork-id'
-        quantity: 1
-        success: sinon.stub()
-        error: sinon.stub()
-      _.last(Backbone.sync.args)[1].attributes.session_id.should.equal 'cool-session-id'
-
-    it 'does not include session_id if user has access token', ->
-      @user.set accessToken: 'xfoobar'
-      @user.addToPendingOrder
-        editionSetId: '123'
-        artworkId: 'artwork-id'
-        quantity: 1
-        success: sinon.stub()
-        error: sinon.stub()
-      _.isUndefined(_.last(Backbone.sync.args)[1].attributes.session_id).should.be.ok()
-
   describe '#checkRegisteredForAuction', ->
     it 'makes the correct API call, accepts normal options', (done) ->
       @user.checkRegisteredForAuction

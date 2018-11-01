@@ -5,9 +5,9 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 
 CurrentUser = require '../../../../models/current_user'
-Order = require '../../../../models/order'
 Sale = require '../../../../models/sale'
 RegistrationForm = require '../../client/registration_form'
+DateHelpers = require '../../../../components/util/date_helpers.coffee'
 
 describe 'RegistrationForm', ->
 
@@ -28,14 +28,13 @@ describe 'RegistrationForm', ->
   beforeEach (done) ->
     @submitStub = sinon.stub(Backbone, 'sync')
 
-    @order = new Order()
     @sale = new Sale fabricate 'sale'
 
     benv.render resolve(__dirname, '../../templates/registration.jade'), {
       sd: {}
       sale: @sale
-      monthRange: @order.getMonthRange()
-      yearRange: @order.getYearRange()
+      monthRange: DateHelpers.getMonthRange()
+      yearRange: DateHelpers.getYearRange()
       asset: ->
     }, =>
       @view = new RegistrationForm
