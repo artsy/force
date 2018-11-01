@@ -1,6 +1,7 @@
 module.exports = """
   fragment partner_artworks on Artwork {
     partner {
+      type
       name
       href
       counts {
