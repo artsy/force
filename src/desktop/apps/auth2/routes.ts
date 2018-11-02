@@ -62,15 +62,8 @@ export const index = async (req, res, next) => {
   const redirectTo = req.query.redirectTo || "/"
   const signupReferer = req.header("Referer") || req.host
 
-  if (action && objectId && kind) {
-    res.cookie(
-      "afterSignUpAction",
-      JSON.stringify({
-        action,
-        objectId,
-        kind,
-      })
-    )
+  if (action) {
+    res.cookie("afterSignUpAction", JSON.stringify({ action, objectId, kind }))
   }
 
   try {
