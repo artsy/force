@@ -1,13 +1,14 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
-import { routes } from "reaction/Apps/Collect/routes"
+import { routes } from "reaction/Apps/Collections/routes"
 import express from "express"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import adminOnly from "desktop/lib/admin_only"
 
 const app = (module.exports = express())
 
-const index = async (req, res, next) => {
+app.get("/collections", adminOnly, async (req, res, next) => {
   try {
     const { IS_MOBILE } = res.locals.sd
 
@@ -30,7 +31,7 @@ const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        // head: () => <Meta appUrl={APP_URL} headTags={headTags} />,
+        head: () => null,
         body: () => <ServerApp />,
       },
       locals: {
@@ -45,8 +46,6 @@ const index = async (req, res, next) => {
     console.log(error)
     next(error)
   }
-}
-
-app.get("/collections", index)
+})
 
 export default app

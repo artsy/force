@@ -4,15 +4,11 @@ import { routes } from "reaction/Apps/Collections/routes"
 import mediator from "desktop/lib/mediator.coffee"
 import React from "react"
 import ReactDOM from "react-dom"
-import styled from "styled-components"
 
 buildClientApp({ routes, user: sd.CURRENT_USER })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
-      <Container>
-        <ClientApp mediator={mediator} />
-      </Container>,
-
+      <ClientApp mediator={mediator} />,
       document.getElementById("react-root")
     )
   })
@@ -23,10 +19,3 @@ buildClientApp({ routes, user: sd.CURRENT_USER })
 if (module.hot) {
   module.hot.accept()
 }
-
-// FIXME: Move this to Reaction
-const Container = styled.div`
-  width: 100%;
-  max-width: 1192px;
-  margin: auto;
-`
