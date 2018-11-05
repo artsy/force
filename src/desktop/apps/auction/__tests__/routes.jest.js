@@ -85,6 +85,16 @@ describe("routes", () => {
       await routes.index(req, res, next)
       expect(res.send).toBeCalledWith("<html />")
     })
+
+    it("works even with the Metaphysics module throwing an error", async () => {
+      metaphysics
+        .mockReturnValueOnce({ sale: { is_auction: true } })
+        .mockRejectedValue("oops!")
+
+      // FIXME: Need to write more robust output test
+      await routes.index(req, res, next)
+      expect(res.send).toBeCalledWith("<html />")
+    })
   })
 
   describe("#redirectLive", async () => {

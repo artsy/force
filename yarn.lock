@@ -50,10 +50,10 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.9.7":
-  version "5.9.8"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.9.8.tgz#646aa4b0d92b41cd29575f3e56e0d4904330e04c"
-  integrity sha512-5YP0t4B21/nQop83hvEC1NDnvLmZ301GaV/TRsIkHqGC1K90K//tIwbciw1zTx5MuxYAxG3cSTBeGDF2zQPvaw==
+"@artsy/reaction@^5.10.0":
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.10.0.tgz#43538db0281b021e76cfe408f0cf97c3b6588920"
+  integrity sha512-ErX1PhVycgpadGD1QbeJ3noOqT6xONs6UEi70d5l2fuQhIxBV6MOwRN4pmj+/QPR47oHKnsP0kZ43MX/oZWstQ==
   dependencies:
     "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
@@ -87,7 +87,7 @@
     react-responsive-decorator "^0.0.1"
     react-router "^4.2.0"
     react-sizeme "^2.4.4"
-    react-slick "^0.23.1"
+    react-slick "^0.23.2"
     react-spring "^5.7.2"
     react-stripe-elements "^2.0.1"
     react-styled-flexboxgrid "^2.2.0"
@@ -12292,7 +12292,7 @@ react-sizeme@^2.4.4:
     lodash.throttle "^4.1.1"
     shallowequal "^1.0.2"
 
-react-slick@^0.23.1:
+react-slick@^0.23.2:
   version "0.23.2"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.23.2.tgz#8d8bdbc77a6678e8ad36f50c32578c7c0f1c54f6"
   integrity sha512-fM6DXX7+22eOcYE9cgaXUfioZL/Zw6fwS6aPMDBt0kLHl4H4fFNEbp4JsJQdEWMLUNFtUytNcvd9KRml22Tp5w==
