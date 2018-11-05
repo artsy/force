@@ -1,20 +1,26 @@
 import Cookies from "cookies-js"
 import React from "react"
-import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
-import { handleSubmit, setCookies } from "../helpers"
 import { data as sd } from "sharify"
+
+import { handleSubmit, setCookies } from "../helpers"
+import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
+import {
+  ModalOptions,
+  ModalType,
+} from "reaction/Components/Authentication/Types"
+
 const mediator = require("../../../lib/mediator.coffee")
 
 export const ModalContainer: React.SFC<any> = () => {
   let manager: ModalManager | null
 
-  mediator.on("open:auth", options => {
+  mediator.on("open:auth", (options: ModalOptions) => {
     options.destination = options.destination || location.href
 
     setCookies(options)
 
-    if (options && options.mode === "register") {
-      options.mode = "signup"
+    if (options && (options.mode as any) === "register") {
+      options.mode = ModalType.signup
     }
 
     setTimeout(() => {

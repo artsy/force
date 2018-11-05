@@ -43,7 +43,8 @@ module.exports = ->
 
   setupErrorReporting()
   setupHeaderView()
-  syncAuth()
+  # TODO: Look into why this fails.
+  # syncAuth()
   checkForAfterSignUpAction()
   if globalClientSetup
     globalClientSetup()
