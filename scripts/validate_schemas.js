@@ -13,6 +13,13 @@ const {
 
 const fetch = require("isomorphic-fetch")
 
+const reactionSchema = readFileSync(
+  "node_modules/@artsy/reaction/data/schema.graphql",
+  "utf8"
+)
+
+const metaphysicsProd = "https://metaphysics-production.artsy.net/"
+
 const downloadSchema = async endpoint => {
   const postBody = {
     query: introspectionQuery,
@@ -32,16 +39,10 @@ const downloadSchema = async endpoint => {
   return printSchema(buildClientSchema(data), { commentDescriptions: true })
 }
 
-const reactionSchema = readFileSync(
-  "node_modules/@artsy/reaction/data/schema.graphql",
-  "utf8"
-)
-
-const metaphysicsProd = "https://metaphysics-production.artsy.net/"
-downloadSchema(metaphysicsProd).then(metaphyiscSchema => {
-  const breakages = findBreakingChanges(
+export const getBreakingChanges = async () => {
+  const metaphyiscSchema = await downloadSchema(metaphysicsProd)
+  return findBreakingChanges(
     buildSchema(metaphyiscSchema),
     buildSchema(reactionSchema)
   )
-  console.log(breakages)
-})
+}
