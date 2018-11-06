@@ -2,6 +2,7 @@
 Backbone = require 'backbone'
 PaymentMethodsView = require '../../components/payment_methods/view.coffee'
 template = -> require('./index.jade') arguments...
+sd = require('sharify').data
 
 module.exports = class PaymentsView extends Backbone.View
   subViews: []
@@ -14,17 +15,10 @@ module.exports = class PaymentsView extends Backbone.View
     paymentMethodsView = new PaymentMethodsView collection: @user.related().creditCards
     @$('.js-settings-section__main--payment-methods')
       .html paymentMethodsView.render().$el
-    paymentMethodsView.fetch()
-
-    @subViews = [
-      paymentMethodsView
-    ]
 
   render: ->
     @$el.html template
       user: @user
+      stitch: sd.stitch
     @postRender()
     this
-
-  remove: ->
-    invoke @subViews, 'remove'
