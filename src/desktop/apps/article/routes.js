@@ -127,12 +127,6 @@ export async function index(req, res, next) {
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
-    let onDailyEditorial = false
-    // Only need to check subscription on mobile
-    if (isMobile && CURRENT_USER) {
-      onDailyEditorial = await subscribedToEditorial(CURRENT_USER.email)
-    }
-
     const showTooltips = !isMobile && !isTablet
     const renderTime = getCurrentUnixTimestamp()
 
@@ -159,7 +153,6 @@ export async function index(req, res, next) {
         isLoggedIn,
         isMobile,
         jsonLD,
-        onDailyEditorial,
         renderTime,
         showTooltips,
         superArticle,
