@@ -21,13 +21,14 @@
     styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
-"@artsy/palette@^2.19.8", "@artsy/palette@^2.19.9":
-  version "2.19.9"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.9.tgz#c04167e93a7fdbf72a80ef93f4e3ad75b8db6d09"
-  integrity sha512-YLtm9R8Hf7/C2ZSS046NvQeV0BnWMbC61rPX5LlQ6HG+2xTGQ9SE8GACgVp6kRyNJU+7JDDuIADmW7YU2t9Zpw==
+"@artsy/palette@^2.19.1":
+  version "2.19.8"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.8.tgz#2dd78ff3f1ef51aed16a7d33035917c83ecd7ce4"
+  integrity sha512-5YyVWtOfwTr3AUEclqSsjhTYyFFUYcHhjCc0qQpI2AlEKr5WZsoWzs3aOejmHssZ4DIoPezXheCx1HipKpTTzA==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
+    styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
 "@artsy/passport@^1.1.0":
@@ -49,21 +50,12 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.5.tgz#9dc2625dcb64b3e1820b93cf66920c8b31d5d348"
-  integrity sha512-BJLM0G8YhxtaurVb6GpOn30hXF/ytQkvl6+VFRCS7h0N6K7u3mdyJE0uAlsZBU5hOeE4lFY976ZxH28BuW80+g==
+"@artsy/reaction@^5.10.0":
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.10.0.tgz#43538db0281b021e76cfe408f0cf97c3b6588920"
+  integrity sha512-ErX1PhVycgpadGD1QbeJ3noOqT6xONs6UEi70d5l2fuQhIxBV6MOwRN4pmj+/QPR47oHKnsP0kZ43MX/oZWstQ==
   dependencies:
-    "@artsy/palette" "^2.19.8"
-    react "16.3.2"
-
-"@artsy/reaction@^5.10.2":
-  version "5.10.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.10.3.tgz#5ef6c77c2fe5548c9fd4a845362903db6528fb2d"
-  integrity sha512-+5Aw2CK+xCIJ/1P2VysnJEFz9yuiZf7MxE2QSUegMBQGTSxL/2A4YGDJcwzk5wiUbNLlpy+XHLkvszcJI7DOBQ==
-  dependencies:
-    "@artsy/palette" "^2.19.9"
-    "@artsy/react-responsive-media" "^1.0.5"
+    "@artsy/palette" "^2.19.1"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -103,7 +95,7 @@
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
-    relay-mock-network-layer "^2.0.0"
+    relay-mock-network-layer "^1.3.0"
     relay-runtime "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
     serialize-javascript "^1.5.0"
     sharify "^0.1.6"
@@ -992,6 +984,11 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/graphql@^0.9.0":
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.9.4.tgz#cdeb6bcbef9b6c584374b81aa7f48ecf3da404fa"
+  integrity sha512-ob2dps4itT/Le5DbxjssBXtBnloDIRUbkgtAvaB42mJ8pVIWMRuURD9WjnhaEGZ4Ql/EryXMQWeU8Y0EU73QLw==
+
 "@types/isomorphic-fetch@^0.0.34":
   version "0.0.34"
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
@@ -1565,7 +1562,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -1588,21 +1584,6 @@ anymatch@^2.0.0:
   dependencies:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
-
-apollo-link@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.3.tgz#9bd8d5fe1d88d31dc91dae9ecc22474d451fb70d"
-  integrity sha512-iL9yS2OfxYhigme5bpTbmRyC+Htt6tyo2fRMHT3K1XRL/C5IQDDz37OjpPy4ndx7WInSvfSZaaOTKFja9VWqSw==
-  dependencies:
-    apollo-utilities "^1.0.0"
-    zen-observable-ts "^0.8.10"
-
-apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.25.tgz#899b00f5f990fb451675adf84cb3de82eb6372ea"
-  integrity sha512-AXvqkhni3Ir1ffm4SA1QzXn8k8I5BBl4PVKEyak734i4jFdp+xgfUyi2VCqF64TJlFTA/B73TRDUvO2D+tKtZg==
-  dependencies:
-    fast-json-stable-stringify "^2.0.0"
 
 app-root-path@^2.0.0:
   version "2.0.1"
@@ -6856,16 +6837,15 @@ graphql-fetch-schema@^0.8.0:
     graphql "^0.13.1"
     node-fetch "^2.0.0"
 
-graphql-tools@^4.0.2:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-4.0.3.tgz#23b5cb52c519212b1b2e4630a361464396ad264b"
-  integrity sha512-NNZM0WSnVLX1zIMUxu7SjzLZ4prCp15N5L2T2ro02OVyydZ0fuCnZYRnx/yK9xjGWbZA0Q58yEO//Bv/psJWrg==
+graphql-tools@^1.2.1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-1.2.3.tgz#079bf4d157e46c0a0bae9fec117e0eea6e03ba2c"
+  integrity sha512-3inNK3rmk32G4hGWbqBuVNxusF+Mcuckg+3aD4hHaMxO0LrSgteWoTD8pTD9GUnmoSRG4AbYHZ0jibGD5MTlrQ==
   dependencies:
-    apollo-link "^1.2.3"
-    apollo-utilities "^1.0.1"
     deprecated-decorator "^0.1.6"
-    iterall "^1.1.3"
-    uuid "^3.1.0"
+    uuid "^3.0.1"
+  optionalDependencies:
+    "@types/graphql" "^0.9.0"
 
 graphql@^0.13.0, graphql@^0.13.1, graphql@^0.13.2:
   version "0.13.2"
@@ -8193,7 +8173,7 @@ istanbul-reports@^1.5.1:
   dependencies:
     handlebars "^4.0.3"
 
-iterall@^1.1.3, iterall@^1.2.1:
+iterall@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
   integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
@@ -12410,16 +12390,6 @@ react-waypoint@^8.0.0:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
 
-react@16.3.2:
-  version "16.3.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
-  integrity sha512-o5GPdkhciQ3cEph6qgvYB7LTOHw/GB0qRI6ZFNugj49qJCFfgHwVNjZ5u+b7nif4vOeMIOuYj3CeYe2IBD74lg==
-  dependencies:
-    fbjs "^0.8.16"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.0"
-
 react@^16.5.0:
   version "16.5.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.0.tgz#f2c1e754bf9751a549d9c6d9aca41905beb56575"
@@ -12875,12 +12845,12 @@ relay-compiler-language-typescript@^0.9.0:
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-relay-mock-network-layer@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/relay-mock-network-layer/-/relay-mock-network-layer-2.0.0.tgz#70cad7c11f76822980196486a42258f68e5c7910"
-  integrity sha512-yL7caWhIoj4KgdvSo8aYA0LJfK/CPSd0plzrijDigR81vyvvqr3eGacOc+Ht7ZXPuv7zJGruOn/HKwaP3MhL1g==
+relay-mock-network-layer@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/relay-mock-network-layer/-/relay-mock-network-layer-1.3.0.tgz#d0be1db25f6df239fd80e41fd4a2a724d2fa47d6"
+  integrity sha512-7IPu77pJxJ6YWSG+n+GIHE4iT1Yo0L7PPFZCmqwn3rK0vRwpkWuBBOQqNTwWGFDDorB5UAu6rVl7TUcGbzlDOA==
   dependencies:
-    graphql-tools "^4.0.2"
+    graphql-tools "^1.2.1"
 
 relay-runtime@1.5.0-artsy.5, "relay-runtime@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz", "relay-runtime@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
@@ -16120,15 +16090,3 @@ yup@^0.24.1:
     synchronous-promise "^1.0.18"
     toposort "^0.2.10"
     type-name "^2.0.1"
-
-zen-observable-ts@^0.8.10:
-  version "0.8.10"
-  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.10.tgz#18e2ce1c89fe026e9621fd83cc05168228fce829"
-  integrity sha512-5vqMtRggU/2GhePC9OU4sYEWOdvmayp2k3gjPf4F0mXwB3CSbbNznfDUvDJx9O2ZTa1EIXdJhPchQveFKwNXPQ==
-  dependencies:
-    zen-observable "^0.8.0"
-
-zen-observable@^0.8.0:
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.11.tgz#d3415885eeeb42ee5abb9821c95bb518fcd6d199"
-  integrity sha512-N3xXQVr4L61rZvGMpWe8XoCGX8vhU35dPyQ4fm5CY/KDlG0F75un14hjbckPXTDuKUY6V0dqR2giT6xN8Y4GEQ==
