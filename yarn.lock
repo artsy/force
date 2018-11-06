@@ -57,10 +57,10 @@
     "@artsy/palette" "^2.19.8"
     react "16.3.2"
 
-"@artsy/reaction@^5.10.2":
-  version "5.10.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.10.3.tgz#5ef6c77c2fe5548c9fd4a845362903db6528fb2d"
-  integrity sha512-+5Aw2CK+xCIJ/1P2VysnJEFz9yuiZf7MxE2QSUegMBQGTSxL/2A4YGDJcwzk5wiUbNLlpy+XHLkvszcJI7DOBQ==
+"@artsy/reaction@^5.11.0":
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.11.0.tgz#4cdd0472dc590c221599301544dc4c95d8510fc4"
+  integrity sha512-vq7NmntbzDCMr/glG//cRzXQUc5L/w/yR6zfCOCwi65kyGQB2RNmBTboV2amRjMWI+ixxPhnRsrkTvd3J5TWyQ==
   dependencies:
     "@artsy/palette" "^2.19.9"
     "@artsy/react-responsive-media" "^1.0.5"
