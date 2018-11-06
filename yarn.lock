@@ -50,12 +50,13 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.10.0":
-  version "5.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.10.0.tgz#43538db0281b021e76cfe408f0cf97c3b6588920"
-  integrity sha512-ErX1PhVycgpadGD1QbeJ3noOqT6xONs6UEi70d5l2fuQhIxBV6MOwRN4pmj+/QPR47oHKnsP0kZ43MX/oZWstQ==
+"@artsy/reaction@^5.11.0":
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.11.0.tgz#4cdd0472dc590c221599301544dc4c95d8510fc4"
+  integrity sha512-vq7NmntbzDCMr/glG//cRzXQUc5L/w/yR6zfCOCwi65kyGQB2RNmBTboV2amRjMWI+ixxPhnRsrkTvd3J5TWyQ==
   dependencies:
-    "@artsy/palette" "^2.19.1"
+    "@artsy/palette" "^2.19.9"
+    "@artsy/react-responsive-media" "^1.0.5"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -95,7 +96,7 @@
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
-    relay-mock-network-layer "^1.3.0"
+    relay-mock-network-layer "^2.0.0"
     relay-runtime "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
     serialize-javascript "^1.5.0"
     sharify "^0.1.6"
@@ -1562,6 +1563,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -12169,7 +12171,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
