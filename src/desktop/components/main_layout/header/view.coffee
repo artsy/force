@@ -17,6 +17,21 @@ MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
 
+operations =
+  save: (currentUser, objectId, kind) ->
+    currentUser.initializeDefaultArtworkCollection()
+    currentUser.defaultArtworkCollection().saveArtwork objectId
+
+  follow: (currentUser, objectId, kind) ->
+    kind? and currentUser.follow(objectId, kind)
+
+  editorialSignup: (currentUser, objectId, kind) ->
+    fetch "/signup/editorial",
+      method: "POST"
+      body: JSON.stringify email: currentUser.get("email")
+      headers: new Headers 'Content-Type': 'application/json'
+      credentials: 'same-origin'
+
 module.exports = class HeaderView extends Backbone.View
   events:
     'click .mlh-login': 'login'
@@ -154,12 +169,9 @@ module.exports = class HeaderView extends Backbone.View
     if afterSignUpAction
       return unless @currentUser
       { action, objectId, kind } = JSON.parse(afterSignUpAction)
-      if action is 'save'
-        @currentUser.initializeDefaultArtworkCollection()
-        @currentUser.defaultArtworkCollection().saveArtwork objectId
-      else if action is 'follow' and kind?
-        following = new Following [], kind: kind
-        following.follow objectId
+
+      ops = operations[action]
+      ops and ops(@currentUser, objectId, kind)
 
       Cookies.expire 'afterSignUpAction'
 
