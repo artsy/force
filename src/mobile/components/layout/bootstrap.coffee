@@ -92,17 +92,29 @@ setupHeaderView = ->
   new HeaderView
     el: $('#main-header')
 
+operations =
+  save: (currentUser, objectId) ->
+    currentUser.initializeDefaultArtworkCollection()
+    currentUser.defaultArtworkCollection().saveArtwork objectId
+
+  follow: (currentUser, objectId, kind) ->
+    kind? and currentUser.follow(objectId, kind)
+
+  editorialSignup: (currentUser) ->
+    fetch "/signup/editorial",
+      method: "POST"
+      body: JSON.stringify email: currentUser.get("email")
+      headers: new Headers 'Content-Type': 'application/json'
+      credentials: 'same-origin'
+
 checkForAfterSignUpAction = ->
   afterSignUpAction = Cookies.get 'afterSignUpAction'
   @currentUser = CurrentUser.orNull()
   if afterSignUpAction
     return unless @currentUser
     { action, objectId, kind } = JSON.parse(afterSignUpAction)
-    
-    if action is 'save'
-      @currentUser.initializeDefaultArtworkCollection()
-      @currentUser.defaultArtworkCollection().saveArtwork objectId
-    else if action is 'follow' and kind?
-      @currentUser.follow(objectId, kind)
+
+    ops = operations[action]
+    ops and ops(@currentUser, objectId, kind)
 
     Cookies.expire 'afterSignUpAction'
