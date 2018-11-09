@@ -28,6 +28,7 @@ export const articleBody = `
     partner_light_logo
     partner_condensed_logo
     partner_logo_link
+    pixel_tracking_code
   }
   seriesArticle {
     title
@@ -41,6 +42,7 @@ export const articleBody = `
       partner_light_logo
       partner_condensed_logo
       partner_logo_link
+      pixel_tracking_code
     }
   }
   super_article {
