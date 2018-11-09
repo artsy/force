@@ -49,18 +49,18 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.10.tgz#6ecd72132bcd28203226c7e10caf6e1ad0300927"
-  integrity sha512-7jcpBRYm+wPQR3oINpFI85mVZERIHnAUu/WmLRDfFX80/8BgKcv30LVxXmORinD13HT3VBwIlzB0rOamhbvpZg==
+"@artsy/react-responsive-media@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.11.tgz#4fce7c078b77ac048f9d951186120d50fb61bdfa"
+  integrity sha512-xt2xhbEI1t/ga7rBR3cyqbFJVYTadZr28xUUYi+MlvtoZaoZDC/2JOaXbW+sNzPmxO6Rk7WOBFLwhKh4TKV4Pg==
 
-"@artsy/reaction@^6.0.5":
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.0.5.tgz#b5989bc61d8052ac88665fb88697791ac18e2701"
-  integrity sha512-fR0JriDVPNpgUnckdM9omlSUjIU7Oo9Uq7qfWFdMYzXxSoWyu2ZFvirkD2CLVA0Y/qpymHaR4jBVBS7wPSK0Ig==
+"@artsy/reaction@^6.0.6":
+  version "6.0.6"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.0.6.tgz#a3c0dfd5e7a106801f924e468e3542bbc3f298c8"
+  integrity sha512-LiXGFqAx9JuhBv983zEEBEll2APaa+jLep2wEthTFeGgYYOGQVbaVYAK78wl/sewyG+JwlndvwD9XvbCz9pZ9A==
   dependencies:
     "@artsy/palette" "^2.19.9"
-    "@artsy/react-responsive-media" "^1.0.10"
+    "@artsy/react-responsive-media" "^1.0.11"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
@@ -12229,7 +12229,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
