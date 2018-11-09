@@ -54,10 +54,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.11.tgz#4fce7c078b77ac048f9d951186120d50fb61bdfa"
   integrity sha512-xt2xhbEI1t/ga7rBR3cyqbFJVYTadZr28xUUYi+MlvtoZaoZDC/2JOaXbW+sNzPmxO6Rk7WOBFLwhKh4TKV4Pg==
 
-"@artsy/reaction@^6.0.6":
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.0.6.tgz#a3c0dfd5e7a106801f924e468e3542bbc3f298c8"
-  integrity sha512-LiXGFqAx9JuhBv983zEEBEll2APaa+jLep2wEthTFeGgYYOGQVbaVYAK78wl/sewyG+JwlndvwD9XvbCz9pZ9A==
+"@artsy/reaction@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.0.tgz#dcce10a63285fa4c62fe4884acb255e6c2c2430d"
+  integrity sha512-Yi9MH7umLperWoUv1JmLKjCQgKnt0DI19sIgHIN4vgWfCCrr1PVz31imVvprzSqi+L74Ek2s8zUwVgitGl0yow==
   dependencies:
     "@artsy/palette" "^2.19.9"
     "@artsy/react-responsive-media" "^1.0.11"
@@ -3427,6 +3427,11 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
+  dependencies:
+    arr-union "^3.1.0"
+    define-property "^0.2.5"
+    isobject "^3.0.0"
+    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"
