@@ -1,4 +1,5 @@
 include ../../templates/mixins
 
-+settings-section('payment-methods', 'Payment Methods')
-  include ../../components/payment_methods/index
++settings-section('payment-methods', '')
+  #stitch-credit-cards
+    != stitch.components.UserSettingsPayments({ mountId: 'stitch-credit-cards' })

@@ -21,14 +21,13 @@
     styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
-"@artsy/palette@^2.19.1":
-  version "2.19.8"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.8.tgz#2dd78ff3f1ef51aed16a7d33035917c83ecd7ce4"
-  integrity sha512-5YyVWtOfwTr3AUEclqSsjhTYyFFUYcHhjCc0qQpI2AlEKr5WZsoWzs3aOejmHssZ4DIoPezXheCx1HipKpTTzA==
+"@artsy/palette@^2.19.9":
+  version "2.19.9"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.9.tgz#c04167e93a7fdbf72a80ef93f4e3ad75b8db6d09"
+  integrity sha512-YLtm9R8Hf7/C2ZSS046NvQeV0BnWMbC61rPX5LlQ6HG+2xTGQ9SE8GACgVp6kRyNJU+7JDDuIADmW7YU2t9Zpw==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
-    styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
 "@artsy/passport@^1.1.0":
@@ -50,13 +49,19 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/reaction@^5.11.0":
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-5.11.0.tgz#4cdd0472dc590c221599301544dc4c95d8510fc4"
-  integrity sha512-vq7NmntbzDCMr/glG//cRzXQUc5L/w/yR6zfCOCwi65kyGQB2RNmBTboV2amRjMWI+ixxPhnRsrkTvd3J5TWyQ==
+"@artsy/react-responsive-media@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
+  integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
+
+"@artsy/reaction@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.1.tgz#51372bee947dea62dc2768ad5d099abeb5de5f96"
+  integrity sha512-XumMCQPrlqaB5ugHasLp9agU3+/ychKgwshXT7+5GH/+S7l7OX4SngXVlC+c15YAYgUa4pxDaiaJGcoh3VviKg==
   dependencies:
     "@artsy/palette" "^2.19.9"
-    "@artsy/react-responsive-media" "^1.0.5"
+    "@artsy/react-responsive-media" "^1.0.12"
+    "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
     formik "^0.11.11"
@@ -931,6 +936,15 @@
     component-type "^1.2.1"
     join-component "^1.1.0"
 
+"@sentry/browser@^4.2.3":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-4.3.0.tgz#07660b2b17b12a6d8953be20eb8efaa8683fafb9"
+  integrity sha512-Np3T12mpvuih9IouwD44BgDdiQWjdEo2eeYwrh6ZzVLn7UKK2eV1VUsSiYADTN2HQB7TbtAnO0IFI5MZl7CccA==
+  dependencies:
+    "@sentry/core" "4.3.0"
+    "@sentry/types" "4.3.0"
+    "@sentry/utils" "4.3.0"
+
 "@sentry/cli@^1.30.4":
   version "1.30.4"
   resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.30.4.tgz#4d2f4f1db319f2950262b8e75b6d6892fe1779ca"
@@ -940,6 +954,44 @@
     node-fetch "^1.7.3"
     progress "2.0.0"
     proxy-from-env "^1.0.0"
+
+"@sentry/core@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.3.0.tgz#f51f86b380637b5f2348cd35fdb96c224023c103"
+  integrity sha512-VEMRshyF2J2IJkGTF9fnAd2/a/wR+42qrKwCLVeNxHzZm53VAnSfJd8ZA5jnN5RiydQVGDOylqvdfij/LmmsuQ==
+  dependencies:
+    "@sentry/hub" "4.3.0"
+    "@sentry/minimal" "4.3.0"
+    "@sentry/types" "4.3.0"
+    "@sentry/utils" "4.3.0"
+
+"@sentry/hub@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.3.0.tgz#ed7731583d81664057de73e3221a393116362b04"
+  integrity sha512-9nh4Hcx2tZQVHr5JGy1XZd1RgwC2C+1tNFXu06rcxYB20nhKOKtOAH9STrv64vpnK+70AC4miRdlCgqHOKLdxA==
+  dependencies:
+    "@sentry/types" "4.3.0"
+    "@sentry/utils" "4.3.0"
+
+"@sentry/minimal@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-4.3.0.tgz#d83826e713d54c95d4986187d223ef1fabc4e1ed"
+  integrity sha512-yRN+L3O9mlcjqpWiivqJsm3Cy/YNh0ejQKpxxxPD186tl5nzEkAqRq5jCYelYIAdH1eBvg87H5VNNFr/shHxaQ==
+  dependencies:
+    "@sentry/hub" "4.3.0"
+    "@sentry/types" "4.3.0"
+
+"@sentry/types@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.3.0.tgz#a5cec425764a72a0817329ac212c5ce085ecdd05"
+  integrity sha512-oBAusA+/JFJJlNfHgikyBPTyvmCr/YxZsLWL2FNOBNJkMClW+m7tQ63x/ZAqRSEd8lnJQxJSU7LfAYDH6LcChQ==
+
+"@sentry/utils@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-4.3.0.tgz#4d278b55deb6175ada2a78b56716aa2df97cd389"
+  integrity sha512-cEGygJbyc1SUGxbanvk3+JYadiywJupdEkp6L8rRfxur/nNQZq1Jd7tkdm4I2rz5YFVg+yayadAquvr4DIu9nA==
+  dependencies:
+    "@sentry/types" "4.3.0"
 
 "@types/body-parser@*":
   version "1.16.8"
@@ -984,11 +1036,6 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
-
-"@types/graphql@^0.9.0":
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.9.4.tgz#cdeb6bcbef9b6c584374b81aa7f48ecf3da404fa"
-  integrity sha512-ob2dps4itT/Le5DbxjssBXtBnloDIRUbkgtAvaB42mJ8pVIWMRuURD9WjnhaEGZ4Ql/EryXMQWeU8Y0EU73QLw==
 
 "@types/isomorphic-fetch@^0.0.34":
   version "0.0.34"
@@ -1586,6 +1633,21 @@ anymatch@^2.0.0:
   dependencies:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
+
+apollo-link@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.3.tgz#9bd8d5fe1d88d31dc91dae9ecc22474d451fb70d"
+  integrity sha512-iL9yS2OfxYhigme5bpTbmRyC+Htt6tyo2fRMHT3K1XRL/C5IQDDz37OjpPy4ndx7WInSvfSZaaOTKFja9VWqSw==
+  dependencies:
+    apollo-utilities "^1.0.0"
+    zen-observable-ts "^0.8.10"
+
+apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
+  version "1.0.25"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.25.tgz#899b00f5f990fb451675adf84cb3de82eb6372ea"
+  integrity sha512-AXvqkhni3Ir1ffm4SA1QzXn8k8I5BBl4PVKEyak734i4jFdp+xgfUyi2VCqF64TJlFTA/B73TRDUvO2D+tKtZg==
+  dependencies:
+    fast-json-stable-stringify "^2.0.0"
 
 app-root-path@^2.0.0:
   version "2.0.1"
@@ -6839,15 +6901,16 @@ graphql-fetch-schema@^0.8.0:
     graphql "^0.13.1"
     node-fetch "^2.0.0"
 
-graphql-tools@^1.2.1:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-1.2.3.tgz#079bf4d157e46c0a0bae9fec117e0eea6e03ba2c"
-  integrity sha512-3inNK3rmk32G4hGWbqBuVNxusF+Mcuckg+3aD4hHaMxO0LrSgteWoTD8pTD9GUnmoSRG4AbYHZ0jibGD5MTlrQ==
+graphql-tools@^4.0.2:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-4.0.3.tgz#23b5cb52c519212b1b2e4630a361464396ad264b"
+  integrity sha512-NNZM0WSnVLX1zIMUxu7SjzLZ4prCp15N5L2T2ro02OVyydZ0fuCnZYRnx/yK9xjGWbZA0Q58yEO//Bv/psJWrg==
   dependencies:
+    apollo-link "^1.2.3"
+    apollo-utilities "^1.0.1"
     deprecated-decorator "^0.1.6"
-    uuid "^3.0.1"
-  optionalDependencies:
-    "@types/graphql" "^0.9.0"
+    iterall "^1.1.3"
+    uuid "^3.1.0"
 
 graphql@^0.13.0, graphql@^0.13.1, graphql@^0.13.2:
   version "0.13.2"
@@ -8175,7 +8238,7 @@ istanbul-reports@^1.5.1:
   dependencies:
     handlebars "^4.0.3"
 
-iterall@^1.2.1:
+iterall@^1.1.3, iterall@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
   integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
@@ -12847,12 +12910,12 @@ relay-compiler-language-typescript@^0.9.0:
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-relay-mock-network-layer@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/relay-mock-network-layer/-/relay-mock-network-layer-1.3.0.tgz#d0be1db25f6df239fd80e41fd4a2a724d2fa47d6"
-  integrity sha512-7IPu77pJxJ6YWSG+n+GIHE4iT1Yo0L7PPFZCmqwn3rK0vRwpkWuBBOQqNTwWGFDDorB5UAu6rVl7TUcGbzlDOA==
+relay-mock-network-layer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/relay-mock-network-layer/-/relay-mock-network-layer-2.0.0.tgz#70cad7c11f76822980196486a42258f68e5c7910"
+  integrity sha512-yL7caWhIoj4KgdvSo8aYA0LJfK/CPSd0plzrijDigR81vyvvqr3eGacOc+Ht7ZXPuv7zJGruOn/HKwaP3MhL1g==
   dependencies:
-    graphql-tools "^1.2.1"
+    graphql-tools "^4.0.2"
 
 relay-runtime@1.5.0-artsy.5, "relay-runtime@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz", "relay-runtime@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
@@ -16092,3 +16155,15 @@ yup@^0.24.1:
     synchronous-promise "^1.0.18"
     toposort "^0.2.10"
     type-name "^2.0.1"
+
+zen-observable-ts@^0.8.10:
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.10.tgz#18e2ce1c89fe026e9621fd83cc05168228fce829"
+  integrity sha512-5vqMtRggU/2GhePC9OU4sYEWOdvmayp2k3gjPf4F0mXwB3CSbbNznfDUvDJx9O2ZTa1EIXdJhPchQveFKwNXPQ==
+  dependencies:
+    zen-observable "^0.8.0"
+
+zen-observable@^0.8.0:
+  version "0.8.11"
+  resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.11.tgz#d3415885eeeb42ee5abb9821c95bb518fcd6d199"
+  integrity sha512-N3xXQVr4L61rZvGMpWe8XoCGX8vhU35dPyQ4fm5CY/KDlG0F75un14hjbckPXTDuKUY6V0dqR2giT6xN8Y4GEQ==
