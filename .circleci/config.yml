@@ -2,14 +2,14 @@ version: 2.0
 jobs:
   acceptance:
     docker:
-      - image: circleci/node:8-stretch-browsers
+      - image: circleci/node:10.13-stretch-browsers
     parallelism: 1
     steps:
       - add_ssh_keys
       - checkout
       - run:
           name: Acceptance Tests
-          command: 'yarn install && yarn acceptance src/test/acceptance/*.js'
+          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
   test:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -28,8 +28,8 @@ jobs:
       - image: artsy/hokusai:0.4.5
     steps:
       - run:
-          name: 'OK'
-          command: 'echo All Tests Pass!'
+          name: "OK"
+          command: "echo All Tests Pass!"
   push:
     docker:
       - image: artsy/hokusai:0.4.5
