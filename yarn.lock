@@ -49,18 +49,18 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.7.tgz#3c0c9748c18542b47fb65c4a8f6e9a492d1c63d1"
-  integrity sha512-YD9zMDwFjdf/1u7Sg68PlJtRl26YnaOKGaGUIuO2KY8WIO3tQAa+WhAp1X5cE4nJzIuYqTekxynjmX+qOmaLug==
+"@artsy/react-responsive-media@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
+  integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
 
-"@artsy/reaction@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.0.0.tgz#8f4a5f2212d8d1f2ca362e30bff1d384533938ea"
-  integrity sha512-V3n9zOKhSAD0V60jwG4Cl+IzRypD1BP7yQxTvdt6w7EJyv9kdwqwsdJRigqcrYAwq1+HCfFgv+4j9ZMOtUHKOw==
+"@artsy/reaction@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.1.tgz#51372bee947dea62dc2768ad5d099abeb5de5f96"
+  integrity sha512-XumMCQPrlqaB5ugHasLp9agU3+/ychKgwshXT7+5GH/+S7l7OX4SngXVlC+c15YAYgUa4pxDaiaJGcoh3VviKg==
   dependencies:
     "@artsy/palette" "^2.19.9"
-    "@artsy/react-responsive-media" "^1.0.7"
+    "@artsy/react-responsive-media" "^1.0.12"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"

@@ -4,7 +4,8 @@
   "javascript.validate.enable": true,
   "search.exclude": {
     "**/node_modules": true,
-    "**/graphql": true
+    "**/graphql": true,
+    ".cache/**": true
   },
   "files.exclude": {
     "**/.git": true
