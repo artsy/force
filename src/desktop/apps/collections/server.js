@@ -2,7 +2,6 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collections/routes"
 import express from "express"
-import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import adminOnly from "desktop/lib/admin_only"
 
@@ -32,7 +31,7 @@ app.get("/collections", adminOnly, async (req, res, next) => {
       },
       blocks: {
         head: () => null,
-        body: () => <ServerApp />,
+        body: ServerApp,
       },
       locals: {
         ...res.locals,
