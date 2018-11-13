@@ -1,5 +1,6 @@
 - var auction = artwork.sale
 - var sale_artwork = artwork.sale_artwork
+- var labFeatures = sd && sd.CURRENT_USER && sd.CURRENT_USER.lab_features
 
 if auction.is_auction_promo
   //- Unimplemented
@@ -10,6 +11,8 @@ else if auction.is_preview || auction.is_open || auction.is_live_open
   include ./live
   include ./bid
   include ./buy_now
+  if labFeatures && labFeatures.indexOf("Pageviews in Sidebar") > -1
+    != stitch.components.ArtworkSidebarPageviews({artworkID: artwork.id})
   include ./buyers_premium
   include ./help
 
