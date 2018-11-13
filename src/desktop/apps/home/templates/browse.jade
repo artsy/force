@@ -6,5 +6,5 @@
   .home-browse-module__menu.grid-4-up
     if browseCategories
       each category, id in browseCategories
-        a.home-browse-module__menu__option.grid-item(href="/collect?medium=#{id}")= category
+        a.home-browse-module__menu__option.grid-item(href="/collect/#{id}")= category
       a.home-browse-module__menu__option.grid-item(href="/collect") All Mediums
