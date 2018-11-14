@@ -21,14 +21,15 @@
     styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
-"@artsy/palette@^2.19.9":
-  version "2.19.9"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.9.tgz#c04167e93a7fdbf72a80ef93f4e3ad75b8db6d09"
-  integrity sha512-YLtm9R8Hf7/C2ZSS046NvQeV0BnWMbC61rPX5LlQ6HG+2xTGQ9SE8GACgVp6kRyNJU+7JDDuIADmW7YU2t9Zpw==
+"@artsy/palette@^2.21.0":
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.21.0.tgz#3187ad4c277e444ca8dbaf7b1c47cc3e8ca3ebb0"
+  integrity sha512-me1hTzFkoJxQUuy8rmI0zzRArhbqSOfjb8jgRQTrTaZ2D52vJYWJ8T++obhplCzGFq1KxYwFZWEA/rW8iwHUBQ==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
-    styled-system "^3.0.3"
+    react-spring "^5.7.2"
+    styled-system "^3.1.11"
 
 "@artsy/passport@^1.1.0":
   version "1.1.0"
@@ -54,12 +55,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
   integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
 
-"@artsy/reaction@^6.1.3":
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.3.tgz#26a1f49740ad818e816fd83f7d147c72b9f918f4"
-  integrity sha512-3SsHdn7wZG/Sjfm5elID25siwj/DUfM42+NVLmZ/4knBpWxsKWbWciu90ybQFFAVqRBgsAvbkSEZiozZZIGaiQ==
+"@artsy/reaction@^6.1.5":
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.5.tgz#2cacb8b892f6a8c6f597df42ea6c3a46f1a4c27b"
+  integrity sha512-NARVcbVeCzVAdsdvwHGzSCIBZzWfdG2yu6BGdPOkHjg/qeUlN9iVggI9qV0GckYvS/C7pHRSKU1vziaTQf9xTw==
   dependencies:
-    "@artsy/palette" "^2.19.9"
+    "@artsy/palette" "^2.21.0"
     "@artsy/react-responsive-media" "^1.0.12"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
@@ -3427,11 +3428,6 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
-  dependencies:
-    arr-union "^3.1.0"
-    define-property "^0.2.5"
-    isobject "^3.0.0"
-    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"
