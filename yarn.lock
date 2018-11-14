@@ -63,7 +63,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
   integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
 
-"@artsy/reaction@^6.1.3":
+"@artsy/reaction@^6.1.7":
   version "6.1.7"
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.7.tgz#cb468469e915d18b0e06703a86c2805ed48bb2b8"
   integrity sha512-halowzKGp2AYOBcuBMjTsAnWdzh5mmQzQ4N1YyhTWxcI4AdjMn9Qpk7NmwD5VhjqIANc86JAKqI91ey/tEdQoA==

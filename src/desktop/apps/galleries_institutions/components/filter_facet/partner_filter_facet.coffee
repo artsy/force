@@ -31,7 +31,7 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
       matches = [@allItemsSuggestion].concat _.select @countItems, ({id}) =>
         id in @emptyStateItemIDs
 
-    callback(matches)
+    callback _.uniq(matches, 'id')
 
   isMatched: (query, string) ->
     escape= (s) ->
