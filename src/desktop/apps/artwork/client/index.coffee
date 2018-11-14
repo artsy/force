@@ -7,6 +7,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
+splitTest = require '../../../components/split_test/index.coffee'
 
 helpers = extend [
   {}
@@ -161,6 +162,7 @@ module.exports =
   init: ->
     setCookie(CLIENT._id)
     recordArtworkView(CLIENT._id, CurrentUser.orNull())
+    splitTest('artwork_sidebar_pageviews').view()
     exec sharedInit
 
     context = CLIENT.context or {}
