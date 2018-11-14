@@ -21,14 +21,15 @@
     styled-reset "^1.3.7"
     styled-system "^3.0.3"
 
-"@artsy/palette@^2.19.9":
-  version "2.19.9"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.19.9.tgz#c04167e93a7fdbf72a80ef93f4e3ad75b8db6d09"
-  integrity sha512-YLtm9R8Hf7/C2ZSS046NvQeV0BnWMbC61rPX5LlQ6HG+2xTGQ9SE8GACgVp6kRyNJU+7JDDuIADmW7YU2t9Zpw==
+"@artsy/palette@^2.21.0":
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.21.0.tgz#3187ad4c277e444ca8dbaf7b1c47cc3e8ca3ebb0"
+  integrity sha512-me1hTzFkoJxQUuy8rmI0zzRArhbqSOfjb8jgRQTrTaZ2D52vJYWJ8T++obhplCzGFq1KxYwFZWEA/rW8iwHUBQ==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
-    styled-system "^3.0.3"
+    react-spring "^5.7.2"
+    styled-system "^3.1.11"
 
 "@artsy/passport@^1.1.0":
   version "1.1.0"
@@ -49,18 +50,18 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^2.0.0-beta.1":
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.1.tgz#f75ae6bb8ba82837a167c79535b7e2394f8c192f"
-  integrity sha512-rhXx5cpAeUiN6zMFAldCtYJ4Vzwkmf/lNb0qhyqYJcvS/z3kkiQqsyg81PYM56flZ6rSU3X7sRxl3Wv86ZV2dg==
+"@artsy/react-responsive-media@^2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.2.tgz#8ff75c9fecc9608da86f01f8a2bd19461b665f7a"
+  integrity sha512-R1FTUV7QcOF2SpLrJy1XzHQu93gbUXg+UIeY+VIVTUZ0+qWggDp0Ku7GkSKynp6JvP9aJ1yul7Sam0A8ZuVOdw==
 
-"@artsy/reaction@^7.0.0-beta.2":
-  version "7.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.0.0-beta.2.tgz#76587a006176cf4bfdb6d5046e477145ffa17b19"
-  integrity sha512-kRl19hplY48UxCmth5O6VbeH6ATtRMqzExto/Sjz3IbcXQdTU+AT4wEHs7OpVUtpJLGj7W4R5BoX+AwrcXjIHg==
+"@artsy/reaction@^7.0.0-beta.4":
+  version "7.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.0.0-beta.4.tgz#84c8038716e20c468beab970a4d36ca21a3fa9f0"
+  integrity sha512-lvwoeaUPYGa4gg90rGIszluA69gjAPl9qauO8cM2GMdo49epCXEdnDo7z/7n/7ndh7HXslm+JdSQVJcmThZFHg==
   dependencies:
-    "@artsy/palette" "^2.19.9"
-    "@artsy/react-responsive-media" "^2.0.0-beta.1"
+    "@artsy/palette" "^2.21.0"
+    "@artsy/react-responsive-media" "^2.0.0-beta.2"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
@@ -12234,7 +12235,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
