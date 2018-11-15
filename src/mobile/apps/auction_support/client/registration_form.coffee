@@ -87,7 +87,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
             else
               resolve(creditCard)
           error: (m, xhr) =>
-            console.log('rejecting', m)
             reject(xhr.responseJSON?.message)
     .then =>
       analyticsHooks.trigger 'registration:submitted'
@@ -127,11 +126,9 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     analyticsHooks.trigger 'registration:submitted-address'
 
     @loadingLock @$submit, =>
-      console.log("valid?", @validateForm())
       (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
         Q.all [@savePhoneNumber(), @tokenizeCard()]
       .catch (error) =>
-        console.log("ERROR NOW",  error)
         @showError error
       .then =>
         @trigger('submitted')
