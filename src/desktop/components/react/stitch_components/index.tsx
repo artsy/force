@@ -10,3 +10,9 @@ export { ReactionFillwidth as Fillwidth } from "./ReactionFillwidth"
 export {
   ReactionTooltipQuestion as TooltipQuestion,
 } from "./ReactionTooltipQuestion"
+export {
+  ReactionArtworkSidebarPageviews as ArtworkSidebarPageviews,
+} from "./ReactionArtworkSidebarPageviews"
+export {
+  ReactionUserSettingsPayments as UserSettingsPayments,
+} from "./ReactionUserSettingsPayments"

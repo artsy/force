@@ -3,9 +3,10 @@ title Artsy - Discover Fine Art
 meta( name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" )
 meta( name="google-site-verification" content="0wcwrQSIrrBNXss78bJW8AOXg2Vdhh8BhYkoeZLqS80" )
 meta( name="apple-mobile-web-app-capable", content="yes" )
-meta( property="al:ios:app_store_id" content='703796080' )
-meta( property="al:ios:app_name" content='Artsy' )
-meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
+//- Briefly removing the applink support until Eigen 2.3.x is most of our traffic
+//- meta( property="al:ios:app_store_id" content='703796080' )
+//- meta( property="al:ios:app_name" content='Artsy' )
+//- meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 if !sd.SHOULD_DISPLAY_APP_BANNER
     meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )

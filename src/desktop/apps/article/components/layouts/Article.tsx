@@ -1,32 +1,48 @@
-import ArticleModel from "desktop/models/article.coffee"
-import InfiniteScrollArticle from "../InfiniteScrollArticle"
-import { once } from "lodash"
-import PropTypes from "prop-types"
 import React from "react"
+import { once } from "lodash"
+
 import { Article } from "reaction/Components/Publishing"
-import Cookies from "desktop/components/cookies/index.coffee"
-import _SuperArticleView from "desktop/components/article/client/super_article.coffee"
-import { setupFollows, setupFollowButtons } from "../FollowButton.js"
-import mediator from "desktop/lib/mediator.coffee"
+import { ArticleProps } from "reaction/Components/Publishing/Article"
+import {
+  ModalOptions,
+  ModalType,
+} from "@artsy/reaction/dist/Components/Authentication/Types"
+
+import InfiniteScrollArticle from "../InfiniteScrollArticle"
+import { setupFollows, setupFollowButtons } from "../FollowButton"
+
+const _SuperArticleView = require("desktop/components/article/client/super_article.coffee")
+const ArticleModel = require("desktop/models/article.coffee")
+const Cookies = require("desktop/components/cookies/index.coffee")
+const mediator = require("desktop/lib/mediator.coffee")
 
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
 
-export default class ArticleLayout extends React.Component {
+interface ArticleLayoutProps extends ArticleProps {
+  templates: {
+    SuperArticleFooter: string
+    SuperArticleHeader: string
+  }
+}
+
+interface ArticleLayoutState {
+  following: any // any because the Following class is defined in coffeescript
+}
+
+interface ArticleModalOptions extends ModalOptions {
+  signupIntent: string
+}
+
+export default class ArticleLayout extends React.Component<
+  ArticleLayoutProps,
+  ArticleLayoutState
+> {
   constructor(props) {
     super(props)
     this.state = {
       following: setupFollows() || null,
     }
-  }
-  static propTypes = {
-    article: PropTypes.object,
-    isMobile: PropTypes.bool,
-    isLoggedIn: PropTypes.bool,
-    isSuper: PropTypes.bool,
-    templates: PropTypes.object,
-    showTooltips: PropTypes.bool,
-    renderTime: PropTypes.number,
   }
 
   componentDidMount() {
@@ -64,14 +80,17 @@ export default class ArticleLayout extends React.Component {
         once(() => {
           setTimeout(() => {
             this.handleOpenAuthModal("register", {
-              mode: "signup",
+              mode: ModalType.signup,
               intent: "Viewed editorial",
               signupIntent: "signup",
               trigger: "timed",
               triggerSeconds: 2,
               copy: "Sign up for the Best Stories in Art and Visual Culture",
               destination: location.href,
-            })
+              afterSignUpAction: {
+                action: "editorialSignup",
+              },
+            } as any)
           }, 2000)
         }),
         { once: true }
@@ -79,7 +98,7 @@ export default class ArticleLayout extends React.Component {
     }
   }
 
-  handleOpenAuthModal = (mode, options) => {
+  handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
     mediator.trigger("open:auth", {
       mode,
       ...options,
@@ -94,10 +113,10 @@ export default class ArticleLayout extends React.Component {
       isMobile,
       renderTime,
       showTooltips,
-      templates: { SuperArticleFooter, SuperArticleHeader } = {},
+      templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
-    const hasNav = isSuper || article.seriesArticle
-    const isStatic = hasNav
+
+    const isStatic = isSuper || article.seriesArticle
 
     return (
       <div>
