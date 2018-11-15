@@ -29,5 +29,6 @@ module.exports = """
     sale_artwork {
       lot_label
     }
+    pageviews
   }
 """
