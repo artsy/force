@@ -10,7 +10,7 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
-"@artsy/express-reloadable@^1.3.1":
+"@artsy/express-reloadable@1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.3.1.tgz#206adcc56ebcf999aece7efcc34eaf1460cf90a7"
   integrity sha1-IGrcxW68+Zmuzn78w06vFGDPkKc=
@@ -19,7 +19,7 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@^2.18.1":
+"@artsy/palette@2.18.1":
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.18.1.tgz#876055f1cb85f32f18a1953aeef8a18aefee8bc6"
   integrity sha512-k3LGUBp4dX9ELFlL3T2+LyoDY6oFoYKZPmE5wIOGGQ+CCzq8BEwxpDzcTuV5HhUBFc8mCPGP+mIdXK/TiD6HLA==
@@ -39,7 +39,7 @@
     react-spring "^5.7.2"
     styled-system "^3.1.11"
 
-"@artsy/passport@^1.1.0":
+"@artsy/passport@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.0.tgz#06120530d7891de0e4b2c8d8163bb088dddce4c2"
   integrity sha512-hGcgTVk3P8rIF2kJ0P/1lC47AxhlvJBnUlbzbw7hK6bd+hYUD0o4qAzEd+mp1H+a329ofrxL8xu2mUqJKyIRtQ==
@@ -63,7 +63,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
   integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
 
-"@artsy/reaction@^6.1.8":
+"@artsy/reaction@6.1.8":
   version "6.1.8"
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.8.tgz#c4153066a12faa72e3402c250bb19f4465094cb2"
   integrity sha512-dfN3cCY7G7OiS+yUYiaEekptdYoC4o4UIP1R4bp3nyM1+s4IdsdV+2uohJr4PVV/BBdFOUG2PnP5xfWlqCNWQQ==
@@ -92,7 +92,7 @@
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
-    react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
+    react-lines-ellipsis "github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
@@ -123,7 +123,7 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@^2.0.0":
+"@artsy/stitch@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-2.0.0.tgz#c0a44186b3eac779bd3c7a6b0030c7ad7acff754"
   integrity sha512-7k5wf7+5lE57aVF0Ep5QyVEQSEYHdLHIuTJxz5syWEq6C+F5m45x4nqKBz+ZmpU8P5oZkvFv2TbEH0DMVXYOGQ==
@@ -12227,8 +12227,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
+  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-markdown@^2.5.0:
@@ -14046,7 +14047,7 @@ standard@^9.0.0:
     eslint-plugin-standard "~2.0.1"
     standard-engine "~5.4.0"
 
-static-extend@^0.1.1, static-extend@^0.1.2:
+static-extend@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=
