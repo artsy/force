@@ -3,8 +3,9 @@
     "config:base"
   ],
   "packageRules": [{
-    "packagePatterns": ["."],
-    "excludePackagePatterns": ["^((?!@artsy).)*$"]
+    "packagePatterns": ["*"],
+    "excludePackagePatterns": ["^@artsy"],
+    "enabled": false
   }],
   "enabledManagers": ["npm"]
 }
