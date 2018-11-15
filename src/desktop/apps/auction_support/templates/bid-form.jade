@@ -2,7 +2,7 @@ extends ../../../components/main_layout/templates/minimal_header
 
 append locals
   - assetPackage = 'auctions'
-  - options = {stripe: true}
+  - options = {stripev3: true}
 
 block body
   #auction-registration-page
@@ -46,7 +46,7 @@ block body
             else
               include ./conditions-of-sale-checkbox.jade
               .auction-bid-form-confirm.avant-garde-button-black.is-block.is-disabled Confirm Bid
-            
+
         else
           .bid-section-header= sd.BIDDER_H1_COPY
           p.note= sd.BIDDER_H2_COPY

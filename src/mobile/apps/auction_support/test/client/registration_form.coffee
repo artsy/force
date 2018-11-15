@@ -16,9 +16,15 @@ describe 'RegistrationForm', ->
       benv.expose
         $: benv.require('jquery'),
         Stripe: @Stripe =
-          setPublishableKey: sinon.stub()
-          card:
-            createToken: sinon.stub()
+          sinon.stub().returns({
+            createToken: sinon.stub().returns(Promise.resolve({ token: { id: '123' } }))
+            elements: sinon.stub().returns({
+              create: sinon.stub().returns({
+                update: sinon.stub()
+                mount: sinon.stub()
+              })
+            })
+          })
       Backbone.$ = $
       done()
 
@@ -97,9 +103,10 @@ describe 'RegistrationForm', ->
         html.should.containEql 'Please review the error(s) above and try again.'
         done()
 
-    it 'lets the user resubmit a corrected form', ->
-      # Submit a bad form
+    it 'xyz lets the user resubmit a corrected form', ->
+      @acceptTerms()
 
+      # Submit a bad form
       @view.$submit.length.should.be.ok()
       @view.$submit.click()
       @view.on "submitted", =>
@@ -107,9 +114,6 @@ describe 'RegistrationForm', ->
         html.should.containEql 'Please review the error(s) above and try again.'
 
         # Now submit a good one
-
-        # Successfully create a stripe token
-        @Stripe.card.createToken.callsArgWith(1, 200, {})
         # Successfully save phone number
         Backbone.sync.onFirstCall().yieldsTo('success')
         # Successfully save credit card
@@ -117,11 +121,12 @@ describe 'RegistrationForm', ->
         # Successfully create the bidder
         Backbone.sync.onThirdCall().yieldsTo('success')
 
-        @acceptTerms()
+        @view.$submit.removeClass('is-loading')
         @submitValidForm()
-        @view.on "submitted", =>
-          @Stripe.card.createToken.args[0][1](200, {})
 
+        @view.on "submitted", =>
+          @Stripe.createToken.args[0][1](200, {})
+          console.log("BACKBONE", Backbone.sync.args)
           # Saves the phone number
           Backbone.sync.args[0][1].changed.phone.should.equal '555-555-5555'
 
