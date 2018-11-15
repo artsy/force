@@ -2,6 +2,11 @@
   "extends": [
     "config:base"
   ],
+  "assignees": [
+    "zephraph",
+    "damassi",
+    "sweir27"
+  ],
   "packageRules": [{
     "packagePatterns": ["*"],
     "excludePackagePatterns": ["^@artsy"],
