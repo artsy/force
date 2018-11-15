@@ -4,5 +4,6 @@
   ],
   "packageRules": [{
     "packagePatterns": ["^@artsy"]
-  }]
+  }],
+  "enabledManagers": ["npm"]
 }
