@@ -11,5 +11,6 @@
   "vulnerabilityAlerts": {
     "enabled": false
   },
-  "ignoreDeps": ["electron"]
+  "ignoreDeps": ["electron"],
+  "prHourlyLimit": 0
 }
