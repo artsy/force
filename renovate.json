@@ -10,5 +10,6 @@
   "enabledManagers": ["npm"],
   "vulnerabilityAlerts": {
     "enabled": false
-  }
+  },
+  "ignoreDeps": ["electron"]
 }
