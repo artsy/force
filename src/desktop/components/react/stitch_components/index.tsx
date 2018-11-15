@@ -13,3 +13,6 @@ export {
 export {
   ReactionArtworkSidebarPageviews as ArtworkSidebarPageviews,
 } from "./ReactionArtworkSidebarPageviews"
+export {
+  ReactionUserSettingsPayments as UserSettingsPayments,
+} from "./ReactionUserSettingsPayments"
