@@ -3,11 +3,10 @@ import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collections/routes"
 import express from "express"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import adminOnly from "desktop/lib/admin_only"
 
 const app = (module.exports = express())
 
-app.get("/collections", adminOnly, async (req, res, next) => {
+app.get("/collections", async (req, res, next) => {
   try {
     const { IS_MOBILE } = res.locals.sd
 

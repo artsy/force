@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
   integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
 
-"@artsy/reaction@^6.1.8":
-  version "6.1.8"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.1.8.tgz#c4153066a12faa72e3402c250bb19f4465094cb2"
-  integrity sha512-dfN3cCY7G7OiS+yUYiaEekptdYoC4o4UIP1R4bp3nyM1+s4IdsdV+2uohJr4PVV/BBdFOUG2PnP5xfWlqCNWQQ==
+"@artsy/reaction@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.2.2.tgz#032a808014e9ebc54ddccf4bf330b4873a63087c"
+  integrity sha512-walQiYc/VfDI5d9Ys3tU5lfM5sHOvQ+FHu3i+0OcANbAd9/did1od/HgN7NG+oXIb2i3sNfHaroLyjAK1gXrOA==
   dependencies:
     "@artsy/palette" "^2.21.0"
     "@artsy/react-responsive-media" "^1.0.12"
@@ -1619,7 +1619,6 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
-    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -3436,6 +3435,11 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
+  dependencies:
+    arr-union "^3.1.0"
+    define-property "^0.2.5"
+    isobject "^3.0.0"
+    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"
@@ -12227,7 +12231,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
