@@ -24,4 +24,14 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {}
+module.exports = {
+  artwork_sidebar_pageviews:
+    key: 'artwork_sidebar_pageviews'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    control_group: 'control'
+    edge: 'experiment'
+    weighting: 'equal'
+}
