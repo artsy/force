@@ -162,7 +162,7 @@ module.exports =
   init: ->
     setCookie(CLIENT._id)
     recordArtworkView(CLIENT._id, CurrentUser.orNull())
-    splitTest('artwork_sidebar_pageviews').view()
+    splitTest('artwork_sidebar_pageviews').view() if CLIENT.pageviews?
     exec sharedInit
 
     context = CLIENT.context or {}
