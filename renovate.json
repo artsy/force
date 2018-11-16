@@ -1,20 +1,10 @@
 {
   "extends": [
-    "config:base"
+    "config:base", "@artsy"
   ],
   "assignees": [
     "zephraph",
     "damassi",
     "sweir27"
-  ],
-  "packageRules": [{
-    "packagePatterns": ["*"],
-    "excludePackagePatterns": ["^@artsy"],
-    "enabled": false
-  }],
-  "enabledManagers": ["npm"],
-  "vulnerabilityAlerts": {
-    "enabled": false
-  },
-  "prHourlyLimit": 0
+  ]
 }
