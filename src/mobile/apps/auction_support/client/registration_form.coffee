@@ -25,28 +25,37 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @$conditionsCheckbox = @$('.artsy-checkbox')
     @$submit = @$('.registration-form-content .avant-garde-box-button')
     @setUpFields()
+    @setUpStripe()
 
   setUpFields: ->
     @fields =
       'name on card': { el: @$('input[name=card_name]'), validator: @isPresent }
-      'card number': { el: @$('input[name=card_number]'), validator: @isCardNumber }
-      'security code': { el: @$('input[name=card_security_code]'), validator: @isPresent }
       telephone: { el: @$('input.telephone'), validator: @isPresent }
-      month: { el: @$('.card-expiration .month select'), validator: @isPresent }
-      year: { el: @$('.card-expiration .year select'), validator: @isPresent }
       street: { el: @$('input.street'), validator: @isPresent, label: 'address' }
       city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
       state: { el: @$('input.region'), validator: @isState, label: 'state' }
       zip: { el: @$('input.postal-code'), validator: @isZip }
     @internationalizeFields()
 
+  setUpStripe: ->
+    @stripe =  Stripe(STRIPE_PUBLISHABLE_KEY)
+    elements = @stripe.elements()
+    @card = elements.create('card', {
+      style: {
+        base: {
+          fontFamily: '"Adobe Garamond W08", Georgia, Serif',
+          fontSize: '16px',
+          '::placeholder': {
+            color: '#cccccc',
+          },
+        }
+      }
+    })
+    @card.update({ hidePostalCode: true })
+    @card.mount('#card-element')
 
   cardData: ->
     name: @fields['name on card'].el.val()
-    number: @fields['card number'].el.val()
-    exp_month: @fields.month.el.first().val()
-    exp_year: @fields.year.el.last().val()
-    cvc: @fields['security code'].el.val()
     address_line1: @fields.street.el.val()
     address_city: @fields.city.el.val()
     address_state: @fields.state.el.val()
@@ -56,12 +65,12 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   tokenizeCard: ->
     Q.Promise (resolve, reject) =>
       # Attempt to tokenize the credit card through Stripe
-      Stripe.setPublishableKey STRIPE_PUBLISHABLE_KEY
-      Stripe.card.createToken @cardData(), (status, data) =>
-        if status is 200
-          resolve data
+      @stripe.createToken(@card, @cardData()).then (result) ->
+        if result.token
+          resolve result
         else
-          reject data.error.message
+          reject result.error.message
+
     .then (data) =>
       analyticsHooks.trigger 'registration:validated'
 
@@ -69,7 +78,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       Q.Promise (resolve, reject) =>
         card = new Backbone.Model
         card.url = "#{sd.API_URL}/api/v1/me/credit_cards"
-        card.save { token: data.id, provider: 'stripe' },
+        card.save { token: data.token.id, provider: 'stripe' },
           success: (creditCard) =>
             if creditCard.get("address_zip_check") == "fail"
               reject @errors.badZip
@@ -77,7 +86,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               reject @errors.badSecurityCode
             else
               resolve(creditCard)
-          error: (m, xhr) => reject(xhr.responseJSON?.message)
+          error: (m, xhr) =>
+            reject(xhr.responseJSON?.message)
     .then =>
       analyticsHooks.trigger 'registration:submitted'
 
@@ -113,7 +123,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   onSubmit: (event) ->
     event.preventDefault()
     return unless @validateAcceptConditions()
-
     analyticsHooks.trigger 'registration:submitted-address'
 
     @loadingLock @$submit, =>
