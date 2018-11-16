@@ -53,10 +53,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-1.0.12.tgz#3a76be54e82d1d658ee1794ecb692ea64468314c"
   integrity sha512-BU7HUAVBvCjc3H7s117d+FL6Ufodc2hwgQZ2HuPq23jEXSYR6PHS98Kqd0vMthUeI4IdUY4Yc0du75Qu30OLew==
 
-"@artsy/reaction@6.2.3":
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.2.3.tgz#aa3d3971f39c6f56ee7167540c4446603c266d7d"
-  integrity sha512-CPAg9R0LcRg5ybMVYvcaomEz21YbuEvYCDuAC5fYS5eITALaGAMzhBt9cDovE0BmGLTi/exm6ZhI9gfVnE0M9w==
+"@artsy/reaction@6.2.4":
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-6.2.4.tgz#f74a18c28f3457d778a51bb4337ee3b54af1287d"
+  integrity sha512-Bnev/o1tqCV1rktSaIkXRjy8h5bAe58FNn1Gq1Vbro/fQ26CioXtSFsxFrKcWsUnC+OJX7JvYDboUHayTLg1JQ==
   dependencies:
     "@artsy/palette" "^2.21.0"
     "@artsy/react-responsive-media" "^1.0.12"
@@ -14041,7 +14041,7 @@ standard@^9.0.0:
     eslint-plugin-standard "~2.0.1"
     standard-engine "~5.4.0"
 
-static-extend@^0.1.2:
+static-extend@^0.1.1, static-extend@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=
