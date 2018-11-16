@@ -9,7 +9,24 @@ jobs:
       - checkout
       - run:
           name: Acceptance Tests
-          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
+          command: 'yarn install && yarn acceptance src/test/acceptance/*.js'
+  build:
+    docker:
+      - image: artsy/hokusai:0.4.5
+    steps:
+      - add_ssh_keys
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build
+          command: |
+            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
+            hokusai build
+            docker save hokusai_force:latest -o hokusai_force.tar
+      - save_cache:
+          key: hokusai-force-{{ .Revision }}
+          paths:
+            - hokusai_force.tar
   test:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -18,12 +35,15 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
+      - restore_cache:
+          key: hokusai-force-{{ .Revision }}
       - run:
           name: Test
           command: |
+            docker load -i hokusai_force.tar
             export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
-            hokusai test
-  build:
+            hokusai test --no-build
+  tests_passed:
     docker:
       - image: artsy/hokusai:0.4.5
     steps:
@@ -37,11 +57,13 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
+      - restore_cache:
+          key: hokusai-force-{{ .Revision }}
       - run:
           name: Push
           command: |
             export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
-            hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
+            hokusai registry push --no-build --tag $CIRCLE_SHA1 --force --overwrite
   publish_staging_assets:
     docker:
       - image: circleci/node:10-stretch-browsers
@@ -120,15 +142,21 @@ workflows:
   version: 2
   default:
     jobs:
+      - build:
+          filters:
+            branches:
+              ignore: staging
       - test:
           filters:
             branches:
               ignore: staging
+          requires:
+            - build
       - acceptance:
           filters:
             branches:
               ignore: staging
-      - build:
+      - tests_passed:
           filters:
             branches:
               ignore: staging
@@ -142,19 +170,19 @@ workflows:
                 - master
                 - release
           requires:
-            - build
+            - tests_passed
       - publish_staging_assets:
           filters:
             branches:
               only: master
           requires:
-            - build
+            - tests_passed
       - publish_release_assets:
           filters:
             branches:
               only: release
           requires:
-            - build
+            - tests_passed
       - deploy_hokusai_staging:
           filters:
             branches:
