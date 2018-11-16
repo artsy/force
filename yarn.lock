@@ -50,18 +50,18 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^2.0.0-beta.2":
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.2.tgz#8ff75c9fecc9608da86f01f8a2bd19461b665f7a"
-  integrity sha512-R1FTUV7QcOF2SpLrJy1XzHQu93gbUXg+UIeY+VIVTUZ0+qWggDp0Ku7GkSKynp6JvP9aJ1yul7Sam0A8ZuVOdw==
+"@artsy/react-responsive-media@^2.0.0-beta.4":
+  version "2.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
+  integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@^7.0.0-beta.5":
-  version "7.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.0.0-beta.5.tgz#3e9509c57ccc31460dc341c51475548006d3d490"
-  integrity sha512-JKSDzFGGIRj9M6oCpzwUolyAY6Btfp7VZdei777PRlORG96eiQkBSvmgi6K47dMH65XGVDnQ0y3Oa2cpYfi7Wg==
+"@artsy/reaction@^7.0.0-beta.6":
+  version "7.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.0.0-beta.6.tgz#b85b738d41d11d63b84146ce25ae2745f78ea20d"
+  integrity sha512-chGb+B1Jqt3oQ5/PnzE1cfHukgLBWJ9jHqc/LCfY4W54DVfItRx7n5i6B3bz/h92IgrN7NhnjD0sQqCFwoDlSg==
   dependencies:
     "@artsy/palette" "^2.21.0"
-    "@artsy/react-responsive-media" "^2.0.0-beta.2"
+    "@artsy/react-responsive-media" "^2.0.0-beta.4"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     farce "^0.2.6"
@@ -74,6 +74,7 @@
     jsonp "^0.2.1"
     loadable-components "^2.2.2"
     lodash "^4.17.4"
+    memoize-one "^4.0.3"
     moment-timezone "^0.5.13"
     numeral "^2.0.4"
     openseadragon "^2.3.1"
@@ -9770,6 +9771,11 @@ mem@^4.0.0:
     map-age-cleaner "^0.1.1"
     mimic-fn "^1.0.0"
     p-is-promise "^1.1.0"
+
+memoize-one@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-4.0.3.tgz#cdfdd942853f1a1b4c71c5336b8c49da0bf0273c"
+  integrity sha512-QmpUu4KqDmX0plH4u+tf0riMc1KHE1+lw95cMrLlXQAFOx/xnBtwhZ52XJxd9X2O6kwKBqX32kmhbhlobD0cuw==
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
