@@ -1,5 +1,6 @@
 import * as _ from "underscore"
 import embed from "particle"
+import { findKey } from "lodash"
 import { URL } from "url"
 import markdown from "desktop/components/util/markdown.coffee"
 import App from "desktop/apps/article/components/App"
@@ -124,6 +125,7 @@ export async function index(req, res, next) {
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
+    const customEditorial = isCustomEditorial(article.id)
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
@@ -149,6 +151,7 @@ export async function index(req, res, next) {
       },
       data: {
         article,
+        customEditorial,
         isSuper,
         isLoggedIn,
         isMobile,
@@ -172,7 +175,7 @@ const getBodyClass = article => {
   const isSuper = article.is_super_article || article.is_super_sub_article
   const isFullscreen =
     article.hero_section && article.hero_section.type === "fullscreen"
-  if (isSuper && isFullscreen) {
+  if ((isSuper && isFullscreen) || isCustomEditorial(article.id)) {
     bodyClass = bodyClass + " body-no-header"
   }
   return bodyClass
@@ -318,3 +321,13 @@ export const editorialSignup = (req, res, next) => {
 
 export const redirectPost = (req, res, next) =>
   res.redirect(301, req.url.replace("post", "article"))
+
+const isCustomEditorial = id => {
+  const customIds = [sd.EOY_2018_1, sd.EOY_2018_2]
+
+  if (customIds.includes(id)) {
+    return findKey(sd, val => {
+      return val === id
+    })
+  }
+}
