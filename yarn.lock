@@ -53,10 +53,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
   integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@^7.0.0-beta.7":
-  version "7.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.0.0-beta.7.tgz#b807d1b8dab2122382e61dbf45f717181d879c22"
-  integrity sha512-SXSHnxrDqZML4vQLxKBOhxMydqV+xxncNszfd/h4uIi0+VcaGkxvleR+P0Qew6qN+6k8xvuUcg3azRqJQo1Uqw==
+"@artsy/reaction@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.0.0.tgz#904f50fdec243279bb2b82c7d206bb8a2d0d8831"
+  integrity sha512-fMpPu6SrblUPypFTTIsIHIS2k7Odgr/PnRlRAGAqP3ktGYbKRauMDOaL/PRoTdbebMgsh3qnkZH+LCGPgB45ug==
   dependencies:
     "@artsy/palette" "^2.21.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.4"
