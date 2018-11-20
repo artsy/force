@@ -322,7 +322,7 @@ export const editorialSignup = (req, res, next) => {
 export const redirectPost = (req, res, next) =>
   res.redirect(301, req.url.replace("post", "article"))
 
-const isCustomEditorial = id => {
+export const isCustomEditorial = id => {
   const customIds = [sd.EOY_2018_1, sd.EOY_2018_2]
 
   if (customIds.includes(id)) {
