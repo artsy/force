@@ -5,6 +5,8 @@ import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import styled from "styled-components"
+import React from "react"
 
 const app = (module.exports = express())
 
@@ -21,6 +23,12 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
       return
     }
 
+    const Container = styled.div`
+      width: 100%;
+      max-width: 1192px;
+      margin: auto;
+    `
+
     const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_redesign.jade",
@@ -34,12 +42,15 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
             <Meta />
           </>
         ),
-        body: ServerApp,
+        body: () => (
+          <Container>
+            <ServerApp />
+          </Container>
+        ),
       },
       locals: {
         ...res.locals,
         assetPackage: "artwork2",
-        styledComponents: true,
       },
     })
 
