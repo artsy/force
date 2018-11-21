@@ -22,8 +22,11 @@ html( data-useragent= userAgent lang="en")
       block body
 
     #scripts
-      include scripts
-      script( src= asset('/assets/main_layout.js') )
-      if assetPackage
-        script( src=asset('/assets/#{assetPackage}.js') )
+      //- Don't replace this block, rather prepend or append!
       block scripts
+        include scripts
+
+        script( src= asset('/assets/main_layout.js') )
+
+        if assetPackage
+          script( src=asset('/assets/#{assetPackage}.js') )

@@ -13,7 +13,13 @@ export const checkoutFlow = async (req, res, next) => {
     )
   }
   try {
-    const { ServerApp, redirect, status, headTags } = await buildServerApp({
+    const {
+      ServerApp,
+      redirect,
+      status,
+      headTags,
+      scripts,
+    } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -58,6 +64,7 @@ export const checkoutFlow = async (req, res, next) => {
         options: {
           stripev3: true,
         },
+        scripts,
       },
     })
 
