@@ -10,10 +10,9 @@ const app = (module.exports = express())
 
 const index = async (req, res, next) => {
   try {
-    const user = req.user && req.user.toJSON()
     const { APP_URL, IS_MOBILE } = res.locals.sd
 
-    const { headTags, ServerApp, redirect } = await buildServerApp({
+    const { headTags, ServerApp, redirect, scripts } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -39,6 +38,7 @@ const index = async (req, res, next) => {
         ...res.locals,
         assetPackage: "collect2",
         bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
+        scripts,
       },
     })
 

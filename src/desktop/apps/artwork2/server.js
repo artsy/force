@@ -5,12 +5,19 @@ import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import React from "react"
 
 const app = (module.exports = express())
 
 app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
   try {
-    const { ServerApp, redirect, status, headTags } = await buildServerApp({
+    const {
+      ServerApp,
+      redirect,
+      status,
+      headTags,
+      scripts,
+    } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -29,17 +36,17 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
       },
       blocks: {
         head: () => (
-          <>
+          <React.Fragment>
             {headTags}
             <Meta />
-          </>
+          </React.Fragment>
         ),
         body: ServerApp,
       },
       locals: {
         ...res.locals,
         assetPackage: "artwork2",
-        styledComponents: true,
+        scripts,
       },
     })
 
