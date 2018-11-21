@@ -122,7 +122,7 @@ if options.stripe
   script( type="text/javascript", src="https://js.stripe.com/v2/" )
 
 if options.stripev3
-  script(async, id="stripe-js", src="https://js.stripe.com/v3/")
+  script(id="stripe-js", src="https://js.stripe.com/v3/")
 
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other'

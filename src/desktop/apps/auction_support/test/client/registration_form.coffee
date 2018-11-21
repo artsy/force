@@ -10,15 +10,20 @@ RegistrationForm = require '../../client/registration_form'
 DateHelpers = require '../../../../components/util/date_helpers.coffee'
 
 describe 'RegistrationForm', ->
-
   before (done) ->
     benv.setup =>
       benv.expose
         $: benv.require('jquery'),
         Stripe: @Stripe =
-          setPublishableKey: sinon.stub()
-          card:
-            createToken: sinon.stub().yields(200, {})
+          sinon.stub().returns({
+            createToken: sinon.stub().returns(Promise.resolve({ token: { id: '123' } }))
+            elements: sinon.stub().returns({
+              create: sinon.stub().returns({
+                update: sinon.stub()
+                mount: sinon.stub()
+              })
+            })
+          })
       Backbone.$ = $
       done()
 
@@ -53,10 +58,6 @@ describe 'RegistrationForm', ->
       @acceptConditions = => @view.$acceptConditions.prop('checked', true)
       @submitValidForm = =>
         @view.$('input[name="card_name"]').val 'Foo Bar'
-        @view.$('select[name="card_expiration_month"]').val '1'
-        @view.$('select[name="card_expiration_year"]').val '2024'
-        @view.$('input[name="card_number"]').val '4111111111111111'
-        @view.$('input[name="card_security_code"]').val '123'
         @view.$('input[name="address[street]"]').val '456 Foo Bar Ln.'
         @view.$('input[name="address[city]"]').val 'Foobarrington'
         @view.$('input[name="address[region]"]').val 'FB'
@@ -79,14 +80,14 @@ describe 'RegistrationForm', ->
         done()
 
     it 'validates the form and displays errors', ->
+      @acceptConditions()
+
       @view.$submit.length.should.be.ok()
       @view.$submit.click()
 
       @view.once 'submitted', =>
         html = @view.$el.html()
         html.should.containEql 'Invalid name on card'
-        html.should.containEql 'Invalid card number'
-        html.should.containEql 'Invalid security code'
         html.should.containEql 'Invalid city'
         html.should.containEql 'Invalid state'
         html.should.containEql 'Invalid zip'
@@ -95,33 +96,29 @@ describe 'RegistrationForm', ->
         @view.$submit.hasClass('is-loading').should.be.false()
 
     it 'lets the user resubmit a corrected form', ->
-      # Submit a bad form
+      @acceptConditions()
 
+      # Submit a bad form
       @view.$submit.length.should.be.ok()
       @view.$submit.click()
+
       @view.once "submitted", =>
         html = @view.$el.html()
         html.should.containEql 'Please review the error(s) above and try again.'
 
+        Backbone.sync
+          .yieldsTo 'success', {} # savePhoneNumber success
+          .onCall 1
+          .yieldsTo 'success', { get: () -> 'pass' } # credit card save passes
+          .onCall 2
+          .yieldsTo 'success', {}
+
         # Now submit a good one
-
-        # Successfully create a stripe token
-        @Stripe.card.createToken.callsArgWith(1, 200, {})
-        # Successfully save phone number
-        Backbone.sync.onFirstCall().yieldsTo('success')
-        # Successfully save credit card
-        Backbone.sync.onSecondCall().yieldsTo('success')
-        # Successfully create the bidder
-        Backbone.sync.onThirdCall().yieldsTo('success')
-
-
-        @acceptConditions()
         @submitValidForm()
-        @view.once "submitted", =>
-          @Stripe.card.createToken.args[0][1](200, {})
 
+        @view.once "submitted", =>
           # Saves the phone number
-          Backbone.sync.args[0][1].changed.phone.should.equal '555-555-5555'
+          Backbone.sync.args[0][2].attrs.phone.should.equal '555-555-5555'
 
           # Saves the credit card
           Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/credit_cards'

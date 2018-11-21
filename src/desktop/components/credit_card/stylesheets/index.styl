@@ -22,15 +22,12 @@
     width 100%
   .order-input-section
     margin-bottom 12px
-    &.region, &.city, &.postal-code, &.card-name, &.card-expiration, &.card-number, &.card-security-code
+    &.region, &.city, &.postal-code, &.card-number
       display inline-block
       vertical-align top
-    &.city, &.card-name, &.card-number, &.card-security-code
+    &.city, &.card-number
       width: 49%
       margin-right: 3%
-    &.card-security-code
-      width: 48%
-      margin-right: 0%
     &.region
       width: 23%
       margin-right: 2%
@@ -38,21 +35,6 @@
       width: 23%
     &.email
       margin-bottom: 30px
-    &.card-expiration
-      width: 48%
-      .month, .year
-        position relative
-        height 51px
-        display inline-block
-        vertical-align top
-        width 47%
-      .month
-        margin-right: 6%
-      .error
-        position absolute
-        top 4px
-        bottom 0px
-        left 0px
   .order-form-button
     width: 100%
   .order-form-checkbox
@@ -60,6 +42,18 @@
       margin-right: 5px
       margin-top: 4px
       vertical-align: top
+
+#card-element
+  border 2px solid gray-lighter-color
+  box-sizing border-box
+  width 100%
+  padding 10px
+  transition border-color 0.25s
+  height 44px
+
+#card-element.StripeElement--focus
+  border-color purple-color
+  outline none
 
 .not-usa
   .order-form .order-input-section

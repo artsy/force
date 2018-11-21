@@ -17,7 +17,7 @@ module.exports =
   ARTSY_ID: null
   ARTSY_SECRET: null
   BIDDER_H1_COPY: 'Please enter your credit card details'
-  BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
+  BIDDER_H2_COPY: 'A valid credit card is required to bid. If you win, you’ll have the opportunity to pay by credit card, check or wire transfer after the sale closes.'
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'
@@ -26,7 +26,6 @@ module.exports =
   CONVECTION_APP_ID: null
   CONVECTION_GEMINI_APP: 'convection-staging'
   COOKIE_DOMAIN: null
-  CRITEO_ARTWORKS_ACCOUNT_NUMBER: '35250'
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
   DD_APM_ENABLED: null
   DD_TRACE_AGENT_HOSTNAME: 'localhost'
