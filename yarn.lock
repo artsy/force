@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
   integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.0.2.tgz#9140f9829bb502ecdcb889966cc2de14c7d9a2cf"
-  integrity sha512-gCy6cwEInOCWgJ6njIM73MizvgH02ho3Lj+oxovBpw6PusqEG1VEz8iDCMLNIq+2UfywM/z+CRtDTa8pt7lGqw==
+"@artsy/reaction@8.0.3":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.0.3.tgz#a0d020c5c91a05c9a9e0bcf452808528dd42e4ee"
+  integrity sha512-OqW4IHh5qPJtQvxSkLYatpe56ZmfO4L7HaXdJkZEgu/vKK4uBAm2jh48Pwa4FgADVSEvE/auiyftiOsXMvMFqw==
   dependencies:
     "@artsy/palette" "^2.21.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.4"
@@ -1141,6 +1141,11 @@
   integrity sha512-MAT0BW2ruO0LhQKjvlipLGCF/Yx0y/cj+tT67tK3QIQDrM2+9R78HgJ54VlrE8AbfjYJJBCQCEPM5ZblPVTuww==
   dependencies:
     source-map "^0.6.1"
+
+"@types/webpack-env@^1.13.6":
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.6.tgz#128d1685a7c34d31ed17010fc87d6a12c1de6976"
+  integrity sha512-5Th3OsZ4gTRdr9Mho83BQ23cex4sRhOR4XTG+m+cJc0FhtUBK9Vn62hBJ+pnQYnSxoPOsKoAPOx6FcphxBC8ng==
 
 "@types/webpack@^4.4.11":
   version "4.4.11"
@@ -12233,7 +12238,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
@@ -14052,7 +14057,7 @@ standard@^9.0.0:
     eslint-plugin-standard "~2.0.1"
     standard-engine "~5.4.0"
 
-static-extend@^0.1.1, static-extend@^0.1.2:
+static-extend@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=

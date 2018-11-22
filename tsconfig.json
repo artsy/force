@@ -17,5 +17,5 @@
       "reaction/*": ["../node_modules/@artsy/reaction/dist/*"]
     }
   },
-  "include": ["./src"]
+  "include": ["./src", "typings/*.d.ts"]
 }
