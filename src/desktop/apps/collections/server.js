@@ -1,3 +1,4 @@
+import React from "react"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collections/routes"
@@ -10,7 +11,7 @@ app.get("/collections", async (req, res, next) => {
   try {
     const { IS_MOBILE } = res.locals.sd
 
-    const { ServerApp, redirect } = await buildServerApp({
+    const { ServerApp, headTags, redirect } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -29,7 +30,7 @@ app.get("/collections", async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => null,
+        head: () => <React.Fragment>{headTags}</React.Fragment>,
         body: ServerApp,
       },
       locals: {

@@ -1,3 +1,4 @@
+import React from "react"
 import express from "express"
 import adminOnly from "desktop/lib/admin_only"
 import { buildServerApp } from "reaction/Artsy/Router/server"
@@ -10,7 +11,7 @@ const app = (module.exports = express())
 
 app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
   try {
-    const { ServerApp, redirect, status } = await buildServerApp({
+    const { ServerApp, headTags, redirect, status } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -28,13 +29,17 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: Meta,
+        head: () => (
+          <React.Fragment>
+            {headTags}
+            <Meta />
+          </React.Fragment>
+        ),
         body: ServerApp,
       },
       locals: {
         ...res.locals,
         assetPackage: "relay",
-        styledComponents: true,
       },
     })
 

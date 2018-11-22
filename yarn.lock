@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
   integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-7.1.1.tgz#e6f4617aff2a39598ee22846e7a4e07df7e444ff"
-  integrity sha512-F6aQPORxFoMWzhDoWUSp+Gef99zusl1M7AtJ1/najV9M5WreRNabWrIYTJAFpAAw/K4FsYShvb5b8MfltfDvoA==
+"@artsy/reaction@8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.1.0.tgz#eb61c6ebcb12f5041935d3297129b5f9aa571148"
+  integrity sha512-wCa3GiyiBQdpP4nxKll1QqavNtS6Vk9dU6iIwvmscUVGzi6QKKk5Eam13ybPbB1GF49mU1RBFHXbpu42a599Jg==
   dependencies:
     "@artsy/palette" "^2.21.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.4"
@@ -124,10 +124,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-3.0.0.tgz#ed307965d4da4b3cf2bcd6893c212ca33ceb37c2"
-  integrity sha512-V8JguXTjyKcG1g4qX5QGvwXDOQtGPJ0M22qYJV5JN97IBxkH+cgjBcyKEnOMrtVgVE6XrOHdzHm4qXGSFrMMkw==
+"@artsy/stitch@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-3.1.0.tgz#6ea39eced27a8323c760f328fa966a0e7442bef1"
+  integrity sha512-uTgB9wnmgDUsN1DZLZqqiBibTMJbf96VjY//xG038/iEuoGbvzE+fAL7ZSv1AK3QmIagp/UXLW7x+h72tc1knw==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.4"
@@ -1141,6 +1141,11 @@
   integrity sha512-MAT0BW2ruO0LhQKjvlipLGCF/Yx0y/cj+tT67tK3QIQDrM2+9R78HgJ54VlrE8AbfjYJJBCQCEPM5ZblPVTuww==
   dependencies:
     source-map "^0.6.1"
+
+"@types/webpack-env@^1.13.6":
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.6.tgz#128d1685a7c34d31ed17010fc87d6a12c1de6976"
+  integrity sha512-5Th3OsZ4gTRdr9Mho83BQ23cex4sRhOR4XTG+m+cJc0FhtUBK9Vn62hBJ+pnQYnSxoPOsKoAPOx6FcphxBC8ng==
 
 "@types/webpack@^4.4.11":
   version "4.4.11"
@@ -3437,11 +3442,6 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
-  dependencies:
-    arr-union "^3.1.0"
-    define-property "^0.2.5"
-    isobject "^3.0.0"
-    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"
@@ -14058,7 +14058,7 @@ standard@^9.0.0:
     eslint-plugin-standard "~2.0.1"
     standard-engine "~5.4.0"
 
-static-extend@^0.1.1, static-extend@^0.1.2:
+static-extend@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=

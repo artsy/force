@@ -102,12 +102,13 @@ mountStitchBlocks = ->
   {components, mountOnClient} = componentRenderer({
     mode: 'client',
     modules: globalReactModules
+    Wrapper: globalReactModules.StitchWrapper
   })
 
   sd.stitch.renderQueue.forEach (block) ->
     mountOnClient(block)
 
   # Mount renderer for runtime client-side templates. NOTE: must be included
-  # in template when rendering data; e.g., html = myTemplate({ data, reaction })
+  # in template when rendering data; e.g., html = myTemplate({ data, stitch })
   sd.stitch.components = components
 

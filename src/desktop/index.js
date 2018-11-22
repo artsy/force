@@ -1,5 +1,6 @@
 import * as modules from "./lib/global_react_modules"
 import { data as sd } from "sharify"
+
 const app = (module.exports = require("express")())
 
 // NOTE:
@@ -7,7 +8,12 @@ const app = (module.exports = require("express")())
 
 // TODO: Move to src/lib/middleware/locals once done developing; this is just so
 // we can get hot module reloading which only works in /desktop and /mobile
-app.use(require("@artsy/stitch/dist/server").middleware(modules))
+app.use(
+  require("@artsy/stitch/dist/server").middleware({
+    modules,
+    Wrapper: modules.StitchWrapper,
+  })
+)
 
 // Apps with hardcoded routes or "RESTful" routes
 app.use(require("./apps/home"))
@@ -16,12 +22,12 @@ app.use(require("./apps/apply"))
 app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2"))
 app.use(require("./apps/auction_lots"))
-app.use(require("./apps/artist/server"))
+app.use(require("./apps/artist/server").app)
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction"))
 app.use(require("./apps/auction_support"))
 app.use(require("./apps/artwork"))
-app.use(require("./apps/artwork2/server"))
+app.use(require("./apps/artwork2/server").app)
 app.use(require("./apps/about"))
 app.use(require("./apps/collect_art"))
 app.use(require("./apps/collect2/server"))
