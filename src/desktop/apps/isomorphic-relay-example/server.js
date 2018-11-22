@@ -5,19 +5,12 @@ import { routes } from "./routes"
 import { stitch } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import React from "react"
 
 const app = (module.exports = express())
 
 app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
   try {
-    const {
-      ServerApp,
-      redirect,
-      status,
-      headTags,
-      scripts,
-    } = await buildServerApp({
+    const { ServerApp, redirect, status } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -35,18 +28,13 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => (
-          <React.Fragment>
-            {headTags}
-            <Meta />
-          </React.Fragment>
-        ),
+        head: Meta,
         body: ServerApp,
       },
       locals: {
         ...res.locals,
         assetPackage: "relay",
-        scripts,
+        styledComponents: true,
       },
     })
 
