@@ -2,11 +2,24 @@ import { buildClientApp } from "reaction/Artsy/Router/client"
 import { routes } from "reaction/Apps/Artwork/routes"
 import React from "react"
 import ReactDOM from "react-dom"
-import mediator from "desktop/lib/mediator.coffee"
-import User from "desktop/models/user.coffee"
-import Artwork from "desktop/models/artwork.coffee"
-import ArtworkInquiry from "desktop/models/artwork_inquiry.coffee"
-import openInquiryQuestionnaireFor from "desktop/components/inquiry_questionnaire/index.coffee"
+
+const mediator = require("desktop/lib/mediator.coffee")
+const User = require("desktop/models/user.coffee")
+const Artwork = require("desktop/models/artwork.coffee")
+const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
+const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
+
+buildClientApp({ routes })
+  .then(({ ClientApp }) => {
+    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+  })
+  .catch(error => {
+    console.error(error)
+  })
+
+if (module.hot) {
+  module.hot.accept()
+}
 
 mediator.on("openBuyNowAskSpecialistModal", options => {
   const artworkId = options.artworkId
@@ -44,15 +57,3 @@ mediator.on("openAuctionAskSpecialistModal", options => {
     })
   }
 })
-
-buildClientApp({ routes })
-  .then(({ ClientApp }) => {
-    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-  })
-  .catch(error => {
-    console.error(error)
-  })
-
-if (module.hot) {
-  module.hot.accept()
-}

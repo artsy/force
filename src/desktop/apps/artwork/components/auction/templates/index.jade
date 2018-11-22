@@ -9,8 +9,9 @@ else if auction.is_preview || auction.is_open || auction.is_live_open
   include ./live
   include ./bid
   include ./buy_now
-  if sd && sd.ARTWORK_SIDEBAR_PAGEVIEWS === 'experiment'
-    != stitch.components.ArtworkSidebarPageviews({artworkID: artwork.id})
+  if sd && sd.stitch.components && sd.ARTWORK_SIDEBAR_PAGEVIEWS === 'experiment'
+    #stitch-pageviews-mountpoint
+      != sd.stitch.components.ArtworkSidebarPageviews({artworkID: artwork.id, mountId: 'stitch-pageviews-mountpoint'})
   include ./buyers_premium
   include ./help
 
