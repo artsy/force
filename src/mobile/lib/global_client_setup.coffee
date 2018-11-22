@@ -13,7 +13,8 @@ module.exports = ->
 mountStitchBlocks = ->
   {components, mountOnClient} = componentRenderer({
     mode: 'client',
-    modules: globalReactModules
+    modules: globalReactModules,
+    Wrapper: globalReactModules.StitchWrapper
   })
 
   sd.stitch.renderQueue.forEach (block) ->

@@ -1,8 +1,9 @@
-export { ReactionArtwork as Artwork } from "./ReactionArtwork"
 export { ReactionArtworkArtistInfo as ArtworkArtistInfo } from "./ReactionArtworkArtistInfo"
-export { ReactionArtworkDetails as ArtworkDetails } from "./ReactionArtworkDetails"
+export { ArtworkDetailsQueryRenderer as ArtworkDetails } from "reaction/Apps/Artwork/Components/ArtworkDetails"
 export { ReactionArtworkGrid as ArtworkGrid } from "./ReactionArtworkGrid"
 export { ReactionFillwidth as Fillwidth } from "./ReactionFillwidth"
 export { ReactionTooltipQuestion as TooltipQuestion } from "./ReactionTooltipQuestion"
 export { ReactionArtworkSidebarPageviews as ArtworkSidebarPageviews } from "./ReactionArtworkSidebarPageviews"
-export { ReactionUserSettingsPayments as UserSettingsPayments } from "./ReactionUserSettingsPayments"
+export { UserSettingsPaymentsQueryRenderer as UserSettingsPayments } from "reaction/Components/Payment/UserSettingsPayments"
+export { StitchWrapper } from './StitchWrapper'
+
