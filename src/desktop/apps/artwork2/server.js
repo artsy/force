@@ -1,3 +1,4 @@
+import React from "react"
 import express from "express"
 import adminOnly from "desktop/lib/admin_only"
 import { buildServerApp } from "reaction/Artsy/Router/server"
@@ -6,7 +7,6 @@ import { stitch } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import styled from "styled-components"
-import React from "react"
 
 const app = (module.exports = express())
 
@@ -37,10 +37,10 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
       },
       blocks: {
         head: () => (
-          <>
+          <React.Fragment>
             {headTags}
             <Meta />
-          </>
+          </React.Fragment>
         ),
         body: () => (
           <Container>
