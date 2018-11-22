@@ -1,6 +1,4 @@
 import React from "react"
-import { ContextProvider } from "reaction/Artsy"
-import { data as sd } from "sharify"
 import { mapToRelayConnection } from "./utils/mapToRelayConnection"
 
 export const ReactionFillwidth = props => {
@@ -11,11 +9,7 @@ export const ReactionFillwidth = props => {
 
     const artworks = mapToRelayConnection(props.artworks) // eslint-disable-line
 
-    return (
-      <ContextProvider user={sd.CURRENT_USER}>
-        <Fillwidth {...props} artworks={artworks} useRelay={false} />
-      </ContextProvider>
-    )
+    return <Fillwidth {...props} artworks={artworks} useRelay={false} />
   } else {
     return ""
   }
