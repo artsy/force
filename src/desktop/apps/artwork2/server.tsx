@@ -54,6 +54,7 @@ app.get(
         locals: {
           ...res.locals,
           assetPackage: "artwork2",
+          styledComponents: true,
         },
       })
 
