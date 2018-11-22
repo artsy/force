@@ -14,13 +14,7 @@ app.get("/artist/:artistID*", async (req, res, next) => {
   try {
     const user = req.user && req.user.toJSON()
 
-    const {
-      ServerApp,
-      redirect,
-      status,
-      headTags,
-      scripts,
-    } = await buildServerApp({
+    const { ServerApp, redirect, status, headTags } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -62,10 +56,10 @@ app.get("/artist/:artistID*", async (req, res, next) => {
       },
       blocks: {
         head: () => (
-          <React.Fragment>
+          <>
             {headTags}
             <Meta sd={res.locals.sd} artist={artist} />
-          </React.Fragment>
+          </>
         ),
         body: () => (
           <Container>
@@ -76,7 +70,6 @@ app.get("/artist/:artistID*", async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: "artist",
-        scripts,
       },
       data: {
         jsonLD,

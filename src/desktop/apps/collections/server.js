@@ -3,7 +3,6 @@ import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collections/routes"
 import express from "express"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import React from "react"
 
 const app = (module.exports = express())
 
@@ -11,7 +10,7 @@ app.get("/collections", async (req, res, next) => {
   try {
     const { IS_MOBILE } = res.locals.sd
 
-    const { ServerApp, redirect, headTags, scripts } = await buildServerApp({
+    const { ServerApp, redirect } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -30,14 +29,13 @@ app.get("/collections", async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => <React.Fragment>{headTags}</React.Fragment>,
+        head: () => null,
         body: ServerApp,
       },
       locals: {
         ...res.locals,
         assetPackage: "collections",
         bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
-        scripts,
       },
     })
 

@@ -9,15 +9,12 @@ block head
   != css
 
 block body
+  script.
+    var __BOOTSTRAP__ = !{JSON.stringify(data)}
+
   #react-root
     != body
   #react-portal
 
   if jsonLD
     include ./json_ld
-
-//- All hydration data should be loaded before React et al
-block prepend scripts
-  script.
-    var __BOOTSTRAP__ = !{JSON.stringify(data)}
-  != scripts
