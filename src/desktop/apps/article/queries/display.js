@@ -27,6 +27,7 @@ export const displayFragment = `
     cover_image_url: cover_img_url
     body
     disclaimer
+    has_cover_overlay
     headline
     layout
     link {
