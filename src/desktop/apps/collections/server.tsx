@@ -1,16 +1,17 @@
-import express from "express"
-import adminOnly from "desktop/lib/admin_only"
+import React from "react"
 import { buildServerApp } from "reaction/Artsy/Router/server"
-import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
-import { Meta } from "./components/Meta"
+import { routes } from "reaction/Apps/Collections/routes"
+import express from "express"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
-const app = (module.exports = express())
+export const app = express()
 
-app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
+app.get("/collections", async (req, res, next) => {
   try {
-    const { ServerApp, redirect, status, headTags } = await buildServerApp({
+    const { IS_MOBILE } = res.locals.sd
+
+    const { ServerApp, headTags, redirect, scripts } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -21,6 +22,7 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
       return
     }
 
+    // Render layout
     const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_redesign.jade",
@@ -28,26 +30,20 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => (
-          <>
-            {headTags}
-            <Meta />
-          </>
-        ),
+        head: () => <>{headTags}</>,
         body: ServerApp,
       },
       locals: {
         ...res.locals,
-        assetPackage: "artwork2",
-        styledComponents: true,
+        assetPackage: "collections",
+        bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
+        scripts,
       },
     })
 
-    res.status(status).send(layout)
+    res.send(layout)
   } catch (error) {
     console.log(error)
     next(error)
   }
 })
-
-export default app

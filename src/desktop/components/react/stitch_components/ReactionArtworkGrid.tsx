@@ -1,7 +1,5 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { ContextProvider } from "reaction/Artsy"
-import { data as sd } from "sharify"
 import { mapToRelayConnection } from "./utils/mapToRelayConnection"
 import { ArtworkGrid } from "reaction/Components/ArtworkGrid"
 
@@ -45,10 +43,6 @@ export class ReactionArtworkGrid extends Component<Props, State> {
   render() {
     const artworks = mapToRelayConnection(this.state.artworks)
 
-    return (
-      <ContextProvider user={sd.CURRENT_USER}>
-        <ArtworkGrid {...this.props} artworks={artworks} useRelay={false} />
-      </ContextProvider>
-    )
+    return <ArtworkGrid {...this.props} artworks={artworks} useRelay={false} />
   }
 }

@@ -1,6 +1,6 @@
 export {
-  ReactionArtworkDetails as ArtworkDetails,
-} from "desktop/components/react/stitch_components/ReactionArtworkDetails"
+  ArtworkDetailsQueryRenderer as ArtworkDetails,
+} from "reaction/Apps/Artwork/Components/ArtworkDetails"
 
 export {
   ReactionArtworkArtistInfo as ArtworkArtistInfo,

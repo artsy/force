@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 
 interface Props {
   appUrl: string
-  headTags: JSX.Element
+  headTags: JSX.Element[]
 }
 
 export const Meta = (props: Props) => {
