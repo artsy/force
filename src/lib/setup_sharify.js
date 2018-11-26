@@ -45,6 +45,8 @@ sharify.data = _.extend(
     "ENABLE_EXPERIMENTAL_STITCH_INJECTION",
     "EOY_2016_ARTICLE",
     "EOY_2016",
+    "EOY_2018_ARTISTS",
+    "EOY_2018_CULTURE",
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
