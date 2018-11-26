@@ -46,7 +46,7 @@ describe("Article Routes", () => {
       rewire.__set__("sd", {
         ARTSY_EDITORIAL_CHANNEL: "123",
         APP_URL: "https://artsy.net",
-        EOY_2018_1: "5bf30690d8b9430baaf6c6de",
+        EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
       }),
       rewire.__set__("sailthru", {
         apiPost: sailthruApiPost,
@@ -400,7 +400,7 @@ describe("Article Routes", () => {
     describe("Custom editorial", () => {
       it("#isCustomEditorial returns key if article.id matches custom editorial list", () => {
         isCustomEditorial("5bf30690d8b9430baaf6c6de").should.containEql(
-          "EOY_2018_1"
+          "EOY_2018_ARTISTS"
         )
       })
 
@@ -422,7 +422,9 @@ describe("Article Routes", () => {
         req.path = "/article/foobar"
         index(req, res, next).then(() => {
           stitch.args[0][0].locals.bodyClass.should.containEql("body-no-header")
-          stitch.args[0][0].data.customEditorial.should.containEql("EOY_2018_1")
+          stitch.args[0][0].data.customEditorial.should.containEql(
+            "EOY_2018_ARTISTS"
+          )
           done()
         })
       })

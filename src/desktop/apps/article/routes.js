@@ -323,7 +323,7 @@ export const redirectPost = (req, res, next) =>
   res.redirect(301, req.url.replace("post", "article"))
 
 export const isCustomEditorial = id => {
-  const customIds = [sd.EOY_2018_1, sd.EOY_2018_2]
+  const customIds = [sd.EOY_2018_ARTISTS, sd.EOY_2018_CULTURE]
 
   if (customIds.includes(id)) {
     return findKey(sd, val => {
