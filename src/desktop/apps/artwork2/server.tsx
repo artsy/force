@@ -15,7 +15,13 @@ app.get(
   adminOnly,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { ServerApp, redirect, status, headTags } = await buildServerApp({
+      const {
+        ServerApp,
+        redirect,
+        status,
+        headTags,
+        scripts,
+      } = await buildServerApp({
         routes,
         url: req.url,
         context: buildServerAppContext(req, res),
@@ -54,7 +60,7 @@ app.get(
         locals: {
           ...res.locals,
           assetPackage: "artwork2",
-          styledComponents: true,
+          scripts,
         },
       })
 

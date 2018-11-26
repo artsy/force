@@ -17,7 +17,13 @@ app.get(
     try {
       const user = req.user && req.user.toJSON()
 
-      const { ServerApp, redirect, status, headTags } = await buildServerApp({
+      const {
+        ServerApp,
+        redirect,
+        status,
+        headTags,
+        scripts,
+      } = await buildServerApp({
         routes,
         url: req.url,
         context: buildServerAppContext(req, res),
@@ -73,6 +79,7 @@ app.get(
         locals: {
           ...res.locals,
           assetPackage: "artist",
+          scripts,
         },
         data: {
           jsonLD,

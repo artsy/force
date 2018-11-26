@@ -7,11 +7,17 @@ import { stitch } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
-const app = (module.exports = express())
+export const app = express()
 
 app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
   try {
-    const { ServerApp, headTags, redirect, status } = await buildServerApp({
+    const {
+      ServerApp,
+      headTags,
+      redirect,
+      status,
+      scripts,
+    } = await buildServerApp({
       routes,
       url: req.url,
       context: buildServerAppContext(req, res),
@@ -40,6 +46,7 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: "relay",
+        scripts,
       },
     })
 
