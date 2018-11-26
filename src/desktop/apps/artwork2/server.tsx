@@ -32,6 +32,7 @@ app.get(
         return
       }
 
+      // FIXME: Move this to Reaction
       const Container = styled.div`
         width: 100%;
         max-width: 1192px;
