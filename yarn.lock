@@ -19,20 +19,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.21.3":
+"@artsy/palette@2.21.3", "@artsy/palette@^2.21.3":
   version "2.21.3"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.21.3.tgz#a285779c58d846c248676128133fce2c1b4402a0"
   integrity sha512-ATKnUWsyfD2AmRASkQj9RjkWdEWwgAawzvIbeJSo7XYDU33KC53HTEf8iJahLqLY6kYXtMdfFL+kR2Vkee7XeQ==
-  dependencies:
-    rc-slider "^8.6.2"
-    react "^16.5.0"
-    react-spring "^5.7.2"
-    styled-system "^3.1.11"
-
-"@artsy/palette@^2.21.0":
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.21.0.tgz#3187ad4c277e444ca8dbaf7b1c47cc3e8ca3ebb0"
-  integrity sha512-me1hTzFkoJxQUuy8rmI0zzRArhbqSOfjb8jgRQTrTaZ2D52vJYWJ8T++obhplCzGFq1KxYwFZWEA/rW8iwHUBQ==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
@@ -63,12 +53,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
   integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@8.1.5":
-  version "8.1.5"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.1.5.tgz#651c4343dcb14845b192d4596dc3438bc996cee3"
-  integrity sha512-3weEYsWL16PflgWDlTuccUtYdRXCvOMcBs73R4NLXV87EDVb0LHrRGsgQCvKCjqU0D97CXSW9kUHG8atFGAhdw==
+"@artsy/reaction@8.1.6":
+  version "8.1.6"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.1.6.tgz#94187aa2310bf171f864b7dfd1ab8c5c53654c17"
+  integrity sha512-ZG6S4ejlhdpDek+0ujgkCdp3Y/OfmzUxY7fFUjtI/BabJTErItbFx/Y1fj01xzvmfQIGtbh/aJz6pVbAFQR7Xw==
   dependencies:
-    "@artsy/palette" "^2.21.0"
+    "@artsy/palette" "^2.21.3"
     "@artsy/react-responsive-media" "^2.0.0-beta.4"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
@@ -99,8 +89,8 @@
     react-overlays "^0.8.3"
     react-popover "^0.5.10"
     react-relay "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
-    react-relay-network-modern "^2.3.1"
-    react-relay-network-modern-ssr "^1.1.2"
+    react-relay-network-modern "^2.4.0"
+    react-relay-network-modern-ssr "^1.2.2"
     react-responsive-decorator "^0.0.1"
     react-router "^4.2.0"
     react-sizeme "^2.4.4"
@@ -120,6 +110,7 @@
     styled-system "^3.1.11"
     superagent "^3.6.3"
     trunc-html "^1.1.2"
+    underscore.string "^3.3.5"
     unstated "^2.1.1"
     unstated-debug "^0.2.0"
     url "^0.11.0"
@@ -12338,12 +12329,12 @@ react-redux@^5.0.7:
     react-is "^16.6.0"
     react-lifecycles-compat "^3.0.0"
 
-react-relay-network-modern-ssr@^1.1.2:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-relay-network-modern-ssr/-/react-relay-network-modern-ssr-1.2.1.tgz#3cb0391f9827c78b5f9bf6dff021d9f1bb4a3351"
-  integrity sha512-Y2erct+4h6qt9FdB/0sdieLC582l5w1KBgtsSQHIHqz5n7RrFNAcJRSrnUGQT/+NC2jMqvE/ud34DaRSrbi8ng==
+react-relay-network-modern-ssr@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-relay-network-modern-ssr/-/react-relay-network-modern-ssr-1.2.2.tgz#9f611872113cc91839600939b0d4edf97a4f8adc"
+  integrity sha512-35SHsvHS6IhZ7Sh9qXwjMhC5nZHhv5P9ERS5oti9u/B6GsQEC3cTwVCeSKIJNs+SxWkwQ6Z7DmzhPMWu1sNI0Q==
 
-react-relay-network-modern@^2.3.1:
+react-relay-network-modern@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.4.0.tgz#639ea0745545ab148d0c78714330e93dca7e031c"
   integrity sha512-LR/RhHcJclDCVEiwRhlRtf1iltSnbGSxS2rag+bAljMFJ0kOVSYUK3+NDPRbcHLRqbha1FuQXBVfHjjPE6jhMA==
@@ -15237,6 +15228,14 @@ underscore.string@^3.2.2:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.3.4.tgz#2c2a3f9f83e64762fdc45e6ceac65142864213db"
   integrity sha1-LCo/n4PmR2L9xF5s6sZRQoZCE9s=
+  dependencies:
+    sprintf-js "^1.0.3"
+    util-deprecate "^1.0.2"
+
+underscore.string@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.3.5.tgz#fc2ad255b8bd309e239cbc5816fd23a9b7ea4023"
+  integrity sha512-g+dpmgn+XBneLmXXo+sGlW5xQEt4ErkS3mgeN2GFbremYeMBSJKr9Wf2KJplQVaiPY/f7FN6atosWYNm9ovrYg==
   dependencies:
     sprintf-js "^1.0.3"
     util-deprecate "^1.0.2"
