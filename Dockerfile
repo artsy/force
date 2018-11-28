@@ -1,4 +1,4 @@
-FROM node:10.13.0
+FROM node:10.14.0
 ARG commit_hash
 RUN test -n "$commit_hash"
 
