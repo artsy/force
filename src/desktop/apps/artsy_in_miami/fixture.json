@@ -1,67 +1,80 @@
 {
+  "meta": {
+    "title": "Art Basel and more on Artsy | Miami Week 2018",
+    "description": "Artsy is your guide to Miami Week 2018. Explore the fairs, editorial coverage, Artsy events, and more—all in one place. December 4-9."
+  },
   "introduction": {
-    "title": "Miami Week<br />Dec 4-10, 2017",
-    "description": "For one week a year, Miami becomes a global destination for art, design, music and all things visual culture. Each fair brings together the most influential collectors, gallerists, designers, curators and critics from around the world in celebration of design culture and commerce."
+    "title": "Miami Art Week<br />Dec 4–9, 2018",
+    "description": "For one week a year, Miami becomes a global destination for art, design, music, and all things visual culture. Celebrate the year in art as collectors, art lovers, and curators come together for the most talked-about art fairs, openings, and events.",
+    "image": "https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg"
   },
   "fair_coverage": {
-    "title": "Visit the fairs",
+    "title": "Fair coverage launches November 28",
     "fairs": [
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/artb.jpg",
-        "site_url": "https://www.google.com"
+        "logo_url": "https://artsy-media-uploads.s3.amazonaws.com/1VDIT3dxaBp8gPPti_ms9g/Group%2019%402x.png",
+        "site_url": "https://www.artsy.net/art-basel-in-miami-beach-2018"
       },
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/designmiami.jpg",
-        "site_url": ""
+        "logo_url": "https://artsy-media-uploads.s3.amazonaws.com/ZCfE2UxeGuBpXGZyzbMiFA/INK%20Miami.png",
+        "site_url": "https://www.artsy.net/ink-miami-2018"
       },
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/ink.jpg",
-        "site_url": ""
+        "logo_url": "https://artsy-media-uploads.s3.amazonaws.com/smTFa2LbpHyYltL5BnKpDA/Art%20Miami.png",
+        "site_url": "https://www.artsy.net/art-miami-2018"
       },
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/artmiami.jpg",
-        "site_url": ""
+        "logo_url": "https://artsy-media-uploads.s3.amazonaws.com/NAsbMWiP_RGE9sxHDxUSxw/CONTEXT%20Miami.png",
+        "site_url": "https://www.artsy.net/context-art-miami-2018"
       },
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/context.jpg",
-        "site_url": ""
+        "logo_url": "https://artsy-media-uploads.s3.amazonaws.com/_MmDstUwULPLvMm4U8DiaQ/Aqua%20Miami.png",
+        "site_url": "https://www.artsy.net/aqua-art-miami-2018"
       },
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/aqua.jpg",
-        "site_url": ""
+        "logo_url": "https://artsy-media-uploads.s3.amazonaws.com/wzRMCWRdWY-grjY8dRARmw/PULSE%20Miami%20Beach.png",
+        "site_url": "https://www.artsy.net/pulse-miami-beach-2018"
       },
       {
-        "logo_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/pulse.jpg",
-        "site_url": ""
+        "logo_url": "http://files.artsy.net/images/untitled.png",
+        "site_url": "https://www.artsy.net/untitled-art-miami-beach-2018"
+      },
+      {
+        "logo_url": "http://files.artsy.net/images/nadamiami.png",
+        "site_url": "https://www.artsy.net/nada-miami-2018"
+      },
+      {
+        "logo_url": "http://files.artsy.net/images/scopemiami.png",
+        "site_url": "https://www.artsy.net/scope-miami-beach-2018"
       }
     ]
   },
   "artsy_in_miami": {
-    "title": "Artsy in Miami",
-    "banner_image_url": "https://d3vpvtm3t56z1n.cloudfront.net/images/artsyinmiami.jpg",
-    "description": "Collective Structures explores the relationship between individual artists and their mental landscape through a series of spatial installations. It will unfold in multiple chapters, across distinct spaces of the Bath Club, drawing on the historic building. The physical and sensory experiences strive to place viewers at a crossroads between current reality and imagined narrative.",
-    "public_viewing_date": "Public Viewing<br />December 7 12:00pm–6:00pm<br />The Bath Club<br />5937 Collins Ave, Miami Beach"
+    "title": null,
+    "banner_image_url": null,
+    "description": null,
+    "public_viewing_date": null
   },
   "prepare_for_fairs": {
-    "title": "Stories from Miami",
+    "title": "Preparing for the fairs",
     "articles": [
       {
-        "image_url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FlhQti2pXrsXDLlS8jJEIDg%252F_AR_3443.jpg&width=1100&quality=80",
-        "title": "The 20 Best Booths at Art Basel in Miami Beach",
-        "author": "ANNA LOUIE SUSSMAN",
-        "article_url": "https://www.artsy.net/article/artsy-editorial-the-20-best-booths-at-art-basel-in-miami-beach"
+        "article_url": "https://www.artsy.net/article/artsy-specialist-3-reasons-buy-art-fairs",
+        "author": "ARTSY SPECIALIST",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/6CJOf-XW90R0ML3xfUfwRQ/3reasons.jpg",
+        "title": "3 Reasons to Buy Art at Art Fairs"
       },
       {
-        "image_url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FvClMRePyeu9nCashzAgEeA%252F_AR_3326.jpg&width=1100&quality=80",
-        "title": "50 Must-See Artworks at Miami Art Week’s Satellite Fairs",
-        "author": "ARTSY EDITORIAL",
-        "article_url": "https://www.artsy.net/article/artsy-editorial-50-must-see-artworks-at-miami-art-week-s-satellite-fairs"
+        "article_url": "https://www.artsy.net/article/artsy-specialist-best-deal-art-fair",
+        "author": "ARTSY SPECIALIST",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/4EiO7x1TI7adea0PsfYKvw/bestdeal.jpg",
+        "title": " How to Get the Best Deal at an Art Fair"
       },
       {
-        "image_url": "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FOX8QZ5TCXVt8szczr7oWZQ%252Fammann.jpg&width=1100&quality=80",
-        "title": "The 10 Best Booths at Design Miami/",
-        "author": "ARTSY EDITORIAL",
-        "article_url": "https://www.artsy.net/article/artsy-editorial-the-10-best-booths-at-design-miami"
+        "article_url": "https://www.artsy.net/article/artsy-specialist-prepare-first-art-fair",
+        "author": "ARTSY SPECIALIST",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/UN_o-HYwLY0Y4M7zlgdoVQ/prepareforfairs.jpg",
+        "title": "How to Prepare for Your First Art Fair"
       }
     ]
   }

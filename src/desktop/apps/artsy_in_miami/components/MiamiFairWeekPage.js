@@ -86,7 +86,7 @@ export default ({
             <div>
               <img
                 style={{ marginTop: 30, marginBottom: 20, maxWidth: "100%" }}
-                src="https://d3vpvtm3t56z1n.cloudfront.net/images/hero.jpg"
+                src={introduction.image}
               />
             </div>
           </ReveredColumnOnMobile>
