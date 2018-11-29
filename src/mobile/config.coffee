@@ -38,7 +38,6 @@ module.exports =
   MAX_POLLS_FOR_MAX_BIDS: 20
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: 'https://metaphysics-production.artsy.net'
-  MIXPANEL_ID: null
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PORT: 3003
