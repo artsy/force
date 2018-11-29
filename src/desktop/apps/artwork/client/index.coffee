@@ -1,5 +1,5 @@
 { extend, map, compact } = require 'underscore'
-{ AUCTION, CLIENT } = require('sharify').data
+{ AUCTION, CLIENT, INTERCOM_BUYER_APP_ID, INTERCOM_BUYER_ENABLED, INTERCOM_BUYER_HASH } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 { recordArtworkView } = require '../../../../lib/components/record_artwork_view'
 metaphysics = require '../../../../lib/metaphysics.coffee'
@@ -160,10 +160,28 @@ module.exports =
           user: CurrentUser.orNull()
 
   init: ->
+    currentUser = CurrentUser.orNull()
     setCookie(CLIENT._id)
-    recordArtworkView(CLIENT._id, CurrentUser.orNull())
+    recordArtworkView(CLIENT._id, currentUser)
     splitTest('artwork_sidebar_pageviews').view() if CLIENT.pageviews?
     exec sharedInit
+
+    # Intercom setup
+    hasIntercomLabFeature = currentUser?.hasLabFeature('Intercom on BNMO Works')
+    hasIntercomQueryParam = window.location.search.includes('showIntercom')
+    shouldUserSeeIntercom = hasIntercomLabFeature || hasIntercomQueryParam
+    intercomEnabled = INTERCOM_BUYER_ENABLED && INTERCOM_BUYER_APP_ID
+    isCommercialWork = CLIENT.is_acquireable || CLIENT.is_offerable
+    if isCommercialWork && intercomEnabled && shouldUserSeeIntercom
+      { intercom } = require('../../../components/intercom/index')
+      if currentUser?
+        userData =
+          name: currentUser.get('name')
+          email: currentUser.get('email')
+          userHash: INTERCOM_BUYER_HASH
+        intercom(INTERCOM_BUYER_APP_ID, userData)
+      else
+        intercom(INTERCOM_BUYER_APP_ID)
 
     context = CLIENT.context or {}
     { query, init, variables } = setup(context)

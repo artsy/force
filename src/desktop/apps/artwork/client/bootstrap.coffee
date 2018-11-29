@@ -6,3 +6,5 @@ module.exports = (sd, { artwork }) ->
     href: artwork.href
     artists: artwork.artists
     pageviews: artwork.pageviews
+    is_acquireable: artwork.is_acquireable
+    is_offerable: artwork.is_offerable

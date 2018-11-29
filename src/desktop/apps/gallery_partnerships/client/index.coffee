@@ -1,5 +1,5 @@
 initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
-sd = require('sharify').data
+{ CURRENT_USER, INTERCOM_SELLER_APP_ID, INTERCOM_SELLER_ENABLED } = require('sharify').data
 
 module.exports.init = ->
   if sd.USER_AGENT.match('iphone')
@@ -8,10 +8,11 @@ module.exports.init = ->
     $('.gallery-partnerships2__chat__video').hide()
     $('.gallery-partnerships2__chat__fallback_image').show()
 
-  isUserAdmin = sd?.CURRENT_USER?.type == 'Admin'
+  isUserAdmin = CURRENT_USER?.type == 'Admin'
 
-  if sd.INTERCOM_ENABLED && sd.INTERCOM_APP_ID && !isUserAdmin
-    intercom = require('./intercom')
+  if INTERCOM_SELLER_ENABLED && INTERCOM_SELLER_APP_ID && !isUserAdmin
+    { intercom } = require('../../../components/intercom/index')
+    intercom(INTERCOM_SELLER_APP_ID)
 
   initCarousel $('.js-partner-stats-slideshow'), { autoPlay: 2500, wrapAround: true, draggable: false }
   initCarousel $('.js-partner-testimonials-slideshow'), { autoPlay: 8000, wrapAround: true, prevNextButtons: false }

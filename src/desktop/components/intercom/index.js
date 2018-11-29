@@ -1,9 +1,16 @@
 import { data as sd } from "sharify"
 
-window.intercomSettings = {
-  app_id: sd.INTERCOM_APP_ID,
-}
-;(function() {
+export const intercom = function(appID, userData = null) {
+  window.intercomSettings = {
+    app_id: appID,
+  }
+
+  // Logged-in user w/ identity verification
+  if (userData) {
+    window.intercomSettings.name = userData.name
+    window.intercomSettings.email = userData.email
+    window.intercomSettings.user_hash = userData.userHash
+  }
   var w = window
   var ic = w.Intercom
   if (typeof ic === "function") {
@@ -23,7 +30,7 @@ window.intercomSettings = {
       var s = d.createElement("script")
       s.type = "text/javascript"
       s.async = true
-      s.src = `https://widget.intercom.io/widget/${sd.INTERCOM_APP_ID}`
+      s.src = `https://widget.intercom.io/widget/${appID}`
       var x = d.getElementsByTagName("script")[0]
       x.parentNode.insertBefore(s, x)
     }
@@ -33,4 +40,4 @@ window.intercomSettings = {
       w.addEventListener("load", l, false)
     }
   }
-})()
+}

@@ -8,6 +8,7 @@ splitTest = require '../../components/split_test/index.coffee'
 { extend } = require 'underscore'
 { stringifyJSONForWeb } = require('../../components/util/json.coffee')
 { convertArtworkToJSONLD } = require('./helper.js')
+crypto = require 'crypto'
 
 query = """
   query artwork($id: String!) {
@@ -88,6 +89,9 @@ bootstrap = ->
       res.locals.sd.QUERY = req.query
       res.locals.jsonLD = stringifyJSONForWeb(convertArtworkToJSONLD(data.artwork))
       res.locals.sd.ARTWORK = data.artwork
+
+      if req.user?
+        res.locals.sd.INTERCOM_BUYER_HASH = crypto.createHmac('sha256', sd.INTERCOM_BUYER_APP_SECRET).update(req.user.get('email')).digest('hex')
 
       # If a saleId is found, then check to see if user has been qualified for
       # bidding so that bid button UI is correct from the server down.
