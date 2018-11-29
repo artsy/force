@@ -19,20 +19,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.22.0":
+"@artsy/palette@2.22.0", "@artsy/palette@^2.22.0":
   version "2.22.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.22.0.tgz#3f9a6b203e301cf82a63781cc861e77387997670"
   integrity sha512-0hp+FwqMTL9aeZGzC3rYAPSLLEaQQV99klqP9HA+b+9lxfAZZEDSHtOWqNUk3dyXH1x/Hut4qekHti261XX3JA==
-  dependencies:
-    rc-slider "^8.6.2"
-    react "^16.5.0"
-    react-spring "^5.7.2"
-    styled-system "^3.1.11"
-
-"@artsy/palette@^2.21.3":
-  version "2.21.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.21.3.tgz#a285779c58d846c248676128133fce2c1b4402a0"
-  integrity sha512-ATKnUWsyfD2AmRASkQj9RjkWdEWwgAawzvIbeJSo7XYDU33KC53HTEf8iJahLqLY6kYXtMdfFL+kR2Vkee7XeQ==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
@@ -63,12 +53,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
   integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@8.1.9":
-  version "8.1.9"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.1.9.tgz#97ff60790ec54c93ddf5768f5b6b11d42890432e"
-  integrity sha512-/LYSzRRQZemy6sfRJZ2MS7S4stXaFzA7HUeRNZqQFHWGOJUzl49wz8ecawZHT4tPFgmS/SCPC65V7xBjd8L7zw==
+"@artsy/reaction@8.1.10":
+  version "8.1.10"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.1.10.tgz#bbcd8a9eaacf42de14f0c8cacb26b8991fd77b61"
+  integrity sha512-82eQKoexT8KsOq2tjI+AVLJyZPtJSYBxACe8UOO6furchwa05+BwPCMSlW/557h+X2HcbHsO3P8PEA0J6aquoA==
   dependencies:
-    "@artsy/palette" "^2.21.3"
+    "@artsy/palette" "^2.22.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.4"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
