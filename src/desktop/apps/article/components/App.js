@@ -16,6 +16,7 @@ export default hot(module)(
   class App extends React.Component {
     static propTypes = {
       article: PropTypes.object,
+      customEditorial: PropTypes.string,
     }
 
     getArticleLayout = () => {
