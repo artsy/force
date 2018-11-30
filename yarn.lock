@@ -53,15 +53,16 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
   integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
 
-"@artsy/reaction@8.1.10":
-  version "8.1.10"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.1.10.tgz#bbcd8a9eaacf42de14f0c8cacb26b8991fd77b61"
-  integrity sha512-82eQKoexT8KsOq2tjI+AVLJyZPtJSYBxACe8UOO6furchwa05+BwPCMSlW/557h+X2HcbHsO3P8PEA0J6aquoA==
+"@artsy/reaction@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.2.0.tgz#099bb7c9adbbf99d6fa4ff49cceb9a0352f25c8d"
+  integrity sha512-otUGd1Xb/Yb8XuNunyRs0/B0xY66WwJa3uCeft9y0CD19El/cjw7RQVEH6W+Oopvxl2zPvhCo2KAGFWNx1Lipg==
   dependencies:
     "@artsy/palette" "^2.22.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.4"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
+    currency.js "^1.2.1"
     farce "^0.2.6"
     formik "^0.11.11"
     found "^0.3.14"
@@ -4275,6 +4276,11 @@ csurf@^1.8.3:
     cookie-signature "1.0.6"
     csrf "~3.0.3"
     http-errors "~1.5.0"
+
+currency.js@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/currency.js/-/currency.js-1.2.1.tgz#18d42ac74d833795051f4a310c83f041013a882f"
+  integrity sha512-7t0jYDZeQYCcaxpgwNOiBz8GaG/qdqTdo+kcTYgCuCNx1p2jLMpJt8h34TJ5INtN9jhryAiLK/atmjwUf13t4A==
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
