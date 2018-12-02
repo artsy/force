@@ -10,6 +10,11 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
+"@artsy/detect-responsive-traits@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.1.tgz#3d83384bf3323fbd4679a2d73155ab85dc73e850"
+  integrity sha512-jqrC40t1P6w9zIvsJJhWe8pxLWdEC/kJQmDc4/b3vAnGy1EsJpcIJGUys37kwut7tDYPiypUF06SImtZVLGQnQ==
+
 "@artsy/express-reloadable@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.4.0.tgz#71db6ca8ac274b2c7a2f38eb633794ce8f9e90fd"
@@ -58,18 +63,19 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^2.0.0-beta.4":
-  version "2.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.4.tgz#ed70fbee99f6e2b167ad26f599ce4e5b4ea1f4b0"
-  integrity sha512-w0Aa92ENdshUoHoxRvlsgggAIZ5yOc/jDW141Rbl3IjJZuGe03lgaPUlhVZe+ohqEiB/JHIA+Hjmq8RPHc7WDw==
+"@artsy/react-responsive-media@^2.0.0-beta.5":
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
+  integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.2.0.tgz#099bb7c9adbbf99d6fa4ff49cceb9a0352f25c8d"
-  integrity sha512-otUGd1Xb/Yb8XuNunyRs0/B0xY66WwJa3uCeft9y0CD19El/cjw7RQVEH6W+Oopvxl2zPvhCo2KAGFWNx1Lipg==
+"@artsy/reaction@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.0.0.tgz#c7bba65181892cd8ae9f22241c82fa75ed6b59c9"
+  integrity sha512-B695lZ39JK5v77PnLpxliZ2AcNzvm31gaagMFyLYP3XrQIs8PAPnj5lcwgUAMPVnVTQjozh23i6JvraCVuVYZQ==
   dependencies:
+    "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/palette" "^2.22.0"
-    "@artsy/react-responsive-media" "^2.0.0-beta.4"
+    "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
