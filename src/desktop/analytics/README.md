@@ -139,7 +139,7 @@ Open Chrome dev tools `cmd + opt + i`, click on the "Network" tab, click the "Fi
 
 ![](https://s3.amazonaws.com/f.cl.ly/items/2Z2K0X1E3d0O141D1d1n/Image%202015-04-14%20at%201.09.48%20PM.png)
 
-Filter the calls according the service you need to debug by typing in the "Filter" input on the left, e.g. "mixpanel". Then click on a network call you think is reponsible for the even you want to track. This will bring up a panel that looks like this:
+Filter the calls according the service you need to debug by typing in the "Filter" input on the left, e.g. "segment". Then click on a network call you think is reponsible for the even you want to track. This will bring up a panel that looks like this:
 
 ![](https://s3.amazonaws.com/f.cl.ly/items/1p3M3N3o3O3z0s0P2C28/Image%202015-04-14%20at%201.20.24%20PM.png)
 

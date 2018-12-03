@@ -1,7 +1,12 @@
 _ = require 'underscore'
 require 'hulk-editor'
 require 'jquery-ui'
-require 'blueimp-file-upload'
+
+# FIXME: When running `test/client.coffee` jQuery dep does not resolve. Seems to
+# be issue related to UMD and benv. This dep isn't necessary for test, however.
+if process.env.NODE_ENV != 'test'
+  require 'blueimp-file-upload'
+
 require 'jquery.iframe-transport'
 GeminiForm = require '../../../components/gemini_form/view.coffee'
 
