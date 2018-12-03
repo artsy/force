@@ -10,13 +10,22 @@ module.exports =
     fair.is_published and fair.profile?.is_published
 
   isNotOver: (fair) ->
-    Date.parse(fair.end_at) > new Date
+    date = new Date
+    date.setHours(0)
+    date.setMinutes(0)
+    date.setMilliseconds(0)
+    Date.parse(fair.end_at) > date
 
   isPast: (fair) ->
     @isEligible(fair) and @isOver(fair)
 
   isOver: (fair) ->
-    Date.parse(fair.end_at) < new Date
+    date = new Date
+    date.setHours(0)
+    date.setMinutes(0)
+    date.setMilliseconds(0)
+    Date.parse(fair.end_at) < date
+
 
   isUpcoming: (fair) ->
     @isEventuallyEligible(fair) and @isNotOver(fair)

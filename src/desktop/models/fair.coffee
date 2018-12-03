@@ -216,17 +216,19 @@ module.exports = class Fair extends Backbone.Model
     @get('published') and
     not @related().profile.get('published')
 
-  hasStarted: ->
-    Date.parse(@get('start_at')) < new Date
-
-  hasNotStarted: ->
-    Date.parse(@get('start_at')) > new Date
-
   isNotOver: ->
-    Date.parse(@get('end_at')) > new Date
+    date = new Date
+    date.setHours(0)
+    date.setMinutes(0)
+    date.setMilliseconds(0)
+    Date.parse(@get('end_at')) > date
 
   isOver: ->
-    Date.parse(@get('end_at')) < new Date
+    date = new Date
+    date.setHours(0)
+    date.setMinutes(0)
+    date.setMilliseconds(0)
+    Date.parse(@get('end_at')) < date
 
   isCurrent: ->
     @isEligible() and @isNotOver()
