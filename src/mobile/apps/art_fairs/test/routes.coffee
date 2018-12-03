@@ -17,11 +17,11 @@ describe '#index', ->
     profile = { is_published: true, icon: { url: "https://www.example.com/cat.jpg" } }
     unpublished_profile = { is_published: false, icon: { url: "https://www.example.com/cat.jpg" } } 
     @currentFairs = _.times 2, ->
-      fabricate('fair', profile: profile, id: _.uniqueId('current'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(11, 'days'))
+      fabricate('fair', profile: profile, id: _.uniqueId('current'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'))
     @pastFairs = _.times 4, ->
-      fabricate('fair', profile: profile, id: _.uniqueId('past'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(11, 'days'))
+      fabricate('fair', profile: profile, id: _.uniqueId('past'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
     @upcomingFairs = _.times 3, ->
-      fabricate('fair', profile: unpublished_profile, id: _.uniqueId('upcoming'), is_published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(11, 'days'))
+      fabricate('fair', profile: unpublished_profile, id: _.uniqueId('upcoming'), is_published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(10, 'days'))
     @invalidFairs = [
       fabricate 'fair', id: _.uniqueId('invalid'), is_published: false
       fabricate 'fair', id: _.uniqueId('invalid'), is_published: true, has_full_feature: false, has_listing: false

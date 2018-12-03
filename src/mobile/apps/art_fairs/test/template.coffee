@@ -14,13 +14,13 @@ describe 'Art fairs template', ->
     unpublished_profile = { is_published: false, icon: { url: "https://www.example.com/cat.jpg" } }
     location = { city: 'New York', state: 'NY', country: 'US' }
     @currentFairs = _.times 2, ->
-      fair = fabricate('fair', location: location, image: { url: { "https://www.example.com/cat.jpg" } }, profile: profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(11, 'days'))
+      fair = fabricate('fair', location: location, image: { url: { "https://www.example.com/cat.jpg" } }, profile: profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'))
       fair
     @pastFairs = _.times 4, ->
-      fair = fabricate('fair', location: location, profile: profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(11, 'days'))
+      fair = fabricate('fair', location: location, profile: profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
       fair
     @upcomingFairs = _.times 3, ->
-      fabricate('fair', profile: unpublished_profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(11, 'days'))
+      fabricate('fair', profile: unpublished_profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(10, 'days'))
 
 
   describe 'with currentFairs', ->
