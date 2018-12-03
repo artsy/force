@@ -90,7 +90,7 @@ bootstrap = ->
       res.locals.jsonLD = stringifyJSONForWeb(convertArtworkToJSONLD(data.artwork))
       res.locals.sd.ARTWORK = data.artwork
 
-      if req.user?
+      if req.user? && sd.INTERCOM_BUYER_APP_SECRET
         res.locals.sd.INTERCOM_BUYER_HASH = crypto.createHmac('sha256', sd.INTERCOM_BUYER_APP_SECRET).update(req.user.get('email')).digest('hex')
 
       # If a saleId is found, then check to see if user has been qualified for
