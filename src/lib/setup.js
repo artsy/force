@@ -44,6 +44,7 @@ import backboneErrorHelper from "./middleware/backbone_error_helper"
 import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
 import marketingModals from "./middleware/marketing_modals"
+import { addIntercomUserHash } from "./middleware/intercom"
 import config from "../config"
 import compression from "compression"
 
@@ -221,6 +222,7 @@ export default function(app) {
   app.use(logger)
   app.use(unsupportedBrowserCheck)
   app.use(splitTestMiddleware)
+  app.use(addIntercomUserHash)
 
   if (DD_APM_ENABLED) {
     ddTracer.init({
