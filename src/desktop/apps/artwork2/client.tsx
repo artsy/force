@@ -1,5 +1,6 @@
 import { buildClientApp } from "reaction/Artsy/Router/client"
 import { routes } from "reaction/Apps/Artwork/routes"
+import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled-components"
@@ -17,7 +18,13 @@ const Container = styled.div`
   margin: auto;
 `
 
-buildClientApp({ routes })
+buildClientApp({
+  routes,
+  context: {
+    user: sd.CURRENT_USER,
+    mediator,
+  },
+})
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <Container>
