@@ -27,7 +27,7 @@ describe 'Fairs routes', ->
       delete fair.in_row
 
   describe '#index', ->
-    xdescribe 'with active current fairs', ->
+    describe 'with active current fairs', ->
       beforeEach ->
         @res = render: sinon.stub(), locals: sd: sinon.stub()
         @fairs = _.flatten [

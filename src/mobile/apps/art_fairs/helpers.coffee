@@ -1,5 +1,6 @@
 _ = require 'underscore'
 DateHelpers = require '../../components/util/date_helpers.coffee'
+moment = require 'moment'
 
 module.exports = 
 
@@ -10,22 +11,21 @@ module.exports =
     fair.is_published and fair.profile?.is_published
 
   isNotOver: (fair) ->
-    date = new Date
-    date.setHours(0)
-    date.setMinutes(0)
-    date.setMilliseconds(0)
-    Date.parse(fair.end_at) > date
+    endOfFair = moment.utc(fair.end_at)
+    offset = endOfFair.utcOffset() 
+    endOfFair = endOfFair.endOf("day")
+    now = moment().utcOffset(offset)
+    now.diff(endOfFair) < 0
 
   isPast: (fair) ->
     @isEligible(fair) and @isOver(fair)
 
   isOver: (fair) ->
-    date = new Date
-    date.setHours(0)
-    date.setMinutes(0)
-    date.setMilliseconds(0)
-    Date.parse(fair.end_at) < date
-
+    endOfFair = moment.utc(fair.end_at)
+    offset = endOfFair.utcOffset() 
+    endOfFair = endOfFair.endOf("day")
+    now = moment().utcOffset(offset)
+    now.diff(endOfFair) > 0
 
   isUpcoming: (fair) ->
     @isEventuallyEligible(fair) and @isNotOver(fair)
