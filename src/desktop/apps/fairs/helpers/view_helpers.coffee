@@ -53,21 +53,15 @@ module.exports =
     fair.is_published and fair.profile?.is_published and fair.profile?.icon?.url
 
   isNotOver: (fair) ->
-    endOfFair = moment.utc(fair.end_at)
-    offset = endOfFair.utcOffset() 
-    endOfFair = endOfFair.endOf("day")
-    now = moment().utcOffset(offset)
-    now.diff(endOfFair) < 0
+    not @isOver(fair)
 
   isPast: (fair) ->
     @isEligible(fair) and @isOver(fair)
 
   isOver: (fair) ->
-    endOfFair = moment.utc(fair.end_at)
-    offset = endOfFair.utcOffset() 
-    endOfFair = endOfFair.endOf("day")
-    now = moment().utcOffset(offset)
-    now.diff(endOfFair) > 0
+    endOfFair = moment.utc(fair.end_at).endOf("day")
+    now = moment()
+    now.isAfter(endOfFair)
 
   isUpcoming: (fair) ->
     @isEventuallyEligible(fair) and @isNotOver(fair)

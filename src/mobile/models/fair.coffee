@@ -139,18 +139,12 @@ module.exports = class Fair extends Backbone.Model
     (not @related().profile.get('published'))
 
   isNotOver: ->
-    endOfFair = moment.utc(@get('end_at'))
-    offset = endOfFair.utcOffset() 
-    endOfFair = endOfFair.endOf("day")
-    now = moment().utcOffset(offset)
-    now.diff(endOfFair) < 0
+    not @isOver
 
   isOver: ->
-    endOfFair = moment.utc(@get('end_at'))
-    offset = endOfFair.utcOffset() 
-    endOfFair = endOfFair.endOf("day")
-    now = moment().utcOffset(offset)
-    now.diff(endOfFair) > 0
+    endOfFair = moment.utc(@get('end_at')).endOf("day")
+    now = moment()
+    now.isAfter(endOfFair)
 
   isCurrent: ->
     @isEligible() and @isNotOver()
