@@ -123,20 +123,15 @@ workflows:
       - test:
           filters:
             branches:
-              ignore:
-                - staging
-                - release
+              ignore: staging
       - acceptance:
           filters:
             branches:
-              ignore:
-                - staging
-                - release
+              ignore: staging
       - build:
           filters:
             branches:
-              ignore:
-                - staging
+              ignore: staging
           requires:
             - test
             - acceptance
