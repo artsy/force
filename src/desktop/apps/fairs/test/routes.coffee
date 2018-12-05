@@ -56,9 +56,6 @@ describe 'Fairs routes', ->
       it 'fetches the fairs and renders the index template', ->
         routes.index {}, @res
           .then =>
-            @res.render.args[0][1].upcomingFairs.map((fair) -> 
-              console.log("#{fair.start_at} #{fair.end_at} - #{fair.id}")
-            )
             @res.render.args[0][1].currentFairRows.should.eql []
             @res.render.args[0][1].upcomingFairs.should.eql @upcomingFairs
             @res.render.args[0][1].pastFairs.should.eql @pastFairs
