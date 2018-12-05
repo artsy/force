@@ -18,8 +18,9 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
       status,
       scripts,
     } = await buildServerApp({
-      routes,
+      routes: routes as any,
       url: req.url,
+      userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
     })
 

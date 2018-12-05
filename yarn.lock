@@ -10,6 +10,11 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
+"@artsy/detect-responsive-traits@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.1.tgz#3d83384bf3323fbd4679a2d73155ab85dc73e850"
+  integrity sha512-jqrC40t1P6w9zIvsJJhWe8pxLWdEC/kJQmDc4/b3vAnGy1EsJpcIJGUys37kwut7tDYPiypUF06SImtZVLGQnQ==
+
 "@artsy/express-reloadable@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.4.0.tgz#71db6ca8ac274b2c7a2f38eb633794ce8f9e90fd"
@@ -58,18 +63,19 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-responsive-media@^2.0.0-beta.4":
+"@artsy/react-responsive-media@^2.0.0-beta.5":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-8.2.0.tgz#099bb7c9adbbf99d6fa4ff49cceb9a0352f25c8d"
-  integrity sha512-otUGd1Xb/Yb8XuNunyRs0/B0xY66WwJa3uCeft9y0CD19El/cjw7RQVEH6W+Oopvxl2zPvhCo2KAGFWNx1Lipg==
+"@artsy/reaction@9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.0.tgz#0024cda16551bb390b16f5b539ba2021d3c08d20"
+  integrity sha512-coECfNS/wYhYrK8fcsTQWa4S681nkYBnSHahIgbS9Fu3a+oHON1G/tK1C/U8ms82UxffUKudvZiC1+kbQrTNVw==
   dependencies:
+    "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/palette" "^2.22.0"
-    "@artsy/react-responsive-media" "^2.0.0-beta.4"
+    "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
@@ -3464,6 +3470,11 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
+  dependencies:
+    arr-union "^3.1.0"
+    define-property "^0.2.5"
+    isobject "^3.0.0"
+    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"
@@ -14129,7 +14140,7 @@ standard@^9.0.0:
     eslint-plugin-standard "~2.0.1"
     standard-engine "~5.4.0"
 
-static-extend@^0.1.2:
+static-extend@^0.1.1, static-extend@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=
