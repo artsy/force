@@ -10,6 +10,7 @@ const User = require("desktop/models/user.coffee")
 const Artwork = require("desktop/models/artwork.coffee")
 const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
+const openAuctionBuyerPremium = require("desktop/apps/artwork/components/auction/components/buyers_premium/index.coffee")
 
 // FIXME: Move this to Reaction
 const Container = styled.div`
@@ -76,4 +77,8 @@ mediator.on("openAuctionAskSpecialistModal", options => {
       })
     })
   }
+})
+
+mediator.on("openAuctionBuyerPremium", options => {
+  openAuctionBuyerPremium(options.auctionId)
 })
