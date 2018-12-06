@@ -6,8 +6,9 @@ if artwork.auction
         .artwork-auction-bid-module__current-bid
           include ./templates/bid.jade
 
-        .artwork-auction-bid-module__bid-form
-          include ./templates/bid_button.jade
+        if !artwork.auction.is_preview
+          .artwork-auction-bid-module__bid-form
+            include ./templates/bid_button.jade
 
         if artwork.auction.is_with_buyers_premium
           .artwork-auction-buyers-premium This work has a&nbsp;
