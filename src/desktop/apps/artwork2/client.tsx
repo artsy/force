@@ -42,22 +42,28 @@ if (module.hot) {
   module.hot.accept()
 }
 
-mediator.on("openBuyNowAskSpecialistModal", options => {
-  const artworkId = options.artworkId
-  if (artworkId) {
-    const user = User.instantiate()
-    const inquiry = new ArtworkInquiry({ notification_delay: 600 })
-    const artwork = new Artwork({ id: artworkId })
+const openInquireableModal = (artworkId: string, { ask_specialist }) => {
+  if (!artworkId) return
+  const user = User.instantiate()
+  const inquiry = new ArtworkInquiry({ notification_delay: 600 })
+  const artwork = new Artwork({ id: artworkId })
 
-    artwork.fetch().then(() => {
-      openInquiryQuestionnaireFor({
-        user,
-        artwork,
-        inquiry,
-        ask_specialist: true,
-      })
+  artwork.fetch().then(() => {
+    openInquiryQuestionnaireFor({
+      user,
+      artwork,
+      inquiry,
+      ask_specialist,
     })
-  }
+  })
+}
+
+mediator.on("launchInquiryFlow", options => {
+  openInquireableModal(options.artworkId, { ask_specialist: false })
+})
+
+mediator.on("openBuyNowAskSpecialistModal", options => {
+  openInquireableModal(options.artworkId, { ask_specialist: true })
 })
 
 mediator.on("openAuctionAskSpecialistModal", options => {
