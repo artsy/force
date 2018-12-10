@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.23.0":
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.23.0.tgz#1b1231f0f17b1022a6b663091a959ffd383aa2f2"
-  integrity sha512-cVgnr7PhPm0kF1BRJfYX+Eb1Woiv8krpOTPYxojppliW9fusi3MgHda6EH2ga0RL+d7mRUJSQbgR1LxMEphjGA==
+"@artsy/palette@2.23.1":
+  version "2.23.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.23.1.tgz#f652dea125ff0e88774f62cde8efb153c1ab4362"
+  integrity sha512-UeQIaYG42rGGuo3ufIq9xqMc0fEc40iZ2ZoZ89wOAgLWds2d6BLemSzclYLuPyAL+QQTHXr1ams196qTCGqoYA==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
@@ -68,10 +68,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.0.tgz#0024cda16551bb390b16f5b539ba2021d3c08d20"
-  integrity sha512-coECfNS/wYhYrK8fcsTQWa4S681nkYBnSHahIgbS9Fu3a+oHON1G/tK1C/U8ms82UxffUKudvZiC1+kbQrTNVw==
+"@artsy/reaction@9.1.3":
+  version "9.1.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.3.tgz#feccf12fcebca666a3cb731dcd07a1f73aeb1221"
+  integrity sha512-hm24UfnHubosRkHAkQgV99oUGAS1duftip/mTl+PhM7jiKAmSIW3oizhv1ZPOUFbFQdLAV9hNQ9NJOVvQ3k1Lw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/palette" "^2.22.0"
@@ -3470,6 +3470,11 @@ class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
   integrity sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==
+  dependencies:
+    arr-union "^3.1.0"
+    define-property "^0.2.5"
+    isobject "^3.0.0"
+    static-extend "^0.1.1"
 
 classnames@^2.2.5:
   version "2.2.5"
@@ -12306,8 +12311,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
+  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-markdown@^2.5.0:
