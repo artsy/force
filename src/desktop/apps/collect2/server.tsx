@@ -15,6 +15,7 @@ const index = async (req, res, next) => {
     const { headTags, ServerApp, redirect, scripts } = await buildServerApp({
       routes,
       url: req.url,
+      userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
     })
 

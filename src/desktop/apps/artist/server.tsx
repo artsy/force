@@ -26,6 +26,7 @@ app.get(
       } = await buildServerApp({
         routes,
         url: req.url,
+        userAgent: req.header("User-Agent"),
         context: buildServerAppContext(req, res),
       })
 

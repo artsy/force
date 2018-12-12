@@ -2,12 +2,13 @@
 if artwork.auction
   .js-artwork-auction-container
     .artwork-auction-bid-module
-      if artwork.auction.is_open && !artwork.auction.is_live_open && !artwork.is_sold && !helpers.moment().isAfter(artwork.auction.end_at)
+      if artwork.auction.is_preview || artwork.auction.is_open && !artwork.auction.is_live_open && !artwork.is_sold && !helpers.moment().isAfter(artwork.auction.end_at)
         .artwork-auction-bid-module__current-bid
           include ./templates/bid.jade
 
-        .artwork-auction-bid-module__bid-form
-          include ./templates/bid_button.jade
+        if !artwork.auction.is_preview
+          .artwork-auction-bid-module__bid-form
+            include ./templates/bid_button.jade
 
         if artwork.auction.is_with_buyers_premium
           .artwork-auction-buyers-premium This work has a&nbsp;

@@ -11,7 +11,7 @@ module.exports.init = ->
   isUserAdmin = CURRENT_USER?.type == 'Admin'
 
   if INTERCOM_SELLER_ENABLED && INTERCOM_SELLER_APP_ID && !isUserAdmin
-    { intercom } = require('../../../components/intercom/index')
+    { intercom } = require('../../../../lib/components/intercom/index')
     intercom(INTERCOM_SELLER_APP_ID)
 
   initCarousel $('.js-partner-stats-slideshow'), { autoPlay: 2500, wrapAround: true, draggable: false }
