@@ -34,16 +34,6 @@
     react-spring "^5.7.2"
     styled-system "^3.1.11"
 
-"@artsy/palette@^2.22.0":
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.22.0.tgz#3f9a6b203e301cf82a63781cc861e77387997670"
-  integrity sha512-0hp+FwqMTL9aeZGzC3rYAPSLLEaQQV99klqP9HA+b+9lxfAZZEDSHtOWqNUk3dyXH1x/Hut4qekHti261XX3JA==
-  dependencies:
-    rc-slider "^8.6.2"
-    react "^16.5.0"
-    react-spring "^5.7.2"
-    styled-system "^3.1.11"
-
 "@artsy/passport@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.0.tgz#06120530d7891de0e4b2c8d8163bb088dddce4c2"
@@ -68,13 +58,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@9.1.8":
-  version "9.1.8"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.8.tgz#aefb93535b202e65d804c9d5e123b7d71a4a9d97"
-  integrity sha512-VJZcJmrJhzHGTevvOAbAVYSei0RmDcDZVcsdDdPkXHy8xDVzMu7kM/P2C/3qJtNhPJA9BaZsEX25w8jJCAYgTQ==
+"@artsy/reaction@9.1.10":
+  version "9.1.10"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.10.tgz#ef7eed713a1834506e98ac59ba51ae97224d63e0"
+  integrity sha512-vzQ9LvXLsQaGxIzbvX+JBD+qTKBCRdYR2KwTjpey4cpGiM9rEZnkHgwBKC4GSWUiIkV71credHEN2Gx5k0fltg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
-    "@artsy/palette" "^2.22.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
