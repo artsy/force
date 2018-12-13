@@ -13,7 +13,6 @@ Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 Raven = require 'raven-js'
 sd = require('sharify').data
-quicklink = require('quicklink').default
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
@@ -25,7 +24,6 @@ globalReactModules = require('./global_react_modules.tsx')
 { initModalManager } = require('../../desktop/apps/auth2/client/index')
 
 module.exports = ->
-  quicklink()
   setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
