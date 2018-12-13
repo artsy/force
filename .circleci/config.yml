@@ -98,6 +98,9 @@ jobs:
     docker:
       - image: artsy/hokusai:0.4.5
     steps:
+      - run:
+          name: Validated Schemas
+          command: node scripts/validate_schemas.js
       - add_ssh_keys
       - checkout
       - setup_remote_docker
