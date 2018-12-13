@@ -17,6 +17,8 @@ import { data as _sd } from "sharify"
 import { stitch as _stitch } from "@artsy/stitch"
 import { stringifyJSONForWeb } from "desktop/components/util/json.coffee"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
+import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
+
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
   SAILTHRU_KEY,
@@ -131,6 +133,8 @@ export async function index(req, res, next) {
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
     const showTooltips = !isMobile && !isTablet
     const renderTime = getCurrentUnixTimestamp()
+
+    res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     const layout = await stitch({
       basePath: res.app.get("views"),
