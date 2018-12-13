@@ -186,7 +186,7 @@ describe 'Inquiry', setup ->
         tomorrow = new Date (new Date()).getTime() + (24*60*60*1000)
         @artwork.related().fairs.first().set 'end_at', tomorrow.toISOString()
         @view.render()
-        @view.$el.find('.artsy-checkbox--label').html().should.containEql 'I will attend Armory Show'
+        @view.$el.html().should.containEql 'I will attend Armory Show'
 
       it 'renders the attendance checkbox for closed fair', ->
         yesterday = new Date (new Date()).getTime() - (24*60*60*1000)
