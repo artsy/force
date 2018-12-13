@@ -8,6 +8,7 @@ exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 splitTest = require '../../../components/split_test/index.coffee'
+{ enableIntercom } = require '../../../../lib/intercom'
 
 helpers = extend [
   {}
@@ -165,23 +166,8 @@ module.exports =
     recordArtworkView(CLIENT._id, currentUser)
     splitTest('artwork_sidebar_pageviews').view() if CLIENT.pageviews?
     exec sharedInit
+    enableIntercom(CLIENT)
 
-    # Intercom setup
-    hasIntercomLabFeature = currentUser?.hasLabFeature('Intercom on BNMO Works')
-    hasIntercomQueryParam = window.location.search.includes('showIntercom')
-    shouldUserSeeIntercom = hasIntercomLabFeature || hasIntercomQueryParam
-    intercomEnabled = INTERCOM_BUYER_ENABLED && INTERCOM_BUYER_APP_ID
-    isCommercialWork = CLIENT.is_acquireable || CLIENT.is_offerable
-    if isCommercialWork && intercomEnabled && shouldUserSeeIntercom
-      { intercom } = require('../../../components/intercom/index')
-      if currentUser?
-        userData =
-          name: currentUser.get('name')
-          email: currentUser.get('email')
-          userHash: INTERCOM_BUYER_HASH
-        intercom(INTERCOM_BUYER_APP_ID, userData)
-      else
-        intercom(INTERCOM_BUYER_APP_ID)
 
     context = CLIENT.context or {}
     { query, init, variables } = setup(context)

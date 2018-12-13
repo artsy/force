@@ -18,11 +18,11 @@ git remote add upstream https://github.com/artsy/force.git
 
 ## Run Force
 
-Install [NVM](https://github.com/creationix/nvm) and Node 8.
+Install [NVM](https://github.com/creationix/nvm) and Node 10.
 
 ```sh
-nvm install 8
-nvm alias default 8
+nvm install 10
+nvm alias default 10
 ```
 
 Install node modules with Yarn.

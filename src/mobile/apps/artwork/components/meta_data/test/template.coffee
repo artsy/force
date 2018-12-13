@@ -33,6 +33,37 @@ describe 'Artwork metadata templates', ->
       $ = cheerio.load(@html)
       $('.sale_message').text().should.equal '$4,000'
 
+  describe 'artwork with shipping information', ->
+    it 'shows shipping information for ecommerce artworks', ->
+      @artwork.is_acquireable = true
+      @artwork.sale_message = '$5,000'
+      @artwork.shippingInfo = "Shipping: $50 continental US, $100 rest of world"
+      @artwork.shippingOrigin = "New York, New York, US"
+
+      html = render('price')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+      $ = cheerio.load html
+      $('.shipping-info').length.should.eql 1
+
+    it 'does not show shipping information when unenrolled from ecommerce programs', ->
+      @artwork.is_acquireable = false
+      @artwork.sale_message = '$5,000'
+      @artwork.shippingInfo = "Shipping: $50 continental US, $100 rest of world"
+      @artwork.shippingOrigin = "New York, New York, US"
+
+      html = render('price')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+      $ = cheerio.load html
+      $('.shipping-info').length.should.eql 0
+
   describe 'artwork without sale message', ->
     beforeEach ->
       @html = render('price')(
