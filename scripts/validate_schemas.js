@@ -16,15 +16,9 @@ const {
 } = require("graphql")
 
 const fetch = require("isomorphic-fetch")
-
-const reactionSchema = readFileSync(
-  "node_modules/@artsy/reaction/data/schema.graphql",
-  "utf8"
-)
-
 const metaphysicsProd = "https://metaphysics-production.artsy.net/"
 
-const downloadSchema = async endpoint => {
+const downloadProductionSchema = async endpoint => {
   const postBody = {
     query: introspectionQuery,
     operationName: "IntrospectionQuery",
@@ -43,10 +37,24 @@ const downloadSchema = async endpoint => {
   return printSchema(buildClientSchema(data), { commentDescriptions: true })
 }
 
+const downloadGitHubReaction = async release => {
+  const response = await fetch(
+    `https://github.com/artsy/reaction/raw/v${release}/data/schema.graphql`
+  )
+
+  const body = await response.text()
+  return body
+}
+
 const getBreakingChanges = async () => {
-  const metaphyiscSchema = await downloadSchema(metaphysicsProd)
+  const packageJSON = JSON.parse(
+    readFileSync(__dirname + "/../package.json", "utf8")
+  )
+  const reactionVersion = packageJSON["dependencies"]["@artsy/reaction"]
+  const reactionSchema = await downloadGitHubReaction(reactionVersion)
+  const metaphyicsSchema = await downloadProductionSchema(metaphysicsProd)
   return findBreakingChanges(
-    buildSchema(metaphyiscSchema),
+    buildSchema(metaphyicsSchema),
     buildSchema(reactionSchema)
   )
 }
