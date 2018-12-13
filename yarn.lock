@@ -24,20 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.23.1":
-  version "2.23.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.23.1.tgz#f652dea125ff0e88774f62cde8efb153c1ab4362"
-  integrity sha512-UeQIaYG42rGGuo3ufIq9xqMc0fEc40iZ2ZoZ89wOAgLWds2d6BLemSzclYLuPyAL+QQTHXr1ams196qTCGqoYA==
-  dependencies:
-    rc-slider "^8.6.2"
-    react "^16.5.0"
-    react-spring "^5.7.2"
-    styled-system "^3.1.11"
-
-"@artsy/palette@^2.22.0":
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.22.0.tgz#3f9a6b203e301cf82a63781cc861e77387997670"
-  integrity sha512-0hp+FwqMTL9aeZGzC3rYAPSLLEaQQV99klqP9HA+b+9lxfAZZEDSHtOWqNUk3dyXH1x/Hut4qekHti261XX3JA==
+"@artsy/palette@2.23.2":
+  version "2.23.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.23.2.tgz#7c96deffb8691958f772133c18b233da62f6679e"
+  integrity sha512-3R9EtI26qkpNPhMSRimFPQzfbNZVJv6YyhI7Ivtm94zEyr/I5sL7oBg47G9RYYmib8DEC1dSYzWflNI4J1NnHw==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
@@ -68,13 +58,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@9.1.3":
-  version "9.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.3.tgz#feccf12fcebca666a3cb731dcd07a1f73aeb1221"
-  integrity sha512-hm24UfnHubosRkHAkQgV99oUGAS1duftip/mTl+PhM7jiKAmSIW3oizhv1ZPOUFbFQdLAV9hNQ9NJOVvQ3k1Lw==
+"@artsy/reaction@9.1.11":
+  version "9.1.11"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.11.tgz#b87207272c1d866ea2df58851060007fa462984c"
+  integrity sha512-87FhDMUBCdeMc+gCCkgROHYMhHAP3eYdwXD9CG87U0keP/038accmYjWRBG5gu58R4dMkObtZ17hbojK5zwyVA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
-    "@artsy/palette" "^2.22.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@sentry/browser" "^4.2.3"
     cheerio "^1.0.0-rc.2"
@@ -104,7 +93,6 @@
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
-    react-popover "^0.5.10"
     react-relay "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
     react-relay-network-modern "^2.4.0"
     react-relay-network-modern-ssr "^1.2.2"
@@ -4257,13 +4245,6 @@ css-to-react-native@^2.0.3:
     fbjs "^0.8.5"
     postcss-value-parser "^3.3.0"
 
-css-vendor@^0.3.1:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/css-vendor/-/css-vendor-0.3.8.tgz#6421cfd3034ce664fe7673972fd0119fc28941fa"
-  integrity sha1-ZCHP0wNM5mT+dnOXL9ARn8KJQfo=
-  dependencies:
-    is-in-browser "^1.0.2"
-
 css-what@2.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.2.tgz#c0876d9d0480927d7d4920dcd72af3595649554d"
@@ -7957,11 +7938,6 @@ is-glob@^4.0.0:
   dependencies:
     is-extglob "^2.1.1"
 
-is-in-browser@^1.0.2:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/is-in-browser/-/is-in-browser-1.1.3.tgz#56ff4db683a078c6082eb95dad7dc62e1d04f835"
-  integrity sha1-Vv9NtoOgeMYILrldrX3GLh0E+DU=
-
 is-installed-globally@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/is-installed-globally/-/is-installed-globally-0.1.0.tgz#0dfd98f5a9111716dd535dda6492f67bf3d25a80"
@@ -9459,13 +9435,6 @@ lodash.create@3.1.1:
     lodash._basecreate "^3.0.0"
     lodash._isiterateecall "^3.0.0"
 
-lodash.debounce@^3.0.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-3.1.1.tgz#812211c378a94cc29d5aa4e3346cf0bfce3a7df5"
-  integrity sha1-gSIRw3ipTMKdWqTjNGzwv846ffU=
-  dependencies:
-    lodash._getnative "^3.0.0"
-
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -9649,13 +9618,6 @@ lodash.startswith@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/lodash.startswith/-/lodash.startswith-4.2.1.tgz#c598c4adce188a27e53145731cdc6c0e7177600c"
   integrity sha1-xZjErc4YiiflMUVzHNxsDnF3YAw=
-
-lodash.throttle@^3.0.3:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-3.0.4.tgz#bc4f471fb328e4d6fdc6df2b3d3caf113f0f89c9"
-  integrity sha1-vE9HH7Mo5Nb9xt8rPTyvET8Pick=
-  dependencies:
-    lodash.debounce "^3.0.0"
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -12311,7 +12273,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
@@ -12343,16 +12305,6 @@ react-overlays@^0.8.3:
     prop-types-extra "^1.0.1"
     react-transition-group "^2.2.0"
     warning "^3.0.0"
-
-react-popover@^0.5.10:
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/react-popover/-/react-popover-0.5.10.tgz#40d5e854300a96722ffc1620e49d840cb1ad5db6"
-  integrity sha512-5SYDTfncywSH00I70oHd4gFRUR8V0rJ4sRADSI/P6G0RVXp9jUgaWloJ0Bk+SFnjpLPuipTKuzQNNd2CTs5Hrw==
-  dependencies:
-    css-vendor "^0.3.1"
-    debug "^2.6.8"
-    lodash.throttle "^3.0.3"
-    prop-types "^15.5.10"
 
 react-redux@^5.0.2:
   version "5.0.5"
