@@ -1,18 +1,26 @@
+import React from "react"
 import express from "express"
 import adminOnly from "desktop/lib/admin_only"
 import { buildServerApp } from "reaction/Artsy/Router/server"
-import { routes } from "reaction/Apps/Artwork/routes"
+import { routes } from "./routes"
 import { stitch } from "@artsy/stitch"
 import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
-const app = (module.exports = express())
+export const app = express()
 
-app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
+app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
   try {
-    const { ServerApp, redirect, status } = await buildServerApp({
-      routes,
+    const {
+      ServerApp,
+      headTags,
+      redirect,
+      status,
+      scripts,
+    } = await buildServerApp({
+      routes: routes as any,
       url: req.url,
+      userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
     })
 
@@ -23,18 +31,23 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
 
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
+      layout: "../../components/main_layout/templates/react_index.jade",
       config: {
         styledComponents: true,
       },
       blocks: {
-        head: Meta,
+        head: () => (
+          <React.Fragment>
+            {headTags}
+            <Meta />
+          </React.Fragment>
+        ),
         body: ServerApp,
       },
       locals: {
         ...res.locals,
-        assetPackage: "artwork2",
-        styledComponents: true,
+        assetPackage: "relay",
+        scripts,
       },
     })
 
@@ -44,5 +57,3 @@ app.get("/artwork2/:artworkID*", adminOnly, async (req, res, next) => {
     next(error)
   }
 })
-
-export default app

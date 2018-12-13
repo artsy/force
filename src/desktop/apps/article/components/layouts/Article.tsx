@@ -1,8 +1,9 @@
 import React from "react"
 import { once } from "lodash"
-
-import { Article } from "reaction/Components/Publishing"
-import { ArticleProps } from "reaction/Components/Publishing/Article"
+import {
+  Article,
+  ArticleProps,
+} from "@artsy/reaction/dist/Components/Publishing/Article"
 import {
   ModalOptions,
   ModalType,
@@ -108,6 +109,7 @@ export default class ArticleLayout extends React.Component<
   render() {
     const {
       article,
+      customEditorial,
       isSuper,
       isLoggedIn,
       isMobile,
@@ -116,7 +118,7 @@ export default class ArticleLayout extends React.Component<
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
 
-    const isStatic = isSuper || article.seriesArticle
+    const isStatic = isSuper || article.seriesArticle || customEditorial
 
     return (
       <div>
@@ -131,6 +133,7 @@ export default class ArticleLayout extends React.Component<
         {isStatic ? (
           <Article
             article={article}
+            customEditorial={customEditorial}
             display={article.display}
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}

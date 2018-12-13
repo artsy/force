@@ -22,9 +22,8 @@ html( class=htmlClass )
         analytics.load("#{sd.SEGMENT_WRITE_KEY}");
         }}();
 
-      //- Fonts + Mixpanel, Quantcast, Google analytics script
+      //- Fonts + Google analytics script
       if sd.NODE_ENV != 'test'
-        include ./quantcast.html
         if sd.GOOGLE_ANALYTICS_ID
           include ./ga.html
 
@@ -37,7 +36,7 @@ html( class=htmlClass )
       script( src=asset('/assets/mobile_analytics.js'))
 
       //- Stripe
-      script( type="text/javascript", src="https://js.stripe.com/v2/" )
+      script( type="text/javascript", src="https://js.stripe.com/v3/" )
 
       //- Include any scripts into the scripts block
       block scripts

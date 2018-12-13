@@ -5,3 +5,6 @@ module.exports = (sd, { artwork }) ->
     context: artwork.context
     href: artwork.href
     artists: artwork.artists
+    pageviews: artwork.pageviews
+    is_acquireable: artwork.is_acquireable
+    is_offerable: artwork.is_offerable

@@ -1,7 +1,6 @@
 - var auctionPartner = artwork.partner.type === 'Auction' || artwork.partner.type === 'Auction House'
-- var labFeatures = sd.CURRENT_USER && sd.CURRENT_USER.lab_features
 - var isCommercial = artwork.is_acquireable || artwork.is_offerable || artwork.is_inquireable
-- var hasLabFeature = labFeatures && labFeatures.indexOf("Pageviews in Sidebar") > -1
+- var hasPageviewFeature = sd.ARTWORK_SIDEBAR_PAGEVIEWS === 'experiment'
 
 .artwork-commercial( class='js-artwork-commercial' )
   form.artwork-commercial__form
@@ -13,7 +12,7 @@
     else if artwork.is_inquireable
       include inquire
 
-    if isCommercial && hasLabFeature
+    if isCommercial && hasPageviewFeature
       != stitch.components.ArtworkSidebarPageviews({artworkID: artwork.id})
 
     include partner

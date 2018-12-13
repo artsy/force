@@ -10,11 +10,12 @@ if artwork.sale_message || isPermanentCollection
           if artwork.is_price_range
             .tooltip-question-container
               != stitch.components.TooltipQuestion({horizontalAlign: 'left', message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'})
-        .artwork-commercial__shipping-info
-          | #{artwork.shippingInfo}
-          if artwork.shippingOrigin
-            br
-            | Ships from #{artwork.shippingOrigin}
+        if artwork.is_acquireable || artwork.is_offerable
+          .artwork-commercial__shipping-info
+            | #{artwork.shippingInfo}
+            if artwork.shippingOrigin
+              br
+              | Ships from #{artwork.shippingOrigin}
       else if isPermanentCollection
         | Permanent collection
       else

@@ -1,19 +1,20 @@
+import React from "react"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Collections/routes"
 import express from "express"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import adminOnly from "desktop/lib/admin_only"
 
-const app = (module.exports = express())
+export const app = express()
 
-app.get("/collections", adminOnly, async (req, res, next) => {
+app.get("/collections", async (req, res, next) => {
   try {
     const { IS_MOBILE } = res.locals.sd
 
-    const { ServerApp, redirect } = await buildServerApp({
+    const { ServerApp, headTags, redirect, scripts } = await buildServerApp({
       routes,
       url: req.url,
+      userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
     })
 
@@ -30,13 +31,14 @@ app.get("/collections", adminOnly, async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => null,
+        head: () => <>{headTags}</>,
         body: ServerApp,
       },
       locals: {
         ...res.locals,
         assetPackage: "collections",
         bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
+        scripts,
       },
     })
 
@@ -46,5 +48,3 @@ app.get("/collections", adminOnly, async (req, res, next) => {
     next(error)
   }
 })
-
-export default app

@@ -15,7 +15,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     badZip: "The ZIP code provided did not match your card number. Please check it again, try another card, or contact <a href='mailto:support@artsy.net'>support</a>."
     badSecurityCode: "The security code provided did not match your card number. Please check it again, try another card, or contact <a href='mailto:support@artsy.net'>support</a>."
-    other: "There was a problem processing your order. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
+    other: "There was a problem processing your request. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     timeout: "Processing your payment took too long. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     connection: "Please check your network connectivity and try again."
 
@@ -35,7 +35,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     @filterHtml()
     @clearErrors()
     for own key, val of @fields
-      continue unless val.el.is(':visible') && !val.validator(val.el)
+      continue unless val.el && !val.validator(val.el)
       errors[key] = val.message || "Invalid #{val.label || key}"
       val.el.addClass 'has-error'
       val.el.last().after "<div class='error'>#{errors[key]}</div>"

@@ -12,15 +12,12 @@ describe 'Fairs routes', ->
     image = { url: "https://www.example.com/cat.jpg" }
     profile = { is_published: true, icon: { url: "https://www.example.com/cat.jpg" } }
     @currentFairs = _.times 2, ->
-      fabricate('fair', image: image, profile: profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days').format(), banner_size: 'x-large')
+      fabricate('fair', image: image, profile: profile, id: _.uniqueId(), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), start_at: moment().subtract(1, 'days'), end_at: moment().add(11, 'days').format(), banner_size: 'x-large')
     @pastFairs = _.times 4, ->
-      fabricate('fair', image: image, profile: profile, id: _.uniqueId('past'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days').format())
+      fabricate('fair', image: image, profile: profile, id: _.uniqueId('past'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(11, 'days').format())
     @upcomingFairs = _.times 3, ->
-      fabricate('fair', id: _.uniqueId('upcoming'), is_published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(10, 'days'))
-    @invalidFairs = [
-      fabricate('fair', id: _.uniqueId('invalid'), is_published: false)
-      fabricate('fair', id: _.uniqueId('invalid'), is_published: true, has_full_feature: false, has_listing: false)
-    ]
+      fabricate('fair', id: _.uniqueId('upcoming'), is_published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(11, 'days'), start_at: moment().add(1, 'days'))
+
 
     @rows = ViewHelpers.fillRows @currentFairs
 
@@ -37,7 +34,6 @@ describe 'Fairs routes', ->
           @currentFairs
           @pastFairs
           @upcomingFairs
-          @invalidFairs
         ]
         routes.__set__ 'metaphysics', => Q.resolve { featured_fairs: [ fairs: {} ], fairs: @fairs }
 
@@ -54,7 +50,6 @@ describe 'Fairs routes', ->
         @fairs = _.flatten [
           @pastFairs
           @upcomingFairs
-          @invalidFairs
         ]
         routes.__set__ 'metaphysics', => Q.resolve { featured_fairs: [ fairs: {} ], fairs: @fairs }
 

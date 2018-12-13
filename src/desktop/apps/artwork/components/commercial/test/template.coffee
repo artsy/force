@@ -108,3 +108,23 @@ describe 'Commercial template', ->
           is_for_sale: true
     $ = cheerio.load html
     $('.js-artwork-bnmo-ask-specialist').length.should.eql 0
+
+  it 'shows shipping information for ecommerce artworks', ->
+    html = renderArtwork
+      artwork: acquireableArtwork
+      artworkOptions:
+        price: '$5,000'
+        shippingInfo: "Shipping: $50 continental US, $100 rest of world"
+        shippingOrigin: "New York, New York, US"
+    $ = cheerio.load html
+    $('.artwork-commercial__shipping-info').length.should.eql 1
+
+  it 'does not show shipping information when unenrolled from ecommerce programs', ->
+    html = renderArtwork
+      artwork: inquireableArtwork
+      artworkOptions:
+        price: '$5,000'
+        shippingInfo: "Shipping: $50 continental US, $100 rest of world"
+        shippingOrigin: "New York, New York, US"
+    $ = cheerio.load html
+    $('.artwork-commercial__shipping-info').length.should.eql 0

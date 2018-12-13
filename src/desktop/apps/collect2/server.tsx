@@ -6,16 +6,16 @@ import React from "react"
 import { Meta } from "./meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
-const app = (module.exports = express())
+export const app = express()
 
 const index = async (req, res, next) => {
   try {
-    const user = req.user && req.user.toJSON()
     const { APP_URL, IS_MOBILE } = res.locals.sd
 
-    const { headTags, ServerApp, redirect } = await buildServerApp({
+    const { headTags, ServerApp, redirect, scripts } = await buildServerApp({
       routes,
       url: req.url,
+      userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
     })
 
@@ -39,6 +39,7 @@ const index = async (req, res, next) => {
         ...res.locals,
         assetPackage: "collect2",
         bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
+        scripts,
       },
     })
 
@@ -52,5 +53,3 @@ const index = async (req, res, next) => {
 app.get("/collect", index)
 app.get("/collect/:medium?", index)
 app.get("/collection/:slug", index)
-
-export default app

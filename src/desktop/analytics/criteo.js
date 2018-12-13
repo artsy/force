@@ -63,7 +63,7 @@ if (pathSplit[1] === "auctions") {
     )
   } else {
     window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
+      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
       { event: "setSiteType", type: "d" },
       { event: "setEmail", email: userEmail },
       { event: "viewItem", item: sd.COMMERCIAL.artwork._id }
@@ -72,7 +72,7 @@ if (pathSplit[1] === "auctions") {
   // ARTWORKS viewBasket
   analyticsHooks.on("inquiry_questionnaire:modal:opened", function(data) {
     window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
+      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
       { event: "setSiteType", type: "d" },
       { event: "setEmail", email: userEmail },
       {
@@ -90,7 +90,7 @@ if (pathSplit[1] === "auctions") {
   // ARTWORKS trackTransaction
   analyticsHooks.on("inquiry_questionnaire:inquiry:sync", function(data) {
     window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
+      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
       { event: "setSiteType", type: "d" },
       { event: "setEmail", email: userEmail },
       {
@@ -111,7 +111,7 @@ if (pathSplit[1] === "auctions") {
     // https://www.artsy.net/collect - (ARTWORKS viewHome)
     //              0          1
     window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
+      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
       { event: "setSiteType", type: "d" },
       { event: "setEmail", email: userEmail },
       { event: "viewHome" }

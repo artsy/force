@@ -6,7 +6,14 @@ import Channel from "desktop/models/channel.coffee"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 
 const rewire = require("rewire")("../routes")
-const { amp, classic, editorialSignup, index, subscribedToEditorial } = rewire
+const {
+  amp,
+  classic,
+  editorialSignup,
+  index,
+  isCustomEditorial,
+  subscribedToEditorial,
+} = rewire
 
 describe("Article Routes", () => {
   let req
@@ -39,6 +46,7 @@ describe("Article Routes", () => {
       rewire.__set__("sd", {
         ARTSY_EDITORIAL_CHANNEL: "123",
         APP_URL: "https://artsy.net",
+        EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
       }),
       rewire.__set__("sailthru", {
         apiPost: sailthruApiPost,
@@ -384,6 +392,39 @@ describe("Article Routes", () => {
 
         index(req, res, next).then(() => {
           stitch.args[0][0].data.showTooltips.should.equal(false)
+          done()
+        })
+      })
+    })
+
+    describe("Custom editorial", () => {
+      it("#isCustomEditorial returns key if article.id matches custom editorial list", () => {
+        isCustomEditorial("5bf30690d8b9430baaf6c6de").should.containEql(
+          "EOY_2018_ARTISTS"
+        )
+      })
+
+      it("Adds custom editorial var and no-header class to stitch args", done => {
+        const data = {
+          article: _.extend({}, fixtures.article, {
+            slug: "foobar",
+            channel_id: "123",
+            layout: "feature",
+            id: "5bf30690d8b9430baaf6c6de",
+          }),
+        }
+        rewire.__set__(
+          "positronql",
+          sinon.stub().returns(Promise.resolve(data))
+        )
+        const stitch = sinon.stub()
+        rewire.__set__("stitch", stitch)
+        req.path = "/article/foobar"
+        index(req, res, next).then(() => {
+          stitch.args[0][0].locals.bodyClass.should.containEql("body-no-header")
+          stitch.args[0][0].data.customEditorial.should.containEql(
+            "EOY_2018_ARTISTS"
+          )
           done()
         })
       })

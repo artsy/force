@@ -1,5 +1,5 @@
 { extend, map, compact } = require 'underscore'
-{ AUCTION, CLIENT } = require('sharify').data
+{ AUCTION, CLIENT, INTERCOM_BUYER_APP_ID, INTERCOM_BUYER_ENABLED, INTERCOM_BUYER_HASH } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 { recordArtworkView } = require '../../../../lib/components/record_artwork_view'
 metaphysics = require '../../../../lib/metaphysics.coffee'
@@ -7,6 +7,8 @@ CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
+splitTest = require '../../../components/split_test/index.coffee'
+{ enableIntercom } = require '../../../../lib/intercom'
 
 helpers = extend [
   {}
@@ -159,9 +161,13 @@ module.exports =
           user: CurrentUser.orNull()
 
   init: ->
+    currentUser = CurrentUser.orNull()
     setCookie(CLIENT._id)
-    recordArtworkView(CLIENT._id, CurrentUser.orNull())
+    recordArtworkView(CLIENT._id, currentUser)
+    splitTest('artwork_sidebar_pageviews').view() if CLIENT.pageviews?
     exec sharedInit
+    enableIntercom(CLIENT)
+
 
     context = CLIENT.context or {}
     { query, init, variables } = setup(context)

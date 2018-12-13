@@ -179,9 +179,6 @@
     "METAPHYSICS_ENDPOINT": {
       "required": true
     },
-    "MIXPANEL_ID": {
-      "required": true
-    },
     "MOBILE_MARKETING_SIGNUP_MODALS": {
       "required": true
     },

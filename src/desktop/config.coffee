@@ -17,7 +17,7 @@ module.exports =
   ARTSY_ID: null
   ARTSY_SECRET: null
   BIDDER_H1_COPY: 'Please enter your credit card details'
-  BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
+  BIDDER_H2_COPY: 'A valid credit card is required to bid. If you win, you’ll have the opportunity to pay by credit card, check or wire transfer after the sale closes.'
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'
@@ -26,7 +26,6 @@ module.exports =
   CONVECTION_APP_ID: null
   CONVECTION_GEMINI_APP: 'convection-staging'
   COOKIE_DOMAIN: null
-  CRITEO_ARTWORKS_ACCOUNT_NUMBER: '35250'
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
   DD_APM_ENABLED: null
   DD_TRACE_AGENT_HOSTNAME: 'localhost'
@@ -42,6 +41,8 @@ module.exports =
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: null
   EOY_2016: '5829db77b5989e6f98f779a5'
+  EOY_2018_ARTISTS: '5bf30690d8b9430baaf6c6de'
+  EOY_2018_CULTURE: '5bf306aad8b9430baaf6c6df'
   EF_VENICE: '58f5eb75faef6a3a8e7fe1ad'
   EF_GUCCI: '5a009372c88a280f5e9efa7e'
   EF_VIDEO_GUIDE: '5901d64b4682400017f0e3cb'
@@ -67,8 +68,11 @@ module.exports =
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
-  INTERCOM_APP_ID: null
-  INTERCOM_ENABLED: false
+  INTERCOM_SELLER_APP_ID: null
+  INTERCOM_SELLER_ENABLED: false
+  INTERCOM_BUYER_APP_ID: null
+  INTERCOM_BUYER_APP_SECRET: null
+  INTERCOM_BUYER_ENABLED: false
   IMAGE_PROXY: 'GEMINI'
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   IP_BLACKLIST: ''

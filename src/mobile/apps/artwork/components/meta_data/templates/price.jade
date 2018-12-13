@@ -2,7 +2,7 @@ if artwork.sale_message
   .artwork-meta-data-price
     if artwork.sale_message
       .sale_message= artwork.sale_message
-    if artwork.price && artwork.availability !== 'sold'
+    if artwork.is_acquireable || artwork.is_offerable
       .shipping-info
         | #{artwork.shippingInfo}
         if artwork.shippingOrigin

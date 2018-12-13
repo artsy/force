@@ -4,7 +4,7 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "reaction/Apps/Order/routes"
 import { stitch } from "@artsy/stitch"
-import metaphysics from "lib/metaphysics.coffee"
+const metaphysics = require("lib/metaphysics.coffee")
 
 export const checkoutFlow = async (req, res, next) => {
   if (!res.locals.sd.CURRENT_USER) {
@@ -13,9 +13,16 @@ export const checkoutFlow = async (req, res, next) => {
     )
   }
   try {
-    const { ServerApp, redirect, status, headTags } = await buildServerApp({
+    const {
+      ServerApp,
+      redirect,
+      status,
+      headTags,
+      scripts,
+    } = await buildServerApp({
       routes,
       url: req.url,
+      userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
     })
 
@@ -58,6 +65,7 @@ export const checkoutFlow = async (req, res, next) => {
         options: {
           stripev3: true,
         },
+        scripts,
       },
     })
 
