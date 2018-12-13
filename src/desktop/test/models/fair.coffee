@@ -15,6 +15,15 @@ describe 'Fair', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#isNotOver', ->
+    it 'checks the UTC timezone of a fair\'s end_at field compared to now', ->
+      fair = new Fair fabricate('fair', end_at: '2018-12-13T22:00:00-05:00')
+      utcMoment = moment.utc('2018-12-14T07:00:00-00:00')
+      realNow = Date.now
+      Date.now = () -> utcMoment
+      fair.isNotOver().should.equal true
+      Date.now = realNow
+
   describe '#nameSansYear', ->
     it 'returns the name without the year', ->
       new Fair name: 'Foo Fair 2015'
