@@ -35,7 +35,7 @@ export default async () => {
 
     if (bc.length) {
       fail(
-        "Metaphysics production does not have a compatible schema for force."
+        `Metaphysics production does not have a compatible schema for force's GraphQL usage, please deploy metaphysics to production and re-run Travis CI.`
       )
     }
 
