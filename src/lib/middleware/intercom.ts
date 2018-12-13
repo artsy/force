@@ -3,7 +3,6 @@ import * as crypto from "crypto"
 import { INTERCOM_BUYER_APP_SECRET } from "../../config"
 
 export function addIntercomUserHash(req, res, next) {
-  console.log(INTERCOM_BUYER_APP_SECRET)
   if (req.user && INTERCOM_BUYER_APP_SECRET) {
     res.locals.sd.INTERCOM_BUYER_HASH = crypto
       .createHmac("sha256", INTERCOM_BUYER_APP_SECRET)
