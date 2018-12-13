@@ -254,7 +254,7 @@ export function amp(req, res, next) {
 }
 
 export const subscribedToEditorial = email => {
-  return new Promise((resolve, _reject) => {
+  return new Promise((resolve, reject) => {
     if (!email.length) {
       return resolve(false)
     }
@@ -282,7 +282,7 @@ export const subscribedToEditorial = email => {
   })
 }
 
-export const editorialSignup = (req, res, _next) => {
+export const editorialSignup = (req, res, next) => {
   // Add user to list
   sailthru.apiPost(
     "user",
@@ -323,7 +323,7 @@ export const editorialSignup = (req, res, _next) => {
   )
 }
 
-export const redirectPost = (req, res, _next) =>
+export const redirectPost = (req, res, next) =>
   res.redirect(301, req.url.replace("post", "article"))
 
 export const isCustomEditorial = id => {
