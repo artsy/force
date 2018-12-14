@@ -1,8 +1,8 @@
 import Articles from "../../../collections/articles.coffee"
 import Backbone from "backbone"
 import sinon from "sinon"
-const request = require("rewire")("superagent")
-const routes = require("rewire")("../routes.js")
+import request from "superagent"
+let routes = require("rewire")("../routes.js")
 
 describe("Routes", () => {
   let req = {}
