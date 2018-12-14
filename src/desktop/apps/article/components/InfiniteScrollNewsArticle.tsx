@@ -85,7 +85,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       "editorial-signup-dismissed"
     )
 
-    if (!sd.CURRENT_USER && !editorialAuthDismissedCookie) {
+    if (
+      !sd.CURRENT_USER &&
+      !editorialAuthDismissedCookie &&
+      !this.props.isMobile
+    ) {
       this.showAuthModal()
     }
   }
@@ -240,28 +244,26 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   showAuthModal() {
-    if (!sd.CURRENT_USER && !this.props.isMobile) {
-      window.addEventListener(
-        "scroll",
-        once(() => {
-          setTimeout(() => {
-            this.handleOpenAuthModal("register", {
-              mode: ModalType.signup,
-              intent: "Viewed editorial",
-              signupIntent: "signup",
-              trigger: "timed",
-              triggerSeconds: 2,
-              copy: "Sign up for the Best Stories in Art and Visual Culture",
-              destination: location.href,
-              afterSignUpAction: {
-                action: "editorialSignup",
-              },
-            } as any)
-          }, 2000)
-        }),
-        { once: true }
-      )
-    }
+    window.addEventListener(
+      "scroll",
+      once(() => {
+        setTimeout(() => {
+          this.handleOpenAuthModal("register", {
+            mode: ModalType.signup,
+            intent: "Viewed editorial",
+            signupIntent: "signup",
+            trigger: "timed",
+            triggerSeconds: 2,
+            copy: "Sign up for the Best Stories in Art and Visual Culture",
+            destination: location.href,
+            afterSignUpAction: {
+              action: "editorialSignup",
+            },
+          } as any)
+        }, 2000)
+      }),
+      { once: true }
+    )
   }
 
   handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
