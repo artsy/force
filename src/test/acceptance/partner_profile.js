@@ -23,6 +23,13 @@ describe("Partner profile page", () => {
       )
       $.html().should.containEql('<p class="partner-bio">Living the dream as')
     })
+
+    it("should not render a page for /system/up healthcheck endpoint", async () => {
+      const $ = await browser.page("/system/up")
+      $.html().should.containEql(
+        '<head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">{&quot;nodejs&quot;:true}</pre></body>'
+      )
+    })
   })
 
   context("iPhone", () => {
@@ -62,6 +69,13 @@ describe("Partner profile page", () => {
       const $ = await browser.page("/pace-gallery/contact")
       $.html().should.containEql("Contact")
       $.html().should.containEql("New York")
+    })
+
+    it("should not render a page for /system/up healthcheck endpoint", async () => {
+      const $ = await browser.page("/system/up")
+      $.html().should.containEql(
+        '<head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">{&quot;nodejs&quot;:true}</pre></body>'
+      )
     })
   })
 })
