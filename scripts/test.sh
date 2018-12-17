@@ -7,7 +7,7 @@ set -ex
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    yarn assets
+    NODE_ENV=development yarn webpack
     ;;
   1)
     yarn mocha src/test/lib/*
