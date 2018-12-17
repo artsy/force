@@ -3,7 +3,6 @@ import adminOnly from "desktop/lib/admin_only"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
-import { Meta } from "./components/Meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import styled from "styled-components"
 import express, { Request, Response, NextFunction } from "express"
@@ -47,12 +46,7 @@ app.get(
           styledComponents: true,
         },
         blocks: {
-          head: () => (
-            <React.Fragment>
-              {headTags}
-              <Meta />
-            </React.Fragment>
-          ),
+          head: () => <React.Fragment>{headTags}</React.Fragment>,
           body: () => (
             <Container>
               <ServerApp />
