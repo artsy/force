@@ -1,15 +1,18 @@
 /* eslint-env mocha */
 import { setup, teardown } from "./helpers"
 import { server as antigravity } from "antigravity"
+import sinon from "sinon"
 
 describe("Partner profile page", () => {
   let gravity, positron, browser
+  const systemProfileStub = sinon.stub()
 
   before(async () => {
     ;({ gravity, positron, browser } = await setup())
     gravity.get("/api/v1/shortcut/:id", (req, res) => {
       res.res.sendStatus(404)
     })
+    gravity.get("/api/v1/profile/system", systemProfileStub)
     gravity.use(antigravity)
   })
 
@@ -26,9 +29,12 @@ describe("Partner profile page", () => {
 
     it("should not render a page for /system/up healthcheck endpoint", async () => {
       const $ = await browser.page("/system/up")
+
       $.html().should.containEql(
         '<head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">{&quot;nodejs&quot;:true}</pre></body>'
       )
+
+      sinon.assert.notCalled(systemProfileStub)
     })
   })
 
@@ -73,9 +79,12 @@ describe("Partner profile page", () => {
 
     it("should not render a page for /system/up healthcheck endpoint", async () => {
       const $ = await browser.page("/system/up")
+
       $.html().should.containEql(
         '<head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">{&quot;nodejs&quot;:true}</pre></body>'
       )
+
+      sinon.assert.notCalled(systemProfileStub)
     })
   })
 })
