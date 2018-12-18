@@ -180,7 +180,7 @@ if (isDevelopment) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
   // Staging / Prod
 } else if (isDeploy) {
-  config.devtool = "#source-map"
+  config.devtool = "source-map"
 
   if (ANALYZE_BUNDLE) {
     config.plugins.push(new BundleAnalyzerPlugin())

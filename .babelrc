@@ -4,9 +4,7 @@
       "@babel/env",
       {
         "targets": {
-          "browsers": [
-            "last 2 versions"
-          ]
+          "browsers": ["last 2 versions", "ie >= 11", "safari >= 10"]
         },
         "useBuiltIns": "usage"
       }
@@ -30,15 +28,8 @@
     [
       "module-resolver",
       {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ],
-        "root": [
-          "./src"
-        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "root": ["./src"],
         "alias": {
           "reaction": "@artsy/reaction/dist"
         }
@@ -53,9 +44,7 @@
   ],
   "env": {
     "development": {
-      "plugins": [
-        "react-hot-loader/babel"
-      ]
+      "plugins": ["react-hot-loader/babel"]
     }
   }
 }
