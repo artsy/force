@@ -74,7 +74,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
     service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '300'
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '5'
 spec:
   ports:
     - port: 443
