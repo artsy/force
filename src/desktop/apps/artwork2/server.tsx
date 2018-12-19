@@ -1,5 +1,4 @@
 import React from "react"
-import adminOnly from "desktop/lib/admin_only"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
@@ -11,8 +10,12 @@ export const app = express()
 
 app.get(
   "/artwork2/:artworkID*",
-  adminOnly,
   async (req: Request, res: Response, next: NextFunction) => {
+    const hasQueryParam = req.query.new_artwork_page
+    const isAdmin = req.user && req.user.get("type") === "Admin"
+    if (!hasQueryParam && !isAdmin) {
+      next()
+    }
     try {
       const {
         ServerApp,
