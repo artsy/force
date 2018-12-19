@@ -87,6 +87,9 @@ jobs:
       - run:
           name: Deploy
           command: hokusai staging deploy $CIRCLE_SHA1
+      - run:
+          name: Deploy Event
+          command: hokusai/deploy_event.sh force staging
   deploy_hokusai_production:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -108,6 +111,9 @@ jobs:
       - run:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin
+      - run:
+          name: Deploy Event
+          command: hokusai/deploy_event.sh force production
 
 workflows:
   version: 2
