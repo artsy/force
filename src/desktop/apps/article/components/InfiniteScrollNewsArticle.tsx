@@ -1,9 +1,14 @@
+import { data as sd } from "sharify"
 import moment from "moment"
 import styled from "styled-components"
 import React, { Component, Fragment } from "react"
-import { flatten, debounce, extend } from "lodash"
+import { flatten, debounce, extend, once } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql as _positronql } from "desktop/lib/positronql"
+import {
+  ModalOptions,
+  ModalType,
+} from "@artsy/reaction/dist/Components/Authentication/Types"
 import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
@@ -15,6 +20,13 @@ import { setupFollows, setupFollowButtons } from "./FollowButton.js"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
+
+const Cookies = require("desktop/components/cookies/index.coffee")
+const mediator = require("desktop/lib/mediator.coffee")
+
+interface ArticleModalOptions extends ModalOptions {
+  signupIntent: string
+}
 
 export interface Props {
   article?: ArticleData
@@ -68,6 +80,22 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   componentDidMount() {
     setupFollowButtons(this.state.following)
+
+    const editorialAuthDismissedCookie = Cookies.get(
+      "editorial-signup-dismissed"
+    )
+
+    if (
+      !sd.CURRENT_USER &&
+      !editorialAuthDismissedCookie &&
+      !this.props.isMobile
+    ) {
+      this.showAuthModal()
+    }
+  }
+
+  dismissAuthModal() {
+    Cookies.set("editorial-signup-dismissed", 1, { expires: 864000 })
   }
 
   fetchNextArticles = async () => {
@@ -213,6 +241,36 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         )
       })
     )
+  }
+
+  showAuthModal() {
+    window.addEventListener(
+      "scroll",
+      once(() => {
+        setTimeout(() => {
+          this.handleOpenAuthModal("register", {
+            mode: ModalType.signup,
+            intent: "Viewed editorial",
+            signupIntent: "signup",
+            trigger: "timed",
+            triggerSeconds: 2,
+            copy: "Sign up for the Best Stories in Art and Visual Culture",
+            destination: location.href,
+            afterSignUpAction: {
+              action: "editorialSignup",
+            },
+          } as any)
+        }, 2000)
+      }),
+      { once: true }
+    )
+  }
+
+  handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
+    mediator.trigger("open:auth", {
+      mode,
+      ...options,
+    })
   }
 
   render() {

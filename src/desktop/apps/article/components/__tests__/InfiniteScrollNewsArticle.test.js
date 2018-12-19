@@ -23,13 +23,11 @@ describe("<InfiniteScrollNewsArticle />", () => {
       sd.CURRENT_PATH =
         "/news/artsy-editorial-surprising-reason-men-women-selfies-differently"
       sd.CURRENT_USER = { id: "123" }
-      clock = sinon.useFakeTimers()
       done()
     })
   })
 
   after(() => {
-    clock.restore()
     benv.teardown()
   })
 
@@ -67,10 +65,13 @@ describe("<InfiniteScrollNewsArticle />", () => {
       marginTop: "50px",
       isMobile: false,
     }
+
+    clock = sinon.useFakeTimers()
   })
 
   afterEach(() => {
     window.history.replaceState.reset()
+    clock.restore()
   })
 
   it("fetches more articles at the end of the page", async () => {
@@ -163,6 +164,76 @@ describe("<InfiniteScrollNewsArticle />", () => {
     const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
     rendered.instance().onActiveArticleChange("1234")
     rendered.state("activeArticle").should.equal("1234")
+  })
+
+  it("does not call showAuthModal when the user is signed in", () => {
+    rewire.__set__("Cookies", { get: sinon.stub().returns(null) })
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    rendered.instance().showAuthModal = sinon.stub()
+    rendered.instance().componentDidMount()
+
+    rendered.instance().showAuthModal.calledOnce.should.equal(false)
+  })
+
+  it("does not call showAuthModal if the user has dismissed the modal", () => {
+    rewire.__set__("Cookies", { get: sinon.stub().returns(1) })
+    sd.CURRENT_USER = null
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    rendered.instance().showAuthModal = sinon.stub()
+    rendered.instance().componentDidMount()
+
+    rendered.instance().showAuthModal.calledOnce.should.equal(false)
+  })
+
+  it("calls showAuthModal when the user is not signed in and has not dismissed", () => {
+    rewire.__set__("Cookies", { get: sinon.stub().returns(null) })
+    sd.CURRENT_USER = null
+    const rendered = shallow(<InfiniteScrollNewsArticle {...props} />)
+    const component = rendered.instance()
+    component.showAuthModal = sinon.stub()
+    component.componentDidMount()
+
+    component.showAuthModal.calledOnce.should.equal(true)
+  })
+
+  it("triggers mediator with correct args", () => {
+    clock.restore()
+    rewire.__set__(
+      "positronql",
+      sinon.stub().returns(Promise.resolve({ articles: [] }))
+    )
+    rewire.__set__("Cookies", { get: sinon.stub().returns(null) })
+    sd.CURRENT_USER = { id: "123" }
+    const trigger = sinon.stub()
+    rewire.__set__("mediator", {
+      trigger,
+    })
+
+    const wrapper = shallow(<InfiniteScrollNewsArticle {...props} />)
+    wrapper.update()
+
+    window.dispatchEvent(new Event("scroll"))
+
+    const registerOptions = {
+      mode: "signup",
+      intent: "Viewed editorial",
+      signupIntent: "signup",
+      trigger: "timed",
+      triggerSeconds: 2,
+      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      destination: location.href,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
+    }
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        trigger.calledOnce.should.equal(true)
+        trigger.calledWith("open:auth", registerOptions).should.equal(true)
+        resolve()
+      }, 3000)
+    })
   })
 
   describe("/news - news index", () => {

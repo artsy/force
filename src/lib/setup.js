@@ -240,6 +240,14 @@ export default function(app) {
     })
   }
 
+  // Routes for pinging system time and up
+  app.get("/system/time", (req, res) =>
+    res.status(200).send({ time: Date.now() })
+  )
+  app.get("/system/up", (req, res) => {
+    res.status(200).send({ nodejs: true })
+  })
+
   // Sets up mobile marketing signup modal
   app.use(marketingModals)
 
@@ -278,12 +286,6 @@ export default function(app) {
     })
     app.use(require("../desktop"))
   }
-
-  // Routes for pinging system time and up
-  app.get("/system/time", (req, res) =>
-    res.status(200).send({ time: Date.now() })
-  )
-  app.get("/system/up", (req, res) => res.status(200).send({ nodejs: true }))
 
   // Ensure CurrentUser is set for Artsy Passport
   // TODO: Investigate race condition b/t reaction's use of AP

@@ -17,8 +17,12 @@ html
             | Safari
           a.unsupported-browser-update-first.avant-garde-button-black.settings-submit( href="https://www.mozilla.org/en-US/firefox/new/?utm_source=artsy-net&utm_medium=referral")
             | FireFox
-          a.avant-garde-button-black.settings-submit( href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" )
-            | IE 11
+          a.avant-garde-button-black.settings-submit( href="https://www.microsoft.com/en-us/windows/microsoft-edge" )
+            | Microsoft Edge
+
+        br
+        br
+
         form.unsupported-browser-continue( action='', method='post' )
           input( type="hidden", name="redirect-to", value=sd.UNSUPPORTED_BROWSER_REDIRECT || '/' )
           button.avant-garde-button-black.unsupported-browser-submit.is-block Continue with #{sd.BROWSER.family} #{sd.BROWSER.major}
