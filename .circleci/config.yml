@@ -23,13 +23,6 @@ jobs:
           command: |
             export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai test
-  build:
-    docker:
-      - image: artsy/hokusai:0.4.5
-    steps:
-      - run:
-          name: "OK"
-          command: "echo All Tests Pass!"
   push:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -128,13 +121,6 @@ workflows:
           filters:
             branches:
               ignore: staging
-      - build:
-          filters:
-            branches:
-              ignore: staging
-          requires:
-            - test
-            - acceptance
       - push:
           filters:
             branches:
@@ -142,19 +128,22 @@ workflows:
                 - master
                 - release
           requires:
-            - build
+            - test
+            - acceptance
       - publish_staging_assets:
           filters:
             branches:
               only: master
           requires:
-            - build
+            - test
+            - acceptance
       - publish_release_assets:
           filters:
             branches:
               only: release
           requires:
-            - build
+            - test
+            - acceptance
       - deploy_hokusai_staging:
           filters:
             branches:
