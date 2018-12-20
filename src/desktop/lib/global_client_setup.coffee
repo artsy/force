@@ -27,7 +27,7 @@ module.exports = ->
   setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
-  syncAuth()
+  # syncAuth()
   listenForInvert()
   listenForBounce()
   confirmation.check()
