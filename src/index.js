@@ -20,6 +20,7 @@ const {
   CLIENT_SECRET,
   NODE_ENV,
   PORT,
+  KEEPALIVE_TIMEOUT,
   PROFILE_MEMORY,
 } = process.env
 
@@ -50,7 +51,11 @@ also could be gravity being down.`)
           ? `\n\n  [Force] Booting on port ${PORT}... \n`
           : `\n\n  [Force] Started on ${APP_URL}. \n`
 
-      app.listen(PORT, "0.0.0.0", () => console.log(message))
+      const server = app.listen(PORT, "0.0.0.0", () => console.log(message))
+      if (KEEPALIVE_TIMEOUT) {
+        console.log("Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT + " ms")
+        server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT)
+      }
     }
   })
 })
