@@ -62,7 +62,7 @@ yarn link @artsy/reaction && yarn start
 ## Running a local copy of Force in Production mode:
 
 ```sh
-yarn assets && yarn debug:prod
+yarn assets && yarn start:prod
 ```
 
 ## Create a Topic Branch
