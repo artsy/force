@@ -5,7 +5,7 @@
 uaParser = require 'ua-parser'
 
 isUnsupported = (ua, req) ->
-  not req.cookies.continue_with_bad_browser and ((ua.family is 'IE' and ua.major <=11) or (ua.family is 'Safari' and ua.major < 10))
+  not req.cookies.continue_with_bad_browser and ((ua.family is 'IE' and ua.major <=11) or (ua.family is 'Safari' and ua.major <= 10))
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
