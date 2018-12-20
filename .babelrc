@@ -4,7 +4,7 @@
       "@babel/env",
       {
         "targets": {
-          "browsers": ["last 2 versions", "ie >= 11", "safari >= 10"]
+          "browsers": ["last 2 versions"]
         },
         "useBuiltIns": "usage"
       }

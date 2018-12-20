@@ -1,5 +1,4 @@
-import { warn, danger } from "danger"
-import { getBreakingChanges } from "./scripts/validate_schemas"
+import { warn, danger, peril } from "danger"
 import { BreakingChange } from "graphql"
 
 // tslint:disable-next-line:no-default-export
@@ -16,7 +15,9 @@ export default async () => {
   }
 
   // Breaking change check for Metaphysics production when deploying
-  if (danger.github.pr.base.ref === "release") {
+  // also locked against Peril having access to the file
+  if (!peril && danger.github.pr.base.ref === "release") {
+    const { getBreakingChanges } = require("./scripts/validate_schemas")
     const breakingChanges = await getBreakingChanges()
     const bc = breakingChanges
     const typesMissing = bc.filter(b => b.type === "TYPE_REMOVED")
@@ -34,7 +35,7 @@ export default async () => {
     }
 
     if (bc.length) {
-      fail(
+      warn(
         `Metaphysics production does not have a compatible schema for force's GraphQL usage, please deploy metaphysics to production and re-run Travis CI.`
       )
     }
@@ -45,7 +46,7 @@ export default async () => {
         const fields = breakingChanges.map(
           b => "`" + b.description.split(" ")[0] + "`"
         )
-        fail(`${key}: ${danger.utils.sentence(fields)}`)
+        warn(`${key}: ${danger.utils.sentence(fields)}`)
       }
     })
   }
