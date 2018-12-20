@@ -93,6 +93,7 @@ const config = {
           compress: {
             warnings: false,
           },
+          safari10: true,
         },
       }),
     ],
