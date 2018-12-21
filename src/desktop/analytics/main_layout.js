@@ -14,6 +14,13 @@ if (pageType == "artwork") {
   properties["acquireable"] = sd.ARTWORK.is_acquireable
   properties["availability"] = sd.ARTWORK.availability
   properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
+
+  if (sd.ARTWORK.is_acquireable || sd.ARTWORK.is_in_auction) {
+    window.addEventListener("load", function() {
+      // marketing requirement for dynamic retargeting
+      window.analytics.track("Viewed Product", { id: sd.ARTWORK._id })
+    })
+  }
 }
 
 // We exclude 'orders' routes from analytics.page calls because they're already
