@@ -108,7 +108,7 @@ bootstrap = ->
     if artwork.isDownloadable(req.user)
       imageRequest = request.get(artwork.downloadableUrl req.user)
       imageRequest.set('X-ACCESS-TOKEN': req.user.get('accessToken')) if req.user
-      req.pipe(imageRequest).pipe res
+      req.pipe(imageRequest, { end: false }).pipe res
     else
       err = new Error 'Not authorized to download this image.'
       err.status = 403
