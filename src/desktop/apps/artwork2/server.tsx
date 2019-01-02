@@ -9,13 +9,8 @@ import express, { Request, Response, NextFunction } from "express"
 export const app = express()
 
 app.get(
-  "/artwork2/:artworkID*",
+  "/artwork/:artworkID*",
   async (req: Request, res: Response, next: NextFunction) => {
-    const hasQueryParam = req.query.new_artwork_page
-    const isAdmin = req.user && req.user.get("type") === "Admin"
-    if (!hasQueryParam && !isAdmin) {
-      next()
-    }
     try {
       const {
         ServerApp,
@@ -62,6 +57,10 @@ app.get(
           scripts,
         },
       })
+
+      // While we are rolling out the new page, override the default (`artwork`)
+      // type inferred from the URL, for tracking and comparison purposes.
+      res.locals.sd.PAGE_TYPE = "new-artwork"
 
       res.status(status).send(layout)
     } catch (error) {
