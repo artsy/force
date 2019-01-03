@@ -58,10 +58,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@9.1.55":
-  version "9.1.55"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.55.tgz#c70910d0b5755797337a8f93f78dbcb1fde24cb3"
-  integrity sha512-SLtEYUDSQYAAvzROzty2DGL92acyxo4QuOPhkARpQwiL8s5HketnqfIpjuhpT3hs613bUQAINpY7ntOaQMcZ3Q==
+"@artsy/reaction@9.1.56":
+  version "9.1.56"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.1.56.tgz#331b1db6ab1bfb2e35b25ac8d8010e414755fdc9"
+  integrity sha512-MVHIBpHpavwJrXAbh6ll3xavC/BodNHeJn/LzY18n+eUlo6sJaOalmICSbPjTdG2vXzSethUVBvjrPcd7vBKXw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -89,12 +89,12 @@
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
-    react-lines-ellipsis "github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a"
+    react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
     react-relay "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
-    react-relay-network-modern "^2.5.0"
+    react-relay-network-modern "^2.5.1"
     react-relay-network-modern-ssr "^1.2.2"
     react-responsive-decorator "^0.0.1"
     react-router "^4.2.0"
@@ -1621,6 +1621,7 @@ antigravity@artsy/antigravity:
   version "0.1.3"
   resolved "https://codeload.github.com/artsy/antigravity/tar.gz/a4438d2fe9d0cdf71f1c47faba371cd3d004e140"
   dependencies:
+    coffeescript "1.11.1"
     express "*"
 
 any-observable@^0.2.0:
@@ -12303,10 +12304,10 @@ react-relay-network-modern-ssr@^1.2.2:
   resolved "https://registry.yarnpkg.com/react-relay-network-modern-ssr/-/react-relay-network-modern-ssr-1.2.2.tgz#9f611872113cc91839600939b0d4edf97a4f8adc"
   integrity sha512-35SHsvHS6IhZ7Sh9qXwjMhC5nZHhv5P9ERS5oti9u/B6GsQEC3cTwVCeSKIJNs+SxWkwQ6Z7DmzhPMWu1sNI0Q==
 
-react-relay-network-modern@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.5.0.tgz#24166dbdcf491aa6c519ae99e5402b41c73040f6"
-  integrity sha512-J7/wpDos+0CQTbCF+LkJ2pNeEAQbtT3N4R/4c4sg9gsKzRKQxOxUisdso5S4wiWYJt3y5vZF0Ov5IAVVQlhEaw==
+react-relay-network-modern@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.5.1.tgz#a081ae2691dbf2cfa53129cd6eb41a1e91a071aa"
+  integrity sha512-Edp9XWAWLiAntrtNmfeLZMPMcwUmTpBhAoxHCaSKcet7gWN5RS0Z2OhKpVhKg3p1qZz+VLMMvWg8eQghBe0auQ==
 
 "react-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz", "react-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"

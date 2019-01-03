@@ -164,7 +164,6 @@ module.exports =
     currentUser = CurrentUser.orNull()
     setCookie(CLIENT._id)
     recordArtworkView(CLIENT._id, currentUser)
-    splitTest('artwork_sidebar_pageviews').view() if CLIENT.pageviews?
     exec sharedInit
     enableIntercom(CLIENT)
 

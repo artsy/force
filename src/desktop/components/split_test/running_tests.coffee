@@ -25,16 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artwork_sidebar_pageviews:
-    key: 'artwork_sidebar_pageviews'
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    control_group: 'control'
-    edge: 'experiment'
-    weighting: 'equal'
-
   # Used for cookie-ing and gradual roll out.
   # We'll start at 1 and work our way up, users in groups
   # less than that number will receive the new artwork page.
