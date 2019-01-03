@@ -3,7 +3,6 @@ export { ArtworkDetailsQueryRenderer as ArtworkDetails } from "reaction/Apps/Art
 export { ReactionArtworkGrid as ArtworkGrid } from "./ReactionArtworkGrid"
 export { ReactionFillwidth as Fillwidth } from "./ReactionFillwidth"
 export { ReactionTooltipQuestion as TooltipQuestion } from "./ReactionTooltipQuestion"
-export { ReactionArtworkSidebarPageviews as ArtworkSidebarPageviews } from "./ReactionArtworkSidebarPageviews"
 export { UserSettingsPaymentsQueryRenderer as UserSettingsPayments } from "reaction/Components/Payment/UserSettingsPayments"
 export { StitchWrapper } from './StitchWrapper'
 
