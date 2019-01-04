@@ -37,6 +37,10 @@ app.get(
         margin: auto;
       `
 
+      // While we are rolling out the new page, override the default (`artwork`)
+      // type inferred from the URL, for tracking and comparison purposes.
+      res.locals.sd.PAGE_TYPE = "new-artwork"
+
       const layout = await stitch({
         basePath: __dirname,
         layout: "../../components/main_layout/templates/react_redesign.jade",
@@ -57,10 +61,6 @@ app.get(
           scripts,
         },
       })
-
-      // While we are rolling out the new page, override the default (`artwork`)
-      // type inferred from the URL, for tracking and comparison purposes.
-      res.locals.sd.PAGE_TYPE = "new-artwork"
 
       res.status(status).send(layout)
     } catch (error) {
