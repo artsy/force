@@ -3,9 +3,7 @@ require('backbone').$ = $
 routes =
   '/artists': require('../apps/artists/client/index.coffee').init
 
-  '/artwork': ->
-    require('../apps/artwork/client/index.coffee').init()
-    require('../apps/artwork/components/artists/market_insights.js').default.setupMarketInsights()
+  '/artwork': require('../apps/artwork/client/index.coffee').init
 
   '/collect': require('../apps/collect/client.coffee').init
 
