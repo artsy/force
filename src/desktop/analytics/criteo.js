@@ -3,10 +3,11 @@
 //
 window.criteo_q = window.criteo_q || []
 var pathSplit = location.pathname.split("/")
+const pageType = window.sd.PAGE_TYPE || pathSplit[1]
 var userEmail = (function() {
   return sd.CURRENT_USER ? [sd.CURRENT_USER.email] : []
 })()
-if (pathSplit[1] === "auctions") {
+if (pageType === "auctions") {
   // http://www.artsy.net/auctions - (AUCTIONS viewHome)
   //              0          1
   window.criteo_q.push(
@@ -14,7 +15,7 @@ if (pathSplit[1] === "auctions") {
     { event: "setSiteType", type: "d" },
     { event: "viewHome" }
   )
-} else if (pathSplit[1] === "auction") {
+} else if (pageType === "auction") {
   if (!pathSplit[3]) {
     // https://www.artsy.net/auction/:auction_id - (AUCTIONS viewList)
     //              0          1          2
@@ -49,7 +50,7 @@ if (pathSplit[1] === "auctions") {
       )
     })
   }
-} else if (pathSplit[1] === "artwork" && !pathSplit[3]) {
+} else if (pageType === "artwork" && !pathSplit[3]) {
   // https://www.artsy.net/artwork/:artwork_id - (AUCTIONS & ARTWORKS viewItem)
   //              0          1          2
   //
@@ -107,7 +108,7 @@ if (pathSplit[1] === "auctions") {
     )
   })
 } else {
-  if (pathSplit[1] === "collect") {
+  if (pageType === "collect") {
     // https://www.artsy.net/collect - (ARTWORKS viewHome)
     //              0          1
     window.criteo_q.push(
