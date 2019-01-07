@@ -10,11 +10,11 @@ PAGE_SIZE = 100
 { parse } = require 'url'
 httpProxy = require 'http-proxy'
 sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
+getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Constants").getFullEditorialHref
 
 @news = (req, res, next) ->
   new Articles().fetch
     data:
-      featured: true
       published: true
       sort: '-published_at'
       exclude_google_news: false
@@ -24,7 +24,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
       recentArticles = articles.filter (article) ->
         moment(article.get 'published_at').isAfter(moment().subtract(2, 'days'))
       res.set 'Content-Type', 'text/xml'
-      res.render('news', { pretty: true, articles: recentArticles })
+      res.render('news', { pretty: true, articles: recentArticles, getFullEditorialHref: getFullEditorialHref })
 
 @misc = (req, res, next) ->
   res.set 'Content-Type', 'text/xml'

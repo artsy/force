@@ -68,23 +68,30 @@ Sitemap: https://www.artsy.net/sitemap-videos.xml
         @res.send.args[0][0].slice(-1).should.eql('\n')
 
   describe '#news', ->
-    it 'displays the sitemap for news that are articles < 2 days old', ->
+    it 'displays the sitemap for articles that are < 2 days old', ->
+      today = new Date()
+      oneDayAgo = new Date()
+      twoDaysAgo = new Date()
+
+      oneDayAgo.setDate(today.getDate() - 1)
+      twoDaysAgo.setDate(today.getDate() - 2)
+
       routes.news(@req, @res)
       Backbone.sync.args[0][2].success {
         total: 16088,
         count: 12,
         results: [
-          fabricate('article', { published_at: new Date().toISOString() })
-          fabricate('article', { published_at: '2015-01-21T22:02:03.808Z' })
+          fabricate('article', { layout: 'standard', published_at: today.toISOString() })
+          fabricate('article', { layout: 'news', published_at: oneDayAgo.toISOString() })
+          fabricate('article', { published_at: twoDaysAgo.toISOString() })
         ]
-
       }
+
       @res.render.args[0][0].should.equal('news')
-      @res.render.args[0][1].articles.length.should.equal(1)
+      @res.render.args[0][1].articles.length.should.equal(2)
 
     it 'fetches with correct news data', ->
       routes.news(@req, @res)
-      Backbone.sync.args[0][2].data.featured.should.be.true()
       Backbone.sync.args[0][2].data.published.should.be.true()
       Backbone.sync.args[0][2].data.sort.should.equal '-published_at'
       Backbone.sync.args[0][2].data.exclude_google_news.should.be.false()
