@@ -20,7 +20,7 @@ listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 globalReactModules = require('./global_react_modules.tsx')
-{ componentRenderer } = require('@artsy/stitch/dist/server')
+hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 { initModalManager } = require('../../desktop/apps/auth2/client/index')
 
 module.exports = ->
@@ -32,7 +32,8 @@ module.exports = ->
   listenForBounce()
   confirmation.check()
   initModalManager() if sd.NEW_AUTH_MODAL
-  mountStitchBlocks()
+  mountStitchComponents()
+
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -98,17 +99,9 @@ setupErrorReporting = ->
   Raven.config(sd.SENTRY_PUBLIC_DSN).install()
   Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
 
-mountStitchBlocks = ->
-  {components, mountOnClient} = componentRenderer({
-    mode: 'client',
+mountStitchComponents = ->
+  hydrateStitch({
+    sharifyData: sd
     modules: globalReactModules
-    Wrapper: globalReactModules.StitchWrapper
+    wrapper: globalReactModules.StitchWrapper
   })
-
-  sd.stitch.renderQueue.forEach (block) ->
-    mountOnClient(block)
-
-  # Mount renderer for runtime client-side templates. NOTE: must be included
-  # in template when rendering data; e.g., html = myTemplate({ data, stitch })
-  sd.stitch.components = components
-
