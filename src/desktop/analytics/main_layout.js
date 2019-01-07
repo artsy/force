@@ -24,9 +24,11 @@ if (pageType == "artwork") {
   }
 }
 
-// We exclude 'orders' routes from analytics.page calls because they're already
-// taken care of in another place.
-const excludedRoutes = ["orders"]
+// We exclude these routes from analytics.page calls because they're already
+// taken care of in Reaction.
+// FIXME: When new artwork page is fully rolled out, and goes back to an
+// `artwork` page type, remove `new-artwork` from here.
+const excludedRoutes = ["orders", "new-artwork"]
 if (!excludedRoutes.includes(pageType)) {
   analytics.page(properties, { integrations: { Marketo: false } })
 }
