@@ -23,14 +23,7 @@ jobs:
           command: |
             export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai test
-  build:
-    docker:
-      - image: artsy/hokusai:0.4.5
-    steps:
-      - run:
-          name: "OK"
-          command: "echo All Tests Pass!"
-  push:
+  push_staging_image: &push_image
     docker:
       - image: artsy/hokusai:0.4.5
     steps:
@@ -42,6 +35,7 @@ jobs:
           command: |
             export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
+  push_production_image: *push_image
   publish_staging_assets:
     docker:
       - image: circleci/node:10-stretch-browsers
@@ -56,7 +50,7 @@ jobs:
           root: workspace
           paths:
             - manifest.json
-  publish_release_assets:
+  publish_production_assets:
     docker:
       - image: circleci/node:10-stretch-browsers
     steps:
@@ -123,49 +117,48 @@ workflows:
       - test:
           filters:
             branches:
-              ignore: staging
+              ignore:
+                - staging
+                - release
       - acceptance:
           filters:
             branches:
-              ignore: staging
-      - build:
+              ignore:
+                - staging
+                - release
+      - push_staging_image:
           filters:
             branches:
-              ignore: staging
+              only: master
           requires:
             - test
             - acceptance
-      - push:
+      - push_production_image:
           filters:
             branches:
-              only:
-                - master
-                - release
-          requires:
-            - build
+              only: release
       - publish_staging_assets:
           filters:
             branches:
               only: master
           requires:
-            - build
-      - publish_release_assets:
+            - test
+            - acceptance
+      - publish_production_assets:
           filters:
             branches:
               only: release
-          requires:
-            - build
       - deploy_hokusai_staging:
           filters:
             branches:
               only: master
           requires:
-            - push
+            - push_staging_image
             - publish_staging_assets
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
-            - push
-            - publish_release_assets
+            - push_production_image
+            - publish_production_assets
