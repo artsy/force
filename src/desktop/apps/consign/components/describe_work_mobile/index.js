@@ -241,6 +241,7 @@ export function makeDescribeWorkMobile(initialValues = {}) {
                   component={renderTextInput}
                   item={"minimum_price_dollars"}
                   label={"\u00A0"}
+                  type="number"
                   warn={numberWarning}
                 />
               </div>
