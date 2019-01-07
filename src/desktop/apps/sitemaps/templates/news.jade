@@ -5,7 +5,7 @@ urlset(
 )
     for article in articles
       url
-        loc= 'https://www.artsy.net/article/' + article.get('slug')
+        loc= 'https://www.artsy.net/' + (article.get('layout') == 'news' ?  'news' : 'article') + '/' + article.get('slug')
         news:news
           news:publication
             news:name Artsy
