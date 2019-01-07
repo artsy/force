@@ -12,6 +12,7 @@ var properties = { path: location.pathname }
 
 if (pageType == "artwork") {
   properties["acquireable"] = sd.ARTWORK.is_acquireable
+  properties["offerable"] = sd.ARTWORK.is_offerable
   properties["availability"] = sd.ARTWORK.availability
   properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
 
