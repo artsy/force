@@ -12,7 +12,7 @@ jobs:
           command: "yarn install && yarn acceptance src/test/acceptance/*.js"
   test:
     docker:
-      - image: artsy/hokusai:0.4.5
+      - image: artsy/hokusai:0.5.0
     parallelism: 4
     steps:
       - add_ssh_keys
@@ -25,7 +25,7 @@ jobs:
             hokusai test
   push_staging_image: &push_image
     docker:
-      - image: artsy/hokusai:0.4.5
+      - image: artsy/hokusai:0.5.0
     steps:
       - add_ssh_keys
       - checkout
@@ -66,7 +66,7 @@ jobs:
             - manifest.json
   deploy_hokusai_staging:
     docker:
-      - image: artsy/hokusai:0.4.5
+      - image: artsy/hokusai:0.5.0
     steps:
       - add_ssh_keys
       - checkout
@@ -90,7 +90,7 @@ jobs:
           command: hokusai staging deploy $CIRCLE_SHA1
   deploy_hokusai_production:
     docker:
-      - image: artsy/hokusai:0.4.5
+      - image: artsy/hokusai:0.5.0
     steps:
       - add_ssh_keys
       - checkout
