@@ -121,10 +121,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-3.1.1.tgz#2d82d38b0415d88af2f07c66d94894210262dfb5"
-  integrity sha512-kfZNmqRbW4hOWLC2QNA/zX0GaJHabGzfJY6HQwdv2Oi1VbTt9Qli6GQJb9MrE9Ware7Eio+5ikeMetIx36sg/Q==
+"@artsy/stitch@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-3.1.2.tgz#931e82cff65de4fbc50934d9ba227e4d18356a30"
+  integrity sha512-OILYKB0IgPKowlbkrziTKUO9RFq2KOyRwGts+gRB8SEg60Ls8ut9ZCVlSKs1j6ijxN3HsJKQDIT22GIO8qQWcA==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.4"
