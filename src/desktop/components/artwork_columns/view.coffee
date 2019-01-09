@@ -8,7 +8,6 @@ ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 SaveControls = require '../artwork_item/save_controls.coffee'
 artworkColumns = -> require('./template.jade') arguments...
-stitchArtworkColumns = -> require('./stitch_template.jade') arguments...
 artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
 
 module.exports = class ArtworkColumns extends Backbone.View
@@ -77,24 +76,14 @@ module.exports = class ArtworkColumns extends Backbone.View
   render: =>
     # Render columns and set some styles according to view params
 
-    # FIXME: Shared with /collect and http://localhost:5000/wychwood-art/works?for_sale=
-    # The latter doesn't render
-    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      @$el
-        .html stitchArtworkColumns
-          artworks: @collection.toJSON()
-          sd: sd
-          buttonLabel: @buttonLabel()
-          seeMore: @seeMore
-    else
-      @$el
-        .html artworkColumns
-          numberOfColumns: @numberOfColumns
-          buttonLabel: @buttonLabel()
-          seeMore: @seeMore
+    @$el
+      .html artworkColumns
+        numberOfColumns: @numberOfColumns
+        buttonLabel: @buttonLabel()
+        seeMore: @seeMore
 
-      @sizeColumns()
-      @appendArtworks @collection.models
+    @sizeColumns()
+    @appendArtworks @collection.models
 
     if @seeMore
       _.each(@collection.rest(@initialItemCount), ((artwork) =>

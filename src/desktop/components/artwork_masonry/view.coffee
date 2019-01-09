@@ -53,14 +53,11 @@ module.exports = class ArtworkMasonryView extends Backbone.View
   appendArtworks: (artworks) ->
     @artworks = @artworks.concat artworks
 
-    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      @appendArtworksToReactionGrid(@artworks)
-    else
-      { columns, @heights } = masonry artworks, @heights
-      _.each columns, (column, i) =>
-        $(@$columns[i]).append columnTemplate { column }
+    { columns, @heights } = masonry artworks, @heights
+    _.each columns, (column, i) =>
+      $(@$columns[i]).append columnTemplate { column }
 
-      @postRender artworks
+    @postRender artworks
 
   remove: ->
     invoke @subViews, 'remove'
