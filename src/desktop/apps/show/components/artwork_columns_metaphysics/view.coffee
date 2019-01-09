@@ -10,9 +10,6 @@ module.exports = class ArtworkColumnsView extends Backbone.View
   initialize: (options = {}) ->
     { @page, @showId, @artworks } = options
 
-    if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      @render()
-
     $(window).on 'scroll.partner_show.artworks', _.throttle(@infiniteScroll, 150)
 
   fetch: =>
@@ -62,10 +59,7 @@ module.exports = class ArtworkColumnsView extends Backbone.View
         @isFetching = false
         @artworks = @artworks.concat fetchedArtworks
 
-        if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-          @appendArtworksToReactionGrid(@artworks)
-        else
-          @render()
+        @render()
 
 
   infiniteScroll: =>
@@ -89,7 +83,6 @@ module.exports = class ArtworkColumnsView extends Backbone.View
 
     @$('.artwork-column').first().prepend "<div class='js-related-articles'>#{relatedArticlesHtml}</div>"
 
-    unless sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-      setupSaveControls @artworks
+    setupSaveControls @artworks
 
     this

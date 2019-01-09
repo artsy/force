@@ -61,24 +61,6 @@ style.
 div
   != stitch.components.TooltipQuestion({ mountId: 'foo', horizontalAlign: 'right', message: 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'})
 
-br
-hr
-br
-
-div(class='reactionArtworkBrick')
-  != stitch.components.ArtworkGrid({ artworks })
-
-br
-hr
-br
-
-div(class='reactionArtworkBrick')
-  != stitch.components.Artwork({ artwork: artworks[0] })
-
-br
-hr
-br
-
 div
   != stitch.components.Fillwidth({ artworks })
 
