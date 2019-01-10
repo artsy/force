@@ -45,4 +45,14 @@ module.exports = {
     weighting: 'equal'
     edge: 0
     control_group: 9
+  artist_insights:
+    key: 'artist_insights',
+    outcomes: [
+      'v1',
+      'v2_before_bio'
+      'v2_after_bio'
+    ],
+    control_group: 'v1',
+    edge: 'v2_before_bio',
+    weighting: 'equal'
 }
