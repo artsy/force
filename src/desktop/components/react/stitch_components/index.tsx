@@ -5,4 +5,5 @@ export { ReactionFillwidth as Fillwidth } from "./ReactionFillwidth"
 export { ReactionTooltipQuestion as TooltipQuestion } from "./ReactionTooltipQuestion"
 export { UserSettingsPaymentsQueryRenderer as UserSettingsPayments } from "reaction/Components/Payment/UserSettingsPayments"
 export { StitchWrapper } from './StitchWrapper'
+export { StagingBanner } from './StagingBanner'
 
