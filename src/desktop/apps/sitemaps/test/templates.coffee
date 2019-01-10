@@ -5,6 +5,7 @@ jade = require 'jade'
 fs = require 'fs'
 moment = require 'moment'
 { fabricate } = require 'antigravity'
+getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Constants").getFullEditorialHref
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 Artwork = require '../../../models/artwork'
@@ -39,9 +40,15 @@ describe 'misc sitemap template', ->
 describe 'news sitemap template', ->
 
   it 'renders article info', ->
-    xml = render('news')
-      articles: [new Article fabricate 'article']
-    xml.should.containEql 'https://www.artsy.net/article/editorial-on-the-heels-of-a-stellar-year'
+    articles = [
+      new Article(fabricate('article', layout: 'standard'))
+      new Article(fabricate('article', layout: 'news', slug: "banksys-half-shredded-painting-will-view-german-museum"))
+    ]
+
+    xml = render('news')(articles: articles, getFullEditorialHref: getFullEditorialHref)
+
+    xml.should.containEql '/article/editorial-on-the-heels-of-a-stellar-year'
+    xml.should.containEql '/news/banksys-half-shredded-painting-will-view-german-museum'
     xml.should.containEql '<news:name>Artsy</news:name>'
     xml.should.containEql '2014-09-24T23:24:54.000Z'
     xml.should.containEql 'On The Heels of A Stellar Year in the West, Sterling Ruby Makes His Vivid Mark on Asia'

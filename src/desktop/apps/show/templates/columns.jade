@@ -1,7 +1,4 @@
 section.show-artworks-columns.js-show-artworks-columns
-  if sd.ENABLE_EXPERIMENTAL_STITCH_INJECTION
-    #stitch-shows-artworks
-  else
-    .artworks-container
-      if artworkColumns
-        include ../components/artwork_columns_metaphysics/template
+  .artworks-container
+    if artworkColumns
+      include ../components/artwork_columns_metaphysics/template
