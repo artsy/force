@@ -50,10 +50,9 @@ module.exports = {
     key: 'artist_insights'
     outcomes: [
       'v1'
-      'v2_before_bio'
-      'v2_after_bio'
+      'v2'
     ]
     control_group: 'v1'
-    edge: 'v2_before_bio'
+    edge: 'v2'
     weighting: 'equal'
 }
