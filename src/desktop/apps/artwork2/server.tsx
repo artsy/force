@@ -65,7 +65,13 @@ app.get(
       res.status(status).send(layout)
     } catch (error) {
       console.log(error)
-      next(error)
+      if (error.message.includes("Artwork Not Found")) {
+        const notFoundError: any = new Error("Artwork Not Found")
+        notFoundError.status = 404
+        next(notFoundError)
+      } else {
+        next(error)
+      }
     }
   }
 )

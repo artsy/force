@@ -58,10 +58,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@9.3.14":
-  version "9.3.14"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.3.14.tgz#921c2b38d10a5a0ff791ec25104c57adee2085cf"
-  integrity sha512-Cie2zon2zPvTXqCyee8J02ySlnAeXMk4YFE2xfAB2JxFFVCY0USiesXhAB6B40myO1cz7/DaSxnHDHb+AcOEXg==
+"@artsy/reaction@9.5.6":
+  version "9.5.6"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-9.5.6.tgz#b0d0cc9c4d792db58503418e51243e0ccb7467a5"
+  integrity sha512-vPdT80GPrvhrvJ1AYtK87UB+Hz1Ui1S1jACLl2VbJuvSDPOOB0L5TMrfh2veoZrj9vaO87R1AO4q6rT+BxYhiA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -121,10 +121,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-3.1.2.tgz#931e82cff65de4fbc50934d9ba227e4d18356a30"
-  integrity sha512-OILYKB0IgPKowlbkrziTKUO9RFq2KOyRwGts+gRB8SEg60Ls8ut9ZCVlSKs1j6ijxN3HsJKQDIT22GIO8qQWcA==
+"@artsy/stitch@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-4.0.0.tgz#1e6a7fbda542dd2114de49c540761d16195b1826"
+  integrity sha512-eZl5jjZ3LYqt3pkFypeMQKUWtsg1FTAqhxprMTAyNQyW974mMPHRx5gdx8Pe5OvtDhphK1HcUJxiohbtbctZbQ==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.4"
@@ -12243,7 +12243,6 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
 
 "react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
-  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-markdown@^2.5.0:

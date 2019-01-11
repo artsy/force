@@ -46,14 +46,21 @@ module.exports = class SearchResult extends Backbone.Model
       "/#{@get('model')}/#{@id}"
 
   displayModel: ->
-    model =
-      if @get('model') is 'gene'
+    originalModel = @get('model')
+    model = switch originalModel
+      when 'gene'
         'category'
-      else if @get('model') is 'partnershow'
+      when 'partnershow'
         'show'
-      else if @get('model') is 'profile'
-        if @get('owner_type') in INSTITUTION_TYPES then 'institution' else 'gallery'
-      else @get('model')
+      when 'profile'
+        if @get('owner_type') in INSTITUTION_TYPES
+          'institution'
+        else if @get('owner_type') == 'FairOrganizer'
+          'fair'
+        else
+          'gallery'
+      else
+        originalModel
 
     _s.capitalize model
 

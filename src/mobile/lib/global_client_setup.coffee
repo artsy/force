@@ -3,23 +3,14 @@
 # to include in this file can actually live somewhere else like a relavent app
 # or component.
 #
+sd = require('sharify').data
 globalReactModules = require('./global_react_modules')
-{ componentRenderer } = require('@artsy/stitch/dist/server')
+hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 
 module.exports = ->
-  mountStitchBlocks()
-
-
-mountStitchBlocks = ->
-  {components, mountOnClient} = componentRenderer({
-    mode: 'client',
-    modules: globalReactModules,
-    Wrapper: globalReactModules.StitchWrapper
+  hydrateStitch({
+    sharifyData: sd
+    modules: globalReactModules
+    wrapper: globalReactModules.StitchWrapper
   })
 
-  sd.stitch.renderQueue.forEach (block) ->
-    mountOnClient(block)
-
-  # Mount renderer for runtime client-side templates. NOTE: must be included
-  # in template when rendering data; e.g., html = myTemplate({ data, reaction })
-  sd.stitch.components = components

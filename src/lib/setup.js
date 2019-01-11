@@ -45,6 +45,8 @@ import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
 import marketingModals from "./middleware/marketing_modals"
 import { addIntercomUserHash } from "./middleware/intercom"
+import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
+import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
 
@@ -223,6 +225,14 @@ export default function(app) {
   app.use(unsupportedBrowserCheck)
   app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
+
+  // Configure stitch SSR functionality
+  app.use(
+    stitchMiddleware({
+      modules: globalReactModules,
+      wrapper: globalReactModules.StitchWrapper,
+    })
+  )
 
   if (DD_APM_ENABLED) {
     ddTracer.init({

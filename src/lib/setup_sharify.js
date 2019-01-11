@@ -8,6 +8,8 @@
 // If it is sensitive configuration you should only add it to config.coffee and
 // require that file directly *only* server-side.
 //
+// See this doc for more details: https://github.com/artsy/force/blob/master/docs/adding_an_env_var.md
+//
 import _ from "underscore"
 import config from "../config"
 import sharify from "sharify"
@@ -43,7 +45,6 @@ sharify.data = _.extend(
     "EMBEDLY_KEY",
     "ENABLE_MAKE_OFFER",
     "ENABLE_WEB_CRAWLING",
-    "ENABLE_EXPERIMENTAL_STITCH_INJECTION",
     "EOY_2016_ARTICLE",
     "EOY_2016",
     "EOY_2018_ARTISTS",

@@ -5,6 +5,7 @@ import get from "lodash.get"
 import { Artwork } from "reaction/Components/Artwork"
 import { ArtworkRail } from "../artwork_rail/ArtworkRail"
 import { connect } from "react-redux"
+import { RelayStubProvider } from "desktop/components/react/RelayStubProvider"
 
 function PromotedSaleArtworks(props) {
   const { isClosed, isMobile, promotedSaleArtworks } = props
@@ -30,7 +31,9 @@ function PromotedSaleArtworks(props) {
           getDisplayComponent={({ artwork }) => {
             return (
               <div onClick={() => (window.location = artwork.href)}>
-                <Artwork artwork={artwork} useRelay={false} />
+                <RelayStubProvider>
+                  <Artwork artwork={artwork} />
+                </RelayStubProvider>
               </div>
             )
           }}
@@ -43,7 +46,9 @@ function PromotedSaleArtworks(props) {
           getDisplayComponent={({ artwork }) => {
             return (
               <div onClick={() => (window.location = artwork.href)}>
-                <Artwork artwork={artwork} useRelay={false} />
+                <RelayStubProvider>
+                  <Artwork artwork={artwork} />
+                </RelayStubProvider>
               </div>
             )
           }}
