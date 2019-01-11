@@ -3,6 +3,7 @@
 if artwork.images.length > 1
   include ./image_carousel.jade
 else
-  .artwork-image-module__outer
-    .artwork-image-module__inner
-      img.artwork-image( src=artwork.image.url )
+  if artwork && artwork.image
+    .artwork-image-module__outer
+      .artwork-image-module__inner
+        img.artwork-image( src=artwork.image.url )
