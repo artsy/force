@@ -120,6 +120,39 @@
           }
         ]
       },
+      "insights": [
+        {
+          "type": "COLLECTED",
+          "label": "Collected by a major institution",
+          "entities": [
+            "Tate",
+            "Museum of Modern Art (MoMA)",
+            "National Gallery of Art, Washington, D.C.",
+            "Indianapolis Museum of Art at Newfields",
+            "San Francisco Museum of Modern Art (SFMOMA)"
+          ]
+        },
+        {
+          "type": "SOLO_SHOW",
+          "label": "Solo show at a major institution",
+          "entities": ["Tate"]
+        },
+        {
+          "type": "GROUP_SHOW",
+          "label": "Group show at a major institution",
+          "entities": ["Tate"]
+        },
+        {
+          "type": "REVIEWED",
+          "label": "Reviewed by a major art publication",
+          "entities": ["Tate"]
+        },
+        {
+          "type": "BIENNIAL",
+          "label": "Participated in a major biennial",
+          "entities": ["frieze"]
+        }
+      ],
       "related": {
         "genes": {
           "edges": [
