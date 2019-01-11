@@ -1,15 +1,17 @@
-a.search-result( href=result.href(), class=_s.decapitalize(result.get('display_model')), data-id=result.get('id'), data-mongo-id=result.get('_id') )
-  if result.imageUrl() != null && result.get('display_model') != 'Artist'
+- displayModel = result.get('display_model')
+
+a.search-result(href=result.href(), class=_s.decapitalize(displayModel), data-id=result.get('id'), data-mongo-id=result.get('_id') )
+  if result.imageUrl() != null && displayModel != 'Artist'
     .search-result-thumbnail
       .search-result-thumbnail-fallback
         include image
   else
     .search-result-no-thumbnail
   .search-result-info
-    if result.get('display_model')
-      .search-result-kind= _s.decapitalize(_s.humanize(result.get('display_model')))
+    if displayModel
+      .search-result-kind= _s.decapitalize(_s.humanize(displayModel))
     .search-result-title= result.resultsPageTitle()
     if result.get('about')
       .search-result-about= result.get('about')
-    if result.get('display_model') == 'Artist' || result.get('display_model') == 'Category'
+    if displayModel == 'Artist' || displayModel == 'Category'
       .search-result-images
