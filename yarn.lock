@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.23.3":
-  version "2.23.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.23.3.tgz#cf9e99075db104822dbe69e85658bbb95a4cf66a"
-  integrity sha512-7ulJ7ZPKRvOWLX+XhFnxvnetXjFurA0B9Wsv3KiZBTnCPqcHZjhJ+CIOFCc5/k0KD7cX+SzQmBdSLliqoLz4bQ==
+"@artsy/palette@2.24.3":
+  version "2.24.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.24.3.tgz#2b5e55f97c174ca5063289e815bf400fe4409fae"
+  integrity sha512-miyUe7MYvKDqGg+P0kqe/WojMaEPK2adQNgGotRrU33OsKhu6P+AnBn9erpT3H+5sTiOefUIWiivbglESrgizQ==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
