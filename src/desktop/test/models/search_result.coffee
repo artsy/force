@@ -71,6 +71,10 @@ describe 'SearchResult', ->
       it 'has a display_model attribute when it an institution seller profile', ->
         model = new SearchResult(model: 'profile', owner_type: 'PartnerInstitutionalSeller')
         model.get('display_model').should.equal 'Institution'
+      
+      it 'has a display_model attribute when it fair profile', ->
+        model = new SearchResult(model: 'profile', owner_type: 'FairOrganizer')
+        model.get('display_model').should.equal 'Fair'
 
     describe '#imageUrl', ->
       it 'has a image url attribute when it an Artist', ->

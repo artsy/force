@@ -1,6 +1,4 @@
-- displayModel = result.get('display_model')
-- isFairProfile = displayModel === 'Gallery' && result.get('owner_type') === 'FairOrganizer'
-- displayName =  isFairProfile ? 'fair' : displayModel
+- displayModel = result.get('display_model') 
 
 a.search-result(
   href= result.href()
@@ -20,7 +18,7 @@ a.search-result(
   .search-result-info
     if displayModel
       .search-result-kind
-        = displayName
+        = displayModel
     if result.get('display')
       .search-result-display
         = result.highlightedDisplay ? result.highlightedDisplay(term) : result.get('display')
