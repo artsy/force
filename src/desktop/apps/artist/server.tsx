@@ -16,7 +16,7 @@ app.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user && req.user.toJSON()
-
+      const { ARTIST_INSIGHTS } = res.locals.sd
       const {
         ServerApp,
         redirect,
@@ -27,7 +27,10 @@ app.get(
         routes,
         url: req.url,
         userAgent: req.header("User-Agent"),
-        context: buildServerAppContext(req, res),
+        context: {
+          ...buildServerAppContext(req, res),
+          ARTIST_INSIGHTS,
+        },
       })
 
       if (redirect) {
