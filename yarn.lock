@@ -24,14 +24,15 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.25.8":
-  version "2.25.8"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.25.8.tgz#88fead723839288d2b58a07c508cb10252a25e63"
-  integrity sha512-XbCfG0tIiLZhYifJlTx8lrcPHTOly1HDWgHz/PwmaE5tcqJr13PqGNvJDFfsZVA2e5qe9rQATaRXhPsW0R9jfA==
+"@artsy/palette@2.25.9":
+  version "2.25.9"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.25.9.tgz#e2adff7985b0a87714b6c33e5ee05a6725f82e49"
+  integrity sha512-cJBnwg3ey61kWNG5hj3XSaHy6ROx1UxcNzLUaTLCjCRt74mOdTBVjhhlc9RfEsOJa6UClEqBHgc+SCLVw1DhUg==
   dependencies:
     rc-slider "^8.6.2"
     react "^16.5.0"
     react-spring "^5.7.2"
+    styled-bootstrap-grid "1.0.4"
     styled-system "^3.1.11"
 
 "@artsy/passport@1.1.0":
