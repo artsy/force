@@ -8,6 +8,7 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
 { parse } = require 'url'
+sd = require 'sharify'
 httpProxy = require 'http-proxy'
 sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
 getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Constants").getFullEditorialHref
@@ -15,6 +16,7 @@ getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Const
 @news = (req, res, next) ->
   new Articles().fetch
     data:
+      channel_id: sd.ARTSY_EDITORIAL_ID
       published: true
       sort: '-published_at'
       exclude_google_news: false
@@ -22,7 +24,7 @@ getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Const
     error: res.backboneError
     success: (articles) ->
       recentArticles = articles.filter (article) ->
-        moment(article.get 'published_at').isAfter(moment().subtract(2, 'days'))
+        moment(article.get 'published_at').isAfter(moment().subtract(2, 'days')) && article.get("layout") != 'classic'
       res.set 'Content-Type', 'text/xml'
       res.render('news', { pretty: true, articles: recentArticles, getFullEditorialHref: getFullEditorialHref })
 
