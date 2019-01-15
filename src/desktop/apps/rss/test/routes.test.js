@@ -96,13 +96,38 @@ describe("Routes", () => {
       res.render.args[0][1].articles.length.should.eql(3)
     })
 
-    it("renders the rss feed for news", async () => {
+    it("renders the rss feed for news without unpublished video articles", async () => {
+      const articlesWithVideo = [
+        ...results.articles,
+        {
+          id: "4",
+          published_at,
+          layout: "video",
+          media: {
+            published: false,
+          },
+        },
+      ]
+
+      routes.__set__(
+        "positronql",
+        sinon.stub().returns(Promise.resolve({ articles: articlesWithVideo }))
+      )
+
+      const findArticlesWithEmbedsStub = sinon.stub()
+
       routes.__set__(
         "findArticlesWithEmbeds",
-        sinon.stub().returns(Promise.resolve(new Articles(results.articles)))
+        findArticlesWithEmbedsStub.returns(
+          Promise.resolve(new Articles(results.articles))
+        )
       )
 
       await routes.news(req, res)
+
+      // This ensures that articles are filtered between the positron call and the #findArticlesWithEmbeds call
+      findArticlesWithEmbedsStub.firstCall.args[0].length.should.eql(3)
+
       res.render.args[0][0].should.containEql("news")
       res.render.args[0][1].articles.length.should.eql(3)
     })

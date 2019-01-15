@@ -17,7 +17,15 @@ export const news = (req, res, next) => {
   return positronql(query)
     .then(async result => {
       try {
-        const articles = await findArticlesWithEmbeds(result.articles)
+        const articlesWithoutUnpublishedVideos = result.articles.filter(
+          article =>
+            article.layout !== "video" ||
+            (article.media && article.media.published)
+        )
+
+        const articles = await findArticlesWithEmbeds(
+          articlesWithoutUnpublishedVideos
+        )
         res.set("Content-Type", "application/rss+xml")
         return res.render("news", { articles, pretty: true })
       } catch (err) {
