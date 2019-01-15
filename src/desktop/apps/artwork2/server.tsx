@@ -3,7 +3,6 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import styled from "styled-components"
 import express, { Request, Response, NextFunction } from "express"
 
 export const app = express()
@@ -30,13 +29,6 @@ app.get(
         return
       }
 
-      // FIXME: Move this to Reaction
-      const Container = styled.div`
-        width: 100%;
-        max-width: 1192px;
-        margin: auto;
-      `
-
       // While we are rolling out the new page, override the default (`artwork`)
       // type inferred from the URL, for tracking and comparison purposes.
       res.locals.sd.PAGE_TYPE = "new-artwork"
@@ -49,11 +41,7 @@ app.get(
         },
         blocks: {
           head: () => <React.Fragment>{headTags}</React.Fragment>,
-          body: () => (
-            <Container>
-              <ServerApp />
-            </Container>
-          ),
+          body: ServerApp,
         },
         locals: {
           ...res.locals,

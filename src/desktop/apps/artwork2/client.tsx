@@ -3,7 +3,6 @@ import { routes } from "reaction/Apps/Artwork/routes"
 import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
-import styled from "styled-components"
 import { enableIntercom } from "lib/intercom"
 
 const mediator = require("desktop/lib/mediator.coffee")
@@ -13,13 +12,6 @@ const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
 const openAuctionBuyerPremium = require("desktop/apps/artwork/components/auction/components/buyers_premium/index.coffee")
 
-// FIXME: Move this to Reaction
-const Container = styled.div`
-  width: 100%;
-  max-width: 1192px;
-  margin: auto;
-`
-
 buildClientApp({
   routes,
   context: {
@@ -28,12 +20,7 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(
-      <Container>
-        <ClientApp />
-      </Container>,
-      document.getElementById("react-root")
-    )
+    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
   })
   .catch(error => {
     console.error(error)
