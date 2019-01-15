@@ -1,10 +1,9 @@
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
-import Colors from "reaction/Assets/Colors"
-import { pMedia } from "reaction/Components/Helpers"
-import { SectionsNav } from "./sections_nav.jsx"
-import { Header } from "./header.jsx"
+import { SectionsNav } from "./sections_nav"
+import { Header } from "./header"
+import { color, media } from "@artsy/palette"
 
 export class FixedHeader extends Component {
   static propTypes = {
@@ -97,8 +96,9 @@ const FixedHeaderContainer = styled.div`
   z-index: 100;
   transition: opacity 0.25s;
   opacity: ${props => (props.isVisible ? "1" : "0")};
-  border-bottom: 1px solid ${Colors.grayRegular};
-  ${pMedia.sm`
+  border-bottom: 1px solid ${color("black10")};
+
+  ${media.sm`
     .SeriesNav {
       margin-top: 40px;
     }

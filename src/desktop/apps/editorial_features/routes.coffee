@@ -13,6 +13,9 @@ Articles = require '../../collections/articles.coffee'
 { WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER } = require '../../config.coffee'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
+{ createMediaStyle } = require "@artsy/reaction/dist/Utils/Responsive"
+
+mediaStyles = createMediaStyle()
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
@@ -51,6 +54,8 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
       res.locals.sd.VIDEO_INDEX = videoIndex
       res.locals.sd.IS_NESTED_PATH = slug?
       res.locals.sd.INCLUDE_SAILTHRU = true
+      res.locals.sd.RESPONSIVE_CSS = mediaStyles
+
       if res.locals.sd.IS_NESTED_PATH
         section = curation.get('sections')[videoIndex]
         appendTitle = ': ' + section.title

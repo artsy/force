@@ -4,13 +4,13 @@ import React from "react"
 import styled from "styled-components"
 import { unica } from "reaction/Assets/Fonts"
 import { Video } from "reaction/Components/Publishing"
-import { media } from "@artsy/palette"
+import { media, Box, Flex, Sans } from "@artsy/palette"
 
 export const SectionVideo = props => {
   const { section, curation } = props
 
   return (
-    <SectionVideoContainer className="SectionVideo">
+    <SectionVideoContainer py={[40, 40, 40, 50]}>
       {renderVideo(section)}
     </SectionVideoContainer>
   )
@@ -35,8 +35,16 @@ function renderVideo(section) {
   } else {
     return (
       <VideoPreview backgroundSrc={videoSection.cover_image_url || ""}>
-        <ReleaseDate>
-          Available {moment(section.release_date).format("MMM. D") || "Soon"}
+        <ReleaseDate
+          justify-content="flex-start"
+          align-items="flex-end"
+          height="100%"
+          py={[10, 10, 10, 15]}
+          px={[20, 20, 20, 30]}
+        >
+          <Sans size={["6", "6", "6", "8"]} color="white">
+            Available {moment(section.release_date).format("MMM. D") || "Soon"}
+          </Sans>
         </ReleaseDate>
       </VideoPreview>
     )
@@ -47,13 +55,7 @@ SectionVideo.propTypes = {
   section: PropTypes.object,
 }
 
-const SectionVideoContainer = styled.div`
-  margin-bottom: 50px;
-
-  ${media.sm`
-    margin-bottom: 40px;
-  `};
-
+const SectionVideoContainer = styled(Box)`
   .VideoCover {
     justify-content: flex-start;
     align-items: flex-end;
@@ -108,17 +110,6 @@ const VideoPreview = styled.div`
   filter: grayscale(100%);
 `
 
-const ReleaseDate = styled.div`
-  ${unica("s80")} color: white;
-  display: flex;
-  height: 100%;
-  justify-content: flex-start;
-  align-items: flex-end;
-  padding: 15px 30px;
+const ReleaseDate = styled(Flex)`
   background: rgba(0, 0, 0, 0.5);
-
-  ${media.sm`
-    ${unica("s40")}
-    padding: 10px 20px;
-  `};
 `

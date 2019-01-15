@@ -1,13 +1,12 @@
+import { Box } from "@artsy/palette"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
 import { debounce } from "lodash"
-import { pMedia } from "reaction/Components/Helpers"
-import { FixedHeader } from "./nav/fixed_header.jsx"
-import { SeriesHeader } from "./series/series_header.jsx"
-import { SeriesFooter } from "./series/series_footer.jsx"
-import { Section } from "./section/section.jsx"
-import { media } from "@artsy/palette"
+import { FixedHeader } from "./nav/fixed_header"
+import { SeriesHeader } from "./series/series_header"
+import { SeriesFooter } from "./series/series_footer"
+import { Section } from "./section/section"
 
 export default class App extends Component {
   static propTypes = {
@@ -91,7 +90,7 @@ export default class App extends Component {
     const { activeSection, isMobile, showHeader } = this.state
 
     return (
-      <div className="gucci">
+      <div>
         <FixedHeader // fixed position shows on scroll
           activeSection={activeSection}
           curation={curation}
@@ -109,7 +108,7 @@ export default class App extends Component {
           onChangeSection={this.onChangeSection}
         />
 
-        <GucciBody>
+        <Box width="100%" maxWidth="1240px" mx="auto" px={[0, 0, 0, "20"]}>
           {curation.sections.map((section, index) => (
             <div id={section.slug} key={"section-" + index}>
               <Section
@@ -121,19 +120,8 @@ export default class App extends Component {
             </div>
           ))}
           <SeriesFooter curation={curation} isMobile={isMobile} />
-        </GucciBody>
+        </Box>
       </div>
     )
   }
 }
-
-const GucciBody = styled.div`
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 20px;
-
-  ${media.sm`
-    padding: 0;
-  `};
-`

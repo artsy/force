@@ -78,7 +78,8 @@ const Title = styled.div`
   ${pMedia.lg`
     margin: 0 30px;
     ${unica("s40")};
-  `} ${pMedia.sm`
+  `};
+  ${pMedia.sm`
     margin: 0;
     &:nth-child(2) {
       margin: 0;

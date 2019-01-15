@@ -16,7 +16,7 @@ export const SeriesFooter = props => {
       mx="auto"
       mb={100}
       px={20}
-      mt={[100, 0, 0, 0]}
+      mt={[100, 100, 100, 0]}
       width="100%"
       flexDirection={["column", "column", "column", "row"]}
       justifyContent="space-between"

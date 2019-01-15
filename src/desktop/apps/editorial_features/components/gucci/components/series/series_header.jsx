@@ -1,10 +1,10 @@
+import { media, Box } from "@artsy/palette"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import React from "react"
 import Waypoint from "react-waypoint"
-import { pMedia } from "reaction/Components/Helpers"
-import { Header } from "../nav/header.jsx"
-import { SectionsNav } from "../nav/sections_nav.jsx"
+import { Header } from "../nav/header"
+import { SectionsNav } from "../nav/sections_nav"
 
 export const SeriesHeader = props => {
   const { curation, inBody, isMobile, onChangeSection } = props
@@ -19,7 +19,9 @@ export const SeriesHeader = props => {
         partner_logo={partner_logo_primary}
         partner_url={partner_link_url}
       />
-      <Title>{curation.name}</Title>
+      <Box mt={80} mb={40} mx="auto" maxWidth="1060px" textAlign="center">
+        <Title>{curation.name}</Title>
+      </Box>
       <Waypoint onEnter={() => inBody(false)} onLeave={() => inBody(true)} />
       <SectionsNav
         activeSection={null}
@@ -48,7 +50,7 @@ const SeriesHeaderContainer = styled.div`
   .SectionsNav__item {
     color: black;
   }
-  ${pMedia.sm`
+  ${media.sm`
     .SectionsNav {
       margin-top: 50px;
       margin-bottom: 0;
@@ -60,10 +62,8 @@ const Title = styled.div`
   line-height: 111px;
   letter-spacing: -3.5px;
   text-transform: uppercase;
-  margin: 80px auto 40px auto;
-  text-align: center;
-  max-width: 1060px;
-  ${pMedia.lg`
+
+  ${media.lg`
     font-size: 50px;
     line-height: 0.9em;
     letter-spacing: -1.5px;

@@ -1,10 +1,10 @@
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
-import { pMedia } from "reaction/Components/Helpers"
 import Icon from "reaction/Components/Icon"
-import { unica } from "reaction/Assets/Fonts"
 import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInline"
+import { media, Flex, Sans, Serif } from "@artsy/palette"
+import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 export class Header extends Component {
   static propTypes = {
@@ -27,7 +27,7 @@ export class Header extends Component {
     } = this.props
 
     return (
-      <HeaderMain className="Header">
+      <HeaderMain justify-content="space-between" align-items="center">
         <PartnerInline
           url={partner_url}
           logo={partner_logo}
@@ -37,66 +37,61 @@ export class Header extends Component {
           }}
         />
 
-        {!isMobile && <div className="title">{title}</div>}
+        <Media greaterThan="md">
+          <Title size={["5", "5", "5", "6"]}>{title}</Title>
+        </Media>
 
-        {!isMobile && (
-          <div className="menu">
+        <BackLink size="3" weight="medium">
+          <Media greaterThan="sm">
             <a href="/articles">Back to Magazine</a>
-          </div>
-        )}
+          </Media>
+        </BackLink>
 
-        {isMobile &&
-          onOpenMenu && (
-            <div className="menu" onClick={onOpenMenu}>
+        <Media lessThan="lg">
+          {onOpenMenu && (
+            <Menu
+              onClick={onOpenMenu}
+              justifyContent="flex-end"
+              alignItems="center"
+            >
               <Icon
                 name={isOpen ? "close" : "list"}
                 color="black"
                 fontSize={isOpen ? "25px" : "32px"}
               />
-            </div>
+            </Menu>
           )}
+        </Media>
       </HeaderMain>
     )
   }
 }
 
-const HeaderMain = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const Title = styled(Serif)`
+  flex: 2;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: -0.25px;
+`
+
+const Menu = styled(Flex)`
+  flex: 1;
+`
+
+const BackLink = styled(Sans)`
+  flex: 1;
+  text-align: right;
+`
+
+const HeaderMain = styled(Flex)`
   .PartnerInline {
     flex: 1;
     img {
       max-width: 120px;
     }
   }
-  .title {
-    flex: 2;
-    text-align: center;
-    font-size: 23px;
-    text-transform: uppercase;
-    height: 23px;
-    letter-spacing: -0.25px;
-  }
-  .menu {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-    align-items: center;
-    a {
-      ${unica("s16", "medium")} text-decoration: none;
-      border-bottom: 2px solid;
-    }
-  }
-  ${pMedia.lg`
-  .title {
-    font-size: 19px;
-    height: 19px;
-  }
-`} ${pMedia.md`
-    .title {
-      display: none;
-    }
+
+  ${media.md`
     .PartnerInline{
       img {
         max-width: 100px;
