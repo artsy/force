@@ -47,6 +47,7 @@ describe("Request for order", () => {
         done()
       })
     })
+
     it("permits an authenticated user access", done => {
       res.locals.sd.CURRENT_USER = {
         id: "user1234",
@@ -56,6 +57,26 @@ describe("Request for order", () => {
       checkoutFlow(req, res, next).then(() => {
         expect(res.redirect).not.toHaveBeenCalled()
         expect(buildServerApp).toHaveBeenCalled()
+        done()
+      })
+    })
+
+    it("serves a 404 when an order is not found", done => {
+      res.locals.sd.CURRENT_USER = {
+        id: "user1234",
+      }
+      buildServerApp.mockRejectedValue({
+        message: "asdfadsfsda Received status code 404 adsfasd",
+      })
+
+      checkoutFlow(req, res, next).then(() => {
+        expect(buildServerApp).toHaveBeenCalled()
+        expect(next).toHaveBeenCalledWith(
+          expect.objectContaining({
+            message: "Order Not Found",
+            status: 404,
+          })
+        )
         done()
       })
     })
