@@ -2,9 +2,9 @@ import "jsdom-global/register"
 import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
-import { FixedHeader } from "../fixed_header.jsx"
-import { Header } from "../header.jsx"
-import { SectionsNav } from "../sections_nav.jsx"
+import { FixedHeader } from "../fixed_header"
+import { Header } from "../header"
+import { SectionsNav } from "../sections_nav"
 
 describe("FixedHeader", () => {
   let props

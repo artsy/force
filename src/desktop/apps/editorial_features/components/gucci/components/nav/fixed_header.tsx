@@ -1,20 +1,23 @@
 import styled from "styled-components"
-import PropTypes from "prop-types"
 import React, { Component } from "react"
 import { SectionsNav } from "./sections_nav"
 import { Header } from "./header"
-import { color, media } from "@artsy/palette"
+import { color } from "@artsy/palette"
 
-export class FixedHeader extends Component {
-  static propTypes = {
-    activeSection: PropTypes.number,
-    curation: PropTypes.object.isRequired,
-    isMobile: PropTypes.bool,
-    isOpen: PropTypes.any,
-    isVisible: PropTypes.bool,
-    onChangeSection: PropTypes.func,
-  }
+interface FixedHeaderProps {
+  activeSection: number
+  curation: any
+  isOpen: boolean
+  isVisible: boolean
+  onChangeSection: (index: number) => void
+}
 
+interface FixedHeaderState {
+  isOpen: boolean
+  scrollPosition: number
+}
+
+export class FixedHeader extends Component<FixedHeaderProps, FixedHeaderState> {
   state = {
     isOpen: false,
     scrollPosition: 0,
@@ -50,32 +53,24 @@ export class FixedHeader extends Component {
 
   render() {
     const { isOpen } = this.state
-    const {
-      activeSection,
-      curation,
-      isMobile,
-      isVisible,
-      onChangeSection,
-    } = this.props
+    const { activeSection, curation, isVisible, onChangeSection } = this.props
 
     const { name, partner_logo_primary, partner_link_url } = curation
 
     return (
       <FixedHeaderContainer
-        className="FixedHeader"
         isVisible={isVisible}
         onMouseEnter={() => this.setState({ isOpen: true })}
         onMouseLeave={() => this.setState({ isOpen: false })}
       >
         <Header
           title={name}
-          isMobile={isMobile}
           isOpen={isOpen}
           partner_logo={partner_logo_primary}
           partner_url={partner_link_url}
           onOpenMenu={() => this.setState({ isOpen: !isOpen })}
         />
-        {this.state.isOpen && (
+        {isOpen && (
           <SectionsNav
             animated
             activeSection={activeSection}
@@ -88,7 +83,10 @@ export class FixedHeader extends Component {
   }
 }
 
-const FixedHeaderContainer = styled.div`
+const FixedHeaderContainer =
+  styled.div <
+  { isVisible: boolean } >
+  `
   width: 100%;
   padding: 15px 20px;
   background: white;
@@ -97,10 +95,4 @@ const FixedHeaderContainer = styled.div`
   transition: opacity 0.25s;
   opacity: ${props => (props.isVisible ? "1" : "0")};
   border-bottom: 1px solid ${color("black10")};
-
-  ${media.sm`
-    .SeriesNav {
-      margin-top: 40px;
-    }
-  `};
 `

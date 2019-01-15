@@ -2,7 +2,7 @@ import "jsdom-global/register"
 import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
-import { Header } from "../header.jsx"
+import { Header } from "../header"
 import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInline"
 import Icon from "reaction/Components/Icon"
 

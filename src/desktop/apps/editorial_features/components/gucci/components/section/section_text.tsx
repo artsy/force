@@ -4,10 +4,14 @@ import styled from "styled-components"
 import { data as sd } from "sharify"
 import { Share } from "reaction/Components/Publishing/Byline/Share"
 import { Text } from "reaction/Components/Publishing"
-import { Flex, Box, Sans, media } from "@artsy/palette"
+import { Flex, Sans, space, media } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
-export const SectionText = props => {
+interface SectionTextProps {
+  section: any
+}
+
+export const SectionText: React.SFC<SectionTextProps> = props => {
   const { section } = props
 
   return (
@@ -16,12 +20,12 @@ export const SectionText = props => {
         maxWidth="1200px"
         mx="auto"
         mb={[0, 0, 0, 100]}
-        px={20}
+        px={2}
         width="100%"
         flexDirection={["column", "column", "column", "row"]}
         justifyContent="space-between"
       >
-        <Flex width={[1, 1, 1, 1 / 3]} flexDirection="column" pb={40}>
+        <Flex width={[1, 1, 1, 1 / 3]} flexDirection="column" pb={4}>
           <div>
             <Sans size={["3", "3", "3", "4"]} weight="medium">
               Featuring
@@ -30,8 +34,8 @@ export const SectionText = props => {
           </div>
 
           <ShareContainer pt={["2px", "2px", "2px", 50]} alignItems="center">
-            <Media lessThan="md">
-              <Sans size={["3", "3", "3", "4"]} weight="medium" mr={20}>
+            <Media greaterThanOrEqual="sm">
+              <Sans size={["3", "3", "3", "4"]} weight="medium" mr={2}>
                 Share
               </Sans>
             </Media>
@@ -46,7 +50,7 @@ export const SectionText = props => {
           <Sans size={["3", "3", "3", "4"]} weight="medium">
             About the Film
           </Sans>
-          <Text html={section.about} />
+          <Text html={section.about} layout="feature" />
         </Flex>
       </Flex>
     </SectionTextContainer>
@@ -69,7 +73,7 @@ const ShareContainer = styled(Flex)`
   ${media.sm`
     position: absolute;
     top: 0;
-    right: 20px;
+    right: ${space(2)}px;
 
     > div {
       margin-top: 0;

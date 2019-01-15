@@ -1,11 +1,13 @@
-import styled from "styled-components"
-import PropTypes from "prop-types"
 import React from "react"
 import { Text, PartnerBlock } from "reaction/Components/Publishing"
 import { Flex, Box, Sans } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
-export const SeriesFooter = props => {
+interface SeriesFooterProps {
+  curation: any
+}
+
+export const SeriesFooter: React.SFC<SeriesFooterProps> = props => {
   const { curation } = props
   const logoSrc = curation.partner_logo_footer || curation.partner_logo_primary
   const logoUrl = curation.partner_link_url || ""
@@ -44,7 +46,7 @@ export const SeriesFooter = props => {
       </Flex>
 
       <Flex width={[1, 1, 1, 3 / 5]} flexDirection="column">
-        <Text html={curation.about} />
+        <Text html={curation.about} layout="standard" />
         <Media lessThan="md">
           <Box pt={80}>
             <PartnerBlock
@@ -60,8 +62,4 @@ export const SeriesFooter = props => {
       </Flex>
     </Flex>
   )
-}
-
-SeriesFooter.propTypes = {
-  curation: PropTypes.object,
 }

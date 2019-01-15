@@ -1,11 +1,17 @@
-import PropTypes from "prop-types"
 import React from "react"
 import Waypoint from "react-waypoint"
-import { SectionVideo } from "./section_video.jsx"
-import { SectionText } from "./section_text.jsx"
-import { Box, media } from "@artsy/palette"
+import { SectionVideo } from "./section_video"
+import { SectionText } from "./section_text"
+import { Box } from "@artsy/palette"
 
-export const Section = props => {
+interface SectionProps {
+  onEnterSection: (index: number, data: any) => void
+  onLeaveSection: (index: number, data: any) => void
+  section: any
+  index: number
+}
+
+export const Section: React.SFC<SectionProps> = props => {
   const { section, onEnterSection, onLeaveSection, index } = props
 
   return (
@@ -19,11 +25,4 @@ export const Section = props => {
       />
     </Box>
   )
-}
-
-Section.propTypes = {
-  onEnterSection: PropTypes.func,
-  onLeaveSection: PropTypes.func,
-  section: PropTypes.object,
-  index: PropTypes.number,
 }
