@@ -3,6 +3,7 @@ import { data as sd } from "sharify"
 import { routes } from "reaction/Apps/Artist/routes"
 import React from "react"
 import ReactDOM from "react-dom"
+import styled from "styled-components"
 import qs from "querystring"
 import { clone, isArray } from "underscore"
 
@@ -17,7 +18,9 @@ buildClientApp({
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
-      <ClientApp />,
+      <Container>
+        <ClientApp />
+      </Container>,
 
       document.getElementById("react-root")
     )
@@ -53,3 +56,10 @@ const onFilterChange = filters => {
   const fragment = "?" + qs.stringify(params)
   window.history.pushState({}, null, fragment)
 }
+
+// FIXME: Move this to Reaction
+const Container = styled.div`
+  width: 100%;
+  max-width: 1192px;
+  margin: auto;
+`

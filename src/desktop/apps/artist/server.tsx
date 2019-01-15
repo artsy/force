@@ -3,6 +3,7 @@ import { Meta, query, toJSONLD } from "./components/Meta"
 import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Artist/routes"
 import React from "react"
+import styled from "styled-components"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
 
@@ -37,6 +38,13 @@ app.get(
         return
       }
 
+      // FIXME: Move this to Reaction
+      const Container = styled.div`
+        width: 100%;
+        max-width: 1192px;
+        margin: auto;
+      `
+
       const send = {
         method: "post",
         query,
@@ -66,7 +74,11 @@ app.get(
               <Meta sd={res.locals.sd} artist={artist} />
             </>
           ),
-          body: ServerApp,
+          body: () => (
+            <Container>
+              <ServerApp />
+            </Container>
+          ),
         },
         locals: {
           ...res.locals,

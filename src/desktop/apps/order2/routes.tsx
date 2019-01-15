@@ -1,3 +1,5 @@
+import React from "react"
+import styled from "styled-components"
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "reaction/Apps/Order/routes"
@@ -29,6 +31,13 @@ export const checkoutFlow = async (req, res, next) => {
       return
     }
 
+    // FIXME: Move this to Reaction
+    const Container = styled.div`
+      width: 100%;
+      max-width: 1192px;
+      margin: auto;
+    `
+
     const headerLogoHref = await getArtworkHref(req)
 
     // Render layout
@@ -41,7 +50,11 @@ export const checkoutFlow = async (req, res, next) => {
       },
       blocks: {
         head: () => headTags,
-        body: ServerApp,
+        body: () => (
+          <Container>
+            <ServerApp />
+          </Container>
+        ),
       },
       locals: {
         ...res.locals,
