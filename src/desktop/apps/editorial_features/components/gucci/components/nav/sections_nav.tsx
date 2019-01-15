@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components"
-import PropTypes from "prop-types"
 import React from "react"
 import { color, Flex, Sans } from "@artsy/palette"
 
@@ -25,7 +24,7 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
       flexWrap={["wrap", "wrap", "nowrap", "nowrap"]}
     >
       {sections.map((section, index) => (
-        <div onClick={() => onClick(index)}>
+        <SectionItem onClick={() => onClick(index)}>
           <Title
             mt={animated && [4, 6]}
             mb={animated && [2, 5]}
@@ -36,18 +35,13 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
           >
             {section.title}
           </Title>
-        </div>
+        </SectionItem>
       ))}
     </SectionsNavContainer>
   )
 }
 
-SectionsNav.propTypes = {
-  activeSection: PropTypes.number,
-  animated: PropTypes.bool,
-  sections: PropTypes.array,
-  onClick: PropTypes.func,
-}
+export const SectionItem = styled.div``
 
 const navKeyframes = keyframes`
   from {

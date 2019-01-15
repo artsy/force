@@ -2,7 +2,7 @@ import "jsdom-global/register"
 import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
-import { SectionsNav } from "../sections_nav"
+import { SectionsNav, SectionItem } from "../sections_nav"
 
 describe("SectionsNav", () => {
   const props = {
@@ -21,7 +21,7 @@ describe("SectionsNav", () => {
   it("Calls onClick with section index on title click", () => {
     const component = mount(<SectionsNav {...props} />)
     component
-      .find(".SectionsNav__item")
+      .find(SectionItem)
       .last()
       .simulate("click")
     props.onClick.args[0][0].should.eql(2)
