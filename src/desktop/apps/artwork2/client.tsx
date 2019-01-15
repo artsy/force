@@ -3,6 +3,7 @@ import { routes } from "reaction/Apps/Artwork/routes"
 import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
+import { enableIntercom } from "lib/intercom"
 
 const mediator = require("desktop/lib/mediator.coffee")
 const User = require("desktop/models/user.coffee")
@@ -74,4 +75,8 @@ mediator.on("openAuctionAskSpecialistModal", options => {
 
 mediator.on("openAuctionBuyerPremium", options => {
   openAuctionBuyerPremium(options.auctionId)
+})
+
+mediator.on("enableIntercomForBuyers", options => {
+  enableIntercom(options)
 })
