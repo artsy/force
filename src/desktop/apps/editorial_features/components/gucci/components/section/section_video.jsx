@@ -2,9 +2,9 @@ import moment from "moment"
 import PropTypes from "prop-types"
 import React from "react"
 import styled from "styled-components"
-import { pMedia } from "reaction/Components/Helpers"
 import { unica } from "reaction/Assets/Fonts"
 import { Video } from "reaction/Components/Publishing"
+import { media } from "@artsy/palette"
 
 export const SectionVideo = props => {
   const { section, curation } = props
@@ -49,34 +49,40 @@ SectionVideo.propTypes = {
 
 const SectionVideoContainer = styled.div`
   margin-bottom: 50px;
-  ${pMedia.sm`
+
+  ${media.sm`
     margin-bottom: 40px;
-  `}
+  `};
+
   .VideoCover {
     justify-content: flex-start;
     align-items: flex-end;
     padding: 15px 30px;
   }
+
   .PlayButton {
     background: none;
-    ${unica("s80")}
+    ${unica("s80")};
     width: auto;
     height: auto;
+
     &:after {
       color: white;
-      content: 'Play';
+      content: "Play";
     }
+
     &__PlayButtonCaret {
       border-left: 45px solid white;
       border-top: 35px solid transparent;
       border-bottom: 35px solid transparent;
-      margin-right 20px;
+      margin-right: 20px;
     }
   }
-  ${pMedia.sm`
+
+  ${media.sm`
     .PlayButton {
       &:after {
-        ${unica("s40")}
+        ${unica("s40")};
       }
       &__PlayButtonCaret {
         border-left: 30px solid white;
@@ -88,7 +94,7 @@ const SectionVideoContainer = styled.div`
     .VideoCover {
       padding: 10px 20px;
     }
-  `}
+  `};
 `
 
 const VideoPreview = styled.div`
@@ -110,7 +116,8 @@ const ReleaseDate = styled.div`
   align-items: flex-end;
   padding: 15px 30px;
   background: rgba(0, 0, 0, 0.5);
-  ${pMedia.sm`
+
+  ${media.sm`
     ${unica("s40")}
     padding: 10px 20px;
   `};

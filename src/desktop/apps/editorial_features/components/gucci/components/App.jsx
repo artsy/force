@@ -7,6 +7,7 @@ import { FixedHeader } from "./nav/fixed_header.jsx"
 import { SeriesHeader } from "./series/series_header.jsx"
 import { SeriesFooter } from "./series/series_footer.jsx"
 import { Section } from "./section/section.jsx"
+import { media } from "@artsy/palette"
 
 export default class App extends Component {
   static propTypes = {
@@ -131,11 +132,8 @@ const GucciBody = styled.div`
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 20px;
-  .col {
-    max-width: 100%;
-    position: relative;
-  }
-  ${pMedia.sm`
+
+  ${media.sm`
     padding: 0;
   `};
 `

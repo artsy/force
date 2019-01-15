@@ -1,37 +1,50 @@
 import PropTypes from "prop-types"
 import React from "react"
 import styled from "styled-components"
-import { data as sd } from "sharify"
-import { pMedia } from "reaction/Components/Helpers"
-import { Col, Row } from "reaction/Components/Grid"
-import { unica } from "reaction/Assets/Fonts"
 import { Share } from "reaction/Components/Publishing/Byline/Share"
 import { Text } from "reaction/Components/Publishing"
+import { Flex, Box, Sans, media } from "@artsy/palette"
 
 export const SectionText = props => {
   const { section } = props
 
   return (
     <SectionTextContainer>
-      <Row className="SectionText">
-        <Col sm={4} className="col col--first">
+      <Flex
+        maxWidth="1200px"
+        mx="auto"
+        mb={[0, 0, 0, 100]}
+        px={20}
+        width="100%"
+        flexDirection={["column", "column", "column", "row"]}
+        justifyContent="space-between"
+      >
+        <Flex width={[1, 1, 1, 1 / 3]} flexDirection="column" pb={40}>
           <div>
-            <Title>Featuring</Title>
-            <Featuring>{section.featuring}</Featuring>
+            <Sans size={["3", "3", "3", "4"]} weight="medium">
+              Featuring
+            </Sans>
+            <Sans size={["6", "6", "6", "8"]}>{section.featuring}</Sans>
           </div>
-          <ShareContainer>
-            <Title>Share</Title>
+
+          <ShareContainer pt={["2px", "2px", "2px", 50]} alignItems="center">
+            <Sans size={["3", "3", "3", "4"]} weight="medium" mr={20}>
+              Share
+            </Sans>
             <Share
               url={`${sd.APP_URL}/gender-equality/${section.slug}`}
               title={section.featuring}
             />
           </ShareContainer>
-        </Col>
-        <Col sm={7} className="col col--last">
-          <Title>About the Film</Title>
+        </Flex>
+
+        <Flex width={[1, 1, 1, 3 / 5]} flexDirection="column">
+          <Sans size={["3", "3", "3", "4"]} weight="medium">
+            About the Film
+          </Sans>
           <Text html={section.about} />
-        </Col>
-      </Row>
+        </Flex>
+      </Flex>
     </SectionTextContainer>
   )
 }
@@ -41,45 +54,25 @@ SectionText.propTypes = {
 }
 
 const SectionTextContainer = styled.div`
-  ${pMedia.md`
-    .article__text-section {
-      min-width: 100%;
-    }
-  `};
+  position: relative;
 `
 
-const Title = styled.div`
-  ${unica("s16", "medium")} line-height: 1.85em;
-  ${pMedia.xs`
-    ${unica("s14", "medium")}
-  `};
-`
-const ShareContainer = styled.div`
-  margin-top: 50px;
-  display: flex;
-  align-items: center;
-  ${Title} {
-    margin-right: 20px;
-  }
+const ShareContainer = styled(Flex)`
   a:last-child {
     padding-right: 0;
   }
-  ${pMedia.sm`
+
+  ${media.sm`
     position: absolute;
     top: 0;
-    right: 0;
-    margin-top: 2px;
-    ${Title} {
+    right: 20px;
+
+    ${Sans} {
       display: none;
     }
+
     > div {
       margin-top: 0;
     }
-  `};
-`
-const Featuring = styled.div`
-  ${unica("s32")} line-height: 1.25em;
-  ${pMedia.xs`
-    ${unica("s19")}
   `};
 `
