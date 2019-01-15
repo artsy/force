@@ -27,7 +27,7 @@ export class Header extends Component {
     } = this.props
 
     return (
-      <HeaderMain justify-content="space-between" align-items="center">
+      <HeaderMain justifyContent="space-between" alignItems="center">
         <PartnerInline
           url={partner_url}
           logo={partner_logo}

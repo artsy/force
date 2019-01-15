@@ -1,9 +1,11 @@
 import PropTypes from "prop-types"
 import React from "react"
 import styled from "styled-components"
+import { data as sd } from "sharify"
 import { Share } from "reaction/Components/Publishing/Byline/Share"
 import { Text } from "reaction/Components/Publishing"
 import { Flex, Box, Sans, media } from "@artsy/palette"
+import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 export const SectionText = props => {
   const { section } = props
@@ -28,9 +30,11 @@ export const SectionText = props => {
           </div>
 
           <ShareContainer pt={["2px", "2px", "2px", 50]} alignItems="center">
-            <Sans size={["3", "3", "3", "4"]} weight="medium" mr={20}>
-              Share
-            </Sans>
+            <Media lessThan="md">
+              <Sans size={["3", "3", "3", "4"]} weight="medium" mr={20}>
+                Share
+              </Sans>
+            </Media>
             <Share
               url={`${sd.APP_URL}/gender-equality/${section.slug}`}
               title={section.featuring}
@@ -66,10 +70,6 @@ const ShareContainer = styled(Flex)`
     position: absolute;
     top: 0;
     right: 20px;
-
-    ${Sans} {
-      display: none;
-    }
 
     > div {
       margin-top: 0;
