@@ -67,9 +67,7 @@ buildClientApp({
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
-      <Container>
-        <ClientApp />
-      </Container>,
+      <ClientApp />,
 
       document.getElementById("react-root")
     )
@@ -81,10 +79,3 @@ buildClientApp({
 if (module.hot) {
   module.hot.accept()
 }
-
-// FIXME: Move this to Reaction
-const Container = styled.div`
-  width: 100%;
-  max-width: 1192px;
-  margin: auto;
-`

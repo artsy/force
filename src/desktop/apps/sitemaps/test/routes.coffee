@@ -83,6 +83,7 @@ Sitemap: https://www.artsy.net/sitemap-videos.xml
         results: [
           fabricate('article', { layout: 'standard', published_at: today.toISOString() })
           fabricate('article', { layout: 'news', published_at: oneDayAgo.toISOString() })
+          fabricate('article', { layout: 'classic', published_at: oneDayAgo.toISOString() })
           fabricate('article', { published_at: twoDaysAgo.toISOString() })
         ]
       }

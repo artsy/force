@@ -16,8 +16,8 @@ describe("App", () => {
 
   beforeEach(() => {
     window.history.pushState = sinon.stub()
-    App = require("desktop/apps/editorial_features/components/gucci/components/App.jsx")
-      .default
+    App = require("desktop/apps/editorial_features/components/gucci/components/App.tsx")
+      .App
     props = {
       activeSection: null,
       curation: {

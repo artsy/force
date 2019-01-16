@@ -1,20 +1,24 @@
-import styled from "styled-components"
-import PropTypes from "prop-types"
+import { Box, Theme } from "@artsy/palette"
 import React, { Component } from "react"
 import { debounce } from "lodash"
-import { pMedia } from "reaction/Components/Helpers"
-import { FixedHeader } from "./nav/fixed_header.jsx"
-import { SeriesHeader } from "./series/series_header.jsx"
-import { SeriesFooter } from "./series/series_footer.jsx"
-import { Section } from "./section/section.jsx"
+import { FixedHeader } from "./nav/fixed_header"
+import { SeriesHeader } from "./series/series_header"
+import { SeriesFooter } from "./series/series_footer"
+import { Section } from "./section/section"
 
-export default class App extends Component {
-  static propTypes = {
-    curation: PropTypes.object,
-    activeSection: PropTypes.number,
-    isMobile: PropTypes.bool,
-  }
+interface GucciProps {
+  curation: any
+  activeSection: number
+  isMobile: boolean
+}
 
+interface GucciState {
+  activeSection: number
+  isMobile: boolean
+  showHeader: boolean
+}
+
+export class App extends Component<GucciProps, GucciState> {
   state = {
     activeSection: this.props.activeSection,
     isMobile: this.props.isMobile,
@@ -87,55 +91,43 @@ export default class App extends Component {
 
   render() {
     const { curation } = this.props
-    const { activeSection, isMobile, showHeader } = this.state
+    const { activeSection, showHeader } = this.state
 
     return (
-      <div className="gucci">
-        <FixedHeader // fixed position shows on scroll
-          activeSection={activeSection}
-          curation={curation}
-          onChangeSection={this.onChangeSection}
-          isMobile={isMobile}
-          isVisible={showHeader}
-          isOpen={this.props.activeSection}
-        />
+      <Theme>
+        <div>
+          <FixedHeader // fixed position shows on scroll
+            activeSection={activeSection}
+            curation={curation}
+            onChangeSection={this.onChangeSection}
+            isVisible={showHeader}
+            isOpen={
+              this.props.activeSection === 0 || this.props.activeSection > 0
+            }
+          />
 
-        <SeriesHeader // relative position always at content top
-          activeSection={activeSection}
-          curation={curation}
-          inBody={this.inBody}
-          isMobile={isMobile}
-          onChangeSection={this.onChangeSection}
-        />
+          <SeriesHeader // relative position always at content top
+            activeSection={activeSection}
+            curation={curation}
+            inBody={this.inBody}
+            onChangeSection={this.onChangeSection}
+          />
 
-        <GucciBody>
-          {curation.sections.map((section, index) => (
-            <div id={section.slug} key={"section-" + index}>
-              <Section
-                section={section}
-                index={index}
-                onEnterSection={this.onEnterSection}
-                onLeaveSection={this.onLeaveSection}
-              />
-            </div>
-          ))}
-          <SeriesFooter curation={curation} isMobile={isMobile} />
-        </GucciBody>
-      </div>
+          <Box width="100%" maxWidth="1240px" mx="auto" px={[0, 0, 0, 2]}>
+            {curation.sections.map((section, index) => (
+              <div id={section.slug} key={"section-" + index}>
+                <Section
+                  section={section}
+                  index={index}
+                  onEnterSection={this.onEnterSection}
+                  onLeaveSection={this.onLeaveSection}
+                />
+              </div>
+            ))}
+            <SeriesFooter curation={curation} />
+          </Box>
+        </div>
+      </Theme>
     )
   }
 }
-
-const GucciBody = styled.div`
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 20px;
-  .col {
-    max-width: 100%;
-    position: relative;
-  }
-  ${pMedia.sm`
-    padding: 0;
-  `};
-`

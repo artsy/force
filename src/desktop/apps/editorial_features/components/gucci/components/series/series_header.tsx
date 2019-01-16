@@ -1,25 +1,31 @@
+import { media, Box } from "@artsy/palette"
 import styled from "styled-components"
-import PropTypes from "prop-types"
 import React from "react"
 import Waypoint from "react-waypoint"
-import { pMedia } from "reaction/Components/Helpers"
-import { Header } from "../nav/header.jsx"
-import { SectionsNav } from "../nav/sections_nav.jsx"
+import { Header } from "../nav/header"
+import { SectionsNav } from "../nav/sections_nav"
 
-export const SeriesHeader = props => {
-  const { curation, inBody, isMobile, onChangeSection } = props
+interface SeriesHeaderProps {
+  activeSection?: number
+  curation: any
+  inBody: (inBody: boolean) => void
+  onChangeSection: (index: number) => void
+}
 
+export const SeriesHeader: React.SFC<SeriesHeaderProps> = props => {
+  const { curation, inBody, onChangeSection } = props
   const { name, partner_logo_primary, partner_link_url } = curation
 
   return (
     <SeriesHeaderContainer className="SeriesHeader">
       <Header
         title={name}
-        isMobile={isMobile}
         partner_logo={partner_logo_primary}
         partner_url={partner_link_url}
       />
-      <Title>{curation.name}</Title>
+      <Box mt={80} mb={4} mx="auto" maxWidth="1060px" textAlign="center">
+        <Title>{curation.name}</Title>
+      </Box>
       <Waypoint onEnter={() => inBody(false)} onLeave={() => inBody(true)} />
       <SectionsNav
         activeSection={null}
@@ -30,40 +36,17 @@ export const SeriesHeader = props => {
   )
 }
 
-SeriesHeader.propTypes = {
-  curation: PropTypes.object,
-  inBody: PropTypes.func,
-  isMobile: PropTypes.bool,
-  onChangeSection: PropTypes.func,
-}
-
 const SeriesHeaderContainer = styled.div`
   width: 100%;
   padding: 15px 20px;
-  .Header {
-    .title {
-      display: none;
-    }
-  }
-  .SectionsNav__item {
-    color: black;
-  }
-  ${pMedia.sm`
-    .SectionsNav {
-      margin-top: 50px;
-      margin-bottom: 0;
-    }
-  `};
 `
 const Title = styled.div`
   font-size: 120px;
   line-height: 111px;
   letter-spacing: -3.5px;
   text-transform: uppercase;
-  margin: 80px auto 40px auto;
-  text-align: center;
-  max-width: 1060px;
-  ${pMedia.lg`
+
+  ${media.lg`
     font-size: 50px;
     line-height: 0.9em;
     letter-spacing: -1.5px;
