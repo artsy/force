@@ -24,11 +24,12 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.27.3":
-  version "2.27.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.27.3.tgz#0b859f753ff5216c26dfc031deec90468110da24"
-  integrity sha512-idH6GyhLr9nhHxjCF8/cdDxKrSYt1zIHhJIlGuqJTV56aUAzOrilSlUFaPsjfbVqxzabVKgKae02sMUH+xjSKg==
+"@artsy/palette@2.29.0":
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.29.0.tgz#d624bc00a9fbb4e87a409c16fc558cbb467a5db6"
+  integrity sha512-lQC87UAq/D7svfTxxVfR59FtNbRYAziTy9KWJTEnh7zu5dAp/zTHplNnzixrMj79MxvfvM4d6syKl7k/Q5tPCw==
   dependencies:
+    moment "^2.23.0"
     rc-slider "^8.6.2"
     react "^16.5.0"
     react-live "^1.12.0"
@@ -10276,7 +10277,7 @@ moment-twitter@^0.2.0:
   dependencies:
     moment "~2.4.0"
 
-"moment@>= 2.9.0", moment@^2.11.1, moment@^2.22.2, moment@~2.4.0:
+"moment@>= 2.9.0", moment@^2.11.1, moment@^2.22.2, moment@^2.23.0, moment@~2.4.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
   integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
