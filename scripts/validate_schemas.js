@@ -53,8 +53,8 @@ const getBreakingChanges = async (metaphysicsEnv) => {
   const reactionSchema = await downloadGitHubReaction(reactionVersion)
   const metaphyicsSchema = await downloadMetaphysicsSchema(`https://metaphysics-${metaphysicsEnv}.artsy.net/`)
   return findBreakingChanges(
-    buildSchema(metaphyicsSchema),
-    buildSchema(reactionSchema)
+    buildSchema(reactionSchema),
+    buildSchema(metaphyicsSchema)
   )
 }
 
@@ -69,15 +69,16 @@ if (require.main === module) {
     console.log('This script must be called with either "staging" or "production"')
     process.exitCode = 1
   } else {
-    getBreakingChanges(process.argv[2]).then(changes => {
+    const env = process.argv[2]
+    getBreakingChanges(env).then(changes => {
       if (changes.length) {
         process.exitCode = 1
         console.error(
-          `Failing due to breaking changes between Force and Metaphysics ${process.argv[2]}\n\n`
+          `Failing due to breaking changes between Force and Metaphysics ${env}\n\n`
         )
         console.error(changes)
         console.error(
-          `\n\nYou should deploy metaphysics ${process.argv[2]}, and re-deploy force`
+          `\n\nYou should deploy metaphysics ${env}, and re-deploy force`
         )
       } else {
         console.log("No breaking changes found!")
