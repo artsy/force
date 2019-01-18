@@ -24,12 +24,13 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.31.0":
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.31.0.tgz#9d87f9d5ef9e519d0ba61076ea08b4e2aab70145"
-  integrity sha512-u1PSaSUGC83M4PJFe4f2i2Y0MbNeMAL3Xt1lJnpQDgrxhcr9h8063pjr2XWiZVZExAhrbSV+vxdJ2TK1WXrwsA==
+"@artsy/palette@2.32.2":
+  version "2.32.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.32.2.tgz#208ce360ac57a6d13d53df48645d52e383349404"
+  integrity sha512-pOeLdgGaOMy1Fp7gI3MHkB9n8RslhzI180IfdHhadONuCHkMilvv25UeMWHveqOdcw6lV4TeAQ7K60byyjG3mA==
   dependencies:
     moment "^2.23.0"
+    moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
     react "^16.5.0"
     react-live "^1.12.0"
@@ -10256,7 +10257,7 @@ module-details-from-path@^1.0.3:
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha1-EUyUlnPiqKNenTV4hSeqN7Z52is=
 
-moment-timezone@^0.5.13:
+moment-timezone@^0.5.13, moment-timezone@^0.5.23:
   version "0.5.23"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
   integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
