@@ -21,6 +21,13 @@ hero-units-height = 478px
   background black
   z-index -1
 
+// Moves hero down for staging banner 
+.body-header-fixed.force-staging
+  #home-hero-units
+    top staging-banner-height
+  #home-foreground
+    margin-top (hero-units-height + staging-banner-height)
+
 #home-unsubscribe
   text-align center
   margin-top 200px

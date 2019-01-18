@@ -5,6 +5,10 @@ export function buildBodyClass(sd, baseClass) {
     classes.push(baseClass)
   }
 
+  if (sd.APPLICATION_NAME === "force-staging") {
+    classes.push("force-staging")
+  }
+
   // Flags that show up in Sharify data
   const flagMap = {
     MICROSITE: "is-microsite",
