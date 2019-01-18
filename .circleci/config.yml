@@ -23,6 +23,26 @@ jobs:
           command: |
             export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai test
+  validate_staging_schema:
+    docker:
+      - image: circleci/node:10-stretch-browsers
+    parallelism: 1
+    steps:
+      - add_ssh_keys
+      - checkout
+      - run:
+          name: Validate Staging Schema
+          command: "yarn install && node scripts/validate_schemas.js staging"
+  validate_production_schema:
+    docker:
+      - image: circleci/node:10-stretch-browsers
+    parallelism: 1
+    steps:
+      - add_ssh_keys
+      - checkout
+      - run:
+          name: Validate Production Schema
+          command: "yarn install && node scripts/validate_schemas.js production"
   push_staging_image: &push_image
     docker:
       - image: artsy/hokusai:0.4.5
@@ -126,6 +146,14 @@ workflows:
               ignore:
                 - staging
                 - release
+      - validate_staging_schema:
+          filters:
+            branches:
+              only: master
+      - validate_production_schema:
+          filters:
+            branches:
+              only: release
       - push_staging_image:
           filters:
             branches:
@@ -133,10 +161,13 @@ workflows:
           requires:
             - test
             - acceptance
+            - validate_staging_schema
       - push_production_image:
           filters:
             branches:
               only: release
+          requires:
+            - validate_production_schema
       - publish_staging_assets:
           filters:
             branches:
@@ -144,10 +175,13 @@ workflows:
           requires:
             - test
             - acceptance
+            - validate_staging_schema
       - publish_production_assets:
           filters:
             branches:
               only: release
+          requires:
+            - validate_production_schema
       - deploy_hokusai_staging:
           filters:
             branches:

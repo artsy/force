@@ -16,9 +16,8 @@ const {
 } = require("graphql")
 
 const fetch = require("isomorphic-fetch")
-const metaphysicsProd = "https://metaphysics-production.artsy.net/"
 
-const downloadProductionSchema = async endpoint => {
+const downloadMetaphysicsSchema = async endpoint => {
   const postBody = {
     query: introspectionQuery,
     operationName: "IntrospectionQuery",
@@ -46,13 +45,13 @@ const downloadGitHubReaction = async release => {
   return body
 }
 
-const getBreakingChanges = async () => {
+const getBreakingChanges = async (metaphysicsEnv) => {
   const packageJSON = JSON.parse(
     readFileSync(__dirname + "/../package.json", "utf8")
   )
   const reactionVersion = packageJSON["dependencies"]["@artsy/reaction"]
   const reactionSchema = await downloadGitHubReaction(reactionVersion)
-  const metaphyicsSchema = await downloadProductionSchema(metaphysicsProd)
+  const metaphyicsSchema = await downloadMetaphysicsSchema(`https://metaphysics-${metaphysicsEnv}.artsy.net/`)
   return findBreakingChanges(
     buildSchema(metaphyicsSchema),
     buildSchema(reactionSchema)
@@ -66,16 +65,23 @@ module.exports = {
 // @ts-ignore
 if (require.main === module) {
   // When this is being called as a script via `node scripts/validate_schemas.js`
-  getBreakingChanges().then(changes => {
-    if (changes.length) {
-      process.exitCode = 1
-      console.error(
-        "Failing due to breaking changes between Force and Metaphysics Production\n\n"
-      )
-      console.error(changes)
-      console.error(
-        "\n\nYou should deploy metaphysics production, and re-deploy force"
-      )
-    }
-  })
+  if (process.argv.length != 3) {
+    console.log('This script must be called with either "staging" or "production"')
+    process.exitCode = 1
+  } else {
+    getBreakingChanges(process.argv[2]).then(changes => {
+      if (changes.length) {
+        process.exitCode = 1
+        console.error(
+          `Failing due to breaking changes between Force and Metaphysics ${process.argv[2]}\n\n`
+        )
+        console.error(changes)
+        console.error(
+          `\n\nYou should deploy metaphysics ${process.argv[2]}, and re-deploy force`
+        )
+      } else {
+        console.log("No breaking changes found!")
+      }
+    })
+  }
 }
