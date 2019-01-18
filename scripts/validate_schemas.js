@@ -74,11 +74,11 @@ if (require.main === module) {
       if (changes.length) {
         process.exitCode = 1
         console.error(
-          `Failing due to breaking changes between Force and Metaphysics ${env}\n\n`
+          `Metaphysics' ${env} schema is incompatible with this project's expectations:\n\n`
         )
         console.error(changes)
         console.error(
-          `\n\nYou should deploy metaphysics ${env}, and re-deploy force`
+          `\n\nYou should update Metaphysics ${env} before releasing these changes`
         )
       } else {
         console.log("No breaking changes found!")
