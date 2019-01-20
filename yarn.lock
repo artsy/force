@@ -24,11 +24,12 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.33.1":
-  version "2.33.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.33.1.tgz#6f141afa0c963862729f95723bcae06bef9c8630"
-  integrity sha512-vzDrh5xyf9ffaGmOYmvY7XXwDIJDzE+70D98TkFM1ZKuLOMKws0SVzXAq3hHLpehMQ1O/ONLuFJ7cZXe/CuaMA==
+"@artsy/palette@2.33.2":
+  version "2.33.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.33.2.tgz#de61eecd4a9d03b48582ffc7effb1ceefd9d3313"
+  integrity sha512-+9NQQUDfTz3AVM+UqF5gqdzD2t6X/8PzSTGhDxdMZwsWnhRdI1LF4RtcdeI36PfNaTBaVxlLOatjcvPSJmyTWg==
   dependencies:
+    gatsby-plugin-catch-links "^2.0.9"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
@@ -6750,6 +6751,14 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
+
+gatsby-plugin-catch-links@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-catch-links/-/gatsby-plugin-catch-links-2.0.9.tgz#1fd5bf02a7f997f7b36c4e0c28b689f0c3d92726"
+  integrity sha512-0I78VTwy9GJkh8nEt33VASo/cvBmDtdChoISQ+U0Pio5pXEXT2RQIesuHwcm4pXG/VRDVnEYxa95PLUccW5vFg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    escape-string-regexp "^1.0.5"
 
 gauge@~2.7.3:
   version "2.7.4"
