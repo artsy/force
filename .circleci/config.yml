@@ -3,7 +3,6 @@ jobs:
   acceptance:
     docker:
       - image: circleci/node:10-stretch-browsers
-    parallelism: 1
     steps:
       - add_ssh_keys
       - checkout
@@ -26,7 +25,6 @@ jobs:
   validate_staging_schema:
     docker:
       - image: circleci/node:10-stretch-browsers
-    parallelism: 1
     steps:
       - add_ssh_keys
       - checkout
@@ -36,7 +34,6 @@ jobs:
   validate_production_schema:
     docker:
       - image: circleci/node:10-stretch-browsers
-    parallelism: 1
     steps:
       - add_ssh_keys
       - checkout
