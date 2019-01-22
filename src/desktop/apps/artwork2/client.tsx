@@ -4,6 +4,7 @@ import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
 import { enableIntercom } from "lib/intercom"
+import { openViewInRoom } from "lib/viewInRoom"
 
 const mediator = require("desktop/lib/mediator.coffee")
 const User = require("desktop/models/user.coffee")
@@ -79,4 +80,8 @@ mediator.on("openAuctionBuyerPremium", options => {
 
 mediator.on("enableIntercomForBuyers", options => {
   enableIntercom(options)
+})
+
+mediator.on("openViewInRoom", options => {
+  openViewInRoom(options)
 })
