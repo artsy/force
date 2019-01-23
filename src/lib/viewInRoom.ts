@@ -4,9 +4,9 @@ const { ViewInRoomView } = require('../desktop/components/view_in_room/view.coff
 export function openViewInRoom({ dimensions, image }) {
 
     // Navigate back to default image if needed
-    // $('.js-artwork-images__pages__page')
-    //   .first()
-    //   .click()
+    $('.js-artwork-images__pages__page')
+      .first()
+      .click()
 
     const view = new ViewInRoomView
       $img: image

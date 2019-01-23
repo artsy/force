@@ -22,6 +22,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   initialize: ({ @$img, @dimensions }) ->
     $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
+    # @$img = [jquery constructor goes here]
     @scrollbar = new Scrollbar
 
   __render__: ->
