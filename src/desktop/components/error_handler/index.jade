@@ -1,9 +1,13 @@
-doctype html
-html
-  head
-    meta( name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' )
-    style
-      include ./index.css
+extends ../main_layout/templates/index
+
+append locals
+  - bodyClass = "error-handler-body"
+
+block head
+  style
+    include ./index.css
+
+block body
   body.error-handler-body
     - try {
       include ../main_layout/header/templates/index
@@ -37,6 +41,3 @@ html
 
         .error-handler-return: a( href='/' )
           | Go to Artsy homepage
-
-    .error-handler-footer
-      include ../main_layout/footer/template

@@ -13,6 +13,10 @@ render = ->
 describe 'Error Handler Template', ->
   beforeEach ->
     @html = render()(
+      sd: {
+        CURRENT_USER: { type: 'Admin' }
+      }
+      asset: (x) -> x
       message: 'This is the error message'
       detail: 'This is the error detail'
       code: 400
