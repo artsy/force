@@ -85,7 +85,7 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
           else
             @onError "You've been outbid, increase your bid"
         else if @timesPolledForBidPlacement > sd.MAX_POLLS_FOR_MAX_BIDS
-          @onError "Your bid result is not yet available. Please contact support@artsy.net."
+          @onError "We’re receiving a high volume of traffic and your bid is still processing. If you don’t receive an update soon, please contact support@artsy.net. "
         else
           @timesPolledForBidPlacement += 1
           _.delay =>
