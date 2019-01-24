@@ -23,6 +23,8 @@ globalReactModules = require('./global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 { initModalManager } = require('../../desktop/apps/auth2/client/index')
 
+require ('es7-object-polyfill')
+
 module.exports = ->
   setupErrorReporting()
   setupJquery()

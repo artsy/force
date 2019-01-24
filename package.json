@@ -121,6 +121,7 @@
     "dotenv": "^4.0.0",
     "embed-video": "^1.2.0",
     "embedly-view-helpers": "artsy/embedly-view-helpers",
+    "es7-object-polyfill": "^0.0.7",
     "express": "^4.13.3",
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
