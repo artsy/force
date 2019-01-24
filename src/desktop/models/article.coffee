@@ -135,6 +135,13 @@ module.exports = class Article extends Backbone.Model
     else
       moment(@get(attr)).local()
 
+  formatDate: ->
+    currentYear = moment().year()
+    publishedYear = @date('published_at').year()
+    year = if currentYear != publishedYear then " #{publishedYear}" else ""
+
+    @date('published_at').format('MMMM Do') + year
+
   strip: (attr) ->
     stripTags(@get attr)
 
