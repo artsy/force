@@ -9,7 +9,7 @@
     .az-partner-group-cell__name
       = partner.get('name')
     .az-partner-group-cell__location
-      if partner.related().locations.length
+      if partner.related().locations.length && city
         = partner.related().locations.getLocationAddressNearest(city.name)
       else
         | &nbsp;

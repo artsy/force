@@ -76,7 +76,7 @@ module.exports = class Artwork extends Backbone.Model
     if @hasCollectingInstitution()
       @get('collecting_institution')
     else
-      @get('partner').name
+      @get('partner')?.name
 
   fetchRelatedSales: (options = {}) ->
     new Backbone.Collection(null,

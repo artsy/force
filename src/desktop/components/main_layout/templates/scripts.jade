@@ -156,14 +156,22 @@ if options.sailthru
           x.parentNode.insertBefore(s, x);
         }
         loadHorizon();
+        function loadSailthru() {
+          if(typeof Sailthru !== "undefined"){
+            Sailthru.setup({
+              domain: 'horizon.artsy.net',
+              useStoredTags: false
+            });
+          }
+          else{
+              setTimeout(loadSailthru, 250);
+          }
+        }
         var oldOnLoad = window.onload;
         window.onload = function() {
           if (typeof oldOnLoad === 'function') {
             oldOnLoad();
           }
-          Sailthru.setup({
-            domain: 'horizon.artsy.net',
-            useStoredTags: false
-          });
+          loadSailthru();
         };
       })();
