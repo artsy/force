@@ -24,17 +24,17 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.33.2":
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.33.2.tgz#de61eecd4a9d03b48582ffc7effb1ceefd9d3313"
-  integrity sha512-+9NQQUDfTz3AVM+UqF5gqdzD2t6X/8PzSTGhDxdMZwsWnhRdI1LF4RtcdeI36PfNaTBaVxlLOatjcvPSJmyTWg==
+"@artsy/palette@2.34.2":
+  version "2.34.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.34.2.tgz#01e67647b930da12f90b3a5b4c0d27b0d7536f8a"
+  integrity sha512-AkgYVzpoEw7t5muyrIWoO6R8ygil9rqH8AHNDTxMxIzaOFTWTW98kM3hLKuFX73NoEsnCQtyI4hD/cqksonV0A==
   dependencies:
-    gatsby-plugin-catch-links "^2.0.9"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
     react "^16.5.0"
     react-live "^1.12.0"
+    react-powerplug "^1.0.0"
     react-spring "^5.7.2"
     styled-bootstrap-grid "1.0.4"
     styled-system "^3.1.11"
@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@11.2.13":
-  version "11.2.13"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-11.2.13.tgz#dda0e91150160e618e0024b59b76f636ac85a9aa"
-  integrity sha512-3Cn4wIDtGJMDM3AlUm8PTPZOg3+RqlfHhWp4j60oH0YSEODOnPpFC36OaQPGlTVqoMywji4CpdrZqbDCBvToeA==
+"@artsy/reaction@11.2.14":
+  version "11.2.14"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-11.2.14.tgz#f7c5dd370b3cb82eb4ab6e96b390c45c59a87f15"
+  integrity sha512-WdGsXCXxiTHf2tjnkWcRI2XZsfruXKevwgHA+z1f+mY/ydasPwqgDvenrONDMnjyyRbkXy/QobxKVoT5R8wXSg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -6753,14 +6753,6 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-gatsby-plugin-catch-links@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-catch-links/-/gatsby-plugin-catch-links-2.0.9.tgz#1fd5bf02a7f997f7b36c4e0c28b689f0c3d92726"
-  integrity sha512-0I78VTwy9GJkh8nEt33VASo/cvBmDtdChoISQ+U0Pio5pXEXT2RQIesuHwcm4pXG/VRDVnEYxa95PLUccW5vFg==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    escape-string-regexp "^1.0.5"
-
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -12418,6 +12410,13 @@ react-overlays@^0.8.3:
     prop-types-extra "^1.0.1"
     react-transition-group "^2.2.0"
     warning "^3.0.0"
+
+react-powerplug@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-powerplug/-/react-powerplug-1.0.0.tgz#f9c10a761ece115661b8fd10920c4e573ea95909"
+  integrity sha512-H7U+1sNiOqlaPgZpfciVZ3BMHtXHsd0tkXrOmrwV7ZTpK+YGRddK7+Um1RT2OTe+4G+1muXfyFMAwcnasABMtA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
 
 react-redux@^5.0.2:
   version "5.0.5"
