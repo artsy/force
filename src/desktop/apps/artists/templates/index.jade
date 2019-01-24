@@ -28,11 +28,12 @@ block body
             for artist in set.artists
               .afc-artist
                 a.hoverable-image-link( href= artist.href )
-                  img(
-                    src= artist.image.thumb.url
-                    alt= artist.title
-                    title= artist.title
-                  )
+                  if artist && artist.image && artist.image.thumb
+                    img(
+                      src= artist.image.thumb.url
+                      alt= artist.title
+                      title= artist.title
+                    )
 
                 .afc-artist-information
                   .afc-artist-information-left
