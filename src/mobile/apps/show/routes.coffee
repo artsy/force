@@ -25,7 +25,7 @@ module.exports.index = (req, res, next) ->
         show.fetchArtworks
           data:
             page: 1
-            size: 10
+            size: 100
           error: res.backboneError
           success: (artworks) ->
             res.locals.sd.ARTWORKS = artworks
