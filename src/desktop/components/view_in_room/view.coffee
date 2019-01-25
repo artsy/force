@@ -20,9 +20,10 @@ module.exports = class ViewInRoom extends Backbone.View
   events:
     'click .js-view-in-room-close': 'remove'
 
-  initialize: ({ @$img, @dimensions }) ->
+  initialize: ({ @imgUrl, @imgSelector, @positionStyles, @dimensions }) ->
     $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
     @scrollbar = new Scrollbar
+    @$img = $(@imgSelector)
 
   __render__: ->
     @$el.html template()
@@ -48,11 +49,10 @@ module.exports = class ViewInRoom extends Backbone.View
 
   injectImage: ->
     @$placeholder.add @$artwork
-      .attr 'src', @$img.attr 'src'
+      .attr 'src', @imgUrl
 
     # Position exactly where original image was
-    @$artwork.css @getRect(@$img)
-
+    @$artwork.css @positionStyles
   getRect: ($el) ->
     _.pick $el[0].getBoundingClientRect(), 'height', 'width', 'top', 'left'
 
@@ -79,7 +79,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$el.attr 'data-state', 'out'
     @$artwork
       .removeClass 'is-notransition'
-      .css @getRect(@$img)
+      .css @positionStyles
 
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
