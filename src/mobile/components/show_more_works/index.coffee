@@ -8,6 +8,7 @@ module.exports =
       $(e.currentTarget).find('.circle-border-icon-button').css 'transform', 'none'
     else
       $(e.currentTarget).prev()
-        .animate({'height': $(e.currentTarget).prev().prop('scrollHeight'), 'max-height': 9999}, 1000)
+        .animate({'height': $(e.currentTarget).prev().prop('scrollHeight')}, 1000)
         .addClass 'toggled'
+        .css 'max-height', 'none'
       $(e.currentTarget).find('.circle-border-icon-button').css 'transform', 'rotate(180deg)'
