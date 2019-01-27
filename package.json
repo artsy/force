@@ -52,7 +52,7 @@
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
     "@artsy/express-reloadable": "1.4.0",
-    "@artsy/palette": "2.34.9",
+    "@artsy/palette": "2.35.1",
     "@artsy/passport": "1.1.0",
     "@artsy/reaction": "11.2.27",
     "@artsy/stitch": "4.0.1",
