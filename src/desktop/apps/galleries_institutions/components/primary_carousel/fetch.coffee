@@ -23,7 +23,7 @@ fetchFeaturedSet = (type) ->
 fetchWithParams = (params) ->
   partners = new FilterPartners
   Q(partners.fetch(
-    data: _.extend {}, params, eligible_for_carousel: true, size: 3, sort: '-random_score'
+    data: _.extend {}, params, eligible_for_carousel: true, size: 6, sort: '-random_score'
   ).then (results) ->
     profiles = new Profiles
     Q.all(partners.map (partner) ->
