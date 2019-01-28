@@ -20,10 +20,11 @@ module.exports = class ViewInRoom extends Backbone.View
   events:
     'click .js-view-in-room-close': 'remove'
 
-  initialize: ({ @imgUrl, @imgSelector, @positionStyles, @dimensions }) ->
+  # Should provide dimensions AND (img OR imgUrl, imgSelector, positionStyles)
+  initialize: ({ @$img, @imgUrl, @imgSelector, @positionStyles, @dimensions }) ->
     $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
     @scrollbar = new Scrollbar
-    @$img = $(@imgSelector)
+    @$sourceImage = $(@imgSelector)
 
   __render__: ->
     @$el.html template()
@@ -52,13 +53,20 @@ module.exports = class ViewInRoom extends Backbone.View
       .attr 'src', @imgUrl
 
     # Position exactly where original image was
-    @$artwork.css @positionStyles
+    if @positionStyles
+      @$artwork.css @positionStyles
+    else
+      @$artwork.css @getRect(@$img)
+
   getRect: ($el) ->
     _.pick $el[0].getBoundingClientRect(), 'height', 'width', 'top', 'left'
 
   transitionIn: ->
     @$el.attr 'data-state', 'in'
-    @$img.css visibility: 'hidden'
+    if @$img
+      @$img.css visibility: 'hidden'
+    if @$sourceImage
+      @$sourceImage.css visibility: 'hidden'
 
     artworkTransformCSS = @getRect @$placeholder
 
@@ -79,7 +87,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$el.attr 'data-state', 'out'
     @$artwork
       .removeClass 'is-notransition'
-      .css @positionStyles
+      .css if @positionStyles then @positionStyles else @getReact(@$img)
 
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
@@ -131,7 +139,10 @@ module.exports = class ViewInRoom extends Backbone.View
     $(window).off 'resize.view-in-room'
     @transitionOut()
       .one $.support.transition.end, =>
-        @$img.css visibility: 'visible'
+        if @$img
+          @$img.css visibility: 'visible'
+        if @$sourceImage
+          @$sourceImage.css visibility: 'visible'
         @scrollbar.reenable()
         ViewInRoom.__super__.remove.apply this, arguments
         @trigger 'removed'
