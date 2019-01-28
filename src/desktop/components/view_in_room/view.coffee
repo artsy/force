@@ -50,7 +50,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   injectImage: ->
     @$placeholder.add @$artwork
-      .attr 'src', @imgUrl
+      .attr 'src', if @imgUrl then @imgUrl else @$img.attr 'src'
 
     # Position exactly where original image was
     if @positionStyles
