@@ -54,7 +54,7 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:closed', @hideSuggestions
     @on 'search:cursorchanged', @ensureResult
 
-    
+
     @autoselect = false if @enableSpotlightAutocomplete
     @setupTypeahead()
     @setupPlaceholder()
@@ -164,7 +164,7 @@ module.exports = class SearchBarView extends Backbone.View
     _.each ['opened', 'closed', 'selected', 'cursorchanged'], (action) =>
       @$input.on "typeahead:#{action}", (args...) =>
         @trigger "search:#{action}", args...
-  
+
     templateOptions = {
       suggestion: @suggestionTemplate
       empty: -> "" # Typeahead won't render the header for empty results unless 'empty' is defined
@@ -198,12 +198,15 @@ module.exports = class SearchBarView extends Backbone.View
 
   selectResult: (e, model) ->
     return @emptyItemClick() unless model
-    analyticsHooks.trigger 'search:item:click',
-      query: @query
-      item_number: model.collection.models.findIndex( (result) -> return result.id == model.id ) + 1
-      item_type: model.get('display_model')
-      item_id: model.get('_id')
-      destination_path: "#{sd.APP_URL}#{model.href()}"
+
+    if model.collection and model.collection.models
+      analyticsHooks.trigger 'search:item:click',
+        query: @query
+        item_number: model.collection.models.findIndex( (result) -> return result.id == model.id ) + 1
+        item_type: model.get('display_model')
+        item_id: model.get('_id')
+        destination_path: "#{sd.APP_URL}#{model.href()}"
+
     @selected = true
     location.assign model.href()
 
