@@ -57,17 +57,19 @@ module.exports = class CarouselView extends Backbone.View
 
   next: (e) ->
     e?.preventDefault()
-    if @active is @$images.length - @increment
-      @active -= @$images.length
-    @active += @increment
-    @moveToActive()
+    if @$images
+      if @active is @$images.length - @increment
+        @active -= @$images.length
+      @active += @increment
+      @moveToActive()
 
   prev: (e) ->
     e?.preventDefault()
-    if @active is 0
-      @active = @$images.length
-    @active -= @increment
-    @moveToActive()
+    if @$images
+      if @active is 0
+        @active = @$images.length
+      @active -= @increment
+      @moveToActive()
 
   keyUp: (e) ->
     switch e.keyCode

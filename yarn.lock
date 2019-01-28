@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.34.2":
-  version "2.34.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.34.2.tgz#01e67647b930da12f90b3a5b4c0d27b0d7536f8a"
-  integrity sha512-AkgYVzpoEw7t5muyrIWoO6R8ygil9rqH8AHNDTxMxIzaOFTWTW98kM3hLKuFX73NoEsnCQtyI4hD/cqksonV0A==
+"@artsy/palette@2.35.1":
+  version "2.35.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.35.1.tgz#09fcdc24b96c33635383ee9c77de17dbb087bf90"
+  integrity sha512-J84h9x0yWTTSzxWIK2DOA1JwMBDSqQJDG0YdtzyF2nYQ4PRy1u7vGIuWv895wPQMGCvzqobcv1XTuz5/IBTGeA==
   dependencies:
     moment "^2.23.0"
     moment-timezone "^0.5.23"
@@ -38,6 +38,7 @@
     react-spring "^5.7.2"
     styled-bootstrap-grid "1.0.4"
     styled-system "^3.1.11"
+    trunc-html "^1.1.2"
 
 "@artsy/passport@1.1.0":
   version "1.1.0"
@@ -63,10 +64,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@11.2.14":
-  version "11.2.14"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-11.2.14.tgz#f7c5dd370b3cb82eb4ab6e96b390c45c59a87f15"
-  integrity sha512-WdGsXCXxiTHf2tjnkWcRI2XZsfruXKevwgHA+z1f+mY/ydasPwqgDvenrONDMnjyyRbkXy/QobxKVoT5R8wXSg==
+"@artsy/reaction@11.2.28":
+  version "11.2.28"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-11.2.28.tgz#4f48b93178277e64c3435021044c9084607540c9"
+  integrity sha512-jBYRSnD7ezGFsFOzZidGmcU8JijGxeP2r4Hqf94prFt48zQcZ9/Fkqm2ASTsktz8sbmLySRJRwp+WXrsozdRmQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -5368,6 +5369,13 @@ es6-weak-map@^2.0.1:
     es5-ext "^0.10.14"
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
+
+es7-object-polyfill@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/es7-object-polyfill/-/es7-object-polyfill-0.0.7.tgz#4cc46ab66aebb8db73f5466184d057ee6795713f"
+  integrity sha512-XoD2Grsf1JvpREOmH9yFMd/GHMVjISpxq9sHm1RKZ3XZ+IBXJDIuyqbTu/zegL5GYZnL3hBA9vqJQVGawWIvgQ==
+  dependencies:
+    reflect.ownkeys "^0.2.0"
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -12896,6 +12904,11 @@ referrer-policy@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/referrer-policy/-/referrer-policy-1.0.0.tgz#f60eedc92f942b01a6118121ec932d66e8fd7e14"
   integrity sha1-9g7tyS+UKwGmEYEh7JMtZuj9fhQ=
+
+reflect.ownkeys@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/reflect.ownkeys/-/reflect.ownkeys-0.2.0.tgz#749aceec7f3fdf8b63f927a04809e90c5c0b3460"
+  integrity sha1-dJrO7H8/34tj+SegSAnpDFwLNGA=
 
 regenerate-unicode-properties@^5.1.1:
   version "5.1.3"

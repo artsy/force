@@ -5,12 +5,15 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { enableIntercom } from "lib/intercom"
 
+const $ = require("jquery")
+
 const mediator = require("desktop/lib/mediator.coffee")
 const User = require("desktop/models/user.coffee")
 const Artwork = require("desktop/models/artwork.coffee")
 const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
 const openAuctionBuyerPremium = require("desktop/apps/artwork/components/auction/components/buyers_premium/index.coffee")
+const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
 
 buildClientApp({
   routes,
@@ -70,6 +73,23 @@ mediator.on("openAuctionAskSpecialistModal", options => {
         ask_specialist: true,
       })
     })
+  }
+})
+
+mediator.on("openViewInRoom", options => {
+  const url = options.image && options.image.url
+  if (url) {
+    const fakeImg = $('<img src="' + options.image.url + '">').load(function() {
+      // TODO: Give it a position so that it can animate from it.
+      // Or alternatevely figure out how to remove the animation
+    })
+
+    const viewInRoom = new ViewInRoomView({
+      $img: fakeImg,
+      dimensions: options.dimensions && options.dimensions.cm,
+    })
+
+    $("body").prepend(viewInRoom.render().$el)
   }
 })
 

@@ -41,7 +41,7 @@ module.exports = class BidForm extends ErrorHandlingForm
     new ModalPageView
       width: '700px'
       pageId: 'auction-info'
-  
+
   getBidAmount: =>
     val = @$('.max-bid').val()
     @saleArtwork.cleanBidAmount val if val
@@ -83,7 +83,7 @@ module.exports = class BidForm extends ErrorHandlingForm
           else
             @showError "You've been outbid, increase your bid"
         else if @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
-          @showError "Your bid result is not yet available. Please contact support@artsy.net."
+          @showError "We’re receiving a high volume of traffic and your bid is still processing. If you don’t receive an update soon, please contact support@artsy.net."
         else
           @timesPolledForBidPlacement += 1
           _.delay =>
