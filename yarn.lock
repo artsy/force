@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.34.9":
-  version "2.34.9"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.34.9.tgz#bf9d66fe4900ba188c8860de15ed0053672b9073"
-  integrity sha512-v9FytGtmZh+ig5HokTCSd6pAWvo09HAbs5MHxcURGR8uHQHgjc8kLTZBroHxGi0jI17U1TT+y6apeMS0Vc9rHg==
+"@artsy/palette@2.35.1":
+  version "2.35.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.35.1.tgz#09fcdc24b96c33635383ee9c77de17dbb087bf90"
+  integrity sha512-J84h9x0yWTTSzxWIK2DOA1JwMBDSqQJDG0YdtzyF2nYQ4PRy1u7vGIuWv895wPQMGCvzqobcv1XTuz5/IBTGeA==
   dependencies:
     moment "^2.23.0"
     moment-timezone "^0.5.23"
@@ -38,6 +38,7 @@
     react-spring "^5.7.2"
     styled-bootstrap-grid "1.0.4"
     styled-system "^3.1.11"
+    trunc-html "^1.1.2"
 
 "@artsy/passport@1.1.0":
   version "1.1.0"
