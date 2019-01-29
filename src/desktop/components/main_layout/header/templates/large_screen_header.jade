@@ -6,7 +6,7 @@ nav.mlh-navbar
     #main-layout-header-minimal-title
       block minimal-nav-header
     - var lab_features = (sd.CURRENT_USER && sd.CURRENT_USER.lab_features) || []
-    if(lab_features.includes('New Search Bar'))
+    if (lab_features.includes('New Search Bar'))
       != stitch.components.SearchBar()
     else
       include ../../../search_bar/templates/index
