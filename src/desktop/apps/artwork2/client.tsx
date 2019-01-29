@@ -77,19 +77,46 @@ mediator.on("openAuctionAskSpecialistModal", options => {
 })
 
 mediator.on("openViewInRoom", options => {
-  const url = options.image && options.image.url
-  if (url) {
-    const fakeImg = $('<img src="' + options.image.url + '">').load(function() {
-      // TODO: Give it a position so that it can animate from it.
-      // Or alternatevely figure out how to remove the animation
-    })
+  try {
+    const { dimensions } = options
+    const { url, width, height } = options.image
+
+    let newWidth = width
+    let newHeight = height
+
+    const bounds = document
+      .querySelector("[data-type=artwork-image]")
+      .getBoundingClientRect()
+
+    if (width > height) {
+      newWidth = bounds.width
+      newHeight = height * newWidth / width
+    } else if (height > width) {
+      newHeight = bounds.height
+      newWidth = newHeight * width / height
+    } else {
+      newWidth = bounds.width
+      newHeight = newWidth
+    }
+
+    const positionStyles = {
+      position: "absolute",
+      top: `${bounds.top + Math.abs(bounds.height - newHeight) / 2}px`,
+      left: `${bounds.left}px`,
+      width: `${newWidth}px`,
+      height: `${newHeight}px`,
+    }
 
     const viewInRoom = new ViewInRoomView({
-      $img: fakeImg,
-      dimensions: options.dimensions && options.dimensions.cm,
+      imgSelector: "[data-type=artwork-image]",
+      imgUrl: url,
+      positionStyles: positionStyles,
+      dimensions: dimensions.cm,
     })
 
     $("body").prepend(viewInRoom.render().$el)
+  } catch {
+    // TODO: Add some proper error handling
   }
 })
 
