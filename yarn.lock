@@ -64,10 +64,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@12.0.3":
-  version "12.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.0.3.tgz#8bbd5b4ee48835ad8b96d3ac65b864fc62de654f"
-  integrity sha512-faeCMKWmeQt7BtDmtM8D9HPRKI3mxPV6pRF5heZChTIIS2cHxQcQoW3+hOSDzQDO0mZ+sdd2hrZMKvhfopwEaQ==
+"@artsy/reaction@12.1.1":
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.1.tgz#e4a0d16a210258d9a10adc697c0da9f198c65bd3"
+  integrity sha512-zMAIEiEXlNWUKmA9RtaqaEGkXBgf1TT4q5bNzAiQZK79wTwWShoTuqCLKPvg8e1XSLI1NkeuYizK0zULTwQbIQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
