@@ -3,7 +3,7 @@ import webpack from "webpack"
 import path from "path"
 
 const app = (module.exports = express())
-const config = require(path.join(process.cwd(), "webpack.config"))
+const config = require(path.join(__dirname, "../../", "webpack"))
 const compiler = webpack(config)
 
 app.use(
