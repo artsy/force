@@ -49,7 +49,7 @@ export const baseConfig = {
           {
             loader: "babel-loader",
             options: {
-              cacheDirectory: !isCI && path.join(basePath, ".cache", "babel"), // FIXME: restore isCI check
+              cacheDirectory: !isCI && path.join(basePath, ".cache", "babel"),
             },
           },
         ],
@@ -63,12 +63,12 @@ export const baseConfig = {
     ],
   },
   plugins: [
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Remove moment.js localization files
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // Remove moment.js localization files
     new webpack.NamedModulesPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",

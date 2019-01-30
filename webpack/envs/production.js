@@ -9,8 +9,11 @@ export const productionConfig = {
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
+        parallel: true,
         sourceMap: true,
         uglifyOptions: {
+          // TODO: Enable when we get sourcemaps running
+          // mangle: true,
           compress: {
             warnings: false,
           },
@@ -22,11 +25,11 @@ export const productionConfig = {
     },
     splitChunks: {
       cacheGroups: {
-        vendor: {
-          name: "common",
-          chunks: "initial",
-          minChunks: 10,
+        commons: {
           test: /[\\/]node_modules[\\/]/,
+          name: "common",
+          minChunks: 10,
+          chunks: "initial",
         },
       },
     },

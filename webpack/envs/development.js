@@ -9,7 +9,14 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
 import WebpackNotifierPlugin from "webpack-notifier"
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
-import { PORT, WEBPACK_DEVTOOL, basePath, isCI } from "../utils/environment"
+
+import {
+  PORT,
+  NODE_ENV,
+  WEBPACK_DEVTOOL,
+  basePath,
+  isCI,
+} from "../utils/environment"
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -23,7 +30,7 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
 }
 
 export const developmentConfig = {
-  mode: "development",
+  mode: NODE_ENV,
   devtool: WEBPACK_DEVTOOL,
   module: {
     rules: [
