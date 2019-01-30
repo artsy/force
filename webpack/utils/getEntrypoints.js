@@ -59,7 +59,7 @@ function findAssets(folder) {
     }
 
     // Load old global module dependencies
-    asset[fileName].unshift("./src/lib/global_modules")
+    asset[fileName].unshift(path.join(basePath, "./src/lib/global_modules"))
     if (isDevelopment) {
       asset[fileName].unshift("webpack-hot-middleware/client?reload=true")
     }

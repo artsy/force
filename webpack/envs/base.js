@@ -9,13 +9,7 @@ export const baseConfig = {
   mode: NODE_ENV,
   devtool: "cheap-module-source-map",
   stats: "errors-only",
-  entry: {
-    webpack: [
-      "webpack-hot-middleware/client?reload=true",
-      "./src/desktop/apps/webpack/client.js",
-    ],
-    ...getEntrypoints(),
-  },
+  entry: getEntrypoints(),
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
@@ -26,12 +20,12 @@ export const baseConfig = {
     rules: [
       {
         test: /\.coffee$/,
-        include: /src/,
+        include: path.resolve(basePath, "src"),
         use: ["cache-loader", "coffee-loader"],
       },
       {
         test: /\.(jade|pug)$/,
-        include: /src/,
+        include: path.resolve(basePath, "src"),
         use: [
           {
             loader: "pug-loader",
@@ -44,7 +38,7 @@ export const baseConfig = {
       },
       {
         test: /(\.(js|ts)x?$)/,
-        include: /src/,
+        include: path.resolve(basePath, "src"),
         use: [
           {
             loader: "babel-loader",
@@ -98,7 +92,25 @@ export const baseConfig = {
     modules: [path.resolve(basePath, "src"), "node_modules"],
     symlinks: false,
   },
+  optimization: {
+    // Add Webpack runtime code to the `common` chunk
+    runtimeChunk: {
+      name: "common",
+    },
+    splitChunks: {
+      cacheGroups: {
+        // Separate vendor libraries from `node_modules` into a `commons.js`
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "common",
+          minChunks: 10,
+          chunks: "initial",
+        },
+      },
+    },
+  },
   externals: {
+    // Don't bundle modules and consider them external
     request: "request",
   },
 }

@@ -36,6 +36,7 @@ export const developmentConfig = {
     rules: [
       {
         test: /\.styl$/,
+        include: path.resolve(basePath, "src"),
         use: [
           {
             loader: "style-loader",
