@@ -20,18 +20,5 @@ export const productionConfig = {
         },
       }),
     ],
-    runtimeChunk: {
-      name: "common",
-    },
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "common",
-          minChunks: 10,
-          chunks: "initial",
-        },
-      },
-    },
   },
 }
