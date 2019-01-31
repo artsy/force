@@ -57,7 +57,7 @@
     "@artsy/express-reloadable": "1.4.0",
     "@artsy/palette": "2.36.3",
     "@artsy/passport": "1.1.0",
-    "@artsy/reaction": "12.1.7",
+    "@artsy/reaction": "12.1.10",
     "@artsy/stitch": "4.0.1",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",
