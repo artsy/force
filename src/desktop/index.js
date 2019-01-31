@@ -45,7 +45,7 @@ if (process.env.ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
   app.use(require("./apps/geo"))
   app.use(require("./apps/jobs"))
   app.use(require("./apps/notifications"))
-  // app.use(require("./apps/order2/server").app)
+  app.use(require("./apps/order2/server").app)
   app.use(require("./apps/personalize"))
   app.use(require("./apps/press"))
   app.use(require("./apps/search"))
