@@ -5,7 +5,7 @@ import query from "./mutation"
 let metaphysics = _metaphysics
 
 export const recordArtworkView = (artwork_id, user) => {
-  if (user === null) {
+  if (user == null) {
     return
   }
   const send = {
