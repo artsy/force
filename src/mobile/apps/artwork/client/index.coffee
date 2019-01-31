@@ -8,8 +8,9 @@ ArtworkPartnerView = require '../components/partner/view.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 fetchArtworkBuckets = require '../components/related_artworks/index.coffee'
-{ recordArtworkView } = require 'lib/components/record_artwork_view'
-{ enableIntercom } = require 'lib/intercom'
+{ recordArtworkView } = require '../../../../lib/components/record_artwork_view'
+{ enableIntercom } = require '../../../../lib/intercom'
+
 module.exports.init = ->
   bootstrap()
   artworkTabsView()
