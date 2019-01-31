@@ -146,7 +146,9 @@ workflows:
       - validate_staging_schema:
           filters:
             branches:
-              only: master
+              ignore:
+                - staging
+                - release
       - validate_production_schema:
           filters:
             branches:
