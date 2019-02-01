@@ -32,9 +32,7 @@ const excludedRoutes = ["orders", "new-artwork"]
 if (!excludedRoutes.includes(pageType)) {
   analytics.page(properties, { integrations: { Marketo: false } })
 }
-console.log("WIN PERF", window.performance)
-console.log("timing", window.performance.timing)
-console.log("sd track page loads", sd.TRACK_PAGELOAD_PATHS)
+
 // Track pageload speed
 if (
   window.performance &&
