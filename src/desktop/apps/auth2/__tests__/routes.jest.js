@@ -119,9 +119,9 @@ describe("Routes", () => {
           afterSignUpAction: "after signup",
           destination: "/foo",
           redirectTo: "/bar",
-          signupIntent: "follow artist",
+          signupIntent: "follow partner",
+          intent: "follow partner",
           signupReferer: "referrer",
-          title: "Sign up to follow Andy Warhol",
         }
 
         index(req, res, next).then(() => {
@@ -139,7 +139,7 @@ describe("Routes", () => {
           expect(redirectTo).toBe(req.query.redirectTo)
           expect(signupIntent).toBe(req.query.signupIntent)
           expect(signupReferer).toBe(req.query.signupReferer)
-          expect(title).toBe(req.query.title)
+          expect(title).toBe("Sign up to follow partners")
           done()
         })
       })

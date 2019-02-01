@@ -10,7 +10,6 @@ module.exports = class FollowButtonView extends Backbone.View
   initialize: (options) ->
     @validateView options
     { @followId, @isLoggedIn, @type, @_id, @context_module, @context_page } = options
-    console.log('options:', options)
     @listenTo @collection, "add:#{@followId}", @onFollowChange
     @listenTo @collection, "remove:#{@followId}", @onFollowChange
     @onFollowChange()
@@ -53,6 +52,6 @@ module.exports = class FollowButtonView extends Backbone.View
         setTimeout (=> @$el.removeClass 'is-clicked'), 1500
     else
       analyticsHooks.trigger 'follow:signup'
-      location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&redirect-to=#{window.location}&signupIntent=follow+#{@type.toLowerCase()}&intent=follow+#{@type.toLowerCase()}&trigger=click&contextModule=#{@context_module}&title=Sign+up+to+follow+#{@type.toLowerCase()}s"
+      location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&redirect-to=#{window.location}&signupIntent=follow+#{@type.toLowerCase()}&intent=follow+#{@type.toLowerCase()}&trigger=click&contextModule=#{@context_module}"
 
     false
