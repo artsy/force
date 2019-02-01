@@ -247,6 +247,7 @@
     "babel-jest": "^23.6.0",
     "benv": "^3.3.0",
     "cache-loader": "^1.2.2",
+    "clean-webpack-plugin": "^1.0.1",
     "coffee-loader": "^0.8.0",
     "core-js": "^2.5.7",
     "danger": "^6.0.2",
@@ -301,6 +302,7 @@
     "webpack-cli": "^3.2.1",
     "webpack-dev-middleware": "^3.5.1",
     "webpack-hot-middleware": "^2.24.3",
+    "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.2.1",
     "webpack-notifier": "^1.7.0"
   },

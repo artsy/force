@@ -14,7 +14,6 @@ export const baseConfig = {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets",
-    sourceMapFilename: "[file].map?[contenthash]",
   },
   module: {
     rules: [
@@ -75,8 +74,8 @@ export const baseConfig = {
   resolve: {
     alias: {
       "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
-      react: require.resolve("react"),
       "styled-components": require.resolve("styled-components"),
+      react: require.resolve("react"),
     },
     extensions: [
       ".mjs",
