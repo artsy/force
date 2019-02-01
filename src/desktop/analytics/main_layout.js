@@ -32,7 +32,9 @@ const excludedRoutes = ["orders", "new-artwork"]
 if (!excludedRoutes.includes(pageType)) {
   analytics.page(properties, { integrations: { Marketo: false } })
 }
-
+console.log("WIN PERF", window.performance)
+console.log("timing", window.performance.timing)
+console.log("sd track page loads", sd.TRACK_PAGELOAD_PATHS)
 // Track pageload speed
 if (
   window.performance &&
@@ -42,7 +44,8 @@ if (
   window.addEventListener("load", function() {
     if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
       window.setTimeout(function() {
-        reportLoadTimeToVolley(pageType, "desktop")
+        var deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
+        reportLoadTimeToVolley(pageType, deviceType)
       }, 0)
     }
   })
