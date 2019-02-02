@@ -2,18 +2,18 @@
 
 import path from "path"
 import webpack from "webpack"
-import { getEntrypoints } from "../utils/getEntrypoints"
+import { buildEntrypoints } from "../utils/buildEntrypoints"
 import { NODE_ENV, basePath, isCI } from "../utils/environment"
 
 export const baseConfig = {
   mode: NODE_ENV,
   devtool: "cheap-module-source-map",
   stats: "errors-only",
-  entry: getEntrypoints(),
+  entry: buildEntrypoints(),
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
-    publicPath: "/assets",
+    publicPath: "/assets/",
   },
   module: {
     rules: [

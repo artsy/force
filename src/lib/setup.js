@@ -49,6 +49,8 @@ import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/midd
 import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
+import expressStaticGzip from "express-static-gzip"
+import { assetMiddleware } from "./middleware/assets"
 
 const {
   API_REQUEST_TIMEOUT,
@@ -67,6 +69,9 @@ const {
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
   DD_APM_ENABLED,
+
+  // FIXME: Remove once bucket-assets has been removed
+  ENABLE_EXPERIMENTAL_ASSET_BUNDLING,
 } = config
 
 export default function(app) {
@@ -80,7 +85,21 @@ export default function(app) {
   }
 
   // Minification and compression
-  app.use(compression())
+  if (ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
+    app.use(
+      expressStaticGzip(path.join(__dirname, "../../public"), {
+        enableBrotli: true,
+        orderPreference: ["br", "gz"],
+
+        // TODO: Is this the best place to set this cache control header?
+        setHeaders: (res, path) => {
+          res.setHeader("Cache-Control", "public, max-age=31536000")
+        },
+      })
+    )
+  } else {
+    app.use(compression())
+  }
 
   // Blacklist IPs
   app.use(
@@ -208,10 +227,10 @@ export default function(app) {
   app.use(downcase)
   app.use(hardcodedRedirects)
 
-  // General helpers and express middleware
+  // Mount static webserver instead of requesting assets through bucket manifest.
+  // Pass in --debugProd on boot.
   if (argv.debugProd) {
-    // Mount static webserver instead of requesting assets through bucket
-    // manifest. Pass in --debugProd on boot.
+    app.use(assetMiddleware)
     app.use(express.static("public"))
   } else {
     app.use(bucketAssets())
@@ -282,10 +301,6 @@ export default function(app) {
     // In staging or prod, mount routes normally
   } else {
     app.use((req, res, next) => {
-      if (argv.debugProd) {
-        res.locals.asset = filename => filename // Stub bucketAssets middleware helper
-      }
-
       // Direct mobile devices to the mobile app, otherwise fall through to
       // the desktop app
       if (res.locals.sd.IS_MOBILE) {

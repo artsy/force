@@ -19,6 +19,10 @@ module.exports =
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
+
+  # FIXME: Remove once bucket assets has been replaced
+  ENABLE_EXPERIMENTAL_ASSET_BUNDLING: false
+
   ENABLE_MAKE_OFFER: true
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
