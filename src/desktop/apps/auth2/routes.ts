@@ -51,8 +51,11 @@ export const index = async (req, res, next) => {
     signupIntent,
     intent,
     trigger,
-    title,
   } = req.query
+
+  const title = ["save artwork", "follow partner"].includes(intent)
+    ? `Sign up to ${intent}s`
+    : null
 
   if (type === ModalType.forgot) {
     res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
