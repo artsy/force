@@ -6,5 +6,9 @@
     "zephraph",
     "damassi",
     "sweir27"
-  ]
+  ],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  }
 }
