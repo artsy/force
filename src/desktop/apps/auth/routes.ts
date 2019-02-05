@@ -83,7 +83,7 @@ export const index = async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: "auth2",
+        assetPackage: "auth",
       },
       data: {
         type,

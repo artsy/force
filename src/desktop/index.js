@@ -5,7 +5,7 @@ const app = (module.exports = require("express")())
 // FIXME: Remove this pattern once bucket-assets is removed
 if (process.env.ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
   app.use(require("./apps/home"))
-  app.use(require("./apps/auth2"))
+  app.use(require("./apps/auth"))
 
   app.use(require("./apps/artist/server").app)
   app.use(require("./apps/artwork2/server").app)
@@ -55,11 +55,7 @@ if (process.env.ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
   app.use(require("./apps/unsubscribe"))
   app.use(require("./apps/unsupported_browser"))
   app.use(require("./apps/style_guide"))
-  app.use(require("./apps/auth2"))
-
-  // FIXME: Rename auth2 -> auth and remove this route
-  // app.use(require("./apps/auth"))
-
+  app.use(require("./apps/auth"))
   app.use(require("./apps/static"))
   app.use(require("./apps/clear_cache"))
   app.use(require("./apps/sitemaps"))

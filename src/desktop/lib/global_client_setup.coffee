@@ -21,7 +21,7 @@ listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 globalReactModules = require('./global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
-{ initModalManager } = require('../../desktop/apps/auth2/client/index')
+{ initModalManager } = require('../../desktop/apps/auth/client/index')
 
 require ('es7-object-polyfill')
 
