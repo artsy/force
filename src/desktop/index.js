@@ -9,7 +9,7 @@ if (process.env.ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
 
   app.use(require("./apps/artist/server").app)
   app.use(require("./apps/artwork2/server").app)
-  app.use(require("./apps/collect2/server").app)
+  app.use(require("./apps/collect/server").app)
   app.use(require("./apps/collections/server").app)
   app.use(require("./apps/order2/server").app)
 
@@ -31,7 +31,7 @@ if (process.env.ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
   app.use(require("./apps/artwork2/server").app)
   app.use(require("./apps/about"))
   app.use(require("./apps/collect_art"))
-  app.use(require("./apps/collect2/server").app)
+  app.use(require("./apps/collect/server").app)
   app.use(require("./apps/collections/server").app)
   app.use(require("./apps/categories"))
   app.use(require("./apps/consign"))
