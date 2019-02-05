@@ -50,7 +50,8 @@ import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
 import expressStaticGzip from "express-static-gzip"
-import { assetMiddleware } from "./middleware/assets"
+import { assetMiddleware } from "./middleware/assetMiddleware"
+import { isDevelopment, isProduction } from "lib/environment"
 
 const {
   API_REQUEST_TIMEOUT,
@@ -70,12 +71,9 @@ const {
   SESSION_SECRET,
   DD_APM_ENABLED,
 
-  // FIXME: Remove once bucket-assets has been removed
+  // FIXME: Remove once new webpack-based fingerprinting has been deployed
   ENABLE_EXPERIMENTAL_ASSET_BUNDLING,
 } = config
-
-const isDevelopment = NODE_ENV === "development"
-const isProduction = NODE_ENV === "production"
 
 export default function(app) {
   // Timeout middleware
@@ -225,14 +223,11 @@ export default function(app) {
         index: false,
         enableBrotli: true,
         orderPreference: ["br", "gz"],
-        // TODO: Is this the best place to set this cache control header?
-        setHeaders: (res, path) => {
-          res.setHeader("Cache-Control", "public, max-age=31536000")
-        },
       })
     )
 
-    app.use(assetMiddleware)
+    // Load asset helper for mapping asset to manifest.json key
+    app.use(assetMiddleware())
   } else {
     // When running `yarn start:prod` locally don't mount bucket assets
     if (!argv.debugProd) {

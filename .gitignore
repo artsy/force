@@ -13,10 +13,10 @@ lib-cov
 pids
 logs
 results
+manifest.json
 npm-debug.log
 .DS_Store
 dump.rdb
-manifest.json
 .cache
 .cache-loader
 COMMIT_HASH.txt

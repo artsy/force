@@ -20,7 +20,7 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
 
-  # FIXME: Remove once bucket assets has been replaced
+  # FIXME: Remove once new webpack-based fingerprinting has been deployed
   ENABLE_EXPERIMENTAL_ASSET_BUNDLING: false
 
   ENABLE_MAKE_OFFER: true

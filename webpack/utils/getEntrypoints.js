@@ -2,11 +2,7 @@
 
 import path from "path"
 import fs from "fs"
-import {
-  ENABLE_EXPERIMENTAL_ASSET_BUNDLING,
-  isDevelopment,
-  basePath,
-} from "./environment"
+import { isDevelopment, basePath } from "../../src/lib/environment"
 
 export function getEntrypoints() {
   return {

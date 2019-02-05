@@ -35,7 +35,7 @@ module.exports =
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
 
-  # FIXME: Remove once bucket assets has been replaced
+  # FIXME: Remove once new webpack-based fingerprinting has been deployed
   ENABLE_EXPERIMENTAL_ASSET_BUNDLING: false
 
   ENABLE_MAKE_OFFER: true

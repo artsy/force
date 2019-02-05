@@ -16,7 +16,7 @@ import {
   WEBPACK_DEVTOOL,
   basePath,
   isCI,
-} from "../utils/environment"
+} from "../../src/lib/environment"
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
