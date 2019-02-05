@@ -33,7 +33,7 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  initModalManager() if sd.NEW_AUTH_MODAL
+  initModalManager()
   mountStitchComponents()
 
 

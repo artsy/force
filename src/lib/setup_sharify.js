@@ -82,8 +82,6 @@ sharify.data = _.extend(
     "MOBILE_MARKETING_SIGNUP_MODALS",
     "MOBILE_MEDIA_QUERY",
     "MOBILE_URL",
-    "MOBILE_NEW_AUTH_MODAL",
-    "NEW_AUTH_MODAL",
     "NODE_ENV",
     "PARSELY_KEY",
     "PC_ARTSY_CHANNEL",

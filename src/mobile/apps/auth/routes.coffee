@@ -23,18 +23,10 @@ module.exports.login = (req, res) ->
   locals = _.extend {}, req.query,
     redirectTo: redirectUrl(req)
 
-  if res.locals.sd.MOBILE_NEW_AUTH_MODAL
-    res.redirect "/login?#{qs.stringify(locals)}"
-  else if locals.action
-    res.render 'call_to_action', locals
-  else
-    res.render 'login', locals
+  res.redirect "/login?#{qs.stringify(locals)}"
 
 module.exports.forgotPassword = (req, res) ->
-  if res.locals.sd.MOBILE_NEW_AUTH_MODAL
-    res.redirect '/forgot'
-  else
-    res.render 'forgot_password'
+  res.redirect '/forgot'
 
 module.exports.submitForgotPassword = (req, res, next) ->
   new Backbone.Model().save null,
@@ -58,15 +50,8 @@ module.exports.signUp = (req, res) ->
     signupIntent: req.query.signupIntent
     trigger: req.query.trigger
     contextModule: req.query.contextModule
-  
-  if res.locals.sd.MOBILE_NEW_AUTH_MODAL
-    res.redirect "/signup?#{qs.stringify(locals)}"
-  else if locals.action
-    res.render 'call_to_action', locals
-  else if req.query.email
-    res.render 'signup_email', locals
-  else
-    res.render 'signup', locals
+
+  res.redirect "/signup?#{qs.stringify(locals)}"
 
 module.exports.twitterLastStep = (req, res) ->
   res.render 'twitter_email'

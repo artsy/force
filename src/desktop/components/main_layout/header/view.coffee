@@ -58,13 +58,8 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
-    if !sd.NEW_AUTH_MODAL
-      mediator.on 'open:auth', @openAuth, @
-
     @checkForPersonalizeFlash()
-
     @checkForAfterSignUpAction()
-
     activatePulldowns()
 
   checkForNotifications: =>

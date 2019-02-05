@@ -9,9 +9,6 @@ describe '#forgotPassword', ->
   it 'renders the reset form', ->
     @res =
       render: @render = sinon.stub(),
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: false
     routes.forgotPassword {}, @res
     @render.args[0][0].should.equal 'forgot_password'
 
@@ -21,9 +18,6 @@ describe '#submitForgotPassword', ->
 
     @res =
       render: @render = sinon.stub(),
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: false
 
   afterEach ->
     Backbone.sync.restore()
@@ -54,9 +48,6 @@ describe '#resetPassword', ->
   it 'renders the reset form', ->
     @res =
       render: @render = sinon.stub(),
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: false
     routes.resetPassword {}, @res
     @render.args[0][0].should.equal 'reset_password'
 
@@ -69,13 +60,10 @@ describe '#login', ->
       query: {}
       body: {}
       params: {}
-    
+
     @res =
       render: @render = sinon.stub(),
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: false
-    
+
   it 'renders the login page', ->
     routes.login @req, @res
     @render.args[0][0].should.equal 'login'
@@ -90,7 +78,7 @@ describe '#login', ->
       }
       body: {}
       params: {}
-  
+
     routes.login req, @res
     @render.args[0][0].should.equal 'call_to_action'
 
@@ -117,12 +105,9 @@ describe '#login', ->
       body: {}
       params: {}
       get: (-> false)
-    
-    res = 
+
+    res =
       redirect: @redirect = sinon.stub()
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: true
 
     routes.login req, res
     @redirect.args[0][0].should.equal '/login?redirect-to=%2F&redirectTo=%2F'
@@ -130,11 +115,8 @@ describe '#login', ->
 describe '#signUp', ->
   beforeEach ->
     @req = { session: {}, get: (-> '/auctions/two-x-two'), query: {}, body: {}, params: {}}
-    @res = 
+    @res =
       render: @render = sinon.stub()
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: false
     sinon.stub Backbone, 'sync'
 
   afterEach ->
@@ -179,12 +161,9 @@ describe '#signUp', ->
       body: {}
       params: {}
       get: (-> false)
-    
+
     res =
       redirect: @redirect = sinon.stub()
-      locals:
-        sd:
-          MOBILE_NEW_AUTH_MODAL: true
 
     routes.signUp req, res
     @redirect.args[0][0].should.containEql '/signup?redirect-to=%2F&redirectTo=%2F'
