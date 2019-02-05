@@ -5,13 +5,6 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 Backbone = require 'backbone'
 
-describe '#forgotPassword', ->
-  it 'renders the reset form', ->
-    @res =
-      render: @render = sinon.stub(),
-    routes.forgotPassword {}, @res
-    @render.args[0][0].should.equal 'forgot_password'
-
 describe '#submitForgotPassword', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
@@ -64,42 +57,7 @@ describe '#login', ->
     @res =
       render: @render = sinon.stub(),
 
-  it 'renders the login page', ->
-    routes.login @req, @res
-    @render.args[0][0].should.equal 'login'
-
-  it 'renders the call_to_action page', ->
-    req =
-      session: null
-      get: (=> @redirectURL)
-      query: {
-        action: 'artwork-save',
-        'redirect-to': @redirectURL
-      }
-      body: {}
-      params: {}
-
-    routes.login req, @res
-    @render.args[0][0].should.equal 'call_to_action'
-
-  it 'passes the redirect param to the template', ->
-    req =
-      query: { 'redirect-to': '%2Ffollowing%2Fprofiles' }
-      body: {}
-      params: {}
-      get: (-> false)
-
-    routes.login req, @res
-    @render.args[0][1].redirectTo.should.equal '%2Ffollowing%2Fprofiles'
-
-  it 'passes the redirect query param to the template', ->
-    @req.query = { 'redirect_uri': '%2Ffollowing%2Fprofiles' }
-    @req.get = (-> false)
-
-    routes.login @req, @res
-    @render.args[0][1].redirectTo.should.equal '%2Ffollowing%2Fprofiles'
-
-  it 'redirects to new login page if env variable is set', ->
+  it 'redirects to new login page', ->
     req =
       query: { 'redirect-to': '/'}
       body: {}
@@ -123,39 +81,7 @@ describe '#signUp', ->
     @render.restore?()
     Backbone.sync.restore()
 
-  it 'renders the call_to_action if coming from an action', ->
-    @req.query.action = 'register-for-auction'
-    routes.signUp @req, @res
-    @render.args[0][1].action.should.equal 'register-for-auction'
-    @render.args[0][0].should.equal 'call_to_action'
-
-  it 'renders the create account page if ?email=1', ->
-    @req.query['email'] = '1'
-    routes.signUp @req, @res
-    @render.args[0][0].should.equal 'signup_email'
-
-  it 'renders the create account page if ?email=1', ->
-    @req.query['email'] = '1'
-    routes.signUp @req, @res
-    @render.args[0][0].should.equal 'signup_email'
-
-  it 'sets redirectTo if redirect-to was passed', ->
-    @req.query['email'] = '1'
-    @req.query['redirect-to'] = '/auction-registration'
-    routes.signUp @req, @res
-    @render.args[0][1].redirectTo.should.equal '/auction-registration'
-
-  it 'ignores malicious redirects', ->
-    req = query: { 'redirect-to': 'http://www.iamveryverysorry.com/' }, body: {}, session: {}, params: {}
-    routes.signUp req, @res
-    @render.args[0][1].redirectTo.should.equal '/'
-
-  it 'sets the prefill var', ->
-    @req.query.prefill = 'foo@bar.com'
-    routes.signUp @req, @res
-    @render.args[0][1].prefill.should.equal 'foo@bar.com'
-
-  it 'redirects to new signup page if env variable is set', ->
+  it 'redirects to new signup page', ->
     req =
       query: { 'redirect-to': '/'}
       body: {}
