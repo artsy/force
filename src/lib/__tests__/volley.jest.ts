@@ -68,9 +68,7 @@ describe("Reporting metrics to Volley", () => {
   })
 
   it("reports valid metrics with 'mobile' as the device type when on mobile", () => {
-    const IS_MOBILE = true
-    const deviceType = IS_MOBILE ? "mobile" : "desktop"
-    reportLoadTimeToVolley("", deviceType, {
+    reportLoadTimeToVolley("", "mobile", {
       "dom-complete": () => 10,
       "load-event-end": () => 5,
     })
@@ -96,9 +94,7 @@ describe("Reporting metrics to Volley", () => {
   })
 
   it("reports valid metrics with 'desktop' as the device type when not on mobile", () => {
-    const IS_MOBILE = false
-    const deviceType = IS_MOBILE ? "mobile" : "desktop"
-    reportLoadTimeToVolley("", deviceType, {
+    reportLoadTimeToVolley("", "desktop", {
       "dom-complete": () => 10,
       "load-event-end": () => 5,
     })
