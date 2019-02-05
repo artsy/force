@@ -42,7 +42,8 @@ if (
   window.addEventListener("load", function() {
     if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
       window.setTimeout(function() {
-        reportLoadTimeToVolley(pageType, "desktop")
+        var deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
+        reportLoadTimeToVolley(pageType, deviceType)
       }, 0)
     }
   })
