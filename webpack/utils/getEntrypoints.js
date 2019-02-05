@@ -32,7 +32,7 @@ function findAssets(folder) {
         "artist",
         "artists_artworks",
         "artwork2",
-        "collect2",
+        "collect",
         "collections",
         "home",
         "main_layout",
