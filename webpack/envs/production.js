@@ -2,12 +2,11 @@
 
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
-import CleanWebpackPlugin from "clean-webpack-plugin"
 import CompressionWebpackPlugin from "compression-webpack-plugin"
 import BrotliWebpackPlugin from "brotli-webpack-plugin"
 import path from "path"
 import { HashedModuleIdsPlugin } from "webpack"
-import { basePath } from "../../src/lib/environment"
+import { getCSSManifest } from "../utils/getCSSManifest"
 
 export const productionConfig = {
   mode: "production",
@@ -16,7 +15,6 @@ export const productionConfig = {
     filename: "[name].[contenthash].js",
   },
   plugins: [
-    new CleanWebpackPlugin(["public/assets"], { root: basePath }),
     new CompressionWebpackPlugin({
       algorithm: "gzip",
       test: /(\.(js|ts)x?$)/,
@@ -32,6 +30,7 @@ export const productionConfig = {
     new WebpackManifestPlugin({
       fileName: path.resolve(__dirname, "../../manifest.json"),
       basePath: "/assets/",
+      seed: getCSSManifest(),
     }),
   ],
   optimization: {

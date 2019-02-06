@@ -6,6 +6,7 @@
 // Used both by Danger during the deploy PR, and also
 // before the deployment on circle
 //
+const path = require("path")
 const { readFileSync } = require("fs")
 const {
   introspectionQuery,
@@ -45,13 +46,15 @@ const downloadGitHubReaction = async release => {
   return body
 }
 
-const getBreakingChanges = async (metaphysicsEnv) => {
+const getBreakingChanges = async metaphysicsEnv => {
   const packageJSON = JSON.parse(
-    readFileSync(__dirname + "/../package.json", "utf8")
+    readFileSync(path.join(__dirname, "/../package.json"), "utf8")
   )
   const reactionVersion = packageJSON["dependencies"]["@artsy/reaction"]
   const reactionSchema = await downloadGitHubReaction(reactionVersion)
-  const metaphyicsSchema = await downloadMetaphysicsSchema(`https://metaphysics-${metaphysicsEnv}.artsy.net/`)
+  const metaphyicsSchema = await downloadMetaphysicsSchema(
+    `https://metaphysics-${metaphysicsEnv}.artsy.net/`
+  )
   return findBreakingChanges(
     buildSchema(reactionSchema),
     buildSchema(metaphyicsSchema)
@@ -64,9 +67,11 @@ module.exports = {
 
 // @ts-ignore
 if (require.main === module) {
-  // When this is being called as a script via `node scripts/validate_schemas.js`
-  if (process.argv.length != 3) {
-    console.log('This script must be called with either "staging" or "production"')
+  // When this is being called as a script via `node scripts/validateSchemas.js`
+  if (process.argv.length !== 3) {
+    console.log(
+      'This script must be called with either "staging" or "production"'
+    )
     process.exitCode = 1
   } else {
     const env = process.argv[2]

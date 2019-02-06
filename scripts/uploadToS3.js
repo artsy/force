@@ -10,7 +10,7 @@ const options = {
   root: "public",
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
-  bucket: "artsy-chris-test-bucket", // process.env.S3_BUCKET,
+  bucket: "artsy-chris-test-bucket", // process.env.S3_BUCKET,  // artsy-force-$DEPLOY_ENV
   cdnUrl: process.env.CDN_URL,
 }
 

@@ -30,7 +30,7 @@ jobs:
       - checkout
       - run:
           name: Validate Staging Schema
-          command: "yarn install && node scripts/validate_schemas.js staging"
+          command: "yarn install && node scripts/validateSchemas.js staging"
   validate_production_schema:
     docker:
       - image: circleci/node:10-stretch-browsers
@@ -39,7 +39,7 @@ jobs:
       - checkout
       - run:
           name: Validate Production Schema
-          command: "yarn install && node scripts/validate_schemas.js production"
+          command: "yarn install && node scripts/validateSchemas.js production"
   push_staging_image: &push_image
     docker:
       - image: artsy/hokusai:0.4.5
@@ -60,7 +60,7 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=staging yarn publish_assets
+      - run: yarn install && DEPLOY_ENV=staging yarn publish-assets
       - run: mkdir -p workspace
       - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:
@@ -74,7 +74,7 @@ jobs:
       - add_ssh_keys
       - checkout
       - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=production yarn publish_assets
+      - run: yarn install && DEPLOY_ENV=production yarn publish-assets
       - run: mkdir -p workspace
       - run: cp manifest.json workspace/manifest.json
       - persist_to_workspace:

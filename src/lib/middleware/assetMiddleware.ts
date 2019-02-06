@@ -19,6 +19,7 @@ export const assetMiddleware = () => {
         let manifestFile
         if (manifest[filename]) {
           manifestFile =
+            // FIXME: Remove test bucket
             "https://s3.amazonaws.com/artsy-chris-test-bucket" +
             manifest[filename]
         } else {
