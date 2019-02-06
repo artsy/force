@@ -12,7 +12,7 @@ const options = {
   root: "public",
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
-  bucket: process.env.S3_BUCKET, // artsy-force-$DEPLOY_ENV
+  bucket: process.env.S3_BUCKET,
   cdnUrl: process.env.CDN_URL,
 }
 
@@ -49,12 +49,12 @@ const generateHeaders = file => {
   if (file.match(/\.gz$/) || file.match(/\.cgz$/) || file.match(/\.jgz$/)) {
     headers.ContentEncoding = "gzip"
   }
+
+  // TODO: Follow-up on enabling on Cloudfront / S3
   if (file.match(/\.br$/)) {
     headers.ContentEncoding = "br"
   }
 
-  console.log("\n", file)
-  console.log(headers)
   return headers
 }
 

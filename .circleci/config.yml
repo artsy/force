@@ -20,7 +20,6 @@ jobs:
       - run:
           name: Test
           command: |
-            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai test
   validate_staging_schema:
     docker:
@@ -50,7 +49,6 @@ jobs:
       - run:
           name: Push
           command: |
-            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
   push_production_image: *push_image
   publish_staging_assets:
@@ -97,9 +95,6 @@ jobs:
           name: Echo Manifest
           command: cat /tmp/workspace/manifest.json
       - run:
-          name: Asset Manifest
-          command: hokusai staging env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
-      - run:
           name: Update staging branch
           command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
       - run:
@@ -120,9 +115,6 @@ jobs:
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
-      - run:
-          name: Asset Manifest
-          command: hokusai production env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin

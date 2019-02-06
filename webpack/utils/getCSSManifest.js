@@ -77,5 +77,3 @@ export function getCSSManifest() {
     process.exit(1)
   }
 }
-
-getCSSManifest()

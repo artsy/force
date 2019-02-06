@@ -1,7 +1,0 @@
-version: '2'
-services:
-  force:
-    build:
-      context: ../
-      args:
-        - commit_hash

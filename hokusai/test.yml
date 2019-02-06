@@ -3,7 +3,6 @@ services:
   force:
     command: yarn test
     extends:
-      file: common.yml
       service: force
     environment:
       - CI=true

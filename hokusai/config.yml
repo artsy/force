@@ -2,4 +2,5 @@
 aws-account-id: "585031190124"
 aws-ecr-region: us-east-1
 project-name: force
+pre-deploy: yarn publish-assets
 post-deploy: .circleci/deploy_event.sh
