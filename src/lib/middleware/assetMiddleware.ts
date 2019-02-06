@@ -1,7 +1,7 @@
 import path from "path"
 import fs from "fs"
 import chalk from "chalk"
-import { isProduction, S3_BUCKET } from "lib/environment"
+import { isProduction, CDN_URL } from "lib/environment"
 
 export const assetMiddleware = () => {
   if (isProduction) {
@@ -16,11 +16,15 @@ export const assetMiddleware = () => {
 
     return (_req, res, next) => {
       res.locals.asset = filename => {
-        let manifestFile
-        if (manifest[filename]) {
-          manifestFile = S3_BUCKET + manifest[filename]
-        } else {
-          manifestFile = filename
+        let manifestFile =
+          manifest[filename + ".gz"] ||
+          manifest[filename + ".cgz"] ||
+          manifest[filename + ".jgz"] ||
+          manifest[filename] ||
+          filename
+
+        if (CDN_URL) {
+          manifestFile = CDN_URL + manifestFile
         }
         return manifestFile
       }

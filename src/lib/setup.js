@@ -216,7 +216,7 @@ export default function(app) {
     expressStaticGzip(path.join(__dirname, "../../public"), {
       index: false,
       enableBrotli: true,
-      orderPreference: ["gzip", "br"],
+      orderPreference: ["gzip", "br"], // TODO: Switch order when `br` is supoorted
       setHeaders: res => {
         res.setHeader("Cache-Control", "public, max-age=31536000")
       },

@@ -19,7 +19,15 @@ export const productionConfig = {
   },
   plugins: [
     new CompressionWebpackPlugin({
+      test: /(\.(js|ts)x?$)/,
       algorithm: "gzip",
+      filename: "[path].jgz[query]",
+      deleteOriginalAssets: false,
+    }),
+
+    // TODO: Figure out a solution to Cloudfront Brotli support:
+    // See: https://github.com/artsy/force/pull/3458#discussion_r254194047
+    new BrotliWebpackPlugin({
       test: /(\.(js|ts)x?$)/,
       threshold: 10240,
       minRatio: 0.7,
@@ -31,13 +39,6 @@ export const productionConfig = {
       seed: getCSSManifest(),
     }),
 
-    // TODO: Figure out a solution to Cloudfront Brotli support:
-    // See: https://github.com/artsy/force/pull/3458#discussion_r254194047
-    new BrotliWebpackPlugin({
-      test: /(\.(js|ts)x?$)/,
-      threshold: 10240,
-      minRatio: 0.7,
-    }),
     ...omitIf(
       isCI,
       // @ts-ignore

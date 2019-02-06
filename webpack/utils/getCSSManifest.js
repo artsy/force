@@ -9,7 +9,7 @@ import { execSync } from "child_process"
 import { baseConfig } from "../envs/base"
 
 // Ouput
-const { path: DEST, publicPath } = baseConfig.output
+const DEST = "public/assets"
 
 // Tasks
 function clean() {
@@ -24,10 +24,6 @@ function compile() {
   execSync(`yarn stylus ${files.join(" ")} --compress -o ${DEST}`)
 }
 
-function gzip() {
-  execSync(`gzip --keep -S .cgz $(find ${DEST} -name '*.css')`)
-}
-
 function fingerprint(file) {
   const contents = fs.readFileSync(file)
   const hash = crypto
@@ -35,9 +31,8 @@ function fingerprint(file) {
     .update(contents)
     .digest("hex")
     .slice(0, 21)
-
-  const ext = ".cgz.css"
-  const original = file.replace("public", "").replace(".cgz", "")
+  const ext = ".css"
+  const original = file.replace("public", "")
   const fingerprinted = path.basename(file, ext) + "." + hash + ext
 
   try {
@@ -54,11 +49,12 @@ function fingerprint(file) {
 
 // Return a CSS manifest as seed data to merge into Webpack manifest.json
 function createManifest() {
-  const manifest = glob.sync(`${DEST}/*.css.cgz`).reduce((acc, file) => {
+  const manifest = glob.sync(`${DEST}/*.css`).reduce((acc, file) => {
     const { original, fingerprinted } = fingerprint(file)
+    const { publicPath } = baseConfig.output
     return {
       ...acc,
-      [original]: `${publicPath}/${fingerprinted}`,
+      [original]: publicPath + fingerprinted,
     }
   }, {})
   return manifest
@@ -68,7 +64,6 @@ export function getCSSManifest() {
   try {
     clean()
     compile()
-    gzip()
     const manifest = createManifest()
     console.log(chalk.green(`[compileCSS] Complete.`))
     return manifest

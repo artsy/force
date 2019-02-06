@@ -4,6 +4,7 @@ import path from "path"
 
 export const {
   ANALYZE_BUNDLE,
+  CDN_URL,
   CI,
   NODE_ENV = "development",
   PORT,

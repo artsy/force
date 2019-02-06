@@ -1,6 +1,8 @@
-// @ts-check
+require("dotenv/config")
 
 const chalk = require("chalk")
+
+// @ts-check
 const glob = require("glob")
 const mime = require("mime")
 const path = require("path")
@@ -8,8 +10,8 @@ const s3 = require("s3")
 const { last } = require("lodash")
 
 const options = {
-  files: path.join(__dirname, "../**/public/**"),
   root: "public",
+  files: path.join(__dirname, "../**/public/**"),
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
   bucket: process.env.S3_BUCKET,
@@ -58,10 +60,9 @@ const generateHeaders = file => {
   return headers
 }
 
-// @ts-ignore
-console.log(chalk.green("[uploadToS3] Starting upload...\n"))
+console.log(chalk.green("[uploadToS3] Starting S3 sync...\n"))
 
-files.forEach(file => {
+files.forEach((file, index) => {
   const s3Path = last(file.split(options.root)).substring(1)
   const uploader = client.uploadFile({
     localFile: file,
@@ -76,7 +77,6 @@ files.forEach(file => {
 
   uploader.on("error", err => {
     console.error(
-      // @ts-ignore
       chalk.red(`[uploadToS3] Error uploading ${s3Path}.\n`),
       err.stack,
       "\n"

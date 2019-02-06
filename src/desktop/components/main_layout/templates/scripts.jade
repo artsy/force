@@ -2,6 +2,7 @@
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
+script( src=asset("/assets/runtimeManifest.js") )
 script( src=asset("/assets/common.js") )
 
 if options.marketo
