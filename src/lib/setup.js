@@ -12,7 +12,6 @@ import artsyXapp from "artsy-xapp"
 import { argv } from "yargs"
 import Backbone from "backbone"
 import bodyParser from "body-parser"
-import bucketAssets from "bucket-assets"
 import cookieParser from "cookie-parser"
 import express from "express"
 import favicon from "serve-favicon"
@@ -228,11 +227,6 @@ export default function(app) {
 
     // Load asset helper for mapping asset to manifest.json key
     app.use(assetMiddleware())
-  } else {
-    // When running `yarn start:prod` locally don't mount bucket assets
-    if (!argv.debugProd) {
-      app.use(bucketAssets())
-    }
   }
 
   app.use(

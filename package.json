@@ -103,7 +103,6 @@
     "bluebird-q": "^2.1.1",
     "blueimp-file-upload": "9.22.1",
     "body-parser": "^1.14.1",
-    "bucket-assets": "^1.0.2",
     "chalk": "^2.4.1",
     "cheerio": "^0.22.0",
     "chokidar": "^1.7.0",
