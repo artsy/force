@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.36.3":
-  version "2.36.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.36.3.tgz#9f56dcf4b4f37db70b204d6719f3845cc2da8879"
-  integrity sha512-rdA65MvpejlTL6yi7DeDh2DCxBa+kVCjzFd0fDLHhPUHbXZMxUt5SW4oZwNEbqhhojO+mPoR3Y7Zh/iAYQC37w==
+"@artsy/palette@2.37.20":
+  version "2.37.20"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.37.20.tgz#1e8d273e19310c9ddc539973a228016572fe2e94"
+  integrity sha512-z00djHVs9NlLsNjOGPYxl9fStgwZIRzNR2iajdSfQr9b8NKkjNrzQezMjfQfU5BcAX/RzvT+cEsTurNTWfnBHw==
   dependencies:
     moment "^2.23.0"
     moment-timezone "^0.5.23"
@@ -64,10 +64,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@12.1.10":
-  version "12.1.10"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.10.tgz#27fdaebea1c0233ad5c90b3272b923f2dbc5dd00"
-  integrity sha512-pa1hl++DZFXBIAf5EiBFPa/HT94x77Cvw5cxZUufB1QfsMEyVH5Tb91IYRf85m54tY7UccJ6yVAh4SwREO9B6g==
+"@artsy/reaction@12.1.19":
+  version "12.1.19"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.19.tgz#55ef5dbb0e64949033349ccb1ba37007aab8891d"
+  integrity sha512-3VAjrErYXrIjRMkKkNtJ2w47P+Az87dMMdysHNoQu2w5YUrGwQf1lmdH40F+VgsAx7uePVDVv30XLG69Qd/0+w==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -12533,6 +12533,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
 
 "react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
+  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-live@^1.12.0:

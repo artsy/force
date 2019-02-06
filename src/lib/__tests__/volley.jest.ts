@@ -67,6 +67,58 @@ describe("Reporting metrics to Volley", () => {
     )
   })
 
+  it("reports valid metrics with 'mobile' as the device type when on mobile", () => {
+    reportLoadTimeToVolley("", "mobile", {
+      "dom-complete": () => 10,
+      "load-event-end": () => 5,
+    })
+    expect(mockSend.mock.calls[0][0]).toEqual(
+      expect.objectContaining({
+        serviceName: "force",
+        metrics: [
+          {
+            type: "timing",
+            name: "load-time",
+            timing: 10,
+            tags: [`page-type:`, `device-type:mobile`, `mark:dom-complete`],
+          },
+          {
+            type: "timing",
+            name: "load-time",
+            timing: 5,
+            tags: [`page-type:`, `device-type:mobile`, `mark:load-event-end`],
+          },
+        ],
+      })
+    )
+  })
+
+  it("reports valid metrics with 'desktop' as the device type when not on mobile", () => {
+    reportLoadTimeToVolley("", "desktop", {
+      "dom-complete": () => 10,
+      "load-event-end": () => 5,
+    })
+    expect(mockSend.mock.calls[0][0]).toEqual(
+      expect.objectContaining({
+        serviceName: "force",
+        metrics: [
+          {
+            type: "timing",
+            name: "load-time",
+            timing: 10,
+            tags: [`page-type:`, `device-type:desktop`, `mark:dom-complete`],
+          },
+          {
+            type: "timing",
+            name: "load-time",
+            timing: 5,
+            tags: [`page-type:`, `device-type:desktop`, `mark:load-event-end`],
+          },
+        ],
+      })
+    )
+  })
+
   it("omits an invalid metric", () => {
     reportLoadTimeToVolley("", "desktop", {
       "dom-complete": () => 10,

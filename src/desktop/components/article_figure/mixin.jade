@@ -15,7 +15,7 @@ mixin article-figure(article, width, showDate, showShare)
     figcaption.article-figure-figcaption
       if showDate
         time.article-figure-date
-          = article.date('published_at').format('MMMM Do')
+          = article.formatDate()
 
       a.article-figure-title( href= article.href() )
         = article.get('thumbnail_title')

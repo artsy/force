@@ -10,7 +10,7 @@ export const init = () => {
   // Rehydrate data from Server
   const bootstrapData = (window as any).__BOOTSTRAP__
   const el = document.getElementById("react-root")
-  const Component = sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
+  const Component: any = sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
 
   if (el) {
     setCookies(bootstrapData.options)

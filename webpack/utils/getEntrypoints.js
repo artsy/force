@@ -20,28 +20,7 @@ function findAssets(folder) {
 
   // Filter out .styl files
   const validAssets = file => {
-    const whitelist = [".js", ".coffee"]
-    const isValid = whitelist.some(
-      extension => extension === path.extname(file)
-    )
-
-    // FIXME: Remove once bucket-assets is removed
-    if (ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
-      const assetWhitelist = [
-        "analytics",
-        "artist",
-        "artists_artworks",
-        "artwork2",
-        "collect2",
-        "collections",
-        "home",
-        "main_layout",
-        "order2",
-      ].some(fileMatch => isValid && file.includes(fileMatch))
-
-      return assetWhitelist
-    }
-
+    const isValid = /\.(js|ts|coffee)x?/.test(path.extname(file))
     return isValid
   }
 

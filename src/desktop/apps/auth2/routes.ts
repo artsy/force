@@ -23,21 +23,21 @@ export const index = async (req, res, next) => {
       break
   }
 
-  let title = ""
+  let pageTitle = ""
   switch (type) {
     case ModalType.login:
-      title = "Login to Artsy"
+      pageTitle = "Login to Artsy"
       break
     case ModalType.signup:
-      title = "Signup for Artsy"
+      pageTitle = "Signup for Artsy"
       break
     case ModalType.forgot:
-      title = "Forgot Password"
+      pageTitle = "Forgot Password"
       break
   }
   const meta = {
     description: "",
-    title,
+    title: pageTitle,
   }
 
   const {
@@ -52,6 +52,10 @@ export const index = async (req, res, next) => {
     intent,
     trigger,
   } = req.query
+
+  const title = ["save artwork", "follow partner"].includes(intent)
+    ? `Sign up to ${intent}s`
+    : null
 
   if (type === ModalType.forgot) {
     res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
@@ -94,6 +98,7 @@ export const index = async (req, res, next) => {
           signupIntent,
           signupReferer,
           trigger,
+          title,
         },
       },
     })

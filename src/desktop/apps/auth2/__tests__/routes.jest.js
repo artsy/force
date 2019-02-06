@@ -119,7 +119,8 @@ describe("Routes", () => {
           afterSignUpAction: "after signup",
           destination: "/foo",
           redirectTo: "/bar",
-          signupIntent: "follow artist",
+          signupIntent: "follow partner",
+          intent: "follow partner",
           signupReferer: "referrer",
         }
 
@@ -130,6 +131,7 @@ describe("Routes", () => {
             redirectTo,
             signupIntent,
             signupReferer,
+            title,
           } = stitch.mock.calls[0][0].data.options
 
           expect(afterSignUpAction).toBe(req.query.afterSignUpAction)
@@ -137,6 +139,7 @@ describe("Routes", () => {
           expect(redirectTo).toBe(req.query.redirectTo)
           expect(signupIntent).toBe(req.query.signupIntent)
           expect(signupReferer).toBe(req.query.signupReferer)
+          expect(title).toBe("Sign up to follow partners")
           done()
         })
       })
