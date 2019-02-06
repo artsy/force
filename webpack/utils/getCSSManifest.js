@@ -1,3 +1,5 @@
+// @ts-check
+
 import glob from "glob"
 import chalk from "chalk"
 import fs from "fs"

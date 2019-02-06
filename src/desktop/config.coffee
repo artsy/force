@@ -34,10 +34,6 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
-
-  # FIXME: Remove once new webpack-based fingerprinting has been deployed
-  ENABLE_EXPERIMENTAL_ASSET_BUNDLING: false
-
   ENABLE_MAKE_OFFER: true
   ENABLE_MEMORY_PROFILING: false
   ENABLE_WEB_CRAWLING: false

@@ -1,3 +1,5 @@
+// @ts-check
+
 const chalk = require("chalk")
 const glob = require("glob")
 const mime = require("mime")
@@ -53,7 +55,8 @@ const generateHeaders = file => {
   return headers
 }
 
-console.log(chalk.green("\n[uploadToS3] Starting upload...\n"))
+// @ts-ignore
+console.log(chalk.green("[uploadToS3] Starting upload...\n"))
 
 files.forEach(async file => {
   const s3Path = last(file.split(options.root)).substring(1)
@@ -70,6 +73,7 @@ files.forEach(async file => {
 
   uploader.on("error", err => {
     console.error(
+      // @ts-ignore
       chalk.red(`[uploadToS3] Error uploading ${s3Path}.\n`),
       err.stack,
       "\n"
@@ -81,6 +85,6 @@ files.forEach(async file => {
   })
 
   uploader.on("end", () => {
-    console.log(chalk.green(`[uploadToS3] Complete: ${s3Path}`))
+    console.log(`[uploadToS3] ${s3Path}`)
   })
 })

@@ -69,9 +69,6 @@ const {
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
   DD_APM_ENABLED,
-
-  // FIXME: Remove once new webpack-based fingerprinting has been deployed
-  ENABLE_EXPERIMENTAL_ASSET_BUNDLING,
 } = config
 
 export default function(app) {
@@ -215,19 +212,17 @@ export default function(app) {
       app.use(express.static(fld))
     })
 
-  if (ENABLE_EXPERIMENTAL_ASSET_BUNDLING) {
-    // Load compressed JS assets
-    app.use(
-      expressStaticGzip(path.join(__dirname, "../../public"), {
-        index: false,
-        enableBrotli: true,
-        orderPreference: ["br", "gz"],
-      })
-    )
+  // Load compressed JS assets
+  app.use(
+    expressStaticGzip(path.join(__dirname, "../../public"), {
+      index: false,
+      enableBrotli: true,
+      orderPreference: ["br", "gz"],
+    })
+  )
 
-    // Load asset helper for mapping asset to manifest.json key
-    app.use(assetMiddleware())
-  }
+  // Load asset helper for mapping asset to manifest.json key
+  app.use(assetMiddleware())
 
   app.use(
     favicon(path.resolve(__dirname, "../mobile/public/images/favicon.ico"))

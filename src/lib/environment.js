@@ -5,7 +5,6 @@ import path from "path"
 export const {
   ANALYZE_BUNDLE,
   CI,
-  ENABLE_EXPERIMENTAL_ASSET_BUNDLING,
   NODE_ENV = "development",
   PORT,
   WEBPACK_DEVTOOL,
