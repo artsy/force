@@ -95,7 +95,7 @@
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
-    react-lines-ellipsis "github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a"
+    react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
@@ -4484,15 +4484,18 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
-dd-trace@artsy/dd-trace-js#artsy:
-  version "0.6.0"
-  resolved "https://codeload.github.com/artsy/dd-trace-js/tar.gz/8331e739b8878eb17600c02b49e7ac55c1de771d"
+dd-trace@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/dd-trace/-/dd-trace-0.7.3.tgz#bc028454e2e4a83b13d2ec8346c1a749a3b8ba69"
+  integrity sha512-aIOmLl5Tu1V8C37tsh+esxFot2kq/N/Fuj8zsZaOOrD5C7m6IYJGinkHQINWxep+MN56Q3x95z473zcuqCiFdg==
   dependencies:
     async-hook-jl "^1.7.6"
     int64-buffer "^0.1.9"
     koalas "^1.0.2"
     lodash.kebabcase "^4.1.1"
     lodash.memoize "^4.1.2"
+    lodash.pick "^4.4.0"
+    lodash.truncate "^4.4.2"
     lodash.uniq "^4.5.0"
     methods "^1.1.2"
     msgpack-lite "^0.1.26"
@@ -9797,7 +9800,7 @@ lodash.once@^4.0.0:
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
 
-lodash.pick@^4.2.1:
+lodash.pick@^4.2.1, lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
   integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
@@ -9841,6 +9844,11 @@ lodash.topath@4.5.2:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.topath/-/lodash.topath-4.5.2.tgz#3616351f3bba61994a0931989660bd03254fd009"
   integrity sha1-NhY1Hzu6YZlKCTGYlmC9AyVP0Ak=
+
+lodash.truncate@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.truncate/-/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"
+  integrity sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -12531,7 +12539,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
   uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
