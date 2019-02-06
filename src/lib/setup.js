@@ -9,7 +9,6 @@ import _ from "underscore"
 import addRequestId from "express-request-id"
 import artsyPassport from "@artsy/passport"
 import artsyXapp from "artsy-xapp"
-import { argv } from "yargs"
 import Backbone from "backbone"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
@@ -217,7 +216,10 @@ export default function(app) {
     expressStaticGzip(path.join(__dirname, "../../public"), {
       index: false,
       enableBrotli: true,
-      orderPreference: ["br", "gz"],
+      orderPreference: ["gzip", "br"],
+      setHeaders: res => {
+        res.setHeader("Cache-Control", "public, max-age=31536000")
+      },
     })
   )
 
@@ -325,6 +327,9 @@ export default function(app) {
   })
 
   // Last but not least, error handling...
-  if (SENTRY_PRIVATE_DSN) app.use(RavenServer.errorHandler())
+  if (SENTRY_PRIVATE_DSN) {
+    app.use(RavenServer.errorHandler())
+  }
+
   app.use(errorHandlingMiddleware)
 }

@@ -1,7 +1,7 @@
 import path from "path"
 import fs from "fs"
 import chalk from "chalk"
-import { isProduction } from "lib/environment"
+import { isProduction, S3_BUCKET } from "lib/environment"
 
 export const assetMiddleware = () => {
   if (isProduction) {
@@ -18,10 +18,7 @@ export const assetMiddleware = () => {
       res.locals.asset = filename => {
         let manifestFile
         if (manifest[filename]) {
-          manifestFile =
-            // FIXME: Remove test bucket
-            "https://s3.amazonaws.com/artsy-chris-test-bucket" +
-            manifest[filename]
+          manifestFile = S3_BUCKET + manifest[filename]
         } else {
           manifestFile = filename
         }

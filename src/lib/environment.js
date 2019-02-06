@@ -7,6 +7,7 @@ export const {
   CI,
   NODE_ENV = "development",
   PORT,
+  S3_BUCKET,
   WEBPACK_DEVTOOL,
 } = process.env
 

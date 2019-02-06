@@ -12,7 +12,7 @@ const options = {
   root: "public",
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
-  bucket: "artsy-chris-test-bucket", // process.env.S3_BUCKET,  // artsy-force-$DEPLOY_ENV
+  bucket: process.env.S3_BUCKET, // artsy-force-$DEPLOY_ENV
   cdnUrl: process.env.CDN_URL,
 }
 
@@ -24,8 +24,9 @@ const client = s3.createClient({
   },
 })
 
-const files = glob.sync(options.files, { nodir: true }).filter(file => {
-  return !file.match("node_modules")
+const files = glob.sync(options.files, {
+  ignore: "node_modules",
+  nodir: true,
 })
 
 const generateHeaders = file => {
@@ -52,13 +53,15 @@ const generateHeaders = file => {
     headers.ContentEncoding = "br"
   }
 
+  console.log("\n", file)
+  console.log(headers)
   return headers
 }
 
 // @ts-ignore
 console.log(chalk.green("[uploadToS3] Starting upload...\n"))
 
-files.forEach(async file => {
+files.forEach(file => {
   const s3Path = last(file.split(options.root)).substring(1)
   const uploader = client.uploadFile({
     localFile: file,

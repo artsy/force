@@ -250,7 +250,6 @@
     "coffee-loader": "^0.8.0",
     "compression-webpack-plugin": "^2.0.0",
     "core-js": "^2.5.7",
-    "crypto": "^1.0.1",
     "danger": "^6.0.2",
     "electron": ">=1.8.2-beta5",
     "enzyme": "^3.4.4",
