@@ -57,11 +57,6 @@ const generateHeaders = file => {
     headers.ContentEncoding = "br"
   }
 
-  // ?
-  if (file.match(/\.(js|css)$/)) {
-    headers.ContentEncoding = "gzip"
-  }
-
   return headers
 }
 
