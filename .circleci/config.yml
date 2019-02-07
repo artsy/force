@@ -125,31 +125,15 @@ workflows:
               only: release
           requires:
             - validate_production_schema
-      - publish_staging_assets:
-          filters:
-            branches:
-              only: master
-          requires:
-            - test
-            - acceptance
-            - validate_staging_schema
-      - publish_production_assets:
-          filters:
-            branches:
-              only: release
-          requires:
-            - validate_production_schema
       - deploy_hokusai_staging:
           filters:
             branches:
               only: master
           requires:
             - push_staging_image
-            - publish_staging_assets
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
             - push_production_image
-            - publish_production_assets
