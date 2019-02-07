@@ -8,7 +8,7 @@ import BrotliWebpackPlugin from "brotli-webpack-plugin"
 import path from "path"
 import { HashedModuleIdsPlugin } from "webpack"
 import { getCSSManifest } from "../utils/getCSSManifest"
-import { NODE_ENV, isCI } from "../../src/lib/environment"
+import { NODE_ENV, isCI, isProduction } from "../../src/lib/environment"
 import { omitIf } from "../utils/omitIf"
 
 export const productionConfig = {
@@ -36,7 +36,7 @@ export const productionConfig = {
     new WebpackManifestPlugin({
       fileName: path.resolve(__dirname, "../../manifest.json"),
       basePath: "/assets/",
-      seed: getCSSManifest(),
+      seed: isProduction ? getCSSManifest() : {},
     }),
 
     ...omitIf(
