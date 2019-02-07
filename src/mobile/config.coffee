@@ -20,6 +20,7 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
   ENABLE_MAKE_OFFER: true
+  ENABLE_OFFER_NOTE: null
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
   EUROPA_URL: 'http://europa-production.herokuapp.com'
