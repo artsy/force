@@ -2,9 +2,6 @@
 
 set -ex
 
-# used for loading correct manifest
-export COMMIT_HASH=`cat COMMIT_HASH.txt`
-
 function version {
   printf "%03d%03d%03d" $(echo "$1" | tr '.' ' ')
 }

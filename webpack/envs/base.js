@@ -3,7 +3,7 @@
 import path from "path"
 import webpack from "webpack"
 import { getEntrypoints } from "../utils/getEntrypoints"
-import { NODE_ENV, basePath, isCI } from "../utils/environment"
+import { NODE_ENV, basePath, isCI } from "../../src/lib/environment"
 
 export const baseConfig = {
   mode: NODE_ENV,
@@ -13,8 +13,7 @@ export const baseConfig = {
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
-    publicPath: "/assets",
-    sourceMapFilename: "[file].map?[contenthash]",
+    publicPath: "/assets/",
   },
   module: {
     rules: [
@@ -75,8 +74,8 @@ export const baseConfig = {
   resolve: {
     alias: {
       "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
-      react: require.resolve("react"),
       "styled-components": require.resolve("styled-components"),
+      react: require.resolve("react"),
     },
     extensions: [
       ".mjs",
@@ -95,7 +94,7 @@ export const baseConfig = {
   optimization: {
     // Add Webpack runtime code to the `common` chunk
     runtimeChunk: {
-      name: "common",
+      name: "runtimeManifest",
     },
     splitChunks: {
       cacheGroups: {

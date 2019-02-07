@@ -20,19 +20,3 @@ app.use(
     stats: "errors-only",
   })
 )
-
-// Testbed for various configurations
-app.get("/webpack", (req, res, next) => {
-  res.send(`
-  <html>
-    <head>
-      <title>Webpack Test</title>
-    </head>
-    <body>
-      <div id='react-root' />
-      <script defer src='/assets/common.js'></script>
-      <script defer src='/assets/webpack.js'></script>
-    </body>
-  </html>
-  `)
-})

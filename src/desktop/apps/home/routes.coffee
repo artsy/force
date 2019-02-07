@@ -38,7 +38,7 @@ fetchMetaphysicsData = (req, showHeroUnits)->
 
 @index = (req, res, next) ->
   return if metaphysics.debug req, res, { method: 'post', query: query }
-  
+
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
 

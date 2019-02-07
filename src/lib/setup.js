@@ -9,10 +9,8 @@ import _ from "underscore"
 import addRequestId from "express-request-id"
 import artsyPassport from "@artsy/passport"
 import artsyXapp from "artsy-xapp"
-import { argv } from "yargs"
 import Backbone from "backbone"
 import bodyParser from "body-parser"
-import bucketAssets from "bucket-assets"
 import cookieParser from "cookie-parser"
 import express from "express"
 import favicon from "serve-favicon"
@@ -49,6 +47,9 @@ import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/midd
 import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
+import expressStaticGzip from "express-static-gzip"
+import { assetMiddleware } from "./middleware/assetMiddleware"
+import { isDevelopment, isProduction } from "lib/environment"
 
 const {
   API_REQUEST_TIMEOUT,
@@ -71,7 +72,9 @@ const {
 
 export default function(app) {
   // Timeout middleware
-  if (NODE_ENV === "production") app.use(timeout(APP_TIMEOUT || "29s"))
+  if (isProduction) {
+    app.use(timeout(APP_TIMEOUT || "29s"))
+  }
 
   // Error reporting
   if (SENTRY_PRIVATE_DSN) {
@@ -79,7 +82,6 @@ export default function(app) {
     app.use(RavenServer.requestHandler())
   }
 
-  // Minification and compression
   app.use(compression())
 
   // Blacklist IPs
@@ -114,7 +116,10 @@ export default function(app) {
   // Make sure we're using SSL and prevent clickjacking
   app.use(ensureSSL)
   app.use(hstsMiddleware)
-  if (!NODE_ENV === "test") app.use(helmet.frameguard())
+
+  if (!NODE_ENV === "test") {
+    app.use(helmet.frameguard())
+  }
 
   // Inject UUID for each request into the X-Request-Id header
   app.use(addRequestId())
@@ -141,10 +146,10 @@ export default function(app) {
   app.use(
     session({
       secret: SESSION_SECRET,
-      domain: NODE_ENV === "development" ? "" : COOKIE_DOMAIN,
+      domain: isDevelopment ? "" : COOKIE_DOMAIN,
       name: SESSION_COOKIE_KEY,
       maxAge: SESSION_COOKIE_MAX_AGE,
-      secure: NODE_ENV === "production" || NODE_ENV === "staging",
+      secure: isProduction || NODE_ENV === "staging",
       httpOnly: false,
     })
   )
@@ -179,8 +184,8 @@ export default function(app) {
     )
   )
 
-  // Static assets
-  if (NODE_ENV === "development") {
+  // Development servers
+  if (isDevelopment) {
     app.use(require("./webpack-dev-server"))
 
     app.use(
@@ -196,9 +201,31 @@ export default function(app) {
       })
     )
   }
+
+  // Static assets
+
+  // Mount static assets from root `public` and /app `public` folders
   glob
     .sync(`${__dirname}/../{public,{desktop,mobile}/**/public}`)
-    .forEach(fld => app.use(express.static(fld)))
+    .forEach(fld => {
+      app.use(express.static(fld))
+    })
+
+  // Load compressed JS assets
+  app.use(
+    expressStaticGzip(path.join(__dirname, "../../public"), {
+      index: false,
+      enableBrotli: true,
+      orderPreference: ["gzip", "br"], // TODO: Switch order when `br` is supoorted
+      setHeaders: res => {
+        res.setHeader("Cache-Control", "public, max-age=31536000")
+      },
+    })
+  )
+
+  // Load asset helper for mapping asset to manifest.json key
+  app.use(assetMiddleware())
+
   app.use(
     favicon(path.resolve(__dirname, "../mobile/public/images/favicon.ico"))
   )
@@ -207,16 +234,6 @@ export default function(app) {
   // Redirect requests before they even have to deal with Force routing
   app.use(downcase)
   app.use(hardcodedRedirects)
-
-  // General helpers and express middleware
-  if (argv.debugProd) {
-    // Mount static webserver instead of requesting assets through bucket
-    // manifest. Pass in --debugProd on boot.
-    app.use(express.static("public"))
-  } else {
-    app.use(bucketAssets())
-  }
-
   app.use(localsMiddleware)
   app.use(backboneErrorHelper)
   app.use(sameOriginMiddleware)
@@ -226,7 +243,8 @@ export default function(app) {
   app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
 
-  // Configure stitch SSR functionality
+  // Configure stitch SSR functionality. See: https://github.com/artsy/stitch/tree/master/src/internal
+  // for more info.
   app.use(
     stitchMiddleware({
       modules: globalReactModules,
@@ -261,13 +279,14 @@ export default function(app) {
   // Sets up mobile marketing signup modal
   app.use(marketingModals)
 
-  // Setup hot-swap loader
-  if (NODE_ENV === "development") {
+  // Setup hot-swap loader. See https://github.com/artsy/express-reloadable
+  if (isDevelopment) {
     const { createReloadable } = require("@artsy/express-reloadable")
     const mountAndReload = createReloadable(app, require)
 
     app.use((req, res, next) => {
       if (res.locals.sd.IS_MOBILE) {
+        // Mount reloadable mobile app
         const mobileApp = mountAndReload(path.resolve("src/mobile"))
         mobileApp(req, res, next)
       } else {
@@ -275,6 +294,7 @@ export default function(app) {
       }
     })
 
+    // Mount reloadable desktop
     mountAndReload(path.resolve("src/desktop"), {
       watchModules: ["@artsy/reaction", "@artsy/stitch"],
     })
@@ -282,18 +302,15 @@ export default function(app) {
     // In staging or prod, mount routes normally
   } else {
     app.use((req, res, next) => {
-      if (argv.debugProd) {
-        res.locals.asset = filename => filename // Stub bucketAssets middleware helper
-      }
-
-      // Direct mobile devices to the mobile app, otherwise fall through to
-      // the desktop app
       if (res.locals.sd.IS_MOBILE) {
+        // Mount mobile app
         require("../mobile")(req, res, next)
       } else {
         next()
       }
     })
+
+    // Mount desktop app
     app.use(require("../desktop"))
   }
 
@@ -310,6 +327,9 @@ export default function(app) {
   })
 
   // Last but not least, error handling...
-  if (SENTRY_PRIVATE_DSN) app.use(RavenServer.errorHandler())
+  if (SENTRY_PRIVATE_DSN) {
+    app.use(RavenServer.errorHandler())
+  }
+
   app.use(errorHandlingMiddleware)
 }

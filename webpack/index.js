@@ -8,7 +8,7 @@ import {
   isCI,
   ANALYZE_BUNDLE,
   NODE_ENV,
-} from "./utils/environment"
+} from "../src/lib/environment"
 
 import {
   baseConfig,
