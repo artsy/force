@@ -137,6 +137,7 @@ export default class ArticleLayout extends React.Component<
             display={article.display}
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
+            isSuper={isSuper}
             onOpenAuthModal={this.handleOpenAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
