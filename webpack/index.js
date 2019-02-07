@@ -18,10 +18,11 @@ import {
 } from "./envs"
 
 const getConfig = () => {
-  console.log(chalk.green(`\n[Force] Building ${NODE_ENV} config\n`))
+  console.log(chalk.green(`\n[Force] Building ${NODE_ENV} config...\n`))
 
   switch (true) {
     case isCI:
+      console.log("[Force] CI=true")
       return merge.smart(baseConfig, ciConfig)
     case isDevelopment:
       return merge.smart(baseConfig, developmentConfig)
