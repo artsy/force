@@ -22,7 +22,7 @@ export const productionConfig = {
       test: /(\.(js|ts)x?$)/,
       algorithm: "gzip",
       filename: "[path].jgz[query]",
-      deleteOriginalAssets: true, // false,
+      deleteOriginalAssets: false,
     }),
 
     // TODO: Figure out a solution to Cloudfront Brotli support:
