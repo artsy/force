@@ -7,7 +7,9 @@ import BrotliWebpackPlugin from "brotli-webpack-plugin"
 import path from "path"
 import { HashedModuleIdsPlugin } from "webpack"
 import { getCSSManifest } from "../utils/getCSSManifest"
-import { NODE_ENV, isProduction } from "../../src/lib/environment"
+import { NODE_ENV, isProduction, isCI } from "../../src/lib/environment"
+
+const buildCSS = isProduction && !isCI
 
 export const productionConfig = {
   mode: NODE_ENV,
@@ -20,7 +22,7 @@ export const productionConfig = {
       test: /(\.(js|ts)x?$)/,
       algorithm: "gzip",
       filename: "[path].jgz[query]",
-      deleteOriginalAssets: false,
+      deleteOriginalAssets: true, // false,
     }),
 
     // TODO: Figure out a solution to Cloudfront Brotli support:
@@ -34,7 +36,7 @@ export const productionConfig = {
     new WebpackManifestPlugin({
       fileName: path.resolve(__dirname, "../../manifest.json"),
       basePath: "/assets/",
-      seed: isProduction ? getCSSManifest() : {},
+      seed: buildCSS ? getCSSManifest() : {},
     }),
   ],
   optimization: {
