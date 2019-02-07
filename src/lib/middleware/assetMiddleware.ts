@@ -20,6 +20,7 @@ export const assetMiddleware = () => {
           manifest[filename + ".gz"] ||
           manifest[filename + ".cgz"] ||
           manifest[filename + ".jgz"] ||
+          manifest[filename + ".br"] ||
           manifest[filename] ||
           filename
 
