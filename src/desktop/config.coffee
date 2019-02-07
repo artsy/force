@@ -35,6 +35,7 @@ module.exports =
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_MAKE_OFFER: true
+  ENABLE_OFFER_NOTE: null
   ENABLE_MEMORY_PROFILING: false
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null

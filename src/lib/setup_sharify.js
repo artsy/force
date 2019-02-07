@@ -44,6 +44,7 @@ sharify.data = _.extend(
     "EMAIL_SIGNUP_IMAGES_ID",
     "EMBEDLY_KEY",
     "ENABLE_MAKE_OFFER",
+    "ENABLE_OFFER_NOTE",
     "ENABLE_WEB_CRAWLING",
     "EOY_2016_ARTICLE",
     "EOY_2016",
