@@ -2,14 +2,12 @@
 
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
-import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
 import CompressionWebpackPlugin from "compression-webpack-plugin"
 import BrotliWebpackPlugin from "brotli-webpack-plugin"
 import path from "path"
 import { HashedModuleIdsPlugin } from "webpack"
 import { getCSSManifest } from "../utils/getCSSManifest"
-import { NODE_ENV, isCI, isProduction } from "../../src/lib/environment"
-import { omitIf } from "../utils/omitIf"
+import { NODE_ENV, isProduction } from "../../src/lib/environment"
 
 export const productionConfig = {
   mode: NODE_ENV,
@@ -38,14 +36,6 @@ export const productionConfig = {
       basePath: "/assets/",
       seed: isProduction ? getCSSManifest() : {},
     }),
-
-    ...omitIf(
-      isCI,
-      // @ts-ignore
-      new SimpleProgressWebpackPlugin({
-        format: "compact",
-      })
-    ),
   ],
   optimization: {
     minimizer: [
