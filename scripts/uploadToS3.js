@@ -32,32 +32,12 @@ const files = glob.sync(options.files, {
 })
 
 const generateHeaders = file => {
-  const contentType = mime.getType(
-    path.extname(
-      file
-        .replace(".br", "")
-        .replace(".gz", "")
-        .replace(".cgz", "")
-        .replace(".jgz", "")
-    )
-  )
-
-  let headers = {
+  const contentType = mime.getType(path.extname(file))
+  return {
     CacheControl: "max-age=315360000, public",
     ContentType: contentType,
     ACL: "public-read",
   }
-
-  if (file.match(/\.gz$/) || file.match(/\.cgz$/) || file.match(/\.jgz$/)) {
-    headers.ContentEncoding = "gzip"
-  }
-
-  // TODO: Follow-up on enabling on Cloudfront / S3
-  if (file.match(/\.br$/)) {
-    headers.ContentEncoding = "br"
-  }
-
-  return headers
 }
 
 console.log(chalk.green("[uploadToS3] Starting S3 sync...\n"))

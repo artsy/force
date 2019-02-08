@@ -16,14 +16,7 @@ export const assetMiddleware = () => {
 
     return (_req, res, next) => {
       res.locals.asset = filename => {
-        let manifestFile =
-          manifest[filename + ".gz"] ||
-          manifest[filename + ".cgz"] ||
-          manifest[filename + ".jgz"] ||
-          manifest[filename + ".br"] ||
-          manifest[filename] ||
-          filename
-
+        let manifestFile = manifest[filename] || filename
         if (CDN_URL) {
           manifestFile = CDN_URL + manifestFile
         }
