@@ -57,6 +57,7 @@ const {
   APP_TIMEOUT,
   COOKIE_DOMAIN,
   DEFAULT_CACHE_TIME,
+  DEPLOY_ENV,
   IP_BLACKLIST,
   NODE_ENV,
   OPENREDIS_URL,
@@ -85,7 +86,7 @@ export default function(app) {
 
     Sentry.init({
       dsn: SENTRY_PUBLIC_DSN,
-      release: `force-${NODE_ENV}-${revision}`,
+      release: `force-${DEPLOY_ENV}-${revision}`,
     })
 
     // The request handler must be the first middleware on the app
