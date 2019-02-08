@@ -1,10 +1,28 @@
 // @ts-check
 
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
+import path from "path"
+import { HashedModuleIdsPlugin } from "webpack"
+import { getCSSManifest } from "../utils/getCSSManifest"
+import { NODE_ENV, isProduction, isCI } from "../../src/lib/environment"
+
+const buildCSS = isProduction && !isCI
 
 export const productionConfig = {
-  mode: "production",
+  mode: NODE_ENV,
   devtool: "source-map",
+  output: {
+    filename: "[name].[contenthash].js",
+  },
+  plugins: [
+    new HashedModuleIdsPlugin(),
+    new WebpackManifestPlugin({
+      fileName: path.resolve(__dirname, "../../manifest.json"),
+      basePath: "/assets/",
+      seed: buildCSS ? getCSSManifest() : {},
+    }),
+  ],
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
@@ -12,8 +30,6 @@ export const productionConfig = {
         parallel: true,
         sourceMap: true,
         uglifyOptions: {
-          // TODO: Enable when we get sourcemaps running
-          // mangle: true,
           compress: {
             warnings: false,
           },

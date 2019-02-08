@@ -19,7 +19,6 @@ dump.rdb
 manifest.json
 .cache
 .cache-loader
-COMMIT_HASH.txt
 
 /data
 

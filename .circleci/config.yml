@@ -20,7 +20,6 @@ jobs:
       - run:
           name: Test
           command: |
-            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai test
   validate_staging_schema:
     docker:
@@ -30,7 +29,7 @@ jobs:
       - checkout
       - run:
           name: Validate Staging Schema
-          command: "yarn install && node scripts/validate_schemas.js staging"
+          command: "yarn install && node scripts/validateSchemas.js staging"
   validate_production_schema:
     docker:
       - image: circleci/node:10-stretch-browsers
@@ -39,7 +38,7 @@ jobs:
       - checkout
       - run:
           name: Validate Production Schema
-          command: "yarn install && node scripts/validate_schemas.js production"
+          command: "yarn install && node scripts/validateSchemas.js production"
   push_staging_image: &push_image
     docker:
       - image: artsy/hokusai:0.4.5
@@ -50,37 +49,8 @@ jobs:
       - run:
           name: Push
           command: |
-            export commit_hash=`git rev-parse --short HEAD` && echo $commit_hash
             hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
   push_production_image: *push_image
-  publish_staging_assets:
-    docker:
-      - image: circleci/node:10-stretch-browsers
-    steps:
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=staging yarn publish_assets
-      - run: mkdir -p workspace
-      - run: cp manifest.json workspace/manifest.json
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - manifest.json
-  publish_production_assets:
-    docker:
-      - image: circleci/node:10-stretch-browsers
-    steps:
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
-      - run: yarn install && DEPLOY_ENV=production yarn publish_assets
-      - run: mkdir -p workspace
-      - run: cp manifest.json workspace/manifest.json
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - manifest.json
   deploy_hokusai_staging:
     docker:
       - image: artsy/hokusai:0.4.5
@@ -93,12 +63,6 @@ jobs:
       - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
-      - run:
-          name: Echo Manifest
-          command: cat /tmp/workspace/manifest.json
-      - run:
-          name: Asset Manifest
-          command: hokusai staging env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Update staging branch
           command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
@@ -115,14 +79,8 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          name: Echo Manifest
-          command: cat /tmp/workspace/manifest.json
-      - run:
           name: Configure
           command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
-      - run:
-          name: Asset Manifest
-          command: hokusai production env set ASSET_MANIFEST=$(cat /tmp/workspace/manifest.json)
       - run:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin
@@ -167,31 +125,15 @@ workflows:
               only: release
           requires:
             - validate_production_schema
-      - publish_staging_assets:
-          filters:
-            branches:
-              only: master
-          requires:
-            - test
-            - acceptance
-            - validate_staging_schema
-      - publish_production_assets:
-          filters:
-            branches:
-              only: release
-          requires:
-            - validate_production_schema
       - deploy_hokusai_staging:
           filters:
             branches:
               only: master
           requires:
             - push_staging_image
-            - publish_staging_assets
       - deploy_hokusai_production:
           filters:
             branches:
               only: release
           requires:
             - push_production_image
-            - publish_production_assets

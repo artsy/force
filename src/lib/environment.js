@@ -4,10 +4,11 @@ import path from "path"
 
 export const {
   ANALYZE_BUNDLE,
+  CDN_URL,
   CI,
-  ENABLE_EXPERIMENTAL_ASSET_BUNDLING,
   NODE_ENV = "development",
   PORT,
+  S3_BUCKET,
   WEBPACK_DEVTOOL,
 } = process.env
 
