@@ -17,6 +17,7 @@ module.exports =
   COOKIE_DOMAIN: null
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: 28539
   DEFAULT_CACHE_TIME: 3600
+  DEPLOY_ENV: ""
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
   ENABLE_MAKE_OFFER: true

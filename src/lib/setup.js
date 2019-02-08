@@ -18,7 +18,7 @@ import glob from "glob"
 import helmet from "helmet"
 import logger from "artsy-morgan"
 import path from "path"
-import RavenServer from "raven"
+import * as Sentry from "@sentry/node"
 import session from "cookie-session"
 import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
@@ -62,7 +62,7 @@ const {
   OPENREDIS_URL,
   REQUEST_EXPIRE_MS,
   REQUEST_LIMIT,
-  SENTRY_PRIVATE_DSN,
+  SENTRY_PUBLIC_DSN,
   SEGMENT_WRITE_KEY_SERVER,
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
@@ -77,9 +77,20 @@ export default function(app) {
   }
 
   // Error reporting
-  if (SENTRY_PRIVATE_DSN) {
-    RavenServer.config(SENTRY_PRIVATE_DSN).install()
-    app.use(RavenServer.requestHandler())
+  if (SENTRY_PUBLIC_DSN) {
+    // TODO: Find a way to uniquely identify a release
+    // const revision = require("child_process")
+    //   .execSync("git rev-parse --short HEAD")
+    //   .toString()
+    //   .trim()
+
+    Sentry.init({
+      dsn: SENTRY_PUBLIC_DSN,
+      // release: `force-${DEPLOY_ENV}-${revision}`,
+    })
+
+    // The request handler must be the first middleware on the app
+    app.use(Sentry.Handlers.requestHandler())
   }
 
   app.use(compression())
@@ -326,9 +337,9 @@ export default function(app) {
     next(err)
   })
 
-  // Last but not least, error handling...
-  if (SENTRY_PRIVATE_DSN) {
-    app.use(RavenServer.errorHandler())
+  // The error handler must be before any other error middleware
+  if (SENTRY_PUBLIC_DSN) {
+    app.use(Sentry.Handlers.errorHandler())
   }
 
   app.use(errorHandlingMiddleware)

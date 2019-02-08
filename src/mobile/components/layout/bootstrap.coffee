@@ -11,7 +11,7 @@ Backbone.$ = $
 
 _ = require 'underscore'
 FastClick = require 'fastclick'
-RavenClient = require 'raven-js'
+Sentry = require('@sentry/browser').default
 sd = require('sharify').data
 Cookies = require 'cookies-js'
 { parse } = require 'url'
@@ -67,7 +67,6 @@ ensureFreshUser = (data) ->
   ]
   for attr in attrs
     if (data[attr] or sd.CURRENT_USER[attr]) and not _.isEqual data[attr], sd.CURRENT_USER[attr]
-      RavenClient.captureException("Forced to refresh user", { extra: { attr: attr, session: sd.CURRENT_USER[attr], current: data[attr] } } )
       $.ajax('/user/refresh').then ->
         setTimeout  (=> window.location.reload()), 500
 
@@ -85,7 +84,15 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupErrorReporting = ->
-  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
+  if sd.SENTRY_PUBLIC_DSN
+    Sentry.init({
+      dsn: sd.SENTRY_PUBLIC_DSN
+    })
+
+    user = sd.CURRENT_USER
+    if user
+      Sentry.configureScope (scope) ->
+        scope.setUser _.pick(user, 'id', 'email')
 
 # Show search button on focusing the search bar
 setupHeaderView = ->
