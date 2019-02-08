@@ -57,7 +57,6 @@ const {
   APP_TIMEOUT,
   COOKIE_DOMAIN,
   DEFAULT_CACHE_TIME,
-  DEPLOY_ENV,
   IP_BLACKLIST,
   NODE_ENV,
   OPENREDIS_URL,
@@ -79,14 +78,15 @@ export default function(app) {
 
   // Error reporting
   if (SENTRY_PUBLIC_DSN) {
-    const revision = require("child_process")
-      .execSync("git rev-parse --short HEAD")
-      .toString()
-      .trim()
+    // TODO: Find a way to uniquely identify a release
+    // const revision = require("child_process")
+    //   .execSync("git rev-parse --short HEAD")
+    //   .toString()
+    //   .trim()
 
     Sentry.init({
       dsn: SENTRY_PUBLIC_DSN,
-      release: `force-${DEPLOY_ENV}-${revision}`,
+      // release: `force-${DEPLOY_ENV}-${revision}`,
     })
 
     // The request handler must be the first middleware on the app
