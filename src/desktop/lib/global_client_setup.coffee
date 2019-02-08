@@ -11,7 +11,7 @@ _ = require 'underscore'
 { uniqBy } = require 'lodash'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
-Raven = require 'raven-js'
+Sentry = require '@sentry/browser'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
@@ -98,8 +98,16 @@ setupJquery = ->
   window[key] = helper for key, helper of templateModules
 
 setupErrorReporting = ->
-  Raven.config(sd.SENTRY_PUBLIC_DSN).install()
-  Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
+  if sd.SENTRY_PUBLIC_DSN
+    Sentry.init({
+      dsn: sd.SENTRY_PUBLIC_DSN
+    })
+
+    user = sd.CURRENT_USER
+    if user
+      Sentry.configureScope (scope) ->
+        scope.setUser _.pick(user, 'id', 'email')
+
 
 mountStitchComponents = ->
   hydrateStitch({
