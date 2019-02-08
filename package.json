@@ -20,7 +20,7 @@
     "prepush": "yarn type-check",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
     "prettier-write": "yarn run prettier --write",
-    "publish-assets": "node scripts/uploadToS3.js",
+    "publish-assets": "node scripts/uploadToS3.js && yarn sentry",
     "publish-assets:local": "yarn assets && yarn publish-assets",
     "relay": "node scripts/relayCompiler.js",
     "sentry": "scripts/sentry.sh",
