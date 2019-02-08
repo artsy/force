@@ -229,7 +229,7 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "@sentry/cli": "^1.30.4",
+    "@sentry/cli": "^1.38.1",
     "@types/dd-trace": "^0.6.0",
     "@types/enzyme": "^3.1.6",
     "@types/express": "^4.11.0",
