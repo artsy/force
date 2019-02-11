@@ -64,10 +64,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@12.1.26":
-  version "12.1.26"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.26.tgz#4d2af24acc0e93a3e81d223a0fed561d12c8f47f"
-  integrity sha512-vf05a0oMOQxT82phFRlRZTP6/TjKlXybPQPBGkuDespJZQ+pckpn+6MiPz3+4bQxhw4t+ZQhRGTqpIwCKD0/vA==
+"@artsy/reaction@12.1.31":
+  version "12.1.31"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.31.tgz#c4fdb766abd1f9247344651969eb0b70f991af29"
+  integrity sha512-GohtaOlZpoDZxPh/z5ssTIysJ9pbHdCOyN8HXH5j2aMTwFBPtbcQrpxwkscjA85WX4kwwCQKg0GEwEDoTDyCVw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -91,11 +91,12 @@
     prop-types "^15.5.10"
     qs "^6.5.0"
     rc-slider "^8.6.2"
+    react-autosuggest "^9.4.3"
     react-css-transition-replace "^3.0.2"
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
-    react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
+    react-lines-ellipsis "github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
@@ -12460,10 +12461,28 @@ react-autosuggest@^9.0.1:
     react-autowhatever "^10.0.0"
     shallow-equal "^1.0.0"
 
+react-autosuggest@^9.4.3:
+  version "9.4.3"
+  resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.4.3.tgz#eb46852422a48144ab9f39fb5470319222f26c7c"
+  integrity sha512-wFbp5QpgFQRfw9cwKvcgLR8theikOUkv8PFsuLYqI2PUgVlx186Cz8MYt5bLxculi+jxGGUUVt+h0esaBZZouw==
+  dependencies:
+    prop-types "^15.5.10"
+    react-autowhatever "^10.1.2"
+    shallow-equal "^1.0.0"
+
 react-autowhatever@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-10.0.0.tgz#2d7fd54f0a330e33c06c53a83ef789da0ebb65bf"
   integrity sha1-LX/VTwozDjPAbFOoPveJ2g67Zb8=
+  dependencies:
+    prop-types "^15.5.8"
+    react-themeable "^1.1.0"
+    section-iterator "^2.0.0"
+
+react-autowhatever@^10.1.2:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-10.2.0.tgz#bdd07bf19ddf78acdb8ce7ae162ac13b646874ab"
+  integrity sha512-dqHH4uqiJldPMbL8hl/i2HV4E8FMTDEdVlOIbRqYnJi0kTpWseF9fJslk/KS9pGDnm80JkYzVI+nzFjnOG/u+g==
   dependencies:
     prop-types "^15.5.8"
     react-themeable "^1.1.0"

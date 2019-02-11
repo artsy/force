@@ -93,7 +93,9 @@ export async function index(req, res, next) {
     if (isSuper && superArticle.get("super_article").related_articles) {
       const related = superArticle.get("super_article").related_articles
       const query = SuperSubArticlesQuery(related)
-      const superSubData = await positronql({ query })
+      const superSubData = await positronql({
+        query,
+      })
       superSubArticles.set(superSubData.articles)
     }
 
@@ -186,7 +188,9 @@ const getBodyClass = article => {
 }
 
 export function classic(req, res, next) {
-  const article = new Article({ id: req.params.slug })
+  const article = new Article({
+    id: req.params.slug,
+  })
   const accessToken = req.user ? req.user.get("accessToken") : null
 
   article.fetchWithRelated({
@@ -224,7 +228,9 @@ export function classic(req, res, next) {
 }
 
 export function amp(req, res, next) {
-  const article = new Article({ id: req.params.slug })
+  const article = new Article({
+    id: req.params.slug,
+  })
 
   article.fetchWithRelated({
     error: res.backboneError,
