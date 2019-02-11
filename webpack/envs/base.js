@@ -94,7 +94,7 @@ export const baseConfig = {
   optimization: {
     // Add Webpack runtime code to the `common` chunk
     runtimeChunk: {
-      name: "runtimeManifest",
+      name: "runtime-manifest",
     },
     splitChunks: {
       cacheGroups: {
