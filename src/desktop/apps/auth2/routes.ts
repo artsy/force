@@ -7,6 +7,7 @@ import { MobileAuthStatic } from "./components/MobileAuthStatic"
 export const index = async (req, res, next) => {
   let type: ModalType
   const template = res.locals.sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
+  let title
 
   switch (req.path) {
     case "/login":
@@ -46,6 +47,7 @@ export const index = async (req, res, next) => {
     contextModule,
     destination,
     error,
+    entityName,
     kind,
     objectId,
     signupIntent,
@@ -53,9 +55,20 @@ export const index = async (req, res, next) => {
     trigger,
   } = req.query
 
-  const title = ["save artwork", "follow partner"].includes(intent)
-    ? `Sign up to ${intent}s`
-    : null
+  switch (intent) {
+    case "save artwork":
+      title = `Sign up to ${intent}s`
+      break
+    case "follow partner":
+      title = `Sign up to ${intent}s`
+      break
+    case "follow artist":
+      title = `Sign up to follow ${entityName || "artists"}`
+      break
+    default:
+      title = `Sign up for Artsy`
+      break
+  }
 
   if (type === ModalType.forgot) {
     res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
