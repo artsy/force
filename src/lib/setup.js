@@ -218,6 +218,7 @@ export default function(app) {
       enableBrotli: true,
       orderPreference: ["gzip", "br"], // TODO: Switch order when `br` is suported
       setHeaders: res => {
+        res.setHeader("Accept-Encoding", "gzip")
         res.setHeader("Cache-Control", "public, max-age=31536000")
       },
     })
