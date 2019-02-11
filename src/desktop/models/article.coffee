@@ -64,6 +64,7 @@ module.exports = class Article extends Backbone.Model
       else
          # Check if the article is IN a super article
         dfds.push new Articles().fetch
+          error: options.error
           cache: true
           headers: 'X-Access-Token': options.accessToken or ''
           data:

@@ -228,9 +228,8 @@ export function classic(req, res, next) {
 }
 
 export function amp(req, res, next) {
-  const slug = req.url.split("/")[2]
   const article = new Article({
-    id: slug,
+    id: req.params.slug,
   })
 
   article.fetchWithRelated({
