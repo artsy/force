@@ -155,11 +155,15 @@ spec:
                     }
                     location / {
                         if ($request_method = POST) {
-                          return 403;
+                          set $fourohthree POST;
                         }
                         if ($bad_referer) {
+                          set $fourohthree "${fourohthree}BadReferer";
+                        }
+                        if ($fourohthree = POSTBadReferer) {
                           return 403;
                         }
+
                         proxy_set_header Host $host;
                         proxy_set_header X-Forwarded-Proto "https";
                         proxy_redirect off;
