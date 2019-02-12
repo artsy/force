@@ -69,7 +69,8 @@ spec:
                     # Put regexes for undesired referers here
                     "~youtube.com"             1;
                     "~google.com"              1;
-                    "~facebook.com"            1;
+                    "~yahoo.com"               1;
+                    "~bing.com"                1;
                 }
                 log_format postdata '$http_x_forwarded_for - $remote_user [$time_local] '
                    '"$request" $status $bytes_sent '
