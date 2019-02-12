@@ -54,12 +54,22 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/usr/sbin/nginx","-s","quit"]
+                command: ["/usr/sbin/nginx", "-s", "quit"]
           env:
-            - name: 'NGINX_DEFAULT_CONF'
+            - name: "NGINX_DEFAULT_CONF"
               value: >
                 upstream force {
                     server 127.0.0.1:5000;
+                }
+                map $http_referer $bad_referer {
+                    hostnames;
+
+                    default                    0;
+
+                    # Put regexes for undesired referers here
+                    "~youtube.com"             1;
+                    "~google.com"              1;
+                    "~facebook.com"            1;
                 }
                 log_format postdata '$http_x_forwarded_for - $remote_user [$time_local] '
                    '"$request" $status $bytes_sent '
@@ -68,6 +78,9 @@ spec:
                     listen *:8080;
                     access_log  /var/log/nginx/access.log postdata;
                     location /log_in {
+                      if ($bad_referer) {
+                        return 403;
+                      }
                       proxy_set_header Host $host;
                       proxy_set_header X-Forwarded-Proto "https";
                       proxy_redirect off;
@@ -143,6 +156,9 @@ spec:
                         if ($request_method = POST) {
                           return 403;
                         }
+                        if ($bad_referer) {
+                          return 403;
+                        }
                         proxy_set_header Host $host;
                         proxy_set_header X-Forwarded-Proto "https";
                         proxy_redirect off;
@@ -173,16 +189,16 @@ metadata:
   name: force-web
   namespace: default
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: 'arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard'
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: 'http'
-    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: '60'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: 'artsy-elb-logs'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: 'production-force'
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '300'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: "60"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "artsy-elb-logs"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "production-force"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
 spec:
   ports:
     - port: 443
