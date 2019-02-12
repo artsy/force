@@ -64,10 +64,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@12.1.34":
-  version "12.1.34"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.34.tgz#09afab470f9be5eb40269ae4bbd39a4903351f8c"
-  integrity sha512-ZF21idJZa1+lwNI7eli+ipQzYkZ5zwl3yYZAC+yz6uhJjhQ1Jw9+vNS7dRCTT+D/mvrHF3E7wlwST4CkF91csg==
+"@artsy/reaction@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-13.0.0.tgz#1f4b711600c038faf3af03702cd4505f7e9490c2"
+  integrity sha512-X9JF7zzoTdz74YaV8ITmyQR9wNj696anLbyLLIFPymPQwWL9l+f6HwEfD1enjnUOCeYAECS4tMz5bfJOGmGxnA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -96,7 +96,7 @@
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
-    react-lines-ellipsis xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a
+    react-lines-ellipsis "github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
