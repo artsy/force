@@ -24,7 +24,9 @@ const {
   PROFILE_MEMORY,
 } = process.env
 
-if (PROFILE_MEMORY) require(".src/lib/memory_profiler")()
+if (PROFILE_MEMORY) {
+  require(".src/lib/memory_profiler")()
+}
 
 // Add all of the middleware and global setup
 setup(app)
