@@ -56,10 +56,10 @@
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
     "@artsy/express-reloadable": "1.4.0",
-    "@artsy/palette": "2.26.0-beta.5",
+    "@artsy/palette": "3.0.0",
     "@artsy/passport": "1.1.0",
-    "@artsy/reaction": "12.1.34",
-    "@artsy/stitch": "4.0.1",
+    "@artsy/reaction": "13.0.0",
+    "@artsy/stitch": "5.0.0",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",

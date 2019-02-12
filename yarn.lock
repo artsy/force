@@ -24,16 +24,21 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.26.0-beta.5":
-  version "2.26.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.26.0-beta.5.tgz#4fe4ca8c0afd8daf8d6d5c9458656c8035ffd6d9"
-  integrity sha512-wwHaC9AXz/Tlm/tTCP26YC4zRXMwTx+c09+eupmtvGXOHroegCf93k0wu/G6wea/5acbDiaJjh9ZEVQUNR8GZA==
+"@artsy/palette@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-3.0.0.tgz#9b1a3778f39611c298ca57f57a5bbc71731e7c87"
+  integrity sha512-dM1vO9zy7sCpewXKqHrBk9gY6Lbtj664yaoATrlOZwHCJD9FNQs1rrEp/oRDE8s973hhX32VUhMErwa+duLAfg==
   dependencies:
+    moment "^2.23.0"
+    moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
     react "^16.5.0"
+    react-live "^1.12.0"
+    react-powerplug "^1.0.0"
     react-spring "^5.7.2"
     styled-bootstrap-grid "1.0.4"
     styled-system "^3.1.11"
+    trunc-html "^1.1.2"
 
 "@artsy/passport@1.1.0":
   version "1.1.0"
@@ -59,10 +64,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@12.1.34":
-  version "12.1.34"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-12.1.34.tgz#09afab470f9be5eb40269ae4bbd39a4903351f8c"
-  integrity sha512-ZF21idJZa1+lwNI7eli+ipQzYkZ5zwl3yYZAC+yz6uhJjhQ1Jw9+vNS7dRCTT+D/mvrHF3E7wlwST4CkF91csg==
+"@artsy/reaction@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-13.0.0.tgz#1f4b711600c038faf3af03702cd4505f7e9490c2"
+  integrity sha512-X9JF7zzoTdz74YaV8ITmyQR9wNj696anLbyLLIFPymPQwWL9l+f6HwEfD1enjnUOCeYAECS4tMz5bfJOGmGxnA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -121,10 +126,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-4.0.1.tgz#445977224e54aa76ac5e96b02ec77e5a61f21c26"
-  integrity sha512-kR6Q/NQPobtLGVXsrtDBV+dgbiwTk/iAToDq0HW7IFGVsGHxA9+/PETx+cAkTQ+tb+3iIamT3ggU6lh4s1yhew==
+"@artsy/stitch@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-5.0.0.tgz#696505cbead4683418a1796818838399998c45c2"
+  integrity sha512-Up02PsPWQXgWaij6Zcd77N2kBHoc+Abx4o3eG6fEaON0FrMyMtCFKECvblbcn+R1sdCu5Zle3dKDX4Ldwy1Nvg==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.4"
