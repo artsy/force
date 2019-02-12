@@ -47,7 +47,6 @@ import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/midd
 import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
-import expressStaticGzip from "express-static-gzip"
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 
@@ -204,28 +203,15 @@ export default function(app) {
 
   // Static assets
 
-  // Mount static assets from root `public` and /app `public` folders
+  // Mount static assets from root public folder
+  app.use(express.static("public"))
+
+  // Mount static assets from sub-app /app `public` folders
   glob
     .sync(`${__dirname}/../{public,{desktop,mobile}/**/public}`)
-    .forEach(fld => {
-      app.use(express.static(fld))
+    .forEach(folder => {
+      app.use(express.static(folder))
     })
-
-  // Load compressed JS assets
-  app.use(
-    expressStaticGzip(path.join(__dirname, "../../public"), {
-      index: false,
-      enableBrotli: true,
-      orderPreference: ["gzip", "br"], // TODO: Switch order when `br` is suported
-      setHeaders: res => {
-        res.setHeader("Accept-Encoding", "gzip")
-        res.setHeader("Cache-Control", "public, max-age=31536000")
-      },
-    })
-  )
-
-  // Load asset helper for mapping asset to manifest.json key
-  app.use(assetMiddleware())
 
   app.use(
     favicon(path.resolve(__dirname, "../mobile/public/images/favicon.ico"))
@@ -235,6 +221,7 @@ export default function(app) {
   // Redirect requests before they even have to deal with Force routing
   app.use(downcase)
   app.use(hardcodedRedirects)
+  app.use(assetMiddleware())
   app.use(localsMiddleware)
   app.use(backboneErrorHelper)
   app.use(sameOriginMiddleware)
