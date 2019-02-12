@@ -130,7 +130,6 @@
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
     "express-request-id": "^1.4.0",
-    "express-static-gzip": "^1.1.3",
     "factor-bundle": "^2.5.0",
     "fastclick": "^1.0.6",
     "flickity": "^2.0.5",
