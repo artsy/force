@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 4
+  replicas: 6
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -32,21 +32,53 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
-          readinessProbe:
-            httpGet:
-              port: 5000
-              path: /system/up
-              httpHeaders:
-                - name: X-FORWARDED-PROTO
-                  value: https
-            initialDelaySeconds: 5
-            periodSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     port: 5000
+          #     path: /system/up
+          #     httpHeaders:
+          #       - name: X-FORWARDED-PROTO
+          #         value: https
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
           resources:
             requests:
               cpu: 700m
               memory: 1Gi
             limits:
               memory: 1.5Gi
+        - name: force-nginx
+          image: artsy/docker-nginx:latest
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
+          env:
+            - name: 'NGINX_DEFAULT_CONF'
+              value: >
+                upstream force {
+                    server 127.0.0.1:5000;
+                }
+                log_format postdata '$http_x_forwarded_for - $remote_user [$time_local] '
+                   '"$request" $status $bytes_sent '
+                   '"$http_referer" "$http_user_agent" [$request_body]';
+                server {
+                    listen *:8080;
+                    access_log  /var/log/nginx/access.log postdata;
+                    location / {
+                        if ($request_method = POST) {
+                          return 403;
+                        }
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force;
+                    }
+                }
       dnsPolicy: Default
       affinity:
         nodeAffinity:
@@ -84,11 +116,11 @@ spec:
     - port: 443
       protocol: TCP
       name: https
-      targetPort: 5000
+      targetPort: 8080
     - port: 80
       protocol: TCP
       name: http
-      targetPort: 5000
+      targetPort: 8080
   selector:
     app: force
     layer: application
