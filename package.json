@@ -75,6 +75,8 @@
     "@babel/runtime": "^7.0.0",
     "@babel/template": "^7.0.0",
     "@babel/types": "^7.0.0",
+    "@sentry/browser": "4.5.3",
+    "@sentry/node": "4.5.3",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
     "annyang": "mzikherman/annyang",

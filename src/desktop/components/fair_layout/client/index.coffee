@@ -1,5 +1,5 @@
 FairHeaderView = require './header.coffee'
-globalClientSetup = require '../../../lib/global_client_setup.coffee'
+{ globalClientSetup } = require '../../../lib/global_client_setup'
 FooterView = require '../../main_layout/footer/view.coffee'
 lightDetector = require '../../light_detector/index.coffee'
 FairNavView = require './nav.coffee'

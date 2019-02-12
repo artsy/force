@@ -1,4 +1,4 @@
-globalClientSetup = require '../../lib/global_client_setup.coffee'
+{ globalClientSetup } = require '../../lib/global_client_setup'
 HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 MarketingSignupModal = require '../marketing_signup_modal/index.coffee'
