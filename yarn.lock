@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@2.37.23":
-  version "2.37.23"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-2.37.23.tgz#ff6b193d52acb1a2100418bd2253445a8b48a7ec"
-  integrity sha512-uI/HHfDO6P38G4wtO5fmGbZszrc1cCVHRwgTAUFJ3bOpJyarP83s41H9na+/t6sTuyN/H854iGfjyYDDsfcIlA==
+"@artsy/palette@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-3.0.0.tgz#9b1a3778f39611c298ca57f57a5bbc71731e7c87"
+  integrity sha512-dM1vO9zy7sCpewXKqHrBk9gY6Lbtj664yaoATrlOZwHCJD9FNQs1rrEp/oRDE8s973hhX32VUhMErwa+duLAfg==
   dependencies:
     moment "^2.23.0"
     moment-timezone "^0.5.23"
@@ -12635,8 +12635,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
+  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-live@^1.12.0:
