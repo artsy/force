@@ -34,6 +34,7 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
+  ENABLE_INSTANT_PAGE: false
   ENABLE_MAKE_OFFER: true
   ENABLE_OFFER_NOTE: null
   ENABLE_MEMORY_PROFILING: false
