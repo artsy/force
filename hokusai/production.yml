@@ -67,6 +67,78 @@ spec:
                 server {
                     listen *:8080;
                     access_log  /var/log/nginx/access.log postdata;
+                    location /log_in {
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Forwarded-Proto "https";
+                      proxy_redirect off;
+                      proxy_read_timeout 60;
+                      proxy_send_timeout 60;
+                      proxy_pass http://force/log_in;
+                    }
+                    location /about/sms {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/about/sms;
+                    }
+                    location /forgot_password {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/forgot_password;
+                    }
+                    location /gallery-insights/form {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/gallery-insights/form;
+                    }
+                    location /unsupported-browser {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/unsupported-browser;
+                    }
+                    location /venice-biennale/sms {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/venice-biennale/sms;
+                    }
+                    location /artsy-primer/set-sailthru {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/artsy-primer/set-sailthru;
+                    }
+                    location /oauth2/access_token {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/oauth2/access_token;
+                    }
+                    location /signup/editorial {
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Forwarded-Proto "https";
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force/signup/editorial;
+                    }
                     location / {
                         if ($request_method = POST) {
                           return 403;
