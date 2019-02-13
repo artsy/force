@@ -165,7 +165,7 @@
     "lodash.merge": "^4.6.0",
     "mailcheck": "^1.1.1",
     "moment": "~2.16.0",
-    "moment-timezone": "^0.5.5",
+    "moment-timezone": "^0.5.23",
     "moment-twitter": "^0.2.0",
     "nib": "^1.1.2",
     "nock": "^9.0.11",

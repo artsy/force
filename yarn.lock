@@ -10508,13 +10508,6 @@ moment-timezone@^0.5.13, moment-timezone@^0.5.23:
   dependencies:
     moment ">= 2.9.0"
 
-moment-timezone@^0.5.5:
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
-  integrity sha1-mc5cfYJyYusPH3AgRBd/YHRde5A=
-  dependencies:
-    moment ">= 2.9.0"
-
 moment-twitter@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/moment-twitter/-/moment-twitter-0.2.0.tgz#01f948425a8deb4d300d3ed7592daa699bbb5160"
@@ -12635,7 +12628,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
