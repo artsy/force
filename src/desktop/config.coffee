@@ -99,8 +99,9 @@ module.exports =
   POSITRON_URL: 'http://localhost:3005'
   PREDICTION_URL: 'https://live.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
-  REQUEST_EXPIRE_MS: 60000 # 1 minute
-  REQUEST_LIMIT: 120
+  REQUEST_EXPIRE: 60 # 1 minute
+  REQUEST_LIMIT: 300
+  REQUEST_PER_INSTANCE_FALLBACK: 60
   S3_KEY: null
   S3_SECRET: null
   S3_BUCKET: null
