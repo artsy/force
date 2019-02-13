@@ -87,7 +87,7 @@ export const baseConfig = {
             )
           )
           .catch(err => {
-            console.error("Could not write duplicates report", err)
+            console.error("[DuplicatesPlugin] Could not write duplicates report", err)
           })
       },
     }),
