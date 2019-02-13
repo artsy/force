@@ -22,6 +22,7 @@ describe 'captureSignup', ->
 
   after ->
     benv.teardown()
+    _.delay.restore()
 
   beforeEach =>
     sinon.stub $, 'ajax'
