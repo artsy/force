@@ -21,6 +21,7 @@ app.get(
         redirect,
         status,
         headTags,
+        styleTags,
         scripts,
       } = await buildServerApp({
         routes,
@@ -56,9 +57,6 @@ app.get(
       const layout = await stitch({
         basePath: __dirname,
         layout: "../../components/main_layout/templates/react_redesign.jade",
-        config: {
-          styledComponents: true,
-        },
         blocks: {
           head: () => (
             <>
@@ -72,6 +70,7 @@ app.get(
           ...res.locals,
           assetPackage: "artist",
           scripts,
+          styleTags,
         },
         data: {
           jsonLD,

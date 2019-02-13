@@ -17,6 +17,7 @@ export const checkoutFlow = async (req, res, next) => {
       status,
       headTags,
       scripts,
+      styleTags,
     } = await buildServerApp({
       routes,
       url: req.url,
@@ -36,9 +37,6 @@ export const checkoutFlow = async (req, res, next) => {
       basePath: __dirname,
       layout:
         "../../components/main_layout/templates/react_minimal_header.jade",
-      config: {
-        styledComponents: true,
-      },
       blocks: {
         head: () => headTags,
         body: ServerApp,
@@ -53,6 +51,7 @@ export const checkoutFlow = async (req, res, next) => {
           stripev3: true,
         },
         scripts,
+        styleTags,
       },
     })
 
