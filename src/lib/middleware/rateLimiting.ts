@@ -43,4 +43,6 @@ export const rateLimiterMiddlewareFactory = redisClient => {
         res.status(429).send("Too Many Requests")
       })
   }
+
+  return rateLimiterMiddleware
 }
