@@ -38,6 +38,7 @@ import proxyReflection from "./middleware/proxy_to_reflection"
 import sameOriginMiddleware from "./middleware/same_origin"
 import errorHandlingMiddleware from "./middleware/error_handler"
 import unsupportedBrowserCheck from "./middleware/unsupported_browser"
+import { rateLimiterMiddlewareFactory } from "./middleware/rateLimiting"
 import backboneErrorHelper from "./middleware/backbone_error_helper"
 import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
@@ -49,7 +50,6 @@ import config from "../config"
 import compression from "compression"
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
-import { RateLimiterMemory, RateLimiterRedis } from "rate-limiter-flexible"
 
 const {
   API_REQUEST_TIMEOUT,
@@ -59,10 +59,6 @@ const {
   DEFAULT_CACHE_TIME,
   IP_BLACKLIST,
   NODE_ENV,
-  OPENREDIS_URL,
-  REQUEST_EXPIRES,
-  REQUEST_LIMIT,
-  REQUEST_PER_INSTANCE_FALLBACK,
   SENTRY_PUBLIC_DSN,
   SEGMENT_WRITE_KEY_SERVER,
   SESSION_COOKIE_KEY,
@@ -94,44 +90,8 @@ export default function(app) {
     })
   )
 
-  // Rate limiting ======================
-
-  /**
-   * Used as a per process limiter if for whatever reason
-   * redis becomes unavailable
-   */
-  const rateLimiterMemory = new RateLimiterMemory({
-    points: REQUEST_PER_INSTANCE_FALLBACK,
-    duration: REQUEST_EXPIRES,
-  })
-
-  let rateLimiter = rateLimiterMemory
-
-  if (OPENREDIS_URL && cache.client) {
-    rateLimiter = new RateLimiterRedis({
-      redis: cache.client,
-      points: REQUEST_LIMIT,
-      duration: REQUEST_EXPIRES,
-      inmemoryBlockOnConsumed: REQUEST_LIMIT + 1,
-      inmemoryBlockDuration: REQUEST_EXPIRES,
-      insuranceLimiter: rateLimiterMemory,
-    })
-  }
-
-  const rateLimiterMiddleware = (req, res, next) => {
-    rateLimiter
-      .consume(req.connection.remoteAddress)
-      .then(() => {
-        next()
-      })
-      .catch(res => {
-        const secs = Math.round(res.msBeforeNext / 1000) || 1
-        res.set("Retry-After", String(secs))
-        res.status(429).send("Too Many Requests")
-      })
-  }
-
-  app.use(rateLimiterMiddleware)
+  // Rate limiting
+  app.use(rateLimiterMiddlewareFactory(cache.client))
 
   // Blank page used by Eigen for caching web views.
   // See: https://github.com/artsy/microgravity-private/pull/1138
