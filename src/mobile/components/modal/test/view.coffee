@@ -25,6 +25,7 @@ describe 'ModalView', ->
 
   afterEach ->
     benv.teardown()
+    _.delay.restore()
 
   describe '#fadeOut', ->
 
