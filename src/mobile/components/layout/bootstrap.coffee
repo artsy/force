@@ -19,10 +19,7 @@ HeaderView = require './client/header_view.coffee'
 doc = window.document
 sharify = require('sharify')
 CurrentUser = require '../../models/current_user.coffee'
-# The conditional check below is for tests not to fail.
-# window.matchMedia is not recognized by specs
-if (window && window.matchMedia)
-  globalClientSetup = require '../../lib/global_client_setup.coffee'
+Sentry = require("@sentry/browser")
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -46,8 +43,6 @@ module.exports = ->
   # TODO: Look into why this fails.
   # syncAuth()
   checkForAfterSignUpAction()
-  if globalClientSetup
-    globalClientSetup()
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
@@ -85,7 +80,7 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupErrorReporting = ->
-  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
+  Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
 
 # Show search button on focusing the search bar
 setupHeaderView = ->

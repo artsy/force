@@ -11,7 +11,13 @@ app.get("/collections", async (req, res, next) => {
   try {
     const { IS_MOBILE } = res.locals.sd
 
-    const { ServerApp, headTags, redirect, scripts } = await buildServerApp({
+    const {
+      ServerApp,
+      headTags,
+      redirect,
+      scripts,
+      styleTags,
+    } = await buildServerApp({
       routes,
       url: req.url,
       userAgent: req.header("User-Agent"),
@@ -27,9 +33,6 @@ app.get("/collections", async (req, res, next) => {
     const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_redesign.jade",
-      config: {
-        styledComponents: true,
-      },
       blocks: {
         head: () => <>{headTags}</>,
         body: ServerApp,
@@ -39,6 +42,7 @@ app.get("/collections", async (req, res, next) => {
         assetPackage: "collections",
         bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
         scripts,
+        styleTags,
       },
     })
 

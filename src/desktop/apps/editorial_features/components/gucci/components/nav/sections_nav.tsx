@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes, css } from "styled-components"
 import React from "react"
 import { color, Flex, Sans } from "@artsy/palette"
 
@@ -53,17 +53,18 @@ const navKeyframes = keyframes`
     opacity: 1;
   }
 `
+
 const SectionsNavContainer =
   styled(Flex) <
   { isAnimated: boolean } >
   `
   ${props =>
     props.isAnimated &&
-    `
-    animation-name: ${navKeyframes};
-    animation-duration: 1s;
-    animation-timing-function: ease;
-  `};
+    css`
+      animation-name: ${navKeyframes};
+      animation-duration: 1s;
+      animation-timing-function: ease;
+    `};
 `
 
 const Title = styled(Sans)`

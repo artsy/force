@@ -17,6 +17,7 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
       redirect,
       status,
       scripts,
+      styleTags,
     } = await buildServerApp({
       routes: routes as any,
       url: req.url,
@@ -32,9 +33,6 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
     const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_index.jade",
-      config: {
-        styledComponents: true,
-      },
       blocks: {
         head: () => (
           <React.Fragment>
@@ -48,6 +46,7 @@ app.get("/isomorphic-relay-example*", adminOnly, async (req, res, next) => {
         ...res.locals,
         assetPackage: "relay",
         scripts,
+        styleTags,
       },
     })
 

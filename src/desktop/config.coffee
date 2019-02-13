@@ -34,6 +34,7 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
+  ENABLE_INSTANT_PAGE: false
   ENABLE_MAKE_OFFER: true
   ENABLE_OFFER_NOTE: null
   ENABLE_MEMORY_PROFILING: false
@@ -112,7 +113,6 @@ module.exports =
   SEGMENT_WRITE_KEY: null
   SEGMENT_WRITE_KEY_MICROGRAVITY: null
   SEGMENT_WRITE_KEY_SERVER: null
-  SENTRY_PRIVATE_DSN: null,
   SENTRY_PUBLIC_DSN: null,
   SESSION_COOKIE_KEY: 'force.sess'
   SESSION_COOKIE_MAX_AGE: 31536000000

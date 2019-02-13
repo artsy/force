@@ -43,6 +43,7 @@ sharify.data = _.extend(
     "EDITORIAL_PATHS",
     "EMAIL_SIGNUP_IMAGES_ID",
     "EMBEDLY_KEY",
+    "ENABLE_INSTANT_PAGE",
     "ENABLE_MAKE_OFFER",
     "ENABLE_OFFER_NOTE",
     "ENABLE_WEB_CRAWLING",

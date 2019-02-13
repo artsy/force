@@ -12,7 +12,13 @@ const index = async (req, res, next) => {
   try {
     const { APP_URL, IS_MOBILE } = res.locals.sd
 
-    const { headTags, ServerApp, redirect, scripts } = await buildServerApp({
+    const {
+      headTags,
+      ServerApp,
+      redirect,
+      scripts,
+      styleTags,
+    } = await buildServerApp({
       routes,
       url: req.url,
       userAgent: req.header("User-Agent"),
@@ -28,9 +34,6 @@ const index = async (req, res, next) => {
     const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_redesign.jade",
-      config: {
-        styledComponents: true,
-      },
       blocks: {
         head: () => <Meta appUrl={APP_URL} headTags={headTags} />,
         body: () => <ServerApp />,
@@ -40,6 +43,7 @@ const index = async (req, res, next) => {
         assetPackage: "collect",
         bodyClass: IS_MOBILE ? "body-header-fixed body-no-margins" : null,
         scripts,
+        styleTags,
       },
     })
 
