@@ -31,7 +31,7 @@ export const rateLimiterMiddlewareFactory = redisClient => {
     })
   }
 
-  const rateLimiterMiddleware = (req, res, next) => {
+  const rateLimiterMiddleware = (req, _res, next) => {
     rateLimiter
       .consume(req.connection.remoteAddress)
       .then(() => {
