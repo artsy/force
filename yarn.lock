@@ -126,10 +126,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-4.0.1.tgz#445977224e54aa76ac5e96b02ec77e5a61f21c26"
-  integrity sha512-kR6Q/NQPobtLGVXsrtDBV+dgbiwTk/iAToDq0HW7IFGVsGHxA9+/PETx+cAkTQ+tb+3iIamT3ggU6lh4s1yhew==
+"@artsy/stitch@6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.0.0.tgz#6d549af5a5e6f8f134b02f4f86ff63e03bf194d5"
+  integrity sha512-nR0I+BlA58FPm/bak0kr41V618suJ9hx86KXb4SAL1sVy5qiQGAVmlNLX5YlZDqVDrrivTci1v+kBtQT2kvMbw==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.4"
@@ -12635,8 +12635,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
+  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-live@^1.12.0:
