@@ -76,7 +76,7 @@ export const baseConfig = {
     new DuplicatesPlugin({
       verbose: true,
       emitHandler(report) {
-        const artifactsPath = path.join(process.cwd(), ".artifacts")
+        const artifactsPath = path.join(basePath, ".artifacts")
         fs
           .mkdir(artifactsPath)
           .catch(() => Promise.resolve()) // .artifact directory exists, continue...
