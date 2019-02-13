@@ -19,6 +19,7 @@ dump.rdb
 manifest.json
 .cache
 .cache-loader
+.artifacts
 
 /data
 
