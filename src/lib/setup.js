@@ -18,7 +18,7 @@ import glob from "glob"
 import helmet from "helmet"
 import logger from "artsy-morgan"
 import path from "path"
-import * as Sentry from "@sentry/node"
+
 import session from "cookie-session"
 import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
@@ -50,6 +50,14 @@ import compression from "compression"
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 
+// FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
+// like "`CURRENT_USER` is undefined". We need more investigation because this
+// only appears in prod, under load, and seems fine on staging.
+// import * as Sentry from "@sentry/node"
+
+// Old Sentry SDK
+import RavenServer from "raven"
+
 const {
   API_REQUEST_TIMEOUT,
   API_URL,
@@ -61,7 +69,7 @@ const {
   OPENREDIS_URL,
   REQUEST_EXPIRE_MS,
   REQUEST_LIMIT,
-  SENTRY_PUBLIC_DSN,
+  SENTRY_PRIVATE_DSN,
   SEGMENT_WRITE_KEY_SERVER,
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
@@ -76,9 +84,9 @@ export default function(app) {
   }
 
   // Error reporting
-  if (SENTRY_PUBLIC_DSN) {
-    Sentry.init({ dsn: SENTRY_PUBLIC_DSN })
-    app.use(Sentry.Handlers.requestHandler())
+  if (SENTRY_PRIVATE_DSN) {
+    RavenServer.config(SENTRY_PRIVATE_DSN).install()
+    app.use(RavenServer.requestHandler())
   }
 
   app.use(compression())
@@ -316,9 +324,15 @@ export default function(app) {
 
   // Error handling
 
+  // FIXME: Investigate issue with new Sentry middleware. See note near import.
   // Sentry error handling appear above other middleware
-  if (SENTRY_PUBLIC_DSN) {
-    app.use(Sentry.Handlers.errorHandler())
+  // if (SENTRY_PUBLIC_DSN) {
+  //   app.use(Sentry.Handlers.errorHandler())
+  // }
+
+  // Old Sentry SDK.
+  if (SENTRY_PRIVATE_DSN) {
+    app.use(RavenServer.errorHandler())
   }
 
   app.use(errorHandlingMiddleware)
