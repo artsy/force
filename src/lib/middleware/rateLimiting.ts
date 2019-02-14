@@ -35,6 +35,7 @@ export const rateLimiterMiddlewareFactory = redisClient => {
   const rateLimiterMiddleware = (req, _res, next) => {
     if (!ENABLE_RATE_LIMITING) {
       next()
+      return
     }
     rateLimiter
       .consume(req.connection.remoteAddress)
