@@ -24,11 +24,12 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-3.0.2.tgz#b534ef4a669bf55a798f9676ec946cbdddb5065e"
-  integrity sha512-1nKT6sHNsyfkA6SzhEBtm+jqNlnCfr0UVcKVVloX2Fp0RCEmrf8blcsATOnzXjnX26JJldcOxol7gH4tU/S3OA==
+"@artsy/palette@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-3.0.3.tgz#7c415ec821a913ed992de9fcf7684aef4beefa07"
+  integrity sha512-8Tin6oxLeIL7FcqKU+PsT2/pUI9d1cX1mvIlo9n5w0q7ii2sVqBcBN1UN9TybOt11F05ElYEDpgZYXEadQhI0g==
   dependencies:
+    babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
@@ -12676,8 +12677,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
+  uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
 react-live@^1.12.0:
