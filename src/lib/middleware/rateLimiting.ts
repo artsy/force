@@ -31,22 +31,25 @@ export const rateLimiterMiddlewareFactory = redisClient => {
       inmemoryBlockDuration: REQUEST_EXPIRES,
       insuranceLimiter: rateLimiterMemory,
     })
+  } else {
+    console.warn("[Rate Limiting] OPENREDIS_URL or redisClient not valid")
+    console.warn("[Rate Limiting] Using local memory limiter")
   }
 
   const rateLimiterMiddleware = (req, _res, next) => {
     if (!ENABLE_RATE_LIMITING) {
-      next()
-      return
+      console.warn("[Rate Limiting] Rate limiting disabled")
+      return next()
     }
+    const ip = requestIp.getClientIp(req)
     rateLimiter
-      .consume(requestIp.getClientIp(req))
-      .then(() => {
-        next()
-      })
+      .consume(ip)
+      .then(() => next())
       .catch(res => {
         const secs = Math.round(res.msBeforeNext / 1000) || 1
         res.set("Retry-After", String(secs))
         res.status(429).send("Too Many Requests")
+        console.warn(`[Rate Limiting] Limiting ${ip}`)
       })
   }
 
