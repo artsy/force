@@ -4,9 +4,6 @@ import path from "path"
 import webpack from "webpack"
 import { getEntrypoints } from "../utils/getEntrypoints"
 import { NODE_ENV, basePath, isCI } from "../../src/lib/environment"
-import { DuplicatesPlugin } from "inspectpack/plugin"
-import stripAnsi from "strip-ansi"
-import { promises as fs } from "fs"
 
 export const baseConfig = {
   mode: NODE_ENV,
@@ -72,24 +69,6 @@ export const baseConfig = {
       "window.jQuery": "jquery",
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
-    }),
-    new DuplicatesPlugin({
-      verbose: true,
-      emitHandler(report) {
-        const artifactsPath = path.join(basePath, ".artifacts")
-        fs
-          .mkdir(artifactsPath)
-          .catch(() => Promise.resolve()) // .artifact directory exists, continue...
-          .then(() =>
-            fs.writeFile(
-              path.join(artifactsPath, "duplicates-report"),
-              stripAnsi(report)
-            )
-          )
-          .catch(err => {
-            console.error("[DuplicatesPlugin] Could not write duplicates report", err)
-          })
-      },
     }),
   ],
   resolve: {
