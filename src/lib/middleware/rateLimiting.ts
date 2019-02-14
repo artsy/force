@@ -4,31 +4,42 @@ import requestIp from "request-ip"
 
 const {
   OPENREDIS_URL,
-  REQUEST_EXPIRES,
+  REQUEST_EXPIRE,
   REQUEST_LIMIT,
   REQUEST_PER_INSTANCE_FALLBACK,
   ENABLE_RATE_LIMITING,
 } = config
 
 export const rateLimiterMiddlewareFactory = redisClient => {
+  if (ENABLE_RATE_LIMITING) {
+    console.log("[Rate Limiting] Rate limiting enabled")
+    console.log(
+      `[Rate Limiting] Clients have ${REQUEST_LIMIT} per ${REQUEST_EXPIRE}s`
+    )
+  } else {
+    console.warn("[Rate Limiting] Rate limiting disabled")
+    return (_req, _res, next) => next()
+  }
+
   /**
    * Used as a per process limiter if for whatever reason
    * redis becomes unavailable
    */
   const rateLimiterMemory = new RateLimiterMemory({
     points: REQUEST_PER_INSTANCE_FALLBACK,
-    duration: REQUEST_EXPIRES,
+    duration: REQUEST_EXPIRE,
   })
 
   let rateLimiter = rateLimiterMemory
 
   if (OPENREDIS_URL && redisClient) {
+    console.log("[Rate Limiting] Using Redis limiter")
     rateLimiter = new RateLimiterRedis({
       storeClient: redisClient,
       points: REQUEST_LIMIT,
-      duration: REQUEST_EXPIRES,
+      duration: REQUEST_EXPIRE,
       inmemoryBlockOnConsumed: REQUEST_LIMIT + 1,
-      inmemoryBlockDuration: REQUEST_EXPIRES,
+      inmemoryBlockDuration: REQUEST_EXPIRE,
       insuranceLimiter: rateLimiterMemory,
     })
   } else {
@@ -36,20 +47,14 @@ export const rateLimiterMiddlewareFactory = redisClient => {
     console.warn("[Rate Limiting] Using local memory limiter")
   }
 
-  const rateLimiterMiddleware = (req, _res, next) => {
-    if (!ENABLE_RATE_LIMITING) {
-      console.warn("[Rate Limiting] Rate limiting disabled")
-      return next()
-    }
-    const ip = requestIp.getClientIp(req)
+  const rateLimiterMiddleware = (req, res, next) => {
     rateLimiter
-      .consume(ip)
+      .consume(requestIp.getClientIp(req))
       .then(() => next())
-      .catch(res => {
-        const secs = Math.round(res.msBeforeNext / 1000) || 1
+      .catch(limiterResults => {
+        const secs = Math.round(limiterResults.msBeforeNext / 1000) || 1
         res.set("Retry-After", String(secs))
         res.status(429).send("Too Many Requests")
-        console.warn(`[Rate Limiting] Limiting ${ip}`)
       })
   }
 
