@@ -1,6 +1,5 @@
 import chalk from "chalk"
 import merge from "webpack-merge"
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 
 import {
   isDevelopment,
@@ -13,6 +12,7 @@ import {
 import {
   baseConfig,
   ciConfig,
+  debugConfig,
   developmentConfig,
   productionConfig,
 } from "./envs"
@@ -21,6 +21,8 @@ const getConfig = () => {
   console.log(chalk.green(`\n[Force] Building ${NODE_ENV} config...\n`))
 
   switch (true) {
+    case ANALYZE_BUNDLE:
+      return merge.smart(baseConfig, debugConfig)
     case isCI:
       console.log("[Force] CI=true")
       return merge.smart(baseConfig, ciConfig)
@@ -32,9 +34,5 @@ const getConfig = () => {
 }
 
 const config = getConfig()
-
-if (ANALYZE_BUNDLE) {
-  config.plugins.push(new BundleAnalyzerPlugin())
-}
 
 module.exports = config
