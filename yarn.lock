@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@13.0.3":
-  version "13.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-13.0.3.tgz#d7c9f87eca0c2c155b85458d7ea770258957fbf0"
-  integrity sha512-PzmK+xl6NZ9lmxkrVG8nyRiF8Hufil2EMPx8LJcbny+modCqn1CHDjdV+OuFP/pqkVzyrzdeERFjDtGpMlWn8g==
+"@artsy/reaction@13.0.4":
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-13.0.4.tgz#4ce47eaf09662d099d78032fdf54d10d2bc41051"
+  integrity sha512-iW83Kv+GdYEEzYP7Sn/s5V7cLBofI7h9bnEXEFJswt7UiPvClGUI9ezSrB0qsp6jYvb1sJwGHq3ozIkF9sUorA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -12677,7 +12677,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
+"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
   version "0.13.0"
   uid "0cd517ad9079aeb5e6710178d93dd6faa65b924a"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
