@@ -155,6 +155,9 @@ spec:
                     location /news/artsy-editorial-belgian-authorities-reportedly-investigating-two-brothers-smuggled-antiquities-syria {
                       deny all;
                     }
+                    location /artwork/xavier-veilhan-light-machine-music {
+                      deny all;
+                    }
                     location / {
                         if ($request_method = POST) {
                           return 403;
