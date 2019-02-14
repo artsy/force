@@ -102,6 +102,7 @@ module.exports =
   REQUEST_EXPIRE: 60 # 1 minute
   REQUEST_LIMIT: 300
   REQUEST_PER_INSTANCE_FALLBACK: 60
+  ENABLE_RATE_LIMITING: false
   S3_KEY: null
   S3_SECRET: null
   S3_BUCKET: null

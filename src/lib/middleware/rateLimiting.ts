@@ -6,6 +6,7 @@ const {
   REQUEST_EXPIRES,
   REQUEST_LIMIT,
   REQUEST_PER_INSTANCE_FALLBACK,
+  ENABLE_RATE_LIMITING,
 } = config
 
 export const rateLimiterMiddlewareFactory = redisClient => {
@@ -32,6 +33,9 @@ export const rateLimiterMiddlewareFactory = redisClient => {
   }
 
   const rateLimiterMiddleware = (req, _res, next) => {
+    if (!ENABLE_RATE_LIMITING) {
+      next()
+    }
     rateLimiter
       .consume(req.connection.remoteAddress)
       .then(() => {
