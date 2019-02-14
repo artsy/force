@@ -87,7 +87,7 @@ export default function(app) {
     app.use(RavenServer.requestHandler())
   }
 
-  app.use(compression())
+  app.set("trust proxy", true)
 
   // Blacklist IPs
   app.use(
@@ -98,9 +98,10 @@ export default function(app) {
     })
   )
 
-  app.set("trust proxy", true)
   // Rate limiting
   app.use(rateLimiterMiddlewareFactory(cache.client))
+
+  app.use(compression())
 
   // Blank page used by Eigen for caching web views.
   // See: https://github.com/artsy/microgravity-private/pull/1138
