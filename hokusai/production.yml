@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 10
+  replicas: 6
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -153,6 +153,9 @@ spec:
                         proxy_pass http://force/signup/editorial;
                     }
                     location / {
+                        if ($request_method = POST) {
+                          return 403;
+                        }
                         if ($bad_referer) {
                           return 403;
                         }
