@@ -10,6 +10,4 @@ So, you're reading this doc, in which case either nothing is on fire and you're 
 
 ![specific image](images/single_image.png "Last Prod Image")
 
-3. Locate the Circle CI deploy process that corresponded to the deploy you are rolling back to. You may need to scroll back in the build history until you find it. One such example is: https://circleci.com/workflow-run/9fec809a-d096-4fc0-88b7-82419ada519d
-
-4. When that completes, run the following command to deploy the desired image that you've located above. `hokusai production deploy production--2018-11-21--20-05-37`
+3. When that completes, run the following command to deploy the desired image that you've located above. `hokusai production deploy production--2018-11-21--20-05-37`

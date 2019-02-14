@@ -28,11 +28,11 @@ if (PROFILE_MEMORY) {
   require(".src/lib/memory_profiler")()
 }
 
-// Add all of the middleware and global setup
-setup(app)
-
 // Connect to Redis
 cache.setup(() => {
+  // Add all of the middleware and global setup
+  setup(app)
+
   // if we can't get an xapp token, just exit and let the whole system try
   // again - this prevents a sustained broken state when gravity returns a
   // 502 during force startup.

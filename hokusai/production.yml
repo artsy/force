@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 6
+  replicas: 14
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -68,7 +68,6 @@ spec:
 
                     # Put regexes for undesired referers here
                     "~youtube.com"             1;
-                    "~google.com"              1;
                     "~yahoo.com"               1;
                     "~bing.com"                1;
                 }
@@ -88,6 +87,17 @@ spec:
                       proxy_read_timeout 60;
                       proxy_send_timeout 60;
                       proxy_pass http://force/log_in;
+                    }
+                    location /sign_up {
+                      if ($bad_referer) {
+                        return 403;
+                      }
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Forwarded-Proto "https";
+                      proxy_redirect off;
+                      proxy_read_timeout 60;
+                      proxy_send_timeout 60;
+                      proxy_pass http://force/sign_up;
                     }
                     location /about/sms {
                         proxy_set_header Host $host;
@@ -153,14 +163,17 @@ spec:
                         proxy_send_timeout 60;
                         proxy_pass http://force/signup/editorial;
                     }
+                    location /news/artsy-editorial-belgian-authorities-reportedly-investigating-two-brothers-smuggled-antiquities-syria {
+                      deny all;
+                    }
+                    location /artwork/xavier-veilhan-light-machine-music {
+                      deny all;
+                    }
                     location / {
                         if ($request_method = POST) {
-                          set $fourohthree POST;
+                          return 403;
                         }
                         if ($bad_referer) {
-                          set $fourohthree "${fourohthree}BadReferer";
-                        }
-                        if ($fourohthree = POSTBadReferer) {
                           return 403;
                         }
 
