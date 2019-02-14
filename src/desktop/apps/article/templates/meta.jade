@@ -69,9 +69,6 @@ if article.contributing_authors && article.contributing_authors.length
       if author.name
         meta( name='author', content=author.name )
 
-//- Unica Font
-link( rel='stylesheet' type='text/css' href="#{sd.WEBFONT_URL + '/unica-webfonts.css'}")
-
 //- No Index
 if !article.indexable
   meta( name='robots', content='noindex' )
