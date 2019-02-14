@@ -6,6 +6,8 @@ const {
   OPENREDIS_URL,
   REQUEST_EXPIRE,
   REQUEST_LIMIT,
+  REQUEST_PER_INSTANCE_EXPIRE,
+  REQUEST_PER_INSTANCE_LIMIT,
   REQUEST_PER_INSTANCE_FALLBACK,
   ENABLE_RATE_LIMITING,
 } = config
@@ -38,8 +40,8 @@ export const rateLimiterMiddlewareFactory = redisClient => {
       storeClient: redisClient,
       points: REQUEST_LIMIT,
       duration: REQUEST_EXPIRE,
-      inmemoryBlockOnConsumed: REQUEST_LIMIT + 1,
-      inmemoryBlockDuration: REQUEST_EXPIRE,
+      inmemoryBlockOnConsumed: REQUEST_PER_INSTANCE_LIMIT,
+      inmemoryBlockDuration: REQUEST_PER_INSTANCE_EXPIRE,
       insuranceLimiter: rateLimiterMemory,
     })
   } else {
