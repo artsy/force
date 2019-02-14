@@ -254,13 +254,16 @@ spec:
                 upstream force {
                     server 127.0.0.1:5000;
                 }
-                location / {
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Forwarded-Proto "https";
-                  proxy_redirect off;
-                  proxy_read_timeout 60;
-                  proxy_send_timeout 60;
-                  proxy_pass http://force;
+                server {
+                    listen *:8080;
+                    location / {
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Forwarded-Proto "https";
+                      proxy_redirect off;
+                      proxy_read_timeout 60;
+                      proxy_send_timeout 60;
+                      proxy_pass http://force;
+                    }
                 }
       dnsPolicy: Default
       affinity:
