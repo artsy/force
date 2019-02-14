@@ -98,6 +98,7 @@ export default function(app) {
     })
   )
 
+  app.set("trust proxy", true)
   // Rate limiting
   app.use(rateLimiterMiddlewareFactory(cache.client))
 
@@ -134,7 +135,6 @@ export default function(app) {
 
   // Cookie and session middleware
   app.use(cookieParser())
-  app.set("trust proxy", true)
   app.use(
     session({
       secret: SESSION_SECRET,

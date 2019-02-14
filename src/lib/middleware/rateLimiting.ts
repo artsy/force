@@ -1,5 +1,6 @@
 import config from "../../config"
 import { RateLimiterMemory, RateLimiterRedis } from "rate-limiter-flexible"
+import requestIp from "request-ip"
 
 const {
   OPENREDIS_URL,
@@ -38,7 +39,7 @@ export const rateLimiterMiddlewareFactory = redisClient => {
       return
     }
     rateLimiter
-      .consume(req.connection.remoteAddress)
+      .consume(requestIp.getClientIp(req))
       .then(() => {
         next()
       })
