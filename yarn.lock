@@ -6016,11 +6016,6 @@ express-ipfilter@0.2.1:
     lodash "~3.10.1"
     range_check "^1.2.0"
 
-express-limiter@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/express-limiter/-/express-limiter-1.6.0.tgz#142753588f785b731551603d214415bc79da697a"
-  integrity sha1-FCdTWI94W3MVUWA9IUQVvHnaaXo=
-
 express-request-id@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/express-request-id/-/express-request-id-1.4.0.tgz#277b2c0949803e68104c9d45c3e68934f96bf5a2"
@@ -12378,6 +12373,11 @@ range_check@^1.2.0:
   dependencies:
     ip6 "0.0.4"
     ipaddr.js "1.2"
+
+rate-limiter-flexible@^0.22.4:
+  version "0.22.4"
+  resolved "https://registry.yarnpkg.com/rate-limiter-flexible/-/rate-limiter-flexible-0.22.4.tgz#bdaee6968f527b9f8577163d7cca7a3620bb0d0f"
+  integrity sha512-DKGzgcB8JDLxnojhnhr62D+eqIHjIfXCOpdeHiE77TJves/qiLGHrZpqEpWZ3f3aNDnvA6YB4FrM3/zorETrMw==
 
 raven-js@^3.27.0:
   version "3.27.0"

@@ -38,6 +38,7 @@ import proxyReflection from "./middleware/proxy_to_reflection"
 import sameOriginMiddleware from "./middleware/same_origin"
 import errorHandlingMiddleware from "./middleware/error_handler"
 import unsupportedBrowserCheck from "./middleware/unsupported_browser"
+import { rateLimiterMiddlewareFactory } from "./middleware/rateLimiting"
 import backboneErrorHelper from "./middleware/backbone_error_helper"
 import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
@@ -66,9 +67,6 @@ const {
   DEFAULT_CACHE_TIME,
   IP_BLACKLIST,
   NODE_ENV,
-  OPENREDIS_URL,
-  REQUEST_EXPIRE_MS,
-  REQUEST_LIMIT,
   SENTRY_PRIVATE_DSN,
   SEGMENT_WRITE_KEY_SERVER,
   SESSION_COOKIE_KEY,
@@ -101,20 +99,7 @@ export default function(app) {
   )
 
   // Rate limiting
-  if (OPENREDIS_URL && cache.client) {
-    const limiter = require("express-limiter")(app, cache.client)
-    limiter({
-      path: "*",
-      method: "all",
-      lookup: ["headers.x-forwarded-for"],
-      total: REQUEST_LIMIT,
-      expire: REQUEST_EXPIRE_MS,
-      onRateLimited(req, res, next) {
-        console.log("Rate limit exceeded for", req.headers["x-forwarded-for"])
-        return next()
-      },
-    })
-  }
+  app.use(rateLimiterMiddlewareFactory(cache.client))
 
   // Blank page used by Eigen for caching web views.
   // See: https://github.com/artsy/microgravity-private/pull/1138
