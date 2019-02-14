@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 6
+  replicas: 10
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -68,7 +68,6 @@ spec:
 
                     # Put regexes for undesired referers here
                     "~youtube.com"             1;
-                    "~google.com"              1;
                     "~yahoo.com"               1;
                     "~bing.com"                1;
                 }
@@ -154,13 +153,7 @@ spec:
                         proxy_pass http://force/signup/editorial;
                     }
                     location / {
-                        if ($request_method = POST) {
-                          set $fourohthree POST;
-                        }
                         if ($bad_referer) {
-                          set $fourohthree "${fourohthree}BadReferer";
-                        }
-                        if ($fourohthree = POSTBadReferer) {
                           return 403;
                         }
 
