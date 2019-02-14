@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -182,6 +183,83 @@ spec:
                     operator: In
                     values:
                       - foreground
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: force-web-canary
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: force
+        layer: application
+        component: web
+      name: force-web-canary
+      namespace: default
+    spec:
+      containers:
+        - name: force-web-canary
+          env:
+            - name: DD_TRACE_AGENT_HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: ENABLE_RATE_LIMITING
+              value: 'true'
+          envFrom:
+            - configMapRef:
+                name: force-environment
+          image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:production
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: 700m
+              memory: 1Gi
+            limits:
+              memory: 1.5Gi
+        - name: force-nginx
+          image: artsy/docker-nginx:latest
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
+          env:
+            - name: "NGINX_DEFAULT_CONF"
+              value: >
+                upstream force {
+                    server 127.0.0.1:5000;
+                }
+                location / {
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Forwarded-Proto "https";
+                  proxy_redirect off;
+                  proxy_read_timeout 60;
+                  proxy_send_timeout 60;
+                  proxy_pass http://force;
+                }
+      dnsPolicy: Default
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: tier
+                    operator: In
+                    values:
+                      - foreground
+
 
 ---
 apiVersion: v1
