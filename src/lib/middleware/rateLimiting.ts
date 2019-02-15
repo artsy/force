@@ -3,7 +3,6 @@ import {
   RateLimiterMemory,
   RateLimiterRedis,
   RateLimiterUnion,
-  RateLimiterRes,
 } from "rate-limiter-flexible"
 import requestIp from "request-ip"
 
