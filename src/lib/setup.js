@@ -76,17 +76,6 @@ const {
 } = config
 
 export default function(app) {
-  // Timeout middleware
-  if (isProduction) {
-    app.use(timeout(APP_TIMEOUT || "29s"))
-  }
-
-  // Error reporting
-  if (SENTRY_PRIVATE_DSN) {
-    RavenServer.config(SENTRY_PRIVATE_DSN).install()
-    app.use(RavenServer.requestHandler())
-  }
-
   app.set("trust proxy", true)
 
   // Blacklist IPs
@@ -100,6 +89,17 @@ export default function(app) {
 
   // Rate limiting
   app.use(rateLimiterMiddlewareFactory(cache.client))
+
+  // Timeout middleware
+  if (isProduction) {
+    app.use(timeout(APP_TIMEOUT || "29s"))
+  }
+
+  // Error reporting
+  if (SENTRY_PRIVATE_DSN) {
+    RavenServer.config(SENTRY_PRIVATE_DSN).install()
+    app.use(RavenServer.requestHandler())
+  }
 
   app.use(compression())
 
