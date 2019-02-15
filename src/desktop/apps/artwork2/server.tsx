@@ -12,18 +12,18 @@ app.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {
-        ServerApp,
+        bodyHTML,
         redirect,
         status,
         headTags,
         styleTags,
         scripts,
-      } = await buildServerApp({
+      } = (await buildServerApp({
         routes,
         url: req.url,
         userAgent: req.header("User-Agent"),
         context: buildServerAppContext(req, res),
-      })
+      })) as any
 
       if (redirect) {
         res.redirect(302, redirect.url)
@@ -39,7 +39,7 @@ app.get(
         layout: "../../components/main_layout/templates/react_redesign.jade",
         blocks: {
           head: () => <React.Fragment>{headTags}</React.Fragment>,
-          body: ServerApp,
+          body: bodyHTML,
         },
         locals: {
           ...res.locals,

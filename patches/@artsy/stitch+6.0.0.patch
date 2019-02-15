@@ -1,0 +1,283 @@
+patch-package
+--- a/node_modules/@artsy/stitch/dist/renderSwitch.js
++++ b/node_modules/@artsy/stitch/dist/renderSwitch.js
+@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
+ });
+ exports.renderSwitch = renderSwitch;
+ 
++var _lodash = require("lodash");
++
++var _path = _interopRequireDefault(require("path"));
++
+ var _react = _interopRequireDefault(require("react"));
+ 
+ var _server = _interopRequireDefault(require("react-dom/server"));
+@@ -23,6 +27,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
+ 
+ function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+ 
++var HTML_TAG = /<\/[a-z]+>/;
++
+ function renderSwitch(_x, _x2) {
+   return _renderSwitch.apply(this, arguments);
+ }
+@@ -31,7 +37,7 @@ function _renderSwitch() {
+   _renderSwitch = _asyncToGenerator(
+   /*#__PURE__*/
+   regeneratorRuntime.mark(function _callee(block, options) {
+-    var html, css, _options$basePath, basePath, _options$data, data, _options$locals, locals, _options$templates, templates, config, props, isReact, Component, _require, ServerStyleSheet, sheet;
++    var html, css, _options$basePath, basePath, _options$data, data, _options$locals, locals, _options$templates, templates, config, filePath, props, isReact, Component, _require, ServerStyleSheet, sheet;
+ 
+     return regeneratorRuntime.wrap(function _callee$(_context) {
+       while (1) {
+@@ -57,25 +63,48 @@ function _renderSwitch() {
+               styledComponents: false
+             }, options.config);
+ 
+-            if (!(0, _utils.isTemplate)(block)) {
+-              _context.next = 12;
++            if (!(0, _lodash.isString)(block)) {
++              _context.next = 21;
++              break;
++            }
++
++            if (!HTML_TAG.test(block)) {
++              _context.next = 11;
+               break;
+             }
+ 
+-            _context.next = 9;
+-            return (0, _renderTemplate.renderTemplate)(block, {
+-              basePath: basePath,
++            html = block;
++            _context.next = 19;
++            break;
++
++          case 11:
++            filePath = _path.default.join(basePath, block);
++
++            if (!(0, _utils.isTemplate)(filePath)) {
++              _context.next = 18;
++              break;
++            }
++
++            _context.next = 15;
++            return (0, _renderTemplate.renderTemplate)(filePath, {
+               locals: _objectSpread({}, locals, data, templates)
+             });
+ 
+-          case 9:
++          case 15:
+             html = _context.sent;
+-            _context.next = 20;
++            _context.next = 19;
++            break;
++
++          case 18:
++            throw new Error("@artsy/stitch: (lib/index) " + "Error rendering layout: a string `block` must either contain " + "HTML or be a path to a valid template file.");
++
++          case 19:
++            _context.next = 29;
+             break;
+ 
+-          case 12:
++          case 21:
+             if (!(0, _utils.isComponent)(block)) {
+-              _context.next = 18;
++              _context.next = 27;
+               break;
+             }
+ 
+@@ -100,24 +129,24 @@ function _renderSwitch() {
+               html = config.componentRenderer(block(props));
+             }
+ 
+-            _context.next = 20;
++            _context.next = 29;
+             break;
+ 
+-          case 18:
++          case 27:
+             if (!(process.env.NODE_ENV === "development")) {
+-              _context.next = 20;
++              _context.next = 29;
+               break;
+             }
+ 
+             throw new Error("@artsy/stitch: (lib/index) " + "Error rendering layout: `block` must be a template, React " + "component or string");
+ 
+-          case 20:
++          case 29:
+             return _context.abrupt("return", {
+               html: html,
+               css: css
+             });
+ 
+-          case 21:
++          case 30:
+           case "end":
+             return _context.stop();
+         }
+--- a/node_modules/@artsy/stitch/dist/renderSwitch.js.map
++++ b/node_modules/@artsy/stitch/dist/renderSwitch.js.map
+@@ -1 +1 @@
+-{"version":3,"sources":["../src/renderSwitch.tsx"],"names":["renderSwitch","block","options","html","css","basePath","process","cwd","data","locals","templates","config","componentRenderer","ReactDOM","renderToString","styledComponents","props","isReact","Component","require","ServerStyleSheet","sheet","collectStyles","getStyleTags","env","NODE_ENV","Error"],"mappings":";;;;;;;AAAA;;AACA;;AAGA;;AACA;;;;;;;;;;;;SAOsBA,Y;;;;;;;0BAAf,iBACLC,KADK,EAELC,OAFK;AAAA;;AAAA;AAAA;AAAA;AAAA;AAIDC,YAAAA,IAJC,GAIM,EAJN;AAKDC,YAAAA,GALC,GAKK,EALL;;AAAA,gBAOAH,KAPA;AAAA;AAAA;AAAA;;AAAA,6CAQI;AAAEE,cAAAA,IAAI,EAAJA,IAAF;AAAQC,cAAAA,GAAG,EAAHA;AAAR,aARJ;;AAAA;AAAA,gCAgBDF,OAhBC,CAYHG,QAZG,EAYHA,QAZG,kCAYQC,OAAO,CAACC,GAAR,EAZR,sCAgBDL,OAhBC,CAaHM,IAbG,EAaHA,IAbG,8BAaI,EAbJ,oCAgBDN,OAhBC,CAcHO,MAdG,EAcHA,MAdG,gCAcM,EAdN,yCAgBDP,OAhBC,CAeHQ,SAfG,EAeHA,SAfG,mCAeS,EAfT;AAkBCC,YAAAA,MAlBD;AAmBHC,cAAAA,iBAAiB,EAAEC,gBAASC,cAnBzB;AAoBHC,cAAAA,gBAAgB,EAAE;AApBf,eAqBAb,OAAO,CAACS,MArBR;;AAAA,iBAwBD,uBAAWV,KAAX,CAxBC;AAAA;AAAA;AAAA;;AAAA;AAAA,mBAyBU,oCAAeA,KAAf,EAAsB;AACjCI,cAAAA,QAAQ,EAARA,QADiC;AAEjCI,cAAAA,MAAM,oBACDA,MADC,EAEDD,IAFC,EAGDE,SAHC;AAF2B,aAAtB,CAzBV;;AAAA;AAyBHP,YAAAA,IAzBG;AAAA;AAAA;;AAAA;AAAA,iBAiCM,wBAAYF,KAAZ,CAjCN;AAAA;AAAA;AAAA;;AAkCGe,YAAAA,KAlCH,qBAkCgBR,IAlChB;AAkCsBC,cAAAA,MAAM,EAANA,MAlCtB;AAkC8BC,cAAAA,SAAS,EAATA;AAlC9B;AAmCGO,YAAAA,OAnCH,GAmCaN,MAAM,CAACC,iBAAP,KAA6BC,gBAASC,cAnCnD;;AAqCH,gBAAIG,OAAJ,EAAa;AACLC,cAAAA,SADK,GACOjB,KADP;;AAGX,kBAAIU,MAAM,CAACI,gBAAX,EAA6B;AAAA,2BACEI,OAAO,CAAC,mBAAD,CADT,EACnBC,gBADmB,YACnBA,gBADmB;AAErBC,gBAAAA,KAFqB,GAEb,IAAID,gBAAJ,EAFa;AAI3BjB,gBAAAA,IAAI,GAAGQ,MAAM,CAACC,iBAAP,CACLS,KAAK,CAACC,aAAN,CAAoB,6BAAC,SAAD,EAAeN,KAAf,CAApB,CADK,CAAP;AAIAZ,gBAAAA,GAAG,GAAGiB,KAAK,CAACE,YAAN,EAAN;AACD,eATD,MASO;AACLpB,gBAAAA,IAAI,GAAGQ,MAAM,CAACC,iBAAP,CAAyB,6BAAC,SAAD,EAAeI,KAAf,CAAzB,CAAP;AACD;AACF,aAfD,MAeO;AACLb,cAAAA,IAAI,GAAGQ,MAAM,CAACC,iBAAP,CAA0BX,KAAD,CAAee,KAAf,CAAzB,CAAP;AACD;;AAtDE;AAAA;;AAAA;AAAA,kBAwDCV,OAAO,CAACkB,GAAR,CAAYC,QAAZ,KAAyB,aAxD1B;AAAA;AAAA;AAAA;;AAAA,kBAyDK,IAAIC,KAAJ,CACJ,gCACE,4DADF,GAEE,qBAHE,CAzDL;;AAAA;AAAA,6CAiEE;AAAEvB,cAAAA,IAAI,EAAJA,IAAF;AAAQC,cAAAA,GAAG,EAAHA;AAAR,aAjEF;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,G","sourcesContent":["import React, { ComponentClass } from \"react\"\nimport ReactDOM from \"react-dom/server\"\nimport { StitchConfig, StitchOptions } from \"./index\"\nimport { Block } from \"./render\"\nimport { renderTemplate } from \"./renderTemplate\"\nimport { isComponent, isTemplate } from \"./utils\"\n\ntype RenderSwitchOptions = Pick<\n  StitchOptions,\n  \"basePath\" | \"config\" | \"data\" | \"locals\" | \"templates\"\n>\n\nexport async function renderSwitch(\n  block: Block,\n  options: RenderSwitchOptions\n): Promise<{ html: string; css: string }> {\n  let html = \"\"\n  let css = \"\"\n\n  if (!block) {\n    return { html, css }\n  }\n\n  const {\n    basePath = process.cwd(),\n    data = {},\n    locals = {},\n    templates = {},\n  } = options\n\n  const config: StitchConfig = {\n    componentRenderer: ReactDOM.renderToString,\n    styledComponents: false,\n    ...options.config,\n  }\n\n  if (isTemplate(block)) {\n    html = await renderTemplate(block, {\n      basePath,\n      locals: {\n        ...locals,\n        ...data,\n        ...templates,\n      },\n    })\n  } else if (isComponent(block)) {\n    const props = { ...data, locals, templates }\n    const isReact = config.componentRenderer === ReactDOM.renderToString\n\n    if (isReact) {\n      const Component = block as ComponentClass<any>\n\n      if (config.styledComponents) {\n        const { ServerStyleSheet } = require(\"styled-components\")\n        const sheet = new ServerStyleSheet()\n\n        html = config.componentRenderer(\n          sheet.collectStyles(<Component {...props} />)\n        )\n\n        css = sheet.getStyleTags()\n      } else {\n        html = config.componentRenderer(<Component {...props} />)\n      }\n    } else {\n      html = config.componentRenderer((block as any)(props))\n    }\n  } else {\n    if (process.env.NODE_ENV === \"development\") {\n      throw new Error(\n        \"@artsy/stitch: (lib/index) \" +\n          \"Error rendering layout: `block` must be a template, React \" +\n          \"component or string\"\n      )\n    }\n  }\n\n  return { html, css }\n}\n"],"file":"renderSwitch.js"}
+\ No newline at end of file
++{"version":3,"sources":["../src/renderSwitch.tsx"],"names":["HTML_TAG","renderSwitch","block","options","html","css","basePath","process","cwd","data","locals","templates","config","componentRenderer","ReactDOM","renderToString","styledComponents","test","filePath","path","join","Error","props","isReact","Component","require","ServerStyleSheet","sheet","collectStyles","getStyleTags","env","NODE_ENV"],"mappings":"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","sourcesContent":["import { isString } from \"lodash\"\nimport path from \"path\"\nimport React, { ComponentClass } from \"react\"\nimport ReactDOM from \"react-dom/server\"\nimport { StitchConfig, StitchOptions } from \"./index\"\nimport { Block } from \"./render\"\nimport { renderTemplate } from \"./renderTemplate\"\nimport { isComponent, isTemplate } from \"./utils\"\n\ntype RenderSwitchOptions = Pick<\n  StitchOptions,\n  \"basePath\" | \"config\" | \"data\" | \"locals\" | \"templates\"\n>\n\nconst HTML_TAG = /<\\/[a-z]+>/\n\nexport async function renderSwitch(\n  block: Block,\n  options: RenderSwitchOptions\n): Promise<{ html: string; css: string }> {\n  let html = \"\"\n  let css = \"\"\n\n  if (!block) {\n    return { html, css }\n  }\n\n  const {\n    basePath = process.cwd(),\n    data = {},\n    locals = {},\n    templates = {},\n  } = options\n\n  const config: StitchConfig = {\n    componentRenderer: ReactDOM.renderToString,\n    styledComponents: false,\n    ...options.config,\n  }\n\n  if (isString(block)) {\n    if (HTML_TAG.test(block)) {\n      html = block\n    } else {\n      const filePath = path.join(basePath, block)\n      if (isTemplate(filePath)) {\n        html = await renderTemplate(filePath, {\n          locals: {\n            ...locals,\n            ...data,\n            ...templates,\n          },\n        })\n      } else {\n        throw new Error(\n          \"@artsy/stitch: (lib/index) \" +\n            \"Error rendering layout: a string `block` must either contain \" +\n            \"HTML or be a path to a valid template file.\"\n        )\n      }\n    }\n  } else if (isComponent(block)) {\n    const props = { ...data, locals, templates }\n    const isReact = config.componentRenderer === ReactDOM.renderToString\n\n    if (isReact) {\n      const Component = block as ComponentClass<any>\n\n      if (config.styledComponents) {\n        const { ServerStyleSheet } = require(\"styled-components\")\n        const sheet = new ServerStyleSheet()\n\n        html = config.componentRenderer(\n          sheet.collectStyles(<Component {...props} />)\n        )\n\n        css = sheet.getStyleTags()\n      } else {\n        html = config.componentRenderer(<Component {...props} />)\n      }\n    } else {\n      html = config.componentRenderer((block as any)(props))\n    }\n  } else {\n    if (process.env.NODE_ENV === \"development\") {\n      throw new Error(\n        \"@artsy/stitch: (lib/index) \" +\n          \"Error rendering layout: `block` must be a template, React \" +\n          \"component or string\"\n      )\n    }\n  }\n\n  return { html, css }\n}\n"],"file":"renderSwitch.js"}
+\ No newline at end of file
+--- a/node_modules/@artsy/stitch/dist/renderTemplate.d.ts
++++ b/node_modules/@artsy/stitch/dist/renderTemplate.d.ts
+@@ -1,5 +1,4 @@
+ import { StitchOptions } from "./index";
+-import { Block } from "./render";
+-declare type RenderTemplateOptions = Pick<StitchOptions, "basePath" | "locals" | "config">;
+-export declare function renderTemplate(block: Block, options?: RenderTemplateOptions): Promise<string>;
++declare type RenderTemplateOptions = Pick<StitchOptions, "locals" | "config">;
++export declare function renderTemplate(filePaths: string | string[], options?: RenderTemplateOptions): Promise<string>;
+ export {};
+--- a/node_modules/@artsy/stitch/dist/renderTemplate.js
++++ b/node_modules/@artsy/stitch/dist/renderTemplate.js
+@@ -24,10 +24,8 @@ function renderTemplate(_x) {
+ function _renderTemplate() {
+   _renderTemplate = _asyncToGenerator(
+   /*#__PURE__*/
+-  regeneratorRuntime.mark(function _callee2(block) {
++  regeneratorRuntime.mark(function _callee2(filePaths) {
+     var options,
+-        _options$basePath,
+-        basePath,
+         _options$locals,
+         locals,
+         _options$config,
+@@ -44,13 +42,13 @@ function _renderTemplate() {
+             _compile = function _ref2() {
+               _compile = _asyncToGenerator(
+               /*#__PURE__*/
+-              regeneratorRuntime.mark(function _callee(file) {
+-                var ext, compileFn, filePath, html;
++              regeneratorRuntime.mark(function _callee(filePath) {
++                var ext, compileFn, html;
+                 return regeneratorRuntime.wrap(function _callee$(_context) {
+                   while (1) {
+                     switch (_context.prev = _context.next) {
+                       case 0:
+-                        ext = _path.default.extname(file).replace(".", "");
++                        ext = _path.default.extname(filePath).replace(".", "");
+                         compileFn = config.engines[ext] || _consolidate.default[ext];
+ 
+                         if ((0, _lodash.isFunction)(compileFn)) {
+@@ -61,28 +59,27 @@ function _renderTemplate() {
+                         throw new Error("(@artsy/stitch: lib/renderTemplate) " + "Error rendering block with extension ".concat(ext, ": Can only render ") + "templates supported by https://www.npmjs.com/package/consolidate.");
+ 
+                       case 4:
+-                        filePath = _path.default.join(basePath, file);
+-                        _context.prev = 5;
+-                        _context.next = 8;
++                        _context.prev = 4;
++                        _context.next = 7;
+                         return compileFn(filePath, locals);
+ 
+-                      case 8:
++                      case 7:
+                         html = _context.sent;
+                         // FIXME: Why does consolidate mutate locals?
+                         delete locals.filename;
+                         return _context.abrupt("return", html);
+ 
+-                      case 13:
+-                        _context.prev = 13;
+-                        _context.t0 = _context["catch"](5);
++                      case 12:
++                        _context.prev = 12;
++                        _context.t0 = _context["catch"](4);
+                         throw new Error(_context.t0.message);
+ 
+-                      case 16:
++                      case 15:
+                       case "end":
+                         return _context.stop();
+                     }
+                   }
+-                }, _callee, this, [[5, 13]]);
++                }, _callee, this, [[4, 12]]);
+               }));
+               return _compile.apply(this, arguments);
+             };
+@@ -92,18 +89,18 @@ function _renderTemplate() {
+             };
+ 
+             options = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : {};
+-            _options$basePath = options.basePath, basePath = _options$basePath === void 0 ? process.cwd() : _options$basePath, _options$locals = options.locals, locals = _options$locals === void 0 ? {} : _options$locals, _options$config = options.config, config = _options$config === void 0 ? {
++            _options$locals = options.locals, locals = _options$locals === void 0 ? {} : _options$locals, _options$config = options.config, config = _options$config === void 0 ? {
+               engines: {}
+             } : _options$config;
+             _context2.prev = 4;
+ 
+-            if (!(0, _lodash.isArray)(block)) {
++            if (!(0, _lodash.isArray)(filePaths)) {
+               _context2.next = 11;
+               break;
+             }
+ 
+             _context2.next = 8;
+-            return Promise.all(block.map(compile));
++            return Promise.all(filePaths.map(compile));
+ 
+           case 8:
+             _context2.t0 = _context2.sent;
+@@ -112,7 +109,7 @@ function _renderTemplate() {
+ 
+           case 11:
+             _context2.next = 13;
+-            return compile(block);
++            return compile(filePaths);
+ 
+           case 13:
+             _context2.t0 = _context2.sent;
+--- a/node_modules/@artsy/stitch/dist/renderTemplate.js.map
++++ b/node_modules/@artsy/stitch/dist/renderTemplate.js.map
+@@ -1 +1 @@
+-{"version":3,"sources":["../src/renderTemplate.tsx"],"names":["renderTemplate","block","compile","file","ext","path","extname","replace","compileFn","config","engines","cons","Error","filePath","join","basePath","locals","html","filename","message","options","process","cwd","Promise","all","map","rendered"],"mappings":";;;;;;;AAAA;;AACA;;AACA;;;;;;;;SASsBA,c;;;;;;;0BAAf,kBACLC,KADK;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,QAsBUC,OAtBV;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sCAsBL,iBAAuBC,IAAvB;AAAA;AAAA;AAAA;AAAA;AAAA;AACQC,wBAAAA,GADR,GACcC,cAAKC,OAAL,CAAaH,IAAb,EAAmBI,OAAnB,CAA2B,GAA3B,EAAgC,EAAhC,CADd;AAGQC,wBAAAA,SAHR,GAGoBC,MAAM,CAACC,OAAP,CAAeN,GAAf,KAAuBO,qBAAKP,GAAL,CAH3C;;AAAA,4BAKO,wBAAWI,SAAX,CALP;AAAA;AAAA;AAAA;;AAAA,8BAMU,IAAII,KAAJ,CACJ,wFAC0CR,GAD1C,0BAEE,mEAHE,CANV;;AAAA;AAaQS,wBAAAA,QAbR,GAamBR,cAAKS,IAAL,CAAUC,QAAV,EAAoBZ,IAApB,CAbnB;AAAA;AAAA;AAAA,+BAgBuBK,SAAS,CAACK,QAAD,EAAWG,MAAX,CAhBhC;;AAAA;AAgBUC,wBAAAA,IAhBV;AAkBI;AACA,+BAAQD,MAAD,CAAgBE,QAAvB;AAnBJ,yDAqBWD,IArBX;;AAAA;AAAA;AAAA;AAAA,8BAuBU,IAAIL,KAAJ,CAAU,YAAMO,OAAhB,CAvBV;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,eAtBK;AAAA;AAAA;;AAsBUjB,YAAAA,OAtBV;AAAA;AAAA;;AAELkB,YAAAA,OAFK,8DAE4B,EAF5B;AAAA,gCAUDA,OAVC,CAKHL,QALG,EAKHA,QALG,kCAKQM,OAAO,CAACC,GAAR,EALR,wCAUDF,OAVC,CAMHJ,MANG,EAMHA,MANG,gCAMM,EANN,sCAUDI,OAVC,CAOHX,MAPG,EAOHA,MAPG,gCAOM;AACPC,cAAAA,OAAO,EAAE;AADF,aAPN;AAAA;;AAAA,iBAac,qBAAQT,KAAR,CAbd;AAAA;AAAA;AAAA;;AAAA;AAAA,mBAcOsB,OAAO,CAACC,GAAR,CAAYvB,KAAK,CAACwB,GAAN,CAAUvB,OAAV,CAAZ,CAdP;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA,mBAeOA,OAAO,CAACD,KAAD,CAfd;;AAAA;AAAA;;AAAA;AAaGyB,YAAAA,QAbH;AAAA,8CAiBIA,QAjBJ;;AAAA;AAAA;AAAA;AAAA,kBAmBG,IAAId,KAAJ,+CAAiD,aAAMO,OAAvD,EAnBH;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,G","sourcesContent":["import cons from \"consolidate\"\nimport { isArray, isFunction } from \"lodash\"\nimport path from \"path\"\nimport { StitchOptions } from \"./index\"\nimport { Block } from \"./render\"\n\ntype RenderTemplateOptions = Pick<\n  StitchOptions,\n  \"basePath\" | \"locals\" | \"config\"\n>\n\nexport async function renderTemplate(\n  block: Block,\n  options: RenderTemplateOptions = {}\n): Promise<string> {\n  const {\n    basePath = process.cwd(),\n    locals = {},\n    config = {\n      engines: {},\n    },\n  } = options\n\n  try {\n    const rendered = isArray(block)\n      ? await Promise.all(block.map(compile))\n      : await compile(block)\n\n    return rendered\n  } catch (error) {\n    throw new Error(`(@artsy/stitch: lib/renderTemplate) ${error.message}`)\n  }\n\n  async function compile(file) {\n    const ext = path.extname(file).replace(\".\", \"\")\n\n    const compileFn = config.engines[ext] || cons[ext]\n\n    if (!isFunction(compileFn)) {\n      throw new Error(\n        \"(@artsy/stitch: lib/renderTemplate) \" +\n          `Error rendering block with extension ${ext}: Can only render ` +\n          \"templates supported by https://www.npmjs.com/package/consolidate.\"\n      )\n    }\n\n    const filePath = path.join(basePath, file)\n\n    try {\n      const html = await compileFn(filePath, locals)\n\n      // FIXME: Why does consolidate mutate locals?\n      delete (locals as any).filename\n\n      return html\n    } catch (error) {\n      throw new Error(error.message)\n    }\n  }\n}\n"],"file":"renderTemplate.js"}
+\ No newline at end of file
++{"version":3,"sources":["../src/renderTemplate.tsx"],"names":["renderTemplate","filePaths","compile","filePath","ext","path","extname","replace","compileFn","config","engines","cons","Error","locals","html","filename","message","options","Promise","all","map","rendered"],"mappings":";;;;;;;AAAA;;AACA;;AACA;;;;;;;;SAKsBA,c;;;;;;;0BAAf,kBACLC,SADK;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,QAqBUC,OArBV;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sCAqBL,iBAAuBC,QAAvB;AAAA;AAAA;AAAA;AAAA;AAAA;AACQC,wBAAAA,GADR,GACcC,cAAKC,OAAL,CAAaH,QAAb,EAAuBI,OAAvB,CAA+B,GAA/B,EAAoC,EAApC,CADd;AAGQC,wBAAAA,SAHR,GAGoBC,MAAM,CAACC,OAAP,CAAeN,GAAf,KAAuBO,qBAAKP,GAAL,CAH3C;;AAAA,4BAKO,wBAAWI,SAAX,CALP;AAAA;AAAA;AAAA;;AAAA,8BAMU,IAAII,KAAJ,CACJ,wFAC0CR,GAD1C,0BAEE,mEAHE,CANV;;AAAA;AAAA;AAAA;AAAA,+BAcuBI,SAAS,CAACL,QAAD,EAAWU,MAAX,CAdhC;;AAAA;AAcUC,wBAAAA,IAdV;AAgBI;AACA,+BAAQD,MAAD,CAAgBE,QAAvB;AAjBJ,yDAmBWD,IAnBX;;AAAA;AAAA;AAAA;AAAA,8BAqBU,IAAIF,KAAJ,CAAU,YAAMI,OAAhB,CArBV;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,eArBK;AAAA;AAAA;;AAqBUd,YAAAA,OArBV;AAAA;AAAA;;AAELe,YAAAA,OAFK,8DAE4B,EAF5B;AAAA,8BASDA,OATC,CAKHJ,MALG,EAKHA,MALG,gCAKM,EALN,sCASDI,OATC,CAMHR,MANG,EAMHA,MANG,gCAMM;AACPC,cAAAA,OAAO,EAAE;AADF,aANN;AAAA;;AAAA,iBAYc,qBAAQT,SAAR,CAZd;AAAA;AAAA;AAAA;;AAAA;AAAA,mBAaOiB,OAAO,CAACC,GAAR,CAAYlB,SAAS,CAACmB,GAAV,CAAclB,OAAd,CAAZ,CAbP;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA,mBAcOA,OAAO,CAACD,SAAD,CAdd;;AAAA;AAAA;;AAAA;AAYGoB,YAAAA,QAZH;AAAA,8CAgBIA,QAhBJ;;AAAA;AAAA;AAAA;AAAA,kBAkBG,IAAIT,KAAJ,+CAAiD,aAAMI,OAAvD,EAlBH;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,G","sourcesContent":["import cons from \"consolidate\"\nimport { isArray, isFunction } from \"lodash\"\nimport path from \"path\"\nimport { StitchOptions } from \"./index\"\n\ntype RenderTemplateOptions = Pick<StitchOptions, \"locals\" | \"config\">\n\nexport async function renderTemplate(\n  filePaths: string | string[],\n  options: RenderTemplateOptions = {}\n): Promise<string> {\n  const {\n    locals = {},\n    config = {\n      engines: {},\n    },\n  } = options\n\n  try {\n    const rendered = isArray(filePaths)\n      ? await Promise.all(filePaths.map(compile))\n      : await compile(filePaths)\n\n    return rendered\n  } catch (error) {\n    throw new Error(`(@artsy/stitch: lib/renderTemplate) ${error.message}`)\n  }\n\n  async function compile(filePath) {\n    const ext = path.extname(filePath).replace(\".\", \"\")\n\n    const compileFn = config.engines[ext] || cons[ext]\n\n    if (!isFunction(compileFn)) {\n      throw new Error(\n        \"(@artsy/stitch: lib/renderTemplate) \" +\n          `Error rendering block with extension ${ext}: Can only render ` +\n          \"templates supported by https://www.npmjs.com/package/consolidate.\"\n      )\n    }\n\n    try {\n      const html = await compileFn(filePath, locals)\n\n      // FIXME: Why does consolidate mutate locals?\n      delete (locals as any).filename\n\n      return html\n    } catch (error) {\n      throw new Error(error.message)\n    }\n  }\n}\n"],"file":"renderTemplate.js"}
+\ No newline at end of file
+--- a/node_modules/@artsy/stitch/dist/utils.d.ts
++++ b/node_modules/@artsy/stitch/dist/utils.d.ts
+@@ -1,3 +1,3 @@
+ import { Block } from "./render";
+-export declare function isTemplate(block: Block): boolean;
++export declare function isTemplate(filePath: string): boolean;
+ export declare function isComponent(block: Block): boolean;
+--- a/node_modules/@artsy/stitch/dist/utils.js
++++ b/node_modules/@artsy/stitch/dist/utils.js
+@@ -8,16 +8,14 @@ exports.isComponent = isComponent;
+ 
+ var _lodash = require("lodash");
+ 
+-function isTemplate(block) {
+-  if (!(0, _lodash.isString)(block)) {
+-    return false;
+-  }
++var _path = _interopRequireDefault(require("path"));
++
++function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
++
++var BLACKLIST = [".js", ".jsx", ".ts", ".tsx"]; // TODO: Could stat the FS to make sure this is truly an existing template.
+ 
+-  var BLACKLIST = [".js", ".jsx", ".ts", ".tsx"];
+-  var found = BLACKLIST.some(function (extension) {
+-    return block.includes(extension);
+-  });
+-  return !found;
++function isTemplate(filePath) {
++  return !BLACKLIST.includes(_path.default.extname(filePath));
+ }
+ 
+ function isComponent(block) {
+--- a/node_modules/@artsy/stitch/dist/utils.js.map
++++ b/node_modules/@artsy/stitch/dist/utils.js.map
+@@ -1 +1 @@
+-{"version":3,"sources":["../src/utils.tsx"],"names":["isTemplate","block","BLACKLIST","found","some","extension","includes","isComponent","Error"],"mappings":";;;;;;;;AAAA;;AAGO,SAASA,UAAT,CAAoBC,KAApB,EAA2C;AAChD,MAAI,CAAC,sBAASA,KAAT,CAAL,EAAsB;AACpB,WAAO,KAAP;AACD;;AACD,MAAMC,SAAS,GAAG,CAAC,KAAD,EAAQ,MAAR,EAAgB,KAAhB,EAAuB,MAAvB,CAAlB;AACA,MAAMC,KAAK,GAAGD,SAAS,CAACE,IAAV,CAAe,UAAAC,SAAS;AAAA,WAAIJ,KAAK,CAACK,QAAN,CAAeD,SAAf,CAAJ;AAAA,GAAxB,CAAd;AACA,SAAO,CAACF,KAAR;AACD;;AAEM,SAASI,WAAT,CAAqBN,KAArB,EAA4C;AACjD,MAAI,wBAAWA,KAAX,CAAJ,EAAuB;AACrB,WAAO,IAAP;AACD,GAFD,MAEO;AACL,UAAM,IAAIO,KAAJ,CACJ,gCACE,4CAFE,CAAN;AAID;AACF","sourcesContent":["import { isFunction, isString } from \"lodash\"\nimport { Block } from \"./render\"\n\nexport function isTemplate(block: Block): boolean {\n  if (!isString(block)) {\n    return false\n  }\n  const BLACKLIST = [\".js\", \".jsx\", \".ts\", \".tsx\"]\n  const found = BLACKLIST.some(extension => block.includes(extension))\n  return !found\n}\n\nexport function isComponent(block: Block): boolean {\n  if (isFunction(block)) {\n    return true\n  } else {\n    throw new Error(\n      \"(@artsy/stitch: lib/utils) \" +\n        \"Error rendering layout: Invalid component.\"\n    )\n  }\n}\n"],"file":"utils.js"}
+\ No newline at end of file
++{"version":3,"sources":["../src/utils.tsx"],"names":["BLACKLIST","isTemplate","filePath","includes","path","extname","isComponent","block","Error"],"mappings":";;;;;;;;AAAA;;AACA;;;;AAGA,IAAMA,SAAS,GAAG,CAAC,KAAD,EAAQ,MAAR,EAAgB,KAAhB,EAAuB,MAAvB,CAAlB,C,CAEA;;AACO,SAASC,UAAT,CAAoBC,QAApB,EAA+C;AACpD,SAAO,CAACF,SAAS,CAACG,QAAV,CAAmBC,cAAKC,OAAL,CAAaH,QAAb,CAAnB,CAAR;AACD;;AAEM,SAASI,WAAT,CAAqBC,KAArB,EAA4C;AACjD,MAAI,wBAAWA,KAAX,CAAJ,EAAuB;AACrB,WAAO,IAAP;AACD,GAFD,MAEO;AACL,UAAM,IAAIC,KAAJ,CACJ,gCACE,4CAFE,CAAN;AAID;AACF","sourcesContent":["import { isFunction, isString } from \"lodash\"\nimport path from \"path\"\nimport { Block } from \"./render\"\n\nconst BLACKLIST = [\".js\", \".jsx\", \".ts\", \".tsx\"]\n\n// TODO: Could stat the FS to make sure this is truly an existing template.\nexport function isTemplate(filePath: string): boolean {\n  return !BLACKLIST.includes(path.extname(filePath))\n}\n\nexport function isComponent(block: Block): boolean {\n  if (isFunction(block)) {\n    return true\n  } else {\n    throw new Error(\n      \"(@artsy/stitch: lib/utils) \" +\n        \"Error rendering layout: Invalid component.\"\n    )\n  }\n}\n"],"file":"utils.js"}
+\ No newline at end of file
