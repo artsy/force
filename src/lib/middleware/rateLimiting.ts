@@ -1,9 +1,17 @@
 import config from "../../config"
-import { RateLimiterMemory, RateLimiterRedis } from "rate-limiter-flexible"
+import {
+  RateLimiterMemory,
+  RateLimiterRedis,
+  RateLimiterUnion,
+  RateLimiterRes,
+} from "rate-limiter-flexible"
 import requestIp from "request-ip"
 
 const {
   OPENREDIS_URL,
+  BURST_REQUEST_LIMIT,
+  BURST_REQUEST_EXPIRE,
+  BURST_REQUEST_BLOCK_FOR,
   REQUEST_EXPIRE,
   REQUEST_LIMIT,
   REQUEST_PER_INSTANCE_EXPIRE,
@@ -49,15 +57,21 @@ export const rateLimiterMiddlewareFactory = redisClient => {
     console.warn("[Rate Limiting] Using local memory limiter")
   }
 
+  const burstLimiter = new RateLimiterMemory({
+    keyPrefix: "burst",
+    points: BURST_REQUEST_LIMIT,
+    duration: BURST_REQUEST_EXPIRE,
+    blockDuration: BURST_REQUEST_BLOCK_FOR,
+  })
+
+  const combinedRateLimiters = new RateLimiterUnion(burstLimiter, rateLimiter)
+
   const rateLimiterMiddleware = (req, res, next) => {
-    rateLimiter
+    combinedRateLimiters
       .consume(requestIp.getClientIp(req))
+      // @ts-ignore (See https://github.com/animir/node-rate-limiter-flexible/pull/19)
       .then(() => next())
-      .catch(limiterResults => {
-        const secs = Math.round(limiterResults.msBeforeNext / 1000) || 1
-        res.set("Retry-After", String(secs))
-        res.status(429).send("Too Many Requests")
-      })
+      .catch(() => res.status(429).send("Too Many Requests"))
   }
 
   return rateLimiterMiddleware
