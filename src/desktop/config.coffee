@@ -99,7 +99,7 @@ module.exports =
   POSITRON_URL: 'http://localhost:3005'
   PREDICTION_URL: 'https://live.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
-  BURST_REQUEST_LIMIT: 30,
+  BURST_REQUEST_LIMIT: 20,
   BURST_REQUEST_EXPIRE: 1,
   BURST_REQUEST_BLOCK_FOR: 90,
   REQUEST_EXPIRE: 60
