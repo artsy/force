@@ -227,11 +227,11 @@ spec:
             - name: ENABLE_RATE_LIMITING
               value: "true"
             - name: REQUEST_LIMIT
-              value: "100"
+              value: "60"
             - name: REQUEST_EXPIRE
               value: "60"
             - name: REQUEST_PER_INSTANCE_LIMIT
-              value: "120"
+              value: "80"
             - name: REQUEST_PER_INSTANCE_EXPIRE
               value: "300"
           envFrom:
