@@ -12,17 +12,17 @@ app.get("/collections", async (req, res, next) => {
     const { IS_MOBILE } = res.locals.sd
 
     const {
-      ServerApp,
+      bodyHTML,
       headTags,
       redirect,
       scripts,
       styleTags,
-    } = await buildServerApp({
+    } = (await buildServerApp({
       routes,
       url: req.url,
       userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
-    })
+    })) as any
 
     if (redirect) {
       res.redirect(302, redirect.url)
@@ -35,7 +35,7 @@ app.get("/collections", async (req, res, next) => {
       layout: "../../components/main_layout/templates/react_redesign.jade",
       blocks: {
         head: () => <>{headTags}</>,
-        body: ServerApp,
+        body: bodyHTML,
       },
       locals: {
         ...res.locals,

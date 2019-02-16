@@ -18,7 +18,6 @@ setupUser = (user, auction) ->
   auctions.url = "#{API_URL}/api/v1/sales" # Sans is_auction param due to promo sales
 
   auctions.fetch(
-    cache: true
     data: published: true, size: 100, sort: '-timely_at,name'
   ).then(->
     setupUser(req.user, auctions.next())

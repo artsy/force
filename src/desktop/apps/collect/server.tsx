@@ -14,16 +14,16 @@ const index = async (req, res, next) => {
 
     const {
       headTags,
-      ServerApp,
+      bodyHTML,
       redirect,
       scripts,
       styleTags,
-    } = await buildServerApp({
+    } = (await buildServerApp({
       routes,
       url: req.url,
       userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
-    })
+    })) as any
 
     if (redirect) {
       res.redirect(302, redirect.url)
@@ -36,7 +36,7 @@ const index = async (req, res, next) => {
       layout: "../../components/main_layout/templates/react_redesign.jade",
       blocks: {
         head: () => <Meta appUrl={APP_URL} headTags={headTags} />,
-        body: () => <ServerApp />,
+        body: bodyHTML,
       },
       locals: {
         ...res.locals,
