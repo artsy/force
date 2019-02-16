@@ -132,6 +132,9 @@ workflows:
           <<: *not_staging_or_release
       - validate_staging_schema:
           <<: *not_staging_or_release
+      # Nothing actually relies on this at the moment
+      - build:
+          <<: *not_staging_or_release
 
       # Staging
       - push_staging_image:
