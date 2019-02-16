@@ -44,16 +44,13 @@ jobs:
 
   test:
     docker:
-      - image: artsy/hokusai:0.5.2
-    parallelism: 4
+      - image: circleci/node:10.13
+    parallelism: 3
     steps:
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
+      - yarn/setup
       - run:
           name: Test
-          command: |
-            hokusai test
+          command: yarn test
 
   push_staging_image: &push_image
     docker:
