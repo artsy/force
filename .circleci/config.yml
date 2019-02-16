@@ -1,14 +1,47 @@
-version: 2.0
+version: 2.1
+
+orbs:
+  yarn: artsy/yarn@0.1.7
+
 jobs:
   acceptance:
     docker:
       - image: circleci/node:10-stretch-browsers
     steps:
-      - add_ssh_keys
-      - checkout
+      - yarn/setup
       - run:
           name: Acceptance Tests
-          command: "yarn install && yarn acceptance src/test/acceptance/*.js"
+          command: yarn acceptance src/test/acceptance/*.js
+
+  validate_staging_schema:
+    docker:
+      - image: circleci/node:10-stretch-browsers
+    steps:
+      - yarn/setup
+      - run:
+          name: Validate Staging Schema
+          command: node scripts/validateSchemas.js staging
+
+  validate_production_schema:
+    docker:
+      - image: circleci/node:10-stretch-browsers
+    steps:
+      - yarn/setup
+      - run:
+          name: Validate Production Schema
+          command: node scripts/validateSchemas.js production
+
+  build:
+    docker:
+      - image: circleci/node:10-stretch-browsers
+    steps:
+      - yarn/setup
+      - run:
+          name: Build force assets
+          command: yarn build
+      - store_artifacts:
+          path: ~/project/force/.artifacts
+
   test:
     docker:
       - image: artsy/hokusai:0.5.2
@@ -21,24 +54,7 @@ jobs:
           name: Test
           command: |
             hokusai test
-  validate_staging_schema:
-    docker:
-      - image: circleci/node:10-stretch-browsers
-    steps:
-      - add_ssh_keys
-      - checkout
-      - run:
-          name: Validate Staging Schema
-          command: "yarn install && node scripts/validateSchemas.js staging"
-  validate_production_schema:
-    docker:
-      - image: circleci/node:10-stretch-browsers
-    steps:
-      - add_ssh_keys
-      - checkout
-      - run:
-          name: Validate Production Schema
-          command: "yarn install && node scripts/validateSchemas.js production"
+
   push_staging_image: &push_image
     docker:
       - image: artsy/hokusai:0.5.2
@@ -51,6 +67,7 @@ jobs:
           command: |
             hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
   push_production_image: *push_image
+
   deploy_hokusai_staging:
     docker:
       - image: artsy/hokusai:0.5.2
@@ -69,6 +86,7 @@ jobs:
       - run:
           name: Deploy
           command: hokusai staging deploy $CIRCLE_SHA1
+
   deploy_hokusai_production:
     docker:
       - image: artsy/hokusai:0.5.2
@@ -85,55 +103,56 @@ jobs:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin
 
+not_staging_or_release: &not_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - staging
+        - release
+
+only_master: &only_master
+  filters:
+    branches:
+      only: master
+
+only_release: &only_release
+  filters:
+    branches:
+      only: release
+
 workflows:
-  version: 2
   default:
     jobs:
+      # Pre-staging
+      - yarn/update-cache:
+          <<: *not_staging_or_release
       - test:
-          filters:
-            branches:
-              ignore:
-                - staging
-                - release
+          <<: *not_staging_or_release
       - acceptance:
-          filters:
-            branches:
-              ignore:
-                - staging
-                - release
+          <<: *not_staging_or_release
       - validate_staging_schema:
-          filters:
-            branches:
-              ignore:
-                - staging
-                - release
-      - validate_production_schema:
-          filters:
-            branches:
-              only: release
+          <<: *not_staging_or_release
+
+      # Staging
       - push_staging_image:
-          filters:
-            branches:
-              only: master
+          <<: *only_master
           requires:
             - test
             - acceptance
             - validate_staging_schema
-      - push_production_image:
-          filters:
-            branches:
-              only: release
-          requires:
-            - validate_production_schema
       - deploy_hokusai_staging:
-          filters:
-            branches:
-              only: master
+          <<: *only_master
           requires:
             - push_staging_image
+
+      # Release
+      - validate_production_schema:
+          <<: *only_release
+      - push_production_image:
+          <<: *only_release
+          requires:
+            - validate_production_schema
       - deploy_hokusai_production:
-          filters:
-            branches:
-              only: release
+          <<: *only_release
           requires:
             - push_production_image
