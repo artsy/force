@@ -99,15 +99,15 @@ module.exports =
   POSITRON_URL: 'http://localhost:3005'
   PREDICTION_URL: 'https://live.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
-  BURST_REQUEST_LIMIT: 15,
-  BURST_REQUEST_EXPIRE: 1,
-  BURST_REQUEST_BLOCK_FOR: 90,
-  REQUEST_EXPIRE: 60
-  REQUEST_LIMIT: 300
-  REQUEST_PER_INSTANCE_FALLBACK: 100
-  REQUEST_PER_INSTANCE_LIMIT: 100
-  REQUEST_PER_INSTANCE_EXPIRE: 300
-  ENABLE_RATE_LIMITING: false
+  BURST_REQUEST_LIMIT: 15,            # Number of requests allowed per BURST_REQUEST_EXPIRE
+  BURST_REQUEST_EXPIRE: 1,            # The period in seconds to measure burst requests 
+  BURST_REQUEST_BLOCK_FOR: 180,       # The number of seconds to block bursts after their limit is reached
+  REQUEST_EXPIRE: 60                  # The period in seconds to measure rate limits
+  REQUEST_LIMIT: 300                  # The maximum number of requests allowed by 1 IP in REQUEST_EXPOR
+  REQUEST_PER_INSTANCE_FALLBACK: 100  # If Redis fails, fall back to this amount of requests per force instance for rate limiting
+  REQUEST_PER_INSTANCE_LIMIT: 100     # The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy
+  REQUEST_PER_INSTANCE_EXPIRE: 300    # The amount of time the requesting ip has to wait before the in-memory rate limit is disabled
+  ENABLE_RATE_LIMITING: false         # Enable/disable the entire rate limiting middleware
   S3_KEY: null
   S3_SECRET: null
   S3_BUCKET: null

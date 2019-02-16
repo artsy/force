@@ -1,9 +1,5 @@
 import config from "../../config"
-import {
-  RateLimiterMemory,
-  RateLimiterRedis,
-  RateLimiterUnion,
-} from "rate-limiter-flexible"
+import { RateLimiterMemory, RateLimiterRedis } from "rate-limiter-flexible"
 import requestIp from "request-ip"
 
 const {
@@ -56,6 +52,11 @@ export const rateLimiterMiddlewareFactory = redisClient => {
     console.warn("[Rate Limiting] Using local memory limiter")
   }
 
+  /**
+   * This limiter governs high volume requests in a short window from a similar
+   * IP on one instance of force. If one IP uses more `points` in the specified
+   * `duration` it will be rate limited for the `blockDuration`.
+   */
   const burstLimiter = new RateLimiterMemory({
     keyPrefix: "burst",
     points: BURST_REQUEST_LIMIT,
@@ -63,12 +64,18 @@ export const rateLimiterMiddlewareFactory = redisClient => {
     blockDuration: BURST_REQUEST_BLOCK_FOR,
   })
 
-  const combinedRateLimiters = new RateLimiterUnion(burstLimiter, rateLimiter)
-
+  /**
+   * If ddos traffic gets into force this is our first line of defense.
+   * Every cycle counts. It processes the burst limiter first which is
+   * the most performant and most likely to be tripped by an attack. It
+   * goes through the rateLimiter afterwards for a marginally slower, but
+   * distributed rate limit.
+   */
   const rateLimiterMiddleware = (req, res, next) => {
-    combinedRateLimiters
-      .consume(requestIp.getClientIp(req))
-      // @ts-ignore (See https://github.com/animir/node-rate-limiter-flexible/pull/19)
+    const ip = requestIp.getClientIp(req)
+    burstLimiter
+      .consume(ip)
+      .then(() => rateLimiter.consume(ip))
       .then(() => next())
       .catch(() => res.status(429).send("Too Many Requests"))
   }
