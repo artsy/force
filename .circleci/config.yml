@@ -40,7 +40,7 @@ jobs:
           name: Build force assets
           command: yarn build
       - store_artifacts:
-          path: ~/project/force/.artifacts
+          path: ~/project/.artifacts
 
   test:
     docker:
