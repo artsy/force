@@ -140,6 +140,7 @@ workflows:
             - test
             - acceptance
             - validate_staging_schema
+            - build
       - deploy_hokusai_staging:
           <<: *only_master
           requires:
