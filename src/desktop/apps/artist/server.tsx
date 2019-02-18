@@ -23,7 +23,7 @@ app.get(
         headTags,
         styleTags,
         scripts,
-      } = (await buildServerApp({
+      } = await buildServerApp({
         routes,
         url: req.url,
         userAgent: req.header("User-Agent"),
@@ -31,7 +31,7 @@ app.get(
           ...buildServerAppContext(req, res),
           ARTIST_INSIGHTS,
         },
-      })) as any
+      })
 
       if (redirect) {
         res.redirect(302, redirect.url)
