@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 14
+  replicas: 4
   strategy:
     rollingUpdate:
       maxSurge: 2
