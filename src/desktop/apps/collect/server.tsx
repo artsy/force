@@ -18,12 +18,12 @@ const index = async (req, res, next) => {
       redirect,
       scripts,
       styleTags,
-    } = (await buildServerApp({
+    } = await buildServerApp({
       routes,
       url: req.url,
       userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
-    })) as any
+    })
 
     if (redirect) {
       res.redirect(302, redirect.url)
