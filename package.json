@@ -52,7 +52,8 @@
     "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-compiler-1.5.0-artsy.5.tgz",
     "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz",
     "react": "16.8.2",
-    "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz"
+    "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz",
+    "react-test-renderer": "16.8.2"
   },
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
@@ -287,6 +288,7 @@
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.10.2",
     "pug-loader": "2.4.0",
+    "react-test-renderer": "^16.8.2",
     "rewire": "2.2.0",
     "s3": "^4.4.0",
     "should": "^11.1.1",
