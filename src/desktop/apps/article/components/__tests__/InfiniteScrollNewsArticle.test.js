@@ -232,7 +232,7 @@ describe("<InfiniteScrollNewsArticle />", () => {
         trigger.calledOnce.should.equal(true)
         trigger.calledWith("open:auth", registerOptions).should.equal(true)
         resolve()
-      }, 3000)
+      }, 4000)
     })
   })
 
