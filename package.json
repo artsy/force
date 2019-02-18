@@ -51,6 +51,7 @@
     "babel-plugin-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/babel-plugin-relay-1.5.0-artsy.5.tgz",
     "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-compiler-1.5.0-artsy.5.tgz",
     "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz",
+    "react": "16.8.2",
     "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz"
   },
   "dependencies": {

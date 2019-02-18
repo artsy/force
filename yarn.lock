@@ -12677,7 +12677,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-lines-ellipsis@github:xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a":
+react-lines-ellipsis@xiaody/react-lines-ellipsis#0cd517ad9079aeb5e6710178d93dd6faa65b924a:
   version "0.13.0"
   resolved "https://codeload.github.com/xiaody/react-lines-ellipsis/tar.gz/0cd517ad9079aeb5e6710178d93dd6faa65b924a"
 
@@ -12912,17 +12912,7 @@ react-waypoint@^8.0.0:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
 
-react@^16.5.0:
-  version "16.5.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.5.0.tgz#f2c1e754bf9751a549d9c6d9aca41905beb56575"
-  integrity sha512-nw/yB/L51kA9PsAy17T1JrzzGRk+BlFCJwFF7p+pwVxgqwPjYNeZEkkH7LXn9dmflolrYMXLWMTkQ77suKPTNQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    schedule "^0.3.0"
-
-react@^16.8.2:
+react@16.8.2, react@^16.5.0, react@^16.8.2:
   version "16.8.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.2.tgz#83064596feaa98d9c2857c4deae1848b542c9c0c"
   integrity sha512-aB2ctx9uQ9vo09HVknqv3DGRpI7OIGJhCx3Bt0QqoRluEjHSaObJl+nG12GDdYH6sTgE7YiPJ6ZUyMx9kICdXw==
@@ -13918,13 +13908,6 @@ sax@^1.2.1, sax@~1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
   integrity sha1-/YYxojvHgmvvXYcb24c3jJVkeCg=
-
-schedule@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.3.0.tgz#1be2ab2fc2e768536269ce7326efb478d6c045e8"
-  integrity sha512-20+1KVo517sR7Nt+bYBN8a+bEJDKLPEx7Ohtts1kX05E4/HY53YUNuhfkVNItmWAnBYHcpG9vsd2/CJxG+aPCQ==
-  dependencies:
-    object-assign "^4.1.1"
 
 scheduler@^0.13.2:
   version "0.13.2"
