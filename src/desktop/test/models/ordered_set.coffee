@@ -6,13 +6,15 @@ Backbone = require 'backbone'
 OrderedSet = rewire '../../models/ordered_set.coffee'
 
 class Items extends Backbone.Model
-  fetch: -> { then: -> sinon.stub() }
 
 OrderedSet.__set__ 'Items', Items
 
 describe 'OrderedSet', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    fetch = -> { then: -> sinon.stub() }
+    @spiedFetch = sinon.spy(fetch)
+    Items.prototype.fetch = @spiedFetch
     @orderedSet = new OrderedSet
 
   afterEach ->
@@ -25,3 +27,8 @@ describe 'OrderedSet', ->
 
     it 'returns a promise', ->
       @orderedSet.fetchItems()
+
+    it 'supports caching', ->
+      @orderedSet.fetchItems(true, 60)
+      @spiedFetch.calledOnce.should.be.ok()
+      @spiedFetch.lastCall.args.should.eql [{cache: true, cacheTime: 60}]
