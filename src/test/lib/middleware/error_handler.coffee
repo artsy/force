@@ -34,7 +34,7 @@ describe 'errorHandler', ->
     @renderStub.render.args[0][1].code.should.equal 420
     _.isUndefined(@renderStub.render.args[0][1].detail).should.be.ok()
 
-  it 'returns a 401 when an IP is blacklisted', ->
+  it 'returns a 401 when an IP is denied', ->
     errorHandler(new IpDeniedError("You've been blocked"), {}, @res, {})
     @res.status.args[0][0].should.equal 401
     @renderStub.render.args[0][1].code.should.equal 401

@@ -168,20 +168,20 @@ describe 'Vanity route', ->
     routes.__set__ 'proxy',
       web: @web = sinon.stub()
 
-  it 'checks that the asset is whitelisted and sets up proxy', ->
-    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+  it 'checks that the asset is allowed and sets up proxy', ->
+    routes.__set__ 'ALLOWED_VANITY_ASSETS', 'videos/final-video.mp4'
     @req = { params: ['videos/final-video.mp4'], headers: host: '' }
     routes.vanity @req, @res, @next
     @web.args[0][2].target.should.containEql '/videos/final-video.mp4'
 
-  it 'rejects assets that are not whitelisted', ->
-    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+  it 'rejects assets that are not allowed', ->
+    routes.__set__ 'ALLOWED_VANITY_ASSETS', 'videos/final-video.mp4'
     @req = { params: ['videos/demo-video.mp4'], headers: host: '' }
     routes.vanity @req, @res, @next
     @next.called.should.be.true()
 
   it 'redirects to articles page if there is a proxy error', ->
-    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    routes.__set__ 'ALLOWED_VANITY_ASSETS', 'videos/final-video.mp4'
     @req = { params: ['videos/final-video.mp4'], headers: host: '' }
     routes.vanity @req, @res, @next
     @web.args[0][3]('Error')
