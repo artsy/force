@@ -77,7 +77,7 @@ module.exports =
   INTERCOM_BUYER_ENABLED: false
   IMAGE_PROXY: 'GEMINI'
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
-  IP_BLACKLIST: ''
+  IP_DENYLIST: ''
   LINKEDIN_KEY: null
   LINKEDIN_SECRET: null
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Discover and Buy Works from Seattle Art Fair 2017","image":"http://files.artsy.net/images/seattle-art-fair-modal.jpg","photoCredit":"Sarah Cain, waves, 2016; Courtesy of the artist and Galerie Lelong & Co., New York"}]'
@@ -139,7 +139,7 @@ module.exports =
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
-  WHITELISTED_VANITY_ASSETS: ''
+  ALLOWED_VANITY_ASSETS: ''
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

@@ -196,7 +196,7 @@ describe("<InfiniteScrollNewsArticle />", () => {
     component.showAuthModal.calledOnce.should.equal(true)
   })
 
-  it("triggers mediator with correct args", () => {
+  xit("triggers mediator with correct args", () => {
     clock.restore()
     rewire.__set__(
       "positronql",

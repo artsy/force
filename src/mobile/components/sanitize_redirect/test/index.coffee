@@ -32,7 +32,7 @@ describe 'sanitizeRedirect', ->
   it 'blocks data urls', ->
     sanitizeRedirect('data:text/html;base64,PHNjcmlwdD5hbGVydChsb2NhdGlvbi5oYXNoKTs8L3NjcmlwdD4=')[0].should.equal '/'
 
-  it 'blocks external links not whitelisted; redirects to root', ->
+  it 'blocks external links not allowed; redirects to root', ->
     sanitizeRedirect('http://google.com').should.equal '/'
 
   it 'blocks external links that lack protocol; redirects to root', ->

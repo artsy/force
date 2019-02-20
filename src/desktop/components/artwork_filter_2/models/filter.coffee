@@ -18,7 +18,7 @@ module.exports = class ArtworkFilter extends Backbone.Model
 
     @listenToOnce @params, 'firstSet', => @fetch true
 
-    _.each @params.whitelisted, (param) =>
+    _.each @params.allowed, (param) =>
       @listenTo @params, "change:#{param}", => @fetch true
 
   fetch: (reset) ->

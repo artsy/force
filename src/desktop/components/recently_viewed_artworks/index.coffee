@@ -5,7 +5,7 @@ _ = require 'underscore'
 CurrentUser = require '../../models/current_user.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaveControls = require '../artwork_item/save_controls/view.coffee'
-blacklist = require './blacklist.coffee'
+denylist = require './denylist.coffee'
 COOKIE_NAME = 'recently-viewed-artworks'
 COOKIE_EXPIRY = 60 * 60 * 24 * 365
 ARTWORK_COUNT = 8
@@ -37,7 +37,7 @@ module.exports =
     Cookies.set COOKIE_NAME, JSON.stringify(artworkIdsToStore), expires: COOKIE_EXPIRY
 
   shouldShowRVARail: ->
-    !blacklist.check() && cookieValue().length > 0 && location.pathname isnt '/'
+    !denylist.check() && cookieValue().length > 0 && location.pathname isnt '/'
 
   reInitRVARail: ($el) ->
     return unless $el.find('.rva-container').length > 0

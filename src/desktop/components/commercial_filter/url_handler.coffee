@@ -11,11 +11,11 @@ module.exports = class UrlHandler extends Backbone.Router
     @listenTo @params, 'change', @setURLAndTitle
 
   currentPath: ->
-    params = qs.stringify @params.whitelisted()
+    params = qs.stringify @params.allowed()
     fragment = location.pathname
     fragment += "?#{params}" if params
     fragment
 
   setURLAndTitle: ->
-    document.title = collectPageTitle(@params.whitelisted(), PAGE_TITLE_FILTERS)
+    document.title = collectPageTitle(@params.allowed(), PAGE_TITLE_FILTERS)
     @navigate @currentPath(), replace: true

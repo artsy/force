@@ -65,7 +65,7 @@ const {
   APP_TIMEOUT,
   COOKIE_DOMAIN,
   DEFAULT_CACHE_TIME,
-  IP_BLACKLIST,
+  IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
   SEGMENT_WRITE_KEY_SERVER,
@@ -78,9 +78,9 @@ const {
 export default function(app) {
   app.set("trust proxy", true)
 
-  // Blacklist IPs
+  // Denied IPs
   app.use(
-    ipfilter(IP_BLACKLIST.split(","), {
+    ipfilter(IP_DENYLIST.split(","), {
       allowedHeaders: ["x-forwarded-for"],
       log: false,
       mode: "deny",
