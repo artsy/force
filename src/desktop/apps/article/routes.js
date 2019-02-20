@@ -18,6 +18,8 @@ import { stitch as _stitch } from "@artsy/stitch"
 import { stringifyJSONForWeb } from "desktop/components/util/json.coffee"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
+// TODO: Remove after collections A/B test
+// import splitTest from "desktop/components/split_test/index.coffee"
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -124,12 +126,18 @@ export async function index(req, res, next) {
         "../../../components/main_layout/templates/react_blank_index.jade"
     }
 
-    const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
+    const {
+      CURRENT_USER,
+      EDITORIAL_COLLECTIONS_RAIL, // TODO: Remove after A/B test
+      IS_MOBILE,
+      IS_TABLET,
+    } = res.locals.sd
 
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
     const customEditorial = isCustomEditorial(article.id)
+    const showCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
@@ -137,6 +145,9 @@ export async function index(req, res, next) {
     const renderTime = getCurrentUnixTimestamp()
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
+
+    // A/B Collections Rail test
+    // splitTest("editorial_collections_rail").view()
 
     const layout = await stitch({
       basePath: res.app.get("views"),
@@ -166,6 +177,7 @@ export async function index(req, res, next) {
         showTooltips,
         superArticle,
         superSubArticles,
+        showCollectionsRail,
       },
       templates,
     })
