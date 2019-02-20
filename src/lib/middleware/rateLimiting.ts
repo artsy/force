@@ -44,7 +44,7 @@ export const _rateLimiterMiddleware = <
     () =>
       rateLimiter
         .consume(ip)
-        .then(() => next())
+        .then(next)
         .catch(() => res.status(429).send(RATE_LIMIT_MESSAGE)),
     () => res.status(429).send(BURST_LIMIT_MESSAGE)
   )
