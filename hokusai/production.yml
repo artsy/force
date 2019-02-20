@@ -33,15 +33,16 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
-          # readinessProbe:
-          #   httpGet:
-          #     port: 5000
-          #     path: /system/up
-          #     httpHeaders:
-          #       - name: X-FORWARDED-PROTO
-          #         value: https
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 5000
+              path: /system/up
+              httpHeaders:
+                - name: X-FORWARDED-PROTO
+                  value: https
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 10
           resources:
             requests:
               cpu: 700m
