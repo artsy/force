@@ -1,5 +1,9 @@
 import config from "../../config"
-import { RateLimiterMemory, RateLimiterRedis } from "rate-limiter-flexible"
+import {
+  RateLimiterMemory,
+  RateLimiterRedis,
+  RateLimiterAbstract,
+} from "rate-limiter-flexible"
 import requestIp from "request-ip"
 
 const {
@@ -14,6 +18,37 @@ const {
   REQUEST_PER_INSTANCE_FALLBACK,
   ENABLE_RATE_LIMITING,
 } = config
+
+export const BURST_LIMIT_MESSAGE = "Too Many Requests (3.1)"
+export const RATE_LIMIT_MESSAGE = "Too Many Requests (3.2)"
+
+/**
+ * If ddos traffic gets into force this is our first line of defense.
+ * Every cycle counts. It processes the burst limiter first which is
+ * the most performant and most likely to be tripped by an attack. It
+ * goes through the rateLimiter afterwards for a marginally slower, but
+ * distributed rate limit.
+ */
+export const _rateLimiterMiddleware = <
+  B extends RateLimiterAbstract,
+  R extends RateLimiterAbstract
+>(
+  burstLimiter: B,
+  rateLimiter: R
+) => (req, res, next) => {
+  const ip = requestIp.getClientIp(req)
+
+  // Ensure promise returns for test purposes
+  // Not needed for actual middleware
+  return burstLimiter.consume(ip).then(
+    () =>
+      rateLimiter
+        .consume(ip)
+        .then(next)
+        .catch(() => res.status(429).send(RATE_LIMIT_MESSAGE)),
+    () => res.status(429).send(BURST_LIMIT_MESSAGE)
+  )
+}
 
 export const rateLimiterMiddlewareFactory = redisClient => {
   if (ENABLE_RATE_LIMITING) {
@@ -64,21 +99,5 @@ export const rateLimiterMiddlewareFactory = redisClient => {
     blockDuration: BURST_REQUEST_BLOCK_FOR,
   })
 
-  /**
-   * If ddos traffic gets into force this is our first line of defense.
-   * Every cycle counts. It processes the burst limiter first which is
-   * the most performant and most likely to be tripped by an attack. It
-   * goes through the rateLimiter afterwards for a marginally slower, but
-   * distributed rate limit.
-   */
-  const rateLimiterMiddleware = (req, res, next) => {
-    const ip = requestIp.getClientIp(req)
-    burstLimiter
-      .consume(ip)
-      .then(() => rateLimiter.consume(ip))
-      .then(() => next())
-      .catch(() => res.status(429).send("Too Many Requests"))
-  }
-
-  return rateLimiterMiddleware
+  return _rateLimiterMiddleware(burstLimiter, rateLimiter)
 }
