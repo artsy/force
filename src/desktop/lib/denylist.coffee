@@ -1,6 +1,6 @@
 _ = require 'underscore'
 
-module.exports = (blacklist) ->
+module.exports = (denylist) ->
   path: ->
     location.pathname
 
@@ -11,4 +11,4 @@ module.exports = (blacklist) ->
     new RegExp(pattern).test @current()
 
   check: ->
-    _.any _.map(blacklist, _.bind(@test, this))
+    _.any _.map(denylist, _.bind(@test, this))

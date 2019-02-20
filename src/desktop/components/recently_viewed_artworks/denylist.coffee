@@ -1,4 +1,4 @@
-blacklist = require '../../lib/blacklist.coffee'
+denylist = require '../../lib/denylist.coffee'
 
 module.exports =
   patterns: [
@@ -21,4 +21,4 @@ module.exports =
   ]
 
   check: ->
-    blacklist(@patterns).check()
+    denylist(@patterns).check()
