@@ -27,6 +27,7 @@
     "start": "scripts/start.sh",
     "start:prod": "NODE_ENV=production node -r dotenv/config --max_old_space_size=4096 ./src --verbose --debugProd",
     "start:relay": "yarn relay && concurrently --raw --kill-others 'yarn relay --watch' 'yarn start'",
+    "start:ssr": "cd ../reaction && rm -rf node_modules/styled-components && yarn link && cd ../force && yarn link @artsy/reaction && yarn start",
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
