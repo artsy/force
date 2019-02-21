@@ -116,7 +116,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$artwork.css @getRect(@$placeholder)
   
   scaleMeasurement: ->
-    @$measurementBar.css width: "#{@measurementHeight()}"
+    @$measurementBar.css width: "#{@measurementWidth()}"
     @$measurement.css marginTop: "#{@measurementMargin()}px"
 
   # Called on the throttled window resize event
@@ -140,9 +140,9 @@ module.exports = class ViewInRoom extends Backbone.View
     Math.round(scaling * 100) / 100
   
   measurementMargin: -> 
-    @$el.height() / 1.90
+    @$el.height() / 1.79 - 27
 
-  measurementHeight: ->
+  measurementWidth: ->
     @$el.height() / 2.42
 
   # @return [height, width]
