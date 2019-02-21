@@ -15,6 +15,8 @@ deslugify = require '../components/deslugify/index.coffee'
 Relations = require './mixins/relations/fair.coffee'
 MetaOverrides = require './mixins/meta_overrides.coffee'
 
+DEFAULT_CACHE_TIME = 60
+
 module.exports = class Fair extends Backbone.Model
   _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -73,6 +75,7 @@ module.exports = class Fair extends Backbone.Model
       data:
         private_partner: false
       cache: true
+      cacheTime: DEFAULT_CACHE_TIME
       success: ->
         aToZGroup = galleries.groupByAlphaWithColumns 3
         options?.success aToZGroup, galleries
@@ -84,6 +87,7 @@ module.exports = class Fair extends Backbone.Model
     artists.fetchUntilEnd
       url: "#{@url()}/artists"
       cache: true
+      cacheTime: DEFAULT_CACHE_TIME
       success: ->
         aToZGroup = artists.groupByAlphaWithColumns 3
         options.success aToZGroup, artists
@@ -93,12 +97,13 @@ module.exports = class Fair extends Backbone.Model
     sections = new Backbone.Collection
     sections.fetch _.extend options,
       cache: true
+      cacheTime: DEFAULT_CACHE_TIME
       url: "#{@url()}/sections"
 
   fetchPrimarySets: (options) ->
     orderedSets = new OrderedSets
     orderedSets
-      .fetchItemsByOwner('Fair', @get('id'), cache: options.cache)
+      .fetchItemsByOwner('Fair', @get('id'), cache: options.cache, cacheTime: options.cacheTime)
       .done ->
         for set in orderedSets.models
           items = set.get('items').filter (item) ->
