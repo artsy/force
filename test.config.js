@@ -16,7 +16,6 @@ const path = require("path")
 const Adapter = require("enzyme-adapter-react-16")
 const Enzyme = require("enzyme")
 const sd = require("sharify").data
-const $ = require("jquery")
 
 // TODO: Look into why this bumps user off of other node command-line tab
 require("dotenv").config({
@@ -28,7 +27,6 @@ Enzyme.configure({
 })
 
 try {
-  global.$ = global.jQuery = $
   window.matchMedia =
     window.matchMedia ||
     function() {
