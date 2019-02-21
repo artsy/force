@@ -1,15 +1,12 @@
 import React from "react"
 import { once } from "lodash"
-import {
-  Article,
-  ArticleProps,
-} from "@artsy/reaction/dist/Components/Publishing/Article"
+import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import {
   ModalOptions,
   ModalType,
 } from "@artsy/reaction/dist/Components/Authentication/Types"
-
-import InfiniteScrollArticle from "../InfiniteScrollArticle"
+import { AppProps } from "../App"
+import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { setupFollows, setupFollowButtons } from "../FollowButton"
 
 const _SuperArticleView = require("desktop/components/article/client/super_article.coffee")
@@ -20,13 +17,6 @@ const mediator = require("desktop/lib/mediator.coffee")
 // FIXME: Rewire
 let SuperArticleView = _SuperArticleView
 
-interface ArticleLayoutProps extends ArticleProps {
-  templates: {
-    SuperArticleFooter: string
-    SuperArticleHeader: string
-  }
-}
-
 interface ArticleLayoutState {
   following: any // any because the Following class is defined in coffeescript
 }
@@ -35,8 +25,8 @@ interface ArticleModalOptions extends ModalOptions {
   signupIntent: string
 }
 
-export default class ArticleLayout extends React.Component<
-  ArticleLayoutProps,
+export class ArticleLayout extends React.Component<
+  AppProps,
   ArticleLayoutState
 > {
   constructor(props) {
@@ -52,7 +42,8 @@ export default class ArticleLayout extends React.Component<
     setupFollowButtons(this.state.following)
 
     if (isSuper) {
-      new SuperArticleView({
+      // @ts-ignore
+      const _superArticleView = new SuperArticleView({
         el: document.querySelector("body"),
         article: new ArticleModel(article),
       })
@@ -115,6 +106,7 @@ export default class ArticleLayout extends React.Component<
       isMobile,
       renderTime,
       showTooltips,
+      showCollectionsRail,
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
 
@@ -143,6 +135,7 @@ export default class ArticleLayout extends React.Component<
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             renderTime={renderTime}
             showTooltips={showTooltips}
+            showCollectionsRail={showCollectionsRail}
           />
         ) : (
           <InfiniteScrollArticle
@@ -151,6 +144,7 @@ export default class ArticleLayout extends React.Component<
             onOpenAuthModal={this.handleOpenAuthModal}
             renderTime={renderTime}
             showTooltips={showTooltips}
+            showCollectionsRail={showCollectionsRail}
           />
         )}
 

@@ -34,7 +34,7 @@ describe("<App />", () => {
   }
 
   const ArticleLayoutRewire = rewire("../layouts/Article")
-  const ArticleLayout = ArticleLayoutRewire.default
+  const ArticleLayout = ArticleLayoutRewire.ArticleLayout
 
   const AppRewire = rewire("../App")
   AppRewire.__set__("ArticleLayout", ArticleLayout)

@@ -33,7 +33,7 @@ describe("<InfiniteScrollArticle />", () => {
   }
 
   let rewire = require("rewire")("../InfiniteScrollArticle")
-  let InfiniteScrollArticle = rewire.default
+  let InfiniteScrollArticle = rewire.InfiniteScrollArticle
   const { Article } = require("reaction/Components/Publishing")
 
   const getWrapper = props => {

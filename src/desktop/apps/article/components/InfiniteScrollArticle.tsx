@@ -5,7 +5,10 @@ import Waypoint from "react-waypoint"
 import styled from "styled-components"
 import { data as sd } from "sharify"
 import { positronql as _positronql } from "desktop/lib/positronql"
-import { Article } from "reaction/Components/Publishing"
+import {
+  Article,
+  ArticleProps,
+} from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { setupFollows, setupFollowButtons } from "./FollowButton.js"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
@@ -15,7 +18,20 @@ let positronql = _positronql
 
 const FETCH_TOP_OFFSET = 200
 
-export default class InfiniteScrollArticle extends React.Component {
+interface InfiniteScrollArticleState {
+  isLoading: boolean
+  articles: any[]
+  offset: number
+  error: boolean
+  following: any
+  isEnabled: boolean
+  renderTimes: any[]
+}
+
+export class InfiniteScrollArticle extends React.Component<
+  ArticleProps,
+  InfiniteScrollArticleState
+> {
   static propTypes = {
     article: PropTypes.object,
     emailSignupUrl: PropTypes.string,
@@ -54,7 +70,6 @@ export default class InfiniteScrollArticle extends React.Component {
       const data = await positronql({
         query: articlesQuery({
           offset,
-          layout: "standard",
           limit: 3,
           channel: sd.ARTSY_EDITORIAL_CHANNEL,
           omit: this.props.article.id,
@@ -97,7 +112,7 @@ export default class InfiniteScrollArticle extends React.Component {
         return (
           <Waypoint
             onEnter={this.fetchNextArticles}
-            threshold={2.0}
+            // threshold={2.0}
             topOffset={FETCH_TOP_OFFSET}
           />
         )
@@ -141,6 +156,7 @@ export default class InfiniteScrollArticle extends React.Component {
       emailSignupUrl,
       isMobile,
       showTooltips,
+      showCollectionsRail,
       onOpenAuthModal,
     } = this.props
     const { articles, renderTimes } = this.state
@@ -158,6 +174,7 @@ export default class InfiniteScrollArticle extends React.Component {
               isMobile={isMobile}
               display={article.display}
               showTooltips={showTooltips}
+              showCollectionsRail={showCollectionsRail}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
               infiniteScrollEntrySlug={slug}

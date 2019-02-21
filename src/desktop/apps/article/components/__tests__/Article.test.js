@@ -37,7 +37,7 @@ describe("<Article />", () => {
   const rewire = require("rewire")("../layouts/Article")
   const ArticleLayout = rewire.default
   const InfiniteScrollArticle = require("desktop/apps/article/components/InfiniteScrollArticle")
-    .default
+    .InfiniteScrollArticle
   const { Article } = require("reaction/Components/Publishing")
   const SuperArticleView = sinon.stub()
   rewire.__set__("SuperArticleView", SuperArticleView)
