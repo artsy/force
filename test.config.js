@@ -16,6 +16,7 @@ const path = require("path")
 const Adapter = require("enzyme-adapter-react-16")
 const Enzyme = require("enzyme")
 const sd = require("sharify").data
+const $ = require("jquery")
 
 // TODO: Look into why this bumps user off of other node command-line tab
 require("dotenv").config({
@@ -26,9 +27,23 @@ Enzyme.configure({
   adapter: new Adapter(),
 })
 
+try {
+  global.$ = global.jQuery = $
+  window.matchMedia =
+    window.matchMedia ||
+    function() {
+      return {
+        matches: false,
+        addListener: function() {},
+        removeListener: function() {},
+      }
+    }
+} catch (error) {}
+
 sd.AP = {
   loginPagePath: "/login",
   signupPagePath: "/signup",
   facebookPath: "/facebook",
   twitterPath: "/twitter",
 }
+sd.APP_URL = "http://artsy.net"
