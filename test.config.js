@@ -26,9 +26,22 @@ Enzyme.configure({
   adapter: new Adapter(),
 })
 
+try {
+  window.matchMedia =
+    window.matchMedia ||
+    function() {
+      return {
+        matches: false,
+        addListener: function() {},
+        removeListener: function() {},
+      }
+    }
+} catch (error) {}
+
 sd.AP = {
   loginPagePath: "/login",
   signupPagePath: "/signup",
   facebookPath: "/facebook",
   twitterPath: "/twitter",
 }
+sd.APP_URL = "http://artsy.net"

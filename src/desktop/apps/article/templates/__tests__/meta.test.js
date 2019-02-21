@@ -23,7 +23,7 @@ describe("Meta template", () => {
       article,
       crop: url => url,
       sd: {
-        APP_URL: "https://www.artsy.net",
+        APP_URL: "https://artsy.net",
         CURRENT_PATH: "/article/artsy-editorial-slug",
       },
     })
@@ -31,7 +31,7 @@ describe("Meta template", () => {
       "<title>Top Ten Booths at miart 2014 - Artsy</title>"
     )
     html.should.containEql(
-      '<link rel="canonical" href="https://www.artsy.net/article/artsy-editorial-slug"/>'
+      '<link rel="canonical" href="https://artsy.net/article/artsy-editorial-slug"/>'
     )
     html.should.containEql(
       '<meta name="description" content="Artsy Editorial is an editorial channel."/>'
@@ -57,7 +57,7 @@ describe("Meta template", () => {
       article,
       crop: url => url,
       sd: {
-        APP_URL: "https://www.artsy.net",
+        APP_URL: "https://artsy.net",
         CURRENT_PATH: "/news/artsy-editorial-slug",
       },
     })
@@ -65,7 +65,7 @@ describe("Meta template", () => {
       "<title>Top Ten Booths at miart 2014 - Artsy News</title>"
     )
     html.should.containEql(
-      '<link rel="canonical" href="https://www.artsy.net/news/artsy-editorial-slug"/>'
+      '<link rel="canonical" href="https://artsy.net/news/artsy-editorial-slug"/>'
     )
   })
 })
@@ -83,11 +83,13 @@ describe("Classic meta template", () => {
     const html = render("classic_meta")({
       article: new Article(article),
       crop: url => url,
-      sd: {},
+      sd: {
+        APP_URL: "https://artsy.net",
+      },
     })
     html.should.containEql("<title>Top Ten Booths at miart 2014</title>")
     html.should.containEql(
-      '<link rel="canonical" href="undefined/article/gallery-insights-slug"/>'
+      '<link rel="canonical" href="http://artsy.net/article/gallery-insights-slug"/>'
     )
     html.should.containEql(
       '<meta property="description" content="Gallery Insights is a team channel."/>'

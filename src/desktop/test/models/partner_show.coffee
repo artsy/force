@@ -49,7 +49,7 @@ describe 'PartnerShow', ->
         "@type": "Person"
         image: "/images/missing_image.png"
         name: "Pablo Picasso"
-        sameAs: "undefined/artist/#{artist.id}"
+        sameAs: "http://artsy.net/artist/#{artist.id}"
       }
 
   describe '#toPageTitle', ->
