@@ -137,7 +137,6 @@ export async function index(req, res, next) {
     const isTablet = IS_TABLET
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
     const customEditorial = isCustomEditorial(article.id)
-    const showCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
 
     // Email signup
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
@@ -148,6 +147,10 @@ export async function index(req, res, next) {
 
     // A/B Collections Rail test
     // splitTest("editorial_collections_rail").view()
+    const hasCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
+    const showCollectionsRail =
+      hasCollectionsRail &&
+      ["standard", "feature", "news"].includes(article.layout)
 
     const layout = await stitch({
       basePath: res.app.get("views"),
