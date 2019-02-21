@@ -112,7 +112,6 @@ export class InfiniteScrollArticle extends React.Component<
         return (
           <Waypoint
             onEnter={this.fetchNextArticles}
-            // threshold={2.0}
             topOffset={FETCH_TOP_OFFSET}
           />
         )

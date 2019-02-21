@@ -4,21 +4,17 @@ import { Article } from "reaction/Components/Publishing"
 import { ContextProvider } from "reaction/Artsy"
 import { InfiniteScrollNewsArticle } from "./InfiniteScrollNewsArticle"
 import { EditButton } from "desktop/apps/article/components/EditButton"
-import { ArticleLayout as _ArticleLayout } from "./layouts/Article"
+import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 
-// FIXME: Rewire
-let ArticleLayout = _ArticleLayout
-
 export interface AppProps extends ArticleProps {
-  templates: {
+  templates?: {
     SuperArticleFooter: string
     SuperArticleHeader: string
   }
 }
 
-// export default hot(module)(
 export class App extends React.Component<AppProps> {
   getArticleLayout = () => {
     const { article } = this.props
@@ -62,7 +58,6 @@ export class App extends React.Component<AppProps> {
     )
   }
 }
-// )
 
 class EditPortal extends React.Component<ArticleProps> {
   render() {
