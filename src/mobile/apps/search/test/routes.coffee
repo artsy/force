@@ -26,8 +26,22 @@ describe 'Search routes', ->
 
         done()
 
-      it 'redirects without query', ->
+      it 'works with query', ->
+        req = { params: {}, query: { q: "percy" } }
+        res = { render: sinon.stub(), locals: { sd: {} } }
+        routes.index req, res
+        Backbone.sync.args[0][2].success([{}])
+        res.render.called.should.be.ok
+
+      it 'works with term', ->
+        req = { params: {}, query: { term: "percy" } }
+        res = { render: sinon.stub(), locals: { sd: {} } }
+        routes.index req, res
+        Backbone.sync.args[0][2].success([{}])
+        res.render.called.should.be.ok
+
+      it 'redirects without query or term', ->
         req = params: {}, query: {}
-        res = render: sinon.stub(), redirect: sinon.stub(), locals: sd: {}
+        res = redirect: sinon.stub(), locals: sd: {}
         routes.index req, res
         res.redirect.args[0][0].should.equal '/'

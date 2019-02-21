@@ -18,9 +18,10 @@ imageUrl = require './components/image_url'
     .pipe res
 
 @index = (req, res) ->
-  return res.redirect("/") unless req.query.q
+  term = req.query.q || req.query.term
+  return res.redirect("/") unless term
 
-  term = removeDiacritics req.query.q
+  term = removeDiacritics term
   indexes = ['Artwork', 'Artist', 'Article', 'City', 'Fair', 'Tag', 'Gene', 'Feature', 'Page', 'Profile', 'PartnerShow', 'Sale']
   data = { term: term, size: 10 }
   data['indexes[]'] = indexes
@@ -38,7 +39,7 @@ imageUrl = require './components/image_url'
     cache: true
     cacheTime: 60 # 1 minute
     success: (results, response, options) ->
-      totalPages = Math.ceil(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
+      totalPages = Math.ceil(parseInt(options.res?.headers['x-total-count'] or 0)  / 10)
       totalPages = 99 if totalPages > 99
       models = results.models
       res.locals.sd.RESULTS = results.toJSON()

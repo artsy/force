@@ -2,9 +2,10 @@ SearchResults = require '../../collections/search_results'
 removeDiacritics = require('diacritics').remove
 
 module.exports.index = (req, res, next) ->
-  return res.redirect('/') unless req.query.term
+  term = req.query.q || req.query.term
+  return res.redirect('/') unless term
 
-  term = removeDiacritics req.query.term
+  term = removeDiacritics term
   res.locals.sd.term = term
 
   results = new SearchResults
