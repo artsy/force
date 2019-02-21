@@ -25,7 +25,6 @@ describe("App", () => {
   beforeEach(() => {
     props = {
       article: StandardArticle,
-      templates: { SuperArticleFooter: "asdf", SuperArticleHeader: "asdf" },
     }
   })
 

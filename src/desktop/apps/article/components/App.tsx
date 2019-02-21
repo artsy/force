@@ -9,13 +9,12 @@ import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 
 export interface AppProps extends ArticleProps {
-  templates: {
+  templates?: {
     SuperArticleFooter: string
     SuperArticleHeader: string
   }
 }
 
-// export default hot(module)(
 export class App extends React.Component<AppProps> {
   getArticleLayout = () => {
     const { article } = this.props
@@ -59,7 +58,6 @@ export class App extends React.Component<AppProps> {
     )
   }
 }
-// )
 
 class EditPortal extends React.Component<ArticleProps> {
   render() {
