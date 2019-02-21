@@ -20,6 +20,8 @@ view-in-room = {
       opacity 1
     .view-in-room__artwork
       box-shadow 0 2px 5px rgba(black, 0.4)
+    .view-in-room__measurement
+      opacity 1
 
   &__close
     position absolute
@@ -68,3 +70,25 @@ view-in-room = {
       transition all 0.75s
     &.is-notransition
       transition none
+
+  &__measurement-flex-container
+    display flex
+    justify-content center
+    // align-items center
+    height 100%
+
+  &__measurement
+      transition opacity 0.5s
+      opacity 0
+      height 11px
+      min-width: 140px
+      z-index 1000
+      border-left 1px solid gray-darker-color
+      border-right 1px solid gray-darker-color
+      display flex
+      align-items center
+
+  &__line
+    width 100%
+    height 0px
+    border-top 1px solid gray-darker-color
