@@ -23,7 +23,8 @@ describe("Artwork helpers", () => {
       "@type": "Product",
       image: "/images/pic.jpg",
       description: "Some contemporary artwork!",
-      url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      url:
+        "http://artsy.net/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
       brand: {
         "@type": "Person",
         name: "Professor Paint",
@@ -53,7 +54,8 @@ describe("Artwork helpers", () => {
       "@type": "CreativeWork",
       image: "/images/pic.jpg",
       description: "Some contemporary artwork!",
-      url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      url:
+        "http://artsy.net/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
       brand: {
         "@type": "Person",
         name: "Professor Paint",
@@ -95,7 +97,8 @@ describe("Artwork helpers", () => {
       "@context": "http://schema.org",
       "@type": "Product",
       description: "Some contemporary artwork!",
-      url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      url:
+        "http://artsy.net/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
       brand: {
         "@type": "Person",
         name: "Professor Paint",
@@ -148,7 +151,8 @@ describe("Artwork helpers", () => {
       "@context": "http://schema.org",
       "@type": "Product",
       description: "Some contemporary artwork!",
-      url: "undefined/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
+      url:
+        "http://artsy.net/artwork/yee-wong-exploding-powder-movement-blue-and-pink",
       brand: {
         "@type": "Person",
         name: "Professor Paint",
