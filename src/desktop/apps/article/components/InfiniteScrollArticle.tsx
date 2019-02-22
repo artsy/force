@@ -1,10 +1,9 @@
 import * as React from "react"
-import _ from "underscore"
-import PropTypes from "prop-types"
+import { flatten } from "underscore"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"
 import { data as sd } from "sharify"
-import { positronql as _positronql } from "desktop/lib/positronql"
+import { positronql } from "desktop/lib/positronql"
 import {
   Article,
   ArticleProps,
@@ -12,15 +11,13 @@ import {
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { setupFollows, setupFollowButtons } from "./FollowButton.js"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
-
-// FIXME: Rewire
-let positronql = _positronql
+import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 
 const FETCH_TOP_OFFSET = 200
 
 interface InfiniteScrollArticleState {
   isLoading: boolean
-  articles: any[]
+  articles: ArticleData[]
   offset: number
   error: boolean
   following: any
@@ -32,15 +29,6 @@ export class InfiniteScrollArticle extends React.Component<
   ArticleProps,
   InfiniteScrollArticleState
 > {
-  static propTypes = {
-    article: PropTypes.object,
-    emailSignupUrl: PropTypes.string,
-    isMobile: PropTypes.bool,
-    showTooltips: PropTypes.bool,
-    onOpenAuthModal: PropTypes.func,
-    renderTime: PropTypes.number,
-  }
-
   constructor(props) {
     super(props)
 
@@ -125,14 +113,14 @@ export class InfiniteScrollArticle extends React.Component<
     }
   }
 
-  onEnter = (article, { previousPosition, currentPosition }) => {
+  onEnter = (article: ArticleData, { previousPosition, currentPosition }) => {
     if (previousPosition === "above" && currentPosition === "inside") {
       document.title = article.thumbnail_title
       window.history.replaceState({}, article.id, `/article/${article.slug}`)
     }
   }
 
-  onLeave = (i, { previousPosition, currentPosition }) => {
+  onLeave = (i: number, { previousPosition, currentPosition }) => {
     const nextArticle = this.state.articles[i + 1]
 
     if (
@@ -160,7 +148,7 @@ export class InfiniteScrollArticle extends React.Component<
     } = this.props
     const { articles, renderTimes } = this.state
 
-    return _.flatten(
+    return flatten(
       articles.map((article, i) => {
         return (
           <div key={`article-${i}`}>
