@@ -1,30 +1,34 @@
 import * as React from "react"
-import _ from "underscore"
-import PropTypes from "prop-types"
+import { flatten } from "underscore"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"
 import { data as sd } from "sharify"
-import { positronql as _positronql } from "desktop/lib/positronql"
-import { Article } from "reaction/Components/Publishing"
+import { positronql } from "desktop/lib/positronql"
+import {
+  Article,
+  ArticleProps,
+} from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { setupFollows, setupFollowButtons } from "./FollowButton.js"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
-
-// FIXME: Rewire
-let positronql = _positronql
+import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 
 const FETCH_TOP_OFFSET = 200
 
-export default class InfiniteScrollArticle extends React.Component {
-  static propTypes = {
-    article: PropTypes.object,
-    emailSignupUrl: PropTypes.string,
-    isMobile: PropTypes.bool,
-    showTooltips: PropTypes.bool,
-    onOpenAuthModal: PropTypes.func,
-    renderTime: PropTypes.number,
-  }
+interface InfiniteScrollArticleState {
+  isLoading: boolean
+  articles: ArticleData[]
+  offset: number
+  error: boolean
+  following: any
+  isEnabled: boolean
+  renderTimes: any[]
+}
 
+export class InfiniteScrollArticle extends React.Component<
+  ArticleProps,
+  InfiniteScrollArticleState
+> {
   constructor(props) {
     super(props)
 
@@ -54,7 +58,6 @@ export default class InfiniteScrollArticle extends React.Component {
       const data = await positronql({
         query: articlesQuery({
           offset,
-          layout: "standard",
           limit: 3,
           channel: sd.ARTSY_EDITORIAL_CHANNEL,
           omit: this.props.article.id,
@@ -97,7 +100,6 @@ export default class InfiniteScrollArticle extends React.Component {
         return (
           <Waypoint
             onEnter={this.fetchNextArticles}
-            threshold={2.0}
             topOffset={FETCH_TOP_OFFSET}
           />
         )
@@ -111,14 +113,14 @@ export default class InfiniteScrollArticle extends React.Component {
     }
   }
 
-  onEnter = (article, { previousPosition, currentPosition }) => {
+  onEnter = (article: ArticleData, { previousPosition, currentPosition }) => {
     if (previousPosition === "above" && currentPosition === "inside") {
       document.title = article.thumbnail_title
       window.history.replaceState({}, article.id, `/article/${article.slug}`)
     }
   }
 
-  onLeave = (i, { previousPosition, currentPosition }) => {
+  onLeave = (i: number, { previousPosition, currentPosition }) => {
     const nextArticle = this.state.articles[i + 1]
 
     if (
@@ -141,11 +143,12 @@ export default class InfiniteScrollArticle extends React.Component {
       emailSignupUrl,
       isMobile,
       showTooltips,
+      showCollectionsRail,
       onOpenAuthModal,
     } = this.props
     const { articles, renderTimes } = this.state
 
-    return _.flatten(
+    return flatten(
       articles.map((article, i) => {
         return (
           <div key={`article-${i}`}>
@@ -158,6 +161,7 @@ export default class InfiniteScrollArticle extends React.Component {
               isMobile={isMobile}
               display={article.display}
               showTooltips={showTooltips}
+              showCollectionsRail={showCollectionsRail}
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
               infiniteScrollEntrySlug={slug}
