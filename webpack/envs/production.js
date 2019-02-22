@@ -17,9 +17,11 @@ export const productionConfig = {
     filename: "[name].[contenthash].js",
   },
   plugins: [
-    // new CompressionWebpackPlugin({
-    //   test: /(\.(js|ts)x?$)/,
-    // }),
+    new CompressionWebpackPlugin({
+      test: /(\.(js|ts)x?$)/,
+      filename: "[path]",
+      // deleteOriginalAssets: false,
+    }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       fileName: path.resolve(__dirname, "../../manifest.json"),
