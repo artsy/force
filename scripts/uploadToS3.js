@@ -34,20 +34,20 @@ const files = glob.sync(options.files, {
 const generateHeaders = file => {
   const extension = path.extname(file)
   const contentType = mime.getType(extension)
-  const addGzipContentEncoding = [".js", ".gz"].some(ext => ext === extension)
+  // const addGzipContentEncoding = [".js", ".gz"].some(ext => ext === extension)
 
-  let optionalHeaders = {}
-  if (addGzipContentEncoding) {
-    optionalHeaders = {
-      ContentEncoding: "gzip",
-    }
-  }
+  // let optionalHeaders = {}
+  // if (addGzipContentEncoding) {
+  //   optionalHeaders = {
+  //     ContentEncoding: "gzip",
+  //   }
+  // }
 
   return {
     ACL: "public-read",
     CacheControl: "max-age=315360000, public",
     ContentType: contentType,
-    ...optionalHeaders,
+    // ...optionalHeaders,
   }
 }
 
