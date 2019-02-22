@@ -20,7 +20,6 @@ export const productionConfig = {
     new CompressionWebpackPlugin({
       test: /(\.(js|ts)x?$)/,
       filename: "[path]",
-      // deleteOriginalAssets: false,
     }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({

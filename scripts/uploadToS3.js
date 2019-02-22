@@ -34,9 +34,7 @@ const files = glob.sync(options.files, {
 const generateHeaders = file => {
   const extension = path.extname(file)
   const contentType = mime.getType(extension)
-  const addGzipContentEncoding = [".js", ".css", ".gz"].some(
-    ext => ext === extension
-  )
+  const addGzipContentEncoding = [".js", ".gz"].some(ext => ext === extension)
 
   let optionalHeaders = {}
   if (addGzipContentEncoding) {
