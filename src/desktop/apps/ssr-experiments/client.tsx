@@ -6,7 +6,7 @@ import { routes } from "./routes"
 
 const { pathname } = window.location
 
-if (pathname === "/fix-hydration/router") {
+if (pathname === "/ssr-experiments/router") {
   buildClientApp({ routes })
     .then(({ ClientApp }) => {
       ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
@@ -14,7 +14,7 @@ if (pathname === "/fix-hydration/router") {
     .catch(error => {
       console.error(error)
     })
-} else if (pathname === "/fix-hydration/all") {
+} else if (pathname === "/ssr-experiments/all") {
   buildClientApp({ routes })
     .then(({ ClientApp }) => {
       ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))

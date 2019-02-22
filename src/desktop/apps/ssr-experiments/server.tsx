@@ -10,7 +10,7 @@ import { ServerStyleSheet } from "styled-components"
 
 export const app = express()
 
-app.get("/fix-hydration", adminOnly, (_req, res, _next) => {
+app.get("/ssr-experiments", adminOnly, (_req, res, _next) => {
   const sheet = new ServerStyleSheet()
   const html = renderToString(sheet.collectStyles(<App />))
   const styleTags = sheet.getStyleTags()
@@ -27,14 +27,14 @@ app.get("/fix-hydration", adminOnly, (_req, res, _next) => {
 
     <script src='/assets/runtime-manifest.js'></script>
     <script src='/assets/common.js'></script>
-    <script src='/assets/fix-hydration.js'></script>
+    <script src='/assets/ssr-experiments.js'></script>
   </body>
 </html>
   `.trim()
   )
 })
 
-app.get("/fix-hydration/stitch", adminOnly, async (_req, res, next) => {
+app.get("/ssr-experiments/stitch", adminOnly, async (_req, res, next) => {
   try {
     const layout = await stitch({
       basePath: __dirname,
@@ -47,7 +47,7 @@ app.get("/fix-hydration/stitch", adminOnly, async (_req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: "fix-hydration",
+        assetPackage: "ssr-experiments",
       },
     })
 
@@ -58,7 +58,7 @@ app.get("/fix-hydration/stitch", adminOnly, async (_req, res, next) => {
   }
 })
 
-app.get("/fix-hydration/router", adminOnly, async (req, res, next) => {
+app.get("/ssr-experiments/router", adminOnly, async (req, res, next) => {
   try {
     const { bodyHTML, styleTags } = await buildServerApp({
       routes,
@@ -77,7 +77,7 @@ app.get("/fix-hydration/router", adminOnly, async (req, res, next) => {
 
       <script src='/assets/runtime-manifest.js'></script>
       <script src='/assets/common.js'></script>
-      <script src='/assets/fix-hydration.js'></script>
+      <script src='/assets/ssr-experiments.js'></script>
     </body>
   </html>
     `.trim()
@@ -88,7 +88,7 @@ app.get("/fix-hydration/router", adminOnly, async (req, res, next) => {
   }
 })
 
-app.get("/fix-hydration/all*", adminOnly, async (req, res, next) => {
+app.get("/ssr-experiments/all*", adminOnly, async (req, res, next) => {
   try {
     const { bodyHTML, styleTags } = await buildServerApp({
       routes,
@@ -103,7 +103,7 @@ app.get("/fix-hydration/all*", adminOnly, async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: "fix-hydration",
+        assetPackage: "ssr-experiments",
         styleTags,
       },
     })

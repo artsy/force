@@ -2,11 +2,11 @@ import { App } from "./App"
 
 export const routes = [
   {
-    path: "/fix-hydration/router",
+    path: "/ssr-experiments/router",
     Component: App,
   },
   {
-    path: "/fix-hydration/all",
+    path: "/ssr-experiments/all",
     Component: App,
   },
 ]
