@@ -1,6 +1,6 @@
 // @ts-check
 
-import CompressionWebpackPlugin from "compression-webpack-plugin"
+// import CompressionWebpackPlugin from "compression-webpack-plugin"
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
 import path from "path"
@@ -17,10 +17,10 @@ export const productionConfig = {
     filename: "[name].[contenthash].js",
   },
   plugins: [
-    new CompressionWebpackPlugin({
-      test: /(\.(js|ts)x?$)/,
-      filename: "[path]",
-    }),
+    // new CompressionWebpackPlugin({
+    //   test: /(\.(js|ts)x?$)/,
+    //   filename: "[path]",
+    // }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       fileName: path.resolve(__dirname, "../../manifest.json"),
