@@ -1,8 +1,8 @@
 import React from "react"
-import { ArticleLayout } from "../layouts/Article"
+import { ArticleLayout } from "../Article"
 import { mount } from "enzyme"
 import { ContextProvider } from "reaction/Artsy"
-import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
+import { InfiniteScrollArticle } from "../../InfiniteScrollArticle"
 import {
   BasicArticle,
   FeatureArticle,
@@ -17,11 +17,12 @@ import { Display } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Com
 jest.mock("desktop/components/article/client/super_article.coffee")
 const mockSuperArticleView = require("desktop/components/article/client/super_article.coffee") as jest.Mock
 
-jest.mock("../FollowButton.js", () => ({
+jest.mock("../../FollowButton.js", () => ({
   setupFollows: jest.fn(),
   setupFollowButtons: jest.fn(),
 }))
-const mockSetupFollows = require("../FollowButton.js").setupFollows as jest.Mock
+const mockSetupFollows = require("../../FollowButton.js")
+  .setupFollows as jest.Mock
 
 describe("Article Layout", () => {
   let props

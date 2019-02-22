@@ -9,16 +9,13 @@ import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { setupFollows, setupFollowButtons } from "../FollowButton"
 
-const _SuperArticleView = require("desktop/components/article/client/super_article.coffee")
+const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 
-// FIXME: Rewire
-let SuperArticleView = _SuperArticleView
-
 interface ArticleLayoutState {
-  following: any // any because the Following class is defined in coffeescript
+  following: any // Backbone collection
 }
 
 interface ArticleModalOptions extends ModalOptions {
