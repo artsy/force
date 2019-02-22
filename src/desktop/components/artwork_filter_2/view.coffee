@@ -29,7 +29,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @filter, 'change:allFetched', @allFetchedChanged
     @listenTo @filter, 'change:isLoading', @loadingStateChanged
     @listenTo @filter, 'fetchedArtworks', @fetchedArtworks
-    _.each @params.whitelisted, (param) =>
+    _.each @params.allowed, (param) =>
       @listenTo @params, "change:#{param}", @paramsChanged
 
     Backbone.history.on 'route', @listenToHistory

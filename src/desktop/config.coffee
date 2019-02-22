@@ -77,7 +77,7 @@ module.exports =
   INTERCOM_BUYER_ENABLED: false
   IMAGE_PROXY: 'GEMINI'
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
-  IP_BLACKLIST: ''
+  IP_DENYLIST: ''
   LINKEDIN_KEY: null
   LINKEDIN_SECRET: null
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Discover and Buy Works from Seattle Art Fair 2017","image":"http://files.artsy.net/images/seattle-art-fair-modal.jpg","photoCredit":"Sarah Cain, waves, 2016; Courtesy of the artist and Galerie Lelong & Co., New York"}]'
@@ -99,15 +99,15 @@ module.exports =
   POSITRON_URL: 'http://localhost:3005'
   PREDICTION_URL: 'https://live.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
-  BURST_REQUEST_LIMIT: 15,
-  BURST_REQUEST_EXPIRE: 1,
-  BURST_REQUEST_BLOCK_FOR: 90,
-  REQUEST_EXPIRE: 60
-  REQUEST_LIMIT: 300
-  REQUEST_PER_INSTANCE_FALLBACK: 100
-  REQUEST_PER_INSTANCE_LIMIT: 100
-  REQUEST_PER_INSTANCE_EXPIRE: 300
-  ENABLE_RATE_LIMITING: false
+  BURST_REQUEST_LIMIT: 15,            # Number of requests allowed per BURST_REQUEST_EXPIRE
+  BURST_REQUEST_EXPIRE: 1,            # The period in seconds to measure burst requests 
+  BURST_REQUEST_BLOCK_FOR: 180,       # The number of seconds to block bursts after their limit is reached
+  REQUEST_EXPIRE: 60                  # The period in seconds to measure rate limits
+  REQUEST_LIMIT: 300                  # The maximum number of requests allowed by 1 IP in REQUEST_EXPOR
+  REQUEST_PER_INSTANCE_FALLBACK: 60   # If Redis fails, fall back to this amount of requests per force instance for rate limiting
+  REQUEST_PER_INSTANCE_LIMIT: 100     # The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy
+  REQUEST_PER_INSTANCE_EXPIRE: 300    # The amount of time the requesting ip has to wait before the in-memory rate limit is disabled
+  ENABLE_RATE_LIMITING: false         # Enable/disable the entire rate limiting middleware
   S3_KEY: null
   S3_SECRET: null
   S3_BUCKET: null
@@ -139,7 +139,7 @@ module.exports =
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
-  WHITELISTED_VANITY_ASSETS: ''
+  ALLOWED_VANITY_ASSETS: ''
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

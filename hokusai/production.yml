@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 14
+  replicas: 4
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -33,159 +33,22 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
-          # readinessProbe:
-          #   httpGet:
-          #     port: 5000
-          #     path: /system/up
-          #     httpHeaders:
-          #       - name: X-FORWARDED-PROTO
-          #         value: https
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 5000
+              path: /system/up
+              httpHeaders:
+                - name: X-FORWARDED-PROTO
+                  value: https
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 10
           resources:
             requests:
               cpu: 700m
               memory: 1Gi
             limits:
               memory: 1.5Gi
-        - name: force-nginx
-          image: artsy/docker-nginx:latest
-          ports:
-            - containerPort: 8080
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/usr/sbin/nginx", "-s", "quit"]
-          env:
-            - name: "NGINX_DEFAULT_CONF"
-              value: >
-                upstream force {
-                    server 127.0.0.1:5000;
-                }
-                map $http_referer $bad_referer {
-                    hostnames;
-
-                    default                    0;
-
-                    # Put regexes for undesired referers here
-                    "~youtube.com"             1;
-                    "~yahoo.com"               1;
-                    "~bing.com"                1;
-                }
-                log_format postdata '$http_x_forwarded_for - $remote_user [$time_local] '
-                   '"$request" $status $bytes_sent '
-                   '"$http_referer" "$http_user_agent" [$request_body]';
-                server {
-                    listen *:8080;
-                    access_log  /var/log/nginx/access.log postdata;
-                    location /log_in {
-                      if ($bad_referer) {
-                        return 403;
-                      }
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Forwarded-Proto "https";
-                      proxy_redirect off;
-                      proxy_read_timeout 60;
-                      proxy_send_timeout 60;
-                      proxy_pass http://force/log_in;
-                    }
-                    location /sign_up {
-                      if ($bad_referer) {
-                        return 403;
-                      }
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Forwarded-Proto "https";
-                      proxy_redirect off;
-                      proxy_read_timeout 60;
-                      proxy_send_timeout 60;
-                      proxy_pass http://force/sign_up;
-                    }
-                    location /about/sms {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/about/sms;
-                    }
-                    location /forgot_password {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/forgot_password;
-                    }
-                    location /gallery-insights/form {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/gallery-insights/form;
-                    }
-                    location /unsupported-browser {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/unsupported-browser;
-                    }
-                    location /venice-biennale/sms {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/venice-biennale/sms;
-                    }
-                    location /artsy-primer/set-sailthru {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/artsy-primer/set-sailthru;
-                    }
-                    location /oauth2/access_token {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/oauth2/access_token;
-                    }
-                    location /signup/editorial {
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force/signup/editorial;
-                    }
-                    location /news/artsy-editorial-belgian-authorities-reportedly-investigating-two-brothers-smuggled-antiquities-syria {
-                      deny all;
-                    }
-                    location /artwork/xavier-veilhan-light-machine-music {
-                      deny all;
-                    }
-                    location / {
-                        if ($request_method = POST) {
-                          return 403;
-                        }
-                        if ($bad_referer) {
-                          return 403;
-                        }
-
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Forwarded-Proto "https";
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force;
-                    }
-                }
       dnsPolicy: Default
       affinity:
         nodeAffinity:
@@ -223,11 +86,11 @@ spec:
     - port: 443
       protocol: TCP
       name: https
-      targetPort: 8080
+      targetPort: 5000
     - port: 80
       protocol: TCP
       name: http
-      targetPort: 8080
+      targetPort: 5000
   selector:
     app: force
     layer: application

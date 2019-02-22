@@ -6,8 +6,8 @@ require '../analytics/before_ready.js'
 $ -> analytics.ready ->
 
   if  sd.CURRENT_USER?.id
-    whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type']
-    traits = _.extend _.pick(sd.CURRENT_USER, whitelist), session_id: sd.SESSION_ID
+    allowedList = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type']
+    traits = _.extend _.pick(sd.CURRENT_USER, allowedList), session_id: sd.SESSION_ID
     analytics.identify sd.CURRENT_USER.id, traits
     analyticsHooks.on 'auth:logged-out', -> analytics.reset()
 

@@ -32,11 +32,12 @@ const files = glob.sync(options.files, {
 })
 
 const generateHeaders = file => {
-  const contentType = mime.getType(path.extname(file))
+  const extension = path.extname(file)
+  const contentType = mime.getType(extension)
   return {
+    ACL: "public-read",
     CacheControl: "max-age=315360000, public",
     ContentType: contentType,
-    ACL: "public-read",
   }
 }
 

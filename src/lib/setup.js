@@ -48,6 +48,7 @@ import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/midd
 import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
+
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 
@@ -65,7 +66,7 @@ const {
   APP_TIMEOUT,
   COOKIE_DOMAIN,
   DEFAULT_CACHE_TIME,
-  IP_BLACKLIST,
+  IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
   SEGMENT_WRITE_KEY_SERVER,
@@ -78,9 +79,9 @@ const {
 export default function(app) {
   app.set("trust proxy", true)
 
-  // Blacklist IPs
+  // Denied IPs
   app.use(
-    ipfilter(IP_BLACKLIST.split(","), {
+    ipfilter(IP_DENYLIST.split(","), {
       allowedHeaders: ["x-forwarded-for"],
       log: false,
       mode: "deny",

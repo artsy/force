@@ -11,7 +11,7 @@ module.exports = class Params extends Backbone.Model
 
   initialize: ->
     @filterParamKeys = _.pluck(aggregationsMap, 'param')
-    @whitelisted = @filterParamKeys.concat ['for_sale', 'page', 'sort']
+    @allowed = @filterParamKeys.concat ['for_sale', 'page', 'sort']
 
   mapped: ->
     _.reduce aggregationsMap, (memo, { param, apiParam }) =>
@@ -34,4 +34,4 @@ module.exports = class Params extends Backbone.Model
 
   currentParamsQueryString: ->
     # Exclude default values of attributes that are not explicitly set
-    qs.stringify _.pick @attributes, @whitelisted
+    qs.stringify _.pick @attributes, @allowed

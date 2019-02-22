@@ -1,7 +1,7 @@
 _ = require 'underscore'
 
 module.exports =
-  blacklist: [
+  denylist: [
     '^/personalize'
   ]
 
@@ -15,4 +15,4 @@ module.exports =
     new RegExp(pattern).test @current()
 
   check: ->
-    _.any _.map(@blacklist, _.bind(@test, this))
+    _.any _.map(@denylist, _.bind(@test, this))

@@ -10,7 +10,7 @@ Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER } = require '../../config.coffee'
+{ ALLOWED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER } = require '../../config.coffee'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 { createMediaStyle } = require "@artsy/reaction/dist/Utils/Responsive"
@@ -139,8 +139,8 @@ mediaStyles = createMediaStyle()
     res.send 201, { msg: "success", data: data }
 
 @vanity = (req, res, next) ->
-  whitelistedAssets = WHITELISTED_VANITY_ASSETS
-  return next() unless req.params[0].match whitelistedAssets
+  allowedAssets = ALLOWED_VANITY_ASSETS
+  return next() unless req.params[0].match allowedAssets
   req.headers['host'] = VANITY_BUCKET
   target = 'https://' + VANITY_BUCKET + '.s3.amazonaws.com' + '/' + req.params[0]
   proxy.web req, res, target: target, (err) ->

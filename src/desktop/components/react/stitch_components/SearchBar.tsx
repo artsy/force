@@ -1,3 +1,14 @@
 import React from "react"
+import { Box } from "@artsy/palette"
+import { SearchBarQueryRenderer } from "reaction/Components/Search/SearchBar"
+import styled from "styled-components"
 
-export const SearchBar = () => <h1>New Search Bar</h1>
+const SearchBarContainer = styled(Box)`
+  z-index: 100;
+`
+
+export const SearchBar = () => (
+  <SearchBarContainer pt={1} pb={0.5}>
+    <SearchBarQueryRenderer />
+  </SearchBarContainer>
+)

@@ -3,7 +3,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 
 module.exports = class Params extends Backbone.Model
-  urlWhitelist: [
+  allowedURLs: [
     'source'
     'page'
     'medium'
@@ -60,15 +60,15 @@ module.exports = class Params extends Backbone.Model
   allLocations: ->
     _.uniq(@fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities'))
 
-  whitelisted: ->
+  allowed: ->
     paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
-    whitelistedUrlParams = _.pick paramsFromUrl, (value, key) ->
+    allowedUrlParams = _.pick paramsFromUrl, (value, key) ->
       new RegExp(UTM).test key
 
-    whitelistedFilterParams = _.pick @current(), @urlWhitelist
+    allowedFilterParams = _.pick @current(), @allowedURLs
 
-    whitelistedParams = _.assign whitelistedFilterParams, whitelistedUrlParams
+    allowedParams = _.assign allowedFilterParams, allowedUrlParams
 
-    _.omit whitelistedParams, (val, key) ->
+    _.omit allowedParams, (val, key) ->
       (key is 'page' and val is 1) or
       not val?
