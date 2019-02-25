@@ -18,6 +18,7 @@ interface Props {
   onDateChange: (date: string) => void
   relatedArticlesForCanvas?: RelatedArticleCanvasData[]
   renderTime?: number
+  showCollectionsRail?: boolean
 }
 
 interface State {
@@ -109,6 +110,7 @@ export class NewsArticle extends Component<Props, State> {
       isTruncated,
       relatedArticlesForCanvas,
       renderTime,
+      showCollectionsRail,
     } = this.props
     const { bottomOffset } = this.state
 
@@ -130,6 +132,9 @@ export class NewsArticle extends Component<Props, State> {
               relatedArticlesForCanvas={relatedArticlesForCanvas}
               display={display}
               renderTime={renderTime}
+              showCollectionsRail={
+                relatedArticlesForCanvas && showCollectionsRail
+              } // Only show rail if already rendering canvas
             />
           </div>
         </Waypoint>

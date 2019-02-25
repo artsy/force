@@ -85,3 +85,6 @@ app.use(require("./apps/user"))
 // Examples
 app.use(require("./apps/react_example"))
 app.use(require("./apps/isomorphic-relay-example/server").app)
+
+// FIXME: Remove
+app.use(require("./apps/ssr-experiments/server").app)

@@ -4,7 +4,7 @@ import styled from "styled-components"
 import React, { Component, Fragment } from "react"
 import { flatten, debounce, extend, once } from "lodash"
 import Waypoint from "react-waypoint"
-import { positronql as _positronql } from "desktop/lib/positronql"
+import { positronql } from "desktop/lib/positronql"
 import {
   ModalOptions,
   ModalType,
@@ -20,7 +20,6 @@ import { setupFollows, setupFollowButtons } from "./FollowButton.js"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
-
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -31,8 +30,9 @@ interface ArticleModalOptions extends ModalOptions {
 export interface Props {
   article?: ArticleData
   articles: ArticleData[]
-  isMobile: boolean
+  isMobile?: boolean
   renderTime?: number
+  showCollectionsRail?: boolean
 }
 
 interface State {
@@ -49,10 +49,8 @@ interface State {
   relatedArticles: RelatedArticleCanvasData[]
 }
 
-// FIXME: Rewire
-let positronql = _positronql
-
 export class InfiniteScrollNewsArticle extends Component<Props, State> {
+  private debouncedDateChange
   constructor(props) {
     super(props)
 
@@ -61,7 +59,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
 
-    this.onDateChange = debounce(this.onDateChange, 200)
+    this.debouncedDateChange = debounce(this.onDateChange, 200)
 
     this.state = {
       activeArticle: "",
@@ -203,7 +201,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   renderContent = () => {
     const { activeArticle, articles, display, relatedArticles } = this.state
-    const { isMobile, renderTime } = this.props
+    const { isMobile, renderTime, showCollectionsRail } = this.props
 
     let counter = 0
 
@@ -226,16 +224,18 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
           <Fragment key={`article-${i}`}>
             {hasDateDivider && <NewsDateDivider date={article.published_at} />}
             <NewsArticle
-              isMobile={isMobile}
+              isMobile={isMobile || false}
               article={article}
               isTruncated={isTruncated}
-              onDateChange={date => this.onDateChange(date)}
+              onDateChange={this.debouncedDateChange}
               nextArticle={articles[i + 1] as any}
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
               relatedArticlesForCanvas={relatedArticlesCanvas as any}
               display={displayCanvas as any}
               renderTime={hasRenderTime as any}
+              // Only show rail if already rendering canvas
+              showCollectionsRail={relatedArticles && showCollectionsRail}
             />
           </Fragment>
         )
@@ -278,7 +278,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const { date } = this.state
 
     return (
-      <NewsContainer isMobile={isMobile} id="article-root">
+      <NewsContainer isMobile={isMobile || false} id="article-root">
         <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}

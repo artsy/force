@@ -16,6 +16,8 @@ FilterArtworks = require '../../collections/filter_artworks'
 aggregationParams = require './components/browse/aggregations.coffee'
 InfoMenu = require '../../components/info_menu/index.coffee'
 
+DEFAULT_CACHE_TIME = 60
+
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
   filterArtworks = new FilterArtworks
@@ -24,8 +26,8 @@ InfoMenu = require '../../components/info_menu/index.coffee'
   filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
   infoMenu = new InfoMenu(fair: fair)
   Q.all([
-    fair.fetch(cache: true)
-    infoMenu.fetch(cache: true)
+    fair.fetch(cache: true, cacheTime: DEFAULT_CACHE_TIME)
+    infoMenu.fetch(cache: true, cacheTime: DEFAULT_CACHE_TIME)
   ]).then () ->
     res.locals.infoMenu = infoMenu.infoMenu
     # TODO: Dependent on attribute of fair
@@ -155,6 +157,7 @@ InfoMenu = require '../../components/info_menu/index.coffee'
 
   fair.fetchPrimarySets
     cache: true
+    cacheTime: DEFAULT_CACHE_TIME
     error: res.backboneError
     success: (primarySets) =>
       res.locals.primarySets = primarySets
@@ -179,6 +182,7 @@ InfoMenu = require '../../components/info_menu/index.coffee'
           error: res.backboneError
           success: (data) ->
             cache.setHash key, data
+            cache.client?.expire key, DEFAULT_CACHE_TIME
             end data
 
 @fetchFairByOrganizerYear = (req, res, next) ->

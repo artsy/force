@@ -48,6 +48,7 @@ import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/midd
 import * as globalReactModules from "desktop/components/react/stitch_components"
 import config from "../config"
 import compression from "compression"
+
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 

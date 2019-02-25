@@ -25,20 +25,24 @@ class OrderedSets extends Backbone.Collection
 
     dfd = Q.defer()
 
+    cache = options.cache
+    cacheTime = options.cacheTime
+
     @fetch
       url: "#{sd.API_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
-      cache: options.cache
+      cache: cache
+      cacheTime: cacheTime
       data: options.data
       error: dfd.resolve
       success: =>
-        @fetchSets(cache: options.cache).then dfd.resolve
+        @fetchSets(cache: cache, cacheTime: cacheTime).then dfd.resolve
 
     dfd.promise
 
   fetchSets: (options = {}) ->
     dfd = Q.defer()
     Q.allSettled(@map (model) ->
-      model.fetchItems options?.cache
+      model.fetchItems options.cache, options.cacheTime
     ).then dfd.resolve
     dfd.promise
 

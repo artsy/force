@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "desktop/apps/article/components/App"
+import { App } from "desktop/apps/article/components/App"
 
 export const init = () => {
   // Rehydrate data from Server
