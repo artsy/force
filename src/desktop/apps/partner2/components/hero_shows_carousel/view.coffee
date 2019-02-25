@@ -81,7 +81,6 @@ module.exports = class HeroShowsCarousel extends Backbone.View
 
           $selectedDot.removeClass('is-deemphasized')
 
-      ($dots = @$('.mgr-dot')).on 'click', -> flickity.select $dots.index $(this)
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
       @$('.js-mgr-next').on 'click', -> flickity.next()
     ) if partnerShows.length > 1
