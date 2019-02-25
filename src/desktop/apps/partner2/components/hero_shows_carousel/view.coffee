@@ -7,7 +7,7 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class HeroShowsCarousel extends Backbone.View
   defaults:
-    maxNumberOfShows: 10
+    maxNumberOfShows: 50
     numberOfActiveDots: 5
 
   initialize: (options = {}) ->
