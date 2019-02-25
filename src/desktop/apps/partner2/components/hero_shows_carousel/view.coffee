@@ -8,9 +8,10 @@ template = -> require('./index.jade') arguments...
 module.exports = class HeroShowsCarousel extends Backbone.View
   defaults:
     maxNumberOfShows: 10
+    numberOfActiveDots: 5
 
   initialize: (options = {}) ->
-    { @partner, @maxNumberOfShows } = _.defaults options, @defaults
+    { @partner, @maxNumberOfShows, @numberOfActiveDots } = _.defaults options, @defaults
 
   startUp: ->
     @fetchShows().then(@initCarousel).done()
@@ -43,13 +44,42 @@ module.exports = class HeroShowsCarousel extends Backbone.View
   initCarousel: (partnerShows) =>
     return @remove() unless partnerShows.length > 0
 
-    @$el.html template partnerShows: partnerShows
-    initCarousel(@$el, wrapAround: true, imagesLoaded: true, (carousel) =>
+    @$el.html template partnerShows: partnerShows, numberOfActiveDots: @numberOfActiveDots
+    initCarousel(@$el, imagesLoaded: true, (carousel) =>
       flickity = carousel.cells.flickity
       flickity.on 'cellSelect', =>
-        i = flickity.selectedIndex
         @$('.hero-show-caption, .mgr-dot').removeClass 'is-active'
-        @$(".hero-show-caption:eq(#{i}), .mgr-dot:eq(#{i})").addClass 'is-active'
+
+        i = flickity.selectedIndex
+        $selectedDot = @$(".mgr-dot:eq(#{i})")
+        $selectedCaption = @$(".hero-show-caption:eq(#{i})")
+        $selectedDot.add($selectedCaption).addClass 'is-active'
+
+        # . . . o O O O O O o . . .
+
+        # If a de-emphasized dot on one edge is selected, we show the adjacent hidden dot;
+        # on the other edge, hide the de-emphasized dot and de-emphasize the normal dot;
+        # move the rail.
+        if $selectedDot.hasClass('is-deemphasized')
+          $rightDot = $selectedDot.next()
+          $leftDot = $selectedDot.prev()
+
+          if $leftDot.is(':not(.is-deemphasized)') # on the right edge
+            $headActiveDot = @$(".mgr-dot:eq(#{i - @numberOfActiveDots})")
+            $headActiveDot.addClass('is-deemphasized').prev().addClass('is-hidden')
+            $rightDot.removeClass('is-hidden')
+            $refDot = $leftDot
+          else if $rightDot.is(':not(.is-deemphasized)') # on the left edge
+            $tailActiveDot = @$(".mgr-dot:eq(#{i + @numberOfActiveDots})")
+            $tailActiveDot.addClass('is-deemphasized').next().addClass('is-hidden')
+            $leftDot.removeClass('is-hidden')
+            $refDot = $rightDot
+
+          if $refDot?
+            offset = $refDot.offset().left - $selectedDot.offset().left
+            @$('.mgr-dot').css({left: "+=#{offset}"})
+
+          $selectedDot.removeClass('is-deemphasized')
 
       ($dots = @$('.mgr-dot')).on 'click', -> flickity.select $dots.index $(this)
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
