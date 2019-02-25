@@ -19,21 +19,13 @@ link( type='text/css', rel='stylesheet', href=('//fast.fonts.net/cssapi/f7f47a40
 link( type='text/css', rel='stylesheet', href=asset('/assets/' + assetPackage + '.css') )
 
 //- Prefetch major external resources
-link( rel='dns-prefetch', href=asset('https://dpm.demdex.net') )
-link( rel='dns-prefetch', href=asset('https://idsync.rlcdn.com') )
-link( rel='dns-prefetch', href=asset('https://gum.criteo.com') )
-link( rel='dns-prefetch', href=asset('https://api.segment.io') )
-link( rel='dns-prefetch', href=asset('https://d.adroll.com') )
-link( rel='dns-prefetch', href=asset('https://volley.artsy.net') )
-link( rel='dns-prefetch', href=asset('https://api.artsy.net') )
-link( rel='dns-prefetch', href=asset('https://webfonts.artsy.net') )
-link( rel='dns-prefetch', href=asset('https://connect.facebook.net') )
-link( rel='dns-prefetch', href=asset('https://www.googleadservices.com') )
-link( rel='dns-prefetch', href=asset('https://cdn.segment.com') )
-link( rel='dns-prefetch', href=asset('https://googleads.g.doubleclick.net') )
-link( rel='dns-prefetch', href=asset('https://s.adroll.com') )
-link( rel='dns-prefetch', href=asset('https://www.google-analytics.com') )
-link( rel='dns-prefetch', href=asset('https://sb.scorecardresearch.com') )
+link( rel='preconnect', href='https://www.google-analytics.com' )
+link( rel='preconnect', href='https://googleads.g.doubleclick.net' )
+link( rel='preconnect', href='https://www.googleadservices.com' )
+link( rel='preconnect', href='https://gum.criteo.com' )
+
+link( rel='dns-prefetch', href='https://connect.facebook.net' )
+link( rel='dns-prefetch', href='https://cdn.segment.com' )
 
 //- Criteo marketing tag
 script( type='text/javascript', src='//static.criteo.net/js/ld/ld.js', async='true' )
