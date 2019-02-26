@@ -16,6 +16,8 @@ describe("App", () => {
         removeListener: () => {},
       }
     }
+    App = require("desktop/apps/editorial_features/components/gucci/components/App.tsx")
+      .App
     props = {
       activeSection: null,
       curation: {
