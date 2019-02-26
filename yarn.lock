@@ -65,14 +65,13 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@14.1.9":
-  version "14.1.9"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-14.1.9.tgz#5f18728ea46266b4605445938559e400f26f594d"
-  integrity sha512-hRfo01kmkJxiIaMNQsFndOI2EhiBVvScLns1gYKsIR5ERGowICBWCRu42Aq0o0Cv4FwDWwOnGnBGbtxTB6ZB8g==
+"@artsy/reaction@14.1.14":
+  version "14.1.14"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-14.1.14.tgz#1b304959b9fc15b026dc54be6b273f2c3f5cb602"
+  integrity sha512-YYK3HXPUWM7nbrueBJfKTcFgLkKeVRho/YiADNpvKVFg/MCOGxcPoKH0DOq69w+qVBiRZJS14blYBDQ4hOWVdg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
-    "@sentry/browser" "^4.2.3"
     autosuggest-highlight "^3.1.1"
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
@@ -944,15 +943,6 @@
     component-type "^1.2.1"
     join-component "^1.1.0"
 
-"@sentry/browser@^4.2.3":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-4.3.0.tgz#07660b2b17b12a6d8953be20eb8efaa8683fafb9"
-  integrity sha512-Np3T12mpvuih9IouwD44BgDdiQWjdEo2eeYwrh6ZzVLn7UKK2eV1VUsSiYADTN2HQB7TbtAnO0IFI5MZl7CccA==
-  dependencies:
-    "@sentry/core" "4.3.0"
-    "@sentry/types" "4.3.0"
-    "@sentry/utils" "4.3.0"
-
 "@sentry/browser@^4.5.4":
   version "4.5.4"
   resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-4.5.4.tgz#d7953bfeffc5c37cd6717b5e95ce5b89ec1656c2"
@@ -973,16 +963,6 @@
     progress "2.0.0"
     proxy-from-env "^1.0.0"
 
-"@sentry/core@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.3.0.tgz#f51f86b380637b5f2348cd35fdb96c224023c103"
-  integrity sha512-VEMRshyF2J2IJkGTF9fnAd2/a/wR+42qrKwCLVeNxHzZm53VAnSfJd8ZA5jnN5RiydQVGDOylqvdfij/LmmsuQ==
-  dependencies:
-    "@sentry/hub" "4.3.0"
-    "@sentry/minimal" "4.3.0"
-    "@sentry/types" "4.3.0"
-    "@sentry/utils" "4.3.0"
-
 "@sentry/core@4.5.4":
   version "4.5.4"
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.5.4.tgz#31c9a0b66d33cbd5b4d7de2b69d6c7951c7c06a3"
@@ -994,14 +974,6 @@
     "@sentry/utils" "4.5.4"
     tslib "^1.9.3"
 
-"@sentry/hub@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.3.0.tgz#ed7731583d81664057de73e3221a393116362b04"
-  integrity sha512-9nh4Hcx2tZQVHr5JGy1XZd1RgwC2C+1tNFXu06rcxYB20nhKOKtOAH9STrv64vpnK+70AC4miRdlCgqHOKLdxA==
-  dependencies:
-    "@sentry/types" "4.3.0"
-    "@sentry/utils" "4.3.0"
-
 "@sentry/hub@4.5.4":
   version "4.5.4"
   resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.5.4.tgz#7e0980dd2f3ead60ce1393e4e108fd4fe65e40b7"
@@ -1010,14 +982,6 @@
     "@sentry/types" "4.5.3"
     "@sentry/utils" "4.5.4"
     tslib "^1.9.3"
-
-"@sentry/minimal@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-4.3.0.tgz#d83826e713d54c95d4986187d223ef1fabc4e1ed"
-  integrity sha512-yRN+L3O9mlcjqpWiivqJsm3Cy/YNh0ejQKpxxxPD186tl5nzEkAqRq5jCYelYIAdH1eBvg87H5VNNFr/shHxaQ==
-  dependencies:
-    "@sentry/hub" "4.3.0"
-    "@sentry/types" "4.3.0"
 
 "@sentry/minimal@4.5.4":
   version "4.5.4"
@@ -1028,22 +992,10 @@
     "@sentry/types" "4.5.3"
     tslib "^1.9.3"
 
-"@sentry/types@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.3.0.tgz#a5cec425764a72a0817329ac212c5ce085ecdd05"
-  integrity sha512-oBAusA+/JFJJlNfHgikyBPTyvmCr/YxZsLWL2FNOBNJkMClW+m7tQ63x/ZAqRSEd8lnJQxJSU7LfAYDH6LcChQ==
-
 "@sentry/types@4.5.3":
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.5.3.tgz#3350dce2b7f9b936a8c327891c12e3aef7bd8852"
   integrity sha512-7ll1PAFNjrBNX9rzy3P2qAQrpQwHaDO3uKj735qsnGw34OtAS8Xr8WYrjI14f9fMPa/XIeWvMPb4GMic28V/ag==
-
-"@sentry/utils@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-4.3.0.tgz#4d278b55deb6175ada2a78b56716aa2df97cd389"
-  integrity sha512-cEGygJbyc1SUGxbanvk3+JYadiywJupdEkp6L8rRfxur/nNQZq1Jd7tkdm4I2rz5YFVg+yayadAquvr4DIu9nA==
-  dependencies:
-    "@sentry/types" "4.3.0"
 
 "@sentry/utils@4.5.4":
   version "4.5.4"
