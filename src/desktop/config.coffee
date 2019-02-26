@@ -35,8 +35,6 @@ module.exports =
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_INSTANT_PAGE: false
-  ENABLE_MAKE_OFFER: true
-  ENABLE_OFFER_NOTE: null
   ENABLE_MEMORY_PROFILING: false
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
@@ -100,7 +98,7 @@ module.exports =
   PREDICTION_URL: 'https://live.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   BURST_REQUEST_LIMIT: 15,            # Number of requests allowed per BURST_REQUEST_EXPIRE
-  BURST_REQUEST_EXPIRE: 1,            # The period in seconds to measure burst requests 
+  BURST_REQUEST_EXPIRE: 1,            # The period in seconds to measure burst requests
   BURST_REQUEST_BLOCK_FOR: 180,       # The number of seconds to block bursts after their limit is reached
   REQUEST_EXPIRE: 60                  # The period in seconds to measure rate limits
   REQUEST_LIMIT: 300                  # The maximum number of requests allowed by 1 IP in REQUEST_EXPOR
