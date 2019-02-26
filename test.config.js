@@ -27,7 +27,7 @@ Enzyme.configure({
 })
 
 try {
-  global.matchMedia = window.matchMedia =
+  window.matchMedia =
     window.matchMedia ||
     function() {
       return {

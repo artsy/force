@@ -6,18 +6,16 @@ import { mount } from "enzyme"
 describe("App", () => {
   let props
   let App
-  window.matchMedia = () => {
-    return {
-      matches: false,
-      addListener: () => {},
-      removeListener: () => {},
-    }
-  }
 
   beforeEach(() => {
     window.history.pushState = sinon.stub()
-    App = require("desktop/apps/editorial_features/components/gucci/components/App.tsx")
-      .App
+    window.matchMedia = () => {
+      return {
+        matches: false,
+        addListener: () => {},
+        removeListener: () => {},
+      }
+    }
     props = {
       activeSection: null,
       curation: {
