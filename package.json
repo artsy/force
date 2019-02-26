@@ -55,7 +55,6 @@
     "react": "16.8.2",
     "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz",
     "react-test-renderer": "16.8.2",
-    "prop-types": "15.7.2",
     "@babel/runtime": "7.1.5"
   },
   "dependencies": {
@@ -81,6 +80,7 @@
     "@babel/template": "^7.0.0",
     "@babel/types": "^7.0.0",
     "@sentry/browser": "^4.5.4",
+    "@sentry/hub": "4.5.4",
     "accounting": "^0.4.1",
     "analytics-node": "^2.4.0",
     "annyang": "mzikherman/annyang",
