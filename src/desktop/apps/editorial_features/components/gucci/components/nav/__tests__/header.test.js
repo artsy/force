@@ -7,14 +7,6 @@ import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInl
 import Icon from "reaction/Components/Icon"
 
 describe("Header", () => {
-  window.matchMedia = () => {
-    return {
-      matches: false,
-      addListener: () => {},
-      removeListener: () => {},
-    }
-  }
-
   const props = {
     title: "Artists For Gender Equality",
     partner_logo: "http://partner.com/logo.jpg",
