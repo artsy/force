@@ -43,7 +43,7 @@ jobs:
           path: ~/project/.artifacts
       - run:
           name: Generate webpack duplicates report
-          command: curl "https://artsy-dupe-report.now.sh/now.js?buildNum=$CIRCLE_BUILD_NUM&dryRun=true"
+          command: curl "https://artsy-dupe-report.now.sh/now.js?buildNum=$CIRCLE_BUILD_NUM"
 
   test:
     docker:
