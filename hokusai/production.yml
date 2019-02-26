@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 4
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -83,6 +82,21 @@ spec:
                     operator: In
                     values:
                       - foreground
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: force-web
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: force-web
+  minReplicas: 3
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 70
 
 ---
 apiVersion: v1
