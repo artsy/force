@@ -39,6 +39,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$room.imagesLoaded().always =>
       @scaleRoom()
       @scalePlaceholder()
+      @scaleMeasurement()
       @transitionIn()
 
     this
@@ -47,6 +48,8 @@ module.exports = class ViewInRoom extends Backbone.View
     @$artwork = @$('.js-view-in-room-artwork')
     @$placeholder = @$('.js-view-in-room-placeholder')
     @$room = @$('.js-view-in-room-room')
+    @$measurement = @$('.js-view-in-room-measurement')
+    @$measurementBar = @$('.js-view-in-room-measurement-bar')
 
   injectImage: ->
     @$placeholder.add @$artwork
@@ -92,6 +95,15 @@ module.exports = class ViewInRoom extends Backbone.View
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
 
+    measurementDistanceFromBottom = @$el.height() - @measurementMargin()
+    artworkDistanceFromBottom = (@eyeLevel() - (@$placeholder.height() / 2)) * @artworkScalingFactor()
+    difference = measurementDistanceFromBottom - artworkDistanceFromBottom
+    bottomPx = @eyeLevel()
+
+    # RAISES ARTWORK IF IT OVERLAPS THE MEASUREMENT BAR
+    if measurementDistanceFromBottom > artworkDistanceFromBottom
+      bottomPx = bottomPx + ((difference + 10) * (1 / @artworkScalingFactor()))
+
     options = if significantDimension > 254
       bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
@@ -99,7 +111,7 @@ module.exports = class ViewInRoom extends Backbone.View
       transformOrigin: "50% #{@$placeholder.height()}px 0"
 
     else
-      bottom: "#{@eyeLevel()}px"
+      bottom: "#{bottomPx}px"
       marginBottom: -(@$placeholder.height() / 2)
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
@@ -111,12 +123,17 @@ module.exports = class ViewInRoom extends Backbone.View
 
   scaleArtwork: ->
     @$artwork.css @getRect(@$placeholder)
+  
+  scaleMeasurement: ->
+    @$measurementBar.css width: "#{@measurementWidth()}"
+    @$measurement.css marginTop: "#{@measurementMargin()}px"
 
   # Called on the throttled window resize event
   scale: =>
     @scaleRoom()
     @scalePlaceholder()
     @scaleArtwork()
+    @scaleMeasurement()
 
   roomScalingFactor: ->
     roomRatio = @$room.width() / @$room.height()
@@ -130,6 +147,12 @@ module.exports = class ViewInRoom extends Backbone.View
     factor = Math.round(width * @benchRatio) or 1
     scaling = factor / @$placeholder.width()
     Math.round(scaling * 100) / 100
+  
+  measurementMargin: -> 
+    @$el.height() / 1.79 - 27
+
+  measurementWidth: ->
+    @$el.height() / 2.42
 
   # @return [height, width]
   getArtworkDimensions: ->
