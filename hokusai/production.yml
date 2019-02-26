@@ -95,7 +95,7 @@ spec:
     kind: Deployment
     name: force-web
   minReplicas: 3
-  maxReplicas: 8
+  maxReplicas: 12
   targetCPUUtilizationPercentage: 70
 
 ---
