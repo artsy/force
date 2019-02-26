@@ -82,15 +82,30 @@ mediator.on("openAuctionAskSpecialistModal", options => {
 
 mediator.on("openViewInRoom", options => {
   try {
-    const { dimensions } = options
+    const { dimensions, primaryImageIndex } = options
     const { url, width, height } = options.image
 
     let newWidth = width
     let newHeight = height
 
-    const bounds = document
-      .querySelector("[data-type=artwork-image]")
-      .getBoundingClientRect()
+    const images = [].slice.call(
+      document.querySelectorAll("[data-type=artwork-image]")
+    )
+
+    const primaryImage = images.find(image => {
+      if (
+        image.parentNode.parentNode.parentNode.getAttribute("data-index") ===
+        primaryImageIndex.toString()
+      ) {
+        return image
+      }
+    })
+
+    const bounds = primaryImage.getBoundingClientRect()
+
+    // const bounds = document
+    //   .querySelector("[data-type=artwork-image]")
+    //   .getBoundingClientRect()
 
     if (width > height) {
       newWidth = bounds.width
