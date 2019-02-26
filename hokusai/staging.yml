@@ -47,6 +47,30 @@ spec:
               memory: 1Gi
             limits:
               memory: 1.5Gi
+        - name: force-nginx
+          image: artsy/docker-nginx:latest
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
+          env:
+            - name: "NGINX_DEFAULT_CONF"
+              value: >
+                upstream force {
+                    server 127.0.0.1:5000;
+                }
+                server {
+                    listen *:8080;
+                    location / {
+                        proxy_set_header Host staging.artsy.net;
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force;
+                    }
+                }
       dnsPolicy: Default
       affinity:
         nodeAffinity:
@@ -81,14 +105,14 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '300'
 spec:
   ports:
-    - port: 443
-      protocol: TCP
-      name: https
-      targetPort: 5000
     - port: 80
       protocol: TCP
       name: http
-      targetPort: 5000
+      targetPort: 8080
+    - port: 443
+      protocol: TCP
+      name: https
+      targetPort: 8080
   selector:
     app: force
     layer: application
