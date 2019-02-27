@@ -1,4 +1,4 @@
-import get from "lodash.get"
+import { get } from "lodash"
 
 export function getBidderStatus(me, auction) {
   const hasBidder = get(me, "bidders.0")

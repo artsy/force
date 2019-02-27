@@ -1,4 +1,4 @@
-get  = require 'lodash.get'
+{ get }  = require 'lodash'
 moment = require 'moment'
 { compact } = require 'underscore'
 { getBidderStatus } = require '../../../../../utils/domain/auctions/getBidderStatus'

@@ -2,7 +2,7 @@ import Backbone from "backbone"
 import sinon from "sinon"
 import articlesJSON from "./fixtures.coffee"
 import fixtures from "desktop/test/helpers/fixtures.coffee"
-import * as _ from "lodash"
+import { extend, cloneDeep } from "lodash"
 
 const rewire = require("rewire")("../routes")
 const { articles, section, teamChannel } = rewire
@@ -67,7 +67,7 @@ describe("Articles routes", () => {
 
   describe("#section", () => {
     it("renders the section with articles", () => {
-      const sectionObject = _.extend(_.cloneDeep(fixtures.section), {
+      const sectionObject = extend(cloneDeep(fixtures.section), {
         slug: "foo",
       })
       section(req, res, next)
@@ -89,7 +89,7 @@ describe("Articles routes", () => {
 
   describe("#teamChannel", () => {
     it("renders the channel with its articles", () => {
-      const channel = _.extend(_.cloneDeep(fixtures.channel), {
+      const channel = extend(cloneDeep(fixtures.channel), {
         slug: "foo",
         type: "team",
       })
@@ -103,7 +103,7 @@ describe("Articles routes", () => {
     })
 
     it("nexts if channel is not a team channel", () => {
-      const channel = _.extend(_.cloneDeep(fixtures.channel), {
+      const channel = extend(cloneDeep(fixtures.channel), {
         slug: "foo",
         type: "editorial",
       })
@@ -114,7 +114,7 @@ describe("Articles routes", () => {
     })
 
     it("errors if there is an issue fetching a team channel", () => {
-      const channel = _.extend(_.cloneDeep(fixtures.channel), {
+      const channel = extend(cloneDeep(fixtures.channel), {
         slug: "foo",
         type: "editorial",
       })
@@ -125,7 +125,7 @@ describe("Articles routes", () => {
     })
 
     it("handles query params", () => {
-      const channel = _.extend(_.cloneDeep(fixtures.channel), {
+      const channel = extend(cloneDeep(fixtures.channel), {
         slug: "foo",
         type: "team",
       })

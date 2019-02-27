@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 { CLIENT } = require('sharify').data
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-get = require 'lodash.get'
+{ get } = require 'lodash'
 CurrentUser = require '../../../../models/current_user.coffee'
 artistsTemplate = -> require('./artists.jade') arguments...
 
