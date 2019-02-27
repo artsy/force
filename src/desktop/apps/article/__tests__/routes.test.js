@@ -397,6 +397,49 @@ describe("Article Routes", () => {
       })
     })
 
+    describe("Collections rail", () => {
+      // TODO: update after CollectionsRail a/b test
+      let data
+      let stitch
+
+      beforeEach(() => {
+        res.locals.sd.CURRENT_USER = { type: "Admin" }
+        data = {
+          article: _.extend({}, fixtures.article, {
+            slug: "foobar",
+            channel_id: "123",
+            layout: "standard",
+          }),
+        }
+        rewire.__set__(
+          "positronql",
+          sinon.stub().returns(Promise.resolve(data))
+        )
+        stitch = sinon.stub()
+        rewire.__set__("stitch", stitch)
+        rewire.__set__(
+          "subscribedToEditorial",
+          sinon.stub().returns(Promise.resolve(true))
+        )
+      })
+
+      it("Sets showCollectionsRail when EDITORIAL_COLLECTIONS_RAIL is true", done => {
+        res.locals.sd.EDITORIAL_COLLECTIONS_RAIL = 1
+        index(req, res, next).then(() => {
+          stitch.args[0][0].data.showCollectionsRail.should.equal(true)
+          done()
+        })
+      })
+
+      it("Sets showCollectionsRail when EDITORIAL_COLLECTIONS_RAIL is false", done => {
+        res.locals.sd.EDITORIAL_COLLECTIONS_RAIL = 0
+        index(req, res, next).then(() => {
+          stitch.args[0][0].data.showCollectionsRail.should.equal(false)
+          done()
+        })
+      })
+    })
+
     describe("Custom editorial", () => {
       it("#isCustomEditorial returns key if article.id matches custom editorial list", () => {
         isCustomEditorial("5bf30690d8b9430baaf6c6de").should.containEql(

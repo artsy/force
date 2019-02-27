@@ -18,7 +18,7 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
-// TODO: Remove after collections A/B test
+// TODO: update after CollectionsRail a/b test
 const splitTest = require("desktop/components/split_test/index.coffee")
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
@@ -128,7 +128,7 @@ export async function index(req, res, next) {
 
     const {
       CURRENT_USER,
-      EDITORIAL_COLLECTIONS_RAIL, // TODO: Remove after A/B test
+      EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
       IS_MOBILE,
       IS_TABLET,
     } = res.locals.sd
@@ -145,9 +145,9 @@ export async function index(req, res, next) {
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
-    // A/B Collections Rail test
+    // CollectionsRail a/b test
     splitTest("editorial_collections_rail").view()
-    const hasCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
+    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === 1
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)
