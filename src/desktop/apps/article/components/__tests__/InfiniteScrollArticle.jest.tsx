@@ -72,7 +72,7 @@ describe("InfiniteScrollArticle", () => {
     const component = getWrapper()
 
     expect(component.html()).toMatch("Related Stories")
-    expect(component.html()).toMatch("Further Reading")
+    expect(component.html()).toMatch("Further reading")
     expect(component.html()).toMatch("RelatedArticlesPanel")
     expect(component.html()).toMatch("RelatedArticlesCanvas")
   })
