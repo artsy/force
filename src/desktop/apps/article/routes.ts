@@ -18,9 +18,8 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
-
 // TODO: Remove after collections A/B test
-// import splitTest from "desktop/components/split_test/index.coffee"
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -147,7 +146,7 @@ export async function index(req, res, next) {
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     // A/B Collections Rail test
-    // splitTest("editorial_collections_rail").view()
+    splitTest("editorial_collections_rail").view()
     const hasCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
     const showCollectionsRail =
       hasCollectionsRail &&
