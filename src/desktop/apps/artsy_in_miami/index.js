@@ -1,6 +1,6 @@
 import React from "react"
 import queryString from "query-string"
-import merge from "lodash.merge"
+import { merge } from "lodash"
 import { stitch } from "@artsy/stitch"
 
 import adminOnly from "../../lib/admin_only"

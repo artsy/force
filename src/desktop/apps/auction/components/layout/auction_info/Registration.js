@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
-import get from "lodash.get"
+import { get } from "lodash"
 import { connect } from "react-redux"
 
 function Registration(props) {

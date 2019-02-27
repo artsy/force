@@ -1,6 +1,5 @@
-{ extend } = require 'underscore'
 qs = require 'qs'
-get = require 'lodash.get'
+{ get, extend } = require 'lodash'
 metaphysics = require '../../../lib/metaphysics'
 { METAPHYSICS_ENDPOINT, CURRENT_USER } = require('sharify').data
 helpers = require './helpers'

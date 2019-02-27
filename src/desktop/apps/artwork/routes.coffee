@@ -1,6 +1,6 @@
 Artwork = require '../../models/artwork'
 Fair = require '../../models/fair'
-get = require 'lodash.get'
+{ get } = require 'lodash'
 metaphysics = require '../../../lib/metaphysics'
 request = require 'superagent'
 sd = require('sharify').data

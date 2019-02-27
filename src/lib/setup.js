@@ -96,6 +96,11 @@ export default function(app) {
     app.use(timeout(APP_TIMEOUT || "29s"))
   }
 
+  // Inject sharify data and asset middleware before any app code so that when
+  // crashing errors occur we'll at least get a 500 error page.
+  app.use(sharify)
+  app.use(assetMiddleware())
+
   // Error reporting
   if (SENTRY_PRIVATE_DSN) {
     RavenServer.config(SENTRY_PRIVATE_DSN).install()
@@ -131,9 +136,6 @@ export default function(app) {
     options.headers["X-XAPP-TOKEN"] = artsyXapp.token || ""
     return superSync(method, model, options)
   }
-
-  // Inject sharify data before any app code
-  app.use(sharify)
 
   // Cookie and session middleware
   app.use(cookieParser())
@@ -216,7 +218,6 @@ export default function(app) {
   // Redirect requests before they even have to deal with Force routing
   app.use(downcase)
   app.use(hardcodedRedirects)
-  app.use(assetMiddleware())
   app.use(localsMiddleware)
   app.use(backboneErrorHelper)
   app.use(sameOriginMiddleware)
