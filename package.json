@@ -229,7 +229,7 @@
     "uuid": "^3.0.1",
     "validator": "^7.0.0",
     "waypoints": "4.0.0",
-    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-bundle-analyzer": "^3.0.4",
     "xss-filters": "^1.2.6",
     "yargs": "^11.0.0"
   },

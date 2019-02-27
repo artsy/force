@@ -3,7 +3,6 @@
 import path from "path"
 
 export const {
-  ANALYZE_BUNDLE,
   CDN_URL,
   CI,
   NODE_ENV = "development",
@@ -12,6 +11,7 @@ export const {
   WEBPACK_DEVTOOL,
 } = process.env
 
+export const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE === "true"
 export const isDevelopment = NODE_ENV === "development"
 export const isStaging = NODE_ENV === "staging"
 export const isProduction = NODE_ENV === "production"
