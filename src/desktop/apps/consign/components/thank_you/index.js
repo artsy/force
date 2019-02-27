@@ -5,7 +5,7 @@ import React from "react"
 import Select from "../../../../components/main_layout/public/icons/consignments-select.svg"
 import SpeechBubble from "../../../../components/main_layout/public/icons/consignments-speech-bubble.svg"
 import block from "bem-cn-lite"
-import get from "lodash.get"
+import { get } from "lodash"
 import { connect } from "react-redux"
 
 function ThankYou({ isMobile, submission, processingImages, uploadedImages }) {
