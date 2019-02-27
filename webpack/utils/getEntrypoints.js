@@ -1,10 +1,10 @@
 // @ts-check
 
-import path from "path"
-import fs from "fs"
-import { isDevelopment, basePath } from "../../src/lib/environment"
+const path = require("path")
+const fs = require("fs")
+const { isDevelopment, basePath } = require("../../src/lib/environment")
 
-export function getEntrypoints() {
+exports.getEntrypoints = () => {
   return {
     ...findAssets("src/desktop/assets"),
     ...findAssets("src/mobile/assets"),

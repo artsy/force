@@ -1,23 +1,6 @@
 require("source-map-support").install()
 require("regenerator-runtime/runtime")
 
-if (process.env.NODE_ENV === "development") {
-  require("coffeescript/register")
-  require("@babel/register")({
-    extensions: [".ts", ".js", ".tsx", ".jsx"],
-    plugins: ["babel-plugin-dynamic-import-node"],
-  })
-}
-
-global.Promise = require("bluebird")
-
-const artsyXapp = require("artsy-xapp")
-const cache = require("./lib/cache")
-const express = require("express")
-const setup = require("./lib/setup").default
-
-const app = (module.exports = express())
-
 const {
   APP_URL,
   API_URL,
@@ -28,6 +11,43 @@ const {
   KEEPALIVE_TIMEOUT,
   PROFILE_MEMORY,
 } = process.env
+
+const chalk = require("chalk")
+const fs = require("fs")
+const path = require("path")
+const { serverConfig } = require("../webpack/envs/serverConfig")
+
+console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
+
+// Development
+if (NODE_ENV === "development") {
+  require("coffeescript/register")
+  require("@babel/register")({
+    extensions: [".ts", ".js", ".tsx", ".jsx"],
+    plugins: ["babel-plugin-dynamic-import-node"],
+  })
+
+  // Production
+} else {
+  console.log(chalk.yellow("[Force] @babel/register disabled in production.\n"))
+
+  const serverDistFile = serverConfig.output.filename
+  if (!fs.statSync(path.resolve(__dirname, serverDistFile))) {
+    console.log(
+      chalk.red(`[Force] Error: Cannot find ${serverDistFile}. Exiting...`)
+    )
+    process.exit(1)
+  }
+}
+
+global.Promise = require("bluebird")
+
+const artsyXapp = require("artsy-xapp")
+const cache = require("./lib/cache.coffee")
+const express = require("express")
+const setup = require("./lib/setup").default
+
+const app = (module.exports = express())
 
 if (PROFILE_MEMORY) {
   require("./lib/memory_profiler")()

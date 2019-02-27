@@ -1,7 +1,9 @@
 import path from "path"
 import fs from "fs"
 import chalk from "chalk"
-import { isProduction, CDN_URL } from "lib/environment"
+import { isProduction } from "lib/environment"
+
+const { CDN_URL } = process.env
 
 export const assetMiddleware = () => {
   if (isProduction) {

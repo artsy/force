@@ -1,10 +1,12 @@
-import path from "path"
-import webpack from "webpack"
-import nodeExternals from "webpack-node-externals"
-import { NODE_ENV, basePath } from "../../src/lib/environment"
-import { baseConfig } from "./base"
+// @ts-check
 
-export const serverConfig = {
+const path = require("path")
+const webpack = require("webpack")
+const nodeExternals = require("webpack-node-externals")
+const { NODE_ENV, basePath } = require("../../src/lib/environment")
+const { baseConfig } = require("./baseConfig")
+
+exports.serverConfig = {
   mode: NODE_ENV,
   devtool: "source-map",
   target: "node",

@@ -1,12 +1,12 @@
-// @ts-check
+const chalk = require("chalk")
 
-import glob from "glob"
-import chalk from "chalk"
-import fs from "fs"
-import path from "path"
-import crypto from "crypto"
-import { execSync } from "child_process"
-import { baseConfig } from "../envs/base"
+// @ts-check
+const glob = require("glob")
+const fs = require("fs")
+const path = require("path")
+const crypto = require("crypto")
+const { execSync } = require("child_process")
+const { baseConfig } = require("../envs/baseConfig")
 
 // Ouput
 const DEST = "public/assets"
@@ -60,7 +60,7 @@ function createManifest() {
   return manifest
 }
 
-export function getCSSManifest() {
+exports.getCSSManifest = () => {
   try {
     clean()
     compile()
