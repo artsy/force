@@ -1,9 +1,13 @@
+require("source-map-support").install()
 require("regenerator-runtime/runtime")
-require("coffeescript/register")
-require("@babel/register")({
-  extensions: [".ts", ".js", ".tsx", ".jsx"],
-  plugins: ["babel-plugin-dynamic-import-node"],
-})
+
+if (process.env.NODE_ENV === "development") {
+  require("coffeescript/register")
+  require("@babel/register")({
+    extensions: [".ts", ".js", ".tsx", ".jsx"],
+    plugins: ["babel-plugin-dynamic-import-node"],
+  })
+}
 
 global.Promise = require("bluebird")
 
@@ -11,6 +15,7 @@ const artsyXapp = require("artsy-xapp")
 const cache = require("./lib/cache")
 const express = require("express")
 const setup = require("./lib/setup").default
+
 const app = (module.exports = express())
 
 const {
@@ -25,7 +30,7 @@ const {
 } = process.env
 
 if (PROFILE_MEMORY) {
-  require(".src/lib/memory_profiler")()
+  require("./lib/memory_profiler")()
 }
 
 // Connect to Redis

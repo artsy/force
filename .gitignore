@@ -26,6 +26,10 @@ manifest.json
 /src/desktop/public/assets
 /src/mobile/public/assets
 
-/node_modules
 node_modules
+/node_modules
 /public
+
+# Compiled server code
+server.dist.js
+server.dist.js.map

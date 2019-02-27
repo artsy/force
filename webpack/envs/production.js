@@ -5,9 +5,14 @@ import WebpackManifestPlugin from "webpack-manifest-plugin"
 import path from "path"
 import { HashedModuleIdsPlugin } from "webpack"
 import { getCSSManifest } from "../utils/getCSSManifest"
-import { NODE_ENV, isProduction, isCI } from "../../src/lib/environment"
+import {
+  BUILD_SERVER,
+  NODE_ENV,
+  isProduction,
+  isCI,
+} from "../../src/lib/environment"
 
-const buildCSS = isProduction && !isCI
+const buildCSS = isProduction && !(isCI || BUILD_SERVER)
 
 export const productionConfig = {
   mode: NODE_ENV,

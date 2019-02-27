@@ -7,9 +7,9 @@ const os = require("os")
 const path = require("path")
 const uuid = require("uuid")
 
-const { NODE_ENV } = process.env
 const {
   ENABLE_MEMORY_PROFILING,
+  NODE_ENV,
   S3_KEY,
   S3_SECRET,
   S3_BUCKET,

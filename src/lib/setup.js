@@ -114,8 +114,9 @@ export default function(app) {
   app.use(require("../desktop/apps/blank"))
 
   // Make sure we're using SSL and prevent clickjacking
-  app.use(ensureSSL)
-  app.use(hstsMiddleware)
+  // FIXME: Reenabled these
+  // app.use(ensureSSL)
+  // app.use(hstsMiddleware)
 
   if (!NODE_ENV === "test") {
     app.use(helmet.frameguard())
