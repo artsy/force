@@ -1,4 +1,3 @@
-import "jsdom-global/register"
 import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
@@ -9,13 +8,6 @@ describe("App", () => {
 
   beforeEach(() => {
     window.history.pushState = sinon.stub()
-    window.matchMedia = () => {
-      return {
-        matches: false,
-        addListener: () => {},
-        removeListener: () => {},
-      }
-    }
     App = require("desktop/apps/editorial_features/components/gucci/components/App.tsx")
       .App
     props = {
