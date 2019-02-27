@@ -7,30 +7,32 @@ import { DuplicatesPlugin } from "inspectpack/plugin"
 import path from "path"
 import stripAnsi from "strip-ansi"
 
+const plugins = {
+  duplicatesReport: new DuplicatesPlugin({
+    verbose: true,
+    emitHandler(report) {
+      const artifactsPath = path.join(basePath, ".artifacts")
+      fs
+        .mkdir(artifactsPath)
+        .catch(() => Promise.resolve()) // .artifact directory exists, continue...
+        .then(() =>
+          fs.writeFile(
+            path.join(artifactsPath, "duplicates-report"),
+            stripAnsi(report)
+          )
+        )
+        .catch(err => {
+          console.error(
+            "[DuplicatesPlugin] Could not write duplicates report",
+            err
+          )
+        })
+    },
+  }),
+}
+
 export const ciConfig = {
   mode: NODE_ENV,
   devtool: false,
-  plugins: [
-    new DuplicatesPlugin({
-      verbose: true,
-      emitHandler(report) {
-        const artifactsPath = path.join(basePath, ".artifacts")
-        fs
-          .mkdir(artifactsPath)
-          .catch(() => Promise.resolve()) // .artifact directory exists, continue...
-          .then(() =>
-            fs.writeFile(
-              path.join(artifactsPath, "duplicates-report"),
-              stripAnsi(report)
-            )
-          )
-          .catch(err => {
-            console.error(
-              "[DuplicatesPlugin] Could not write duplicates report",
-              err
-            )
-          })
-      },
-    }),
-  ],
+  plugins: [plugins.duplicatesReport],
 }
