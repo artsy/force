@@ -1,4 +1,3 @@
-import "jsdom-global/register"
 import React from "react"
 import auctions from "desktop/apps/auctions2/reducers"
 import bootstrap from "desktop/apps/auctions2/__tests__/fixtures/currentAuctions"

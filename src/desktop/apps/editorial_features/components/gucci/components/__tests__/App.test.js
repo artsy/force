@@ -1,4 +1,3 @@
-import "jsdom-global/register"
 import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
@@ -6,13 +5,6 @@ import { mount } from "enzyme"
 describe("App", () => {
   let props
   let App
-  window.matchMedia = () => {
-    return {
-      matches: false,
-      addListener: () => {},
-      removeListener: () => {},
-    }
-  }
 
   beforeEach(() => {
     window.history.pushState = sinon.stub()

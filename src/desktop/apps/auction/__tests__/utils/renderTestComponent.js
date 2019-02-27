@@ -1,9 +1,3 @@
-// Include JSDom if running from Mocha. Jest automatically injects.
-const isMocha = typeof jest === "undefined"
-if (isMocha) {
-  require("jsdom-global/register")
-}
-
 import Articles from "desktop/collections/articles.coffee"
 import Auction from "desktop/models/auction.coffee"
 import CurrentUser from "desktop/models/current_user.coffee"
