@@ -17,11 +17,10 @@ exports.serverConfig = {
   entry: path.join(basePath, "src/index.js"),
   output: {
     filename: "server.dist.js",
-    path: path.resolve(basePath, "src"),
+    path: path.resolve(basePath),
   },
   module: {
     rules: [
-      ...baseConfig.module.rules,
       {
         test: /\.coffee$/,
         include: [path.resolve(basePath, "node_modules/artsy-ezel-components")],
@@ -39,6 +38,7 @@ exports.serverConfig = {
           },
         ],
       },
+      ...baseConfig.module.rules,
     ],
   },
   plugins: [

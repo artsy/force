@@ -21,5 +21,5 @@ if [ "$NODE_ENV" != "production" ]; then
   fi
   exec node "${OPT[@]}" ./src
 else
-  exec node "${OPT[@]}" ./src/server.dist.js
+  exec node "${OPT[@]}" ./server.dist.js
 fi

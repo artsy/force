@@ -5,7 +5,6 @@
 //
 
 import config from "../config"
-
 import ddTracer from "dd-trace"
 import _ from "underscore"
 import addRequestId from "express-request-id"
@@ -20,7 +19,6 @@ import glob from "glob"
 import helmet from "helmet"
 import logger from "artsy-morgan"
 import path from "path"
-
 import session from "cookie-session"
 import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
@@ -60,8 +58,6 @@ import { isDevelopment, isProduction } from "lib/environment"
 
 // Old Sentry SDK
 import RavenServer from "raven"
-
-console.log(config)
 
 const {
   API_REQUEST_TIMEOUT,
@@ -117,9 +113,8 @@ export default function(app) {
   app.use(require("../desktop/apps/blank"))
 
   // Make sure we're using SSL and prevent clickjacking
-  // FIXME: Reenabled these
-  // app.use(ensureSSL)
-  // app.use(hstsMiddleware)
+  app.use(ensureSSL)
+  app.use(hstsMiddleware)
 
   if (!NODE_ENV === "test") {
     app.use(helmet.frameguard())
