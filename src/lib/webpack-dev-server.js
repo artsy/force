@@ -2,7 +2,7 @@ import express from "express"
 import webpack from "webpack"
 import webpackConfig from "../../webpack"
 
-const app = (module.exports = express())
+export const app = express()
 const compiler = webpack(webpackConfig)
 
 app.use(

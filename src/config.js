@@ -4,10 +4,8 @@
 // TODO: We should probably drop these config files altogether and just rely
 // on process.env and sharify.
 //
-const config = Object.assign(
-  {},
-  require("./desktop/config"),
-  require("./mobile/config")
-)
 
-export default config
+module.exports = {
+  ...require("./desktop/config"),
+  ...require("./mobile/config"),
+}

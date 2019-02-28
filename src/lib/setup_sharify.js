@@ -14,6 +14,8 @@ import _ from "underscore"
 import config from "../config"
 import sharify from "sharify"
 
+console.log(config)
+
 sharify.data = _.extend(
   _.pick(
     config,

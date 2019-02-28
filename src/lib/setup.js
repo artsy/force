@@ -4,6 +4,8 @@
 // populating sharify data
 //
 
+import config from "../config"
+
 import ddTracer from "dd-trace"
 import _ from "underscore"
 import addRequestId from "express-request-id"
@@ -46,7 +48,6 @@ import marketingModals from "./middleware/marketing_modals"
 import { addIntercomUserHash } from "./middleware/intercom"
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
-import config from "../config"
 import compression from "compression"
 
 import { assetMiddleware } from "./middleware/assetMiddleware"
@@ -59,6 +60,8 @@ import { isDevelopment, isProduction } from "lib/environment"
 
 // Old Sentry SDK
 import RavenServer from "raven"
+
+console.log(config)
 
 const {
   API_REQUEST_TIMEOUT,
@@ -183,7 +186,7 @@ export default function(app) {
 
   // Development servers
   if (isDevelopment) {
-    app.use(require("./webpack-dev-server"))
+    app.use(require("./webpack-dev-server").app)
 
     app.use(
       require("stylus").middleware({

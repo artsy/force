@@ -13,31 +13,14 @@ const {
 } = process.env
 
 const chalk = require("chalk")
-const fs = require("fs")
-const path = require("path")
-const { serverConfig } = require("../webpack/envs/serverConfig")
-
 console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 
-// Development
 if (NODE_ENV === "development") {
   require("coffeescript/register")
   require("@babel/register")({
     extensions: [".ts", ".js", ".tsx", ".jsx"],
     plugins: ["babel-plugin-dynamic-import-node"],
   })
-
-  // Production
-} else {
-  console.log(chalk.yellow("[Force] @babel/register disabled in production.\n"))
-
-  const serverDistFile = serverConfig.output.filename
-  if (!fs.statSync(path.resolve(__dirname, serverDistFile))) {
-    console.log(
-      chalk.red(`[Force] Error: Cannot find ${serverDistFile}. Exiting...`)
-    )
-    process.exit(1)
-  }
 }
 
 global.Promise = require("bluebird")
@@ -69,6 +52,7 @@ also could be gravity being down.`)
     console.error(err)
     process.exit()
   })
+
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server

@@ -1,7 +1,7 @@
 import * as routes from "./routes"
 import express from "express"
 
-const app = (module.exports = express())
+export const app = express()
 
 app.set("view engine", "jade")
 app.set("views", `${__dirname}/templates`)

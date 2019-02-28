@@ -2,8 +2,8 @@
 
 const path = require("path")
 const stripAnsi = require("strip-ansi")
+const fs = require("fs").promises
 const { DuplicatesPlugin } = require("inspectpack/plugin")
-const { promises: fs } = require("fs")
 const { NODE_ENV, basePath } = require("../../src/lib/environment")
 
 const plugins = {
