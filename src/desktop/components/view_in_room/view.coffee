@@ -11,11 +11,11 @@ module.exports = class ViewInRoom extends Backbone.View
 
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
-    0.132 * @roomWidth
+    0.139 * @roomWidth
 
   # Should be visually at about 12" from interstitial
   groundLevel: ->
-    0.095 * @roomWidth
+    0.099 * @roomWidth
 
   events:
     'click .js-view-in-room-close': 'remove'
@@ -95,12 +95,6 @@ module.exports = class ViewInRoom extends Backbone.View
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
 
-    bottomPx = @eyeLevel()
-
-    # RAISES ARTWORK IF IT OVERLAPS THE MEASUREMENT BAR
-    if significantDimension > 200
-      bottomPx = bottomPx + (significantDimension - 200)
-
     options = if significantDimension > 254
       bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
@@ -108,7 +102,7 @@ module.exports = class ViewInRoom extends Backbone.View
       transformOrigin: "50% #{@$placeholder.height()}px 0"
 
     else
-      bottom: "#{bottomPx}px"
+      bottom: "#{@eyeLevel()}px"
       marginBottom: -(@$placeholder.height() / 2)
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
