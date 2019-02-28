@@ -103,7 +103,7 @@ module.exports =
   REQUEST_EXPIRE: 60                  # The period in seconds to measure rate limits
   REQUEST_LIMIT: 300                  # The maximum number of requests allowed by 1 IP in REQUEST_EXPOR
   REQUEST_PER_INSTANCE_FALLBACK: 60   # If Redis fails, fall back to this amount of requests per force instance for rate limiting
-  REQUEST_PER_INSTANCE_LIMIT: 100     # The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy
+  REQUEST_PER_INSTANCE_LIMIT: 301     # The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy
   REQUEST_PER_INSTANCE_EXPIRE: 300    # The amount of time the requesting ip has to wait before the in-memory rate limit is disabled
   ENABLE_RATE_LIMITING: false         # Enable/disable the entire rate limiting middleware
   S3_KEY: null
