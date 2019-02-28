@@ -1,5 +1,5 @@
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
-import get from "lodash.get"
+import { get } from "lodash"
 import u from "updeep"
 import { contains } from "underscore"
 import { data as sd } from "sharify"

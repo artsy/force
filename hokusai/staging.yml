@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 3
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -47,6 +46,30 @@ spec:
               memory: 1Gi
             limits:
               memory: 1.5Gi
+        - name: force-nginx
+          image: artsy/docker-nginx:latest
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
+          env:
+            - name: "NGINX_DEFAULT_CONF"
+              value: >
+                upstream force {
+                    server 127.0.0.1:5000;
+                }
+                server {
+                    listen *:8080;
+                    location / {
+                        proxy_set_header Host staging.artsy.net;
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force;
+                    }
+                }
       dnsPolicy: Default
       affinity:
         nodeAffinity:
@@ -59,6 +82,21 @@ spec:
                       - foreground
 
 ---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: force-web
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: force-web
+  minReplicas: 2
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -69,26 +107,26 @@ metadata:
   name: force-web
   namespace: default
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: 'arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard'
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: 'http'
-    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: '60'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: 'artsy-elb-logs'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: 'staging-force'
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '300'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: "60"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "artsy-elb-logs"
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "staging-force"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
 spec:
   ports:
-    - port: 443
-      protocol: TCP
-      name: https
-      targetPort: 5000
     - port: 80
       protocol: TCP
       name: http
-      targetPort: 5000
+      targetPort: 8080
+    - port: 443
+      protocol: TCP
+      name: https
+      targetPort: 8080
   selector:
     app: force
     layer: application

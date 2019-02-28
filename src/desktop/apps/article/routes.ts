@@ -2,22 +2,25 @@ import * as _ from "underscore"
 import embed from "particle"
 import { findKey } from "lodash"
 import { URL } from "url"
-import markdown from "desktop/components/util/markdown.coffee"
-import App from "desktop/apps/article/components/App"
+import { App } from "desktop/apps/article/components/App"
 import ArticleQuery from "desktop/apps/article/queries/article"
-import _Article from "desktop/models/article.coffee"
-import Articles from "desktop/collections/articles.coffee"
 import {
   SuperSubArticlesQuery,
   SuperArticleQuery,
 } from "desktop/apps/article/queries/superArticle"
 import { positronql as _positronql } from "desktop/lib/positronql"
-import { crop, resize } from "desktop/components/resizer/index.coffee"
 import { data as _sd } from "sharify"
 import { stitch as _stitch } from "@artsy/stitch"
-import { stringifyJSONForWeb } from "desktop/components/util/json.coffee"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
+const Articles = require("desktop/collections/articles.coffee")
+const markdown = require("desktop/components/util/markdown.coffee")
+const { crop, resize } = require("desktop/components/resizer/index.coffee")
+const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
+const _Article = require("desktop/models/article.coffee")
+
+// TODO: Remove after collections A/B test
+// import splitTest from "desktop/components/split_test/index.coffee"
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -124,7 +127,12 @@ export async function index(req, res, next) {
         "../../../components/main_layout/templates/react_blank_index.jade"
     }
 
-    const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
+    const {
+      CURRENT_USER,
+      EDITORIAL_COLLECTIONS_RAIL, // TODO: Remove after A/B test
+      IS_MOBILE,
+      IS_TABLET,
+    } = res.locals.sd
 
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
@@ -137,6 +145,13 @@ export async function index(req, res, next) {
     const renderTime = getCurrentUnixTimestamp()
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
+
+    // A/B Collections Rail test
+    // splitTest("editorial_collections_rail").view()
+    const hasCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
+    const showCollectionsRail =
+      hasCollectionsRail &&
+      ["standard", "feature", "news"].includes(article.layout)
 
     const layout = await stitch({
       basePath: res.app.get("views"),
@@ -166,6 +181,7 @@ export async function index(req, res, next) {
         showTooltips,
         superArticle,
         superSubArticles,
+        showCollectionsRail,
       },
       templates,
     })
@@ -187,7 +203,7 @@ const getBodyClass = article => {
   return bodyClass
 }
 
-export function classic(req, res, next) {
+export function classic(req, res, _next) {
   const article = new Article({
     id: req.params.slug,
   })
@@ -260,7 +276,7 @@ export function amp(req, res, next) {
 }
 
 export const subscribedToEditorial = email => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     if (!email.length) {
       return resolve(false)
     }
@@ -288,7 +304,7 @@ export const subscribedToEditorial = email => {
   })
 }
 
-export const editorialSignup = (req, res, next) => {
+export const editorialSignup = (req, res, _next) => {
   // Add user to list
   sailthru.apiPost(
     "user",
@@ -329,7 +345,7 @@ export const editorialSignup = (req, res, next) => {
   )
 }
 
-export const redirectPost = (req, res, next) =>
+export const redirectPost = (req, res, _next) =>
   res.redirect(301, req.url.replace("post", "article"))
 
 export const isCustomEditorial = id => {

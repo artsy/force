@@ -30,8 +30,9 @@ interface ArticleModalOptions extends ModalOptions {
 export interface Props {
   article?: ArticleData
   articles: ArticleData[]
-  isMobile: boolean
+  isMobile?: boolean
   renderTime?: number
+  showCollectionsRail?: boolean
 }
 
 interface State {
@@ -200,7 +201,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   renderContent = () => {
     const { activeArticle, articles, display, relatedArticles } = this.state
-    const { isMobile, renderTime } = this.props
+    const { isMobile, renderTime, showCollectionsRail } = this.props
 
     let counter = 0
 
@@ -223,7 +224,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
           <Fragment key={`article-${i}`}>
             {hasDateDivider && <NewsDateDivider date={article.published_at} />}
             <NewsArticle
-              isMobile={isMobile}
+              isMobile={isMobile || false}
               article={article}
               isTruncated={isTruncated}
               onDateChange={this.debouncedDateChange}
@@ -233,6 +234,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               relatedArticlesForCanvas={relatedArticlesCanvas as any}
               display={displayCanvas as any}
               renderTime={hasRenderTime as any}
+              // Only show rail if already rendering canvas
+              showCollectionsRail={relatedArticles && showCollectionsRail}
             />
           </Fragment>
         )
@@ -275,7 +278,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const { date } = this.state
 
     return (
-      <NewsContainer isMobile={isMobile} id="article-root">
+      <NewsContainer isMobile={isMobile || false} id="article-root">
         <NewsNav date={date} positionTop={61} />
         {this.renderContent()}
         {this.renderWaypoint()}

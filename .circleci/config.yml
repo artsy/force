@@ -41,6 +41,9 @@ jobs:
           command: yarn build
       - store_artifacts:
           path: ~/project/.artifacts
+      - run:
+          name: Generate webpack duplicates report
+          command: curl "https://artsy-dupe-report.now.sh/now.js?buildNum=$CIRCLE_BUILD_NUM"
 
   test:
     docker:

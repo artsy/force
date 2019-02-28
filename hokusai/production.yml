@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: force-web
 spec:
-  replicas: 4
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -49,6 +48,30 @@ spec:
               memory: 1Gi
             limits:
               memory: 1.5Gi
+        - name: force-nginx
+          image: artsy/docker-nginx:latest
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
+          env:
+            - name: "NGINX_DEFAULT_CONF"
+              value: >
+                upstream force {
+                    server 127.0.0.1:5000;
+                }
+                server {
+                    listen *:8080;
+                    location / {
+                        proxy_set_header Host artsy.net;
+                        proxy_redirect off;
+                        proxy_read_timeout 60;
+                        proxy_send_timeout 60;
+                        proxy_pass http://force;
+                    }
+                }
       dnsPolicy: Default
       affinity:
         nodeAffinity:
@@ -59,6 +82,21 @@ spec:
                     operator: In
                     values:
                       - foreground
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: force-web
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: force-web
+  minReplicas: 3
+  maxReplicas: 12
+  targetCPUUtilizationPercentage: 70
 
 ---
 apiVersion: v1
@@ -83,14 +121,14 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
 spec:
   ports:
-    - port: 443
-      protocol: TCP
-      name: https
-      targetPort: 5000
     - port: 80
       protocol: TCP
       name: http
-      targetPort: 5000
+      targetPort: 8080
+    - port: 443
+      protocol: TCP
+      name: https
+      targetPort: 8080
   selector:
     app: force
     layer: application
