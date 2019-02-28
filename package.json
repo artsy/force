@@ -26,7 +26,7 @@
     "relay": "node scripts/relayCompiler.js",
     "sentry": "scripts/sentry.sh",
     "start": "scripts/start.sh",
-    "start:prod": "NODE_ENV=production yarn start",
+    "start:prod": "yarn assets && yarn build:server && NODE_ENV=production yarn start",
     "start:relay": "yarn relay && concurrently --raw --kill-others 'yarn relay --watch' 'yarn start'",
     "start:ssr": "cd ../reaction && rm -rf node_modules/styled-components && yarn link && cd ../force && yarn link @artsy/reaction && yarn start",
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
