@@ -82,8 +82,5 @@ app.use(require("./apps/feature"))
 // User profiles
 app.use(require("./apps/user"))
 
-// Examples
-app.use(require("./apps/react_example").app)
-
-// FIXME: Remove
+// Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
