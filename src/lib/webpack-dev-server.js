@@ -1,10 +1,9 @@
 import express from "express"
 import webpack from "webpack"
-import path from "path"
+import webpackConfig from "../../webpack"
 
-const app = (module.exports = express())
-const config = require(path.join(__dirname, "../../", "webpack"))
-const compiler = webpack(config)
+export const app = express()
+const compiler = webpack(webpackConfig)
 
 app.use(
   require("webpack-hot-middleware")(compiler, {
@@ -15,7 +14,7 @@ app.use(
 app.use(
   require("webpack-dev-middleware")(compiler, {
     quiet: true,
-    publicPath: config.output.publicPath,
+    publicPath: webpackConfig.output.publicPath,
     serverSideRender: true,
     stats: "errors-only",
   })

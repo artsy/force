@@ -8,6 +8,7 @@ module.exports = (err, req, res, next) ->
     __dirname,
     '../../desktop/components/error_handler/index.jade'
   )
+
   isDevelopment = argv.verbose or NODE_ENV is 'development'
   code = 504 if req.timedout
   code ||= err.status || 500

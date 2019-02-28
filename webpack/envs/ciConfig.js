@@ -1,11 +1,10 @@
 // @ts-check
 
-import { NODE_ENV, basePath } from "../../src/lib/environment"
-
-import { promises as fs } from "fs"
-import { DuplicatesPlugin } from "inspectpack/plugin"
-import path from "path"
-import stripAnsi from "strip-ansi"
+const path = require("path")
+const stripAnsi = require("strip-ansi")
+const fs = require("fs").promises
+const { DuplicatesPlugin } = require("inspectpack/plugin")
+const { NODE_ENV, basePath } = require("../../src/lib/environment")
 
 const plugins = {
   duplicatesReport: new DuplicatesPlugin({
