@@ -10,11 +10,11 @@ import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { clone } from "lodash"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 
-jest.mock("../FollowButton.js", () => ({
+jest.mock("../FollowButton", () => ({
   setupFollows: jest.fn(),
   setupFollowButtons: jest.fn(),
 }))
-const mockSetupFollows = require("../FollowButton.js").setupFollows as jest.Mock
+const mockSetupFollows = require("../FollowButton").setupFollows as jest.Mock
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),

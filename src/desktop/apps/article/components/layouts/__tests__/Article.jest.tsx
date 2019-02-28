@@ -17,12 +17,11 @@ import { Display } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Com
 jest.mock("desktop/components/article/client/super_article.coffee")
 const mockSuperArticleView = require("desktop/components/article/client/super_article.coffee") as jest.Mock
 
-jest.mock("../../FollowButton.js", () => ({
+jest.mock("../../FollowButton", () => ({
   setupFollows: jest.fn(),
   setupFollowButtons: jest.fn(),
 }))
-const mockSetupFollows = require("../../FollowButton.js")
-  .setupFollows as jest.Mock
+const mockSetupFollows = require("../../FollowButton").setupFollows as jest.Mock
 
 describe("Article Layout", () => {
   let props

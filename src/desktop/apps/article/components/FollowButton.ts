@@ -1,11 +1,14 @@
-import Artist from "desktop/models/artist.coffee"
-import CurrentUser from "desktop/models/current_user.coffee"
-import {
-  Following,
-  FollowButton,
-} from "desktop/components/follow_button/index.coffee"
 import { data as sd } from "sharify"
 import { map } from "lodash"
+const Artist = require("desktop/models/artist.coffee")
+const CurrentUser = require("desktop/models/current_user.coffee")
+const {
+  Following,
+  FollowButton,
+} = require("desktop/components/follow_button/index.coffee")
+
+// TODO: Deprecate in favor of relay follow, needs added to Reaction article Text
+// https://artsyproduct.atlassian.net/browse/GROW-725
 
 export const setupFollows = () => {
   if (CurrentUser.orNull()) {
@@ -14,11 +17,14 @@ export const setupFollows = () => {
 }
 
 export const setupFollowButtons = following => {
+  // @ts-ignore
   const artists = map($(".artist-follow"), artist => {
     return artist.getAttribute("data-id")
   })
   map(artists, artist => {
-    new FollowButton({
+    // @ts-ignore
+    const _followButton = new FollowButton({
+      // @ts-ignore
       el: $(`.artist-follow[data-id="${artist}"]`),
       following,
       modelName: "artist",
