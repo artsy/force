@@ -38,7 +38,7 @@ jobs:
       - yarn/setup
       - run:
           name: Build force assets
-          command: yarn build
+          command: yarn assets
       - store_artifacts:
           path: ~/project/.artifacts
       - run:
