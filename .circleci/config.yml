@@ -44,6 +44,9 @@ jobs:
       - run:
           name: Generate webpack duplicates report
           command: curl "https://artsy-dupe-report.now.sh/now.js?buildNum=$CIRCLE_BUILD_NUM"
+      - run:
+          name: Verify bundle sizes
+          command: npx bundlesize
 
   test:
     docker:
@@ -135,6 +138,7 @@ workflows:
       # Nothing actually relies on this at the moment
       - build:
           <<: *not_staging_or_release
+          context: bundlesizes
 
       # Staging
       - push_staging_image:
