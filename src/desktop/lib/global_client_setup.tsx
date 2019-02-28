@@ -31,41 +31,14 @@ export function globalClientSetup() {
   }
 
   mountStitchComponents()
-}
-
-function ensureFreshUser() {
-  if (!sd.CURRENT_USER) {
-    return
-  }
-
-  for (let attr of [
-    "id",
-    "type",
-    "name",
-    "email",
-    "phone",
-    "lab_features",
-    "default_profile_id",
-    "has_partner_access",
-    "collector_level",
-  ]) {
-    // NOTE:
-    // If any of the above props have changed between two routes, and the second
-    // route fails to mount sd.locals.CURRENT_USER with the latest req.user.fetch()
-    // data, a hard refresh will occur once the client-side mounts as the two
-    // will be out of sync.
-
-    if (!_.isEqual(data[attr], sd.CURRENT_USER[attr])) {
-      $.ajax("/user/refresh").then(() => window.location.reload())
-    }
-  }
+  syncAuth()
 }
 
 export function syncAuth() {
   if (sd.CURRENT_USER) {
     $.ajax({
       url: `${sd.API_URL}/api/v1/me`,
-      success: ensureFreshUser,
+      // success: ensureFreshUser, # this can cause an endless reload
       error() {
         $.ajax({
           method: "DELETE",
