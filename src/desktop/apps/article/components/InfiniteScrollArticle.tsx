@@ -9,7 +9,7 @@ import {
   ArticleProps,
 } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
-import { setupFollows, setupFollowButtons } from "./FollowButton.js"
+import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 
