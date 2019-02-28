@@ -90,7 +90,7 @@ describe 'ViewInRoomView', ->
         .should.eql ['bottom', 'marginBottom', 'marginLeft', 'transform']
 
       @view.$placeholder.css.args[0][0].bottom
-        .should.equal '868.296px'
+        .should.equal '957.099px'
 
     it 'scales the placeholder and sets it at ground level if the significant dimension is greater than 254', ->
       @view.$placeholder.css = sinon.stub()
@@ -101,4 +101,4 @@ describe 'ViewInRoomView', ->
         .should.eql ['bottom', 'marginLeft', 'transform', 'transformOrigin']
 
       @view.$placeholder.css.args[0][0].bottom
-        .should.equal '624.91px'
+        .should.equal '667.6669999999999px'
