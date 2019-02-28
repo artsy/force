@@ -11,7 +11,7 @@ import {
 } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import React from "react"
 
-jest.mock("../FollowButton.js", () => ({
+jest.mock("../FollowButton", () => ({
   setupFollows: jest.fn(),
   setupFollowButtons: jest.fn(),
 }))

@@ -1,20 +1,23 @@
 // @ts-check
 
-import path from "path"
+const { CI, NODE_ENV } = process.env
+const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE === "true"
+const BUILD_SERVER = process.env.BUILD_SERVER === "true"
+const isDevelopment = NODE_ENV === "development"
+const isStaging = NODE_ENV === "staging"
+const isProduction = NODE_ENV === "production"
+const isDeploy = isStaging || isProduction
+const isCI = CI === "true"
+const basePath = process.cwd()
 
-export const {
-  CDN_URL,
-  CI,
-  NODE_ENV = "development",
-  PORT,
-  S3_BUCKET,
-  WEBPACK_DEVTOOL,
-} = process.env
-
-export const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE === "true"
-export const isDevelopment = NODE_ENV === "development"
-export const isStaging = NODE_ENV === "staging"
-export const isProduction = NODE_ENV === "production"
-export const isDeploy = isStaging || isProduction
-export const isCI = CI === "true"
-export const basePath = path.resolve(__dirname, "../..")
+module.exports = {
+  ANALYZE_BUNDLE,
+  BUILD_SERVER,
+  NODE_ENV,
+  isDevelopment,
+  isStaging,
+  isProduction,
+  isDeploy,
+  isCI,
+  basePath,
+}

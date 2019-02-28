@@ -4,6 +4,7 @@
 // populating sharify data
 //
 
+import config from "../config"
 import ddTracer from "dd-trace"
 import _ from "underscore"
 import addRequestId from "express-request-id"
@@ -18,7 +19,6 @@ import glob from "glob"
 import helmet from "helmet"
 import logger from "artsy-morgan"
 import path from "path"
-
 import session from "cookie-session"
 import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
@@ -46,7 +46,6 @@ import marketingModals from "./middleware/marketing_modals"
 import { addIntercomUserHash } from "./middleware/intercom"
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
-import config from "../config"
 import compression from "compression"
 
 import { assetMiddleware } from "./middleware/assetMiddleware"
@@ -182,7 +181,7 @@ export default function(app) {
 
   // Development servers
   if (isDevelopment) {
-    app.use(require("./webpack-dev-server"))
+    app.use(require("./webpack-dev-server").app)
 
     app.use(
       require("stylus").middleware({

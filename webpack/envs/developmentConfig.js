@@ -1,22 +1,16 @@
+const chalk = require("chalk")
+
 // @ts-check
-
-import chalk from "chalk"
-import fs from "fs"
-import path from "path"
-import webpack from "webpack"
-import ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin"
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
-import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
-import WebpackNotifierPlugin from "webpack-notifier"
-import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
-
-import {
-  PORT,
-  NODE_ENV,
-  WEBPACK_DEVTOOL,
-  basePath,
-  isCI,
-} from "../../src/lib/environment"
+const fs = require("fs")
+const path = require("path")
+const webpack = require("webpack")
+const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin")
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
+const WebpackNotifierPlugin = require("webpack-notifier")
+const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
+const { NODE_ENV, basePath, isCI } = require("../../src/lib/environment")
+const { PORT, WEBPACK_DEVTOOL } = process.env
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -29,7 +23,7 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
   )
 }
 
-export const developmentConfig = {
+exports.developmentConfig = {
   mode: NODE_ENV,
   devtool: WEBPACK_DEVTOOL,
   module: {

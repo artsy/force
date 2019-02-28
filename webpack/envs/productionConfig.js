@@ -1,15 +1,21 @@
 // @ts-check
 
-import UglifyJsPlugin from "uglifyjs-webpack-plugin"
-import WebpackManifestPlugin from "webpack-manifest-plugin"
-import path from "path"
-import { HashedModuleIdsPlugin } from "webpack"
-import { getCSSManifest } from "../utils/getCSSManifest"
-import { NODE_ENV, isProduction, isCI } from "../../src/lib/environment"
+const path = require("path")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const WebpackManifestPlugin = require("webpack-manifest-plugin")
+const { HashedModuleIdsPlugin } = require("webpack")
+const { getCSSManifest } = require("../utils/getCSSManifest")
 
-const buildCSS = isProduction && !isCI
+const {
+  BUILD_SERVER,
+  NODE_ENV,
+  isProduction,
+  isCI,
+} = require("../../src/lib/environment")
 
-export const productionConfig = {
+const buildCSS = isProduction && !(isCI || BUILD_SERVER)
+
+exports.productionConfig = {
   mode: NODE_ENV,
   devtool: "source-map",
   output: {
