@@ -104,10 +104,11 @@ mediator.on("openViewInRoom", options => {
     }
 
     const newLeft = (bounds.width - newWidth) / 2 + bounds.left
+    const newTop = bounds.top + Math.abs(bounds.height - newHeight) / 2
 
     const positionStyles = {
       position: "absolute",
-      top: `${bounds.top + Math.abs(bounds.height - newHeight) / 2}px`,
+      top: `${newTop}px`,
       left: `${newLeft}px`,
       width: `${newWidth}px`,
       height: `${newHeight}px`,

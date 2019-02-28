@@ -95,14 +95,11 @@ module.exports = class ViewInRoom extends Backbone.View
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
 
-    measurementDistanceFromBottom = @$el.height() - @measurementMargin()
-    artworkDistanceFromBottom = (@eyeLevel() - (@$placeholder.height() / 2)) * @artworkScalingFactor()
-    difference = measurementDistanceFromBottom - artworkDistanceFromBottom
     bottomPx = @eyeLevel()
 
     # RAISES ARTWORK IF IT OVERLAPS THE MEASUREMENT BAR
-    if measurementDistanceFromBottom > artworkDistanceFromBottom
-      bottomPx = bottomPx + ((difference + 10) * (1 / @artworkScalingFactor()))
+    if significantDimension > 200
+      bottomPx = bottomPx + (significantDimension - 200)
 
     options = if significantDimension > 254
       bottom: "#{@groundLevel()}px"
@@ -148,7 +145,7 @@ module.exports = class ViewInRoom extends Backbone.View
     scaling = factor / @$placeholder.width()
     Math.round(scaling * 100) / 100
   
-  measurementMargin: -> 
+  measurementMargin: ->
     @$el.height() / 1.79 - 27
 
   measurementWidth: ->
