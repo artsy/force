@@ -33,6 +33,7 @@ module.exports = class ViewInRoom extends Backbone.View
   render: ->
     @__render__()
     @scrollbar.disable()
+    document.body.style.overflowY = 'hidden'
     @cacheSelectors()
     @injectImage()
 
@@ -148,7 +149,7 @@ module.exports = class ViewInRoom extends Backbone.View
     scaling = factor / @$placeholder.width()
     Math.round(scaling * 100) / 100
   
-  measurementMargin: -> 
+  measurementMargin: ->
     @$el.height() / 1.79 - 27
 
   measurementWidth: ->
@@ -167,5 +168,6 @@ module.exports = class ViewInRoom extends Backbone.View
         if @$sourceImage
           @$sourceImage.css visibility: 'visible'
         @scrollbar.reenable()
+        document.body.style.overflowY = 'visible'
         ViewInRoom.__super__.remove.apply this, arguments
         @trigger 'removed'
