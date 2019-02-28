@@ -58,6 +58,44 @@
     "react-test-renderer": "16.8.2",
     "react-is": "^16.8.3"
   },
+  "bundlesize": [
+    {
+      "path": "./public/assets/common.*js",
+      "maxSize": "700 kB"
+    },
+    {
+      "path": "./public/assets/fairs.*js",
+      "maxSize": "400 kB"
+    },
+    {
+      "path": "./public/assets/article.*js",
+      "maxSize": "350 kB"
+    },
+    {
+      "path": "./public/assets/editorial_features.*js",
+      "maxSize": "350 kB"
+    },
+    {
+      "path": "./public/assets/main_layout.*js",
+      "maxSize": "350 kB"
+    },
+    {
+      "path": "./public/assets/artwork2.*js",
+      "maxSize": "300 kB"
+    },
+    {
+      "path": "./public/assets/articles.*js",
+      "maxSize": "350 kB"
+    },
+    {
+      "path": "./public/assets/order2.*js",
+      "maxSize": "250 kB"
+    },
+    {
+      "path": "./public/assets/collect.*js",
+      "maxSize": "200 kB"
+    }
+  ],
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
     "@artsy/express-reloadable": "1.4.0",
