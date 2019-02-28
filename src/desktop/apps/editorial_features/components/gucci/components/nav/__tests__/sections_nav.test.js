@@ -1,4 +1,3 @@
-import "jsdom-global/register"
 import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"

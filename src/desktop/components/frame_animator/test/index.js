@@ -1,4 +1,3 @@
-import "jsdom-global/register"
 import sinon from "sinon"
 
 const rewire = require("rewire")("../index")

@@ -1,4 +1,3 @@
-import "jsdom-global/register"
 import _ from "underscore"
 import sinon from "sinon"
 import Backbone from "backbone"
