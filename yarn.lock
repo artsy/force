@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-3.0.9.tgz#3ede774660703dc4392e1f4e797a10366e111692"
-  integrity sha512-PY8Z3g7CSZ7uTroy0JIG7r0QmmpybmEbQCwll5YOIVpkp5M1vlfN888hhUXbKLlLdzN4920hQgJjtW0XksvXkQ==
+"@artsy/palette@3.0.13":
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-3.0.13.tgz#89c52b172bb826f6c5c766a6255227951901c1a9"
+  integrity sha512-4eYH2sh8gWQvgL5oVBEYMbzc3Sb/ymqW6S3eQHSoq0Oagkxat3qK00DdQtAH7bVjSDl8PoAonv1/m44wJOP+8w==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@14.1.23":
-  version "14.1.23"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-14.1.23.tgz#1cbb5e06f0246064e35633b3fb967acc0e42da1d"
-  integrity sha512-ezizLZrGv33E2pBeTtS1/c6sfa7jJUK7xF3Xo1PW9qmkeiLhDsoqa6wsZx6eRofHXtCKIsq8Ad8sDIwQHricaA==
+"@artsy/reaction@14.1.28":
+  version "14.1.28"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-14.1.28.tgz#87be468566b04e58a0df9b028974e0399ba1d2dc"
+  integrity sha512-NeY7QGwx3IiPFgUZNinJFRjca89hqg0nNgr6wXN0Ft3gBo0TXGPxtSv5hyexymdyXKXqXCtLZA+p8pcxqyaRnQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
