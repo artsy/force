@@ -61,7 +61,7 @@
   "bundlesize": [
     {
       "path": "./public/assets/common.*js",
-      "maxSize": "700 kB"
+      "maxSize": "800 kB"
     },
     {
       "path": "./public/assets/fairs.*js",
