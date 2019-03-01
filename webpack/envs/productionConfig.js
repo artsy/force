@@ -1,7 +1,7 @@
 // @ts-check
 
 const path = require("path")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const TerserPlugin = require("terser-webpack-plugin")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { getCSSManifest } = require("../utils/getCSSManifest")
@@ -31,15 +31,20 @@ exports.productionConfig = {
   ],
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      // new UglifyJsPlugin({
+      //   cache: true,
+      //   parallel: true,
+      //   sourceMap: true,
+      //   uglifyOptions: {
+      //     compress: {
+      //       warnings: false,
+      //     },
+      //   },
+      // }),
+      new TerserPlugin({
         cache: true,
         parallel: true,
         sourceMap: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
-        },
       }),
     ],
   },
