@@ -47,11 +47,17 @@ module.exports = class HeroShowsCarousel extends Backbone.View
     @$el.html template partnerShows: partnerShows, numberOfActiveDots: @numberOfActiveDots
     initCarousel(@$el, imagesLoaded: true, (carousel) =>
       flickity = carousel.cells.flickity
-      flickity.on 'cellSelect', => @swipeDots(@$el, @numberOfActiveDots, flickity.selectedIndex)
+      flickity.on 'cellSelect', =>
+        @swipeDots(@$el, @numberOfActiveDots, flickity.selectedIndex)
+        @updatePrevNext(flickity.selectedIndex, partnerShows.length)
 
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
       @$('.js-mgr-next').on 'click', -> flickity.next()
     ) if partnerShows.length > 1
+
+  updatePrevNext: (selectedIndex, cellsCount) =>
+    @$('.js-mgr-prev').attr 'disabled', selectedIndex is 0
+    @$('.js-mgr-next').attr 'disabled', selectedIndex is cellsCount - 1
 
   swipeDots: ($el, numberOfActiveDots, selectedIndex) ->
     $el.find('.hero-show-caption, .mgr-dot').removeClass 'is-active'
