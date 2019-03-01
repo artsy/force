@@ -47,43 +47,45 @@ module.exports = class HeroShowsCarousel extends Backbone.View
     @$el.html template partnerShows: partnerShows, numberOfActiveDots: @numberOfActiveDots
     initCarousel(@$el, imagesLoaded: true, (carousel) =>
       flickity = carousel.cells.flickity
-      flickity.on 'cellSelect', =>
-        @$('.hero-show-caption, .mgr-dot').removeClass 'is-active'
-
-        i = flickity.selectedIndex
-        $selectedDot = @$(".mgr-dot:eq(#{i})")
-        $selectedCaption = @$(".hero-show-caption:eq(#{i})")
-        $selectedDot.add($selectedCaption).addClass 'is-active'
-
-        # . . . o O O O O O o . . .
-
-        # If a de-emphasized dot on one edge is selected, we show the adjacent hidden dot;
-        # on the other edge, hide the de-emphasized dot and de-emphasize the normal dot;
-        # move the rail.
-        if $selectedDot.hasClass('is-deemphasized')
-          $rightDot = $selectedDot.next()
-          $leftDot = $selectedDot.prev()
-
-          if $leftDot.is(':not(.is-deemphasized)') # on the right edge
-            $headActiveDot = @$(".mgr-dot:eq(#{i - @numberOfActiveDots})")
-            $headActiveDot.addClass('is-deemphasized').prev().addClass('is-hidden')
-            $rightDot.removeClass('is-hidden')
-            $refDot = $leftDot
-          else if $rightDot.is(':not(.is-deemphasized)') # on the left edge
-            $tailActiveDot = @$(".mgr-dot:eq(#{i + @numberOfActiveDots})")
-            $tailActiveDot.addClass('is-deemphasized').next().addClass('is-hidden')
-            $leftDot.removeClass('is-hidden')
-            $refDot = $rightDot
-
-          if $refDot?
-            offset = $refDot.offset().left - $selectedDot.offset().left
-            @$('.mgr-dot').css({left: "+=#{offset}"})
-
-          $selectedDot.removeClass('is-deemphasized')
+      flickity.on 'cellSelect', => @swipeDots(@$el, @numberOfActiveDots, flickity.selectedIndex)
 
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
       @$('.js-mgr-next').on 'click', -> flickity.next()
     ) if partnerShows.length > 1
+
+  swipeDots: ($el, numberOfActiveDots, selectedIndex) ->
+    $el.find('.hero-show-caption, .mgr-dot').removeClass 'is-active'
+
+    i = selectedIndex
+    $selectedDot = $el.find(".mgr-dot").eq(i)
+    $selectedCaption = $el.find(".hero-show-caption").eq(i)
+    $selectedDot.add($selectedCaption).addClass 'is-active'
+
+    # . . . o O O O O O o . . .
+
+    # If a de-emphasized dot on one edge is selected, we show the adjacent hidden dot;
+    # on the other edge, hide the de-emphasized dot and de-emphasize the normal dot;
+    # move the rail.
+    if $selectedDot.hasClass('is-deemphasized')
+      $rightDot = $selectedDot.next()
+      $leftDot = $selectedDot.prev()
+
+      if $leftDot.is(':not(.is-deemphasized)') # on the right edge
+        $headActiveDot = $el.find(".mgr-dot").eq(i - numberOfActiveDots)
+        $headActiveDot.addClass('is-deemphasized').prev().addClass('is-hidden')
+        $rightDot.removeClass('is-hidden')
+        $refDot = $leftDot
+      else if $rightDot.is(':not(.is-deemphasized)') # on the left edge
+        $tailActiveDot = $el.find(".mgr-dot").eq(i + numberOfActiveDots)
+        $tailActiveDot.addClass('is-deemphasized').next().addClass('is-hidden')
+        $leftDot.removeClass('is-hidden')
+        $refDot = $rightDot
+
+      if $refDot?
+        offset = $refDot.offset().left - $selectedDot.offset().left
+        $el.find('.mgr-dot').css({left: "+=#{offset}"})
+
+      $selectedDot.removeClass('is-deemphasized')
 
   remove: ->
     @$el.closest('.partner2-overview-section').remove()

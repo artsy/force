@@ -133,3 +133,116 @@ describe 'HeroShowsCarousel', ->
     it 'removes the view if no partner shows', ->
       @view.initCarousel []
       @view.remove.calledOnce.should.be.ok()
+
+  describe '#swipeDots', ->
+    beforeEach ->
+      sinon.stub($.fn, 'offset')
+
+    afterEach ->
+      $.fn.offset.restore()
+
+    describe 'move right', ->
+      it 'selects non-de-emphasized dot without moving the rail', ->
+        html = """
+          <div class="mgr-dots">
+            <div class="mgr-dot is-active"></div>
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot is-deemphasized"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+          </div>
+        """
+        $el = $ html
+        @view.swipeDots($el, 3, 1)
+        $el[0].outerHTML.should.equal """
+          <div class="mgr-dots">
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot is-active"></div>
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot is-deemphasized"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+          </div>
+        """
+
+      it 'selects de-emphasized dot, re-styles dots and moves the rail', ->
+        html = """
+          <div class="mgr-dots">
+            <div class="mgr-dot is-deemphasized" style="left: 0px;"></div>
+            <div class="mgr-dot" style="left: 1px;"></div>
+            <div class="mgr-dot" style="left: 2px;"></div>
+            <div class="mgr-dot is-active" style="left: 3px;"></div>
+            <div class="mgr-dot is-deemphasized" style="left: 4px;"></div>
+            <div class="mgr-dot is-deemphasized is-hidden" style="left: 5px;"></div>
+          </div>
+        """
+        $.fn.offset
+          .onFirstCall().returns({top: 0, left: 2})
+          .onSecondCall().returns({top: 0, left: 3})
+
+        $el = $ html
+        @view.swipeDots($el, 3, 4)
+        $el[0].outerHTML.should.equal """
+          <div class="mgr-dots">
+            <div class="mgr-dot is-deemphasized is-hidden" style="left: -1px;"></div>
+            <div class="mgr-dot is-deemphasized" style="left: 0px;"></div>
+            <div class="mgr-dot" style="left: 1px;"></div>
+            <div class="mgr-dot" style="left: 2px;"></div>
+            <div class="mgr-dot is-active" style="left: 3px;"></div>
+            <div class="mgr-dot is-deemphasized" style="left: 4px;"></div>
+          </div>
+        """
+
+    describe 'move left', ->
+      it 'selects non-de-emphasized dot without moving the rail', ->
+        html = """
+          <div class="mgr-dots">
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot is-active"></div>
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot is-deemphasized"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+          </div>
+        """
+        $el = $ html
+        @view.swipeDots($el, 3, 0)
+        $el[0].outerHTML.should.equal """
+          <div class="mgr-dots">
+            <div class="mgr-dot is-active"></div>
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot"></div>
+            <div class="mgr-dot is-deemphasized"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+            <div class="mgr-dot is-deemphasized is-hidden"></div>
+          </div>
+        """
+
+      it 'selects de-emphasized dot, re-styles dots and moves the rail', ->
+        html = """
+          <div class="mgr-dots">
+            <div class="mgr-dot is-deemphasized is-hidden" style="left: 0px;"></div>
+            <div class="mgr-dot is-deemphasized" style="left: 1px;"></div>
+            <div class="mgr-dot is-active" style="left: 2px;"></div>
+            <div class="mgr-dot" style="left: 3px;"></div>
+            <div class="mgr-dot" style="left: 4px;"></div>
+            <div class="mgr-dot is-deemphasized" style="left: 5px;"></div>
+          </div>
+        """
+        $.fn.offset
+          .onFirstCall().returns({top: 0, left: 2})
+          .onSecondCall().returns({top: 0, left: 1})
+
+        $el = $ html
+        @view.swipeDots($el, 3, 1)
+        $el[0].outerHTML.should.equal """
+          <div class="mgr-dots">
+            <div class="mgr-dot is-deemphasized" style="left: 1px;"></div>
+            <div class="mgr-dot is-active" style="left: 2px;"></div>
+            <div class="mgr-dot" style="left: 3px;"></div>
+            <div class="mgr-dot" style="left: 4px;"></div>
+            <div class="mgr-dot is-deemphasized" style="left: 5px;"></div>
+            <div class="mgr-dot is-deemphasized is-hidden" style="left: 6px;"></div>
+          </div>
+        """
