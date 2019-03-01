@@ -15,13 +15,20 @@ const {
 const chalk = require("chalk")
 console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 
-if (NODE_ENV === "development") {
-  require("coffeescript/register")
-  require("@babel/register")({
-    extensions: [".ts", ".js", ".tsx", ".jsx"],
-    plugins: ["babel-plugin-dynamic-import-node"],
-  })
-}
+// FIXME: Reenable for server-side compilation
+// if (NODE_ENV === "development") {
+//   require("coffeescript/register")
+//   require("@babel/register")({
+//     extensions: [".ts", ".js", ".tsx", ".jsx"],
+//     plugins: ["babel-plugin-dynamic-import-node"],
+//   })
+// }
+
+require("coffeescript/register")
+require("@babel/register")({
+  extensions: [".ts", ".js", ".tsx", ".jsx"],
+  plugins: ["babel-plugin-dynamic-import-node"],
+})
 
 global.Promise = require("bluebird")
 
