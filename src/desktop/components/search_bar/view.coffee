@@ -1,6 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
+request = require 'superagent'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -47,9 +48,11 @@ module.exports = class SearchBarView extends Backbone.View
     @search = new Search restrictType: @restrictType, mode: @mode, fairId: @fairId, size: @limit, agg: @enableAggregations
 
     @on 'search:start', @indicateLoading
+    @on 'search:start', @recordPerformanceMeasurementStart if @shouldMeasurePerformance()
     @on 'search:complete', @concealLoading
     @on 'search:complete', @maybeHighlight
     @on 'search:complete', @displayFeedback
+    @on 'search:complete', @reportPerformanceMeasurement if @shouldMeasurePerformance()
     @on 'search:opened', @displaySuggestions
     @on 'search:closed', @hideSuggestions
     @on 'search:cursorchanged', @ensureResult
@@ -84,6 +87,30 @@ module.exports = class SearchBarView extends Backbone.View
   indicateLoading: ->
     @renderFeedback()
     @$el.addClass 'is-loading'
+
+  shouldMeasurePerformance: ->
+    performance? and sd.VOLLEY_ENDPOINT
+
+  recordPerformanceMeasurementStart: ->
+    @performanceStart = performance.now()
+
+  reportPerformanceMeasurement: ->
+    duration = performance.now() - @performanceStart
+
+    metricPayload = {
+      type: "timing",
+      name: "autocomplete-search-response",
+      timing: duration,
+      tags: [
+        "device-type:desktop",
+        "design:simple",
+      ],
+    }
+
+    request
+      .post(sd.VOLLEY_ENDPOINT)
+      .send({ serviceName: "force", metrics: [metricPayload] })
+      .end()
 
   concealLoading: ->
     @$el.removeClass 'is-loading'
