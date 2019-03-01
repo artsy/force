@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Scrollbar = require '../scrollbar/index.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View
@@ -23,7 +22,6 @@ module.exports = class ViewInRoom extends Backbone.View
   # Should provide dimensions AND (img OR imgUrl, imgSelector, positionStyles)
   initialize: ({ @$img, @imgUrl, @imgSelector, @positionStyles, @dimensions }) ->
     $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
-    @scrollbar = new Scrollbar
     @$sourceImage = $(@imgSelector)
 
   __render__: ->
@@ -32,7 +30,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   render: ->
     @__render__()
-    @scrollbar.disable()
+    document.body.style.overflowY = 'hidden'
     @cacheSelectors()
     @injectImage()
 
@@ -148,7 +146,7 @@ module.exports = class ViewInRoom extends Backbone.View
     scaling = factor / @$placeholder.width()
     Math.round(scaling * 100) / 100
   
-  measurementMargin: -> 
+  measurementMargin: ->
     @$el.height() / 1.79 - 27
 
   measurementWidth: ->
@@ -166,6 +164,6 @@ module.exports = class ViewInRoom extends Backbone.View
           @$img.css visibility: 'visible'
         if @$sourceImage
           @$sourceImage.css visibility: 'visible'
-        @scrollbar.reenable()
+        document.body.style.overflowY = 'visible'
         ViewInRoom.__super__.remove.apply this, arguments
         @trigger 'removed'
