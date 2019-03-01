@@ -47,11 +47,10 @@ module.exports = ->
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
-  mountStitch()
+  if sd.stitch?.renderQueue?
+    mountStitch()
   
 mountStitch = ->
-  globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
-  hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
   hydrateStitch({
     sharifyData: sd
     modules: globalReactModules
