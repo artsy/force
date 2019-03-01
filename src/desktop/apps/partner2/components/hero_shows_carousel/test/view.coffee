@@ -34,9 +34,9 @@ describe 'HeroShowsCarousel', ->
       _.each requests, (request) =>
         request[2].url.should.endWith "#{@partner.url()}/shows"
       requests[0][2].data.should.eql size: 1, sort: '-featured,-end_at', displayable: true
-      requests[1][2].data.should.eql size: 10, status: 'running', sort: 'end_at', displayable: true
-      requests[2][2].data.should.eql size: 10, status: 'upcoming', sort: 'start_at', displayable: true
-      requests[3][2].data.should.eql size: 10, status: 'closed', sort: '-end_at', displayable: true
+      requests[1][2].data.should.eql size: 50, status: 'running', sort: 'end_at', displayable: true
+      requests[2][2].data.should.eql size: 50, status: 'upcoming', sort: 'start_at', displayable: true
+      requests[3][2].data.should.eql size: 50, status: 'closed', sort: '-end_at', displayable: true
 
     it 'returns a thenable promise', ->
       _.isFunction(@view.fetchShows().then).should.be.ok()
