@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Scrollbar = require '../scrollbar/index.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View
@@ -11,11 +10,14 @@ module.exports = class ViewInRoom extends Backbone.View
 
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
-    0.132 * @roomWidth
+    0.139 * @roomWidth
 
   # Should be visually at about 12" from interstitial
   groundLevel: ->
     0.095 * @roomWidth
+
+  relativeMeasurementHeight: ->
+    0.0065 * @roomWidth
 
   events:
     'click .js-view-in-room-close': 'remove'
@@ -23,7 +25,6 @@ module.exports = class ViewInRoom extends Backbone.View
   # Should provide dimensions AND (img OR imgUrl, imgSelector, positionStyles)
   initialize: ({ @$img, @imgUrl, @imgSelector, @positionStyles, @dimensions }) ->
     $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
-    @scrollbar = new Scrollbar
     @$sourceImage = $(@imgSelector)
 
   __render__: ->
@@ -32,7 +33,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   render: ->
     @__render__()
-    @scrollbar.disable()
+    document.body.style.overflowY = 'hidden'
     @cacheSelectors()
     @injectImage()
 
@@ -95,23 +96,14 @@ module.exports = class ViewInRoom extends Backbone.View
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
 
-    measurementDistanceFromBottom = @$el.height() - @measurementMargin()
-    artworkDistanceFromBottom = (@eyeLevel() - (@$placeholder.height() / 2)) * @artworkScalingFactor()
-    difference = measurementDistanceFromBottom - artworkDistanceFromBottom
-    bottomPx = @eyeLevel()
-
-    # RAISES ARTWORK IF IT OVERLAPS THE MEASUREMENT BAR
-    if measurementDistanceFromBottom > artworkDistanceFromBottom
-      bottomPx = bottomPx + ((difference + 10) * (1 / @artworkScalingFactor()))
-
     options = if significantDimension > 254
-      bottom: "#{@groundLevel()}px"
+      bottom: "#{@groundLevel() + @relativeMeasurementHeight()}px"
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
       transformOrigin: "50% #{@$placeholder.height()}px 0"
 
     else
-      bottom: "#{bottomPx}px"
+      bottom: "#{@eyeLevel() + @relativeMeasurementHeight()}px"
       marginBottom: -(@$placeholder.height() / 2)
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
@@ -123,7 +115,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   scaleArtwork: ->
     @$artwork.css @getRect(@$placeholder)
-  
+
   scaleMeasurement: ->
     @$measurementBar.css width: "#{@measurementWidth()}"
     @$measurement.css marginTop: "#{@measurementMargin()}px"
@@ -147,8 +139,8 @@ module.exports = class ViewInRoom extends Backbone.View
     factor = Math.round(width * @benchRatio) or 1
     scaling = factor / @$placeholder.width()
     Math.round(scaling * 100) / 100
-  
-  measurementMargin: -> 
+
+  measurementMargin: ->
     @$el.height() / 1.79 - 27
 
   measurementWidth: ->
@@ -166,6 +158,6 @@ module.exports = class ViewInRoom extends Backbone.View
           @$img.css visibility: 'visible'
         if @$sourceImage
           @$sourceImage.css visibility: 'visible'
-        @scrollbar.reenable()
+        document.body.style.overflowY = 'visible'
         ViewInRoom.__super__.remove.apply this, arguments
         @trigger 'removed'
