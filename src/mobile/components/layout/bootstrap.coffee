@@ -20,6 +20,8 @@ doc = window.document
 sharify = require('sharify')
 CurrentUser = require '../../models/current_user.coffee'
 Sentry = require("@sentry/browser")
+globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
+hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -45,6 +47,15 @@ module.exports = ->
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
+  if sd.stitch?.renderQueue?
+    mountStitch()
+  
+mountStitch = ->
+  hydrateStitch({
+    sharifyData: sd
+    modules: globalReactModules
+    wrapper: globalReactModules.StitchWrapper
+  })
 
 syncAuth = module.exports.syncAuth = ->
   # Log out of Microgravity if you're not logged in to Gravity
