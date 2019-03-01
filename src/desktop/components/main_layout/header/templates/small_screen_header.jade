@@ -5,7 +5,8 @@ nav.mlh-small-screen#main-header-small-screen
   form#main-header-search-form( action='/search', method='GET' )
     - var lab_features = (sd.CURRENT_USER && sd.CURRENT_USER.lab_features) || []
     if (lab_features.includes('New Search Bar'))
-      != stitch.components.SearchBar()
+      #main-header-search-bar
+        != stitch.components.SearchBar()
     else
       input#main-header-search-box(
         placeholder='Search by artist, gallery, etc.',
