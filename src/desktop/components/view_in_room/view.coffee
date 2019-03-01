@@ -11,11 +11,11 @@ module.exports = class ViewInRoom extends Backbone.View
 
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
-    0.139 * @roomWidth
+    0.132 * @roomWidth
 
   # Should be visually at about 12" from interstitial
   groundLevel: ->
-    0.099 * @roomWidth
+    0.095 * @roomWidth
 
   events:
     'click .js-view-in-room-close': 'remove'
