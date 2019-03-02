@@ -1,28 +1,35 @@
-import chalk from "chalk"
-import merge from "webpack-merge"
+const chalk = require("chalk")
+const merge = require("webpack-merge")
 
-import {
+const {
   isDevelopment,
   isProduction,
   isCI,
   ANALYZE_BUNDLE,
+  BUILD_SERVER,
   NODE_ENV,
-} from "../src/lib/environment"
+} = require("../src/lib/environment")
 
-import {
+const {
   baseConfig,
   ciConfig,
   debugConfig,
   developmentConfig,
   productionConfig,
-} from "./envs"
+  serverConfig,
+} = require("./envs")
 
 const getConfig = () => {
-  console.log(chalk.green(`\n[Force] Building ${NODE_ENV} config...\n`))
+  console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV} \n`))
 
   switch (true) {
     case ANALYZE_BUNDLE:
       return merge.smart(baseConfig, debugConfig)
+
+    case BUILD_SERVER:
+      console.log("[Force] Building server-side code...")
+      return serverConfig
+
     case isCI:
       console.log("[Force] CI=true")
       return merge.smart(baseConfig, ciConfig)

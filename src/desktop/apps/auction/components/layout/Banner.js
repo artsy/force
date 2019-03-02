@@ -2,7 +2,7 @@ import _ClockView from "desktop/components/clock/react"
 import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
-import get from "lodash.get"
+import { get } from "lodash"
 import { connect } from "react-redux"
 import { data as sd } from "sharify"
 

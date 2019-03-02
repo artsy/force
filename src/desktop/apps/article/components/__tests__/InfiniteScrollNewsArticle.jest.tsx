@@ -8,11 +8,11 @@ import { data as sd } from "sharify"
 import moment from "moment"
 const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
-jest.mock("../FollowButton.js", () => ({
+jest.mock("../FollowButton", () => ({
   setupFollows: jest.fn(),
   setupFollowButtons: jest.fn(),
 }))
-const mockSetupFollows = require("../FollowButton.js").setupFollows as jest.Mock
+const mockSetupFollows = require("../FollowButton").setupFollows as jest.Mock
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),

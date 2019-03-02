@@ -59,6 +59,8 @@ cd force
 yarn link @artsy/reaction && yarn start
 ```
 
+## SSR Rendering
+
 When testing SSR rendering, it's important to only have one copy of styled components in your dependency tree at a given time. This can be achieved by running
 
 ```sh
@@ -79,7 +81,7 @@ yarn start
 ## Running a local copy of Force in Production mode:
 
 ```sh
-yarn assets && yarn start:prod
+yarn assets && yarn build:prod && NODE_ENV=production yarn start --verbose
 ```
 
 ## Create a Topic Branch

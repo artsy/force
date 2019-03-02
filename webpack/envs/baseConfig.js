@@ -1,11 +1,11 @@
 // @ts-check
 
-import path from "path"
-import webpack from "webpack"
-import { getEntrypoints } from "../utils/getEntrypoints"
-import { NODE_ENV, basePath, isCI } from "../../src/lib/environment"
+const path = require("path")
+const webpack = require("webpack")
+const { getEntrypoints } = require("../utils/getEntrypoints")
+const { NODE_ENV, basePath, isCI } = require("../../src/lib/environment")
 
-export const baseConfig = {
+exports.baseConfig = {
   mode: NODE_ENV,
   devtool: "cheap-module-source-map",
   stats: "errors-only",

@@ -16,7 +16,7 @@ import {
   DisplayData,
 } from "reaction/Components/Publishing/Typings"
 import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
-import { setupFollows, setupFollowButtons } from "./FollowButton.js"
+import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"

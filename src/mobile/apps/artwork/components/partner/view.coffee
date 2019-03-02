@@ -1,4 +1,4 @@
-_ = require 'lodash'
+{ uniq, map, isNull } = require 'lodash'
 Backbone = require 'backbone'
 FollowProfile = require '../../../../collections/follow_profiles.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
@@ -20,12 +20,12 @@ module.exports = class ArtworkPartnerView extends Backbone.View
         el: @$('.apm-follow')
         type: 'Partner'
         followId: @artwork.partner.profile.id
-        isLoggedIn: not _.isNull CurrentUser.orNull()
+        isLoggedIn: not isNull CurrentUser.orNull()
         _id: @artwork.partner.profile._id
         context_module: 'Artwork page'
 
   renderPartnerCities: ->
-    cities = _.uniq _.map(@artwork.partner.locations, ({city}) ->
+    cities = uniq map(@artwork.partner.locations, ({city}) ->
       city.trim()
     )
     $('.artwork-partner-location').text cities.join(' • ')

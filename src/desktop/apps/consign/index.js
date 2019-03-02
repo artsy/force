@@ -3,7 +3,8 @@ import JSONPage from "../../components/json_page"
 import adminOnly from "../../lib/admin_only"
 import express from "express"
 
-const app = (module.exports = express())
+export const app = express()
+
 app.set("views", `${__dirname}/templates`)
 app.set("view engine", "jade")
 

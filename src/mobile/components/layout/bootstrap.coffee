@@ -20,6 +20,8 @@ doc = window.document
 sharify = require('sharify')
 CurrentUser = require '../../models/current_user.coffee'
 Sentry = require("@sentry/browser")
+globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
+hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -40,38 +42,27 @@ module.exports = ->
 
   setupErrorReporting()
   setupHeaderView()
-  # TODO: Look into why this fails.
-  # syncAuth()
+  syncAuth()
   checkForAfterSignUpAction()
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
-
-ensureFreshUser = (data) ->
-  return unless sd.CURRENT_USER
-  attrs = [
-    'id',
-    'type',
-    'name',
-    'email',
-    'phone',
-    'lab_features',
-    'default_profile_id',
-    'has_partner_access',
-    'collector_level'
-  ]
-  for attr in attrs
-    if (data[attr] or sd.CURRENT_USER[attr]) and not _.isEqual data[attr], sd.CURRENT_USER[attr]
-      RavenClient.captureException("Forced to refresh user", { extra: { attr: attr, session: sd.CURRENT_USER[attr], current: data[attr] } } )
-      $.ajax('/user/refresh').then ->
-        setTimeout  (=> window.location.reload()), 500
+  if sd.stitch?.renderQueue?
+    mountStitch()
+  
+mountStitch = ->
+  hydrateStitch({
+    sharifyData: sd
+    modules: globalReactModules
+    wrapper: globalReactModules.StitchWrapper
+  })
 
 syncAuth = module.exports.syncAuth = ->
   # Log out of Microgravity if you're not logged in to Gravity
   if sd.CURRENT_USER
     $.ajax
       url: "#{sd.API_URL}/api/v1/me"
-      success: ensureFreshUser
+      # success: ensureFreshUser # this can cause an endless reload
       error: ->
         $.ajax
           method: 'DELETE'

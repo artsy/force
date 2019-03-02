@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
 import React, { Fragment } from "react"
-import get from "lodash.get"
+import { get } from "lodash"
 import { Artwork } from "reaction/Components/Artwork"
 import { ArtworkRail } from "../artwork_rail/ArtworkRail"
 import { connect } from "react-redux"
