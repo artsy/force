@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@14.1.28":
-  version "14.1.28"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-14.1.28.tgz#87be468566b04e58a0df9b028974e0399ba1d2dc"
-  integrity sha512-NeY7QGwx3IiPFgUZNinJFRjca89hqg0nNgr6wXN0Ft3gBo0TXGPxtSv5hyexymdyXKXqXCtLZA+p8pcxqyaRnQ==
+"@artsy/reaction@14.2.2":
+  version "14.2.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-14.2.2.tgz#c977bddc8e3c62fb52328c4e46130f67529d206e"
+  integrity sha512-iggiXN7eIZ/r6CYX8Hub4T8cZUIatuhUnlrUAYs84+6ud8bufuv0HqOP5AqbyobR0eQx+zZ1FE7OVZqPsj55Fg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -126,13 +126,13 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.0.tgz#ad928e94924d6a58dd4c1720c7f7c2cbeb703ff5"
-  integrity sha512-jF2jTwgR4zSA2Datlbqwnp4hMNrF/wt6IPf5hM7M/33T3n4TsQmrHL5qDJ5np6GrKIlsTmcY3BZW0QS28d+z0Q==
+"@artsy/stitch@6.1.3":
+  version "6.1.3"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.3.tgz#0d5ed6f041d87436bf63368d7bbfe39c3a586ea2"
+  integrity sha512-uhqsldUqr4oAMbUlnM4TIHlDJi//HcFlj+mNhFWHLqilhPFzDC47Wu51YR8GJDVERQlNG6OD5wyXe7neAjzGdA==
   dependencies:
     consolidate "^0.14.5"
-    lodash "^4.17.4"
+    lodash "^4.17.11"
 
 "@babel/code-frame@^7.0.0":
   version "7.0.0"

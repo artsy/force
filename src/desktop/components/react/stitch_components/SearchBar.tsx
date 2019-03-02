@@ -8,7 +8,7 @@ const SearchBarContainer = styled(Box)`
 `
 
 export const SearchBar = () => (
-  <SearchBarContainer pt={1} pb={0.5}>
+  <SearchBarContainer>
     <SearchBarQueryRenderer />
   </SearchBarContainer>
 )
