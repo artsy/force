@@ -56,6 +56,16 @@ module.exports = {
     edge: 'v2'
     weighting: 'equal'
 
+  editorial_collections_rail:
+    key: 'editorial_collections_rail'
+    outcomes: [
+      0
+      1
+    ]
+    control_group: 0
+    edge: 1
+    weighting: 'equal'
+
   search_bar:
     key: 'search_bar'
     outcomes: [
@@ -65,14 +75,4 @@ module.exports = {
     control_group: 'control'
     edge: 'experiment'
     weighting: 'equal'
-
-  # editorial_collections_rail:
-  #   key: 'editorial_collections_rail'
-  #   outcomes: [
-  #     0
-  #     1
-  #   ]
-  #   control_group: 0
-  #   edge: 1
-  #   weighting: 'equal'
 }
