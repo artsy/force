@@ -56,13 +56,14 @@ module.exports = {
     edge: 'v2'
     weighting: 'equal'
 
-  editorial_collections_rail:
-    key: 'editorial_collections_rail'
-    outcomes: [
-      0
-      1
-    ]
-    control_group: 0
-    edge: 1
-    weighting: 'equal'
+  # Disable a/b test
+  # editorial_collections_rail:
+  #   key: 'editorial_collections_rail'
+  #   outcomes: [
+  #     0
+  #     1
+  #   ]
+  #   control_group: 0
+  #   edge: 1
+  #   weighting: 'equal'
 }
