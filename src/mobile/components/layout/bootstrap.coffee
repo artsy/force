@@ -22,6 +22,7 @@ CurrentUser = require '../../models/current_user.coffee'
 Sentry = require("@sentry/browser")
 globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
+splitTest = require '../../../desktop/components/split_test/index.coffee'
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -49,6 +50,8 @@ module.exports = ->
   require 'jquery-on-infinite-scroll'
   if sd.stitch?.renderQueue?
     mountStitch()
+
+  splitTest('search_bar').view()
   
 mountStitch = ->
   hydrateStitch({
