@@ -5,6 +5,16 @@ link( rel='apple-touch-icon', sizes='152x152', href=asset('/images/icon-152.png'
 link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )
 link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )
 link( rel='search', type='application/opensearchdescription+xml', href=asset('/images/opensearch.xml'), title='Artsy' )
+
+//- Prefetch major external resources
+link( rel='preconnect', href='https://www.google-analytics.com' )
+link( rel='preconnect', href='https://googleads.g.doubleclick.net' )
+link( rel='preconnect', href='https://www.googleadservices.com' )
+link( rel='preconnect', href='https://gum.criteo.com' )
+
+link( rel='dns-prefetch', href='https://connect.facebook.net' )
+link( rel='dns-prefetch', href='https://cdn.segment.com' )
+
 meta( charset='utf-8' )
 meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )

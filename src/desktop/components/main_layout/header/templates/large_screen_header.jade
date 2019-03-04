@@ -14,7 +14,8 @@ nav.mlh-navbar
         itemscope
         itemtype='http://schema.org/SearchAction'
       )
-        != stitch.components.SearchBar()
+        #main-layout-search-bar
+          != stitch.components.SearchBar()
     else
       include ../../../search_bar/templates/index
   #main-layout-header-center.mlh-navbar-cell

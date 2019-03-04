@@ -22,7 +22,9 @@ describe 'Bootstrapping client-side environment', ->
       sd['ARTSY_XAPP_TOKEN'] = 'xappfoobar'
       sd['CURRENT_USER'] = { accessToken: 'accessfoobar' }
       sd['APP_URL'] = 'http://m.artsy.net'
-      require('../bootstrap')()
+      @bootstrap = rewire '../bootstrap'
+      @bootstrap.__set__('mountStitch', sinon.stub())
+      @bootstrap()
       done()
 
   afterEach ->
@@ -84,6 +86,7 @@ describe 'inquiry cookies', ->
         get: sinon.stub()
       }
       @bootstrap.__set__ 'sd', { APP_URL: 'http://artsy.net' }
+      @bootstrap.__set__('mountStitch', sinon.stub())
       done()
 
   afterEach ->
@@ -123,6 +126,7 @@ describe 'afterSignUpAction', ->
           follow: @follow = sinon.stub()
         })
       }
+      @bootstrap.__set__('mountStitch', sinon.stub())
       done()
 
   afterEach ->
