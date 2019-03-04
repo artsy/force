@@ -16,8 +16,6 @@ RUN rm -f /usr/local/bin/yarn && \
 RUN yarn install
 
 RUN yarn assets
-
-# FIXME: Reenable for server-side compilation
-# RUN yarn build:server
+RUN yarn build:server
 
 CMD yarn start
