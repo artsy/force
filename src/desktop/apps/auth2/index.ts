@@ -1,7 +1,7 @@
 import express from "express"
 import { index, resetPassword } from "./routes"
 
-const app = (module.exports = express())
+export const app = express()
 
 app.set("view engine", "jade")
 app.set("views", `${__dirname}/templates`)

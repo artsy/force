@@ -89,7 +89,7 @@ mediator.on("openViewInRoom", options => {
     let newHeight = height
 
     const bounds = document
-      .querySelector("[data-type=artwork-image]")
+      .querySelector("[data-is-default=true]")
       .getBoundingClientRect()
 
     if (width > height) {
@@ -103,10 +103,13 @@ mediator.on("openViewInRoom", options => {
       newHeight = newWidth
     }
 
+    const newLeft = (bounds.width - newWidth) / 2 + bounds.left
+    const newTop = bounds.top + Math.abs(bounds.height - newHeight) / 2
+
     const positionStyles = {
       position: "absolute",
-      top: `${bounds.top + Math.abs(bounds.height - newHeight) / 2}px`,
-      left: `${bounds.left}px`,
+      top: `${newTop}px`,
+      left: `${newLeft}px`,
       width: `${newWidth}px`,
       height: `${newHeight}px`,
     }

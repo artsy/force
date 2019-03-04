@@ -41,8 +41,6 @@ module.exports =
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: null
   EOY_2016: '5829db77b5989e6f98f779a5'
-  EOY_2018_ARTISTS: '5bf30690d8b9430baaf6c6de'
-  EOY_2018_CULTURE: '5bf306aad8b9430baaf6c6df'
   EF_VENICE: '58f5eb75faef6a3a8e7fe1ad'
   EF_GUCCI: '5a009372c88a280f5e9efa7e'
   EF_VIDEO_GUIDE: '5901d64b4682400017f0e3cb'
@@ -103,7 +101,7 @@ module.exports =
   REQUEST_EXPIRE: 60                  # The period in seconds to measure rate limits
   REQUEST_LIMIT: 300                  # The maximum number of requests allowed by 1 IP in REQUEST_EXPOR
   REQUEST_PER_INSTANCE_FALLBACK: 60   # If Redis fails, fall back to this amount of requests per force instance for rate limiting
-  REQUEST_PER_INSTANCE_LIMIT: 100     # The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy
+  REQUEST_PER_INSTANCE_LIMIT: 301     # The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy
   REQUEST_PER_INSTANCE_EXPIRE: 300    # The amount of time the requesting ip has to wait before the in-memory rate limit is disabled
   ENABLE_RATE_LIMITING: false         # Enable/disable the entire rate limiting middleware
   S3_KEY: null

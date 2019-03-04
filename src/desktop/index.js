@@ -10,11 +10,11 @@ app.use(require("./apps/home"))
 app.use(require("./apps/editorial_features"))
 app.use(require("./apps/apply"))
 app.use(require("./apps/auctions"))
-app.use(require("./apps/auctions2"))
+app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
 app.use(require("./apps/artist/server").app)
 app.use(require("./apps/artists"))
-app.use(require("./apps/auction"))
+app.use(require("./apps/auction").app)
 app.use(require("./apps/auction_support"))
 app.use(require("./apps/artwork"))
 app.use(require("./apps/artwork2/server").app)
@@ -22,8 +22,8 @@ app.use(require("./apps/about"))
 app.use(require("./apps/collect_art"))
 app.use(require("./apps/collect/server").app)
 app.use(require("./apps/collections/server").app)
-app.use(require("./apps/categories"))
-app.use(require("./apps/consign"))
+app.use(require("./apps/categories").app)
+app.use(require("./apps/consign").app)
 app.use(require("./apps/contact"))
 app.use(require("./apps/eoy_2016"))
 app.use(require("./apps/how_auctions_work"))
@@ -45,7 +45,7 @@ app.use(require("./apps/unsubscribe"))
 app.use(require("./apps/unsupported_browser"))
 app.use(require("./apps/style_guide"))
 if (sd.NEW_AUTH_MODAL) {
-  app.use(require("./apps/auth2"))
+  app.use(require("./apps/auth2").app)
 } else {
   app.use(require("./apps/auth"))
 }
@@ -54,7 +54,7 @@ app.use(require("./apps/clear_cache"))
 app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
 app.use(require("./apps/dev"))
-app.use(require("./apps/article"))
+app.use(require("./apps/article").app)
 app.use(require("./apps/artsy_primer"))
 app.use(require("./apps/gallery_partnerships"))
 app.use(require("./apps/marketing_signup_modals"))
@@ -66,7 +66,7 @@ app.use(require("./apps/basel_week").default)
 
 // Non-profile dynamic vanity url apps
 app.use(require("./apps/galleries_institutions"))
-app.use(require("./apps/articles"))
+app.use(require("./apps/articles").app)
 app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
 
@@ -82,9 +82,5 @@ app.use(require("./apps/feature"))
 // User profiles
 app.use(require("./apps/user"))
 
-// Examples
-app.use(require("./apps/react_example"))
-app.use(require("./apps/isomorphic-relay-example/server").app)
-
-// FIXME: Remove
+// Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)

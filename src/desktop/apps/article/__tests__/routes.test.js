@@ -441,12 +441,6 @@ describe("Article Routes", () => {
     })
 
     describe("Custom editorial", () => {
-      it("#isCustomEditorial returns key if article.id matches custom editorial list", () => {
-        isCustomEditorial("5bf30690d8b9430baaf6c6de").should.containEql(
-          "EOY_2018_ARTISTS"
-        )
-      })
-
       it("Adds custom editorial var and no-header class to stitch args", done => {
         const data = {
           article: _.extend({}, fixtures.article, {

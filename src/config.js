@@ -4,8 +4,8 @@
 // TODO: We should probably drop these config files altogether and just rely
 // on process.env and sharify.
 //
-module.exports = Object.assign(
-  {},
-  require("./desktop/config"),
-  require("./mobile/config")
-)
+
+module.exports = {
+  ...require("./desktop/config"),
+  ...require("./mobile/config"),
+}
