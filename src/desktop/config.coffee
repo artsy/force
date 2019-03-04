@@ -27,7 +27,6 @@ module.exports =
   CONVECTION_GEMINI_APP: 'convection-staging'
   COOKIE_DOMAIN: null
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
-  DD_APM_ENABLED: null
   DD_TRACE_AGENT_HOSTNAME: 'localhost'
   DD_SERVICE_NAME: 'force'
   DEFAULT_CACHE_TIME: 3600

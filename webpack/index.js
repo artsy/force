@@ -33,9 +33,12 @@ const getConfig = () => {
     case isCI:
       console.log("[Force] CI=true")
       return merge.smart(baseConfig, ciConfig)
+
     case isDevelopment:
       return merge.smart(baseConfig, developmentConfig)
+
     case isProduction:
+      console.log("[Force] Building client-side production code...")
       return merge.smart(baseConfig, productionConfig)
   }
 }
