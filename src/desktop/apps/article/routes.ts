@@ -19,7 +19,7 @@ const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
 // TODO: update after CollectionsRail a/b test
-const splitTest = require("desktop/components/split_test/index.coffee")
+// const splitTest = require("desktop/components/split_test/index.coffee")
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -128,7 +128,7 @@ export async function index(req, res, next) {
 
     const {
       CURRENT_USER,
-      EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
+      EDITORIAL_COLLECTIONS_RAIL_QA, // TODO: update after CollectionsRail a/b test
       IS_MOBILE,
       IS_TABLET,
     } = res.locals.sd
@@ -146,8 +146,9 @@ export async function index(req, res, next) {
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     // CollectionsRail a/b test
-    splitTest("editorial_collections_rail").view()
-    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === 1
+    // splitTest("editorial_collections_rail").view()
+    const hasCollectionsRail =
+      EDITORIAL_COLLECTIONS_RAIL_QA === 1 && req.user && req.user.isAdmin()
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)
