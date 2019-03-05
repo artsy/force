@@ -128,7 +128,7 @@ export async function index(req, res, next) {
 
     const {
       CURRENT_USER,
-      EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
+      // EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
       IS_MOBILE,
       IS_TABLET,
     } = res.locals.sd
@@ -147,7 +147,9 @@ export async function index(req, res, next) {
 
     // CollectionsRail a/b test
     // splitTest("editorial_collections_rail").view()
-    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === 1
+    // const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === 1
+    // Set hasCollectionsRail to false to ensure rail is not visable
+    const hasCollectionsRail = false
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)
