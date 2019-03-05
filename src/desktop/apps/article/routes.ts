@@ -126,12 +126,7 @@ export async function index(req, res, next) {
         "../../../components/main_layout/templates/react_blank_index.jade"
     }
 
-    const {
-      CURRENT_USER,
-      // EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
-      IS_MOBILE,
-      IS_TABLET,
-    } = res.locals.sd
+    const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
 
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
