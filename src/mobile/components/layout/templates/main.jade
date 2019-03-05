@@ -19,12 +19,17 @@ block body
         a#main-header-menu( href= '#' )
           #main-header-menu-icon
         form#main-header-search-form( action='/search', method='GET' )
-          input#main-header-search-box(
-            placeholder='Search',
-            name='term',
-            value=mainHeaderSearchBoxValue,
-            type='search'
-          )
+          - var lab_features = (sd.CURRENT_USER && sd.CURRENT_USER.lab_features) || []
+          if (lab_features.includes('New Search Bar'))
+            #main-header-search-bar
+              != stitch.components.SearchBar()
+          else
+            input#main-header-search-box(
+              placeholder='Search',
+              name='term',
+              value=mainHeaderSearchBoxValue,
+              type='search'
+            )
           button#main-header-search-button.avant-garde-box-button Search
 
     main

@@ -17,5 +17,15 @@ link( href="#{sd.APP_URL}#{sd.CURRENT_PATH}", rel="canonical" )
 //- Include asset package's CSS
 link( type='text/css', rel='stylesheet', href=('//fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css') )
 link( type='text/css', rel='stylesheet', href=asset('/assets/' + assetPackage + '.css') )
+
+//- Prefetch major external resources
+link( rel='preconnect', href='https://www.google-analytics.com' )
+link( rel='preconnect', href='https://googleads.g.doubleclick.net' )
+link( rel='preconnect', href='https://www.googleadservices.com' )
+link( rel='preconnect', href='https://gum.criteo.com' )
+
+link( rel='dns-prefetch', href='https://connect.facebook.net' )
+link( rel='dns-prefetch', href='https://cdn.segment.com' )
+
 //- Criteo marketing tag
 script( type='text/javascript', src='//static.criteo.net/js/ld/ld.js', async='true' )

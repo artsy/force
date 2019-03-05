@@ -20,10 +20,7 @@ if [ "$NODE_ENV" != "production" ]; then
     OPT+=(--inspect-brk)
   fi
 
-# FIXME: Reenable for server-side compilation
-#   exec node "${OPT[@]}" ./src
-# else
-#   exec node "${OPT[@]}" ./server.dist.js
+  exec node "${OPT[@]}" ./src
+else
+  exec node "${OPT[@]}" ./server.dist.js
 fi
-
-exec node "${OPT[@]}" ./src

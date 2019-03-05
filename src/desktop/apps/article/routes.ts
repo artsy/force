@@ -1,6 +1,5 @@
 import * as _ from "underscore"
 import embed from "particle"
-import { findKey } from "lodash"
 import { URL } from "url"
 import { App } from "desktop/apps/article/components/App"
 import ArticleQuery from "desktop/apps/article/queries/article"
@@ -13,14 +12,14 @@ import { data as _sd } from "sharify"
 import { stitch as _stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
+import { isCustomEditorial } from "./editorial_features"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
-
-// TODO: Remove after collections A/B test
-// import splitTest from "desktop/components/split_test/index.coffee"
+// TODO: update after CollectionsRail a/b test
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -129,7 +128,7 @@ export async function index(req, res, next) {
 
     const {
       CURRENT_USER,
-      EDITORIAL_COLLECTIONS_RAIL, // TODO: Remove after A/B test
+      EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
       IS_MOBILE,
       IS_TABLET,
     } = res.locals.sd
@@ -146,9 +145,9 @@ export async function index(req, res, next) {
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
-    // A/B Collections Rail test
-    // splitTest("editorial_collections_rail").view()
-    const hasCollectionsRail = Boolean(EDITORIAL_COLLECTIONS_RAIL)
+    // CollectionsRail a/b test
+    splitTest("editorial_collections_rail").view()
+    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === 1
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)
@@ -347,13 +346,3 @@ export const editorialSignup = (req, res, _next) => {
 
 export const redirectPost = (req, res, _next) =>
   res.redirect(301, req.url.replace("post", "article"))
-
-export const isCustomEditorial = id => {
-  const customIds = [sd.EOY_2018_ARTISTS, sd.EOY_2018_CULTURE]
-
-  if (customIds.includes(id)) {
-    return findKey(sd, val => {
-      return val === id
-    })
-  }
-}
