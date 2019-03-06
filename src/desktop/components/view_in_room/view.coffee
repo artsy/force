@@ -152,24 +152,13 @@ module.exports = class ViewInRoom extends Backbone.View
 
   removeScrollbar: ->
     $('body').css({
-      'overflow-y': 'hidden',
-      'margin-right': '17px' # to avoid a jump due to scrollbar disappearing
-    })
-
-    $('header').css({
-      'padding-right': '17px'
+      'overflow-y': 'hidden'
     })
 
   addScrollbar: ->
     $('body').css({
-      'overflow-y': 'visible',
-      'margin-right': '0px' # to avoid a jump due to scrollbar re-appearing
+      'overflow-y': 'visible'
     })
-
-    $('header').css({
-      'padding-right': '0px'
-    })
-
 
   remove: ->
     $(window).off 'resize.view-in-room'
