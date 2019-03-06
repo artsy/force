@@ -58,20 +58,10 @@ spec:
                 command: ["/usr/sbin/nginx", "-s", "quit"]
           env:
             - name: "NGINX_DEFAULT_CONF"
-              value: >
-                upstream force {
-                    server 127.0.0.1:5000;
-                }
-                server {
-                    listen *:8080;
-                    location / {
-                        proxy_set_header Host artsy.net;
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force;
-                    }
-                }
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-config
+                  key: force
       dnsPolicy: Default
       affinity:
         nodeAffinity:
