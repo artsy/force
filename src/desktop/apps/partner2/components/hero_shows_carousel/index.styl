@@ -60,6 +60,37 @@
 
   .mgr-dots
     display inline-block
+    max-width 80px
+    white-space nowrap
+
+  .mgr-dot
+    left 0
+    position relative
+    line-height 20px
+    transition all .3s ease-in-out
+    width 12px
+    &:after
+      content ''
+      display inline-block
+      width 8px
+      height 8px
+      border-radius 4px
+      background-color gray-color
+      vertical-align middle
+      transition all .3s ease-in-out
+
+  .mgr-dot.is-active
+    &:after
+      background-color black
+
+  .mgr-dot.is-deemphasized
+    &:after
+      width 5px
+      height 5px
+
+  .mgr-dot.is-hidden
+    &:after
+      opacity 0
 
   .mgr-cell
   .mgr-cell img
