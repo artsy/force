@@ -92,12 +92,15 @@ mediator.on("openViewInRoom", options => {
       .querySelector("[data-is-default=true]")
       .getBoundingClientRect()
 
-    if (width > height) {
-      newWidth = bounds.width
-      newHeight = height * newWidth / width
-    } else if (height > width) {
+    const imgRatio = newWidth / newHeight
+    const boundsRatio = bounds.width / bounds.height
+
+    if (boundsRatio > imgRatio) {
       newHeight = bounds.height
       newWidth = newHeight * width / height
+    } else if (boundsRatio < imgRatio) {
+      newWidth = bounds.width
+      newHeight = height * newWidth / width
     } else {
       newWidth = bounds.width
       newHeight = newWidth
