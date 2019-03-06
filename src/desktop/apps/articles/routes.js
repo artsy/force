@@ -17,6 +17,9 @@ import { PARSELY_KEY, PARSELY_SECRET } from "../../config.coffee"
 import { subscribedToEditorial } from "desktop/apps/article/routes"
 import { data as sd } from "sharify"
 
+// TODO: update after CollectionsRail a/b test
+// const splitTest = require("desktop/components/split_test/index.coffee")
+
 // FIXME: Rewire
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
@@ -135,6 +138,15 @@ export async function news(req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
   const renderTime = getCurrentUnixTimestamp()
 
+  // CollectionsRail a/b test
+  // splitTest("editorial_collections_rail").view()
+
+  // TODO: update after CollectionsRail a/b test
+  const showCollectionsRail =
+    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL_QA === 1 &&
+    req.user &&
+    req.user.isAdmin()
+
   try {
     const { articles } = await positronql({
       query: newsArticlesQuery({ limit: 6 }),
@@ -160,6 +172,7 @@ export async function news(req, res, next) {
         articles,
         isMobile,
         renderTime,
+        showCollectionsRail,
       },
     })
 
