@@ -43,7 +43,7 @@ export const checkoutFlow = async (req, res, next) => {
       },
       locals: {
         ...res.locals,
-        assetPackage: "order2",
+        assetPackage: "order",
         // header logo should link back to originating artwork
         headerLogoHref,
         hideLogoForEigen: res.locals.sd.EIGEN,
@@ -57,7 +57,7 @@ export const checkoutFlow = async (req, res, next) => {
 
     res.status(status).send(layout)
   } catch (error) {
-    console.log("(apps/order2) Error: ", error)
+    console.log("(apps/order) Error: ", error)
     if (error.message.includes("Received status code 404")) {
       const notFoundError: any = new Error("Order Not Found")
       notFoundError.status = 404
