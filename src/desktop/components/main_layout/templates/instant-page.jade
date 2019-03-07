@@ -77,7 +77,7 @@ if sd.ENABLE_INSTANT_PAGE
     }
 
     function mouseoutListener(event) {
-      if (event.relatedTarget && getLinkElement(event) == event.relatedTarget.closest('a')) {
+      if (event.relatedTarget && typeof event.relatedTarget.closest === 'function' && getLinkElement(event) == event.relatedTarget.closest('a')) {
         return
       }
 
