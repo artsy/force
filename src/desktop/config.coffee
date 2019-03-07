@@ -135,6 +135,7 @@ module.exports =
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
   ALLOWED_VANITY_ASSETS: ''
+  VERBOSE_LOGGING: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

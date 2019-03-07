@@ -1,3 +1,6 @@
+path = require 'path'
+fs = require 'fs'
+
 module.exports = (page) ->
   data: (req, res, next) ->
     page.get (err, data) ->
@@ -12,7 +15,8 @@ module.exports = (page) ->
       res.locals.sd.PATHS = page.paths
 
       # Render the template irrespective of app/views context
-      template = require('jade').compileFile(require.resolve './templates/index.jade')
+      file = path.resolve(__dirname, './templates/index.jade')
+      template = require('jade').compileFile(file)
       res.write template(res.locals) # Pass locals that were set up in middlewares
       res.end()
 

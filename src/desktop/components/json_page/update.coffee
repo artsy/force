@@ -1,5 +1,6 @@
 _ = require 'underscore'
 fs = require 'fs'
+path = require 'path'
 inquirer = require 'inquirer'
 JSONPage = require './index'
 sd = require('sharify').data
@@ -8,7 +9,7 @@ sd = require('sharify').data
 bucket = sd.S3_BUCKET
 
 try
-  fixture = require.resolve path
+  fixture = path.resolve __dirname, path
 catch
   return console.log 'Cannot find the file you want to update.'
 
