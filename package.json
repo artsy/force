@@ -88,7 +88,7 @@
       "maxSize": "350 kB"
     },
     {
-      "path": "./public/assets/order2.*js",
+      "path": "./public/assets/order.*js",
       "maxSize": "250 kB"
     },
     {
