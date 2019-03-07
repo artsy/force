@@ -59,30 +59,13 @@ cd force
 yarn link @artsy/reaction && yarn start
 ```
 
-## SSR Rendering
-
-When testing SSR rendering, it's important to only have one copy of styled components in your dependency tree at a given time. This can be achieved by running
-
-```sh
-yarn start:ssr
-```
-
-which under the hood runs
-
-```sh
-cd ../reaction
-rm -rf node_modules/styled-components
-yarn link
-cd ../force
-yarn link @artsy/reaction
-yarn start
-```
-
 ## Running a local copy of Force in Production mode:
 
 ```sh
-yarn assets && yarn build:prod && NODE_ENV=production yarn start --verbose
+yarn start:prod
 ```
+
+This creates a production-ready bundle of client and server-side code and boots the server. (This will take a while to compile.)
 
 ## Create a Topic Branch
 
