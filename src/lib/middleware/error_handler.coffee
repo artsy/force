@@ -9,7 +9,7 @@ module.exports = (err, req, res, next) ->
     '../../desktop/components/error_handler/index.jade'
   )
 
-  enableLogging = argv.verbose or NODE_ENV is 'development' or VERBOSE_LOGGING is true
+  enableLogging = NODE_ENV is 'development' or argv.verbose or VERBOSE_LOGGING is true
   code = 504 if req.timedout
   code ||= err.status || 500
 
