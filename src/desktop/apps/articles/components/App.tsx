@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { hot } from "react-hot-loader"
 import { ArticleData } from "reaction/Components/Publishing/Typings"
 import { InfiniteScrollNewsArticle } from "desktop/apps/article/components/InfiniteScrollNewsArticle"
 
@@ -9,10 +8,8 @@ export interface Props {
   marginTop: string
 }
 
-export default hot(module)(
-  class App extends Component<Props, any> {
-    render() {
-      return <InfiniteScrollNewsArticle {...this.props} />
-    }
+export default class App extends Component<Props, any> {
+  render() {
+    return <InfiniteScrollNewsArticle {...this.props} />
   }
-)
+}

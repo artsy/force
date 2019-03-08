@@ -5,8 +5,6 @@ import styled from "styled-components"
 import GeneFamilyNav from "./GeneFamilyNav"
 import TAGPContent from "./TAGPContent"
 
-import { hot } from "react-hot-loader"
-
 const Layout = styled.div`
   display: flex;
   justify-content: space-between;
@@ -34,4 +32,4 @@ class App extends Component {
   }
 }
 
-export default hot(module)(App)
+export default App

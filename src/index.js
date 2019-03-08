@@ -27,6 +27,20 @@ if (NODE_ENV === "development") {
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 require("./lib/datadog")
 
+const path = require("path")
+const { setAliases } = require("require-control")
+
+// Force resolution of potentially `yarn link`'d modules to the local node_modules
+// folder. This gets around SSR issues involving single react context requirements.
+// This is server-side only. Client-side must be resolved via webpack.
+setAliases({
+  react: path.resolve(path.join(__dirname, "../node_modules/react")),
+  "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
+  "styled-components": path.resolve(
+    path.join(__dirname, "../node_modules/styled-components")
+  ),
+})
+
 global.Promise = require("bluebird")
 
 const artsyXapp = require("artsy-xapp")

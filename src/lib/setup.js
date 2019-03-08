@@ -43,10 +43,7 @@ import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
 import marketingModals from "./middleware/marketing_modals"
 import { addIntercomUserHash } from "./middleware/intercom"
-import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
-import * as globalReactModules from "desktop/components/react/stitch_components"
 import compression from "compression"
-
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 
@@ -223,15 +220,6 @@ export default function(app) {
   app.use(unsupportedBrowserCheck)
   app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
-
-  // Configure stitch SSR functionality. See: https://github.com/artsy/stitch/tree/master/src/internal
-  // for more info.
-  app.use(
-    stitchMiddleware({
-      modules: globalReactModules,
-      wrapper: globalReactModules.StitchWrapper,
-    })
-  )
 
   // Routes for pinging system time and up
   app.get("/system/time", (req, res) =>

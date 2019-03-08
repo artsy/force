@@ -74,6 +74,10 @@ exports.baseConfig = {
   resolve: {
     alias: {
       "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
+
+      // The following packages need to be resolved to the host app (force) to get
+      // around issues involving `yarn link` and multiple instances. A  similar
+      // configuration has been setup for SSR in `src/index`, via `require-control`.
       "styled-components": require.resolve("styled-components"),
       react: require.resolve("react"),
     },
@@ -92,7 +96,7 @@ exports.baseConfig = {
     symlinks: false,
   },
   optimization: {
-    // Add Webpack runtime code to the `common` chunk
+    // Extract webpack runtime code into it's own file
     runtimeChunk: {
       name: "runtime-manifest",
     },
