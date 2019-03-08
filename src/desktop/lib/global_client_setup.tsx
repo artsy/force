@@ -9,6 +9,9 @@ import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "../../desktop/apps/auth2/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
 
+const mediator = require("./mediator.coffee")
+const FlashMessage = require("../components/flash/index.coffee")
+const analyticsHooks = require("./analytics_hooks.coffee")
 const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
 const listenForBounce = require("../components/eggs/bounce/index.coffee")
@@ -31,7 +34,9 @@ export function globalClientSetup() {
   }
 
   mountStitchComponents()
+
   syncAuth()
+  mediator.on("auth:logout", logoutEventHandler)
 }
 
 export function syncAuth() {
@@ -47,6 +52,23 @@ export function syncAuth() {
             return window.location.reload()
           },
         })
+      },
+    })
+  }
+}
+
+function logoutEventHandler() {
+  if (sd.CURRENT_USER) {
+    $.ajax({
+      url: "/users/sign_out",
+      type: "DELETE",
+      success() {
+        analyticsHooks.trigger("auth:logged-out")
+        location.reload()
+      },
+      error(_xhr, _status, errorMessage) {
+        // tslint:disable-next-line:no-unused-expression
+        new FlashMessage({ message: errorMessage })
       },
     })
   }

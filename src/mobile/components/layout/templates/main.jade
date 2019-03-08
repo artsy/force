@@ -9,9 +9,13 @@ block body
       else
         mixin login-signup("Header")
 
-    header#main-header
-      nav.main-dropdown-menu.js-main-dropdown-menu
-        include ../../main_dropdown_menu/template
+    if sd.ENABLE_NEW_NAVBAR
+      header
+        != stitch.components.NavBar()
+    else
+      header#main-header
+        nav.main-dropdown-menu.js-main-dropdown-menu
+          include ../../main_dropdown_menu/template
 
       nav.main-header-nav
         a#main-header-logo( href= '/' )
