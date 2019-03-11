@@ -10,8 +10,8 @@ CurrentUser = require '../../../models/current_user.coffee'
 mediator = require '../../../lib/mediator.coffee'
 accounting = require 'accounting'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-ClockView = require '../../../../desktop/apps/artwork/components/clock/view.coffee'
-{ countdownLabel, countdownTimestamp } = require '../../../../desktop/apps/artwork/components/banner/helpers.coffee'
+ClockView = require '../components/clock/view.coffee'
+{ countdownLabel, countdownTimestamp } = require '../helpers.coffee'
 
 module.exports.BidPageView = class BidPageView extends Backbone.View
   _.extend @prototype, ConditionsOfSale

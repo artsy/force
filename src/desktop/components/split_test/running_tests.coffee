@@ -25,27 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  # Used for cookie-ing and gradual roll out.
-  # We'll start at 1 and work our way up, users in groups
-  # less than that number will receive the new artwork page.
-  new_artwork_page:
-    key: 'new_artwork_page',
-    outcomes: [
-      0
-      1
-      2
-      3
-      4
-      5
-      6
-      7
-      8
-      9
-    ]
-    weighting: 'equal'
-    edge: 0
-    control_group: 9
-
   artist_insights:
     key: 'artist_insights'
     outcomes: [
