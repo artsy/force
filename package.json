@@ -80,7 +80,7 @@
       "maxSize": "350 kB"
     },
     {
-      "path": "./public/assets/artwork2.*js",
+      "path": "./public/assets/artwork.*js",
       "maxSize": "300 kB"
     },
     {
