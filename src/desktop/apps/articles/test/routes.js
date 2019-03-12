@@ -72,7 +72,7 @@ describe("Articles routes", () => {
     })
   })
 
-  describe("#new", () => {
+  describe("#news", () => {
     it("correctly sets showCollectionsRail", () => {
       rewire.__set__(
         "positronql",
