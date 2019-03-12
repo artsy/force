@@ -14,7 +14,7 @@
     "build:server": "BUILD_SERVER=true NODE_ENV=production yarn webpack",
     "bundle-report": "NODE_ENV=production ANALYZE_BUNDLE=true yarn build",
     "bundle-report:dev": "NODE_ENV=development ANALYZE_BUNDLE=true yarn build",
-    "clean": "rm -f manifest.json && rm -rf public/assets && mkdir -p public/assets && echo '[Force] Cleaned build directory'",
+    "clean": "rm -rf .cache && rm -f manifest.json && rm -rf public/assets && mkdir -p public/assets && echo '[Force] Cleaned build directory'",
     "mocha": "scripts/mocha.sh",
     "precommit": "lint-staged",
     "prepare": "patch-package",
