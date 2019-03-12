@@ -7,7 +7,7 @@ Article = require '../../../../../models/article'
 markdown = require '../../../../../components/util/markdown.coffee'
 { resolve } = require 'path'
 
-describe 'Venice Video', ->
+xdescribe 'Venice Video', ->
 
   beforeEach (done) ->
     benv.setup =>
