@@ -50,63 +50,6 @@ if (pageType === "auctions") {
       )
     })
   }
-} else if (pageType === "artwork" && !pathSplit[3]) {
-  // https://www.artsy.net/artwork/:artwork_id - (AUCTIONS & ARTWORKS viewItem)
-  //              0          1          2
-  //
-  // We cannot send both ids on product pages, so, send the Auctions account ID
-  // if the artwork is in an auction, otherwise send the Artworks account ID.
-  if (sd.AUCTION && sd.AUCTION.artwork_id) {
-    window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
-      { event: "setSiteType", type: "m" },
-      { event: "viewItem", item: sd.AUCTION && sd.AUCTION.artwork_id }
-    )
-  } else {
-    window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
-      { event: "setSiteType", type: "d" },
-      { event: "setEmail", email: userEmail },
-      { event: "viewItem", item: sd.COMMERCIAL.artwork._id }
-    )
-  }
-  // ARTWORKS viewBasket
-  analyticsHooks.on("inquiry_questionnaire:modal:opened", function(data) {
-    window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
-      { event: "setSiteType", type: "d" },
-      { event: "setEmail", email: userEmail },
-      {
-        event: "viewBasket",
-        item: [
-          {
-            id: sd.COMMERCIAL.artwork._id,
-            price: sd.COMMERCIAL.artwork.price,
-            quantity: 1,
-          },
-        ],
-      }
-    )
-  })
-  // ARTWORKS trackTransaction
-  analyticsHooks.on("inquiry_questionnaire:inquiry:sync", function(data) {
-    window.criteo_q.push(
-      { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
-      { event: "setSiteType", type: "d" },
-      { event: "setEmail", email: userEmail },
-      {
-        event: "trackTransaction",
-        id: data.inquiry.id,
-        item: [
-          {
-            id: sd.COMMERCIAL.artwork._id,
-            price: sd.COMMERCIAL.artwork.price,
-            quantity: 1,
-          },
-        ],
-      }
-    )
-  })
 } else {
   if (pageType === "collect") {
     // https://www.artsy.net/collect - (ARTWORKS viewHome)
