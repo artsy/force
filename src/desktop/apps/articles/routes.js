@@ -142,10 +142,7 @@ export async function news(req, res, next) {
   splitTest("editorial_collections_rail").view()
 
   // TODO: update after CollectionsRail a/b test
-  const showCollectionsRail =
-    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === 1 &&
-    req.user &&
-    req.user.isAdmin()
+  const showCollectionsRail = res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === 1
 
   try {
     const { articles } = await positronql({
