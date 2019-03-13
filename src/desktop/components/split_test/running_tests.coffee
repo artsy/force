@@ -35,8 +35,8 @@ module.exports = {
     edge: 'v2'
     weighting: 'equal'
 
-  editorial_collections_rail_qa:
-    key: 'editorial_collections_rail_qa'
+  editorial_collections_rail:
+    key: 'editorial_collections_rail'
     outcomes: [
       0
       1
