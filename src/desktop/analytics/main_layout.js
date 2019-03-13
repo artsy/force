@@ -10,25 +10,9 @@ import { reportLoadTimeToVolley } from "lib/volley"
 const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
 var properties = { path: location.pathname }
 
-if (pageType == "artwork") {
-  properties["acquireable"] = sd.ARTWORK.is_acquireable
-  properties["offerable"] = sd.ARTWORK.is_offerable
-  properties["availability"] = sd.ARTWORK.availability
-  properties["price_listed"] = sd.ARTWORK.price && sd.ARTWORK.price.length > 0
-
-  if (sd.ARTWORK.is_acquireable || sd.ARTWORK.is_in_auction) {
-    window.addEventListener("load", function() {
-      // marketing requirement for dynamic retargeting
-      window.analytics.track("Viewed Product", { id: sd.ARTWORK._id })
-    })
-  }
-}
-
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
-// FIXME: When new artwork page is fully rolled out, and goes back to an
-// `artwork` page type, remove `new-artwork` from here.
-const excludedRoutes = ["orders", "new-artwork"]
+const excludedRoutes = ["orders"]
 if (!excludedRoutes.includes(pageType)) {
   analytics.page(properties, { integrations: { Marketo: false } })
 }

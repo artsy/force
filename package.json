@@ -14,7 +14,7 @@
     "build:server": "BUILD_SERVER=true NODE_ENV=production yarn webpack",
     "bundle-report": "NODE_ENV=production ANALYZE_BUNDLE=true yarn build",
     "bundle-report:dev": "NODE_ENV=development ANALYZE_BUNDLE=true yarn build",
-    "clean": "rm -f manifest.json && rm -rf public/assets && mkdir -p public/assets && echo '[Force] Cleaned build directory'",
+    "clean": "rm -rf .cache && rm -f manifest.json && rm -rf public/assets && mkdir -p public/assets && echo '[Force] Cleaned build directory'",
     "mocha": "scripts/mocha.sh",
     "precommit": "lint-staged",
     "prepare": "patch-package",
@@ -80,7 +80,7 @@
       "maxSize": "350 kB"
     },
     {
-      "path": "./public/assets/artwork2.*js",
+      "path": "./public/assets/artwork.*js",
       "maxSize": "300 kB"
     },
     {
@@ -99,9 +99,9 @@
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
     "@artsy/express-reloadable": "1.4.0",
-    "@artsy/palette": "3.2.3",
+    "@artsy/palette": "4.0.6",
     "@artsy/passport": "1.1.1",
-    "@artsy/reaction": "14.3.11",
+    "@artsy/reaction": "15.2.1",
     "@artsy/stitch": "6.1.3",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",

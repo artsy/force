@@ -3,7 +3,7 @@ import sinon from "sinon"
 const rewire = require("rewire")("../index")
 const FrameAnimator = rewire.default
 
-describe("FrameAnimator", () => {
+xdescribe("FrameAnimator", () => {
   beforeEach(() => {
     window.requestAnimationFrame = () => {}
     window.performance = {
