@@ -62,7 +62,11 @@ spec:
                 configMapKeyRef:
                   name: nginx-config
                   key: force
-      dnsPolicy: Default
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

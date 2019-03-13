@@ -56,21 +56,15 @@ spec:
                 command: ["/usr/sbin/nginx", "-s", "quit"]
           env:
             - name: "NGINX_DEFAULT_CONF"
-              value: >
-                upstream force {
-                    server 127.0.0.1:5000;
-                }
-                server {
-                    listen *:8080;
-                    location / {
-                        proxy_set_header Host staging.artsy.net;
-                        proxy_redirect off;
-                        proxy_read_timeout 60;
-                        proxy_send_timeout 60;
-                        proxy_pass http://force;
-                    }
-                }
-      dnsPolicy: Default
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-config
+                  key: force
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
