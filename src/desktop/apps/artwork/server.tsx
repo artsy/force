@@ -4,8 +4,41 @@ import { routes } from "reaction/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
+import request from "superagent"
+
+const Artwork = require("desktop/models/artwork.coffee")
 
 export const app = express()
+
+export const handleDownload = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const artwork = new Artwork({ id: req.params.artworkID })
+  await artwork.fetch({
+    cache: true,
+  })
+
+  if (artwork.isDownloadable(req.user)) {
+    const imageRequest = request.get(artwork.downloadableUrl(req.user))
+    if (req.user) {
+      imageRequest.set("X-ACCESS-TOKEN", req.user.get("accessToken"))
+    }
+    req
+      .pipe(
+        imageRequest,
+        { end: false }
+      )
+      .pipe(res)
+  } else {
+    const error: any = new Error("Not authorized to download this image.")
+    error.status = 403
+    next(error)
+  }
+}
+
+app.get("/artwork/:artworkID/download/:filename", handleDownload)
 
 app.get(
   "/artwork/:artworkID*",
