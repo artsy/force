@@ -139,11 +139,11 @@ export async function news(req, res, next) {
   const renderTime = getCurrentUnixTimestamp()
 
   // CollectionsRail a/b test
-  // splitTest("editorial_collections_rail").view()
+  splitTest("editorial_collections_rail").view()
 
   // TODO: update after CollectionsRail a/b test
   const showCollectionsRail =
-    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL_QA === 1 &&
+    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === 1 &&
     req.user &&
     req.user.isAdmin()
 

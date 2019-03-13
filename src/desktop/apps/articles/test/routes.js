@@ -26,7 +26,7 @@ describe("Articles routes", () => {
       render: sinon.stub(),
       locals: {
         sd: {
-          EDITORIAL_COLLECTIONS_RAIL_QA: 1,
+          EDITORIAL_COLLECTIONS_RAIL: 1,
         },
       },
       redirect: sinon.stub(),
