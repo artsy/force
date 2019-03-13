@@ -24,16 +24,15 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.0.5":
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.0.5.tgz#6e73974504b52d40b1cff180287eb3f4749f5bc7"
-  integrity sha512-QBz68yDSP+Xva+1iA9TAsuXJrxMI2O5PrbFmpgHbnlt7sF7j/qGgfHF4xuM2GVdRwXYN7PUC71SRMHqSTZPTCA==
+"@artsy/palette@4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.0.6.tgz#5d3ce1c6531c61dac777231ae10a7c9897cebb2c"
+  integrity sha512-2sePxxolSd1CUkP1tJ7L0L4KsP+Wguv8A+x9rvqkFHRs/1stMYHHrtXtvFO6f8J7GmZpAmiR/r8GnKXV21qTUw==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
-    react "^16.8.2"
     react-live "^1.12.0"
     react-powerplug "^1.0.0"
     react-spring "^5.7.2"
@@ -11760,7 +11759,7 @@ react-waypoint@^8.0.0:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
 
-react@16.8.4, react@^16.8.2, react@^16.8.4:
+react@16.8.4, react@^16.8.4:
   version "16.8.4"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"
   integrity sha512-0GQ6gFXfUH7aZcjGVymlPOASTuSjlQL4ZtVC5YKH+3JL6bBLCVO21DknzmaPlI90LN253ojj02nsapy+j7wIjg==
