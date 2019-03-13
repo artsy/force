@@ -147,7 +147,7 @@ export async function index(req, res, next) {
 
     // CollectionsRail a/b test
     splitTest("editorial_collections_rail").view()
-    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === 1
+    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === "1"
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)

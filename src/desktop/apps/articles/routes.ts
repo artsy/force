@@ -1,31 +1,32 @@
 import { stitch as _stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
-import App from "desktop/apps/articles/components/App.tsx"
-import magazineQuery from "./queries/editorial_articles.coffee"
+import App from "desktop/apps/articles/components/App"
 import {
   newsArticlesQuery,
   newsPanelQuery,
-} from "./queries/news_articles_query.js"
+} from "./queries/news_articles_query"
 import { positronql as _positronql } from "desktop/lib/positronql"
-import Articles from "desktop/collections/articles.coffee"
-import Section from "desktop/models/section.coffee"
-import { crop } from "desktop/components/resizer/index.coffee"
-import Channel from "desktop/models/channel.coffee"
-import { topParselyArticles as _topParselyArticles } from "desktop/components/util/parsely.coffee"
 import { map, sortBy, first, last, reject } from "lodash"
-import { PARSELY_KEY, PARSELY_SECRET } from "../../config.coffee"
 import { subscribedToEditorial } from "desktop/apps/article/routes"
 import { data as sd } from "sharify"
+const { crop } = require("desktop/components/resizer/index.coffee")
+const { PARSELY_KEY, PARSELY_SECRET } = require("../../config.coffee")
+const _topParselyArticles = require("desktop/components/util/parsely.coffee")
+  .topParselyArticles
+const magazineQuery = require("./queries/editorial_articles.coffee")
+const Articles = require("desktop/collections/articles.coffee")
+const Channel = require("desktop/models/channel.coffee")
+const Section = require("desktop/models/section.coffee")
 
 // TODO: update after CollectionsRail a/b test
-// const splitTest = require("desktop/components/split_test/index.coffee")
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 // FIXME: Rewire
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
 let stitch = _stitch
 
-export const articles = (req, res, next) => {
+export const articles = (_req, res, next) => {
   const query = { query: magazineQuery }
   return positronql(query)
     .then(async result => {
@@ -33,7 +34,7 @@ export const articles = (req, res, next) => {
       res.locals.sd.ARTICLES = articles.toJSON()
 
       // Email
-      let onDailyEditorial = false
+      let onDailyEditorial: any = false
       // Only need to check subscription on mobile
       if (sd.IS_MOBILE && sd.CURRENT_USER) {
         onDailyEditorial = await subscribedToEditorial(sd.CURRENT_USER.email)
@@ -55,11 +56,11 @@ export const articles = (req, res, next) => {
     .catch(next)
 }
 
-export const redirectMagazine = (req, res, next) => {
+export const redirectMagazine = (_req, res, _next) => {
   res.redirect(301, "/articles")
 }
 
-export const section = (req, res, next) => {
+export const section = (_req, res, next) => {
   new Section({ id: "venice-biennale-2015" }).fetch({
     cache: true,
     error: next,
@@ -118,13 +119,12 @@ export const teamChannel = (req, res, next) => {
                 const slug = last(article.link.split("/"))
                 return pinnedSlugs.includes(slug)
               })
-              const numRemaining = 6 - pinnedArticles.length
 
               res.locals.sd.CHANNEL = channel.toJSON()
               res.render("team_channel", {
                 channel,
                 pinnedArticles,
-                parselyArticles: first(newParselyArticles, numRemaining),
+                parselyArticles: first(newParselyArticles),
               })
             },
           })
@@ -134,7 +134,7 @@ export const teamChannel = (req, res, next) => {
   })
 }
 
-export async function news(req, res, next) {
+export async function news(_req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
   const renderTime = getCurrentUnixTimestamp()
 
@@ -142,11 +142,11 @@ export async function news(req, res, next) {
   splitTest("editorial_collections_rail").view()
 
   // TODO: update after CollectionsRail a/b test
-  const showCollectionsRail = res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === 1
+  const showCollectionsRail = res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === "1"
 
   try {
     const { articles } = await positronql({
-      query: newsArticlesQuery({ limit: 6 }),
+      query: newsArticlesQuery({ limit: 6, offset: 0 }),
     })
 
     const layout = await stitch({

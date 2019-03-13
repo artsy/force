@@ -73,6 +73,7 @@ describe("Articles routes", () => {
   })
 
   describe("#news", () => {
+    // FIXME: not catching async correctly
     it("correctly sets showCollectionsRail", () => {
       rewire.__set__(
         "positronql",
@@ -80,9 +81,11 @@ describe("Articles routes", () => {
       )
       const stitch = sinon.stub()
       rewire.__set__("stitch", stitch)
-      news(req, res, next).then(() => {
-        stitch.args[0][0].data.showCollectionsRail.should.equal(true)
-      })
+      news(req, res, next)
+        .then(() => {
+          stitch.args[0][0].data.showCollectionsRail.should.equal(true)
+        })
+        .catch(e => console.log(e))
     })
   })
 
