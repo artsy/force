@@ -63,14 +63,17 @@ spec:
                 server {
                     listen *:8080;
                     location / {
-                        proxy_set_header Host staging.artsy.net;
                         proxy_redirect off;
                         proxy_read_timeout 60;
                         proxy_send_timeout 60;
                         proxy_pass http://force;
                     }
                 }
-      dnsPolicy: Default
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
