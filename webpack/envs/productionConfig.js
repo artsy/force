@@ -10,10 +10,9 @@ const {
   BUILD_SERVER,
   NODE_ENV,
   isProduction,
-  isCI,
 } = require("../../src/lib/environment")
 
-const buildCSS = isProduction && !(isCI || BUILD_SERVER)
+const buildCSS = isProduction && !BUILD_SERVER
 
 exports.productionConfig = {
   mode: NODE_ENV,

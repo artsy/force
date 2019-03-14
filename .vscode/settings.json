@@ -13,7 +13,6 @@
   "[json]": {
     "editor.formatOnSave": false
   },
-  "editor.formatOnSave": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
   "debug.node.autoAttach": "on",
   "cSpell.ignoreWords": [],
@@ -27,5 +26,6 @@
     "typings",
     "**/*.snap",
     "**/*.story.tsx"
-  ]
+  ],
+  "editor.formatOnSave": true
 }
