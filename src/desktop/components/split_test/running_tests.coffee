@@ -44,4 +44,14 @@ module.exports = {
     control_group: 0
     edge: 1
     weighting: 'equal'
+
+  artist_collections_rail_qa:
+    key: 'artist_collections_rail_qa'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    control_group: 0
+    edge: 1
+    weighting: 'equal'
 }

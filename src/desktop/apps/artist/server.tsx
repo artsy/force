@@ -15,7 +15,10 @@ app.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user && req.user.toJSON()
-      const { ARTIST_INSIGHTS } = res.locals.sd
+      const {
+        ARTIST_INSIGHTS,
+        ARTIST_COLLECTIONS_RAIL_QA, // TODO: update after Artist Collections Rail a/b test
+      } = res.locals.sd
       const {
         bodyHTML,
         redirect,
@@ -30,6 +33,7 @@ app.get(
         context: {
           ...buildServerAppContext(req, res),
           ARTIST_INSIGHTS,
+          showCollectionsRail: ARTIST_COLLECTIONS_RAIL_QA === "experiment", // TODO: update after Artist Collections Rail a/b test
         },
       })
 
