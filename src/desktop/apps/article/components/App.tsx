@@ -7,6 +7,7 @@ import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 export interface AppProps extends ArticleProps {
   templates?: {
@@ -16,6 +17,13 @@ export interface AppProps extends ArticleProps {
 }
 
 export class App extends React.Component<AppProps> {
+  // TODO: Remove after CollectionsRail a/b test
+  componentDidMount() {
+    if (["standard", "feature", "news"].includes(this.props.article.layout)) {
+      splitTest("editorial_collections_rail").view()
+    }
+  }
+
   getArticleLayout = () => {
     const { article } = this.props
 

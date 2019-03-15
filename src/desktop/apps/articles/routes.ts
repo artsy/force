@@ -18,9 +18,6 @@ const Articles = require("desktop/collections/articles.coffee")
 const Channel = require("desktop/models/channel.coffee")
 const Section = require("desktop/models/section.coffee")
 
-// TODO: update after CollectionsRail a/b test
-const splitTest = require("desktop/components/split_test/index.coffee")
-
 // FIXME: Rewire
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
@@ -139,7 +136,7 @@ export async function news(_req, res, next) {
   const renderTime = getCurrentUnixTimestamp()
 
   // CollectionsRail a/b test
-  splitTest("editorial_collections_rail").view()
+  const isNewsLayout = true
 
   // TODO: update after CollectionsRail a/b test
   const showCollectionsRail = res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === "1"
@@ -170,6 +167,7 @@ export async function news(_req, res, next) {
         isMobile,
         renderTime,
         showCollectionsRail,
+        isNewsLayout,
       },
     })
 
