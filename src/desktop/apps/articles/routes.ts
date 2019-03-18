@@ -140,7 +140,8 @@ export async function news(_req, res, next) {
 
   // TODO: update after CollectionsRail a/b test
   const showCollectionsRail =
-    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL.toString() === "1"
+    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === "1" ||
+    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === 1
 
   try {
     const { articles } = await positronql({
