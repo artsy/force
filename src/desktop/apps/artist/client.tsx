@@ -13,7 +13,10 @@ buildClientApp({
   context: {
     user: sd.CURRENT_USER,
     mediator,
-    showCollectionsRail: sd.ARTIST_COLLECTIONS_RAIL_QA === "experiment", // TODO: update after Artist Collections Rail a/b test
+    showCollectionsRail:
+      sd.ARTIST_COLLECTIONS_RAIL_QA === "experiment" &&
+      sd.CURRENT_USER &&
+      sd.CURRENT_USER.type === "Admin", // TODO: update after Artist Collections Rail a/b test
   },
 })
   .then(({ ClientApp }) => {
