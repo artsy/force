@@ -18,7 +18,7 @@ export default class App extends Component<Props, any> {
   // TODO: Remove after CollectionsRail a/b test
   componentDidMount() {
     if (this.props.isNewsLayout) {
-      splitTest("editorial_collections_rail").view()
+      splitTest("editorial_collection_rail").view()
     }
   }
 

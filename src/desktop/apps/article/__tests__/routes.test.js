@@ -426,16 +426,16 @@ describe("Article Routes", () => {
         )
       })
 
-      it("Sets showCollectionsRail when EDITORIAL_COLLECTIONS_RAIL is true", done => {
-        res.locals.sd.EDITORIAL_COLLECTIONS_RAIL = "1"
+      it("Sets showCollectionsRail when EDITORIAL_COLLECTION_RAIL is experiment", done => {
+        res.locals.sd.EDITORIAL_COLLECTION_RAIL = "experiment"
         index(req, res, next).then(() => {
           stitch.args[0][0].data.showCollectionsRail.should.equal(true)
           done()
         })
       })
 
-      it("Sets showCollectionsRail when EDITORIAL_COLLECTIONS_RAIL is false", done => {
-        res.locals.sd.EDITORIAL_COLLECTIONS_RAIL = "0"
+      it("Sets showCollectionsRail when EDITORIAL_COLLECTION_RAIL is not experiment", done => {
+        res.locals.sd.EDITORIAL_COLLECTION_RAIL = "control"
         index(req, res, next).then(() => {
           stitch.args[0][0].data.showCollectionsRail.should.equal(false)
           done()

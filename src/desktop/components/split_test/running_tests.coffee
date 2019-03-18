@@ -35,11 +35,11 @@ module.exports = {
     edge: 'v2'
     weighting: 'equal'
 
-  editorial_collections_rail:
-    key: 'editorial_collections_rail'
+  editorial_collection_rail:
+    key: 'editorial_collection_rail'
     outcomes: [
-      0
-      1
+      'control'
+      'experiment'
     ]
     control_group: 0
     edge: 1

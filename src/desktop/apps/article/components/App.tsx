@@ -20,7 +20,7 @@ export class App extends React.Component<AppProps> {
   // TODO: Remove after CollectionsRail a/b test
   componentDidMount() {
     if (["standard", "feature", "news"].includes(this.props.article.layout)) {
-      splitTest("editorial_collections_rail").view()
+      splitTest("editorial_collection_rail").view()
     }
   }
 

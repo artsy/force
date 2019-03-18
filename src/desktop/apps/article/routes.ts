@@ -126,7 +126,7 @@ export async function index(req, res, next) {
 
     const {
       CURRENT_USER,
-      EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
+      EDITORIAL_COLLECTION_RAIL, // TODO: update after CollectionsRail a/b test
       IS_MOBILE,
       IS_TABLET,
     } = res.locals.sd
@@ -144,7 +144,7 @@ export async function index(req, res, next) {
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     // CollectionsRail a/b test
-    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === "1"
+    const hasCollectionsRail = EDITORIAL_COLLECTION_RAIL === "experiment"
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)
