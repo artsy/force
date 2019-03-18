@@ -144,7 +144,7 @@ export async function index(req, res, next) {
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     // CollectionsRail a/b test
-    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === "1"
+    const hasCollectionsRail = EDITORIAL_COLLECTIONS_RAIL.toString() === "1"
     const showCollectionsRail =
       hasCollectionsRail &&
       ["standard", "feature", "news"].includes(article.layout)
