@@ -51,7 +51,7 @@ module.exports = {
       'control'
       'experiment'
     ]
-    control_group: 0
-    edge: 1
+    control_group: 'control'
+    edge: 'experiment'
     weighting: 'equal'
 }
