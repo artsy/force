@@ -24,15 +24,16 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.2.1.tgz#9f3fbbe1ee2dcdd5cb8ec4b2f8c5c6bb5f66ea97"
-  integrity sha512-tmcEZefS7Iz4/EIFS6voOB0RlPDwJwsNbfCIRUoXkmqJ61AwekrbjXbJz471eC4KLL/wFu1PTl2NJeLB+akGeQ==
+"@artsy/palette@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.3.0.tgz#2281d0d3e13fd1eff1b541363c3a5e2d1837b9f3"
+  integrity sha512-3YBucN3IDApdC1dcqa3QxCoHqUA+hR6fTTJ3K/AgVdZKdNny4ailgS6BbbgR//U2mDtXkjDKtHPOKlGug9KhRg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
+    react-lazy-load-image-component "^1.3.2"
     react-live "^1.12.0"
     react-powerplug "^1.0.0"
     react-spring "^5.7.2"
@@ -11527,6 +11528,14 @@ react-lazy-load-image-component@^1.1.1:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.1.5.tgz#0f27b7811265de932992dbad8abb7515e6ca0c42"
   integrity sha512-mx7+1G4Gl1vaaQ2ZPB+bi0xKnZOeXHPRluQTf9BOYXFuBse/XdJWSpBkT4sHHGhGMwVjB/j7t2yGhT5xyEbAQA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
+react-lazy-load-image-component@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.3.2.tgz#2182d6ed864feb15c30067e04e52cbcdcfc86860"
+  integrity sha512-LLbsFQwIV4TdlObBYjlJyRSmYMadd8pMOsYmihFAI6nXBgOEYVuRJlq7T0PjT5OWzntV38VvSw+P+NJU7etH3Q==
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
