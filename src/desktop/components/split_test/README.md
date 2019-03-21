@@ -50,6 +50,67 @@ Tests are by default initialized globally meaning as soon as there is a configur
 
 A test is not enabled from the analytics side without a `view` event. This must be triggered on the client.
 
+#### In Reaction
+
+SD variables are made available _on the client-side only_ in Reaction when they are added to [Reaction's Sharify `GlobalData`](https://github.com/artsy/reaction/blob/master/typings/sharify.d.ts).
+
+```javascript
+@track()
+export class MyComponent extends React.Component<Props> {
+  componentDidMount() {
+    this.trackMyTest()
+  }
+
+  @track <
+    Props >
+    (props => {
+      const experiment = "my_test"
+      const variation = sd.MY_TEST
+
+      return {
+        action_type: Schema.ActionType.ExperimentViewed,
+        experiment_id: experiment,
+        experiment_name: experiment,
+        variation_id: variation,
+        variation_name: variation,
+        nonInteraction: 1,
+      }
+    })
+  trackMyTest() {
+    // no-op
+  }
+}
+```
+
+#### In Force
+
+When testing an app built in Reaction, you will only have access to SD data on the client. If you need this information on the server as well, you will need to pass it down from Force.
+
+##### Via stitch
+
+```javascript
+stitch({
+  data: {
+    myTest: sd.MY_TEST,
+  },
+})
+```
+
+##### Via `buildClientApp`
+
+```javascript
+buildClientApp({
+  routes,
+  context: {
+    myTest: sd.MY_TEST,
+  },
+}).then(({ ClientApp }) => {
+  ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+})
+```
+
+##### Via Backbone and React Apps housed in Force (legacy)
+
 ```javascript
 // On the client!
 const splitTest = require("desktop/components/split_test/index.coffee")
