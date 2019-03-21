@@ -1,5 +1,18 @@
 # Split Test
 
+The Split Test component enables the bucketing of users into categories. When a test is enabled, a cookie is set for each user that is also stored on the window via sharify. The cookie/SD var's name is based on the test name, and its value is set to one of the test's possible outcomes. Engineers can expose multiple variations of features, content, components etc. by hooking into a test outcome.
+
+Rolling out a test requires a few steps:
+
+- Add a test with name and outcomes to `running_tests.coffee`
+- Create any feature variations that should be exposed based on outcome
+- Configure analytics events that will be tracked as part of the test
+- Enable the test via a `splitTest.view()` event
+
+The last step is especially important! Users will still receive cookies, and analytics will operate as expected with or without a `splitTest.view()` event, but it is this call that enables the data team to parse analytics in the context of a test.
+
+## Creating a test and outcomes
+
 To start a test, add your configuration to the `running_tests.coffee` file:
 
 ```coffeescript
@@ -13,44 +26,60 @@ header_design:
   scope: 'local' # Optional
 ```
 
-## Options
+Once this step is complete, an `sd` variable will be present for all users identified by the uppercase key of your test. For the above example, the key of the test is `header_design` and `sd.HEADER_DESIGN` will contain the outcome of the split test, in this case either `80` or `20`.
 
-`key` name of your test
+#### Options
 
-`outcomes` either a hash of your outcomes, whose point values must add up to 100, or an array (when used with `weighting`: 'equal').
+- `key` name of your test
 
-`edge` is the feature that you want logged in admins to always have.
+- `outcomes` either a hash of your outcomes, whose point values must add up to 100, or an array (when used with `weighting`: 'equal').
 
-`dimension` is a Google Analytics dimension. You can create one by logging into GA, clicking 'Admin', clicking 'Custom Definitions' in the middle column, clicking 'Custom Dimensions'. From there you can create a new custom dimension. Note that you should then name this 'dimension1', 'dimesion2', etc. - corresponding to the index of the custom definition in this UI.
+- `edge` is the feature that you want logged in admins to always have.
 
-`scope` in some cases you may only want to initialize a test once a certain action is triggered (ie: landing on a specific page), if that's the case passing `scope: 'local'` will not globally intialize the test.
+- `dimension` is a Google Analytics dimension. You can create one by logging into GA, clicking 'Admin', clicking 'Custom Definitions' in the middle column, clicking 'Custom Dimensions'. From there you can create a new custom dimension. Note that you should then name this 'dimension1', 'dimesion2', etc. - corresponding to the index of the custom definition in this UI.
 
-`control_group` is what Reflection and other crawlers will see. Defaults to 'control'.
+- `scope` in some cases you may only want to initialize a test once a certain action is triggered (ie: landing on a specific page), if that's the case passing `scope: 'local'` will not globally intialize the test.
 
-`weighting` when specified as 'equal', will equally weight `outcomes`.
+- `control_group` is what Reflection and other crawlers will see. Defaults to 'control'.
+
+- `weighting` when specified as 'equal', will equally weight `outcomes`.
 
 Tests are by default initialized globally meaning as soon as there is a configuration in the running tests file you'll get access to a Sharify variable the same name as your configuration key with the outcome and the test will set itself up client-side.
 
-## Getting the outcome of a split test on the server
+### Tracking experiments
 
-By default, this component sets an `sd` variable with the uppercase key of your test. If the key of your test is `artist_view_test`, `sd.ARTIST_VIEW_TEST` will contain the outcome of the split test.
+A test is not enabled from the analytics side without a `view` event. This must be triggered on the client.
 
-## Manually initializing a test on the client-side (optional)
+```javascript
+// On the client!
+const splitTest = require("desktop/components/split_test/index.coffee")
 
-```coffeescript
-splitTest = require '../../../components/split_test/index.coffee'
-# Call the required fn with the key to your configuration
-test = splitTest('header_design')
-# You can then call outcome (as many times as you like, you will get the same outcome for the same user)
-test.outcome() # => 'new'
-# Do something with your outcome
-# Another useful method is `cssClass` which will output a class name for use in stylesheets
-test.cssClass() # => 'is-splittest-header_design--new'
+splitTest("header_design").view()
 ```
 
-## Forcing a test down a specific path (optional)
+### Manually access a test on the client-side (optional)
 
-### Client-side
+In some cases, especially when dealing with legacy Backbone apps, you may want to access variables from your test on the client. You can use the below methods to access an outcome without `sd`, or generate a css class based on your test outcome.
+
+```javascript
+const splitTest = require("desktop/components/split_test/index.coffee")
+
+// Call the required fn with the key to your configuration
+const test = splitTest("header_design")
+
+// You can then call outcome (as many times as you like, you will get the same outcome for the same user)
+test.outcome() // => 'new'
+
+// Do something with your outcome
+// Another useful method is `cssClass` which will output a class name for use in stylesheets
+test.cssClass() // => 'is-splittest-header_design--new'
+```
+
+## Ensuring a test is correctly configured
+
+### Forcing a test down a specific path (optional)
+
+#### Client-side
 
 ```coffeescript
 splitTest = require '../../../components/split_test/index.coffee'
@@ -58,7 +87,7 @@ test = splitTest 'header_design'
 test.set 'old' # Force down 'old' path
 ```
 
-### Server-side
+#### Server-side
 
 ```coffeescript
 SplitTest = require '../../components/split_test/server_split_test'
@@ -69,22 +98,14 @@ test.set 'old'
 res.locals.sd[testConfig.key.toUpperCase()] = 'old' # manually set the Sharify variable
 ```
 
-## Forcing a test down a specific path via url params
+#### Via url params
 
 Logged in Artsy admins can override the outcome of a particular split test by passing query params.
 
 For forcing the test `header_design` to have the outcome `old`:
 http://www.artsy.net?split_test[header_design]=old
 
-## Tracking experiments
-
-```coffeescript
-# On the client
-splitTest = require '../../../components/split_test/index.coffee'
-test = splitTest('header_design').view()
-```
-
-## Confirm tracking data is received
+### Confirm tracking data is received
 
 Tests should deliver data to Looker ~ 2 hours after going into production. To confirm that data is being received, look for the test's 'experiment_id' at:
 https://artsy.looker.com/sql/cgkgxbnzmf26cw
