@@ -24,15 +24,16 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.1.3":
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.1.3.tgz#07ab043266ea6bf803b90efc680cf0a58b19c031"
-  integrity sha512-4zxMu49pP/3kOA+ER3iF6t5fo6M69wYKjiVPLj7ou4/TghBZSUmAObNW0Klm/3CWcba89DAoRvH1ynvt6K+W/A==
+"@artsy/palette@4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.3.2.tgz#1e9bbc6be1134287ff92ed93cdb73162cc976aec"
+  integrity sha512-XW8UA5Ujn0OiAtem6RQp0Wr8G1BN1xbtFt8/Kx2oDm79PsLzgtGw3TkBdUBJrByqr0mMZOIPugP4cIVU8zwGTw==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     rc-slider "^8.6.2"
+    react-lazy-load-image-component "^1.3.2"
     react-live "^1.12.0"
     react-powerplug "^1.0.0"
     react-spring "^5.7.2"
@@ -64,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@15.5.8":
-  version "15.5.8"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-15.5.8.tgz#bfd2f87b02963f6ff9cbc990b5eb89cb858b0621"
-  integrity sha512-S0IHrV4YgxIK0fWrNpwUrDY9UUdwRpKdFvTKB74GFChYyzHlj5gDFSgKX2j/gBUwUPN+0YX0cnJJCKhyN9bcgA==
+"@artsy/reaction@15.7.1":
+  version "15.7.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-15.7.1.tgz#7f7165187f7786171439680af1ccf6f6ab5e3ae1"
+  integrity sha512-Crv9NQQ1zHMSQwA5QdIr/OsPTGqDi+mDLWL2FafCphw3LI6MeyaPrCchDpS2fQXR0gopku4DuXrV51Tf12tjtQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.1"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -11527,6 +11528,14 @@ react-lazy-load-image-component@^1.1.1:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.1.5.tgz#0f27b7811265de932992dbad8abb7515e6ca0c42"
   integrity sha512-mx7+1G4Gl1vaaQ2ZPB+bi0xKnZOeXHPRluQTf9BOYXFuBse/XdJWSpBkT4sHHGhGMwVjB/j7t2yGhT5xyEbAQA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
+react-lazy-load-image-component@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.3.2.tgz#2182d6ed864feb15c30067e04e52cbcdcfc86860"
+  integrity sha512-LLbsFQwIV4TdlObBYjlJyRSmYMadd8pMOsYmihFAI6nXBgOEYVuRJlq7T0PjT5OWzntV38VvSw+P+NJU7etH3Q==
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
