@@ -35,7 +35,105 @@ Tests are by default initialized globally meaning as soon as there is a configur
 
 By default, this component sets an `sd` variable with the uppercase key of your test. If the key of your test is `artist_view_test`, `sd.ARTIST_VIEW_TEST` will contain the outcome of the split test.
 
-## Manually initializing a test on the client-side (optional)
+## Passing test outcomes to components
+
+### How does an outcome get set to sd?
+
+On app start up the split test middleware checks if there is an existing `sd.YOUR_AB_TEST_NAME` value for the keys in runningTest config and if there is none, one is assigned. The value is assigned by retrieving the test cookie or setting the cookie which is determined by the `weighting` property passed into options.
+
+### How to pass an outcome to react
+
+Via routes file:
+
+```
+export async function index(req, res, next) {
+  const {
+    ...
+    EDITORIAL_COLLECTIONS_RAIL, // a/b test value
+  } = res.locals.sd
+
+
+  // CollectionsRail a/b test
+  const showCollectionsRail = EDITORIAL_COLLECTIONS_RAIL === "experiment"
+
+  const layout = await stitch({
+    basePath: res.app.get("views"),
+    layout: layoutTemplate,
+    config: {
+      styledComponents: true,
+    },
+    blocks: {
+      head: "meta.jade",
+      body: App,
+    },
+    locals: {
+      ...res.locals,
+    },
+    data: {
+      showCollectionsRail, // pass in a/b test bool as a prop
+    },
+  })
+}
+```
+
+Via reaction app with react router:
+For app using react router, properties should be passed to the context object.
+
+In the server:
+
+```
+app.get(
+  "/artist/:artistID*",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = req.user && req.user.toJSON()
+      const {
+        ARTIST_COLLECTIONS_RAIL_QA, // Collections Rail a/b test
+      } = res.locals.sd
+      const {
+        ...
+      } = await buildServerApp({
+        routes,
+        url: req.url,
+        userAgent: req.header("User-Agent"),
+        context: {
+          ...buildServerAppContext(req, res),
+          showCollectionsRail:
+            ARTIST_COLLECTIONS_RAIL_QA === "experiment"
+        },
+      })
+    // Render layout logic
+    ...
+    }
+  } catch (error) {
+    ...
+  }
+)
+```
+
+In the client:
+
+```
+buildClientApp({
+  routes,
+  context: {
+    user: sd.CURRENT_USER,
+    showCollectionsRail:
+      sd.ARTIST_COLLECTIONS_RAIL_QA === "experiment"
+  },
+})
+  .then(({ ClientApp }) => {
+    // Hydrate client app
+    ...
+  })
+  .catch(error => {
+    console.error(error)
+  })
+```
+
+## Manually initializing a test on the client-side (optional) - deprecated
+
+Note that this is the legacy method of initializing a test on the client-side.
 
 ```coffeescript
 splitTest = require '../../../components/split_test/index.coffee'
@@ -48,7 +146,7 @@ test.outcome() # => 'new'
 test.cssClass() # => 'is-splittest-header_design--new'
 ```
 
-## Forcing a test down a specific path (optional)
+## Forcing a test down a specific path (optional) - deprecate?
 
 ### Client-side
 
@@ -58,7 +156,7 @@ test = splitTest 'header_design'
 test.set 'old' # Force down 'old' path
 ```
 
-### Server-side
+### Server-side - deprecate?
 
 ```coffeescript
 SplitTest = require '../../components/split_test/server_split_test'
@@ -69,12 +167,24 @@ test.set 'old'
 res.locals.sd[testConfig.key.toUpperCase()] = 'old' # manually set the Sharify variable
 ```
 
+## Ensuring your test is configured correctly
+
+### Notes on QA:
+
+1. Once a test is added to runningTests, cookies will be set for all users.
+2. It is possible to enable a test without exposing new features to users with an admin only flags to keep the display internal.
+3. However, because we do not want to infect our results tracking with data that is not part of the official test it is recommended you use a dummy name during qa and rename when the test is officially launched (i.e. `sd.EDITORIAL_COLLECTIONS_RAIL_QA`)
+
 ## Forcing a test down a specific path via url params
 
 Logged in Artsy admins can override the outcome of a particular split test by passing query params.
 
 For forcing the test `header_design` to have the outcome `old`:
 http://www.artsy.net?split_test[header_design]=old
+
+## How to ensure your events are being tracked
+
+For local and staging environments these events will be printed to the browser console. For production, you can use the developer tools and click the network tap, filter request by "segment", and verify that you see the "Experiment Viewed" and other associated analytics events. You can also check looker as stated below.
 
 ## Tracking experiments
 
