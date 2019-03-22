@@ -24,3 +24,19 @@ describe '#index', ->
     Backbone.sync.args[0][2].success fabricate 'feature', name: 'Awesome Feature'
     @res.render.args[0][0].should.equal 'templates/index'
     @res.render.args[0][1].feature.get('name').should.equal 'Awesome Feature'
+
+describe '#redirectCityGuide', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    @req = { params: { id: 'city-guide-foo' } }
+    @res =
+      redirect: sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'redirects to iphone splash page', ->
+    routes.redirectCityGuide @req, @res
+    @res.redirect.args[0][0].should.eql(301)
+    @res.redirect.args[0][1].should.eql('https://iphone.artsy.net')
