@@ -44,6 +44,7 @@ redirects =
   '/following/profiles': '/user/saves#galleries-institutions'
   '/artsy.net/artwork/marilyn-minter-miley': '/artwork/marilyn-minter-miley'
   '/article/artsy-editorial-the-year-in-art-2016': '/2016-year-in-art'
+  '/gallery-insights': 'https://partners.artsy.net/'
 
 for from, path of redirects
   router.get from, to(path)
