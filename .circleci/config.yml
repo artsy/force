@@ -33,6 +33,15 @@ jobs:
       - store_artifacts:
           path: ~/project/.artifacts
 
+  danger:
+    docker:
+      - image: circleci/node:10.13
+    steps:
+      - yarn/setup
+      - run:
+          name: Danger
+          command: yarn danger ci
+
   test:
     docker:
       - image: circleci/node:10.13
@@ -122,6 +131,8 @@ workflows:
       - build:
           <<: *not_staging_or_release
           context: bundlesizes
+      - danger:
+          <<: *not_staging_or_release
 
       # Staging
       - push_staging_image:

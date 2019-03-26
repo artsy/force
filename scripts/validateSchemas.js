@@ -13,11 +13,9 @@ const {
   buildClientSchema,
   printSchema,
   buildSchema,
-  findBreakingChanges,
 } = require("graphql")
 
-import { diff, Change } from "@graphql-inspector/core"
-
+const { diff } = require("@graphql-inspector/core")
 const fetch = require("isomorphic-fetch")
 
 const downloadMetaphysicsSchema = async endpoint => {
