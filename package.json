@@ -99,9 +99,9 @@
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
     "@artsy/express-reloadable": "1.4.0",
-    "@artsy/palette": "4.4.1",
+    "@artsy/palette": "4.4.2",
     "@artsy/passport": "1.1.1",
-    "@artsy/reaction": "15.9.2",
+    "@artsy/reaction": "15.10.3",
     "@artsy/stitch": "6.1.3",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",
