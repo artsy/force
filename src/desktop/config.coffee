@@ -69,6 +69,7 @@ module.exports =
   INTERCOM_BUYER_APP_ID: null
   INTERCOM_BUYER_APP_SECRET: null
   INTERCOM_BUYER_ENABLED: false
+  IMAGE_LAZY_LOADING: true
   IMAGE_PROXY: 'GEMINI'
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   IP_DENYLIST: ''
