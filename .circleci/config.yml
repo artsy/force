@@ -13,15 +13,6 @@ jobs:
           name: Acceptance Tests
           command: yarn acceptance src/test/acceptance/*.js
 
-  validate_staging_schema:
-    docker:
-      - image: circleci/node:10-stretch-browsers
-    steps:
-      - yarn/setup
-      - run:
-          name: Validate Staging Schema
-          command: node scripts/validateSchemas.js staging
-
   validate_production_schema:
     docker:
       - image: circleci/node:10-stretch-browsers
@@ -41,7 +32,7 @@ jobs:
           command: yarn assets
       - store_artifacts:
           path: ~/project/.artifacts
-          
+
   test:
     docker:
       - image: circleci/node:10.13
@@ -127,8 +118,6 @@ workflows:
           <<: *not_staging_or_release
       - acceptance:
           <<: *not_staging_or_release
-      - validate_staging_schema:
-          <<: *not_staging_or_release
       # Nothing actually relies on this at the moment
       - build:
           <<: *not_staging_or_release
@@ -140,7 +129,6 @@ workflows:
           requires:
             - test
             - acceptance
-            - validate_staging_schema
             - build
       - deploy_hokusai_staging:
           <<: *only_master

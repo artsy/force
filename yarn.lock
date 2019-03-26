@@ -896,6 +896,13 @@
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.3.tgz#6310a047f12d21a1036fb031317219892440416f"
   integrity sha512-4zAPlpDEh2VwXswwr/t8xGNDGg8RQiPxtxZ3qQEXyQsBV39ptTdESCjuBvGze1nLMVrxmTIKmnO/nAV8Tqjjzg==
 
+"@graphql-inspector/core@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@graphql-inspector/core/-/core-1.14.0.tgz#c623b015c51f338312334dba133f839ba60cc512"
+  integrity sha512-pyhZ3HDAHJ8/85hvs/NWTx901/M/kO8OaUH5iLCfccNsrQ92j77a0t1Ha3ER3CSDFIYsnByQgJgf/2vJ5/NX6A==
+  dependencies:
+    dependency-graph "0.8.0"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -4458,6 +4465,11 @@ depd@~1.1.0, depd@~1.1.1, depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
+
+dependency-graph@0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.8.0.tgz#2da2d35ed852ecc24a5d6c17788ba57c3708755b"
+  integrity sha512-DCvzSq2UiMsuLnj/9AL484ummEgLtZIcRS7YvtO38QnpX3vqh9nJ8P+zhu8Ja+SmLrBHO2iDbva20jq38qvBkQ==
 
 deprecate@^0.1.0:
   version "0.1.0"
@@ -9574,6 +9586,9 @@ mixin-deep@^1.2.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
   integrity sha512-8ZItLHeEgaqEvd5lYBXfm4EZSFCX29Jb9K+lAHhDKzReKBQKj3R+7NOF6tjqYi9t4oI8VUfaWITJQm86wnXGNQ==
+  dependencies:
+    for-in "^1.0.2"
+    is-extendable "^1.0.1"
 
 mkdirp@0.5.0:
   version "0.5.0"

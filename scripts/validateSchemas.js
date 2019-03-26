@@ -16,6 +16,8 @@ const {
   findBreakingChanges,
 } = require("graphql")
 
+import { diff, Change } from "@graphql-inspector/core"
+
 const fetch = require("isomorphic-fetch")
 
 const downloadMetaphysicsSchema = async endpoint => {
@@ -55,10 +57,14 @@ const getBreakingChanges = async metaphysicsEnv => {
   const metaphyicsSchema = await downloadMetaphysicsSchema(
     `https://metaphysics-${metaphysicsEnv}.artsy.net/`
   )
-  return findBreakingChanges(
+
+  const allChanges = diff(
     buildSchema(reactionSchema),
     buildSchema(metaphyicsSchema)
   )
+  const breakings = allChanges.filter(c => c.criticality.level === "BREAKING")
+  const messages = breakings.map(c => c.message)
+  return messages
 }
 
 module.exports = {
