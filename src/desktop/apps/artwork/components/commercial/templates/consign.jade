@@ -1,9 +1,0 @@
-if helpers.commercial.isWithConsignableArtists(artwork)
-  .artwork-commercial__consignables
-    .artwork-commercial__consignables__consign
-      - var artistPrompt = (artwork.artists.length === 1) ? artwork.artists[0].name : 'these artists'
-      | Want to sell a work by #{artistPrompt}?
-      = ' '
-      a( href='/consign' )
-        | Learn&nbsp;more
-      | .

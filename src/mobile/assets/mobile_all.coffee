@@ -146,9 +146,6 @@ hash =
       # Last resort
       require('../components/layout/bootstrap.coffee')()
 
-  '^/artwork/.*': ->
-    require('../apps/artwork/client/index.coffee').init()
-
   '^$': ->
     require '../apps/home/client/index.coffee'
 

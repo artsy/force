@@ -5,7 +5,6 @@
 //
 
 import config from "../config"
-import ddTracer from "dd-trace"
 import _ from "underscore"
 import addRequestId from "express-request-id"
 import artsyPassport from "@artsy/passport"
@@ -44,10 +43,7 @@ import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
 import marketingModals from "./middleware/marketing_modals"
 import { addIntercomUserHash } from "./middleware/intercom"
-import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
-import * as globalReactModules from "desktop/components/react/stitch_components"
 import compression from "compression"
-
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 
@@ -72,7 +68,6 @@ const {
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
-  DD_APM_ENABLED,
 } = config
 
 export default function(app) {
@@ -225,31 +220,6 @@ export default function(app) {
   app.use(unsupportedBrowserCheck)
   app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
-
-  // Configure stitch SSR functionality. See: https://github.com/artsy/stitch/tree/master/src/internal
-  // for more info.
-  app.use(
-    stitchMiddleware({
-      modules: globalReactModules,
-      wrapper: globalReactModules.StitchWrapper,
-    })
-  )
-
-  if (DD_APM_ENABLED) {
-    ddTracer.init({
-      hostname: process.env.DD_TRACE_AGENT_HOSTNAME,
-      service: "force",
-      plugins: false,
-    })
-    ddTracer.use("express", {
-      // We want the root spans of MP to be labelled as just `service`
-      service: "force",
-      headers: ["User-Agent"],
-    })
-    ddTracer.use("http", {
-      service: `force.http-client`,
-    })
-  }
 
   // Routes for pinging system time and up
   app.get("/system/time", (req, res) =>

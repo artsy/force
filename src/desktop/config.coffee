@@ -26,8 +26,6 @@ module.exports =
   CONVECTION_APP_ID: null
   CONVECTION_GEMINI_APP: 'convection-staging'
   COOKIE_DOMAIN: null
-  CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
-  DD_APM_ENABLED: null
   DD_TRACE_AGENT_HOSTNAME: 'localhost'
   DD_SERVICE_NAME: 'force'
   DEFAULT_CACHE_TIME: 3600
@@ -71,6 +69,7 @@ module.exports =
   INTERCOM_BUYER_APP_ID: null
   INTERCOM_BUYER_APP_SECRET: null
   INTERCOM_BUYER_ENABLED: false
+  IMAGE_LAZY_LOADING: true
   IMAGE_PROXY: 'GEMINI'
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   IP_DENYLIST: ''
@@ -83,7 +82,6 @@ module.exports =
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
   NEW_AUTH_MODAL: true
-  NEW_ARTWORK_PAGE_THRESHOLD: 0
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
@@ -136,6 +134,7 @@ module.exports =
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
   ALLOWED_VANITY_ASSETS: ''
+  VERBOSE_LOGGING: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

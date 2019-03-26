@@ -1,6 +1,18 @@
 import { data as sd } from "sharify"
+import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
+import * as globalReactModules from "desktop/components/react/stitch_components"
 
 const app = (module.exports = require("express")())
+
+// Configure stitch SSR functionality. Mounted here (rather than in setup) so
+// changes to stitched code can be hot reloaded.
+// See: https://github.com/artsy/stitch/tree/master/src/internal for more info.
+app.use(
+  stitchMiddleware({
+    modules: globalReactModules,
+    wrapper: globalReactModules.StitchWrapper,
+  })
+)
 
 // NOTE:
 // App order matters as some apps establish logic that is shared inside of subapps.
@@ -16,8 +28,7 @@ app.use(require("./apps/artist/server").app)
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction").app)
 app.use(require("./apps/auction_support"))
-app.use(require("./apps/artwork"))
-app.use(require("./apps/artwork2/server").app)
+app.use(require("./apps/artwork/server").app)
 app.use(require("./apps/about"))
 app.use(require("./apps/collect_art"))
 app.use(require("./apps/collect/server").app)
@@ -34,10 +45,11 @@ app.use(require("./apps/gene"))
 app.use(require("./apps/geo"))
 app.use(require("./apps/jobs"))
 app.use(require("./apps/notifications"))
-app.use(require("./apps/order2/server").app)
+app.use(require("./apps/order/server").app)
 app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 app.use(require("./apps/search"))
+app.use(require("./apps/search2/server").app)
 app.use(require("./apps/show"))
 app.use(require("./apps/shows"))
 app.use(require("./apps/tag"))

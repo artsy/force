@@ -15,7 +15,6 @@ $ -> analytics.ready ->
   require '../analytics/impressions.js'
   require '../analytics/show_page.js'
   require '../analytics/bidding.js'
-  require '../analytics/criteo.js'
   require '../analytics/commercial_filter.js'
   require '../analytics/auth.js'
   require '../analytics/fairs.js'

@@ -2,4 +2,139 @@ if sd.ENABLE_INSTANT_PAGE
   //- Prefetch links on hover. See: https://instant.page/
   script( type="text/javascript" ).
     /*! instant.page v1.2.1 - (C) 2019 Alexandre Dieulot - https://instant.page/license */
-    let urlToPreload,mouseoverTimer,lastTouchTimestamp;const prefetcher=document.createElement("link"),isSupported=prefetcher.relList&&prefetcher.relList.supports&&prefetcher.relList.supports("prefetch"),allowQueryString="instantAllowQueryString"in document.body.dataset,allowExternalLinks="instantAllowExternalLinks"in document.body.dataset;if(isSupported){prefetcher.rel="prefetch",document.head.appendChild(prefetcher);const e={capture:!0,passive:!0};document.addEventListener("touchstart",touchstartListener,e),document.addEventListener("mouseover",mouseoverListener,e)}function touchstartListener(e){lastTouchTimestamp=performance.now();const t=e.target.closest("a");isPreloadable(t)&&(t.addEventListener("touchcancel",touchendAndTouchcancelListener,{passive:!0}),t.addEventListener("touchend",touchendAndTouchcancelListener,{passive:!0}),urlToPreload=t.href,preload(t.href))}function touchendAndTouchcancelListener(){urlToPreload=void 0,stopPreloading()}function mouseoverListener(e){if(performance.now()-lastTouchTimestamp<1100)return;const t=e.target.closest("a");isPreloadable(t)&&(t.addEventListener("mouseout",mouseoutListener,{passive:!0}),urlToPreload=t.href,mouseoverTimer=setTimeout(()=>{preload(t.href),mouseoverTimer=void 0},65))}function mouseoutListener(e){e.relatedTarget&&e.target.closest("a")==e.relatedTarget.closest("a")||(mouseoverTimer?(clearTimeout(mouseoverTimer),mouseoverTimer=void 0):(urlToPreload=void 0,stopPreloading()))}function isPreloadable(e){if(!e||!e.href)return;if(urlToPreload==e.href)return;const t=new URL(e.href);return!(!(allowExternalLinks||t.origin==location.origin||"instant"in e.dataset)||!["http:","https:"].includes(t.protocol)||"http:"==t.protocol&&"https:"==location.protocol||!(allowQueryString||!t.search||"instant"in e.dataset)||t.hash&&t.pathname+t.search==location.pathname+location.search||"noInstant"in e.dataset)||void 0}function preload(e){prefetcher.href=e}function stopPreloading(){prefetcher.removeAttribute("href")}
+
+    let urlToPreload
+    let mouseoverTimer
+    let lastTouchTimestamp
+
+    const prefetcher = document.createElement('link')
+    const isSupported = prefetcher.relList && prefetcher.relList.supports && prefetcher.relList.supports('prefetch')
+    const allowQueryString = 'instantAllowQueryString' in document.body.dataset
+    const allowExternalLinks = 'instantAllowExternalLinks' in document.body.dataset
+
+    if (isSupported) {
+      prefetcher.rel = 'prefetch'
+      document.head.appendChild(prefetcher)
+
+      const eventListenersOptions = {
+        capture: true,
+        passive: true,
+      }
+      document.addEventListener('touchstart', touchstartListener, eventListenersOptions)
+      document.addEventListener('mouseover', mouseoverListener, eventListenersOptions)
+    }
+
+    function getLinkElement(event) {
+      try {
+        return event.target.closest('a')
+      } catch (error) {
+        return null
+      }
+    }
+
+    function touchstartListener(event) {
+      /* Chrome on Android calls mouseover before touchcancel so `lastTouchTimestamp`
+      * must be assigned on touchstart to be measured on mouseover. */
+      lastTouchTimestamp = performance.now()
+
+      const linkElement = getLinkElement(event)
+
+      if (!isPreloadable(linkElement)) {
+        return
+      }
+
+      linkElement.addEventListener('touchcancel', touchendAndTouchcancelListener, {passive: true})
+      linkElement.addEventListener('touchend', touchendAndTouchcancelListener, {passive: true})
+
+      urlToPreload = linkElement.href
+      preload(linkElement.href)
+    }
+
+    function touchendAndTouchcancelListener() {
+      urlToPreload = undefined
+      stopPreloading()
+    }
+
+    function mouseoverListener(event) {
+      if (performance.now() - lastTouchTimestamp < 1100) {
+        return
+      }
+
+      const linkElement = getLinkElement(event)
+
+      if (!isPreloadable(linkElement)) {
+        return
+      }
+
+      linkElement.addEventListener('mouseout', mouseoutListener, {passive: true})
+
+      urlToPreload = linkElement.href
+
+      mouseoverTimer = setTimeout(() => {
+        preload(linkElement.href)
+        mouseoverTimer = undefined
+      }, 65)
+    }
+
+    function mouseoutListener(event) {
+      if (event.relatedTarget && typeof event.relatedTarget.closest === 'function' && getLinkElement(event) == event.relatedTarget.closest('a')) {
+        return
+      }
+
+      if (mouseoverTimer) {
+        clearTimeout(mouseoverTimer)
+        mouseoverTimer = undefined
+      }
+      else {
+        urlToPreload = undefined
+        stopPreloading()
+      }
+    }
+
+    function isPreloadable(linkElement) {
+      if (!linkElement || !linkElement.href) {
+        return
+      }
+
+      if (urlToPreload == linkElement.href) {
+        return
+      }
+
+      const preloadLocation = new URL(linkElement.href)
+
+      if (!allowExternalLinks && preloadLocation.origin != location.origin && !('instant' in linkElement.dataset)) {
+        return
+      }
+
+      if (!['http:', 'https:'].includes(preloadLocation.protocol)) {
+        return
+      }
+
+      if (preloadLocation.protocol == 'http:' && location.protocol == 'https:') {
+        return
+      }
+
+      if (!allowQueryString && preloadLocation.search && !('instant' in linkElement.dataset)) {
+        return
+      }
+
+      if (preloadLocation.hash && preloadLocation.pathname + preloadLocation.search == location.pathname + location.search) {
+        return
+      }
+
+      if ('noInstant' in linkElement.dataset) {
+        return
+      }
+
+      return true
+    }
+
+    function preload(url) {
+      prefetcher.href = url
+    }
+
+    function stopPreloading() {
+      /* The spec says an empty string should abort the prefetching
+      * but Firefox 64 interprets it as a relative URL to prefetch. */
+      prefetcher.removeAttribute('href')
+    }

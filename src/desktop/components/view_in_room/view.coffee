@@ -33,7 +33,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   render: ->
     @__render__()
-    document.body.style.overflowY = 'hidden'
+    @removeScrollbar()
     @cacheSelectors()
     @injectImage()
 
@@ -150,6 +150,16 @@ module.exports = class ViewInRoom extends Backbone.View
   getArtworkDimensions: ->
     @__dimensions__ ?= _.map @dimensions.replace('cm', '').split(' × '), parseFloat
 
+  removeScrollbar: ->
+    $('body').css({
+      'overflow-y': 'hidden'
+    })
+
+  addScrollbar: ->
+    $('body').css({
+      'overflow-y': 'visible'
+    })
+
   remove: ->
     $(window).off 'resize.view-in-room'
     @transitionOut()
@@ -158,6 +168,8 @@ module.exports = class ViewInRoom extends Backbone.View
           @$img.css visibility: 'visible'
         if @$sourceImage
           @$sourceImage.css visibility: 'visible'
-        document.body.style.overflowY = 'visible'
+
+        @addScrollbar()
+
         ViewInRoom.__super__.remove.apply this, arguments
         @trigger 'removed'

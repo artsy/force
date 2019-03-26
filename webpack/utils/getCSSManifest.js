@@ -17,7 +17,7 @@ function clean() {
 }
 
 function compile() {
-  console.log(chalk.green(`[compileCSS] Compiling...`))
+  console.log(chalk.green(`[Force compileCSS] Compiling...`))
   const files = glob.sync("src/{desktop,mobile}/assets/*.styl", {
     nodir: true,
   })
@@ -38,7 +38,7 @@ function fingerprint(file) {
   try {
     fs.renameSync(file, `${DEST}/${fingerprinted}`)
   } catch (error) {
-    console.error("[compileCSS] Error renaming file:", error)
+    console.error("[Force compileCSS] Error renaming file:", error)
   }
 
   return {
@@ -65,10 +65,10 @@ exports.getCSSManifest = () => {
     clean()
     compile()
     const manifest = createManifest()
-    console.log(chalk.green(`[compileCSS] Complete.`))
+    console.log(chalk.green(`[Force compileCSS] Complete.`))
     return manifest
   } catch (error) {
-    console.error(chalk.red("[compileCSS] Error:", error))
+    console.error(chalk.red("[Force compileCSS] Error:", error))
     process.exit(1)
   }
 }

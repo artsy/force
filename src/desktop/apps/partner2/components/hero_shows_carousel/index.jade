@@ -3,7 +3,7 @@
 
 .hero-shows-carousel
   if partnerShows.length > 1
-    a.mgr-arrow-left.icon-chevron-left.js-mgr-prev
+    a.mgr-arrow-left.icon-chevron-left.js-mgr-prev(disabled= true)
 
   .hero-shows-carousel-captions
     for show, i in partnerShows
@@ -18,7 +18,10 @@
     if partnerShows.length > 1
       .mgr-dots
         for _, i in partnerShows
-          .mgr-dot.js-mgr-select(class= (i == 0 ? 'is-active' : undefined)) •
+          - var classes = i == 0 ? ['is-active'] : []
+          - classes = i >= numberOfActiveDots ? classes.concat(['is-deemphasized']) : classes
+          - classes = i > numberOfActiveDots ? classes.concat(['is-hidden']) : classes
+          .mgr-dot.js-mgr-select(class=classes)
 
   .hero-shows-carousel-images
     .mgr-cells.js-mgr-cells

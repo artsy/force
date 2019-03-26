@@ -15,19 +15,30 @@ const {
 const chalk = require("chalk")
 console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 
-// FIXME: Reenable for server-side compilation
-// if (NODE_ENV === "development") {
-//   require("coffeescript/register")
-//   require("@babel/register")({
-//     extensions: [".ts", ".js", ".tsx", ".jsx"],
-//     plugins: ["babel-plugin-dynamic-import-node"],
-//   })
-// }
+if (NODE_ENV === "development") {
+  require("coffeescript/register")
+  require("@babel/register")({
+    extensions: [".ts", ".js", ".tsx", ".jsx"],
+    plugins: ["babel-plugin-dynamic-import-node"],
+  })
+}
 
-require("coffeescript/register")
-require("@babel/register")({
-  extensions: [".ts", ".js", ".tsx", ".jsx"],
-  plugins: ["babel-plugin-dynamic-import-node"],
+// This must come before any other instrumented module.
+// See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
+require("./lib/datadog")
+
+const path = require("path")
+const { setAliases } = require("require-control")
+
+// Force resolution of potentially `yarn link`'d modules to the local node_modules
+// folder. This gets around SSR issues involving single react context requirements.
+// This is server-side only. Client-side must be resolved via webpack.
+setAliases({
+  react: path.resolve(path.join(__dirname, "../node_modules/react")),
+  "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
+  "styled-components": path.resolve(
+    path.join(__dirname, "../node_modules/styled-components")
+  ),
 })
 
 global.Promise = require("bluebird")

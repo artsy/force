@@ -5,7 +5,7 @@ import fixtures from "desktop/test/helpers/fixtures.coffee"
 import { extend, cloneDeep } from "lodash"
 
 const rewire = require("rewire")("../routes")
-const { articles, section, teamChannel } = rewire
+const { articles, news, section, teamChannel } = rewire
 
 describe("Articles routes", () => {
   let req
@@ -18,10 +18,17 @@ describe("Articles routes", () => {
     req = {
       params: {},
       query: {},
+      user: {
+        isAdmin: sinon.stub().returns(true),
+      },
     }
     res = {
       render: sinon.stub(),
-      locals: { sd: {} },
+      locals: {
+        sd: {
+          EDITORIAL_COLLECTIONS_RAIL: 1,
+        },
+      },
       redirect: sinon.stub(),
       backboneError: sinon.stub(),
     }
@@ -62,6 +69,23 @@ describe("Articles routes", () => {
       articles(req, res, next).then(() => {
         positronql.args[0][0].query.should.containEql("limit: 50")
       })
+    })
+  })
+
+  describe("#news", () => {
+    // FIXME: not catching async correctly
+    it("correctly sets showCollectionsRail", () => {
+      rewire.__set__(
+        "positronql",
+        sinon.stub().returns(Promise.resolve({ articles }))
+      )
+      const stitch = sinon.stub()
+      rewire.__set__("stitch", stitch)
+      news(req, res, next)
+        .then(() => {
+          stitch.args[0][0].data.showCollectionsRail.should.equal(true)
+        })
+        .catch(e => console.log(e))
     })
   })
 
