@@ -42,7 +42,7 @@ exports.productionConfig = {
       // }),
       new TerserPlugin({
         cache: true,
-        parallel: true,
+        parallel: 4,
         sourceMap: true,
       }),
     ],
