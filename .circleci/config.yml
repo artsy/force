@@ -32,6 +32,9 @@ jobs:
           command: yarn assets
       - store_artifacts:
           path: ~/project/.artifacts
+      - run:
+          name: Duplicates Report
+          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
 
   danger:
     docker:
