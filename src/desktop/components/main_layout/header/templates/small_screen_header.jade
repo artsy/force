@@ -3,13 +3,18 @@ nav.mlh-small-screen#main-header-small-screen
     span.screen-reader-text Home
     include ../../public/icons/logo-40.svg
   form#main-header-search-form( action='/search', method='GET' )
-    input#main-header-search-box(
-      placeholder='Search by artist, gallery, etc.',
-      name='term',
-      value=mainHeaderSearchBoxValue,
-      type='search'
-      aria-label='Search'
-    )
+    - var enableNewSearchBar = sd.SEARCH_BAR === 'experiment'
+    if (enableNewSearchBar)
+      #main-header-search-bar
+        != stitch.components.SearchBar()
+    else
+      input#main-header-search-box(
+        placeholder='Search by artist, gallery, etc.',
+        name='term',
+        value=mainHeaderSearchBoxValue,
+        type='search'
+        aria-label='Search'
+      )
   button#main-header-search-button.avant-garde-button(form="main-header-search-form") Search
 
   a#main-header-menu-button
