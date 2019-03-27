@@ -8,3 +8,7 @@ Feature = require '../../models/feature.coffee'
       res.locals.sd.TAB = req.params.tab
       res.render 'templates/index',
         feature: feature
+
+@redirectCityGuide = (req, res) ->
+  res.redirect 301, 'https://iphone.artsy.net'
+  
