@@ -43,7 +43,7 @@ jobs:
       - yarn/setup
       - run:
           name: Danger
-          command: yarn danger ci
+          command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
   test:
     docker:
