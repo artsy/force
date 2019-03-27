@@ -16,6 +16,7 @@ The last step is especially important! Users will still receive cookies, and ana
 To start a test, add your configuration to the `running_tests.coffee` file:
 
 ```coffeescript
+# Using an object for outcomes
 header_design:
   key: 'header_design'
   outcomes:
@@ -24,6 +25,17 @@ header_design:
   edge: 'new' # Optional
   dimension: 'dimension1' # Optional
   scope: 'local' # Optional
+
+# Using an array for outcomes
+  artist_collections_rail_qa:
+    key: 'artist_collections_rail_qa'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    control_group: 'control'
+    edge: 'experiment'
+    weighting: 'equal'
 ```
 
 Once this step is complete, an `sd` variable will be present for all users identified by the uppercase key of your test. For the above example, the key of the test is `header_design` and `sd.HEADER_DESIGN` will contain the outcome of the split test, in this case either `80` or `20`.
@@ -53,6 +65,8 @@ A test is not enabled from the analytics side without a `view` event. This must 
 #### In Reaction
 
 SD variables are made available _on the client-side only_ in Reaction when they are added to [Reaction's Sharify `GlobalData`](https://github.com/artsy/reaction/blob/master/typings/sharify.d.ts).
+
+### Add link to artist collections rail test!!!
 
 ```javascript
 @track()
@@ -86,19 +100,61 @@ export class MyComponent extends React.Component<Props> {
 
 When testing an app built in Reaction, you will only have access to SD data on the client. If you need this information on the server as well, you will need to pass it down from Force.
 
-##### Via stitch
+##### Via Stitch (usually in app routes)
 
 ```javascript
-stitch({
-  data: {
-    myTest: sd.MY_TEST,
-  },
-})
+export async function index(req, res, next) {
+  const { MY_TEST } = res.locals.sd
+  const showMyTest = MY_TEST === "experiment"
+
+  const layout = await stitch({
+    basePath: res.app.get("views"),
+    layout: layoutTemplate,
+    config: { ... },
+    blocks: { ... },
+    locals: { ...res.locals },
+    data: {
+      showMyTest, // pass in a/b test as a prop
+    },
+  })
+}
 ```
 
-##### Via `buildClientApp`
+##### Via reaction app with React Router
+
+Reaction apps using React Route, properties should be passed to the context object.
+
+ADD LINK TO ARTIST PAGE
 
 ```javascript
+// Server side: buildServerAppContext
+
+app.get("/:slug", async (req, res, next) => {
+    try {
+      const user = req.user && req.user.toJSON()
+      const { MY_TEST } = res.locals.sd
+      const {
+        ...
+      } = await buildServerApp({
+        routes,
+        url: req.url,
+        userAgent: req.header("User-Agent"),
+        context: {
+          ...buildServerAppContext(req, res),
+          showMyTest: MY_TEST === "experiment"
+        },
+      })
+    // Render layout logic
+    ...
+    }
+  } catch (error) {
+    ...
+  }
+)
+```
+
+```javascript
+// Server side: buildClientApp
 buildClientApp({
   routes,
   context: {
@@ -138,7 +194,22 @@ test.cssClass() // => 'is-splittest-header_design--new'
 
 ## Ensuring a test is correctly configured
 
+For local and staging environments analytics events will be printed to the browser console. For production, you can use the developer tools and click the network tab, filter request by "segment", and verify that you see the "Experiment Viewed" and other associated analytics events. You can also check looker as stated below.
+
+### Notes on QA:
+
+1. Once a test is added to [`runningTests`](TKTKTK), cookies will be set for all users.
+2. It is possible to enable a test without exposing new features to users with an admin only flags to keep the display internal.
+3. However, because we do not want to infect our results tracking with data that is not part of the official test it is recommended you use a dummy name during qa and rename when the test is officially launched (i.e. `sd.MY_TEST_QA`)
+
 ### Forcing a test down a specific path (optional)
+
+#### Via url params
+
+Logged in Artsy admins can override the outcome of a particular split test by passing query params.
+
+For forcing the test "my_test" to have the outcome "experiment":
+`http://www.artsy.net?split_test[my_test]=experiment`
 
 #### Client-side
 
@@ -158,13 +229,6 @@ test = new SplitTest req, res, testConfig
 test.set 'old'
 res.locals.sd[testConfig.key.toUpperCase()] = 'old' # manually set the Sharify variable
 ```
-
-#### Via url params
-
-Logged in Artsy admins can override the outcome of a particular split test by passing query params.
-
-For forcing the test `header_design` to have the outcome `old`:
-http://www.artsy.net?split_test[header_design]=old
 
 ### Confirm tracking data is received
 
