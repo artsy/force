@@ -45,8 +45,8 @@ module.exports = {
     edge: 'experiment'
     weighting: 'equal'
 
-  search_bar:
-    key: 'search_bar'
+  search_bar_2:
+    key: 'search_bar_2'
     outcomes: [
       'control'
       'experiment'

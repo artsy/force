@@ -51,8 +51,8 @@ module.exports = ->
   if sd.stitch?.renderQueue?
     mountStitch()
 
-  splitTest('search_bar').view()
-  
+  splitTest('search_bar_2').view()
+
 mountStitch = ->
   hydrateStitch({
     sharifyData: sd

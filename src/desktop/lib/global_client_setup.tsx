@@ -33,7 +33,7 @@ export function globalClientSetup() {
 
   mountStitchComponents()
   syncAuth()
-  splitTest("search_bar").view()
+  splitTest("search_bar_2").view()
 }
 
 export function syncAuth() {
