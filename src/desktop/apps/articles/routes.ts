@@ -135,14 +135,6 @@ export async function news(_req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
   const renderTime = getCurrentUnixTimestamp()
 
-  // CollectionsRail a/b test
-  const isNewsLayout = true
-
-  // TODO: update after CollectionsRail a/b test
-  const showCollectionsRail =
-    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === "1" ||
-    res.locals.sd.EDITORIAL_COLLECTIONS_RAIL === 1
-
   try {
     const { articles } = await positronql({
       query: newsArticlesQuery({ limit: 6, offset: 0 }),
@@ -168,8 +160,6 @@ export async function news(_req, res, next) {
         articles,
         isMobile,
         renderTime,
-        showCollectionsRail,
-        isNewsLayout,
       },
     })
 
