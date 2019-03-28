@@ -37,27 +37,30 @@ representation = (fair) ->
   fairOrg = profile.related().owner
 
   fairs = new Fairs
-
-  # This grabs all the past fairs by passing fair_organizer_id
-  # to the /fairs endpoint
-  fairs.fetch
+  options =
     cache: true
     data:
       fair_organizer_id: fairOrg.get('_id')
       sort: "-start_at"
-    success: (models, response, options)->
-      articles = new Articles()
 
+  # This grabs all the past fairs by passing fair_organizer_id
+  # to the /fairs endpoint
+  Q(fairs.fetch(options))
+    .then ->
       # find if we have a current fair
       current = fairs.find (fair)->
         moment().utc().isBetween fair.get('autopublish_artworks_at'), fair.get('end_at')
 
-      # redirect to fair if there is a fair currently running.
-      return res.redirect(current.href()) if current
-
+      throw new Error() unless current?
+      Q(current.related().profile.fetch())
+    .then (profile) ->
+      # redirect to fair if there is a fair currently running and its profile is public.
+      res.redirect(new Profile(profile).href())
+    .fail ->
       # fetch the past fairs and their respective representations
       # to get the two small images
       # also, grab all the articles associated with the fair from positron
+      articles = new Articles()
       promises = _.compact _.flatten [
         fairs.map representation
         articles.fetch(
@@ -85,5 +88,4 @@ representation = (fair) ->
         res.locals.pastFairs = res.locals.sd.PAST_FAIRS = fairs.pastYearRoundFairs()
         res.locals.articles = articles.models
         next()
-      ).done()
-
+      )

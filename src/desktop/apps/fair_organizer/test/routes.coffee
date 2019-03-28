@@ -1,6 +1,7 @@
 { fabricate } = require 'antigravity'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
@@ -48,32 +49,53 @@ describe 'Fair Organization routes', ->
       ]
 
     it 'fetches the fair organizer and associated fairs', ->
-      routes.fetchFairOrgData @req, @res, (next = sinon.stub())
-      Backbone.sync.args[0][2].success @fairs.models
-      Backbone.sync.args[1][2].success()
-      _.defer => _.defer =>
+      Backbone.sync.onCall(0).yieldsTo 'success', @fairs.models
+      Backbone.sync.yieldsTo 'success'
+      routes.fetchFairOrgData(@req, @res, (next = sinon.stub())).then =>
         @res.locals.sd.FAIR_IDS.should.eql @fairs.pluck('_id')
         @res.locals.sd.FAIR_ORGANIZER.should.eql @fairOrg.toJSON()
 
-    it 'redirects to the fair if there is a current fair', ->
+    it 'redirects to the fair if there is a current fair with public profile', ->
       fair = @fairs.first()
       fair.set
         autopublish_artworks_at: moment().utc().subtract(5, 'days').format()
         start_at: moment().utc().subtract(3, 'days').format()
         end_at: moment().utc().add(3, 'days').format()
-      routes.fetchFairOrgData @req, @res, (next = sinon.stub())
-      Backbone.sync.args[0][2].success @fairs.models
-      @res.redirect.args[0][0].should.equal '/the-armory-show'
+
+      Backbone.sync.onCall(0).yieldsTo 'success', @fairs.models
+      Backbone.sync
+        .onCall 1
+        .yieldsTo 'success'
+        .returns Q.promise (resolve, reject) -> resolve(fabricate('fair_profile'))
+      Backbone.sync.yieldsTo 'success'
+      routes.fetchFairOrgData(@req, @res, (next = sinon.stub())).then =>
+        @res.redirect.args[0][0].should.equal '/the-armory-show'
+
+    it 'redirects to the fair if there is a current fair with private profile', ->
+      fair = @fairs.first()
+      fair.set
+        autopublish_artworks_at: moment().utc().subtract(5, 'days').format()
+        start_at: moment().utc().subtract(3, 'days').format()
+        end_at: moment().utc().add(3, 'days').format()
+
+      Backbone.sync.onCall(0).yieldsTo 'success', @fairs.models
+      Backbone.sync
+        .onCall 1
+        .yieldsTo 'error'
+        .returns Q.promise (resolve, reject) -> reject()
+      Backbone.sync.yieldsTo 'success'
+      routes.fetchFairOrgData(@req, @res, (next = sinon.stub())).then =>
+        @res.redirect.notCalled.should.be.ok()
+        @res.locals.sd.FAIR_IDS.should.eql @fairs.pluck('_id')
+        @res.locals.sd.FAIR_ORGANIZER.should.eql @fairOrg.toJSON()
 
     it 'sets showName if the all the fairs dont have identical names', ->
       fair = @fairs.first()
       fair.set name: 'modern-fair'
-      routes.fetchFairOrgData @req, @res, (next = sinon.stub())
-      Backbone.sync.args[0][2].success @fairs.models
-      Backbone.sync.args[1][2].success()
-      _.defer => _.defer =>
+      Backbone.sync.onCall(0).yieldsTo 'success', @fairs.models
+      Backbone.sync.yieldsTo 'success'
+      routes.fetchFairOrgData(@req, @res, (next = sinon.stub())).then =>
         @res.locals.showName.should.be.true()
-
 
   describe '#overview', ->
     it 'next is called without a fair org', ->
