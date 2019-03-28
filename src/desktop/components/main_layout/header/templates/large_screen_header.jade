@@ -5,7 +5,7 @@ nav.mlh-navbar
   #main-layout-header-left.mlh-navbar-cell
     #main-layout-header-minimal-title
       block minimal-nav-header
-    - var enableNewSearchBar = sd.SEARCH_BAR === 'experiment'
+    - var enableNewSearchBar = sd.SEARCH_BAR_2 === 'experiment'
     if (enableNewSearchBar)
       form(
         action='/search'

@@ -19,7 +19,7 @@ block body
         a#main-header-menu( href= '#' )
           #main-header-menu-icon
         form#main-header-search-form( action='/search', method='GET' )
-          - var enableNewSearchBar = sd.SEARCH_BAR === 'experiment'
+          - var enableNewSearchBar = sd.SEARCH_BAR_2 === 'experiment'
           if (enableNewSearchBar)
             #main-header-search-bar
               != stitch.components.SearchBar()
