@@ -25,9 +25,7 @@ describe("Articles routes", () => {
     res = {
       render: sinon.stub(),
       locals: {
-        sd: {
-          EDITORIAL_COLLECTIONS_RAIL: 1,
-        },
+        sd: {},
       },
       redirect: sinon.stub(),
       backboneError: sinon.stub(),
@@ -69,23 +67,6 @@ describe("Articles routes", () => {
       articles(req, res, next).then(() => {
         positronql.args[0][0].query.should.containEql("limit: 50")
       })
-    })
-  })
-
-  describe("#news", () => {
-    // FIXME: not catching async correctly
-    it("correctly sets showCollectionsRail", () => {
-      rewire.__set__(
-        "positronql",
-        sinon.stub().returns(Promise.resolve({ articles }))
-      )
-      const stitch = sinon.stub()
-      rewire.__set__("stitch", stitch)
-      news(req, res, next)
-        .then(() => {
-          stitch.args[0][0].data.showCollectionsRail.should.equal(true)
-        })
-        .catch(e => console.log(e))
     })
   })
 

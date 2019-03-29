@@ -124,12 +124,7 @@ export async function index(req, res, next) {
         "../../../components/main_layout/templates/react_blank_index.jade"
     }
 
-    const {
-      CURRENT_USER,
-      EDITORIAL_COLLECTIONS_RAIL, // TODO: update after CollectionsRail a/b test
-      IS_MOBILE,
-      IS_TABLET,
-    } = res.locals.sd
+    const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
 
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
@@ -142,13 +137,6 @@ export async function index(req, res, next) {
     const renderTime = getCurrentUnixTimestamp()
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
-
-    // CollectionsRail a/b test
-    const hasCollectionsRail =
-      EDITORIAL_COLLECTIONS_RAIL === "1" || EDITORIAL_COLLECTIONS_RAIL === 1
-    const showCollectionsRail =
-      hasCollectionsRail &&
-      ["standard", "feature", "news"].includes(article.layout)
 
     const layout = await stitch({
       basePath: res.app.get("views"),
@@ -178,7 +166,6 @@ export async function index(req, res, next) {
         showTooltips,
         superArticle,
         superSubArticles,
-        showCollectionsRail,
       },
       templates,
     })
