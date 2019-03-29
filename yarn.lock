@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.5.3.tgz#7cf823d61b2c4a9aa9fb2fd6d7e0410973cbfc8e"
-  integrity sha512-gZAbx5rvHY+NbND+1xr9gmSUzTl3P973rSbL3V9K0iu4Sx8o37aI3s7pR8iaOKIEQmBeRgL7sXOnslRc9F1WYg==
+"@artsy/palette@4.5.5":
+  version "4.5.5"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.5.5.tgz#47b130e9ea84f3aca4efe08ea8735ec9d1ed9377"
+  integrity sha512-X9jTvvhnJquBgzc4x3DP5CgdN2i7MFxjNlDTIlW9DX9MTtQqfIIluu6Card3YzenjtCCizOx83ZPvPHjWwjdXg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
