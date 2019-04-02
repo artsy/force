@@ -1,3 +1,4 @@
+export { SearchBar } from "./SearchBar"
 export { ReactionArtworkArtistInfo as ArtworkArtistInfo } from "./ReactionArtworkArtistInfo"
 export { ArtworkDetailsQueryRenderer as ArtworkDetails } from "reaction/Apps/Artwork/Components/ArtworkDetails"
 export { ReactionTooltipQuestion as TooltipQuestion } from "./ReactionTooltipQuestion"
