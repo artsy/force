@@ -25,6 +25,9 @@ export const relatedArticles = `
     ${canvasBody}
   }
   relatedArticles {
+    authors {
+      name
+    }
     description
     layout
     thumbnail_title
