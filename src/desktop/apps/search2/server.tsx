@@ -8,7 +8,7 @@ import express, { Request, Response, NextFunction } from "express"
 export const app = express()
 
 app.get(
-  "/search2*",
+  "/search/:tab?",
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.query.term) {
       res.redirect(302, "/")
