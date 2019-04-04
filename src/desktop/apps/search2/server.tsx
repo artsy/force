@@ -10,6 +10,11 @@ export const app = express()
 app.get(
   "/search2*",
   async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.query.term) {
+      res.redirect(302, "/")
+      return
+    }
+
     try {
       const {
         bodyHTML,
