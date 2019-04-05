@@ -7,9 +7,26 @@ import express, { Request, Response, NextFunction } from "express"
 
 export const app = express()
 
+const maybeShowNewPage = (req, _res, next) => {
+  const shouldShowNewPage =
+    req.user && req.user.hasLabFeature("New Search Results")
+
+  if (shouldShowNewPage) {
+    return next()
+  } else {
+    return next("route")
+  }
+}
+
 app.get(
-  "/search2*",
+  "/search/:tab?",
+  maybeShowNewPage,
   async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.query.term) {
+      res.redirect(302, "/")
+      return
+    }
+
     try {
       const {
         bodyHTML,
