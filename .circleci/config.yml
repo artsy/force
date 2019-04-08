@@ -111,11 +111,13 @@ not_staging_or_release: &not_staging_or_release
         - release
 
 only_master: &only_master
+  context: hokusai
   filters:
     branches:
       only: master
 
 only_release: &only_release
+  context: hokusai
   filters:
     branches:
       only: release
