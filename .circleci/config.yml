@@ -104,7 +104,6 @@ jobs:
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin
 
 not_staging_or_release: &not_staging_or_release
-  context: hokusai
   filters:
     branches:
       ignore:
