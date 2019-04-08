@@ -1,8 +1,22 @@
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
+Events = require('@artsy/reaction/dist/Utils/Events.js').default
 
 require '../lib/analytics_hooks.coffee'
 require '../analytics/before_ready.js'
+
+# All Reaction events are sent directly to Segment
+Events.onEvent (data) =>
+  if data.action
+    # Old analytics schema
+    analytics.track data.action, _.omit data, 'action'
+  else if data.action_type
+    # New analytics schema
+    analytics.track data.action_type, _.omit data, 'action_type'
+  else
+    console.error("Unknown analytics schema being used: #{JSON.stringify(data)}")
+
+
 $ -> analytics.ready ->
 
   if  sd.CURRENT_USER?.id
