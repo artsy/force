@@ -5,8 +5,8 @@ nav.mlh-navbar
   #main-layout-header-left.mlh-navbar-cell
     #main-layout-header-minimal-title
       block minimal-nav-header
-    - var lab_features = (sd.CURRENT_USER && sd.CURRENT_USER.lab_features) || []
-    if (lab_features.includes('New Search Bar'))
+    - var enableNewSearchBar = sd.SEARCH_BAR_2 === 'experiment'
+    if (enableNewSearchBar)
       form(
         action='/search'
         method='GET'

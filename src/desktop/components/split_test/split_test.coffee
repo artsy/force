@@ -73,6 +73,7 @@ module.exports = class SplitTest
       @set @toss()
 
   view: ->
+    debugger
     analytics?.track? 'Experiment Viewed', {
       experiment_id: @key
       experiment_name: @key
