@@ -51,7 +51,6 @@ module.exports = ->
   if sd.stitch?.renderQueue?
     mountStitch()
   
-  debugger
   splitTest('search_bar_2').view()
   
 mountStitch = ->
