@@ -47,13 +47,13 @@ jobs:
 
   test:
     docker:
-      - image: artsy/hokusai
+      - image: circleci/node:10.13
     parallelism: 3
     steps:
       - yarn/setup
       - run:
           name: Test
-          command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH hokusai test --build
+          command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
 
   push_staging_image: &push_image
     docker:
