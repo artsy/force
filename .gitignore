@@ -35,5 +35,5 @@ server.dist.js
 server.dist.js.map
 
 # Codecov
-coverage.lcov
+coverage*
 .nyc_output/
