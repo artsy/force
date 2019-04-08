@@ -23,5 +23,11 @@ reporter.write(map)
 fs.copyFile(
   "./coverage/coverage-final.json",
   "./.nyc_output/coverage-final.json",
-  error => error && console.log(error)
+  error =>
+    error &&
+    console.error(
+      chalk.red(`[codecov] Error merging mocha and jest coverage.\n`),
+      error.stack,
+      "\n"
+    )
 )
