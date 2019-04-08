@@ -6,7 +6,7 @@ set -ex
 
 # node --inspect-brk \
 # ./node_modules/.bin/mocha \
-mocha \
+nyc mocha \
   -c \
   --require test.config.js \
   --require mocha.config.js \
