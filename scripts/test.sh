@@ -8,7 +8,8 @@ run () {
   case $CIRCLE_NODE_INDEX in
   0)
     yarn mocha src/test/lib/*
-    yarn mocha $(find src/desktop -name '*.test.coffee')
+    yarn mocha $(find src/desktop/test -name '*.test.coffee')
+    yarn mocha $(find src/desktop/components -name '*.test.coffee')
     yarn mocha $(find src/desktop/components -name '*.test.js')
     ;;
   1)
