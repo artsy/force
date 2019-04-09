@@ -29,7 +29,7 @@ describe 'CTABarView', ->
       it 'does not render the form (default mode of "link")', ->
         @view.$('.cta-bar-form').should.have.lengthOf 0
 
-      it 'opens the signup modal on clicking CTA', ->
+      xit 'opens the signup modal on clicking CTA', ->
         @view.openModal = sinon.stub()
         @view.onClickButton preventDefault: prevent = sinon.stub()
         prevent.called.should.be.ok()

@@ -8,7 +8,7 @@ Artworks = require '../../../../collections/artworks'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-describe 'Auction results client-side code', ->
+xdescribe 'Auction results client-side code', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')

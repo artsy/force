@@ -9,7 +9,7 @@ describe 'State', ->
       state.context.state.should.equal state
 
     describe '#inject', ->
-      it 'lets you inject additions to the context at any point', ->
+      xit 'lets you inject additions to the context at any point', ->
         state = new State
         state.inject foo: 'bar', bar: baz: 'foo'
         state.inject baz: 'qux'
