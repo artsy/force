@@ -1,4 +1,4 @@
-extends ../main_layout/templates/index
+extends ../main_layout/templates/blank
 
 append locals
   - bodyClass = "error-handler-body"
@@ -41,3 +41,5 @@ block body
 
         .error-handler-return: a( href='/' )
           | Go to Artsy homepage
+
+  include ../main_layout/footer/template
