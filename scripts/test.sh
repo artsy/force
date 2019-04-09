@@ -7,13 +7,9 @@ set -ex
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    yarn mocha src/test/lib/*
-    yarn mocha $(find src/desktop/test -name '*.coffee')
-    yarn mocha $(find src/desktop/components/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/components/*/test -name '*.js')
-    yarn mocha $(find src/desktop/components/**/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/components/**/*/test -name '*.js')
-    yarn mocha $(find src/desktop/components -name '*.test.js')
+    yarn mocha $(find src/test -name '*.test.*')
+    yarn mocha $(find src/desktop/test -name '*.test.*')
+    yarn mocha $(find src/desktop/components -name '*.test.*')
     ;;
   1)
     yarn mocha $(find src/desktop/apps/*/test -name '*.coffee')

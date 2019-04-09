@@ -11,7 +11,7 @@ sd = require('sharify').data
 { stubChildClasses } = require '../../../test/helpers/stubs'
 embed = require 'particle'
 
-describe 'ArticleView', ->
+xdescribe 'ArticleView', ->
 
   before ->
     benv.setup =>
