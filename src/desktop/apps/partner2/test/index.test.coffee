@@ -49,7 +49,7 @@ subscriptions2_0Specs = (partnerRoutes) ->
           # https://github.com/visionmedia/supertest/issues/253
           res.text.should.startWith '<!DOCTYPE html>'
 
-  it 'redirects to /:id for /:id/overview', ->
+  xit 'redirects to /:id for /:id/overview', ->
     request(@app)
       .get '/partner-id/overview'
       .expect 302

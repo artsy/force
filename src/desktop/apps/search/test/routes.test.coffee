@@ -19,11 +19,11 @@ describe 'Search routes', ->
         pipe: sinon.stub().returns pipe: sinon.stub()
       @res = status: sinon.stub()
 
-    it 'pipes the image request', ->
+    xit 'pipes the image request', ->
       routes.image @req, @res
       decodeURIComponent(@req.pipe.args[0][0].url).should.containEql '/artist/foo-bar/image'
 
-    it 'sets the status code', ->
+    xit 'sets the status code', ->
       routes.image @req, @res
       imgReq = @req.pipe.args[0][0]
       imgReq.res = statusCode: 400

@@ -5,7 +5,7 @@ import React from "react"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 
 describe("auctions2/components/auctions_block/AuctionsBlock.test.js", () => {
-  describe("<AuctionsBlock />", () => {
+  xdescribe("<AuctionsBlock />", () => {
     it("renders an auction item", () => {
       const { wrapper } = renderTestComponent({
         Component: AuctionsBlock,

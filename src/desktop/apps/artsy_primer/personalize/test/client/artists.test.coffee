@@ -117,7 +117,7 @@ describe 'ArtistsView', ->
 
   describe '#render', ->
     describe 'collector_level 2', ->
-      it 'renders the template with the correct copy', ->
+      xit 'renders the template with the correct copy', ->
         @view.$el.html().should.containEql 'Follow artists you are interested in'
 
   describe 'GeneArtists', ->

@@ -2,7 +2,7 @@ import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
 
-describe("App", () => {
+xdescribe("App", () => {
   let props
   let App
 
