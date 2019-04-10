@@ -12,10 +12,7 @@ run () {
     yarn mocha $(find src/desktop/components -name '*.test.*')
     ;;
   1)
-    yarn mocha $(find src/desktop/apps/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/apps/*/test -name '*.js')
-    yarn mocha $(find src/desktop/apps/*/**/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/apps -name '*.test.js')
+    yarn mocha $(find src/desktop/apps -name '*.test.*')
     ;;
   2)
     yarn mocha $(find src/mobile/test -name '*.coffee')
