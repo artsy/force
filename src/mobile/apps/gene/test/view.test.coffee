@@ -8,7 +8,7 @@ Artists = require '../../../collections/artists.coffee'
 Gene = require '../../../models/gene.coffee'
 { fabricate } = require 'antigravity'
 
-describe 'GeneArtworksView', ->
+xdescribe 'GeneArtworksView', ->
 
   beforeEach (done) ->
     benv.setup =>
