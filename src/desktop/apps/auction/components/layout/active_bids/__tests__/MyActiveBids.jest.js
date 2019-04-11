@@ -1,16 +1,15 @@
-import Auction from "desktop/models/auction.coffee"
-import CurrentUser from "desktop/models/current_user.coffee"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { initialState } from "desktop/apps/auction/reducers"
-import { fabricate } from "antigravity"
+const Auction = require("desktop/models/auction.coffee")
+const CurrentUser = require("desktop/models/current_user.coffee")
 
 describe("apps/auction/components/layout/active_bids/MyActiveBids", () => {
   let baseData
 
-  before(() => {
+  beforeEach(() => {
     baseData = {
-      auction: new Auction(fabricate("sale")),
+      auction: new Auction(),
       viewHelpers: { getLiveAuctionUrl: () => "placeholderauctionurl.com" },
       me: {
         lot_standings: [],
@@ -78,17 +77,13 @@ describe("apps/auction/components/layout/active_bids/MyActiveBids", () => {
         user: new CurrentUser({ id: "user" }),
       })
 
-      wrapper.find("h2").length.should.eql(1)
-      wrapper.find(".bid-status").length.should.eql(1)
-      wrapper
-        .find(".bid-status")
-        .text()
-        .should.containEql("Outbid")
-      wrapper.find(".auction-ActiveBidItem__bid-button").length.should.eql(1)
-      wrapper
-        .find(".auction-ActiveBidItem__bid-button")
-        .text()
-        .should.containEql("Bid")
+      expect(wrapper.find("h2").length).toBe(1)
+      expect(wrapper.find(".bid-status").length).toBe(1)
+      expect(wrapper.find(".bid-status").text()).toMatch("Outbid")
+      expect(wrapper.find(".auction-ActiveBidItem__bid-button").length).toBe(1)
+      expect(wrapper.find(".auction-ActiveBidItem__bid-button").text()).toMatch(
+        "Bid"
+      )
     })
 
     it("displays a Bid Live button if is_live_open", () => {
@@ -133,15 +128,14 @@ describe("apps/auction/components/layout/active_bids/MyActiveBids", () => {
         user: new CurrentUser({ id: "user" }),
       })
 
-      wrapper.find("h2").length.should.eql(1)
-      wrapper.find(".bid-status").length.should.eql(0)
-      wrapper
-        .find(".auction-ActiveBidItem__bid-live-button")
-        .length.should.eql(1)
-      wrapper
-        .find(".auction-ActiveBidItem__bid-live-button")
-        .text()
-        .should.containEql("Bid Live")
+      expect(wrapper.find("h2").length).toBe(1)
+      expect(wrapper.find(".bid-status").length).toBe(0)
+      expect(
+        wrapper.find(".auction-ActiveBidItem__bid-live-button").length
+      ).toBe(1)
+      expect(
+        wrapper.find(".auction-ActiveBidItem__bid-live-button").text()
+      ).toMatch("Bid Live")
     })
   })
 })

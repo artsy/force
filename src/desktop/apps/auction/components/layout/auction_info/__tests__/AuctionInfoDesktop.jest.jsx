@@ -1,51 +1,57 @@
 import React from "react"
 import Registration from "desktop/apps/auction/components/layout/auction_info/Registration"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
+import { test } from "../AuctionInfoDesktop"
 
-const rewire = require("rewire")("../AuctionInfoDesktop")
-const { AuctionInfoDesktop } = rewire.test
+jest.mock("desktop/components/add_to_calendar/react", () => ({
+  __esModule: true,
+  namedExport: jest.fn(),
+  default: jest.fn().mockImplementation(() => ({
+    render: () => <div />,
+  })),
+}))
+
+const AddToCalendarView = require("desktop/components/add_to_calendar/react")
+  .default
 
 describe("auction/components/layout/auction_info/AuctionInfoDesktop.test", () => {
   describe("<AuctionInfoDesktop />", () => {
     it("renders Sale Preview if isAuctionPromo", () => {
       let component = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           isAuctionPromo: true,
         },
       })
 
-      component.wrapper.text().should.containEql("Sale Preview")
+      expect(component.wrapper.text()).toMatch("Sale Preview")
 
       component = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           isAuctionPromo: false,
         },
       })
 
-      component.wrapper.text().should.not.containEql("Sale Preview")
+      expect(component.wrapper.text()).not.toMatch("Sale Preview")
     })
 
     it("renders name and upcoming label", () => {
       const { wrapper } = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           name: "Foo",
           upcomingLabel: "Bar",
         },
       })
 
-      wrapper.text().should.containEql("Foo")
-      wrapper.text().should.containEql("Bar")
+      expect(wrapper.text()).toMatch("Foo")
+      expect(wrapper.text()).toMatch("Bar")
     })
 
     it("renders AddToCalendarView if showAddToCalendar is true", () => {
-      const AddToCalendarView = () => <div />
-      const resetRewire = rewire.__set__("AddToCalendarView", AddToCalendarView)
-
       let component = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           showAddToCalendar: true,
         },
@@ -54,55 +60,54 @@ describe("auction/components/layout/auction_info/AuctionInfoDesktop.test", () =>
       component.wrapper.find(AddToCalendarView).length.should.eql(1)
 
       component = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           showAddToCalendar: false,
         },
       })
 
-      component.wrapper.find(AddToCalendarView).length.should.eql(0)
-      resetRewire()
+      expect(component.wrapper.find(AddToCalendarView).length).toBe(0)
     })
 
     it("renders Live Auction if liveStartAt exists", () => {
       const { wrapper } = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           liveStartAt: "foo",
         },
       })
 
-      wrapper.text().should.containEql("Live auction")
+      expect(wrapper.text()).toMatch("Live auction")
     })
 
     it("renders a description", () => {
       const { wrapper } = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           description: "hello description",
         },
       })
 
-      wrapper.text().should.containEql("hello description")
+      expect(wrapper.text()).toMatch("hello description")
     })
 
     it("renders a Registration metadata component", () => {
       const { wrapper } = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
       })
 
-      wrapper.find(Registration).length.should.eql(1)
+      expect(wrapper.find(Registration).length).toBe(1)
     })
 
     it("hides upcomingLabel if empty", () => {
       const { wrapper } = renderTestComponent({
-        Component: AuctionInfoDesktop,
+        Component: test.AuctionInfoDesktop,
         props: {
           upcomingLabel: "",
         },
       })
 
-      wrapper.html().should.not.containEql("AuctionInfoDesktop__upcominigLabel")
+      expect(wrapper.html()).not.toMatch("AuctionInfoDesktop__upcominigLabel")
     })
   })
 })
