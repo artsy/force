@@ -5,7 +5,7 @@ import { ArtworkRail } from "../../artwork_rail/ArtworkRail"
 import { followedArtistSaleArtworks } from "../__tests__/fixtures/followedArtistSaleArtworks"
 import { cloneDeep } from "lodash"
 
-describe("auction/components/artwork_browser/BuyNowSaleArtworks", () => {
+xdescribe("auction/components/artwork_browser/BuyNowSaleArtworks", () => {
   const data = {
     app: {
       isMobile: false,
