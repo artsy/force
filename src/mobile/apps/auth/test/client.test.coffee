@@ -98,6 +98,7 @@ describe 'Sign up (with email) client-side code', ->
 describe 'Login view', ->
 
   beforeEach (done) ->
+    global.location = { search: '' }
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
