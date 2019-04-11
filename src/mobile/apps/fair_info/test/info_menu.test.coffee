@@ -35,11 +35,9 @@ describe 'InfoMenu', ->
   it 'fetches the infoMenu', ->
     @infoMenu.fetch({cache: false})
     urls = _.map Backbone.sync.args, (args) ->  _.result args[1], 'url'
-    urls.should.eql [
-        "undefined/api/v1/fair/#{@fair.id}/fair_events",
-        "undefined/api/articles"
-        "undefined/api/articles"
-      ]
+    urls[0].should.containEql("/api/v1/fair/#{@fair.id}/fair_events")
+    urls[1].should.containEql("/api/articles")
+    urls[2].should.containEql("/api/articles")
 
   it 'resolves with the infoMenu',->
     @infoMenu.fetch({cache: false})

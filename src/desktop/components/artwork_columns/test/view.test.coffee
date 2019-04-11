@@ -11,7 +11,6 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = null
 
 xdescribe 'ArtworkColumns', ->
-# FIXME: not sure
   before (done) ->
     benv.setup =>
       benv.expose
@@ -39,6 +38,7 @@ xdescribe 'ArtworkColumns', ->
     @view = new ArtworkColumnsView
       el: $('body')
       collection: @artworks
+      user: new CurrentUser
 
   describe '#initialize', ->
 
