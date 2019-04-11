@@ -22,7 +22,7 @@ describe 'Article template', ->
 
   it 'renders a non-editorial article correctly', ->
     @page = jade.compile(fs.readFileSync(@filename), filename: @filename) @props
-    # @page.should.containEql 'Top Ten Booths at miart 2014'
+    # FIXME: @page.should.containEql 'Top Ten Booths at miart 2014'
     @page.should.containEql '/article/ten-booths-miart-2014'
     @page.should.containEql 'https://artsy-media-uploads.s3.amazonaws.com/9-vuUwfMbo9-dibbqjZQHQ%2FSterling_Ruby_2013_%282%29.jpg'
     @page.should.containEql 'Elena Soboleva'

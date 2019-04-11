@@ -15,6 +15,7 @@ describe 'ClockView', ->
 
   beforeEach ->
     @clock = sinon.useFakeTimers()
+    # FIXME: conflicts with jsdom
     # sinon.spy(window.location, 'reload')
 
     # Dynamically import ClockView constructor so that it pulls in the stubbed
@@ -23,6 +24,7 @@ describe 'ClockView', ->
     
   afterEach ->
     @clock.restore()
+    # FIXME: conflicts with jsdom
     # location.reload.restore()
 
   xit 'does trigger a reload for a timestamp 1 day away, only after the day passes', ->
