@@ -97,7 +97,7 @@ describe "#articles", ->
   afterEach ->
     request.post.restore()
 
-  it 'fetches a collection of articles and renders the list', (done) ->
+  xit 'fetches a collection of articles and renders the list', (done) ->
     routes.articles @req, @res, @next
     @res.render.args[0][0].should.equal 'articles'
     @res.render.args[0][1].articles[0].thumbnail_title.should.containEql 'Top Ten Booths at miart 2014'

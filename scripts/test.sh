@@ -18,11 +18,7 @@ run () {
     yarn mocha $(find src/desktop/apps -name '*.test.js')
     ;;
   2)
-    yarn mocha $(find src/mobile/test -name '*.coffee')
-    yarn mocha $(find src/mobile/components/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
+    yarn mocha $(find src/mobile -name '*.test.*')
     yarn jest
     ;;
   esac

@@ -31,6 +31,7 @@ describe 'PartnerArtistView', ->
         @view = new PartnerArtistView
           artist: new Artist(fabricate 'artist')
           partner: new Partner(fabricate 'partner')
+          user: null
         done()
 
   afterEach ->
@@ -117,6 +118,7 @@ describe 'PartnerArtistView', ->
     describe 'without a user', ->
 
       it 'should redirect to log in', ->
+        @view.followButtonView.isLoggedIn = false
         spy = sinon.spy @view.followArtists, 'follow'
         @view.followButtonView.onToggle(@e)
         spy.called.should.be.false()
