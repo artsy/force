@@ -13,7 +13,6 @@ describe 'AppBanner', ->
     benv.teardown()
 
   beforeEach ->
-    window.location = {}
     global.location = window.location
     @appBanner = new @AppBanner @$content
 
