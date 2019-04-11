@@ -52,6 +52,7 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
           BidStatus: () => <div />,
           bid,
           ...bid.sale_artwork,
+          isMobile: false,
         },
       })
 

@@ -23,6 +23,11 @@ describe("auction/components/layout/Banner.test", () => {
           isAuction: true,
           isLiveOpen: true,
           liveAuctionUrl,
+          auction: {},
+          coverImage: "coverImage",
+          isClosed: false,
+          isMobile: false,
+          name: "string",
         },
       })
 
@@ -38,6 +43,10 @@ describe("auction/components/layout/Banner.test", () => {
           isAuction: true,
           hasEndTime: false,
           isLiveOpen: false,
+          coverImage: "coverImage",
+          isClosed: false,
+          isMobile: false,
+          name: "string",
         },
       })
 
@@ -55,6 +64,10 @@ describe("auction/components/layout/Banner.test", () => {
           isAuction: true,
           hasEndTime: false,
           isLiveOpen: false,
+          coverImage: "coverImage",
+          isClosed: false,
+          isMobile: false,
+          name: "string",
         },
       })
 
@@ -67,10 +80,15 @@ describe("auction/components/layout/Banner.test", () => {
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
+          auction: {},
           isAuction: true,
           hasEndTime: true,
           isLiveOpen: true,
           liveAuctionUrl,
+          coverImage: "coverImage",
+          isClosed: false,
+          isMobile: false,
+          name: "string",
         },
       })
 
@@ -85,8 +103,14 @@ describe("auction/components/layout/Banner.test", () => {
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
+          auction: {},
+          isAuction: true,
           hasEndTime: true,
           isLiveOpen: false,
+          coverImage: "coverImage",
+          isClosed: false,
+          isMobile: false,
+          name: "string",
         },
         options: {
           renderMode: "render",
@@ -100,8 +124,14 @@ describe("auction/components/layout/Banner.test", () => {
       const { wrapper } = renderTestComponent({
         Component: Banner,
         props: {
+          auction: {},
+          isAuction: false,
           hasEndTime: false,
           isLiveOpen: false,
+          isMobile: false,
+          isClosed: false,
+          name: "string",
+          coverImage: "coverImage",
         },
         options: {
           renderMode: "render",
