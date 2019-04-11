@@ -13,7 +13,7 @@ import { createStore } from "redux"
 const rewire = require("rewire")("../sidebar/Sidebar")
 const Sidebar = rewire.default
 
-describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
+xdescribe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
   describe("<ArtworkDisplay />", () => {
     let saleArtwork
 
@@ -43,7 +43,7 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
       }
     })
 
-    xit("renders an auction grid artwork component", () => {
+    it("renders an auction grid artwork component", () => {
       const { wrapper } = renderTestComponent({
         Component: GridArtwork,
         props: {
@@ -55,7 +55,7 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
       wrapper.html().should.containEql("<em>My Artwork</em>, 2002")
     })
 
-    xit("renders an auction list artwork component", () => {
+    it("renders an auction list artwork component", () => {
       const { wrapper } = renderTestComponent({
         Component: ListArtwork,
         props: {
@@ -67,7 +67,7 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
       wrapper.html().should.containEql("<em>My Artwork</em>, 2002")
     })
 
-    xit("renders an auction grid artwork component without a bid status if the auction is closed", () => {
+    it("renders an auction grid artwork component without a bid status if the auction is closed", () => {
       const { wrapper } = renderTestComponent({
         Component: GridArtwork,
         data: {
@@ -83,7 +83,7 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
       wrapper.html().should.not.containEql("$100")
     })
 
-    xit("renders an auction list artwork component without a bid status if the auction is closed", () => {
+    it("renders an auction list artwork component without a bid status if the auction is closed", () => {
       const { wrapper } = renderTestComponent({
         Component: ListArtwork,
         data: {
@@ -297,7 +297,7 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
   })
 
   describe("<RangeSlider />", () => {
-    xit("renders the range correctly initially", () => {
+    it("renders the range correctly initially", () => {
       const initialStore = createStore(auctions, {
         app: {
           auction: {
@@ -315,7 +315,7 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
       wrapper.text().should.containEql("$0 - 50,000+")
     })
 
-    xit("renders the range correctly for a middle bucket", () => {
+    it("renders the range correctly for a middle bucket", () => {
       const initialStore = createStore(auctions, {
         app: {
           auction: {
@@ -333,7 +333,8 @@ describe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
       wrapper.find(".auction-RangeSlider__caption").length.should.eql(1)
       wrapper.text().should.containEql("$200 - 4,000")
     })
-    xit("renders the range correctly for an upper bucket", () => {
+
+    it("renders the range correctly for an upper bucket", () => {
       const initialStore = createStore(auctions, {
         app: {
           auction: {

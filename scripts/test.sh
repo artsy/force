@@ -7,6 +7,7 @@ set -ex
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
+    yarn jest
     yarn mocha $(find src/test -name '*.test.*')
     yarn mocha $(find src/desktop/test -name '*.test.*')
     yarn mocha $(find src/desktop/components -name '*.test.*')
@@ -20,7 +21,6 @@ run () {
     yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
     yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
     yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
-    yarn jest
     ;;
   esac
 }
