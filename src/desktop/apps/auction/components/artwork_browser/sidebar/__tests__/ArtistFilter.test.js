@@ -13,6 +13,9 @@ describe("auction/components/artwork_browser/sidebar/ArtistFilter.test", () => {
       artistIds: [1, 2, 3],
       artistsYouFollow: { id: 1 },
       aggregatedArtists: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      allArtistsSelected: false,
+      includeArtworksByFollowedArtists: false,
+      updateArtistParamsAction: x => x,
     }
 
     beforeEach(() => {
