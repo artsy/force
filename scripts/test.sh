@@ -18,11 +18,12 @@ run () {
     yarn mocha $(find src/desktop/apps -name '*.test.js')
     ;;
   2)
-    yarn mocha $(find src/mobile/test -name '*.coffee')
-    yarn mocha $(find src/mobile/components/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
+    yarn mocha $(find src/mobile -name '*.test.*')
+    # 232 passing, 2 pending: src/mobile/test
+    # 115 passing, 3 pending: src/mobile/components/*/test
+    # 4 passing: src/mobile/components/**/*/test
+    # 299 passing, 17 pending: src/mobile/apps/*/test
+    # 9 passing: src/mobile/apps/*/**/*/test 
     yarn jest
     ;;
   esac

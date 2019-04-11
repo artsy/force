@@ -13,8 +13,8 @@ cache = require '../../../lib/cache'
 describe 'InfoMenu', ->
   beforeEach ->
     @fair = new Fair fabricate 'fair'
-    @infoMenu = new InfoMenu fair: @fair
-    @fairEvent = new FairEvent fabricate('fair_event'), { fairId: @fair.id }
+    @infoMenu = new InfoMenu fair: @fair, sd: { APP_URL: "artsy.net" }
+    @fairEvent = new FairEvent fabricate('fair_event'), { fairId: @fair.id  }
 
 
     @cache = {}
