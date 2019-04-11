@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import ReactDOM from "react-dom"
 import { Article } from "reaction/Components/Publishing"
-import { ContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "reaction/Artsy"
 import { InfiniteScrollNewsArticle } from "./InfiniteScrollNewsArticle"
 import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
@@ -51,9 +51,9 @@ export class App extends React.Component<AppProps> {
     return (
       <Fragment>
         <EditPortal article={article} />
-        <ContextProvider user={sd.CURRENT_USER}>
+        <SystemContextProvider user={sd.CURRENT_USER}>
           {this.getArticleLayout()}
-        </ContextProvider>
+        </SystemContextProvider>
       </Fragment>
     )
   }
