@@ -17,7 +17,7 @@ buildClientApp({
       sd.ARTIST_COLLECTIONS_RAIL_QA === "experiment" &&
       sd.CURRENT_USER &&
       sd.CURRENT_USER.type === "Admin", // TODO: update after Artist Collections Rail a/b test
-  },
+  } as any,
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(

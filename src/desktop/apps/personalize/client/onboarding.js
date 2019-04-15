@@ -4,7 +4,7 @@ import { Router } from "react-router"
 import createHistory from "history/createBrowserHistory"
 import Cookies from "cookies-js"
 
-import { ContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "reaction/Artsy"
 import { Wizard } from "reaction/Components/Onboarding/Wizard"
 import { data as sd } from "sharify"
 
@@ -37,9 +37,9 @@ export const init = () => {
   // Start app
   ReactDOM.hydrate(
     <Router history={history}>
-      <ContextProvider {...bootstrapData} user={sd.CURRENT_USER}>
+      <SystemContextProvider {...bootstrapData} user={sd.CURRENT_USER}>
         <Wizard redirectTo={redirectTo} />
-      </ContextProvider>
+      </SystemContextProvider>
     </Router>,
     document.getElementById("react-root")
   )

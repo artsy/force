@@ -4,7 +4,7 @@ import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
 import { Contents } from "reaction/Components/Tag"
-import { ContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "reaction/Artsy"
 
 import Tag from "../../models/tag.coffee"
 import CurrentUser from "../../models/current_user.coffee"
@@ -33,9 +33,9 @@ function setupTagPage() {
   )
   const user = CurrentUser.orNull()
   ReactDOM.render(
-    <ContextProvider user={user ? user.toJSON() : null}>
+    <SystemContextProvider user={user ? user.toJSON() : null}>
       <Contents {...options} onStateChange={onStateChange} />
-    </ContextProvider>,
+    </SystemContextProvider>,
     document.getElementById("tag-filter")
   )
 }
