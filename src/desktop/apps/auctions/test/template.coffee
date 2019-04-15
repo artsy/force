@@ -50,7 +50,7 @@ describe 'Auctions template', ->
       $($('.af-sale-time')[1]).text().should.eql 'Live bidding now open'
 
 
-  describe 'without current auctions', ->
+  xdescribe 'without current auctions', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
