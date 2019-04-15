@@ -16,7 +16,7 @@ run () {
     ;;
   2)
     yarn mocha $(find src/mobile -name '*.test.*')
-    yarn jest
+    yarn jest --runInBand
     ;;
   esac
 }
