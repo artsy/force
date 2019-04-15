@@ -7,7 +7,7 @@ FeedItem = require '../models/feed_item'
 FeedItems = require '../collections/feed_items'
 { fabricate } = require 'antigravity'
 
-describe 'FeedView', ->
+xdescribe 'FeedView', ->
 
   before (done) ->
     benv.setup =>
@@ -42,7 +42,7 @@ describe 'FeedView', ->
 
   describe '#initialize', ->
 
-    xit "renders a feed", ->
+    it "renders a feed", ->
       @view.$el.html().should.not.containEql 'undefined'
       @view.$el.html().should.not.containEql "\#{"
       @view.$el.html().should.not.containEql "NaN"
@@ -54,7 +54,7 @@ describe 'FeedView', ->
 
   describe '#fetchMoreItems', ->
 
-    xit 'adds items to the feed', ->
+    it 'adds items to the feed', ->
       partnerShow = new FeedItem fabricate('show',
         _type: "PartnerShow",
         artists: [fabricate('artist')]

@@ -3,7 +3,6 @@ require("@babel/register")({
 })
 
 require("coffeescript/register")
-require("@babel/polyfill")
 require("raf/polyfill")
 require("should")
 require("./src/lib/jade_hook")

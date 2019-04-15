@@ -34,6 +34,7 @@ exports.productionConfig = {
         cache: true,
         parallel: true,
         sourceMap: true,
+        extractComments: true,
         uglifyOptions: {
           compress: {
             warnings: false,

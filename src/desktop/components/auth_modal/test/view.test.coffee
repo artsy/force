@@ -115,7 +115,6 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
     beforeEach ->
-      sinon.stub location, 'assign'
       sinon.stub location, 'reload'
       @view.validateForm = -> true
 
@@ -123,7 +122,6 @@ describe 'AuthModalView', ->
       @view.user = new LoggedOutUser
 
     afterEach ->
-      location.assign.restore()
       location.reload.restore()
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
