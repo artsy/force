@@ -1,12 +1,10 @@
-import React from "react"
-import { buildServerApp } from "reaction/Artsy/Router/server"
-import { routes } from "reaction/Apps/Search/routes"
-import { stitch } from "@artsy/stitch"
-import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
 import { stringify } from "querystring"
 
 export const app = express()
+
+app.set("views", __dirname + "/templates")
+app.set("view engine", "jade")
 
 const maybeShowNewPage = (req, _res, next) => {
   const shouldShowNewPage =
@@ -22,7 +20,7 @@ const maybeShowNewPage = (req, _res, next) => {
 app.get(
   "/search/:tab?",
   maybeShowNewPage,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, _next: NextFunction) => {
     if (!req.query.term) {
       if (req.query.q) {
         const query = stringify({ term: req.query.q })
@@ -34,44 +32,6 @@ app.get(
       }
     }
 
-    try {
-      const {
-        bodyHTML,
-        redirect,
-        status,
-        headTags,
-        styleTags,
-        scripts,
-      } = await buildServerApp({
-        routes,
-        url: req.url,
-        userAgent: req.header("User-Agent"),
-        context: buildServerAppContext(req, res),
-      })
-
-      if (redirect) {
-        res.redirect(302, redirect.url)
-        return
-      }
-
-      const layout = await stitch({
-        basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_redesign.jade",
-        blocks: {
-          head: () => <React.Fragment>{headTags}</React.Fragment>,
-          body: bodyHTML,
-        },
-        locals: {
-          ...res.locals,
-          assetPackage: "search2",
-          scripts,
-          styleTags,
-        },
-      })
-
-      res.status(status).send(layout)
-    } catch (error) {
-      next(error)
-    }
+    res.render("index")
   }
 )
