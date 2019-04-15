@@ -13,8 +13,6 @@ render = (templateName) ->
 
 describe 'Activator', ->
 
-  after -> benv.teardown()
-
   describe '/foo/bar', ->
     before (done) ->
       benv.setup =>
@@ -25,7 +23,9 @@ describe 'Activator', ->
         @$cases = $(render('activator')())
         done()
 
-    after -> @$cases.remove()
+    after ->
+      benv.teardown()
+      @$cases.remove()
 
     it 'activates properly', ->
       @$cases.find('#case-1').text().should.equal 'is-active'
@@ -45,7 +45,9 @@ describe 'Activator', ->
         @$cases = $(render('activator')())
         done()
 
-    after -> @$cases.remove()
+    after ->
+      @$cases.remove()
+      benv.teardown()
 
     it 'activates properly', ->
       @$cases.find('#case-1').text().should.equal 'is-active'
@@ -65,7 +67,9 @@ describe 'Activator', ->
         @$cases = $(render('activator')())
         done()
 
-    after -> @$cases.remove()
+    after ->
+      @$cases.remove()
+      benv.teardown()
 
     it 'activates properly', ->
       @$cases.find('#case-1').text().should.equal 'is-inactive'
@@ -85,7 +89,9 @@ describe 'Activator', ->
         @$cases = $(render('activator')())
         done()
 
-    after -> @$cases.remove()
+    after ->
+      @$cases.remove()
+      benv.teardown()
 
     it 'activates properly', ->
       @$cases.find('#case-1').text().should.equal 'is-inactive'
@@ -105,7 +111,9 @@ describe 'Activator', ->
         @$cases = $(render('activator')())
         done()
 
-    after -> @$cases.remove()
+    after ->
+      @$cases.remove()
+      benv.teardown()
 
     it 'activates properly', ->
       @$cases.find('#case-1').text().should.equal 'is-inactive'

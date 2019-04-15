@@ -35,6 +35,7 @@ describe 'map', ->
   afterEach ->
     @logger.reset()
     @state.off 'next'
+    benv.teardown()
 
   describe 'logged in user', ->
     beforeEach ->
