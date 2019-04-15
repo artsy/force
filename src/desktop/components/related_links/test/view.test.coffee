@@ -13,6 +13,9 @@ describe 'RelatedLinksView', ->
       Backbone.$ = $
       done()
 
+  after ->
+    benv.teardown()
+
   describe 'with a pre-fetched collection', ->
     beforeEach ->
       @collection = new Genes _.times 5, -> fabricate('gene')
