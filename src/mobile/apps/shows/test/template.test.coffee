@@ -12,6 +12,9 @@ describe 'Shows template', ->
       benv.expose $: benv.require 'jquery'
       done()
 
+  after ->
+    benv.teardown()
+
   describe '#index with cities and featured show', ->
     before (done) ->
       benv.render resolve(__dirname, '../templates/index.jade'),
