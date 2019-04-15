@@ -1,10 +1,8 @@
+import { stitch } from "@artsy/stitch"
 import express, { Request, Response, NextFunction } from "express"
 import { stringify } from "querystring"
 
 export const app = express()
-
-app.set("views", __dirname + "/templates")
-app.set("view engine", "jade")
 
 const maybeShowNewPage = (req, _res, next) => {
   const shouldShowNewPage =
@@ -20,7 +18,7 @@ const maybeShowNewPage = (req, _res, next) => {
 app.get(
   "/search/:tab?",
   maybeShowNewPage,
-  async (req: Request, res: Response, _next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (!req.query.term) {
       if (req.query.q) {
         const query = stringify({ term: req.query.q })
@@ -32,6 +30,19 @@ app.get(
       }
     }
 
-    res.render("index")
+    try {
+      const layout = await stitch({
+        basePath: __dirname,
+        layout: "../../components/main_layout/templates/react_redesign.jade",
+        locals: {
+          ...res.locals,
+          assetPackage: "search2",
+        },
+      })
+
+      res.send(layout)
+    } catch (error) {
+      next(error)
+    }
   }
 )
