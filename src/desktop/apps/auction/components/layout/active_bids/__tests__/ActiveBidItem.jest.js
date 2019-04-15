@@ -52,13 +52,13 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
           BidStatus: () => <div />,
           bid,
           ...bid.sale_artwork,
+          isMobile: false,
         },
       })
 
-      wrapper
-        .find("img")
-        .html()
-        .should.containEql(bid.sale_artwork.artwork.image.url)
+      expect(wrapper.find("img").html()).toMatch(
+        bid.sale_artwork.artwork.image.url
+      )
     })
 
     it("renders a bid status", () => {
@@ -72,7 +72,7 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      wrapper.find(BidStatus).length.should.eql(1)
+      expect(wrapper.find(BidStatus).length).toBe(1)
     })
 
     it("renders a desktop highest bid", () => {
@@ -86,13 +86,10 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      wrapper.find(".auction-ActiveBidItem__current-bid").length.should.eql(1)
-      wrapper
-        .find(".auction-ActiveBidItem__current-bid")
-        .text()
-        .should.containEql(
-          `Current Bid: ${bid.sale_artwork.highest_bid.display}`
-        )
+      expect(wrapper.find(".auction-ActiveBidItem__current-bid").length).toBe(1)
+      expect(
+        wrapper.find(".auction-ActiveBidItem__current-bid").text()
+      ).toMatch(`Current Bid: ${bid.sale_artwork.highest_bid.display}`)
     })
 
     it("renders a mobile highest bid", () => {
@@ -106,13 +103,12 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      wrapper
-        .find(".auction-ActiveBidItem__current-and-bids")
-        .length.should.eql(1)
-      wrapper
-        .find(".auction-ActiveBidItem__current-bid")
-        .text()
-        .should.containEql(bid.sale_artwork.highest_bid.display)
+      expect(
+        wrapper.find(".auction-ActiveBidItem__current-and-bids").length
+      ).toBe(1)
+      expect(
+        wrapper.find(".auction-ActiveBidItem__current-bid").text()
+      ).toMatch(bid.sale_artwork.highest_bid.display)
     })
 
     it("renders a bid live button", () => {
@@ -129,11 +125,12 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      wrapper
-        .find("a")
-        .last()
-        .text()
-        .should.containEql("Bid Live")
+      expect(
+        wrapper
+          .find("a")
+          .last()
+          .text()
+      ).toMatch("Bid Live")
     })
 
     it("renders a bid button", () => {
@@ -150,11 +147,12 @@ describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      wrapper
-        .find("a")
-        .last()
-        .text()
-        .should.containEql("Bid")
+      expect(
+        wrapper
+          .find("a")
+          .last()
+          .text()
+      ).toMatch("Bid")
     })
   })
 })

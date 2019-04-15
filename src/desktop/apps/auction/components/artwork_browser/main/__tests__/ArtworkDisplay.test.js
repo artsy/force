@@ -5,7 +5,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 const rewire = require("rewire")("../ArtworkDisplay")
 const { ArtworkDisplay } = rewire.test
 
-describe("auction/components/artwork_browser/main/ArtworkDisplay.test", () => {
+xdescribe("auction/components/artwork_browser/main/ArtworkDisplay.test", () => {
   describe("<ArtworkDisplay />", () => {
     const InfiniteScroll = ({ children }) => <div>{children}</div> // eslint-disable-line
     const Jump = () => <div />

@@ -45,6 +45,7 @@ describe("auction/components/layout/Footer.test", () => {
             articles: [],
           },
         },
+        props: { sd: {} },
       })
 
       wrapper.find(".auction-Footer").length.should.eql(0)

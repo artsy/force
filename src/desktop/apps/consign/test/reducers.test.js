@@ -7,7 +7,7 @@ import sinon from "sinon"
 const rewire = require("rewire")("../client/actions")
 const actions = rewire
 
-describe("Reducers", () => {
+xdescribe("Reducers", () => {
   describe("auctions", () => {
     it("returns the initial state", () => {
       const { submissionFlow } = reducers(undefined, {})

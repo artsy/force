@@ -56,6 +56,7 @@ describe("auction/components/artwork_browser/sidebar/Sidebar.test", () => {
         },
         props: {
           isSale: true,
+          isClosed: false,
         },
       })
 

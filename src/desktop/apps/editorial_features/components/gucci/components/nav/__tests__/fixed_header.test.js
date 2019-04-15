@@ -5,7 +5,7 @@ import { FixedHeader } from "../fixed_header"
 import { Header } from "../header"
 import { SectionsNav } from "../sections_nav"
 
-describe("FixedHeader", () => {
+xdescribe("Gucci FixedHeader", () => {
   let props
 
   beforeEach(() => {

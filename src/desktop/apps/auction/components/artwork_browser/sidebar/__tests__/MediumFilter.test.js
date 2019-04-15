@@ -13,6 +13,8 @@ describe("auction/components/artwork_browser/sidebar/MediumFilter.test", () => {
       mediumIds: [1, 2, 3],
       aggregatedMediums: [{ id: 1 }, { id: 2 }, { id: 3 }],
       initialMediumMap: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      allMediumsSelected: false,
+      updateMediumParamsAction: x => x,
     }
 
     beforeEach(() => {

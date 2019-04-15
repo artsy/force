@@ -11,7 +11,6 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = null
 
 xdescribe 'ArtworkColumns', ->
-
   before (done) ->
     benv.setup =>
       benv.expose
@@ -44,9 +43,11 @@ xdescribe 'ArtworkColumns', ->
   describe '#initialize', ->
 
     it 'sets up internal state', ->
+      sinon.stub(CurrentUser, 'orNull').returns new CurrentUser fabricate 'user'
       @view.seeMore.should.be.false()
       @view.columns[0].should.have.property 'height'
       @view.columns[0].should.have.property 'artworkCount'
+      CurrentUser.orNull.restore()
 
   describe '#length', ->
 
