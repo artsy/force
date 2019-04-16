@@ -3,7 +3,7 @@ import { test } from "desktop/apps/auction/components/artwork_browser/main/artwo
 
 const { BidStatus } = test
 
-describe("auction/components/artwork_browser/main/artwork/BidStatus.test", () => {
+xdescribe("auction/components/artwork_browser/main/artwork/BidStatus.test", () => {
   describe("<BidStatus />", () => {
     it("renders sold label if artwork is sold", () => {
       const { wrapper } = renderTestComponent({

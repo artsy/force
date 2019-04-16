@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { ContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "reaction/Artsy"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import {
   StandardArticle,
@@ -26,9 +26,9 @@ describe("InfiniteScrollArticle", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <ContextProvider user={null}>
+      <SystemContextProvider user={null}>
         <InfiniteScrollArticle {...passedProps} />
-      </ContextProvider>
+      </SystemContextProvider>
     )
   }
 

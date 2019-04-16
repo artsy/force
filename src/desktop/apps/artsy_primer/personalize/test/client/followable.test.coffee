@@ -32,6 +32,9 @@ describe 'Followable', ->
           this
       done()
 
+  after ->
+    benv.teardown()
+
   beforeEach ->
     sinon.stub Backbone, 'sync'
 

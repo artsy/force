@@ -1,22 +1,22 @@
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import BasicCheckbox from "desktop/apps/auction/components/artwork_browser/sidebar/BasicCheckbox"
-import sinon from "sinon"
 
-describe("auction/components/artwork_browser/sidebar/BasicCheckbox.test", () => {
+xdescribe("auction/components/artwork_browser/sidebar/BasicCheckbox.test", () => {
   describe("<FilterSort />", () => {
     it("triggers callback onClick", () => {
-      const spy = sinon.spy()
+      const onClick = jest.fn()
 
       const { wrapper } = renderTestComponent({
         Component: BasicCheckbox,
         props: {
           item: { id: 1 },
-          onClick: spy,
+          onClick,
+          checked: false,
         },
       })
 
       wrapper.find("input").simulate("click")
-      spy.called.should.eql(true)
+      expect(onClick).toBeCalled()
     })
   })
 })

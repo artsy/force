@@ -3,7 +3,7 @@ import sinon from "sinon"
 import { mount } from "enzyme"
 import { SectionsNav, SectionItem } from "../sections_nav"
 
-describe("SectionsNav", () => {
+describe("Gucci SectionsNav", () => {
   const props = {
     activeSection: null,
     sections: [{ title: "Past" }, { title: "Present" }, { title: "Future" }],
@@ -12,9 +12,9 @@ describe("SectionsNav", () => {
 
   it("Renders the titles for each section", () => {
     const component = mount(<SectionsNav {...props} />)
-    component.html().should.containEql("Past")
-    component.html().should.containEql("Present")
-    component.html().should.containEql("Future")
+    expect(component.html()).toMatch("Past")
+    expect(component.html()).toMatch("Present")
+    expect(component.html()).toMatch("Future")
   })
 
   it("Calls onClick with section index on title click", () => {
@@ -23,6 +23,6 @@ describe("SectionsNav", () => {
       .find(SectionItem)
       .last()
       .simulate("click")
-    props.onClick.args[0][0].should.eql(2)
+    expect(props.onClick.args[0][0]).toBe(2)
   })
 })

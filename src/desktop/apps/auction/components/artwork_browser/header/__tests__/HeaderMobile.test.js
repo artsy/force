@@ -4,7 +4,7 @@ import sinon from "sinon"
 
 const rewire = require("rewire")("../../../../actions/artworkBrowser")
 
-describe("auction/components/artwork_browser/header/HeaderMobile.test", () => {
+xdescribe("auction/components/artwork_browser/header/HeaderMobile.test", () => {
   describe("<HeaderMobile />", () => {
     it("default sort is Default", () => {
       const { wrapper } = renderTestComponent({

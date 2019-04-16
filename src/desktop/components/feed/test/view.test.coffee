@@ -10,6 +10,7 @@ FeedItems = require '../collections/feed_items'
 xdescribe 'FeedView', ->
 
   before (done) ->
+  # FIXME: Error: the string "userId is required" was thrown, throw an Error :)
     benv.setup =>
       sd.APP_URL = 'localhost:3004'
       sd.API_URL = 'localhost:3003'

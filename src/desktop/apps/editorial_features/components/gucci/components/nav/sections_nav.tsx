@@ -24,11 +24,10 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
       flexWrap={["wrap", "wrap", "nowrap", "nowrap"]}
     >
       {sections.map((section, index) => (
-        <SectionItem onClick={() => onClick(index)}>
+        <SectionItem onClick={() => onClick(index)} key={"nav-" + index}>
           <Title
             mt={animated && [4, 6]}
             mb={animated && [2, 5]}
-            key={"nav-" + index}
             size={["10", "10", "10", "14"]}
             mx={animated && [3]}
             color={activeSection === index ? "black" : color("black10")}
@@ -54,10 +53,7 @@ const navKeyframes = keyframes`
   }
 `
 
-const SectionsNavContainer =
-  styled(Flex) <
-  { isAnimated: boolean } >
-  `
+const SectionsNavContainer = styled(Flex)<{ isAnimated: boolean }>`
   ${props =>
     props.isAnimated &&
     css`
