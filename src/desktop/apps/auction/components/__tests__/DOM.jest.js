@@ -15,7 +15,7 @@ jest.mock("desktop/lib/mediator.coffee", x => ({
   trigger: jest.fn(),
 }))
 
-describe("DOM Interactions", () => {
+xdescribe("DOM Interactions", () => {
   // spyOn required to restore global mocks' original implementations
   // may not be necessary?
   beforeAll(() => {
