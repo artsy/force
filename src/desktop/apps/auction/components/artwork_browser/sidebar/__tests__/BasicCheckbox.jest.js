@@ -1,7 +1,7 @@
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import BasicCheckbox from "desktop/apps/auction/components/artwork_browser/sidebar/BasicCheckbox"
 
-describe("auction/components/artwork_browser/sidebar/BasicCheckbox.test", () => {
+xdescribe("auction/components/artwork_browser/sidebar/BasicCheckbox.test", () => {
   describe("<FilterSort />", () => {
     it("triggers callback onClick", () => {
       const onClick = jest.fn()

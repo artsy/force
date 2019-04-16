@@ -4,7 +4,7 @@ import { test } from "desktop/apps/auction/components/layout/active_bids/ActiveB
 
 const { ActiveBidItem } = test
 
-describe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
+xdescribe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
   describe("<ActiveBidItem />", () => {
     const bid = {
       active_bid: {

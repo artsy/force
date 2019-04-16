@@ -3,7 +3,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 import { ArtworkRail } from "../ArtworkRail"
 import { promotedSaleArtworks } from "../../artwork_browser/__tests__/fixtures/promotedSaleArtworks"
 
-describe("auction/components/artwork_rail/ArtworkRail", () => {
+xdescribe("auction/components/artwork_rail/ArtworkRail", () => {
   const data = {
     app: {
       auction: {

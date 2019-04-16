@@ -4,7 +4,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 const rewire = require("rewire")("../ListArtwork")
 const { ListArtwork } = rewire.test
 
-describe("auction/components/artwork_browser/main/artwork/ListArtwork.test", () => {
+xdescribe("auction/components/artwork_browser/main/artwork/ListArtwork.test", () => {
   describe("<ListArtwork />", () => {
     const BidStatus = () => <div />
 

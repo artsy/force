@@ -4,7 +4,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 const rewire = require("rewire")("../GridArtwork")
 const { GridArtwork } = rewire.test
 
-describe("auction/components/artwork_browser/main/artwork/GridArtwork.test", () => {
+xdescribe("auction/components/artwork_browser/main/artwork/GridArtwork.test", () => {
   describe("<GridArtwork />", () => {
     const BidStatus = () => <div />
 

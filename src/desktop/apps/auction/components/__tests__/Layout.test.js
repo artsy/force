@@ -9,7 +9,7 @@ import { promotedSaleArtworks } from "../artwork_browser/__tests__/fixtures/prom
 const rewire = require("rewire")("../Layout")
 const Layout = rewire.default
 
-describe("<Layout />", () => {
+xdescribe("<Layout />", () => {
   let resetRewire
 
   beforeEach(() => {
