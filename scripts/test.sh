@@ -13,10 +13,10 @@ run () {
     ;;
   1)
     yarn mocha $(find src/desktop/apps -name '*.test.*')
+    yarn mocha $(find src/mobile -name '*.test.*')
+    yarn publish-coverage
     ;;
   2)
-
-    yarn mocha $(find src/mobile -name '*.test.*')
     yarn jest --runInBand
     yarn publish-coverage
     ;;
