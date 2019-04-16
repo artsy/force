@@ -3,7 +3,7 @@ import { test } from "desktop/apps/auction/components/layout/auction_info/Regist
 
 const { Registration } = test
 
-describe("auction/components/layout/auction_info/Registration.test", () => {
+xdescribe("auction/components/layout/auction_info/Registration.test", () => {
   describe("<Registration />", () => {
     it("doesnt render when isClosed is true", () => {
       const { wrapper } = renderTestComponent({

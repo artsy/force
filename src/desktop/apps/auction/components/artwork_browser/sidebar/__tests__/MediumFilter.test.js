@@ -4,7 +4,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 const rewire = require("rewire")("../MediumFilter")
 const { MediumFilter } = rewire.test
 
-describe("auction/components/artwork_browser/sidebar/MediumFilter.test", () => {
+xdescribe("auction/components/artwork_browser/sidebar/MediumFilter.test", () => {
   describe("<MediumFilter />", () => {
     const BasicCheckbox = () => <div />
 

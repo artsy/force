@@ -2,7 +2,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 import FilterSort from "desktop/apps/auction/components/artwork_browser/header/FilterSort"
 import HeaderDesktop from "desktop/apps/auction/components/artwork_browser/header/HeaderDesktop"
 
-describe("auction/components/artwork_browser/header/HeaderDesktop.test", () => {
+xdescribe("auction/components/artwork_browser/header/HeaderDesktop.test", () => {
   describe("<HeaderDesktop />", () => {
     it("renders a <FilterSort /> component", () => {
       const { wrapper } = renderTestComponent({

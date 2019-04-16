@@ -21,7 +21,7 @@ jest.mock("../AuctionInfoMobile", () => ({
 const AuctionInfoDesktop = require("../AuctionInfoDesktop").default
 const AuctionInfoMobile = require("../AuctionInfoMobile").default
 
-describe("auction/components/layout/auction_info/AuctionInfoContainer.test", () => {
+xdescribe("auction/components/layout/auction_info/AuctionInfoContainer.test", () => {
   beforeEach(() => {
     AuctionInfoDesktop.mockClear()
     AuctionInfoMobile.mockClear()
