@@ -2,7 +2,7 @@
 
 So, you're reading this doc, in which case either nothing is on fire and you're simply educating yourself (yay!), or, there's a problem and you need to rollback Force. Take a deep breath, and read on.
 
-1. Run `hokusai registry images`. You'll see output like the below.
+1. Run `hokusai registry images -f production`. This will return list of images that were deployed to production. You'll see output like the below.
 
 ![list of images](images/hokusai_images.png "Hokusai Images")
 

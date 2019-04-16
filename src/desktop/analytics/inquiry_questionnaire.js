@@ -177,6 +177,7 @@
   bindOnce("inquiry:sync", function(context) {
     analytics.track("Sent artwork inquiry", {
       artwork_id: context.artwork.get("_id"),
+      product_id: context.artwork.get("_id"),
       artwork_slug: context.artwork.id,
       inquiry_id: context.inquiry.id,
     })

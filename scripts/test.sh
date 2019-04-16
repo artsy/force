@@ -7,27 +7,17 @@ set -ex
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    yarn mocha src/test/lib/*
-    yarn mocha $(find src/desktop/test -name '*.coffee')
-    yarn mocha $(find src/desktop/components/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/components/*/test -name '*.js')
-    yarn mocha $(find src/desktop/components/**/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/components/**/*/test -name '*.js')
-    yarn mocha $(find src/desktop/components -name '*.test.js')
+    yarn mocha $(find src/test -name '*.test.*')
+    yarn mocha $(find src/desktop/test -name '*.test.*')
+    yarn mocha $(find src/desktop/components -name '*.test.*')
     ;;
   1)
-    yarn mocha $(find src/desktop/apps/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/apps/*/test -name '*.js')
-    yarn mocha $(find src/desktop/apps/*/**/*/test -name '*.coffee')
-    yarn mocha $(find src/desktop/apps -name '*.test.js')
+    yarn mocha $(find src/desktop/apps -name '*.test.*')
     ;;
   2)
-    yarn mocha $(find src/mobile/test -name '*.coffee')
-    yarn mocha $(find src/mobile/components/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/components/**/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/apps/*/test -name '*.coffee')
-    yarn mocha $(find src/mobile/apps/*/**/*/test -name '*.coffee')
-    yarn jest --detectOpenHandles --forceExit
+
+    yarn mocha $(find src/mobile -name '*.test.*')
+    yarn jest --runInBand
     yarn publish-coverage
     ;;
   esac

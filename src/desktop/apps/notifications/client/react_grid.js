@@ -1,10 +1,8 @@
-import $ from "jquery"
-
 import React from "react"
 import ReactDOM from "react-dom"
 import { WorksForYou } from "reaction/Apps/WorksForYou"
 
-import { ContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "reaction/Artsy"
 
 import CurrentUser from "../../../models/current_user.coffee"
 
@@ -13,9 +11,9 @@ function setupReactGrid(options = {}) {
   const { artistID, forSale } = options
 
   ReactDOM.render(
-    <ContextProvider user={user ? user.toJSON() : null}>
+    <SystemContextProvider user={user ? user.toJSON() : null}>
       <WorksForYou forSale={forSale} artistID={artistID || ""} />
-    </ContextProvider>,
+    </SystemContextProvider>,
     document.getElementById("notifications-react-works")
   )
 }

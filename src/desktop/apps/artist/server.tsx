@@ -37,7 +37,7 @@ app.get(
             ARTIST_COLLECTIONS_RAIL_QA === "experiment" &&
             req.user &&
             req.user.isAdmin(), // TODO: update after Artist Collections Rail a/b test
-        },
+        } as any,
       })
 
       if (redirect) {

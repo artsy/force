@@ -121,6 +121,7 @@ analyticsHooks.on("confirm:bid:form:success", function(data) {
     auction_slug: sd.SALE.id,
     user_id: USER_ID,
     artwork_slug: sd.SALE_ARTWORK.artwork.id,
+    product_id: sd.SALE_ARTWORK.artwork._id,
     bidder_position_id: data.bidder_position_id,
     bidder_id: data.bidder_id,
   })
