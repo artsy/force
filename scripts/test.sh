@@ -10,13 +10,16 @@ run () {
     yarn mocha $(find src/test -name '*.test.*')
     yarn mocha $(find src/desktop/test -name '*.test.*')
     yarn mocha $(find src/desktop/components -name '*.test.*')
+    nyc report --reporter=text-lcov > coverage.lcov
+    yarn report-coverage
     ;;
   1)
     yarn mocha $(find src/desktop/apps -name '*.test.*')
-    yarn mocha $(find src/mobile -name '*.test.*')
-    yarn publish-coverage
+    nyc report --reporter=text-lcov > coverage.lcov
+    yarn report-coverage
     ;;
   2)
+    yarn mocha $(find src/mobile -name '*.test.*')
     yarn jest --runInBand
     yarn publish-coverage
     ;;
