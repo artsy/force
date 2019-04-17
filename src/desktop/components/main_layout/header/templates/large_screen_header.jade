@@ -5,19 +5,18 @@ nav.mlh-navbar
   #main-layout-header-left.mlh-navbar-cell
     #main-layout-header-minimal-title
       block minimal-nav-header
-    - var enableNewSearchBar = sd.SEARCH_BAR_2 === 'experiment'
-    if (enableNewSearchBar)
-      form(
-        action='/search'
-        method='GET'
-        itemprop='potentialAction'
-        itemscope
-        itemtype='http://schema.org/SearchAction'
-      )
-        #main-layout-search-bar
+
+    form(
+      action='/search'
+      method='GET'
+      itemprop='potentialAction'
+      itemscope
+      itemtype='http://schema.org/SearchAction'
+    )
+      #main-layout-search-bar
+        if stitch
           != stitch.components.SearchBar()
-    else
-      include ../../../search_bar/templates/index
+
   #main-layout-header-center.mlh-navbar-cell
     a.mlh-top-nav-link( href='/collect', class= activeClass("/collect") ) Artworks
     a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
