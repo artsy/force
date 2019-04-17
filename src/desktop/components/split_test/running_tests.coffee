@@ -44,14 +44,4 @@ module.exports = {
     control_group: 'control'
     edge: 'experiment'
     weighting: 'equal'
-
-  search_bar_2:
-    key: 'search_bar_2'
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    control_group: 'control'
-    edge: 'experiment'
-    weighting: 'equal'
 }

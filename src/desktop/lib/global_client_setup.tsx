@@ -13,7 +13,6 @@ const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
 const listenForBounce = require("../components/eggs/bounce/index.coffee")
 const confirmation = require("../components/confirmation/index.coffee")
-const splitTest = require("../components/split_test/index.coffee")
 
 Backbone.$ = $
 
@@ -33,7 +32,6 @@ export function globalClientSetup() {
 
   mountStitchComponents()
   syncAuth()
-  splitTest("search_bar_2").view()
 }
 
 export function syncAuth() {
