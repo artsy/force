@@ -8,6 +8,7 @@ Follow = require '../model'
 Profile = require '../../../models/profile'
 { fabricate } = require 'antigravity'
 Following = require '../collection'
+CurrentUser = require '../../../models/current_user.coffee'
 
 describe 'Following collection', ->
   before (done) ->
@@ -51,10 +52,12 @@ describe 'Following collection', ->
 
   describe '#syncFollows', ->
     it 'returns without a current user', ->
+      sinon.stub CurrentUser, 'orNull', -> null
       fetchSpy = sinon.spy @following, 'fetch'
       @following.syncFollows [@follow2.get('profile').id]
       fetchSpy.callCount.should.equal 0
       fetchSpy.restore()
+      CurrentUser.orNull.restore()
 
   describe "with a current user", ->
     beforeEach ->
