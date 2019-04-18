@@ -32,7 +32,7 @@
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
     "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack",
-    "report-coverage": "./scripts/codecov -C $COMMIT_HASH_FULL -p app/ -B $BRANCH_NAME -f ./coverage"
+    "report-coverage": "./node_modules/.bin/codecov -c $COMMIT_HASH_FULL -b $BRANCH_NAME"
   },
   "prettier": {
     "bracketSpacing": true,
@@ -154,6 +154,7 @@
     "cheerio": "^0.22.0",
     "chokidar": "^1.7.0",
     "classnames": "^2.2.5",
+    "codecov": "^3.3.0",
     "coffee-script": "^1.12.7",
     "coffeescript": "1.11.1",
     "compression": "^1.7.2",

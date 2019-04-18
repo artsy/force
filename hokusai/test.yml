@@ -11,6 +11,3 @@ services:
       - CI=true
       - CIRCLE_NODE_INDEX
     env_file: ../.env.test
-    #environment:
-    #- NODE_ENV=test
-    #env_file: ../.env.test

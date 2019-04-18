@@ -2,7 +2,7 @@
 
 set -ex
 
-trap "exit" INT
+#trap "exit" INT
 
 nyc mocha \
   -c \

@@ -23,7 +23,7 @@ module.exports.SignUpView = class SignUpView extends Backbone.View
     options =
       url: sd.AP.loginPagePath
       error: @onError
-      success: =>
+      success: ->
         window.location = data.redirectTo
     new Backbone.Model().save data, options
 

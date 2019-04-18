@@ -81,11 +81,11 @@ describe 'Sign up (with email) client-side code', ->
         @view.$('input').eq(1).val('Foo Bar').trigger('blur')
         @view.$el.html().should.not.containEql 'Please enter your'
 
-    describe 'signup', ->
+    xdescribe 'signup', ->
       beforeEach ->
         Backbone.sync.yieldsTo 'success'
 
-      xit 'creates the user then logs in', ->
+      it 'creates the user then logs in', ->
         @view.signup foo: 'bar'
         # Registers the user
         Backbone.sync.args[0][0].should.equal 'create'
