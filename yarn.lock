@@ -10,10 +10,10 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
-"@artsy/detect-responsive-traits@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.1.tgz#3d83384bf3323fbd4679a2d73155ab85dc73e850"
-  integrity sha512-jqrC40t1P6w9zIvsJJhWe8pxLWdEC/kJQmDc4/b3vAnGy1EsJpcIJGUys37kwut7tDYPiypUF06SImtZVLGQnQ==
+"@artsy/detect-responsive-traits@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.4.tgz#933c66db24e70186c20e83017af39794a920ef0e"
+  integrity sha512-3LfmVWQdTQLjorlNv02y+qdD3h3RS57M46P/PBlG+nHjzUFtNk2B9NAKPurTzDubjlPYx1FUTH+EPm3ZaoTipg==
 
 "@artsy/express-reloadable@1.4.0":
   version "1.4.0"
@@ -65,12 +65,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.0.1.tgz#caa7c21d5634080a276344fba1a7be649d7e2c07"
-  integrity sha512-WkbdHvw7ERiNEgSD3EFE1dXZCZzpM8OLX4woP2Aqvm5Z6nj4Mcy6ycmgXYlpHt56jg36ZobATxjpBXa/gMTB/w==
+"@artsy/reaction@16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.1.0.tgz#b46ceeee7692c8416c0f1f94ee32d63b571c1035"
+  integrity sha512-xmXNIjGrAh741z1BhcisZRV4ra3NdgBJ5CpD1T3NzF46sJGncX92zsfozLHraqP9JZcVEWTSLnnRwSvTvzI1QQ==
   dependencies:
-    "@artsy/detect-responsive-traits" "^0.0.1"
+    "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     autosuggest-highlight "^3.1.1"
     cheerio "^1.0.0-rc.2"
