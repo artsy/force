@@ -32,10 +32,7 @@
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
     "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack",
-    "normalize-jest-coverage": "node scripts/normalizeJestCoverage.js",
-    "create-merged-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-    "report-coverage": "./scripts/codecov -C $COMMIT_HASH_FULL -p app/ -B $BRANCH_NAME -f coverage.lcov",
-    "publish-coverage": "yarn normalize-jest-coverage && yarn create-merged-coverage && yarn report-coverage"
+    "report-coverage": "./scripts/codecov -C $COMMIT_HASH_FULL -p app/ -B $BRANCH_NAME -f coverage.lcov"
   },
   "prettier": {
     "bracketSpacing": true,
@@ -393,5 +390,19 @@
       "<rootDir>/src"
     ],
     "testURL": "https://artsy.net"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "include": [
+      "*.test.*"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "extension": [
+      ".coffee"
+    ],
+    "lines": 40
   }
 }
