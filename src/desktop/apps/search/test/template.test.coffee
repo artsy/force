@@ -20,7 +20,7 @@ render = (templateName) ->
 
 describe 'Search results template', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery'}
       done()
 

@@ -9,7 +9,7 @@ Artwork = require '../../../models/artwork'
 
 describe 'Inquiry', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()

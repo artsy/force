@@ -8,7 +8,7 @@ Mailcheck = require '../index.coffee'
 describe 'Mailcheck', ->
 
   beforeEach (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       $.fn.mailcheck = sinon.stub()

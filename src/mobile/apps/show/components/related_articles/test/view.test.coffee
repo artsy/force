@@ -10,7 +10,7 @@ ShowRelatedArticlesView = benv.requireWithJadeify resolve(__dirname, '../view.co
 describe 'ShowRelatedArticlesView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()

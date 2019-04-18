@@ -11,7 +11,7 @@ FillwidthView = benv.requireWithJadeify resolve(__dirname, '../view'), ['templat
 describe 'FillwidthView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       $.fn.fillwidth = ->
       Backbone.$ = $

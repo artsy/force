@@ -10,7 +10,7 @@ Artist = require '../../../../../models/artist.coffee'
 
 describe 'ArtistsView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'

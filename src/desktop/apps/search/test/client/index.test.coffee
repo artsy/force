@@ -27,8 +27,8 @@ describe 'SearchResultsView', ->
         done()
 
   afterEach () ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   it 'fills in artwork images', ->
     @view.refreshRenderArtworks(fixture.searchResult)

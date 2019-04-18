@@ -14,7 +14,7 @@ _ = require 'underscore'
 describe 'ArtworkCollection', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       done()
 
   after -> benv.teardown()

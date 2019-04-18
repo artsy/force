@@ -32,7 +32,7 @@
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
     "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack",
-    "report-coverage": "./scripts/codecov -C $COMMIT_HASH_FULL -p app/ -B $BRANCH_NAME -f coverage/coverage.lcov"
+    "report-coverage": "./scripts/codecov -C $COMMIT_HASH_FULL -p app/ -B $BRANCH_NAME -f coverage/coverage-final.lcov"
   },
   "prettier": {
     "bracketSpacing": true,
@@ -372,7 +372,7 @@
     "collectCoverage": true,
     "coverageReporters": [
       "text-summary",
-      "json"
+      "lcov"
     ],
     "moduleFileExtensions": [
       "coffee",

@@ -10,7 +10,7 @@ FavoritesView = null
 
 describe 'FavoritesView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       FavoritesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/favorites'), ['template']

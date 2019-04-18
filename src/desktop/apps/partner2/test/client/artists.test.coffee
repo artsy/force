@@ -20,7 +20,7 @@ PartnerArtistsView = benv.requireWithJadeify(
 describe 'PartnerArtistsView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

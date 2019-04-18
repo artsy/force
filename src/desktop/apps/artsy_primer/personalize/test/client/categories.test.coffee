@@ -12,7 +12,7 @@ CategoriesView = null
 
 describe 'CategoriesView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'

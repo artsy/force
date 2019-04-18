@@ -16,7 +16,7 @@ ArtistFillwidthList.__set__ 'FillwidthView', class FillwidthView
 describe 'ArtistFillwidthList', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         sd: {}

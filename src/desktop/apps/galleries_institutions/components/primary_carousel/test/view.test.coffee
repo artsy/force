@@ -8,7 +8,7 @@ PrimaryCarousel = rewire '../view.coffee'
 
 describe 'PrimaryCarousel', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
       Backbone.$ = $

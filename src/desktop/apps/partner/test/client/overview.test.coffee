@@ -12,7 +12,7 @@ _ = require 'underscore'
 describe 'PartnerOverviewView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

@@ -13,7 +13,7 @@ FilterableListView = benv.requireWithJadeify resolve(__dirname, '../view'), [
 
 describe 'FilterableListView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()

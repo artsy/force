@@ -12,7 +12,7 @@ SuggestedGenesView = mod = benv.requireWithJadeify resolve(__dirname, '../view')
 describe 'SuggestedGenesView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

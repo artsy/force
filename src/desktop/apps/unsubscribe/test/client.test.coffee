@@ -12,7 +12,7 @@ emailTypes = require '../email_types.coffee'
 describe 'Unsubscribe View', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

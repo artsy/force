@@ -9,7 +9,7 @@ benv = require 'benv'
 describe '/how-auctions-work', ->
   describe 'learn_more', ->
     before (done) ->
-      benv.setup =>
+      benv.setup ->
         benv.expose $: benv.require 'jquery'
         benv.render resolve(__dirname, '../templates/learn_more.jade'),
           sd: {}

@@ -8,7 +8,7 @@ Show = require '../../../models/show'
 
 describe 'Shows template', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require 'jquery'
       done()
 

@@ -7,7 +7,7 @@ CTABarView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
 describe 'CTABarView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()

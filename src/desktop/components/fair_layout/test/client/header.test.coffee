@@ -12,7 +12,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 
 describe 'HeaderView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')

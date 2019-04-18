@@ -12,7 +12,7 @@ InfoMenu = require '../../../../components/info_menu/index.coffee'
 describe 'FairInfoVisitorsView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

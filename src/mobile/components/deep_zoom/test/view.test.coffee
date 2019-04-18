@@ -11,7 +11,7 @@ OpenSeadragon = -> addHandler: sinon.stub()
 
 describe 'DeepZoomView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         OpenSeadragon: OpenSeadragon

@@ -5,7 +5,7 @@ rewire = require 'rewire'
 describe 'activatePulldowns', ->
   describe '#activatePulldown', ->
     before (done) ->
-      benv.setup =>
+      benv.setup ->
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         $('body').html """
           <span class="hover-pulldown">
@@ -61,7 +61,7 @@ describe 'activatePulldowns', ->
 
   describe '#dismissStatic', ->
     before (done) ->
-      benv.setup =>
+      benv.setup ->
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         $('body').html """
           <span class="hover-pulldown" data-state='static' data-cookie='monster'>

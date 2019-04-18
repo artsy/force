@@ -14,7 +14,7 @@ describe 'Feature template', ->
         sd: @sd
         asset: (->)
         feature: @feature
-      }, => done()
+      }, -> done()
 
   after ->
     benv.teardown()

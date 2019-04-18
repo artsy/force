@@ -14,7 +14,7 @@ moment = require 'moment'
 describe 'FairsView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

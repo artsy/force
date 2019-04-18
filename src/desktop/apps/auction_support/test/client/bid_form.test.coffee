@@ -15,7 +15,7 @@ DateHelpers = require '../../../../components/util/date_helpers.coffee'
 
 describe 'BidForm', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
