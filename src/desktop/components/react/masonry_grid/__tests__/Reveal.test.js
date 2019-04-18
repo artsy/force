@@ -1,7 +1,7 @@
 import { Reveal } from "../Reveal"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 
-describe("components/react/masonry_grid/MasonryGrid", () => {
+xdescribe("components/react/masonry_grid/MasonryGrid", () => {
   it("hides revealer if isEnabled is false", () => {
     const { wrapper } = renderTestComponent({
       Component: Reveal,

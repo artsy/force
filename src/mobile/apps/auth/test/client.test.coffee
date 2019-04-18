@@ -18,8 +18,8 @@ describe 'Reset password page client-side code', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe 'PasswordResetView', ->
 
@@ -69,8 +69,8 @@ describe 'Sign up (with email) client-side code', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe 'SignUpView', ->
 
@@ -88,11 +88,11 @@ describe 'Sign up (with email) client-side code', ->
         Backbone.sync.yieldsTo 'success'
 
       xit 'creates the user then logs in', ->
-
         @view.signup foo: 'bar'
         # Registers the user
         Backbone.sync.args[0][0].should.equal 'create'
-        Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
+        # FIXME: not called 3 times
+        # Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
 
 
 describe 'Login view', ->
@@ -109,8 +109,8 @@ describe 'Login view', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#renderAuthError', ->
 
@@ -144,12 +144,12 @@ describe 'Require gdpr checkbox', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe 'SignUpOptionsView', ->
 
-      describe '#acceptTermsBeforeSignup', ->
-        it 'adds error class if user does not click gdpr checkbox before creating an account', ->
-          @view.$('#auth-page-signup-social a').first().click()
-          @view.$el.html().should.containEql 'tos-error'
+    describe '#acceptTermsBeforeSignup', ->
+      it 'adds error class if user does not click gdpr checkbox before creating an account', ->
+        @view.$('#auth-page-signup-social a').first().click()
+        @view.$el.html().should.containEql 'tos-error'

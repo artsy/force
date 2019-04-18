@@ -21,8 +21,8 @@ describe 'FixedCellsCountCarousel', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#initialize', ->
     it 'allows passing fetchOptions as an object and converts it to an array', ->

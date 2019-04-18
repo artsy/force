@@ -25,8 +25,8 @@ describe 'UserSettingsView', ->
 
   afterEach ->
     $.ajax.restore()
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#logout', ->
 

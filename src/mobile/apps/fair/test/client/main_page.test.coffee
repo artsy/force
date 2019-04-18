@@ -40,9 +40,9 @@ describe 'Main page client-side code', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
     Backbone.history.start.restore()
+    benv.teardown()
 
   describe 'FairMainPageView', ->
 

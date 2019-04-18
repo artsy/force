@@ -21,8 +21,8 @@ describe 'Unsubscribe View', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   it 'renders checkboxes for each email type, including a select all', ->
     _(_.keys(emailTypes)).each (type) =>

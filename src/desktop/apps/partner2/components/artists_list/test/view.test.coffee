@@ -24,8 +24,8 @@ describe 'PartnerArtistsListView', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#fetch', ->
     beforeEach ->
@@ -232,7 +232,7 @@ describe 'PartnerArtistsListView', ->
 
       it 'disables artists links if they do not have published artworks with this partner', ->
         @view.$('.artists-column > li > span').length.should.equal 1
-        _.each @view.$('.artists-column > li > span'), (span) =>
+        _.each @view.$('.artists-column > li > span'), (span) ->
           $(span).hasClass 'artist-name'
 
     describe 'for non-partner galleries', ->
@@ -242,7 +242,7 @@ describe 'PartnerArtistsListView', ->
 
       it 'links artists to their artists pages', ->
         @view.$('.artists-column > li > a').length.should.equal 3
-        _.each @view.$('.artists-column > li > a'), (a) =>
+        _.each @view.$('.artists-column > li > a'), (a) ->
           $(a).attr('href').should.startWith "/artist/"
 
   describe '#render', ->

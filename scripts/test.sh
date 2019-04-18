@@ -8,7 +8,6 @@ run () {
   case $CIRCLE_NODE_INDEX in
   0)
     yarn mocha $(find src -name '*.test.*')
-    nyc report --reporter=text-lcov > coverage.lcov
 
     if [ "$CI" = "true" ]; then
       yarn report-coverage

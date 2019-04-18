@@ -39,7 +39,7 @@ describe 'ArticlesAdapter', ->
         sd: { PROFILE: fabricate 'partner_profile' }
         asset: (->)
         params: {}
-      }, =>
+      }, ->
         done()
 
   afterEach ->
@@ -140,7 +140,7 @@ describe 'ArticlesAdapter', ->
     xit 'renders the json-ld', ->
       article = _.extend {}, fixtures.article,
         channel_id: null
-        partner_channel_id: '123'        
+        partner_channel_id: '123'
       Backbone.sync.args[0][2].success article
       html = @view.el.html()
       html.should.containEql 'json-ld'

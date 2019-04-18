@@ -31,8 +31,8 @@ describe 'Exhibitors page client-side code', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe 'init', ->
 

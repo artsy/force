@@ -26,8 +26,8 @@ describe 'NewsView', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#fetch', ->
     before ->

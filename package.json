@@ -371,7 +371,7 @@
     "coverageDirectory": "./.nyc_output/",
     "collectCoverage": true,
     "coverageReporters": [
-      "text",
+      "text-summary",
       "json"
     ],
     "moduleFileExtensions": [
@@ -393,16 +393,14 @@
   },
   "nyc": {
     "check-coverage": true,
-    "include": [
-      "*.test.*"
-    ],
     "reporter": [
       "lcov",
       "text-summary"
     ],
     "extension": [
-      ".coffee"
+      ".coffee",
+      ".js"
     ],
-    "lines": 40
+    "lines": 0
   }
 }

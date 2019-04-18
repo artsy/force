@@ -32,9 +32,9 @@ describe 'For You View', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
     CurrentUser.orNull.restore()
+    benv.teardown()
 
   describe 'init code', ->
 

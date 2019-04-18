@@ -41,8 +41,8 @@ describe 'BidPageView', ->
           done()
 
     afterEach ->
-      benv.teardown()
       Backbone.sync.restore()
+      benv.teardown()
       try @BidPageView::renderUnqualifiedWarning.restore()
 
     describe 'view', ->
@@ -134,8 +134,8 @@ describe 'BidPageView', ->
           done()
 
     afterEach ->
-      benv.teardown()
       Backbone.sync.restore()
+      benv.teardown()
       try @BidPageView::renderUnqualifiedWarning.restore()
     
     it 'requires you to check the checkbox before bidding', ->

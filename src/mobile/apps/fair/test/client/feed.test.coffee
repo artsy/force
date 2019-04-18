@@ -30,8 +30,8 @@ describe 'Fair feed page client-side code', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe 'FeedView', ->
 

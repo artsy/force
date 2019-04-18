@@ -30,8 +30,8 @@ describe 'FollowedArtistsRailView', ->
     ]
 
   after ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   beforeEach ->
     @view = new FollowedArtistsRailView
@@ -40,7 +40,7 @@ describe 'FollowedArtistsRailView', ->
   describe '#_parseAndFetchArtists', ->
     it 'filters out weird urls', ->
       @view._parseAndFetchArtists(@featuredArtists)
-        .then (artists) -> 
+        .then (artists) ->
           artists.length.should.equal 2
           artists[0].id.should.equal 'charles-broskoski'
           artists[1].id.should.equal 'damon-zucconi'

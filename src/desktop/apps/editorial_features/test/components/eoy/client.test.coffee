@@ -113,8 +113,8 @@ xdescribe 'EoyView', ->
         done()
 
   after ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 

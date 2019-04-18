@@ -36,8 +36,8 @@ describe 'ShowCityView', ->
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 

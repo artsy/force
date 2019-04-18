@@ -118,7 +118,7 @@ describe '#login', ->
       params: {}
       get: (-> false)
     
-    res = 
+    res =
       redirect: @redirect = sinon.stub()
       locals:
         sd:
@@ -130,7 +130,7 @@ describe '#login', ->
 describe '#signUp', ->
   beforeEach ->
     @req = { session: {}, get: (-> '/auctions/two-x-two'), query: {}, body: {}, params: {}}
-    @res = 
+    @res =
       render: @render = sinon.stub()
       locals:
         sd:

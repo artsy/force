@@ -24,8 +24,8 @@ describe 'HeroShowsCarousel', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#fetchShows', ->
     it 'makes proper requests to fetch shows', ->

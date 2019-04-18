@@ -23,8 +23,8 @@ describe 'FollowButton', ->
       done()
 
   after ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe 'initializing artist suggestions', ->
     before ->

@@ -20,9 +20,9 @@ describe 'AutoCompleteView', ->
     benv.teardown()
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     @view = new AutoCompleteView
     @view.render()
-    sinon.stub Backbone, 'sync'
 
   afterEach ->
     Backbone.sync.restore()

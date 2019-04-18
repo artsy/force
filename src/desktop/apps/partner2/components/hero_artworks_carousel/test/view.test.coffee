@@ -27,8 +27,8 @@ describe 'HeroArtworksCarousel', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#fetchArtworks', ->
     before ->

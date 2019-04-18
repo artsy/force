@@ -36,8 +36,8 @@ describe 'PartnerArtistView', ->
 
   afterEach ->
     global.location = @_location
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 

@@ -38,8 +38,8 @@ xdescribe 'FeedView', ->
       done()
 
   after ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 

@@ -27,9 +27,9 @@ describe 'HeaderView', ->
     @sd = { HEADER_CLASS: 'stub' }
     benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
       @HeaderView = benv.requireWithJadeify(
-          resolve(__dirname, '../view')
-          ['bundleTemplate']
-        )
+        resolve(__dirname, '../view')
+        ['bundleTemplate']
+      )
       @HeaderView.__set__ 'SearchBarView', Backbone.View
       @HeaderView.__set__ 'AuthModalView', sinon.stub()
       @HeaderView.__set__ 'FlashMessage', sinon.stub()
@@ -75,9 +75,9 @@ describe 'HeaderView', ->
       sd = { CURRENT_USER: @user}
       benv.render resolve(__dirname, '../templates/index.jade'), { sd: sd }, =>
         @HeaderView = benv.requireWithJadeify(
-            resolve(__dirname, '../view')
-            ['bundleTemplate']
-          )
+          resolve(__dirname, '../view')
+          ['bundleTemplate']
+        )
         @HeaderView.__set__ 'CurrentUser', { orNull: => @user }
         @HeaderView.__set__ 'SearchBarView', Backbone.View
         @HeaderView.__set__ 'AuthModalView', sinon.stub()

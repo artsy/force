@@ -39,9 +39,9 @@ xdescribe 'GeneArtworksView', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
     @politeScroll.restore()
+    benv.teardown()
 
   describe '#readMore', ->
 
@@ -82,9 +82,9 @@ describe 'GeneArtistsView', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
     @politeScroll.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 

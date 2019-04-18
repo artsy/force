@@ -29,10 +29,10 @@ describe 'ClockView', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
     location.reload.restore()
     @clock.restore()
+    benv.teardown()
 
   describe '#render', ->
 
