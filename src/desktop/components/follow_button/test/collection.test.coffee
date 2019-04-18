@@ -94,7 +94,7 @@ describe 'Following collection', ->
         profileIds = []
         sinon.spy @following, 'syncFollows'
         @following.maxSyncSize = 10
-        _(22).times (n) =>
+        _(22).times (n) ->
           profileIds.push "profile-#{n}"
         @following.syncFollows profileIds
 

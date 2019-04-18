@@ -6,22 +6,20 @@ benv = require 'benv'
 { resolve } = require 'path'
 
 describe 'Reset password page client-side code', ->
-
-  beforeEach (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      Backbone.$ = $
-      sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../templates/reset_password.jade'), { sd: { AP: {} }, asset: (->) }, =>
-        { PasswordResetView } = require '../client/reset_password'
-        @view = new PasswordResetView el: $('#reset-password-form')
-        done()
-
-  afterEach ->
-    Backbone.sync.restore()
-    benv.teardown()
-
   describe 'PasswordResetView', ->
+    beforeEach (done) ->
+      benv.setup =>
+        benv.expose { $: benv.require 'jquery' }
+        Backbone.$ = $
+        sinon.stub Backbone, 'sync'
+        benv.render resolve(__dirname, '../templates/reset_password.jade'), { sd: { AP: {} }, asset: (->) }, =>
+          { PasswordResetView } = require '../client/reset_password'
+          @view = new PasswordResetView el: $('#reset-password-form')
+          done()
+
+    afterEach ->
+      Backbone.sync.restore()
+      benv.teardown()
 
     describe '#initialize', ->
 

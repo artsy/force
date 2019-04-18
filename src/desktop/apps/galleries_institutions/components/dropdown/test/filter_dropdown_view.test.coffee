@@ -87,7 +87,7 @@ describe 'FilterDropdownView', ->
 
     describe '#setPlaceholder', ->
       beforeEach ->
-          @$input.attr 'placeholder', 'foo bar'
+        @$input.attr 'placeholder', 'foo bar'
 
       describe 'no selection', ->
         beforeEach ->
