@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
 _s = require 'underscore.string'
 PartnerShow = require './show.coffee'
-moment = require 'moment'
+moment = require 'moment-timezone'
 module.exports = class SearchResult extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -80,7 +80,7 @@ module.exports = class SearchResult extends Backbone.Model
     else if @get('display_model') == 'Fair'
       @formatEventAbout('Art fair')
     else if @get('display_model') == 'Sale'
-      @formatEventAbout('Sale')
+      @formatEventAbout('Sale', 'America/New_York')
     else if @get('display_model') in ['Show', 'Booth']
       @formatShowAbout()
     else if @get('display_model') in ['Artwork', 'Feature', 'Gallery']
@@ -155,12 +155,9 @@ module.exports = class SearchResult extends Backbone.Model
 
     show.toPageDescription()
 
-  formatEventAbout: (title) ->
-    if startTime = @get('start_at')
-      formattedStartTime = moment(startTime).format("MMM Do")
-    if endTime = @get('end_at')
-      formattedEndTime = moment(endTime).format("MMM Do, YYYY")
-
+  formatEventAbout: (title, timezone) ->
+    formattedStartTime = @formatEventTime(@get('start_at'), 'MMM Do', timezone)
+    formattedEndTime = @formatEventTime(@get('end_at'), 'MMM Do, YYYY', timezone)
     location = @get('city')
 
     if formattedStartTime and formattedEndTime
@@ -168,7 +165,20 @@ module.exports = class SearchResult extends Backbone.Model
       about += " in #{location}" if location
     else if formattedStartTime
       about = "#{title} opening #{formattedStartTime}"
+      about += " in #{location}" if location
     else
       about = @get('description')
 
     about
+
+  formatEventTime: (timestamp, format, timezone) ->
+    if timestamp
+      momentTime = moment(timestamp)
+
+      if !momentTime.isValid()
+        null
+      else if timezone
+        momentTime = momentTime.tz(timezone)
+        "#{momentTime.format(format)} (at #{momentTime.format("h:mma z")})"
+      else
+        momentTime.format(format)
