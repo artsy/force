@@ -17,7 +17,7 @@ app.get(
       const user = req.user && req.user.toJSON()
       const {
         ARTIST_INSIGHTS,
-        ARTIST_COLLECTIONS_RAIL_QA, // TODO: update after Artist Collections Rail a/b test
+        ARTIST_COLLECTIONS_RAIL, // TODO: update after Artist Collections Rail a/b test
       } = res.locals.sd
       const {
         bodyHTML,
@@ -33,10 +33,7 @@ app.get(
         context: {
           ...buildServerAppContext(req, res),
           ARTIST_INSIGHTS,
-          showCollectionsRail:
-            ARTIST_COLLECTIONS_RAIL_QA === "experiment" &&
-            req.user &&
-            req.user.isAdmin(), // TODO: update after Artist Collections Rail a/b test
+          showCollectionsRail: ARTIST_COLLECTIONS_RAIL === "experiment", // TODO: update after Artist Collections Rail a/b test
         } as any,
       })
 
