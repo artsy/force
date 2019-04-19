@@ -35,8 +35,8 @@ module.exports = {
     edge: 'v2'
     weighting: 'equal'
 
-  artist_collections_rail:
-    key: 'artist_collections_rail'
+  artist_collections_rail_qa:
+    key: 'artist_collections_rail_qa'
     outcomes: [
       'control'
       'experiment'
