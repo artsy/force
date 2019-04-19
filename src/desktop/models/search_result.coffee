@@ -153,8 +153,8 @@ module.exports = class SearchResult extends Backbone.Model
     show.toPageDescription()
 
   formatEventAbout: (title, timezone) ->
-    formattedStartTime = @formatEventTime(@get('start_at'), timezone)
-    formattedEndTime = @formatEventTime(@get('end_at'), timezone)
+    formattedStartTime = @formatEventTime(@get('start_at'), 'MMM Do', timezone)
+    formattedEndTime = @formatEventTime(@get('end_at'), 'MMM Do, YYYY', timezone)
     location = @get('city')
 
     if formattedStartTime and formattedEndTime
@@ -168,7 +168,7 @@ module.exports = class SearchResult extends Backbone.Model
 
     about
 
-  formatEventTime: (timestamp, timezone) ->
+  formatEventTime: (timestamp, format, timezone) ->
     if timestamp
       momentTime = moment(timestamp)
 
@@ -176,9 +176,9 @@ module.exports = class SearchResult extends Backbone.Model
         null
       else if timezone
         momentTime = momentTime.tz(timezone)
-        "#{momentTime.format("MMM Do")} (at #{momentTime.format("h:mma z")})"
+        "#{momentTime.format(format)} (at #{momentTime.format("h:mma z")})"
       else
-        momentTime.format("MMM Do")
+        momentTime.format(format)
 
   href: ->
     @get('location')
