@@ -36,13 +36,13 @@ app.get(
     try {
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/search_results.jade",
+        layout: "templates/index.jade",
         locals: {
           ...res.locals,
           assetPackage: "search2",
         },
         blocks: {
-          skeleton: _props => {
+          loadingComponent: _props => {
             return (
               <StitchWrapper>
                 <SearchResultsSkeleton />
