@@ -15,7 +15,7 @@ buildClientApp({
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-    document.getElementById("search-results-skeleton").remove()
+    document.getElementById("loading-container").remove()
   })
   .catch(error => {
     console.error(error)
