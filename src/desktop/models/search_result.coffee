@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
-moment = require 'moment'
+moment = require 'moment-timezone'
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
 PartnerShow = require './partner_show.coffee'
@@ -92,7 +92,7 @@ module.exports = class SearchResult extends Backbone.Model
     else if @get('display_model') == 'Fair'
       @formatEventAbout('Art fair')
     else if @get('display_model') == 'Sale'
-      @formatEventAbout('Sale')
+      @formatEventAbout('Sale', "America/New_York")
     else if @get('display_model') in ['Show', 'Booth']
       @formatShowAbout()
     else if @get('display_model') in ['Artwork', 'Feature', 'Gallery', 'Page']
@@ -152,12 +152,9 @@ module.exports = class SearchResult extends Backbone.Model
 
     show.toPageDescription()
 
-  formatEventAbout: (title) ->
-    if startTime = @get('start_at')
-      formattedStartTime = moment(startTime).format("MMM Do")
-    if endTime = @get('end_at')
-      formattedEndTime = moment(endTime).format("MMM Do, YYYY")
-
+  formatEventAbout: (title, timezone) ->
+    formattedStartTime = @formatEventTime(@get('start_at'), timezone)
+    formattedEndTime = @formatEventTime(@get('end_at'), timezone)
     location = @get('city')
 
     if formattedStartTime and formattedEndTime
@@ -165,10 +162,23 @@ module.exports = class SearchResult extends Backbone.Model
       about += " in #{location}" if location
     else if formattedStartTime
       about = "#{title} opening #{formattedStartTime}"
+      about += " in #{location}" if location
     else
       about = @get('description')
 
     about
+
+  formatEventTime: (timestamp, timezone) ->
+    if timestamp
+      momentTime = moment(timestamp)
+
+      if !momentTime.isValid()
+        null
+      else if timezone
+        momentTime = momentTime.tz(timezone)
+        "#{momentTime.format("MMM Do")} (at #{momentTime.format("h:mma z")})"
+      else
+        momentTime.format("MMM Do")
 
   href: ->
     @get('location')
