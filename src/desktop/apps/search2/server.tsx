@@ -7,9 +7,8 @@ import { StitchWrapper } from "desktop/components/react/stitch_components/Stitch
 
 export const app = express()
 
-const maybeShowNewPage = (req, _res, next) => {
-  const shouldShowNewPage =
-    req.user && req.user.hasLabFeature("New Search Results")
+const maybeShowNewPage = (_req, res, next) => {
+  const shouldShowNewPage = res.locals.sd.NEW_SEARCH_PAGE === "experiment"
 
   if (shouldShowNewPage) {
     return next()
