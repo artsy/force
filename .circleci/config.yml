@@ -53,7 +53,7 @@ jobs:
       - yarn/setup
       - run:
           name: Test
-          command: yarn test
+          command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
 
   push_staging_image: &push_image
     docker:
