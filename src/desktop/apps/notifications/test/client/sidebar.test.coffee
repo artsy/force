@@ -16,8 +16,8 @@ describe 'SidebarView', ->
         matchMedia: () ->
           media: ""
           matches: false
-          addListener: () => null
-          removeListener: () => null
+          addListener: () -> null
+          removeListener: () -> null
       Backbone.$ = $
       SidebarView = require '../../client/sidebar.coffee'
       done()
@@ -33,8 +33,8 @@ describe 'SidebarView', ->
     artists.models = [ artist1, artist2 ]
     benv.render resolve(__dirname, '../../templates/index.jade'), { sd: { FOLLOWING: artists }, asset: (->) }, =>
       @SidebarView = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/sidebar.coffee'), ['filterArtistTemplate']
-        )
+        (resolve __dirname, '../../client/sidebar.coffee'), ['filterArtistTemplate']
+      )
       @filterState = new Backbone.Model
         forSale: false
         artist: null

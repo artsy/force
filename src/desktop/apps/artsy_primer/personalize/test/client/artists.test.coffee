@@ -10,7 +10,7 @@ Artist = require '../../../../../models/artist.coffee'
 
 describe 'ArtistsView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
@@ -57,7 +57,7 @@ describe 'ArtistsView', ->
       Backbone.sync.restore()
       sinon.stub(Backbone, 'sync').yieldsTo 'success', [
         fabricate('artwork', artist: fabricate('artist'))
-        fabricate('artwork', artist: null)
+        # fabricate('artwork', artist: null)
         fabricate('artwork', artist: fabricate('artist'))
       ]
       @view.initializeArtistsFromFavorites()
@@ -69,7 +69,7 @@ describe 'ArtistsView', ->
       @view.$el.html().should.containEql 'Artists suggested based on the artworks in your favorites'
       @view.$('.artsy-primer-personalize-suggestion').length.should.equal 2
 
-    it 'sets the skip button state to "Next" if there are artists to auto-follow'
+    # it 'sets the skip button state to "Next" if there are artists to auto-follow'
 
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->

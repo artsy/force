@@ -115,14 +115,14 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
     beforeEach ->
-      sinon.stub location, 'reload'
+      sinon.stub window.location, 'reload'
       @view.validateForm = -> true
 
       @view.state = new Backbone.Model
       @view.user = new LoggedOutUser
 
     afterEach ->
-      location.reload.restore()
+      window.location.reload.restore()
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
       @view.destination = '/artist/some-guy/follow'

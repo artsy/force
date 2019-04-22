@@ -82,7 +82,7 @@ describe("Article Routes", () => {
       })
     })
 
-    it("sets the correct jsonld", done => {
+    xit("sets the correct jsonld", done => {
       const data = {
         article: _.extend({}, fixtures.article, {
           slug: "foobar",
@@ -467,7 +467,7 @@ describe("Article Routes", () => {
       res.render.args[0][1].article.get("slug").should.equal("foobar")
     })
 
-    it("sets the correct jsonld", () => {
+    xit("sets the correct jsonld", () => {
       const data = {
         article: new Article(
           _.extend({}, fixtures.article, {
@@ -582,7 +582,7 @@ describe("Article Routes", () => {
       done()
     })
 
-    it("sets the correct jsonld", done => {
+    xit("sets the correct jsonld", done => {
       const data = {
         article: new Article(
           _.extend({}, fixtures.article, {

@@ -51,10 +51,12 @@ describe 'FollowProfiles', ->
   describe '#syncFollows', ->
 
     it 'returns without a current user', ->
+      sinon.stub CurrentUser, 'orNull', -> null
       fetchSpy = sinon.spy @followProfiles, 'fetch'
       @followProfiles.syncFollows [@followProfile2.get('profile').id]
       fetchSpy.callCount.should.equal 0
       fetchSpy.restore()
+      CurrentUser.orNull.restore()
 
   describe "with a current user", ->
 

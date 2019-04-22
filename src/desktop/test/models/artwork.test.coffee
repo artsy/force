@@ -331,14 +331,14 @@ describe 'Artwork', ->
 
   describe "artistName", ->
     it "renders correctly", ->
-       new Artwork(title: "title", forsale: false).artistName().should.equal ""
-       new Artwork(title: "title", forsale: false, artist: { name: undefined }).artistName().should.equal ""
-       new Artwork(title: "title", forsale: false, artists: [{ name: undefined }]).artistName().should.equal ""
-       new Artwork(title: "title", forsale: false, artist: { name: "popeye the sailor" }).artistName().should.equal "popeye the sailor"
-       new Artwork(title: "title", forsale: false, artists: [{ name: "cap'n crunch" }]).artistName().should.equal "cap'n crunch"
-       new Artwork(title: "title", forsale: false, artists: [{ name: "cap'n crunch" }, { name: "popeye the sailor" }]).artistName().should.equal "cap'n crunch"
-       new Artwork(title: "title", forsale: false, artists: [{ name: undefined }, { name: "so and so" }]).artistName().should.equal "so and so"
-       new Artwork(title: "title", forsale: false, artist: { name: undefined }, artists: [{ name: "so and so" }]).artistName().should.equal "so and so"
+      new Artwork(title: "title", forsale: false).artistName().should.equal ""
+      new Artwork(title: "title", forsale: false, artist: { name: undefined }).artistName().should.equal ""
+      new Artwork(title: "title", forsale: false, artists: [{ name: undefined }]).artistName().should.equal ""
+      new Artwork(title: "title", forsale: false, artist: { name: "popeye the sailor" }).artistName().should.equal "popeye the sailor"
+      new Artwork(title: "title", forsale: false, artists: [{ name: "cap'n crunch" }]).artistName().should.equal "cap'n crunch"
+      new Artwork(title: "title", forsale: false, artists: [{ name: "cap'n crunch" }, { name: "popeye the sailor" }]).artistName().should.equal "cap'n crunch"
+      new Artwork(title: "title", forsale: false, artists: [{ name: undefined }, { name: "so and so" }]).artistName().should.equal "so and so"
+      new Artwork(title: "title", forsale: false, artist: { name: undefined }, artists: [{ name: "so and so" }]).artistName().should.equal "so and so"
 
   describe "artistsNames", ->
     it "renders correctly", ->
