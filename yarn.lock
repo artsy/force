@@ -24,14 +24,14 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.9.5":
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.9.5.tgz#1a20401d186f86d6d3b3ebb6abbdce05a0854060"
-  integrity sha512-6z0SevjsxWgdKoyYbDip3Kmr1ACkk9hEZmdajZonFj3mc4OhIaeniJ52om8sIcpUbaDn3H16nNEyVZ+koJCSVQ==
+"@artsy/palette@4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.10.0.tgz#6be123e982b7dea856e44feae56097d114130dad"
+  integrity sha512-TJaxyTcw4t/0SfLAcO4JxvUWUzs1Nez/nH6aCsJohNWdI5raMWrymD4ctO2IJ2LGd2h7jFGqh1FGqoBgfBMBiA==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
-    moment-timezone "^0.5.23"
+    moment-timezone "^0.5.25"
     rc-slider "^8.6.2"
     react-lazy-load-image-component "^1.3.2"
     react-live "^1.12.0"
@@ -9844,6 +9844,13 @@ moment-timezone@^0.5.13, moment-timezone@^0.5.23:
   version "0.5.23"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
   integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
+  dependencies:
+    moment ">= 2.9.0"
+
+moment-timezone@^0.5.25:
+  version "0.5.25"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.25.tgz#a11bfa2f74e088327f2cd4c08b3e7bdf55957810"
+  integrity sha512-DgEaTyN/z0HFaVcVbSyVCUU6HeFdnNC3vE4c9cgu2dgMTvjBUBdBzWfasTBmAW45u5OIMeCJtU8yNjM22DHucw==
   dependencies:
     moment ">= 2.9.0"
 
