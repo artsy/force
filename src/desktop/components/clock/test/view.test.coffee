@@ -18,7 +18,7 @@ describe 'ClockView', ->
       sd.CURRENT_PATH = ""
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      sinon.stub location, 'reload'
+      sinon.stub window.location, 'reload'
       Backbone.$ = $
       @view = new ClockView
         model: new Sale(fabricate('sale'), clockState: 'open')
@@ -29,10 +29,10 @@ describe 'ClockView', ->
       done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
-    location.reload.restore()
+    window.location.reload.restore()
     @clock.restore()
+    benv.teardown()
 
   describe '#render', ->
 

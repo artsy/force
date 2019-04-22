@@ -117,8 +117,8 @@ describe '#maybeFetchAndRenderShows', ->
         params: {}
       }, =>
         PartnerShowsGridView = mod = benv.requireWithJadeify(
-            (resolve __dirname, '../../client/shows_grid'), ['template', 'showFiguresTemplate']
-          )
+          (resolve __dirname, '../../client/shows_grid'), ['template', 'showFiguresTemplate']
+        )
         @src = [
           fabricate('show', { name: 'show1' } ),
           fabricate('show', { name: 'show2', featured: true } ),

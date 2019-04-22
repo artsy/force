@@ -90,19 +90,19 @@ describe 'FairInfo routes', ->
         _.keys(Backbone.sync.args[0][2]['data'].should.containEql 'fair_programming_id')
 
 describe '#info', ->
-    beforeEach ->
-      @req =
-        profile: new Profile fabricate 'profile', owner_type: 'Fair', owner: fabricate 'fair'
-        params:
-          id: "the-armory-show-2013"
+  beforeEach ->
+    @req =
+      profile: new Profile fabricate 'profile', owner_type: 'Fair', owner: fabricate 'fair'
+      params:
+        id: "the-armory-show-2013"
 
-      @res =
-        locals:
-          sd: {}
-        redirect: sinon.stub()
+    @res =
+      locals:
+        sd: {}
+      redirect: sinon.stub()
 
-      @next = sinon.stub()
+    @next = sinon.stub()
 
-    it 'should redirect to /info/visitors', ->
-      routes.info(@req, @res)
-      @res.redirect.args[0][0].should.equal 'info/visitors'
+  it 'should redirect to /info/visitors', ->
+    routes.info(@req, @res)
+    @res.redirect.args[0][0].should.equal 'info/visitors'

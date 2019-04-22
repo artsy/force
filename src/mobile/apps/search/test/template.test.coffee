@@ -13,15 +13,15 @@ sinon = require 'sinon'
 
 describe 'Search results template', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
       done()
 
   after ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   beforeEach ->
     @search = new SearchResults
@@ -32,8 +32,7 @@ describe 'Search results template', ->
         sd: {}
         results: []
         mainHeaderSearchBoxValue: 'foobar'
-        sd: {}
-      }, =>
+      }, ->
         done()
       )
 
@@ -66,8 +65,7 @@ describe 'Search results template', ->
         sd: {}
         results: @search.models
         mainHeaderSearchBoxValue: 'foobar'
-        sd: {}
-      }, =>
+      }, ->
         done()
       )
 

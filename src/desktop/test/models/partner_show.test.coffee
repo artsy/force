@@ -30,7 +30,6 @@ describe 'PartnerShow', ->
       partnerShow.url().should.equal "#{sd.API_URL}/api/v1/show/#{partnerShow.get('id')}"
 
   describe '#toJSONLD', ->
-
     it 'returns valid json', ->
       artist = fabricate 'artist'
       @partnerShow.set artists: [artist]
@@ -49,7 +48,7 @@ describe 'PartnerShow', ->
         "@type": "Person"
         image: "/images/missing_image.png"
         name: "Pablo Picasso"
-        sameAs: "http://artsy.net/artist/#{artist.id}"
+        sameAs: "#{sd.APP_URL}/artist/#{artist.id}"
       }
 
   describe '#toPageTitle', ->
@@ -249,6 +248,7 @@ describe 'PartnerShow', ->
 
   describe '#contextualLabel', ->
     describe 'with name', ->
+      it 'returns the correct label', ->
         new PartnerShow(artists: [0, 0, 0], fair: null).contextualLabel('Foobar').should.equal 'Group Show including Foobar'
         new PartnerShow(artists: [0], fair: null).contextualLabel('Foobar').should.equal 'Solo Show'
         new PartnerShow(artists: [0], fair: 'existy').contextualLabel('Foobar').should.equal 'Fair Booth including Foobar'
@@ -280,10 +280,10 @@ describe 'PartnerShow', ->
       @partnerShow = new PartnerShow fabricate 'show',
         location: fabricate 'partner_location'
       @partnerShow.get('location').day_schedules.push
-          _id: "5543d89472616978f1e40100",
-          start_time: 76000,
-          end_time: 88400,
-          day_of_week: "Tuesday"
+        _id: "5543d89472616978f1e40100"
+        start_time: 76000,
+        end_time: 88400,
+        day_of_week: "Tuesday"
 
     it 'returns the formatted day schedule for a day of the week with a day schedule', ->
       @partnerShow.formatDaySchedule('Monday').should.match { start: 'Monday', hours: '10am–7pm' }
@@ -299,10 +299,10 @@ describe 'PartnerShow', ->
       @partnerShow = new PartnerShow fabricate 'show',
         location: fabricate 'partner_location'
       @partnerShow.get('location').day_schedules.push
-          _id: "5543d89472616978f1e40100",
-          start_time: 76000,
-          end_time: 88400,
-          day_of_week: "Tuesday"
+        _id: "5543d89472616978f1e40100"
+        start_time: 76000,
+        end_time: 88400,
+        day_of_week: "Tuesday"
 
     it 'returns a formatted string describing the days open and hours for the show', ->
       @partnerShow.formatDaySchedules().should.match [

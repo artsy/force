@@ -19,6 +19,10 @@ describe 'MagazineView', ->
       Backbone.$ = $
       $.onInfiniteScroll = sinon.stub()
       $.fn.error = sinon.stub()
+      sinon.stub request, 'post'
+        .returns
+          send: sinon.stub().returns
+            end: sinon.stub().yields(null, body: data: articles: @articles)
 
       @articles = [
         {
@@ -76,10 +80,6 @@ describe 'MagazineView', ->
       , =>
         filename = path.resolve(__dirname, '../../client/articles.coffee')
         { MagazineView } = module = benv.requireWithJadeify filename, ['articleTemplate']
-        sinon.stub request, 'post'
-          .returns
-            send: sinon.stub().returns
-              end: sinon.stub().yields(null, body: data: articles: @articles)
 
         @view = new MagazineView
           el: $ 'body'
@@ -93,7 +93,7 @@ describe 'MagazineView', ->
 
   describe '#initialize', ->
 
-    xit 'offset should be zero', ->
+    it 'offset should be zero', ->
       @view.offset.should.equal 0
 
     it 'renders articles', ->
@@ -101,7 +101,7 @@ describe 'MagazineView', ->
 
     it 'sets up infinite scroll on click', (done) ->
       $('.is-show-more-button').click()
-      _.defer =>
+      _.defer ->
         $('.is-show-more-button').hasClass('is-hidden').should.be.true()
         done()
 

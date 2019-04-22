@@ -5,7 +5,7 @@ IntroductionView = require '../index'
 
 describe 'IntroductionView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
@@ -13,23 +13,25 @@ describe 'IntroductionView', ->
   after ->
     benv.teardown()
 
-  beforeEach ->
-    sinon.stub(Backbone, 'sync').yieldsTo 'success', introduction: 'Foo is bar'
-    @view = new IntroductionView
-
-  afterEach ->
-    Backbone.sync.restore()
-
   describe '#render', ->
+    beforeEach ->
+      sinon.stub(Backbone, 'sync').yieldsTo 'success', introduction: 'Foo is bar'
+      @view = new IntroductionView
+
+    afterEach ->
+      Backbone.sync.restore()
+
     it 'renders the introduction', ->
       @view.$el.html().should.equal 'Foo is bar'
 
   describe '#syncing, #update', ->
     beforeEach ->
-      Backbone.sync.restore()
       sinon.stub Backbone, 'sync'
-      @view.update()
+      @view = new IntroductionView
       @view.model.trigger 'request' # What's up with this not triggering in specs?
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'requests an updated introduction', ->
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/inquiry_introduction'
@@ -56,6 +58,13 @@ describe 'IntroductionView', ->
       Backbone.sync.callCount.should.equal 3
 
   describe 'XSS', ->
+    beforeEach ->
+      sinon.stub(Backbone, 'sync').yieldsTo 'success', introduction: 'Foo is bar'
+      @view = new IntroductionView
+
+    afterEach ->
+      Backbone.sync.restore()
+
     it 'prevents HTML from being injected', ->
       Backbone.sync.args[0][2].success introduction: 'Foo is baz<script>alert("hi");</script>'
       @view.$el.html().should.equal 'Foo is baz&lt;script&gt;alert("hi");&lt;/script&gt;'
