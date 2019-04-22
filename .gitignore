@@ -33,3 +33,7 @@ node_modules
 # Compiled server code
 server.dist.js
 server.dist.js.map
+
+# Codecov
+coverage*
+.nyc_output
