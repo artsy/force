@@ -23,13 +23,11 @@ describe 'HomePageView', ->
         sinon.stub Backbone, 'sync'
         @HomePageView.__set__ 'Flickity', @Flickity = sinon.stub()
         @view = new @HomePageView
-        Backbone.sync.restore()
-        sinon.stub Backbone, 'sync'
         done()
 
   afterEach ->
-    benv.teardown()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 
@@ -62,3 +60,4 @@ describe 'HomePageView', ->
   xdescribe '#onSwipeStart', ->
 
   xdescribe '#onSwipeEnd', ->
+  

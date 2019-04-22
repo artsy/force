@@ -7,7 +7,6 @@ sinon = require 'sinon'
 describe 'UserEdit', ->
 
   beforeEach ->
-    require('sharify').data.API_URL = 'http://localhost:5000'
     @userEdit = new UserEdit fabricate 'user'
     sinon.stub Backbone, 'sync'
 
