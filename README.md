@@ -17,6 +17,7 @@ Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://a
 * **Point People:** [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
 
 [![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
+[![codecov](https://codecov.io/gh/artsy/force/branch/master/graph/badge.svg)](https://codecov.io/gh/artsy/force)
 
 ## History
 
