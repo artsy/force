@@ -9847,6 +9847,13 @@ moment-timezone@^0.5.13, moment-timezone@^0.5.23:
   dependencies:
     moment ">= 2.9.0"
 
+moment-timezone@^0.5.25:
+  version "0.5.25"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.25.tgz#a11bfa2f74e088327f2cd4c08b3e7bdf55957810"
+  integrity sha512-DgEaTyN/z0HFaVcVbSyVCUU6HeFdnNC3vE4c9cgu2dgMTvjBUBdBzWfasTBmAW45u5OIMeCJtU8yNjM22DHucw==
+  dependencies:
+    moment ">= 2.9.0"
+
 moment-twitter@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/moment-twitter/-/moment-twitter-0.2.0.tgz#01f948425a8deb4d300d3ed7592daa699bbb5160"
