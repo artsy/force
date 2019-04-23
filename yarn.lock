@@ -24,14 +24,14 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.9.4":
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.9.4.tgz#f7b7b14bdda5e1f632293d1a73a82545d57dbdc1"
-  integrity sha512-hJ1YCzpv4EUnhrTBIR9H7XCOsq8p1jB0GGY1vqf2vJc6NVWi73bPCiM2sd1iquNjJpiCj02GXH2q9zptzsLLGg==
+"@artsy/palette@4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.10.0.tgz#6be123e982b7dea856e44feae56097d114130dad"
+  integrity sha512-TJaxyTcw4t/0SfLAcO4JxvUWUzs1Nez/nH6aCsJohNWdI5raMWrymD4ctO2IJ2LGd2h7jFGqh1FGqoBgfBMBiA==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
-    moment-timezone "^0.5.23"
+    moment-timezone "^0.5.25"
     rc-slider "^8.6.2"
     react-lazy-load-image-component "^1.3.2"
     react-live "^1.12.0"
@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.2.0":
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.2.0.tgz#2ca9f9726f8c09f920dcb187c42ac506fa342280"
-  integrity sha512-a+Dr6E90SkuleQYOwQhUtiogTudR2eYIPzJtOb67S2FAlT/qA48hYTwPFYts0n+2gk7YONAIaPtPvi92oVXnWw==
+"@artsy/reaction@16.3.2":
+  version "16.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.3.2.tgz#5c80fda1cdcce38d19740873eca92f922f2dde1c"
+  integrity sha512-LvEAQBnYEj4NVkSXwy5GdLqlW4MDJYa04CgClGKnSzsbg1RwNyJsNPwmZJI3HeSIl1hR+Ta5By/mduFn3i7vFA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -85,7 +85,7 @@
     jsonp "^0.2.1"
     lodash "^4.17.4"
     memoize-one "^4.0.3"
-    moment-timezone "^0.5.13"
+    moment-timezone "^0.5.25"
     numeral "^2.0.4"
     openseadragon "^2.3.1"
     prop-types "^15.5.10"
@@ -9840,7 +9840,7 @@ module-details-from-path@^1.0.3:
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha1-EUyUlnPiqKNenTV4hSeqN7Z52is=
 
-moment-timezone@^0.5.13, moment-timezone@^0.5.23:
+moment-timezone@^0.5.23:
   version "0.5.23"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
   integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
