@@ -9,7 +9,7 @@ import {
 } from "desktop/apps/article/queries/superArticle"
 import { positronql as _positronql } from "desktop/lib/positronql"
 import { data as _sd } from "sharify"
-import { stitch as _stitch } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
 import { isCustomEditorial } from "./editorial_features"
@@ -24,12 +24,12 @@ const sailthru = require("sailthru-client").createSailthruClient(
   SAILTHRU_KEY,
   SAILTHRU_SECRET
 )
+console.log("in routes:", sailthru.apiGet)
 
 // FIXME: Rewire
 let sd = _sd
 let positronql = _positronql
 let Article = _Article
-let stitch = _stitch
 
 export async function index(req, res, next) {
   const articleId = req.params.slug
@@ -70,6 +70,7 @@ export async function index(req, res, next) {
       article.seriesArticle &&
       !req.path.includes(`/series/${article.seriesArticle.slug}/`)
     ) {
+      console.log("calling redirect")
       return res.redirect(
         `/series/${article.seriesArticle.slug}/${article.slug}${search}`
       )
@@ -81,6 +82,7 @@ export async function index(req, res, next) {
 
     // Set main super article
     if (article.is_super_sub_article) {
+      console.log("positron call:", positronql)
       const superData = await positronql({
         query: SuperArticleQuery(article.id),
       })
@@ -93,6 +95,7 @@ export async function index(req, res, next) {
     if (isSuper && superArticle.get("super_article").related_articles) {
       const related = superArticle.get("super_article").related_articles
       const query = SuperSubArticlesQuery(related)
+      console.log("another positron call:", positronql)
       const superSubData = await positronql({
         query,
       })
@@ -260,7 +263,9 @@ export function amp(req, res, next) {
 }
 
 export const subscribedToEditorial = email => {
+  console.log("called subscribedToEditorial!!")
   return new Promise((resolve, _reject) => {
+    console.log("hi mom!")
     if (!email.length) {
       return resolve(false)
     }
@@ -270,6 +275,7 @@ export const subscribedToEditorial = email => {
         id: email,
       },
       (err, response) => {
+        console.log("res:", response, err)
         if (err) {
           return resolve(false)
         } else {

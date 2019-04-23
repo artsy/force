@@ -35,6 +35,7 @@ try {
         removeListener: function() {},
       }
     }
+  window.alert = function() {}
 } catch (error) {}
 
 sd.AP = {
