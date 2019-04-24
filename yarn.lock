@@ -24,10 +24,10 @@
     chokidar "^1.7.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.10.0":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.10.0.tgz#6be123e982b7dea856e44feae56097d114130dad"
-  integrity sha512-TJaxyTcw4t/0SfLAcO4JxvUWUzs1Nez/nH6aCsJohNWdI5raMWrymD4ctO2IJ2LGd2h7jFGqh1FGqoBgfBMBiA==
+"@artsy/palette@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.10.1.tgz#de60821d9ed2983355c43b6e1cb9e8f4b2fad2a0"
+  integrity sha512-1omoQpZbE8/DuFmhu6erU+Tvy6pp87xpfr/DHyaONqQz9tWt1bMZmb3zFDi4a8l62K6pwao67xeAnmJxe5rgLg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     moment "^2.23.0"
@@ -9839,13 +9839,6 @@ module-details-from-path@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha1-EUyUlnPiqKNenTV4hSeqN7Z52is=
-
-moment-timezone@^0.5.23:
-  version "0.5.23"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
-  integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
-  dependencies:
-    moment ">= 2.9.0"
 
 moment-timezone@^0.5.25:
   version "0.5.25"
