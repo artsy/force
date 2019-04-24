@@ -19,6 +19,11 @@ app.get(
         ARTIST_INSIGHTS,
         ARTIST_COLLECTIONS_RAIL, // TODO: update after Artist Collections Rail a/b test
       } = res.locals.sd
+
+      const context = buildServerAppContext(req, res, {
+        ARTIST_INSIGHTS,
+        showCollectionsRail: ARTIST_COLLECTIONS_RAIL === "experiment", // TODO: update after Artist Collections Rail a/b test
+      })
       const {
         bodyHTML,
         redirect,
@@ -30,11 +35,7 @@ app.get(
         routes,
         url: req.url,
         userAgent: req.header("User-Agent"),
-        context: {
-          ...buildServerAppContext(req, res),
-          ARTIST_INSIGHTS,
-          showCollectionsRail: ARTIST_COLLECTIONS_RAIL === "experiment", // TODO: update after Artist Collections Rail a/b test
-        } as any,
+        context,
       })
 
       if (redirect) {
