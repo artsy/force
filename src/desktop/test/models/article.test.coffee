@@ -218,13 +218,18 @@ describe "Article", ->
       @article.contributingByline().should.equal 'Molly, Kana and Christina'
 
   describe 'toJSONLD', ->
-    it 'Appends the layout, vertical and tracking tags', ->
+    it 'includes the layout, vertical and tracking tags', ->
       @article.set
         tags: ['Venice', 'Technology']
         tracking_tags: ['Evergreen', 'Interviews']
         vertical: { name: 'Culture', id: '123' }
         layout: 'standard'
       @article.toJSONLD().keywords.should.eql [ 'Venice', 'Technology', 'standard', 'Culture', 'Evergreen', 'Interviews' ]
+    it 'includes datestamps', ->
+      @article.set
+        published_at: '2019-04-23T16:31:48.205Z'
+      @article.toJSONLD().dateCreated.should.eql '2019-04-23T16:31:48.205Z'
+      @article.toJSONLD().datePublished.should.eql '2019-04-23T16:31:48.205Z'
 
   describe 'date', ->
     it 'returns NY time for editorial articles', ->

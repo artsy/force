@@ -257,6 +257,7 @@ module.exports = class Article extends Backbone.Model
       "headline": @get('thumbnail_title')
       "url": @fullHref()
       "thumbnailUrl": @get('thumbnail_image')
+      "datePublished": @get('published_at')
       "dateCreated": @get('published_at')
       "articleSection": @getParselySection()
       "creator": @getAuthorArray()
