@@ -43,6 +43,12 @@ app.get("/artwork/:artworkID/download/:filename", handleDownload)
 app.get(
   "/artwork/:artworkID*",
   async (req: Request, res: Response, next: NextFunction) => {
+    const { GOOGLE_ADWORDS_ID } = res.locals.sd
+
+    const context = buildServerAppContext(req, res, {
+      googleAdId: GOOGLE_ADWORDS_ID,
+    })
+
     try {
       const {
         bodyHTML,
@@ -55,7 +61,7 @@ app.get(
         routes,
         url: req.url,
         userAgent: req.header("User-Agent"),
-        context: buildServerAppContext(req, res),
+        context,
       })
 
       if (redirect) {
