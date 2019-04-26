@@ -7,6 +7,8 @@ import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
+import { isProduction } from "lib/environment"
+import { articleAdCategory } from "../ad_category"
 
 export interface AppProps extends ArticleProps {
   templates?: {
@@ -14,8 +16,36 @@ export interface AppProps extends ArticleProps {
     SuperArticleHeader: string
   }
 }
-
+interface HtlbidProps {
+  cmd: any
+  setTargeting?: (a: string, b: string) => any
+}
 export class App extends React.Component<AppProps> {
+  componentDidMount() {
+    this.mountDFPScript()
+  }
+
+  mountDFPScript() {
+    const { article } = this.props
+    let htlbid: HtlbidProps = {
+      cmd: [],
+    }
+    let testingState = isProduction ? "no" : "yes"
+    let pageType = articleAdCategory(article)
+    let postID = article.id
+
+    return `
+      <script src="//htlbid.com/v2/artsy.min.js"></script>
+      <script>
+        ${htlbid["cmd"].push(() => {
+          htlbid.setTargeting("is_testing", testingState)
+          htlbid.setTargeting("page_type", pageType)
+          htlbid.setTargeting("post_id", postID)
+        })}
+      </script>
+    `
+  }
+
   getArticleLayout = () => {
     const { article } = this.props
 
