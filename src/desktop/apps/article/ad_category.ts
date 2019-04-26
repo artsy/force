@@ -75,17 +75,17 @@ export const articleAdCategory = (article: ArticleProperties) => {
 }
 
 /**
- * Example Articles
+ * Example Article Slugs
  *
- * News Landing: http://localhost:5000/news/artsy-editorial-eternal-beauty-botticelli-s-the-birth-venus-caused-man-heart-attack
+ * News Landing: /news/artsy-editorial-eternal-beauty-botticelli-s-the-birth-venus-caused-man-heart-attack
  *
- * Sponsored Feature: http://localhost:5000/series/artsy-editors-newly-established
+ * Sponsored Feature: /series/artsy-editors-newly-established
  *
- * Sponsored Landing (Series):  http://localhost:5000/series/artsy-vanguard
+ * Sponsored Landing (Series):  /series/artsy-vanguard
  *
- * Sponsored Landing (Video): http://localhost:5000/series/artsy-editors-future-art/artsy-editors-future-art-carrie-mae-weems
+ * Sponsored Landing (Video): /series/artsy-editors-future-art/artsy-editors-future-art-carrie-mae-weems
  *
- * Feature: http://localhost:5000/article/artsy-editorial-rise-fall-internet-art-communities or http://localhost:5000/article/artsy-editorial-inside-new-yorks-remaining-artists-housing
+ * Feature: /article/artsy-editorial-rise-fall-internet-art-communities or /article/artsy-editorial-inside-new-yorks-remaining-artists-housing
  *
- * Article: http://localhost:5000/article/artsy-editorial-malick-sidibephotographs-captured-moments-joy-liberation-mali
+ * Article: /article/artsy-editorial-malick-sidibephotographs-captured-moments-joy-liberation-mali
  */
