@@ -31,9 +31,6 @@ app.get(
         return
       }
     }
-
-    const { IS_MOBILE } = res.locals.sd
-
     try {
       const layout = await stitch({
         basePath: __dirname,
@@ -45,11 +42,9 @@ app.get(
         blocks: {
           loadingComponent: _props => {
             return (
-              !IS_MOBILE && (
-                <StitchWrapper>
-                  <SearchResultsSkeleton />
-                </StitchWrapper>
-              )
+              <StitchWrapper>
+                <SearchResultsSkeleton />
+              </StitchWrapper>
             )
           },
         },
