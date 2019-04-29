@@ -35,6 +35,9 @@ jobs:
       - run:
           name: Duplicates Report
           command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
+      - run:
+          name: Verify bundle sizes
+          command: npx bundlesize
 
   danger:
     docker:
