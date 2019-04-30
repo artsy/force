@@ -15,6 +15,7 @@ ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_a
 RUN chown deploy:deploy /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
 
+ADD . /app
 WORKDIR /app
 
 # Set up node_modules
