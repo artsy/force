@@ -6112,7 +6112,7 @@ flickity@^2.0.5:
     tap-listener "^2.0.0"
     unidragger "^2.1.0"
 
-flickity@^2.1.2:
+flickity@^2.1.2, flickity@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.2.0.tgz#9ac65006d9cc77d2035f7eff33d5d9a3d4a8092f"
   integrity sha512-K9trFruKtbi4F8nOo+pHjJK4P/Pqix2Udq3lHhUVXfxqmoxuwZHu3nEEiEb49NWpzBrVHHIcnnn8fhcUTkWpgA==
