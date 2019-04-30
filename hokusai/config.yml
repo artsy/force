@@ -2,3 +2,4 @@ project-name: force
 pre-deploy: yarn publish-assets
 post-deploy: .circleci/deploy_event.sh
 hokusai-required-version: ">=0.5.4"
+git-remote: git@github.com:artsy/force.git
