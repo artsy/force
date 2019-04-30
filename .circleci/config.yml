@@ -60,7 +60,7 @@ jobs:
 
   push_staging_image: &push_image
     docker:
-      - image: artsy/hokusai:0.5.2
+      - image: artsy/hokusai:0.5
     steps:
       - add_ssh_keys
       - checkout
@@ -73,7 +73,7 @@ jobs:
 
   deploy_hokusai_staging:
     docker:
-      - image: artsy/hokusai:0.5.2
+      - image: artsy/hokusai:0.5
     steps:
       - add_ssh_keys
       - checkout
@@ -92,7 +92,7 @@ jobs:
 
   deploy_hokusai_production:
     docker:
-      - image: artsy/hokusai:0.5.2
+      - image: artsy/hokusai:0.5
     steps:
       - add_ssh_keys
       - checkout
