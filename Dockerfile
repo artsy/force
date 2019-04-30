@@ -13,7 +13,7 @@ RUN rm -f /usr/local/bin/yarn && \
   chmod +x ~/.yarn/bin/yarn && \
   ln -s ~/.yarn/bin/yarn /usr/local/bin/yarn
 
-RUN yarn install
+RUN yarn cache clean && yarn install
 
 RUN yarn assets
 RUN yarn build:server
