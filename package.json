@@ -32,7 +32,7 @@
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
-    "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
+    "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register ./node_modules/.bin/webpack --config ./webpack"
   },
   "prettier": {
     "bracketSpacing": true,
@@ -280,7 +280,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "@graphql-inspector/core": "^1.14.0",
-    "@sentry/cli": "^1.30.4",
+    "@sentry/cli": "^1.41.2",
     "@types/dd-trace": "^0.6.0",
     "@types/enzyme": "^3.1.6",
     "@types/express": "^4.11.0",

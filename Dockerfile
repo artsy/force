@@ -5,15 +5,25 @@ RUN apk add bash curl git \
   libsecret-dev glib-dev && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD . /app
+# Set up deploy user and working directory
+RUN adduser -D -g '' deploy
+RUN mkdir -p /app
+RUN chown deploy:deploy /app
+
 WORKDIR /app
 
-# Set up node_modules, sentry for alpine
-RUN yarn add @sentry/cli
+# Set up node_modules
+ADD package.json /app
+ADD yarn.lock /app
 RUN yarn cache clean && yarn install
 
 # Compile assets
 RUN yarn assets
 RUN yarn build:server
+
+# Switch to deploy user
+USER deploy
+ENV USER deploy
+ENV HOME /home/deploy
 
 CMD yarn start
