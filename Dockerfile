@@ -17,6 +17,9 @@ ADD package.json /app
 ADD yarn.lock /app
 RUN yarn cache clean && yarn install
 
+# Add the codebase
+ADD --chown=deploy:deploy . /app
+
 # Compile assets
 RUN yarn assets
 RUN yarn build:server
