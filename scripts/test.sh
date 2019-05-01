@@ -7,7 +7,7 @@ set -ex
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    yarn mocha $(find src -name '*.test.*')
+    yarn mocha $(find src/desktop/test -name '*.test.*')
     if [ "$CI" = "true" ]; then
       yarn report-coverage
     fi
