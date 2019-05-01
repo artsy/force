@@ -1,7 +1,7 @@
 import React from "react"
 import { mount } from "enzyme"
 import { AuthWrapper } from "../AuthWrapper"
-import { data as sd } from "sharify"
+import sharify, { data as sd } from "sharify"
 
 jest.mock("sharify")
 jest.mock("querystring", () => ({
@@ -30,6 +30,10 @@ describe("AuthWrapper", () => {
   beforeEach(() => {
     delete sd.IS_MOBILE
     delete sd.CURRENT_USER
+  })
+
+  afterEach(() => {
+    sharify.mockClear()
   })
 
   const getWrapper = () => {
