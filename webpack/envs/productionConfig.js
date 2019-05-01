@@ -1,7 +1,6 @@
 // @ts-check
 
 const path = require("path")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { getCSSManifest } = require("../utils/getCSSManifest")
@@ -28,19 +27,4 @@ exports.productionConfig = {
       seed: buildCSS ? getCSSManifest() : {},
     }),
   ],
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-        extractComments: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
-        },
-      }),
-    ],
-  },
 }
