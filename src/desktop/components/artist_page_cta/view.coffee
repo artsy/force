@@ -39,7 +39,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
 
   maybeShowOverlay: (e) =>
-    @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
+    @fullScreenOverlay(e) if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
 
   triggerLoginModal: (e) ->
     e.stopPropagation()
@@ -55,10 +55,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     qs.parse(location.search.replace(/^\?/, ''))
 
   fullScreenOverlay: (e) =>
+    contextModule = "Footer" if e.currentTarget.className?.includes("artist-page-cta")
     return if @$el.hasClass 'fullscreen'
     @$overlay.fadeIn 300
     @$banner.fadeOut 300
     fragment = qs.stringify @currentParams()
+    @trackImpression(e.type, contextModule)
     # This handles the redirect for the new onboarding flow
     @afterAuthPath += "?redirectTo=#{@artist.get('href')}"
     @afterAuthPath += "?#{fragment}" if fragment
@@ -91,7 +93,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$el.removeClass 'fullscreen'
     setTimeout (=> @reenableScroll()), 400
     @alreadyDismissed = true
-    analyticsHooks.trigger 'artist_page:cta:hidden'
+    analytics.track("Click", {
+      context_module: "artist page signup prompt",
+      type: "dismiss",
+      flow: "auth",
+      label: "dismiss auth modal",
+    })
 
   submit: (e) ->
     return unless @validateForm()
@@ -132,3 +139,14 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   initializeMailcheck: ->
     Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
+
+  trackImpression:(triggerType, contextModule) ->
+    console.log('artist:', @artist)
+    analytics.track("Auth Impression", {
+      modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
+      onboarding: true,
+      trigger: if triggerType == "scroll" then "trigger" else triggerType,
+      type: "signup",
+      intent: "signup",
+      context_module: contextModule
+    })
