@@ -11,7 +11,7 @@ block body
 
     if sd.ENABLE_NEW_NAVBAR
       header
-        != stitch.components.NavBar()
+        != stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
     else
       header#main-header
         nav.main-dropdown-menu.js-main-dropdown-menu
