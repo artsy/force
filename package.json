@@ -58,8 +58,7 @@
     "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz",
     "react-test-renderer": "16.8.2",
     "react-is": "^16.8.3",
-    "superagent": "3.8.3",
-    "flickity": "^2.2.0"
+    "superagent": "3.8.3"
   },
   "bundlesize": [
     {
@@ -177,7 +176,7 @@
     "express-request-id": "^1.4.0",
     "factor-bundle": "^2.5.0",
     "fastclick": "^1.0.6",
-    "flickity": "^2.2.0",
+    "flickity": "^2.0.5",
     "forever": "^0.15.3",
     "gemup": "^0.0.2",
     "geoformatter": "dzucconi/geo_formatter",
