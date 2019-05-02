@@ -6117,7 +6117,19 @@ flatiron@~0.4.2:
     optimist "0.6.0"
     prompt "0.2.14"
 
-flickity@^2.1.2, flickity@^2.2.0:
+flickity@^2.0.5:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.0.6.tgz#c623f0417b43cab833a03a5a1a6a23ef08a0a31c"
+  integrity sha1-xiPwQXtDyrgzoDpaGmoj7wigoxw=
+  dependencies:
+    desandro-matches-selector "^2.0.0"
+    ev-emitter "^1.0.2"
+    fizzy-ui-utils "^2.0.0"
+    get-size "^2.0.0"
+    tap-listener "^2.0.0"
+    unidragger "^2.1.0"
+
+flickity@^2.1.2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.2.0.tgz#9ac65006d9cc77d2035f7eff33d5d9a3d4a8092f"
   integrity sha512-K9trFruKtbi4F8nOo+pHjJK4P/Pqix2Udq3lHhUVXfxqmoxuwZHu3nEEiEb49NWpzBrVHHIcnnn8fhcUTkWpgA==
@@ -14162,6 +14174,13 @@ table@^4.0.3:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
+tap-listener@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tap-listener/-/tap-listener-2.0.0.tgz#d2e11d0d8e7c92b26a56ae4f35538a248b44ad63"
+  integrity sha1-0uEdDY58krJqVq5PNVOKJItErWM=
+  dependencies:
+    unipointer "^2.1.0"
+
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.3.tgz#a1fccc06b58db61fd7a45da2da44f5f3a3e67ba2"
@@ -14770,6 +14789,13 @@ unicode-property-aliases-ecmascript@^1.0.4:
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.0.4.tgz#5a533f31b4317ea76f17d807fa0d116546111dd0"
   integrity sha512-2WSLa6OdYd2ng8oqiGIWnJqyFArvhn+5vgx5GTxMbUYjCYKUcuKS62YLFF0R/BDGlB1yzXjQOLtPAfHsgirEpg==
 
+unidragger@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.2.0.tgz#b162f05b8d53b929acc5f5a6e35e09ef69261f30"
+  integrity sha1-sWLwW41TuSmsxfWm414J72kmHzA=
+  dependencies:
+    unipointer "^2.2.0"
+
 unidragger@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.3.0.tgz#ab9d9fd62106f3252d88fae5f3a99575e6d31d02"
@@ -14786,6 +14812,13 @@ union-value@^1.0.0:
     get-value "^2.0.6"
     is-extendable "^0.1.1"
     set-value "^0.4.3"
+
+unipointer@^2.1.0, unipointer@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.2.0.tgz#3f6cf997f7d7dc78f75385106a5527efc5d71b61"
+  integrity sha1-P2z5l/fX3Hj3U4UQalUn78XXG2E=
+  dependencies:
+    ev-emitter "^1.0.1"
 
 unipointer@^2.3.0:
   version "2.3.0"
