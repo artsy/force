@@ -45,8 +45,4 @@ const getConfig = () => {
 
 const config = getConfig()
 
-console.log(config)
-
-process.exit()
-
 module.exports = config
