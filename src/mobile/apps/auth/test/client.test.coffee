@@ -9,7 +9,9 @@ describe 'Reset password page client-side code', ->
   describe 'PasswordResetView', ->
     beforeEach (done) ->
       benv.setup =>
-        benv.expose { $: benv.require 'jquery' }
+        benv.expose
+          $: benv.require 'jquery'
+          jQuery: benv.require 'jquery'
         Backbone.$ = $
         sinon.stub Backbone, 'sync'
         benv.render resolve(__dirname, '../templates/reset_password.jade'), { sd: { AP: {} }, asset: (->) }, =>
@@ -56,6 +58,7 @@ describe 'Sign up (with email) client-side code', ->
     benv.setup =>
       benv.expose {
         $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
         analyticsHooks: { trigger: sinon.stub() }
       }
       Backbone.$ = $
@@ -98,7 +101,9 @@ describe 'Login view', ->
   beforeEach (done) ->
     global.location.search = ''
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/login.jade'), { sd: { AP: {} }, asset: (->) }, =>
@@ -131,6 +136,7 @@ describe 'Require gdpr checkbox', ->
     benv.setup =>
       benv.expose {
         $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
         analyticsHooks: { trigger: sinon.stub() }
       }
       Backbone.$ = $
