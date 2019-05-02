@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile.test
     command: yarn test
     extends:
-      file: common.yml
+      file: build.yml
       service: force
     environment:
       - CI=true
