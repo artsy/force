@@ -8,6 +8,9 @@
       #news-panel
         //- renders reaction newsPanel via magazine.coffee
 
+      #signup-modal
+        //- renders AuthWrapper via magazine.coffee
+
   if sd.CURRENT_PATH != '/articles' && section && section.get('featured_links')
     section.articles-featured-articles.main-layout-container
       h4= section.get('featured_links_header')

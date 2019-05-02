@@ -6,7 +6,6 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 { NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'
 Articles = require '../../../collections/articles.coffee'
-EditorialSignupView = require './editorial_signup.coffee'
 articleTemplate = -> require('../templates/articles_feed.jade') arguments...
 request = require 'superagent'
 { crop } = require '../../../components/resizer/index.coffee'
@@ -89,5 +88,3 @@ module.exports.init = ->
     ),
     document.getElementById('news-panel')
   )
-
-  new EditorialSignupView el: $('body')

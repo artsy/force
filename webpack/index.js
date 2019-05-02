@@ -32,7 +32,7 @@ const getConfig = () => {
 
     case isCI:
       console.log("[Force] CI=true")
-      return merge.smart(baseConfig, ciConfig)
+      return merge.smart(baseConfig, productionConfig, ciConfig)
 
     case isDevelopment:
       return merge.smart(baseConfig, developmentConfig)

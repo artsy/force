@@ -8,8 +8,32 @@ import { StandardArticle } from "@artsy/reaction/dist/Components/Publishing/Fixt
 
 const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)
-  return jade.compile(fs.readFileSync(filename), { filename })
+  return jade.compile(fs.readFileSync(filename), {
+    filename,
+  })
 }
+
+describe("Script tag", () => {
+  it("contains ad server script tag", () => {
+    const article = _.extend({}, StandardArticle, {
+      slug: "artsy-editorial-slug",
+      indexable: true,
+      description: "Artsy Editorial is an editorial channel.",
+      social_description: "Artsy Editorial is socially friendly.",
+      social_image: "http://kitten-social.com",
+    })
+    const html = render("meta")({
+      article,
+      crop: url => url,
+      sd: {
+        APP_URL: "https://artsy.net",
+        CURRENT_PATH: "/article/artsy-editorial-slug",
+      },
+    })
+
+    expect(html).toMatch('<script src="//htlbid.com/v2/artsy.min.js">')
+  })
+})
 
 describe("Meta template", () => {
   it("contains basic meta tags", () => {
