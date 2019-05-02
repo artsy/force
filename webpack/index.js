@@ -32,7 +32,7 @@ const getConfig = () => {
 
     case isCI:
       console.log("[Force] CI=true")
-      return merge.smart(baseConfig, ciConfig)
+      return merge.smart(baseConfig, productionConfig, ciConfig)
 
     case isDevelopment:
       return merge.smart(baseConfig, developmentConfig)
@@ -44,5 +44,9 @@ const getConfig = () => {
 }
 
 const config = getConfig()
+
+console.log(config)
+
+process.exit()
 
 module.exports = config
