@@ -139,7 +139,7 @@ module.exports = class ModalView extends Backbone.View
 
     @$el.
       attr('data-state', 'closed').
-      one($.support.transition.end, =>
+      one($.support.transition?.end, =>
         # Re-enable scrolling
         @scrollbar.reenable()
 

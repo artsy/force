@@ -1,10 +1,10 @@
 // @ts-check
 
 const path = require("path")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { getCSSManifest } = require("../utils/getCSSManifest")
+const TerserPlugin = require("terser-webpack-plugin")
 
 const {
   BUILD_SERVER,
@@ -15,6 +15,7 @@ const {
 const buildCSS = isProduction && !BUILD_SERVER
 
 exports.productionConfig = {
+  parallelism: 75,
   mode: NODE_ENV,
   devtool: "source-map",
   output: {
@@ -30,16 +31,10 @@ exports.productionConfig = {
   ],
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-        extractComments: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
-        },
+      new TerserPlugin({
+        cache: false,
+        parallel: false,
+        sourceMap: true, // Must be set to true if using source-maps in production
       }),
     ],
   },
