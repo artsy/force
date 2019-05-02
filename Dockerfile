@@ -1,21 +1,40 @@
-FROM node:10.13.0
+FROM node:10.13-alpine
 
-# The key bits here are making sure we install, libsecret-1-dev libglib2.0-dev
-RUN apt-get update -qq && apt-get install -y \
-  libsecret-1-dev libglib2.0-dev && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Install required libraries
+RUN apk --no-cache add bash curl git \
+  make gcc g++ python \
+  libsecret-dev glib-dev
 
+# Set up deploy user and working directory
+RUN adduser -D -g '' deploy
+RUN mkdir -p /app
+RUN chown deploy:deploy /app
+
+# Set up dumb-init
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 /usr/local/bin/dumb-init
+RUN chown deploy:deploy /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
+
+# Copy required libs and files to /app
 ADD . /app
+ADD package.json /app
+ADD yarn.lock /app
 WORKDIR /app
 
-RUN rm -f /usr/local/bin/yarn && \
-  curl -o- -L https://yarnpkg.com/install.sh | bash && \
-  chmod +x ~/.yarn/bin/yarn && \
-  ln -s ~/.yarn/bin/yarn /usr/local/bin/yarn
+# Set up node_modules
+RUN yarn cache clean && yarn install
 
-RUN yarn install
+# Copy over node_modules
+ADD --chown=deploy:deploy . /app
 
+# Compile assets
 RUN yarn assets
 RUN yarn build:server
 
-CMD yarn start
+# Switch to deploy user
+USER deploy
+ENV USER deploy
+ENV HOME /home/deploy
+
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+CMD ["yarn", "start"]
