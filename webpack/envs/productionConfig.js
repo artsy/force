@@ -29,8 +29,6 @@ exports.productionConfig = {
     }),
   ],
   optimization: {
-    optimization: {
-      minimize: false,
-    },
+    minimize: false,
   },
 }
