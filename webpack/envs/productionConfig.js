@@ -15,6 +15,7 @@ const {
 const buildCSS = isProduction && !BUILD_SERVER
 
 exports.productionConfig = {
+  parallelism: 75,
   mode: NODE_ENV,
   devtool: "source-map",
   output: {
@@ -32,11 +33,8 @@ exports.productionConfig = {
     minimizer: [
       new TerserPlugin({
         cache: false,
-        parallel: 2,
+        parallel: false,
         sourceMap: true, // Must be set to true if using source-maps in production
-        terserOptions: {
-          // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-        },
       }),
     ],
   },

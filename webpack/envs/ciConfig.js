@@ -37,5 +37,4 @@ export const ciConfig = {
   mode: NODE_ENV,
   devtool: false,
   plugins: [plugins.duplicatesReport],
-  parallelism: 75,
 }
