@@ -4,7 +4,6 @@ const path = require("path")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { getCSSManifest } = require("../utils/getCSSManifest")
-const TerserPlugin = require("terser-webpack-plugin")
 
 const {
   BUILD_SERVER,
@@ -30,12 +29,8 @@ exports.productionConfig = {
     }),
   ],
   optimization: {
-    minimizer: [
-      new TerserPlugin({
-        cache: false,
-        parallel: false,
-        sourceMap: true, // Must be set to true if using source-maps in production
-      }),
-    ],
+    optimization: {
+      minimize: false,
+    },
   },
 }
