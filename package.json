@@ -32,7 +32,7 @@
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
-    "webpack": "node --inspect-brk --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
+    "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
   "prettier": {
     "bracketSpacing": true,
