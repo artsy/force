@@ -60,7 +60,7 @@ jobs:
 
   push_staging_image: &push_image
     docker:
-      - image: artsy/hokusai:0.5
+      - image: artsy/hokusai:0.5.2
     steps:
       - add_ssh_keys
       - checkout
@@ -73,7 +73,7 @@ jobs:
 
   deploy_hokusai_staging:
     docker:
-      - image: artsy/hokusai:0.5
+      - image: artsy/hokusai:0.5.2
     steps:
       - add_ssh_keys
       - checkout
@@ -82,7 +82,7 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Configure
-          command: hokusai configure --kubectl-version 1.10.7 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
+          command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Update staging branch
           command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
@@ -92,7 +92,7 @@ jobs:
 
   deploy_hokusai_production:
     docker:
-      - image: artsy/hokusai:0.5
+      - image: artsy/hokusai:0.5.2
     steps:
       - add_ssh_keys
       - checkout
@@ -101,7 +101,7 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Configure
-          command: hokusai configure --kubectl-version 1.10.7 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
+          command: hokusai configure --kubectl-version 1.6.3 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
       - run:
           name: Deploy
           command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin

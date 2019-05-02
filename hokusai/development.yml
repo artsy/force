@@ -2,7 +2,7 @@ version: "2"
 services:
   force:
     extends:
-      file: build.yml
+      file: common.yml
       service: force
     environment:
       - NODE_ENV=development

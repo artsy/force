@@ -279,7 +279,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "@graphql-inspector/core": "^1.14.0",
-    "@sentry/cli": "^1.41.2",
+    "@sentry/cli": "^1.30.4",
     "@types/dd-trace": "^0.6.0",
     "@types/enzyme": "^3.1.6",
     "@types/express": "^4.11.0",
