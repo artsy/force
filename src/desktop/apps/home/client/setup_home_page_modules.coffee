@@ -61,10 +61,10 @@ module.exports = ->
     metaphysics(
       query: query
       variables:
-        key: "#{module.key}",
-        id: "#{module.params?.id}"
-        related_artist_id: "#{module.params?.related_artist_id}"
-        followed_artist_id: "#{module.params?.followed_artist_id}"
+        key: module.key,
+        id: module.params?.id
+        related_artist_id: module.params?.related_artist_id
+        followed_artist_id: module.params?.followed_artist_id
         timezone: moment.tz.guess()
       req: { user: user }
     ).then ({ home_page: { artwork_module } }) ->
