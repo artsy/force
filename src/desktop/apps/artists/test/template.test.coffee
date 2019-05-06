@@ -5,6 +5,7 @@ jade = require 'jade'
 fixture = require './fixtures/artists'
 { fabricate } = require 'antigravity'
 ArtistsByLetter = require '../collections/artists_by_letter'
+sd = require('sharify').data
 
 render = (template) ->
   filename = require.resolve "../templates/#{template}.jade"
@@ -16,12 +17,11 @@ describe 'Artists', ->
       data = _.extend fixture.data,
         letters: ArtistsByLetter::range
         asset: (->)
-        sd: {}
+        sd: sd
       @html = render('index') data
       @$ = $.load @html
 
     it 'renders the alphabetical nav', ->
-      @$('body').html().should.not.containEql 'undefined'
       @$('.alphabetical-index-range').text().should.equal 'abcdefghijklmnopqrstuvwxyz'
 
     it 'has a single <h1> that displays the name of the artists set', ->
@@ -60,7 +60,7 @@ describe 'Artists', ->
         letter: 'a', state: currentPage: 1, totalRecords: 1000
 
       template = render('letter')
-        sd:
+        sd: _.extend sd,
           MOBILE_URL: 'http://localhost:5000'
           APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/artists-starting-with-a'

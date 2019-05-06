@@ -20,10 +20,11 @@ FilterArtworks = require '../../../collections/filter_artworks.coffee'
 FeedItem = require '../../../components/feed/models/feed_item'
 cheerio = require 'cheerio'
 sinon = require 'sinon'
+sdData = require('sharify').data
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  sd =
+  sd = _.extend sdData,
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
     MOBILE_URL: 'http://localhost:5000'
@@ -38,7 +39,7 @@ describe 'Fair', ->
   describe 'index page', ->
 
     before (done) ->
-      sd =
+      sd = _.extend sdData,
         APP_URL: 'http://localhost:5000'
         MOBILE_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'

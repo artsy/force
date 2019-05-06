@@ -18,6 +18,7 @@ OrderedSets = require '../../../collections/ordered_sets'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 cheerio = require 'cheerio'
 sinon = require 'sinon'
+sdData = require('sharify').data
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -30,7 +31,7 @@ describe 'Fair Organizer', ->
   describe 'index page', ->
 
     before (done) ->
-      sd =
+      sd = _.extend sdData,
         MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
