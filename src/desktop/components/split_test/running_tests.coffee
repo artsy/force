@@ -25,16 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_insights:
-    key: 'artist_insights'
-    outcomes: [
-      'v1'
-      'v2'
-    ]
-    control_group: 'v1'
-    edge: 'v2'
-    weighting: 'equal'
-
   artist_collections_rail:
     key: 'artist_collections_rail'
     outcomes: [
