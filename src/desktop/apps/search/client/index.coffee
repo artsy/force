@@ -7,7 +7,6 @@ Gene = require '../../../models/gene.coffee'
 Artwork = require '../../../models/artwork.coffee'
 { crop } = require '../../../components/resizer/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-splitTest = require '../../../components/split_test/index.coffee'
 
 imageTemplate = -> require('../templates/image-template.jade') arguments...
 resolvedImage = -> require('../templates/image.jade') arguments...
@@ -28,8 +27,6 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
           @initializeGeneRow result
         else if result.display_model is 'Artwork'
           @refreshRenderArtworks result
-
-    splitTest('new_search_page').view()
 
   initializeArtistRow: (result) ->
     artist = new Artist(id: result.id)
