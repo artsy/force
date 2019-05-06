@@ -16,12 +16,10 @@ app.get(
     try {
       const user = req.user && req.user.toJSON()
       const {
-        ARTIST_INSIGHTS,
         ARTIST_COLLECTIONS_RAIL, // TODO: update after Artist Collections Rail a/b test
       } = res.locals.sd
 
       const context = buildServerAppContext(req, res, {
-        ARTIST_INSIGHTS,
         showCollectionsRail: ARTIST_COLLECTIONS_RAIL === "experiment", // TODO: update after Artist Collections Rail a/b test
       })
       const {
