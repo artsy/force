@@ -89,11 +89,8 @@ describe 'RegistrationForm', ->
         html = @view.$el.html()
         # FIXME: name error not rendered, bluebird hides failure
         # html.should.containEql 'Invalid name on card'
-        html.should.containEql 'Invalid city'
-        html.should.containEql 'Invalid state'
-        html.should.containEql 'Invalid zip'
-        html.should.containEql 'Invalid telephone'
-        html.should.containEql 'Please review the error(s) above and try again.'
+
+        html.should.containEql 'This field is required'
         @view.$submit.hasClass('is-loading').should.be.false()
         done()
 
@@ -106,7 +103,7 @@ describe 'RegistrationForm', ->
 
       @view.once "submitted", =>
         html = @view.$el.html()
-        html.should.containEql 'Please review the error(s) above and try again.'
+        html.should.containEql 'This field is required'
 
         Backbone.sync
           .yieldsTo 'success', {} # savePhoneNumber success
