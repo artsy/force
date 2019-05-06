@@ -88,6 +88,7 @@ sharify.data = _.extend(
     "PC_AUCTION_CHANNEL",
     "POSITRON_URL",
     "PREDICTION_URL",
+    "RECAPTCHA_KEY",
     "S3_BUCKET",
     "SAILTHRU_MASTER_LIST",
     "SECURE_IMAGES_URL",
