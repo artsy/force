@@ -38,7 +38,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       continue unless val.el && !val.validator(val.el)
       errors[key] = val.message || "Invalid #{val.label || key}"
       val.el.addClass 'has-error'
-      val.el.last().after "<div class='error'>#{errors[key]}</div>"
+      val.el.last().after "<div class='error'>This field is required</div>"
     _.isEmpty(errors)
 
   filterHtml: ->
