@@ -42,6 +42,7 @@ module.exports =
   PORT: 3003
   POSITRON_URL: 'http://writer.artsy.net'
   PREDICTION_URL: 'https://live.artsy.net'
+  RECAPTCHA_KEY: null,
   S3_BUCKET: null
   S3_KEY: null
   S3_SECRET: null
