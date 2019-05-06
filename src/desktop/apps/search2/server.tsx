@@ -7,19 +7,8 @@ import { StitchWrapper } from "desktop/components/react/stitch_components/Stitch
 
 export const app = express()
 
-const maybeShowNewPage = (_req, res, next) => {
-  const shouldShowNewPage = res.locals.sd.NEW_SEARCH_PAGE === "experiment"
-
-  if (shouldShowNewPage) {
-    return next()
-  } else {
-    return next("route")
-  }
-}
-
 app.get(
   "/search/:tab?",
-  maybeShowNewPage,
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.query.term) {
       if (req.query.q) {
