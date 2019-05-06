@@ -14,18 +14,7 @@ describe("Artist page", () => {
   after(teardown)
 
   it("renders an artist name and some biographical info", async () => {
-    const $ = await browser.page(
-      "/artist/pablo-picasso?split_test[artist_insights]=v1"
-    )
-    $.html().should.containEql("Pablo Picasso")
-    $.html().should.containEql("Spanish")
-    $.html().should.containEql("1881-1973")
-  })
-
-  it("renders an artist name and some biographical info with artist insights v2 enabled", async () => {
-    const $ = await browser.page(
-      "/artist/pablo-picasso?split_test[artist_insights]=v2"
-    )
+    const $ = await browser.page("/artist/pablo-picasso")
     $.html().should.containEql("Pablo Picasso")
     $.html().should.containEql("Spanish")
     $.html().should.containEql("1881-1973")
