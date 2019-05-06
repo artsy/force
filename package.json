@@ -100,10 +100,10 @@
   ],
   "dependencies": {
     "@airbnb/node-memwatch": "^1.0.2",
-    "@artsy/express-reloadable": "1.4.1",
-    "@artsy/palette": "4.11.4",
+    "@artsy/express-reloadable": "1.4.5",
+    "@artsy/palette": "4.11.5",
     "@artsy/passport": "1.1.1",
-    "@artsy/reaction": "16.7.0",
+    "@artsy/reaction": "16.8.4",
     "@artsy/stitch": "6.1.3",
     "@babel/core": "^7.0.0",
     "@babel/node": "^7.0.0",

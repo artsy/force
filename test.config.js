@@ -44,3 +44,4 @@ sd.AP = {
   twitterPath: "/twitter",
 }
 sd.APP_URL = "http://artsy.net"
+sd.RECAPTCHA_KEY = "RECAPTCHA_KEY"

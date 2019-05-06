@@ -1,4 +1,4 @@
-- defaultOptions = {stripev3: false, sailthru: true, marketo: true, quantcast: false}
+- defaultOptions = {grecaptcha: true, stripev3: false, sailthru: true, marketo: true, quantcast: false}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
@@ -179,3 +179,8 @@ if options.sailthru
 
 //- Prefetch links on hover. See: https://instant.page/
 include instant-page
+
+
+//- Google reCAPTCHA
+if options.grecaptcha
+  script(id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=#{sd.RECAPTCHA_KEY}")

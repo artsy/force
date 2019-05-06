@@ -154,8 +154,6 @@ module.exports = class HeaderView extends Backbone.View
     # This ensures we check for personalize in the pathname.
     if document.referrer.split('?')[0].match '^/personalize.*'
       new FlashMessage message: 'Thank you for personalizing your profile'
-    else if document.referrer.match '/artsy-primer-personalize/'
-      new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
 
   checkForAfterSignUpAction: ->
     afterSignUpAction = Cookies.get 'afterSignUpAction'
