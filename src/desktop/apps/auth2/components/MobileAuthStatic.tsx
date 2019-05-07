@@ -7,6 +7,7 @@ import {
   ModalType,
   ModalOptions,
 } from "reaction/Components/Authentication/Types"
+import { data as sd } from "sharify"
 
 interface Props {
   type: string
@@ -15,8 +16,18 @@ interface Props {
 }
 
 export class MobileAuthStatic extends React.Component<Props> {
+  onHandleSubmit = (values, formikBag) => {
+    const { type, options } = this.props
+    // @ts-ignore
+    grecaptcha.ready(() => {
+      // @ts-ignore
+      grecaptcha.execute(sd.RECAPTCHA_KEY, { action: type })
+      handleSubmit(type as ModalType, options, values, formikBag)
+    })
+  }
+
   render() {
-    const { options } = this.props
+    const { type, options } = this.props
     const submitUrls = {
       login: "/log_in",
       forgot: "/forgot_password",
@@ -30,13 +41,9 @@ export class MobileAuthStatic extends React.Component<Props> {
         <MobileContainer>
           <FormSwitcher
             {...this.props}
-            title={this.props.options.title}
-            type={this.props.type as ModalType}
-            handleSubmit={handleSubmit.bind(
-              this,
-              this.props.type,
-              this.props.options
-            )}
+            title={options.title}
+            type={type as ModalType}
+            handleSubmit={this.onHandleSubmit}
             onBackButtonClicked={() => {
               if (typeof window !== "undefined") {
                 window.location.href = options.redirectTo || "/"

@@ -17,8 +17,21 @@ interface Props {
 }
 
 export class AuthStatic extends React.Component<Props> {
+  onHandleSubmit = (values, formikBag) => {
+    const { type, options } = this.props
+    // @ts-ignore
+    grecaptcha.ready(() => {
+      // @ts-ignore
+      grecaptcha.execute(sd.RECAPTCHA_KEY, { action: type })
+      handleSubmit(type as ModalType, options, values, formikBag)
+    })
+  }
+
   render() {
-    const { type, meta: { title } } = this.props
+    const {
+      type,
+      meta: { title },
+    } = this.props
     return (
       <Wrapper>
         <AuthFormContainer>
@@ -27,11 +40,7 @@ export class AuthStatic extends React.Component<Props> {
             {...this.props}
             type={type as ModalType}
             isStatic
-            handleSubmit={handleSubmit.bind(
-              this,
-              this.props.type,
-              this.props.options
-            )}
+            handleSubmit={this.onHandleSubmit}
             submitUrls={{
               login: "/log_in",
               forgot: "/forgot_password",
