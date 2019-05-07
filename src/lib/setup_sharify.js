@@ -25,6 +25,7 @@ sharify.data = _.extend(
     "APPLY_URL",
     "APP_URL",
     "ARTSY_EDITORIAL_CHANNEL",
+    "ARTIST_COLLECTIONS_RAIL_IDS",
     "AUTO_GRAVITY_LOGIN",
     "BIDDER_H1_COPY",
     "BIDDER_H2_COPY",
