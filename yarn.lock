@@ -15,10 +15,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.4.tgz#933c66db24e70186c20e83017af39794a920ef0e"
   integrity sha512-3LfmVWQdTQLjorlNv02y+qdD3h3RS57M46P/PBlG+nHjzUFtNk2B9NAKPurTzDubjlPYx1FUTH+EPm3ZaoTipg==
 
-"@artsy/express-reloadable@1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.4.5.tgz#7ef941ed2484a9067ace483ab344812cd47be067"
-  integrity sha512-J0ysrVDCnt7tU7cynS0DpkEvmyp9ieBOufRlhRXMPsnrtuaUZsgeiKIP1LLmGGhJGeBU+nME5AxgRrXLSn/0DQ==
+"@artsy/express-reloadable@1.4.6":
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.4.6.tgz#2f262c992fffdae227bdaab717e598b812bddb8a"
+  integrity sha512-vgZ/rPranjBmdpxkNDGsqiEG9gWsxgVgnFdVDEp/Is/ZtaLULNwjemXW31/FZZiMUcEu0eTKts94YpVyEaXjeQ==
   dependencies:
     chalk "^2.3.1"
     chokidar "^3.0.0"
@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.8.4":
-  version "16.8.4"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.8.4.tgz#ecdb391ac32e78898094c78fffebf55401d823f2"
-  integrity sha512-ulSFz0+LiHG74MJGzxUTBz83p8RkrlQG70eNcsMk5LqzobjI3TKEDHI1cfUwF2N62UnByxZSLVOJY5axOh9Mpw==
+"@artsy/reaction@16.8.11":
+  version "16.8.11"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.8.11.tgz#92d4e68a5cccfecdb85bdadf2e3084da48df8b53"
+  integrity sha512-qayVNS5lLDozcLzyuiq4hbeYIGhXvFJenkjvqw9I8lz0h8HLi2/zPAzUi/soPZyM0R6WY95G+RFXtaOqNRCbvA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
