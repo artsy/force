@@ -87,7 +87,6 @@ describe 'RegistrationForm', ->
 
       @view.once 'submitted', =>
         html = @view.$el.html()
-        # FIXME: name error not rendered, bluebird hides failure
         # html.should.containEql 'Invalid name on card'
 
         html.should.containEql 'This field is required'
