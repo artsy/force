@@ -3,7 +3,7 @@ import React from "react"
 import { data as sd } from "sharify"
 
 import { handleSubmit, setCookies } from "../helpers"
-import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
+import { ModalManager } from "@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager"
 import {
   ModalOptions,
   ModalType,
@@ -86,6 +86,7 @@ export class ModalContainer extends React.Component<any> {
         onModalClose={() => {
           mediator.trigger("modal:closed")
         }}
+        showRecaptchaDisclaimer={true}
       />
     )
   }

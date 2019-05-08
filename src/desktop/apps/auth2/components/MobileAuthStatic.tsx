@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Colors from "reaction/Assets/Colors"
-import { FormSwitcher } from "reaction/Components/Authentication/FormSwitcher"
+import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "../helpers"
 import {
   ModalType,
@@ -50,6 +50,7 @@ export class MobileAuthStatic extends React.Component<Props> {
               }
             }}
             submitUrls={submitUrls}
+            showRecaptchaDisclaimer={true}
             isMobile
             isStatic
           />

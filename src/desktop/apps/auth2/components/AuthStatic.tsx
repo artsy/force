@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { FormSwitcher } from "reaction/Components/Authentication/FormSwitcher"
+import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
 import {
   ModalType,
   ModalOptions,
@@ -48,6 +48,7 @@ export class AuthStatic extends React.Component<Props> {
               facebook: "/users/auth/facebook",
               twitter: "/users/auth/twitter",
             }}
+            showRecaptchaDisclaimer={true}
           />
         </AuthFormContainer>
       </Wrapper>
