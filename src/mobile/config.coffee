@@ -29,7 +29,7 @@ module.exports =
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
   GOOGLE_ANALYTICS_ID: 'UA-12450662-6'
   GOOGLE_MAPS_API_KEY: null
-  HASHTAG_LAB_ADS_ENABLED: ['ashleyreneejelks@gmail.com']
+  HASHTAG_LAB_ADS_ALLOWLIST: null
   IMAGE_PROXY: 'GEMINI'
   MAILCHIMP_AUCTION_LIST_ID: 'b7b9959ee0'
   MAILCHIMP_KEY: null
