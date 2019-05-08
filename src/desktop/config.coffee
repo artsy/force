@@ -13,6 +13,7 @@ module.exports =
   APPLICATION_NAME: 'force-staging'
   APPLY_URL: 'http://apply.artsy.net'
   APP_URL: 'http://localhost:3004'
+  ARTIST_COLLECTIONS_RAIL_IDS: null
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   ARTSY_ID: null
   ARTSY_SECRET: null
