@@ -1,13 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import Colors from "reaction/Assets/Colors"
 import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "../helpers"
 import {
   ModalType,
   ModalOptions,
 } from "reaction/Components/Authentication/Types"
-import { data as sd } from "sharify"
+import { Box, color, Flex } from "@artsy/palette"
 
 interface Props {
   type: string
@@ -16,16 +15,6 @@ interface Props {
 }
 
 export class MobileAuthStatic extends React.Component<Props> {
-  onHandleSubmit = (values, formikBag) => {
-    const { type, options } = this.props
-    // @ts-ignore
-    grecaptcha.ready(() => {
-      // @ts-ignore
-      grecaptcha.execute(sd.RECAPTCHA_KEY, { action: type })
-      handleSubmit(type as ModalType, options, values, formikBag)
-    })
-  }
-
   render() {
     const { type, options } = this.props
     const submitUrls = {
@@ -37,13 +26,13 @@ export class MobileAuthStatic extends React.Component<Props> {
     }
 
     return (
-      <AuthFormContainer>
+      <Box maxWidth={400} mx="auto">
         <MobileContainer>
           <FormSwitcher
             {...this.props}
             title={options.title}
             type={type as ModalType}
-            handleSubmit={this.onHandleSubmit}
+            handleSubmit={handleSubmit.bind(this, type, options)}
             onBackButtonClicked={() => {
               if (typeof window !== "undefined") {
                 window.location.href = options.redirectTo || "/"
@@ -55,19 +44,13 @@ export class MobileAuthStatic extends React.Component<Props> {
             isStatic
           />
         </MobileContainer>
-      </AuthFormContainer>
+      </Box>
     )
   }
 }
 
-const AuthFormContainer = styled.div`
-  max-width: 400px;
-  margin: auto;
-`
-
-const MobileContainer = styled.div`
-  border: 1px solid ${Colors.grayRegular};
-  display: flex;
+const MobileContainer = styled(Flex)`
+  border: 1px solid ${color("black10")};
   width: 100%;
   height: 100vh;
   margin: 0 auto;

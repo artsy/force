@@ -19,15 +19,6 @@ export class ModalContainer extends React.Component<any> {
     mediator.on("auth:error", this.onAuthError)
   }
 
-  onHandleSubmit = (type, options, values, formikBag) => {
-    // @ts-ignore
-    grecaptcha.ready(() => {
-      // @ts-ignore
-      grecaptcha.execute(sd.RECAPTCHA_KEY, { action: type })
-      handleSubmit(type as ModalType, options, values, formikBag)
-    })
-  }
-
   onOpenAuth = (options: ModalOptions) => {
     options.destination = options.destination || location.href
     if (options && (options.mode as any) === "register") {
@@ -81,7 +72,7 @@ export class ModalContainer extends React.Component<any> {
           twitter: sd.AP.twitterPath,
         }}
         csrf={sd.CSRF_TOKEN}
-        handleSubmit={this.onHandleSubmit}
+        handleSubmit={handleSubmit}
         onSocialAuthEvent={this.onSocialAuthEvent}
         onModalClose={() => {
           mediator.trigger("modal:closed")
