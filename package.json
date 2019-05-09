@@ -176,7 +176,7 @@
     "express-request-id": "1.4.0",
     "factor-bundle": "2.5.0",
     "fastclick": "1.0.6",
-    "flickity": "2.0.6",
+    "flickity": "2.1.2",
     "forever": "0.15.3",
     "gemup": "0.0.2",
     "geoformatter": "dzucconi/geo_formatter",
