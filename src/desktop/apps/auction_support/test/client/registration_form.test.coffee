@@ -87,8 +87,6 @@ describe 'RegistrationForm', ->
 
       @view.once 'submitted', =>
         html = @view.$el.html()
-        # html.should.containEql 'Invalid name on card'
-
         html.should.containEql 'This field is required'
         @view.$submit.hasClass('is-loading').should.be.false()
         done()
