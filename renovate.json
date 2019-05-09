@@ -1,14 +1,8 @@
 {
   "extends": [
-    "@artsy"
+    "@artsy:app"
   ],
   "assignees": [
-    "zephraph",
-    "damassi",
-    "sweir27"
-  ],
-  "automerge": true,
-  "major": {
-    "automerge": false
-  }
+    "zephraph"
+  ]
 }
