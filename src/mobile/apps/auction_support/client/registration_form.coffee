@@ -126,7 +126,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     analyticsHooks.trigger 'registration:submitted-address'
 
     @loadingLock @$submit, =>
-      (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
+      (if @validateForm() then Q() else Q.reject('')).then =>
         Q.all [@savePhoneNumber(), @tokenizeCard()]
       .catch (error) =>
         @showError error

@@ -87,12 +87,7 @@ describe 'RegistrationForm', ->
 
       @view.on "submitted", =>
         html = @view.$el.html()
-        html.should.containEql 'Invalid name on card'
-        html.should.containEql 'Invalid city'
-        html.should.containEql 'Invalid state'
-        html.should.containEql 'Invalid zip'
-        html.should.containEql 'Invalid telephone'
-        html.should.containEql 'Please review the error(s) above and try again.'
+        html.should.containEql 'This field is required'
         done()
 
     it 'lets the user resubmit a corrected form', ->
@@ -103,7 +98,7 @@ describe 'RegistrationForm', ->
       @view.$submit.click()
       @view.once "submitted", =>
         html = @view.$el.html()
-        html.should.containEql 'Please review the error(s) above and try again.'
+        html.should.containEql 'This field is required'
 
         # Now submit a good one
         Backbone.sync

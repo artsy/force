@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.9.2":
-  version "16.9.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.9.2.tgz#f926d5c23c81a661981233de09a11ff7ade562aa"
-  integrity sha512-N02penVysa24E9SVrxsvdiLZdjHnkJSxDkT1SaXbmm4C+2dw3oDmdbo7ibOGKmqNbUefcy7fnMrsSpqQlGnylQ==
+"@artsy/reaction@16.9.4":
+  version "16.9.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.9.4.tgz#39aa7a4dd0a331de24d8f49533748dddf7d0a101"
+  integrity sha512-QbXbRJspDjSl6s3s9mjltkUMNdhSEwTdyulnl89EqBiizEoBPu8SSL5tRDOrW+5ounerP6WFNcsj4Uq7LCMZ3w==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -6160,17 +6160,17 @@ flatiron@~0.4.2:
     optimist "0.6.0"
     prompt "0.2.14"
 
-flickity@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.0.6.tgz#c623f0417b43cab833a03a5a1a6a23ef08a0a31c"
-  integrity sha1-xiPwQXtDyrgzoDpaGmoj7wigoxw=
+flickity@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.1.2.tgz#f1be68a75c8d8d8d6df68fb2a49f358268279bd0"
+  integrity sha512-6IBJjkfCQ8yG6pah9rA9k4NoA9txuIf9+b3V67y70FdZK0icponlJEqseqLKuram0odKrv9ryjrBHQHgMkFfZA==
   dependencies:
     desandro-matches-selector "^2.0.0"
     ev-emitter "^1.0.2"
     fizzy-ui-utils "^2.0.0"
     get-size "^2.0.0"
     tap-listener "^2.0.0"
-    unidragger "^2.1.0"
+    unidragger "^2.3.0"
 
 flickity@^2.1.2:
   version "2.2.0"
@@ -14875,13 +14875,6 @@ unicode-property-aliases-ecmascript@^1.0.4:
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.0.4.tgz#5a533f31b4317ea76f17d807fa0d116546111dd0"
   integrity sha512-2WSLa6OdYd2ng8oqiGIWnJqyFArvhn+5vgx5GTxMbUYjCYKUcuKS62YLFF0R/BDGlB1yzXjQOLtPAfHsgirEpg==
 
-unidragger@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.2.0.tgz#b162f05b8d53b929acc5f5a6e35e09ef69261f30"
-  integrity sha1-sWLwW41TuSmsxfWm414J72kmHzA=
-  dependencies:
-    unipointer "^2.2.0"
-
 unidragger@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.3.0.tgz#ab9d9fd62106f3252d88fae5f3a99575e6d31d02"
@@ -14899,14 +14892,7 @@ union-value@^1.0.0:
     is-extendable "^0.1.1"
     set-value "^0.4.3"
 
-unipointer@^2.1.0, unipointer@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.2.0.tgz#3f6cf997f7d7dc78f75385106a5527efc5d71b61"
-  integrity sha1-P2z5l/fX3Hj3U4UQalUn78XXG2E=
-  dependencies:
-    ev-emitter "^1.0.1"
-
-unipointer@^2.3.0:
+unipointer@^2.1.0, unipointer@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.3.0.tgz#ba0dc462ce31c2a88e80810e19c3bae0ce47ed9f"
   integrity sha512-m85sAoELCZhogI1owtJV3Dva7GxkHk2lI7A0otw3o0OwCuC/Q9gi7ehddigEYIAYbhkqNdri+dU1QQkrcBvirQ==
