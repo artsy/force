@@ -23,7 +23,7 @@ block body
 
     .responsive-layout-container
       //- Featured
-      if pinnedArticles.length + parselyArticles.length > 0
+      if (pinnedArticles && parselyArticles) && (pinnedArticles.length + parselyArticles.length > 0)
         .team-channel-featured
           .team-channel-featured__header Featured
           .mgr-cells.js-mgr-cells.team-channel-featured__articles
