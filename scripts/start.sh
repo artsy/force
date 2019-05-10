@@ -1,6 +1,10 @@
 #! /bin/bash
 
-set -ex
+set -e
+
+if [ "$NODE_ENV" == "production" ]; then
+  set -x
+fi
 
 function version {
   printf "%03d%03d%03d" $(echo "$1" | tr '.' ' ')
@@ -17,7 +21,16 @@ if [ "$NODE_ENV" != "production" ]; then
      [ ! -z "$TERM_PROGRAM_VERSION" ] && \
      [ $(version $TERM_PROGRAM_VERSION) -ge $(version "1.22.2") ]
   then
-    OPT+=(--inspect-brk)
+    # Sometimes we have force and metaphysics running at the same time.
+    # in that case we don't want
+    if (node --inspect-brk -e 'console.log()') &> /dev/null; then
+      OPT+=(--inspect-brk)
+    else
+      echo
+      echo "WARNING! You are already debugging another node process!"
+      echo
+      echo "    force will start without --inspect-brk unless you kill the other process"
+    fi
   fi
 
   exec node "${OPT[@]}" ./src
