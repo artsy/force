@@ -22,14 +22,15 @@ if [ "$NODE_ENV" != "production" ]; then
      [ $(version $TERM_PROGRAM_VERSION) -ge $(version "1.22.2") ]
   then
     # Sometimes we have force and metaphysics running at the same time.
-    # in that case we don't want
-    if (node --inspect-brk -e 'console.log()') &> /dev/null; then
-      OPT+=(--inspect-brk)
-    else
+    # in that case we don't want to fail to launch, but simply show a warning
+    # that the debugging won't work.
+    if (nc -z 127.0.0.1 9229) &> /dev/null; then
       echo
       echo "WARNING! You are already debugging another node process!"
       echo
       echo "    force will start without --inspect-brk unless you kill the other process"
+    else
+      OPT+=(--inspect-brk)
     fi
   fi
 
