@@ -13,6 +13,7 @@ module.exports =
   APPLICATION_NAME: 'force-staging'
   APPLY_URL: 'http://apply.artsy.net'
   APP_URL: 'http://localhost:3004'
+  ARTIST_COLLECTIONS_RAIL_IDS: null
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   ARTSY_ID: null
   ARTSY_SECRET: null
@@ -64,6 +65,8 @@ module.exports =
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
+  HASHTAG_LAB_ADS_ALLOWLIST: ''
+  HASHTAG_LAB_ADS_ENABLED: false
   INTERCOM_SELLER_APP_ID: null
   INTERCOM_SELLER_ENABLED: false
   INTERCOM_BUYER_APP_ID: null
