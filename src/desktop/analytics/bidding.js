@@ -117,13 +117,23 @@ analyticsHooks.on("error", function(message) {
 
 // Confirmed bid on bid page
 analyticsHooks.on("confirm:bid:form:success", function(data) {
+  const price = data.max_bid_amount_cents
+    ? data.max_bid_amount_cents / 100
+    : null
   analytics.track("Confirmed bid on bid page", {
     auction_slug: sd.SALE.id,
     user_id: USER_ID,
     artwork_slug: sd.SALE_ARTWORK.artwork.id,
-    product_id: sd.SALE_ARTWORK.artwork._id,
+    products: [
+      {
+        product_id: sd.SALE_ARTWORK.artwork._id,
+        quantity: 1,
+        price: price,
+      },
+    ],
     bidder_position_id: data.bidder_position_id,
     bidder_id: data.bidder_id,
+    order_id: data.bidder_id,
   })
 })
 
