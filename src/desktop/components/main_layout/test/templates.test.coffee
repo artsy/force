@@ -3,6 +3,7 @@ fs = require 'fs'
 Profile = require '../../../models/profile'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
+sd = require('sharify').data
 
 render = (template) ->
   filename = resolve __dirname, template
@@ -42,6 +43,18 @@ describe 'Main layout template', ->
       sd: CURRENT_USER: {}
       asset: ((p) -> p)
     ).should.containEql '<html'
+
+  it 'Does not reCAPTCHA script if RECAPTCHA_KEY is missing', ->
+    render('../templates/index.jade')(
+      sd: {},
+      asset: ((p) -> p)
+    ).should.not.containEql 'id="google-recaptcha"'
+
+  it 'loads reCAPTCHA script if RECAPTCHA_KEY is present', ->
+    render('../templates/index.jade')(
+      sd: sd,
+      asset: ((p) -> p)
+    ).should.containEql 'id="google-recaptcha"'
 
 describe 'Head template', ->
   describe 'IS_RESPONSIVE', ->
