@@ -177,7 +177,13 @@
   bindOnce("inquiry:sync", function(context) {
     analytics.track("Sent artwork inquiry", {
       artwork_id: context.artwork.get("_id"),
-      product_id: context.artwork.get("_id"),
+      products: [
+        {
+          product_id: context.artwork.get("_id"),
+          quantity: 1,
+          price: context.artwork.get("price") || 6000,
+        },
+      ],
       artwork_slug: context.artwork.id,
       inquiry_id: context.inquiry.id,
     })

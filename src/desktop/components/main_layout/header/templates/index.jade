@@ -1,8 +1,12 @@
 include ../../../util/activator
 
-header#main-layout-header( class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '' )
-  if sd.APPLICATION_NAME === "force-staging"
-    #staging-banner
-      != stitch.components.StagingBanner()
-  include ./small_screen_header.jade
-  include ./large_screen_header.jade
+if sd.ENABLE_NEW_NAVBAR
+  header
+    != stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
+else
+  header#main-layout-header( class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '' )
+    if sd.APPLICATION_NAME === "force-staging"
+      #staging-banner
+        != stitch.components.StagingBanner()
+    include ./small_screen_header.jade
+    include ./large_screen_header.jade
