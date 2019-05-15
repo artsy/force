@@ -1,12 +1,12 @@
 import React from "react"
-import styled from "styled-components"
-import { FormSwitcher } from "reaction/Components/Authentication/FormSwitcher"
+import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
 import {
   ModalType,
   ModalOptions,
 } from "reaction/Components/Authentication/Types"
 import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
 import { handleSubmit } from "../helpers"
+import { Box, Flex } from "@artsy/palette"
 
 interface Props {
   type: string
@@ -18,20 +18,20 @@ interface Props {
 
 export class AuthStatic extends React.Component<Props> {
   render() {
-    const { type, meta: { title } } = this.props
+    const {
+      type,
+      meta: { title },
+      options,
+    } = this.props
     return (
-      <Wrapper>
-        <AuthFormContainer>
+      <Flex alignItems="center" justifyContent="center" height="90vh">
+        <Box py={2} maxWidth={400}>
           <ModalHeader title={title} hasLogo />
           <FormSwitcher
             {...this.props}
             type={type as ModalType}
             isStatic
-            handleSubmit={handleSubmit.bind(
-              this,
-              this.props.type,
-              this.props.options
-            )}
+            handleSubmit={handleSubmit.bind(this, type, options)}
             submitUrls={{
               login: "/log_in",
               forgot: "/forgot_password",
@@ -39,21 +39,10 @@ export class AuthStatic extends React.Component<Props> {
               facebook: "/users/auth/facebook",
               twitter: "/users/auth/twitter",
             }}
+            showRecaptchaDisclaimer={true}
           />
-        </AuthFormContainer>
-      </Wrapper>
+        </Box>
+      </Flex>
     )
   }
 }
-
-const AuthFormContainer = styled.div`
-  max-width: 400px;
-  padding: 20px 0;
-`
-
-const Wrapper = styled.div`
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
