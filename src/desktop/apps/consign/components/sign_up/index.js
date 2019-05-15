@@ -8,6 +8,8 @@ import { renderTextInput } from "../text_input"
 import { renderCheckboxInput } from "../checkbox_input"
 import { signUp, updateAuthFormStateAndClearError } from "../../client/actions"
 import { GDPRMessage } from "desktop/components/react/gdpr/GDPRCheckbox"
+import { CaptchaTerms } from "@artsy/reaction/dist/Components/Authentication/commonElements"
+import { Theme } from "@artsy/palette"
 
 function validate(values) {
   const { accepted_terms_of_service, email, name, password } = values
@@ -34,73 +36,77 @@ function SignUp(props) {
   const b = block("consignments-submission-sign-up")
 
   return (
-    <div className={b()}>
-      <div className={b("title")}>Create an Account</div>
-      <div className={b("subtitle")}>
-        Already have an account?{" "}
-        <span
-          className={b("clickable")}
-          onClick={() => updateAuthFormStateAndClearErrorAction("logIn")}
-        >
-          Log in
-        </span>.
+    <Theme>
+      <div className={b()}>
+        <div className={b("title")}>Create an Account</div>
+        <div className={b("subtitle")}>
+          Already have an account?{" "}
+          <span
+            className={b("clickable")}
+            onClick={() => updateAuthFormStateAndClearErrorAction("logIn")}
+          >
+            Log in
+          </span>
+          .
+        </div>
+        <form className={b("form")} onSubmit={handleSubmit(signUpAction)}>
+          <div className={b("row")}>
+            <div className={b("row-item")}>
+              <Field
+                name="name"
+                component={renderTextInput}
+                item={"name"}
+                label={"Full Name"}
+                autofocus
+              />
+            </div>
+          </div>
+          <div className={b("row")}>
+            <div className={b("row-item")}>
+              <Field
+                name="email"
+                component={renderTextInput}
+                item={"email"}
+                label={"Email"}
+                type={"email"}
+              />
+            </div>
+          </div>
+          <div className={b("row")}>
+            <div className={b("row-item")}>
+              <Field
+                name="password"
+                component={renderTextInput}
+                item={"password"}
+                label={"Password"}
+                type={"password"}
+              />
+            </div>
+          </div>
+          <div className={b("row")}>
+            <div className={b("row-item")}>
+              <Field
+                name="accepted_terms_of_service"
+                component={renderCheckboxInput}
+                item={"accepted_terms_of_service"}
+                label={<GDPRMessage />}
+                value={false}
+              />
+            </div>
+          </div>
+          <button
+            className={b
+              .builder()("sign-up-button")
+              .mix("avant-garde-button-black")()}
+            type="submit"
+          >
+            {isLoading ? <div className="loading-spinner-white" /> : "Submit"}
+          </button>
+          {error && <div className={b("error")}>{error}</div>}
+        </form>
+        <CaptchaTerms />
       </div>
-      <form className={b("form")} onSubmit={handleSubmit(signUpAction)}>
-        <div className={b("row")}>
-          <div className={b("row-item")}>
-            <Field
-              name="name"
-              component={renderTextInput}
-              item={"name"}
-              label={"Full Name"}
-              autofocus
-            />
-          </div>
-        </div>
-        <div className={b("row")}>
-          <div className={b("row-item")}>
-            <Field
-              name="email"
-              component={renderTextInput}
-              item={"email"}
-              label={"Email"}
-              type={"email"}
-            />
-          </div>
-        </div>
-        <div className={b("row")}>
-          <div className={b("row-item")}>
-            <Field
-              name="password"
-              component={renderTextInput}
-              item={"password"}
-              label={"Password"}
-              type={"password"}
-            />
-          </div>
-        </div>
-        <div className={b("row")}>
-          <div className={b("row-item")}>
-            <Field
-              name="accepted_terms_of_service"
-              component={renderCheckboxInput}
-              item={"accepted_terms_of_service"}
-              label={<GDPRMessage />}
-              value={false}
-            />
-          </div>
-        </div>
-        <button
-          className={b
-            .builder()("sign-up-button")
-            .mix("avant-garde-button-black")()}
-          type="submit"
-        >
-          {isLoading ? <div className="loading-spinner-white" /> : "Submit"}
-        </button>
-        {error && <div className={b("error")}>{error}</div>}
-      </form>
-    </div>
+    </Theme>
   )
 }
 
@@ -129,5 +135,8 @@ export default compose(
     form: "signUp", // a unique identifier for this form
     validate,
   }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(SignUp)
