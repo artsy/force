@@ -35,6 +35,7 @@ module.exports =
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_INSTANT_PAGE: false
   ENABLE_MEMORY_PROFILING: false
+  ENABLE_NEW_NAVBAR: false,
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
@@ -126,7 +127,7 @@ module.exports =
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   SHOW_ANALYTICS_CALLS: false
   STRIPE_PUBLISHABLE_KEY: null
-  TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/buying-with-artsy$'
+  TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
   TRACK_PAGELOAD_PATHS: null
   TWILIO_ACCOUNT_SID: null
