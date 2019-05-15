@@ -9,6 +9,7 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
 FormErrorHelpers = require('../auth_modal/helpers')
+{ repcaptcha } = require "@artsy/reaction/dist/Utils/repcaptcha"
 
 module.exports = class ArtistPageCTAView extends Backbone.View
   _.extend @prototype, Form
@@ -18,8 +19,8 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   events:
     'click': 'fullScreenOverlay'
-    'click .gdpr-signup__form button': 'submit'
-    'submit form': 'submit'
+    'click .gdpr-signup__form button': 'onSubmit'
+    'submit form': 'onSubmit'
     'click .auth-toggle': 'triggerLoginModal'
     'keydown': 'keyAction'
     'click #signup-fb': 'fbSignup'
@@ -33,7 +34,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
     @signupIntent = 'Artist CTA Banner'
-
+    @afterAuthPath = window.location
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
@@ -100,21 +101,17 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       label: "dismiss auth modal",
     })
 
-  submit: (e) ->
-    return unless @validateForm()
-    return if @formIsSubmitting()
-
-    e.preventDefault()
-
-    @$('button').attr 'data-state', 'loading'
-
+  submit: (recaptcha_token) =>
     formData = @serializeForm()
     data = Object.assign {},
       formData,
       @gdprData(formData),
       signupIntent: @signupIntent,
       signupReferer: location.href
+      # TODO: uncomment when @artsy/passport is updated
+      # recaptcha_token: recaptcha_token
     @user.set data
+
     @user.signup
       success: @onRegisterSuccess
       error: (model, response, options) =>
@@ -124,6 +121,15 @@ module.exports = class ArtistPageCTAView extends Backbone.View
         @$('.auth-errors').text message
         mediator.trigger 'auth:error', message
       context: 'artist_page_cta'
+
+  onSubmit: (e) ->
+    return unless @validateForm()
+    return if @formIsSubmitting()
+    e.preventDefault()
+    @$('button').attr 'data-state', 'loading'
+    repcaptcha("signup_submit", (token) =>
+      @submit(token)
+    )
 
   onRegisterSuccess: (model, response, options) =>
     window.location = @afterAuthPath
@@ -141,7 +147,6 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   trackImpression:(triggerType, contextModule) ->
-    console.log('artist:', @artist)
     analytics.track("Auth Impression", {
       modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
       onboarding: true,
