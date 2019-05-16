@@ -80,7 +80,7 @@ describe 'RegistrationForm', ->
       @acceptTerms()
       @submitValidForm()
 
-    xit 'validates the form and displays errors', (done) ->
+    it 'validates the form and displays errors', (done) ->
       @view.$submit.length.should.be.ok()
       @acceptTerms()
       @view.$submit.click()
@@ -90,7 +90,7 @@ describe 'RegistrationForm', ->
         html.should.containEql 'This field is required'
         done()
 
-    it 'lets the user resubmit a corrected form', ->
+    it 'lets the user resubmit a corrected form', (done) ->
       @acceptTerms()
 
       # Submit a bad form
@@ -122,8 +122,9 @@ describe 'RegistrationForm', ->
           # Creates the bidder
           Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
           Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+          done()
 
-    it 'submits the form correctly', ->
+    it 'submits the form correctly', (done) ->
       # Successfully save phone number
       Backbone.sync.onFirstCall().yieldsTo('success')
       # Successfully save credit card
@@ -144,6 +145,7 @@ describe 'RegistrationForm', ->
         # Creates the bidder
         Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
         Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+        done()
 
     it 'does not submit the form if Conditions of Sale are not accepted', ->
       spy = sinon.spy(@submitStub)
