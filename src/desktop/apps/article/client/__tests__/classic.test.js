@@ -46,14 +46,6 @@ describe("Classic Article", () => {
     ArticleView.args[0][0].article.get("title").should.equal("Foo")
   })
 
-  it("initializes GalleryInsightsView", () => {
-    const GalleryInsightsView = sinon.stub()
-    rewire.__set__("ArticleView", sinon.stub())
-    rewire.__set__("GalleryInsightsView", GalleryInsightsView)
-    init()
-    GalleryInsightsView.callCount.should.equal(1)
-  })
-
   it("initializes TeamChannelNavView", () => {
     rewire.__set__("ArticleView", sinon.stub())
     rewire.__set__("sd", {

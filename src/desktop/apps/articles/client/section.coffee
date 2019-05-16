@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Articles = require '../../../collections/articles.coffee'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
-GalleryInsightsView = require '../../../components/email/client/gallery_insights.coffee'
 sd = require('sharify').data
 
 module.exports = class SectionView extends Backbone.View
@@ -23,4 +22,3 @@ module.exports = class SectionView extends Backbone.View
 
 module.exports.init = ->
   new SectionView el: $('body')
-  new GalleryInsightsView el: $('body')
