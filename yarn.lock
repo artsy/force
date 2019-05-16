@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.11.19":
-  version "16.11.19"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.11.19.tgz#01b2aef053de771ee42d9dab3a9219d37fb11839"
-  integrity sha512-kQ7tintc1rzTobc+nrXfBik9C0ROR0HyWsWMmx1MzdA2MIDggMBGrVy4m7VHj2cT9CNJ5Y+zbVAeMvrexV05zA==
+"@artsy/reaction@16.11.21":
+  version "16.11.21"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.11.21.tgz#0dccde6484632b7694d4b259c8561d0e0a2bb40a"
+  integrity sha512-tTQQexBq5meTMwyM0dKXS5oMX+v/H1N+imgiwrdv9B94BAlZ0dq4AwjFH8WflCsRZINyg24z+17MPUvVxTmNPQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -110,7 +110,7 @@
     react-slick "^0.23.2"
     react-spring "^5.7.2"
     react-stripe-elements "^2.0.1"
-    react-tracking "^5.6.0"
+    react-tracking "^6.0.0"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
@@ -4508,15 +4508,10 @@ deep-object-diff@^1.1.0:
   resolved "https://registry.yarnpkg.com/deep-object-diff/-/deep-object-diff-1.1.0.tgz#d6fabf476c2ed1751fc94d5ca693d2ed8c18bc5a"
   integrity sha512-b+QLs5vHgS+IoSNcUE4n9HP2NwcHj7aqnJWsjPtuG75Rh5TOaGt0OjAYInh77d5T16V5cRDC+Pw/6ZZZiETBGw==
 
-deepmerge@3.2.0:
+deepmerge@3.2.0, deepmerge@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
   integrity sha512-6+LuZGU7QCNUnAJyX8cIrlzoEgggTM6B7mm+znKOX4t5ltluT9KLjN6g61ECMS0LTsLW7yDpNoxhix5FZcrIow==
-
-deepmerge@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
-  integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -7116,12 +7111,19 @@ hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1, hoist-non-react-
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-hoist-non-react-statics@^3.0.1, hoist-non-react-statics@^3.1.0:
+hoist-non-react-statics@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.1.0.tgz#42414ccdfff019cd2168168be998c7b3bd5245c0"
   integrity sha512-MYcYuROh7SBM69xHGqXEwQqDux34s9tz+sCnxJmN18kgWh6JFdTw/5YdZtqsOdZJXddE/wUpCzfEdDrJj8p0Iw==
   dependencies:
     react-is "^16.3.2"
+
+hoist-non-react-statics@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
+  integrity sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
+  dependencies:
+    react-is "^16.7.0"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -12021,7 +12023,7 @@ react-html-parser@^2.0.2:
   dependencies:
     htmlparser2 "^3.9.0"
 
-react-is@^16.3.2, react-is@^16.6.0, react-is@^16.6.1, react-is@^16.8.1, react-is@^16.8.2, react-is@^16.8.3:
+react-is@^16.3.2, react-is@^16.6.0, react-is@^16.6.1, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.2, react-is@^16.8.3:
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
@@ -12227,13 +12229,13 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
-react-tracking@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-5.6.0.tgz#b093e88b161252457307fff1bec622eecc7894b4"
-  integrity sha512-S+BylXekrspRlJ6CTfrrSO/CAlyQv0pl6iEiiNLLQwmFpBNpg6O8fyC1tC6y8o/Ta5Mv9YS6sB6LseRwiQmEyQ==
+react-tracking@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-6.0.0.tgz#9ed5dd7f8b64d40fcd1cc0160f449d909e6a58a0"
+  integrity sha512-wYOg9s54CV4/joO3gYJ9YpphGbbyHHhzI9priZk2QTqC3/ygQ8mHM2LK22vE7ILBun8LcGiPWCRUuGV/gtvlgA==
   dependencies:
-    deepmerge "^2.2.1"
-    hoist-non-react-statics "^3.0.1"
+    deepmerge "^3.2.0"
+    hoist-non-react-statics "^3.3.0"
 
 react-transition-group@^2.2.0, react-transition-group@^2.3.0:
   version "2.5.0"
