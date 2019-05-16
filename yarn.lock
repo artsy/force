@@ -41,10 +41,10 @@
     styled-system "^3.1.11"
     trunc-html "^1.1.2"
 
-"@artsy/passport@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.1.tgz#f8aa1ebd405f8bda9b0c7ce7fadebf0e390fe080"
-  integrity sha512-0vnNs1ZK5+BON/TVOlg3br6S/lXULPABFcffPByGLpIKIhiAo1dC7wAFwPPDDk+GrvjJOvNi0923wvbvesdQnA==
+"@artsy/passport@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.2.tgz#6171558435e48d7cef5d70881070365aba56a0e4"
+  integrity sha512-eNddrCudYX7gf0Sp6nbNL2cSr5+i15M4/tLIyq+EqxjHsdrCD/pd33ItEUmfPbAO988sJmEJffhsp+BwMaizKg==
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -65,10 +65,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.11.10":
-  version "16.11.10"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.11.10.tgz#d3084744098e54d398003a8b26e44df0e280f35c"
-  integrity sha512-n6RcsJg7l9fdhKSqdEeVI+Tbq9eDTlceuuW4PUbGBGPVl7+UZPIhrffv1i7OH+tNY1ZQ5o3ZPECFDRGZjqtf5A==
+"@artsy/reaction@16.11.19":
+  version "16.11.19"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.11.19.tgz#01b2aef053de771ee42d9dab3a9219d37fb11839"
+  integrity sha512-kQ7tintc1rzTobc+nrXfBik9C0ROR0HyWsWMmx1MzdA2MIDggMBGrVy4m7VHj2cT9CNJ5Y+zbVAeMvrexV05zA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"

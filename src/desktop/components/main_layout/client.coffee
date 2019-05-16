@@ -4,6 +4,7 @@ FooterView = require './footer/view.coffee'
 MarketingSignupModal = require '../marketing_signup_modal/index.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FlashMessage = require '../flash/index.coffee'
+Cookies = require 'cookies-js'
 
 module.exports = ->
   globalClientSetup()
