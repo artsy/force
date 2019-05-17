@@ -7,7 +7,8 @@ orbs:
 
 jobs:
   acceptance:
-    executor: node/build
+    docker:
+      - image: circleci/node:10-stretch-browsers
     steps:
       - yarn/setup
       - run:
