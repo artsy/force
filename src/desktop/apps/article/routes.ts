@@ -44,6 +44,10 @@ export async function index(req, res, next) {
     const search = new URL(sd.APP_URL + req.url).search
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
+      // Redirect deprecated Gallery Insights articles
+      if (article.channel_id === sd.GALLERY_INSIGHTS_CHANNEL) {
+        return res.redirect("https://partners.artsy.net")
+      }
       return classic(req, res, next)
     }
 

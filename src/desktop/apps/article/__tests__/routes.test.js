@@ -47,6 +47,7 @@ describe("Article Routes", () => {
         ARTSY_EDITORIAL_CHANNEL: "123",
         APP_URL: "https://artsy.net",
         EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
+        GALLERY_INSIGHTS_CHANNEL: "1234",
       }),
       rewire.__set__("sailthru", {
         apiPost: sailthruApiPost,
@@ -185,22 +186,42 @@ describe("Article Routes", () => {
     })
 
     it("renders classic mode if article is not editorial", done => {
-      const data = {
-        article: new Article(
-          _.extend({}, fixtures.article, {
-            slug: "foobar",
-            channel_id: "456",
+      const article = _.extend({}, fixtures.article, {
+        slug: "foobar",
+        channel_id: "456",
+      })
+      rewire.__set__(
+        "positronql",
+        sinon.stub().returns(
+          Promise.resolve({
+            article,
           })
-        ),
+        )
+      )
+      Article.prototype.fetchWithRelated = sinon.stub().yieldsTo("success", {
+        article: new Article(article),
         channel: new Channel(),
-      }
-      rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      Article.prototype.fetchWithRelated = sinon
-        .stub()
-        .yieldsTo("success", data)
+      })
       rewire.__set__("Article", Article)
+      req.params = { slug: "foobar" }
+
       index(req, res, next).then(() => {
         res.render.args[0][0].should.equal("article")
+        done()
+      })
+    })
+
+    it("redirects to partners.artsy.net if channel is GALLERY_INSIGHTS_CHANNEL", done => {
+      const data = {
+        article: _.extend({}, fixtures.article, {
+          slug: "foobar",
+          channel_id: "1234",
+        }),
+      }
+      rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
+
+      index(req, res, next).then(() => {
+        res.redirect.args[0][0].should.equal("https://partners.artsy.net")
         done()
       })
     })
@@ -426,17 +447,22 @@ describe("Article Routes", () => {
   })
 
   describe("#classic", () => {
+    let article
+    beforeEach(() => {
+      article = new Article(
+        _.extend({}, fixtures.article, {
+          slug: "foobar",
+          channel_id: "456",
+          sections: [],
+          featured: true,
+          published: true,
+        })
+      )
+    })
+
     it("renders a classic article", () => {
       const data = {
-        article: new Article(
-          _.extend({}, fixtures.article, {
-            slug: "foobar",
-            channel_id: "456",
-            sections: [],
-            featured: true,
-            published: true,
-          })
-        ),
+        article,
         channel: new Channel({
           name: "Foo",
         }),
@@ -450,16 +476,7 @@ describe("Article Routes", () => {
     })
 
     it("renders a ghosted article", () => {
-      const data = {
-        article: new Article(
-          _.extend({}, fixtures.article, {
-            slug: "foobar",
-            sections: [],
-            featured: true,
-            published: true,
-          })
-        ),
-      }
+      const data = { article }
       Article.prototype.fetchWithRelated = sinon
         .stub()
         .yieldsTo("success", data)
@@ -468,17 +485,7 @@ describe("Article Routes", () => {
     })
 
     xit("sets the correct jsonld", () => {
-      const data = {
-        article: new Article(
-          _.extend({}, fixtures.article, {
-            slug: "foobar",
-            sections: [],
-            featured: true,
-            published: true,
-            channel_id: "456",
-          })
-        ),
-      }
+      const data = { article }
       Article.prototype.fetchWithRelated = sinon
         .stub()
         .yieldsTo("success", data)
