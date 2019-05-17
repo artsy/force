@@ -1,8 +1,6 @@
 import * as _ from "underscore"
-import { stitch as _stitch } from "@artsy/stitch"
+import { stitch } from "@artsy/stitch"
 import { App } from "desktop/apps/personalize/components/App"
-
-let stitch = _stitch
 
 export const index = async (req, res, next) => {
   try {
