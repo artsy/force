@@ -207,7 +207,9 @@ export function completeSubmission() {
 export function createSubmission() {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { inputs, submission, user } } = getState()
+      const {
+        submissionFlow: { inputs, submission, user },
+      } = getState()
       const token = await fetchToken(user.accessToken)
       let submissionBody
       if (submission.id) {
@@ -274,7 +276,9 @@ export function errorOnImage(fileName) {
 export function fetchArtistSuggestions(value) {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { user } } = getState()
+      const {
+        submissionFlow: { user },
+      } = getState()
       const res = await request
         .get(`${sd.API_URL}/api/v1/match/artists`)
         .query({ visible_to_public: "true", term: value })
@@ -377,7 +381,9 @@ export function logIn(values, accountCreated = false) {
     try {
       dispatch(showLoader())
 
-      const { submissionFlow: { redirectOnAuth } } = getState()
+      const {
+        submissionFlow: { redirectOnAuth },
+      } = getState()
 
       const options = {
         email: values.email,
@@ -393,8 +399,8 @@ export function logIn(values, accountCreated = false) {
 
       dispatch(updateUser(user.body.user, accountCreated))
       redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
-      dispatch(clearError())
-      dispatch(hideLoader())
+      // dispatch(clearError())
+      // dispatch(hideLoader())
     } catch (err) {
       const errorMessage = get(err, "response.body.error", false)
       dispatch(updateError(errorMessage))
@@ -452,7 +458,9 @@ export function resetPassword(values) {
 
 export function scrubLocation() {
   return (dispatch, getState) => {
-    const { submissionFlow: { inputs, locationAutocompleteValue } } = getState()
+    const {
+      submissionFlow: { inputs, locationAutocompleteValue },
+    } = getState()
     // if user has selected from the autocomplete, one of these should be filled
     // in the off-chance it's not, stick the outlier data in the city field
     if (

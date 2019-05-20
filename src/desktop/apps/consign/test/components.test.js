@@ -6,6 +6,7 @@ import reducers from "../client/reducers"
 import { responsiveWindowAction } from "../../../components/react/responsive_window"
 import { createStore } from "redux"
 import { shallow } from "enzyme"
+import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
 
 const createAccountRewire = require("rewire")("../components/create_account")
 const { default: CreateAccount } = createAccountRewire
@@ -90,52 +91,10 @@ describe("React components", () => {
   })
 
   describe("CreateAccount", () => {
-    let rewires = []
-
-    beforeEach(() => {
-      rewires.push(
-        createAccountRewire.__set__("ForgotPassword", () => (
-          <div className="forgot-password" />
-        )),
-        createAccountRewire.__set__("LogIn", () => <div className="log-in" />),
-        createAccountRewire.__set__("SignUp", () => <div className="sign-up" />)
-      )
-    })
-
-    afterEach(() => {
-      rewires.forEach(reset => reset())
-    })
-
-    describe("log in", () => {
-      it("the log in form", () => {
-        const wrapper = shallow(<CreateAccount store={initialStore} />)
-        const rendered = wrapper.render()
-        rendered.find(".log-in").length.should.eql(0)
-        rendered.find(".forgot-password").length.should.eql(0)
-        rendered.find(".sign-up").length.should.eql(1)
-      })
-    })
-
-    describe("forgot password", () => {
-      it("the forgot password form", () => {
-        initialStore.dispatch(actions.updateAuthFormState("forgotPassword"))
-        const wrapper = shallow(<CreateAccount store={initialStore} />)
-        const rendered = wrapper.render()
-        rendered.find(".log-in").length.should.eql(0)
-        rendered.find(".forgot-password").length.should.eql(1)
-        rendered.find(".sign-up").length.should.eql(0)
-      })
-    })
-
-    describe("sign up", () => {
-      it("the signup form", () => {
-        initialStore.dispatch(actions.updateAuthFormState("signUp"))
-        const wrapper = shallow(<CreateAccount store={initialStore} />)
-        const rendered = wrapper.render()
-        rendered.find(".log-in").length.should.eql(0)
-        rendered.find(".forgot-password").length.should.eql(0)
-        rendered.find(".sign-up").length.should.eql(1)
-      })
+    it("the auth form", () => {
+      const wrapper = shallow(<CreateAccount store={initialStore} />)
+      const rendered = wrapper.render()
+      rendered.text().should.containEql("Create an account")
     })
   })
 
