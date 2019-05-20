@@ -25,10 +25,6 @@ routes =
 
   '/reset_password': require('../apps/auth2/client/reset_password.coffee').init
 
-  '/signup': require('../apps/auth/client/auth.coffee').init
-
-  '/login': require('../apps/auth/client/auth.coffee').init
-
   '/works-for-you': ->
     require('../apps/notifications/client/index.coffee').init()
     { artist, artist_id } = qs.parse(location.search.substring(1))
