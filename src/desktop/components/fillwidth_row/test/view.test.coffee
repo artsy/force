@@ -11,9 +11,11 @@ FillwidthView = benv.requireWithJadeify resolve(__dirname, '../view'), ['templat
 describe 'FillwidthView', ->
 
   before (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      $.fn.fillwidth = ->
+    benv.setup ->
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
+      $.fn.fillwidth = sinon.stub()
       Backbone.$ = $
       done()
 
@@ -21,7 +23,6 @@ describe 'FillwidthView', ->
     benv.teardown()
 
   beforeEach (done) ->
-
     @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
     window.currentUser = @currentUser
     window.currentUser.initializeDefaultArtworkCollection()
