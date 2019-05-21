@@ -19,6 +19,7 @@ interface Props {
   relatedArticlesForCanvas?: RelatedArticleCanvasData[]
   renderTime?: number
   showCollectionsRail?: boolean
+  areHostedAdsEnabled: boolean
 }
 
 interface State {
@@ -111,6 +112,7 @@ export class NewsArticle extends Component<Props, State> {
       relatedArticlesForCanvas,
       renderTime,
       showCollectionsRail,
+      areHostedAdsEnabled,
     } = this.props
     const { bottomOffset } = this.state
 
@@ -135,6 +137,7 @@ export class NewsArticle extends Component<Props, State> {
               showCollectionsRail={
                 relatedArticlesForCanvas && showCollectionsRail
               } // Only show rail if already rendering canvas
+              areHostedAdsEnabled={areHostedAdsEnabled}
             />
           </div>
         </Waypoint>
