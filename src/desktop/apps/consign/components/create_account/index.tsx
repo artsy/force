@@ -9,26 +9,26 @@ import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 interface CreateAccountProps {
   title: string
-  type: string
-  updateAuthFormStateAndClearErrorAction: (type: string) => void
+  type: ModalType
+  updateAuthFormStateAndClearErrorAction: (type: ModalType) => void
 }
 
 export class CreateAccount extends React.Component<CreateAccountProps> {
   handleSubmit = (values, formikBag) => {
-    handleSubmit("login" as ModalType, {}, values, formikBag)
+    handleSubmit(
+      this.props.type,
+      {
+        copy: this.props.title,
+        contextModule: "consignments",
+      },
+      values,
+      formikBag
+    )
   }
 
-  handleTypeChange = type => {
+  handleTypeChange = (type: ModalType) => {
     const { updateAuthFormStateAndClearErrorAction } = this.props
-    let authType
-    if (type === "login") {
-      authType = "logIn"
-    } else if (type === "forgot") {
-      authType = "forgotPassword"
-    } else {
-      authType = "signUp"
-    }
-    updateAuthFormStateAndClearErrorAction(authType)
+    updateAuthFormStateAndClearErrorAction(type)
   }
 
   render() {
@@ -38,9 +38,8 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         <FormSwitcher
           options={{
             title: this.props.title,
-            contextModule: "consignments", // TODO: confirm analytics
           }}
-          type={this.props.type as ModalType}
+          type={this.props.type}
           handleSubmit={this.handleSubmit}
           handleTypeChange={this.handleTypeChange}
           submitUrls={{
@@ -62,20 +61,14 @@ const mapStateToProps = state => {
     submissionFlow: { authFormState },
   } = state
 
-  const stateTotype = {
-    logIn: "login",
-    signUp: "signup",
-    forgotPassword: "forgot",
-  }
-
   const stateToTitle = {
-    logIn: "Log in",
-    signUp: "Create an account",
-    forgotPassword: "Enter the email address associated with your account",
+    login: "Log in",
+    signup: "Create an account",
+    forgot: "Enter the email address associated with your account",
   }
 
   return {
-    type: stateTotype[authFormState],
+    type: authFormState,
     title: stateToTitle[authFormState],
   }
 }

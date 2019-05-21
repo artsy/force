@@ -3,27 +3,43 @@ import React from "react"
 import reducers from "desktop/apps/consign/client/reducers"
 import { createStore } from "redux"
 import { mount } from "enzyme"
-import CreateAccount from "../index"
+import CreateAccount, {
+  CreateAccount as UnconnectedCreateAccount,
+} from "../index"
 import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
 import { LoginForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/LoginForm"
 import { ForgotPasswordForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/ForgotPasswordForm"
 import { SignUpForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/SignUpForm"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+
+jest.mock("desktop/apps/auth2/helpers", () => ({
+  handleSubmit: jest.fn(),
+}))
+
+const handleSubmitMock = require("desktop/apps/auth2/helpers")
+  .handleSubmit as jest.Mock
 
 describe("React components", () => {
   let initialStore
+  let props
 
   beforeEach(() => {
     initialStore = createStore(reducers)
+    props = {
+      title: "Log In",
+      type: "login",
+      updateAuthFormStateAndClearErrorAction: jest.fn(),
+    }
   })
 
-  const getWrapper = () => {
-    return mount(<CreateAccount store={initialStore} />)
+  const getWrapper = (passedProps = props) => {
+    return mount(<CreateAccount store={initialStore} {...passedProps} />)
   }
 
   describe("CreateAccount", () => {
     describe("log in", () => {
       it("renders the log in form", () => {
-        initialStore.dispatch(actions.updateAuthFormState("logIn"))
+        initialStore.dispatch(actions.updateAuthFormState("login"))
         const wrapper = getWrapper()
         expect(
           wrapper
@@ -37,7 +53,7 @@ describe("React components", () => {
 
     describe("forgot password", () => {
       it("renders the forgot password form", () => {
-        initialStore.dispatch(actions.updateAuthFormState("forgotPassword"))
+        initialStore.dispatch(actions.updateAuthFormState("forgot"))
         const wrapper = getWrapper()
         expect(
           wrapper
@@ -61,5 +77,32 @@ describe("React components", () => {
         expect(wrapper.find(SignUpForm).length).toBe(1)
       })
     })
+  })
+
+  it("#handleTypeChange calls updateAuthFormStateAndClearErrorAction", () => {
+    const wrapper = mount(
+      <UnconnectedCreateAccount {...props} />
+    ).instance() as UnconnectedCreateAccount
+    wrapper.handleTypeChange("login" as ModalType)
+    expect(props.updateAuthFormStateAndClearErrorAction).toBeCalledWith("login")
+  })
+
+  it("#handleSubmit calls props.handleSubmit with expected args", () => {
+    const wrapper = mount(
+      <UnconnectedCreateAccount {...props} />
+    ).instance() as UnconnectedCreateAccount
+    wrapper.handleSubmit(
+      {
+        email: "user@email.com",
+        password: "mypassword",
+      },
+      {}
+    )
+    expect(handleSubmitMock).toBeCalledWith(
+      "login",
+      { copy: "Log In", contextModule: "consignments" },
+      { email: "user@email.com", password: "mypassword" },
+      {}
+    )
   })
 })

@@ -126,7 +126,7 @@ function setupSubmissionFlow() {
                 path={stepsConfig.uploadLanding.submissionPath}
                 render={() => {
                   const Component = stepsConfig.uploadLanding.component
-                  store.dispatch(updateAuthFormStateAndClearError("logIn"))
+                  store.dispatch(updateAuthFormStateAndClearError("login"))
                   store.dispatch(ignoreRedirectOnAuth())
                   return <Component />
                 }}
