@@ -1,5 +1,4 @@
 import React from "react"
-import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { Box } from "@artsy/palette"
 import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
@@ -33,31 +32,27 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
   }
 
   render() {
-    const b = block("consignments-submission-create-account")
-
     return (
-      <div className={b()}>
-        <Box mx="auto" maxWidth={550}>
-          <ModalHeader title={this.props.title} />
-          <FormSwitcher
-            options={{
-              title: this.props.title,
-              contextModule: "consignments", // TODO: use schema
-            }}
-            type={this.props.type as ModalType}
-            handleSubmit={this.handleSubmit}
-            handleTypeChange={this.handleTypeChange}
-            submitUrls={{
-              login: "/log_in",
-              forgot: "/forgot_password",
-              signup: "/sign_up",
-              facebook: "/users/auth/facebook",
-              twitter: "/users/auth/twitter",
-            }}
-            showRecaptchaDisclaimer={true}
-          />
-        </Box>
-      </div>
+      <Box mx="auto" maxWidth={550}>
+        <ModalHeader title={this.props.title} />
+        <FormSwitcher
+          options={{
+            title: this.props.title,
+            contextModule: "consignments", // TODO: confirm analytics
+          }}
+          type={this.props.type as ModalType}
+          handleSubmit={this.handleSubmit}
+          handleTypeChange={this.handleTypeChange}
+          submitUrls={{
+            login: "/log_in",
+            forgot: "/forgot_password",
+            signup: "/sign_up",
+            facebook: "/users/auth/facebook",
+            twitter: "/users/auth/twitter",
+          }}
+          showRecaptchaDisclaimer={true}
+        />
+      </Box>
     )
   }
 }

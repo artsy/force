@@ -6,7 +6,6 @@ import reducers from "../client/reducers"
 import { responsiveWindowAction } from "../../../components/react/responsive_window"
 import { createStore } from "redux"
 import { shallow } from "enzyme"
-import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
 
 const createAccountRewire = require("rewire")("../components/create_account")
 const { default: CreateAccount } = createAccountRewire
