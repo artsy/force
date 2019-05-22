@@ -15,9 +15,9 @@ describe 'showMarketingSignupModal', ->
           MARKETING_SIGNUP_MODALS: data
         modal: {slug: "foo", copy: "welcome to artsy", image: "img.jpg"}
     middleware.__set__ "JSONPage", class MockJSONPage
-        get: -> 
-            new Promise (resolve, reject) ->
-              resolve({modals: data})
+      get: ->
+        new Promise (resolve, reject) ->
+          resolve({modals: data})
 
   it 'shows the modal if coming from a campaign', ->
     middleware @req, @res, =>
