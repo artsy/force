@@ -19,6 +19,7 @@ export class App extends React.Component<AppProps> {
   getArticleLayout = () => {
     const { article } = this.props
 
+    console.log("TCL: App -> getArticleLayout -> this.props", this.props)
     switch (article.layout) {
       case "video": {
         return (

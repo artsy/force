@@ -35,6 +35,7 @@ export interface Props {
   renderTime?: number
   showCollectionsRail?: boolean
   areHostedAdsEnabled?: boolean
+  shouldAdRender?: boolean
 }
 
 interface State {
@@ -49,7 +50,6 @@ interface State {
   offset: number
   omit: string
   relatedArticles: RelatedArticleCanvasData[]
-  shouldAdRender?: boolean
 }
 
 export class InfiniteScrollNewsArticle extends Component<Props, State> {
