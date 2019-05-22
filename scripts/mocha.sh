@@ -9,4 +9,6 @@ nyc mocha --no-cache \
   --require test.config.js \
   --require mocha.config.js \
   --timeout 30000 \
+  --reporter mocha-multi-reporters \
+  --reporter-options configFile=package.json \
    $@
