@@ -15,7 +15,6 @@ describe 'AutoCompleteView', ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
-        scrollTo: sinon.stub()
       Backbone.$ = $
       done()
 
