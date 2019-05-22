@@ -20,6 +20,7 @@ import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
+import { shouldAdRender } from "desktop/apps/article/helpers"
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -48,6 +49,7 @@ interface State {
   offset: number
   omit: string
   relatedArticles: RelatedArticleCanvasData[]
+  shouldAdRender?: boolean
 }
 
 export class InfiniteScrollNewsArticle extends Component<Props, State> {
@@ -243,6 +245,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               // Only show rail if already rendering canvas
               showCollectionsRail={relatedArticles && showCollectionsRail}
               areHostedAdsEnabled={areHostedAdsEnabled}
+              shouldAdRender={shouldAdRender(i + 1, 3, 6)} // render ads on News Landing the 3rd and then every 6 news articles thereafter
+              articleSerial={i + 1}
             />
           </Fragment>
         )
