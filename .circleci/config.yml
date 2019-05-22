@@ -88,7 +88,7 @@ workflows:
           <<: *not_staging_or_release
       - test:
           <<: *not_staging_or_release
-          context: alerts-slack
+          context: slack-platform-machines
       - acceptance:
           <<: *not_staging_or_release
       # Nothing actually relies on this at the moment
