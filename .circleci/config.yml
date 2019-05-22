@@ -56,6 +56,8 @@ jobs:
       - run:
           name: Test
           command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
+      - store_test_results:
+          path: reports
       - slack/status:
           fail_only: "true"
           failure_message: "Tests have failed for a Force master build"

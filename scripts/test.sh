@@ -13,7 +13,7 @@ run () {
     fi
     ;;
   1)
-    yarn jest --runInBand
+    yarn jest
     if [ "$CI" = "true" ]; then
       yarn report-coverage
     fi
