@@ -1,4 +1,4 @@
-import { areThirdPartyAdsEnabled } from "desktop/apps/article/third_party_ads_enabled"
+import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
 import { data as sd } from "sharify"
 
 jest.mock("sharify", () => ({

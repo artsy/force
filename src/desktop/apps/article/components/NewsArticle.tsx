@@ -8,6 +8,7 @@ import {
 } from "reaction/Components/Publishing/Typings"
 
 interface Props {
+  areHostedAdsEnabled: boolean
   article: ArticleData
   display?: DisplayData
   isActive: boolean
@@ -19,7 +20,8 @@ interface Props {
   relatedArticlesForCanvas?: RelatedArticleCanvasData[]
   renderTime?: number
   showCollectionsRail?: boolean
-  areHostedAdsEnabled: boolean
+  shouldAdRender?: boolean
+  articleSerial?: number
 }
 
 interface State {
@@ -113,6 +115,8 @@ export class NewsArticle extends Component<Props, State> {
       renderTime,
       showCollectionsRail,
       areHostedAdsEnabled,
+      shouldAdRender,
+      articleSerial,
     } = this.props
     const { bottomOffset } = this.state
 
@@ -138,6 +142,8 @@ export class NewsArticle extends Component<Props, State> {
                 relatedArticlesForCanvas && showCollectionsRail
               } // Only show rail if already rendering canvas
               areHostedAdsEnabled={areHostedAdsEnabled}
+              shouldAdRender={shouldAdRender}
+              articleSerial={articleSerial}
             />
           </div>
         </Waypoint>

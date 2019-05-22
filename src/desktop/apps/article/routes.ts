@@ -18,7 +18,7 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
-import { areThirdPartyAdsEnabled } from "desktop/apps/article/third_party_ads_enabled"
+import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
