@@ -65,17 +65,16 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.12.6":
-  version "16.12.6"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.6.tgz#0449b6d25c50a8ad8083ee0260becaea854dc62a"
-  integrity sha512-9FXoDSqpPoxwLgAHs82LR/+gAoEGvJM9wnVS4KL75+FHSsQyD+djDx2Hb3J6+rMKn86GD9zkKaZEUsJ678hYag==
+"@artsy/reaction@16.12.9":
+  version "16.12.9"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.9.tgz#3b5b6f4f1ce33c49c1c14c1a2e7f9f5ffd7793f8"
+  integrity sha512-fqxFQiHxbNwq8kdTeJn/2qGD8HlKBDzcJUGpcTUAxdhfxANmncRAY66+UNOYosKL5uxKoZDrOYVmLlawwjx5ow==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     autosuggest-highlight "^3.1.1"
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
-    deepmerge "^3.2.0"
     farce "^0.2.6"
     formik "^0.11.11"
     found "^0.3.14"
