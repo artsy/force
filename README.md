@@ -18,6 +18,7 @@ Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://a
 
 [![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
 [![codecov](https://codecov.io/gh/artsy/force/branch/master/graph/badge.svg)](https://codecov.io/gh/artsy/force)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fartsy%2Fforce.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fartsy%2Fforce?ref=badge_shield)
 
 ## History
 
@@ -54,3 +55,6 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 ## License
 
 MIT License. See [LICENSE](LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fartsy%2Fforce.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fartsy%2Fforce?ref=badge_large)
