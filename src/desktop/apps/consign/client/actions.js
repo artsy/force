@@ -207,7 +207,9 @@ export function completeSubmission() {
 export function createSubmission() {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { inputs, submission, user } } = getState()
+      const {
+        submissionFlow: { inputs, submission, user },
+      } = getState()
       const token = await fetchToken(user.accessToken)
       let submissionBody
       if (submission.id) {
@@ -274,7 +276,9 @@ export function errorOnImage(fileName) {
 export function fetchArtistSuggestions(value) {
   return async (dispatch, getState) => {
     try {
-      const { submissionFlow: { user } } = getState()
+      const {
+        submissionFlow: { user },
+      } = getState()
       const res = await request
         .get(`${sd.API_URL}/api/v1/match/artists`)
         .query({ visible_to_public: "true", term: value })
@@ -372,38 +376,6 @@ export function ignoreRedirectOnAuth() {
   }
 }
 
-export function logIn(values, accountCreated = false) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(showLoader())
-
-      const { submissionFlow: { redirectOnAuth } } = getState()
-
-      const options = {
-        email: values.email,
-        password: values.password,
-        _csrf: sd.CSRF_TOKEN,
-      }
-      const user = await request
-        .post(sd.AP.loginPagePath)
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
-        .set("X-Requested-With", "XMLHttpRequest")
-        .send(options)
-
-      dispatch(updateUser(user.body.user, accountCreated))
-      redirectOnAuth && dispatch(push(stepsConfig.chooseArtist.path))
-      dispatch(clearError())
-      dispatch(hideLoader())
-    } catch (err) {
-      const errorMessage = get(err, "response.body.error", false)
-      dispatch(updateError(errorMessage))
-      dispatch(hideLoader())
-      console.error("(consignments/client/actions.js @ logIn) Error:", err)
-    }
-  }
-}
-
 export function removeErroredImage(fileName) {
   return {
     type: REMOVE_ERRORED_IMAGE,
@@ -430,29 +402,11 @@ export function removeUploadedImage(fileName) {
   }
 }
 
-export function resetPassword(values) {
-  return async (dispatch, getState) => {
-    try {
-      const options = {
-        email: values.email,
-      }
-      await request
-        .post(`${sd.API_URL}/api/v1/users/send_reset_password_instructions`)
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
-        .set("X-XAPP-TOKEN", sd.ARTSY_XAPP_TOKEN)
-        .send(options)
-      dispatch(clearError())
-      dispatch(showResetPasswordSuccessMessage())
-    } catch (err) {
-      dispatch(updateError(err.response.body.error))
-    }
-  }
-}
-
 export function scrubLocation() {
   return (dispatch, getState) => {
-    const { submissionFlow: { inputs, locationAutocompleteValue } } = getState()
+    const {
+      submissionFlow: { inputs, locationAutocompleteValue },
+    } = getState()
     // if user has selected from the autocomplete, one of these should be filled
     // in the off-chance it's not, stick the outlier data in the city field
     if (
@@ -477,33 +431,6 @@ export function showNotConsigningMessage() {
 export function showResetPasswordSuccessMessage() {
   return {
     type: SHOW_RESET_PASSWORD_SUCCESS_MESSAGE,
-  }
-}
-
-export function signUp(values) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(showLoader())
-
-      const options = {
-        email: values.email,
-        name: values.name,
-        password: values.password,
-        _csrf: sd.CSRF_TOKEN,
-      }
-      await request
-        .post(sd.AP.signupPagePath)
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
-        .set("X-Requested-With", "XMLHttpRequest")
-        .send(options)
-      dispatch(logIn(values, true))
-    } catch (err) {
-      const errorMessage = get(err, "response.body.error", false)
-      dispatch(updateError(errorMessage))
-      dispatch(hideLoader())
-      console.error("(consignments/client/actions.js @ signUp) Error:", err)
-    }
   }
 }
 
