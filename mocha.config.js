@@ -12,3 +12,9 @@ window.matchMedia =
       removeListener: function() {},
     }
   }
+
+window.alert = function(msg) {
+  console.log(msg)
+}
+
+window.scrollTo = function() {}

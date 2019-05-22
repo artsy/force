@@ -35,6 +35,12 @@ try {
         removeListener: function() {},
       }
     }
+  window.alert =
+    window.alert ||
+    function(msg) {
+      console.log(msg)
+    }
+  window.scrollTo = window.scrollTo || function() {}
 } catch (error) {}
 
 sd.AP = {

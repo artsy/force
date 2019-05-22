@@ -75,7 +75,6 @@ describe 'Visitors', ->
     @html = render fair, location
     $ = cheerio.load @html
     @html.should.containEql 'Contact'
-    console.log 'html: ', $('.fair-info-contact').html()
     $('.fair-info-contact').html().should.containEql "<p>Design Miami/ Office<br>Call + 1 555 555 5555</p>"
 
   it 'renders links', ->
