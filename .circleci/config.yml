@@ -55,6 +55,8 @@ jobs:
       - run:
           name: Test
           command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
+      - store_test_results:
+          path: reports
 
 not_staging_or_release: &not_staging_or_release
   filters:

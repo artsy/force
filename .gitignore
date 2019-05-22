@@ -34,6 +34,7 @@ node_modules
 server.dist.js
 server.dist.js.map
 
-# Codecov
+# Test utils
 coverage*
 .nyc_output
+reports*
