@@ -13,7 +13,10 @@ window.matchMedia =
     }
   }
 
-window.alert = msg => {
-  console.log(msg)
-}
-window.scrollTo = () => {}
+window.alert =
+  window.alert ||
+  function(msg) {
+    console.log(msg)
+  }
+
+window.scrollTo = window.scrollTo || function() {}

@@ -84,7 +84,7 @@ describe("Routes", () => {
   })
 
   describe("#news", () => {
-    xit("renders the rss feed if #findArticlesWithEmbeds rejects", async () => {
+    it("renders the rss feed if #findArticlesWithEmbeds rejects", async () => {
       request.get = sinon.stub().returns({
         end: cb => {
           cb(new Error())
