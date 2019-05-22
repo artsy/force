@@ -41,9 +41,6 @@ describe 'FilterDropdownView', ->
         @$input = @dropdown.$input
         done()
 
-    # afterEach ->
-    #   $.fn.typeahead.restore()
-
     describe '#initialize', ->
       it 'sets up typeahead', ->
         @$input.typeahead.args[0][1].source.should.be.an.instanceOf Function
@@ -52,7 +49,7 @@ describe 'FilterDropdownView', ->
         @$input.typeahead.args[0][1].template.should.equal 'custom'
         @$input.typeahead.args[0][1].displayKey.should.equal 'name'
 
-    xdescribe '#selected', ->
+    describe '#selected', ->
       it 'blurs the input', ->
         @$input.focus()
         @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2'} , {}
@@ -145,9 +142,6 @@ describe 'FilterDropdownView', ->
         sinon.stub @dropdown, 'goToProfile'
         done()
 
-    # afterEach ->
-    #   $.fn.typeahead.restore()
-
     describe '#initialize', ->
       it 'sets up typeahead', ->
         @$input.typeahead.args[0][1].source.should.be.an.instanceOf Function
@@ -156,7 +150,7 @@ describe 'FilterDropdownView', ->
         @$input.typeahead.args[0][1].template.should.equal 'custom'
         @$input.typeahead.args[0][1].displayKey.should.equal 'name'
 
-    xdescribe '#selected', ->
+    describe '#selected', ->
       it 'blurs the input', ->
         @$input.focus()
         @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2', profile: {href: 'location-2'}} , {}
