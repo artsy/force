@@ -4,6 +4,7 @@ orbs:
   yarn: artsy/yarn@0.2.0
   hokusai: artsy/hokusai@0.1.0
   node: artsy/node@0.1.0
+  slack: circleci/slack@2.5.1
 
 jobs:
   acceptance:
@@ -55,6 +56,10 @@ jobs:
       - run:
           name: Test
           command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
+      - slack/status:
+          fail_only: "true"
+          failure_message: "Tests have failed for a Force master build"
+          only_for_branch: master
 
 not_staging_or_release: &not_staging_or_release
   filters:
@@ -83,6 +88,7 @@ workflows:
           <<: *not_staging_or_release
       - test:
           <<: *not_staging_or_release
+          context: alerts-slack
       - acceptance:
           <<: *not_staging_or_release
       # Nothing actually relies on this at the moment
