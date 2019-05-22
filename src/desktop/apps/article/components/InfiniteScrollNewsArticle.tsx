@@ -33,6 +33,7 @@ export interface Props {
   isMobile?: boolean
   renderTime?: number
   showCollectionsRail?: boolean
+  areHostedAdsEnabled?: boolean
 }
 
 interface State {
@@ -201,7 +202,12 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   renderContent = () => {
     const { activeArticle, articles, display, relatedArticles } = this.state
-    const { isMobile, renderTime, showCollectionsRail } = this.props
+    const {
+      isMobile,
+      renderTime,
+      showCollectionsRail,
+      areHostedAdsEnabled,
+    } = this.props
 
     let counter = 0
 
@@ -236,6 +242,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               renderTime={hasRenderTime as any}
               // Only show rail if already rendering canvas
               showCollectionsRail={relatedArticles && showCollectionsRail}
+              areHostedAdsEnabled={areHostedAdsEnabled}
             />
           </Fragment>
         )
