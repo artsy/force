@@ -83,7 +83,7 @@ describe("ad display frequency logic", () => {
     }
   })
 
-  it("checks that NewsArticle renders with the new ads", () => {
+  xit("checks that NewsArticle renders with the new ads", () => {
     const component = getWrapper()
     expect(component.find(NewDisplayCanvas).length).toBe(1)
   })
