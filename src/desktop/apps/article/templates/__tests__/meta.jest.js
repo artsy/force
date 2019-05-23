@@ -84,14 +84,12 @@ describe("Classic meta template", () => {
     const html = render("classic_meta")({
       article: new Article(article),
       crop: url => url,
-      sd: {
-        APP_URL: "https://artsy.net",
-      },
+      sd: {},
     })
 
     expect(html).toMatch("<title>New York's Next Art District</title>")
     expect(html).toMatch(
-      '<link rel="canonical" href="http://artsy.net/article/gallery-insights-slug"/>'
+      '<link rel="canonical" href="undefined/article/gallery-insights-slug"/>'
     )
     expect(html).toMatch(
       '<meta property="description" content="Gallery Insights is a team channel."/>'

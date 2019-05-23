@@ -1,19 +1,23 @@
 benv = require 'benv'
 rewire = require 'rewire'
+sinon = require "sinon"
 
 describe 'AppBanner', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
+        location.assign = sinon.stub()
       @AppBanner = rewire '../app_banner'
       $('body').html (@$content = $('<div id="content"></div>'))
+      @AppBanner.__set__ 'Cookies', { get: (->), set: (->) }
       done()
 
   after ->
     benv.teardown()
 
   beforeEach ->
-    global.location = window.location
     @appBanner = new @AppBanner @$content
 
   it 'inserts the app banner before the passed in element', ->
