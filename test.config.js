@@ -38,3 +38,8 @@ try {
     }
   window.scrollTo = window.scrollTo || function() {}
 } catch (error) {}
+
+// Used for Acceptance tests
+require("raf/polyfill")
+require("should")
+require("./src/lib/jade_hook")
