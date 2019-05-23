@@ -13,7 +13,8 @@ benv = require 'benv'
 { resolve } = require 'path'
 
 xdescribe 'Feature page client-side code', ->
-  # FIXME: jQuery flickity conflics
+  # FIXME: errors setting up due to react-flickity jquery errors
+  # Uncaught TypeError: Cannot set property 'imagesLoaded' of undefined
   beforeEach (done) ->
     benv.setup =>
       benv.expose {
@@ -108,7 +109,7 @@ xdescribe 'Feature page client-side code', ->
         @view.$('#feature-page-auction-clock').prop('class').should.not.containEql('feature-auction-section-unregistered')
         @view.$('#feature-page-auction-register-link').prop('href').should.not.containEql 'auction-registration/whtney-art-party'
 
-    xdescribe '#renderAuction', ->
+    describe '#renderAuction', ->
 
       beforeEach ->
         @view.renderAuction()

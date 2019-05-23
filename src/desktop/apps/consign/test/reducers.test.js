@@ -649,7 +649,7 @@ describe("Reducers", () => {
         })
 
         xit("updates the error if it does not succeed", done => {
-          // FIXME: improper request mocking
+          // FIXME: request mocking cannot catch errors
           request.post = sinon.stub().returns("TypeError")
           const expectedActions = [
             {

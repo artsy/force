@@ -13,7 +13,7 @@ describe 'AcceptConditionsOfSaleModal', ->
     benv.setup ->
       benv.expose
         $: benv.require('jquery'),
-      location.assign = sinon.stub()
+        location.assign = sinon.stub()
       Backbone.$ = $
       done()
 
