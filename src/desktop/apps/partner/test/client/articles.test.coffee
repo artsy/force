@@ -16,6 +16,7 @@ describe 'ArticlesAdapter', ->
       benv.expose
         $: benv.require 'jquery'
         sd: ARTSY_EDITORIAL_CHANNEL: '123'
+        location.replace = sinon.stub()
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
       $.fn.fillwidthLite = sinon.stub()
@@ -110,7 +111,6 @@ describe 'ArticlesAdapter', ->
     # unrecognized expression: .article-container[data-id=0.016085399075416174] .article-content
     beforeEach ->
       sinon.stub(@ArticlesAdapter.prototype, 'isArticle').returns true
-      sinon.stub window.location, 'replace'
       @view = new @ArticlesAdapter
         profile: new Profile fabricate 'partner_profile'
         partner: new Partner fabricate 'partner'
@@ -119,7 +119,6 @@ describe 'ArticlesAdapter', ->
 
     afterEach ->
       @ArticlesAdapter.prototype.isArticle.restore()
-      window.location.replace.restore()
 
     it 'redirects to the partner overview if the article is not found', ->
       Backbone.sync.args[0][2].error()
