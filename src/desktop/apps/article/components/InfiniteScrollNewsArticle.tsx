@@ -20,6 +20,7 @@ import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
+import { shouldAdRender } from "desktop/apps/article/helpers"
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -34,6 +35,7 @@ export interface Props {
   renderTime?: number
   showCollectionsRail?: boolean
   areHostedAdsEnabled?: boolean
+  shouldAdRender?: boolean
 }
 
 interface State {
@@ -226,6 +228,19 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         const hasRenderTime =
           hasMetaContent && ((displayAd && displayAd.renderTime) || renderTime)
 
+        // render ads on News Landing the 3rd and then every 6 news articles thereafter
+        const adPosition = {
+          index: i + 1, // article index + 1
+          startIndex: 3, // render first ad after 3rd article
+          frequency: 6, // render subsequent ads after 6th article
+        }
+
+        const renderAd = shouldAdRender(
+          adPosition.index,
+          adPosition.startIndex,
+          adPosition.frequency
+        )
+
         return (
           <Fragment key={`article-${i}`}>
             {hasDateDivider && <NewsDateDivider date={article.published_at} />}
@@ -243,6 +258,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               // Only show rail if already rendering canvas
               showCollectionsRail={relatedArticles && showCollectionsRail}
               areHostedAdsEnabled={areHostedAdsEnabled}
+              shouldAdRender={renderAd}
+              articleSerial={adPosition.index}
             />
           </Fragment>
         )
