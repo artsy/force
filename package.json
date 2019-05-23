@@ -271,7 +271,7 @@
     "uuid": "3.3.2",
     "validator": "7.0.0",
     "waypoints": "4.0.0",
-    "webpack-bundle-analyzer": "3.0.4",
+    "webpack-bundle-analyzer": "3.3.2",
     "webpack-node-externals": "1.7.2",
     "xss-filters": "1.2.7",
     "yargs": "11.0.0"
