@@ -15,6 +15,7 @@
     "bundle-report:dev": "NODE_ENV=development ANALYZE_BUNDLE=true yarn build",
     "bundle-report": "NODE_ENV=production ANALYZE_BUNDLE=true yarn build",
     "clean": "rm -rf .cache && rm -f manifest.json && rm -rf public/assets && mkdir -p public/assets && echo '[Force] Cleaned build directory'",
+    "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
     "mocha": "scripts/mocha.sh",
     "precommit": "lint-staged",
     "prepare": "patch-package",
@@ -101,10 +102,10 @@
   "dependencies": {
     "@airbnb/node-memwatch": "1.0.2",
     "@artsy/express-reloadable": "1.4.6",
-    "@artsy/palette": "4.11.9",
-    "@artsy/passport": "1.1.1",
-    "@artsy/reaction": "16.11.9",
-    "@artsy/stitch": "6.1.3",
+    "@artsy/palette": "4.12.2",
+    "@artsy/passport": "1.1.2",
+    "@artsy/reaction": "16.12.9",
+    "@artsy/stitch": "6.1.4",
     "@babel/core": "7.0.0",
     "@babel/node": "7.0.0",
     "@babel/plugin-proposal-class-properties": "7.0.0",
@@ -322,6 +323,7 @@
     "inspectpack": "4.1.2",
     "jest": "23.6.0",
     "jest-coffee-preprocessor": "1.0.0",
+    "jest-junit": "^6.4.0",
     "jsdom": "11.6.2",
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
@@ -329,6 +331,8 @@
     "lint-staged": "6.1.0",
     "mime": "2.4.0",
     "mocha": "3.4.1",
+    "mocha-junit-reporter": "^1.22.0",
+    "mocha-multi-reporters": "^1.1.7",
     "nightmare": "2.10.0",
     "patch-package": "5.0.0",
     "postinstall-prepare": "1.0.1",
@@ -373,6 +377,10 @@
       "lcov",
       "text-summary"
     ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
     "moduleFileExtensions": [
       "coffee",
       "js",
@@ -381,7 +389,7 @@
       "ts",
       "tsx"
     ],
-    "testRegex": "/__tests__/.*\\.jest\\.(ts|tsx|js|jsx)$",
+    "testRegex": ".*\\.jest\\.(ts|tsx|js|jsx)$",
     "setupFiles": [
       "<rootDir>/test.config.js"
     ],
@@ -389,6 +397,10 @@
       "<rootDir>/src"
     ],
     "testURL": "https://artsy.net"
+  },
+  "reporterEnabled": "mocha-junit-reporter, spec",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "reports/mocha/test-results.xml"
   },
   "nyc": {
     "check-coverage": true,

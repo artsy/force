@@ -15,46 +15,6 @@ describe("analytics middleware", () => {
     })
   })
 
-  it("tracks a login", () => {
-    const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
-    store.dispatch({
-      type: "UPDATE_USER",
-      payload: {
-        user: { id: "sarah", email: "sarah@test.com" },
-        accountCreated: false,
-      },
-    })
-
-    triggerStub.callCount.should.eql(1)
-    const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:account:created")
-    analyticsArgs[1].should.containEql({
-      id: "sarah",
-      email: "sarah@test.com",
-      accountCreated: false,
-    })
-  })
-
-  it("tracks a signup", () => {
-    const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
-    store.dispatch({
-      type: "UPDATE_USER",
-      payload: {
-        user: { id: "sarah", email: "sarah@test.com" },
-        accountCreated: true,
-      },
-    })
-
-    triggerStub.callCount.should.eql(1)
-    const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:account:created")
-    analyticsArgs[1].should.containEql({
-      id: "sarah",
-      email: "sarah@test.com",
-      accountCreated: true,
-    })
-  })
-
   it("tracks an artist confirmed action", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({

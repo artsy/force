@@ -104,6 +104,7 @@ export class ArticleLayout extends React.Component<
       renderTime,
       showTooltips,
       showCollectionsRail,
+      areHostedAdsEnabled,
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
 
@@ -133,6 +134,7 @@ export class ArticleLayout extends React.Component<
             renderTime={renderTime}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
+            areHostedAdsEnabled={areHostedAdsEnabled}
           />
         ) : (
           <InfiniteScrollArticle
@@ -142,6 +144,7 @@ export class ArticleLayout extends React.Component<
             renderTime={renderTime}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
+            areHostedAdsEnabled={areHostedAdsEnabled}
           />
         )}
 

@@ -145,6 +145,7 @@ export class InfiniteScrollArticle extends React.Component<
       showTooltips,
       showCollectionsRail,
       onOpenAuthModal,
+      areHostedAdsEnabled,
     } = this.props
     const { articles, renderTimes } = this.state
 
@@ -165,6 +166,7 @@ export class InfiniteScrollArticle extends React.Component<
               onOpenAuthModal={onOpenAuthModal}
               renderTime={renderTimes[Math.floor(i / 3)]}
               infiniteScrollEntrySlug={slug}
+              areHostedAdsEnabled={areHostedAdsEnabled}
             />
             <Waypoint
               onEnter={waypointData => this.onEnter(article, waypointData)}

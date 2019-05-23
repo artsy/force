@@ -75,8 +75,7 @@ class MarketingSignupModalInner extends Backbone.View
       signupIntent: @signupIntent,
       signupReferer: @signupReferer
       acquisition_initiative: "Marketing Modal #{@acquisitionInitiative}"
-      # TODO: uncomment when @artsy/passport is updated
-      # recaptcha_token: recaptcha_token
+      recaptcha_token: recaptcha_token
 
     $.ajax
       url: sd.AP.signupPagePath

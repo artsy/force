@@ -2,6 +2,8 @@ version: 2.1
 
 orbs:
   yarn: artsy/yarn@0.2.0
+  hokusai: artsy/hokusai@0.1.0
+  node: artsy/node@0.1.0
 
 jobs:
   acceptance:
@@ -14,8 +16,7 @@ jobs:
           command: yarn acceptance src/test/acceptance/*.js
 
   validate_production_schema:
-    docker:
-      - image: circleci/node:10-stretch-browsers
+    executor: node/build
     steps:
       - yarn/setup
       - run:
@@ -23,8 +24,7 @@ jobs:
           command: node scripts/validateSchemas.js production
 
   build:
-    docker:
-      - image: circleci/node:10-stretch-browsers
+    executor: node/build
     steps:
       - yarn/setup
       - run:
@@ -40,8 +40,7 @@ jobs:
           command: npx bundlesize
 
   danger:
-    docker:
-      - image: circleci/node:10.13
+    executor: node/build
     steps:
       - yarn/setup
       - run:
@@ -49,62 +48,15 @@ jobs:
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
   test:
-    docker:
-      - image: circleci/node:10.13
+    executor: node/build
     parallelism: 2
     steps:
       - yarn/setup
       - run:
           name: Test
           command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
-
-  push_staging_image: &push_image
-    docker:
-      - image: artsy/hokusai:0.5
-    steps:
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Push
-          command: |
-            hokusai registry push --tag $CIRCLE_SHA1 --force --overwrite
-  push_production_image: *push_image
-
-  deploy_hokusai_staging:
-    docker:
-      - image: artsy/hokusai:0.5
-    steps:
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Configure
-          command: hokusai configure --kubectl-version 1.10.7 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
-      - run:
-          name: Update staging branch
-          command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:staging --force
-      - run:
-          name: Deploy
-          command: hokusai staging deploy $CIRCLE_SHA1
-
-  deploy_hokusai_production:
-    docker:
-      - image: artsy/hokusai:0.5
-    steps:
-      - add_ssh_keys
-      - checkout
-      - setup_remote_docker
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Configure
-          command: hokusai configure --kubectl-version 1.10.7 --s3-bucket artsy-citadel --s3-key k8s/config --platform linux
-      - run:
-          name: Deploy
-          command: hokusai production deploy $CIRCLE_SHA1 --git-remote origin
+      - store_test_results:
+          path: reports
 
 not_staging_or_release: &not_staging_or_release
   filters:
@@ -143,25 +95,29 @@ workflows:
           <<: *not_staging_or_release
 
       # Staging
-      - push_staging_image:
+      - hokusai/push:
+          name: push-staging-image
           <<: *only_master
           requires:
             - test
             - acceptance
             - build
-      - deploy_hokusai_staging:
+
+      - hokusai/deploy-staging:
           <<: *only_master
+          project-name: force
           requires:
-            - push_staging_image
+            - push-staging-image
 
       # Release
       - validate_production_schema:
           <<: *only_release
-      - push_production_image:
+      - hokusai/push:
+          name: push-production-image
           <<: *only_release
           requires:
             - validate_production_schema
-      - deploy_hokusai_production:
+      - hokusai/deploy-production:
           <<: *only_release
           requires:
-            - push_production_image
+            - push-production-image

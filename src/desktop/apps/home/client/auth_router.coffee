@@ -33,7 +33,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
         when 'account-not-found', 'no-user-access-token', 'no-user'
           "We couldn't find your account. Please sign up."
         else
-          error
+          "An unexpected error occurred."
       mediator.trigger 'open:auth',
         mode: 'login'
         intent: 'login'

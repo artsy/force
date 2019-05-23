@@ -108,8 +108,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       @gdprData(formData),
       signupIntent: @signupIntent,
       signupReferer: location.href
-      # TODO: uncomment when @artsy/passport is updated
-      # recaptcha_token: recaptcha_token
+      recaptcha_token: recaptcha_token
     @user.set data
 
     @user.signup

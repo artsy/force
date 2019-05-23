@@ -18,6 +18,7 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
+import { areThirdPartyAdsEnabled } from "desktop/apps/article/third_party_ads_enabled"
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -39,11 +40,16 @@ export async function index(req, res, next) {
       query: ArticleQuery(articleId),
       req,
     })
+    const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals)
     const article = data.article
     const articleModel = new Article(data.article)
     const search = new URL(sd.APP_URL + req.url).search
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
+      // Redirect deprecated Gallery Insights articles
+      if (article.channel_id === sd.GALLERY_INSIGHTS_CHANNEL) {
+        return res.redirect("https://partners.artsy.net")
+      }
       return classic(req, res, next)
     }
 
@@ -156,6 +162,7 @@ export async function index(req, res, next) {
         markdown,
       },
       data: {
+        areHostedAdsEnabled,
         article,
         customEditorial,
         isSuper,
@@ -192,6 +199,7 @@ export function classic(req, res, _next) {
     id: req.params.slug,
   })
   const accessToken = req.user ? req.user.get("accessToken") : null
+  const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals)
 
   article.fetchWithRelated({
     accessToken,
@@ -218,6 +226,7 @@ export function classic(req, res, _next) {
       res.render(
         "article",
         _.extend(data, {
+          areHostedAdsEnabled,
           embed,
           crop,
           resize,
@@ -231,6 +240,7 @@ export function amp(req, res, next) {
   const article = new Article({
     id: req.params.slug,
   })
+  const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals)
 
   article.fetchWithRelated({
     error: res.backboneError,
@@ -249,6 +259,7 @@ export function amp(req, res, next) {
       return res.render(
         "amp_article",
         _.extend(data, {
+          areHostedAdsEnabled,
           resize,
           crop,
           embed,

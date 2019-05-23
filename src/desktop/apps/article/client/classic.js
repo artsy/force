@@ -12,7 +12,6 @@ import Articles from "desktop/collections/articles.coffee"
 import _ArticlesGridView from "desktop/components/articles_grid/view.coffee"
 import _ArticleView from "desktop/components/article/client/view.coffee"
 import Channel from "desktop/models/channel.coffee"
-import _GalleryInsightsView from "desktop/components/email/client/gallery_insights.coffee"
 import _TeamChannelNavView from "desktop/components/channel_nav/view.coffee"
 
 // FIXME: Rewire
@@ -21,7 +20,6 @@ let sd = _sd
 let ArticlesGridView = _ArticlesGridView
 let TeamChannelNavView = _TeamChannelNavView
 let ArticleView = _ArticleView
-let GalleryInsightsView = _GalleryInsightsView
 
 const promotedTemplate = args => {
   return require("desktop/apps/article/templates/promoted_content.jade")(args)
@@ -35,8 +33,6 @@ export const init = () => {
     el: $("body"),
     article,
   })
-
-  new GalleryInsightsView({ el: $("body") })
 
   if (channel.isTeam()) {
     new TeamChannelNavView({
