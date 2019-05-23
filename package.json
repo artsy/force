@@ -233,7 +233,6 @@
     "react": "16.8.4",
     "react-autosuggest": "9.4.3",
     "react-dom": "16.8.4",
-    "react-gpt": "^2.0.1",
     "react-redux": "5.1.1",
     "react-relay": "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz",
     "react-router": "4.2.0",
