@@ -12,6 +12,7 @@ import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
+import { shouldAdRender } from "desktop/apps/article/helpers"
 
 const FETCH_TOP_OFFSET = 200
 
@@ -151,6 +152,8 @@ export class InfiniteScrollArticle extends React.Component<
 
     return flatten(
       articles.map((article, i) => {
+        const renderAd = shouldAdRender(null, null, null, article.layout)
+
         return (
           <div key={`article-${i}`}>
             <Article
@@ -167,6 +170,7 @@ export class InfiniteScrollArticle extends React.Component<
               renderTime={renderTimes[Math.floor(i / 3)]}
               infiniteScrollEntrySlug={slug}
               areHostedAdsEnabled={areHostedAdsEnabled}
+              shouldAdRender={renderAd}
             />
             <Waypoint
               onEnter={waypointData => this.onEnter(article, waypointData)}

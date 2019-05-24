@@ -7,6 +7,7 @@ import {
 } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
+import { shouldAdRender } from "desktop/apps/article/helpers"
 import { setupFollows, setupFollowButtons } from "../FollowButton"
 
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
@@ -105,11 +106,11 @@ export class ArticleLayout extends React.Component<
       showTooltips,
       showCollectionsRail,
       areHostedAdsEnabled,
-      shouldAdRender,
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
 
     const isStatic = isSuper || article.seriesArticle || customEditorial
+    const renderAd = shouldAdRender(null, null, null, article.layout)
 
     return (
       <div>
@@ -136,7 +137,7 @@ export class ArticleLayout extends React.Component<
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}
-            shouldAdRender={shouldAdRender}
+            shouldAdRender={true} // always render ads on super, series, and custom editorial articles
           />
         ) : (
           <InfiniteScrollArticle
@@ -147,6 +148,7 @@ export class ArticleLayout extends React.Component<
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}
+            shouldAdRender={renderAd}
           />
         )}
 
