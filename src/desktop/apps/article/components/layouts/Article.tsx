@@ -106,6 +106,7 @@ export class ArticleLayout extends React.Component<
       showTooltips,
       showCollectionsRail,
       areHostedAdsEnabled,
+      articleSerial,
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
 
@@ -137,6 +138,7 @@ export class ArticleLayout extends React.Component<
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}
+            articleSerial={articleSerial}
             shouldAdRender={true} // always render ads on super, series, and custom editorial articles
           />
         ) : (
@@ -149,6 +151,7 @@ export class ArticleLayout extends React.Component<
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}
             shouldAdRender={renderAd}
+            articleSerial={articleSerial}
           />
         )}
 

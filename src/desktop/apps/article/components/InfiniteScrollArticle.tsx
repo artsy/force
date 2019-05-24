@@ -152,7 +152,9 @@ export class InfiniteScrollArticle extends React.Component<
 
     return flatten(
       articles.map((article, i) => {
-        const renderAd = shouldAdRender(null, null, null, article.layout)
+        const articleType = article.layout
+        // Feature articles and Standard articles should return true
+        const renderAd = shouldAdRender(null, null, null, articleType)
 
         return (
           <div key={`article-${i}`}>
@@ -171,6 +173,7 @@ export class InfiniteScrollArticle extends React.Component<
               infiniteScrollEntrySlug={slug}
               areHostedAdsEnabled={areHostedAdsEnabled}
               shouldAdRender={renderAd}
+              articleSerial={i + 1}
             />
             <Waypoint
               onEnter={waypointData => this.onEnter(article, waypointData)}
