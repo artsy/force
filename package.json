@@ -102,9 +102,9 @@
   "dependencies": {
     "@airbnb/node-memwatch": "1.0.2",
     "@artsy/express-reloadable": "1.4.6",
-    "@artsy/palette": "4.12.2",
+    "@artsy/palette": "4.12.5",
     "@artsy/passport": "1.1.2",
-    "@artsy/reaction": "16.12.9",
+    "@artsy/reaction": "16.12.15",
     "@artsy/stitch": "6.1.4",
     "@babel/core": "7.0.0",
     "@babel/node": "7.0.0",
@@ -271,7 +271,7 @@
     "uuid": "3.3.2",
     "validator": "7.0.0",
     "waypoints": "4.0.0",
-    "webpack-bundle-analyzer": "3.0.4",
+    "webpack-bundle-analyzer": "3.3.2",
     "webpack-node-externals": "1.7.2",
     "xss-filters": "1.2.7",
     "yargs": "11.0.0"
