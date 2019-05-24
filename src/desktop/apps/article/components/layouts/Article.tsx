@@ -138,7 +138,6 @@ export class ArticleLayout extends React.Component<
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}
-            articleSerial={articleSerial}
             shouldAdRender={true} // always render ads on super, series, and custom editorial articles
           />
         ) : (
