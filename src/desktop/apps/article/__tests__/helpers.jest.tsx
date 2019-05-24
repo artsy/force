@@ -3,16 +3,16 @@ import {
   shouldAdRender,
 } from "desktop/apps/article/helpers"
 import { data as sd } from "sharify"
-import { NewsArticle as NewsArticleFixture } from "reaction/Components/Publishing/Fixtures/Articles"
+import {
+  NewsArticle as NewsArticleFixture,
+  FeatureArticle,
+  StandardArticle,
+} from "reaction/Components/Publishing/Fixtures/Articles"
 import React from "react"
 import { NewsArticle } from "desktop/apps/article/components/NewsArticle"
 import { NewDisplayCanvas } from "reaction/Components/Publishing/Display/NewDisplayCanvas"
 import { NewDisplayPanel } from "reaction/Components/Publishing/Display/NewDisplayPanel"
 import { mount } from "enzyme"
-import {
-  FeatureArticle,
-  StandardArticle,
-} from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import { ArticleLayout } from "desktop/apps/article/components/layouts/Article"
 import { SystemContextProvider } from "reaction/Artsy"
 
@@ -100,14 +100,14 @@ describe("ad display logic on Feature and Standard Articles", () => {
   })
 
   it("checks the shouldAdRender prop is correctly passed Feature articles", () => {
-    const articleType = FeatureArticle.article.layout
+    const articleType = FeatureArticle.layout
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)
   })
 
   it("checks the shouldAdRender prop is correctly passed Standard articles", () => {
-    const articleType = StandardArticle.article.layout
+    const articleType = StandardArticle.layout
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)
