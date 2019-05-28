@@ -12,13 +12,6 @@ browseCategories = require './browse_categories.coffee'
 query = require './queries/initial'
 CurrentUser = require '../../models/current_user.coffee'
 
-getRedirectTo = (req) ->
-  req.body['redirect-to'] or
-  req.query['redirect-to'] or
-  req.query['redirect_uri'] or
-  parse(req.get('Referrer') or '').path or
-  '/'
-
 positionWelcomeHeroMethod = (req, res) ->
   method = if req.cookies?['hide-welcome-hero']? then 'push' else 'unshift'
   res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)

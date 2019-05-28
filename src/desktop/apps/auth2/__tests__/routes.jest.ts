@@ -1,11 +1,11 @@
-import { stitch } from "@artsy/stitch"
 import { AuthStatic } from "../components/AuthStatic"
 import { MobileAuthStatic } from "../components/MobileAuthStatic"
-import { index, resetPassword } from "../routes"
+import { index, resetPassword, redirectLoggedInHome } from "../routes"
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
 }))
+const stitch = require("@artsy/stitch").stitch as jest.Mock
 
 describe("Routes", () => {
   let req
@@ -76,8 +76,24 @@ describe("Routes", () => {
           })
         })
 
+        it("Returns the correct modal.type for /log_in path", done => {
+          req.path = "/log_in"
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.type).toBe("login")
+            done()
+          })
+        })
+
         it("Returns the correct modal.type for /signup path", done => {
           req.path = "/signup"
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.type).toBe("signup")
+            done()
+          })
+        })
+
+        it("Returns the correct modal.type for /sign_up path", done => {
+          req.path = "/sign_up"
           index(req, res, next).then(() => {
             expect(stitch.mock.calls[0][0].data.type).toBe("signup")
             done()
@@ -236,6 +252,89 @@ describe("Routes", () => {
         expect(res.render.mock.calls[0][1].reset_password_token).toBe("foobar")
         expect(res.render.mock.calls[0][1].set_password).toBe("set password")
       })
+    })
+  })
+
+  describe("#redirectLoggedInHome", () => {
+    beforeEach(() => {
+      res = {
+        locals: {
+          sd: {},
+        },
+        redirect: jest.fn(),
+        render: jest.fn(),
+      }
+      req = {
+        header: () => "referrer",
+        body: {},
+        query: {},
+        session: {},
+        get: jest.fn(),
+      }
+    })
+
+    it("Calls next if no user", () => {
+      redirectLoggedInHome(req, res, next)
+      expect(next).toBeCalled()
+    })
+
+    it("redirects logged in users home", () => {
+      req.user = {}
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/")
+    })
+
+    it("redirects logged in users (with a redirect_uri query param) to redirect location", () => {
+      req.user = {}
+      req.query["redirect_uri"] = "/awesome-fair"
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/awesome-fair")
+    })
+
+    it("redirects logged in users (with a redirect-to query param) to redirect location", () => {
+      req.user = {}
+      req.query["redirect-to"] = "/awesome-fair"
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/awesome-fair")
+    })
+
+    it("redirects logged in users (with redirect-to in the POST params) to redirect location", () => {
+      req.user = {}
+      req.body["redirect-to"] = "/awesome-fair"
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/awesome-fair")
+    })
+
+    it("redirects logged in users to home if they log in from /log_in", () => {
+      req.get.mockReturnValueOnce("/log_in")
+      req.url = "/log_in"
+      req.user = {}
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/")
+    })
+
+    it("redirects logged in users to home if they log in from /login", () => {
+      req.get.mockReturnValueOnce("/login")
+      req.url = "/login"
+      req.user = {}
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/")
+    })
+
+    it("redirects logged in users to home if they log in from /sign_up", () => {
+      req.get.mockReturnValueOnce("/sign_up")
+      req.url = "/sign_up"
+      req.user = {}
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/")
+    })
+
+    it("redirects logged in users to home if they log in from /signup", () => {
+      req.get.mockReturnValueOnce("/signup")
+      req.url = "/signup"
+      req.user = {}
+      redirectLoggedInHome(req, res, next)
+      expect(res.redirect).toBeCalledWith("/")
     })
   })
 })
