@@ -3,6 +3,7 @@ import { AuthStatic } from "./components/AuthStatic"
 import { ModalType } from "reaction/Components/Authentication/Types"
 import { AuthenticationMeta } from "./components/meta"
 import { MobileAuthStatic } from "./components/MobileAuthStatic"
+import { parse } from "url"
 
 export const index = async (req, res, next) => {
   let type: ModalType
@@ -10,10 +11,10 @@ export const index = async (req, res, next) => {
   let title
 
   switch (req.path) {
-    case "/login":
-      type = ModalType.login
-      break
     case "/signup":
+      type = ModalType.signup
+      break
+    case "/sign_up":
       type = ModalType.signup
       break
     case "/forgot":
@@ -137,4 +138,27 @@ export const resetPassword = (req, res) => {
       set_password: req.session.set_password,
     })
   }
+}
+
+export const redirectLoggedInHome = (req, res, next) => {
+  const pathname = parse(req.url || "").pathname
+  if (["/log_in", "/sign_up"].includes(pathname)) {
+    req.query["redirect-to"] = "/"
+  }
+  if (req.user) {
+    res.redirect(getRedirectTo(req))
+  } else {
+    next()
+  }
+}
+
+export const getRedirectTo = req => {
+  let referrer = parse(req.get("Referrer") || "").path || "/"
+
+  return (
+    req.body["redirect-to"] ||
+    req.query["redirect-to"] ||
+    req.query["redirect_uri"] ||
+    referrer
+  )
 }

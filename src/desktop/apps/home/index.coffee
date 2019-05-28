@@ -14,8 +14,3 @@ app.set 'view engine', 'jade'
 app.locals.resize = resize
 app.locals.markdown = markdown
 app.get '/', routes.index
-app.get '/log_in', routes.redirectLoggedInHome, routes.index
-app.get '/sign_up', routes.redirectLoggedInHome, routes.index
-# TODO: Remove after /auth2 launches
-if !sd.NEW_AUTH_MODAL
-  app.get '/forgot', routes.index

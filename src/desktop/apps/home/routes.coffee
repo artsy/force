@@ -81,11 +81,3 @@ fetchMetaphysicsData = (req, showHeroUnits)->
         jsonLD: JSON.stringify jsonLD
 
     .catch next
-
-@redirectToSignup = (req, res) ->
-  res.redirect "/sign_up"
-
-@redirectLoggedInHome = (req, res, next) ->
-  pathname = parse(req.url or '').pathname
-  req.query['redirect-to'] = '/' if pathname is '/log_in' or pathname is '/sign_up'
-  if req.user? then res.redirect getRedirectTo(req) else next()

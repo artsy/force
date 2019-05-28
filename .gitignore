@@ -38,3 +38,4 @@ server.dist.js.map
 coverage*
 .nyc_output
 reports*
+junit.xml
