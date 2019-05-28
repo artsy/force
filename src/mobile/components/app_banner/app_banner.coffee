@@ -47,7 +47,7 @@ module.exports = class AppBanner
     height
 
   launch: ->
-    window.location = @iTunesUrl()
+    window.location.replace @iTunesUrl()
 
   remove: ->
     @dismissed()

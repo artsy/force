@@ -1,11 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import { NavBar as ReactionNavBar } from "reaction/Components/NavBar"
+import { data as sd } from "sharify"
 
 import {
   SystemContextProvider,
   SystemContextProps,
 } from "@artsy/reaction/dist/Artsy"
+import { StagingBanner } from "./StagingBanner"
 
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -23,6 +25,8 @@ interface NavBarProps {
 }
 
 export const NavBar: React.FC<NavBarProps> = ({ notificationCount, user }) => {
+  const showStagingBanner = sd.APPLICATION_NAME === "force-staging"
+
   return (
     <SystemContextProvider
       mediator={mediator}
@@ -30,6 +34,7 @@ export const NavBar: React.FC<NavBarProps> = ({ notificationCount, user }) => {
       user={user}
     >
       <NavBarContainer>
+        {showStagingBanner && <StagingBanner />}
         <ReactionNavBar />
       </NavBarContainer>
     </SystemContextProvider>

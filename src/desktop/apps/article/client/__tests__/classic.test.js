@@ -3,8 +3,6 @@ import sinon from "sinon"
 import Backbone from "backbone"
 import benv from "benv"
 
-const $ = require("jquery")(window)
-
 describe("Classic Article", () => {
   let init
   let RewireApi

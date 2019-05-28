@@ -8,6 +8,7 @@ mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 Form = require('../mixins/form.coffee')
 FormErrorHelpers = require('../auth_modal/helpers')
+{ repcaptcha } = require "@artsy/reaction/dist/Utils/repcaptcha"
 
 class MarketingSignupModalInner extends Backbone.View
   _.extend @prototype, Form
@@ -20,7 +21,7 @@ class MarketingSignupModalInner extends Backbone.View
   events:
     'click .auth-mode-toggle a': 'openLogin'
     'click #signup-fb': 'fbSignup'
-    'submit form': 'submit'
+    'submit form': 'onSubmit'
 
   initialize: ({@data}) ->
     @acquisitionInitiative = @data?.slug
@@ -66,14 +67,7 @@ class MarketingSignupModalInner extends Backbone.View
   showError: (msg) =>
     @$('.auth-errors').text msg
 
-  submit: (e) ->
-    return unless @validateForm()
-    return if @formIsSubmitting()
-
-    e.preventDefault()
-
-    @$('form button').addClass 'is-loading'
-
+  submit: (recaptcha_token) =>
     formData = @serializeForm()
     data = Object.assign {},
       formData,
@@ -81,6 +75,7 @@ class MarketingSignupModalInner extends Backbone.View
       signupIntent: @signupIntent,
       signupReferer: @signupReferer
       acquisition_initiative: "Marketing Modal #{@acquisitionInitiative}"
+      recaptcha_token: recaptcha_token
 
     $.ajax
       url: sd.AP.signupPagePath
@@ -94,6 +89,15 @@ class MarketingSignupModalInner extends Backbone.View
         flash = new FlashMessage message: 'Thank you for joining Artsy', href: '/personalize'
       complete: =>
         @$('form button').removeClass 'is-loading'
+
+  onSubmit: (e) ->
+    return unless @validateForm()
+    return if @formIsSubmitting()
+    e.preventDefault()
+    @$('form button').addClass 'is-loading'
+    repcaptcha("signup_submit", (token) =>
+      @submit(token)
+    )
 
 module.exports = class MarketingSignupModal extends Backbone.View
 

@@ -18,7 +18,7 @@ const initialState = {
   artistAutocompleteValue: "",
   artistName: sd.SUBMISSION_ARTIST_NAME || "",
   assetIds: [],
-  authFormState: "signUp",
+  authFormState: "signup",
   categoryOptions: [
     "Painting",
     "Sculpture",

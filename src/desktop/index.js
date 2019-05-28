@@ -56,11 +56,7 @@ app.use(require("./apps/tag"))
 app.use(require("./apps/unsubscribe"))
 app.use(require("./apps/unsupported_browser"))
 app.use(require("./apps/style_guide"))
-if (sd.NEW_AUTH_MODAL) {
-  app.use(require("./apps/auth2").app)
-} else {
-  app.use(require("./apps/auth"))
-}
+app.use(require("./apps/auth2").app)
 app.use(require("./apps/static"))
 app.use(require("./apps/clear_cache"))
 app.use(require("./apps/sitemaps"))

@@ -24,12 +24,14 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.12.1":
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.12.1.tgz#797fcb587e5dfc044e0aa197a690a17df68f0e6b"
-  integrity sha512-179d6QKXZJI6kjgRSsMjt8ZD8GZVfqAcepaO2iseDPqNgiYsPIcrGc+kLU6/HKmPBlYH8MRaTpqvPG/EQiC82w==
+"@artsy/palette@4.12.5":
+  version "4.12.5"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.12.5.tgz#971ca10878279a605874c588b235fe3a7f6d1b09"
+  integrity sha512-hwWTCu7qhNfFkdliqmeBlwwt5RyF6NZ4DNeJ0yLILGbvhrRG8Aftpvra0FLSB4V0Ek6aOoiMwoAwa4V0xwTBzA==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
+    d3-interpolate "^1.3.2"
+    d3-shape "^1.3.5"
     moment "^2.23.0"
     moment-timezone "^0.5.25"
     rc-slider "^8.6.2"
@@ -65,17 +67,16 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.12.1":
-  version "16.12.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.1.tgz#f5a9f7f9cebea0a50603d09fa14353beee863041"
-  integrity sha512-n+mRme1dbv4hZ5CiYgo+J+Z+3HXUiVLq3hvluTW5n/aK4A/pCl3B336SmWNHdbzpliFqaxZiJCEOiQ6kUm75BA==
+"@artsy/reaction@16.12.17":
+  version "16.12.17"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.17.tgz#7287d4a8d10a08e019ba204bbfe81902d30fa025"
+  integrity sha512-YVvarF4QYtcrDlXRhLyB3jfgdRYaVY2O4/bd0sgtHeBh3w4vX2J2aN8ZLj7eXf2C27M+FnSKWLiEiA21a556EQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     autosuggest-highlight "^3.1.1"
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
-    deepmerge "^3.2.0"
     farce "^0.2.6"
     formik "^0.11.11"
     found "^0.3.14"
@@ -95,6 +96,7 @@
     react-autosuggest "^9.4.3"
     react-css-transition-replace "^3.0.2"
     react-flickity-component "^3.3.0"
+    react-gpt "^2.0.1"
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
@@ -102,7 +104,7 @@
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
-    react-relay "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
+    react-relay "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
     react-relay-network-modern "^2.5.1"
     react-relay-network-modern-ssr "^1.2.2"
     react-responsive-decorator "^0.0.1"
@@ -111,12 +113,12 @@
     react-slick "^0.23.2"
     react-spring "^5.7.2"
     react-stripe-elements "^2.0.1"
-    react-tracking "^6.0.0"
+    react-tracking "^7.0.1"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
     relay-mock-network-layer "^2.0.0"
-    relay-runtime "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
+    relay-runtime "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
     serialize-javascript "^1.5.0"
     sharify "^0.1.6"
     styled-system "^3.1.11"
@@ -128,10 +130,10 @@
     url "^0.11.0"
     yup "^0.24.1"
 
-"@artsy/stitch@6.1.3":
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.3.tgz#0d5ed6f041d87436bf63368d7bbfe39c3a586ea2"
-  integrity sha512-uhqsldUqr4oAMbUlnM4TIHlDJi//HcFlj+mNhFWHLqilhPFzDC47Wu51YR8GJDVERQlNG6OD5wyXe7neAjzGdA==
+"@artsy/stitch@6.1.4":
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.4.tgz#1f7cdcad22537dc2d5ab8ec50f9de0f1c5e05041"
+  integrity sha512-FiLuWb4qBXFssG2REWQuOiMZUfMPMj5PFeBI61/VWsEtZeP2yOe133rvog4/ZHqZm6O6bxuSizujxIDg3zGJUg==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
@@ -913,6 +915,15 @@
   dependencies:
     dependency-graph "0.8.0"
 
+"@jest/types@^24.8.0":
+  version "24.8.0"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-24.8.0.tgz#f31e25948c58f0abd8c845ae26fcea1491dea7ad"
+  integrity sha512-g17UxVr2YfBtaMUxn9u/4+siG1ptg9IGYAYwvpwn61nBg779RXnjE/m7CxYcIzEt0AbHZZAHSEZNhkE2WxURVg==
+  dependencies:
+    "@types/istanbul-lib-coverage" "^2.0.0"
+    "@types/istanbul-reports" "^1.1.1"
+    "@types/yargs" "^12.0.9"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1086,6 +1097,26 @@
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
   integrity sha1-PDSD5gbAQTeEOOlRRk8A5OYHBtY=
 
+"@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
+  integrity sha512-hRJD2ahnnpLgsj6KWMYSrmXkM3rm2Dl1qkx6IOFD5FnuNPXJIG5L0dhgKXCYTRMGzU4n0wImQ/xfmRc4POUFlg==
+
+"@types/istanbul-lib-report@*":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/istanbul-lib-report/-/istanbul-lib-report-1.1.1.tgz#e5471e7fa33c61358dd38426189c037a58433b8c"
+  integrity sha512-3BUTyMzbZa2DtDI2BkERNC6jJw2Mr2Y0oGI7mRxYNBPxppbtEK1F66u3bKwU2g+wxwWI7PAoRpJnOY1grJqzHg==
+  dependencies:
+    "@types/istanbul-lib-coverage" "*"
+
+"@types/istanbul-reports@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/istanbul-reports/-/istanbul-reports-1.1.1.tgz#7a8cbf6a406f36c8add871625b278eaf0b0d255a"
+  integrity sha512-UpYjBi8xefVChsCoBpKShdxTllC9pwISirfoZsUa2AAdQg/Jd2KQGtSbw+ya7GPo7x/wAPlH6JBhKhAsXUEZNA==
+  dependencies:
+    "@types/istanbul-lib-coverage" "*"
+    "@types/istanbul-lib-report" "*"
+
 "@types/jest@23.3.2":
   version "23.3.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.2.tgz#07b90f6adf75d42c34230c026a2529e56c249dbb"
@@ -1178,6 +1209,11 @@
     "@types/tapable" "*"
     "@types/uglify-js" "*"
     source-map "^0.6.0"
+
+"@types/yargs@^12.0.9":
+  version "12.0.12"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.12.tgz#45dd1d0638e8c8f153e87d296907659296873916"
+  integrity sha512-SOhuU4wNBxhhTHxYaiG5NY4HBhDIDnJF60GU+2LqHAdKKer86//e4yg69aENCtQ04n0ovz+tq2YPME5t5yp4pw==
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -1422,6 +1458,11 @@ acorn-jsx@^4.1.1:
   dependencies:
     acorn "^5.0.3"
 
+acorn-walk@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-6.1.1.tgz#d363b66f5fac5f018ff9c3a1e7b6f8e310cc3913"
+  integrity sha512-OtUw6JUTgxA2QoqqmrmQ7F2NYqiBPi/L2jqHyFtllhOUvXYQXf0Z1CYUinIfyT4bTCGmrA7gX9FvHA81uzCoVw==
+
 acorn@^1.0.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-1.2.2.tgz#c8ce27de0acc76d896d2b1fad3df588d9e82f014"
@@ -1442,12 +1483,12 @@ acorn@^4.0.4, acorn@~4.0.2:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
   integrity sha1-EFSVrlNh1pe9GVyCUZLhrX8lN4c=
 
-acorn@^5.0.0, acorn@^5.0.1, acorn@^5.0.3, acorn@^5.3.0, acorn@^5.6.0, acorn@^5.7.3:
+acorn@^5.0.0, acorn@^5.0.1, acorn@^5.0.3, acorn@^5.3.0, acorn@^5.6.0:
   version "5.7.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
   integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
 
-acorn@^6.0.5:
+acorn@^6.0.5, acorn@^6.0.7:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
   integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
@@ -2213,9 +2254,9 @@ babel-plugin-module-resolver@3.1.0:
     reselect "^3.0.1"
     resolve "^1.4.0"
 
-"babel-plugin-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/babel-plugin-relay-1.5.0-artsy.5.tgz":
+"babel-plugin-relay@https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/babel-plugin-relay-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
-  resolved "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/babel-plugin-relay-1.5.0-artsy.5.tgz#690d531191f8b4838141eda455116078a0f734de"
+  resolved "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/babel-plugin-relay-1.5.0-artsy.5.tgz#690d531191f8b4838141eda455116078a0f734de"
   dependencies:
     babel-runtime "^6.23.0"
     babel-types "^6.24.1"
@@ -4003,6 +4044,11 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
+core-js@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.1.1.tgz#502ba6e7c15300de20a372b390f9fc9039db76f2"
+  integrity sha512-OddJJmAMN6czmPEtp1ScHFWq4RXzH1iWJFGL8CZ6UcopeBzCMjo4Slv0UoLW2hhny1/wsDowm6xCmBCWQ1azkA==
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -4276,6 +4322,30 @@ cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
+
+d3-color@1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.2.3.tgz#6c67bb2af6df3cc8d79efcc4d3a3e83e28c8048f"
+  integrity sha512-x37qq3ChOTLd26hnps36lexMRhNXEtVxZ4B25rL0DVdDsGQIJGB18S7y9XDwlDD6MD/ZBzITCf4JjGMM10TZkw==
+
+d3-interpolate@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.3.2.tgz#417d3ebdeb4bc4efcc8fd4361c55e4040211fd68"
+  integrity sha512-NlNKGopqaz9qM1PXh9gBF1KSCVh+jSFErrSlD/4hybwoNX/gt1d8CDbDW+3i+5UOHhjC6s6nMvRxcuoMVNgL2w==
+  dependencies:
+    d3-color "1"
+
+d3-path@1:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.7.tgz#8de7cd693a75ac0b5480d3abaccd94793e58aae8"
+  integrity sha512-q0cW1RpvA5c5ma2rch62mX8AYaiLX0+bdaSM2wxSU9tXjU4DNvkx9qiUvjkuWCj3p22UO/hlPivujqMiR9PDzA==
+
+d3-shape@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.3.5.tgz#e81aea5940f59f0a79cfccac012232a8987c6033"
+  integrity sha512-VKazVR3phgD+MUCldapHD7P9kcrvPcexeX/PkMJmkUov4JM8IxsSg1DvbYoYich9AtdTsa5nNk2++ImPiDiSxg==
+  dependencies:
+    d3-path "1"
 
 d@1:
   version "1.0.0"
@@ -5614,6 +5684,11 @@ eventemitter3@1.x.x:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
   integrity sha1-HIaZHYFq0eUEdQ5zh0Ik7PO+xQg=
 
+eventemitter3@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+  integrity sha1-teEHm1n7XhuidxwKmTvgYKWMmbo=
+
 events@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
@@ -5672,6 +5747,11 @@ execa@^0.8.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
+
+exenv@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
 
 exit-hook@^1.0.0:
   version "1.1.1"
@@ -7107,6 +7187,11 @@ hoek@4.x.x:
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
   integrity sha512-QLg82fGkfnJ/4iy1xZ81/9SIJiq1NGFUMGs6ParyjBZr6jW2Ufj/snDqTHixNlHdPNwN2RLVD0Pi3igeK9+JfA==
 
+hoist-non-react-statics@^1.0.5:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
+  integrity sha1-qkSM8JhtVcxAdzsXF0t90GbLfPs=
+
 hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
@@ -8309,6 +8394,11 @@ jest-get-type@^22.1.0:
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-22.1.0.tgz#4e90af298ed6181edc85d2da500dbd2753e0d5a9"
   integrity sha512-nD97IVOlNP6fjIN5i7j5XRH+hFsHL7VlauBbzRvueaaUe70uohrkz7pL/N8lx/IAwZRTJ//wOdVgh85OgM7g3w==
 
+jest-get-type@^24.8.0:
+  version "24.8.0"
+  resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-24.8.0.tgz#a7440de30b651f5a70ea3ed7ff073a32dfe646fc"
+  integrity sha512-RR4fo8jEmMD9zSz2nLbs2j0zvPpk/KCEz3a62jJWbd2ayNo0cb+KFRxPHVhE4ZmgGJEQp0fosmNz84IfqM8cMQ==
+
 jest-haste-map@^23.6.0:
   version "23.6.0"
   resolved "https://registry.yarnpkg.com/jest-haste-map/-/jest-haste-map-23.6.0.tgz#2e3eb997814ca696d62afdb3f2529f5bbc935e16"
@@ -8340,6 +8430,16 @@ jest-jasmine2@^23.6.0:
     jest-snapshot "^23.6.0"
     jest-util "^23.4.0"
     pretty-format "^23.6.0"
+
+jest-junit@6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-6.4.0.tgz#23e15c979fa6338afde46f2d2ac2a6b7e8cf0d9e"
+  integrity sha512-GXEZA5WBeUich94BARoEUccJumhCgCerg7mXDFLxWwI2P7wL3Z7sGWk+53x343YdBLjiMR9aD/gYMVKO+0pE4Q==
+  dependencies:
+    jest-validate "^24.0.0"
+    mkdirp "^0.5.1"
+    strip-ansi "^4.0.0"
+    xml "^1.0.1"
 
 jest-leak-detector@^23.6.0:
   version "23.6.0"
@@ -8495,6 +8595,18 @@ jest-validate@^23.6.0:
     jest-get-type "^22.1.0"
     leven "^2.1.0"
     pretty-format "^23.6.0"
+
+jest-validate@^24.0.0:
+  version "24.8.0"
+  resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-24.8.0.tgz#624c41533e6dfe356ffadc6e2423a35c2d3b4849"
+  integrity sha512-+/N7VOEMW1Vzsrk3UWBDYTExTPwf68tavEPKDnJzrC6UlHtUDU/fuEdXqFoHzv9XnQ+zW6X3qMZhJ3YexfeLDA==
+  dependencies:
+    "@jest/types" "^24.8.0"
+    camelcase "^5.0.0"
+    chalk "^2.0.1"
+    jest-get-type "^24.8.0"
+    leven "^2.1.0"
+    pretty-format "^24.8.0"
 
 jest-watcher@^23.4.0:
   version "23.4.0"
@@ -9486,7 +9598,7 @@ lodash@3.0.x:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.0.1.tgz#14d49028a38bc740241d11e2ecd57ec06d73c19a"
   integrity sha1-FNSQKKOLx0AkHRHi7NV+wG1zwZo=
 
-lodash@4.17.11, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@~4.17.2:
+lodash@4.17.11, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@~4.17.2:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -9664,7 +9776,7 @@ md5.js@^1.3.4:
     inherits "^2.0.1"
     safe-buffer "^5.1.2"
 
-md5@^2.2.1:
+md5@^2.1.0, md5@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/md5/-/md5-2.2.1.tgz#53ab38d5fe3c8891ba465329ea23fac0540126f9"
   integrity sha1-U6s41f48iJG6RlMp6iP6wFQBJvk=
@@ -9971,10 +10083,29 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@0.x.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~
   dependencies:
     minimist "0.0.8"
 
+mocha-junit-reporter@1.22.0:
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/mocha-junit-reporter/-/mocha-junit-reporter-1.22.0.tgz#4eee2f3318398bf424a64b7594ca7a39d924479c"
+  integrity sha512-nRBCVxzYYhOqQr2XlByLRj5MAAy7djArRkGUSx9dGc+B9NMu4yCeo74uXKALAnMhXjuLmtAL9F8WGe3wQV30IA==
+  dependencies:
+    debug "^2.2.0"
+    md5 "^2.1.0"
+    mkdirp "~0.5.1"
+    strip-ansi "^4.0.0"
+    xml "^1.0.0"
+
 mocha-lcov-reporter@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/mocha-lcov-reporter/-/mocha-lcov-reporter-1.3.0.tgz#469bdef4f8afc9a116056f079df6182d0afb0384"
   integrity sha1-Rpve9PivyaEWBW8HnfYYLQr7A4Q=
+
+mocha-multi-reporters@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/mocha-multi-reporters/-/mocha-multi-reporters-1.1.7.tgz#cc7f3f4d32f478520941d852abb64d9988587d82"
+  integrity sha1-zH8/TTL0eFIJQdhSq7ZNmYhYfYI=
+  dependencies:
+    debug "^3.1.0"
+    lodash "^4.16.4"
 
 mocha@3.4.1:
   version "3.4.1"
@@ -11386,6 +11517,16 @@ pretty-format@^23.6.0:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
+pretty-format@^24.8.0:
+  version "24.8.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-24.8.0.tgz#8dae7044f58db7cb8be245383b565a963e3c27f2"
+  integrity sha512-P952T7dkrDEplsR+TuY7q3VXDae5Sr7zmQb12JU/NDQa/3CH7/QW0yvqLcGN6jL+zQFKaoJcPc+yJxMTGmosqw==
+  dependencies:
+    "@jest/types" "^24.8.0"
+    ansi-regex "^4.0.0"
+    ansi-styles "^3.2.0"
+    react-is "^16.8.4"
+
 prettyjson@^1.1.2:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prettyjson/-/prettyjson-1.2.1.tgz#fcffab41d19cab4dfae5e575e64246619b12d289"
@@ -12009,6 +12150,18 @@ react-flickity-component@^3.3.0:
     imagesloaded "^4.1.4"
     prop-types "^15.7.2"
 
+react-gpt@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-gpt/-/react-gpt-2.0.1.tgz#faab7d7b650ea7f0b14f16de0bc701fa81fb35f7"
+  integrity sha512-MpN3H9aXY2Ywq7lzfBUQPAdfYVZen0BbNKDRn7brk5My3RRfIN9vetj4IRHMZmq9RKCs45xXj9cqkpOMXqhj0w==
+  dependencies:
+    deep-equal "^1.0.1"
+    eventemitter3 "^2.0.2"
+    exenv "^1.2.2"
+    hoist-non-react-statics "^1.0.5"
+    invariant "^2.2.2"
+    throttle-debounce "^1.0.1"
+
 react-head@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-head/-/react-head-3.0.2.tgz#efe79b1e5805a18a5ffc58e6a810eeeb609d82bd"
@@ -12024,7 +12177,7 @@ react-html-parser@^2.0.2:
   dependencies:
     htmlparser2 "^3.9.0"
 
-react-is@^16.3.2, react-is@^16.6.0, react-is@^16.6.1, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.2, react-is@^16.8.3:
+react-is@^16.3.2, react-is@^16.6.0, react-is@^16.6.1, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.2, react-is@^16.8.3, react-is@^16.8.4:
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
@@ -12126,9 +12279,9 @@ react-relay-network-modern@^2.5.1:
   resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.5.1.tgz#a081ae2691dbf2cfa53129cd6eb41a1e91a071aa"
   integrity sha512-Edp9XWAWLiAntrtNmfeLZMPMcwUmTpBhAoxHCaSKcet7gWN5RS0Z2OhKpVhKg3p1qZz+VLMMvWg8eQghBe0auQ==
 
-"react-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz", "react-relay@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz":
+"react-relay@https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz", "react-relay@https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
-  resolved "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz#956280da8d941af7f6f65f3831b01051ee2c32c7"
+  resolved "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz#956280da8d941af7f6f65f3831b01051ee2c32c7"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.14"
@@ -12230,11 +12383,12 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
-react-tracking@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-6.0.0.tgz#9ed5dd7f8b64d40fcd1cc0160f449d909e6a58a0"
-  integrity sha512-wYOg9s54CV4/joO3gYJ9YpphGbbyHHhzI9priZk2QTqC3/ygQ8mHM2LK22vE7ILBun8LcGiPWCRUuGV/gtvlgA==
+react-tracking@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-tracking/-/react-tracking-7.0.1.tgz#8d0c21374b58e7259a3a42d908d68923e6c1e112"
+  integrity sha512-O7Gh55b86J9mBNVbUFwnT+GHHY27QtireG97tJdZQvmsQ3ScmJrqLTPq4kFJu/Nyt8Q3AWuM8+jpnmR29GAnWQ==
   dependencies:
+    core-js "^3.1.1"
     deepmerge "^3.2.0"
     hoist-non-react-statics "^3.3.0"
 
@@ -12654,9 +12808,9 @@ relay-compiler-language-typescript@0.9.0:
     immutable "^3.7.6"
     invariant "^2.2.2"
 
-"relay-compiler@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-compiler-1.5.0-artsy.5.tgz":
+"relay-compiler@https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/relay-compiler-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
-  resolved "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-compiler-1.5.0-artsy.5.tgz#171e0716d30f2c3e8ee61b5af5aa893f366a1d2c"
+  resolved "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/relay-compiler-1.5.0-artsy.5.tgz#171e0716d30f2c3e8ee61b5af5aa893f366a1d2c"
   dependencies:
     babel-generator "^6.26.0"
     babel-polyfill "^6.20.0"
@@ -12682,9 +12836,9 @@ relay-mock-network-layer@^2.0.0:
   dependencies:
     graphql-tools "^4.0.2"
 
-relay-runtime@1.5.0-artsy.5, "relay-runtime@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz", "relay-runtime@https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz":
+relay-runtime@1.5.0-artsy.5, "relay-runtime@https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz", "relay-runtime@https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz":
   version "1.5.0-artsy.5"
-  resolved "https://github.com/alloy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz#6f24fa3cd7dcfc58164ee1b21b059c535e6419bf"
+  resolved "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/relay-runtime-1.5.0-artsy.5.tgz#6f24fa3cd7dcfc58164ee1b21b059c535e6419bf"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.14"
@@ -14399,6 +14553,11 @@ throat@^4.0.0:
   resolved "https://registry.yarnpkg.com/throat/-/throat-4.1.0.tgz#89037cbc92c56ab18926e6ba4cbb200e15672a6a"
   integrity sha1-iQN8vJLFarGJJua6TLsgDhVnKmo=
 
+throttle-debounce@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
+  integrity sha512-XH8UiPCQcWNuk2LYePibW/4qL97+ZQ1AN3FNXwZRBNPPowo/NRU5fAlDCSNBJIYCKbioZfuYtMhG4quqoJhVzg==
+
 throttleit@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/throttleit/-/throttleit-0.0.2.tgz#cfedf88e60c00dd9697b61fdd2a8343a9b680eaf"
@@ -15250,12 +15409,13 @@ webidl-conversions@^4.0.1, webidl-conversions@^4.0.2:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
-webpack-bundle-analyzer@3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-3.0.4.tgz#095638487a664162f19e3b2fb7e621b7002af4b8"
-  integrity sha512-ggDUgtKuQki4vmc93Ej65GlYxeCUR/0THa7gA+iqAGC2FFAxO+r+RM9sAUa8HWdw4gJ3/NZHX/QUcVgRjdIsDg==
+webpack-bundle-analyzer@3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-3.3.2.tgz#3da733a900f515914e729fcebcd4c40dde71fc6f"
+  integrity sha512-7qvJLPKB4rRWZGjVp5U1KEjwutbDHSKboAl0IfafnrdXMrgC0tOtZbQD6Rw0u4cmpgRN4O02Fc0t8eAT+FgGzA==
   dependencies:
-    acorn "^5.7.3"
+    acorn "^6.0.7"
+    acorn-walk "^6.1.1"
     bfj "^6.1.1"
     chalk "^2.4.1"
     commander "^2.18.0"
@@ -15620,6 +15780,11 @@ xml2js@^0.4.4:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~9.0.1"
+
+xml@^1.0.0, xml@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
+  integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
 xmlbuilder@0.4.2:
   version "0.4.2"

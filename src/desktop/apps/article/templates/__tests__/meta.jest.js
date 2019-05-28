@@ -3,7 +3,6 @@ import path from "path"
 import jade from "jade"
 import fs from "fs"
 import Article from "desktop/models/article.coffee"
-import fixtures from "desktop/test/helpers/fixtures.coffee"
 import { StandardArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 
 const render = templateName => {
@@ -12,28 +11,6 @@ const render = templateName => {
     filename,
   })
 }
-
-describe("Script tag", () => {
-  it("contains ad server script tag", () => {
-    const article = _.extend({}, StandardArticle, {
-      slug: "artsy-editorial-slug",
-      indexable: true,
-      description: "Artsy Editorial is an editorial channel.",
-      social_description: "Artsy Editorial is socially friendly.",
-      social_image: "http://kitten-social.com",
-    })
-    const html = render("meta")({
-      article,
-      crop: url => url,
-      sd: {
-        APP_URL: "https://artsy.net",
-        CURRENT_PATH: "/article/artsy-editorial-slug",
-      },
-    })
-
-    expect(html).toMatch('<script src="//htlbid.com/v2/artsy.min.js">')
-  })
-})
 
 describe("Meta template", () => {
   it("contains basic meta tags", () => {
@@ -107,14 +84,12 @@ describe("Classic meta template", () => {
     const html = render("classic_meta")({
       article: new Article(article),
       crop: url => url,
-      sd: {
-        APP_URL: "https://artsy.net",
-      },
+      sd: {},
     })
 
     expect(html).toMatch("<title>New York's Next Art District</title>")
     expect(html).toMatch(
-      '<link rel="canonical" href="http://artsy.net/article/gallery-insights-slug"/>'
+      '<link rel="canonical" href="undefined/article/gallery-insights-slug"/>'
     )
     expect(html).toMatch(
       '<meta property="description" content="Gallery Insights is a team channel."/>'
