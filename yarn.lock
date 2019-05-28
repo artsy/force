@@ -24,10 +24,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/palette@4.12.5":
-  version "4.12.5"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.12.5.tgz#971ca10878279a605874c588b235fe3a7f6d1b09"
-  integrity sha512-hwWTCu7qhNfFkdliqmeBlwwt5RyF6NZ4DNeJ0yLILGbvhrRG8Aftpvra0FLSB4V0Ek6aOoiMwoAwa4V0xwTBzA==
+"@artsy/palette@4.12.6":
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.12.6.tgz#26c69b116caa152123b37ba47c1e3c9963e4b19e"
+  integrity sha512-IyqUV3cU5OZIG8LOicOxeoI5gBRN+ZBaK0iuNZCY3yyRl0HAu4CmfzhbVmI1k69zISOVlxjUoDrxhRUuFI5ubQ==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -43,10 +43,10 @@
     styled-system "^3.1.11"
     trunc-html "^1.1.2"
 
-"@artsy/passport@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.2.tgz#6171558435e48d7cef5d70881070365aba56a0e4"
-  integrity sha512-eNddrCudYX7gf0Sp6nbNL2cSr5+i15M4/tLIyq+EqxjHsdrCD/pd33ItEUmfPbAO988sJmEJffhsp+BwMaizKg==
+"@artsy/passport@1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.4.tgz#48b2c41d9fa90b3c13e2d8bd9b4d5e6ca26002d3"
+  integrity sha512-rDcuO+YvTD1fHYpg1z4vmW8y1RfNGRh7yzVFHQiYad2C8vY2G/NTMRG12XPJnLVcMPEerOX1LmKr/9JPjdNBxA==
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
