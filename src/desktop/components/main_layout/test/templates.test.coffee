@@ -50,6 +50,12 @@ describe 'Main layout template', ->
       asset: ((p) -> p)
     ).should.not.containEql 'id="google-recaptcha"'
 
+  it 'Does not reCAPTCHA script if is EIGEN', ->
+    render('../templates/index.jade')(
+      sd: { EIGEN: true, RECAPTCHA_KEY: sd.RECAPTCHA_KEY },
+      asset: ((p) -> p)
+    ).should.not.containEql 'id="google-recaptcha"'
+
   it 'loads reCAPTCHA script if RECAPTCHA_KEY is present', ->
     render('../templates/index.jade')(
       sd: sd,
