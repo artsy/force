@@ -13,7 +13,6 @@ app.use(
   })
 )
 
-app.use(require("./apps/auth"))
 app.use(require("./apps/page"))
 app.use(require("./apps/home"))
 app.use(require("./apps/unsubscribe"))

@@ -43,16 +43,16 @@ hash =
     require '../apps/profile/client.coffee'
 
   '^/log_in': ->
-    require('../apps/auth/client/login.coffee').init()
+  #   require('../apps/auth/client/login.coffee').init()
 
-  '^/login': ->
-    require('../apps/auth/client/login.coffee').init()
+  # '^/login': ->
+  #   require('../apps/auth/client/login.coffee').init()
 
-  '^/reset_password': ->
-    require('../apps/auth/client/reset_password.coffee').init()
+  # '^/reset_password': ->
+  #   require('../apps/auth/client/reset_password.coffee').init()
 
-  '^/sign_up': ->
-    require('../apps/auth/client/signup.coffee').init()
+  # '^/sign_up': ->
+  #   require('../apps/auth/client/signup.coffee').init()
 
   '^/collect$': ->
     require('../apps/browse/client.coffee').init()
