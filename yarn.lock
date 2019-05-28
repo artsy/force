@@ -43,10 +43,10 @@
     styled-system "^3.1.11"
     trunc-html "^1.1.2"
 
-"@artsy/passport@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.3.tgz#fb22122382123e08e144c0612685a0ab10303b42"
-  integrity sha512-xRLSyw0awymzP6uL27/gu17d4CAAgrc64ZU3mGI+FMqA95dmHYk3h6eCUKRXr0ZrUCo83TnKS3GAg7tZTHLNXg==
+"@artsy/passport@1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.4.tgz#48b2c41d9fa90b3c13e2d8bd9b4d5e6ca26002d3"
+  integrity sha512-rDcuO+YvTD1fHYpg1z4vmW8y1RfNGRh7yzVFHQiYad2C8vY2G/NTMRG12XPJnLVcMPEerOX1LmKr/9JPjdNBxA==
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
