@@ -59,7 +59,6 @@ module.exports =
   GEMINI_ACCOUNT_KEY: 'force-staging'
   GEMINI_APP: 'http://localhost:3004'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
-  GEMINI_S3_ACCESS_KEY: null
   GENOME_URL: 'https://helix.artsy.net'
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'

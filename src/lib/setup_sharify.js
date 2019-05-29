@@ -63,7 +63,6 @@ sharify.data = _.extend(
     "GEMINI_ACCOUNT_KEY",
     "GEMINI_APP",
     "GEMINI_CLOUDFRONT_URL",
-    "GEMINI_S3_ACCESS_KEY",
     "GENOME_URL",
     "GEODATA_URL",
     "GOOGLE_ANALYTICS_ID",
