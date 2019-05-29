@@ -96,7 +96,6 @@ function setupJquery() {
   require("jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js")
   const loadTouchEvents = require("jquery-touch-events")
   loadTouchEvents($)
-  require("artsy-gemini-upload")($)
 
   // For drop down menus that appear on hover you may want that menu to close
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and

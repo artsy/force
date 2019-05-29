@@ -24,6 +24,11 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
+"@artsy/gemup@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
+  integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
+
 "@artsy/palette@4.12.8":
   version "4.12.8"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.12.8.tgz#f7e4e8904757f82978ba32c34b7cb0ad070913d0"
@@ -67,10 +72,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.12.21":
-  version "16.12.21"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.21.tgz#61b37d70b62eef5e0c8b4e2cdc1d64a247607d29"
-  integrity sha512-BHZDuwbK7qs+s/j7c8Y1KX1RpCMHyhiv3/PvCjteQBBHdpaMFJ3PBq80N1pTVobWk8ACoN8a370Pw2clrI7HyA==
+"@artsy/reaction@16.12.23":
+  version "16.12.23"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.23.tgz#514c0f662089af3e93fbbcbf55f5d235f4c2510d"
+  integrity sha512-8lPwfOiRW2WcaaiKYoNfEtBj+Aq4CIzQU6Om5jj7lG+mEpdg9MLU0eqrmxFDQOcE8OEI7Q4YHKQL5U9FGOtO4Q==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -1894,11 +1899,6 @@ artsy-eigen-web-association@artsy/artsy-eigen-web-association:
 artsy-ezel-components@artsy/artsy-ezel-components:
   version "0.0.6"
   resolved "https://codeload.github.com/artsy/artsy-ezel-components/tar.gz/61983f3758ecc4a0a057aa9c830e3552abcaa50e"
-
-artsy-gemini-upload@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/artsy-gemini-upload/-/artsy-gemini-upload-0.0.6.tgz#ff228ff04a66beb9eb2dd251587c2c3446e26abd"
-  integrity sha1-/yKP8EpmvrnrLdJRWHwsNEbiar0=
 
 artsy-morgan@artsy/artsy-morgan:
   version "1.0.1"
@@ -6641,11 +6641,6 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
-
-gemup@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/gemup/-/gemup-0.0.2.tgz#bd9e7bea1957ee0c766924190a9a6222fcc76e28"
-  integrity sha1-vZ576hlX7gx2aSQZCppiIvzHbig=
 
 generate-function@^2.0.0:
   version "2.0.0"
