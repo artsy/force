@@ -79,6 +79,7 @@ module.exports = class LoggedOutUser extends User
         'signupReferer',
         'accepted_terms_of_service',
         'agreed_to_receive_emails'
+        'recaptcha_token'
       ), _.extend {}, options,
         url: "#{APP_URL}#{sd.AP.signupPagePath}"
         success: =>

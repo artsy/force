@@ -18,7 +18,7 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
-import { areThirdPartyAdsEnabled } from "desktop/apps/article/third_party_ads_enabled"
+import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
 const sailthru = require("sailthru-client").createSailthruClient(
@@ -40,7 +40,7 @@ export async function index(req, res, next) {
       query: ArticleQuery(articleId),
       req,
     })
-    const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals)
+    const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals.sd)
     const article = data.article
     const articleModel = new Article(data.article)
     const search = new URL(sd.APP_URL + req.url).search
@@ -56,7 +56,6 @@ export async function index(req, res, next) {
     if (articleId !== article.slug) {
       return res.redirect(`/article/${article.slug}${search}`)
     }
-
     if (
       article.layout === "video" &&
       article.media &&
@@ -122,7 +121,6 @@ export async function index(req, res, next) {
       (article.hero_section && article.hero_section.type === "fullscreen")
     const hasSeriesNav =
       _.contains(["series", "video"], article.layout) || isFeatureInSeries
-
     let layoutTemplate =
       "../../../components/main_layout/templates/react_index.jade"
     if (hasSeriesNav) {
@@ -206,6 +204,7 @@ export function classic(req, res, _next) {
     error: res.backboneError,
     success: data => {
       if (req.params.slug !== data.article.get("slug")) {
+        console.log("is redirecting")
         return res.redirect(`/article/${data.article.get("slug")}`)
       }
 

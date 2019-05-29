@@ -1,7 +1,9 @@
 import { data as sd } from "sharify"
 import * as routes from "../routes"
-// import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
+import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
+import { extend } from "underscore"
+const Article = require("desktop/models/article.coffee")
 
 jest.mock("sailthru-client", () => ({
   createSailthruClient: () => ({
@@ -14,25 +16,29 @@ jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
 }))
 
+jest.mock("sharify", () => ({
+  data: {
+    ARTSY_EDITORIAL_CHANNEL: "123",
+    GALLERY_INSIGHTS_CHANNEL: "987",
+    APP_URL: "https://artsy.net",
+    EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
+  },
+}))
+
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
 }))
 
-const positronqlMock = require("desktop/lib/positronql").positronql as jest.Mock
-const stitchMock = require("@artsy/stitch").stitch as jest.Mock
-
-//         ARTSY_EDITORIAL_CHANNEL: "123",
-//         APP_URL: "https://artsy.net",
-//         EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
-//         GALLERY_INSIGHTS_CHANNEL: "1234",
+const positronql = require("desktop/lib/positronql").positronql as jest.Mock
+const stitch = require("@artsy/stitch").stitch as jest.Mock
 
 describe("Article Routes", () => {
   let req
   let res
   let next
-  //   let sailthruApiPost
-  //   let sailthruApiGet
-  //   let rewires = []
+  let article
+  let sailthruApiPost
+  let sailthruApiGet
 
   beforeEach(() => {
     req = {
@@ -43,41 +49,176 @@ describe("Article Routes", () => {
     }
     res = {
       app: { get: jest.fn().mockReturnValue("components") },
-      locals: { sd },
+      locals: {
+        sd,
+      },
       render: jest.fn(),
       send: jest.fn(),
       redirect: jest.fn(),
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     }
     next = jest.fn()
+
+    sailthruApiPost = jest.fn()
+    sailthruApiGet = jest.fn()
+
+    article = extend({}, fixtures.StandardArticle, {
+      slug: "foobar",
+      channel_id: "123",
+    })
+
+    positronql.mockReturnValue(Promise.resolve({ article }))
+    stitch.mockReturnValue(Promise.resolve())
+
+    Article.prototype.fetchWithRelated = jest.fn(options => {
+      options.success({ article: new Article(article) })
+    })
+  })
+
+  afterEach(() => {
+    positronql.mockClear()
+    stitch.mockClear()
   })
 
   describe("#index", () => {
     it("renders the index with the correct data", done => {
-      const data = {
-        article: fixtures.StandardArticle,
-        //         article: _.extend({}, fixtures.article, {
-        //           slug: "foobar",
-        //           channel_id: "123",
-        //           layout: "standard",
-        //         }),
-      }
-      positronqlMock.mockReturnValueOnce(Promise.resolve(data))
-      // const time = getCurrentUnixTimestamp()
+      const time = getCurrentUnixTimestamp()
       routes.index(req, res, next).then(() => {
-        console.log("res", res)
-        console.log("stitch", stitchMock.mock.calls)
+        const { data, locals } = stitch.mock.calls[0][0]
+        const timeDifference = time - data.renderTime
+
+        expect(timeDifference).toBeLessThan(100)
+        expect(locals.assetPackage).toBe("article")
+        expect(data.article.title).toBe("New York's Next Art District")
         done()
       })
-      //       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-      //       const stitch = sinon.stub()
-      //       rewire.__set__("stitch", stitch)
-      //       index(req, res, next).then(() => {
-      //         stitch.args[0][0].data.article.title.should.equal("Top Ten Booths")
+    })
 
-      //         const timeDifference = time - stitch.args[0][0].data.renderTime
-      //         timeDifference.should.be.below(100)
-      //         stitch.args[0][0].locals.assetPackage.should.equal("article")
+    it("sets the correct jsonld", done => {
+      routes.index(req, res, next).then(() => {
+        const {
+          data: { jsonLD },
+        } = stitch.mock.calls[0][0]
+
+        expect(jsonLD).toMatch("New York's Next Art District")
+        done()
+      })
+    })
+
+    it("nexts if media is unpublished", done => {
+      article.layout = "video"
+      article.media = { published: false }
+      positronql.mockReturnValue(Promise.resolve({ article }))
+
+      routes.index(req, res, next).then(() => {
+        expect(next).toBeCalled()
+        done()
+      })
+    })
+
+    it("redirects to the main slug if an older slug is queried", done => {
+      article.slug = "zoobar"
+      positronql.mockReturnValue(Promise.resolve({ article }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith("/article/zoobar")
+        done()
+      })
+    })
+
+    it("redirects to the layout if it is not a standard/feature article", done => {
+      article.layout = "series"
+      positronql.mockReturnValue(Promise.resolve({ article }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith("/series/foobar")
+        done()
+      })
+    })
+
+    it("does not strip search params from redirects", done => {
+      article = extend(article, fixtures.NewsArticle)
+      positronql.mockReturnValue(Promise.resolve({ article }))
+      req.url =
+        "/article/artsy-editorial-museums-embrace-activists?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V"
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith(
+          "/article/news-article?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V"
+        )
+        done()
+      })
+    })
+
+    it("redirects to a nested series if it is one", done => {
+      article = extend(article, {
+        seriesArticle: {
+          slug: "future-of-art",
+        },
+      })
+      positronql.mockReturnValue(Promise.resolve({ article }))
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith("/series/future-of-art/foobar")
+        done()
+      })
+    })
+
+    it("renders classic mode if article is not editorial", done => {
+      article.channel_id = "456"
+      article.layout = "classic"
+      positronql.mockReturnValue(Promise.resolve({ article }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.render.mock.calls[0][0]).toBe("article")
+        done()
+      })
+    })
+
+    it("redirects to partners.artsy.net if channel is GALLERY_INSIGHTS_CHANNEL", done => {
+      article.channel_id = "987"
+      positronql.mockReturnValue(Promise.resolve({ article }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith("https://partners.artsy.net")
+        done()
+      })
+    })
+
+    describe("templates", () => {
+      it("sets the blank template for video layout", done => {
+        article = extend(fixtures.VideoArticle, {
+          channel_id: "123",
+          slug: "foobar",
+        })
+        req.path = "/video/foobar"
+        positronql.mockReturnValue(Promise.resolve({ article }))
+
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].layout).toMatch("react_blank_index")
+          done()
+        })
+      })
+
+      it("sets the blank template for series layout", done => {
+        article = extend(fixtures.SeriesArticle, {
+          channel_id: "123",
+          slug: "foobar",
+        })
+        req.path = "/series/foobar"
+        positronql.mockReturnValue(Promise.resolve({ article }))
+
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].layout).toMatch("react_blank_index")
+          done()
+        })
+      })
+
+      it("sets the main template for standard layouts", done => {
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].layout).toMatch("react_index")
+          done()
+        })
+      })
     })
   })
 })
@@ -89,226 +230,7 @@ describe("Article Routes", () => {
 // import Channel from "desktop/models/channel.coffee"
 // import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 
-// const rewire = require("rewire")("../routes")
-// const {
-//   amp,
-//   classic,
-//   editorialSignup,
-//   index,
-//   isCustomEditorial,
-//   subscribedToEditorial,
-// } = rewire
-
-// describe("Article Routes", () => {
-//   let req
-//   let res
-//   let next
-//   let sailthruApiPost
-//   let sailthruApiGet
-//   let rewires = []
-
-//   beforeEach(() => {
-//     req = {
-//       body: {},
-//       params: { slug: "foobar" },
-//       path: "/article/foobar",
-//       url: "",
-//     }
-//     res = {
-//       app: { get: sinon.stub().returns("components") },
-//       locals: { sd: {} },
-//       render: sinon.stub(),
-//       send: sinon.stub(),
-//       redirect: sinon.stub(),
-//       status: sinon.stub().returns({ send: sinon.stub() }),
-//     }
-//     next = sinon.stub()
-//     sailthruApiPost = sinon.stub()
-//     sailthruApiGet = sinon.stub()
-
-//     rewires.push(
-//       rewire.__set__("sd", {
-//         ARTSY_EDITORIAL_CHANNEL: "123",
-//         APP_URL: "https://artsy.net",
-//         EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
-//         GALLERY_INSIGHTS_CHANNEL: "1234",
-//       }),
-//       rewire.__set__("sailthru", {
-//         apiPost: sailthruApiPost,
-//         apiGet: sailthruApiGet,
-//       })
-//     )
-//   })
-
-//   afterEach(() => {
-//     rewires.forEach(reset => reset())
-//   })
-
 //   describe("#index", () => {
-//     it("renders the index with the correct data", done => {
-//       const time = getCurrentUnixTimestamp()
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "standard",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].data.article.title.should.equal("Top Ten Booths")
-
-//         const timeDifference = time - stitch.args[0][0].data.renderTime
-//         timeDifference.should.be.below(100)
-//         stitch.args[0][0].locals.assetPackage.should.equal("article")
-//         done()
-//       })
-//     })
-
-//     xit("sets the correct jsonld", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].data.jsonLD.should.containEql(
-//           "Top Ten Booths at miart 2014"
-//         )
-//         stitch.args[0][0].data.jsonLD.should.containEql("Fair Coverage")
-//         done()
-//       })
-//     })
-
-//     it("nexts if media is unpublished", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "video",
-//           media: {
-//             published: false,
-//           },
-//         }),
-//       }
-
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       index(req, res, next).then(() => {
-//         next.callCount.should.equal(1)
-//         done()
-//       })
-//     })
-
-//     it("redirects to the main slug if an older slug is queried", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "zoobar",
-//           channel_id: "123",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       index(req, res, next).then(() => {
-//         res.redirect.args[0][0].should.equal("/article/zoobar")
-//         done()
-//       })
-//     })
-
-//     it("redirects to the layout if it is not a regular article", () => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "series",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       index(req, res, next).then(() => {
-//         res.redirect.args[0][0].should.equal("/series/foobar")
-//       })
-//     })
-
-//     it("does not strip search params from redirects", () => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "news",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       req.url =
-//         "/article/artsy-editorial-museums-embrace-activists?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V"
-//       index(req, res, next).then(() => {
-//         res.redirect.args[0][0].should.equal(
-//           "/news/foobar?utm_medium=email&utm_source=13533678-newsletter-editorial-daily-06-11-18&utm_campaign=editorial&utm_content=st-V"
-//         )
-//       })
-//     })
-
-//     it("redirects to a nested series if it is one", () => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "video",
-//           seriesArticle: {
-//             slug: "future-of-art",
-//           },
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       req.path = "/video/foobar"
-//       index(req, res, next).then(() => {
-//         res.redirect.args[0][0].should.equal("/series/future-of-art/foobar")
-//       })
-//     })
-
-//     it("renders classic mode if article is not editorial", done => {
-//       const article = _.extend({}, fixtures.article, {
-//         slug: "foobar",
-//         channel_id: "456",
-//       })
-//       rewire.__set__(
-//         "positronql",
-//         sinon.stub().returns(
-//           Promise.resolve({
-//             article,
-//           })
-//         )
-//       )
-//       Article.prototype.fetchWithRelated = sinon.stub().yieldsTo("success", {
-//         article: new Article(article),
-//         channel: new Channel(),
-//       })
-//       rewire.__set__("Article", Article)
-//       req.params = { slug: "foobar" }
-
-//       index(req, res, next).then(() => {
-//         res.render.args[0][0].should.equal("article")
-//         done()
-//       })
-//     })
-
-//     it("redirects to partners.artsy.net if channel is GALLERY_INSIGHTS_CHANNEL", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "1234",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-
-//       index(req, res, next).then(() => {
-//         res.redirect.args[0][0].should.equal("https://partners.artsy.net")
-//         done()
-//       })
-//     })
 
 //     it("fetches resources for a super article", () => {
 //       const article = {
@@ -395,59 +317,6 @@ describe("Article Routes", () => {
 //         stitch.args[0][0].data.superArticle
 //           .get("title")
 //           .should.equal("Super Article Title")
-//       })
-//     })
-
-//     it("sets the main template for standard and feature layouts", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "standard",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].layout.should.containEql("react_index")
-//         done()
-//       })
-//     })
-
-//     it("sets the blank template for video layout", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "video",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       req.path = "/video/foobar"
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].layout.should.containEql("react_blank_index")
-//         done()
-//       })
-//     })
-
-//     it("sets the blank template for series layout", done => {
-//       const data = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           layout: "series",
-//         }),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       req.path = "/series/foobar"
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].layout.should.containEql("react_blank_index")
-//         done()
 //       })
 //     })
 

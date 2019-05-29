@@ -59,7 +59,6 @@ module.exports =
   GEMINI_ACCOUNT_KEY: 'force-staging'
   GEMINI_APP: 'http://localhost:3004'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
-  GEMINI_S3_ACCESS_KEY: null
   GENOME_URL: 'https://helix.artsy.net'
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
@@ -148,4 +147,5 @@ for key, val of module.exports
   module.exports[key] = try JSON.parse(val) catch then val
 
 # Warn if this file is included client-side
-alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?
+if process.env.NODE_ENV isnt "test"
+  alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?

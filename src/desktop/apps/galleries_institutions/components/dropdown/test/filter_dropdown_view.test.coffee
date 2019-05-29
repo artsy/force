@@ -9,9 +9,10 @@ FilterParams = require '../../parameters/filter_params.coffee'
 
 describe 'FilterDropdownView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
       done()
 
@@ -87,7 +88,7 @@ describe 'FilterDropdownView', ->
 
     describe '#setPlaceholder', ->
       beforeEach ->
-          @$input.attr 'placeholder', 'foo bar'
+        @$input.attr 'placeholder', 'foo bar'
 
       describe 'no selection', ->
         beforeEach ->
@@ -154,6 +155,7 @@ describe 'FilterDropdownView', ->
         @$input.focus()
         @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2', profile: {href: 'location-2'}} , {}
         @$input.is(":focus").should.be.false()
+
       it 'redirects to profile page', ->
         @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2', profile: {href: '/partner-profile-url'}} , {}
         @dropdown.goToProfile.args[0][0].should.equal '/partner-profile-url'

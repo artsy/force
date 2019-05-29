@@ -7,7 +7,7 @@ block head
   script( type="text/javascript" ).
     (function() {
       function loadGrecaptcha() {
-        if (sd.RECAPTCHA_KEY) {
+        if (sd.RECAPTCHA_KEY && !sd.EIGEN) {
           grecaptcha.execute(sd.RECAPTCHA_KEY, {action: 'homepage'})
         }
       }

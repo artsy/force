@@ -96,7 +96,6 @@ function setupJquery() {
   require("jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js")
   const loadTouchEvents = require("jquery-touch-events")
   loadTouchEvents($)
-  require("artsy-gemini-upload")($)
 
   // For drop down menus that appear on hover you may want that menu to close
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and
@@ -119,13 +118,15 @@ function setupJquery() {
 }
 
 function setupErrorReporting() {
-  Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
-  const user = sd && sd.CURRENT_USER
+  if (sd.NODE_ENV === "production") {
+    Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
+    const user = sd && sd.CURRENT_USER
 
-  if (sd.CURRENT_USER) {
-    Sentry.configureScope(scope => {
-      scope.setUser(_.pick(user, "id", "email"))
-    })
+    if (sd.CURRENT_USER) {
+      Sentry.configureScope(scope => {
+        scope.setUser(_.pick(user, "id", "email"))
+      })
+    }
   }
 }
 

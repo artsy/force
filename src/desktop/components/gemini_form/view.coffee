@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 template = -> require('./form.jade') arguments...
 _ = require 'underscore'
+gemup = require '@artsy/gemup'
 
 module.exports = class GeminiForm extends Backbone.View
 
@@ -9,8 +10,11 @@ module.exports = class GeminiForm extends Backbone.View
   initialize: (options) ->
     @$el.html template()
     defaults =
-      geminiApp: sd.GEMINI_APP
       acl: 'public-read'
-      s3Key: sd.GEMINI_S3_ACCESS_KEY
-      geminiKey: sd.GEMINI_ACCOUNT_KEY
-    @$el.geminiUpload _.extend defaults, options
+      app: sd.GEMINI_ACCOUNT_KEY
+    opts = _.extend defaults, options
+
+    geminiUpload = (file) ->
+      gemup(file, opts)
+    @$("input[type='file']").on("change", (e) -> geminiUpload(e.target.files[0]))
+

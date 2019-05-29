@@ -1,12 +1,20 @@
 import React from "react"
-import { Banner } from "@artsy/palette"
+import styled from "styled-components"
+import { Banner, Box } from "@artsy/palette"
 import { data as sd } from "sharify"
 
 export const StagingBanner = () => {
   return (
-    <Banner
-      backgroundColor="purple100"
-      message={sd.APP_URL.replace("https://", "").replace("http://", "")}
-    />
+    <Container>
+      <Banner
+        backgroundColor="purple100"
+        message={sd.APP_URL.replace("https://", "").replace("http://", "")}
+      />
+    </Container>
   )
 }
+
+const Container = styled(Box)`
+  position: relative;
+  z-index: 2;
+`
