@@ -6,7 +6,7 @@ import * as Sentry from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
-import { initModalManager } from "../../desktop/apps/auth2/client/index"
+import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
 
 const mediator = require("./mediator.coffee")

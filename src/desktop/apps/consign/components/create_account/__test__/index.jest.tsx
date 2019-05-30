@@ -12,11 +12,11 @@ import { ForgotPasswordForm } from "@artsy/reaction/dist/Components/Authenticati
 import { SignUpForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/SignUpForm"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
-jest.mock("desktop/apps/auth2/helpers", () => ({
+jest.mock("desktop/apps/authentication/helpers", () => ({
   handleSubmit: jest.fn(),
 }))
 
-const handleSubmitMock = require("desktop/apps/auth2/helpers")
+const handleSubmitMock = require("desktop/apps/authentication/helpers")
   .handleSubmit as jest.Mock
 
 describe("React components", () => {
