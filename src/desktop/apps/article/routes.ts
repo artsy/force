@@ -93,7 +93,6 @@ export async function index(req, res, next) {
     } else if (article.is_super_article) {
       superArticle.set(article)
     }
-
     // Set super sub articles
     if (isSuper && superArticle.get("super_article").related_articles) {
       const related = superArticle.get("super_article").related_articles
@@ -204,7 +203,6 @@ export function classic(req, res, _next) {
     error: res.backboneError,
     success: data => {
       if (req.params.slug !== data.article.get("slug")) {
-        console.log("is redirecting")
         return res.redirect(`/article/${data.article.get("slug")}`)
       }
 
@@ -254,7 +252,7 @@ export function amp(req, res, next) {
 
       data.article = data.article.prepForAMP()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
-
+      console.log(res.locals.jsonLD)
       return res.render(
         "amp_article",
         _.extend(data, {
@@ -274,12 +272,14 @@ export const subscribedToEditorial = email => {
     if (!email.length) {
       return resolve(false)
     }
+    console.log("in here", sailthru.apiGet)
     sailthru.apiGet(
       "user",
       {
         id: email,
       },
       (err, response) => {
+        console.log("in here", err, response)
         if (err) {
           return resolve(false)
         } else {

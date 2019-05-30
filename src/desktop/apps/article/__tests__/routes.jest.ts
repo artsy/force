@@ -4,13 +4,16 @@ import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publish
 import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import { extend } from "underscore"
 const Article = require("desktop/models/article.coffee")
+const Channel = require("desktop/models/channel.coffee")
 
 jest.mock("sailthru-client", () => ({
-  createSailthruClient: () => ({
+  createSailthruClient: jest.fn(() => ({
     apiPost: jest.fn(),
     apiGet: jest.fn(),
-  }),
+  })),
 }))
+const sailthruMock = require("sailthru-client")
+  .createSailthruClient as jest.Mock
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
@@ -37,8 +40,6 @@ describe("Article Routes", () => {
   let res
   let next
   let article
-  let sailthruApiPost
-  let sailthruApiGet
 
   beforeEach(() => {
     req = {
@@ -58,9 +59,6 @@ describe("Article Routes", () => {
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     }
     next = jest.fn()
-
-    sailthruApiPost = jest.fn()
-    sailthruApiGet = jest.fn()
 
     article = extend({}, fixtures.StandardArticle, {
       slug: "foobar",
@@ -220,374 +218,236 @@ describe("Article Routes", () => {
         })
       })
     })
+
+    describe("SuperArticles", () => {
+      it("fetches resources for a super article", done => {
+        article.is_super_article = "true"
+        article.super_article = {
+          related_articles: ["456"],
+        }
+        const articles = [
+          extend({}, article, {
+            slug: "sub-article",
+            is_super_sub_article: true,
+          }),
+        ]
+        positronql
+          .mockReturnValue(Promise.resolve({ article }))
+          .mockReturnValueOnce({ article })
+          .mockReturnValueOnce({ articles })
+
+        routes.index(req, res, next).then(() => {
+          const {
+            data: { isSuper, superArticle, superSubArticles },
+          } = stitch.mock.calls[0][0]
+          expect(isSuper).toBeTruthy()
+          expect(superArticle.get("slug")).toBe("foobar")
+          expect(superSubArticles).toHaveLength(1)
+          expect(superSubArticles.first().get("slug")).toBe("sub-article")
+          done()
+        })
+      })
+
+      it("fetches resources for super sub articles", done => {
+        article.is_super_sub_article = true
+        const articles = [
+          extend({}, article, {
+            slug: "sub-article",
+            is_super_sub_article: true,
+          }),
+        ]
+        positronql
+          .mockReturnValue(Promise.resolve({ article }))
+          .mockReturnValueOnce({
+            article: extend(fixtures.SuperArticle, {
+              channel_id: "123",
+              slug: "foobar",
+            }),
+          })
+          .mockReturnValueOnce({ articles })
+
+        routes.index(req, res, next).then(() => {
+          const {
+            data: { isSuper, superArticle, superSubArticles },
+          } = stitch.mock.calls[0][0]
+          expect(isSuper).toBeTruthy()
+          expect(superArticle.get("title")).toBe(
+            "What’s the Path to Winning an Art Prize?"
+          )
+          expect(superSubArticles).toHaveLength(1)
+          expect(superSubArticles.first().get("slug")).toBe("sub-article")
+          done()
+        })
+      })
+    })
+
+    describe("ToolTips", () => {
+      it("Shows tooltips if desktop UA", done => {
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].data.showTooltips).toBeTruthy()
+          done()
+        })
+      })
+
+      it("Hides tooltips for mobile UA", done => {
+        res.locals.sd.IS_MOBILE = true
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].data.showTooltips).toBeFalsy()
+          done()
+        })
+      })
+
+      it("Hides tooltips for tablet UA", done => {
+        res.locals.sd.IS_TABLET = true
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].data.showTooltips).toBeFalsy()
+          done()
+        })
+      })
+    })
+
+    describe("Custom editorial", () => {
+      it("Adds custom editorial var and no-header class to stitch args", done => {
+        article.id = "5bf30690d8b9430baaf6c6de"
+        positronql.mockReturnValue(Promise.resolve({ article }))
+
+        routes.index(req, res, next).then(() => {
+          expect(stitch.mock.calls[0][0].locals.bodyClass).toMatch(
+            "body-no-header"
+          )
+          expect(stitch.mock.calls[0][0].data.customEditorial).toMatch(
+            "EOY_2018_ARTISTS"
+          )
+          done()
+        })
+      })
+    })
+  })
+
+  describe("#classic", () => {
+    let channel
+
+    beforeEach(() => {
+      channel = new Channel({ name: "Foo" })
+      article = extend(fixtures.ClassicArticle, {
+        slug: "foobar",
+      })
+
+      Article.prototype.fetchWithRelated.mockImplementation(options => {
+        options.success({ article: new Article(article), channel })
+      })
+    })
+
+    it("renders a classic article", () => {
+      routes.classic(req, res, next)
+      expect(res.render.mock.calls[0][1].article.get("slug")).toBe("foobar")
+      expect(res.render.mock.calls[0][1].channel.get("name")).toBe("Foo")
+    })
+
+    it("renders a ghosted article (no channel)", () => {
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.classic(req, res, next)
+      expect(res.render.mock.calls[0][1].article.get("slug")).toBe("foobar")
+    })
+
+    it("sets the correct jsonld", () => {
+      routes.classic(req, res, next)
+      expect(res.locals.jsonLD).toMatch(
+        "Gender Pay Gap for Artists Is Not So Simple"
+      )
+      expect(res.locals.jsonLD).toMatch("Partner")
+    })
+  })
+
+  describe("#amp", () => {
+    beforeEach(() => {
+      article = extend(fixtures.StandardArticle, {
+        slug: "foobar",
+        featured: true,
+        published: true,
+      })
+      Article.prototype.fetchWithRelated = jest.fn(options => {
+        options.success({ article: new Article(article) })
+      })
+    })
+
+    it("renders amp page", () => {
+      routes.amp(req, res, next)
+      expect(res.render.mock.calls[0][0]).toBe("amp_article")
+    })
+
+    it("skips if image/artwork sections exist (amp requires image dimensions)", () => {
+      article = extend(article, {
+        sections: [
+          {
+            type: "image",
+          },
+        ],
+      })
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(next).toBeCalled()
+    })
+
+    it("skips if it isnt featured", () => {
+      article.featured = false
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(next).toBeCalled()
+    })
+
+    it("redirects to the main slug if an older slug is queried", () => {
+      article.slug = "zoobar"
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(res.redirect).toBeCalledWith("/article/zoobar/amp")
+    })
+
+    xit("sets the correct jsonld", () => {
+      routes.amp(req, res, next)
+      console.log(res.locals)
+      expect(res.locals.jsonLD).toMatch("New York's Next Art District")
+      expect(res.locals.jsonLD).toMatch("Casey Lesser")
+      expect(res.locals.jsonLD).toMatch(
+        '/images/full_logo.png","height":103,"width":300}}'
+      )
+    })
+  })
+
+  describe("#subscribedToEditorial", () => {
+    it("resolves to false if there is no email", async done => {
+      const subscribed = await routes.subscribedToEditorial("")
+      expect(subscribed).toBeFalsy()
+      done()
+    })
+
+    it("resolves to true if a user is subscribed", async done => {
+      console.log(sailthruMock)
+      // sailthruMock.apiGet.mockReturnValue((vars, success) => {
+      //   console.log("got into mock")
+      //   success(null, {
+      //     vars: {
+      //       receive_editorial_email: true,
+      //       email_frequency: "weekly",
+      //     },
+      //   })
+      // })
+      const subscribed = await routes.subscribedToEditorial("foo@test.com")
+      expect(subscribed).toBeTruthy()
+      done()
+    })
   })
 })
 
-// import * as fixtures from "desktop/test/helpers/fixtures.coffee"
-// import * as _ from "underscore"
-// import sinon from "sinon"
-// import Article from "desktop/models/article.coffee"
-// import Channel from "desktop/models/channel.coffee"
-// import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
-
-//   describe("#index", () => {
-
-//     it("fetches resources for a super article", () => {
-//       const article = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           is_super_article: true,
-//         }),
-//       }
-//       const superSubArticles = {
-//         articles: [
-//           _.extend({}, fixtures.article, {
-//             slug: "sub-article",
-//             channel_id: "123",
-//             is_super_sub_article: true,
-//           }),
-//         ],
-//       }
-//       const positronql = sinon.stub()
-//       positronql
-//         .onCall(0)
-//         .returns(Promise.resolve(article))
-//         .onCall(1)
-//         .returns(Promise.resolve(superSubArticles))
-//       rewire.__set__("positronql", positronql)
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].data.isSuper.should.be.true()
-//         stitch.args[0][0].data.superArticle.get("slug").should.equal("foobar")
-//         stitch.args[0][0].data.superSubArticles.length.should.equal(1)
-//         stitch.args[0][0].data.superSubArticles
-//           .first()
-//           .get("slug")
-//           .should.equal("sub-article")
-//       })
-//     })
-
-//     it("fetches resources for super sub articles", () => {
-//       const article = {
-//         article: _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "123",
-//           is_super_sub_article: true,
-//         }),
-//       }
-//       const superArticle = {
-//         articles: [
-//           _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "123",
-//             is_super_article: true,
-//             title: "Super Article Title",
-//           }),
-//         ],
-//       }
-//       const superSubArticles = {
-//         articles: [
-//           _.extend({}, fixtures.article, {
-//             slug: "sub-article",
-//             channel_id: "123",
-//             is_super_sub_article: true,
-//           }),
-//         ],
-//       }
-//       const positronql = sinon.stub()
-//       positronql
-//         .onCall(0)
-//         .returns(Promise.resolve(article))
-//         .onCall(1)
-//         .returns(Promise.resolve(superArticle))
-//         .onCall(2)
-//         .returns(Promise.resolve(superSubArticles))
-//       rewire.__set__("positronql", positronql)
-//       const stitch = sinon.stub()
-//       rewire.__set__("stitch", stitch)
-//       index(req, res, next).then(() => {
-//         stitch.args[0][0].data.isSuper.should.be.true()
-//         stitch.args[0][0].data.superSubArticles.length.should.equal(1)
-//         stitch.args[0][0].data.superSubArticles
-//           .first()
-//           .get("slug")
-//           .should.equal("sub-article")
-//         stitch.args[0][0].data.superArticle
-//           .get("title")
-//           .should.equal("Super Article Title")
-//       })
-//     })
-
-//     describe("ToolTips", () => {
-//       let data
-//       let stitch
-
-//       beforeEach(() => {
-//         res.locals.sd.CURRENT_USER = { type: "Admin" }
-//         data = {
-//           article: _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "123",
-//             layout: "standard",
-//           }),
-//         }
-//         rewire.__set__(
-//           "positronql",
-//           sinon.stub().returns(Promise.resolve(data))
-//         )
-//         stitch = sinon.stub()
-//         rewire.__set__("stitch", stitch)
-//         rewire.__set__(
-//           "subscribedToEditorial",
-//           sinon.stub().returns(Promise.resolve(true))
-//         )
-//       })
-
-//       it("Shows tooltips if desktop UA", done => {
-//         index(req, res, next).then(() => {
-//           stitch.args[0][0].data.showTooltips.should.equal(true)
-//           done()
-//         })
-//       })
-
-//       it("Hides tooltips for mobile UA", done => {
-//         res.locals.sd.IS_MOBILE = true
-
-//         index(req, res, next).then(() => {
-//           stitch.args[0][0].data.showTooltips.should.equal(false)
-//           done()
-//         })
-//       })
-
-//       it("Hides tooltips for tablet UA", done => {
-//         res.locals.sd.IS_TABLET = true
-
-//         index(req, res, next).then(() => {
-//           stitch.args[0][0].data.showTooltips.should.equal(false)
-//           done()
-//         })
-//       })
-//     })
-
-//     describe("Custom editorial", () => {
-//       it("Adds custom editorial var and no-header class to stitch args", done => {
-//         const data = {
-//           article: _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "123",
-//             layout: "feature",
-//             id: "5bf30690d8b9430baaf6c6de",
-//           }),
-//         }
-//         rewire.__set__(
-//           "positronql",
-//           sinon.stub().returns(Promise.resolve(data))
-//         )
-//         const stitch = sinon.stub()
-//         rewire.__set__("stitch", stitch)
-//         req.path = "/article/foobar"
-//         index(req, res, next).then(() => {
-//           stitch.args[0][0].locals.bodyClass.should.containEql("body-no-header")
-//           stitch.args[0][0].data.customEditorial.should.containEql(
-//             "EOY_2018_ARTISTS"
-//           )
-//           done()
-//         })
-//       })
-//     })
-//   })
-
-//   describe("#classic", () => {
-//     let article
-//     beforeEach(() => {
-//       article = new Article(
-//         _.extend({}, fixtures.article, {
-//           slug: "foobar",
-//           channel_id: "456",
-//           sections: [],
-//           featured: true,
-//           published: true,
-//         })
-//       )
-//     })
-
-//     it("renders a classic article", () => {
-//       const data = {
-//         article,
-//         channel: new Channel({
-//           name: "Foo",
-//         }),
-//       }
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       classic(req, res, next)
-//       res.render.args[0][1].article.get("slug").should.equal("foobar")
-//       res.render.args[0][1].channel.get("name").should.equal("Foo")
-//     })
-
-//     it("renders a ghosted article", () => {
-//       const data = { article }
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       classic(req, res, next)
-//       res.render.args[0][1].article.get("slug").should.equal("foobar")
-//     })
-
-//     xit("sets the correct jsonld", () => {
-//       const data = { article }
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       classic(req, res, next)
-//       res.locals.jsonLD.should.containEql("Top Ten Booths at miart 2014")
-//       res.locals.jsonLD.should.containEql("Fair Coverage")
-//     })
-//   })
-
-//   describe("#amp", () => {
-//     it("renders amp page", done => {
-//       const data = {
-//         article: new Article(
-//           _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "456",
-//             sections: [],
-//             featured: true,
-//             published: true,
-//             layout: "standard",
-//           })
-//         ),
-//         channel: new Channel(),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       rewire.__set__("Article", Article)
-//       amp(req, res, next)
-//       res.render.args[0][0].should.equal("amp_article")
-//       done()
-//     })
-
-//     it("skips if image/artwork sections exist (amp requires image dimensions)", done => {
-//       const data = {
-//         article: new Article(
-//           _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "456",
-//             sections: [
-//               {
-//                 type: "image",
-//               },
-//             ],
-//           })
-//         ),
-//         channel: new Channel(),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       rewire.__set__("Article", Article)
-//       amp(req, res, next)
-//       next.callCount.should.equal(1)
-//       done()
-//     })
-
-//     it("skips if it isnt featured", done => {
-//       const data = {
-//         article: new Article(
-//           _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "456",
-//             featured: false,
-//             sections: [],
-//           })
-//         ),
-//         channel: new Channel(),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       rewire.__set__("Article", Article)
-//       amp(req, res, next)
-//       next.callCount.should.equal(1)
-//       done()
-//     })
-
-//     it("redirects to the main slug if an older slug is queried", done => {
-//       const data = {
-//         article: new Article(
-//           _.extend({}, fixtures.article, {
-//             slug: "zoobar",
-//             channel_id: "456",
-//             featured: true,
-//             sections: [],
-//           })
-//         ),
-//         channel: new Channel(),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       rewire.__set__("Article", Article)
-//       amp(req, res, next)
-//       res.redirect.args[0][0].should.equal("/article/zoobar/amp")
-//       done()
-//     })
-
-//     xit("sets the correct jsonld", done => {
-//       const data = {
-//         article: new Article(
-//           _.extend({}, fixtures.article, {
-//             slug: "foobar",
-//             channel_id: "456",
-//             sections: [],
-//             featured: true,
-//             published: true,
-//             layout: "standard",
-//           })
-//         ),
-//         channel: new Channel(),
-//       }
-//       rewire.__set__("positronql", sinon.stub().returns(Promise.resolve(data)))
-//       Article.prototype.fetchWithRelated = sinon
-//         .stub()
-//         .yieldsTo("success", data)
-//       rewire.__set__("Article", Article)
-//       amp(req, res, next)
-//       res.locals.jsonLD.should.containEql("Magazine")
-//       res.locals.jsonLD.should.containEql("Top Ten Booths at miart 2014")
-//       res.locals.jsonLD.should.containEql("Artsy Editorial")
-//       res.locals.jsonLD.should.containEql(
-//         '/images/full_logo.png","height":103,"width":300}}'
-//       )
-//       done()
-//     })
-//   })
-
 //   describe("#subscribedToEditorial", () => {
-//     it("resolves to false if there is no email", async () => {
-//       const subscribed = await subscribedToEditorial("")
-//       subscribed.should.equal(false)
-//     })
-
-//     it("resolves to true if a user is subscribed", async () => {
-//       sailthruApiGet.yields(null, {
-//         vars: {
-//           receive_editorial_email: true,
-//           email_frequency: "daily",
-//         },
-//       })
-//       const subscribed = await subscribedToEditorial("foo@test.com")
-//       subscribed.should.equal(true)
-//     })
 
 //     it("resolves to false if a user exists but is not subscribed with daily frequency", async () => {
 //       sailthruApiGet.yields(null, {
