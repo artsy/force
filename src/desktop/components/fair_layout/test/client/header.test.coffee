@@ -12,7 +12,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 
 describe 'HeaderView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
@@ -40,11 +40,6 @@ describe 'HeaderView', ->
     afterEach ->
       Backbone.sync.restore()
       $.ajax.restore()
-
-    it 'sets up the mediator', ->
-      @mediator.on.args[0][0].should.equal 'open:auth'
-      @mediator.on.args[0][1](mode: 'foo')
-      @authModalView.args[0][0].mode.should.equal 'foo'
 
     describe '#login', ->
       it 'triggers the mediator', ->
