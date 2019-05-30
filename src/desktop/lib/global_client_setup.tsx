@@ -28,13 +28,8 @@ export function globalClientSetup() {
   listenForInvert()
   listenForBounce()
   confirmation.check()
-
-  if (sd.NEW_AUTH_MODAL) {
-    initModalManager()
-  }
-
+  initModalManager()
   mountStitchComponents()
-
   syncAuth()
   mediator.on("auth:logout", logoutEventHandler)
 }
