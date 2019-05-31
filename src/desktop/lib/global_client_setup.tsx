@@ -16,6 +16,7 @@ const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
 const listenForBounce = require("../components/eggs/bounce/index.coffee")
 const confirmation = require("../components/confirmation/index.coffee")
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 Backbone.$ = $
 
@@ -32,6 +33,9 @@ export function globalClientSetup() {
   mountStitchComponents()
   syncAuth()
   mediator.on("auth:logout", logoutEventHandler)
+
+  // TODO: Remove A/B test
+  splitTest("instant_page_ab_test").view()
 }
 
 export function syncAuth() {
