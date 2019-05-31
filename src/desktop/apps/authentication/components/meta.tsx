@@ -8,7 +8,9 @@ interface MetaProps {
 }
 
 export const AuthenticationMeta: React.SFC<MetaProps> = props => {
-  const { meta: { description, title } } = props
+  const {
+    meta: { description, title },
+  } = props
 
   return (
     <>

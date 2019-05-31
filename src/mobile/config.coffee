@@ -36,7 +36,6 @@ module.exports =
   MAILCHIMP_AUCTION_LIST_ID: 'b7b9959ee0'
   MAILCHIMP_KEY: null
   MOBILE_MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Discover and Buy Works from Seattle Art Fair 2017","image":"http://files.artsy.net/images/seattle-art-fair-modal.jpg","photoCredit":"Sarah Cain, waves, 2016; Courtesy of the artist and Galerie Lelong & Co., New York"}]'
-  MOBILE_NEW_AUTH_MODAL: true
   MAX_POLLS_FOR_MAX_BIDS: 20
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: 'https://metaphysics-production.artsy.net'
@@ -76,4 +75,5 @@ for key, val of module.exports
   module.exports[key] = try JSON.parse(val) catch then val
 
 # Warn if this file is included client-side
-alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?
+if process.env.NODE_ENV isnt "test"
+  alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?

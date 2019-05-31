@@ -33,7 +33,6 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
-  ENABLE_INSTANT_PAGE: false
   ENABLE_MEMORY_PROFILING: false
   ENABLE_NEW_NAVBAR: false,
   ENABLE_WEB_CRAWLING: false
@@ -59,7 +58,6 @@ module.exports =
   GEMINI_ACCOUNT_KEY: 'force-staging'
   GEMINI_APP: 'http://localhost:3004'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
-  GEMINI_S3_ACCESS_KEY: null
   GENOME_URL: 'https://helix.artsy.net'
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
@@ -84,7 +82,6 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
-  NEW_AUTH_MODAL: true
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
@@ -148,4 +145,5 @@ for key, val of module.exports
   module.exports[key] = try JSON.parse(val) catch then val
 
 # Warn if this file is included client-side
-alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?
+if process.env.NODE_ENV isnt "test"
+  alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?

@@ -71,10 +71,7 @@ module.exports = class JSONPageEditor
 
       new GeminiForm
         el: $form
-        onUploadComplete: (res) =>
-          url = res.url + $form.find('[name=key]').val()
-            .replace('${filename}', encodeURIComponent(res.files[0].name))
-
+        done: (url) =>
           $(this).val(url).trigger 'keyup'
           $(this).prev('img').attr 'src', url
 

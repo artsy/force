@@ -1,5 +1,5 @@
 import _request from "superagent"
-import gemup from "gemup"
+import gemup from "@artsy/gemup"
 import { get } from "lodash"
 import stepsConfig from "./steps_config"
 import { data as _sd } from "sharify"
@@ -334,7 +334,6 @@ export function handleImageUpload(file) {
         const options = {
           acl: "private",
           app: sd.CONVECTION_GEMINI_APP,
-          key: sd.GEMINI_S3_ACCESS_KEY,
           fail: _err => {
             dispatch(errorOnImage(file.name))
           },
