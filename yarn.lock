@@ -8685,7 +8685,7 @@ jquery.transition@dzucconi/jquery.transition:
   version "0.1.1"
   resolved "https://codeload.github.com/dzucconi/jquery.transition/tar.gz/9e1ced2d91227d54d6cc2627a4a6a32c341b2434"
 
-jquery@>=1.7, jquery@^2.1.4:
+jquery@2.2.4, jquery@>=1.7:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
   integrity sha1-LInWiJterFIqfuoywUUhVZxsvwI=
