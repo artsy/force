@@ -29,10 +29,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@4.13.2":
-  version "4.13.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.13.2.tgz#c1c5d51d3a9140f19ee9fe916b5eaf2342631fd0"
-  integrity sha512-fGqyo3sS32nhvFHGO+/XL7p87bijcUngt7zyFI7u4Qw0svGQDHhtMB3xhgJguPRfP8QqHGsyAj6RJIsy71GbtA==
+"@artsy/palette@4.14.0":
+  version "4.14.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.14.0.tgz#2e8eb4d1145dbd162d8a791f2f75a73c8c60a9f3"
+  integrity sha512-bTUyaSYINKKu2/NwowSCZjuv03VfX9GKG4u8qW9askz6AYZBPLvvZ//3+3TNwbOC4Ow6kEH6foBXbcJHTibOGg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -72,10 +72,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.12.23":
-  version "16.12.23"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.12.23.tgz#514c0f662089af3e93fbbcbf55f5d235f4c2510d"
-  integrity sha512-8lPwfOiRW2WcaaiKYoNfEtBj+Aq4CIzQU6Om5jj7lG+mEpdg9MLU0eqrmxFDQOcE8OEI7Q4YHKQL5U9FGOtO4Q==
+"@artsy/reaction@16.13.3":
+  version "16.13.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.13.3.tgz#b3c085fb8404a8dfdeccda52e17f73baa2eacb35"
+  integrity sha512-nLIFcNFN486UOPQ4mVm3Xn3q3W4STzpMMsdVQbe4PoB8jH774etvbD56+BQeb8pRlZmU9zyiRn4omjnHHZZbDw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -83,6 +83,7 @@
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
     farce "^0.2.6"
+    flickity "^2.2.0"
     formik "^0.11.11"
     found "^0.3.14"
     found-relay "^0.3.1"

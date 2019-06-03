@@ -45,7 +45,7 @@ Noindex: ?dimension_range=
 Disallow: /*?dns_source=
 Disallow: /*?microsite=
 Disallow: /*?from-show-guide=
-Disallow: /search/
+Disallow: /search
 Sitemap: https://www.artsy.net/sitemap-articles.xml
 Sitemap: https://www.artsy.net/sitemap-artists.xml
 Sitemap: https://www.artsy.net/sitemap-artist-images.xml

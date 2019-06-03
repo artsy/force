@@ -6,7 +6,7 @@ import * as Sentry from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
-import { initModalManager } from "../../desktop/apps/auth2/client/index"
+import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
 
 const mediator = require("./mediator.coffee")
@@ -16,6 +16,7 @@ const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
 const listenForBounce = require("../components/eggs/bounce/index.coffee")
 const confirmation = require("../components/confirmation/index.coffee")
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 Backbone.$ = $
 
@@ -28,15 +29,13 @@ export function globalClientSetup() {
   listenForInvert()
   listenForBounce()
   confirmation.check()
-
-  if (sd.NEW_AUTH_MODAL) {
-    initModalManager()
-  }
-
+  initModalManager()
   mountStitchComponents()
-
   syncAuth()
   mediator.on("auth:logout", logoutEventHandler)
+
+  // TODO: Remove A/B test
+  splitTest("instant_page_ab_test").view()
 }
 
 export function syncAuth() {

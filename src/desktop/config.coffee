@@ -33,7 +33,6 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
-  ENABLE_INSTANT_PAGE: false
   ENABLE_MEMORY_PROFILING: false
   ENABLE_NEW_NAVBAR: false,
   ENABLE_WEB_CRAWLING: false
@@ -83,7 +82,6 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   MOBILE_URL: 'https://m.artsy.net'
-  NEW_AUTH_MODAL: true
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
