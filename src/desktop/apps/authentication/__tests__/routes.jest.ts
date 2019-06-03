@@ -162,6 +162,30 @@ describe("Routes", () => {
         })
       })
 
+      it("can handle old redirect_uri redirect params", done => {
+        req.query = {
+          redirect_uri: "/bar",
+        }
+
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/bar")
+          done()
+        })
+      })
+
+      it("can handle old redirect-to redirect params", done => {
+        req.query = {
+          "redirect-to": "/bar",
+        }
+
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/bar")
+          done()
+        })
+      })
+
       it("Sets afterSignUpAction cookie if corresponding query params are present", done => {
         req.query = {
           action: "follow",
@@ -284,12 +308,6 @@ describe("Routes", () => {
       req.user = {}
       redirectLoggedInHome(req, res, next)
       expect(res.redirect).toBeCalledWith("/")
-    })
-
-    it("preserves existing redirects for logged out users", () => {
-      req.query = { redirect_uri: "/foo" }
-      expect(next).toBeCalled()
-      expect(req.query.redirect_uri).toBe("/foo")
     })
 
     it("redirects logged in users (with a redirect_uri query param) to redirect location", () => {
