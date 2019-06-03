@@ -18,6 +18,8 @@ describe("Routes", () => {
         path: "/",
         query: {},
         header: () => "referrer",
+        get: jest.fn(),
+        body: {},
       }
       res = {
         locals: {
@@ -156,6 +158,30 @@ describe("Routes", () => {
           expect(signupIntent).toBe(req.query.signupIntent)
           expect(signupReferer).toBe(req.query.signupReferer)
           expect(title).toBe("Sign up to follow partners")
+          done()
+        })
+      })
+
+      it("can handle old redirect_uri redirect params", done => {
+        req.query = {
+          redirect_uri: "/bar",
+        }
+
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/bar")
+          done()
+        })
+      })
+
+      it("can handle old redirect-to redirect params", done => {
+        req.query = {
+          "redirect-to": "/bar",
+        }
+
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/bar")
           done()
         })
       })
