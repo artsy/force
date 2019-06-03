@@ -252,7 +252,6 @@ export function amp(req, res, next) {
 
       data.article = data.article.prepForAMP()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
-      console.log(res.locals.jsonLD)
       return res.render(
         "amp_article",
         _.extend(data, {
@@ -272,14 +271,14 @@ export const subscribedToEditorial = email => {
     if (!email.length) {
       return resolve(false)
     }
-    console.log("in here", sailthru.apiGet)
+    console.log("in subscribedToEditorial", sailthru.apiGet)
     sailthru.apiGet(
       "user",
       {
         id: email,
       },
       (err, response) => {
-        console.log("in here", err, response)
+        console.log("got a response", err, response.vars)
         if (err) {
           return resolve(false)
         } else {

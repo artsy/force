@@ -265,7 +265,7 @@ module.exports = class Article extends Backbone.Model
     }
 
   toJSONLDAmp: ->
-    jsonLD = compactObject {
+    compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
       "headline": @get('thumbnail_title')
@@ -295,5 +295,3 @@ module.exports = class Article extends Backbone.Model
         "height": 600
       }
     }
-    console.log('in here', jsonLD)
-    return jsonLD

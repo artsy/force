@@ -1,5 +1,4 @@
 import { data as sd } from "sharify"
-import * as routes from "../routes"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import { extend } from "underscore"
@@ -9,11 +8,47 @@ const Channel = require("desktop/models/channel.coffee")
 jest.mock("sailthru-client", () => ({
   createSailthruClient: jest.fn(() => ({
     apiPost: jest.fn(),
-    apiGet: jest.fn(),
+    apiGet: jest
+      .fn()
+      .mockImplementation((_var, _args, success) => {
+        success(null, {
+          vars: {
+            receive_editorial_email: true,
+            email_frequency: "weekly",
+          },
+        })
+      })
+      .mockImplementationOnce((_var, _args, success) => {
+        success(null, {
+          vars: {
+            receive_editorial_email: true,
+            email_frequency: "daily",
+          },
+        })
+      })
+      .mockImplementationOnce((_var, _args, success) => {
+        success(null, {
+          vars: {},
+        })
+      }),
   })),
 }))
-// const sailthruMock = require("sailthru-client")
-//   .createSailthruClient as jest.Mock
+const sailthruMock = require("sailthru-client").createSailthruClient
+
+// const apiPost = jest.fn()
+import * as routes from "../routes"
+
+// sailthruMock.mockImplementation(() => ({
+//   apiPost: apiPost,
+//   apiGet: (_var, _args, success) => {
+//     success(null, {
+//       vars: {
+//         receive_editorial_email: true,
+//         email_frequency: "daily",
+//       },
+//     })
+//   },
+// }))
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
@@ -378,6 +413,14 @@ describe("Article Routes", () => {
       expect(res.render.mock.calls[0][0]).toBe("amp_article")
     })
 
+    it("sets the correct jsonld", () => {
+      routes.amp(req, res, next)
+      expect(res.render.mock.calls[0][0]).toBe("amp_article")
+      expect(res.locals.jsonLD).toBe(
+        '{"@context":"http://schema.org","@type":"NewsArticle","headline":"New York\'s Next Art District","url":"https://artsy.net/article/foobar","thumbnailUrl":"https://artsy-media-uploads.s3.amazonaws.com/7lsxxsw0qPAuKl37jEYitw%2Farticle+asset+1-hig+res+copy.jpg","datePublished":"2017-05-19T13:09:18.567Z","dateCreated":"2017-05-19T13:09:18.567Z","articleSection":"Other","creator":["Casey Lesser"],"mainEntityOfPage":"https://artsy.net/article/foobar","author":{"name":"Artsy Editorial"},"publisher":{"name":"Artsy","logo":{"url":"https://artsy.net/images/full_logo.png","height":103,"width":300}},"image":{"url":"https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F7lsxxsw0qPAuKl37jEYitw%252Farticle%2Basset%2B1-hig%2Bres%2Bcopy.jpg&width=800&height=600&quality=80","width":800,"height":600}}'
+      )
+    })
+
     it("skips if image/artwork sections exist (amp requires image dimensions)", () => {
       article = extend(article, {
         sections: [
@@ -410,86 +453,74 @@ describe("Article Routes", () => {
       routes.amp(req, res, next)
       expect(res.redirect).toBeCalledWith("/article/zoobar/amp")
     })
-
-    xit("sets the correct jsonld", () => {
-      routes.amp(req, res, next)
-      console.log(res.locals)
-      expect(res.locals.jsonLD).toMatch("New York's Next Art District")
-      expect(res.locals.jsonLD).toMatch("Casey Lesser")
-      expect(res.locals.jsonLD).toMatch(
-        '/images/full_logo.png","height":103,"width":300}}'
-      )
-    })
   })
 
   describe("#subscribedToEditorial", () => {
-    it("resolves to false if there is no email", async done => {
+    it("resolves to false if there is no email", async () => {
       const subscribed = await routes.subscribedToEditorial("")
       expect(subscribed).toBeFalsy()
-      done()
     })
 
-    xit("resolves to true if a user is subscribed", async done => {
-      // sailthruMock.apiGet.mockReturnValue((vars, success) => {
-      //   console.log("got into mock")
-      //   success(null, {
-      //     vars: {
-      //       receive_editorial_email: true,
-      //       email_frequency: "weekly",
-      //     },
-      //   })
-      // })
+    it("resolves to true if a user is subscribed", async () => {
       const subscribed = await routes.subscribedToEditorial("foo@test.com")
       expect(subscribed).toBeTruthy()
-      done()
     })
 
-    //     it("resolves to false if a user exists but is not subscribed with daily frequency", async () => {
-    //       sailthruApiGet.yields(null, {
-    //         vars: {
-    //           receive_editorial_email: true,
-    //           email_frequency: "weekly",
-    //         },
-    //       })
-    //       const subscribed = await subscribedToEditorial("foo@test.com")
-    //       subscribed.should.equal(false)
-    //     })
+    it("resolves to false if a user exists but is not subscribed with daily frequency", async () => {
+      const subscribed = await routes.subscribedToEditorial("foo@test.com")
+      expect(subscribed).toBeFalsy()
+    })
 
-    //     it("resolves to false if a user exists but is not subscribed", async () => {
-    //       sailthruApiGet.yields(null, { vars: {} })
-    //       const subscribed = await subscribedToEditorial("foo@test.com")
-    //       subscribed.should.equal(false)
-    //     })
+    it("resolves to false if a user exists but is not subscribed with daily frequency", async () => {
+      const subscribed = await routes.subscribedToEditorial("foo@test.com")
+      expect(subscribed).toBeFalsy()
+    })
+
+    it("resolves to false if a user exists but is not subscribed", async () => {
+      const subscribed = await routes.subscribedToEditorial("foo@test.com")
+      expect(subscribed).toBeFalsy()
+    })
   })
 
-  //   describe("#editorialSignup", () => {
-  //     it("adds a user and sends a welcome email", () => {
-  //       req.body.email = "foo@goo.net"
-  //       editorialSignup(req, res, next)
-  //       sailthruApiPost.args[0][1].id.should.equal("foo@goo.net")
-  //       sailthruApiPost.args[0][2](null, { ok: true })
-  //       sailthruApiPost.args[1][1].event.should.equal("editorial_welcome")
-  //       sailthruApiPost.args[1][2](null, {})
-  //       res.send.args[0][0].email.should.equal("foo@goo.net")
-  //     })
+  describe("#editorialSignup", () => {
+    it("adds a user and sends a welcome email", () => {
+      req.body.email = "foo@goo.net"
+      routes.editorialSignup(req, res, next)
+      console.log("res", res.send.mock)
+      // sailthruMock()
+      // console.log("apiPost", sailthruMock.apiPost.mock.calls)
+      // sailthruApiPost.args[0][1].id.should.equal("foo@goo.net")
+      //       sailthruApiPost.args[0][2](null, { ok: true })
+      //       sailthruApiPost.args[1][1].event.should.equal("editorial_welcome")
+      //       sailthruApiPost.args[1][2](null, {})
+      //       res.send.args[0][0].email.should.equal("foo@goo.net")
+    })
 
-  //     it("sends an error if user could not be created", () => {
-  //       req.body.email = "foo@goo.net"
-  //       editorialSignup(req, res, next)
-  //       sailthruApiPost.args[0][1].id.should.equal("foo@goo.net")
-  //       sailthruApiPost.args[0][2]("error", { errormsg: "Error" })
-  //       res.status.args[0][0].should.equal(500)
-  //     })
+    //     it("sends an error if user could not be created", () => {
+    //       req.body.email = "foo@goo.net"
+    //       editorialSignup(req, res, next)
+    //       sailthruApiPost.args[0][1].id.should.equal("foo@goo.net")
+    //       sailthruApiPost.args[0][2]("error", { errormsg: "Error" })
+    //       res.status.args[0][0].should.equal(500)
+    //     })
 
-  //     it("sends an error if a welcome email cannot be sent", () => {
-  //       req.body.email = "foo@goo.net"
-  //       editorialSignup(req, res, next)
-  //       sailthruApiPost.args[0][1].id.should.equal("foo@goo.net")
-  //       sailthruApiPost.args[0][2](null, { ok: true })
-  //       sailthruApiPost.args[1][1].event.should.equal("editorial_welcome")
-  //       sailthruApiPost.args[1][2]("error", { errormsg: "Error" })
-  //       res.status.args[0][0].should.equal(500)
-  //     })
-  //   })
-  // })
+    //     it("sends an error if a welcome email cannot be sent", () => {
+    //       req.body.email = "foo@goo.net"
+    //       editorialSignup(req, res, next)
+    //       sailthruApiPost.args[0][1].id.should.equal("foo@goo.net")
+    //       sailthruApiPost.args[0][2](null, { ok: true })
+    //       sailthruApiPost.args[1][1].event.should.equal("editorial_welcome")
+    //       sailthruApiPost.args[1][2]("error", { errormsg: "Error" })
+    //       res.status.args[0][0].should.equal(500)
+    //     })
+    //   })
+  })
+
+  describe("#redirectPost", () => {
+    it("redirects /post to /article", () => {
+      req.url = "/post/foobar"
+      routes.redirectPost(req, res, next)
+      expect(res.redirect).toBeCalledWith(301, "/article/foobar")
+    })
+  })
 })
