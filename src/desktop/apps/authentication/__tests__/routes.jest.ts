@@ -18,6 +18,8 @@ describe("Routes", () => {
         path: "/",
         query: {},
         header: () => "referrer",
+        get: jest.fn(),
+        body: {},
       }
       res = {
         locals: {
@@ -282,6 +284,12 @@ describe("Routes", () => {
       req.user = {}
       redirectLoggedInHome(req, res, next)
       expect(res.redirect).toBeCalledWith("/")
+    })
+
+    it("preserves existing redirects for logged out users", () => {
+      req.query = { redirect_uri: "/foo" }
+      expect(next).toBeCalled()
+      expect(req.query.redirect_uri).toBe("/foo")
     })
 
     it("redirects logged in users (with a redirect_uri query param) to redirect location", () => {

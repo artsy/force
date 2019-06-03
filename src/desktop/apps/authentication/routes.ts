@@ -141,6 +141,10 @@ export const resetPassword = (req, res) => {
 }
 
 export const redirectLoggedInHome = (req, res, next) => {
+  const pathname = parse(req.url || "").pathname
+  if (["/log_in", "/login", "/sign_up", "/signup"].includes(pathname)) {
+    req.query["redirect-to"] = req.query["redirect-to"] || "/"
+  }
   if (req.user) {
     res.redirect(getRedirectTo(req))
   } else {
@@ -151,7 +155,7 @@ export const redirectLoggedInHome = (req, res, next) => {
 export const getRedirectTo = req => {
   let referrer = parse(req.get("Referrer") || "").path || "/"
   return (
-    req.body["redirectTo"] ||
+    req.query["redirectTo"] ||
     req.body["redirect-to"] ||
     req.query["redirect-to"] ||
     req.query["redirect_uri"] ||
