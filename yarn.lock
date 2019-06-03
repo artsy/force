@@ -29,10 +29,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@4.14.0":
-  version "4.14.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.14.0.tgz#2e8eb4d1145dbd162d8a791f2f75a73c8c60a9f3"
-  integrity sha512-bTUyaSYINKKu2/NwowSCZjuv03VfX9GKG4u8qW9askz6AYZBPLvvZ//3+3TNwbOC4Ow6kEH6foBXbcJHTibOGg==
+"@artsy/palette@4.14.1":
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.14.1.tgz#398502b7668befe82a803b0df92be40bd68d176a"
+  integrity sha512-jujfM0zblgJDI6pnpW4zUtGqN2gtd9nHKlaNJJyBicAb8Egi0f9OHEX42fLsbJI7GkIT7rXMowRV+bqRKXiQTQ==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -42,6 +42,7 @@
     rc-slider "^8.6.2"
     react-lazy-load-image-component "^1.3.2"
     react-live "^1.12.0"
+    react-native-svg "^9.4.0"
     react-powerplug "^1.0.0"
     react-spring "^5.7.2"
     styled-bootstrap-grid "1.0.4"
@@ -12225,6 +12226,11 @@ react-markdown@^2.5.0:
     commonmark "^0.24.0"
     commonmark-react-renderer "^4.3.4"
     prop-types "^15.5.1"
+
+react-native-svg@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.4.0.tgz#e428e0eae55aebd2355f1ff4f22675dad4611960"
+  integrity sha512-IVJlVbS2dAPerPr927fEi4uXzrPXzlra5ddgyJXZZ2IKA2ZygyYWFZDM+vsQs+Vj20CfL8nOWszQQV57vdQgFg==
 
 react-oembed-container@^0.3.0:
   version "0.3.0"
