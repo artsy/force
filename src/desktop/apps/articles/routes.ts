@@ -171,3 +171,8 @@ export async function news(_req, res, next) {
     next(error)
   }
 }
+
+export const testFunction = () => {
+  const a = 10
+  return a + 1
+}
