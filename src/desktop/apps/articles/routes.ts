@@ -25,8 +25,6 @@ let topParselyArticles = _topParselyArticles
 let stitch = _stitch
 
 export const articles = (_req, res, next) => {
-  testFunction()
-
   const query = { query: magazineQuery }
   return positronql(query)
     .then(async result => {
@@ -61,8 +59,6 @@ export const redirectMagazine = (_req, res, _next) => {
 }
 
 export const section = (_req, res, next) => {
-  testFunction()
-
   new Section({ id: "venice-biennale-2015" }).fetch({
     cache: true,
     error: next,
@@ -90,7 +86,6 @@ export const section = (_req, res, next) => {
 
 export const teamChannel = (req, res, next) => {
   const slug = req.path.split("/")[1]
-  testFunction()
 
   new Channel({ id: slug }).fetch({
     error: res.backboneError,
@@ -171,15 +166,9 @@ export async function news(_req, res, next) {
         areHostedAdsEnabled,
       },
     })
-    testFunction()
 
     res.send(layout)
   } catch (error) {
     next(error)
   }
-}
-
-export const testFunction = () => {
-  const a = 10
-  return a + 1
 }

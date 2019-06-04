@@ -27,6 +27,7 @@ export const handleSubmit = (
     triggerSeconds,
   } = modalOptions
 
+  testFunction()
   /*
    * These are the attributes that will be saved on the user. We are moving
    * towards using `intent` on analytics, but Gravity expects `signupIntent`
@@ -99,6 +100,7 @@ export const handleSubmit = (
 }
 
 export const setCookies = options => {
+  testFunction()
   const { afterSignUpAction, destination } = options
 
   if (afterSignUpAction) {
@@ -113,6 +115,7 @@ export const setCookies = options => {
 }
 
 export const getRedirect = type => {
+  testFunction()
   const { location } = window
   switch (type) {
     case "login":
@@ -127,4 +130,9 @@ export const getRedirect = type => {
     default:
       return window.location
   }
+}
+
+export const testFunction = () => {
+  const a = 10
+  return a + 1
 }
