@@ -73,10 +73,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.13.4":
-  version "16.13.4"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.13.4.tgz#290f861e58eb63e4e9169265b8c30f275a19dded"
-  integrity sha512-iOn5cacxUv1Qr4UAkFPR3XlAKzSHLzrIgRWOuKHwZVn+T4Pl5Y2Nv5y9ipDfduMHlni0UKst8M35cWXw7Gvg2w==
+"@artsy/reaction@16.13.6":
+  version "16.13.6"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.13.6.tgz#05eae8b734de7f30a4451aeda0f9edafb72601ff"
+  integrity sha512-sq2onT1Bb5NVjeCiDfgiMxmHRaxxo4+kS6rm8w6/ojDftPQsheiUmVQDohjASzL8wsaqfKn+lLEKzDAH+ZBLKg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -84,7 +84,6 @@
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
     farce "^0.2.6"
-    flickity "^2.2.0"
     formik "^0.11.11"
     found "^0.3.14"
     found-relay "^0.3.1"
@@ -102,7 +101,6 @@
     rc-slider "^8.6.2"
     react-autosuggest "^9.4.3"
     react-css-transition-replace "^3.0.2"
-    react-flickity-component "^3.3.0"
     react-gpt "^2.0.1"
     react-head "^3.0.0"
     react-html-parser "^2.0.2"
@@ -5646,11 +5644,6 @@ etag@~1.8.0, etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-ev-emitter@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.1.1.tgz#8f18b0ce5c76a5d18017f71c0a795c65b9138f2a"
-  integrity sha512-ipiDYhdQSCZ4hSbX4rMW+XzNKMD1prg/sTvoVmSLkuQ1MVlwjJQQA+sW8tMYR3BLUr9KjodFV4pvzunvRhd33Q==
-
 ev-emitter@^1.0.1, ev-emitter@^1.0.2, ev-emitter@~1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.0.3.tgz#ee5ef74b6ed28d911b32ddcbfc97867f580937bc"
@@ -6021,31 +6014,12 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs-css-vars@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/fbjs-css-vars/-/fbjs-css-vars-1.0.2.tgz#216551136ae02fe255932c3ec8775f18e2c078b8"
-  integrity sha512-b2XGFAFdWZWg0phtAWLHCk836A1Xann+I+Dgd3Gk64MHKZO44FfoD1KxyvbSh0qZsIoXQGGlVztIY+oitJPpRQ==
-
 fbjs@^0.8.0, fbjs@^0.8.14, fbjs@^0.8.5:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
   dependencies:
     core-js "^1.0.0"
-    isomorphic-fetch "^2.1.1"
-    loose-envify "^1.0.0"
-    object-assign "^4.1.0"
-    promise "^7.1.1"
-    setimmediate "^1.0.5"
-    ua-parser-js "^0.7.18"
-
-fbjs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-1.0.0.tgz#52c215e0883a3c86af2a7a776ed51525ae8e0a5a"
-  integrity sha512-MUgcMEJaFhCaF1QtWGnmq9ZDRAzECTCRAF7O6UZIlAlkTs1SasiX9aP0Iw7wfD2mJ7wDTNfg2w7u5fSCwJk1OA==
-  dependencies:
-    core-js "^2.4.1"
-    fbjs-css-vars "^1.0.0"
     isomorphic-fetch "^2.1.1"
     loose-envify "^1.0.0"
     object-assign "^4.1.0"
@@ -6268,18 +6242,6 @@ flickity@2.1.2:
     get-size "^2.0.0"
     tap-listener "^2.0.0"
     unidragger "^2.3.0"
-
-flickity@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.2.0.tgz#9ac65006d9cc77d2035f7eff33d5d9a3d4a8092f"
-  integrity sha512-K9trFruKtbi4F8nOo+pHjJK4P/Pqix2Udq3lHhUVXfxqmoxuwZHu3nEEiEb49NWpzBrVHHIcnnn8fhcUTkWpgA==
-  dependencies:
-    desandro-matches-selector "^2.0.0"
-    ev-emitter "^1.0.2"
-    fizzy-ui-utils "^2.0.0"
-    get-size "^2.0.0"
-    unidragger "^2.3.0"
-    unipointer "^2.3.0"
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -7440,13 +7402,6 @@ imagesloaded@4.1.2:
   integrity sha1-nR4JQRKtP+ZEUonEcNl1YngZ3w0=
   dependencies:
     ev-emitter "~1.0.0"
-
-imagesloaded@^4.1.4:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/imagesloaded/-/imagesloaded-4.1.4.tgz#1376efcd162bb768c34c3727ac89cc04051f3cc7"
-  integrity sha512-ltiBVcYpc/TYTF5nolkMNsnREHW+ICvfQ3Yla2Sgr71YFwQ86bDwV9hgpFhFtrGPuwEx5+LqOHIrdXBdoWwwsA==
-  dependencies:
-    ev-emitter "^1.0.0"
 
 immutable@^3.7.6:
   version "3.8.2"
@@ -11630,7 +11585,7 @@ prop-types-extra@^1.0.1, prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^3.0.0"
 
-prop-types@15.7.2, prop-types@15.x, prop-types@^15.0.0, prop-types@^15.5.1, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@15.x, prop-types@^15.0.0, prop-types@^15.5.1, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -12136,16 +12091,6 @@ react-dom@16.8.4:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.4"
-
-react-flickity-component@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-flickity-component/-/react-flickity-component-3.3.0.tgz#ea667325f29ef78e2459bb2488fccf1dfa401f59"
-  integrity sha512-dv3RLBvGrWLmxzJtzacBdaPQP1FR/vWiFIQv/f6noZTp/s5XLK4MCewM/8vw65IC54FcSOnawYcqB33LF7jJjQ==
-  dependencies:
-    fbjs "^1.0.0"
-    flickity "^2.2.0"
-    imagesloaded "^4.1.4"
-    prop-types "^15.7.2"
 
 react-gpt@^2.0.1:
   version "2.0.1"
