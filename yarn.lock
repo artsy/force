@@ -48,10 +48,10 @@
     styled-system "^3.1.11"
     trunc-html "^1.1.2"
 
-"@artsy/passport@1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.4.tgz#48b2c41d9fa90b3c13e2d8bd9b4d5e6ca26002d3"
-  integrity sha512-rDcuO+YvTD1fHYpg1z4vmW8y1RfNGRh7yzVFHQiYad2C8vY2G/NTMRG12XPJnLVcMPEerOX1LmKr/9JPjdNBxA==
+"@artsy/passport@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.5.tgz#882d25c93890249d24bcd1c457d1d5c7246927d0"
+  integrity sha512-xRxfjPRpvXogHx4XkgDLZG17C6FMlhM2n91x6s9i+R1NLfpiXWQhyTXRpPNoR4ko7K8yJIkSyc/QJY9PIuvNwA==
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -61,9 +61,7 @@
     mailcheck "^1.1.1"
     passport "^0.3.0"
     passport-facebook "^2.0.0"
-    passport-linkedin "^1.0.0"
     passport-local "^1.0.0"
-    passport-twitter "^1.0.3"
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
@@ -11104,28 +11102,12 @@ passport-facebook@^2.0.0:
   dependencies:
     passport-oauth2 "1.x.x"
 
-passport-linkedin@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/passport-linkedin/-/passport-linkedin-1.0.0.tgz#e3300cf232f7e7b4b95710e238f0bb7936b5d85a"
-  integrity sha1-4zAM8jL357S5VxDiOPC7eTa12Fo=
-  dependencies:
-    passport-oauth1 "1.x.x"
-
 passport-local@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
   integrity sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
   dependencies:
     passport-strategy "1.x.x"
-
-passport-oauth1@1.x.x:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/passport-oauth1/-/passport-oauth1-1.1.0.tgz#a7de988a211f9cf4687377130ea74df32730c918"
-  integrity sha1-p96YiiEfnPRoc3cTDqdN8ycwyRg=
-  dependencies:
-    oauth "0.9.x"
-    passport-strategy "1.x.x"
-    utils-merge "1.x.x"
 
 passport-oauth2@1.x.x:
   version "1.4.0"
@@ -11141,14 +11123,6 @@ passport-strategy@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
-
-passport-twitter@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/passport-twitter/-/passport-twitter-1.0.4.tgz#01a799e1f760bf2de49f2ba5fba32282f18932d7"
-  integrity sha1-AaeZ4fdgvy3knyul+6MigvGJMtc=
-  dependencies:
-    passport-oauth1 "1.x.x"
-    xtraverse "0.1.x"
 
 passport@^0.3.0:
   version "0.3.2"
@@ -15737,11 +15711,6 @@ xmlbuilder@>=0.4.2, xmlbuilder@~9.0.1:
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
   integrity sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=
 
-xmldom@0.1.x:
-  version "0.1.27"
-  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
-  integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
-
 xss-filters@1.2.7, xss-filters@^1.2.6:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/xss-filters/-/xss-filters-1.2.7.tgz#59fa1de201f36f2f3470dcac5f58ccc2830b0a9a"
@@ -15763,13 +15732,6 @@ xtend@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-3.0.0.tgz#5cce7407baf642cba7becda568111c493f59665a"
   integrity sha1-XM50B7r2Qsunvs2laBEcST9ZZlo=
-
-xtraverse@0.1.x:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/xtraverse/-/xtraverse-0.1.0.tgz#b741bad018ef78d8a9d2e83ade007b3f7959c732"
-  integrity sha1-t0G60BjveNip0ug63gB7P3lZxzI=
-  dependencies:
-    xmldom "0.1.x"
 
 y18n@^3.2.1:
   version "3.2.1"
