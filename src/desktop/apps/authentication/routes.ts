@@ -77,8 +77,8 @@ export const index = async (req, res, next) => {
     res.locals.sd.SET_PASSWORD = req.query.set_password
   }
 
-  const redirectTo = req.query.redirectTo || "/"
-  const signupReferer = req.header("Referer") || req.host
+  const redirectTo = getRedirectTo(req)
+  const signupReferer = req.header("Referer") || req.hostname
 
   if (action) {
     res.cookie("afterSignUpAction", JSON.stringify({ action, objectId, kind }))
@@ -141,11 +141,11 @@ export const resetPassword = (req, res) => {
 }
 
 export const redirectLoggedInHome = (req, res, next) => {
-  const pathname = parse(req.url || "").pathname
-  if (["/log_in", "/login", "/sign_up", "/signup"].includes(pathname)) {
-    req.query["redirect-to"] = "/"
-  }
   if (req.user) {
+    const pathname = parse(req.url || "").pathname
+    if (["/log_in", "/login", "/sign_up", "/signup"].includes(pathname)) {
+      req.query["redirect-to"] = req.query["redirect-to"] || "/"
+    }
     res.redirect(getRedirectTo(req))
   } else {
     next()
@@ -154,8 +154,8 @@ export const redirectLoggedInHome = (req, res, next) => {
 
 export const getRedirectTo = req => {
   let referrer = parse(req.get("Referrer") || "").path || "/"
-
   return (
+    req.query["redirectTo"] ||
     req.body["redirect-to"] ||
     req.query["redirect-to"] ||
     req.query["redirect_uri"] ||

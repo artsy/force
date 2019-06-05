@@ -19,11 +19,7 @@ describe 'NotificationsView', ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
-        matchMedia: () ->
-          media: ""
-          matches: false
-          addListener: () => null
-          removeListener: () => null
+
       Backbone.$ = $
       SidebarView = require '../../client/sidebar.coffee'
       done()
@@ -36,6 +32,7 @@ describe 'NotificationsView', ->
     sinon.stub CurrentUser, 'orNull'
     CurrentUser.orNull.returns new CurrentUser fabricate 'user'
     artists = null
+    location.search = ''
     benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) , artists: artists }, =>
       { @NotificationsView } = mod = rewire '../../client/index.coffee'
       mod.__set__ 'SidebarView', sinon.stub()
@@ -51,7 +48,6 @@ describe 'NotificationsView', ->
   describe '#initialize', ->
 
     beforeEach ->
-      location.search = ''
       @view = new @NotificationsView el: $('body')
 
     it 'should create a filterState model with defaults', ->
