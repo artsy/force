@@ -4,7 +4,7 @@
 # This app messages users of dated browsers and manages
 # the state of that messaging.
 #
-# See also lib/middleware/unsupported_browser.coffee
+# See also lib/middleware/unsupportedBrowser.ts
 #
 
 express = require 'express'
