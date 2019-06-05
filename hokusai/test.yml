@@ -1,8 +1,6 @@
 version: "2"
 services:
   force:
-    build:
-      dockerfile: Dockerfile.test
     command: yarn test
     extends:
       file: build.yml
