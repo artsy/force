@@ -36,7 +36,6 @@ import proxyGravity from "./middleware/proxy_to_gravity"
 import proxyReflection from "./middleware/proxy_to_reflection"
 import sameOriginMiddleware from "./middleware/same_origin"
 import errorHandlingMiddleware from "./middleware/error_handler"
-import unsupportedBrowserCheck from "./middleware/unsupported_browser"
 import { rateLimiterMiddlewareFactory } from "./middleware/rateLimiting"
 import backboneErrorHelper from "./middleware/backbone_error_helper"
 import CurrentUser from "./current_user"
@@ -46,6 +45,7 @@ import { addIntercomUserHash } from "./middleware/intercom"
 import compression from "compression"
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
+import { unsupportedBrowserCheck } from "lib/middleware/unsupportedBrowser"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
