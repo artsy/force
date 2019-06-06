@@ -12,11 +12,14 @@ import { StagingBanner } from "./StagingBanner"
 const mediator = require("desktop/lib/mediator.coffee")
 
 const NavBarContainer = styled.div`
-  position: fixed;
   z-index: 990;
   width: 100%;
   top: 0;
   left: 0;
+
+  /* FIXME: Overwrite main force navbar style. Once main bar is totally removed
+     and no longer controlled by an ENV var we can remove this. */
+  border-bottom: none !important;
 `
 
 interface NavBarProps {
@@ -39,7 +42,7 @@ export const NavBar: React.FC<NavBarProps> = ({
       searchQuery={searchQuery}
       user={user}
     >
-      <NavBarContainer>
+      <NavBarContainer id="main-layout-header">
         {showStagingBanner && <StagingBanner />}
         <ReactionNavBar />
       </NavBarContainer>
