@@ -2,7 +2,7 @@ include ../../../util/activator
 
 if sd.ENABLE_NEW_NAVBAR
   header
-    != stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
+    != stitch.components.NavBar({ notificationCount: sd.NOTIFICATION_COUNT, searchQuery: sd.searchQuery, user: sd.CURRENT_USER,  })
 else
   header#main-layout-header( class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '' )
     if sd.APPLICATION_NAME === "force-staging"
