@@ -4,7 +4,7 @@ path = require 'path'
 fs = require 'fs'
 sd = require('sharify').data
 cheerio = require 'cheerio'
-uaParser = require 'ua-parser'
+useragent = require 'useragent'
 
 render = ->
   filename = path.resolve __dirname, "../template.jade"
@@ -16,7 +16,7 @@ render = ->
 describe 'Unsupported Browser', ->
 
   beforeEach ->
-    @ua = uaParser.parseUA 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1)'
+    @ua = useragent.parse 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1)'
     @sd =
       CSS_EXT: '.css'
       BROWSER: @ua

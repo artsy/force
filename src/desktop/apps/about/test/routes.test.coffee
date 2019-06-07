@@ -17,9 +17,9 @@ describe 'About routes', ->
       routes.__set__ 'JSONPage', sinon.stub().returns
         get: sinon.stub().callsArgWith 0, null, sections: []
 
-    it 'redirects to collect-art if it is mobile', ->
+    it 'redirects to buying-with-artsy if it is mobile', ->
       routes.index {}, @res
-      @res.redirect.args[0].should.eql ['/collect-art']
+      @res.redirect.args[0].should.eql ['/buying-with-artsy']
 
     it 'doesnt redirect if not mobile', ->
       @res.locals.sd.IS_MOBILE = false
