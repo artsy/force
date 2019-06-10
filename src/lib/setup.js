@@ -36,7 +36,6 @@ import proxyGravity from "./middleware/proxy_to_gravity"
 import proxyReflection from "./middleware/proxy_to_reflection"
 import sameOriginMiddleware from "./middleware/same_origin"
 import errorHandlingMiddleware from "./middleware/error_handler"
-import { rateLimiterMiddlewareFactory } from "./middleware/rateLimiting"
 import backboneErrorHelper from "./middleware/backbone_error_helper"
 import CurrentUser from "./current_user"
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
@@ -81,9 +80,6 @@ export default function(app) {
       mode: "deny",
     })
   )
-
-  // Rate limiting
-  app.use(rateLimiterMiddlewareFactory(cache.client))
 
   // Timeout middleware
   if (isProduction) {
