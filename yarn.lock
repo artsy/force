@@ -29,17 +29,14 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@4.14.12":
-  version "4.14.12"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.14.12.tgz#00af1155932b880d442bb330ad8f2f21f1b08dcc"
-  integrity sha512-x4KUZWrx7fPC8uGh8KmrTozo4hipggul0nU7HQlR69rf9hklP8gfvGrHgm+Ndwj/9vxZVqshl5+Sf5Hmhhm1MQ==
+"@artsy/palette@4.14.13":
+  version "4.14.13"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.14.13.tgz#f96cc118c48eefcb47ceb84a980cc3d328138db8"
+  integrity sha512-RZ+ThamZdPFFKrhyYSKon2b4S6OR5MPa5d9hMy4wCAZeXgX2CKtQkk4bldC6dqQa/UbQPghSks7uYSg297bsAg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
-    luxon "^1.15.0"
-    moment "^2.23.0"
-    moment-timezone "^0.5.25"
     rc-slider "^8.6.2"
     react-lazy-load-image-component "^1.3.2"
     react-live "^1.12.0"
@@ -9635,7 +9632,7 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-luxon@^1.15, luxon@^1.15.0:
+luxon@^1.15:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.16.0.tgz#93c915cfc3dff4bb806656595018fddc47cc96ec"
   integrity sha512-qaqB+JwpGwtl7UbIXng3A/l4W/ySBr8drQvwtMLZBMiLD2V+0fEnPWMrs+UjnIy9PsktazQaKvwDUCLzoWz0Hw==
@@ -10099,7 +10096,7 @@ moment-twitter@0.2.0:
   dependencies:
     moment "~2.4.0"
 
-moment@2.22.2, "moment@>= 2.9.0", moment@^2.11.1, moment@^2.23.0, moment@~2.4.0:
+moment@2.22.2, "moment@>= 2.9.0", moment@^2.11.1, moment@~2.4.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
   integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
