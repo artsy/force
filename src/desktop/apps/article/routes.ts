@@ -19,12 +19,10 @@ const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const _Article = require("desktop/models/article.coffee")
 import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
+import { createSailthruClient } from "sailthru-client"
 
 const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
-const sailthru = require("sailthru-client").createSailthruClient(
-  SAILTHRU_KEY,
-  SAILTHRU_SECRET
-)
+const sailthru = createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
 
 // FIXME: Rewire
 let sd = _sd
@@ -268,17 +266,20 @@ export function amp(req, res, next) {
 
 export const subscribedToEditorial = email => {
   return new Promise((resolve, _reject) => {
+    console.log("in here")
     if (!email.length) {
+      console.log("is false")
       return resolve(false)
     }
-    console.log("in subscribedToEditorial", sailthru.apiGet)
     sailthru.apiGet(
       "user",
       {
         id: email,
       },
       (err, response) => {
-        console.log("got a response", err, response.vars)
+        console.log("in cb")
+        console.log("err", err, "response", response)
+
         if (err) {
           return resolve(false)
         } else {
@@ -299,6 +300,7 @@ export const subscribedToEditorial = email => {
 
 export const editorialSignup = (req, res, _next) => {
   // Add user to list
+  console.log("apiPost", sailthru.apiPost)
   sailthru.apiPost(
     "user",
     {
