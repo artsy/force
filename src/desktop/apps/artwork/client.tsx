@@ -5,6 +5,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 const $ = require("jquery")
 
@@ -53,8 +54,24 @@ const openInquireableModal = (artworkId: string, { ask_specialist }) => {
   })
 }
 
+export const handleOpenAuthModal = () => {
+  mediator.trigger("open:auth", {
+    mode: ModalType.signup,
+    intent: "Contact Gallery",
+    signupIntent: "signup",
+    trigger: "click",
+    contextModule: "Contact gallery",
+    copy: "Sign up to contact gallery",
+    destination: location.href,
+  })
+}
+
 mediator.on("launchInquiryFlow", options => {
-  openInquireableModal(options.artworkId, { ask_specialist: false })
+  if (sd.CURRENT_USER) {
+    openInquireableModal(options.artworkId, { ask_specialist: false })
+  } else {
+    handleOpenAuthModal()
+  }
 })
 
 mediator.on("openBuyNowAskSpecialistModal", options => {
@@ -97,10 +114,10 @@ mediator.on("openViewInRoom", options => {
 
     if (boundsRatio > imgRatio) {
       newHeight = bounds.height
-      newWidth = newHeight * width / height
+      newWidth = (newHeight * width) / height
     } else if (boundsRatio < imgRatio) {
       newWidth = bounds.width
-      newHeight = height * newWidth / width
+      newHeight = (height * newWidth) / width
     } else {
       newWidth = bounds.width
       newHeight = newWidth
