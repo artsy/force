@@ -34,14 +34,4 @@ module.exports = {
     control_group: 'control'
     edge: 'experiment'
     weighting: 'equal'
-
-  instant_page_ab_test:
-    key: 'instant_page_ab_test'
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    control_group: 'control'
-    edge: 'experiment'
-    weighting: 'equal'
 }
