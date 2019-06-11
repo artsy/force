@@ -33,7 +33,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - name: force-http
-              containerPort: 8080
+              containerPort: 5000
           readinessProbe:
             httpGet:
               port: force-http
