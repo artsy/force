@@ -1,3 +1,4 @@
+----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -21,7 +22,7 @@ spec:
         - name: force-web
           env:
             - name: PORT
-              value: 8080
+              value: "8080"
             - name: DD_TRACE_AGENT_HOSTNAME
               valueFrom:
                 fieldRef:
