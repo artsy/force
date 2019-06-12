@@ -59,6 +59,7 @@
     "react-relay": "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.5/react-relay-1.5.0-artsy.5.tgz",
     "react-test-renderer": "16.8.2",
     "react-is": "^16.8.3",
+    "regenerator-runtime": "0.13.2",
     "superagent": "3.8.3"
   },
   "bundlesize": [
@@ -105,7 +106,7 @@
     "@artsy/gemup": "0.0.3",
     "@artsy/palette": "4.14.13",
     "@artsy/passport": "1.1.6",
-    "@artsy/reaction": "16.15.0",
+    "@artsy/reaction": "16.16.2",
     "@artsy/stitch": "6.1.4",
     "@babel/core": "7.0.0",
     "@babel/node": "7.0.0",
