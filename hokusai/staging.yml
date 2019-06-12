@@ -1,4 +1,3 @@
-----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -133,7 +132,7 @@ spec:
     - port: 443
       protocol: TCP
       name: https
-      targetPort: nginx-https
+      targetPort: nginx-http
   selector:
     app: force
     layer: application
