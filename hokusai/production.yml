@@ -21,7 +21,7 @@ spec:
         - name: force-web
           env:
             - name: PORT
-              value: "8080"
+              value: "5000"
             - name: DD_TRACE_AGENT_HOSTNAME
               valueFrom:
                 fieldRef:
@@ -54,7 +54,7 @@ spec:
           image: artsy/docker-nginx:latest
           ports:
             - name: nginx-http
-              containerPort: 80
+              containerPort: 8080
             - name: nginx-https
               containerPort: 443
           readinessProbe:
