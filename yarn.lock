@@ -68,10 +68,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.16.2":
-  version "16.16.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.16.2.tgz#036f72248b0daa010a2c34bbbce234c3ad961c09"
-  integrity sha512-ErVyx/F769X8ohMOQ0aexCdkBUKnzgx6xoM6qJn7cFZ+CuTKEIpx1iMPxJDb11DzieJeOIbhr4MImYUNeeKfEA==
+"@artsy/reaction@16.17.0":
+  version "16.17.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.17.0.tgz#f1c3e221d9d20e170e70f966d351a82409d86e45"
+  integrity sha512-On+EURM6OLNPlDembT/v0yfUpBM8emKL65P4iZ5DvflutxDb1udDh6Vf1x8Yvj5/A7CAhdzf8JC4BYlQOa9j8g==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -90,7 +90,6 @@
     lodash "^4.17.4"
     luxon "^1.15"
     memoize-one "^4.0.3"
-    moment "^2.24.0"
     numeral "^2.0.4"
     openseadragon "^2.3.1"
     prop-types "^15.5.10"
@@ -10096,7 +10095,7 @@ moment-twitter@0.2.0:
   dependencies:
     moment "~2.4.0"
 
-moment@2.22.2, "moment@>= 2.9.0", moment@^2.11.1, moment@^2.24.0, moment@~2.4.0:
+moment@2.22.2, "moment@>= 2.9.0", moment@^2.11.1, moment@~2.4.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
   integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
