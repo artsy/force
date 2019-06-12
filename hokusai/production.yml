@@ -1,4 +1,3 @@
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -21,6 +20,8 @@ spec:
       containers:
         - name: force-web
           env:
+            - name: PORT
+              value: "5000"
             - name: DD_TRACE_AGENT_HOSTNAME
               valueFrom:
                 fieldRef:
@@ -31,10 +32,11 @@ spec:
           image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:production
           imagePullPolicy: Always
           ports:
-            - containerPort: 5000
+            - name: force-http
+              containerPort: 5000
           readinessProbe:
             httpGet:
-              port: 5000
+              port: force-http
               path: /system/up
               httpHeaders:
                 - name: X-FORWARDED-PROTO
@@ -51,7 +53,16 @@ spec:
         - name: force-nginx
           image: artsy/docker-nginx:latest
           ports:
-            - containerPort: 8080
+            - name: nginx-http
+              containerPort: 8080
+            - name: nginx-https
+              containerPort: 443
+          readinessProbe:
+            tcpSocket:
+              port: nginx-http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 10
           lifecycle:
             preStop:
               exec:
@@ -118,11 +129,11 @@ spec:
     - port: 80
       protocol: TCP
       name: http
-      targetPort: 8080
+      targetPort: nginx-http
     - port: 443
       protocol: TCP
       name: https
-      targetPort: 8080
+      targetPort: nginx-http
   selector:
     app: force
     layer: application
