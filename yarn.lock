@@ -68,10 +68,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@16.17.0":
-  version "16.17.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.17.0.tgz#f1c3e221d9d20e170e70f966d351a82409d86e45"
-  integrity sha512-On+EURM6OLNPlDembT/v0yfUpBM8emKL65P4iZ5DvflutxDb1udDh6Vf1x8Yvj5/A7CAhdzf8JC4BYlQOa9j8g==
+"@artsy/reaction@16.17.2":
+  version "16.17.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-16.17.2.tgz#04d8ce99adc21a7f74d2203fa23ca695d0c3ab4b"
+  integrity sha512-qKQ5B+L6qNKH5fuOp0ypn45OdSRTPacRUSqmk8ZSjRxg/ZIeMt0yFsGxO5rVC28LwosfkqJKXNqIzaJqUOE0oA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -112,7 +112,7 @@
     react-router "^4.2.0"
     react-sizeme "^2.4.4"
     react-slick "^0.23.2"
-    react-spring "^5.7.2"
+    react-spring "^8.0.23"
     react-stripe-elements "^2.0.1"
     react-tracking "^7.0.1"
     react-transition-group "^2.3.0"
@@ -858,6 +858,13 @@
   integrity sha512-xKnPpXG/pvK1B90JkwwxSGii90rQGKtzcMt2gI5G6+M0REXaq6rOHsGC2ay6/d0Uje7zzvSzjEzfR3ENhFlrfA==
   dependencies:
     regenerator-runtime "^0.12.0"
+
+"@babel/runtime@^7.3.1":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
+  integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
 
 "@babel/template@7.2.2", "@babel/template@^7.0.0", "@babel/template@^7.1.0", "@babel/template@^7.2.2":
   version "7.2.2"
@@ -12266,6 +12273,14 @@ react-spring@^5.7.2:
   integrity sha512-ZDCBm4OaYuuSER3k7EELn9AKGs98HI23qMRL93zUUw6AlyBmqoU+eAfouGRx47gVkZkH+hArJXBHf4UGYpH9Og==
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+react-spring@^8.0.23:
+  version "8.0.23"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.23.tgz#2a0ddaeb0816ea9e21898d04d3b8da7d1a3daa14"
+  integrity sha512-2mp7+0DnoBQ67h2zY0rFztdMqSm8gdvSWHgfwKz4TbLQ+N4n2IauB6DCMc046K8uvUNwDCUdlKgshUrCj14QUA==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    prop-types "^15.5.8"
 
 react-static-container@^1.0.2:
   version "1.0.2"
