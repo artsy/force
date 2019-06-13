@@ -88,14 +88,11 @@ module.exports.articles = (req, res, next) ->
           query: newsQuery
         ).end (err, response) ->
           newsArticles = response.body.data?.articles
-          # check if subscribed
-          subscribedToEditorial email, (err, subscribed) ->
-            res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
-            res.locals.sd.ARTICLES = articles
-            res.locals.sd.NEWS_ARTICLES = newsArticles
-            res.render 'articles',
-              articles: articles,
-              newsArticles: newsArticles
+          res.locals.sd.ARTICLES = articles
+          res.locals.sd.NEWS_ARTICLES = newsArticles
+          res.render 'articles',
+            articles: articles,
+            newsArticles: newsArticles
 
 module.exports.form = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
@@ -109,7 +106,6 @@ module.exports.form = (req, res, next) ->
         MMERGE2: req.body.lname
         MMERGE3: 'Opt-in (artsy.net)'
       double_optin: false
-      send_welcome: true
     ).end (err, response) ->
       if (response.ok)
         res.send req.body

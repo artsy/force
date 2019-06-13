@@ -7,30 +7,20 @@ import {
   SuperSubArticlesQuery,
   SuperArticleQuery,
 } from "desktop/apps/article/queries/superArticle"
-import { positronql as _positronql } from "desktop/lib/positronql"
-import { data as _sd } from "sharify"
-import { stitch as _stitch } from "@artsy/stitch"
-import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
+import { positronql } from "desktop/lib/positronql"
+import { data as sd } from "sharify"
+import { stitch } from "@artsy/stitch"
+import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
+import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
 import { isCustomEditorial } from "./editorial_features"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
-const _Article = require("desktop/models/article.coffee")
-import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
-import { createSailthruClient } from "sailthru-client"
+const Article = require("desktop/models/article.coffee")
 
-const { SAILTHRU_KEY, SAILTHRU_SECRET } = require("config")
-const sailthru = createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)
-
-// FIXME: Rewire
-let sd = _sd
-let positronql = _positronql
-let Article = _Article
-let stitch = _stitch
-
-export async function index(req, res, next) {
+export const index = async (req, res, next) => {
   const articleId = req.params.slug
 
   try {
@@ -126,15 +116,12 @@ export async function index(req, res, next) {
     }
 
     const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
-
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
+    const showTooltips = !isMobile && !isTablet
+    const isLoggedIn = typeof CURRENT_USER !== "undefined"
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
     const customEditorial = isCustomEditorial(article.id)
-
-    // Email signup
-    const isLoggedIn = typeof CURRENT_USER !== "undefined"
-    const showTooltips = !isMobile && !isTablet
     const renderTime = getCurrentUnixTimestamp()
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
@@ -189,7 +176,7 @@ const getBodyClass = article => {
   return bodyClass
 }
 
-export function classic(req, res, _next) {
+export const classic = (req, res, _next) => {
   const article = new Article({
     id: req.params.slug,
   })
@@ -231,7 +218,7 @@ export function classic(req, res, _next) {
   })
 }
 
-export function amp(req, res, next) {
+export const amp = (req, res, next) => {
   const article = new Article({
     id: req.params.slug,
   })
@@ -262,82 +249,6 @@ export function amp(req, res, next) {
       )
     },
   })
-}
-
-export const subscribedToEditorial = email => {
-  return new Promise((resolve, _reject) => {
-    console.log("in here")
-    if (!email.length) {
-      console.log("is false")
-      return resolve(false)
-    }
-    sailthru.apiGet(
-      "user",
-      {
-        id: email,
-      },
-      (err, response) => {
-        console.log("in cb")
-        console.log("err", err, "response", response)
-
-        if (err) {
-          return resolve(false)
-        } else {
-          if (
-            response.vars &&
-            response.vars.receive_editorial_email &&
-            response.vars.email_frequency === "daily"
-          ) {
-            resolve(true)
-          } else {
-            resolve(false)
-          }
-        }
-      }
-    )
-  })
-}
-
-export const editorialSignup = (req, res, _next) => {
-  // Add user to list
-  console.log("apiPost", sailthru.apiPost)
-  sailthru.apiPost(
-    "user",
-    {
-      id: req.body.email,
-      lists: {
-        [`${sd.SAILTHRU_MASTER_LIST}`]: 1,
-      },
-      vars: {
-        source: "editorial",
-        receive_editorial_email: true,
-        email_frequency: "daily",
-      },
-    },
-    (err, response) => {
-      if (err) {
-        return res.status(500).send(response.errormsg)
-      }
-      if (response.ok) {
-        // Send welcome email
-        sailthru.apiPost(
-          "event",
-          {
-            event: "editorial_welcome",
-            id: req.body.email,
-          },
-          (err, response) => {
-            if (err) {
-              return res.status(500).send(response.errormsg)
-            }
-            return res.send(req.body)
-          }
-        )
-      } else {
-        return res.status(500).send(response.errormsg)
-      }
-    }
-  )
 }
 
 export const redirectPost = (req, res, _next) =>
