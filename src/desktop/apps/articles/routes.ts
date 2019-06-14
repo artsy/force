@@ -8,8 +8,6 @@ import {
 } from "./queries/news_articles_query"
 import { positronql as _positronql } from "desktop/lib/positronql"
 import { map, sortBy, first, last, reject } from "lodash"
-import { subscribedToEditorial } from "desktop/apps/article/routes"
-import { data as sd } from "sharify"
 const { crop } = require("desktop/components/resizer/index.coffee")
 const { PARSELY_KEY, PARSELY_SECRET } = require("../../config.coffee")
 const _topParselyArticles = require("desktop/components/util/parsely.coffee")
@@ -31,18 +29,10 @@ export const articles = (_req, res, next) => {
       const articles = new Articles(result.articles)
       res.locals.sd.ARTICLES = articles.toJSON()
 
-      // Email
-      let onDailyEditorial: any = false
-      // Only need to check subscription on mobile
-      if (sd.IS_MOBILE && sd.CURRENT_USER) {
-        onDailyEditorial = await subscribedToEditorial(sd.CURRENT_USER.email)
-      }
-
       // Fetch News Panel Articles
       positronql({ query: newsPanelQuery() }).then(result => {
         const newsArticles = result.articles
         res.locals.sd.NEWS_ARTICLES = newsArticles
-        res.locals.sd.ON_DAILY_EDITORIAL = onDailyEditorial
 
         res.render("articles", {
           articles: articles,

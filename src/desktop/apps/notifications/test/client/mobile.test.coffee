@@ -13,7 +13,7 @@ NotificationsView = benv.requireWithJadeify require.resolve('../../client/mobile
   'emptyTemplate'
 ]
 
-describe 'NotificationsView', ->
+xdescribe 'NotificationsView', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'

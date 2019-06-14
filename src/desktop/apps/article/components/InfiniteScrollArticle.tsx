@@ -141,7 +141,6 @@ export class InfiniteScrollArticle extends React.Component<
   renderContent = () => {
     const {
       article: { slug },
-      emailSignupUrl,
       isMobile,
       showTooltips,
       showCollectionsRail,
@@ -160,7 +159,6 @@ export class InfiniteScrollArticle extends React.Component<
           <div key={`article-${i}`}>
             <Article
               article={article}
-              emailSignupUrl={emailSignupUrl}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
