@@ -77,24 +77,6 @@ describe("InfiniteScrollArticle", () => {
     expect(component.html()).toMatch("RelatedArticlesCanvas")
   })
 
-  describe("email signup", () => {
-    it("renders the email signup when url is provided", () => {
-      props.emailSignupUrl = "/signup/editorial"
-      const component = getWrapper()
-
-      expect(component.html()).toMatch("Stay up to date with Artsy Editorial")
-    })
-
-    it("does not render the email signup url is not provided", () => {
-      props.emailSignupUrl = ""
-      const component = getWrapper()
-
-      expect(component.html()).not.toMatch(
-        "Stay up to date with Artsy Editorial"
-      )
-    })
-  })
-
   describe("#onEnter", () => {
     beforeEach(() => {
       window.history.replaceState = jest.fn() as jest.Mock
