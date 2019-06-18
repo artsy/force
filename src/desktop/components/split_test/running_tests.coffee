@@ -24,14 +24,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {
-  artist_collections_rail:
-    key: 'artist_collections_rail'
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    control_group: 'control'
-    edge: 'experiment'
-    weighting: 'equal'
-}
+module.exports = {}
