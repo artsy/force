@@ -22,5 +22,5 @@ export const StagingBanner = () => {
 
 const Container = styled(Box)`
   position: relative;
-  z-index: 2;
+  z-index: 4;
 `
