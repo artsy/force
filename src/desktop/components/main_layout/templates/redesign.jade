@@ -17,7 +17,7 @@ html(
 
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
 
-    unless styledComponents
+    if !styledComponents
       if assetPackage
         link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 

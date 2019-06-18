@@ -13,6 +13,9 @@ app.use(
   })
 )
 
+// FIXME: Remove experiment
+app.use(require("./apps/experimental-app-shell/server").app)
+
 // NOTE:
 // App order matters as some apps establish logic that is shared inside of subapps.
 // Apps with hardcoded routes or "RESTful" routes
