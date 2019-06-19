@@ -154,11 +154,16 @@ export const redirectLoggedInHome = (req, res, next) => {
 
 export const getRedirectTo = req => {
   let referrer = parse(req.get("Referrer") || "").path || "/"
-  return (
+  const redirectTo =
     req.query["redirectTo"] ||
     req.body["redirect-to"] ||
     req.query["redirect-to"] ||
     req.query["redirect_uri"] ||
     referrer
-  )
+
+  if (redirectTo === "/reset_password") {
+    return "/"
+  } else {
+    return redirectTo
+  }
 }
