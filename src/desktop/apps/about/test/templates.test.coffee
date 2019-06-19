@@ -5,7 +5,7 @@ CurrentUser = require '../../../models/current_user'
 template = require('jade').compileFile(require.resolve '../templates/index.jade')
 fixture = require './fixture/content.json'
 resizer = require '../../../components/resizer'
-data = _.extend {}, asset: (->), sd: {}, fixture, resizer, nav: {}
+data = _.extend {}, asset: (->), sd: {}, fixture, resizer, nav: {}, stitch: { components: { NavBar: -> }}
 
 render = (moreData) ->
   template _.extend {}, data, moreData

@@ -10,7 +10,7 @@ block body
         mixin login-signup("Header")
 
     header
-      != stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
+      != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
 
     main
       block content
