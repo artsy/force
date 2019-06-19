@@ -9,25 +9,8 @@ block body
       else
         mixin login-signup("Header")
 
-    if sd.ENABLE_NEW_NAVBAR
-      header
-        != stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
-    else
-      header#main-header
-        nav.main-dropdown-menu.js-main-dropdown-menu
-          include ../../main_dropdown_menu/template
-
-        nav.main-header-nav
-          a#main-header-logo( href= '/' )
-            #main-header-logo-icon
-          a#main-header-menu( href= '#' )
-            #main-header-menu-icon
-          form#main-header-search-form( action='/search', method='GET' )
-            #main-header-search-bar
-              if stitch
-                != stitch.components.SearchBar()
-
-            button#main-header-search-button.avant-garde-box-button Search
+    header
+      != stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
 
     main
       block content
