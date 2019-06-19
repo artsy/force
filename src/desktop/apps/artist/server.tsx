@@ -15,13 +15,8 @@ app.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user && req.user.toJSON()
-      const {
-        ARTIST_COLLECTIONS_RAIL, // TODO: update after Artist Collections Rail a/b test
-      } = res.locals.sd
 
-      const context = buildServerAppContext(req, res, {
-        showCollectionsRail: ARTIST_COLLECTIONS_RAIL === "experiment", // TODO: update after Artist Collections Rail a/b test
-      })
+      const context = buildServerAppContext(req, res, {})
       const {
         bodyHTML,
         redirect,
