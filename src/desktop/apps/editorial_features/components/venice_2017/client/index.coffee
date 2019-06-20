@@ -17,9 +17,7 @@ module.exports = class VeniceView extends Backbone.View
 
   events:
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
-    'click .venice-overlay__cta-button': 'showCta'
     'click .venice-body__help a, .venice-guide__modal-bg, .venice-guide__body a.icon-close': 'toggleVideoGuide'
-    'click .venice-overlay__subscribe-form button': 'onSubscribe'
     'click .venice-overlay--completed__buttons .next': 'onNextVideo'
     'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
     'submit .venice-body__text-link': 'submitPhoneLink'
@@ -134,28 +132,6 @@ module.exports = class VeniceView extends Backbone.View
       sd.APP_URL + section.video_url_adaptive
     else
       sd.APP_URL + section.video_url
-
-  showCta: (e) ->
-    @$(e.target).fadeOut()
-    @$(e.target).next('.venice-overlay__subscribe-form').fadeIn()
-
-  onSubscribe: (e) ->
-    @$(e.currentTarget).addClass 'is-loading'
-    @email = @$(e.currentTarget).prev('input').val()
-    $.ajax
-      type: 'POST'
-      url: '/signup/editorial'
-      data:
-        email: @email
-        name: sd.CURRENT_USER?.name or= ''
-      error: (res) =>
-        new FlashMessage message: 'Whoops, there was an error. Please try again.'
-        @$(e.currentTarget).removeClass 'is-loading'
-      success: (res) =>
-        analyticsHooks.trigger 'email:signup', {user_email: @email}
-        new FlashMessage message: 'Thank you for signing up.'
-        @$(e.currentTarget).removeClass 'is-loading'
-        @$('.venice-overlay__cta').hide()
 
   toggleVideoGuide: (e) ->
     e.preventDefault()

@@ -11,7 +11,6 @@ buildClientApp({
   context: {
     user: sd.CURRENT_USER,
     mediator,
-    showCollectionsRail: sd.ARTIST_COLLECTIONS_RAIL === "experiment", // TODO: update after Artist Collections Rail a/b test
   } as any,
 })
   .then(({ ClientApp }) => {

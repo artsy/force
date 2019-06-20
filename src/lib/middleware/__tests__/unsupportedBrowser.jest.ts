@@ -137,5 +137,10 @@ describe("unsupported browsers", () => {
       req.get.mockReturnValue("/collect")
       expect(getRedirectTo(req)).toBe("/collect")
     })
+
+    it("does not send users back to /reset_password", () => {
+      req.body["redirectTo"] = "/reset_password"
+      expect(getRedirectTo(req)).toBe("/")
+    })
   })
 })
