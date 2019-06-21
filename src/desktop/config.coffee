@@ -35,7 +35,6 @@ module.exports =
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_INSTANT_PAGE: true,
   ENABLE_MEMORY_PROFILING: false
-  ENABLE_NEW_NAVBAR: false,
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'

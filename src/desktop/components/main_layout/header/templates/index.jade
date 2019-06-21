@@ -1,12 +1,4 @@
 include ../../../util/activator
 
-if sd.ENABLE_NEW_NAVBAR
-  header
-    != stitch.components.NavBar({ notificationCount: sd.NOTIFICATION_COUNT, searchQuery: sd.searchQuery, user: sd.CURRENT_USER,  })
-else
-  header#main-layout-header( class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '' )
-    if sd.APPLICATION_NAME === "force-staging"
-      #staging-banner
-        != stitch.components.StagingBanner()
-    include ./small_screen_header.jade
-    include ./large_screen_header.jade
+header
+  != stitch && stitch.components.NavBar({ notificationCount: sd.NOTIFICATION_COUNT, searchQuery: sd.searchQuery, user: sd.CURRENT_USER,  })

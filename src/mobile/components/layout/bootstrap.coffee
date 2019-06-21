@@ -15,7 +15,6 @@ RavenClient = require 'raven-js'
 sd = require('sharify').data
 Cookies = require 'cookies-js'
 { parse } = require 'url'
-HeaderView = require './client/header_view.coffee'
 doc = window.document
 sharify = require('sharify')
 CurrentUser = require '../../models/current_user.coffee'
@@ -41,7 +40,6 @@ module.exports = ->
     FastClick.attach document.body
 
   setupErrorReporting()
-  setupHeaderView()
   syncAuth()
   checkForAfterSignUpAction()
 
@@ -49,7 +47,7 @@ module.exports = ->
   require 'jquery-on-infinite-scroll'
   if sd.stitch?.renderQueue?
     mountStitch()
-  
+
 mountStitch = ->
   hydrateStitch({
     sharifyData: sd
@@ -72,11 +70,6 @@ syncAuth = module.exports.syncAuth = ->
 
 setupErrorReporting = ->
   Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
-
-# Show search button on focusing the search bar
-setupHeaderView = ->
-  new HeaderView
-    el: $('#main-header')
 
 operations =
   save: (currentUser, objectId) ->

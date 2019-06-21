@@ -20,7 +20,6 @@ module.exports =
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
-  ENABLE_NEW_NAVBAR: false,
   EUROPA_URL: 'http://europa-production.herokuapp.com'
   FACEBOOK_ID: null
   FACEBOOK_SECRET: null
