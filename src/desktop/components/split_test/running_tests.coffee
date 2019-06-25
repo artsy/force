@@ -24,4 +24,14 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {}
+module.exports = {
+  inquiry_auth:
+    key: 'inquiry_auth'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    control_group: 'control'
+    edge: 'experiment'
+    weighting: 'equal'
+}
