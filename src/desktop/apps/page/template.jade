@@ -21,4 +21,4 @@ append locals
   - assetPackage = 'misc'
 
 block body
-  #page-markdown-content!= page.mdToHtml('content')
+  #page-markdown-content!= page.sanitizedHtml('content')
