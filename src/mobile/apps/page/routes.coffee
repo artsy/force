@@ -1,4 +1,4 @@
-Page = require '../../models/page'
+Page = require '../../../desktop/models/page.coffee'
 { APP_URL } = require '../../config'
 
 module.exports.vanityUrl = (id) ->
