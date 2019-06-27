@@ -2,7 +2,6 @@ import React from "react"
 import { shallow } from "enzyme"
 import { InfiniteScrollNewsArticle } from "../InfiniteScrollNewsArticle"
 import { NewsArticle } from "reaction/Components/Publishing/Fixtures/Articles"
-import { UnitCanvasImage } from "reaction/Components/Publishing/Fixtures/Components"
 import { extend, times } from "lodash"
 import { data as sd } from "sharify"
 import moment from "moment"
@@ -94,29 +93,6 @@ describe("InfiniteScrollNewsArticle", () => {
     expect(mockPositronql).toBeCalled()
     expect(component.find("#article-root").children().length).toBe(5)
     expect(Object.keys(component.state().display[0])[1]).toBe("renderTime")
-  })
-
-  it("injects a canvas ad after the sixth article", async () => {
-    const data = {
-      articles: times(6, () => {
-        return extend({}, NewsArticle, {
-          slug: "foobar",
-          channel_id: "123",
-          id: "678",
-        })
-      }),
-      display: {
-        name: "BMW",
-        canvas: UnitCanvasImage,
-      },
-    }
-    mockPositronql.mockReturnValue(Promise.resolve(data))
-    const component = getWrapper()
-    const instance = component.instance() as InfiniteScrollNewsArticle
-    await instance.fetchNextArticles()
-    component.update()
-
-    expect(component.html()).toMatch("Sponsored by BMW")
   })
 
   it("injects read more after the sixth article", async () => {
