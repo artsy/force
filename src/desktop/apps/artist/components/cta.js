@@ -1,8 +1,10 @@
-import $ from "jquery"
-import metaphysics from "lib/metaphysics.coffee"
-import Artist from "desktop/models/artist.coffee"
+import * as $ from "jquery"
 import { data as sd } from "sharify"
-import ArtistPageCTAView from "desktop/components/artist_page_cta/view.coffee"
+
+const metaphysics = require("lib/metaphysics.coffee")
+const Artist = require("desktop/models/artist.coffee")
+const ArtistPageCTAView = require("desktop/components/artist_page_cta/view.coffee")
+const mediator = require("desktop/lib/mediator.coffee")
 
 const query = `
 query ArtistCTAQuery($artistID: String!) {
@@ -22,6 +24,13 @@ query ArtistCTAQuery($artistID: String!) {
       }
       name
     }
+    artworks(size: 1) {
+      image {
+        cropped(width: 390, height: 644) {
+          url
+        }
+      }
+    }
   }
 }
 `
@@ -33,12 +42,44 @@ const send = {
 
 if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
   metaphysics(send).then(({ artist: artistData }) => {
-    const artist = new Artist(artistData)
-    const view = new ArtistPageCTAView({ artist })
-    $("body").append(view.render().$el)
-    view.initializeMailcheck()
-    setTimeout(() => {
-      view.$el.removeClass("initial")
-    }, 500)
+    const image =
+      artistData.artworks &&
+      artistData.artworks[0] &&
+      artistData.artworks[0].image &&
+      artistData.artworks[0].image.cropped &&
+      artistData.artworks[0].image.cropped.url
+
+    if (sd.ARTIST_PAGE_SIGNUP_MODAL_QA === "experiment") {
+      if (!sd.CURRENT_USER && !sd.IS_MOBILE) {
+        window.addEventListener(
+          "scroll",
+          () => {
+            setTimeout(() => {
+              mediator.trigger("open:auth", {
+                copy: `Join Artsy to discover new works by ${
+                  artistData.name
+                } and more artists you love`,
+                mode: "signup",
+                intent: "signup",
+                signupIntent: "signup",
+                trigger: "scroll",
+                triggerSeconds: 2,
+                destination: location.href,
+                image,
+              })
+            }, 2000)
+          },
+          { once: true }
+        )
+      }
+    } else {
+      const artist = new Artist(artistData)
+      const view = new ArtistPageCTAView({ artist })
+      $("body").append(view.render().$el)
+      view.initializeMailcheck()
+      setTimeout(() => {
+        view.$el.removeClass("initial")
+      }, 500)
+    }
   })
 }

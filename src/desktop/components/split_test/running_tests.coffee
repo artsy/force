@@ -24,4 +24,12 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {}
+module.exports = {
+  artist_page_signup_modal_qa:
+    key: "artist_page_signup_modal_qa"
+    outcomes: 
+      control: 100
+      experiment: 0
+    control_group: "control"
+    edge: "experiemnt"
+}
