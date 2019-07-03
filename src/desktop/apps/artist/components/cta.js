@@ -5,6 +5,9 @@ const metaphysics = require("lib/metaphysics.coffee")
 const Artist = require("desktop/models/artist.coffee")
 const ArtistPageCTAView = require("desktop/components/artist_page_cta/view.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
+// Uncomment when we are ready to launch a/b test
+// const split_test = require("desktop/components/split_test.coffee")
+// split_test.view()
 
 const query = `
 query ArtistCTAQuery($artistID: String!) {
