@@ -1,4 +1,5 @@
 import * as $ from "jquery"
+import { get } from "lodash"
 import { data as sd } from "sharify"
 
 const metaphysics = require("lib/metaphysics.coffee")
@@ -45,12 +46,7 @@ const send = {
 
 if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
   metaphysics(send).then(({ artist: artistData }) => {
-    const image =
-      artistData.artworks &&
-      artistData.artworks[0] &&
-      artistData.artworks[0].image &&
-      artistData.artworks[0].image.cropped &&
-      artistData.artworks[0].image.cropped.url
+    const image = get(artistData, "artworks[0].image.cropped.url")
 
     if (sd.ARTIST_PAGE_SIGNUP_MODAL_QA === "experiment") {
       if (!sd.CURRENT_USER && !sd.IS_MOBILE) {
