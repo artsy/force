@@ -27,7 +27,6 @@ class DOM extends Component {
 
     this.$ = require("jquery")
     this.addEventListeners()
-    // this.maybeShowConfirmRegistrationModal()
     this.maybeStartRegistrationFlow()
   }
 

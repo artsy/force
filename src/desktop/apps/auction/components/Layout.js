@@ -8,7 +8,7 @@ import Footer from "desktop/apps/auction/components/layout/Footer"
 import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout/ConfirmRegistrationModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
-import React, { useEffect, useState } from "react"
+import React, { useLayoutEffect } from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 
@@ -24,16 +24,15 @@ function Layout(props) {
     showInfoWindow,
     showMyActiveBids,
     showFooter,
+    modal,
   } = props
 
   const b = block("auction-Layout")
 
-  const Modal = ConfirmRegistrationModal
-  // const Modal =
-  //   typeof window !== "undefined" &&
-  //   window.location.pathname.match("/confirm-registration")
-  //     ? ConfirmRegistrationModal
-  //     : null
+  const Modal =
+    modal === "ConfirmRegistration" ? ConfirmRegistrationModal : null
+
+  // : ConfirmRegistrationModal
 
   return (
     <div className={b()}>
@@ -74,7 +73,15 @@ Layout.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    app: { articles, auction, me, isEcommerceSale, isMobile, showInfoWindow },
+    app: {
+      articles,
+      auction,
+      me,
+      isEcommerceSale,
+      isMobile,
+      showInfoWindow,
+      modal,
+    },
   } = state
 
   const {
@@ -97,6 +104,7 @@ const mapStateToProps = state => {
   return {
     associatedSale: associated_sale,
     isMobile,
+    modal,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
