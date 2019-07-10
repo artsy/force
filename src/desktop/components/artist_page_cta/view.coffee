@@ -35,12 +35,13 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @alreadyDismissed = false
     @signupIntent = 'Artist CTA Banner'
     @afterAuthPath = window.location
-    @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
+    @$window.on 'scroll', _.once(@maybeShowOverlay)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
 
-  maybeShowOverlay: (e) =>
-    @fullScreenOverlay(e) if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
+  maybeShowOverlay: () =>
+    if !@alreadyDismissed
+      setTimeout (=> @fullScreenOverlay()), 4000
 
   triggerLoginModal: (e) ->
     e.stopPropagation()
@@ -55,13 +56,15 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   currentParams: ->
     qs.parse(location.search.replace(/^\?/, ''))
 
-  fullScreenOverlay: (e) =>
-    contextModule = "Footer" if e.currentTarget.className?.includes("artist-page-cta")
+  fullScreenOverlay: (event = "scroll") =>
+    if event != "scroll"
+      contextModule = "Footer" if event.currentTarget.className?.includes("artist-page-cta")
+    eventType = if event == "scroll" then "scroll" else event.type
     return if @$el.hasClass 'fullscreen'
     @$overlay.fadeIn 300
     @$banner.fadeOut 300
     fragment = qs.stringify @currentParams()
-    @trackImpression(e.type, contextModule)
+    @trackImpression(eventType, contextModule)
     # This handles the redirect for the new onboarding flow
     @afterAuthPath += "?redirectTo=#{@artist.get('href')}"
     @afterAuthPath += "?#{fragment}" if fragment
@@ -145,12 +148,14 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   initializeMailcheck: ->
     Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
-  trackImpression:(triggerType, contextModule) ->
+  trackImpression:(triggerType, contextModule) =>
     analytics.track("Auth Impression", {
       modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
       onboarding: true,
-      trigger: if triggerType == "scroll" then "trigger" else triggerType,
+      trigger: if triggerType == "scroll" then "scroll" else triggerType,
+      triggerSeconds: 4 if triggerType is "scroll",
       type: "signup",
       intent: "signup",
-      context_module: contextModule
+      context_module: contextModule,
+      auth_redirect: location.href
     })
