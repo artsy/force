@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Modal } from "reaction/Components/Modal/Modal"
-import { Serif, Button, CheckCircleIcon, Theme, Box } from "@artsy/palette"
+import { Serif, Button, CheckCircleIcon, Box } from "@artsy/palette"
 import { connect } from "react-redux"
 
 const _ConfirmRegistrationModal = ({ me }) => {
