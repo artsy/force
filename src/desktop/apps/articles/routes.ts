@@ -124,7 +124,6 @@ export const teamChannel = (req, res, next) => {
 
 export async function news(_req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
-  const renderTime = getCurrentUnixTimestamp()
   const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals.sd)
 
   try {
@@ -151,7 +150,6 @@ export async function news(_req, res, next) {
       data: {
         articles,
         isMobile,
-        renderTime,
         areHostedAdsEnabled,
       },
     })
