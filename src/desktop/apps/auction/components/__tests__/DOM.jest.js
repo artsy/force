@@ -10,7 +10,6 @@ jest.mock("jquery", x => () => ({
 jest.mock(
   "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
 )
-// jest.mock("desktop/components/credit_card/client/confirm_registration.coffee")
 jest.mock("desktop/lib/mediator.coffee", x => ({
   trigger: jest.fn(),
 }))
@@ -27,7 +26,6 @@ describe("DOM Interactions", () => {
     jest.restoreAllMocks()
   })
 
-  // describe
   describe(".handleRegister", () => {
     afterEach(() => {
       jest.resetAllMocks()

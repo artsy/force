@@ -25,13 +25,11 @@ const _ConfirmRegistrationModal = ({ me }) => {
     : RegistrationPending
 
   return (
-    <Theme>
-      <Modal show={showModal} onClose={hideModal}>
-        <Box textAlign="center">
-          <Content onClick={hideModal} />
-        </Box>
-      </Modal>
-    </Theme>
+    <Modal show={showModal} onClose={hideModal}>
+      <Box textAlign="center">
+        <Content onClick={hideModal} />
+      </Box>
+    </Modal>
   )
 }
 

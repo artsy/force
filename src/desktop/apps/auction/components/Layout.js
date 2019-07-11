@@ -8,7 +8,7 @@ import Footer from "desktop/apps/auction/components/layout/Footer"
 import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout/ConfirmRegistrationModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
-import React, { useLayoutEffect } from "react"
+import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 
@@ -31,8 +31,6 @@ function Layout(props) {
 
   const Modal =
     modal === "ConfirmRegistration" ? ConfirmRegistrationModal : null
-
-  // : ConfirmRegistrationModal
 
   return (
     <div className={b()}>
