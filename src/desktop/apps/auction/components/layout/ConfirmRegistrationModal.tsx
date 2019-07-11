@@ -4,6 +4,13 @@ import { Serif, Button, CheckCircleIcon, Theme, Box } from "@artsy/palette"
 import { connect } from "react-redux"
 
 const _ConfirmRegistrationModal = ({ me }) => {
+  useEffect(() => {
+    const replaceModalTriggerPath = location.pathname.replace(
+      "/confirm-registration",
+      ""
+    )
+    history.replaceState({}, document.title, replaceModalTriggerPath)
+  }, [])
   if (!(me && me.bidders && me.bidders.length)) return null
 
   const bidder = me.bidders[0]
@@ -16,15 +23,6 @@ const _ConfirmRegistrationModal = ({ me }) => {
   const Content = bidder.qualified_for_bidding
     ? RegistrationComplete
     : RegistrationPending
-
-  useEffect(() => {
-    console.log("rendering modal")
-    const replaceModalTriggerPath = location.pathname.replace(
-      "/confirm-registration",
-      ""
-    )
-    history.replaceState({}, document.title, replaceModalTriggerPath)
-  }, [])
 
   return (
     <Theme>
