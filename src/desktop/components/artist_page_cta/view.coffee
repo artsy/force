@@ -38,6 +38,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$window.on 'scroll', _.once(@maybeShowOverlay)
     mediator.on 'clickFollowButton', @fullScreenOverlay
     mediator.on 'clickHeaderAuth', @fullScreenOverlay
+    mediator.on("artist_cta:account_creation", (options) => analytics.track("Created Account", options))
 
   maybeShowOverlay: () =>
     if !@alreadyDismissed
@@ -59,12 +60,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   fullScreenOverlay: (event = "scroll") =>
     if event != "scroll"
       contextModule = "Footer" if event.currentTarget.className?.includes("artist-page-cta")
-    eventType = if event == "scroll" then "scroll" else event.type
+    @eventType = if event == "scroll" then "scroll" else event.type
     return if @$el.hasClass 'fullscreen'
     @$overlay.fadeIn 300
     @$banner.fadeOut 300
     fragment = qs.stringify @currentParams()
-    @trackImpression(eventType, contextModule)
+    @trackImpression(@eventType, contextModule)
     # This handles the redirect for the new onboarding flow
     @afterAuthPath += "?redirectTo=#{@artist.get('href')}"
     @afterAuthPath += "?#{fragment}" if fragment
@@ -133,7 +134,21 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       @submit(token)
     )
 
+
   onRegisterSuccess: (model, response, options) =>
+    hasEmailAndPassword = true if model.get("email") && model.get("password")
+    service = if hasEmailAndPassword then "email" else "facebook"
+    accountCreationData = {
+      user_id: response.user.id,
+      intent: "signup",
+      modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
+      trigger: if @eventType == "scroll" then "scroll" else @eventType,
+      triggerSeconds: 4 if @eventType is "scroll",
+      type: "signup",
+      auth_redirect: location.href
+      service: service,
+    }
+    mediator.trigger 'artist_cta:account_creation', accountCreationData
     window.location = @afterAuthPath
 
   render: ->
