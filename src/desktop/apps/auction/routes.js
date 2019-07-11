@@ -84,6 +84,10 @@ export async function index(req, res, next) {
       sort = "-searchable_estimate"
     }
 
+    const modal = req.originalUrl.match("/confirm-registration")
+      ? "ConfirmRegistration"
+      : null
+
     const store = configureStore(auctionReducer, {
       app: u(
         {
@@ -97,6 +101,7 @@ export async function index(req, res, next) {
             isLoggedIn: Boolean(me),
           }),
           me,
+          modal,
         },
         appInitialState
       ),

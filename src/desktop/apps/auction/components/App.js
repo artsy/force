@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import React, { Component } from "react"
 import ResponsiveWindow from "desktop/components/react/responsive_window"
 import { Provider } from "react-redux"
+import { Theme } from "@artsy/palette"
 
 export default class App extends Component {
   static propTypes = {
@@ -12,13 +13,15 @@ export default class App extends Component {
 
   render() {
     return (
-      <Provider store={this.props.store}>
-        <ResponsiveWindow>
-          <DOM>
-            <Layout />
-          </DOM>
-        </ResponsiveWindow>
-      </Provider>
+      <Theme>
+        <Provider store={this.props.store}>
+          <ResponsiveWindow>
+            <DOM>
+              <Layout />
+            </DOM>
+          </ResponsiveWindow>
+        </Provider>
+      </Theme>
     )
   }
 }

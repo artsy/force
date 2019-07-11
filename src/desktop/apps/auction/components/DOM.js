@@ -1,5 +1,4 @@
 import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
-import ConfirmRegistrationModal from "desktop/components/credit_card/client/confirm_registration.coffee"
 import PropTypes from "prop-types"
 import mediator from "desktop/lib/mediator.coffee"
 import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
@@ -28,7 +27,6 @@ class DOM extends Component {
 
     this.$ = require("jquery")
     this.addEventListeners()
-    this.maybeShowConfirmRegistrationModal()
     this.maybeStartRegistrationFlow()
   }
 
@@ -78,15 +76,6 @@ class DOM extends Component {
   maybeStartRegistrationFlow() {
     if (location.pathname.match("/registration-flow")) {
       this.handleRegister()
-    }
-  }
-
-  maybeShowConfirmRegistrationModal() {
-    const { auction, user } = this.props
-    if (user && location.pathname.match("/confirm-registration")) {
-      new ConfirmRegistrationModal({
-        auction,
-      })
     }
   }
 
