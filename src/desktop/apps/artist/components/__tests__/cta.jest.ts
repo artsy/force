@@ -1,4 +1,4 @@
-import { init, query } from "../cta"
+import { setupArtistSignUpModal, query } from "../cta"
 
 jest.mock("lib/metaphysics.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))
@@ -56,7 +56,7 @@ describe("CTA", () => {
       query: query,
       variables: { artistID: artist.id },
     }
-    await init()
+    await setupArtistSignUpModal()
 
     expect(mockMetaphysics).toBeCalledWith(options)
   })
@@ -64,7 +64,7 @@ describe("CTA", () => {
   it("should set up a scroll event listener when in the experiment group", async () => {
     const spy = jest.spyOn(window, "addEventListener")
     mockMetaphysics.mockReturnValue(Promise.resolve({ artist }))
-    await init()
+    await setupArtistSignUpModal()
 
     expect(spy).toHaveBeenCalled()
     expect(spy.mock.calls[0][0]).toBe("scroll")

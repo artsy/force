@@ -44,7 +44,7 @@ const send = {
   variables: { artistID: sd.ARTIST_PAGE_CTA_ARTIST_ID },
 }
 
-export const init = () => {
+export const setupArtistSignUpModal = () => {
   if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
     return metaphysics(send).then(({ artist: artistData }) => {
       const image = get(artistData, "artworks[0].image.cropped.url")
