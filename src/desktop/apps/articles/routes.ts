@@ -1,6 +1,5 @@
 import { stitch as _stitch } from "@artsy/stitch"
 import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
-import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import App from "desktop/apps/articles/components/App"
 import {
   newsArticlesQuery,
