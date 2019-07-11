@@ -31,5 +31,5 @@ module.exports = {
       control: 100
       experiment: 0
     control_group: "control"
-    edge: "experiemnt"
+    edge: "experiment"
 }
