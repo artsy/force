@@ -1,6 +1,5 @@
 import { stitch as _stitch } from "@artsy/stitch"
 import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
-import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import App from "desktop/apps/articles/components/App"
 import {
   newsArticlesQuery,
@@ -124,7 +123,6 @@ export const teamChannel = (req, res, next) => {
 
 export async function news(_req, res, next) {
   const isMobile = res.locals.sd.IS_MOBILE
-  const renderTime = getCurrentUnixTimestamp()
   const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals.sd)
 
   try {
@@ -151,7 +149,6 @@ export async function news(_req, res, next) {
       data: {
         articles,
         isMobile,
-        renderTime,
         areHostedAdsEnabled,
       },
     })

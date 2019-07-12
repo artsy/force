@@ -70,11 +70,6 @@ describe("InfiniteScrollNewsArticle", () => {
 
   it("fetches more articles at the end of the page", async () => {
     const data = {
-      display: {
-        canvas: {
-          layout: "standard",
-        },
-      },
       articles: [
         extend({}, fixtures.article, {
           slug: "foobar",
@@ -92,7 +87,6 @@ describe("InfiniteScrollNewsArticle", () => {
 
     expect(mockPositronql).toBeCalled()
     expect(component.find("#article-root").children().length).toBe(5)
-    expect(Object.keys(component.state().display[0])[1]).toBe("renderTime")
   })
 
   it("injects read more after the sixth article", async () => {
