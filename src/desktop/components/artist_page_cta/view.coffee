@@ -36,8 +36,6 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @signupIntent = 'Artist CTA Banner'
     @afterAuthPath = window.location
     @$window.on 'scroll', _.once(@maybeShowOverlay)
-    mediator.on 'clickFollowButton', @fullScreenOverlay
-    mediator.on 'clickHeaderAuth', @fullScreenOverlay
     mediator.on("artist_cta:account_creation", (options) => analytics.track("Created Account", options))
 
   maybeShowOverlay: () =>
