@@ -10,12 +10,11 @@ jest.mock("jquery", x => () => ({
 jest.mock(
   "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
 )
-jest.mock("desktop/components/credit_card/client/confirm_registration.coffee")
 jest.mock("desktop/lib/mediator.coffee", x => ({
   trigger: jest.fn(),
 }))
 
-xdescribe("DOM Interactions", () => {
+describe("DOM Interactions", () => {
   // spyOn required to restore global mocks' original implementations
   // may not be necessary?
   beforeAll(() => {

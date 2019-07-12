@@ -3,6 +3,7 @@ import { data as sd } from "sharify"
 import { routes } from "reaction/Apps/Artist/routes"
 import React from "react"
 import ReactDOM from "react-dom"
+import { setupArtistSignUpModal } from "desktop/apps/artist/components/cta"
 
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -16,8 +17,10 @@ buildClientApp({
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(
       <ClientApp />,
-
-      document.getElementById("react-root")
+      document.getElementById("react-root"),
+      () => {
+        setupArtistSignUpModal()
+      }
     )
   })
   .catch(error => {

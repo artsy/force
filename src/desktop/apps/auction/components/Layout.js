@@ -5,6 +5,7 @@ import AuctionBlock from "desktop/components/react/auction_block/auction_block"
 import AuctionInfoContainer from "desktop/apps/auction/components/layout/auction_info"
 import _Banner from "desktop/apps/auction/components/layout/Banner"
 import Footer from "desktop/apps/auction/components/layout/Footer"
+import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout/ConfirmRegistrationModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
 import React from "react"
@@ -23,12 +24,17 @@ function Layout(props) {
     showInfoWindow,
     showMyActiveBids,
     showFooter,
+    modal,
   } = props
 
   const b = block("auction-Layout")
 
+  const Modal =
+    modal === "ConfirmRegistration" ? ConfirmRegistrationModal : null
+
   return (
     <div className={b()}>
+      {Modal && <Modal />}
       <Banner />
       <div className={b("container", "responsive-layout-container")}>
         <AuctionInfoContainer />
@@ -42,12 +48,11 @@ function Layout(props) {
         <PromotedSaleArtworks />
         <ArtworksByFollowedArtists />
 
-        {showFilter &&
-          !showInfoWindow && (
-            <div className="auction-main-page">
-              <ArtworkBrowser />
-            </div>
-          )}
+        {showFilter && !showInfoWindow && (
+          <div className="auction-main-page">
+            <ArtworkBrowser />
+          </div>
+        )}
 
         {showFooter && <Footer />}
       </div>
@@ -66,7 +71,15 @@ Layout.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    app: { articles, auction, me, isEcommerceSale, isMobile, showInfoWindow },
+    app: {
+      articles,
+      auction,
+      me,
+      isEcommerceSale,
+      isMobile,
+      showInfoWindow,
+      modal,
+    },
   } = state
 
   const {
@@ -89,6 +102,7 @@ const mapStateToProps = state => {
   return {
     associatedSale: associated_sale,
     isMobile,
+    modal,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
