@@ -63,8 +63,6 @@ module.exports =
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
-  HASHTAG_LAB_ADS_ALLOWLIST: ''
-  HASHTAG_LAB_ADS_ENABLED: false
   INTERCOM_SELLER_APP_ID: null
   INTERCOM_SELLER_ENABLED: false
   INTERCOM_BUYER_APP_ID: null
