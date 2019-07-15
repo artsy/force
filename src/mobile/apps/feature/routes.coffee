@@ -117,9 +117,6 @@ module.exports.confirmRegistration = (from) ->
       when 'bid'
         href: "/auction/#{req.params.id}/bid/#{req.params.artworkId}"
         buttonCopy: 'Continue Bidding'
-      when 'auction'
-        href: "/auction/#{req.params.id}"
-        buttonCopy: 'Back to Auction'
     locals = _.extend locals,
       h1Copy: 'Registration Complete'
       h2Copy: "We'll notify you when the auction opens."

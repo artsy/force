@@ -140,7 +140,3 @@ describe '#confirmRegistration', ->
     routes.confirmRegistration('bid') @req, @res
     @res.render.args[0][1].href.should.containEql "/auction/two-x-two/bid/foo-bar"
 
-  it 'points back to the auction page after confirming from an auction page', ->
-    @req.params = id: 'two-x-two'
-    routes.confirmRegistration('auction') @req, @res
-    @res.render.args[0][1].href.should.containEql "/auction/two-x-two"
