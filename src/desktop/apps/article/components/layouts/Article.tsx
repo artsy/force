@@ -102,7 +102,6 @@ export class ArticleLayout extends React.Component<
       isSuper,
       isLoggedIn,
       isMobile,
-      renderTime,
       showTooltips,
       showCollectionsRail,
       areHostedAdsEnabled,
@@ -127,14 +126,12 @@ export class ArticleLayout extends React.Component<
           <Article
             article={article}
             customEditorial={customEditorial}
-            display={article.display}
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
             onOpenAuthModal={this.handleOpenAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
-            renderTime={renderTime}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}
@@ -145,7 +142,6 @@ export class ArticleLayout extends React.Component<
             article={article}
             isMobile={isMobile}
             onOpenAuthModal={this.handleOpenAuthModal}
-            renderTime={renderTime}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             areHostedAdsEnabled={areHostedAdsEnabled}

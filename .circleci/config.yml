@@ -112,12 +112,5 @@ workflows:
       # Release
       - validate_production_schema:
           <<: *only_release
-      - hokusai/push:
-          name: push-production-image
-          <<: *only_release
-          requires:
-            - validate_production_schema
       - hokusai/deploy-production:
           <<: *only_release
-          requires:
-            - push-production-image
