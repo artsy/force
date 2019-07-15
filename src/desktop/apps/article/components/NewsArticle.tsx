@@ -7,7 +7,6 @@ import {
 } from "reaction/Components/Publishing/Typings"
 
 interface Props {
-  areHostedAdsEnabled: boolean
   article: ArticleData
   isActive: boolean
   isMobile: boolean
@@ -109,7 +108,6 @@ export class NewsArticle extends Component<Props, State> {
       isTruncated,
       relatedArticlesForCanvas,
       showCollectionsRail,
-      areHostedAdsEnabled,
       shouldAdRender,
       articleSerial,
     } = this.props
@@ -135,7 +133,6 @@ export class NewsArticle extends Component<Props, State> {
               showCollectionsRail={
                 relatedArticlesForCanvas && showCollectionsRail
               }
-              areHostedAdsEnabled={areHostedAdsEnabled}
               shouldAdRender={shouldAdRender}
               articleSerial={articleSerial}
             />
