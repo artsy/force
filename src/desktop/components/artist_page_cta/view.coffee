@@ -35,12 +35,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @alreadyDismissed = false
     @signupIntent = 'Artist CTA Banner'
     @afterAuthPath = window.location
-    @$window.on 'scroll', _.once(@maybeShowOverlay)
+    @$window.on('scroll', _.once(@maybeShowOverlay))
     mediator.on("artist_cta:account_creation", (options) => analytics.track("Created Account", options))
 
-  maybeShowOverlay: () =>
+  maybeShowOverlay: (event) =>
     if !@alreadyDismissed
-      setTimeout (=> @fullScreenOverlay()), 4000
+      setTimeout (=> @fullScreenOverlay(event)), 4000
 
   triggerLoginModal: (e) ->
     e.stopPropagation()
@@ -55,10 +55,10 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   currentParams: ->
     qs.parse(location.search.replace(/^\?/, ''))
 
-  fullScreenOverlay: (event = "scroll") =>
-    if event != "scroll"
+  fullScreenOverlay: (event) =>
+    if event.type != "scroll"
       contextModule = "Footer" if event.currentTarget.className?.includes("artist-page-cta")
-    @eventType = if event == "scroll" then "scroll" else event.type
+    @eventType = event.type
     return if @$el.hasClass 'fullscreen'
     @$overlay.fadeIn 300
     @$banner.fadeOut 300
