@@ -4,13 +4,19 @@ jest.mock("lib/metaphysics.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))
 )
 
+jest.mock("desktop/components/split_test/index.coffee", () =>
+  jest.fn().mockReturnValue({
+    view: jest.fn(),
+  })
+)
+
 const mockMetaphysics = require("lib/metaphysics.coffee")
 
 jest.mock("sharify", () => ({
   data: {
     ARTIST_PAGE_CTA_ARTIST_ID: "claes-oldenburg",
     ARTIST_PAGE_CTA_ENABLED: true,
-    ARTIST_PAGE_SIGNUP_MODAL_QA: "experiment",
+    ARTIST_PAGE_SIGNUP_MODAL: "experiment",
   },
 }))
 

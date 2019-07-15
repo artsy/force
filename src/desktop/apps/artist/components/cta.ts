@@ -6,9 +6,7 @@ const metaphysics = require("lib/metaphysics.coffee")
 const Artist = require("desktop/models/artist.coffee")
 const ArtistPageCTAView = require("desktop/components/artist_page_cta/view.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
-// Uncomment when we are ready to launch a/b test
-// const split_test = require("desktop/components/split_test.coffee")
-// split_test.view()
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 export const query = `
 query ArtistCTAQuery($artistID: String!) {
@@ -45,11 +43,12 @@ const send = {
 }
 
 export const setupArtistSignUpModal = () => {
+  splitTest("artist_page_signup_modal").view()
   if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
     return metaphysics(send).then(({ artist: artistData }) => {
       const image = get(artistData, "artworks[0].image.cropped.url")
 
-      if (sd.ARTIST_PAGE_SIGNUP_MODAL_QA === "experiment") {
+      if (sd.ARTIST_PAGE_SIGNUP_MODAL === "experiment") {
         if (!sd.CURRENT_USER && !sd.IS_MOBILE) {
           window.addEventListener(
             "scroll",
