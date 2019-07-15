@@ -32,7 +32,6 @@ export interface Props {
   articles: ArticleData[]
   isMobile?: boolean
   showCollectionsRail?: boolean
-  areHostedAdsEnabled?: boolean
   shouldAdRender?: boolean
 }
 
@@ -186,7 +185,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   renderContent = () => {
     const { activeArticle, articles, relatedArticles } = this.state
-    const { isMobile, showCollectionsRail, areHostedAdsEnabled } = this.props
+    const { isMobile, showCollectionsRail } = this.props
 
     let counter = 0
 
@@ -228,7 +227,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               relatedArticlesForCanvas={relatedArticlesCanvas as any}
               // Only show rail if already rendering canvas
               showCollectionsRail={relatedArticles && showCollectionsRail}
-              areHostedAdsEnabled={areHostedAdsEnabled}
               shouldAdRender={renderAd}
               articleSerial={adPosition.index}
             />
