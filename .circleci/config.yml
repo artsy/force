@@ -114,3 +114,5 @@ workflows:
           <<: *only_release
       - hokusai/deploy-production:
           <<: *only_release
+          requires:
+            - validate_production_schema
