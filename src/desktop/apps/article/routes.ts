@@ -121,6 +121,7 @@ export const index = async (req, res, next) => {
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
     const customEditorial = isCustomEditorial(article.id)
     const renderTime = getCurrentUnixTimestamp()
+    const developmentEnv = res.locals.sd.DEPLOY_ENV
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
@@ -152,6 +153,7 @@ export const index = async (req, res, next) => {
         showTooltips,
         superArticle,
         superSubArticles,
+        developmentEnv,
       },
       templates,
     })
