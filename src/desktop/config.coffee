@@ -29,6 +29,7 @@ module.exports =
   COOKIE_DOMAIN: null
   DD_TRACE_AGENT_HOSTNAME: 'localhost'
   DD_SERVICE_NAME: 'force'
+  DEPLOY_ENV: null
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
