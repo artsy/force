@@ -31,7 +31,7 @@ describe("Confirm Registration Modal", () => {
   })
 
   describe("User is not registered for sale", () => {
-    it("does not render the modal", () => {
+    it("does not render the modal if there is no user", () => {
       const { wrapper } = renderTestComponent({
         Component: ConfirmRegistrationModal,
         options: { renderMode: "render" },
@@ -53,6 +53,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
+              modal: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -70,12 +71,15 @@ describe("Confirm Registration Modal", () => {
     })
 
     describe("User is not qualified for bidding", () => {
-      it("shows a not qualified message", () => {
+      it("shows a bid could not be placed message if the user was trying to bid + register", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
+          props: { cantBid: true },
           options: { renderMode: "render" },
           data: {
             app: {
+              modal: "ConfirmBidAndRegistration",
+
               me: {
                 bidders: [
                   {
@@ -86,6 +90,31 @@ describe("Confirm Registration Modal", () => {
             },
           },
         })
+        expect(wrapper.text()).toEqual(
+          expect.stringContaining("We're sorry, your bid could not be placed.")
+        )
+      })
+
+      it("shows a registration pending message if the user was trying to register", () => {
+        const { wrapper } = renderTestComponent({
+          Component: ConfirmRegistrationModal,
+          options: { renderMode: "render" },
+          data: {
+            app: {
+              modal: "ConfirmRegistration",
+              me: {
+                bidders: [
+                  {
+                    qualified_for_bidding: false,
+                  },
+                ],
+              },
+            },
+          },
+        })
+        expect(wrapper.text()).not.toEqual(
+          expect.stringContaining("We're sorry, your bid could not be placed.")
+        )
         expect(wrapper.text()).toEqual(
           expect.stringContaining("Registration pending")
         )
