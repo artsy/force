@@ -66,6 +66,8 @@ module.exports = class BidForm extends ErrorHandlingForm
           , 1000
         error: (model, response) =>
           if response.responseJSON?.error == "Bidder not qualified to bid on this auction"
+            # Trigger the registration confirmation modal on the auction page
+            #with the 'bid could not be placed' registration pending message
             bidPendingUrl = "#{APP_URL}/auction/#{@model.get('id')}/confirm-registration?origin=bid"
             window.location = bidPendingUrl
           else
