@@ -43,8 +43,8 @@ const send = {
 }
 
 export const setupArtistSignUpModal = () => {
-  splitTest("artist_page_signup_modal").view()
   if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
+    splitTest("artist_page_signup_modal").view()
     return metaphysics(send).then(({ artist: artistData }) => {
       const image = get(artistData, "artworks[0].image.cropped.url")
 
