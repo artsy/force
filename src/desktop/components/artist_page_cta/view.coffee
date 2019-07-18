@@ -137,9 +137,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     hasEmailAndPassword = true if model.get("email") && model.get("password")
     service = if hasEmailAndPassword then "email" else "facebook"
 
-    persistedAnalyticsData = JSON.parse(Cookies.get("artist-page-account-creation-data"))
-    Cookies.expire("artist-page-account-creation-data")
-    accountCreationData = _.extend(persistedAnalyticsData, {
+    accountCreationData = _.extend(_.omit(@analyticsData, "onboarding"), {
       user_id: response.user.id,
       service: service,
     })
@@ -160,17 +158,15 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   trackImpression:(triggerType, contextModule) =>
-    persistData = {
+    @analyticsData = {
       modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
       trigger: if triggerType == "scroll" then "scroll" else triggerType,
       trigger_seconds: 4 if triggerType == "scroll",
       type: "signup",
       intent: "signup",
       context_module: contextModule,
-      auth_redirect: location.href
+      auth_redirect: location.href,
+      onboarding: true
     }
-
-    Cookies.set('artist-page-account-creation-data', JSON.stringify(persistData), { expires: 600 })
-
-    analyticsData = _.extend(persistData, { onboarding: true })
-    analytics.track("Auth Impression", analyticsData)
+    
+    analytics.track("Auth Impression", @analyticsData)
