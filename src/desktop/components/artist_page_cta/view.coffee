@@ -58,12 +58,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   fullScreenOverlay: (event) =>
     if event.type != "scroll"
       contextModule = "Footer" if event.currentTarget.className?.includes("artist-page-cta")
-    @eventType = event.type
+    eventType = event.type
     return if @$el.hasClass 'fullscreen'
     @$overlay.fadeIn 300
     @$banner.fadeOut 300
     fragment = qs.stringify @currentParams()
-    @trackImpression(@eventType, contextModule)
+    @trackImpression(eventType, contextModule)
     # This handles the redirect for the new onboarding flow
     @afterAuthPath += "?redirectTo=#{@artist.get('href')}"
     @afterAuthPath += "?#{fragment}" if fragment
@@ -136,16 +136,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   onRegisterSuccess: (model, response, options) =>
     hasEmailAndPassword = true if model.get("email") && model.get("password")
     service = if hasEmailAndPassword then "email" else "facebook"
-    accountCreationData = {
+
+    accountCreationData = _.extend(_.omit(@analyticsData, "onboarding"), {
       user_id: response.user.id,
-      intent: "signup",
-      modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
-      trigger: if @eventType == "scroll" then "scroll" else @eventType,
-      triggerSeconds: 4 if @eventType is "scroll",
-      type: "signup",
-      auth_redirect: location.href
       service: service,
-    }
+    })
+
     mediator.trigger 'artist_cta:account_creation', accountCreationData
     window.location = @afterAuthPath
 
@@ -162,13 +158,15 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   trackImpression:(triggerType, contextModule) =>
-    analytics.track("Auth Impression", {
+    @analyticsData = {
       modal_copy: "Join Artsy to discover new works by #{@artist.get('name')} and more artists you love",
-      onboarding: true,
       trigger: if triggerType == "scroll" then "scroll" else triggerType,
-      triggerSeconds: 4 if triggerType is "scroll",
+      trigger_seconds: 4 if triggerType == "scroll",
       type: "signup",
       intent: "signup",
       context_module: contextModule,
-      auth_redirect: location.href
-    })
+      auth_redirect: location.href,
+      onboarding: true
+    }
+    
+    analytics.track("Auth Impression", @analyticsData)
