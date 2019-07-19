@@ -12,7 +12,6 @@ module.exports = class PartnerContactView extends Backbone.View
 
     @listenTo @partner, 'sync', @renderAdditionalInfo
     @partner.related().locations.fetch success: @renderLocations
-    @listenTo @partner, 'sync', @renderVATInfo
     @render()
 
   render: ->
@@ -27,6 +26,4 @@ module.exports = class PartnerContactView extends Backbone.View
 
   renderAdditionalInfo: ->
     @$('.partner2-contact-info').html contactTemplate(profile: @profile, partner: @partner)
-
-  renderVATInfo: ->
-    @$('.partner2-vat-info').html "hello world"
+    @$('.partner2-vat-info').html "VAT ID #: #{@partner.get('vat_number')}" if @partner.get('vat_number')
