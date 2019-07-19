@@ -25,11 +25,11 @@
 # module.exports = {}
 
 module.exports = {
-  artist_page_signup_modal_qa:
-    key: "artist_page_signup_modal_qa"
+  artist_page_signup_modal:
+    key: "artist_page_signup_modal"
     outcomes: 
-      control: 100
-      experiment: 0
+      control: 50
+      experiment: 50
     control_group: "control"
     edge: "experiment"
 }
