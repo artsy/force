@@ -65,7 +65,15 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
           success: =>
             @window.location = "/artwork/#{@saleArtwork.get('artwork').id}#confirm-bid"
           error: @onError
-      error: @onError
+      error: (model, response) =>
+        if response.responseJSON?.error == "Bidder not qualified to bid on this auction"
+          # Trigger the registration confirmation modal on the (desktop) auction page
+          # with the 'bid could not be placed' registration pending message
+
+          bidPendingUrl = "#{sd.APP_URL}/auction/#{@saleArtwork.get('sale').id}/confirm-registration?origin=bid"
+          @window.location = bidPendingUrl
+        else
+          @onError model, response
 
   onError: (m, err) =>
     msg = if _.isString(m) then m else JSON.parse(err.responseText).message

@@ -7,7 +7,7 @@ BidderPosition = require '../../../models/bidder_position.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 ConditionsOfSale = require '../mixins/conditions_of_sale.js'
-{ SESSION_ID } = require('sharify').data
+{ SESSION_ID, APP_URL } = require('sharify').data
 { getLiveAuctionUrl } = require '../../../../utils/domain/auctions/urls.js'
 
 module.exports = class BidForm extends ErrorHandlingForm
@@ -65,7 +65,13 @@ module.exports = class BidForm extends ErrorHandlingForm
             @pollForBidderPositionProcessed(model)
           , 1000
         error: (model, response) =>
-          @showError 'Error placing your bid', response
+          if response.responseJSON?.error == "Bidder not qualified to bid on this auction"
+            # Trigger the registration confirmation modal on the auction page
+            # with the 'bid could not be placed' registration pending message
+            bidPendingUrl = "#{APP_URL}/auction/#{@model.get('id')}/confirm-registration?origin=bid"
+            window.location = bidPendingUrl
+          else
+            @showError 'Error placing your bid', response
     else
       @showError "Your bid must be higher than #{@bidderPositions.minBid()}"
 

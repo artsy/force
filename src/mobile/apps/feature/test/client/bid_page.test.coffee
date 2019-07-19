@@ -147,6 +147,14 @@ describe 'BidPageView', ->
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/bidder_position'
 
+    it 'gives a could not place your bid message if the bidder is not qualified', () ->
+      Backbone.sync.onFirstCall().yieldsTo('error', responseJSON: { error : "Bidder not qualified to bid on this auction",} )
+      @view.window = { location: "" }
+
+      @acceptConditions()
+      @view.onSubmit(@e)
+      @view.window.location.should.containEql '/confirm-registration?origin=bid'
+
     describe 'polling', ->
       beforeEach ->
         @view.window = {}
