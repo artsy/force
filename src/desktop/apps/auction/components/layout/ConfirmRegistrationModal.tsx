@@ -30,7 +30,7 @@ const _ConfirmRegistrationModal = ({ me, type }) => {
 
   return (
     <Modal show={showModal} onClose={hideModal}>
-      <Box textAlign="center">
+      <Box pt={[3, 0]} textAlign="center">
         <Content onClick={hideModal} />
       </Box>
     </Modal>
