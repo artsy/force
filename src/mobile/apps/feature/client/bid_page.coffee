@@ -71,7 +71,7 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
           # with the 'bid could not be placed' registration pending message
 
           bidPendingUrl = "#{sd.APP_URL}/auction/#{@saleArtwork.get('sale').id}/confirm-registration?origin=bid"
-          window.location = bidPendingUrl
+          @window.location = bidPendingUrl
         else
           @onError model, response
 
