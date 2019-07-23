@@ -29,12 +29,9 @@ function Layout(props) {
 
   const b = block("auction-Layout")
 
-  const Modal =
-    modal === "ConfirmRegistration" ? ConfirmRegistrationModal : null
-
   return (
     <div className={b()}>
-      {Modal && <Modal />}
+      {modal && <ConfirmRegistrationModal />}
       <Banner />
       <div className={b("container", "responsive-layout-container")}>
         <AuctionInfoContainer />
