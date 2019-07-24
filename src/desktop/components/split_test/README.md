@@ -66,6 +66,18 @@ A test is not enabled from the analytics side without a `view` event. This must 
 
 SD variables are made available _on the client-side only_ in Reaction when they are added to [Reaction's Sharify `GlobalData`](https://github.com/artsy/reaction/blob/master/typings/sharify.d.ts).
 
+Once that is done, your Reaction app can access Sharify variables as follows:
+
+```jsx
+import { data as sd } from "sharify"
+
+const MyApp = () => {
+  return (
+    <div>{sd.MY_FEATURE === "new" ? <NewComponent /> : <OldComponent />}</div>
+  )
+}
+```
+
 ### Add link to artist collections rail test!!!
 
 ```javascript
