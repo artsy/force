@@ -4,6 +4,7 @@ import mediator from "desktop/lib/mediator.coffee"
 import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
 import { Component } from "react"
 import { connect } from "react-redux"
+import { showModal } from "../actions/app"
 
 class DOM extends Component {
   static propTypes = {
@@ -28,6 +29,7 @@ class DOM extends Component {
     this.$ = require("jquery")
     this.addEventListeners()
     this.maybeStartRegistrationFlow()
+    this.maybeShowModal()
   }
 
   componentWillUnmount() {
@@ -46,9 +48,29 @@ class DOM extends Component {
     this.$registerBtn.off("click", this.handleRegister)
   }
 
+  showModal = type => {
+    this.props.dispatch(showModal(type))
+  }
+
+  maybeShowModal() {
+    const { pathname } = location
+    console.log(pathname)
+    if (pathname.match(/registration-flow$/) && this.props.me) {
+      this.showModal("RegistrationFlow")
+    } else if (pathname.match(/\/confirm-registration/) && this.props.me) {
+      this.showModal(
+        location.search.match("origin=bid")
+          ? "ConfirmBidAndRegistration"
+          : "ConfirmRegistration"
+      )
+    }
+  }
+
   handleRegister = event => {
+    console.log("handleRegister")
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
+    // debugger
     if (!me) {
       mediator.trigger("open:auth", {
         mode: "signup",
@@ -64,12 +86,10 @@ class DOM extends Component {
 
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)
-    } else if (me.has_credit_cards) {
-      this.showAcceptConditions()
-
-      // Redirect to credit card registration form
-    } else {
+    } else if (!me.has_credit_cards) {
       window.location.assign(auction.registerUrl())
+    } else {
+      this.showModal("RegistrationFlow")
     }
   }
 
