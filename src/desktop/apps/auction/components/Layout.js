@@ -6,11 +6,13 @@ import AuctionInfoContainer from "desktop/apps/auction/components/layout/auction
 import _Banner from "desktop/apps/auction/components/layout/Banner"
 import Footer from "desktop/apps/auction/components/layout/Footer"
 import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout/ConfirmRegistrationModal"
+import { RegistrationFlowModal } from "reaction/Components/Auction/RegistrationFlowModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
+import { showModal } from "../actions/app"
 
 // FIXME: Rewire
 let Banner = _Banner
@@ -24,14 +26,33 @@ function Layout(props) {
     showInfoWindow,
     showMyActiveBids,
     showFooter,
-    modal,
+    modalType,
+    dispatch,
   } = props
 
   const b = block("auction-Layout")
 
+  let Modal
+  switch (modalType) {
+    case "RegistrationFlow":
+      Modal = RegistrationFlowModal
+      break
+    case "ConfirmBidAndRegistration":
+    case "ConfirmRegistration":
+      Modal = ConfirmRegistrationModal
+      break
+  }
+
   return (
     <div className={b()}>
-      {modal && <ConfirmRegistrationModal />}
+      {Modal && (
+        <Modal
+          resetModal={() => {
+            console.log("in the force resetModal handler")
+            dispatch(showModal(null))
+          }}
+        />
+      )}
       <Banner />
       <div className={b("container", "responsive-layout-container")}>
         <AuctionInfoContainer />
@@ -75,7 +96,7 @@ const mapStateToProps = state => {
       isEcommerceSale,
       isMobile,
       showInfoWindow,
-      modal,
+      modalType,
     },
   } = state
 
@@ -99,7 +120,7 @@ const mapStateToProps = state => {
   return {
     associatedSale: associated_sale,
     isMobile,
-    modal,
+    modalType,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
