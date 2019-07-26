@@ -7,7 +7,6 @@ Contact = require '../../client/contact.coffee'
 benv = require 'benv'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-fixtures = require '../../../../test/helpers/fixtures.coffee'
 
 describe 'Contact page', ->
 
