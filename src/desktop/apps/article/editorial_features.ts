@@ -19,6 +19,10 @@ const customEditorialArticles: CustomArticle[] = [
     name: "EOY_2018_CULTURE",
     id: "5bf306aad8b9430baaf6c6df",
   },
+  {
+    name: "VANGUARD_2019",
+    id: "5d2f8bd0cdc74b00208b7e16",
+  },
 ]
 
 /**
