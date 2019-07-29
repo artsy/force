@@ -74,7 +74,7 @@ export const handleSubmit = (
         analytics.track(action, pickBy(properties, identity))
       }
 
-      const defaultRedirect = getRedirect(type)
+      const defaultRedirect = getRedirect(type, res)
       window.location = modalOptions.redirectTo || (defaultRedirect as any)
     },
     error: (_, res) => {
@@ -112,8 +112,13 @@ export const setCookies = options => {
   }
 }
 
-export const getRedirect = type => {
+export const getRedirect = (type, response) => {
   const { location } = window
+
+  if (response.redirect_uri) {
+    return response.redirect_uri
+  }
+
   switch (type) {
     case "login":
     case "forgot":
