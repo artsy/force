@@ -41,4 +41,7 @@ block content
               p: a.avant-garde-box-button( href="tel:#{location.get('phone')}" ) Call #{partner.get('type')}
             br
 
+    if partner.has('vat_number')
+      .partner-vat-info
+        | VAT ID #: #{partner.get('vat_number')}
     a.partner-back-link( href='/' + profile.get('id') ) Go to #{partner.get('name')}
