@@ -9,7 +9,7 @@ class DOM extends Component {
   static propTypes = {
     auction: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-    user: PropTypes.object,
+    me: PropTypes.object,
   }
 
   // Selectors
@@ -103,7 +103,6 @@ class DOM extends Component {
 
 const mapStateToProps = state => ({
   auction: state.app.auction,
-  user: state.app.user,
   me: state.app.me,
 })
 

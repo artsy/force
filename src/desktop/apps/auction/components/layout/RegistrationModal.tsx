@@ -11,7 +11,7 @@ export const RegistrationModal = ({ auction, onClose }) => {
   }
   return (
     <AuctionRegistrationModal
-      auction={auction}
+      auction={auction.attributes}
       onClose={onClose}
       onSubmit={submitRegistration}
     />
