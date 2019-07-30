@@ -1,4 +1,3 @@
-import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
 import PropTypes from "prop-types"
 import mediator from "desktop/lib/mediator.coffee"
 import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
@@ -54,7 +53,6 @@ class DOM extends Component {
 
   maybeShowModal() {
     const { pathname } = location
-    console.log(pathname)
     if (pathname.match(/registration-flow$/) && this.props.me) {
       this.showModal("RegistrationFlow")
     } else if (pathname.match(/\/confirm-registration/) && this.props.me) {
@@ -67,7 +65,6 @@ class DOM extends Component {
   }
 
   handleRegister = event => {
-    console.log("handleRegister")
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     // debugger
@@ -96,15 +93,6 @@ class DOM extends Component {
   maybeStartRegistrationFlow() {
     if (location.pathname.match("/registration-flow")) {
       this.handleRegister()
-    }
-  }
-
-  showAcceptConditions() {
-    const { auction, user } = this.props
-    if (user) {
-      new AcceptConditionsOfSaleModal({
-        auction,
-      })
     }
   }
 
