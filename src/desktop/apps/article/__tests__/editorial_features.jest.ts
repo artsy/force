@@ -15,4 +15,9 @@ describe("Editorial Features", () => {
     const customEditorial = isCustomEditorial("5bf306aad8b9430baaf6c6df")
     expect(customEditorial).toBe("EOY_2018_CULTURE")
   })
+
+  it("Can identify VANGUARD_2019", () => {
+    const customEditorial = isCustomEditorial("5d2f8bd0cdc74b00208b7e16")
+    expect(customEditorial).toBe("VANGUARD_2019")
+  })
 })

@@ -25,6 +25,7 @@ export const relatedArticles = `
     ${canvasBody}
   }
   relatedArticles {
+    id
     authors {
       name
     }
@@ -35,6 +36,7 @@ export const relatedArticles = `
     title
     slug
     published_at
+    related_article_ids
     media {
       duration
       published
