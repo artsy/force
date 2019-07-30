@@ -6,7 +6,7 @@ import AuctionInfoContainer from "desktop/apps/auction/components/layout/auction
 import _Banner from "desktop/apps/auction/components/layout/Banner"
 import Footer from "desktop/apps/auction/components/layout/Footer"
 import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout/ConfirmRegistrationModal"
-import { RegistrationFlowModal } from "reaction/Components/Auction/RegistrationFlowModal"
+import { RegistrationModal } from "desktop/apps/auction/components/layout/RegistrationModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
 import React from "react"
@@ -21,6 +21,7 @@ let ArtworkBrowser = _ArtworkBrowser
 function Layout(props) {
   const {
     associatedSale,
+    auction,
     showAssociatedAuctions,
     showFilter,
     showInfoWindow,
@@ -35,7 +36,7 @@ function Layout(props) {
   let Modal
   switch (modalType) {
     case "RegistrationFlow":
-      Modal = RegistrationFlowModal
+      Modal = RegistrationModal
       break
     case "ConfirmBidAndRegistration":
     case "ConfirmRegistration":
@@ -47,8 +48,8 @@ function Layout(props) {
     <div className={b()}>
       {Modal && (
         <Modal
-          resetModal={() => {
-            console.log("in the force resetModal handler")
+          auction={auction}
+          onClose={() => {
             dispatch(showModal(null))
           }}
         />
@@ -119,6 +120,7 @@ const mapStateToProps = state => {
 
   return {
     associatedSale: associated_sale,
+    auction,
     isMobile,
     modalType,
     showAssociatedAuctions,
