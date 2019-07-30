@@ -115,8 +115,8 @@ export const setCookies = options => {
 export const getRedirect = (type, response) => {
   const { location } = window
 
-  if (response.redirect_uri) {
-    return response.redirect_uri
+  if (response.api_sign_in_with_redirect) {
+    return response.api_sign_in_with_redirect
   }
 
   switch (type) {

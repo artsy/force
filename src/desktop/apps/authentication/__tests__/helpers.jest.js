@@ -276,7 +276,7 @@ describe("Authentication Helpers", () => {
     it("returns the redirect_uri in the response if present", () => {
       const response = {
         success: true,
-        redirect_uri: "http://some-url.com",
+        api_sign_in_with_redirect: "http://some-url.com",
         user: {},
       }
       const redirectTo = getRedirect("anything", response)
