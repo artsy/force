@@ -242,25 +242,47 @@ describe("Authentication Helpers", () => {
   describe("#getRedirect", () => {
     it("Returns home if type is login and path is login", () => {
       window.history.pushState({}, "", "/login")
-      const redirectTo = getRedirect("login")
+
+      const response = {}
+      const redirectTo = getRedirect("login", response)
+
       expect(redirectTo).toBe("/")
     })
 
     it("Returns home if type is forgot", () => {
       window.history.pushState({}, "", "/forgot")
-      const redirectTo = getRedirect("forgot")
+
+      const response = {}
+      const redirectTo = getRedirect("forgot", response)
+
       expect(redirectTo).toBe("/")
     })
 
     it("Returns /personalize if type is signup", () => {
-      const redirectTo = getRedirect("signup")
+      const response = {}
+      const redirectTo = getRedirect("signup", response)
+
       expect(redirectTo).toBe("/personalize")
     })
 
     it("Returns window.location by default", () => {
-      window.history.pushState({}, "", "/magazine")
-      const redirectTo = getRedirect("login")
+      window.history.pushState({}, "", "/magazine", response)
+
+      const response = {}
+      const redirectTo = getRedirect("login", response)
+
       expect(redirectTo).toBe(window.location)
+    })
+
+    it("returns the redirect_uri in the response if present", () => {
+      const response = {
+        success: true,
+        redirect_uri: "http://some-url.com",
+        user: {},
+      }
+      const redirectTo = getRedirect("anything", response)
+
+      expect(redirectTo).toBe("http://some-url.com")
     })
   })
 })
