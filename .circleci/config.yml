@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   yarn: artsy/yarn@2.1.0
-  hokusai: artsy/hokusai@0.5.0
+  hokusai: artsy/hokusai@0.6.0
   node: artsy/node@0.1.0
 
 jobs:
