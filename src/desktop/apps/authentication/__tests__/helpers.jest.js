@@ -137,6 +137,14 @@ describe("Authentication Helpers", () => {
       )
 
       Backbone.sync.mock.calls[0][2].success()
+      Backbone.sync.mock.calls[1][2].success({
+        success: true,
+        redirect_uri: "testing",
+        user: {
+          id: 123,
+          accessToken: "foobar",
+        },
+      })
       expect(formikBag.setSubmitting.mock.calls[0][0]).toBe(false)
     })
 
