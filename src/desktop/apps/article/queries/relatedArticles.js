@@ -13,6 +13,24 @@ export const canvasBody = `
   }
 `
 
+export const relatedArticleBody = `
+  authors {
+    name
+  }
+  description
+  layout
+  thumbnail_title
+  thumbnail_image
+  title
+  slug
+  published_at
+  media {
+    duration
+    published
+    release_date
+  }
+`
+
 export const relatedArticles = `
   relatedArticlesPanel {
     id
@@ -25,23 +43,7 @@ export const relatedArticles = `
     ${canvasBody}
   }
   relatedArticles {
-    id
-    authors {
-      name
-    }
-    description
-    layout
-    thumbnail_title
-    thumbnail_image
-    title
-    slug
-    published_at
-    related_article_ids
-    media {
-      duration
-      published
-      release_date
-    }
+    ${relatedArticleBody}
   }
 `
 
