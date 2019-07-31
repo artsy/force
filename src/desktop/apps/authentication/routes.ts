@@ -77,7 +77,6 @@ export const index = async (req, res, next) => {
     res.locals.sd.SET_PASSWORD = req.query.set_password
   }
 
-  const redirectTo = getRedirectTo(req)
   const signupReferer = req.header("Referer") || req.hostname
 
   if (action) {
@@ -108,7 +107,6 @@ export const index = async (req, res, next) => {
           contextModule,
           destination,
           intent,
-          redirectTo,
           signupIntent,
           signupReferer,
           trigger,
