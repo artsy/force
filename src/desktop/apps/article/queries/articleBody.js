@@ -58,7 +58,6 @@ export const articleBody = `
     footer_title
     related_articles
   }
-  related_article_ids
   email_metadata {
     headline
     author
