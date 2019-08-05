@@ -3,7 +3,6 @@ import { Modal } from "reaction/Components/Modal/Modal"
 import { Serif, Button, CheckCircleIcon, Box } from "@artsy/palette"
 import { connect } from "react-redux"
 
-// TODO: Move this into reaction alongside AuctionRegistrationModal
 const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
   useEffect(() => {
     const replaceModalTriggerPath = location.pathname.replace(
