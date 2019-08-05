@@ -1,15 +1,15 @@
 import { test } from "../DOM"
 const { DOM } = test
 
-import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
+// import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
 import mediator from "desktop/lib/mediator.coffee"
 
 jest.mock("jquery", x => () => ({
   foo: "bar",
 }))
-jest.mock(
-  "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
-)
+// jest.mock(
+//   "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
+// )
 jest.mock("desktop/lib/mediator.coffee", x => ({
   trigger: jest.fn(),
 }))
@@ -29,7 +29,7 @@ describe("DOM Interactions", () => {
   describe(".handleRegister", () => {
     afterEach(() => {
       jest.resetAllMocks()
-      AcceptConditionsOfSaleModal.mockReset()
+      // AcceptConditionsOfSaleModal.mockReset()
       mediator.trigger.mockReset()
     })
     it("user has credit card: opens the conditions of sale modal", () => {

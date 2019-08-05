@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import React, { Component } from "react"
 import ResponsiveWindow from "desktop/components/react/responsive_window"
 import { Provider } from "react-redux"
-import { data as sd } from "sharify"
 import { Theme } from "@artsy/palette"
 
 export default class App extends Component {
