@@ -1,3 +1,5 @@
+import { seriesRelatedArticlesBody } from "desktop/apps/article/queries/seriesRelatedArticles"
+
 export const canvasBody = `
   id
   layout
@@ -13,35 +15,23 @@ export const canvasBody = `
   }
 `
 
+export const panelBody = `
+  id
+  layout
+  slug
+  thumbnail_title
+  thumbnail_image
+`
+
 export const relatedArticles = `
   relatedArticlesPanel {
-    id
-    layout
-    slug
-    thumbnail_title
-    thumbnail_image
+    ${panelBody}
   }
   relatedArticlesCanvas {
     ${canvasBody}
   }
   relatedArticles {
-    id
-    authors {
-      name
-    }
-    description
-    layout
-    thumbnail_title
-    thumbnail_image
-    title
-    slug
-    published_at
-    related_article_ids
-    media {
-      duration
-      published
-      release_date
-    }
+    ${seriesRelatedArticlesBody}
   }
 `
 
