@@ -27,8 +27,9 @@ class DOM extends Component {
 
     this.$ = require("jquery")
     this.addEventListeners()
-    this.maybeStartRegistrationFlow()
-    this.maybeShowModal()
+
+    this.handleRegistrationFlowPath()
+    this.handleConfirmRegistrationPath()
   }
 
   componentWillUnmount() {
@@ -39,23 +40,34 @@ class DOM extends Component {
     this.$body = this.$("body")
     this.$body.find(".Sidebar").on("click", ".artsy-checkbox", scrollToTop)
     this.$registerBtn = this.$body.find(".js-register-button")
-    this.$registerBtn.on("click", this.handleRegister)
+    this.$registerBtn.on("click", this.handleRegister(false))
   }
 
   removeEventListeners() {
     this.$body.off("click")
-    this.$registerBtn.off("click", this.handleRegister)
+    this.$registerBtn.off("click")
   }
 
-  showModal = type => {
-    this.props.dispatch(showModal(type))
+  showModal = (type, delay = true) => {
+    // Showing modal immediately requires a delay due to jockeying with
+    // the backbone-based ClockView inside Banner
+    setTimeout(
+      () => {
+        this.props.dispatch(showModal(type))
+      },
+      delay ? 1000 : 0
+    )
   }
 
-  maybeShowModal() {
+  handleRegistrationFlowPath() {
+    if (location.pathname.match("/registration-flow")) {
+      this.handleRegister(true)()
+    }
+  }
+
+  handleConfirmRegistrationPath() {
     const { pathname } = location
-    if (pathname.match(/registration-flow$/) && this.props.me) {
-      this.showModal("RegistrationFlow")
-    } else if (pathname.match(/\/confirm-registration/) && this.props.me) {
+    if (pathname.match(/\/confirm-registration/) && this.props.me) {
       this.showModal(
         location.search.match("origin=bid")
           ? "ConfirmBidAndRegistration"
@@ -64,10 +76,9 @@ class DOM extends Component {
     }
   }
 
-  handleRegister = event => {
+  handleRegister = delayModal => event => {
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
-    // debugger
     if (!me) {
       mediator.trigger("open:auth", {
         mode: "signup",
@@ -84,15 +95,10 @@ class DOM extends Component {
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)
     } else if (!me.has_credit_cards) {
+      console.log("redirecting to form")
       window.location.assign(auction.registerUrl())
     } else {
-      this.showModal("RegistrationFlow")
-    }
-  }
-
-  maybeStartRegistrationFlow() {
-    if (location.pathname.match("/registration-flow")) {
-      this.handleRegister()
+      this.showModal("RegistrationFlow", delayModal)
     }
   }
 
