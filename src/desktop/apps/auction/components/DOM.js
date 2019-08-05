@@ -95,7 +95,6 @@ class DOM extends Component {
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)
     } else if (!me.has_credit_cards) {
-      console.log("redirecting to form")
       window.location.assign(auction.registerUrl())
     } else {
       this.showModal("RegistrationFlow", delayModal)
