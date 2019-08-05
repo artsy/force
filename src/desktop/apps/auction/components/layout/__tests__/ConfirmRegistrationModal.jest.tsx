@@ -53,7 +53,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
-              modal: "ConfirmRegistration",
+              modalType: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -78,7 +78,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
-              modal: "ConfirmBidAndRegistration",
+              modalType: "ConfirmBidAndRegistration",
 
               me: {
                 bidders: [
@@ -101,7 +101,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
-              modal: "ConfirmRegistration",
+              modalType: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
