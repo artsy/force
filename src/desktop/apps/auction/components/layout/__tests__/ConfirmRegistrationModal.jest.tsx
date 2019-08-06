@@ -1,6 +1,7 @@
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { ConfirmRegistrationModal } from "../ConfirmRegistrationModal"
 import { act } from "react-dom/test-utils"
+import { Button } from "@artsy/palette"
 describe("Confirm Registration Modal", () => {
   beforeAll(() => {
     jest.spyOn(history, "replaceState")
@@ -27,6 +28,31 @@ describe("Confirm Registration Modal", () => {
         "big time",
         "/auction/auction-one"
       )
+    })
+  })
+
+  describe("onClose", () => {
+    it("calls the onClose prop when the modal is closed", () => {
+      const mockOnClose = jest.fn()
+
+      const { wrapper } = renderTestComponent({
+        Component: ConfirmRegistrationModal,
+        options: { renderMode: "mount" },
+        props: { onClose: mockOnClose },
+        data: {
+          app: {
+            me: {
+              bidders: [
+                {
+                  qualified_for_bidding: true,
+                },
+              ],
+            },
+          },
+        },
+      })
+      wrapper.find(Button).simulate("click")
+      expect(mockOnClose).toHaveBeenCalled()
     })
   })
 
