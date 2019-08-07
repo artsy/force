@@ -5,6 +5,7 @@ import {
 } from "reaction/Components/Authentication/Types"
 import { data as sd } from "sharify"
 import { pickBy, identity } from "lodash"
+import * as qs from "query-string"
 
 const mediator = require("../../lib/mediator.coffee")
 const LoggedOutUser = require("../../models/logged_out_user.coffee")
@@ -140,11 +141,11 @@ export async function apiAuthWithRedirectUrl(
       const responseBody = await tokenResponse.json()
       const trustToken = responseBody["trust_token"]
 
-      return new URL(
-        `${
-          sd.API_URL
-        }/users/sign_in?trust_token=${trustToken}&redirect_uri=${appRedirectURL.toString()}`
-      )
+      const queryParams = qs.stringify({
+        trust_token: trustToken,
+        redirect_uri: appRedirectURL.toString(),
+      })
+      return new URL(`${sd.API_URL}/users/sign_in?${queryParams}`)
     } else {
       return appRedirectURL
     }
