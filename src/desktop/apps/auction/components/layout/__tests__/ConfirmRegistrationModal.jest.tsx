@@ -1,7 +1,6 @@
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { ConfirmRegistrationModal } from "../ConfirmRegistrationModal"
 import { act } from "react-dom/test-utils"
-import { Button } from "@artsy/palette"
 describe("Confirm Registration Modal", () => {
   beforeAll(() => {
     jest.spyOn(history, "replaceState")
@@ -31,31 +30,6 @@ describe("Confirm Registration Modal", () => {
     })
   })
 
-  describe("onClose", () => {
-    it("calls the onClose prop when the modal is closed", () => {
-      const mockOnClose = jest.fn()
-
-      const { wrapper } = renderTestComponent({
-        Component: ConfirmRegistrationModal,
-        options: { renderMode: "mount" },
-        props: { onClose: mockOnClose },
-        data: {
-          app: {
-            me: {
-              bidders: [
-                {
-                  qualified_for_bidding: true,
-                },
-              ],
-            },
-          },
-        },
-      })
-      wrapper.find(Button).simulate("click")
-      expect(mockOnClose).toHaveBeenCalled()
-    })
-  })
-
   describe("User is not registered for sale", () => {
     it("does not render the modal if there is no user", () => {
       const { wrapper } = renderTestComponent({
@@ -79,7 +53,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
+              modal: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -104,7 +78,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
-              modalType: "ConfirmBidAndRegistration",
+              modal: "ConfirmBidAndRegistration",
 
               me: {
                 bidders: [
@@ -127,7 +101,7 @@ describe("Confirm Registration Modal", () => {
           options: { renderMode: "render" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
+              modal: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
