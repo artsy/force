@@ -52,7 +52,7 @@ describe("DOM Interactions", () => {
         dispatch: mockDispatch,
       })
 
-      dom.handleRegister(false)()
+      dom.handleRegister()
       jest.runAllTimers()
 
       expect(mockDispatch).toHaveBeenCalledWith({
@@ -75,7 +75,7 @@ describe("DOM Interactions", () => {
         dispatch: mockDispatch,
       })
 
-      dom.handleRegister()()
+      dom.handleRegister()
       jest.runAllTimers()
 
       expect(mockDispatch).not.toHaveBeenCalled()
@@ -95,7 +95,7 @@ describe("DOM Interactions", () => {
         dispatch: mockDispatch,
       })
 
-      dom.handleRegister()()
+      dom.handleRegister()
       jest.runAllTimers()
 
       expect(mockDispatch).not.toHaveBeenCalled()
@@ -123,7 +123,7 @@ describe("DOM Interactions", () => {
         dispatch: mockDispatch,
       })
 
-      dom.handleRegister()()
+      dom.handleRegister()
       jest.runAllTimers()
 
       expect(mockDispatch).not.toHaveBeenCalled()
