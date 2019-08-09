@@ -17,8 +17,8 @@ module.exports =
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   ARTSY_ID: null
   ARTSY_SECRET: null
-  BIDDER_H1_COPY: 'Please enter your credit card details'
-  BIDDER_H2_COPY: 'A valid credit card is required to bid. If you win, you’ll have the opportunity to pay by credit card, check or wire transfer after the sale closes.'
+  BIDDER_INFO_COPY_P1: 'Please enter your credit card information below. The name on your Artsy account must match the name on the card, and a valid credit card is required in order to bid.'
+  BIDDER_INFO_COPY_P2: 'Registration is free. Artsy will never charge this card without your permission, and you are not required to use this card to pay if you win.'
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'

@@ -21,6 +21,7 @@ app.use(
 app.use(require("./apps/home"))
 app.use(require("./apps/editorial_features"))
 app.use(require("./apps/apply"))
+app.use(require("./apps/auction_reaction/server").app)
 app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
