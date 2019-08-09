@@ -40,7 +40,7 @@ class DOM extends Component {
     this.$body = this.$("body")
     this.$body.find(".Sidebar").on("click", ".artsy-checkbox", scrollToTop)
     this.$registerBtn = this.$body.find(".js-register-button")
-    this.$registerBtn.on("click", this.handleRegister(false))
+    this.$registerBtn.on("click", this.handleRegister)
   }
 
   removeEventListeners() {
@@ -48,20 +48,18 @@ class DOM extends Component {
     this.$registerBtn.off("click")
   }
 
-  showModal = (type, delay = true) => {
+  showModal = type => {
     // Showing modal immediately requires a delay due to jockeying with
     // the backbone-based ClockView inside Banner
-    setTimeout(
-      () => {
-        this.props.dispatch(showModal(type))
-      },
-      delay ? 1000 : 0
-    )
+    // FIXME: Remove timeout when we remove backbone
+    setTimeout(() => {
+      this.props.dispatch(showModal(type))
+    }, 1000)
   }
 
   handleRegistrationFlowPath() {
     if (location.pathname.match("/registration-flow")) {
-      this.handleRegister(true)()
+      this.handleRegister()
     }
   }
 
@@ -76,7 +74,7 @@ class DOM extends Component {
     }
   }
 
-  handleRegister = delayModal => event => {
+  handleRegister = event => {
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     if (!me) {
@@ -97,7 +95,7 @@ class DOM extends Component {
     } else if (!me.has_credit_cards) {
       window.location.assign(auction.registerUrl())
     } else {
-      this.showModal("RegistrationFlow", delayModal)
+      this.showModal("RegistrationFlow")
     }
   }
 
