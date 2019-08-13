@@ -49,3 +49,4 @@ require("./src/lib/jade_hook")
 // Used by relay
 sd.METAPHYSICS_ENDPOINT = "http://localhost:5003"
 global.Promise = require("promise")
+global.$ = require("jquery")

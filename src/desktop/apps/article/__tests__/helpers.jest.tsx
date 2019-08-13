@@ -22,8 +22,25 @@ describe("ad display logic in Feature and Standard Articles", () => {
     )
   }
 
+  beforeEach(() => {
+    props = {
+      isMobile: false,
+      shouldAdRender: true,
+      articleSerial: 3,
+      article: NewsArticleFixture,
+      isTruncated: true,
+      isFirstArticle: true,
+      nextArticle: {
+        id: "1234",
+        published_at: "5678",
+      },
+      onDateChange: jest.fn(),
+      onActiveArticleChange: jest.fn(),
+    }
+  })
+
   // FIXME: useMemo in System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Standard article", () => {
+  it("renders new ad component in a Standard article", () => {
     props.shouldAdRender = true
     props.article = StandardArticle
     const component = getWrapper()
@@ -31,11 +48,10 @@ describe("ad display logic in Feature and Standard Articles", () => {
   })
 
   // FIXME: useMemo in System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Feature article", () => {
-    props.shouldAdRender = true
+  it("renders new ad component in a Feature article", () => {
     props.article = FeatureArticle
     const component = getWrapper()
-    expect(component.find(DisplayAd).length).toBe(1)
+    expect(component.find(DisplayAd).length).toBe(2)
   })
 
   it("checks the shouldAdRender prop is passed to Feature articles", () => {
@@ -83,8 +99,7 @@ describe("ad display frequency logic in News Articles", () => {
     }
   })
 
-  // FIXME: useState React hook in DisplayAd component is causing this test to fail
-  xit("checks that NewsArticle renders with the new ads", () => {
+  it("checks that NewsArticle renders with the new ads", () => {
     const component = getWrapper()
     expect(component.find(DisplayAd).length).toBe(1)
   })
