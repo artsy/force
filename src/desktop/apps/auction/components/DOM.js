@@ -1,15 +1,15 @@
-import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
 import PropTypes from "prop-types"
 import mediator from "desktop/lib/mediator.coffee"
 import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
 import { Component } from "react"
 import { connect } from "react-redux"
+import { showModal } from "../actions/app"
 
 class DOM extends Component {
   static propTypes = {
     auction: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-    user: PropTypes.object,
+    me: PropTypes.object,
   }
 
   // Selectors
@@ -27,7 +27,9 @@ class DOM extends Component {
 
     this.$ = require("jquery")
     this.addEventListeners()
-    this.maybeStartRegistrationFlow()
+
+    this.handleRegistrationFlowPath()
+    this.handleConfirmRegistrationPath()
   }
 
   componentWillUnmount() {
@@ -43,7 +45,33 @@ class DOM extends Component {
 
   removeEventListeners() {
     this.$body.off("click")
-    this.$registerBtn.off("click", this.handleRegister)
+    this.$registerBtn.off("click")
+  }
+
+  showModal = type => {
+    // Showing modal immediately requires a delay due to jockeying with
+    // the backbone-based ClockView inside Banner
+    // FIXME: Remove timeout when we remove backbone
+    setTimeout(() => {
+      this.props.dispatch(showModal(type))
+    }, 1000)
+  }
+
+  handleRegistrationFlowPath() {
+    if (location.pathname.match("/registration-flow")) {
+      this.handleRegister()
+    }
+  }
+
+  handleConfirmRegistrationPath() {
+    const { pathname } = location
+    if (pathname.match(/\/confirm-registration/) && this.props.me) {
+      this.showModal(
+        location.search.match("origin=bid")
+          ? "ConfirmBidAndRegistration"
+          : "ConfirmRegistration"
+      )
+    }
   }
 
   handleRegister = event => {
@@ -64,27 +92,10 @@ class DOM extends Component {
 
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)
-    } else if (me.has_credit_cards) {
-      this.showAcceptConditions()
-
-      // Redirect to credit card registration form
-    } else {
+    } else if (!me.has_credit_cards) {
       window.location.assign(auction.registerUrl())
-    }
-  }
-
-  maybeStartRegistrationFlow() {
-    if (location.pathname.match("/registration-flow")) {
-      this.handleRegister()
-    }
-  }
-
-  showAcceptConditions() {
-    const { auction, user } = this.props
-    if (user) {
-      new AcceptConditionsOfSaleModal({
-        auction,
-      })
+    } else {
+      this.showModal("RegistrationFlow")
     }
   }
 
@@ -95,7 +106,6 @@ class DOM extends Component {
 
 const mapStateToProps = state => ({
   auction: state.app.auction,
-  user: state.app.user,
   me: state.app.me,
 })
 
