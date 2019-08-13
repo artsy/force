@@ -43,10 +43,8 @@ const CantBid = ({ onClick }) => {
       <Serif size="6">Registration pending</Serif>
       <Serif my={3} size="3t">
         We're sorry, your bid could not be placed.
-        <br />
-        <br />
-        {reviewingRegistrationCopy()}
       </Serif>
+      <ReviewingRegistrationContent />
       <Button width="100%" onClick={onClick}>
         View works in this sale
       </Button>
@@ -58,9 +56,7 @@ const RegistrationPending = ({ onClick }) => {
   return (
     <>
       <Serif size="6">Registration pending</Serif>
-      <Serif my={3} size="3t">
-        {reviewingRegistrationCopy()}
-      </Serif>
+      <ReviewingRegistrationContent />
       <Button width="100%" onClick={onClick}>
         View works in this sale
       </Button>
@@ -90,15 +86,15 @@ export const ConfirmRegistrationModal = connect(mapStateToProps)(
   _ConfirmRegistrationModal
 )
 
-const reviewingRegistrationCopy = () => {
+const ReviewingRegistrationContent = () => {
   return (
-    <>
+    <Serif my={3} size="3t">
       Artsy is reviewing your registration and you will receive an email when it
       has been confirmed. Please email specialist@artsy.net with any questions.
       <br />
       <br />
       In the meantime, you can still view works and watch lots you’re interested
       in.
-    </>
+    </Serif>
   )
 }
