@@ -1,4 +1,4 @@
-import { data as sd } from "sharify"
+const sd = require("sharify").data
 
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],

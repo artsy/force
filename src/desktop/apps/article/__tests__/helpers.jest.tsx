@@ -59,7 +59,11 @@ describe("ad display frequency logic in News Articles", () => {
   const frequency = 6
 
   const getWrapper = (passedProps = props) => {
-    return mount(<NewsArticle {...passedProps} />)
+    return mount(
+      <SystemContextProvider user={null}>
+        <NewsArticle {...passedProps} />
+      </SystemContextProvider>
+    )
   }
 
   beforeEach(() => {

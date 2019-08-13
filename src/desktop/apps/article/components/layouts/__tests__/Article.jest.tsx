@@ -1,7 +1,7 @@
 import React from "react"
 import { ArticleLayout } from "../Article"
 import { mount } from "enzyme"
-import { SystemContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollArticle } from "../../InfiniteScrollArticle"
 import {
   BasicArticle,
