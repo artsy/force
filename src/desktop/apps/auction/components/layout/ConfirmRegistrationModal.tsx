@@ -45,13 +45,7 @@ const CantBid = ({ onClick }) => {
         We're sorry, your bid could not be placed.
         <br />
         <br />
-        Artsy is reviewing your registration and you will receive an email when
-        it has been confirmed. Please email specialist@artsy.net with any
-        questions.
-        <br />
-        <br />
-        In the meantime, you can still view works and watch lots you’re
-        interested in.
+        {reviewingRegistrationCopy()}
       </Serif>
       <Button width="100%" onClick={onClick}>
         View works in this sale
@@ -65,12 +59,7 @@ const RegistrationPending = ({ onClick }) => {
     <>
       <Serif size="6">Registration pending</Serif>
       <Serif my={3} size="3t">
-        You will receive an email from an Artsy specialist once your
-        registration has been confirmed.
-        <br />
-        <br />
-        In the meantime, you can still view works and watch lots you’re
-        interested in.
+        {reviewingRegistrationCopy()}
       </Serif>
       <Button width="100%" onClick={onClick}>
         View works in this sale
@@ -100,3 +89,16 @@ const mapStateToProps = state => ({ me: state.app.me, type: state.app.modal })
 export const ConfirmRegistrationModal = connect(mapStateToProps)(
   _ConfirmRegistrationModal
 )
+
+const reviewingRegistrationCopy = () => {
+  return (
+    <>
+      Artsy is reviewing your registration and you will receive an email when it
+      has been confirmed. Please email specialist@artsy.net with any questions.
+      <br />
+      <br />
+      In the meantime, you can still view works and watch lots you’re interested
+      in.
+    </>
+  )
+}
