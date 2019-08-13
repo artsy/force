@@ -1,3 +1,5 @@
+const sd = require("sharify").data
+
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
 })
@@ -43,3 +45,10 @@ try {
 require("raf/polyfill")
 require("should")
 require("./src/lib/jade_hook")
+
+// Used by relay
+sd.METAPHYSICS_ENDPOINT = "http://localhost:5003"
+global.$ = require("jquery")
+
+// https://jestjs.io/docs/en/troubleshooting#unresolved-promises
+global.Promise = require("promise")

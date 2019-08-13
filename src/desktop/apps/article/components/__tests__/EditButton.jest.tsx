@@ -1,6 +1,7 @@
 import React from "react"
 import { mount } from "enzyme"
 import { EditButton } from "../EditButton"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 
 jest.mock("sharify", () => ({
   data: {
@@ -18,7 +19,11 @@ const mockPositronql = require("desktop/lib/positronql").positronql as jest.Mock
 describe("EditButton", () => {
   let props
   const getWrapper = () => {
-    return mount(<EditButton {...props} />)
+    return mount(
+      <SystemContextProvider user={null}>
+        <EditButton {...props} />
+      </SystemContextProvider>
+    )
   }
 
   beforeEach(() => {
@@ -33,13 +38,15 @@ describe("EditButton", () => {
     const data = { channels: [{ id: "123" }, { id: "234" }] }
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
-    await component.instance().componentDidMount()
+    const instance = component.find(EditButton).instance()
+    await instance.componentDidMount()
 
+    component.update()
     expect(component.html()).toMatch(
       "https://writer.artsy.net/articles/artsy-editorial-slug/edit"
     )
     expect(component.html()).toMatch("icon-with-black-circle")
-    expect(component.state()).toEqual({
+    expect(instance.state).toEqual({
       hasButtonState: true,
       showEditButton: true,
     })
@@ -49,25 +56,25 @@ describe("EditButton", () => {
     const data = { channels: [{ id: "234" }] }
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
-    await component.instance().componentDidMount()
+    const instance = component.find(EditButton).instance()
+    await instance.componentDidMount()
 
-    expect(component.children().length).toBe(0)
-    expect(component.html()).toBe(null)
-    expect(component.state()).toEqual({
+    expect(component.children().length).toBe(1)
+    expect(instance.state).toEqual({
       hasButtonState: true,
       showEditButton: false,
     })
   })
 
-  it("does not render edit button if there is no user", () => {
+  it("does not render edit button if there is no user", async () => {
     delete sd.CURRENT_USER
     const component = getWrapper()
-    component.instance().componentDidMount()
+    const instance = component.find(EditButton).instance()
+    await instance.componentDidMount()
 
     expect(mockPositronql).not.toBeCalled()
-    expect(component.children().length).toBe(0)
-    expect(component.html()).toBe(null)
-    expect(component.state()).toEqual({
+    expect(component.children().length).toBe(1)
+    expect(instance.state).toEqual({
       hasButtonState: true,
       showEditButton: false,
     })
