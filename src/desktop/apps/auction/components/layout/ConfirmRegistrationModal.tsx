@@ -40,14 +40,12 @@ const _ConfirmRegistrationModal = ({ me, type }) => {
 const CantBid = ({ onClick }) => {
   return (
     <>
-      <Serif size="6">Registration pending</Serif>
+      <RegistrationPendingHeader />
       <Serif my={3} size="3t">
         We're sorry, your bid could not be placed.
       </Serif>
       <ReviewingRegistrationContent />
-      <Button width="100%" onClick={onClick}>
-        View works in this sale
-      </Button>
+      <ViewWorksButton onClick={onClick} />
     </>
   )
 }
@@ -55,11 +53,9 @@ const CantBid = ({ onClick }) => {
 const RegistrationPending = ({ onClick }) => {
   return (
     <>
-      <Serif size="6">Registration pending</Serif>
+      <RegistrationPendingHeader />
       <ReviewingRegistrationContent />
-      <Button width="100%" onClick={onClick}>
-        View works in this sale
-      </Button>
+      <ViewWorksButton onClick={onClick} />
     </>
   )
 }
@@ -96,5 +92,17 @@ const ReviewingRegistrationContent = () => {
       In the meantime, you can still view works and watch lots you’re interested
       in.
     </Serif>
+  )
+}
+
+const RegistrationPendingHeader = () => {
+  return <Serif size="6">Registration pending</Serif>
+}
+
+const ViewWorksButton = props => {
+  return (
+    <Button width="100%" onClick={props.onClick}>
+      View works in this sale
+    </Button>
   )
 }
