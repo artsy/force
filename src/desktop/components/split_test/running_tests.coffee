@@ -25,13 +25,6 @@
 # module.exports = {}
 
 module.exports = {
-  artist_page_signup_modal:
-    key: "artist_page_signup_modal"
-    outcomes:
-      control: 50
-      experiment: 50
-    control_group: "control"
-    edge: "experiment"
   collection_hubs:
     key: "collection_hubs"
     outcomes:
