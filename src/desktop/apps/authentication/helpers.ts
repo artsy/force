@@ -7,6 +7,7 @@ import { data as sd } from "sharify"
 import { pickBy, identity } from "lodash"
 import * as qs from "query-string"
 import { Response } from "express"
+import { captureException } from "@sentry/browser"
 
 const mediator = require("../../lib/mediator.coffee")
 const LoggedOutUser = require("../../models/logged_out_user.coffee")
@@ -151,6 +152,7 @@ export async function apiAuthWithRedirectUrl(
       return appRedirectURL
     }
   } catch (error) {
+    captureException(error)
     return appRedirectURL
   }
 }
