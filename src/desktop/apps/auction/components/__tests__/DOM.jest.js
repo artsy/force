@@ -1,18 +1,18 @@
 import { test } from "../DOM"
-const { DOM } = test
-
-import AcceptConditionsOfSaleModal from "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
 import mediator from "desktop/lib/mediator.coffee"
+import { AuctionRegistrationModal } from "reaction/Components/Auction/AuctionRegistrationModal"
+
+const { DOM } = test
 
 jest.mock("jquery", x => () => ({
   foo: "bar",
 }))
-jest.mock(
-  "desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee"
-)
+
 jest.mock("desktop/lib/mediator.coffee", x => ({
   trigger: jest.fn(),
 }))
+
+jest.useFakeTimers()
 
 describe("DOM Interactions", () => {
   // spyOn required to restore global mocks' original implementations
@@ -26,18 +26,21 @@ describe("DOM Interactions", () => {
     jest.restoreAllMocks()
   })
 
+  const mockDispatch = jest.fn()
+
   describe(".handleRegister", () => {
+    beforeEach(() => {
+      mockDispatch.mockReset()
+    })
+
     afterEach(() => {
       jest.resetAllMocks()
-      AcceptConditionsOfSaleModal.mockReset()
       mediator.trigger.mockReset()
     })
     it("user has credit card: opens the conditions of sale modal", () => {
       DOM.prototype.componentDidMount = jest.fn()
+
       const dom = new DOM({
-        user: {
-          id: "user",
-        },
         auction: {
           name: "An Auction",
         },
@@ -46,18 +49,20 @@ describe("DOM Interactions", () => {
           bidders: [],
           has_credit_cards: true,
         },
+        dispatch: mockDispatch,
       })
 
       dom.handleRegister()
+      jest.runAllTimers()
 
-      expect(AcceptConditionsOfSaleModal).toHaveBeenCalled()
+      expect(mockDispatch).toHaveBeenCalledWith({
+        payload: { modalType: "RegistrationFlow" },
+        type: "SHOW_MODAL",
+      })
     })
     it("already registered: stays on the auction page", () => {
       DOM.prototype.componentDidMount = jest.fn()
       const dom = new DOM({
-        user: {
-          id: "user",
-        },
         auction: {
           name: "An Auction",
           href: () => "/auction/regular-auction-route",
@@ -67,29 +72,33 @@ describe("DOM Interactions", () => {
           bidders: ["SOME BIDDER OBJECT"],
           has_credit_cards: true,
         },
+        dispatch: mockDispatch,
       })
 
       dom.handleRegister()
+      jest.runAllTimers()
 
-      expect(AcceptConditionsOfSaleModal).not.toHaveBeenCalled()
+      expect(mockDispatch).not.toHaveBeenCalled()
       expect(history.replaceState).toHaveBeenCalledWith(
         {},
         "",
         "/auction/regular-auction-route"
       )
     })
-    it("no user: opens the login modal with registraition intent", () => {
+    it("no user: opens the login modal with registration intent", () => {
       const dom = new DOM({
         auction: {
           name: "An Auction",
           href: () => "/auction/auction-id",
           registrationFlowUrl: () => "/auction/auction-id/registration-flow",
         },
+        dispatch: mockDispatch,
       })
 
       dom.handleRegister()
+      jest.runAllTimers()
 
-      expect(AcceptConditionsOfSaleModal).not.toHaveBeenCalled()
+      expect(mockDispatch).not.toHaveBeenCalled()
       expect(mediator.trigger).toHaveBeenCalledWith("open:auth", {
         mode: "signup",
         redirectTo: "/auction/auction-id/registration-flow",
@@ -102,9 +111,6 @@ describe("DOM Interactions", () => {
     it("user has no credit card: redirects to auction registration url (the credit card form)", () => {
       DOM.prototype.componentDidMount = jest.fn()
       const dom = new DOM({
-        user: {
-          id: "user",
-        },
         auction: {
           name: "An Auction",
           registerUrl: () => "/auction-registration/auction-id",
@@ -114,11 +120,13 @@ describe("DOM Interactions", () => {
           bidders: [],
           has_credit_cards: false,
         },
+        dispatch: mockDispatch,
       })
 
       dom.handleRegister()
+      jest.runAllTimers()
 
-      expect(AcceptConditionsOfSaleModal).not.toHaveBeenCalled()
+      expect(mockDispatch).not.toHaveBeenCalled()
       expect(location.assign).toHaveBeenCalledWith(
         "/auction-registration/auction-id"
       )
