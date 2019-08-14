@@ -17,9 +17,17 @@ const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
 
   const [modalVisible, setModalVisible] = useState(true)
 
+  useEffect(
+    () => {
+      if (!modalVisible) {
+        onClose()
+      }
+    },
+    [modalVisible]
+  )
+
   const hideModal = () => {
     setModalVisible(false)
-    onClose()
   }
 
   let Content
