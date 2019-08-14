@@ -35,6 +35,9 @@ const send = {
 export const setupArtistSignUpModal = () => {
   if (sd.ARTIST_PAGE_CTA_ENABLED && sd.ARTIST_PAGE_CTA_ARTIST_ID) {
     return metaphysics(send).then(({ artist: artistData }) => {
+      if (!artistData) {
+        return
+      }
       const artist = new Artist(artistData)
       const view = new ArtistPageCTAView({ artist })
       $("body").append(view.render().$el)
