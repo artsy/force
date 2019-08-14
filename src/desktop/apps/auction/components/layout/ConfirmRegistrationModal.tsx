@@ -3,7 +3,7 @@ import { Modal } from "reaction/Components/Modal/Modal"
 import { Serif, Button, CheckCircleIcon, Box } from "@artsy/palette"
 import { connect } from "react-redux"
 
-const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
+const _ConfirmRegistrationModal = ({ me, type }) => {
   useEffect(() => {
     const replaceModalTriggerPath = location.pathname.replace(
       "/confirm-registration",
@@ -15,11 +15,9 @@ const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
 
   const bidder = me.bidders[0]
 
-  const [modalVisible, setModalVisible] = useState(true)
-
+  const [showModal, setShowModal] = useState(true)
   const hideModal = () => {
-    setModalVisible(false)
-    onClose()
+    setShowModal(false)
   }
 
   let Content
@@ -27,11 +25,11 @@ const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
     Content = RegistrationComplete
   } else {
     Content =
-      modalType === "ConfirmBidAndRegistration" ? CantBid : RegistrationPending
+      type === "ConfirmBidAndRegistration" ? CantBid : RegistrationPending
   }
 
   return (
-    <Modal show={modalVisible} onClose={hideModal}>
+    <Modal show={showModal} onClose={hideModal}>
       <Box pt={[3, 0]} textAlign="center">
         <Content onClick={hideModal} />
       </Box>
@@ -97,10 +95,7 @@ const RegistrationComplete = ({ onClick }) => {
   )
 }
 
-const mapStateToProps = state => ({
-  me: state.app.me,
-  modalType: state.app.modalType,
-})
+const mapStateToProps = state => ({ me: state.app.me, type: state.app.modal })
 
 export const ConfirmRegistrationModal = connect(mapStateToProps)(
   _ConfirmRegistrationModal
