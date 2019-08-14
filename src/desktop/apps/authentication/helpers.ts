@@ -6,6 +6,7 @@ import {
 import { data as sd } from "sharify"
 import { pickBy, identity } from "lodash"
 import * as qs from "query-string"
+import { Response } from "express"
 
 const mediator = require("../../lib/mediator.coffee")
 const LoggedOutUser = require("../../models/logged_out_user.coffee")
@@ -120,11 +121,11 @@ export const setCookies = options => {
 }
 
 export async function apiAuthWithRedirectUrl(
-  response: any,
+  response: Response,
   redirectPath: URL
 ): Promise<URL> {
   const redirectUrl = sd.APP_URL + redirectPath.pathname
-  const accessToken = (response.user || {}).accessToken
+  const accessToken = (response["user"] || {}).accessToken
   const appRedirectURL = new URL(redirectUrl)
 
   // There isn't an access token when we don't have a valid session, for example,
