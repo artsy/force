@@ -150,7 +150,7 @@ export async function apiAuthWithRedirectUrl(
     } else {
       return appRedirectURL
     }
-  } catch {
+  } catch (error) {
     return appRedirectURL
   }
 }
