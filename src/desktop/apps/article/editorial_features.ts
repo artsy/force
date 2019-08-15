@@ -34,3 +34,13 @@ export const isCustomEditorial = (id: string) => {
     return customArticle.name
   }
 }
+
+/**
+ * Returns the id of specified customEditorialArticle by name
+ */
+export const getCustomEditorialId = (name: string) => {
+  const customArticle = find(customEditorialArticles, { name })
+  if (customArticle) {
+    return customArticle.id
+  }
+}
