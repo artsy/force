@@ -1,6 +1,6 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
-import { routes } from "reaction/Apps/Collect/routes"
+import { collectRoutes } from "reaction/Apps/Collect2/collectRoutes"
 import express from "express"
 import React from "react"
 import { Meta } from "./meta"
@@ -19,7 +19,7 @@ const index = async (req, res, next) => {
       scripts,
       styleTags,
     } = await buildServerApp({
-      routes,
+      routes: collectRoutes,
       url: req.url,
       userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res),
@@ -57,3 +57,4 @@ const index = async (req, res, next) => {
 app.get("/collect", index)
 app.get("/collect/:medium?", index)
 app.get("/collection/:slug", index)
+app.get("/collections", index)

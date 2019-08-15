@@ -1,12 +1,12 @@
 import { buildClientApp } from "reaction/Artsy/Router/client"
 import { data as sd } from "sharify"
-import { routes } from "reaction/Apps/Collect/routes"
+import { collectRoutes } from "reaction/Apps/Collect2/collectRoutes"
 import mediator from "desktop/lib/mediator.coffee"
 import React from "react"
 import ReactDOM from "react-dom"
 
 buildClientApp({
-  routes,
+  routes: collectRoutes,
   context: {
     user: sd.CURRENT_USER,
     mediator,
