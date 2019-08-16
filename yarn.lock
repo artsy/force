@@ -69,10 +69,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@17.0.1":
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-17.0.1.tgz#c6b2a8b9e0ffd8edc46e61e7f34f1691808da840"
-  integrity sha512-AduwwBxydtKLpSOpTXDH91F1aHlYsdY4ay/MVN+aGdADqlZNKVMJwqqjY19U0wuPkO/p+/JdxwoQ3vKv5ulpoA==
+"@artsy/reaction@17.1.0":
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-17.1.0.tgz#7d156f12e4b55ee365a5b9f0f88cb0f5184c6ec1"
+  integrity sha512-wFVyWONiU9Po1iAo7NI9muhLfCXB/Fc8qBigkrHXXqz0NUnSwAO8i8pYtYnjAQr655dGBLb226T+bpKcb2nBaw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -114,6 +114,7 @@
     react-sizeme "^2.4.4"
     react-slick "^0.23.2"
     react-spring "^8.0.23"
+    react-static-container "^1.0.2"
     react-stripe-elements "^2.0.1"
     react-tracking "^7.0.1"
     react-transition-group "^2.3.0"
