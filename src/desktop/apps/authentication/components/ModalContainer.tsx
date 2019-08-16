@@ -14,7 +14,7 @@ const mediator = require("../../../lib/mediator.coffee")
 export class ModalContainer extends React.Component<any> {
   public manager: ModalManager | null
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     mediator.on("open:auth", this.onOpenAuth)
     mediator.on("auth:error", this.onAuthError)
   }
