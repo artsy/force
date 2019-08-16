@@ -3,7 +3,7 @@ import { Modal } from "reaction/Components/Modal/Modal"
 import { Serif, Button, CheckCircleIcon, Box } from "@artsy/palette"
 import { connect } from "react-redux"
 
-const _ConfirmRegistrationModal = ({ me, type }) => {
+const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
   useEffect(() => {
     const replaceModalTriggerPath = location.pathname.replace(
       "/confirm-registration",
@@ -15,9 +15,19 @@ const _ConfirmRegistrationModal = ({ me, type }) => {
 
   const bidder = me.bidders[0]
 
-  const [showModal, setShowModal] = useState(true)
+  const [modalVisible, setModalVisible] = useState(true)
+
+  useEffect(
+    () => {
+      if (!modalVisible) {
+        onClose()
+      }
+    },
+    [modalVisible]
+  )
+
   const hideModal = () => {
-    setShowModal(false)
+    setModalVisible(false)
   }
 
   let Content
@@ -25,11 +35,11 @@ const _ConfirmRegistrationModal = ({ me, type }) => {
     Content = RegistrationComplete
   } else {
     Content =
-      type === "ConfirmBidAndRegistration" ? CantBid : RegistrationPending
+      modalType === "ConfirmBidAndRegistration" ? CantBid : RegistrationPending
   }
 
   return (
-    <Modal show={showModal} onClose={hideModal}>
+    <Modal show={modalVisible} onClose={hideModal}>
       <Box pt={[3, 0]} textAlign="center">
         <Content onClick={hideModal} />
       </Box>
@@ -40,22 +50,12 @@ const _ConfirmRegistrationModal = ({ me, type }) => {
 const CantBid = ({ onClick }) => {
   return (
     <>
-      <Serif size="6">Registration pending</Serif>
+      <RegistrationPendingHeader />
       <Serif my={3} size="3t">
         We're sorry, your bid could not be placed.
-        <br />
-        <br />
-        Artsy is reviewing your registration and you will receive an email when
-        it has been confirmed. Please email specialist@artsy.net with any
-        questions.
-        <br />
-        <br />
-        In the meantime, you can still view works and watch lots you’re
-        interested in.
       </Serif>
-      <Button width="100%" onClick={onClick}>
-        View works in this sale
-      </Button>
+      <ReviewingRegistrationContent />
+      <ViewWorksButton onClick={onClick} />
     </>
   )
 }
@@ -63,18 +63,9 @@ const CantBid = ({ onClick }) => {
 const RegistrationPending = ({ onClick }) => {
   return (
     <>
-      <Serif size="6">Registration pending</Serif>
-      <Serif my={3} size="3t">
-        You will receive an email from an Artsy specialist once your
-        registration has been confirmed.
-        <br />
-        <br />
-        In the meantime, you can still view works and watch lots you’re
-        interested in.
-      </Serif>
-      <Button width="100%" onClick={onClick}>
-        View works in this sale
-      </Button>
+      <RegistrationPendingHeader />
+      <ReviewingRegistrationContent />
+      <ViewWorksButton onClick={onClick} />
     </>
   )
 }
@@ -95,8 +86,36 @@ const RegistrationComplete = ({ onClick }) => {
   )
 }
 
-const mapStateToProps = state => ({ me: state.app.me, type: state.app.modal })
+const mapStateToProps = state => ({
+  me: state.app.me,
+  modalType: state.app.modalType,
+})
 
 export const ConfirmRegistrationModal = connect(mapStateToProps)(
   _ConfirmRegistrationModal
 )
+
+const ReviewingRegistrationContent = () => {
+  return (
+    <Serif my={3} size="3t">
+      Artsy is reviewing your registration and you will receive an email when it
+      has been confirmed. Please email specialist@artsy.net with any questions.
+      <br />
+      <br />
+      In the meantime, you can still view works and watch lots you’re interested
+      in.
+    </Serif>
+  )
+}
+
+const RegistrationPendingHeader = () => {
+  return <Serif size="6">Registration pending</Serif>
+}
+
+const ViewWorksButton = props => {
+  return (
+    <Button width="100%" onClick={props.onClick}>
+      View works in this sale
+    </Button>
+  )
+}

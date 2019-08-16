@@ -1,6 +1,10 @@
 import React from "react"
-import { BorderBox } from "@artsy/palette"
+import { BorderBox, Box } from "@artsy/palette"
 
 export const App = () => {
-  return <BorderBox>hello</BorderBox>
+  return (
+    <Box>
+      <BorderBox>hello</BorderBox>
+    </Box>
+  )
 }

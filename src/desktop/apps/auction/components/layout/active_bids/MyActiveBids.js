@@ -20,7 +20,7 @@ class MyActiveBids extends Component {
     lotStandings: [],
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({
       lotStandings: this.props.lotStandings,
     })
@@ -73,16 +73,18 @@ class MyActiveBids extends Component {
       <div className={b()}>
         <h2>Your Active Bids</h2>
 
-        {lotStandings.filter(bid => bid.sale_artwork).map((bid, key) => {
-          return (
-            <ActiveBidItem
-              {...bid.sale_artwork}
-              BidStatus={BidStatus}
-              bid={bid}
-              key={key}
-            />
-          )
-        })}
+        {lotStandings
+          .filter(bid => bid.sale_artwork)
+          .map((bid, key) => {
+            return (
+              <ActiveBidItem
+                {...bid.sale_artwork}
+                BidStatus={BidStatus}
+                bid={bid}
+                key={key}
+              />
+            )
+          })}
       </div>
     )
   }

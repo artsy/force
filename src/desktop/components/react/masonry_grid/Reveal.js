@@ -21,7 +21,7 @@ export class Reveal extends Component {
     isExpanded: false,
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { isExpanded } = this.props
 
     this.setState({

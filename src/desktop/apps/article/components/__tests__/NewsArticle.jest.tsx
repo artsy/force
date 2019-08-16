@@ -1,13 +1,18 @@
 import React from "react"
 import { mount, shallow } from "enzyme"
 import { NewsArticle } from "../NewsArticle"
-import { NewsArticle as NewsArticleFixture } from "reaction/Components/Publishing/Fixtures/Articles"
+import { NewsArticle as NewsArticleFixture } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 
 describe("InfiniteScrollArticle", () => {
   let props
 
   const getWrapper = (passedProps = props) => {
-    return mount(<NewsArticle {...passedProps} />)
+    return mount(
+      <SystemContextProvider user={null}>
+        <NewsArticle {...passedProps} />
+      </SystemContextProvider>
+    )
   }
 
   beforeEach(() => {
@@ -34,10 +39,10 @@ describe("InfiniteScrollArticle", () => {
 
   it("#onExpand pushes article url to browser and updates articles state", () => {
     const component = getWrapper()
-    const instance = component.instance() as NewsArticle
+    const instance = component.find(NewsArticle).instance() as NewsArticle
     instance.onExpand()
 
-    expect(component.state().isTruncated).toBeFalsy()
+    expect(instance.state.isTruncated).toBeFalsy()
     expect(window.history.replaceState).toBeCalledWith(
       {},
       "594a7e2254c37f00177c0ea9",
@@ -47,13 +52,17 @@ describe("InfiniteScrollArticle", () => {
 
   describe("#setMetadata", () => {
     it("sets default news metadata", () => {
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.setMetadata()
       expect(window.history.replaceState).toBeCalledWith({}, "news", "/news")
     })
 
     it("#sets article metadata", () => {
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.setMetadata({
         slug: "some-slug",
         thumbnail_title: "Some title",
@@ -69,7 +78,9 @@ describe("InfiniteScrollArticle", () => {
 
   describe("#onEnter", () => {
     it("does not push url to browser if it is not scrolling into an article", () => {
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.onEnter({
         currentPosition: "outside",
         previousPosition: "above",
@@ -78,7 +89,9 @@ describe("InfiniteScrollArticle", () => {
     })
 
     it("calls onDateChange if waypoint is triggered inside", () => {
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.onEnter({
         currentPosition: "inside",
         previousPosition: "above",
@@ -87,7 +100,9 @@ describe("InfiniteScrollArticle", () => {
     })
 
     it("pushes /news to browser if it is scrolling into a truncated article", () => {
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.onEnter({
         currentPosition: "inside",
         previousPosition: "above",
@@ -114,7 +129,9 @@ describe("InfiniteScrollArticle", () => {
 
     it("calls #onActiveArticleChange if it is mobile", () => {
       props.isMobile = true
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.onEnter({
         currentPosition: "inside",
         previousPosition: "above",
@@ -125,7 +142,9 @@ describe("InfiniteScrollArticle", () => {
 
   describe("#onLeave", () => {
     it("changes the date if there is a next article on leave", () => {
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.onLeave({
         currentPosition: "above",
         previousPosition: "inside",
@@ -135,7 +154,9 @@ describe("InfiniteScrollArticle", () => {
 
     it("calls #onActiveArticleChange if it is mobile", () => {
       props.isMobile = true
-      const instance = getWrapper().instance() as NewsArticle
+      const instance = getWrapper()
+        .find(NewsArticle)
+        .instance() as NewsArticle
       instance.onLeave({
         currentPosition: "above",
         previousPosition: "inside",
