@@ -1,5 +1,10 @@
 import Cookies from "cookies-js"
-import { handleSubmit, setCookies, getRedirect } from "../helpers"
+import {
+  handleSubmit,
+  setCookies,
+  getRedirect,
+  apiAuthWithRedirectUrl,
+} from "../helpers"
 import Backbone from "backbone"
 import $ from "jquery"
 
@@ -7,6 +12,8 @@ jest.mock("cookies-js")
 jest.mock("sharify", () => {
   return {
     data: {
+      API_URL: "https://api.example.com",
+      APP_URL: "https://app.example.com",
       AP: {
         loginPagePath: "foo",
       },
@@ -239,28 +246,140 @@ describe("Authentication Helpers", () => {
       })
     })
   })
+
+  describe("#apiAuthWithRedirectUrl", () => {
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    describe("when there isn't a current user", () => {
+      it("returns the app url, not an api url", async () => {
+        const response = {}
+        const redirectPath = new URL("/any-path", "https://app.example.com")
+
+        const actual = await apiAuthWithRedirectUrl(response, redirectPath)
+
+        expect(actual.toString()).toMatch("https://app.example.com/any-path")
+      })
+    })
+
+    describe("when there is a current user", () => {
+      describe("when we can get a trust token from the api", () => {
+        beforeEach(() => {
+          global.fetch = jest.fn(() =>
+            Promise.resolve({
+              status: 200,
+              ok: true,
+              json: () =>
+                Promise.resolve({
+                  trust_token: "a-trust-token",
+                  issued_at: "some-datetime",
+                  expires_in: "some-datetime",
+                }),
+            })
+          )
+        })
+
+        it("returns an API URL", async () => {
+          const response = { user: { accessToken: "some-access-token" } }
+          const redirectPath = new URL("/any-path", "https://app.example.com")
+
+          const actual = await apiAuthWithRedirectUrl(response, redirectPath)
+
+          expect(actual.toString()).toMatch("https://api.example.com")
+        })
+
+        it("returns with an application URL as the redirect uri", async () => {
+          const response = { user: { accessToken: "some-access-token" } }
+          const redirectPath = new URL("/any-path", "https://app.example.com")
+
+          const actual = await apiAuthWithRedirectUrl(response, redirectPath)
+
+          const expectedRedirectUri = encodeURIComponent(
+            "https://app.example.com/any-path"
+          )
+          expect(actual.toString()).toMatch(
+            `redirect_uri=${expectedRedirectUri}`
+          )
+        })
+
+        it("returns with the trust token from the api", async () => {
+          const response = { user: { accessToken: "some-access-token" } }
+          const redirectPath = new URL("/any-path", "https://app.example.com")
+
+          const actual = await apiAuthWithRedirectUrl(response, redirectPath)
+
+          expect(actual.toString()).toMatch(`trust_token=a-trust-token`)
+        })
+      })
+
+      describe("when we aren't authorized to get a trust token from the api", () => {
+        beforeEach(() => {
+          global.fetch = jest.fn(() =>
+            Promise.resolve({
+              status: 401,
+              ok: false,
+              json: () =>
+                Promise.resolve({
+                  error: "Unauthorized",
+                  text: "The access token is invalid or has expired.",
+                }),
+            })
+          )
+        })
+
+        it("returns the app URL, not the api url", async () => {
+          const response = { user: { accessToken: "some-access-token" } }
+          const redirectPath = new URL("/any-path", "https://app.example.com")
+
+          const actual = await apiAuthWithRedirectUrl(response, redirectPath)
+
+          expect(actual.toString()).toEqual("https://app.example.com/any-path")
+        })
+      })
+
+      describe("when the api is down", () => {
+        beforeEach(() => {
+          global.fetch = jest.fn(() =>
+            Promise.resolve(new Error("gravity is down"))
+          )
+        })
+
+        it("returns the app URL, not the api url", async () => {
+          const response = { user: { accessToken: "some-access-token" } }
+          const redirectPath = new URL("/any-path", "https://app.example.com")
+
+          const actual = await apiAuthWithRedirectUrl(response, redirectPath)
+
+          expect(actual.toString()).toEqual("https://app.example.com/any-path")
+        })
+      })
+    })
+  })
+
   describe("#getRedirect", () => {
     it("Returns home if type is login and path is login", () => {
       window.history.pushState({}, "", "/login")
       const redirectTo = getRedirect("login")
-      expect(redirectTo).toBe("/")
+      expect(redirectTo.toString()).toBe("https://app.example.com/")
     })
 
     it("Returns home if type is forgot", () => {
       window.history.pushState({}, "", "/forgot")
       const redirectTo = getRedirect("forgot")
-      expect(redirectTo).toBe("/")
+      expect(redirectTo.toString()).toBe("https://app.example.com/")
     })
 
     it("Returns /personalize if type is signup", () => {
       const redirectTo = getRedirect("signup")
-      expect(redirectTo).toBe("/personalize")
+      expect(redirectTo.toString()).toBe("https://app.example.com/personalize")
     })
 
     it("Returns window.location by default", () => {
       window.history.pushState({}, "", "/magazine")
       const redirectTo = getRedirect("login")
-      expect(redirectTo).toBe(window.location)
+
+      expect(redirectTo.toString()).toBe(window.location.href)
     })
   })
 })

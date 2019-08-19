@@ -27,7 +27,7 @@ export class ArtworkRail extends Component {
     page: 1,
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.updatePageDisplay()
   }
 

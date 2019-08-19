@@ -9,7 +9,7 @@ const mediator = require("desktop/lib/mediator.coffee")
 export class AuthWrapper extends React.Component {
   public openModal
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const hasCookie = Cookies.get("editorial-signup-dismissed")
 
     if (
