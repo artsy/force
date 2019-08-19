@@ -1,5 +1,3 @@
-import { find } from "lodash"
-
 interface CustomArticle {
   name: string
   id: string
@@ -29,7 +27,9 @@ const customEditorialArticles: CustomArticle[] = [
  * Checks if an article._id is included in customEditorialArticles
  */
 export const isCustomEditorial = (id: string) => {
-  const customArticle = find(customEditorialArticles, { id })
+  const customArticle = customEditorialArticles.find(
+    article => article.id === id
+  )
   if (customArticle) {
     return customArticle.name
   }
@@ -39,7 +39,9 @@ export const isCustomEditorial = (id: string) => {
  * Returns the id of specified customEditorialArticle by name
  */
 export const getCustomEditorialId = (name: string) => {
-  const customArticle = find(customEditorialArticles, { name })
+  const customArticle = customEditorialArticles.find(
+    article => article.name === name
+  )
   if (customArticle) {
     return customArticle.id
   }
