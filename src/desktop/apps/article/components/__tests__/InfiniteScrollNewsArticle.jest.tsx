@@ -1,11 +1,14 @@
 import React from "react"
-import { shallow } from "enzyme"
+import { mount } from "enzyme"
 import { InfiniteScrollNewsArticle } from "../InfiniteScrollNewsArticle"
-import { NewsArticle } from "reaction/Components/Publishing/Fixtures/Articles"
-import { UnitCanvasImage } from "reaction/Components/Publishing/Fixtures/Components"
+import { NewsArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
+import { NewsLayout } from "@artsy/reaction/dist/Components/Publishing/Layouts/NewsLayout"
+import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
 import { extend, times } from "lodash"
 import { data as sd } from "sharify"
 import moment from "moment"
+import Waypoint from "react-waypoint"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
 jest.mock("../FollowButton", () => ({
@@ -37,7 +40,11 @@ describe("InfiniteScrollNewsArticle", () => {
   let nextArticle
 
   const getWrapper = (passedProps = props) => {
-    return shallow(<InfiniteScrollNewsArticle {...passedProps} />)
+    return mount(
+      <SystemContextProvider user={null}>
+        <InfiniteScrollNewsArticle {...passedProps} />
+      </SystemContextProvider>
+    )
   }
 
   beforeEach(() => {
@@ -52,6 +59,7 @@ describe("InfiniteScrollNewsArticle", () => {
       id: "456",
       slug: "next-news-article",
       published_at: "2017-05-19T13:09:18.567Z",
+      sections: [{ type: "text", body: "News content" }],
     }
 
     sd.CURRENT_USER = { id: "123" }
@@ -64,18 +72,15 @@ describe("InfiniteScrollNewsArticle", () => {
 
   it("#hasNewDate returns true if article date is different from previous article", () => {
     props.articles.push(nextArticle)
-    const instance = getWrapper().instance() as InfiniteScrollNewsArticle
+    const instance = getWrapper()
+      .find(InfiniteScrollNewsArticle)
+      .instance() as InfiniteScrollNewsArticle
     const hasNewDate = instance.hasNewDate(nextArticle, 1)
     expect(hasNewDate).toBeTruthy()
   })
 
   it("fetches more articles at the end of the page", async () => {
     const data = {
-      display: {
-        canvas: {
-          layout: "standard",
-        },
-      },
       articles: [
         extend({}, fixtures.article, {
           slug: "foobar",
@@ -87,36 +92,16 @@ describe("InfiniteScrollNewsArticle", () => {
     }
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
-    const instance = component.instance() as InfiniteScrollNewsArticle
+    const instance = component
+      .find(InfiniteScrollNewsArticle)
+      .instance() as InfiniteScrollNewsArticle
     await instance.fetchNextArticles()
     component.update()
 
     expect(mockPositronql).toBeCalled()
-    expect(component.find("#article-root").children().length).toBe(5)
-    expect(Object.keys(component.state().display[0])[1]).toBe("renderTime")
-  })
-
-  it("injects a canvas ad after the sixth article", async () => {
-    const data = {
-      articles: times(6, () => {
-        return extend({}, NewsArticle, {
-          slug: "foobar",
-          channel_id: "123",
-          id: "678",
-        })
-      }),
-      display: {
-        name: "BMW",
-        canvas: UnitCanvasImage,
-      },
-    }
-    mockPositronql.mockReturnValue(Promise.resolve(data))
-    const component = getWrapper()
-    const instance = component.instance() as InfiniteScrollNewsArticle
-    await instance.fetchNextArticles()
-    component.update()
-
-    expect(component.html()).toMatch("Sponsored by BMW")
+    expect(component.find(NewsNav).length).toBe(1)
+    expect(component.find(NewsLayout).length).toBe(2)
+    expect(component.find(Waypoint).exists()).toBeTruthy()
   })
 
   it("injects read more after the sixth article", async () => {
@@ -139,7 +124,9 @@ describe("InfiniteScrollNewsArticle", () => {
     }
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
-    const instance = component.instance() as InfiniteScrollNewsArticle
+    const instance = component
+      .find(InfiniteScrollNewsArticle)
+      .instance() as InfiniteScrollNewsArticle
     await instance.fetchNextArticles()
     component.update()
 
@@ -148,17 +135,21 @@ describe("InfiniteScrollNewsArticle", () => {
 
   it("#onActiveArticleChange sets the activeArticle", () => {
     const component = getWrapper()
-    const instance = component.instance() as InfiniteScrollNewsArticle
+    const instance = component
+      .find(InfiniteScrollNewsArticle)
+      .instance() as InfiniteScrollNewsArticle
     instance.onActiveArticleChange("1234")
 
-    expect(component.state().activeArticle).toBe("1234")
+    expect(instance.state.activeArticle).toBe("1234")
   })
 
   describe("Auth Modal", () => {
     it("does not call showAuthModal when the user is signed in", () => {
       mockCookies.mockReturnValue(null)
       const component = getWrapper()
-      const instance = component.instance() as InfiniteScrollNewsArticle
+      const instance = component
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       instance.showAuthModal = jest.fn()
       instance.componentDidMount()
 
@@ -168,7 +159,9 @@ describe("InfiniteScrollNewsArticle", () => {
     it("does not call showAuthModal if the user has dismissed the modal", () => {
       mockCookies.mockReturnValue(1)
       const component = getWrapper()
-      const instance = component.instance() as InfiniteScrollNewsArticle
+      const instance = component
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       instance.showAuthModal = jest.fn()
       instance.componentDidMount()
 
@@ -179,7 +172,9 @@ describe("InfiniteScrollNewsArticle", () => {
       mockCookies.mockReturnValue(null)
       sd.CURRENT_USER = null
       const component = getWrapper()
-      const instance = component.instance() as InfiniteScrollNewsArticle
+      const instance = component
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       instance.showAuthModal = jest.fn()
       instance.componentDidMount()
 
@@ -193,7 +188,7 @@ describe("InfiniteScrollNewsArticle", () => {
     const component = getWrapper()
     component.update()
     window.dispatchEvent(new Event("scroll"))
-    jest.runAllTimers()
+
     const registerOptions = {
       mode: "signup",
       intent: "Viewed editorial",
@@ -206,8 +201,9 @@ describe("InfiniteScrollNewsArticle", () => {
         action: "editorialSignup",
       },
     }
-
-    expect(mockMediator).toBeCalledWith("open:auth", registerOptions)
+    setTimeout(() => {
+      expect(mockMediator).toBeCalledWith("open:auth", registerOptions)
+    }, 2000)
   })
 
   describe("/news - news index", () => {
@@ -217,20 +213,25 @@ describe("InfiniteScrollNewsArticle", () => {
 
     it("renders list", () => {
       const component = getWrapper()
-      expect(component.find("#article-root").children().length).toBe(3)
-      expect(component.html()).toMatch("NewsLayout")
+      expect(component.find(NewsNav).length).toBe(1)
+      expect(component.find(NewsLayout).length).toBe(1)
+      expect(component.find(Waypoint).exists()).toBeTruthy()
     })
 
     it("sets up state without props.article", () => {
-      const component = getWrapper()
-      expect(component.state().offset).toBe(6)
-      expect(component.state().date).toBe(props.articles[0].published_at)
+      const instance = getWrapper()
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
+      expect(instance.state.offset).toBe(6)
+      expect(instance.state.date).toBe(props.articles[0].published_at)
     })
   })
 
   describe("#getDateField", () => {
     it("Returns published_at if present", () => {
-      const instance = getWrapper().instance() as InfiniteScrollNewsArticle
+      const instance = getWrapper()
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       const getDateField = instance.getDateField(props.article)
       expect(getDateField).toBe(props.article.published_at)
     })
@@ -239,7 +240,9 @@ describe("InfiniteScrollNewsArticle", () => {
       const published_at = props.article.published_at
       props.article.scheduled_publish_at = published_at
       delete props.article.published_at
-      const instance = getWrapper().instance() as InfiniteScrollNewsArticle
+      const instance = getWrapper()
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       const getDateField = instance.getDateField(props.article)
 
       expect(getDateField).toBe(published_at)
@@ -251,7 +254,9 @@ describe("InfiniteScrollNewsArticle", () => {
         .substring(0, 10)
       delete props.article.published_at
       delete props.article.scheduled_publish_at
-      const instance = getWrapper().instance() as InfiniteScrollNewsArticle
+      const instance = getWrapper()
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       const getDateField = instance.getDateField(props.article).substring(0, 10)
 
       expect(getDateField).toBe(today)
@@ -261,16 +266,20 @@ describe("InfiniteScrollNewsArticle", () => {
   describe("#onDateChange", () => {
     it("it sets date if it has a new one", () => {
       const component = getWrapper()
-      const instance = component.instance() as InfiniteScrollNewsArticle
+      const instance = component
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       instance.onDateChange("2018-07-20T17:19:55.909Z")
-      expect(component.state().date).toBe("2018-07-20T17:19:55.909Z")
+      expect(instance.state.date).toBe("2018-07-20T17:19:55.909Z")
     })
 
     it("it doesn't set date if it hasn't changed", () => {
       const component = getWrapper()
-      const instance = component.instance() as InfiniteScrollNewsArticle
+      const instance = component
+        .find(InfiniteScrollNewsArticle)
+        .instance() as InfiniteScrollNewsArticle
       instance.setState = jest.fn()
-      instance.onDateChange(component.state().date)
+      instance.onDateChange(instance.state.date)
       expect(instance.setState).not.toBeCalled()
     })
   })

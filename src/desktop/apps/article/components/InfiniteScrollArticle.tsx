@@ -10,7 +10,6 @@ import {
 } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { setupFollows, setupFollowButtons } from "./FollowButton"
-import { getCurrentUnixTimestamp } from "reaction/Components/Publishing/Constants"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 
@@ -23,7 +22,6 @@ interface InfiniteScrollArticleState {
   error: boolean
   following: any
   isEnabled: boolean
-  renderTimes: any[]
 }
 
 export class InfiniteScrollArticle extends React.Component<
@@ -40,7 +38,6 @@ export class InfiniteScrollArticle extends React.Component<
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
-      renderTimes: [props.renderTime],
     }
   }
 
@@ -49,7 +46,7 @@ export class InfiniteScrollArticle extends React.Component<
   }
 
   fetchNextArticles = async () => {
-    const { articles, following, offset, renderTimes } = this.state
+    const { articles, following, offset } = this.state
 
     this.setState({
       isLoading: true,
@@ -68,7 +65,6 @@ export class InfiniteScrollArticle extends React.Component<
       if (data.articles.length) {
         this.setState({
           articles: articles.concat(data.articles),
-          renderTimes: renderTimes.concat([getCurrentUnixTimestamp()]),
           isLoading: false,
           offset: offset + 3,
         })
@@ -145,9 +141,8 @@ export class InfiniteScrollArticle extends React.Component<
       showTooltips,
       showCollectionsRail,
       onOpenAuthModal,
-      areHostedAdsEnabled,
     } = this.props
-    const { articles, renderTimes } = this.state
+    const { articles } = this.state
 
     return flatten(
       articles.map((article, i) => {
@@ -163,13 +158,10 @@ export class InfiniteScrollArticle extends React.Component<
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
               isMobile={isMobile}
-              display={article.display}
               showTooltips={showTooltips}
               showCollectionsRail={showCollectionsRail}
               onOpenAuthModal={onOpenAuthModal}
-              renderTime={renderTimes[Math.floor(i / 3)]}
               infiniteScrollEntrySlug={slug}
-              areHostedAdsEnabled={areHostedAdsEnabled}
               shouldAdRender={renderAd}
               articleSerial={i + 1}
             />

@@ -12,7 +12,6 @@ import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
-import { areThirdPartyAdsEnabled } from "desktop/apps/article/helpers"
 import { isCustomEditorial } from "./editorial_features"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
@@ -28,7 +27,6 @@ export const index = async (req, res, next) => {
       query: ArticleQuery(articleId),
       req,
     })
-    const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals.sd)
     const article = data.article
     const articleModel = new Article(data.article)
     const search = new URL(sd.APP_URL + req.url).search
@@ -144,7 +142,6 @@ export const index = async (req, res, next) => {
         markdown,
       },
       data: {
-        areHostedAdsEnabled,
         article,
         customEditorial,
         isSuper,
@@ -181,7 +178,6 @@ export const classic = (req, res, _next) => {
     id: req.params.slug,
   })
   const accessToken = req.user ? req.user.get("accessToken") : null
-  const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals)
 
   article.fetchWithRelated({
     accessToken,
@@ -208,7 +204,6 @@ export const classic = (req, res, _next) => {
       res.render(
         "article",
         _.extend(data, {
-          areHostedAdsEnabled,
           embed,
           crop,
           resize,
@@ -222,7 +217,6 @@ export const amp = (req, res, next) => {
   const article = new Article({
     id: req.params.slug,
   })
-  const areHostedAdsEnabled = areThirdPartyAdsEnabled(res.locals)
 
   article.fetchWithRelated({
     error: res.backboneError,
@@ -240,7 +234,6 @@ export const amp = (req, res, next) => {
       return res.render(
         "amp_article",
         _.extend(data, {
-          areHostedAdsEnabled,
           resize,
           crop,
           embed,

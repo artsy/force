@@ -1,4 +1,3 @@
-import { data as sd } from "sharify"
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
 
@@ -21,6 +20,7 @@ app.use(
 app.use(require("./apps/home"))
 app.use(require("./apps/editorial_features"))
 app.use(require("./apps/apply"))
+app.use(require("./apps/auction_reaction/server").app)
 app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
@@ -31,7 +31,6 @@ app.use(require("./apps/auction_support"))
 app.use(require("./apps/artwork/server").app)
 app.use(require("./apps/about"))
 app.use(require("./apps/collect/server").app)
-app.use(require("./apps/collections/server").app)
 app.use(require("./apps/categories").app)
 app.use(require("./apps/consign").app)
 app.use(require("./apps/contact"))

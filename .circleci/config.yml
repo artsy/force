@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  yarn: artsy/yarn@0.2.0
-  hokusai: artsy/hokusai@0.3.0
+  yarn: artsy/yarn@2.1.0
+  hokusai: artsy/hokusai@0.7.0
   node: artsy/node@0.1.0
 
 jobs:
@@ -112,12 +112,7 @@ workflows:
       # Release
       - validate_production_schema:
           <<: *only_release
-      - hokusai/push:
-          name: push-production-image
-          <<: *only_release
-          requires:
-            - validate_production_schema
       - hokusai/deploy-production:
           <<: *only_release
           requires:
-            - push-production-image
+            - validate_production_schema

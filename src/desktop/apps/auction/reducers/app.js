@@ -12,6 +12,7 @@ export const initialState = {
   me: {},
   sd: {},
   showInfoWindow: false,
+  modalType: undefined,
 }
 
 export default function appReducer(state = initialState, action = {}) {
@@ -23,6 +24,9 @@ export default function appReducer(state = initialState, action = {}) {
         },
         state
       )
+    }
+    case types.SHOW_MODAL: {
+      return u({ modalType: action.payload.modalType }, state)
     }
   }
   return state

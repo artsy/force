@@ -1,7 +1,7 @@
 import React from "react"
 import { ArticleLayout } from "../Article"
 import { mount } from "enzyme"
-import { SystemContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollArticle } from "../../InfiniteScrollArticle"
 import {
   BasicArticle,
@@ -12,7 +12,6 @@ import {
 import { clone } from "lodash"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
-import { Display } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Components"
 import { CollectionsRailContent } from "@artsy/reaction/dist/Components/CollectionsRail"
 
 jest.mock("desktop/components/article/client/super_article.coffee")
@@ -80,21 +79,6 @@ describe("Article Layout", () => {
   it("sets up follow buttons", () => {
     getWrapper()
     expect(mockSetupFollows).toBeCalled()
-  })
-
-  it("renders display components", () => {
-    props.article = clone({
-      ...StandardArticle,
-      display: Display("standard"),
-    } as ArticleData)
-    const component = getWrapper()
-
-    expect(component.html()).toMatch("DisplayPanel")
-    expect(component.html()).toMatch('class="Canvas')
-    expect(component.html()).toMatch("Euismod Inceptos Quam")
-    expect(component.html()).toMatch(
-      "Commodo Risus Pharetra Fermentum Vehicula Adipiscing"
-    )
   })
 
   describe("CollectionsRail", () => {

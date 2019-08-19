@@ -27,6 +27,11 @@ describe("Article Templates", () => {
       moment: () => {},
       asset: () => {},
       sd: {},
+      stitch: {
+        components: {
+          NavBar: x => x,
+        },
+      },
     })
     html.should.containEql("is-team-channel")
     html.should.containEql("team-channel-nav")

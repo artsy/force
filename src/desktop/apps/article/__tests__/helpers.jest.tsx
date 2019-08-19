@@ -1,8 +1,4 @@
-import {
-  areThirdPartyAdsEnabled,
-  shouldAdRender,
-} from "desktop/apps/article/helpers"
-import { data as sd } from "sharify"
+import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
   NewsArticle as NewsArticleFixture,
   FeatureArticle,
@@ -10,62 +6,12 @@ import {
 } from "reaction/Components/Publishing/Fixtures/Articles"
 import React from "react"
 import { NewsArticle } from "desktop/apps/article/components/NewsArticle"
-import { NewDisplayCanvas } from "reaction/Components/Publishing/Display/NewDisplayCanvas"
-import { NewDisplayPanel } from "reaction/Components/Publishing/Display/NewDisplayPanel"
+import { DisplayAd } from "reaction/Components/Publishing/Display/DisplayAd"
 import { mount } from "enzyme"
 import { ArticleLayout } from "desktop/apps/article/components/layouts/Article"
 import { SystemContextProvider } from "reaction/Artsy"
 
-jest.mock("sharify", () => ({
-  data: {
-    HASHTAG_LAB_ADS_ALLOWLIST: "alloweduser@email.com,alloweduser2@email.com",
-    HASHTAG_LAB_ADS_ENABLED: true,
-    CURRENT_USER: {
-      type: "Non-Admin",
-      email: "someuser@email.com",
-    },
-  },
-}))
-
-describe("feature flag checks when ads should be disabled", () => {
-  it("checks that ads are disabled for non-allowlisted users", () => {
-    const currentUser = sd.CURRENT_USER.email
-    const allowList = sd.HASHTAG_LAB_ADS_ALLOWLIST.split(",").filter(Boolean)
-    const isUserAllowed = allowList.includes(currentUser)
-    const mockResponse = sd.data
-
-    expect(areThirdPartyAdsEnabled(mockResponse)).toBe(false)
-    expect(allowList).toHaveLength(2)
-    expect(isUserAllowed).toBe(false)
-    expect(allowList).toHaveLength(2)
-    expect(allowList).toEqual([
-      "alloweduser@email.com",
-      "alloweduser2@email.com",
-    ])
-  })
-
-  it("checks that ads are disabled for current users", () => {
-    const currentUser = sd.CURRENT_USER.email
-    const allowList = sd.HASHTAG_LAB_ADS_ALLOWLIST.split(",").filter(Boolean)
-    const allowedUsers = allowList.includes(currentUser)
-    const mockResponse = sd.data
-
-    expect(areThirdPartyAdsEnabled(mockResponse)).toBe(false)
-    expect(allowedUsers).not.toContain(currentUser)
-  })
-
-  it("checks that ads are disabled for non-admin users", () => {
-    const adminUser = sd.CURRENT_USER.type
-    const isAdminUser = adminUser === "Admin"
-    const mockResponse = sd.data
-
-    expect(areThirdPartyAdsEnabled(mockResponse)).toBe(false)
-    expect(isAdminUser).toBe(false)
-    expect(adminUser).toEqual("Non-Admin")
-  })
-})
-
-describe("ad display logic on Feature and Standard Articles", () => {
+describe("ad display logic in Feature and Standard Articles", () => {
   let props
 
   const getWrapper = (passedProps = props) => {
@@ -78,35 +24,44 @@ describe("ad display logic on Feature and Standard Articles", () => {
 
   beforeEach(() => {
     props = {
-      areHostedAdsEnabled: true,
+      isMobile: false,
+      shouldAdRender: true,
+      articleSerial: 3,
+      article: NewsArticleFixture,
+      isTruncated: true,
+      isFirstArticle: true,
+      nextArticle: {
+        id: "1234",
+        published_at: "5678",
+      },
+      onDateChange: jest.fn(),
+      onActiveArticleChange: jest.fn(),
     }
   })
 
   // FIXME: useMemo in System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Standard article", () => {
+  it("renders new ad component in a Standard article", () => {
     props.shouldAdRender = true
     props.article = StandardArticle
     const component = getWrapper()
-    expect(component.find(NewDisplayCanvas).length).toBe(1)
-    expect(component.find(NewDisplayPanel).length).toBe(1)
+    expect(component.find(DisplayAd).length).toBe(2)
   })
 
   // FIXME: useMemo in System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Feature article", () => {
-    props.shouldAdRender = true
+  it("renders new ad component in a Feature article", () => {
     props.article = FeatureArticle
     const component = getWrapper()
-    expect(component.find(NewDisplayCanvas).length).toBe(1)
+    expect(component.find(DisplayAd).length).toBe(2)
   })
 
-  it("checks the shouldAdRender prop is correctly passed Feature articles", () => {
+  it("checks the shouldAdRender prop is passed to Feature articles", () => {
     const articleType = FeatureArticle.layout
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)
   })
 
-  it("checks the shouldAdRender prop is correctly passed Standard articles", () => {
+  it("checks the shouldAdRender prop is passed to Standard articles", () => {
     const articleType = StandardArticle.layout
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
@@ -114,20 +69,23 @@ describe("ad display logic on Feature and Standard Articles", () => {
   })
 })
 
-describe("ad display frequency logic on News Articles", () => {
+describe("ad display frequency logic in News Articles", () => {
   let props
   const startingIndex = 3
   const frequency = 6
 
   const getWrapper = (passedProps = props) => {
-    return mount(<NewsArticle {...passedProps} />)
+    return mount(
+      <SystemContextProvider user={null}>
+        <NewsArticle {...passedProps} />
+      </SystemContextProvider>
+    )
   }
 
   beforeEach(() => {
     props = {
       isMobile: false,
       shouldAdRender: true,
-      areHostedAdsEnabled: true,
       articleSerial: 3,
       article: NewsArticleFixture,
       isTruncated: true,
@@ -143,7 +101,7 @@ describe("ad display frequency logic on News Articles", () => {
 
   it("checks that NewsArticle renders with the new ads", () => {
     const component = getWrapper()
-    expect(component.find(NewDisplayCanvas).length).toBe(1)
+    expect(component.find(DisplayAd).length).toBe(1)
   })
 
   it("checks that News Articles receive the correct prop to render ads after the 3rd article", () => {

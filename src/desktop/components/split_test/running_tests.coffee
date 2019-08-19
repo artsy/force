@@ -25,6 +25,13 @@
 # module.exports = {}
 
 module.exports = {
+  collection_hubs:
+    key: "collection_hubs"
+    outcomes:
+      control: 100
+      experiment: 0
+    edge: 'experiment'
+
   inquiry_auth:
     key: 'inquiry_auth'
     outcomes: [

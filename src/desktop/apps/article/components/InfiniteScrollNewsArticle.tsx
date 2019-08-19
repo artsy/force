@@ -2,7 +2,7 @@ import { data as sd } from "sharify"
 import moment from "moment"
 import styled from "styled-components"
 import React, { Component, Fragment } from "react"
-import { flatten, debounce, extend, once } from "lodash"
+import { flatten, debounce, once } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
 import {
@@ -13,7 +13,6 @@ import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
   RelatedArticleCanvasData,
-  DisplayData,
 } from "reaction/Components/Publishing/Typings"
 import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
 import { setupFollows, setupFollowButtons } from "./FollowButton"
@@ -32,9 +31,7 @@ export interface Props {
   article?: ArticleData
   articles: ArticleData[]
   isMobile?: boolean
-  renderTime?: number
   showCollectionsRail?: boolean
-  areHostedAdsEnabled?: boolean
   shouldAdRender?: boolean
 }
 
@@ -42,7 +39,6 @@ interface State {
   activeArticle: string
   articles: ArticleData[]
   date: string
-  display: DisplayData[]
   error: boolean
   following: object[]
   isEnabled: boolean
@@ -68,7 +64,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       activeArticle: "",
       articles: props.articles,
       date,
-      display: [],
       error: false,
       following: setupFollows() || null,
       isEnabled: true,
@@ -100,14 +95,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   fetchNextArticles = async () => {
-    const {
-      articles,
-      display,
-      following,
-      offset,
-      omit,
-      relatedArticles,
-    } = this.state
+    const { articles, following, offset, omit, relatedArticles } = this.state
 
     this.setState({
       isLoading: true,
@@ -124,18 +112,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
       const newArticles = data.articles
 
-      let newDisplay
-      if (data.display) {
-        newDisplay = extend({}, data.display, {
-          renderTime: moment().unix(),
-        })
-      }
       const newRelatedArticles = [data.relatedArticlesCanvas]
 
       if (newArticles.length) {
         this.setState({
           articles: articles.concat(newArticles),
-          display: display.concat(newDisplay),
           relatedArticles: relatedArticles.concat(newRelatedArticles),
           isLoading: false,
           offset: offset + 6,
@@ -203,20 +184,14 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   renderContent = () => {
-    const { activeArticle, articles, display, relatedArticles } = this.state
-    const {
-      isMobile,
-      renderTime,
-      showCollectionsRail,
-      areHostedAdsEnabled,
-    } = this.props
+    const { activeArticle, articles, relatedArticles } = this.state
+    const { isMobile, showCollectionsRail } = this.props
 
     let counter = 0
 
     return flatten(
       articles.map((article, i) => {
         const hasMetaContent = i % 6 === 0 && i !== 0
-        const displayAd = display[counter]
         const related = relatedArticles[counter]
         if (hasMetaContent) {
           counter++
@@ -224,9 +199,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         const isTruncated = !this.props.article || i !== 0
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
         const relatedArticlesCanvas = hasMetaContent && related
-        const displayCanvas = hasMetaContent && displayAd
-        const hasRenderTime =
-          hasMetaContent && ((displayAd && displayAd.renderTime) || renderTime)
 
         // render ads on News Landing the 3rd and then every 6 news articles thereafter
         const adPosition = {
@@ -253,11 +225,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
               relatedArticlesForCanvas={relatedArticlesCanvas as any}
-              display={displayCanvas as any}
-              renderTime={hasRenderTime as any}
               // Only show rail if already rendering canvas
               showCollectionsRail={relatedArticles && showCollectionsRail}
-              areHostedAdsEnabled={areHostedAdsEnabled}
               shouldAdRender={renderAd}
               articleSerial={adPosition.index}
             />

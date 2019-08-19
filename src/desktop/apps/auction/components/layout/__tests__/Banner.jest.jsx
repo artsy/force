@@ -11,7 +11,7 @@ jest.mock("desktop/components/clock/react", () => ({
   })),
 }))
 
-xdescribe("auction/components/layout/Banner.test", () => {
+describe("auction/components/layout/Banner.test", () => {
   describe("<Banner />", () => {
     it('tracks a click on the "Enter Live Auction" button', () => {
       const liveAuctionUrl = "live.artsy.net/some-auction-url"

@@ -5,6 +5,9 @@ import {
 } from "reaction/Components/Authentication/Types"
 import { data as sd } from "sharify"
 import { pickBy, identity } from "lodash"
+import * as qs from "query-string"
+import { Response } from "express"
+import { captureException } from "@sentry/browser"
 
 const mediator = require("../../lib/mediator.coffee")
 const LoggedOutUser = require("../../models/logged_out_user.coffee")
@@ -41,7 +44,7 @@ export const handleSubmit = (
   user.set(userAttributes)
 
   const options = {
-    success: (_, res) => {
+    success: async (_, res) => {
       formikBag.setSubmitting(false)
       const analytics = (window as any).analytics
 
@@ -74,8 +77,14 @@ export const handleSubmit = (
         analytics.track(action, pickBy(properties, identity))
       }
 
-      const defaultRedirect = getRedirect(type)
-      window.location = modalOptions.redirectTo || (defaultRedirect as any)
+      let afterAuthURL: URL
+      if (modalOptions.redirectTo)
+        afterAuthURL = new URL(modalOptions.redirectTo, sd.APP_URL)
+      else afterAuthURL = getRedirect(type)
+
+      const result = await apiAuthWithRedirectUrl(res, afterAuthURL)
+
+      window.location.href = result.href
     },
     error: (_, res) => {
       const error = res.responseJSON
@@ -112,19 +121,56 @@ export const setCookies = options => {
   }
 }
 
-export const getRedirect = type => {
+export async function apiAuthWithRedirectUrl(
+  response: Response,
+  redirectPath: URL
+): Promise<URL> {
+  const redirectUrl = sd.APP_URL + redirectPath.pathname
+  const accessToken = (response["user"] || {}).accessToken
+  const appRedirectURL = new URL(redirectUrl)
+
+  // There isn't an access token when we don't have a valid session, for example,
+  // when the user is resetting their password.
+  if (!accessToken) return appRedirectURL
+
+  try {
+    const tokenResponse = await fetch(sd.API_URL + "/api/v1/me/trust_token", {
+      method: "POST",
+      headers: { "X-Access-Token": accessToken },
+    })
+
+    if (tokenResponse.ok) {
+      const responseBody = await tokenResponse.json()
+      const trustToken = responseBody["trust_token"]
+
+      const queryParams = qs.stringify({
+        trust_token: trustToken,
+        redirect_uri: appRedirectURL.toString(),
+      })
+      return new URL(`${sd.API_URL}/users/sign_in?${queryParams}`)
+    } else {
+      return appRedirectURL
+    }
+  } catch (error) {
+    captureException(error)
+    return appRedirectURL
+  }
+}
+
+export function getRedirect(type): URL {
+  const appBaseURL = new URL(sd.APP_URL)
   const { location } = window
   switch (type) {
     case "login":
     case "forgot":
       if (["/login", "/forgot"].includes(location.pathname)) {
-        return "/"
+        return new URL("/", appBaseURL)
       } else {
-        return location
+        return new URL(location.href, appBaseURL)
       }
     case "signup":
-      return "/personalize"
+      return new URL("/personalize", appBaseURL)
     default:
-      return window.location
+      return new URL(window.location.href, appBaseURL)
   }
 }

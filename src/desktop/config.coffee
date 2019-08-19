@@ -17,8 +17,8 @@ module.exports =
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   ARTSY_ID: null
   ARTSY_SECRET: null
-  BIDDER_H1_COPY: 'Please enter your credit card details'
-  BIDDER_H2_COPY: 'A valid credit card is required to bid. If you win, you’ll have the opportunity to pay by credit card, check or wire transfer after the sale closes.'
+  BIDDER_INFO_COPY_P1: 'Please enter your credit card information below. The name on your Artsy account must match the name on the card, and a valid credit card is required in order to bid.'
+  BIDDER_INFO_COPY_P2: 'Registration is free. Artsy will never charge this card without your permission, and you are not required to use this card to pay if you win.'
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'
@@ -29,13 +29,13 @@ module.exports =
   COOKIE_DOMAIN: null
   DD_TRACE_AGENT_HOSTNAME: 'localhost'
   DD_SERVICE_NAME: 'force'
+  DEPLOY_ENV: null
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
   EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_INSTANT_PAGE: true,
   ENABLE_MEMORY_PROFILING: false
-  ENABLE_NEW_NAVBAR: false,
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
@@ -64,8 +64,6 @@ module.exports =
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
-  HASHTAG_LAB_ADS_ALLOWLIST: ''
-  HASHTAG_LAB_ADS_ENABLED: false
   INTERCOM_SELLER_APP_ID: null
   INTERCOM_SELLER_ENABLED: false
   INTERCOM_BUYER_APP_ID: null

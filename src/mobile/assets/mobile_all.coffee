@@ -33,9 +33,6 @@ hash =
   '^/auction/.*/bid/.*': ->
     require('../apps/feature/client/bid_page.coffee').init()
 
-  '^/auction/.*/confirm-registration': ->
-    return
-
   '^/feature/([^/]+)$': ->
     require('../apps/feature/client/index.coffee').init()
 

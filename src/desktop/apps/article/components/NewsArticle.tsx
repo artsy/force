@@ -3,14 +3,11 @@ import { Article } from "reaction/Components/Publishing/Article"
 import Waypoint from "react-waypoint"
 import {
   ArticleData,
-  DisplayData,
   RelatedArticleCanvasData,
 } from "reaction/Components/Publishing/Typings"
 
 interface Props {
-  areHostedAdsEnabled: boolean
   article: ArticleData
-  display?: DisplayData
   isActive: boolean
   isMobile: boolean
   isTruncated: boolean
@@ -18,7 +15,6 @@ interface Props {
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
   relatedArticlesForCanvas?: RelatedArticleCanvasData[]
-  renderTime?: number
   showCollectionsRail?: boolean
   shouldAdRender?: boolean
   articleSerial?: number
@@ -107,14 +103,11 @@ export class NewsArticle extends Component<Props, State> {
   render() {
     const {
       article,
-      display,
       isActive,
       isMobile,
       isTruncated,
       relatedArticlesForCanvas,
-      renderTime,
       showCollectionsRail,
-      areHostedAdsEnabled,
       shouldAdRender,
       articleSerial,
     } = this.props
@@ -136,12 +129,10 @@ export class NewsArticle extends Component<Props, State> {
               onExpand={this.onExpand}
               isHovered={isMobile && isActive}
               relatedArticlesForCanvas={relatedArticlesForCanvas}
-              display={display}
-              renderTime={renderTime}
+              // Only show rail if already rendering canvas
               showCollectionsRail={
                 relatedArticlesForCanvas && showCollectionsRail
-              } // Only show rail if already rendering canvas
-              areHostedAdsEnabled={areHostedAdsEnabled}
+              }
               shouldAdRender={shouldAdRender}
               articleSerial={articleSerial}
             />

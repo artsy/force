@@ -5,11 +5,14 @@ import AuctionBlock from "desktop/components/react/auction_block/auction_block"
 import AuctionInfoContainer from "desktop/apps/auction/components/layout/auction_info"
 import _Banner from "desktop/apps/auction/components/layout/Banner"
 import Footer from "desktop/apps/auction/components/layout/Footer"
+import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout/ConfirmRegistrationModal"
+import { RegistrationModal } from "desktop/apps/auction/components/layout/RegistrationModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
+import { showModal } from "../actions/app"
 
 // FIXME: Rewire
 let Banner = _Banner
@@ -18,17 +21,39 @@ let ArtworkBrowser = _ArtworkBrowser
 function Layout(props) {
   const {
     associatedSale,
+    auction,
     showAssociatedAuctions,
     showFilter,
     showInfoWindow,
     showMyActiveBids,
     showFooter,
+    modalType,
+    dispatch,
   } = props
 
   const b = block("auction-Layout")
 
+  let Modal
+  switch (modalType) {
+    case "RegistrationFlow":
+      Modal = RegistrationModal
+      break
+    case "ConfirmBidAndRegistration":
+    case "ConfirmRegistration":
+      Modal = ConfirmRegistrationModal
+      break
+  }
+
   return (
     <div className={b()}>
+      {Modal && (
+        <Modal
+          auction={auction}
+          onClose={() => {
+            dispatch(showModal(null))
+          }}
+        />
+      )}
       <Banner />
       <div className={b("container", "responsive-layout-container")}>
         <AuctionInfoContainer />
@@ -42,12 +67,11 @@ function Layout(props) {
         <PromotedSaleArtworks />
         <ArtworksByFollowedArtists />
 
-        {showFilter &&
-          !showInfoWindow && (
-            <div className="auction-main-page">
-              <ArtworkBrowser />
-            </div>
-          )}
+        {showFilter && !showInfoWindow && (
+          <div className="auction-main-page">
+            <ArtworkBrowser />
+          </div>
+        )}
 
         {showFooter && <Footer />}
       </div>
@@ -66,7 +90,15 @@ Layout.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    app: { articles, auction, me, isEcommerceSale, isMobile, showInfoWindow },
+    app: {
+      articles,
+      auction,
+      me,
+      isEcommerceSale,
+      isMobile,
+      showInfoWindow,
+      modalType,
+    },
   } = state
 
   const {
@@ -88,7 +120,9 @@ const mapStateToProps = state => {
 
   return {
     associatedSale: associated_sale,
+    auction,
     isMobile,
+    modalType,
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,

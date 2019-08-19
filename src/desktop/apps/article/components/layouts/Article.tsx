@@ -102,10 +102,8 @@ export class ArticleLayout extends React.Component<
       isSuper,
       isLoggedIn,
       isMobile,
-      renderTime,
       showTooltips,
       showCollectionsRail,
-      areHostedAdsEnabled,
       articleSerial,
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
@@ -127,17 +125,14 @@ export class ArticleLayout extends React.Component<
           <Article
             article={article}
             customEditorial={customEditorial}
-            display={article.display}
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
             onOpenAuthModal={this.handleOpenAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
-            renderTime={renderTime}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
-            areHostedAdsEnabled={areHostedAdsEnabled}
             shouldAdRender={true} // always render ads on super, series, and custom editorial articles
           />
         ) : (
@@ -145,10 +140,8 @@ export class ArticleLayout extends React.Component<
             article={article}
             isMobile={isMobile}
             onOpenAuthModal={this.handleOpenAuthModal}
-            renderTime={renderTime}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
-            areHostedAdsEnabled={areHostedAdsEnabled}
             shouldAdRender={renderAd}
             articleSerial={articleSerial}
           />
