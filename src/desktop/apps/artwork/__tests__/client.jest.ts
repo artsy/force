@@ -2,7 +2,6 @@ import Backbone from "backbone"
 import { data as sd } from "sharify"
 require("../client")
 const mediator = require("desktop/lib/mediator.coffee")
-const splitTest = require("desktop/components/split_test/index.coffee")
 
 jest.mock("react-dom", () => ({
   hydrate: jest.fn(),
@@ -10,9 +9,6 @@ jest.mock("react-dom", () => ({
 jest.mock("desktop/components/inquiry_questionnaire/index.coffee", () =>
   jest.fn()
 )
-jest.mock("desktop/components/split_test/index.coffee", () => ({
-  view: jest.fn(),
-}))
 const inquiryMock = require("desktop/components/inquiry_questionnaire/index.coffee")
 const mediatorTriggerMock = jest.spyOn(mediator, "trigger")
 
@@ -24,10 +20,6 @@ describe("artwork client", () => {
     mediatorTriggerMock.mockClear()
     inquiryMock.mockClear()
     Backbone.sync.mockImplementation(() => Promise.resolve())
-  })
-
-  it("Registers a test view", () => {
-    expect(splitTest.view).toBeCalledWith("inquiry_auth")
   })
 
   describe("Inquiry auth control", () => {

@@ -27,9 +27,8 @@ buildClientApp({
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-
     // TODO: Remove after inquiry a/b test
-    splitTest.view("inquiry_auth")
+    splitTest("inquiry_auth").view()
   })
   .catch(error => {
     console.error(error)
