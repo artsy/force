@@ -27,8 +27,6 @@ buildClientApp({
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-    // TODO: Remove after inquiry a/b test
-    splitTest("inquiry_auth").view()
   })
   .catch(error => {
     console.error(error)
@@ -61,18 +59,25 @@ export const handleOpenAuthModal = options => {
   mediator.trigger("open:auth", {
     mode: ModalType.signup,
     signupIntent: "signup",
+    type: "signup",
     trigger: "click",
     destination: location.href,
     ...options,
   })
 }
 
+const shouldViewExperiment = () => {
+  return sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER
+}
+
 mediator.on("launchInquiryFlow", options => {
-  if (sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER) {
+  // TODO: Remove after inquiry a/b test
+  splitTest("inquiry_auth").view()
+  if (shouldViewExperiment()) {
     const authOptions = {
       intent: "Contact Gallery",
-      contextModule: "Contact gallery",
-      copy: "Sign up to contact gallery",
+      contextModule: "Artwork CTA",
+      modal_copy: "Sign up to contact gallery",
     }
     handleOpenAuthModal(authOptions)
   } else {
@@ -81,11 +86,13 @@ mediator.on("launchInquiryFlow", options => {
 })
 
 mediator.on("openBuyNowAskSpecialistModal", options => {
-  if (sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER) {
+  // TODO: Remove after inquiry a/b test
+  splitTest("inquiry_auth").view()
+  if (shouldViewExperiment()) {
     const authOptions = {
       intent: "Ask a specialist",
-      contextModule: "Ask a specialist",
-      copy: "Sign up to ask a specialist",
+      contextModule: "Artwork CTA",
+      modal_copy: "Sign up to ask a specialist",
     }
     handleOpenAuthModal(authOptions)
   } else {
@@ -94,11 +101,13 @@ mediator.on("openBuyNowAskSpecialistModal", options => {
 })
 
 mediator.on("openAuctionAskSpecialistModal", options => {
-  if (sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER) {
+  // TODO: Remove after inquiry a/b test
+  splitTest("inquiry_auth").view()
+  if (shouldViewExperiment()) {
     const authOptions = {
       intent: "Ask a specialist",
-      contextModule: "Ask a specialist",
-      copy: "Sign up to ask a specialist",
+      contextModule: "Artwork CTA",
+      modal_copy: "Sign up to ask a specialist",
     }
     handleOpenAuthModal(authOptions)
   } else {

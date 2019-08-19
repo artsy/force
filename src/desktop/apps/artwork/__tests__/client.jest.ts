@@ -121,8 +121,9 @@ describe("artwork client", () => {
           intent: "Contact Gallery",
           signupIntent: "signup",
           trigger: "click",
-          contextModule: "Contact gallery",
-          copy: "Sign up to contact gallery",
+          type: "signup",
+          contextModule: "Artwork CTA",
+          modal_copy: "Sign up to contact gallery",
           destination: "https://artsy.net/",
         })
       })
@@ -151,8 +152,9 @@ describe("artwork client", () => {
           intent: "Ask a specialist",
           signupIntent: "signup",
           trigger: "click",
-          contextModule: "Ask a specialist",
-          copy: "Sign up to ask a specialist",
+          type: "signup",
+          contextModule: "Artwork CTA",
+          modal_copy: "Sign up to ask a specialist",
           destination: "https://artsy.net/",
         })
       })
@@ -181,8 +183,9 @@ describe("artwork client", () => {
           intent: "Ask a specialist",
           signupIntent: "signup",
           trigger: "click",
-          contextModule: "Ask a specialist",
-          copy: "Sign up to ask a specialist",
+          type: "signup",
+          contextModule: "Artwork CTA",
+          modal_copy: "Sign up to ask a specialist",
           destination: "https://artsy.net/",
         })
       })
