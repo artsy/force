@@ -12,7 +12,7 @@ import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
-import { isCustomEditorial } from "./editorial_features"
+import { isCustomEditorial, getCustomEditorialId } from "./editorial_features"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -20,7 +20,20 @@ const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const Article = require("desktop/models/article.coffee")
 
 export const index = async (req, res, next) => {
-  const articleId = req.params.slug
+  let articleId = req.params.slug
+
+  // Always fetch master series for vanguard 2019 sub-articles
+  if (req.path.split("/").includes("artsy-vanguard-2019")) {
+    articleId = getCustomEditorialId("VANGUARD_2019")
+
+    if (!req.path.includes(`/series/`)) {
+      return res.redirect(
+        `/series/artsy-vanguard-2019${(req.params.slug &&
+          `/${req.params.slug}`) ||
+          ""}`
+      )
+    }
+  }
 
   try {
     const data = await positronql({
@@ -30,6 +43,7 @@ export const index = async (req, res, next) => {
     const article = data.article
     const articleModel = new Article(data.article)
     const search = new URL(sd.APP_URL + req.url).search
+    const customEditorial = isCustomEditorial(article.id)
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       // Redirect deprecated Gallery Insights articles
@@ -39,9 +53,10 @@ export const index = async (req, res, next) => {
       return classic(req, res, next)
     }
 
-    if (articleId !== article.slug) {
+    if (articleId !== article.slug && !customEditorial) {
       return res.redirect(`/article/${article.slug}${search}`)
     }
+
     if (
       article.layout === "video" &&
       article.media &&
@@ -51,7 +66,7 @@ export const index = async (req, res, next) => {
     }
 
     if (
-      !_.includes(["standard", "feature"], article.layout) &&
+      !["standard", "feature"].includes(article.layout) &&
       req.path.includes("/article")
     ) {
       return res.redirect(`/${article.layout}/${article.slug}${search}`)
@@ -105,7 +120,7 @@ export const index = async (req, res, next) => {
       article.layout === "feature" &&
       (article.hero_section && article.hero_section.type === "fullscreen")
     const hasSeriesNav =
-      _.contains(["series", "video"], article.layout) || isFeatureInSeries
+      ["series", "video"].includes(article.layout) || isFeatureInSeries
     let layoutTemplate =
       "../../../components/main_layout/templates/react_index.jade"
     if (hasSeriesNav) {
@@ -119,7 +134,6 @@ export const index = async (req, res, next) => {
     const showTooltips = !isMobile && !isTablet
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
     const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
-    const customEditorial = isCustomEditorial(article.id)
     const renderTime = getCurrentUnixTimestamp()
 
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
@@ -201,14 +215,12 @@ export const classic = (req, res, _next) => {
       res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      res.render(
-        "article",
-        _.extend(data, {
-          embed,
-          crop,
-          resize,
-        })
-      )
+      res.render("article", {
+        embed,
+        crop,
+        resize,
+        ...data,
+      })
     },
   })
 }
@@ -231,15 +243,13 @@ export const amp = (req, res, next) => {
 
       data.article = data.article.prepForAMP()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
-      return res.render(
-        "amp_article",
-        _.extend(data, {
-          resize,
-          crop,
-          embed,
-          _,
-        })
-      )
+      return res.render("amp_article", {
+        resize,
+        crop,
+        embed,
+        _,
+        ...data,
+      })
     },
   })
 }
