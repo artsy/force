@@ -44,3 +44,10 @@ export const getCustomEditorialId = (name: string) => {
     return customArticle.id
   }
 }
+
+// TODO: redirect sub-series to /artsy-vanguard-2019
+export const VanguardSubSeries = [
+  "5d1d01e03e7eba002037dc4c",
+  "5d3defd1373e39001ff00644",
+  "5d3def6b71e1480020dd7cb9",
+]
