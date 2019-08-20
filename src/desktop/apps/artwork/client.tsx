@@ -5,6 +5,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 const $ = require("jquery")
 
@@ -15,6 +16,7 @@ const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
 const openAuctionBuyerPremium = require("desktop/apps/artwork/components/buyers_premium/index.coffee")
 const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 buildClientApp({
   routes,
@@ -53,30 +55,78 @@ const openInquireableModal = (artworkId: string, { ask_specialist }) => {
   })
 }
 
+export const handleOpenAuthModal = options => {
+  mediator.trigger("open:auth", {
+    mode: ModalType.signup,
+    signupIntent: "signup",
+    type: "signup",
+    trigger: "click",
+    destination: location.href,
+    ...options,
+  })
+}
+
+const shouldViewExperiment = () => {
+  return sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER
+}
+
 mediator.on("launchInquiryFlow", options => {
-  openInquireableModal(options.artworkId, { ask_specialist: false })
+  // TODO: Remove after inquiry a/b test
+  splitTest("inquiry_auth").view()
+  if (shouldViewExperiment()) {
+    const authOptions = {
+      intent: "Contact Gallery",
+      contextModule: "Artwork CTA",
+      modal_copy: "Sign up to contact gallery",
+    }
+    handleOpenAuthModal(authOptions)
+  } else {
+    openInquireableModal(options.artworkId, { ask_specialist: false })
+  }
 })
 
 mediator.on("openBuyNowAskSpecialistModal", options => {
-  openInquireableModal(options.artworkId, { ask_specialist: true })
+  // TODO: Remove after inquiry a/b test
+  splitTest("inquiry_auth").view()
+  if (shouldViewExperiment()) {
+    const authOptions = {
+      intent: "Ask a specialist",
+      contextModule: "Artwork CTA",
+      modal_copy: "Sign up to ask a specialist",
+    }
+    handleOpenAuthModal(authOptions)
+  } else {
+    openInquireableModal(options.artworkId, { ask_specialist: true })
+  }
 })
 
 mediator.on("openAuctionAskSpecialistModal", options => {
-  const artworkId = options.artworkId
-  if (artworkId) {
-    const user = User.instantiate()
-    const inquiry = new ArtworkInquiry({ notification_delay: 600 })
-    const artwork = new Artwork({ id: artworkId })
+  // TODO: Remove after inquiry a/b test
+  splitTest("inquiry_auth").view()
+  if (shouldViewExperiment()) {
+    const authOptions = {
+      intent: "Ask a specialist",
+      contextModule: "Artwork CTA",
+      modal_copy: "Sign up to ask a specialist",
+    }
+    handleOpenAuthModal(authOptions)
+  } else {
+    const artworkId = options.artworkId
+    if (artworkId) {
+      const user = User.instantiate()
+      const inquiry = new ArtworkInquiry({ notification_delay: 600 })
+      const artwork = new Artwork({ id: artworkId })
 
-    artwork.fetch().then(() => {
-      artwork.set("is_in_auction", true)
-      openInquiryQuestionnaireFor({
-        user,
-        artwork,
-        inquiry,
-        ask_specialist: true,
+      artwork.fetch().then(() => {
+        artwork.set("is_in_auction", true)
+        openInquiryQuestionnaireFor({
+          user,
+          artwork,
+          inquiry,
+          ask_specialist: true,
+        })
       })
-    })
+    }
   }
 })
 
@@ -97,10 +147,10 @@ mediator.on("openViewInRoom", options => {
 
     if (boundsRatio > imgRatio) {
       newHeight = bounds.height
-      newWidth = newHeight * width / height
+      newWidth = (newHeight * width) / height
     } else if (boundsRatio < imgRatio) {
       newWidth = bounds.width
-      newHeight = height * newWidth / width
+      newHeight = (height * newWidth) / width
     } else {
       newWidth = bounds.width
       newHeight = newWidth

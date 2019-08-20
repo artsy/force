@@ -31,4 +31,14 @@ module.exports = {
       control: 100
       experiment: 0
     edge: 'experiment'
+
+  inquiry_auth:
+    key: 'inquiry_auth'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    control_group: 'control'
+    edge: 'experiment'
+    weighting: 'equal'
 }
