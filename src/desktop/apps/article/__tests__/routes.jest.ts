@@ -445,5 +445,41 @@ describe("Article Routes", () => {
         "5d2f8bd0cdc74b00208b7e16"
       )
     })
+
+    it("redirects sub-series to master article", done => {
+      const subSeries = {
+        ...article,
+        seriesArticle: {
+          id: "5d2f8bd0cdc74b00208b7e16",
+        },
+        title: "Newly Emerging",
+      }
+      positronql.mockReturnValue(Promise.resolve({ article: subSeries }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith(
+          "/series/artsy-vanguard-2019/newly-emerging"
+        )
+        done()
+      })
+    })
+
+    it("redirects artist articles to master article", done => {
+      const artistArticle = {
+        ...article,
+        seriesArticle: {
+          id: "5d3defd1373e39001ff00644",
+        },
+        title: "Genesis Balenger",
+      }
+      positronql.mockReturnValue(Promise.resolve({ article: artistArticle }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith(
+          "/series/artsy-vanguard-2019/genesis-balenger"
+        )
+        done()
+      })
+    })
   })
 })

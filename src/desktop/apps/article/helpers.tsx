@@ -23,6 +23,7 @@ export const getBodyClass = article => {
   const isSuper = article.is_super_article || article.is_super_sub_article
   const isFullscreen =
     article.hero_section && article.hero_section.type === "fullscreen"
+
   if ((isSuper && isFullscreen) || isCustomEditorial(article.id)) {
     bodyClass = bodyClass + " body-no-header"
   }

@@ -1,4 +1,9 @@
-import { isCustomEditorial, getCustomEditorialId } from "../editorial_features"
+import {
+  isCustomEditorial,
+  getCustomEditorialId,
+  isVanguardSubArticle,
+} from "../editorial_features"
+import { StandardArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 
 describe("Editorial Features", () => {
   describe("#isCustomEditoral", () => {
@@ -32,6 +37,41 @@ describe("Editorial Features", () => {
     it("does nothing if name is not found", () => {
       const id = getCustomEditorialId("VANGUARD_2018")
       expect(id).toBeUndefined()
+    })
+  })
+
+  describe("#isVanguardSubArticle", () => {
+    it("returns true if article is child of vanguard series", () => {
+      const article = {
+        seriesArticle: {
+          id: "5d2f8bd0cdc74b00208b7e16",
+        },
+        ...StandardArticle,
+      }
+      const isSubarticle = isVanguardSubArticle(article)
+      expect(isSubarticle).toBeTruthy()
+    })
+
+    it("returns true if article is child of vanguard sub-series", () => {
+      const article = {
+        seriesArticle: {
+          id: "5d3def6b71e1480020dd7cb9",
+        },
+        ...StandardArticle,
+      }
+      const isSubarticle = isVanguardSubArticle(article)
+      expect(isSubarticle).toBeTruthy()
+    })
+
+    it("returns false for non-sub articles", () => {
+      const article = {
+        seriesArticle: {
+          id: "5d3def6b71e1480020dd7cb8",
+        },
+        ...StandardArticle,
+      }
+      const isSubarticle = isVanguardSubArticle(article)
+      expect(isSubarticle).toBeFalsy()
     })
   })
 })
