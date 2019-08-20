@@ -12,7 +12,12 @@ import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
-import { isCustomEditorial, getCustomEditorialId } from "./editorial_features"
+import {
+  isCustomEditorial,
+  getCustomEditorialId,
+  isVanguardSubArticle,
+} from "./editorial_features"
+import { slugify } from "underscore.string"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -36,13 +41,12 @@ export const index = async (req, res, next) => {
   }
 
   try {
-    const data = await positronql({
+    const { article } = await positronql({
       query: ArticleQuery(articleId),
       req,
     })
-    const article = data.article
-    const articleModel = new Article(data.article)
-    const search = new URL(sd.APP_URL + req.url).search
+    const articleModel = new Article(article)
+    const { search } = new URL(sd.APP_URL + req.url)
     const customEditorial = isCustomEditorial(article.id)
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
@@ -53,15 +57,17 @@ export const index = async (req, res, next) => {
       return classic(req, res, next)
     }
 
+    if (isVanguardSubArticle(article)) {
+      return res.redirect(
+        `/series/artsy-vanguard-2019/${slugify(article.title)}`
+      )
+    }
+
     if (articleId !== article.slug && !customEditorial) {
       return res.redirect(`/article/${article.slug}${search}`)
     }
 
-    if (
-      article.layout === "video" &&
-      article.media &&
-      !article.media.published
-    ) {
+    if (isUnpublishedVideo(article)) {
       return next()
     }
 
@@ -185,6 +191,10 @@ const getBodyClass = article => {
     bodyClass = bodyClass + " body-no-header"
   }
   return bodyClass
+}
+
+const isUnpublishedVideo = article => {
+  return article.layout === "video" && article.media && !article.media.published
 }
 
 export const classic = (req, res, _next) => {

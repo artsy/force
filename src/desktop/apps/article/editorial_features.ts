@@ -1,3 +1,5 @@
+import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
+
 interface CustomArticle {
   name: string
   id: string
@@ -47,9 +49,16 @@ export const getCustomEditorialId = (name: string) => {
   }
 }
 
-// TODO: redirect sub-series to /artsy-vanguard-2019
 export const VanguardSubSeries = [
   "5d1d01e03e7eba002037dc4c",
   "5d3defd1373e39001ff00644",
   "5d3def6b71e1480020dd7cb9",
 ]
+
+export const isVanguardSubArticle = (article: ArticleData) => {
+  return (
+    article.seriesArticle &&
+    (article.seriesArticle.id === getCustomEditorialId("VANGUARD_2019") ||
+      VanguardSubSeries.includes(article.seriesArticle.id))
+  )
+}
