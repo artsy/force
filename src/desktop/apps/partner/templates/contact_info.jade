@@ -1,7 +1,3 @@
-if profile.isGallery() && partner.has('email')
-  .purchase
-    p Interested in purchasing works?
-    a.email-gallery( href=partner.getMailTo() ) Contact #{partner.displayName()} via email.
 if partner.has('website')
   .contact-website
     a.partner-website( href=partner.get('website'), target='_blank' )= partner.getSimpleWebsite()
