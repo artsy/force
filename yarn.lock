@@ -69,10 +69,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@17.6.0":
-  version "17.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-17.6.0.tgz#6053605e08ce5ec58e12fb0fb57de271b121f219"
-  integrity sha512-iEn9BsSs8k75Oalyc4EWQH8PPAPjnpVtQVav0/kfGnNo4KYxZFIPnniCnD6GfLNApSZSUtxJGeqC787FMgMHzA==
+"@artsy/reaction@17.6.1":
+  version "17.6.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-17.6.1.tgz#f4a474fd444dfa8a04120ad18588fb6fbab9d57b"
+  integrity sha512-U7TY7GAk8+Fe8dbeo5VhvOQzcgElWonSTaK3ZJE2QvDZbgjXfzRoms9l/5W3ate/QSkJo1c/6EnJRj2Eziakyg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.4"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -119,6 +119,7 @@
     react-tracking "^7.0.1"
     react-transition-group "^2.3.0"
     react-url-query "^1.1.4"
+    react-use-dimensions "^1.2.1"
     react-waypoint "^7.3.3"
     relay-mock-network-layer "^2.0.0"
     relay-runtime "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/relay-runtime-1.5.0-artsy.3.tgz"
@@ -12514,7 +12515,7 @@ react-url-query@^1.1.4:
     prop-types "^15.5.9"
     query-string "^4.2.3"
 
-react-use-dimensions@1.2.1:
+react-use-dimensions@1.2.1, react-use-dimensions@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-use-dimensions/-/react-use-dimensions-1.2.1.tgz#eb1561db7b06c393209d2bffa449931dd93f7870"
   integrity sha512-XL+Rup9Hosxx3Ap9xpyQMbVwuUa4BSqiOjfBb2zDuGs4uv2FesFV+m8Z/huRx2BNptMd9ARPqFuSNA62zhCozg==
