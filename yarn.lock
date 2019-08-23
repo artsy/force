@@ -12514,7 +12514,7 @@ react-url-query@^1.1.4:
     prop-types "^15.5.9"
     query-string "^4.2.3"
 
-react-use-dimensions@^1.2.1:
+react-use-dimensions@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-use-dimensions/-/react-use-dimensions-1.2.1.tgz#eb1561db7b06c393209d2bffa449931dd93f7870"
   integrity sha512-XL+Rup9Hosxx3Ap9xpyQMbVwuUa4BSqiOjfBb2zDuGs4uv2FesFV+m8Z/huRx2BNptMd9ARPqFuSNA62zhCozg==
