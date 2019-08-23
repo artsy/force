@@ -340,7 +340,7 @@
     "prettier": "1.15.2",
     "pug-loader": "2.4.0",
     "react-test-renderer": "16.8.6",
-    "react-use-dimensions": "^1.2.1",
+    "react-use-dimensions": "1.2.1",
     "rewire": "2.2.0",
     "s3": "4.4.0",
     "should": "11.2.1",
