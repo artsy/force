@@ -50,6 +50,8 @@ block body
         input( type='hidden', name='sale_id', value=auction.get('id') )
         select.bordered-select.feature-bid-page-max-bid-select( name='bid' )
           - incrementsInCents = bidIncrements.filter(function(i) { return i > (myLastMaxBid || 0) })
+          - minimumNextBidDollars = incrementsInCents[0] / 100
+          - bidButtonValue = maxBid || minimumNextBidDollars
           for incrementCent in incrementsInCents
             - incrementDollar = incrementCent / 100
             - formattedIncrementDollar = accounting.formatMoney(incrementDollar, saleArtwork.get('symbol'), 0)
@@ -58,7 +60,6 @@ block body
               data-display=formattedIncrementDollar
               selected=(maxBid === incrementDollar)
             )= formattedIncrementDollar
-        - next = incrementsInCents[0]
         #feature-bid-page-errors
           if error
             = error.message
@@ -66,12 +67,12 @@ block body
           if registered
             include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-message.jade
             button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button
-              | Bid #{accounting.formatMoney(maxBid, saleArtwork.get('symbol'), 0)}
+              | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner
           else
             include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-checkbox.jade
             button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button.is-disabled
-              | Bid #{accounting.formatMoney(maxBid, saleArtwork.get('symbol'), 0)}
+              | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner
     #feature-clock-container.js-auction-clock
       include ../../../../desktop/components/clock/template
