@@ -8,7 +8,6 @@ import { recordArtworkView } from "lib/components/record_artwork_view"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 const $ = require("jquery")
-
 const mediator = require("desktop/lib/mediator.coffee")
 const User = require("desktop/models/user.coffee")
 const Artwork = require("desktop/models/artwork.coffee")
@@ -70,9 +69,13 @@ const shouldViewExperiment = () => {
   return sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER
 }
 
+const maybeFireTestView = () => {
+  !sd.CURRENT_USER && splitTest("inquiry_auth").view()
+}
+
 mediator.on("launchInquiryFlow", options => {
   // TODO: Remove after inquiry a/b test
-  splitTest("inquiry_auth").view()
+  maybeFireTestView()
   if (shouldViewExperiment()) {
     const authOptions = {
       intent: "Contact Gallery",
@@ -87,7 +90,7 @@ mediator.on("launchInquiryFlow", options => {
 
 mediator.on("openBuyNowAskSpecialistModal", options => {
   // TODO: Remove after inquiry a/b test
-  splitTest("inquiry_auth").view()
+  maybeFireTestView()
   if (shouldViewExperiment()) {
     const authOptions = {
       intent: "Ask a specialist",
@@ -102,7 +105,7 @@ mediator.on("openBuyNowAskSpecialistModal", options => {
 
 mediator.on("openAuctionAskSpecialistModal", options => {
   // TODO: Remove after inquiry a/b test
-  splitTest("inquiry_auth").view()
+  maybeFireTestView()
   if (shouldViewExperiment()) {
     const authOptions = {
       intent: "Ask a specialist",
