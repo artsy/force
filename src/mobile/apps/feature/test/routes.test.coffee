@@ -70,6 +70,26 @@ describe '#bid', ->
       @res.render.args[0][1].hasQualifiedCreditCard.should.be.true
       done()
 
+  it 'converts to dollars and renders the bid confirmation amount from the query', (done) ->
+    @req = session: {}, params: {}, query: { bid: 20000 }, get: sinon.stub()
+    @metaphysics.returns Promise.resolve
+      artwork: sale_artwork: bid_increments: [100, 200]
+      me: {
+        has_qualified_credit_cards: true
+        bidders: [{ id: 'foo', qualified_for_bidding: false }]
+        lot_standing: null
+      }
+
+    routes.bid @req, @res, done
+
+    Backbone.sync.args[0][2].success fabricate 'artwork'
+    Backbone.sync.args[1][2].success [fabricate 'sale', is_auction: true]
+    Backbone.sync.args[2][2].success fabricate 'sale_artwork'
+
+    _.defer =>
+      @res.render.args[0][1].maxBid.should.equal(200)
+      done()
+
   it 'handles users who are logged in but not registered and do not have a qualified credit card', (done) ->
     @metaphysics.returns Promise.resolve
       artwork: sale_artwork: bid_increments: [100, 200]
