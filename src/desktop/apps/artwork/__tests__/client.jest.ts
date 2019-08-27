@@ -124,7 +124,7 @@ describe("artwork client", () => {
           type: "signup",
           contextModule: "Artwork CTA",
           modal_copy: "Sign up to contact gallery",
-          destination: "https://artsy.net/",
+          redirectTo: "https://artsy.net/",
         })
       })
 
@@ -155,7 +155,7 @@ describe("artwork client", () => {
           type: "signup",
           contextModule: "Artwork CTA",
           modal_copy: "Sign up to ask a specialist",
-          destination: "https://artsy.net/",
+          redirectTo: "https://artsy.net/",
         })
       })
 
@@ -186,7 +186,7 @@ describe("artwork client", () => {
           type: "signup",
           contextModule: "Artwork CTA",
           modal_copy: "Sign up to ask a specialist",
-          destination: "https://artsy.net/",
+          redirectTo: "https://artsy.net/",
         })
       })
 

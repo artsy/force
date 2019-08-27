@@ -60,7 +60,7 @@ export const handleOpenAuthModal = options => {
     signupIntent: "signup",
     type: "signup",
     trigger: "click",
-    destination: location.href,
+    redirectTo: location.href,
     ...options,
   })
 }
@@ -114,24 +114,28 @@ mediator.on("openAuctionAskSpecialistModal", options => {
     }
     handleOpenAuthModal(authOptions)
   } else {
-    const artworkId = options.artworkId
-    if (artworkId) {
-      const user = User.instantiate()
-      const inquiry = new ArtworkInquiry({ notification_delay: 600 })
-      const artwork = new Artwork({ id: artworkId })
-
-      artwork.fetch().then(() => {
-        artwork.set("is_in_auction", true)
-        openInquiryQuestionnaireFor({
-          user,
-          artwork,
-          inquiry,
-          ask_specialist: true,
-        })
-      })
-    }
+    openAuctionAskSpecialistModal(options)
   }
 })
+
+const openAuctionAskSpecialistModal = options => {
+  const artworkId = options.artworkId
+  if (artworkId) {
+    const user = User.instantiate()
+    const inquiry = new ArtworkInquiry({ notification_delay: 600 })
+    const artwork = new Artwork({ id: artworkId })
+
+    artwork.fetch().then(() => {
+      artwork.set("is_in_auction", true)
+      openInquiryQuestionnaireFor({
+        user,
+        artwork,
+        inquiry,
+        ask_specialist: true,
+      })
+    })
+  }
+}
 
 mediator.on("openViewInRoom", options => {
   try {
