@@ -81,8 +81,6 @@ mediator.on("launchInquiryFlow", options => {
       intent: "Contact Gallery",
       contextModule: "Artwork CTA",
       modal_copy: "Sign up to contact gallery",
-      afterSignupAction: () =>
-        openInquireableModal(options.artworkId, { ask_specialist: false }),
     }
     handleOpenAuthModal(authOptions)
   } else {
@@ -98,8 +96,6 @@ mediator.on("openBuyNowAskSpecialistModal", options => {
       intent: "Ask a specialist",
       contextModule: "Artwork CTA",
       modal_copy: "Sign up to ask a specialist",
-      afterSignupAction: () =>
-        openInquireableModal(options.artworkId, { ask_specialist: true }),
     }
     handleOpenAuthModal(authOptions)
   } else {
@@ -115,7 +111,6 @@ mediator.on("openAuctionAskSpecialistModal", options => {
       intent: "Ask a specialist",
       contextModule: "Artwork CTA",
       modal_copy: "Sign up to ask a specialist",
-      afterSignupAction: () => openAuctionAskSpecialistModal(options),
     }
     handleOpenAuthModal(authOptions)
   } else {
