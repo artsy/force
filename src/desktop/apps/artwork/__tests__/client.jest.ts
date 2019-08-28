@@ -103,7 +103,7 @@ describe("artwork client", () => {
     })
   })
 
-  describe("Inquiry auth experiment", () => {
+  xdescribe("Inquiry auth experiment", () => {
     beforeEach(() => {
       sd.INQUIRY_AUTH = "experiment"
       sd.CURRENT_USER = {}
