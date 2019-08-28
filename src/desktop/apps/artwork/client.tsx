@@ -15,7 +15,7 @@ const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
 const openAuctionBuyerPremium = require("desktop/apps/artwork/components/buyers_premium/index.coffee")
 const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
-const splitTest = require("desktop/components/split_test/index.coffee")
+// const splitTest = require("desktop/components/split_test/index.coffee")
 
 buildClientApp({
   routes,
@@ -66,11 +66,13 @@ export const handleOpenAuthModal = options => {
 }
 
 const shouldViewExperiment = () => {
-  return sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER
+  return false // TODO: Remove after AB blocker resolved
+  // return sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER
 }
 
 const maybeFireTestView = () => {
-  !sd.CURRENT_USER && splitTest("inquiry_auth").view()
+  return // TODO: Remove after AB blocker resolved
+  // !sd.CURRENT_USER && splitTest("inquiry_auth").view()
 }
 
 mediator.on("launchInquiryFlow", options => {
