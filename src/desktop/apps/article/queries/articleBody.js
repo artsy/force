@@ -31,6 +31,7 @@ export const articleBody = `
     pixel_tracking_code
   }
   seriesArticle {
+    id
     title
     slug
     series {

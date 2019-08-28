@@ -1,4 +1,4 @@
-import { find } from "lodash"
+import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 
 interface CustomArticle {
   name: string
@@ -29,8 +29,36 @@ const customEditorialArticles: CustomArticle[] = [
  * Checks if an article._id is included in customEditorialArticles
  */
 export const isCustomEditorial = (id: string) => {
-  const customArticle = find(customEditorialArticles, { id })
+  const customArticle = customEditorialArticles.find(
+    article => article.id === id
+  )
   if (customArticle) {
     return customArticle.name
   }
+}
+
+/**
+ * Returns the id of specified customEditorialArticle by name
+ */
+export const getCustomEditorialId = (name: string) => {
+  const customArticle = customEditorialArticles.find(
+    article => article.name === name
+  )
+  if (customArticle) {
+    return customArticle.id
+  }
+}
+
+export const VanguardSubSeries = [
+  "5d1d01e03e7eba002037dc4c",
+  "5d3defd1373e39001ff00644",
+  "5d3def6b71e1480020dd7cb9",
+]
+
+export const isVanguardSubArticle = (article: ArticleData) => {
+  return (
+    article.seriesArticle &&
+    (article.seriesArticle.id === getCustomEditorialId("VANGUARD_2019") ||
+      VanguardSubSeries.includes(article.seriesArticle.id))
+  )
 }

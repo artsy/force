@@ -35,10 +35,16 @@ export const seriesRelatedArticlesBody = `
       url
     }
   }
+  seriesArticle {
+    id
+  }
   relatedArticles {
     title
     layout
     slug
+    seriesArticle {
+      id
+    }
     hero_section {
       ... on FeatureHeader {
         url

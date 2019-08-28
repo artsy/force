@@ -45,6 +45,11 @@ module.exports.bid = (req, res, next) ->
   res.locals.error = req.session.error
   req.session.error = null
 
+  if req.query && req.query.bid
+    maxBid = req.query.bid / 100
+  else
+    maxBid = ''
+
   saleArtwork = null; auction = null; registered = false; qualified = false; hasQualifiedCreditCard = false
   artwork = new Artwork id: req.params.artworkId
   fullURL = req.protocol + "://" + req.get('host') + req.url
@@ -56,6 +61,7 @@ module.exports.bid = (req, res, next) ->
       registered: registered
       qualified: qualified
       hasQualifiedCreditCard: hasQualifiedCreditCard
+      maxBid: maxBid
       registerUrl: auction.registerUrl(fullURL)
   artwork.fetch
     cache: true

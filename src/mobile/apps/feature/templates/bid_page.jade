@@ -48,16 +48,18 @@ block body
       form
         input( type='hidden', name='artwork_id', value=artwork.get('id') )
         input( type='hidden', name='sale_id', value=auction.get('id') )
-        - increments = bidIncrements.filter(function(i) { return i > (myLastMaxBid || 0) })
-        select.bordered-select.feature-bid-page-max-bid-select( name='bid_ammount' )
-          for val in increments
-            - display = accounting.formatMoney(val / 100, saleArtwork.get('symbol'), 0)
+        select.bordered-select.feature-bid-page-max-bid-select( name='bid' )
+          - incrementsInCents = bidIncrements.filter(function(i) { return i > (myLastMaxBid || 0) })
+          - minimumNextBidDollars = incrementsInCents[0] / 100
+          - bidButtonValue = maxBid || minimumNextBidDollars
+          for incrementCent in incrementsInCents
+            - incrementDollar = incrementCent / 100
+            - formattedIncrementDollar = accounting.formatMoney(incrementDollar, saleArtwork.get('symbol'), 0)
             option(
-              value=val
-              data-display=display
-              selected=(maxBid === val)
-            )= display
-        - next = increments[0]
+              value=incrementCent
+              data-display=formattedIncrementDollar
+              selected=(maxBid === incrementDollar)
+            )= formattedIncrementDollar
         #feature-bid-page-errors
           if error
             = error.message
@@ -65,12 +67,12 @@ block body
           if registered
             include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-message.jade
             button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button
-              | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+              | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner
           else
             include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-checkbox.jade
             button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button.is-disabled
-              | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+              | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner
     #feature-clock-container.js-auction-clock
       include ../../../../desktop/components/clock/template

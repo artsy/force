@@ -418,4 +418,68 @@ describe("Article Routes", () => {
       expect(res.redirect).toBeCalledWith(301, "/article/foobar")
     })
   })
+
+  describe("Vanguard 2019", () => {
+    it("redirects to /series if shorthand slug", () => {
+      req.params = {}
+      req.path = "/artsy-vanguard-2019"
+      routes.index(req, res, next)
+      expect(res.redirect).toBeCalledWith("/series/artsy-vanguard-2019")
+    })
+
+    it("preserves params when redirects to /series", () => {
+      req.params = { slug: "emerging" }
+      req.path = "/artsy-vanguard-2019"
+      routes.index(req, res, next)
+      expect(res.redirect).toBeCalledWith(
+        "/series/artsy-vanguard-2019/emerging"
+      )
+    })
+
+    it("always fetches master vanguard article if vanguard slug", () => {
+      req.params = { slug: "emerging" }
+      req.path = "/series/artsy-vanguard-2019/emerging"
+      routes.index(req, res, next)
+
+      expect(positronql.mock.calls[0][0].query).toMatch(
+        "5d2f8bd0cdc74b00208b7e16"
+      )
+    })
+
+    it("redirects sub-series to master article", done => {
+      const subSeries = {
+        ...article,
+        seriesArticle: {
+          id: "5d2f8bd0cdc74b00208b7e16",
+        },
+        title: "Newly Emerging",
+      }
+      positronql.mockReturnValue(Promise.resolve({ article: subSeries }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith(
+          "/series/artsy-vanguard-2019/newly-emerging"
+        )
+        done()
+      })
+    })
+
+    it("redirects artist articles to master article", done => {
+      const artistArticle = {
+        ...article,
+        seriesArticle: {
+          id: "5d3defd1373e39001ff00644",
+        },
+        title: "Genesis Balenger",
+      }
+      positronql.mockReturnValue(Promise.resolve({ article: artistArticle }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith(
+          "/series/artsy-vanguard-2019/genesis-balenger"
+        )
+        done()
+      })
+    })
+  })
 })

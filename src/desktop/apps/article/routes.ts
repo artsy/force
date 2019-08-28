@@ -12,24 +12,48 @@ import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
-import { isCustomEditorial } from "./editorial_features"
+import {
+  isCustomEditorial,
+  getCustomEditorialId,
+  isVanguardSubArticle,
+} from "./editorial_features"
+import { slugify } from "underscore.string"
+import {
+  isUnpublishedVideo,
+  getBodyClass,
+  getJsonLd,
+  getLayoutTemplate,
+  getSuperArticleTemplates,
+} from "./helpers"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
-const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const Article = require("desktop/models/article.coffee")
+const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 
 export const index = async (req, res, next) => {
-  const articleId = req.params.slug
+  let articleId = req.params.slug
+
+  // Always fetch master series for vanguard 2019 sub-articles
+  if (req.path.split("/").includes("artsy-vanguard-2019")) {
+    articleId = getCustomEditorialId("VANGUARD_2019")
+
+    if (!req.path.includes(`/series/`)) {
+      return res.redirect(
+        `/series/artsy-vanguard-2019${(req.params.slug &&
+          `/${req.params.slug}`) ||
+          ""}`
+      )
+    }
+  }
 
   try {
-    const data = await positronql({
+    const { article } = await positronql({
       query: ArticleQuery(articleId),
       req,
     })
-    const article = data.article
-    const articleModel = new Article(data.article)
-    const search = new URL(sd.APP_URL + req.url).search
+    const { search } = new URL(sd.APP_URL + req.url)
+    const customEditorial = isCustomEditorial(article.id)
 
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       // Redirect deprecated Gallery Insights articles
@@ -39,19 +63,22 @@ export const index = async (req, res, next) => {
       return classic(req, res, next)
     }
 
-    if (articleId !== article.slug) {
+    if (isVanguardSubArticle(article)) {
+      return res.redirect(
+        `/series/artsy-vanguard-2019/${slugify(article.title)}`
+      )
+    }
+
+    if (articleId !== article.slug && !customEditorial) {
       return res.redirect(`/article/${article.slug}${search}`)
     }
-    if (
-      article.layout === "video" &&
-      article.media &&
-      !article.media.published
-    ) {
+
+    if (isUnpublishedVideo(article)) {
       return next()
     }
 
     if (
-      !_.includes(["standard", "feature"], article.layout) &&
+      !["standard", "feature"].includes(article.layout) &&
       req.path.includes("/article")
     ) {
       return res.redirect(`/${article.layout}/${article.slug}${search}`)
@@ -89,44 +116,16 @@ export const index = async (req, res, next) => {
       superSubArticles.set(superSubData.articles)
     }
 
-    let templates
-    if (isSuper) {
-      templates = {
-        SuperArticleFooter:
-          "../../../components/article/templates/super_article_footer.jade",
-        SuperArticleHeader:
-          "../../../components/article/templates/super_article_sticky_header.jade",
-      }
-    }
-
-    // Series and Video pages
-    const isFeatureInSeries =
-      article.seriesArticle &&
-      article.layout === "feature" &&
-      (article.hero_section && article.hero_section.type === "fullscreen")
-    const hasSeriesNav =
-      _.contains(["series", "video"], article.layout) || isFeatureInSeries
-    let layoutTemplate =
-      "../../../components/main_layout/templates/react_index.jade"
-    if (hasSeriesNav) {
-      layoutTemplate =
-        "../../../components/main_layout/templates/react_blank_index.jade"
-    }
-
     const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
     const showTooltips = !isMobile && !isTablet
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
-    const jsonLD = stringifyJSONForWeb(articleModel.toJSONLD())
-    const customEditorial = isCustomEditorial(article.id)
-    const renderTime = getCurrentUnixTimestamp()
-
     res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     const layout = await stitch({
       basePath: res.app.get("views"),
-      layout: layoutTemplate,
+      layout: getLayoutTemplate(article),
       config: {
         styledComponents: true,
       },
@@ -147,30 +146,19 @@ export const index = async (req, res, next) => {
         isSuper,
         isLoggedIn,
         isMobile,
-        jsonLD,
-        renderTime,
+        jsonLD: getJsonLd(article),
+        renderTime: getCurrentUnixTimestamp(),
         showTooltips,
         superArticle,
         superSubArticles,
       },
-      templates,
+      templates: getSuperArticleTemplates(article),
     })
 
     res.send(layout)
   } catch (error) {
     next(error)
   }
-}
-
-const getBodyClass = article => {
-  let bodyClass = "body-article body-no-margins"
-  const isSuper = article.is_super_article || article.is_super_sub_article
-  const isFullscreen =
-    article.hero_section && article.hero_section.type === "fullscreen"
-  if ((isSuper && isFullscreen) || isCustomEditorial(article.id)) {
-    bodyClass = bodyClass + " body-no-header"
-  }
-  return bodyClass
 }
 
 export const classic = (req, res, _next) => {
@@ -201,14 +189,12 @@ export const classic = (req, res, _next) => {
       res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      res.render(
-        "article",
-        _.extend(data, {
-          embed,
-          crop,
-          resize,
-        })
-      )
+      res.render("article", {
+        embed,
+        crop,
+        resize,
+        ...data,
+      })
     },
   })
 }
@@ -231,15 +217,13 @@ export const amp = (req, res, next) => {
 
       data.article = data.article.prepForAMP()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
-      return res.render(
-        "amp_article",
-        _.extend(data, {
-          resize,
-          crop,
-          embed,
-          _,
-        })
-      )
+      return res.render("amp_article", {
+        resize,
+        crop,
+        embed,
+        _,
+        ...data,
+      })
     },
   })
 }
