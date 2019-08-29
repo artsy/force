@@ -1,6 +1,6 @@
 import Backbone from "backbone"
 import { data as sd } from "sharify"
-require("../client")
+import { maybeRelaunchInquiryModalAfterAuth } from "../client"
 const mediator = require("desktop/lib/mediator.coffee")
 
 jest.mock("react-dom", () => ({
@@ -9,22 +9,70 @@ jest.mock("react-dom", () => ({
 jest.mock("desktop/components/inquiry_questionnaire/index.coffee", () =>
   jest.fn()
 )
+
+jest.mock("desktop/components/cookies/index.coffee", () => ({
+  get: jest.fn(),
+  expire: jest.fn(),
+  set: jest.fn(),
+}))
+const mockCookies = require("desktop/components/cookies/index.coffee")
+  .get as jest.Mock
+
 const inquiryMock = require("desktop/components/inquiry_questionnaire/index.coffee")
 const mediatorTriggerMock = jest.spyOn(mediator, "trigger")
+
+require("../client")
 
 describe("artwork client", () => {
   Backbone.sync = jest.fn()
   document.getElementById = jest.fn()
 
   beforeEach(() => {
+    mockCookies.mockClear()
     mediatorTriggerMock.mockClear()
     inquiryMock.mockClear()
     Backbone.sync.mockImplementation(() => Promise.resolve())
   })
 
+  describe("launching inquiry modal based on cookie", () => {
+    describe("when user is not logged in", () => {
+      describe("when cookie is set", () => {
+        beforeEach(() => {
+          mockCookies.mockReturnValue(1)
+        })
+        it("does not launch", async () => {
+          await maybeRelaunchInquiryModalAfterAuth("pictures-of-percy")
+          expect(inquiryMock.mock.calls.length).toBeFalsy()
+        })
+      })
+      describe("when cookie is not set", () => {
+        it("does not launch", async () => {
+          await maybeRelaunchInquiryModalAfterAuth("pictures-of-percy")
+          expect(inquiryMock.mock.calls.length).toBeFalsy()
+        })
+      })
+    })
+    describe("when user is logged in", () => {
+      beforeEach(() => {
+        sd.CURRENT_USER = {}
+      })
+      describe("when cookie is set", () => {
+        beforeEach(() => {
+          mockCookies.mockReturnValue(1)
+        })
+        it("launches", async () => {
+          await maybeRelaunchInquiryModalAfterAuth("pictures-of-percy")
+          expect(inquiryMock.mock.calls[0][0].artwork.get("id")).toBe(
+            "pictures-of-percy"
+          )
+        })
+      })
+    })
+  })
+
   describe("Inquiry auth control", () => {
     beforeEach(() => {
-      sd.INQUIRY_AUTH = "control"
+      sd.INQUIRY_AUTH_V2 = "control"
     })
 
     describe("Contact gallery", () => {
@@ -103,9 +151,9 @@ describe("artwork client", () => {
     })
   })
 
-  xdescribe("Inquiry auth experiment", () => {
+  describe("Inquiry auth experiment", () => {
     beforeEach(() => {
-      sd.INQUIRY_AUTH = "experiment"
+      sd.INQUIRY_AUTH_V2 = "experiment"
       sd.CURRENT_USER = {}
     })
 
