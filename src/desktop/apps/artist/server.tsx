@@ -77,14 +77,7 @@ app.get(
 
       res.status(status).send(layout)
     } catch (error) {
-      console.log(error)
-      if (error.message.includes("Artist Not Found")) {
-        const notFoundError: any = new Error("Artist Not Found")
-        notFoundError.status = 404
-        next(notFoundError)
-      } else {
-        next(error)
-      }
+      next(error)
     }
   }
 )

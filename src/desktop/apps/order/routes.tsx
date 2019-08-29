@@ -57,14 +57,7 @@ export const checkoutFlow = async (req, res, next) => {
 
     res.status(status).send(layout)
   } catch (error) {
-    console.log("(apps/order) Error: ", error)
-    if (error.message.includes("Received status code 404")) {
-      const notFoundError: any = new Error("Order Not Found")
-      notFoundError.status = 404
-      next(notFoundError)
-    } else {
-      next(error)
-    }
+    next(error)
   }
 }
 
