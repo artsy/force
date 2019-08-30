@@ -15,7 +15,8 @@ const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
 const openAuctionBuyerPremium = require("desktop/apps/artwork/components/buyers_premium/index.coffee")
 const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
-// const splitTest = require("desktop/components/split_test/index.coffee")
+const splitTest = require("desktop/components/split_test/index.coffee")
+const Cookies = require("desktop/components/cookies/index.coffee")
 
 buildClientApp({
   routes,
@@ -38,13 +39,24 @@ if (module.hot) {
 const artworkSlug = location.pathname.replace(/\/artwork\//, "")
 recordArtworkView(artworkSlug, sd.CURRENT_USER)
 
-const openInquireableModal = (artworkId: string, { ask_specialist }) => {
+const openInquireableModal = (
+  artworkId: string,
+  { ask_specialist },
+  artworkOptions = {}
+) => {
   if (!artworkId) return
   const user = User.instantiate()
   const inquiry = new ArtworkInquiry({ notification_delay: 600 })
   const artwork = new Artwork({ id: artworkId })
 
+  // TODO: Look into why this is needed.
+  $.ajaxSettings.headers = {
+    "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
+    "X-ACCESS-TOKEN":
+      sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
+  }
   artwork.fetch().then(() => {
+    artwork.set(artworkOptions)
     openInquiryQuestionnaireFor({
       user,
       artwork,
@@ -66,14 +78,47 @@ export const handleOpenAuthModal = options => {
 }
 
 const shouldViewExperiment = () => {
-  return false // TODO: Remove after AB blocker resolved
-  // return sd.INQUIRY_AUTH === "experiment" && !sd.CURRENT_USER
+  return sd.INQUIRY_AUTH_V2 === "experiment" && !sd.CURRENT_USER
 }
 
 const maybeFireTestView = () => {
-  return // TODO: Remove after AB blocker resolved
-  // !sd.CURRENT_USER && splitTest("inquiry_auth").view()
+  !sd.CURRENT_USER && splitTest("inquiry_auth_v2").view()
 }
+
+// If this cookie is set, that means we should immediately launch
+// an inquiry or specialist modal, if the user is signed in.
+// Otherwise, we expire the cookie.
+export const maybeRelaunchInquiryModalAfterAuth = slug => {
+  let cookieValue
+
+  cookieValue = Cookies.get("launchInquiryFlow")
+  if (cookieValue) {
+    sd.CURRENT_USER && openInquireableModal(slug, { ask_specialist: false })
+    Cookies.expire("launchInquiryFlow")
+    return
+  }
+
+  cookieValue = Cookies.get("launchSpecialistFlow")
+  if (cookieValue) {
+    sd.CURRENT_USER && openInquireableModal(slug, { ask_specialist: true })
+    Cookies.expire("launchSpecialistFlow")
+    return
+  }
+
+  cookieValue = Cookies.get("launchAuctionSpecialistFlow")
+  if (cookieValue) {
+    sd.CURRENT_USER &&
+      openInquireableModal(
+        slug,
+        { ask_specialist: true },
+        { is_in_auction: true }
+      )
+    Cookies.expire("launchAuctionSpecialistFlow")
+    return
+  }
+}
+
+maybeRelaunchInquiryModalAfterAuth(artworkSlug)
 
 mediator.on("launchInquiryFlow", options => {
   // TODO: Remove after inquiry a/b test
@@ -85,6 +130,7 @@ mediator.on("launchInquiryFlow", options => {
       modal_copy: "Sign up to contact gallery",
     }
     handleOpenAuthModal(authOptions)
+    Cookies.set("launchInquiryFlow", 1)
   } else {
     openInquireableModal(options.artworkId, { ask_specialist: false })
   }
@@ -100,6 +146,7 @@ mediator.on("openBuyNowAskSpecialistModal", options => {
       modal_copy: "Sign up to ask a specialist",
     }
     handleOpenAuthModal(authOptions)
+    Cookies.set("launchSpecialistFlow", 1)
   } else {
     openInquireableModal(options.artworkId, { ask_specialist: true })
   }
@@ -115,29 +162,15 @@ mediator.on("openAuctionAskSpecialistModal", options => {
       modal_copy: "Sign up to ask a specialist",
     }
     handleOpenAuthModal(authOptions)
+    Cookies.set("launchAuctionSpecialistFlow", 1)
   } else {
-    openAuctionAskSpecialistModal(options)
+    openInquireableModal(
+      options.artworkId,
+      { ask_specialist: true },
+      { is_in_auction: true }
+    )
   }
 })
-
-const openAuctionAskSpecialistModal = options => {
-  const artworkId = options.artworkId
-  if (artworkId) {
-    const user = User.instantiate()
-    const inquiry = new ArtworkInquiry({ notification_delay: 600 })
-    const artwork = new Artwork({ id: artworkId })
-
-    artwork.fetch().then(() => {
-      artwork.set("is_in_auction", true)
-      openInquiryQuestionnaireFor({
-        user,
-        artwork,
-        inquiry,
-        ask_specialist: true,
-      })
-    })
-  }
-}
 
 mediator.on("openViewInRoom", options => {
   try {
