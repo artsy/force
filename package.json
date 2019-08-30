@@ -362,7 +362,8 @@
     "webpack-hot-middleware": "2.24.3",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
-    "webpack-notifier": "1.7.0"
+    "webpack-notifier": "1.7.0",
+    "yalc": "^1.0.0-pre.34"
   },
   "license": "MIT",
   "optionalDependencies": {
