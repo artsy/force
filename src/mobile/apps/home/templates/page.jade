@@ -18,7 +18,12 @@ block content
                     h2!= heroUnit.subtitle
 
   section.main-side-margin.home-page-section
-    h1.avant-garde-header-center Explore Artsy
+    if collectionsHubs && collectionsHubs.length
+      h2 Featured categories
+      != stitch.components.CollectionsHubsHomepageNav({collectionsHubs: collectionsHubs})
+    else
+      h1.avant-garde-header-center Explore Artsy
+      
     nav#home-page-featured-list.chevron-nav-list
       a#home-page-featured-works( href='/collect' ) Featured Artworks
       a#home-page-featured-articles( href='/articles' ) Featured Articles
