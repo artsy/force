@@ -14,7 +14,8 @@ html( data-useragent= userAgent lang="en")
       link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
   body( class=bodyClass )
-    include ../header/templates/minimal_header
+    -if (!hideHeaderOnEigen)
+      include ../header/templates/minimal_header
     include ../../modal/template
     include ../../flash/template
 

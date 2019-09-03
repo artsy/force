@@ -46,7 +46,7 @@ export const checkoutFlow = async (req, res, next) => {
         assetPackage: "order",
         // header logo should link back to originating artwork
         headerLogoHref,
-        hideLogoForEigen: res.locals.sd.EIGEN,
+        hideHeaderOnEigen: res.locals.sd.EIGEN,
         options: {
           stripev3: true,
         },
