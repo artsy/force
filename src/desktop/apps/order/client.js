@@ -58,6 +58,7 @@ buildClientApp({
   context: {
     user: sd.CURRENT_USER,
     mediator,
+    isEigen: sd.EIGEN,
   },
   history: {
     options: {
