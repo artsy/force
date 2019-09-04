@@ -33,6 +33,7 @@
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
+    "unlink-all": "yalc remove --all && yarn --check-files",
     "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
   "prettier": {
@@ -45,6 +46,9 @@
     "*.@(js|jsx|ts|tsx)": [
       "npm run prettier-write --",
       "git add"
+    ],
+    "{package.json,yarn.lock}": [
+      "node ./scripts/check-for-links.js"
     ]
   },
   "resolutions": {
@@ -329,7 +333,7 @@
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
     "konami-js": "0.0.2",
-    "lint-staged": "6.1.0",
+    "lint-staged": "^9.2.5",
     "mime": "2.4.0",
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
@@ -362,7 +366,8 @@
     "webpack-hot-middleware": "2.24.3",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
-    "webpack-notifier": "1.7.0"
+    "webpack-notifier": "1.7.0",
+    "yalc": "^1.0.0-pre.34"
   },
   "license": "MIT",
   "optionalDependencies": {
