@@ -333,7 +333,7 @@
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
     "konami-js": "0.0.2",
-    "lint-staged": "^9.2.5",
+    "lint-staged": "9.2.5",
     "mime": "2.4.0",
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
@@ -367,7 +367,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
     "webpack-notifier": "1.7.0",
-    "yalc": "^1.0.0-pre.34"
+    "yalc": "1.0.0-pre.34"
   },
   "license": "MIT",
   "optionalDependencies": {
