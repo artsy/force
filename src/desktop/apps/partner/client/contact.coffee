@@ -25,4 +25,5 @@ module.exports = class PartnerContactView extends Backbone.View
     @$('.partner-locations').html locationStrings.join("")
 
   renderAdditionalInfo: ->
+    @$('.partner-vat-info').html "VAT ID #: #{@partner.get('vat_number')}" if @partner.get('vat_number')
     @$('.partner-contact-info').html contactTemplate(profile: @profile, partner: @partner)
