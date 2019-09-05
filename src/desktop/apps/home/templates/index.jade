@@ -23,13 +23,12 @@ block body
     if collectionsHubs && collectionsHubs.length
       #home-layout-container.responsive-layout-container
         .main-layout-container: #home-body
-          h2.home-featured-header Featured categories
-          != stitch.components.CollectionsHubsHomepageNav({collectionsHubs: collectionsHubs})
-
-    unless user
-      #home-layout-container.responsive-layout-container
-        .main-layout-container: #home-body
-          include browse
+          include hubs_entry
+    else 
+      unless user
+        #home-layout-container.responsive-layout-container
+          .main-layout-container: #home-body
+            include browse
 
     include rails
     #home-layout-container.responsive-layout-container
