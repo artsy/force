@@ -4,6 +4,12 @@ import { routes } from "reaction/Apps/Auction/routes"
 import { stitch } from "@artsy/stitch"
 
 export const bidderRegistration = async (req, res, next) => {
+  /* If this request is from a registration modal (trying to create a bidder),
+     defer to the auction_support app router
+  */
+  if (req.query["accepted-conditions"] === "true") {
+    next()
+  }
   if (!res.locals.sd.CURRENT_USER) {
     return res.redirect(
       `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
