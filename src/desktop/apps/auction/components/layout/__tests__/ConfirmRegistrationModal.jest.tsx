@@ -76,7 +76,7 @@ describe("Confirm Registration Modal", () => {
       it("shows a qualified message", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
+          options: { renderMode: "render" },
           data: {
             app: {
               modalType: "ConfirmRegistration",
@@ -90,7 +90,6 @@ describe("Confirm Registration Modal", () => {
             },
           },
         })
-
         expect(wrapper.text()).toEqual(
           expect.stringContaining("Registration complete")
         )
@@ -102,7 +101,7 @@ describe("Confirm Registration Modal", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
           props: { cantBid: true },
-          options: { renderMode: "mount" },
+          options: { renderMode: "render" },
           data: {
             app: {
               modalType: "ConfirmBidAndRegistration",
@@ -125,7 +124,7 @@ describe("Confirm Registration Modal", () => {
       it("shows a registration pending message if the user was trying to register", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
+          options: { renderMode: "render" },
           data: {
             app: {
               modalType: "ConfirmRegistration",
