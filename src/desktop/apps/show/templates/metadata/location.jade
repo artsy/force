@@ -1,5 +1,5 @@
 .show-location
-  if partner_show.has_location
+  if partner_show.has_location && partner_show.location
     span= ViewHelpers.singleLine(partner_show.location)
     if partner_show.location.coordinates
       a.show-entity-link.js-open-map-modal
