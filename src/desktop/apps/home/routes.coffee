@@ -56,7 +56,7 @@ fetchMetaphysicsData = (req, showHeroUnits, showCollectionsHubs)->
   initialFetch
     .then (results) ->
       homePage = results?[0].value.home_page
-      collectionsHubs = results?[0].value.marketingCollections
+      collectionsHubs = results?[0].value.marketingHubCollections
       heroUnits = homePage.hero_units
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 

@@ -14,7 +14,7 @@ query = """
       }
     }
 
-    marketingCollections(size: 6) @include(if: $showCollectionsHubs){
+    marketingHubCollections @include(if: $showCollectionsHubs){
       id
       slug
       title
@@ -29,9 +29,9 @@ module.exports.index = (req, res, next) ->
   showCollectionsHubs = res.locals.sd.COLLECTION_HUBS == "experiment"
 
   metaphysics(query: query, variables: {showCollectionsHubs: showCollectionsHubs})
-    .then ({ home_page, marketingCollections }) ->
+    .then ({ home_page, marketingHubCollections }) ->
       res.render 'page', 
         heroUnits: home_page.hero_units, 
         resize: resize, 
-        collectionsHubs: marketingCollections
+        collectionsHubs: marketingHubCollections
     .catch next

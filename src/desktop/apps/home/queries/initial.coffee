@@ -39,7 +39,7 @@ module.exports = """
       }
     }
 
-    marketingCollections(size: 6) @include(if: $showCollectionsHubs){
+    marketingHubCollections @include(if: $showCollectionsHubs){
       id
       slug
       title
