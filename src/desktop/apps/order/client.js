@@ -9,6 +9,7 @@ import User from "desktop/models/user.coffee"
 import Artwork from "desktop/models/artwork.coffee"
 import ArtworkInquiry from "desktop/models/artwork_inquiry.coffee"
 import openInquiryQuestionnaireFor from "desktop/components/inquiry_questionnaire/index.coffee"
+import { enableIntercom } from "lib/intercom"
 
 mediator.on("openOrdersContactArtsyModal", options => {
   const artworkId = options.artworkId
@@ -26,6 +27,10 @@ mediator.on("openOrdersContactArtsyModal", options => {
       })
     })
   }
+})
+
+mediator.on("enableIntercomForBuyers", options => {
+  enableIntercom(options)
 })
 
 // Track page views for order checkout flow: shipping, payment and review.
