@@ -15,6 +15,7 @@ cd $PROJECT
 cat package.json | jq -e .scripts.integrate &>2
 
 if [ $? -ne 0 ]; then
+  # TODO: Reference documentation on the integration process
   echo "$PROJECT doesn't have an `integrate` script in its package.json"
   exit 1
 fi
