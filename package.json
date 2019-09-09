@@ -18,9 +18,7 @@
     "integrate": "./scripts/quicklink-to-project.sh",
     "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
     "mocha": "scripts/mocha.sh",
-    "precommit": "lint-staged",
     "prepare": "patch-package",
-    "prepush": "yarn type-check",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
     "prettier-write": "yarn run prettier --write",
     "publish-assets:local": "yarn assets && yarn publish-assets",
@@ -42,6 +40,12 @@
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn type-check"
+    }
   },
   "lint-staged": {
     "*.@(js|jsx|ts|tsx)": [
@@ -323,7 +327,7 @@
     "friendly-errors-webpack-plugin": "1.6.1",
     "graphql-fetch-schema": "0.8.0",
     "hulk-editor": "craigspaeth/hulk",
-    "husky": "0.14.3",
+    "husky": "3.0.5",
     "imagesloaded": "4.1.2",
     "inquirer": "1.2.3",
     "inspectpack": "4.1.2",
