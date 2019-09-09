@@ -17,9 +17,7 @@
     "clean": "rm -rf .cache && rm -f manifest.json && rm -rf public/assets && mkdir -p public/assets && echo '[Force] Cleaned build directory'",
     "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
     "mocha": "scripts/mocha.sh",
-    "precommit": "lint-staged",
     "prepare": "patch-package",
-    "prepush": "yarn type-check",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
     "prettier-write": "yarn run prettier --write",
     "publish-assets:local": "yarn assets && yarn publish-assets",
@@ -41,6 +39,12 @@
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn type-check"
+    }
   },
   "lint-staged": {
     "*.@(js|jsx|ts|tsx)": [
