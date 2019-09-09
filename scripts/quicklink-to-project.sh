@@ -15,7 +15,7 @@ cd $PROJECT
 cat package.json | jq -e .scripts.integrate &>2
 
 if [ $? -ne 0 ]; then
-  echo "$PROJECT doesn't have integrate npm script, ensure it's valid"
+  echo "$PROJECT doesn't have an `integrate` script in its package.json"
   exit 1
 fi
 
