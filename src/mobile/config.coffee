@@ -18,7 +18,6 @@ module.exports =
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
   DEPLOY_ENV: null
-  EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
   EUROPA_URL: 'http://europa-production.herokuapp.com'

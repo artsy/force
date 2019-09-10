@@ -208,8 +208,7 @@ module.exports = class ArticleView extends Backbone.View
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
-       @user?.id is @article.get('author_id')) or
-       @user?.isEditorialAdmin()
+       @user?.id is @article.get('author_id'))
       editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
       message = if @article.get('published') then '' else "Draft"
       @renderedEditButton = true

@@ -32,7 +32,6 @@ module.exports =
   DEPLOY_ENV: null
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
-  EDITORIAL_ADMINS: ''
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_INSTANT_PAGE: true,
   ENABLE_MEMORY_PROFILING: false
