@@ -32,14 +32,12 @@ module.exports =
   DEPLOY_ENV: null
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
-  EDITORIAL_ADMINS: ''
-  EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ENABLE_INSTANT_PAGE: true,
   ENABLE_MEMORY_PROFILING: false
   ENABLE_WEB_CRAWLING: false
   EMAIL_SIGNUP_IMAGES_ID: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
-  EOY_2016_ARTICLE: null
+  EOY_2016_ARTICLE: '58472d93b7b31d00116f5ab0'
   EOY_2016: '5829db77b5989e6f98f779a5'
   EF_VENICE: '58f5eb75faef6a3a8e7fe1ad'
   EF_GUCCI: '5a009372c88a280f5e9efa7e'
@@ -47,14 +45,12 @@ module.exports =
   FACEBOOK_APP_NAMESPACE: "artsyinc"
   FACEBOOK_DOMAIN_VERIFICATION: 'yeg3dqrlq548zc77ggvfipouil1l1e'
   FACEBOOK_ID: null
-  FACEBOOK_PIXEL_ID: null
   FACEBOOK_SECRET: null
   FORCE_CLOUDFRONT_URL: 'https://d3vpvtm3t56z1n.cloudfront.net'
   GALAXY_PUBLISHABLE_TOKEN: null
   GALAXY_TOKEN: null
   GALAXY_URL: null
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995' # Used to redirect to partners.artsy.net
-  GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
   GALLERY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
   GEMINI_ACCOUNT_KEY: 'force-staging'
   GEMINI_APP: 'http://localhost:3004'
@@ -128,8 +124,6 @@ module.exports =
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null
   TWILIO_NUMBER: null
-  TWITTER_KEY: null
-  TWITTER_SECRET: null
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
