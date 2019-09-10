@@ -11,7 +11,6 @@ describe 'Meta tags', ->
     before ->
       @file = "#{path.resolve __dirname, '../'}/meta/press.jade"
       @sd =
-        MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
@@ -29,7 +28,6 @@ describe 'Meta tags', ->
     before ->
       @file = "#{path.resolve __dirname, '../'}/meta/terms.jade"
       @sd =
-        MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
@@ -46,7 +44,6 @@ describe 'Meta tags', ->
     before ->
       @file = "#{path.resolve __dirname, '../'}/meta/privacy.jade"
       @sd =
-        MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
@@ -64,7 +61,6 @@ describe 'Meta tags', ->
     before ->
       @file = "#{path.resolve __dirname, '../'}/meta/security.jade"
       @sd =
-        MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),

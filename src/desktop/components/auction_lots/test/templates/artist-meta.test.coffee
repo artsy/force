@@ -11,7 +11,6 @@ describe 'Meta tags', ->
     @sd =
       APP_URL: 'http://localhost:5000'
       API_URL: 'http://localhost:5000'
-      MOBILE_URL: 'http://m.localhost:5000'
       MOBILE_MEDIA_QUERY: 'mobile-media-query'
 
   describe 'basic artist with name and short blurb', ->

@@ -27,7 +27,6 @@ render = (templateName) ->
   sd = _.extend sdData,
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
-    MOBILE_URL: 'http://localhost:5000'
     WEBFONT_URL: 'http://webfonts.artsy.net/'
     NODE_ENV: 'test'
   jade.compile(
@@ -41,7 +40,6 @@ describe 'Fair', ->
     before (done) ->
       sd = _.extend sdData,
         APP_URL: 'http://localhost:5000'
-        MOBILE_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         CURRENT_PATH: '/cool-fair'
