@@ -16,7 +16,7 @@ getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Const
 @news = (req, res, next) ->
   new Articles().fetch
     data:
-      channel_id: sd.ARTSY_EDITORIAL_ID
+      channel_id: sd.ARTSY_EDITORIAL_CHANNEL
       published: true
       sort: '-published_at'
       exclude_google_news: false
