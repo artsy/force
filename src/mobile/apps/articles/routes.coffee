@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { toSentence } = require 'underscore.string'
 Q = require 'bluebird-q'
-{ MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } = require '../../config'
+{ SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } = require '../../config'
 sd = require('sharify').data
 request = require 'superagent'
 Article = require '../../models/article'
