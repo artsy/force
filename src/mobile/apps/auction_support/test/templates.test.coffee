@@ -25,7 +25,6 @@ describe 'Auction', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       @sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'

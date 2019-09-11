@@ -32,7 +32,6 @@ describe 'Fair Organizer', ->
 
     before (done) ->
       sd = _.extend sdData,
-        MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'

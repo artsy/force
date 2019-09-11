@@ -42,8 +42,6 @@ module.exports = class ArticleView extends Backbone.View
     @setupFollowButtons()
     @setupImageSets()
     @resetImageSetPreview()
-    if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
-      @setupMarketoStyles()
 
     # Resizing
     @sizeVideo()
@@ -268,8 +266,3 @@ module.exports = class ArticleView extends Backbone.View
       else
         $('.article-social').show()
     , { offset: 'bottom-in-view' }
-
-  setupMarketoStyles: =>
-    $(@$el).waypoint (direction) =>
-      if direction is 'down'
-        @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')

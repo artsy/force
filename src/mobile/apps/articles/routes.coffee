@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { toSentence } = require 'underscore.string'
 Q = require 'bluebird-q'
-{ MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } = require '../../config'
+{ SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } = require '../../config'
 sd = require('sharify').data
 request = require 'superagent'
 Article = require '../../models/article'
@@ -93,24 +93,6 @@ module.exports.articles = (req, res, next) ->
           res.render 'articles',
             articles: articles,
             newsArticles: newsArticles
-
-module.exports.form = (req, res, next) ->
-  request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
-    .send(
-      apikey: MAILCHIMP_KEY
-      id: sd.GALLERY_INSIGHTS_LIST
-      email: email: req.body.email
-      send_welcome: true
-      merge_vars:
-        MMERGE1: req.body.fname
-        MMERGE2: req.body.lname
-        MMERGE3: 'Opt-in (artsy.net)'
-      double_optin: false
-    ).end (err, response) ->
-      if (response.ok)
-        res.send req.body
-      else
-        res.send(response.status, response.body.error)
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
