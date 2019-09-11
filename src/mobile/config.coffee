@@ -18,7 +18,6 @@ module.exports =
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
   DEPLOY_ENV: null
-  EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,cab,charles'
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
   EUROPA_URL: 'http://europa-production.herokuapp.com'
@@ -62,8 +61,6 @@ module.exports =
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
   TRACK_PAGELOAD_PATHS: null
   TWITTER_CONSUMER_KEY: null
-  TWITTER_CONSUMER_SECRET: null
-  VENICE_2015_SECTION: null
   VOLLEY_ENDPOINT: null
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

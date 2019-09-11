@@ -30,7 +30,7 @@ search-bar-input-placeholder()
     &.force-position-absolute
       position absolute
 
-// Adds extra margin for staging banner 
+// Adds extra margin for staging banner
 .body-header-fixed.force-staging
   #main-layout-container
     margin-top (main-header-height + content-margin-top + staging-banner-height)
@@ -186,3 +186,11 @@ html[data-useragent*="iPad"]
 .body-no-padding
   #main-layout-container
     padding 0
+
+// This is where reaction-built apps mount to
+#react-root
+  .reactionPageLoader
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 53px !important; // Overwrite storybooks position

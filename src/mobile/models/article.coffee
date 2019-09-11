@@ -51,7 +51,7 @@ module.exports = class Article extends Backbone.Model
   fetchRelated: (options) ->
     Articles = require '../collections/articles.coffee'
     dfds = []
-    channel_id = @get('channel_id') or @get('partner_channel_id') or sd.ARTSY_EDITORIAL_ID
+    channel_id = @get('channel_id') or @get('partner_channel_id') or sd.ARTSY_EDITORIAL_CHANNEL
     dfds.push (footerArticles = new Articles).fetch
       cache: true
       data:

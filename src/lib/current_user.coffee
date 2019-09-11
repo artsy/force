@@ -9,7 +9,7 @@ Backbone = require 'backbone'
 request = require 'superagent'
 Q = require 'bluebird-q'
 ABM = require 'artsy-backbone-mixins'
-{ API_URL, CURRENT_USER, EDITORIAL_ADMINS } = sd = require('sharify').data
+{ API_URL, CURRENT_USER } = sd = require('sharify').data
 Following = require '../desktop/components/follow_button/collection.coffee'
 Artists = require '../desktop/collections/artists.coffee'
 mediator = require '../desktop/lib/mediator.coffee'
@@ -239,13 +239,9 @@ module.exports = class CurrentUser extends Backbone.Model
     @set followArtists: new Artists()
     @get('followArtists').fetchUntilEndInParallel(_.extend { url: url, data: data }, options)
 
+  # TODO: not sure what 'is_slumming' indicates
   isAdmin: ->
     (@get('type') is 'Admin') and ! @get('is_slumming')
-
-  isEditorialAdmin: ->
-    return false unless sd.EDITORIAL_ADMINS?
-    @get('type') is 'Admin' and
-    @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS?.split(',')
 
   markNotifications: (status = 'read', options) ->
     request.put("#{@url()}/notifications")
