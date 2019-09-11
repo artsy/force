@@ -63,7 +63,3 @@ include ./mixins
         .article-social(data-id=article.get('id'))
           h2.article-social__header Share article
           +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
-
-    if channel && channel.id === sd.GALLERY_INSIGHTS_CHANNEL
-      .responsive-layout-container.article-gi.article-subscribe__gi
-        include ./gi_signup.jade

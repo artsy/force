@@ -76,7 +76,6 @@ module.exports =
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
-  MOBILE_URL: 'https://m.artsy.net'
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PARSELY_KEY: 'artsy.net'
