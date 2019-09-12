@@ -12,8 +12,8 @@ module.exports =
   APP_URL: 'http://localhost:3003'
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   CALENDAR_URL: 'http://localhost:3003' # For redirecting to .ics files
-  CLIENT_ID: 'e750db60ac506978fc70'
-  CLIENT_SECRET: '3a33d2085cbd1176153f99781bbce7c6'
+  CLIENT_ID: null
+  CLIENT_SECRET: null
   COOKIE_DOMAIN: null
   DEFAULT_CACHE_TIME: 3600
   DISABLE_IMAGE_PROXY: false
@@ -57,8 +57,7 @@ module.exports =
   SHOW_ANALYTICS_CALLS: false
   STRIPE_PUBLISHABLE_KEY: null
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
-  TRACK_PAGELOAD_PATHS: null
-  TWITTER_CONSUMER_KEY: null
+  TRACK_PAGELOAD_PATHS: "home|collect|artist|artwork|show|article|feature|gene|tag|partner|fair|news|new-artwork"
   VOLLEY_ENDPOINT: null
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
