@@ -20,6 +20,8 @@ module.exports =
   BIDDER_INFO_COPY_P1: 'Please enter your credit card information below. The name on your Artsy account must match the name on the card, and a valid credit card is required in order to bid.'
   BIDDER_INFO_COPY_P2: 'Registration is free. Artsy will never charge this card without your permission, and you are not required to use this card to pay if you win.'
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
+  CLIENT_ID: null
+  CLIENT_SECRET: null
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'
   CONSIGNMENTS_APP_URL: null
@@ -35,7 +37,7 @@ module.exports =
   ENABLE_INSTANT_PAGE: true,
   ENABLE_MEMORY_PROFILING: false
   ENABLE_WEB_CRAWLING: false
-  EMAIL_SIGNUP_IMAGES_ID: null
+  EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: '58472d93b7b31d00116f5ab0'
   EOY_2016: '5829db77b5989e6f98f779a5'
@@ -107,7 +109,6 @@ module.exports =
   SECURE_IMAGES_URL: null
   SEGMENT_AMP_WRITE_KEY: null
   SEGMENT_WRITE_KEY: null
-  SEGMENT_WRITE_KEY_MICROGRAVITY: null
   SEGMENT_WRITE_KEY_SERVER: null
   SENTRY_PUBLIC_DSN: null
   SENTRY_PRIVATE_DSN: null
@@ -126,7 +127,7 @@ module.exports =
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'
-  ALLOWED_VANITY_ASSETS: ''
+  ALLOWED_VANITY_ASSETS: 'videos/*|vrview/*|hls-videos/*'
   VERBOSE_LOGGING: false
 
 # Override any values with env variables if they exist.
