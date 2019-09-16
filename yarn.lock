@@ -29,10 +29,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@4.17.2":
-  version "4.17.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.17.2.tgz#722fadd97a2f39cc29edc208e634cef8d89c77f7"
-  integrity sha512-kjSXRw9qq7XwjSIuT94KmOb/CZOCIaoxu89SGgckQpH2wIIe+S43DrVgphqEaJoTyeSQNPQ8x65hvOR4/vw7+g==
+"@artsy/palette@4.17.4":
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.17.4.tgz#c4c824f3fea4b4895b7dacb416960b12a5b1c833"
+  integrity sha512-pCM/VzZWzLw2rpXt7hMx7H3HIYouyvYSGStSeApRatQ6CQL7saj8YFJKHVwunQt2JidNaJPUcsxId6ytYLAq2g==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -69,10 +69,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@17.11.13":
-  version "17.11.13"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-17.11.13.tgz#c4be03f4c2f6fbda983abd30812de65457a02f29"
-  integrity sha512-YZwu7i7SaoAbWfqEwhL1b+3He1ScEh5wfeU71P8Pfe3aFG+KG0LbZ0d0jjRDl1Z1ivVQioDNKlULMkYur0GljA==
+"@artsy/reaction@18.1.2":
+  version "18.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-18.1.2.tgz#81f909a40e20525278d79583c623c3203187585d"
+  integrity sha512-qpGK6khWaozCk2aoV75dqSQCQQEA98fFgwhEpWGcwXRZUW7p/4LzIGse3YdY9E+IJvgOCG5z6A25TfEWz9B+kg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
@@ -131,6 +131,7 @@
     unstated "^2.1.1"
     unstated-debug "^0.2.0"
     url "^0.11.0"
+    use-deep-compare-effect "^1.2.0"
     yup "^0.24.1"
 
 "@artsy/stitch@6.1.4":
@@ -960,7 +961,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime@7.6.0":
+"@babel/runtime@7.6.0", "@babel/runtime@^7.2.0":
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.0.tgz#4fc1d642a9fd0299754e8b5de62c631cf5568205"
   integrity sha512-89eSBLJsxNxOERC0Op4vd+0Bqm6wRMqMbFtV3i0/fbaWw/mJ8Q3eBvgX0G4SyrOOLCtbu98HspF8o09MRT+KzQ==
@@ -5034,6 +5035,11 @@ deps-topo-sort@~0.2.1:
     JSONStream "~0.7.1"
     minimist "0.0.5"
     through "~2.3.4"
+
+dequal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-1.0.0.tgz#41c6065e70de738541c82cdbedea5292277a017e"
+  integrity sha512-/Nd1EQbQbI9UbSHrMiKZjFLrXSnU328iQdZKPQf78XQI6C+gutkFUeoHpG5J08Ioa6HeRbRNFpSIclh1xyG0mw==
 
 des.js@^1.0.0:
   version "1.0.0"
@@ -15897,6 +15903,14 @@ urlgrey@^0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/urlgrey/-/urlgrey-0.4.4.tgz#892fe95960805e85519f1cd4389f2cb4cbb7652f"
   integrity sha1-iS/pWWCAXoVRnxzUOJ8stMu3ZS8=
+
+use-deep-compare-effect@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.2.0.tgz#41a52b3dea028c082b57e35050427b482237eb47"
+  integrity sha512-u45BDmcLgXErTR4y18bUW8j7SzrS85JMPSYKAbzPJwTs3W7+Am1L3xwDhwNEbek41qfp7yfh4B2br5hJk4Q+lA==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    dequal "^1.0.0"
 
 use@^3.1.0:
   version "3.1.1"

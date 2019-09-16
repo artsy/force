@@ -37,6 +37,8 @@ registerOrRender = (sale, req, res, next) ->
               res.redirect sale.registrationSuccessUrl()
       else
         # Render the full registration + credit card form
+        # TODO: When the bid + register flow is fully moved to reaction these routes
+        # and templates will need cleanup and templates will need deletion.
         res.render 'registration',
           sale: sale
           monthRange: DateHelpers.getMonthRange()
