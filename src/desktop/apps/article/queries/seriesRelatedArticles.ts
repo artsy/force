@@ -40,8 +40,14 @@ export const seriesRelatedArticlesBody = `
   }
   relatedArticles {
     title
+    thumbnail_image
+    thumbnail_title
+    social_description
+    social_image
+    social_title
     layout
     slug
+    description
     seriesArticle {
       id
     }
