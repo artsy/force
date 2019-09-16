@@ -16,6 +16,7 @@ import {
   isCustomEditorial,
   getCustomEditorialId,
   isVanguardSubArticle,
+  getVanguardSubArticleContent,
 } from "./editorial_features"
 import { slugify } from "underscore.string"
 import {
@@ -67,6 +68,18 @@ export const index = async (req, res, next) => {
       return res.redirect(
         `/series/artsy-vanguard-2019/${slugify(article.title)}`
       )
+    }
+
+    let customMetaContent
+    if (customEditorial === "VANGUARD_2019") {
+      customMetaContent = getVanguardSubArticleContent(req.path, article)
+      // Use subArticle content for meta if not master page
+      if (customMetaContent) {
+        res.locals.customMetaContent = {
+          ...article,
+          ...customMetaContent,
+        }
+      }
     }
 
     if (articleId !== article.slug && !customEditorial) {
