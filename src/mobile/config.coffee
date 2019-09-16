@@ -57,7 +57,7 @@ module.exports =
   SHOW_ANALYTICS_CALLS: false
   STRIPE_PUBLISHABLE_KEY: null
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
-  TRACK_PAGELOAD_PATHS: "home|collect|artist|artwork|show|article|feature|gene|tag|partner|fair|news|new-artwork"
+  TRACK_PAGELOAD_PATHS: null
   VOLLEY_ENDPOINT: null
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
