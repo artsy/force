@@ -470,15 +470,83 @@ describe("Article Routes", () => {
         seriesArticle: {
           id: "5d3defd1373e39001ff00644",
         },
-        title: "Genesis Balenger",
+        title: "Genesis Belanger",
       }
       positronql.mockReturnValue(Promise.resolve({ article: artistArticle }))
 
       routes.index(req, res, next).then(() => {
         expect(res.redirect).toBeCalledWith(
-          "/series/artsy-vanguard-2019/genesis-balenger"
+          "/series/artsy-vanguard-2019/genesis-belanger"
         )
         done()
+      })
+    })
+
+    describe("Custom meta content", () => {
+      it("sets up custom meta for sub-series", done => {
+        const vanguardArticle = {
+          ...article,
+
+          id: "5d2f8bd0cdc74b00208b7e16",
+          relatedArticles: [
+            {
+              title: "Emerging",
+              thumbnail_title: "The Emerging Artists to Know",
+              relatedArticles: [
+                {
+                  title: "Genesis Belanger",
+                  thumbnail_title: "Vanguard 2019: Genesis Belanger",
+                },
+              ],
+            },
+          ],
+        }
+
+        positronql.mockReturnValue(
+          Promise.resolve({ article: vanguardArticle })
+        )
+
+        req.params = { slug: "emerging" }
+        req.path = "/series/artsy-vanguard-2019/emerging"
+        routes.index(req, res, next).then(() => {
+          expect(res.locals.customMetaContent.thumbnail_title).toBe(
+            "The Emerging Artists to Know"
+          )
+          done()
+        })
+      })
+
+      it("sets up custom meta for artist stub", done => {
+        const vanguardArticle = {
+          ...article,
+
+          id: "5d2f8bd0cdc74b00208b7e16",
+          relatedArticles: [
+            {
+              title: "Emerging",
+              thumbnail_title: "The Emerging Artists to Know",
+              relatedArticles: [
+                {
+                  title: "Genesis Belanger",
+                  thumbnail_title: "Vanguard 2019: Genesis Belanger",
+                },
+              ],
+            },
+          ],
+        }
+
+        positronql.mockReturnValue(
+          Promise.resolve({ article: vanguardArticle })
+        )
+
+        req.params = { slug: "genesis-belanger" }
+        req.path = "/series/artsy-vanguard-2019/genesis-belanger"
+        routes.index(req, res, next).then(() => {
+          expect(res.locals.customMetaContent.thumbnail_title).toBe(
+            "Vanguard 2019: Genesis Belanger"
+          )
+          done()
+        })
       })
     })
   })
