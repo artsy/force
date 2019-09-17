@@ -34,28 +34,28 @@ describe 'LinkedAccountsView', ->
       beforeEach ->
         sinon.stub @user, 'isLinkedTo'
           .returns true
-        @view.$('.js-settings-linked-accounts__service__toggle[data-service="twitter"]').click()
+        @view.$('.js-settings-linked-accounts__service__toggle[data-service="facebook"]').click()
 
       afterEach ->
         @user.isLinkedTo.restore()
 
       it 'destroys the authentication', ->
         Backbone.sync.args[0][0].should.equal 'delete'
-        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/authentications/twitter'
+        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/authentications/facebook'
 
       describe 'success', ->
         beforeEach ->
           Backbone.sync.yieldsTo 'success'
-          @view.$('.js-settings-linked-accounts__service__toggle[data-service="twitter"]').click()
+          @view.$('.js-settings-linked-accounts__service__toggle[data-service="facebook"]').click()
 
         it 'sets the correct button state', ->
-          @view.$('.js-settings-linked-accounts__service__toggle[data-service="twitter"]')
-            .data().should.eql service: 'twitter', connected: 'disconnected'
+          @view.$('.js-settings-linked-accounts__service__toggle[data-service="facebook"]')
+            .data().should.eql service: 'facebook', connected: 'disconnected'
 
       describe 'error', ->
         beforeEach ->
           Backbone.sync.yieldsTo 'error', responseJSON: error: 'Something bad.'
-          @view.$('.js-settings-linked-accounts__service__toggle[data-service="twitter"]').click()
+          @view.$('.js-settings-linked-accounts__service__toggle[data-service="facebook"]').click()
 
         it 'renders any errors', ->
           @view.$('.js-form-errors').text().should.equal 'Something bad.'
