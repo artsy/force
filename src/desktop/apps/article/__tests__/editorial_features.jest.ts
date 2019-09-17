@@ -2,6 +2,7 @@ import {
   isCustomEditorial,
   getCustomEditorialId,
   isVanguardSubArticle,
+  getVanguardSubArticleContent,
 } from "../editorial_features"
 import { StandardArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 
@@ -72,6 +73,48 @@ describe("Editorial Features", () => {
       }
       const isSubarticle = isVanguardSubArticle(article)
       expect(isSubarticle).toBeFalsy()
+    })
+  })
+
+  describe("getVanguardSubArticleContent", () => {
+    const article = {
+      ...StandardArticle,
+      relatedArticles: [
+        {
+          title: "Emerging",
+          thumbnail_title: "Emerging Artists to Know",
+          relatedArticles: [
+            {
+              title: "Genesis Belanger",
+              thumbnail_title: "Vanguard 2019: Genesis Belanger",
+            },
+          ],
+        },
+      ],
+    }
+
+    it("returns nothing if path is master series", () => {
+      const subContents = getVanguardSubArticleContent(
+        "series/artsy-vanguard-2019",
+        article
+      )
+      expect(subContents).toBe(undefined)
+    })
+
+    it("returns subArticle data for sub-series if path is not master series", () => {
+      const subContents = getVanguardSubArticleContent(
+        "artsy-vanguard-2019/emerging",
+        article
+      )
+      expect(subContents.title).toBe("Emerging")
+    })
+
+    it("returns subArticle data for artist if path is not master series", () => {
+      const subContents = getVanguardSubArticleContent(
+        "artsy-vanguard-2019/genesis-belanger",
+        article
+      )
+      expect(subContents.title).toBe("Genesis Belanger")
     })
   })
 })

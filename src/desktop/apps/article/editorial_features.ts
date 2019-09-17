@@ -1,4 +1,5 @@
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
+import { slugify } from "underscore.string"
 
 interface CustomArticle {
   name: string
@@ -61,4 +62,29 @@ export const isVanguardSubArticle = (article: ArticleData) => {
     (article.seriesArticle.id === getCustomEditorialId("VANGUARD_2019") ||
       VanguardSubSeries.includes(article.seriesArticle.id))
   )
+}
+
+export const getVanguardSubArticleContent = (
+  path: any,
+  article: ArticleData
+) => {
+  let subArticleContent
+  const subArticleSlug = path.split("artsy-vanguard-2019/").pop()
+  const { relatedArticles } = article
+
+  if (!subArticleSlug.includes("artsy-vanguard-2019")) {
+    relatedArticles &&
+      relatedArticles.forEach(series => {
+        if (subArticleSlug === slugify(series.title)) {
+          subArticleContent = series
+        }
+        series.relatedArticles &&
+          series.relatedArticles.map(artist => {
+            if (subArticleSlug === slugify(artist.title)) {
+              subArticleContent = artist
+            }
+          })
+      })
+  }
+  return subArticleContent
 }
