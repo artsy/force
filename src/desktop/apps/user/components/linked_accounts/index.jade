@@ -2,17 +2,18 @@
   if sd.ERROR
     != sd.ERROR
 
-for service in ['Twitter', 'Facebook']
-  .settings-linked-accounts__service.settings-split
-    .settings-split__left
-      .settings-linked-accounts__service__name
-        = service
+- service = 'Facebook'
 
-    .settings-split__right
-      a.settings-linked-accounts__service__toggle.avant-garde-button-white(
-        class='js-settings-linked-accounts__service__toggle'
-        href= sd.AP[service.toLowerCase() + 'Path']
-        data-service= service.toLowerCase()
-        data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
-      )
-        i( class='icon-#{service.toLowerCase()}' )
+.settings-linked-accounts__service.settings-split
+  .settings-split__left
+    .settings-linked-accounts__service__name
+      = service
+
+  .settings-split__right
+    a.settings-linked-accounts__service__toggle.avant-garde-button-white(
+      class='js-settings-linked-accounts__service__toggle'
+      href= sd.AP[service.toLowerCase() + 'Path']
+      data-service= service.toLowerCase()
+      data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
+    )
+      i( class='icon-#{service.toLowerCase()}' )
