@@ -1,0 +1,2838 @@
+{
+  "data": {
+  "marketingCollections":[
+    {
+      "id":"5bcf4e518ef6ac2e05f0eb97",
+      "slug":"kaws-companions",
+      "title":"KAWS: Companions",
+      "thumbnail":"http://files.artsy.net/images/kaws-companions_thumbnail.png",
+      "__id":"5bcf4e518ef6ac2e05f0eb97"
+    },
+    {
+      "id":"5bcf4e518ef6ac2e05f0eb98",
+      "slug":"collectible-sculptures",
+      "title":"Big Artists, Small Sculptures",
+      "thumbnail":"",
+      "__id":"5bcf4e518ef6ac2e05f0eb98"
+    },
+    {
+      "id":"5bcf4e518ef6ac2e05f0eb99",
+      "slug":"minimalist-prints",
+      "title":"Minimalist Prints",
+      "thumbnail":"",
+      "__id":"5bcf4e518ef6ac2e05f0eb99"
+    },
+    {
+      "id":"5bcf4e518ef6ac2e05f0eb9a",
+      "slug":"contemporary-limited-editions",
+      "title":"Contemporary Limited Editions",
+      "thumbnail":"",
+      "__id":"5bcf4e518ef6ac2e05f0eb9a"
+    },
+    {
+      "id":"5bcf4e518ef6ac2e05f0eb9b",
+      "slug":"street-art-now",
+      "title":"Street Art Now",
+      "thumbnail":"",
+      "__id":"5bcf4e518ef6ac2e05f0eb9b"
+    },
+    {
+      "id":"5bcf4e518ef6ac2e05f0eb9c",
+      "slug":"timeless-modern-prints",
+      "title":"Timeless Modern Prints",
+      "thumbnail":"http://files.artsy.net/images/timelessmodernprints_small.png",
+      "__id":"5bcf4e518ef6ac2e05f0eb9c"
+    }
+  ],
+  "filterArtworks":{
+    "artworks_connection":{
+      "edges":[
+        {
+          "node":{
+            "__id":"QXJ0d29yazplc3RoZXItcnVpei1ob3RoLWk=",
+            "availability":"for sale",
+            "category":"Sculpture",
+            "date":"2017",
+            "href":"/artwork/esther-ruiz-hoth-i",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$550",
+            "price_currency":"USD",
+            "title":"Hoth I",
+            "artists":[
+              {
+                "name":"Esther Ruiz",
+                "__id":"QXJ0aXN0OmVzdGhlci1ydWl6"
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/PjwLtvdk2WTG6LLgFboEqg/larger.jpg",
+              "__id":"5d253c1dfd18410012e03261"
+            },
+            "meta":{
+              "description":"Available for sale from Carvalho Park, Esther Ruiz, Hoth I (2017), Cement, plexiglas, bloodstone + quartz, paint"
+            },
+            "partner":{
+              "name":"Carvalho Park",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/zzxn6fHfFJzjtkMZB3Q5BQ/large.jpg",
+                  "__id":"5cae20828774890cfdc850a8"
+                },
+                "__id":"UHJvZmlsZTpjYXJ2YWxoby1wYXJr"
+              },
+              "locations":[
+                {
+                  "address":"112 Waterbury Street",
+                  "address_2":"",
+                  "city":"Brooklyn",
+                  "state":"NY",
+                  "country":"US",
+                  "postal_code":"11206",
+                  "phone":"718.366.2550",
+                  "__id":"TG9jYXRpb246NWM1MDhiOTMyNWVlZWIwZjI4NzkxMjc1"
+                }
+              ],
+              "__id":"UGFydG5lcjpjYXJ2YWxoby1wYXJr"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpzb2wtbGV3aXR0LXVuaXF1ZS1pbmstZHJhd2luZy1vbi12aW5jZW50LXZhbi1nb2doLWNhcmQtZnJvbS1zcG9sZXRvLWl0YWx5",
+            "availability":"for sale",
+            "category":"Drawing, Collage or other Work on Paper",
+            "date":"1982",
+            "href":"/artwork/sol-lewitt-unique-ink-drawing-on-vincent-van-gogh-card-from-spoleto-italy",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$5,500",
+            "price_currency":"USD",
+            "title":"Unique ink drawing on Vincent Van Gogh card from Spoleto, Italy",
+            "artists":[
+              {
+                "name":"Sol LeWitt",
+                "__id":"QXJ0aXN0OnNvbC1sZXdpdHQ="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/EyeRj7VJngtOMYWr3h_lxg/larger.jpg",
+              "__id":"5d6dd900839a5c001300f5a5"
+            },
+            "meta":{
+              "description":"Available for sale from Alpha 137 Gallery, Sol LeWitt, Unique ink drawing on Vincent Van Gogh card from Spoleto, Italy (1982), Original drawing done on pos…"
+            },
+            "partner":{
+              "name":"Alpha 137 Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/n21VrbfpJCN9EcpCrEZ-nQ/large.jpg",
+                  "__id":"59229d428b0c1467690de37e"
+                },
+                "__id":"UHJvZmlsZTphbHBoYS0xMzctZ2FsbGVyeQ=="
+              },
+              "locations":[
+                {
+                  "address":"Port Authority Project Find Space",
+                  "address_2":"549 Ninth Avenue - Ground Floor Window Display",
+                  "city":"New York City",
+                  "state":"NY",
+                  "country":"US",
+                  "postal_code":"10018",
+                  "phone":"2128656258",
+                  "__id":"TG9jYXRpb246NWQ2MzZlM2M3NzFlZjQwMDBlNGY1MDRi"
+                }
+              ],
+              "__id":"UGFydG5lcjphbHBoYS0xMzctZ2FsbGVyeQ=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazprYXdzLWNodW0tcGluay03",
+            "availability":"for sale",
+            "category":"Sculpture",
+            "date":"2002",
+            "href":"/artwork/kaws-chum-pink-7",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Chum (Pink)",
+            "artists":[
+              {
+                "name":"KAWS",
+                "__id":"QXJ0aXN0Omthd3M="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/deUNgpzagAcddvVGCdDzDw/larger.jpg",
+              "__id":"5d7635e9bece320012159b68"
+            },
+            "meta":{
+              "description":"Available for sale from Digard Auction, KAWS, Chum (Pink) (2002), Painted cast vinyl"
+            },
+            "partner":{
+              "name":"Digard Auction",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpqb2huLWJhbGRlc3NhcmktZ2l2ZS1tZS1hLWItZ2l2ZS1tZS1hbi1hLWRvdC1kb3QtZG90LWFuZC1ldGMtZG90LTIwMDktMg==",
+            "availability":"for sale",
+            "category":"Print",
+            "date":"2009",
+            "href":"/artwork/john-baldessari-give-me-a-b-give-me-an-a-dot-dot-dot-and-etc-dot-2009-2",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Give me a B, give me an A … & etc., 2009",
+            "artists":[
+              {
+                "name":"John Baldessari",
+                "__id":"QXJ0aXN0OmpvaG4tYmFsZGVzc2FyaQ=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/qwJF-Ye5sWrkLIUSQ9lpnQ/larger.jpg",
+              "__id":"5d76d0dc9d1ba30012075c57"
+            },
+            "meta":{
+              "description":"Available for sale from RAW Editions Gallery Auction, John Baldessari, Give me a B, give me an A … & etc., 2009 (2009), 10-part leporello, digital pigment …"
+            },
+            "partner":{
+              "name":"RAW Editions Gallery Auction",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpyYXctZWRpdGlvbnMtZ2FsbGVyeS1hdWN0aW9u"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazphbnNlbC1hZGFtcy1icmlkYWx2ZWlsLWZhbGwteW9zZW1pdGUtMTkyNw==",
+            "availability":"sold",
+            "category":"Photography",
+            "date":"1927",
+            "href":"/artwork/ansel-adams-bridalveil-fall-yosemite-1927",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"$7,500",
+            "price_currency":"USD",
+            "title":"Bridalveil Fall, Yosemite, 1927",
+            "artists":[
+              {
+                "name":"Ansel Adams",
+                "__id":"QXJ0aXN0OmFuc2VsLWFkYW1z"
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/a8ICZIytD2wMLy79FjJjzg/larger.jpg",
+              "__id":"5d70a4fc1d780d00120a63db"
+            },
+            "meta":{
+              "description":"From Seagrave Gallery, Ansel Adams, Bridalveil Fall, Yosemite, 1927 (1927), Silver Gelatin"
+            },
+            "partner":{
+              "name":"Seagrave Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/o96BuGbpfuUhbvsmVWFm8A/square.jpg",
+                  "__id":"5b70f6d68d29884b547e0b53"
+                },
+                "__id":"UHJvZmlsZTpzZWFncmF2ZS1nYWxsZXJ5"
+              },
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpzZWFncmF2ZS1nYWxsZXJ5"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpzZWVuLXB1bmlzaGVy",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2016",
+            "href":"/artwork/seen-punisher",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$14,000",
+            "price_currency":"USD",
+            "title":"Punisher",
+            "artists":[
+              {
+                "name":"SEEN",
+                "__id":"QXJ0aXN0OnNlZW4="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/MK--4uZxx3BPS6ychTsW8A/larger.jpg",
+              "__id":"5d6309ab4d23fb00126a8696"
+            },
+            "meta":{
+              "description":"Available for sale from Dirtypilot.com/Hobbs Gallery, SEEN, Punisher (2016), Aerosol on canvas"
+            },
+            "partner":{
+              "name":"Dirtypilot.com/Hobbs Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/_fYcyKd6R87ifye1VCPnqw/large.jpg",
+                  "__id":"5b1480b3cb4c271664ee87df"
+                },
+                "__id":"UHJvZmlsZTpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ=="
+              },
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpzZWVuLXdpbGRlc3R5bGU=",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2017",
+            "href":"/artwork/seen-wildestyle",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$950",
+            "price_currency":"USD",
+            "title":"Wildestyle",
+            "artists":[
+              {
+                "name":"SEEN",
+                "__id":"QXJ0aXN0OnNlZW4="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/IRTOSKYeNoSq3EGjeHka4w/larger.jpg",
+              "__id":"5d6318394d23fb00126a887f"
+            },
+            "meta":{
+              "description":"Available for sale from Dirtypilot.com/Hobbs Gallery, SEEN, Wildestyle (2017), Aerosol on canvas"
+            },
+            "partner":{
+              "name":"Dirtypilot.com/Hobbs Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/_fYcyKd6R87ifye1VCPnqw/large.jpg",
+                  "__id":"5b1480b3cb4c271664ee87df"
+                },
+                "__id":"UHJvZmlsZTpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ=="
+              },
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpwdXJ2aXMteW91bmctdW50aXRsZWQtNzk=",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"ca. 2000",
+            "href":"/artwork/purvis-young-untitled-79",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$25,000",
+            "price_currency":"USD",
+            "title":"UNTITLED",
+            "artists":[
+              {
+                "name":"Purvis Young",
+                "__id":"QXJ0aXN0OnB1cnZpcy15b3VuZw=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/dJyzMyeP-jMjHRDLOiC6_w/larger.jpg",
+              "__id":"5d4dafab8611870012ccdf49"
+            },
+            "meta":{
+              "description":"Available for sale from Gallery Art, Purvis Young, UNTITLED (ca. 2000), MIXED MEDIA ON WOOD"
+            },
+            "partner":{
+              "name":"Gallery Art",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/k1HwMcBf4mhd9rm2cMfTWA/large.jpg",
+                  "__id":"59614f5fc9dc246ea0c9a636"
+                },
+                "__id":"UHJvZmlsZTpnYWxsZXJ5LWFydA=="
+              },
+              "locations":[
+                {
+                  "address":"20633 Biscayne Blvd",
+                  "address_2":"",
+                  "city":"Aventura",
+                  "state":"FL",
+                  "country":"US",
+                  "postal_code":"33180",
+                  "phone":"3059326166",
+                  "__id":"TG9jYXRpb246NTk1NTdjYjYxMzliMjEwZTg4OGJlM2Mw"
+                }
+              ],
+              "__id":"UGFydG5lcjpnYWxsZXJ5LWFydA=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazprYXdzLWJlYXJicmljay0xMDAwLXBlcmNlbnQtZ3JleQ==",
+            "availability":"for sale",
+            "category":"Sculpture",
+            "date":"2002",
+            "href":"/artwork/kaws-bearbrick-1000-percent-grey",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Bearbrick 1000% (Grey)",
+            "artists":[
+              {
+                "name":"KAWS",
+                "__id":"QXJ0aXN0Omthd3M="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/FXP5bIQN-gv8T3Nvnub1vw/larger.jpg",
+              "__id":"5d7635f0f160ef0011418fa4"
+            },
+            "meta":{
+              "description":"Available for sale from Digard Auction, KAWS, Bearbrick 1000% (Grey) (2002), Painted cast vinyl"
+            },
+            "partner":{
+              "name":"Digard Auction",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazprYXRoZXJpbmUtYmVybmhhcmR0LWJhY29uLXBsdXMtZWdncw==",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2014",
+            "href":"/artwork/katherine-bernhardt-bacon-plus-eggs",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Bacon + Eggs",
+            "artists":[
+              {
+                "name":"Katherine Bernhardt",
+                "__id":"QXJ0aXN0OmthdGhlcmluZS1iZXJuaGFyZHQ="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/0pGzAsKpQFo7QudzeRNqzA/larger.jpg",
+              "__id":"5d680e1035a5ac00113ee276"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Katherine Bernhardt, Bacon + Eggs (2014), Acrylic and spray paint on canvas"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazptYXJrLWtvc3RhYmktdHdvLWNhdml0eS1maWdodGVycw==",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"1992",
+            "href":"/artwork/mark-kostabi-two-cavity-fighters",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$3,000",
+            "price_currency":"USD",
+            "title":"TWO CAVITY FIGHTERS",
+            "artists":[
+              {
+                "name":"Mark Kostabi",
+                "__id":"QXJ0aXN0Om1hcmsta29zdGFiaQ=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/BT0RkejRJrgia7yYQ8KS_Q/larger.jpg",
+              "__id":"5d65a55358e68f000ed83a16"
+            },
+            "meta":{
+              "description":"Available for sale from Gallery Art, Mark Kostabi, TWO CAVITY FIGHTERS (1992), MIXED MEDIA ON PAPER"
+            },
+            "partner":{
+              "name":"Gallery Art",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/k1HwMcBf4mhd9rm2cMfTWA/large.jpg",
+                  "__id":"59614f5fc9dc246ea0c9a636"
+                },
+                "__id":"UHJvZmlsZTpnYWxsZXJ5LWFydA=="
+              },
+              "locations":[
+                {
+                  "address":"20633 Biscayne Blvd",
+                  "address_2":"",
+                  "city":"Aventura",
+                  "state":"FL",
+                  "country":"US",
+                  "postal_code":"33180",
+                  "phone":"3059326166",
+                  "__id":"TG9jYXRpb246NTk1NTdjYjYxMzliMjEwZTg4OGJlM2Mw"
+                }
+              ],
+              "__id":"UGFydG5lcjpnYWxsZXJ5LWFydA=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpqYWNxdWVsaW5lLWh1bXBocmllcy11bnRpdGxlZC0yNg==",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"1988",
+            "href":"/artwork/jacqueline-humphries-untitled-26",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Untitled",
+            "artists":[
+              {
+                "name":"Jacqueline Humphries",
+                "__id":"QXJ0aXN0OmphY3F1ZWxpbmUtaHVtcGhyaWVz"
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/ExELwG5CimUy9cx1AYHrCA/larger.jpg",
+              "__id":"5d680e06c4b393000d83125e"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Jacqueline Humphries, Untitled (1988), Oil on linen"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpzZWVuLW1hZC10cmFuc2l0LTE=",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2009",
+            "href":"/artwork/seen-mad-transit-1",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$2,700",
+            "price_currency":"USD",
+            "title":"Mad Transit",
+            "artists":[
+              {
+                "name":"SEEN",
+                "__id":"QXJ0aXN0OnNlZW4="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/vyJd_0Pp5CKH0ZslY55BHQ/larger.jpg",
+              "__id":"5d630b4135a964001131ecc9"
+            },
+            "meta":{
+              "description":"Available for sale from Dirtypilot.com/Hobbs Gallery, SEEN, Mad Transit (2009), Aerosol on linen"
+            },
+            "partner":{
+              "name":"Dirtypilot.com/Hobbs Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/_fYcyKd6R87ifye1VCPnqw/large.jpg",
+                  "__id":"5b1480b3cb4c271664ee87df"
+                },
+                "__id":"UHJvZmlsZTpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ=="
+              },
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpicmlhbi1yb2NoZWZvcnQtZGFyd2lucy1oZWxsLWNyYXRlcg==",
+            "availability":"for sale",
+            "category":"Sculpture",
+            "date":"2018",
+            "href":"/artwork/brian-rochefort-darwins-hell-crater",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"$8,000",
+            "price_currency":"USD",
+            "title":"Darwin's Hell (Crater)",
+            "artists":[
+              {
+                "name":"Brian Rochefort",
+                "__id":"QXJ0aXN0OmJyaWFuLXJvY2hlZm9ydA=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/i_K31sGw3JzgNvVLu82TsQ/larger.jpg",
+              "__id":"5d5efb270af583001519aaa0"
+            },
+            "meta":{
+              "description":"Available for sale from Edward Cella Art and Architecture, Brian Rochefort, Darwin's Hell (Crater) (2018), Stoneware, porcelain and glaze"
+            },
+            "partner":{
+              "name":"Edward Cella Art and Architecture",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/_cbPoY3YvK2Q3awB8zV7tg/large.jpg",
+                  "__id":"5d336e1f1c5524000e845ca4"
+                },
+                "__id":"UHJvZmlsZTplZHdhcmQtY2VsbGEtYXJ0LWFuZC1hcmNoaXRlY3R1cmU="
+              },
+              "locations":[
+                {
+                  "address":"2754 S La Cienega Blvd",
+                  "address_2":"",
+                  "city":"Los Angeles",
+                  "state":"CA",
+                  "country":"US",
+                  "postal_code":"90034",
+                  "phone":"323-525-0053",
+                  "__id":"TG9jYXRpb246NTI4ZTg1MWJiMjAyYTNiOGM1MDAwMGUw"
+                }
+              ],
+              "__id":"UGFydG5lcjplZHdhcmQtY2VsbGEtYXJ0LWFuZC1hcmNoaXRlY3R1cmU="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpkYW1pZW4taGlyc3QtY2FmZS1yb3lhbC1oNS03LTg=",
+            "availability":"for sale",
+            "category":"Print",
+            "date":"2018",
+            "href":"/artwork/damien-hirst-cafe-royal-h5-7-8",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Cafe Royal H5-7",
+            "artists":[
+              {
+                "name":"Damien Hirst",
+                "__id":"QXJ0aXN0OmRhbWllbi1oaXJzdA=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/20-_-b3mbfFUO8oS7rJt1g/larger.jpg",
+              "__id":"5d778a0e0c6462000fc7d9b1"
+            },
+            "meta":{
+              "description":"Available for sale from Vogtle Contemporary , Damien Hirst, Cafe Royal H5-7 (2018), Diasec-mounted Giclée print on aluminium panel"
+            },
+            "partner":{
+              "name":"Vogtle Contemporary",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/eJlVBLUiYacHqN8Y5wDnfQ/untouched-png.png",
+                  "__id":"59d5e8f6139b2155ae44dc4b"
+                },
+                "__id":"UHJvZmlsZTp2b2d0bGUtY29udGVtcG9yYXJ5"
+              },
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjp2b2d0bGUtY29udGVtcG9yYXJ5"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpyb2JlcnQtbWFycy1pLWxpdmUtZm9yLXRoYXQtbG9vaw==",
+            "availability":"for sale",
+            "category":"Mixed Media",
+            "date":"2018",
+            "href":"/artwork/robert-mars-i-live-for-that-look",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$11,900",
+            "price_currency":"USD",
+            "title":"I Live For That Look",
+            "artists":[
+              {
+                "name":"Robert Mars",
+                "__id":"QXJ0aXN0OnJvYmVydC1tYXJz"
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/SPw-uIufeCqZeaIF4N61QA/larger.jpg",
+              "__id":"5d3f394fcbfbb5000e5b088b"
+            },
+            "meta":{
+              "description":"Available for sale from Arton Contemporary, Robert Mars, I Live For That Look (2018), Resin, Wood Panel, Mixed Media"
+            },
+            "partner":{
+              "name":"Arton Contemporary",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/pykRqO1w6iZkV9IYU7Uglw/large.jpg",
+                  "__id":"5cf03b66e72b28467aac5e2c"
+                },
+                "__id":"UHJvZmlsZTphcnRvbi1jb250ZW1wb3Jhcnk="
+              },
+              "locations":[
+                {
+                  "address":"675 MADISON AVENUE",
+                  "address_2":"PENTHOUSE, 5th FL",
+                  "city":"New York",
+                  "state":"NY",
+                  "country":"US",
+                  "postal_code":"10065",
+                  "phone":"212-335-0062",
+                  "__id":"TG9jYXRpb246NWJmYzhlNGMzODU0MDI2ZTY0MzY2NWY4"
+                }
+              ],
+              "__id":"UGFydG5lcjphcnRvbi1jb250ZW1wb3Jhcnk="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpzYWx2YWRvci1kYWxpLXRoZS1tYXJyaWFnZS1vZi1yb21lby1hbmQtanVsaWV0LWJ5LWRlYXRoLTE4",
+            "availability":"for sale",
+            "category":"Mixed Media",
+            "date":"ca. 1967",
+            "href":"/artwork/salvador-dali-the-marriage-of-romeo-and-juliet-by-death-18",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"$155,000",
+            "price_currency":"USD",
+            "title":"The Marriage of Romeo & Juliet by Death",
+            "artists":[
+              {
+                "name":"Salvador Dalí",
+                "__id":"QXJ0aXN0OnNhbHZhZG9yLWRhbGk="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/2EtjGsTpQLHS9LvKoNz0vg/larger.jpg",
+              "__id":"5d7156773885e70012bc4c44"
+            },
+            "meta":{
+              "description":"Available for sale from Robin Rile Fine Art, Salvador Dalí, The Marriage of Romeo & Juliet by Death (ca. 1967), Gouache, watercolor and felt pen on paper"
+            },
+            "partner":{
+              "name":"Robin Rile Fine Art",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/RAxqwScXCX-i2kUy9-DKLg/untouched-png.png",
+                  "__id":"55830bd872616970d4000077"
+                },
+                "__id":"UHJvZmlsZTpyb2Jpbi1yaWxlLWZpbmUtYXJ0"
+              },
+              "locations":[
+                {
+                  "address":"Coral Gables Country Club",
+                  "address_2":"",
+                  "city":"Miami",
+                  "state":"",
+                  "country":"US",
+                  "postal_code":"33133",
+                  "phone":null,
+                  "__id":"TG9jYXRpb246NTU4MmQ2YTc3MjYxNjk3MGNkMDAwMDJm"
+                }
+              ],
+              "__id":"UGFydG5lcjpyb2Jpbi1yaWxlLWZpbmUtYXJ0"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpiYW5rc3ktZGktZmFjZWQtdGVubmVycy0xMC1nYnAtbm90ZQ==",
+            "availability":"for sale",
+            "category":"Print",
+            "date":"",
+            "href":"/artwork/banksy-di-faced-tenners-10-gbp-note",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Di-Faced Tenners, 10 GBP,note",
+            "artists":[
+              {
+                "name":"Banksy",
+                "__id":"QXJ0aXN0OmJhbmtzeQ=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/8Z50rOUvahq3RqNY1pufhQ/larger.jpg",
+              "__id":"5d7635e39866af0012c98ff5"
+            },
+            "meta":{
+              "description":"Available for sale from Digard Auction, Banksy, Di-Faced Tenners, 10 GBP,note, Eight banknote offset lithograph in colors"
+            },
+            "partner":{
+              "name":"Digard Auction",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpzaGFyYS1odWdoZXMtcmFtcA==",
+            "availability":"for sale",
+            "category":"Drawing, Collage or other Work on Paper",
+            "date":"2008",
+            "href":"/artwork/shara-hughes-ramp",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Ramp",
+            "artists":[
+              {
+                "name":"Shara Hughes",
+                "__id":"QXJ0aXN0OnNoYXJhLWh1Z2hlcw=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/6KF3kdxd5caxK1jSzjcAxw/larger.jpg",
+              "__id":"5d680e171e4ff6000e1e722e"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Shara Hughes, Ramp (2008), Mixed media on paper"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazphZnRlci1tYXJjZWwtZHVjaGFtcC1yb3RvcmVsaWVmLTE5MzUtMTk2NQ==",
+            "availability":"for sale",
+            "category":"Mixed Media",
+            "date":"",
+            "href":"/artwork/after-marcel-duchamp-rotorelief-1935-1965",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Rotorelief, 1935 (1965)",
+            "artists":[
+              {
+                "name":"After Marcel Duchamp",
+                "__id":"QXJ0aXN0OmFmdGVyLW1hcmNlbC1kdWNoYW1w"
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/bhsRiKf6RhNe-p_6KHGQmw/larger.jpg",
+              "__id":"5d78eb6356373b000e05d608"
+            },
+            "meta":{
+              "description":"Available for sale from Bruun Rasmussen, After Marcel Duchamp, Rotorelief, 1935 (1965), Offset in colours cardboard rotating disk (printed in 1953 and publ…"
+            },
+            "partner":{
+              "name":"Bruun Rasmussen",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpicnV1bi1yYXNtdXNzZW4="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpwYXVsLXJlYmV5cm9sbGUtcG9ydHJhaXQtZGhvbW1lLWFzc2lz",
+            "availability":"not for sale",
+            "category":"Painting",
+            "date":"1950",
+            "href":"/artwork/paul-rebeyrolle-portrait-dhomme-assis",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Portrait d'homme assis.",
+            "artists":[
+              {
+                "name":"Paul Rebeyrolle",
+                "__id":"QXJ0aXN0OnBhdWwtcmViZXlyb2xsZQ=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/x5qJyDIB4S_EXhjzbS7eoA/larger.jpg",
+              "__id":"5d716c5023b14f000d0ee80e"
+            },
+            "meta":{
+              "description":"From Swann Auction Galleries, Paul Rebeyrolle, Portrait d'homme assis. (1950), Oil on canvas"
+            },
+            "partner":{
+              "name":"Swann Auction Galleries",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpzd2Fubi1hdWN0aW9uLWdhbGxlcmllcw=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazp5YXlvaS1rdXNhbWEtZW1icnlv",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"1953",
+            "href":"/artwork/yayoi-kusama-embryo",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Embryo",
+            "artists":[
+              {
+                "name":"Yayoi Kusama",
+                "__id":"QXJ0aXN0OnlheW9pLWt1c2FtYQ=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/agCJfrwr_bOyiI_L3lvv7Q/larger.jpg",
+              "__id":"5d680e154ed4d7000e83c79a"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Yayoi Kusama, Embryo (1953), Gouache, pastel and ink on paper"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpmcmVkcmlrLXZhZXJzbGV2LXVudGl0bGVkLWRyb2Jhay1rdW5zdGZvcmVuaW5nLW51bWJlci0xMQ==",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2013",
+            "href":"/artwork/fredrik-vaerslev-untitled-drobak-kunstforening-number-11",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Untitled (Drøbak Kunstforening #11)",
+            "artists":[
+              {
+                "name":"Fredrik Værslev",
+                "__id":"QXJ0aXN0OmZyZWRyaWstdmFlcnNsZXY="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/S7nHinGPhKCMBzJUHfa5kw/larger.jpg",
+              "__id":"5d680def029767000fd42b04"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Fredrik Værslev, Untitled (Drøbak Kunstforening #11) (2013), Acrylic on canvas"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazphYXJvbi1nYXJiZXItbWFpa292c2thLXlldC10by1iZS10aXRsZWQtbnVtYmVyLTY4",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2013",
+            "href":"/artwork/aaron-garber-maikovska-yet-to-be-titled-number-68",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"Yet-to-be-titled #68",
+            "artists":[
+              {
+                "name":"Aaron Garber-Maikovska",
+                "__id":"QXJ0aXN0OmFhcm9uLWdhcmJlci1tYWlrb3Zza2E="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/E-jhtdJ3W9AEJLpJ0uLbRw/larger.jpg",
+              "__id":"5d680e1958e68f0012c5653c"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Aaron Garber-Maikovska, Yet-to-be-titled #68 (2013), Ink and acrylic on archival Gatorboard, in artist's frame"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpsYWRkaWUtam9obi1kaWxsLXVudGl0bGVkLWZsb3JhbC1saWdodC10cmFw",
+            "availability":"for sale",
+            "category":"Sculpture",
+            "date":"2019",
+            "href":"/artwork/laddie-john-dill-untitled-floral-light-trap",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$18,000",
+            "price_currency":"USD",
+            "title":"Untitled Floral Light Trap",
+            "artists":[
+              {
+                "name":"Laddie John Dill",
+                "__id":"QXJ0aXN0OmxhZGRpZS1qb2huLWRpbGw="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/QF-F9UYfBOGFZNdh1EuUkQ/larger.jpg",
+              "__id":"5d2f7080300e2b00115d1cd7"
+            },
+            "meta":{
+              "description":"Available for sale from Timothy Yarger Fine Art, Laddie John Dill, Untitled Floral Light Trap (2019), Welded & Polished 6061 T6 Aircraft Aluminum"
+            },
+            "partner":{
+              "name":"Timothy Yarger Fine Art",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/oy9FlgT6Efx5QoqH0bArRQ/untouched-png.png",
+                  "__id":"54d51886726169545dec0100"
+                },
+                "__id":"UHJvZmlsZTp0aW1vdGh5LXlhcmdlci1maW5lLWFydA=="
+              },
+              "locations":[
+                {
+                  "address":"468 N Camden Drive",
+                  "address_2":"Suite 200",
+                  "city":"Beverly Hills",
+                  "state":"CA",
+                  "country":"US",
+                  "postal_code":"90210",
+                  "phone":"310-278-4400",
+                  "__id":"TG9jYXRpb246NTRkNTE4NjA3MjYxNjkyYTY5ZDUwMTAw"
+                }
+              ],
+              "__id":"UGFydG5lcjp0aW1vdGh5LXlhcmdlci1maW5lLWFydA=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpsYXVyZW4tbHVsb2ZmLWwtc2hhcGVkLWZpZ3VyZQ==",
+            "availability":"for sale",
+            "category":"Mixed Media",
+            "date":"2014",
+            "href":"/artwork/lauren-luloff-l-shaped-figure",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"L Shaped Figure",
+            "artists":[
+              {
+                "name":"Lauren Luloff",
+                "__id":"QXJ0aXN0OmxhdXJlbi1sdWxvZmY="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/KexeXqrmVbuN47jh_BzrjA/larger.jpg",
+              "__id":"5d7926e5ffdd01001213779f"
+            },
+            "meta":{
+              "description":"Available for sale from Rema Hort Mann Foundation Benefit Auction, Lauren Luloff, L Shaped Figure (2014), Oil, bleached bedsheets and fabric, rabbit skin g…"
+            },
+            "partner":{
+              "name":"Rema Hort Mann Foundation Benefit Auction",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpyZW1hLWhvcnQtbWFubi1mb3VuZGF0aW9uLWJlbmVmaXQtYXVjdGlvbg=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpqb2huLWJhbGRlc3NhcmktdGhlLW92ZXJsYXAtc2VyaWVzLWFybS1hbmQtYmxpbmRmb2xkZWQtbWFuLXNsYXNoLXN0YWlycw==",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2001",
+            "href":"/artwork/john-baldessari-the-overlap-series-arm-and-blindfolded-man-slash-stairs",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"The Overlap Series: Arm and Blindfolded Man/Stairs",
+            "artists":[
+              {
+                "name":"John Baldessari",
+                "__id":"QXJ0aXN0OmpvaG4tYmFsZGVzc2FyaQ=="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/NaQauz5EVGmuMKIcWMESzQ/larger.jpg",
+              "__id":"5d76b88d0f7b7c000d790a9c"
+            },
+            "meta":{
+              "description":"Available for sale from Marian Goodman Gallery, John Baldessari, The Overlap Series: Arm and Blindfolded Man/Stairs (2001), Digital photographic prints wit…"
+            },
+            "partner":{
+              "name":"Marian Goodman Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/Oj3FA3k11Yc_VlJosGYy5Q/untouched-png.png",
+                  "__id":"53c402047261692673521700"
+                },
+                "__id":"UHJvZmlsZTptYXJpYW4tZ29vZG1hbi1nYWxsZXJ5"
+              },
+              "locations":[
+                {
+                  "address":"24 W 57th St ",
+                  "address_2":"",
+                  "city":"New York",
+                  "state":"New York",
+                  "country":"",
+                  "postal_code":"10019",
+                  "phone":"(212) 977-7160",
+                  "__id":"TG9jYXRpb246NTFkYTE5ZGYyNzViMjQ5MWI3MDAwMDNj"
+                }
+              ],
+              "__id":"UGFydG5lcjptYXJpYW4tZ29vZG1hbi1nYWxsZXJ5"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazpoYWRpZWgtc2hhZmllLTE0NjM1LXBhZ2Vz",
+            "availability":"for sale",
+            "category":"Painting",
+            "date":"2010",
+            "href":"/artwork/hadieh-shafie-14635-pages",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"14635 Pages",
+            "artists":[
+              {
+                "name":"Hadieh Shafie",
+                "__id":"QXJ0aXN0OmhhZGllaC1zaGFmaWU="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/wYStvX0mb1_3XPwABxebnQ/larger.jpg",
+              "__id":"5d680e0a2652d7000e4dcd91"
+            },
+            "meta":{
+              "description":"Available for sale from Phillips, Hadieh Shafie, 14635 Pages (2010), Acrylic and ink on paper with printed and hand-written Farsi text, in artist's frame"
+            },
+            "partner":{
+              "name":"Phillips",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpwaGlsbGlwcy0x"
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazprYXdzLWpwcC1ibGFjay04",
+            "availability":"for sale",
+            "category":"Sculpture",
+            "date":"2008",
+            "href":"/artwork/kaws-jpp-black-8",
+            "is_acquireable":false,
+            "is_price_range":false,
+            "price":"",
+            "price_currency":"USD",
+            "title":"JPP (Black)",
+            "artists":[
+              {
+                "name":"KAWS",
+                "__id":"QXJ0aXN0Omthd3M="
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/KWrufXceFITaf01pLgthWw/larger.jpg",
+              "__id":"5d7635ed0398f60012df27b1"
+            },
+            "meta":{
+              "description":"Available for sale from Digard Auction, KAWS, JPP (Black) (2008), Painted cast vinyl"
+            },
+            "partner":{
+              "name":"Digard Auction",
+              "type":"Auction House",
+              "profile":null,
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg=="
+            }
+          }
+        },
+        {
+          "node":{
+            "__id":"QXJ0d29yazphbnNlbC1hZGFtcy10ZWtsYW5pa2Etcml2ZXItbW91bnQtbWNraW5sZXktbnAtYWstMTk0Nw==",
+            "availability":"for sale",
+            "category":"Photography",
+            "date":"1947",
+            "href":"/artwork/ansel-adams-teklanika-river-mount-mckinley-np-ak-1947",
+            "is_acquireable":true,
+            "is_price_range":false,
+            "price":"$6,500",
+            "price_currency":"USD",
+            "title":"Teklanika River, Mount McKinley NP, AK, 1947",
+            "artists":[
+              {
+                "name":"Ansel Adams",
+                "__id":"QXJ0aXN0OmFuc2VsLWFkYW1z"
+              }
+            ],
+            "image":{
+              "url":"https://d32dm0rphc51dk.cloudfront.net/MsMJu7G9Rr7krL66Y679Rw/larger.jpg",
+              "__id":"5d709d338816ac001382a8ef"
+            },
+            "meta":{
+              "description":"Available for sale from Seagrave Gallery, Ansel Adams, Teklanika River, Mount McKinley NP, AK, 1947 (1947), Silver Gelatin"
+            },
+            "partner":{
+              "name":"Seagrave Gallery",
+              "type":"Gallery",
+              "profile":{
+                "icon":{
+                  "url":"https://d32dm0rphc51dk.cloudfront.net/o96BuGbpfuUhbvsmVWFm8A/square.jpg",
+                  "__id":"5b70f6d68d29884b547e0b53"
+                },
+                "__id":"UHJvZmlsZTpzZWFncmF2ZS1nYWxsZXJ5"
+              },
+              "locations":[
+
+              ],
+              "__id":"UGFydG5lcjpzZWFncmF2ZS1nYWxsZXJ5"
+            }
+          }
+        }
+      ]
+    },
+    "__id":"RmlsdGVyQXJ0d29ya3M6eyJhZ2dyZWdhdGlvbnMiOlsidG90YWwiXSwic29ydCI6Ii1kZWNheWVkX21lcmNoIn0="
+  },
+  "viewer":{
+    "filtered_artworks":{
+      "__id":"RmlsdGVyQXJ0d29ya3M6eyJhZ2dyZWdhdGlvbnMiOlsidG90YWwiXSwic29ydCI6Ii1kZWNheWVkX21lcmNoIn0=",
+      "artworks":{
+        "pageInfo":{
+          "hasNextPage":true,
+          "endCursor":"YXJyYXljb25uZWN0aW9uOjI5"
+        },
+        "pageCursors":{
+          "around":[
+            {
+              "cursor":"YXJyYXljb25uZWN0aW9uOi0x",
+              "page":1,
+              "isCurrent":true
+            },
+            {
+              "cursor":"YXJyYXljb25uZWN0aW9uOjI5",
+              "page":2,
+              "isCurrent":false
+            },
+            {
+              "cursor":"YXJyYXljb25uZWN0aW9uOjU5",
+              "page":3,
+              "isCurrent":false
+            },
+            {
+              "cursor":"YXJyYXljb25uZWN0aW9uOjg5",
+              "page":4,
+              "isCurrent":false
+            }
+          ],
+          "first":null,
+          "last":{
+            "cursor":"YXJyYXljb25uZWN0aW9uOjI5Njk=",
+            "page":100,
+            "isCurrent":false
+          },
+          "previous":null
+        },
+        "edges":[
+          {
+            "node":{
+              "__id":"QXJ0d29yazplc3RoZXItcnVpei1ob3RoLWk=",
+              "id":"esther-ruiz-hoth-i",
+              "href":"/artwork/esther-ruiz-hoth-i",
+              "image":{
+                "aspect_ratio":0.67,
+                "__id":"5d253c1dfd18410012e03261",
+                "placeholder":"150%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/PjwLtvdk2WTG6LLgFboEqg/large.jpg"
+              },
+              "_id":"5d253c1dfc44c30011be2cbc",
+              "title":"Hoth I",
+              "image_title":"Esther Ruiz, ‘Hoth I’, 2017",
+              "date":"2017",
+              "sale_message":"$550",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmVzdGhlci1ydWl6",
+                  "href":"/artist/esther-ruiz",
+                  "name":"Esther Ruiz"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Carvalho Park",
+                "href":"/carvalho-park",
+                "__id":"UGFydG5lcjpjYXJ2YWxoby1wYXJr",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpzb2wtbGV3aXR0LXVuaXF1ZS1pbmstZHJhd2luZy1vbi12aW5jZW50LXZhbi1nb2doLWNhcmQtZnJvbS1zcG9sZXRvLWl0YWx5",
+              "id":"sol-lewitt-unique-ink-drawing-on-vincent-van-gogh-card-from-spoleto-italy",
+              "href":"/artwork/sol-lewitt-unique-ink-drawing-on-vincent-van-gogh-card-from-spoleto-italy",
+              "image":{
+                "aspect_ratio":1.3,
+                "__id":"5d6dd900839a5c001300f5a5",
+                "placeholder":"76.86318131256952%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/EyeRj7VJngtOMYWr3h_lxg/large.jpg"
+              },
+              "_id":"5d63a3cf35a9640011320436",
+              "title":"Unique ink drawing on Vincent Van Gogh card from Spoleto, Italy",
+              "image_title":"Sol LeWitt, ‘Unique ink drawing on Vincent Van Gogh card from Spoleto, Italy’, 1982",
+              "date":"1982",
+              "sale_message":"$5,500",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnNvbC1sZXdpdHQ=",
+                  "href":"/artist/sol-lewitt",
+                  "name":"Sol LeWitt"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Alpha 137 Gallery",
+                "href":"/alpha-137-gallery",
+                "__id":"UGFydG5lcjphbHBoYS0xMzctZ2FsbGVyeQ==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":true
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazprYXdzLWNodW0tcGluay03",
+              "id":"kaws-chum-pink-7",
+              "href":"/artwork/kaws-chum-pink-7",
+              "image":{
+                "aspect_ratio":0.65,
+                "__id":"5d7635e9bece320012159b68",
+                "placeholder":"152.9449978345604%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/deUNgpzagAcddvVGCdDzDw/large.jpg"
+              },
+              "_id":"5d7635e89d1ba3001207394c",
+              "title":"Chum (Pink)",
+              "image_title":"KAWS, ‘Chum (Pink)’, 2002",
+              "date":"2002",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0Omthd3M=",
+                  "href":"/artist/kaws",
+                  "name":"KAWS"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Digard Auction",
+                "href":"/auction/digard-auctions",
+                "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg==",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpkaWdhcmQtYXVjdGlvbi1lZGl0aW9ucy01",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":3
+                },
+                "highest_bid":{
+                  "display":"€2,500",
+                  "__id":"5d83e55d50dd70000aea6d0b"
+                },
+                "opening_bid":{
+                  "display":"€2,000"
+                },
+                "__id":"U2FsZUFydHdvcms6a2F3cy1jaHVtLXBpbmstNw=="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpqb2huLWJhbGRlc3NhcmktZ2l2ZS1tZS1hLWItZ2l2ZS1tZS1hbi1hLWRvdC1kb3QtZG90LWFuZC1ldGMtZG90LTIwMDktMg==",
+              "id":"john-baldessari-give-me-a-b-give-me-an-a-dot-dot-dot-and-etc-dot-2009-2",
+              "href":"/artwork/john-baldessari-give-me-a-b-give-me-an-a-dot-dot-dot-and-etc-dot-2009-2",
+              "image":{
+                "aspect_ratio":7.66,
+                "__id":"5d76d0dc9d1ba30012075c57",
+                "placeholder":"13.05079559363525%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/qwJF-Ye5sWrkLIUSQ9lpnQ/large.jpg"
+              },
+              "_id":"5d76d0dc71b1de000d9146bf",
+              "title":"Give me a B, give me an A … & etc., 2009",
+              "image_title":"John Baldessari, ‘Give me a B, give me an A … & etc., 2009’, 2009",
+              "date":"2009",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmpvaG4tYmFsZGVzc2FyaQ==",
+                  "href":"/artist/john-baldessari",
+                  "name":"John Baldessari"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"RAW Editions Gallery Auction",
+                "href":"/auction/raw-editions-gallery-auctions",
+                "__id":"UGFydG5lcjpyYXctZWRpdGlvbnMtZ2FsbGVyeS1hdWN0aW9u",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpyYXctZWRpdGlvbnMtdGhlLWVkaXQtdmk=",
+                "is_live_open":false,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"ends in 4h"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"£1,400"
+                },
+                "__id":"U2FsZUFydHdvcms6am9obi1iYWxkZXNzYXJpLWdpdmUtbWUtYS1iLWdpdmUtbWUtYW4tYS1kb3QtZG90LWRvdC1hbmQtZXRjLWRvdC0yMDA5LTI="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazphbnNlbC1hZGFtcy1icmlkYWx2ZWlsLWZhbGwteW9zZW1pdGUtMTkyNw==",
+              "id":"ansel-adams-bridalveil-fall-yosemite-1927",
+              "href":"/artwork/ansel-adams-bridalveil-fall-yosemite-1927",
+              "image":{
+                "aspect_ratio":0.77,
+                "__id":"5d70a4fc1d780d00120a63db",
+                "placeholder":"130.42218543046357%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/a8ICZIytD2wMLy79FjJjzg/large.jpg"
+              },
+              "_id":"5d70a4fb8816ac001382aa34",
+              "title":"Bridalveil Fall, Yosemite, 1927",
+              "image_title":"Ansel Adams, ‘Bridalveil Fall, Yosemite, 1927’, 1927",
+              "date":"1927",
+              "sale_message":"Sold",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmFuc2VsLWFkYW1z",
+                  "href":"/artist/ansel-adams",
+                  "name":"Ansel Adams"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Seagrave Gallery",
+                "href":"/seagrave-gallery",
+                "__id":"UGFydG5lcjpzZWFncmF2ZS1nYWxsZXJ5",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpzZWVuLXB1bmlzaGVy",
+              "id":"seen-punisher",
+              "href":"/artwork/seen-punisher",
+              "image":{
+                "aspect_ratio":1,
+                "__id":"5d6309ab4d23fb00126a8696",
+                "placeholder":"100.33519553072625%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/MK--4uZxx3BPS6ychTsW8A/large.jpg"
+              },
+              "_id":"5d6309aae96f3100137fc01b",
+              "title":"Punisher",
+              "image_title":"SEEN, ‘Punisher’, 2016",
+              "date":"2016",
+              "sale_message":"$14,000",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnNlZW4=",
+                  "href":"/artist/seen",
+                  "name":"SEEN"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Dirtypilot.com/Hobbs Gallery",
+                "href":"/dirtypilot-dot-com-slash-hobbs-gallery",
+                "__id":"UGFydG5lcjpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":true
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpzZWVuLXdpbGRlc3R5bGU=",
+              "id":"seen-wildestyle",
+              "href":"/artwork/seen-wildestyle",
+              "image":{
+                "aspect_ratio":1.24,
+                "__id":"5d6318394d23fb00126a887f",
+                "placeholder":"80.82103912764592%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/IRTOSKYeNoSq3EGjeHka4w/large.jpg"
+              },
+              "_id":"5d631838196e100011ff1ec0",
+              "title":"Wildestyle",
+              "image_title":"SEEN, ‘Wildestyle’, 2017",
+              "date":"2017",
+              "sale_message":"$950",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnNlZW4=",
+                  "href":"/artist/seen",
+                  "name":"SEEN"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Dirtypilot.com/Hobbs Gallery",
+                "href":"/dirtypilot-dot-com-slash-hobbs-gallery",
+                "__id":"UGFydG5lcjpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpwdXJ2aXMteW91bmctdW50aXRsZWQtNzk=",
+              "id":"purvis-young-untitled-79",
+              "href":"/artwork/purvis-young-untitled-79",
+              "image":{
+                "aspect_ratio":0.57,
+                "__id":"5d4dafab8611870012ccdf49",
+                "placeholder":"175.88331963845522%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/dJyzMyeP-jMjHRDLOiC6_w/large.jpg"
+              },
+              "_id":"5d4dafaa703ba30012b7fac0",
+              "title":"UNTITLED",
+              "image_title":"Purvis Young, ‘UNTITLED’, ca. 2000",
+              "date":"ca. 2000",
+              "sale_message":"$25,000",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnB1cnZpcy15b3VuZw==",
+                  "href":"/artist/purvis-young",
+                  "name":"Purvis Young"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Gallery Art",
+                "href":"/gallery-art",
+                "__id":"UGFydG5lcjpnYWxsZXJ5LWFydA==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":true
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazprYXdzLWJlYXJicmljay0xMDAwLXBlcmNlbnQtZ3JleQ==",
+              "id":"kaws-bearbrick-1000-percent-grey",
+              "href":"/artwork/kaws-bearbrick-1000-percent-grey",
+              "image":{
+                "aspect_ratio":0.88,
+                "__id":"5d7635f0f160ef0011418fa4",
+                "placeholder":"113.94258933801993%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/FXP5bIQN-gv8T3Nvnub1vw/large.jpg"
+              },
+              "_id":"5d7635f0bece320012159b74",
+              "title":"Bearbrick 1000% (Grey)",
+              "image_title":"KAWS, ‘Bearbrick 1000% (Grey)’, 2002",
+              "date":"2002",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0Omthd3M=",
+                  "href":"/artist/kaws",
+                  "name":"KAWS"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Digard Auction",
+                "href":"/auction/digard-auctions",
+                "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg==",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpkaWdhcmQtYXVjdGlvbi1lZGl0aW9ucy01",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":4
+                },
+                "highest_bid":{
+                  "display":"€2,750",
+                  "__id":"5d857750da3ce4000704b711"
+                },
+                "opening_bid":{
+                  "display":"€2,000"
+                },
+                "__id":"U2FsZUFydHdvcms6a2F3cy1iZWFyYnJpY2stMTAwMC1wZXJjZW50LWdyZXk="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazprYXRoZXJpbmUtYmVybmhhcmR0LWJhY29uLXBsdXMtZWdncw==",
+              "id":"katherine-bernhardt-bacon-plus-eggs",
+              "href":"/artwork/katherine-bernhardt-bacon-plus-eggs",
+              "image":{
+                "aspect_ratio":1.2,
+                "__id":"5d680e1035a5ac00113ee276",
+                "placeholder":"83.14855875831486%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/0pGzAsKpQFo7QudzeRNqzA/large.jpg"
+              },
+              "_id":"5d680e1098cff6000e433deb",
+              "title":"Bacon + Eggs",
+              "image_title":"Katherine Bernhardt, ‘Bacon + Eggs’, 2014",
+              "date":"2014",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmthdGhlcmluZS1iZXJuaGFyZHQ=",
+                  "href":"/artist/katherine-bernhardt",
+                  "name":"Katherine Bernhardt"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":1
+                },
+                "highest_bid":{
+                  "display":"$16,000",
+                  "__id":"5d702b05bfe6400007a2b5f8"
+                },
+                "opening_bid":{
+                  "display":"$16,000"
+                },
+                "__id":"U2FsZUFydHdvcms6a2F0aGVyaW5lLWJlcm5oYXJkdC1iYWNvbi1wbHVzLWVnZ3M="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazptYXJrLWtvc3RhYmktdHdvLWNhdml0eS1maWdodGVycw==",
+              "id":"mark-kostabi-two-cavity-fighters",
+              "href":"/artwork/mark-kostabi-two-cavity-fighters",
+              "image":{
+                "aspect_ratio":0.75,
+                "__id":"5d65a55358e68f000ed83a16",
+                "placeholder":"133.8006230529595%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/BT0RkejRJrgia7yYQ8KS_Q/large.jpg"
+              },
+              "_id":"5d65a5522652d7001238a4f6",
+              "title":"TWO CAVITY FIGHTERS",
+              "image_title":"Mark Kostabi, ‘TWO CAVITY FIGHTERS’, 1992",
+              "date":"1992",
+              "sale_message":"$3,000",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0Om1hcmsta29zdGFiaQ==",
+                  "href":"/artist/mark-kostabi",
+                  "name":"Mark Kostabi"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Gallery Art",
+                "href":"/gallery-art",
+                "__id":"UGFydG5lcjpnYWxsZXJ5LWFydA==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":true
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpqYWNxdWVsaW5lLWh1bXBocmllcy11bnRpdGxlZC0yNg==",
+              "id":"jacqueline-humphries-untitled-26",
+              "href":"/artwork/jacqueline-humphries-untitled-26",
+              "image":{
+                "aspect_ratio":1.01,
+                "__id":"5d680e06c4b393000d83125e",
+                "placeholder":"99.06666666666666%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/ExELwG5CimUy9cx1AYHrCA/large.jpg"
+              },
+              "_id":"5d680e055dae4100110d8918",
+              "title":"Untitled",
+              "image_title":"Jacqueline Humphries, ‘Untitled’, 1988",
+              "date":"1988",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmphY3F1ZWxpbmUtaHVtcGhyaWVz",
+                  "href":"/artist/jacqueline-humphries",
+                  "name":"Jacqueline Humphries"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"$2,400"
+                },
+                "__id":"U2FsZUFydHdvcms6amFjcXVlbGluZS1odW1waHJpZXMtdW50aXRsZWQtMjY="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpzZWVuLW1hZC10cmFuc2l0LTE=",
+              "id":"seen-mad-transit-1",
+              "href":"/artwork/seen-mad-transit-1",
+              "image":{
+                "aspect_ratio":1.28,
+                "__id":"5d630b4135a964001131ecc9",
+                "placeholder":"78.2312925170068%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/vyJd_0Pp5CKH0ZslY55BHQ/large.jpg"
+              },
+              "_id":"5d630b4024aacd000e00e4ba",
+              "title":"Mad Transit",
+              "image_title":"SEEN, ‘Mad Transit’, 2009",
+              "date":"2009",
+              "sale_message":"$2,700",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnNlZW4=",
+                  "href":"/artist/seen",
+                  "name":"SEEN"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Dirtypilot.com/Hobbs Gallery",
+                "href":"/dirtypilot-dot-com-slash-hobbs-gallery",
+                "__id":"UGFydG5lcjpkaXJ0eXBpbG90LWRvdC1jb20tc2xhc2gtaG9iYnMtZ2FsbGVyeQ==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpicmlhbi1yb2NoZWZvcnQtZGFyd2lucy1oZWxsLWNyYXRlcg==",
+              "id":"brian-rochefort-darwins-hell-crater",
+              "href":"/artwork/brian-rochefort-darwins-hell-crater",
+              "image":{
+                "aspect_ratio":1.17,
+                "__id":"5d5efb270af583001519aaa0",
+                "placeholder":"85.17887563884156%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/i_K31sGw3JzgNvVLu82TsQ/large.jpg"
+              },
+              "_id":"5d5efb260af583001519aa9a",
+              "title":"Darwin's Hell (Crater)",
+              "image_title":"Brian Rochefort, ‘Darwin's Hell (Crater)’, 2018",
+              "date":"2018",
+              "sale_message":"$8,000",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmJyaWFuLXJvY2hlZm9ydA==",
+                  "href":"/artist/brian-rochefort",
+                  "name":"Brian Rochefort"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Edward Cella Art and Architecture",
+                "href":"/edward-cella-art-and-architecture",
+                "__id":"UGFydG5lcjplZHdhcmQtY2VsbGEtYXJ0LWFuZC1hcmNoaXRlY3R1cmU=",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpkYW1pZW4taGlyc3QtY2FmZS1yb3lhbC1oNS03LTg=",
+              "id":"damien-hirst-cafe-royal-h5-7-8",
+              "href":"/artwork/damien-hirst-cafe-royal-h5-7-8",
+              "image":{
+                "aspect_ratio":0.8,
+                "__id":"5d778a0e0c6462000fc7d9b1",
+                "placeholder":"125%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/20-_-b3mbfFUO8oS7rJt1g/large.jpg"
+              },
+              "_id":"5d7788a2b26f67000ec5eac3",
+              "title":"Cafe Royal H5-7",
+              "image_title":"Damien Hirst, ‘Cafe Royal H5-7’, 2018",
+              "date":"2018",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmRhbWllbi1oaXJzdA==",
+                  "href":"/artist/damien-hirst",
+                  "name":"Damien Hirst"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Vogtle Contemporary",
+                "href":"/vogtle-contemporary",
+                "__id":"UGFydG5lcjp2b2d0bGUtY29udGVtcG9yYXJ5",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpyb2JlcnQtbWFycy1pLWxpdmUtZm9yLXRoYXQtbG9vaw==",
+              "id":"robert-mars-i-live-for-that-look",
+              "href":"/artwork/robert-mars-i-live-for-that-look",
+              "image":{
+                "aspect_ratio":0.67,
+                "__id":"5d3f394fcbfbb5000e5b088b",
+                "placeholder":"149.62962962962962%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/SPw-uIufeCqZeaIF4N61QA/large.jpg"
+              },
+              "_id":"5d3f336b5465d1000ea6ff06",
+              "title":"I Live For That Look",
+              "image_title":"Robert Mars, ‘I Live For That Look’, 2018",
+              "date":"2018",
+              "sale_message":"$11,900",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnJvYmVydC1tYXJz",
+                  "href":"/artist/robert-mars",
+                  "name":"Robert Mars"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Arton Contemporary",
+                "href":"/arton-contemporary",
+                "__id":"UGFydG5lcjphcnRvbi1jb250ZW1wb3Jhcnk=",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpzYWx2YWRvci1kYWxpLXRoZS1tYXJyaWFnZS1vZi1yb21lby1hbmQtanVsaWV0LWJ5LWRlYXRoLTE4",
+              "id":"salvador-dali-the-marriage-of-romeo-and-juliet-by-death-18",
+              "href":"/artwork/salvador-dali-the-marriage-of-romeo-and-juliet-by-death-18",
+              "image":{
+                "aspect_ratio":0.84,
+                "__id":"5d7156773885e70012bc4c44",
+                "placeholder":"119.73392461197338%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/2EtjGsTpQLHS9LvKoNz0vg/large.jpg"
+              },
+              "_id":"5d715676db30a700124ef048",
+              "title":"The Marriage of Romeo & Juliet by Death",
+              "image_title":"Salvador Dalí, ‘The Marriage of Romeo & Juliet by Death’, ca. 1967",
+              "date":"ca. 1967",
+              "sale_message":"$155,000",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnNhbHZhZG9yLWRhbGk=",
+                  "href":"/artist/salvador-dali",
+                  "name":"Salvador Dalí"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Robin Rile Fine Art",
+                "href":"/robin-rile-fine-art",
+                "__id":"UGFydG5lcjpyb2Jpbi1yaWxlLWZpbmUtYXJ0",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpiYW5rc3ktZGktZmFjZWQtdGVubmVycy0xMC1nYnAtbm90ZQ==",
+              "id":"banksy-di-faced-tenners-10-gbp-note",
+              "href":"/artwork/banksy-di-faced-tenners-10-gbp-note",
+              "image":{
+                "aspect_ratio":0.74,
+                "__id":"5d7635e39866af0012c98ff5",
+                "placeholder":"134.80662983425415%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/8Z50rOUvahq3RqNY1pufhQ/large.jpg"
+              },
+              "_id":"5d7635e3c24fad000e4f3681",
+              "title":"Di-Faced Tenners, 10 GBP,note",
+              "image_title":"Banksy, ‘Di-Faced Tenners, 10 GBP,note’",
+              "date":"",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmJhbmtzeQ==",
+                  "href":"/artist/banksy",
+                  "name":"Banksy"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Digard Auction",
+                "href":"/auction/digard-auctions",
+                "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg==",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpkaWdhcmQtYXVjdGlvbi1lZGl0aW9ucy01",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"€5,000"
+                },
+                "__id":"U2FsZUFydHdvcms6YmFua3N5LWRpLWZhY2VkLXRlbm5lcnMtMTAtZ2JwLW5vdGU="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpzaGFyYS1odWdoZXMtcmFtcA==",
+              "id":"shara-hughes-ramp",
+              "href":"/artwork/shara-hughes-ramp",
+              "image":{
+                "aspect_ratio":0.75,
+                "__id":"5d680e171e4ff6000e1e722e",
+                "placeholder":"133.33333333333331%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/6KF3kdxd5caxK1jSzjcAxw/large.jpg"
+              },
+              "_id":"5d680e174f10810012ee710d",
+              "title":"Ramp",
+              "image_title":"Shara Hughes, ‘Ramp’, 2008",
+              "date":"2008",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnNoYXJhLWh1Z2hlcw==",
+                  "href":"/artist/shara-hughes",
+                  "name":"Shara Hughes"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":1
+                },
+                "highest_bid":{
+                  "display":"$5,500",
+                  "__id":"5d84367eda3ce4000704b6a5"
+                },
+                "opening_bid":{
+                  "display":"$5,500"
+                },
+                "__id":"U2FsZUFydHdvcms6c2hhcmEtaHVnaGVzLXJhbXA="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazphZnRlci1tYXJjZWwtZHVjaGFtcC1yb3RvcmVsaWVmLTE5MzUtMTk2NQ==",
+              "id":"after-marcel-duchamp-rotorelief-1935-1965",
+              "href":"/artwork/after-marcel-duchamp-rotorelief-1935-1965",
+              "image":{
+                "aspect_ratio":0.94,
+                "__id":"5d78eb6356373b000e05d608",
+                "placeholder":"105.98834128245893%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/bhsRiKf6RhNe-p_6KHGQmw/large.jpg"
+              },
+              "_id":"5d78eb636e7b72001168063f",
+              "title":"Rotorelief, 1935 (1965)",
+              "image_title":"After Marcel Duchamp, ‘Rotorelief, 1935 (1965)’",
+              "date":"",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmFmdGVyLW1hcmNlbC1kdWNoYW1w",
+                  "href":"/artist/after-marcel-duchamp",
+                  "name":"After Marcel Duchamp"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Bruun Rasmussen",
+                "href":"/auction/bruun-rasmussen",
+                "__id":"UGFydG5lcjpicnV1bi1yYXNtdXNzZW4=",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpicnV1bi1yYXNtdXNzZW4tcGFpbnRpbmdzLWFuZC1zY3VscHR1cmVzLTE=",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"DKK 22,000"
+                },
+                "__id":"U2FsZUFydHdvcms6YWZ0ZXItbWFyY2VsLWR1Y2hhbXAtcm90b3JlbGllZi0xOTM1LTE5NjU="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpwYXVsLXJlYmV5cm9sbGUtcG9ydHJhaXQtZGhvbW1lLWFzc2lz",
+              "id":"paul-rebeyrolle-portrait-dhomme-assis",
+              "href":"/artwork/paul-rebeyrolle-portrait-dhomme-assis",
+              "image":{
+                "aspect_ratio":0.6,
+                "__id":"5d716c5023b14f000d0ee80e",
+                "placeholder":"166.41666666666666%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/x5qJyDIB4S_EXhjzbS7eoA/large.jpg"
+              },
+              "_id":"5d716c501d780d00120a9009",
+              "title":"Portrait d'homme assis.",
+              "image_title":"Paul Rebeyrolle, ‘Portrait d'homme assis.’, 1950",
+              "date":"1950",
+              "sale_message":null,
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnBhdWwtcmViZXlyb2xsZQ==",
+                  "href":"/artist/paul-rebeyrolle",
+                  "name":"Paul Rebeyrolle"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Swann Auction Galleries",
+                "href":"/auction/swann-auction-galleries",
+                "__id":"UGFydG5lcjpzd2Fubi1hdWN0aW9uLWdhbGxlcmllcw==",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":true,
+                "__id":"U2FsZTpzd2Fubi1hdWN0aW9uLWdhbGxlcmllcy0xOXRoLWFuZC0yMHRoLWNlbnR1cnktcHJpbnRzLWFuZC1kcmF3aW5ncw==",
+                "is_live_open":false,
+                "is_open":false,
+                "is_preview":false,
+                "display_timely_at":"live 5d ago"
+              },
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazp5YXlvaS1rdXNhbWEtZW1icnlv",
+              "id":"yayoi-kusama-embryo",
+              "href":"/artwork/yayoi-kusama-embryo",
+              "image":{
+                "aspect_ratio":1.33,
+                "__id":"5d680e154ed4d7000e83c79a",
+                "placeholder":"75%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/agCJfrwr_bOyiI_L3lvv7Q/large.jpg"
+              },
+              "_id":"5d680e154ed4d70012cd30ea",
+              "title":"Embryo",
+              "image_title":"Yayoi Kusama, ‘Embryo’, 1953",
+              "date":"1953",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OnlheW9pLWt1c2FtYQ==",
+                  "href":"/artist/yayoi-kusama",
+                  "name":"Yayoi Kusama"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"$65,000"
+                },
+                "__id":"U2FsZUFydHdvcms6eWF5b2kta3VzYW1hLWVtYnJ5bw=="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpmcmVkcmlrLXZhZXJzbGV2LXVudGl0bGVkLWRyb2Jhay1rdW5zdGZvcmVuaW5nLW51bWJlci0xMQ==",
+              "id":"fredrik-vaerslev-untitled-drobak-kunstforening-number-11",
+              "href":"/artwork/fredrik-vaerslev-untitled-drobak-kunstforening-number-11",
+              "image":{
+                "aspect_ratio":0.63,
+                "__id":"5d680def029767000fd42b04",
+                "placeholder":"159.33333333333331%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/S7nHinGPhKCMBzJUHfa5kw/large.jpg"
+              },
+              "_id":"5d680deee6bccb000df69b40",
+              "title":"Untitled (Drøbak Kunstforening #11)",
+              "image_title":"Fredrik Værslev, ‘Untitled (Drøbak Kunstforening #11)’, 2013",
+              "date":"2013",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmZyZWRyaWstdmFlcnNsZXY=",
+                  "href":"/artist/fredrik-vaerslev",
+                  "name":"Fredrik Værslev"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"$9,500"
+                },
+                "__id":"U2FsZUFydHdvcms6ZnJlZHJpay12YWVyc2xldi11bnRpdGxlZC1kcm9iYWsta3Vuc3Rmb3JlbmluZy1udW1iZXItMTE="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazphYXJvbi1nYXJiZXItbWFpa292c2thLXlldC10by1iZS10aXRsZWQtbnVtYmVyLTY4",
+              "id":"aaron-garber-maikovska-yet-to-be-titled-number-68",
+              "href":"/artwork/aaron-garber-maikovska-yet-to-be-titled-number-68",
+              "image":{
+                "aspect_ratio":0.5,
+                "__id":"5d680e1958e68f0012c5653c",
+                "placeholder":"201.86666666666667%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/E-jhtdJ3W9AEJLpJ0uLbRw/large.jpg"
+              },
+              "_id":"5d680e19e6bccb000df69b9e",
+              "title":"Yet-to-be-titled #68",
+              "image_title":"Aaron Garber-Maikovska, ‘Yet-to-be-titled #68’, 2013",
+              "date":"2013",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmFhcm9uLWdhcmJlci1tYWlrb3Zza2E=",
+                  "href":"/artist/aaron-garber-maikovska",
+                  "name":"Aaron Garber-Maikovska"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"$8,000"
+                },
+                "__id":"U2FsZUFydHdvcms6YWFyb24tZ2FyYmVyLW1haWtvdnNrYS15ZXQtdG8tYmUtdGl0bGVkLW51bWJlci02OA=="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpsYWRkaWUtam9obi1kaWxsLXVudGl0bGVkLWZsb3JhbC1saWdodC10cmFw",
+              "id":"laddie-john-dill-untitled-floral-light-trap",
+              "href":"/artwork/laddie-john-dill-untitled-floral-light-trap",
+              "image":{
+                "aspect_ratio":0.98,
+                "__id":"5d2f7080300e2b00115d1cd7",
+                "placeholder":"101.88195038494439%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/QF-F9UYfBOGFZNdh1EuUkQ/large.jpg"
+              },
+              "_id":"5d2f707f99d3c7000dcf2400",
+              "title":"Untitled Floral Light Trap",
+              "image_title":"Laddie John Dill, ‘Untitled Floral Light Trap’, 2019",
+              "date":"2019",
+              "sale_message":"$18,000",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmxhZGRpZS1qb2huLWRpbGw=",
+                  "href":"/artist/laddie-john-dill",
+                  "name":"Laddie John Dill"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Timothy Yarger Fine Art",
+                "href":"/timothy-yarger-fine-art",
+                "__id":"UGFydG5lcjp0aW1vdGh5LXlhcmdlci1maW5lLWFydA==",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpsYXVyZW4tbHVsb2ZmLWwtc2hhcGVkLWZpZ3VyZQ==",
+              "id":"lauren-luloff-l-shaped-figure",
+              "href":"/artwork/lauren-luloff-l-shaped-figure",
+              "image":{
+                "aspect_ratio":0.76,
+                "__id":"5d7926e5ffdd01001213779f",
+                "placeholder":"131.95876288659792%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/KexeXqrmVbuN47jh_BzrjA/large.jpg"
+              },
+              "_id":"5d7926e55acd6c0012db775e",
+              "title":"L Shaped Figure",
+              "image_title":"Lauren Luloff, ‘L Shaped Figure’, 2014",
+              "date":"2014",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmxhdXJlbi1sdWxvZmY=",
+                  "href":"/artist/lauren-luloff",
+                  "name":"Lauren Luloff"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Rema Hort Mann Foundation Benefit Auction",
+                "href":"/auction/rema-hort-mann-foundation-benefit-auctions",
+                "__id":"UGFydG5lcjpyZW1hLWhvcnQtbWFubi1mb3VuZGF0aW9uLWJlbmVmaXQtYXVjdGlvbg==",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpyZW1hLWhvcnQtbWFubi1mb3VuZGF0aW9uLWJlbmVmaXQtYXVjdGlvbi0yMDE5",
+                "is_live_open":false,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"ends in 2d"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"$3,000"
+                },
+                "__id":"U2FsZUFydHdvcms6bGF1cmVuLWx1bG9mZi1sLXNoYXBlZC1maWd1cmU="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpqb2huLWJhbGRlc3NhcmktdGhlLW92ZXJsYXAtc2VyaWVzLWFybS1hbmQtYmxpbmRmb2xkZWQtbWFuLXNsYXNoLXN0YWlycw==",
+              "id":"john-baldessari-the-overlap-series-arm-and-blindfolded-man-slash-stairs",
+              "href":"/artwork/john-baldessari-the-overlap-series-arm-and-blindfolded-man-slash-stairs",
+              "image":{
+                "aspect_ratio":0.65,
+                "__id":"5d76b88d0f7b7c000d790a9c",
+                "placeholder":"153.25670498084293%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/NaQauz5EVGmuMKIcWMESzQ/large.jpg"
+              },
+              "_id":"5d76b88cc2df54000ec799c3",
+              "title":"The Overlap Series: Arm and Blindfolded Man/Stairs",
+              "image_title":"John Baldessari, ‘The Overlap Series: Arm and Blindfolded Man/Stairs’, 2001",
+              "date":"2001",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmpvaG4tYmFsZGVzc2FyaQ==",
+                  "href":"/artist/john-baldessari",
+                  "name":"John Baldessari"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Marian Goodman Gallery",
+                "href":"/marian-goodman-gallery",
+                "__id":"UGFydG5lcjptYXJpYW4tZ29vZG1hbi1nYWxsZXJ5",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazpoYWRpZWgtc2hhZmllLTE0NjM1LXBhZ2Vz",
+              "id":"hadieh-shafie-14635-pages",
+              "href":"/artwork/hadieh-shafie-14635-pages",
+              "image":{
+                "aspect_ratio":1,
+                "__id":"5d680e0a2652d7000e4dcd91",
+                "placeholder":"100.13351134846462%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/wYStvX0mb1_3XPwABxebnQ/large.jpg"
+              },
+              "_id":"5d680e094f10810012ee7105",
+              "title":"14635 Pages",
+              "image_title":"Hadieh Shafie, ‘14635 Pages’, 2010",
+              "date":"2010",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmhhZGllaC1zaGFmaWU=",
+                  "href":"/artist/hadieh-shafie",
+                  "name":"Hadieh Shafie"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Phillips",
+                "href":"/auction/phillips-1",
+                "__id":"UGFydG5lcjpwaGlsbGlwcy0x",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpwaGlsbGlwcy1uZXctbm93LTEy",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":0
+                },
+                "highest_bid":{
+                  "display":null,
+                  "__id":null
+                },
+                "opening_bid":{
+                  "display":"$24,000"
+                },
+                "__id":"U2FsZUFydHdvcms6aGFkaWVoLXNoYWZpZS0xNDYzNS1wYWdlcw=="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazprYXdzLWpwcC1ibGFjay04",
+              "id":"kaws-jpp-black-8",
+              "href":"/artwork/kaws-jpp-black-8",
+              "image":{
+                "aspect_ratio":0.94,
+                "__id":"5d7635ed0398f60012df27b1",
+                "placeholder":"106.84823366883758%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/KWrufXceFITaf01pLgthWw/large.jpg"
+              },
+              "_id":"5d7635ed9d1ba3000e558822",
+              "title":"JPP (Black)",
+              "image_title":"KAWS, ‘JPP (Black)’, 2008",
+              "date":"2008",
+              "sale_message":"Contact For Price",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0Omthd3M=",
+                  "href":"/artist/kaws",
+                  "name":"KAWS"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Digard Auction",
+                "href":"/auction/digard-auctions",
+                "__id":"UGFydG5lcjpkaWdhcmQtYXVjdGlvbg==",
+                "type":"Auction House"
+              },
+              "sale":{
+                "is_auction":true,
+                "is_closed":false,
+                "__id":"U2FsZTpkaWdhcmQtYXVjdGlvbi1lZGl0aW9ucy01",
+                "is_live_open":true,
+                "is_open":true,
+                "is_preview":false,
+                "display_timely_at":"in progress"
+              },
+              "sale_artwork":{
+                "counts":{
+                  "bidder_positions":2
+                },
+                "highest_bid":{
+                  "display":"€900",
+                  "__id":"5d83702e50dd70000aea6c83"
+                },
+                "opening_bid":{
+                  "display":"€850"
+                },
+                "__id":"U2FsZUFydHdvcms6a2F3cy1qcHAtYmxhY2stOA=="
+              },
+              "is_inquireable":true,
+              "is_saved":false,
+              "is_biddable":true,
+              "is_acquireable":false,
+              "is_offerable":false
+            }
+          },
+          {
+            "node":{
+              "__id":"QXJ0d29yazphbnNlbC1hZGFtcy10ZWtsYW5pa2Etcml2ZXItbW91bnQtbWNraW5sZXktbnAtYWstMTk0Nw==",
+              "id":"ansel-adams-teklanika-river-mount-mckinley-np-ak-1947",
+              "href":"/artwork/ansel-adams-teklanika-river-mount-mckinley-np-ak-1947",
+              "image":{
+                "aspect_ratio":1.27,
+                "__id":"5d709d338816ac001382a8ef",
+                "placeholder":"78.54166666666667%",
+                "url":"https://d32dm0rphc51dk.cloudfront.net/MsMJu7G9Rr7krL66Y679Rw/large.jpg"
+              },
+              "_id":"5d709d32ec9f8b00121e614f",
+              "title":"Teklanika River, Mount McKinley NP, AK, 1947",
+              "image_title":"Ansel Adams, ‘Teklanika River, Mount McKinley NP, AK, 1947’, 1947",
+              "date":"1947",
+              "sale_message":"$6,500",
+              "cultural_maker":null,
+              "artists":[
+                {
+                  "__id":"QXJ0aXN0OmFuc2VsLWFkYW1z",
+                  "href":"/artist/ansel-adams",
+                  "name":"Ansel Adams"
+                }
+              ],
+              "collecting_institution":null,
+              "partner":{
+                "name":"Seagrave Gallery",
+                "href":"/seagrave-gallery",
+                "__id":"UGFydG5lcjpzZWFncmF2ZS1nYWxsZXJ5",
+                "type":"Gallery"
+              },
+              "sale":null,
+              "sale_artwork":null,
+              "is_inquireable":false,
+              "is_saved":false,
+              "is_biddable":false,
+              "is_acquireable":true,
+              "is_offerable":false
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+}
