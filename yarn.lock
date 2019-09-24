@@ -29,10 +29,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@4.17.7":
-  version "4.17.7"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.17.7.tgz#bdf400cbae44da4f4b7867b263467441a77b6afe"
-  integrity sha512-wXunZpz8CmhAJtl9yCUeqEUN6Ked7leLUs2XNGTuPubuVM3FZwHZHdYeBc5VGw6iAJ2LfblfpqH+3K48qlUyeQ==
+"@artsy/palette@4.17.8":
+  version "4.17.8"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-4.17.8.tgz#a023883869f9734cc0a2f2a4c39ad00cbbe53f1c"
+  integrity sha512-ZMq1ZmGMwY4Zkr6qPl+JJ6wJ3E1Rc2OUt9/J5kc7EQyy5DVa9reOe2ON/OZQvxeph8DHWK5pK2OfqMa0QQB4BA==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -69,10 +69,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@18.1.18":
-  version "18.1.18"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-18.1.18.tgz#cebb14453019e88bbe1e651795d25b158914e91a"
-  integrity sha512-M3NfGDLRbHXiCECIG1aAnBIX43U8c+lj6WL1rx0sNkaruSow4Ww0Xc9YnAVIvLos2q6eefu88HADK+OllaugWQ==
+"@artsy/reaction@18.1.19":
+  version "18.1.19"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-18.1.19.tgz#7b8cf911574b41d2e043ec57b0bc408aa904690d"
+  integrity sha512-3PGlQuSpZ0nrjnabd83i9ERWI5qJaHayjPpzd6LlN2esNx3/U1xcHQRjOxbnrOX5WyUtzPZJjK5DPl7Bq25GeA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
