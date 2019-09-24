@@ -1,0 +1,201 @@
+{
+  "data":{
+     "categories":[
+        {
+           "name":"Collectible Sculptures",
+           "collections":[
+              {
+                 "slug":"kaws-toys",
+                 "headerImage":"https://artsy-vanity-files-production.s3.amazonaws.com/images/kaws2.png",
+                 "title":"KAWS: Toys",
+                 "__id":"5beb5aca1338c043ac8ae214"
+              },
+              {
+                 "slug":"alexander-calder-mobiles",
+                 "headerImage":"http://files.artsy.net/images/caldermobile.png",
+                 "title":"Alexander Calder: Mobiles",
+                 "__id":"5beb5aca1338c043ac8ae21b"
+              },
+              {
+                 "slug":"jeff-koons-puppies",
+                 "headerImage":"http://files.artsy.net/images/jeffkoonspuppies.png",
+                 "title":"Jeff Koons: Puppies",
+                 "__id":"5beb5aca1338c043ac8ae228"
+              },
+              {
+                 "slug":"kaws-snoopy",
+                 "headerImage":"http://files.artsy.net/images/kaws-snoopy.png",
+                 "title":"KAWS: Snoopy",
+                 "__id":"5beb5aca1338c043ac8ae216"
+              },
+              {
+                 "slug":"kaws-bff",
+                 "headerImage":"http://files.artsy.net/images/kawsbff.png",
+                 "title":"KAWS: BFF",
+                 "__id":"5beb5aca1338c043ac8ae21c"
+              },
+              {
+                 "slug":"kaws-together",
+                 "headerImage":"http://files.artsy.net/images/kawstogether2.png",
+                 "title":"KAWS: Together",
+                 "__id":"5beb5acb1338c043ac8ae235"
+              },
+              {
+                 "slug":"jeff-koons-balloon-dogs",
+                 "headerImage":"http://files.artsy.net/images/jeffkoonsballoondogs.png",
+                 "title":"Jeff Koons: Balloon Dogs",
+                 "__id":"5beb5aca1338c043ac8ae218"
+              },
+              {
+                 "slug":"kaws-bearbrick",
+                 "headerImage":"http://files.artsy.net/images/kawsbearbricks.png",
+                 "title":"KAWS: Bearbrick",
+                 "__id":"5beb5aca1338c043ac8ae229"
+              },
+              {
+                 "slug":"kaws-bape",
+                 "headerImage":"http://files.artsy.net/images/kawsbape.png",
+                 "title":"KAWS: Bape",
+                 "__id":"5beb5acb1338c043ac8ae23f"
+              },
+              {
+                 "slug":"kaws-astroboy",
+                 "headerImage":"http://files.artsy.net/images/kawsastroboy.png",
+                 "title":"KAWS: Astroboy",
+                 "__id":"5beb5acb1338c043ac8ae23e"
+              }
+           ]
+        },
+        {
+           "name":"Abstract Art",
+           "collections":[
+              {
+                 "slug":"minimalist-prints",
+                 "headerImage":"http://files.artsy.net/images/minimalistprints.png",
+                 "title":"Minimalist Prints",
+                 "__id":"5bcf4e518ef6ac2e05f0eb99"
+              },
+              {
+                 "slug":"josef-albers-homage-to-the-square",
+                 "headerImage":"http://files.artsy.net/images/albers-square.png",
+                 "title":"Josef Albers: Homage to the Square",
+                 "__id":"5c005a034248cb32b6ba3b99"
+              },
+              {
+                 "slug":"sol-lewitt-cubes",
+                 "headerImage":"http://files.artsy.net/images/sollewittcubes.png",
+                 "title":"Sol LeWitt: Cubes",
+                 "__id":"5c005a034248cb32b6ba3c86"
+              },
+              {
+                 "slug":"sam-francis-lithographs",
+                 "headerImage":"http://files.artsy.net/images/samfrancislithograph.png",
+                 "title":"Sam Francis: Lithographs",
+                 "__id":"5c005a034248cb32b6ba3d2b"
+              },
+              {
+                 "slug":"josef-albers-formulation-articulation",
+                 "headerImage":"http://files.artsy.net/images/albers-formulation-articulation.png",
+                 "title":"Josef Albers: Formulation Articulation",
+                 "__id":"5c005a034248cb32b6ba3d41"
+              },
+              {
+                 "slug":"josef-albers-white-line-squares",
+                 "headerImage":"http://files.artsy.net/images/albers-white-line-square.png",
+                 "title":"Josef Albers: White Line Squares",
+                 "__id":"5c005a034248cb32b6ba3dba"
+              },
+              {
+                 "slug":"yaacov-agam-agamographs",
+                 "headerImage":"http://files.artsy.net/images/agam-agamograph.png",
+                 "title":"Yaacov Agam: Agamographs",
+                 "__id":"5c005a044248cb32b6ba3f1b"
+              },
+              {
+                 "slug":"willem-de-kooning-lithographs",
+                 "headerImage":"http://files.artsy.net/images/kooning-lithograph.png",
+                 "title":"Willem de Kooning: Lithographs",
+                 "__id":"5c005a044248cb32b6ba3f31"
+              },
+              {
+                 "slug":"yves-klein-monochromes",
+                 "headerImage":"http://files.artsy.net/images/yveskleinmonochromes.png",
+                 "title":"Yves Klein: Monochromes",
+                 "__id":"5c005a044248cb32b6ba3f3c"
+              },
+              {
+                 "slug":"frank-stella-protractor-series",
+                 "headerImage":"http://files.artsy.net/images/frankstellaprotractorseries.png",
+                 "title":"Frank Stella: Protractor Series",
+                 "__id":"5c1410d14248cb32b6fb3d3a"
+              }
+           ]
+        },
+        {
+           "name":"Contemporary",
+           "collections":[
+              {
+                 "slug":"collect-by-color-orange",
+                 "headerImage":"http://files.artsy.net/images/josefalbersorangesquare.png",
+                 "title":"Collect by Color: Orange",
+                 "__id":"5beb5acb1338c043ac8ae24c"
+              },
+              {
+                 "slug":"chuck-close-self-portraits",
+                 "headerImage":"http://files.artsy.net/images/chuckcloseselfportrait.png",
+                 "title":"Chuck Close: Self-Portraits",
+                 "__id":"5beb5aca1338c043ac8ae21f"
+              },
+              {
+                 "slug":"damien-hirst-butterflies",
+                 "headerImage":"http://files.artsy.net/images/hirst-butterfly-1.png",
+                 "title":"Damien Hirst: Butterflies",
+                 "__id":"5beb5acb1338c043ac8ae233"
+              },
+              {
+                 "slug":"collect-by-color-black-and-white",
+                 "headerImage":"http://files.artsy.net/images/blackandwhiteopie.png",
+                 "title":"Collect by Color: Black and White",
+                 "__id":"5beb5acb1338c043ac8ae24d"
+              },
+              {
+                 "slug":"yayoi-kusama-pumpkins",
+                 "headerImage":"http://files.artsy.net/images/pumpkinsbigartistsmallsculpture.png",
+                 "title":"Yayoi Kusama: Pumpkins",
+                 "__id":"5beb5aca1338c043ac8ae22d"
+              },
+              {
+                 "slug":"mel-bochner-text",
+                 "headerImage":"http://files.artsy.net/images/mel-bochner-text.png",
+                 "title":"Mel Bochner: Text",
+                 "__id":"5beb5acb1338c043ac8ae248"
+              },
+              {
+                 "slug":"damien-hirst-skulls",
+                 "headerImage":"http://files.artsy.net/images/damienhirstskulls.png",
+                 "title":"Damien Hirst: Skulls",
+                 "__id":"5beb5acb1338c043ac8ae234"
+              },
+              {
+                 "slug":"takashi-murakami-flowers",
+                 "headerImage":"http://files.artsy.net/images/takashiflowers2.png",
+                 "title":"Takashi Murakami: Flowers",
+                 "__id":"5beb5aca1338c043ac8ae22b"
+              },
+              {
+                 "slug":"contemporary-limited-editions",
+                 "headerImage":"http://files.artsy.net/images/contemporarylimitededition2.png",
+                 "title":"Contemporary Limited Editions",
+                 "__id":"5bcf4e518ef6ac2e05f0eb9a"
+              },
+              {
+                 "slug":"chuck-close-portraits",
+                 "headerImage":"http://files.artsy.net/images/chuckcloseselfportrait.png",
+                 "title":"Chuck Close: Portraits",
+                 "__id":"5beb5acb1338c043ac8ae23a"
+              }
+           ]
+        }
+     ]
+  }
+}
