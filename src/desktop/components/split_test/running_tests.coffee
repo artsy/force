@@ -25,8 +25,8 @@
 # module.exports = {}
 
 module.exports = {
-  collection_hub_entrypoints:
-    key: "collection_hub_entrypoints"
+  collection_hub_entrypoints_test:
+    key: "collection_hub_entrypoints_test"
     outcomes:
       control: 50
       experiment: 50
