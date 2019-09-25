@@ -6,7 +6,8 @@
         "targets": {
           "browsers": ["last 2 versions"]
         },
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "corejs": 2
       }
     ],
     "@babel/react",
@@ -41,5 +42,5 @@
         "artifactDirectory": "./src/__generated__"
       }
     ]
-  ],
+  ]
 }

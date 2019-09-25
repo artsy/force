@@ -5,7 +5,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 const $ = require("jquery")
 const mediator = require("desktop/lib/mediator.coffee")
@@ -15,8 +14,6 @@ const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
 const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
 const openAuctionBuyerPremium = require("desktop/apps/artwork/components/buyers_premium/index.coffee")
 const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
-const splitTest = require("desktop/components/split_test/index.coffee")
-const Cookies = require("desktop/components/cookies/index.coffee")
 
 buildClientApp({
   routes,
@@ -66,110 +63,20 @@ const openInquireableModal = (
   })
 }
 
-export const handleOpenAuthModal = options => {
-  mediator.trigger("open:auth", {
-    mode: ModalType.signup,
-    signupIntent: "signup",
-    type: "signup",
-    trigger: "click",
-    redirectTo: location.href,
-    ...options,
-  })
-}
-
-const shouldViewExperiment = () => {
-  return sd.INQUIRY_AUTH_V2 === "experiment" && !sd.CURRENT_USER
-}
-
-const maybeFireTestView = () => {
-  !sd.CURRENT_USER && splitTest("inquiry_auth_v2").view()
-}
-
-// If this cookie is set, that means we should immediately launch
-// an inquiry or specialist modal, if the user is signed in.
-// Otherwise, we expire the cookie.
-export const maybeRelaunchInquiryModalAfterAuth = slug => {
-  let cookieValue
-
-  cookieValue = Cookies.get("launchInquiryFlow")
-  if (cookieValue) {
-    sd.CURRENT_USER && openInquireableModal(slug, { ask_specialist: false })
-    Cookies.expire("launchInquiryFlow")
-    return
-  }
-
-  cookieValue = Cookies.get("launchSpecialistFlow")
-  if (cookieValue) {
-    sd.CURRENT_USER && openInquireableModal(slug, { ask_specialist: true })
-    Cookies.expire("launchSpecialistFlow")
-    return
-  }
-
-  cookieValue = Cookies.get("launchAuctionSpecialistFlow")
-  if (cookieValue) {
-    sd.CURRENT_USER &&
-      openInquireableModal(
-        slug,
-        { ask_specialist: true },
-        { is_in_auction: true }
-      )
-    Cookies.expire("launchAuctionSpecialistFlow")
-    return
-  }
-}
-
-maybeRelaunchInquiryModalAfterAuth(artworkSlug)
-
 mediator.on("launchInquiryFlow", options => {
-  // TODO: Remove after inquiry a/b test
-  maybeFireTestView()
-  if (shouldViewExperiment()) {
-    const authOptions = {
-      intent: "Contact Gallery",
-      contextModule: "Artwork CTA",
-      modal_copy: "Sign up to contact gallery",
-    }
-    handleOpenAuthModal(authOptions)
-    Cookies.set("launchInquiryFlow", 1)
-  } else {
-    openInquireableModal(options.artworkId, { ask_specialist: false })
-  }
+  openInquireableModal(options.artworkId, { ask_specialist: false })
 })
 
 mediator.on("openBuyNowAskSpecialistModal", options => {
-  // TODO: Remove after inquiry a/b test
-  maybeFireTestView()
-  if (shouldViewExperiment()) {
-    const authOptions = {
-      intent: "Ask a specialist",
-      contextModule: "Artwork CTA",
-      modal_copy: "Sign up to ask a specialist",
-    }
-    handleOpenAuthModal(authOptions)
-    Cookies.set("launchSpecialistFlow", 1)
-  } else {
-    openInquireableModal(options.artworkId, { ask_specialist: true })
-  }
+  openInquireableModal(options.artworkId, { ask_specialist: true })
 })
 
 mediator.on("openAuctionAskSpecialistModal", options => {
-  // TODO: Remove after inquiry a/b test
-  maybeFireTestView()
-  if (shouldViewExperiment()) {
-    const authOptions = {
-      intent: "Ask a specialist",
-      contextModule: "Artwork CTA",
-      modal_copy: "Sign up to ask a specialist",
-    }
-    handleOpenAuthModal(authOptions)
-    Cookies.set("launchAuctionSpecialistFlow", 1)
-  } else {
-    openInquireableModal(
-      options.artworkId,
-      { ask_specialist: true },
-      { is_in_auction: true }
-    )
-  }
+  openInquireableModal(
+    options.artworkId,
+    { ask_specialist: true },
+    { is_in_auction: true }
+  )
 })
 
 mediator.on("openViewInRoom", options => {
