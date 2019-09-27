@@ -3,23 +3,6 @@ extends ../../../components/main_layout/templates/index
 block head
   include meta
 
-  //- Google reCAPTCHA
-  script( type="text/javascript" ).
-    (function() {
-      function loadGrecaptcha() {
-        if (sd.RECAPTCHA_KEY && !sd.EIGEN) {
-          grecaptcha.execute(sd.RECAPTCHA_KEY, {action: 'homepage'})
-        }
-      }
-      var oldOnLoad = window.onload
-      window.onload = function() {
-        if (typeof oldOnLoad === 'function') {
-          oldOnLoad()
-        }
-        loadGrecaptcha()
-      };
-    })()
-
 append locals
   - assetPackage = 'home'
   - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header' + (heroUnits.length && heroUnits[0].mode.match('LIGHT') ? '-white' : '')
