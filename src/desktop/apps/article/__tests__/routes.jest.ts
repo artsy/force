@@ -409,6 +409,36 @@ describe("Article Routes", () => {
       routes.amp(req, res, next)
       expect(res.redirect).toBeCalledWith("/article/zoobar/amp")
     })
+
+    it("redirects to main slug if article is a series article", () => {
+      article.slug = "a-series-article"
+      article.layout = "series"
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(res.redirect).toBeCalledWith("/article/a-series-article")
+    })
+
+    it("redirects to main slug if article is a news article", () => {
+      article.slug = "a-news-article"
+      article.layout = "news"
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(res.redirect).toBeCalledWith("/article/a-news-article")
+    })
+
+    it("redirects to main slug if article is a video article", () => {
+      article.slug = "a-video-article"
+      article.layout = "video"
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(res.redirect).toBeCalledWith("/article/a-video-article")
+    })
   })
 
   describe("#redirectPost", () => {
