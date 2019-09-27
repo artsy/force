@@ -220,6 +220,10 @@ export const amp = (req, res, next) => {
   article.fetchWithRelated({
     error: res.backboneError,
     success: data => {
+      if (!["standard", "feature"].includes(data.article.get("layout"))) {
+        return res.redirect(`/article/${data.article.get("slug")}`)
+      }
+
       if (req.params.slug !== data.article.get("slug")) {
         return res.redirect(`/article/${data.article.get("slug")}/amp`)
       }
