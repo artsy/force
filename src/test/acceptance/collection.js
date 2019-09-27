@@ -22,7 +22,7 @@ describe("Collection page", () => {
 
   it("renders artwork grid", async () => {
     const $ = await browser.page("/collection/kaws-companions")
-    $.html().should.containEql("KAWS, Pinocchio, 2018")
-    $.html().should.containEql("IDEA")
+    $.html().should.containEql("Boba Fett Companion")
+    $.html().should.containEql("Woodstock")
   })
 })

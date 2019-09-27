@@ -6,16 +6,6 @@ block content
       a( href='/' + profile.get('id') )= partner.get('name')
       span Contact
 
-    if profile.isGallery() && partner.has('email')
-      h1.partner-profile-contact-email
-        | Are you interested in purchasing works from #{partner.get('name')}?
-        br
-        a(
-          data-partner-id=partner.get('_id'),
-          data-partner-slug=partner.get('id'),
-          href=partner.getMailTo()
-        ) Contact gallery via email.
-
     if partner.has('website')
       h2.partner-profile-contact-website
         a(

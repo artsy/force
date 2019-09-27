@@ -112,17 +112,6 @@ describe 'Partner page templates', ->
       sd: {}
     html.should.not.containEql 'Tel:'
 
-  it 'invites users to email galleries that have a contact email address', ->
-    profile = new Profile fabricate 'profile', id: 'gagosian-gallery', icon: null, owner_type: 'PartnerGallery'
-    partner = new Partner fabricate 'partner', email: 'info@gagosian.com'
-    html = render('contact')
-      locationGroups: {}
-      profile: profile
-      partner: partner
-      sd: {}
-    $ = cheerio.load html
-    $("a[href^='mailto:#{partner.get('email')}']").length.should.be.above 0
-
   it 'renders a link to the partner\s website', ->
     profile = new Profile fabricate 'profile', id: 'gagosian-gallery', icon: null, owner_type: 'PartnerGallery'
     partner = new Partner fabricate 'partner', website: "http://www.gagosian.com"
