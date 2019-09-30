@@ -14,7 +14,7 @@
 title= title + titleExtension
 meta( name='description', content= search_description )
 link( rel='canonical' href=url )
-if article.featured && article.published 
+if article.featured && article.published
   link(rel='amphtml' href=(sd.APP_URL + '/article/' + article.slug + '/amp'))
 
 //- OG
