@@ -401,6 +401,24 @@ describe("Article Routes", () => {
       expect(next).toBeCalled()
     })
 
+    it("skips if it is series", () => {
+      article.layout = "series"
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(next).toBeCalled()
+    })
+
+    it("skips if it is video", () => {
+      article.layout = "video"
+      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
+        options.success({ article: new Article(article) })
+      })
+      routes.amp(req, res, next)
+      expect(next).toBeCalled()
+    })
+
     it("redirects to the main slug if an older slug is queried", () => {
       article.slug = "zoobar"
       Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
