@@ -220,12 +220,14 @@ module.exports = class Article extends Backbone.Model
     @set 'sections', sections
 
   hasAMP: ->
+    isValidLayout = @get('layout') in ['standard', 'feature', 'news']
+    return false if not isValidLayout
     # AMP requires that images provide a width and height
     # Articles that have been converted to ImageCollections will have this info
     for section in @get('sections')
       return false if section.type in ['artworks', 'image']
     return true if @get('layout') is 'news' and @get('published')
-    return @get('featured') and @get('published') and @get('layout') in ['standard', 'feature']
+    return @get('featured') and @get('published')
 
   fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
     for id in @get('super_article').related_articles

@@ -1,7 +1,6 @@
 title= article.get('search_title') ? article.get('search_title') : article.get('thumbnail_title')
 link( rel="canonical" href=article.fullHref() )
 if article.hasAMP()
-  link(rel="amphtml" href=(article.fullHref() + "/amp"))
 meta( property="og:site_name" content='Artsy' )
 meta( property="og:url", content=(sd.APP_URL + '/article/' + article.get('slug')) )
 meta( property="og:type", content="article" )
