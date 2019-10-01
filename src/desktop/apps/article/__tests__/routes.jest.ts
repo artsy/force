@@ -437,6 +437,32 @@ describe("Article Routes", () => {
     })
   })
 
+  describe("#redirectAMP", () => {
+    it("redirects to /series if amp", () => {
+      req.url = "/series/artsy-vanguard-2019/amp"
+      routes.redirectAMP(req, res, next)
+      expect(res.redirect).toBeCalledWith(301, "/series/artsy-vanguard-2019")
+    })
+
+    it("redirects to /series if amp with a Vanguard subarticle slug", () => {
+      req.url = "/series/artsy-vanguard-2019/victoria-sin/amp"
+      routes.redirectAMP(req, res, next)
+      expect(res.redirect).toBeCalledWith(
+        301,
+        "/series/artsy-vanguard-2019/victoria-sin"
+      )
+    })
+
+    it("redirects to /video if amp", () => {
+      req.url = "/video/artsy-editors-future-art-carrie-mae-weems/amp"
+      routes.redirectAMP(req, res, next)
+      expect(res.redirect).toBeCalledWith(
+        301,
+        "/video/artsy-editors-future-art-carrie-mae-weems"
+      )
+    })
+  })
+
   describe("Vanguard 2019", () => {
     it("redirects to /series if shorthand slug", () => {
       req.params = {}
