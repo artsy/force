@@ -1,4 +1,4 @@
-import { bidderRegistration } from "./routes"
+import { bidderRegistration, auctionFAQRoute } from "./routes"
 import { stitch } from "@artsy/stitch"
 
 jest.mock("reaction/Artsy/Router/server", () => {
@@ -9,15 +9,35 @@ jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
 }))
 
+const mockSend = jest.fn()
+const mockRedirect = jest.fn()
+const mockNext = jest.fn()
+const mockStitch = stitch as jest.Mock
+const layout = "<marquee>Welcome to Artsy</marquee>"
+
 describe("Reaction Auction app routes", () => {
+  describe("Auction FAQ", () => {
+    jest.resetAllMocks()
+    mockStitch.mockResolvedValue(layout)
+    const req = {
+      query: {},
+      header: jest.fn(),
+    }
+    const res = {
+      locals: { sd: { CURRENT_USER: null } },
+      redirect: mockRedirect,
+      status: () => ({ send: mockSend }),
+    }
+    it("renders the FAQ page without failing", async () => {
+      await auctionFAQRoute(req, res, mockNext)
+      expect(mockNext).not.toHaveBeenCalled()
+      expect(mockSend).toHaveBeenCalledWith(layout)
+    })
+  })
+
   describe("bidderRegistration", () => {
     let req
     let res
-    const mockSend = jest.fn()
-    const mockRedirect = jest.fn()
-    const mockNext = jest.fn()
-    const mockStitch = stitch as jest.Mock
-    const layout = "<marquee>Welcome to Artsy</marquee>"
 
     beforeEach(() => {
       jest.resetAllMocks()

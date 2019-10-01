@@ -10,6 +10,17 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
+"@artsy/arc@^1.4.2":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@artsy/arc/-/arc-1.4.4.tgz#b949298ae2c5fa4763da3ea6b5825e2cb9a12283"
+  integrity sha512-0j3px+JJEVUM4cHaEE9us0dh0DGvHDUahPjNuM3uev79sdrW8+nkcfASQycQuHPd+YZOsmYUD9KtXwJsaR207A==
+  dependencies:
+    farce "0.2.6"
+    found "0.3.14"
+    found-relay "0.3.1"
+    found-scroll "0.1.5"
+    react-relay "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
+
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
@@ -69,22 +80,19 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@20.0.11":
-  version "20.0.11"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-20.0.11.tgz#048990f5c83e1df94ba3181775afd97df2071a11"
-  integrity sha512-Ai726h+2vM7sg3BhpYI3VnJZXSrkuTS8nw+qq0fEmZst+WWwwwGJ2Spnvfx6tijRCVlu8r7UGbF7CB+1GPEtaA==
+"@artsy/reaction@21.0.2":
+  version "21.0.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.0.2.tgz#492afb5318bfa091980e3414ce5b6c04ab54578c"
+  integrity sha512-qkL7L3cPcyclbbVS2oupPjLlVvJ01jACUgMdz2iclDqx3n6Yk5k9sgrxSfMZqxa0kdx4xUudfyFNUpBKXWuikw==
   dependencies:
+    "@artsy/arc" "^1.4.2"
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@types/luxon" "^1.15.1"
     autosuggest-highlight "^3.1.1"
     cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
-    farce "^0.2.6"
     formik "^1.5.8"
-    found "^0.3.14"
-    found-relay "^0.3.1"
-    found-scroll "^0.1.5"
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
     jsonp "^0.2.1"
@@ -6322,7 +6330,7 @@ factor-bundle@2.5.0:
     through2 "^0.5.1"
     xtend "^4.0.0"
 
-farce@^0.2.1, farce@^0.2.6:
+farce@0.2.6, farce@^0.2.1, farce@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/farce/-/farce-0.2.6.tgz#3d307fae9eac46a148fd5535dee2dfbcf653ba83"
   integrity sha1-PTB/rp6sRqFI/VU13uLfvPZTuoM=
@@ -6773,7 +6781,7 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-found-relay@^0.3.1:
+found-relay@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.3.1.tgz#b525339595e5b3aa24af555423e60fdb33a5cb16"
   integrity sha512-N9lADMedKGkl+PNY/L/qf0rDy+3HRbO9IX8Gcvjpy2tgRmPy6Z2QM/zVOufCvvD8rYGP84CuqtmTWJvJrLPFYw==
@@ -6785,7 +6793,7 @@ found-relay@^0.3.1:
     prop-types-extra "^1.1.0"
     warning "^4.0.2"
 
-found-scroll@^0.1.5:
+found-scroll@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/found-scroll/-/found-scroll-0.1.5.tgz#23b6a127dde05572c573b71048798a5eaea35add"
   integrity sha1-I7ahJ93gVXLFc7cQSHmKXq6jWt0=
@@ -6794,7 +6802,7 @@ found-scroll@^0.1.5:
     prop-types "^15.6.0"
     scroll-behavior "^0.9.3"
 
-found@^0.3.14:
+found@0.3.14:
   version "0.3.14"
   resolved "https://registry.yarnpkg.com/found/-/found-0.3.14.tgz#0bfe2e7433951bf2df223e65c73756565d97ba8c"
   integrity sha512-Z4Ag0L8whIJwVf0MyNTkx9q3ekmbqK5RkCvlcVU7Dn3ruKfKSxbPReUiQi7mWGMTAut2JnkwiobSD/FQRhk9Vw==
