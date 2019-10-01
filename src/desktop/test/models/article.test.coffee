@@ -326,6 +326,29 @@ describe "Article", ->
         layout: 'series'
       @article.hasAMP().should.be.false()
 
+    it 'returns false if article is not featured', ->
+      @article.set
+        sections: [ type: 'text' ]
+        featured: false
+        published: true
+      @article.hasAMP().should.be.false()
+
+    it 'returns false if article is a series', ->
+      @article.set
+        sections: [ type: 'text' ]
+        featured: true
+        published: true
+        layout: 'series'
+      @article.hasAMP().should.be.false()
+    
+    it 'returns false if article is a video', ->
+      @article.set
+        sections: [ type: 'text' ]
+        featured: true
+        published: true
+        layout: 'video'
+      @article.hasAMP().should.be.false()
+
     it 'preps article for AMP', ->
       @article.set sections: [
         {
