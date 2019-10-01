@@ -243,3 +243,6 @@ export const amp = (req, res, next) => {
 
 export const redirectPost = (req, res, _next) =>
   res.redirect(301, req.url.replace("post", "article"))
+
+export const redirectAMP = (req, res, _next) =>
+  res.redirect(301, req.url.replace("/amp", ""))
