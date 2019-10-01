@@ -10,6 +10,7 @@ app.get '/robots.txt', routes.robots
 app.get ['/sitemap-articles.xml', '/sitemap-articles-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-artists.xml', '/sitemap-artists-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-artist-images.xml', '/sitemap-artist-images-:slug.xml'], routes.sitemaps
+app.get ['/sitemap-artists-titles.xml', '/sitemap-artists-titles:slug.xml'], routes.sitemaps
 app.get ['/sitemap-artworks.xml', '/sitemap-artworks-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-cities.xml', routes.sitemaps
 app.get '/sitemap-collect.xml', routes.sitemaps

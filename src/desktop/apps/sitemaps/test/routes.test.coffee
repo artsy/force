@@ -49,6 +49,7 @@ Disallow: /search
 Sitemap: https://www.artsy.net/sitemap-articles.xml
 Sitemap: https://www.artsy.net/sitemap-artists.xml
 Sitemap: https://www.artsy.net/sitemap-artist-images.xml
+Sitemap: https://www.artsy.net/sitemap-artist-titles.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-cities.xml
 Sitemap: https://www.artsy.net/sitemap-collect.xml
