@@ -1,6 +1,6 @@
 import express from "express"
 import { buildServerApp } from "@artsy/reaction/dist/Artsy/Router/server"
-import { appShellRoutes } from "reaction/Artsy/Router/AppShell/routes"
+// import { appShellRoutes } from "reaction/Artsy/Router/AppShell/routes"
 import { stitch } from "@artsy/stitch"
 
 export const app = express()
@@ -8,7 +8,7 @@ export const app = express()
 app.get("/experimental-app-shell*", async (req, res, next) => {
   try {
     const { bodyHTML, styleTags } = await buildServerApp({
-      routes: appShellRoutes,
+      routes: [],
       url: req.url,
     })
 
