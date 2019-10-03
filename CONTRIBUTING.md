@@ -67,6 +67,16 @@ yarn start:prod
 
 This creates a production-ready bundle of client and server-side code and boots the server. (This will take a while to compile.)
 
+## Creating a Review App
+
+If wanting to create a deploy for a WIP feature or for QA, [Hokusai](), supports [Review Apps](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh). This can be automated via the [`build_review_app`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script:
+
+```sh
+./scripts/build_review_app.sh review-app-name
+```
+
+Notably, the process isn’t fully automated as it requires creating a DNS record for the service in the `artsy.net` domain. This is required so that the Review App can oauth with [Gravity](https://github.com/artsy/gravity) (which does a hard check that the requesting client originates from the `artsy.net` domain). The script above will guide you in creating this, however.
+
 ## Create a Topic Branch
 
 Make sure your fork is up-to-date and create a topic branch for your feature or bug fix.
