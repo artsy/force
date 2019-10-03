@@ -1,14 +1,15 @@
+import React from "react"
 import express from "express"
 import { buildServerApp } from "@artsy/reaction/dist/Artsy/Router/server"
-// import { appShellRoutes } from "reaction/Artsy/Router/AppShell/routes"
+import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 
 export const app = express()
 
-app.get("/experimental-app-shell*", async (req, res, next) => {
+app.get("/*", async (req, res, next) => {
   try {
-    const { bodyHTML, styleTags } = await buildServerApp({
-      routes: [],
+    const { bodyHTML, styleTags, headTags } = await buildServerApp({
+      routes: getAppRoutes(),
       url: req.url,
     })
 
@@ -17,10 +18,11 @@ app.get("/experimental-app-shell*", async (req, res, next) => {
       layout: "../../components/main_layout/templates/react_blank_index.jade",
       blocks: {
         body: bodyHTML,
+        head: () => <>{headTags}</>,
       },
       locals: {
         ...res.locals,
-        assetPackage: "experimental-app-shell",
+        // assetPackage: "experimental-app-shell",
         styleTags,
       },
     })

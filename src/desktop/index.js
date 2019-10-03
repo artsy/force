@@ -13,9 +13,6 @@ app.use(
   })
 )
 
-// FIXME: Remove experiment
-app.use(require("./apps/experimental-app-shell/server").app)
-
 // NOTE:
 // App order matters as some apps establish logic that is shared inside of subapps.
 // Apps with hardcoded routes or "RESTful" routes
@@ -27,13 +24,19 @@ app.use(require("./apps/auction_reaction/server").app)
 app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
-app.use(require("./apps/artist/server").app)
+
+// FIXME: Remove experiment
+if (!process.env.EXPERIMENTAL_APP_SHELL) {
+  app.use(require("./apps/artist/server").app)
+  app.use(require("./apps/artwork/server").app)
+  app.use(require("./apps/collect/server").app)
+  app.use(require("./apps/search2/server").app)
+}
+
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction").app)
 app.use(require("./apps/auction_support"))
-app.use(require("./apps/artwork/server").app)
 app.use(require("./apps/about"))
-app.use(require("./apps/collect/server").app)
 app.use(require("./apps/categories").app)
 app.use(require("./apps/consign").app)
 app.use(require("./apps/contact"))
@@ -49,7 +52,6 @@ app.use(require("./apps/notifications"))
 app.use(require("./apps/order/server").app)
 app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
-app.use(require("./apps/search2/server").app)
 app.use(require("./apps/search"))
 app.use(require("./apps/show"))
 app.use(require("./apps/shows"))
@@ -92,3 +94,8 @@ app.use(require("./apps/user"))
 
 // Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
+
+// FIXME: Remove experiment
+if (process.env.EXPERIMENTAL_APP_SHELL) {
+  app.use(require("./apps/experimental-app-shell/server").app)
+}

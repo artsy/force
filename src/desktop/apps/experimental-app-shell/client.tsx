@@ -1,10 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { buildClientApp } from "reaction/Artsy/Router/client"
-// import { appShellRoutes } from "reaction/Artsy/Router/AppShell/routes"
+import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 
 buildClientApp({
-  routes: [],
+  routes: getAppRoutes(),
 })
   .then(({ ClientApp }) => {
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
