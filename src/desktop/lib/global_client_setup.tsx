@@ -9,6 +9,9 @@ import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
 
+// Mount global router
+import "desktop/apps/experimental-app-shell/client"
+
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
 const analyticsHooks = require("./analytics_hooks.coffee")
