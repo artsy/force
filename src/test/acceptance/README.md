@@ -6,7 +6,7 @@ These tests start a set of vanilla Express apps to mock the behavior of dependen
 
 A typical acceptance test will involve setting up these fake servers, running a nightmare instance to browse the website, and asserting the contents of the page using [Nightmare APIs](https://github.com/segmentio/nightmare#extract-from-the-page) or a small helper `$ = await browser.page('.selector')` to provide a convenient jQuery-like interface to the page's contents.
 
-````javascript
+```javascript
 /* eslint-env mocha */
 import { setup, teardown } from './helpers'
 
@@ -28,9 +28,11 @@ describe('', () => {
       $('body').html().should.containEql('These Terms of Use')
     })
   })
-````
+```
 
 ## Fixtures
+
+_**Note:** The description below appears to be obsolete. See [this thread](https://artsy.slack.com/archives/C2TQ4PT8R/p1570211335035500) in the meantime for a workaround for capturing fixtures._
 
 We use fixtures to mock downstream API's JSON responses. These JSON fixtures can be found in the test/acceptance/fixtures folders. You can make these yourself, or more conveniently, you might want to try recording the JSON responses from a given page using [Nock's recording functionality](https://github.com/node-nock/nock#recording). To do so...
 
@@ -45,13 +47,13 @@ $ Writing recordings...
 $ gravity/auction.json: GET stagingapi.artsy.net/api/v1/auction/phillips...
 ```
 
-````javascript
+```javascript
 before(async () => {
-  ({ gravity, browser } = await setup())
-  gravity.get('/api/v1/page/:id', (req, res) => {
-    res.send(require('./fixtures/gravity/auction.json'))
+  ;({ gravity, browser } = await setup())
+  gravity.get("/api/v1/page/:id", (req, res) => {
+    res.send(require("./fixtures/gravity/auction.json"))
   })
 })
-````
+```
 
 **Note:** These fixtures are intended to be a convenient starting point and not an end-all solution. It's encouraged that you modify, create, or delete the fixtures as you see fit for each test to take control of test behavior.
