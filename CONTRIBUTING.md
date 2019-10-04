@@ -90,7 +90,7 @@ If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say,
 1) Change `Type` dropdown to `CNAME`
 1) Paste in URL output by `build_review_app.sh` script into `RData` field, and add a `.` at the end
 1) Scroll to bottom and hit `Save` and then publish changes
-1) DNS will propagate and after a few minutes the review app will be available via `<your-supdomain>.artsy.net`
+1) DNS will propagate and after a few minutes the review app will be available via `<your-subdomain>.artsy.net`
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done. 
 
