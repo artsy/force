@@ -13,14 +13,14 @@ describe("Collection page", () => {
 
   after(teardown)
 
-  xit("renders a title and header info", async () => {
+  it("renders a title and header info", async () => {
     const $ = await browser.page("/collection/kaws-companions")
     $.html().should.containEql("KAWS: Companions")
     $.html().should.containEql("Collectible Sculptures")
     $.html().should.containEql("Brian Donnelly, better known as KAWS")
   })
 
-  xit("renders artwork grid", async () => {
+  it("renders artwork grid", async () => {
     const $ = await browser.page("/collection/kaws-companions")
     $.html().should.containEql("Boba Fett Companion")
     $.html().should.containEql("Woodstock")
