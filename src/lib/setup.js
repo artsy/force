@@ -73,13 +73,15 @@ export default function(app) {
   app.set("trust proxy", true)
 
   // Denied IPs
-  app.use(
-    ipfilter(IP_DENYLIST.split(","), {
-      allowedHeaders: ["x-forwarded-for"],
-      log: false,
-      mode: "deny",
-    })
-  )
+  if (IP_DENYLIST && IP_DENYLIST.length > 0) {
+    app.use(
+      ipfilter(IP_DENYLIST.split(","), {
+        allowedHeaders: ["x-forwarded-for"],
+        log: false,
+        mode: "deny",
+      })
+    )
+  }
 
   // Timeout middleware
   if (isProduction) {

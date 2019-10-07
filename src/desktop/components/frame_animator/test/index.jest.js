@@ -1,37 +1,38 @@
-import sinon from "sinon"
+import FrameAnimator from "../index"
 
-const rewire = require("rewire")("../index")
-const FrameAnimator = rewire.default
-
-xdescribe("FrameAnimator", () => {
+describe("FrameAnimator", () => {
   beforeEach(() => {
-    window.requestAnimationFrame = () => {}
-    window.performance = {
-      now: sinon.stub(),
+    delete global.requestAnimationFrame
+    global.requestAnimationFrame = () => {}
+
+    delete global.performance
+    global.performance = {
+      now: jest.fn(() => {
+        return 0
+      }),
     }
-    window.performance.now.onCall(0).returns(0)
   })
 
   it("fires the callback within the requested duration", () => {
     const duration = 100
     const timestampWithinDuration = 99
-    const callback = sinon.spy()
+    const callback = jest.fn()
 
     const animator = new FrameAnimator(callback, { duration })
     animator._animatorFunction(timestampWithinDuration)
 
-    callback.callCount.should.equal(1)
+    expect(callback).toHaveBeenCalledTimes(1)
   })
 
   it("does not fire the callback after the duration is up", () => {
     const duration = 100
-    const timestampAfterDuration = 101
-    const callback = sinon.spy()
+    const timestampAfterDuration = 200
+    const callback = jest.fn()
 
     const animator = new FrameAnimator(callback, { duration })
     animator._animatorFunction(timestampAfterDuration)
 
-    callback.callCount.should.equal(0)
+    expect(callback).not.toHaveBeenCalled()
   })
 
   it("animates from the starting value", () => {
@@ -39,7 +40,7 @@ xdescribe("FrameAnimator", () => {
     const startValue = 42
     const endValue = 420
     const timestamp = 0
-    const callback = sinon.spy()
+    const callback = jest.fn()
 
     const animator = new FrameAnimator(callback, {
       duration,
@@ -48,8 +49,8 @@ xdescribe("FrameAnimator", () => {
     })
     animator._animatorFunction(timestamp)
 
-    callback.callCount.should.equal(1)
-    callback.getCall(0).args[0].should.equal(42)
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(42)
   })
 
   it("animates to the ending value", () => {
@@ -57,7 +58,7 @@ xdescribe("FrameAnimator", () => {
     const startValue = 42
     const endValue = 420
     const timestamp = 100
-    const callback = sinon.spy()
+    const callback = jest.fn()
 
     const animator = new FrameAnimator(callback, {
       duration,
@@ -66,26 +67,30 @@ xdescribe("FrameAnimator", () => {
     })
     animator._animatorFunction(timestamp)
 
-    callback.callCount.should.equal(1)
-    callback.getCall(0).args[0].should.equal(420)
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(420)
   })
 
   it("queues itself again with requestAnimationFrame", () => {
     const duration = 100
     const startValue = 42
     const endValue = 420
-    const callback = sinon.spy()
+    const callback = jest.fn()
 
     // stub a series of hi-res timestamp calls for requestAnimationFrame
-    window.performance.now.onCall(1).returns(30) // re-queues
-    window.performance.now.onCall(2).returns(60) // re-queues
-    window.performance.now.onCall(3).returns(90) // re-queues
-    window.performance.now.onCall(4).returns(120) // finishes
+    global.performance = {
+      now: jest
+        .fn()
+        .mockImplementationOnce(() => 30) // re-queues
+        .mockImplementationOnce(() => 60) // re-queues
+        .mockImplementationOnce(() => 90) // re-queues
+        .mockImplementationOnce(() => 120), // finishes
+    }
 
     // stub requestAnimationFrame itself
-    sinon.stub(window, "requestAnimationFrame", fn => {
-      const currentTimestamp = window.performance.now()
-      fn(currentTimestamp)
+    global.requestAnimationFrame = jest.fn(cb => {
+      const currentTimestamp = global.performance.now()
+      cb(currentTimestamp)
     })
 
     const animator = new FrameAnimator(callback, {
@@ -95,50 +100,37 @@ xdescribe("FrameAnimator", () => {
     })
     animator.start()
 
-    callback.callCount.should.equal(3)
+    expect(callback).toHaveBeenCalledTimes(3)
   })
 
   it("uses sensible defaults", () => {
-    const callback = sinon.spy()
+    const callback = jest.fn()
     const animator = new FrameAnimator(callback)
 
     // animate from 0 to 1 in 500ms
     animator._animatorFunction(0)
     animator._animatorFunction(500)
 
-    callback.args.should.match([[0], [1]])
+    expect(callback.mock.calls).toEqual([[0], [1]])
   })
 
-  describe("easing function", () => {
-    let easingFunctions
-    let resetRewire
-
-    beforeEach(() => {
-      easingFunctions = {
-        sinInOut: sinon.spy(),
-        cubicInOut: sinon.spy(),
-      }
-      resetRewire = rewire.__set__("easingFunctions", easingFunctions)
-    })
-
-    afterEach(() => {
-      resetRewire()
-    })
+  xdescribe("easing function", () => {
+    // needs mocking of ../easing
 
     it("defaults to cubicInOut", () => {
-      const callback = sinon.spy()
+      const callback = jest.fn()
       const animator = new FrameAnimator(callback)
       animator._animatorFunction(0)
-      easingFunctions.cubicInOut.callCount.should.equal(1)
+      // expect(easingFunctions.cubicInOut).toHaveBeenCalledTimes(1)
     })
 
     it("can be configured by supplying a function name", () => {
-      const callback = sinon.spy()
+      const callback = jest.fn()
       const animator = new FrameAnimator(callback, {
         easing: "sinInOut",
       })
       animator._animatorFunction(0)
-      easingFunctions.sinInOut.callCount.should.equal(1)
+      // expect(easingFunctions.sinInOut).toHaveBeenCalledTimes(1)
     })
   })
 })
