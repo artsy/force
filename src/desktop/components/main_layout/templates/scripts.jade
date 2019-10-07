@@ -121,6 +121,8 @@ if sharify
 //- Stripe
 if options.stripev3
   script(id="stripe-js", src="https://js.stripe.com/v3/")
+else
+  script(id="stripe-js", src="https://js.stripe.com/v3/", async defer)
 
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other'
