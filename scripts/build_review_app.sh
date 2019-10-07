@@ -73,8 +73,15 @@ hokusai review_app env copy $NAME --configmap nginx-config --verbose
 # authentication requests won't work!
 hokusai review_app env set $NAME \
   APP_URL="https://$NAME.artsy.net" \
+  APPLICATION_NAME="$NAME" \
   COOKIE_DOMAIN="$NAME.artsy.net" \
   FORCE_URL="https://$NAME.artsy.net"
+
+# Publish Force assets to S3
+hokusai review_app run $NAME 'yarn publish-assets'
+
+# Refresh ENV
+hokusai review_app refresh $NAME
 
 # Now you need to create a CNAME for your review app and wait. This is required
 # as Gravity only allows authentication requests from requests of originating
