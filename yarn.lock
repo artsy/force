@@ -10,7 +10,18 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
-"@artsy/arc@1.4.5", "@artsy/arc@^1.4.2":
+"@artsy/arc@1.4.6":
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/@artsy/arc/-/arc-1.4.6.tgz#7ad7e96d0125841acbeac606ea9cd2ff9b179503"
+  integrity sha512-s3pPPz+qXFnVq+2v+S6zdvOenpR4zXPiW7cxcgQOUG4qzpI37mqLbM1Cq+Fylh+kA08bTYcoExA8pwIiBZLldA==
+  dependencies:
+    farce "0.2.6"
+    found "0.3.14"
+    found-relay "0.3.1"
+    found-scroll "0.1.5"
+    react-relay "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
+
+"@artsy/arc@^1.4.2":
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/@artsy/arc/-/arc-1.4.5.tgz#3b6cc41f9ed6c0b4ce41abcaf68171b3f606cd38"
   integrity sha512-Yu9G4PyGJW6VGi7I1ZOL4TXPOQUW/cNkCCAqsT7x5BbGXSCkFM+5NseH3F0cetnWwdiwoLZDjBm6ldjj/7sCdQ==
@@ -142,10 +153,10 @@
     use-deep-compare-effect "^1.2.0"
     yup "^0.24.1"
 
-"@artsy/stitch@6.1.4":
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.4.tgz#1f7cdcad22537dc2d5ab8ec50f9de0f1c5e05041"
-  integrity sha512-FiLuWb4qBXFssG2REWQuOiMZUfMPMj5PFeBI61/VWsEtZeP2yOe133rvog4/ZHqZm6O6bxuSizujxIDg3zGJUg==
+"@artsy/stitch@6.1.5":
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.5.tgz#fd23dab1a0dd4fd36e165773fd061c0609031705"
+  integrity sha512-mijUkSiEUzLmTxpdIs0uXojiRAFu9x7/cOho8tBFZqxygO9UBWQyj9bEmnBC3/qRGAHzWe1yOIQujhQFLWd7HQ==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
