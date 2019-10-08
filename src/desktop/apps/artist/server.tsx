@@ -1,12 +1,9 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
-import { Meta, query, toJSONLD } from "./components/Meta"
 import { stitch } from "@artsy/stitch"
 import { routes } from "reaction/Apps/Artist/routes"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
-
-const metaphysics = require("lib/metaphysics.coffee")
 
 export const app = express()
 
@@ -36,16 +33,8 @@ app.get(
         return
       }
 
-      const send = {
-        method: "post",
-        query,
-        variables: { artistID: req.params.artistID },
-      }
-
-      const { artist } = await metaphysics(send).then(data => data)
       const { APP_URL, IS_MOBILE, REFERRER } = res.locals.sd
       const isExternalReferer = !(REFERRER && REFERRER.includes(APP_URL))
-      const jsonLD = toJSONLD(artist, APP_URL)
 
       res.locals.sd.ARTIST_PAGE_CTA_ENABLED =
         !user && isExternalReferer && !IS_MOBILE
@@ -56,12 +45,7 @@ app.get(
         basePath: __dirname,
         layout: "../../components/main_layout/templates/react_redesign.jade",
         blocks: {
-          head: () => (
-            <>
-              {headTags}
-              <Meta sd={res.locals.sd} artist={artist} />
-            </>
-          ),
+          head: () => <React.Fragment>{headTags}</React.Fragment>,
           body: bodyHTML,
         },
         locals: {
@@ -69,9 +53,6 @@ app.get(
           assetPackage: "artist",
           scripts,
           styleTags,
-        },
-        data: {
-          jsonLD,
         },
       })
 
