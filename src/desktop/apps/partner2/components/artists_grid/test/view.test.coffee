@@ -8,7 +8,7 @@ PartnerArtists = require '../../../../../collections/partner_artists.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-PartnerArtistsGridView = benv.requireWithJadeify resolve(
+PartnerArtistsGridView = benv.requireWithPugify resolve(
   __dirname, '../view.coffee'
 ), ['template']
 

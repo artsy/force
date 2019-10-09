@@ -8,7 +8,7 @@ PartnerShow = require '../../../../../models/partner_show.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-HeroShowsCarousel = benv.requireWithJadeify resolve(
+HeroShowsCarousel = benv.requireWithPugify resolve(
   __dirname, '../view.coffee'
 ), ['template']
 

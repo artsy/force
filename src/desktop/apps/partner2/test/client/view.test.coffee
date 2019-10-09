@@ -31,7 +31,7 @@ describe 'PartnerView', ->
         asset: (->)
         params: {}
       }, =>
-        PartnerView = mod = benv.requireWithJadeify(
+        PartnerView = mod = benv.requireWithPugify(
           resolve(__dirname, '../../client/view'), ['tablistTemplate']
         )
         @profile = new Profile fabricate 'partner_profile'

@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-CTABarView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+CTABarView = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
 
 describe 'CTABarView', ->
   before (done) ->

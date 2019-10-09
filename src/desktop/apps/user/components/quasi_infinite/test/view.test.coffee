@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-QuasiInfiniteView = benv.requireWithJadeify require.resolve('../view'), ['template']
+QuasiInfiniteView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 class ViewFromQuasiInfiniteView extends QuasiInfiniteView
   kind: 'tests'

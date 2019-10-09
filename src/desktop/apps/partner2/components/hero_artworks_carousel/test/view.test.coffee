@@ -11,7 +11,7 @@ Artworks = require '../../../../../collections/artworks.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-HeroArtworksCarousel = benv.requireWithJadeify resolve(
+HeroArtworksCarousel = benv.requireWithPugify resolve(
   __dirname, '../view.coffee'
 ), ['template']
 

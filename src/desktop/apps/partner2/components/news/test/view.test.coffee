@@ -10,7 +10,7 @@ PartnerShowEvents = require '../../../../../collections/partner_show_events.coff
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-NewsView = benv.requireWithJadeify resolve(
+NewsView = benv.requireWithPugify resolve(
   __dirname, '../view.coffee'
 ), ['template']
 

@@ -13,7 +13,7 @@ describe 'HeadlineView', ->
         $: benv.require 'jquery'
         sd: {}
       Backbone.$ = $
-      @HeadlineView = benv.requireWithJadeify resolve(__dirname, '../headline_view'), ['template']
+      @HeadlineView = benv.requireWithPugify resolve(__dirname, '../headline_view'), ['template']
       done()
 
   after ->

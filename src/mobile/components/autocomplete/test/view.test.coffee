@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-AutoCompleteView = benv.requireWithJadeify resolve(__dirname, '../view'), [
+AutoCompleteView = benv.requireWithPugify resolve(__dirname, '../view'), [
   'template'
   'emptyTemplate'
   'resultTemplate'

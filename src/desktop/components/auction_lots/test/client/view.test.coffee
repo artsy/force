@@ -32,7 +32,7 @@ xdescribe 'Auction results client-side code', ->
       auctionLots: @auctionLots
       asset: (->)
     }, =>
-      AuctionResultsView = benv.requireWithJadeify (resolve __dirname, '../../client/view'), []
+      AuctionResultsView = benv.requireWithPugify (resolve __dirname, '../../client/view'), []
 
       AuctionResultsView.__set__ 'zoom', @zoomStub = sinon.stub()
       AuctionResultsView.__set__ 'FillwidthView', Backbone.View

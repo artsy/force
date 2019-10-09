@@ -6,7 +6,7 @@ sinon = require 'sinon'
 Artworks = require '../../../collections/artworks'
 CurrentUser = require '../../../models/current_user'
 { resolve } = require 'path'
-FillwidthView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+FillwidthView = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
 
 describe 'FillwidthView', ->
 

@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
-FollowingView = benv.requireWithJadeify resolve(__dirname, '../../client/following'),
+FollowingView = benv.requireWithPugify resolve(__dirname, '../../client/following'),
   ['profilesTemplate']
 
 describe 'Follows client-side code', ->

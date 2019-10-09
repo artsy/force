@@ -1,6 +1,6 @@
 benv = require 'benv'
 Backbone = require 'backbone'
-ShareView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template']
+ShareView = benv.requireWithPugify require.resolve('../view.coffee'), ['template']
 
 describe 'ShareView', ->
   before (done) ->

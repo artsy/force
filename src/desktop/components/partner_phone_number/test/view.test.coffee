@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
 PartnerLocations = require '../../../collections/partner_locations'
-PartnerPhoneNumberView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+PartnerPhoneNumberView = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
 
 describe 'PartnerPhoneNumberView', ->
   before (done) ->

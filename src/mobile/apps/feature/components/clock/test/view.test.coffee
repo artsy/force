@@ -20,7 +20,7 @@ describe 'ClockView', ->
 
     # Dynamically import ClockView constructor so that it pulls in the stubbed
     # setTimeout from sinon.useFakeTimers.
-    @ClockView = benv.requireWithJadeify require.resolve('../view'), ['template']
+    @ClockView = benv.requireWithPugify require.resolve('../view'), ['template']
     
   afterEach ->
     @clock.restore()

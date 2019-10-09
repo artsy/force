@@ -3,8 +3,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Partners = require '../../../../../collections/partners'
-PartnerCellView = benv.requireWithJadeify require.resolve('../../partner_cell/view'), ['template']
-PartnerCellCarouselView = benv.requireWithJadeify require.resolve('../view'), ['template']
+PartnerCellView = benv.requireWithPugify require.resolve('../../partner_cell/view'), ['template']
+PartnerCellCarouselView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 describe 'PartnerCellCarouselView', ->
 

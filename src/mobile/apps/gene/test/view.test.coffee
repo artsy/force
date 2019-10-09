@@ -27,7 +27,7 @@ xdescribe 'GeneArtworksView', ->
       @e = new $.Event('click')
       sinon.stub Backbone, 'sync'
       filename = path.resolve(__dirname, '../client.coffee')
-      { GeneArtworksView } = module = benv.requireWithJadeify filename, ['artworkColumnsTemplate']
+      { GeneArtworksView } = module = benv.requireWithPugify filename, ['artworkColumnsTemplate']
       @PoliteInfiniteScrollView = module.__get__ 'PoliteInfiniteScrollView'
       @politeScroll = sinon.stub(@PoliteInfiniteScrollView.prototype, 'initialize')
       @view = new GeneArtworksView
@@ -70,7 +70,7 @@ describe 'GeneArtistsView', ->
         gene: gene
       sinon.stub Backbone, 'sync'
       filename = path.resolve(__dirname, '../client.coffee')
-      { GeneArtistsView } = module = benv.requireWithJadeify filename, ['artistTemplate']
+      { GeneArtistsView } = module = benv.requireWithPugify filename, ['artistTemplate']
       @PoliteInfiniteScrollView = module.__get__ 'PoliteInfiniteScrollView'
       @politeScroll = sinon.stub(@PoliteInfiniteScrollView.prototype, 'initialize')
       @view = new GeneArtistsView

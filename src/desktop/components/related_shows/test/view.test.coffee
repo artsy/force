@@ -5,7 +5,7 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
-RelatedShowsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
+RelatedShowsView = benv.requireWithPugify resolve(__dirname, '../view.coffee'), ['template']
 
 describe 'RelatedShowsView', ->
   before (done) ->

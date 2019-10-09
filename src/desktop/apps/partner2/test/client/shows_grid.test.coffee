@@ -120,7 +120,7 @@ describe 'PartnerShowsGridView', ->
           partner: { href: -> }
           params: {}
         }, =>
-          PartnerShowsGridView = mod = benv.requireWithJadeify(
+          PartnerShowsGridView = mod = benv.requireWithPugify(
             (resolve __dirname, '../../client/shows_grid'), ['template', 'showFiguresTemplate']
           )
           @src = [

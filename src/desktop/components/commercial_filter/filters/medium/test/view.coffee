@@ -13,7 +13,7 @@ describe 'MediumFilterView', ->
         $: benv.require 'jquery'
         sd: {}
       Backbone.$ = $
-      @MediumFilterView = benv.requireWithJadeify resolve(__dirname, '../medium_filter_view'), ['template']
+      @MediumFilterView = benv.requireWithPugify resolve(__dirname, '../medium_filter_view'), ['template']
       done()
 
   after ->

@@ -5,8 +5,8 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Articles = require '../../../collections/articles'
-ArticleView = benv.requireWithJadeify resolve(__dirname, '../article'), ['template']
-ArticlesFeedView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'button', 'empty']
+ArticleView = benv.requireWithPugify resolve(__dirname, '../article'), ['template']
+ArticlesFeedView = benv.requireWithPugify resolve(__dirname, '../view'), ['template', 'button', 'empty']
 ArticlesFeedView.__set__ 'ArticleView', ArticleView
 
 describe 'ArticlesFeedView', ->

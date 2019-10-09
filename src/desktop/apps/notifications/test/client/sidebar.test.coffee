@@ -32,7 +32,7 @@ describe 'SidebarView', ->
     artist2 = get: -> { name: 'Kana', id: 'kana-abe', published_artworks_count: 5 }
     artists.models = [ artist1, artist2 ]
     benv.render resolve(__dirname, '../../templates/index.pug'), { sd: { FOLLOWING: artists }, asset: (->) }, =>
-      @SidebarView = mod = benv.requireWithJadeify(
+      @SidebarView = mod = benv.requireWithPugify(
         (resolve __dirname, '../../client/sidebar.coffee'), ['filterArtistTemplate']
       )
       @filterState = new Backbone.Model

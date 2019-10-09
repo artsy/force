@@ -28,7 +28,7 @@ describe 'ShowCityView', ->
         current: [new Show(fabricate 'show').set 'status', 'running']
         past: []
       , =>
-        { ShowCityView } = mod = benv.requireWithJadeify path.resolve(__dirname, '../client/shows.coffee'), ['showTemplate']
+        { ShowCityView } = mod = benv.requireWithPugify path.resolve(__dirname, '../client/shows.coffee'), ['showTemplate']
         @view = new ShowCityView
           collection: partnerShows
           el: $ 'body'

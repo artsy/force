@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 setup = require './setup'
-BasicInfo = benv.requireWithJadeify require.resolve('../../views/basic_info'), ['template']
+BasicInfo = benv.requireWithPugify require.resolve('../../views/basic_info'), ['template']
 
 describe 'BasicInfo', setup ->
   beforeEach ->

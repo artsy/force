@@ -18,7 +18,7 @@ describe 'HomePageView', ->
         heroUnits: []
         sd: {}
       }, =>
-        @HomePageView = benv.requireWithJadeify resolve(__dirname, '../client/view'),
+        @HomePageView = benv.requireWithPugify resolve(__dirname, '../client/view'),
           ['featuredItemsTemplate', 'currentShowsTemplate', 'artworkColumnsTemplate']
         sinon.stub Backbone, 'sync'
         @HomePageView.__set__ 'Flickity', @Flickity = sinon.stub()

@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Auction = require '../../../models/auction'
 Artworks = require '../../../collections/artworks'
-AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+AuctionArtworksView = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
 
 describe 'AuctionArtworksView', ->
   beforeEach (done) ->

@@ -10,10 +10,10 @@ _ = require 'underscore'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-ArtistsListView = benv.requireWithJadeify(
+ArtistsListView = benv.requireWithPugify(
   (resolve __dirname, '../../components/artists_list/view'), ['template']
 )
-PartnerArtistsView = benv.requireWithJadeify(
+PartnerArtistsView = benv.requireWithPugify(
   (resolve __dirname, '../../client/artists'), ['template']
 )
 

@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-FilterableListView = benv.requireWithJadeify resolve(__dirname, '../view'), [
+FilterableListView = benv.requireWithPugify resolve(__dirname, '../view'), [
   'filtersTemplate'
   'itemsTemplate'
   'headerTemplate'

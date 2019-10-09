@@ -25,7 +25,7 @@ describe 'DeepZoomView', ->
     sinon.stub Backbone, 'sync'
     @model = new Artwork(fabricate 'artwork')
     @OpenSeadragon = OpenSeadragon()
-    DeepZoomView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+    DeepZoomView = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
     DeepZoomView.__set__ 'getScript', (x, cb) -> cb()
     @view = new DeepZoomView el: $('body'), model: @model
     done()

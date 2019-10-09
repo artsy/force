@@ -11,7 +11,7 @@ describe 'HeaderCountView', ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      @HeaderCountView = benv.requireWithJadeify resolve(__dirname, '../../views/header_count_view'), ['template']
+      @HeaderCountView = benv.requireWithPugify resolve(__dirname, '../../views/header_count_view'), ['template']
 
       done()
 

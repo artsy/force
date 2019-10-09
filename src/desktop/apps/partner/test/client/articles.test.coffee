@@ -20,13 +20,13 @@ describe 'ArticlesAdapter', ->
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
       $.fn.fillwidthLite = sinon.stub()
-      @ArticlesAdapter = benv.requireWithJadeify(
+      @ArticlesAdapter = benv.requireWithPugify(
         (resolve __dirname, '../../client/articles'), ['articleTemplate', 'jsonldTemplate']
       )
-      @ArticlesGridView = benv.requireWithJadeify(
+      @ArticlesGridView = benv.requireWithPugify(
         (resolve __dirname, '../../../../components/articles_grid/view'), ['template', 'button', 'figure', 'empty']
       )
-      @ArticleView = benv.requireWithJadeify(
+      @ArticleView = benv.requireWithPugify(
         (resolve __dirname, '../../../../components/article/client/view'), ['editTemplate']
       )
       @ArticleView.__set__ 'initCarousel', sinon.stub()

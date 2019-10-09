@@ -42,7 +42,7 @@ describe 'ArticleView', ->
         superArticle: new Article { super_article: {} }
         relatedArticles: new Articles
       }, =>
-        @ArticleView = benv.requireWithJadeify(
+        @ArticleView = benv.requireWithPugify(
           resolve(__dirname, '../client/view'),
           []
         )

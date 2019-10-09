@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 setup = require './setup'
-Inquiry = benv.requireWithJadeify require.resolve('../../views/inquiry'), [
+Inquiry = benv.requireWithPugify require.resolve('../../views/inquiry'), [
   'template'
 ]
 

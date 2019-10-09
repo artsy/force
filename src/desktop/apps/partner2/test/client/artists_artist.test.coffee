@@ -9,7 +9,7 @@ benv = require 'benv'
 { fabricate } = require 'antigravity'
 rewire = require 'rewire'
 
-PartnerArtistsArtistView = benv.requireWithJadeify require.resolve('../../client/artists_artist'), ['template']
+PartnerArtistsArtistView = benv.requireWithPugify require.resolve('../../client/artists_artist'), ['template']
 
 describe 'PartnerArtistsArtistView', ->
 

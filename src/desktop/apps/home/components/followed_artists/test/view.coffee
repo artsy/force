@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Q = require 'bluebird-q'
 Items = require '../../../../../collections/items.coffee'
-FollowedArtistsRailView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template']
+FollowedArtistsRailView = benv.requireWithPugify require.resolve('../view.coffee'), ['template']
 
 describe 'FollowedArtistsRailView', ->
   before (done) ->

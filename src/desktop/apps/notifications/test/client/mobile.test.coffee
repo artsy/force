@@ -7,7 +7,7 @@ Backbone = require 'backbone'
 Notifications = require '../../../../collections/notifications.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
 Artist = require '../../../../models/artist.coffee'
-NotificationsView = benv.requireWithJadeify require.resolve('../../client/mobile'), [
+NotificationsView = benv.requireWithPugify require.resolve('../../client/mobile'), [
   'template'
   'artworkColumnsTemplate'
   'emptyTemplate'

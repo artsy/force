@@ -7,7 +7,7 @@ OrderedSets = require '../../../collections/ordered_sets.coffee'
 Gene = require '../../../models/gene'
 Genes = require '../../../collections/genes'
 { resolve } = require 'path'
-SuggestedGenesView = mod = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+SuggestedGenesView = mod = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
 
 describe 'SuggestedGenesView', ->
 

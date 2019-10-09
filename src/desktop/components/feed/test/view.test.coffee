@@ -31,7 +31,7 @@ xdescribe 'FeedView', ->
       )
       @feedItems = new FeedItems
       @feedItems.add @partnerShow
-      FeedView = benv.requireWithJadeify resolve(__dirname, '../client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']
+      FeedView = benv.requireWithPugify resolve(__dirname, '../client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']
       @view = new FeedView
         el: $("<div class='feed'></div>")
         feedItems: @feedItems

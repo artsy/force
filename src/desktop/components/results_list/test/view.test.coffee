@@ -10,12 +10,12 @@ describe 'ResultsListView', ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      TypeaheadView = benv.requireWithJadeify require.resolve('../../typeahead/view'), [
+      TypeaheadView = benv.requireWithPugify require.resolve('../../typeahead/view'), [
         'templates.index'
         'templates.empty'
         'templates.suggestion'
       ]
-      ResultsView = benv.requireWithJadeify require.resolve('../views/results'), ['template']
+      ResultsView = benv.requireWithPugify require.resolve('../views/results'), ['template']
       ResultsListView = rewire '../view'
       ResultsListView.__set__ 'ResultsView', ResultsView
       $.fn.typeahead = -> this

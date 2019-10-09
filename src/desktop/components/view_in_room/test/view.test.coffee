@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
-ViewInRoomView = benv.requireWithJadeify require.resolve('../view'), ['template']
+ViewInRoomView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 describe 'ViewInRoomView', ->
   before (done) ->

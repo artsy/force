@@ -26,7 +26,7 @@ describe 'PartnerArtistView', ->
         partner: new Partner(fabricate 'partner'),
         sd: {}
       }, =>
-        { PartnerArtistView } = mod = benv.requireWithJadeify resolve(__dirname, '../client/artist'), ['artworksTemplate']
+        { PartnerArtistView } = mod = benv.requireWithPugify resolve(__dirname, '../client/artist'), ['artworksTemplate']
         mod.__set__ 'ShareView', @ShareView = sinon.stub()
         @view = new PartnerArtistView
           artist: new Artist(fabricate 'artist')

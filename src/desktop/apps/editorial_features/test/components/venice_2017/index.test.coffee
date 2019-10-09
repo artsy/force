@@ -65,7 +65,7 @@ describe 'Venice Main', ->
         videoGuide: new Article {id: '123', title: 'Video Guide'}
         sub_articles: [{title:{'Sub 1'}, thumbnail_image: 'http://artsy.net/image.jpg'}, {title:{'Sub 2'}, thumbnail_image: 'http://artsy.net/image2.jpg'}]
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.pug'), @options, =>
-        VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), ['videoDescription']
+        VeniceView = benv.requireWithPugify resolve(__dirname, '../../../components/venice_2017/client/index'), ['videoDescription']
         VeniceView.__set__ 'sd',
           APP_URL: 'localhost'
           VIDEO_INDEX: 0

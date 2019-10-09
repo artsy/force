@@ -23,7 +23,7 @@ xdescribe 'ArticleView', ->
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
       $.fn.fillwidthLite = sinon.stub().yieldsTo('done', [{ $el: $('img') }])
-      @ArticleView = benv.requireWithJadeify(
+      @ArticleView = benv.requireWithPugify(
         resolve(__dirname, '../client/view')
         ['editTemplate' ]
       )

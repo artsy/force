@@ -5,8 +5,8 @@ Backbone = require 'backbone'
 openFeedbackModal = rewire '../index'
 openFeedbackModal.__set__
   views:
-    how_can_we_help: benv.requireWithJadeify require.resolve('../views/how_can_we_help'), ['template']
-    press: benv.requireWithJadeify require.resolve('../views/press'), ['template']
+    how_can_we_help: benv.requireWithPugify require.resolve('../views/how_can_we_help'), ['template']
+    press: benv.requireWithPugify require.resolve('../views/press'), ['template']
   openMultiPageModal: openMultiPageModal = sinon.stub()
   openFeedback: openFeedback = sinon.stub()
 

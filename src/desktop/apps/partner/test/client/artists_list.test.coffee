@@ -153,7 +153,7 @@ describe 'PartnerArtistsListView', ->
         Backbone.$ = $
         benv.render resolve(__dirname, '../../templates/artists_list.pug'), { groups: {} }, =>
           @PartnerArtistsListView = mod =
-            benv.requireWithJadeify resolve(__dirname, '../../client/artists_list'), ['template']
+            benv.requireWithPugify resolve(__dirname, '../../client/artists_list'), ['template']
           @partner = fabricate('partner', default_profile_id: 'taipei-fine-art-museum')
           @pas = new PartnerArtists [
             fabricate('partner_artist', partner: @partner),

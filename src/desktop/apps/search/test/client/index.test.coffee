@@ -21,7 +21,7 @@ describe 'SearchResultsView', ->
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         Backbone.$ = $
         sinon.stub(Backbone, 'sync')
-        { SearchResultsView } = benv.requireWithJadeify path.resolve(__dirname, '../../client/index.coffee'), ['imageTemplate', 'resolvedImage']
+        { SearchResultsView } = benv.requireWithPugify path.resolve(__dirname, '../../client/index.coffee'), ['imageTemplate', 'resolvedImage']
         @view = new SearchResultsView
           results: [fixture.searchResult]
         done()

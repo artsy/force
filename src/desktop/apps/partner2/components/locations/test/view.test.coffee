@@ -8,7 +8,7 @@ PartnerLocations = require '../../../../../collections/partner_locations'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-LocationsView = benv.requireWithJadeify resolve(
+LocationsView = benv.requireWithPugify resolve(
   __dirname, '../view.coffee'
 ), ['template']
 

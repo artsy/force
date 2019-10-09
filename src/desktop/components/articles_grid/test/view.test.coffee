@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-ArticlesGridView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'button', 'empty', 'figure']
+ArticlesGridView = benv.requireWithPugify resolve(__dirname, '../view'), ['template', 'button', 'empty', 'figure']
 
 describe 'ArticlesGridView', ->
   before (done) ->

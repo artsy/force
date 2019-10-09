@@ -13,7 +13,7 @@ describe 'PillboxView', ->
         $: benv.require 'jquery'
         sd: {}
       Backbone.$ = $
-      @PillboxView = benv.requireWithJadeify resolve(__dirname, '../pillbox_view'), ['template']
+      @PillboxView = benv.requireWithPugify resolve(__dirname, '../pillbox_view'), ['template']
       done()
 
   after ->

@@ -16,9 +16,9 @@ describe 'Affiliated', setup ->
     benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
     window.jQuery = $
 
-    Affiliated = benv.requireWithJadeify require.resolve('../../views/affiliated'), ['template']
-    ResultsView = benv.requireWithJadeify require.resolve('../../../results_list/views/results'), ['template']
-    TypeaheadView = benv.requireWithJadeify require.resolve('../../../typeahead/view'), ['templates.index']
+    Affiliated = benv.requireWithPugify require.resolve('../../views/affiliated'), ['template']
+    ResultsView = benv.requireWithPugify require.resolve('../../../results_list/views/results'), ['template']
+    TypeaheadView = benv.requireWithPugify require.resolve('../../../typeahead/view'), ['templates.index']
 
     ResultsListView = rewire '../../../results_list/view'
     ResultsListView.__set__ 'ResultsView', ResultsView

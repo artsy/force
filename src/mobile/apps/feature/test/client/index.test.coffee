@@ -32,7 +32,7 @@ xdescribe 'Feature page client-side code', ->
         feature: new Feature fabricate 'feature'
         sd: { API_URL: 'foo/bar' }
       }, =>
-        { @FeatureView, @init } = benv.requireWithJadeify resolve(__dirname, '../../client'), [
+        { @FeatureView, @init } = benv.requireWithPugify resolve(__dirname, '../../client'), [
             'artworkListTemplate'
             'featuredItemsTemplate'
             'itemsTemplate'

@@ -8,7 +8,7 @@ describe 'TypeaheadView', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-      TypeaheadView = benv.requireWithJadeify require.resolve('../view'), [
+      TypeaheadView = benv.requireWithPugify require.resolve('../view'), [
         'templates.index'
         'templates.empty'
         'templates.suggestion'

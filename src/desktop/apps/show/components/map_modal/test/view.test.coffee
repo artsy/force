@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 PartnerShow = require '../../../../../models/partner_show'
 Partner = require '../../../../../models/partner'
-MapModalView = benv.requireWithJadeify require.resolve('../view'), ['template']
+MapModalView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 xdescribe 'MapModalView', ->
   beforeEach (done) ->

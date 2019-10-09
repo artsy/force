@@ -10,7 +10,7 @@ describe 'SelectView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       filename = path.resolve(__dirname, '../client/select_view.coffee')
-      SelectView = benv.requireWithJadeify filename, ['template']
+      SelectView = benv.requireWithPugify filename, ['template']
 
       @triggerSpy = sinon.stub()
       SelectView.__set__ 'mediator', trigger: @triggerSpy

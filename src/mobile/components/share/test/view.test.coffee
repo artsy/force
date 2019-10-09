@@ -10,7 +10,7 @@ describe 'ShareView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       filename = path.resolve(__dirname, '../view.coffee')
-      ShareView = benv.requireWithJadeify filename, ['template']
+      ShareView = benv.requireWithPugify filename, ['template']
       @view = new ShareView
         el: $('body')
         imageUrl: 'foo.jpg'

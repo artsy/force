@@ -16,7 +16,7 @@ xdescribe 'ArtworkColumns', ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
-      ArtworkColumnsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['artworkColumns', 'artworkItem']
+      ArtworkColumnsView = benv.requireWithPugify resolve(__dirname, '../view'), ['artworkColumns', 'artworkItem']
       Backbone.$ = $
       done()
 

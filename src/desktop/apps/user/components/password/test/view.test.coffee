@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../../models/current_user'
-PasswordView = benv.requireWithJadeify require.resolve('../view'), ['template']
+PasswordView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 describe 'PasswordView', ->
   before (done) ->

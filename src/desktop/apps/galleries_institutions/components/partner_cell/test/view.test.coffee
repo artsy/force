@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Partner = require '../../../../../models/partner'
-PartnerCellView = benv.requireWithJadeify require.resolve('../view'), ['template']
+PartnerCellView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 PartnerCellView.__set__ 'Cities', [{"slug": "new-york-ny-usa", "name": "New York", "full_name": "New York, NY, USA", "coords": [40.71, -74.01 ] }]
 

@@ -13,7 +13,7 @@ describe 'RelatedArticlesView', ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      @RelatedArticlesView = benv.requireWithJadeify(
+      @RelatedArticlesView = benv.requireWithPugify(
         resolve(__dirname, '../view.coffee')
         ['template']
       )

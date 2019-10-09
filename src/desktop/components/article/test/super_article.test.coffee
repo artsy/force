@@ -20,7 +20,7 @@ describe 'SuperArticleView', ->
       window.resize = ->
       $.fn.waypoint = sinon.stub()
       Backbone.$ = $
-      @ArticleView = benv.requireWithJadeify(
+      @ArticleView = benv.requireWithPugify(
         resolve(__dirname, '../client/super_article'), []
       )
       stubChildClasses @ArticleView, this,

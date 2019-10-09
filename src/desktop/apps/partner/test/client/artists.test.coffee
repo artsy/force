@@ -31,7 +31,7 @@ describe 'PartnerArtistsView', ->
         asset: (->)
         params: {}
       }, =>
-        PartnerArtistsView = mod = benv.requireWithJadeify(
+        PartnerArtistsView = mod = benv.requireWithPugify(
           (resolve __dirname, '../../client/artists'), ['template']
         )
         @profile = new Profile fabricate 'partner_profile'

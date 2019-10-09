@@ -16,7 +16,7 @@ describe 'FeatureView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @FeatureView = mod = benv.requireWithJadeify(
+      @FeatureView = mod = benv.requireWithPugify(
         (resolve __dirname, '../../client/view'),
         ['setsTemplate', 'artworkColumns']
       )

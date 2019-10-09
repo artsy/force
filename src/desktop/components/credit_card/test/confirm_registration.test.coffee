@@ -14,7 +14,7 @@ describe 'ConfirmRegistration', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      ConfirmRegistration = benv.requireWithJadeify(
+      ConfirmRegistration = benv.requireWithPugify(
         resolve(__dirname, '../client/confirm_registration'),
         ['template']
       )

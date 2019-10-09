@@ -6,7 +6,7 @@ rewire = require 'rewire'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork.coffee'
 PartnerLocations = rewire '../index'
-PartnerPhoneNumberView = benv.requireWithJadeify require.resolve('../../partner_phone_number/view.coffee'), [
+PartnerPhoneNumberView = benv.requireWithPugify require.resolve('../../partner_phone_number/view.coffee'), [
   'template'
 ]
 

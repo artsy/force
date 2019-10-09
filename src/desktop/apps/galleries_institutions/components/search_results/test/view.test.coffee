@@ -4,7 +4,7 @@ benv = require 'benv'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 ResultsView = rewire '../view.coffee'
-PartnerCellView = benv.requireWithJadeify require.resolve('../../partner_cell/view'), ['template']
+PartnerCellView = benv.requireWithPugify require.resolve('../../partner_cell/view'), ['template']
 
 describe 'ResultsView', ->
 

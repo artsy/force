@@ -32,7 +32,7 @@ describe 'Main page client-side code', ->
         byPriceHash: { '1:1000': "Under $1,000" }
         sd: {}
       }, =>
-        { FairMainPageView } = benv.requireWithJadeify resolve(__dirname, '../../client/main_page'),
+        { FairMainPageView } = benv.requireWithPugify resolve(__dirname, '../../client/main_page'),
           ['featuredLinksTemplate', 'primarySetTemplate', 'imageNavItemTemplate']
         @view = new FairMainPageView
           el: $ 'body'

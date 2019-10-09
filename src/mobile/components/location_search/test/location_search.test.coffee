@@ -16,7 +16,7 @@ describe 'Location Search', ->
       }
       Backbone.$ = $
       benv.render resolve(__dirname, '../template.pug'), =>
-      { @LocationSearchView } = benv.requireWithJadeify resolve(__dirname, '../index'), ['template']
+      { @LocationSearchView } = benv.requireWithPugify resolve(__dirname, '../index'), ['template']
       done()
 
   afterEach ->

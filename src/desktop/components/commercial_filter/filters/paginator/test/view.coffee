@@ -16,7 +16,7 @@ describe 'Paginator', ->
         $: benv.require 'jquery'
         sd: {}
       Backbone.$ = $
-      PaginatorView = benv.requireWithJadeify resolve(__dirname, '../paginator_view'), ['template']
+      PaginatorView = benv.requireWithPugify resolve(__dirname, '../paginator_view'), ['template']
       done()
 
   after ->

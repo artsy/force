@@ -20,7 +20,7 @@ describe 'Fair feed page client-side code', ->
         fair: new Fair(fabricate 'fair')
         sd: {}
       }, =>
-        { FeedView } = benv.requireWithJadeify resolve(__dirname, '../../client/feed'),
+        { FeedView } = benv.requireWithPugify resolve(__dirname, '../../client/feed'),
           ['fairEntriesTemplate']
 
         @view = new FeedView

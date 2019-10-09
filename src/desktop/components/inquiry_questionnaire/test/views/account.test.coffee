@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 setup = require './setup'
 { resolve } = require 'path'
 
-Account = benv.requireWithJadeify resolve(__dirname, '../../views/account'), [
+Account = benv.requireWithPugify resolve(__dirname, '../../views/account'), [
   'templates.login'
   'templates.register'
   'templates.forgot'

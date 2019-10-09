@@ -11,7 +11,7 @@ describe 'ModalView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       filename = path.resolve(__dirname, '../view.coffee')
-      ModalView = benv.requireWithJadeify filename, ['template']
+      ModalView = benv.requireWithPugify filename, ['template']
 
       @triggerSpy = sinon.stub()
       ModalView.__set__ 'mediator', on: sinon.stub()

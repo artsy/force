@@ -13,7 +13,7 @@ describe 'ColorFilterView', ->
         $: benv.require 'jquery'
         sd: {}
       Backbone.$ = $
-      @ColorFilterView = benv.requireWithJadeify resolve(__dirname, '../color_filter_view'), ['template']
+      @ColorFilterView = benv.requireWithPugify resolve(__dirname, '../color_filter_view'), ['template']
       done()
 
   after ->

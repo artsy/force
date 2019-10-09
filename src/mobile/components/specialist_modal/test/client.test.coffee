@@ -14,7 +14,7 @@ describe 'SpecialistView', ->
       sinon.stub Backbone, 'sync'
       sinon.stub $, 'ajax'
 
-      SpecialistView = benv.requireWithJadeify resolve(__dirname, '../client/specialist_view'), ['template', 'successTemplate']
+      SpecialistView = benv.requireWithPugify resolve(__dirname, '../client/specialist_view'), ['template', 'successTemplate']
 
       @view = new SpecialistView
         collection: new Backbone.Collection [fabricate 'representative']

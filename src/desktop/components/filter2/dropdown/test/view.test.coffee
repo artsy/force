@@ -15,7 +15,7 @@ describe 'Filter / Dropdown', ->
         _s: require('underscore.string')
         filterLabelMap: require '../label_map.coffee'
       Backbone.$ = $
-      DropdownView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+      DropdownView = benv.requireWithPugify resolve(__dirname, '../view'), ['template']
       @view = new DropdownView
         el: $ "<div></div>"
         params: new Backbone.Model

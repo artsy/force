@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user'
-FeedbackView = benv.requireWithJadeify require.resolve('../views/feedback'), ['template']
+FeedbackView = benv.requireWithPugify require.resolve('../views/feedback'), ['template']
 
 describe 'FeedbackView', ->
   before (done) ->

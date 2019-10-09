@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 
-LocationSearchView = benv.requireWithJadeify(resolve(__dirname, '../index'), ['template'])
+LocationSearchView = benv.requireWithPugify(resolve(__dirname, '../index'), ['template'])
 
 describe 'Location Search', ->
   beforeEach (done) ->

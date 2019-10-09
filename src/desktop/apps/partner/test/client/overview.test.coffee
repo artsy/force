@@ -30,7 +30,7 @@ describe 'PartnerOverviewView', ->
         asset: (->)
         params: {}
       }, =>
-        PartnerOverviewView = mod = benv.requireWithJadeify(
+        PartnerOverviewView = mod = benv.requireWithPugify(
           (resolve __dirname, '../../client/overview'), ['template', 'artistsGridTemplate']
         )
 
@@ -96,7 +96,7 @@ describe 'PartnerOverviewView', ->
         asset: (->)
         params: {}
       }, =>
-        @PartnerOverviewView = mod = benv.requireWithJadeify(
+        @PartnerOverviewView = mod = benv.requireWithPugify(
           (resolve __dirname, '../../client/overview'), ['template', 'artistsGridTemplate']
         )
 

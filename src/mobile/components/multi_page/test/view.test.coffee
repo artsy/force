@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 _ = require 'underscore'
-MultiPageView = benv.requireWithJadeify require.resolve('../view'), ['template']
+MultiPageView = benv.requireWithPugify require.resolve('../view'), ['template']
 config = require '../config'
 
 describe 'MultiPageView', ->

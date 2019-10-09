@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../../models/current_user'
-LinkedAccountsView = benv.requireWithJadeify require.resolve('../view'), ['template']
+LinkedAccountsView = benv.requireWithPugify require.resolve('../view'), ['template']
 LinkedAccountsView.__set__ 'sd', AP:
   twitterPath: '/users/auth/twitter'
   facebookPath: '/users/auth/facebook'

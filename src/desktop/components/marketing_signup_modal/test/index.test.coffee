@@ -8,7 +8,7 @@ describe 'MarketingSignupModal', ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       sinon.stub $, 'ajax'
-      @MarketingSignupModal = benv.requireWithJadeify(
+      @MarketingSignupModal = benv.requireWithPugify(
         require.resolve '../index.coffee'
         ['template']
       )

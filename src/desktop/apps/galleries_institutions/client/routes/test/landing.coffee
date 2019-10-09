@@ -46,7 +46,7 @@ describe 'LandingCarouselView', ->
     LandingCarouselView.__set__ 'fetchLocationCarousel', @fetch
     @fetch.returns Q.promise (resolve, reject) => resolve @category
 
-    @PartnerCellCarouselView = benv.requireWithJadeify resolve(__dirname, '../../../components/partner_cell_carousel/view'), ['template']
+    @PartnerCellCarouselView = benv.requireWithPugify resolve(__dirname, '../../../components/partner_cell_carousel/view'), ['template']
     LandingCarouselView.__set__ 'PartnerCellCarouselView', @PartnerCellCarouselView
     @PartnerCellCarouselView.prototype.postRender = sinon.stub()
     @PartnerCellCarouselView.prototype.initialize = sinon.spy()

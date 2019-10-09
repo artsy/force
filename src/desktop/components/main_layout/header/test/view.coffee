@@ -26,7 +26,7 @@ describe 'HeaderView', ->
     sinon.stub Backbone, 'sync'
     @sd = { HEADER_CLASS: 'stub' }
     benv.render resolve(__dirname, '../templates/index.pug'), { sd: @sd }, =>
-      @HeaderView = benv.requireWithJadeify(
+      @HeaderView = benv.requireWithPugify(
         resolve(__dirname, '../view')
         ['bundleTemplate']
       )
@@ -74,7 +74,7 @@ describe 'HeaderView', ->
       @user.type = 'Admin'
       sd = { CURRENT_USER: @user}
       benv.render resolve(__dirname, '../templates/index.pug'), { sd: sd }, =>
-        @HeaderView = benv.requireWithJadeify(
+        @HeaderView = benv.requireWithPugify(
           resolve(__dirname, '../view')
           ['bundleTemplate']
         )

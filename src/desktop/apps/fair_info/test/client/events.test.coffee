@@ -47,7 +47,7 @@ describe 'FairInfoEventsView', ->
       }
       infoMenu: @infoMenu.infoMenu
     }, =>
-      @FairInfoEventsView = benv.requireWithJadeify resolve(__dirname, '../../client/events'), ['template']
+      @FairInfoEventsView = benv.requireWithPugify resolve(__dirname, '../../client/events'), ['template']
       @FairInfoEventsView.__set__ 'sd', data
       sinon.stub(@FairInfoEventsView.prototype, 'initializeBlurb')
       @view = new @FairInfoEventsView { el: $('.fair-info2-body'), model: @profile, fair: @fair }

@@ -11,7 +11,7 @@ describe 'FiltersView', ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      @FiltersView = benv.requireWithJadeify resolve(__dirname, '../../views/filters_view'), ['template']
+      @FiltersView = benv.requireWithPugify resolve(__dirname, '../../views/filters_view'), ['template']
 
       done()
 

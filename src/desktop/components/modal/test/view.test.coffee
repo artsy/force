@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 mediator = require '../../../lib/mediator.coffee'
 { resolve } = require 'path'
-ModalView = benv.requireWithJadeify resolve(__dirname, '../view'), ['modalTemplate']
+ModalView = benv.requireWithPugify resolve(__dirname, '../view'), ['modalTemplate']
 
 xdescribe 'ModalView', ->
   beforeEach (done) ->

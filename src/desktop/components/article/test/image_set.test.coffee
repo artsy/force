@@ -19,7 +19,7 @@ describe 'ImageSetView', ->
         _s: benv.require('underscore.string')
       Backbone.$ = $
       $.fn.imagesLoaded = ->
-      @ImageSetView = benv.requireWithJadeify(
+      @ImageSetView = benv.requireWithPugify(
         resolve(__dirname, '../client/image_set')
         ['template' ]
       )

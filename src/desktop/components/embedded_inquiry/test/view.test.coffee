@@ -12,7 +12,7 @@ describe 'EmbeddedInquiryView', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-      EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
+      EmbeddedInquiryView = benv.requireWithPugify require.resolve('../view'), [
         'template'
         'confirmation'
       ]

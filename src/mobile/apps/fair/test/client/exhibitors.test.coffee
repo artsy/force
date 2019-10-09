@@ -22,7 +22,7 @@ describe 'Exhibitors page client-side code', ->
         artworkColumnsTemplate: ->
         sd: {}
       }, =>
-        { FairExhibitorsView } = benv.requireWithJadeify resolve(__dirname, '../../client/exhibitors'),
+        { FairExhibitorsView } = benv.requireWithPugify resolve(__dirname, '../../client/exhibitors'),
           ['exhibitorsTemplate', 'artworkColumnsTemplate']
         @view = new FairExhibitorsView
           el: $ 'body'

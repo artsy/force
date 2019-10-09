@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../../models/current_user'
-DeleteMyAccountFormView = benv.requireWithJadeify require.resolve('../view'), ['template']
+DeleteMyAccountFormView = benv.requireWithPugify require.resolve('../view'), ['template']
 
 describe 'DeleteMyAccountFormView', ->
   before (done) ->

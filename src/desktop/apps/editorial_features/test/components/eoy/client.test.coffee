@@ -99,7 +99,7 @@ xdescribe 'EoyView', ->
         asset: ->
       }
       benv.render resolve(__dirname, '../../../components/eoy/templates/index.pug'), @options, =>
-        { EoyView } = mod = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
+        { EoyView } = mod = benv.requireWithPugify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
         mod.__set__ 'initCarousel', @carousel = sinon.stub()
         @playVideo = sinon.stub EoyView::, 'playVideo'
         boundaryArray = [4931.6875, 6317.1875, 9595.125, 12164.203125, 14924.03125, 18523.484375, 21394.359375, 24569.453125, 27352.703125, 29895.953125, 32703.140625, 35213.125, 35293.125]

@@ -79,7 +79,7 @@ describe 'MagazineView', ->
         pluck: ->
       , =>
         filename = path.resolve(__dirname, '../../client/articles.coffee')
-        { MagazineView } = module = benv.requireWithJadeify filename, ['articleTemplate']
+        { MagazineView } = module = benv.requireWithPugify filename, ['articleTemplate']
 
         @view = new MagazineView
           el: $ 'body'
