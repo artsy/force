@@ -203,7 +203,6 @@
     "http-proxy": "1.16.2",
     "invariant": "2.2.4",
     "ip": "1.1.5",
-    "jade": "1.11.0",
     "jquery": "2.2.4",
     "jquery-fillwidth-lite": "1.0.8",
     "jquery-on-infinite-scroll": ">=1.0.1 && 1.0.1",

@@ -23,7 +23,7 @@ exports.baseConfig = {
         use: ["cache-loader", "coffee-loader"],
       },
       {
-        test: /\.(jade|pug)$/,
+        test: /\.pug$/,
         include: path.resolve(basePath, "src"),
         use: [
           {
@@ -55,6 +55,9 @@ exports.baseConfig = {
       },
     ],
   },
+  node: {
+    fs: "empty",
+  },
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
@@ -67,7 +70,6 @@ exports.baseConfig = {
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
-      jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
   ],
@@ -81,16 +83,7 @@ exports.baseConfig = {
       "styled-components": require.resolve("styled-components"),
       react: require.resolve("react"),
     },
-    extensions: [
-      ".mjs",
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx",
-      ".json",
-      ".jade",
-      ".coffee",
-    ],
+    extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx", ".json", ".coffee"],
     // Symlink issues should be fixed via `yarn --pnp`
     modules: [path.resolve(basePath, "src"), "node_modules"],
     symlinks: false,
