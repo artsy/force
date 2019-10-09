@@ -24,7 +24,7 @@ block body
           tr
             th= modal["campaignName"]
             th
-              a(href="https://www.artsy.net/?m-id=#{modal['slug']}", target="_blank")= modal["slug"]
+              a(href="https://www.artsy.net/?m-id=" + modal['slug'], target="_blank")= modal["slug"]
             th= modal["copy"]
             th
               a(href=modal["image"])= modal["image"]

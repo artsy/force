@@ -14,7 +14,7 @@ block body
   include ./header
   .consignments-page
     header.consignments-header(
-      style='background-image: url(#{header.image.src});'
+      style='background-image: url(' + header.image.src + ');'
     )
       h1.consignments-header__headline
         = header.headline
@@ -97,7 +97,7 @@ block body
       if sales && sales.length > 0
         //- Upcoming sales, desktop version
         section.consignments-section.consignments-upcoming-sales.consignments-upcoming-sales--desktop(
-          style='background-image: url(#{sections.upcoming_sales.image.src});'
+          style='background-image: url(' + sections.upcoming_sales.image.src + ');'
         )
           .consignments-section__content.consignments-upcoming-sales__content
             .consignments-section__about
@@ -114,7 +114,7 @@ block body
 
         //- Upcoming sales, mobile version
         section.consignments-section.consignments-upcoming-sales.consignments-upcoming-sales--mobile(
-          style='background-image: url(#{sections.upcoming_sales.mobile_image.src});'
+          style='background-image: url(' + sections.upcoming_sales.mobile_image.src + ');'
         )
           .consignments-section__content.consignments-upcoming-sales__content
             .consignments-section__about
@@ -155,7 +155,7 @@ block body
               = sections.footer.button_cta
 
     .consignments-footer(
-      style='background-image: url(#{sections.footer.image.src});'
+      style='background-image: url(' + sections.footer.image.src + ');'
     )
       h1.consignments-header__headline
         = sections.footer.headline

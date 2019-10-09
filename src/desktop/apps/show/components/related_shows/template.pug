@@ -6,7 +6,7 @@
     include ./templates/show
 
   if fromShowGuide && city && (title !== 'Featured Shows')
-    a.avant-garde-button-white.show-related-shows__more( href= '/shows/#{city.slug}' )
+    a.avant-garde-button-white.show-related-shows__more( href= '/shows/' + city.slug )
       | See more shows in #{city.name}
 
   if linkToFair

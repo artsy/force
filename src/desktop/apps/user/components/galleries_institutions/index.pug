@@ -3,7 +3,7 @@ for profile in profiles.models
   .settings-galleries-institutions__profile
     a.settings-galleries-institutions__profile__icon(
       href= href
-      style="background-image: url(#{profile.icon().imageUrl('square')});"
+      style="background-image: url(" + profile.icon().imageUrl('square') + ");"
     )
     .settings-galleries-institutions__profile__metadata
       a.settings-galleries-institutions__profile__metadata__name( href= href )

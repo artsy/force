@@ -2,7 +2,7 @@ mixin current-fair-figure(fair)
   .fairs__current-fair
     .fairs__current-fair__image
       a.hoverable-image-link( href= fair.href )
-        .hoverable-image( style="background-image: url(#{fair.image.url});" )
+        .hoverable-image( style="background-image: url(" + fair.image.url + ");" )
         .fairs__current-fair__image__overlay Explore the fair
     .fairs-fair__meta
       a( href= fair.href )
@@ -16,7 +16,7 @@ mixin current-fair-figure(fair)
               | , #{fair.location.city ? fair.location.city : fair.location.country}
 
 each row in currentFairRows
-  .fairs__current-fair-row(class="fairs__current-fair-row--#{row.type}")
+  .fairs__current-fair-row(class="fairs__current-fair-row--" + row.type)
     each fair in row.fairs
       +current-fair-figure(fair)
     if row.type == 'two-third-promo' || row.type == 'half-promo'

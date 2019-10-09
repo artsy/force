@@ -8,7 +8,7 @@
       .team-channel-nav__artsy-logo
         a(href='/')
           i.icon-logotype
-      a.team-channel-nav__name(href="#{sd.APP_URL}/#{channel.get('slug')}")= channel.get('name')
+      a.team-channel-nav__name(href=sd.APP_URL + "/" + channel.get('slug'))= channel.get('name')
       .team-channel-nav__tagline= channel.get('tagline')
       .team-channel-nav__links
         for link in channel.get('links')

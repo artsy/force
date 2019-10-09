@@ -8,11 +8,11 @@ block content
     unless Object.keys(sd.PARAMS || {}).length
       .main-side-margin
         .fairs-artworks-categories.chevron-nav-list
-          a( href='#{fair.href()}/browse/artworks?filter=true' )
+          a( href=fair.href() + '/browse/artworks?filter=true' )
             | All Works
 
           for gene in fair.get('filter_genes')
-            a( href='#{fair.href()}/browse/artworks?related_gene=#{gene.id}' )
+            a( href=fair.href() + '/browse/artworks?related_gene=' + gene.id )
               = gene.name
 
     else

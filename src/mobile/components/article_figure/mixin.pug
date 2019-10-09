@@ -1,7 +1,7 @@
 mixin article-figure(article, width, showDate)
   figure.article-figure
     a.article-figure-container( href='/article/' + article.get('slug') )
-      .article-figure-img( style="background-image: url('#{article.get('thumbnail_image')}')" )
+      .article-figure-img( style="background-image: url('" + article.get('thumbnail_image') + "')" )
       figcaption
         if showDate
           time.article-figure-date= article.formatDate()

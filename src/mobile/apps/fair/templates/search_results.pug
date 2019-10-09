@@ -5,7 +5,7 @@ block body
   #content
     mixin login-signup("Fair Search Results")
     header#fair-header
-      form#fair-header-search-form( action="#{profile.get('id')}/search", method='GET' )
+      form#fair-header-search-form( action=profile.get('id') + "/search", method='GET' )
         input#fair-search-input.bordered-input(
           placeholder='Search exhibitors & artists',
           name='term',

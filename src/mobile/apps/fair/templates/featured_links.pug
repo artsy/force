@@ -4,7 +4,7 @@ mixin navItemImage(link)
   else
     - image_url = link.imageUrl('small_rectangle')
 
-  .fair-nav-item-image(class="fair-nav-item-image--#{key}" style="background-image: url(#{image_url})" )
+  .fair-nav-item-image(class="fair-nav-item-image--" + key style="background-image: url(" + image_url + ")" )
 
 if title
   h3.avant-garde-header-center.fair-page-featured-links-title= title

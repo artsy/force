@@ -5,7 +5,7 @@
 - var imgUrl = crop(article.image_url, { width: width, height: Math.round(width / 1.5) })
 figure.article-figure: .article-figure-container
   a.article-figure-img-container( href= article.link )
-    .article-figure-img( style="background-image: url(#{imgUrl})" )
+    .article-figure-img( style="background-image: url(" + imgUrl + ")" )
 
   figcaption.article-figure-figcaption
     a.article-figure-title( href= article.link )

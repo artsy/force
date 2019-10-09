@@ -7,7 +7,7 @@ block content
     each emailDisplay, emailType in emailTypes
       .unsubscribe-email
         label #{emailDisplay}
-          input( name="#{emailType}", type='checkbox' )
+          input( name=emailType, type='checkbox' )
     .unsubscribe-check-all
       label Select All
         input( name='selectAll', type='checkbox' )

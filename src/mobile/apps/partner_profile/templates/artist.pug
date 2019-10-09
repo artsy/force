@@ -7,9 +7,9 @@ extends ../../../components/layout/templates/main
 block content
   .main-side-margin
     nav.slash-breadcrumbs
-      a( href="/#{profile.get('id')}" )= profile.get('owner').name
+      a( href="/" + profile.get('id') )= profile.get('owner').name
       span
-        a( href="/#{profile.get('id')}/artists") Artists
+        a( href="/" + profile.get('id') + "/artists") Artists
   header#artist-page-header
     h1.artist-page-large-header.avant-garde-header-center= name
     h2
@@ -30,5 +30,5 @@ block content
           | See more
 
     nav.chevron-nav-list.main-side-margin
-      a( href="/artist/#{artist.get('id')}" ) More from #{artist.get('name')}
+      a( href="/artist/" + artist.get('id') ) More from #{artist.get('name')}
     br

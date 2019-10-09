@@ -3,7 +3,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
   channel
     title Gallery Partner Updates
     link= sd.APP_URL
-    atom:link(href='#{sd.APP_URL}/rss/partner-updates', rel='self', type='application/rss+xml')
+    atom:link(href=sd.APP_URL + '/rss/partner-updates', rel='self', type='application/rss+xml')
     description Artsy articles featured for Gallery Partner Updates.
     language en-US
     if articles.length

@@ -7,8 +7,8 @@ block content
 
   .main-side-margin
     nav.slash-breadcrumbs
-      a( href="/#{partner.get('default_profile_id')}" )= partner.get('name')
-      a( href="/#{partner.get('default_profile_id')}/articles" )
+      a( href="/" + partner.get('default_profile_id') )= partner.get('name')
+      a( href="/" + partner.get('default_profile_id') + "/articles" )
         span Articles
 
   #article-body-container.partner

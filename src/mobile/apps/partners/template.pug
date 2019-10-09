@@ -13,7 +13,7 @@ block content
         if partner.get('locations').length > 0
           - var location = partner.get('locations').first()
         a.nav-image-item( href=profile.href() )
-          .nav-image-item-image( style="background-image: url(#{profile.coverImageUrl()})" )
+          .nav-image-item-image( style="background-image: url(" + profile.coverImageUrl() + ")" )
           .nav-image-item-label
             .nav-image-item-label-title= partner.get('name')
             if location && location.has('city')

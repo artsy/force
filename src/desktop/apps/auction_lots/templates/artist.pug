@@ -10,7 +10,7 @@ append locals
 
 block body
   #auction-results-page.main-layout-container
-    a( href="/artist/#{artist.id}" ).contextual-return-link
+    a( href="/artist/" + artist.id ).contextual-return-link
       i.icon-chevron-small-left
       | Back to #{artist.get('name')}
 

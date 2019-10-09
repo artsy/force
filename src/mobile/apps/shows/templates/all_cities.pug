@@ -5,4 +5,4 @@ block content
     #all-cities-page-content.main-side-margin
       nav.chevron-nav-list.all-cities-page-all-cities
         for city in cities
-          a(href="/shows/#{city.slug}")= city.name
+          a(href="/shows/" + city.slug)= city.name

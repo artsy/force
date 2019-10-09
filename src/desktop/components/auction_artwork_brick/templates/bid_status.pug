@@ -30,7 +30,7 @@
         ) Bid
 
         if artwork.is_buy_nowable
-          form( action='#{artwork.href}/acquire', method='POST' )
+          form( action=artwork.href + '/acquire', method='POST' )
             input( type='hidden', name='artwork_id', value= artwork.id )
             button.artwork-metadata-stub__sale-artwork__buttons__button.avant-garde-button-black.is-small(
               type='submit'

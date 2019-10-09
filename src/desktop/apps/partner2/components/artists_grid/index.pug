@@ -8,7 +8,7 @@
             figure.partner2-artist( data-artist-id=pa.get('artist').id )
               a.partner2-route-link( href=pa.href() )
                 .partner2-artist-cover-image
-                  img( src="#{pa.imageUrl('four_thirds')}", alt=pa.get('artist').name )
+                  img( src=pa.imageUrl('four_thirds'), alt=pa.get('artist').name )
                   .partner2-artist-overlay
                 figurecaption.partner2-artist-caption
                   h5.partner2-artist-name= pa.get('artist').name
@@ -16,5 +16,5 @@
   section.artists-grid-section
     .partner2-artists-see-all.avant-garde-header-center
       a.faux-underline-hover.partner2-route-link(
-        href="#{partner.href()}/artists"
+        href=partner.href() + "/artists"
       ) Go to artists

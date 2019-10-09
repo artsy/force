@@ -11,7 +11,7 @@
 a.partner-profile-cover.hoverable-image-link(
   data-id= profile.id
   data-mode= mode
-  href= profile.href(), class="is-#{mode}"
+  href= profile.href(), class="is-" + mode
 )
   .hoverable-image.is-three-two(
     data-initials= profile.defaultIconInitials()

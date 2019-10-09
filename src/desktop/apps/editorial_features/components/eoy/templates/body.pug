@@ -14,8 +14,8 @@ section.article-body__intro(data-section=0)
     if i == 7
       - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-gg-poster.png'
 
-    section(data-section='#{i + 1}')
-      a(name='section-#{i + 1}')
+    section(data-section=i + 1)
+      a(name='section-' + i + 1)
       .article-body--section
         header
           if i == 4 || i == 5

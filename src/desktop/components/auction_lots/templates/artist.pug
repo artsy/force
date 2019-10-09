@@ -19,7 +19,7 @@ include ../../../../../node_modules/artsy-ezel-components/pagination/paginator
       a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
       for k, v in auctionLots.sortCriteria
         if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
-          a( href="?sort=#{v}" )= k
+          a( href="?sort=" + v )= k
 
 table.auction-lots-table
   include ./auction_lots_table

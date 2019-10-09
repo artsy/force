@@ -20,7 +20,7 @@ if sale_registrations
             a.avant-garde-button-white.is-success( href= sale.href )
               | Approved
           else
-            a.avant-garde-button-black( href= '/auction-registration/#{sale.id}' )
+            a.avant-garde-button-black( href= '/auction-registration/' + sale.id )
               | Register
 
 else

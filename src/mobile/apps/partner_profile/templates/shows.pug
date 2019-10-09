@@ -3,9 +3,9 @@ mixin show-list(shows)
     for show in shows
       if show.hasImage()
         li
-          a( href="/show/#{show.get('id')}" )
+          a( href="/show/" + show.get('id') )
             if show.hasImage()
-              .partner-profile-shows-list-image( style='background-image: url(#{show.imageUrl()})' )
+              .partner-profile-shows-list-image( style='background-image: url(' + show.imageUrl() + ')' )
             h3= show.get('name')
             h4!= show.formattedDateRange()
 

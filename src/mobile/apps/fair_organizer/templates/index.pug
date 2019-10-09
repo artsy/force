@@ -7,10 +7,10 @@ block body
     #fair-organization-page
       if newestFair.imageUrl('large_rectangle')
         .fair-organization-page__header-image
-          img(src="#{newestFair.imageUrl('large_rectangle')}")
+          img(src=newestFair.imageUrl('large_rectangle'))
       .main-side-margin
         if profile.hasIcon()
-          .fair-organization-page__profile-icon( style="background-image: url(#{profile.iconUrl()})" )
+          .fair-organization-page__profile-icon( style="background-image: url(" + profile.iconUrl() + ")" )
         h1.fair-organization-page__title= fairOrg.get('name')
         h1.fair-organization-page__subtitle!= newestFair.formatDates()
         h2.fair-organization-page__caption Discover and collect works before the fair opens on Artsy

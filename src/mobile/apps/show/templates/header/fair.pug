@@ -6,7 +6,7 @@ header#show-page-header
   .show-page-meta
     .show-page-meta-left
       .show-page-partner
-        a.chevron-arrow-button(href="#{show.partnerProfileHref()}")= show.partnerName()
+        a.chevron-arrow-button(href=show.partnerProfileHref())= show.partnerName()
       .show-page-running-dates
         p #{show.date('start_at').format('MMM Do')} – #{show.date('end_at').format('MMM Do, YYYY')}
     .show-page-modal-button
@@ -17,6 +17,6 @@ header#show-page-header
         p= location.singleLine()
       if fair.get('published') && fair.get('has_full_feature')
         .show-page-location-map
-          a.chevron-arrow-button(href="#{fair.href()}") GO TO FAIR
+          a.chevron-arrow-button(href=fair.href()) GO TO FAIR
   if location && location && location.related().daySchedules.length
     include ../full_schedule

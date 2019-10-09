@@ -6,12 +6,12 @@ block head
 block content
   #fair-page-main-content
     if fair.has('banner_image_urls')
-      #fair-page-img.mobile-fair-cover( style="background-image: url('#{fair.get('banner_image_urls')['mobile-fair-cover']}')" )
+      #fair-page-img.mobile-fair-cover( style="background-image: url('" + fair.get('banner_image_urls')['mobile-fair-cover'] + "')" )
     else if fair.imageUrl('large_rectangle')
-      #fair-page-img.mobile-large-rectangle( style="background-image: url(#{fair.imageUrl('large_rectangle')})" )
+      #fair-page-img.mobile-large-rectangle( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
     .main-side-margin
       if profile.hasIcon() && !fair.has('banner_image_urls')
-        .fair-page-profile-icon( style="background-image: url(#{profile.iconUrl()})" )
+        .fair-page-profile-icon( style="background-image: url(" + profile.iconUrl() + ")" )
       h1#fair-page-title= fair.title()
       h2#fair-page-subtitle!= fair.subtitle()
 

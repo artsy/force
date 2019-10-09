@@ -13,7 +13,7 @@ block body
         | Browse over 50,000 artists
       .alphabetical-index-range
         for letter in letters
-          a( href='/artists/artists-starting-with-#{letter}' )
+          a( href='/artists/artists-starting-with-' + letter )
             = letter
 
     for set in featured_artists
@@ -55,7 +55,7 @@ block body
         for gene in set.genes
           .artists-featured-genes-gene
             h4
-              a.avant-garde-jump-link( href='#{gene.href}/artists' )
+              a.avant-garde-jump-link( href=gene.href + '/artists' )
                 = gene.name
                 i.icon-chevron-small-right
 

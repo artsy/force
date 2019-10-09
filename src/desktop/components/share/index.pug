@@ -7,7 +7,7 @@ h3.share-menu__header
       class='js-pop-up'
       data-message='Post to Facebook',
       data-service='facebook',
-      href="https://www.facebook.com/sharer/sharer.php?u=#{url}",
+      href="https://www.facebook.com/sharer/sharer.php?u=" + url,
       target='_blank'
     )
       i.icon-facebook
@@ -17,7 +17,7 @@ h3.share-menu__header
       class='js-pop-up'
       data-message='Share on Twitter',
       data-service='twitter',
-      href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
+      href="https://twitter.com/intent/tweet?original_referer=" + url + "&text=" + description + "&url=" + url + "&via=artsy",
       target='_blank'
     )
       i.icon-twitter
@@ -27,7 +27,7 @@ h3.share-menu__header
       class='js-pop-up'
       data-message='Pin It on Pinterest',
       data-service='pinterest',
-      href="https://pinterest.com/pin/create/button/?url=#{url}&media=#{media}&description=#{description}",
+      href="https://pinterest.com/pin/create/button/?url=" + url + "&media=" + media + "&description=" + description,
       target='_blank'
     )
       i.icon-pinterest
@@ -35,7 +35,7 @@ h3.share-menu__header
 
     a.share-to-tumblr(
       class='js-pop-up'
-      href='https://www.tumblr.com/share/photo?source=#{media}&caption=#{description}&clickthru=#{url}'
+      href='https://www.tumblr.com/share/photo?source=' + media + '&caption=' + description + '&clickthru=' + url
     )
       i.icon-tumblr
       | Tumblr
@@ -43,7 +43,7 @@ h3.share-menu__header
     a.share-by-email(
       data-message='Share via email',
       data-service='email',
-      href='mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}',
+      href='mailto:?subject=' + description + '&body=Check out ' + description + ' on Artsy: ' + url,
     )
       i.icon-mail
       | Email

@@ -1,6 +1,6 @@
 unless name == 'total' || name == 'for_sale'
   .filter-dropdown(
-    id="filter-dropdown-#{name}"
+    id="filter-dropdown-" + name
     class= ( params.has(name) && activeText ) ? 'is-active' : ''
   )
     .filter-nav-main-text= filterLabelMap[name].label

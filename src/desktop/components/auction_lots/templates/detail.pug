@@ -26,11 +26,11 @@ section.auction-result-artist
 
 if auctionLots.length
   section.auction-result-more-results
-    h2: a( href= "#{artist.href()}/auction-results" ) More auction results for #{artist.get('name')}
+    h2: a( href= artist.href() + "/auction-results" ) More auction results for #{artist.get('name')}
 
     table.auction-lots-table
       include ./auction_lots_table
 
-    a.avant-garde-jump-link( href= "#{artist.href()}/auction-results" )
+    a.avant-garde-jump-link( href= artist.href() + "/auction-results" )
       | See all auction results for #{artist.get('name')}
       i.icon-chevron-small-right

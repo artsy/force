@@ -15,7 +15,7 @@ link( rel='dns-prefetch', href='https://connect.facebook.net' )
 link( rel='dns-prefetch', href='https://cdn.segment.com' )
 
 meta( charset='utf-8' )
-meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
+meta( name="apple-itunes-app" content="app-id=703796080, app-argument=" + sd.APP_URL + "" + sd.CURRENT_PATH )
 meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
 meta( name='viewport', content='width=device-width, initial-scale=1, maximum-scale=5' )
 //- Briefly removing the applink support until Eigen 2.3.x is most of our traffic
@@ -30,4 +30,4 @@ script( type="text/javascript" )
 
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'Other'
-  link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/all-webfonts.css')
+  link( type='text/css', rel='stylesheet', href=sd.WEBFONT_URL + '/all-webfonts.css')

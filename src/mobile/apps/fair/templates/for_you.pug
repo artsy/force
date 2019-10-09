@@ -3,7 +3,7 @@ extends ../../../components/layout/templates/main
 block content
   #fair-for-you.fair-for-you-loading
     if fair.imageUrl('large_rectangle')
-      #fair-page-img( style="background-image: url(#{fair.imageUrl('large_rectangle')})" )
+      #fair-page-img( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
     .main-side-margin
       h1#fair-page-title My Guide
       h2#fair-page-subtitle

@@ -1,7 +1,7 @@
 .abrv-context__content.abrv-context__content--followed-artists
   if artists && artists.length
     each artist in artists
-      a.abrv-context__content--followed-artists__artist(href="/artist/#{artist.id}")= artist.get('name')
+      a.abrv-context__content--followed-artists__artist(href="/artist/" + artist.id)= artist.get('name')
     if counts.artists - artists.length > 0
       - s = counts.artists - artists.length == 1 ? '' : 's'
       a.abrv-context__content--followed-artists__more-artists(href="/works-for-you") +#{counts.artists - artists.length} more artist#{s}

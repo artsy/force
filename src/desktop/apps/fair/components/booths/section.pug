@@ -3,7 +3,7 @@ include ../../../../components/bordered_pulldown/mixin
 .browse-section.booths
   #fair-booths-subheader
     a#fair-booths-az-as-list.faux-underline(
-      href="#{fair.href()}/browse/exhibitors"
+      href=fair.href() + "/browse/exhibitors"
     ) Show as A-Z List
     #fair-booths-sort
       +bordered-pulldown('Relevance', 'Sort By')

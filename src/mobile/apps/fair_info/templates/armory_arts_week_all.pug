@@ -4,10 +4,10 @@ block content
   h1.fair-info2-page-header All Armory Arts Week Events
   .fair-info-aaw-menu.main-side-margin
     each neighborhood in neighborhoods
-      .fair-info-aaw-neightborhood-nav: a(href="##{neighborhood.name}") #{neighborhood.name}
+      .fair-info-aaw-neightborhood-nav: a(href="#" + neighborhood.name) #{neighborhood.name}
   .fair-info-aaw-neigborhoods
     each neighborhood in neighborhoods
-      .fair-info-aaw-neigborhood(id="#{neighborhood.name}")
+      .fair-info-aaw-neigborhood(id=neighborhood.name)
         - article = neighborhood.article
         .fair-info-article-content-wrapper.main-side-margin
           h1.fair-info2-page-header= article.get('title')

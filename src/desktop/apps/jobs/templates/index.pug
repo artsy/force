@@ -21,7 +21,7 @@ block body
     section.jobs-category-section
       nav.jobs-category-nav.js-jobs-category-nav
         for jobs, name in categories
-          a.jobs-category.js-jobs-category( href="##{name.replace(' ', '-')}" )
+          a.jobs-category.js-jobs-category( href="#" + name.replace(' ', '-') )
             h3= name
             p #{jobs.length} Open Position#{jobs.length === 1 ? '' : 's'}
 

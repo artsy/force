@@ -1,7 +1,7 @@
 mixin showFigureContent(show, isFeatured)
   - var posterImageUrl = show.posterImageUrl(isFeatured) || ""
-  .partner2-show-cover-image( style="background-image: url(#{posterImageUrl})" )
-    img( src="#{posterImageUrl}", alt=show.formatFeedItemHeading() )
+  .partner2-show-cover-image( style="background-image: url(" + posterImageUrl + ")" )
+    img( src=posterImageUrl, alt=show.formatFeedItemHeading() )
     .partner2-show-overlay
   figurecaption.partner2-show-caption
     h5.partner2-show-heading= show.formatLeadHeading()

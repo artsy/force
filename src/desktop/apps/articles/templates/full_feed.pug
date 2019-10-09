@@ -17,7 +17,7 @@
       ul.grid-4-up
         for link in section.get('featured_links')
           li.grid-item
-            a( href="#{link.url}" )
+            a( href=link.url )
               img( src=crop(link.thumbnail_url, { width: 70, height: 70 }) )
               p= link.title
         +remainingStickies(section, articles, 70, 70)

@@ -1,9 +1,9 @@
-ul(id="#{shows[0].get('status')}").shows-page-list 
+ul(id=shows[0].get('status')).shows-page-list 
   for show in shows
     li.shows-page-list__item
-      a(href="#{show.href()}")
+      a(href=show.href())
         .shows-page-list__item__image
-          img(src="#{show.imageUrl('square')}")
+          img(src=show.imageUrl('square'))
 
         .shows-page-list__item__details
           .shows-page-list__item__details-partner-name= show.partnerName()

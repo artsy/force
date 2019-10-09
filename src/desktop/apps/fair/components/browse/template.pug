@@ -12,7 +12,7 @@ mixin exhibitors-a-to-z
     h1.large-garamond-header
       | All Exhibitors at #{fair.get('name')}
     a#fair-booths-as-grid.faux-underline(
-      href="#{fair.href()}/browse/booths"
+      href=fair.href() + "/browse/booths"
     ) Show as Grid View
     section.fair-exhibitors-list.a-to-z-container
       include ../../../../components/a_to_z_list/template
@@ -25,7 +25,7 @@ mixin exhibitors-a-to-z
       include ../../../../components/filter2/dropdown_group/template
       label By Artists:
       a#fair-filter-all-artists.filter-button(
-        href="#{fair.href()}/browse/artists"
+        href=fair.href() + "/browse/artists"
       ) All Artists
   .browse-sections.main-layout-container
     .browse-section.artists-a-to-z

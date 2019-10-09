@@ -10,7 +10,7 @@ else
       .mgr-cells.js-mgr-cells
         each article in sub_articles
           .mgr-cell.js-mgr-cell
-            a(href="#{sd.APP_URL}/article/#{article.slug}")
+            a(href=sd.APP_URL + "/article/" + article.slug)
               img(src=crop(article.thumbnail_image, {width: 600, height: 400}))
               h2= article.thumbnail_title
       include ../../../../../components/merry_go_round/templates/horizontal_navigation

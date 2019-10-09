@@ -2,7 +2,7 @@
   .mgr-cells.js-mgr-cells
     for section, index in curation.get('sections')
       .mgr-cell.js-mgr-cell
-        .venice-overlay(style="background-image:url(#{section.cover_image})" data-published="#{section.published}")
+        .venice-overlay(style="background-image:url(" + section.cover_image + ")" data-published=section.published)
           .venice-overlay__text
             .venice-overlay__title Inside the Biennale
             .venice-overlay__sub-title= section.title

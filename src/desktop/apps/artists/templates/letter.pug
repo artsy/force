@@ -29,7 +29,7 @@ block body
 
       .artists-columns
         for artist in artists.models
-          a.highlight-link( href="/artist/#{artist.id}" )
+          a.highlight-link( href="/artist/" + artist.id )
             = artist.get('name')
 
       +paginate(artists.state.currentPage, artists.state.totalPages)

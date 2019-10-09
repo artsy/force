@@ -4,7 +4,7 @@
 .article-item
   a.article-item-link( href= article.href() data-id = article.get('id') )
     img.article-item-image(
-      src="#{imgUrl}"
+      src=imgUrl
       alt= article.get('thumbnail_title')
       onerror='this.style.display="none";'
     )

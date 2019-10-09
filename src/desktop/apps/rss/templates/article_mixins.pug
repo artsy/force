@@ -18,6 +18,6 @@ mixin image(image, width)
 mixin source(source)
   if source.url
     p via 
-      a(href="#{source.url}")= source.title
+      a(href=source.url)= source.title
   else
     p= 'via ' + source.title

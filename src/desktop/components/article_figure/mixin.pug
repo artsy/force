@@ -10,7 +10,7 @@ mixin article-figure(article, width, showDate, showShare)
     - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.5) })
   figure.article-figure: .article-figure-container
     a.article-figure-img-container( href= article.href() )
-      .article-figure-img( style="background-image: url(#{imgUrl})" )
+      .article-figure-img( style="background-image: url(" + imgUrl + ")" )
 
     figcaption.article-figure-figcaption
       if showDate

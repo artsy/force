@@ -13,7 +13,7 @@ nav.shows-page-cities-nav.horizontal-list-nav
     )=  "Online Exclusive"
     for city in featuredCities
       a.hln-link.shows-location(
-        href="/shows/#{city.slug}"
+        href="/shows/" + city.slug
         class= activeClass("/shows/#{city.slug}")
       )= city.name
   .hln-cell
@@ -21,5 +21,5 @@ nav.shows-page-cities-nav.horizontal-list-nav
       select( onChange='window.location.href=this.value' )
         option( value='/shows' ) All Cities
         for city in cities
-          option( value='/shows/#{city.slug}' )
+          option( value='/shows/' + city.slug )
             = city.name

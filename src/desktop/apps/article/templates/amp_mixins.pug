@@ -68,7 +68,7 @@ mixin amp_video(section)
 mixin amp_embed(section)
   .article-section-container.responsive-layout-container
     .article-section-embed
-      amp-iframe(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
+      amp-iframe(src=section.url height=section.mobile_height || section.height width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
 
 mixin amp_social_embed(section)
   - var url = _.compact(section.url.split('/'))

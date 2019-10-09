@@ -34,7 +34,7 @@ block content
       h4.contact-section-headers Editorial Staff
       .editorial-staff-contact-info
         each member in data.editorial_staff.members
-            a(href='mailto:#{member.email}').editorial-staff
+            a(href='mailto:' + member.email).editorial-staff
               h5.contact-editorial-title-header= member.role
               p= member.name
               p= member.email

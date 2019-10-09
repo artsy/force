@@ -1,5 +1,5 @@
 if artwork.image
-  .artwork-item-image( style= "padding-bottom: #{ViewHelpers.factor(artwork.image) * 100}%" )
+  .artwork-item-image( style= "padding-bottom: " + ViewHelpers.factor(artwork.image) * 100 + "%" )
     img(
       src= artwork.image.url
       nopin= ViewHelpers.noPinAttr(artwork)

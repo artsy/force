@@ -111,10 +111,10 @@ mixin auction_apply(section)
       script.
         MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
 
-section.partnerships-section( id= sections[0].slug, data-href="/auction-partnerships/#{sections[0].slug}" ): +experience(sections[0])
-section.partnerships-section( id= sections[1].slug, data-href="/auction-partnerships/#{sections[1].slug}" ): +auction_audience(sections[1])
-section.partnerships-section( id= sections[2].slug, data-href="/auction-partnerships/#{sections[2].slug}" ): +access(sections[2])
-section.partnerships-section( id= sections[3].slug, data-href="/auction-partnerships/#{sections[3].slug}" ): +visibility(sections[3])
-section.partnerships-section( id= sections[4].slug, data-href="/auction-partnerships/#{sections[4].slug}" ): +event_services(sections[4])
-section.partnerships-section( id= sections[5].slug, data-href="/auction-partnerships/#{sections[5].slug}" ): +support(sections[5])
-section.partnerships-section( id= sections[6].slug, data-href="/auction-partnerships/#{sections[6].slug}" ): +auction_apply(sections[6])
+section.partnerships-section( id= sections[0].slug, data-href="/auction-partnerships/" + sections[0].slug ): +experience(sections[0])
+section.partnerships-section( id= sections[1].slug, data-href="/auction-partnerships/" + sections[1].slug ): +auction_audience(sections[1])
+section.partnerships-section( id= sections[2].slug, data-href="/auction-partnerships/" + sections[2].slug ): +access(sections[2])
+section.partnerships-section( id= sections[3].slug, data-href="/auction-partnerships/" + sections[3].slug ): +visibility(sections[3])
+section.partnerships-section( id= sections[4].slug, data-href="/auction-partnerships/" + sections[4].slug ): +event_services(sections[4])
+section.partnerships-section( id= sections[5].slug, data-href="/auction-partnerships/" + sections[5].slug ): +support(sections[5])
+section.partnerships-section( id= sections[6].slug, data-href="/auction-partnerships/" + sections[6].slug ): +auction_apply(sections[6])

@@ -191,4 +191,4 @@ if options.grecaptcha && sd.RECAPTCHA_KEY && !sd.EIGEN
         grecaptcha.execute(sd.RECAPTCHA_KEY, {action: 'homepage'})
       }
     }
-  script(id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?onload=loadGrecaptchaOnHome&render=#{sd.RECAPTCHA_KEY}" async defer)
+  script(id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?onload=loadGrecaptchaOnHome&render=" + sd.RECAPTCHA_KEY async defer)

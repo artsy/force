@@ -12,7 +12,7 @@ block body
   - hasImage = feature.hasImage() && feature.imageUrl()
   #feature.feature-page( class= hasImage ? 'has-image' : undefined )
     if hasImage
-      .feature-image( style="background-image: url(#{feature.imageUrl('wide')})" )
+      .feature-image( style="background-image: url(" + feature.imageUrl('wide') + ")" )
 
     .responsive-layout-container: .main-layout-container.feature-content
         header.feature-header

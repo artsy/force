@@ -28,7 +28,7 @@ block content
             if location.get('phone')
               p Tel: #{location.get('phone')}
               br
-              p: a.avant-garde-box-button( href="tel:#{location.get('phone')}" ) Call #{partner.get('type')}
+              p: a.avant-garde-box-button( href="tel:" + location.get('phone') ) Call #{partner.get('type')}
             br
 
     if partner.has('vat_number')
