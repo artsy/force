@@ -51,13 +51,13 @@ if article.get('published')
   meta( name="sailthru.date" content=article.get('published_at'))
 
 if article.get('contributing_authors') && article.get('contributing_authors').length
-  - for author in article.get('contributing_authors')
-      if author.name
-        meta( name='author', content=author.name )
-      if author.facebook_uid
-        meta( property='article:author', content=author.facebook_uid )
-      if author.twitter_uid
-        meta( property='twitter:creator:id', content=author.twitter_uid )
+  for author in article.get('contributing_authors')
+    if author.name
+      meta( name='author', content=author.name )
+    if author.facebook_uid
+      meta( property='article:author', content=author.facebook_uid )
+    if author.twitter_uid
+      meta( property='twitter:creator:id', content=author.twitter_uid )
 
 if !article.get('indexable')
   meta( name='robots', content='noindex' )

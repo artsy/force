@@ -66,9 +66,9 @@ if article.published && article.email_metadata
 
 //- Author Metatags
 if article.contributing_authors && article.contributing_authors.length
-  - for author in article.contributing_authors
-      if author.name
-        meta( name='author', content=author.name )
+  for author in article.contributing_authors
+    if author.name
+      meta( name='author', content=author.name )
 
 //- No Index
 if !article.indexable
