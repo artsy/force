@@ -3,7 +3,7 @@ express = require 'express'
 
 app = module.exports = express()
 app.set 'views', __dirname
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/blank', (req, res, next) ->
   res.render 'index',

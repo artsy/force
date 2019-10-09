@@ -1,11 +1,11 @@
 path = require 'path'
-jade = require 'jade'
+pug = require 'pug'
 fs = require 'fs'
 
 describe 'templates', ->
   render = (template, options) ->
-    file = path.resolve __dirname, "../#{template}.jade"
-    jade.render fs.readFileSync(file).toString(), options
+    file = path.resolve __dirname, "../#{template}.pug"
+    pug.render fs.readFileSync(file).toString(), options
 
   describe 'pre-rendered template', ->
     before ->

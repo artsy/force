@@ -6,7 +6,7 @@ moment = require 'moment'
 
 app = module.exports = express()
 app.set 'views', "#{__dirname}"
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 app.locals.crop = crop
 app.locals.markdown = markdown
 app.locals.moment = moment

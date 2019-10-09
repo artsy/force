@@ -1,14 +1,14 @@
 _ = require 'underscore'
 $ = require 'cheerio'
 benv = require 'benv'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 { fabricate } = require 'antigravity'
 
 render = (opts) ->
-  filename = path.resolve __dirname, "../templates/mobile/index.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/mobile/index.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )(_.extend require('./fixture/content.json'), {

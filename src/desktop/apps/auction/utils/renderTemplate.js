@@ -1,4 +1,4 @@
-import jade from "jade"
+import pug from "pug"
 import path from "path"
 import { first, isArray } from "underscore"
 
@@ -8,7 +8,7 @@ export default function renderTemplate(templates, options = {}) {
   const { basePath = "", compilerOptions = {}, locals = {} } = options
 
   const templateFns = templates.map(file => {
-    return jade.compileFile(path.join(basePath, file), compilerOptions)
+    return pug.compileFile(path.join(basePath, file), compilerOptions)
   })
 
   const renderedTemplates = templateFns.map(template => template(locals))

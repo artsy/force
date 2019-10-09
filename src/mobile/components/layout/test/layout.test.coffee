@@ -1,4 +1,4 @@
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -76,8 +76,8 @@ xdescribe 'Layout init code', ->
 describe 'Canonical url', ->
 
   xit "renders the canonical meta tag", ->
-    filename = path.resolve __dirname, "../templates/main.jade"
-    jade.compile(
+    filename = path.resolve __dirname, "../templates/main.pug"
+    pug.compile(
       fs.readFileSync(filename),
       { filename: filename }
     )(pathname: '/test', sd: { APP_URL: 'http://artsy.net'}).should.containEql "link href=\"http://artsy.net/test\" rel=\"canonical\""

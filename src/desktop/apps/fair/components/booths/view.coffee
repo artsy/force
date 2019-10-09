@@ -9,7 +9,7 @@ FilterNav = require '../../../../components/filter/nav/view.coffee'
 deslugify = require '../../../../components/deslugify/index.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 
-navSectionsTemplate = -> require('./nav_sections.jade') arguments...
+navSectionsTemplate = -> require('./nav_sections.pug') arguments...
 
 module.exports = class BoothsView extends Backbone.View
 

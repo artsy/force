@@ -1,5 +1,5 @@
 _ = require 'underscore'
-learnMoreTemplate = require('jade').compileFile(require.resolve '../templates/learn_more.jade')
+learnMoreTemplate = require('pug').compileFile(require.resolve '../templates/learn_more.pug')
 fixture = require '../fixtures/data.json'
 markdown = require '../../../components/util/markdown.coffee'
 bidIncrements = require '../bid_increments.coffee'
@@ -11,7 +11,7 @@ describe '/how-auctions-work', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
-        benv.render resolve(__dirname, '../templates/learn_more.jade'),
+        benv.render resolve(__dirname, '../templates/learn_more.pug'),
           sd: {}
           _: require 'underscore'
           asset: (->)

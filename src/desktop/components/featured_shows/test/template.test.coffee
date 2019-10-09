@@ -1,14 +1,14 @@
 _ = require 'underscore'
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 benv = require 'benv'
 { fabricate } = require 'antigravity'
 PartnerShows = require '../../../collections/partner_shows'
 
 render = (template) ->
-  filename = path.resolve __dirname, "../#{template}.jade"
-  jade.compile(fs.readFileSync(filename), filename: filename)
+  filename = path.resolve __dirname, "../#{template}.pug"
+  pug.compile(fs.readFileSync(filename), filename: filename)
 
 describe 'Featured Shows templates', ->
   before (done) ->

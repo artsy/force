@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 markdown = require '../util/markdown.coffee'
 Page = require '../../../desktop/models/page.coffee'
 mediator = require '../../lib/mediator.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class MultiPageView extends Backbone.View
   className: 'multi-page-view'

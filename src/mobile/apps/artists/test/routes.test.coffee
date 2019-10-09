@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'

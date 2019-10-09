@@ -4,7 +4,7 @@ sd = require('sharify').data
 bootstrap = require '../../components/layout/bootstrap.coffee'
 Backbone = require 'backbone'
 PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view.coffee'
-artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
+artworkColumnsTemplate = -> require('../../components/artwork_columns/template.pug') arguments...
 
 module.exports.ArtworksView = class ArtworksView extends PoliteInfiniteScrollView
   page: 1

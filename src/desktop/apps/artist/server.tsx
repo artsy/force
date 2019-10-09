@@ -43,7 +43,7 @@ app.get(
       // Render layout
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_redesign.jade",
+        layout: "../../components/main_layout/templates/react_redesign.pug",
         blocks: {
           head: () => <React.Fragment>{headTags}</React.Fragment>,
           body: bodyHTML,

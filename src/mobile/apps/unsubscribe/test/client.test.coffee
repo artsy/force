@@ -12,7 +12,7 @@ describe 'Unsubscribe View', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../templates/index.jade'), {
+      benv.render resolve(__dirname, '../templates/index.pug'), {
         sd: {}
         emailTypes: emailTypes
       }, =>

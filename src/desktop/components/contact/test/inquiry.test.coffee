@@ -21,7 +21,7 @@ describe 'Inquiry', ->
     sinon.stub Backbone, 'sync'
     @artwork = new Artwork fabricate 'artwork'
     @partner = fabricate 'partner'
-    benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
+    benv.render resolve(__dirname, '../templates/index.pug'), {}, =>
       Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate'])
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'

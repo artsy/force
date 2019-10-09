@@ -17,7 +17,7 @@ describe 'Shows template', ->
 
   describe '#index with cities and featured show', ->
     before (done) ->
-      benv.render resolve(__dirname, '../templates/index.jade'),
+      benv.render resolve(__dirname, '../templates/index.pug'),
         sd: {}
         cities: Cities
         featuredCities: FeaturedCities
@@ -35,7 +35,7 @@ describe 'Shows template', ->
       @upcomingShow = new Show fabricate 'show', status: 'upcoming', id: 'upcoming-show', name: 'upcoming-show'
       @pastShow = new Show fabricate 'show', status: 'closed', id: 'closed-show', name: 'closed-show'
 
-      benv.render resolve(__dirname, '../templates/city.jade'),
+      benv.render resolve(__dirname, '../templates/city.pug'),
         sd: {}
         city: {name: 'New York'}
         opening: []
@@ -52,7 +52,7 @@ describe 'Shows template', ->
 
   describe '#all-cities with every city', ->
     before (done) ->
-      benv.render resolve(__dirname, '../templates/all_cities.jade'),
+      benv.render resolve(__dirname, '../templates/all_cities.pug'),
         sd: {}
         cities: Cities
       , ->

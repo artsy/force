@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
-template = -> require('../templates/select.jade') arguments...
+template = -> require('../templates/select.pug') arguments...
 
 module.exports = class SelectView extends Backbone.View
   className: 'garamond-select select-group'

@@ -9,7 +9,7 @@ mixin carouselFigure(item)
       if slideshowArtworks
         - artwork = slideshowArtworks.findWhere({ _id: item.id })
         if artwork
-          include ../../artwork_item/templates/artwork.jade
+          include ../../artwork_item/templates/artwork.pug
 
 .js-article-carousel
   - items = article.get('sections')[0].items
@@ -20,4 +20,4 @@ mixin carouselFigure(item)
 
   - length = items.length
   if length > 1
-    include ../../merry_go_round/templates/bottom_navigation.jade
+    include ../../merry_go_round/templates/bottom_navigation.pug

@@ -44,7 +44,7 @@ xdescribe 'Venice Video', ->
           ]
         sub_articles: []
         videoGuide: new Article {id: '123', title: 'Video Guide'}
-      benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
+      benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.pug'), @options, =>
         VeniceVideoView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/video'), []
         VeniceVideoView.__set__ 'sd', APP_URL: 'localhost'
         VeniceVideoView.__set__ 'noUiSlider', create: (@scrubberCreate = sinon.stub()).returns

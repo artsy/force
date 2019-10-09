@@ -3,12 +3,12 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 cheerio = require 'cheerio'
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

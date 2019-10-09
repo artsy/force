@@ -5,7 +5,7 @@ Profile = require '../../../models/profile'
 { fabricate } = require 'antigravity'
 
 render = (data, done) =>
-  benv.render resolve(__dirname, '../template.jade'), data, done
+  benv.render resolve(__dirname, '../template.pug'), data, done
 
 describe 'Template', ->
   beforeEach (done) ->

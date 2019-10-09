@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('../templates/artists_list.jade') arguments...
+template = -> require('../templates/artists_list.pug') arguments...
 
 module.exports = class PartnerArtistsListView extends Backbone.View
 

@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = -> require('../templates/how_can_we_help.jade') arguments...
+template = -> require('../templates/how_can_we_help.pug') arguments...
 
 module.exports = class HowCanWeHelpYouView extends Backbone.View
   events:

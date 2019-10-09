@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Flickity = require 'flickity'
-carouselTemplate = -> require('../templates/sections/slideshow/carousel.jade') arguments...
+carouselTemplate = -> require('../templates/sections/slideshow/carousel.pug') arguments...
 
 module.exports = ->
   $('.article-section-slideshow').each ->

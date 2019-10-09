@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { SEADRAGON_URL }  = require('sharify').data
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 getScript = (src, callback) ->
   script = document.createElement 'script'

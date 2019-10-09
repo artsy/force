@@ -5,7 +5,7 @@ s = require 'underscore.string'
 colorMap = require './color_map.coffee'
 mediumMap = require '../../filters/medium/medium_map.coffee'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class HeadlineView extends Backbone.View
 

@@ -11,7 +11,7 @@ UrlUpdater = require './url_updater.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
 Cookies = require '../../../components/cookies/index.coffee'
 MobileNotificationsView = require './mobile.coffee'
-emptyTemplate = -> require('../templates/empty.jade') arguments...
+emptyTemplate = -> require('../templates/empty.pug') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
 

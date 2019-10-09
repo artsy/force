@@ -8,9 +8,9 @@ The UI that makes up an article. Extracted because articles can be embedded in o
 
 Include the template passing in the `article` local
 
-````jade
+````pug
 #article-container
-  include ../components/article/templates/index.jade
+  include ../components/article/templates/index.pug
 ````
 
 Add the view on the client-side

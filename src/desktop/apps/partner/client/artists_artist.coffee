@@ -7,7 +7,7 @@ Partner = require '../../../models/partner.coffee'
 PartnerArtistArtworks = require '../../../collections/partner_artist_artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 BlurbView = require '../../../components/blurb/view.coffee'
-template = -> require('../templates/artists_artist.jade') arguments...
+template = -> require('../templates/artists_artist.pug') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports = class PartnerArtistsArtistView extends Backbone.View

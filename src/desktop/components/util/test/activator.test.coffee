@@ -1,12 +1,12 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 benv = require 'benv'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

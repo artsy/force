@@ -36,7 +36,7 @@ describe 'FairInfoEventsView', ->
       aboutTheFair: false
     }
     data = { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info/events' }
-    benv.render resolve(__dirname, '../../templates/events.jade'), {
+    benv.render resolve(__dirname, '../../templates/events.pug'), {
       sd: data
       fair: @fair
       profile: @profile

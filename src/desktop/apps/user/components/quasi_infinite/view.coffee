@@ -1,6 +1,6 @@
 { invoke, extend } = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class QuasiInfiniteView extends Backbone.View
   subViews: []

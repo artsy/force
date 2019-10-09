@@ -25,7 +25,7 @@ describe 'PartnerArtistsView', ->
     beforeEach (done) ->
 
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/index.jade'), {
+      benv.render resolve(__dirname, '../../templates/index.pug'), {
         profile: new Profile fabricate 'partner_profile'
         sd: { PROFILE: fabricate 'partner_profile' }
         asset: (->)

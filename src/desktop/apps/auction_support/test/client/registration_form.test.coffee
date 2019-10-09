@@ -35,7 +35,7 @@ describe 'RegistrationForm', ->
 
     @sale = new Sale fabricate 'sale'
 
-    benv.render resolve(__dirname, '../../templates/registration.jade'), {
+    benv.render resolve(__dirname, '../../templates/registration.pug'), {
       sd: {}
       sale: @sale
       monthRange: DateHelpers.getMonthRange()

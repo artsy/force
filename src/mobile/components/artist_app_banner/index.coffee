@@ -3,7 +3,7 @@ AppBanner = require '../app_banner/app_banner.coffee'
 
 class ArtistAppBanner extends AppBanner
   template: ->
-    $ require('./index.jade') { modal: APP_BANNER_MODAL }
+    $ require('./index.pug') { modal: APP_BANNER_MODAL }
 
   @shouldDisplay: ->
     USER_AGENT?.match(/iPhone/i)? and

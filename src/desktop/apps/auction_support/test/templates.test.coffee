@@ -1,6 +1,6 @@
 _ = require 'underscore'
 benv = require 'benv'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -14,8 +14,8 @@ cheerio = require 'cheerio'
 DateHelpers = require '../../../components/util/date_helpers.coffee'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

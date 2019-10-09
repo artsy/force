@@ -19,7 +19,7 @@ describe 'Auctions template', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-        benv.render resolve(__dirname, '../templates/index.jade'),
+        benv.render resolve(__dirname, '../templates/index.pug'),
           sd: {}
           asset: (->)
           pastAuctions: [@closedAuction]
@@ -54,7 +54,7 @@ describe 'Auctions template', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-        benv.render resolve(__dirname, '../templates/index.jade'),
+        benv.render resolve(__dirname, '../templates/index.pug'),
           sd: {}
           asset: (->)
           pastAuctions: [@closedAuction]

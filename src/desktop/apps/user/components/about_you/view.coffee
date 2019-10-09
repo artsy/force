@@ -1,7 +1,7 @@
 { extend, invoke } = require 'underscore'
 GenericFormView = require '../generic_form/view.coffee'
 LocationSearchView = require '../../../../components/location_search/index.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class AboutYouView extends GenericFormView
   subViews: []

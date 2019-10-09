@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 cheerio = require 'cheerio'
@@ -17,8 +17,8 @@ Artworks = require '../../../collections/artworks'
 describe 'Artworks template', ->
   describe 'with no params', ->
     beforeEach ->
-      filename = path.resolve __dirname, "../templates/artworks.jade"
-      @page = jade.compile(fs.readFileSync(filename), filename: filename) {
+      filename = path.resolve __dirname, "../templates/artworks.pug"
+      @page = pug.compile(fs.readFileSync(filename), filename: filename) {
         sd: {}
         fair: new Fair fabricate 'fair', filter_genes: []
         filters: new Backbone.Model medium: {}, related_genes: {}
@@ -31,8 +31,8 @@ describe 'Artworks template', ->
 
   describe 'with params', ->
     beforeEach ->
-      filename = path.resolve __dirname, "../templates/artworks.jade"
-      @page = jade.compile(fs.readFileSync(filename), filename: filename) {
+      filename = path.resolve __dirname, "../templates/artworks.pug"
+      @page = pug.compile(fs.readFileSync(filename), filename: filename) {
         sd: PARAMS: filter: 'true'
         fair: new Fair fabricate 'fair', filter_genes: []
         filters: new Backbone.Model medium: {}, related_genes: {}
@@ -53,8 +53,8 @@ describe 'Exhibitors template', ->
         sd: {}
       params = _.extend defaults, options
 
-      filename = path.resolve __dirname, "../templates/exhibitors_page.jade"
-      jade.compile(fs.readFileSync(filename), filename: filename) params
+      filename = path.resolve __dirname, "../templates/exhibitors_page.pug"
+      pug.compile(fs.readFileSync(filename), filename: filename) params
 
     it 'hides the A-Z link unless its all exhibitors', ->
       render(displayToggle: false).should.not.containEql 'a-z-feed-toggle-container'
@@ -63,8 +63,8 @@ describe 'Exhibitors template', ->
   describe 'less than 6 artworks', ->
     before ->
       render = (templateName) ->
-        filename = path.resolve __dirname, "../templates/exhibitors_page.jade"
-        jade.compile(fs.readFileSync(filename), filename: filename)
+        filename = path.resolve __dirname, "../templates/exhibitors_page.pug"
+        pug.compile(fs.readFileSync(filename), filename: filename)
 
       @shows = new Shows [fabricate('show', fair: fabricate('fair'), artwork: fabricate('artwork'))]
       @template = render('exhibitors')(
@@ -80,8 +80,8 @@ describe 'Exhibitors template', ->
   describe 'more than 6 artworks', ->
     before ->
       render = (templateName) ->
-        filename = path.resolve __dirname, "../templates/exhibitors_page.jade"
-        jade.compile(fs.readFileSync(filename), filename: filename)
+        filename = path.resolve __dirname, "../templates/exhibitors_page.pug"
+        pug.compile(fs.readFileSync(filename), filename: filename)
 
       artworks = [
         fabricate('artwork', id: 1),
@@ -118,8 +118,8 @@ describe 'Sections template', ->
       ]).models
     params = _.extend defaults, options
 
-    filename = path.resolve __dirname, "../templates/sections.jade"
-    jade.compile(fs.readFileSync(filename), filename: filename) params
+    filename = path.resolve __dirname, "../templates/sections.pug"
+    pug.compile(fs.readFileSync(filename), filename: filename) params
 
   it 'working links', ->
     render().should.not.containEql 'null'
@@ -129,8 +129,8 @@ describe 'Main page template ', ->
   beforeEach ->
 
   render = (profile, fair) ->
-    filename = path.resolve __dirname, "../templates/main_page.jade"
-    jade.compile(fs.readFileSync(filename), filename: filename)
+    filename = path.resolve __dirname, "../templates/main_page.pug"
+    pug.compile(fs.readFileSync(filename), filename: filename)
       fair: fair
       profile: profile
       sd: {}
@@ -165,8 +165,8 @@ describe 'Main page template ', ->
 describe 'Info page template ', ->
 
   render = (fair, location) ->
-    filename = path.resolve __dirname, "../templates/info.jade"
-    jade.compile(fs.readFileSync(filename), filename: filename)
+    filename = path.resolve __dirname, "../templates/info.pug"
+    pug.compile(fs.readFileSync(filename), filename: filename)
       fair: fair
       location: location
       sd: {}
@@ -226,8 +226,8 @@ describe 'Search', ->
     @profile = new Profile(fabricate('profile', id: 'dog'))
 
   render = (locals) ->
-    filename = path.resolve __dirname, "../templates/search_results.jade"
-    jade.compile(fs.readFileSync(filename), filename: filename)(locals)
+    filename = path.resolve __dirname, "../templates/search_results.pug"
+    pug.compile(fs.readFileSync(filename), filename: filename)(locals)
 
   it 'renders without errors', ->
     html = render(
@@ -262,8 +262,8 @@ describe 'Search', ->
     it 'protects against those crazy fair booths that exist in the aether', ->
       # TODO: Consolidate these various render helpers
       render = (params) ->
-        filename = path.resolve __dirname, "../templates/artist.jade"
-        jade.compile(fs.readFileSync(filename), filename: filename) _.extend(
+        filename = path.resolve __dirname, "../templates/artist.pug"
+        pug.compile(fs.readFileSync(filename), filename: filename) _.extend(
           profile: @profile
           artist: new Artist fabricate 'artist'
           fairResults: @fairResults
@@ -280,8 +280,8 @@ describe 'article page template ', ->
   beforeEach ->
 
   render = (profile, fair) ->
-    filename = path.resolve __dirname, "../templates/article.jade"
-    jade.compile(fs.readFileSync(filename), filename: filename)(
+    filename = path.resolve __dirname, "../templates/article.pug"
+    pug.compile(fs.readFileSync(filename), filename: filename)(
       fair: fair
       profile: profile
       sd: {}

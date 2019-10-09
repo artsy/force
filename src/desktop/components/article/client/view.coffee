@@ -12,7 +12,7 @@ modalize = require '../../modalize/index.coffee'
 initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
 Q = require 'bluebird-q'
 Sticky = require '../../sticky/index.coffee'
-editTemplate = -> require('../templates/edit.jade') arguments...
+editTemplate = -> require('../templates/edit.pug') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 

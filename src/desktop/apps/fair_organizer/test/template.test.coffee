@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'graceful-fs'
 Backbone = require 'backbone'
@@ -21,8 +21,8 @@ sinon = require 'sinon'
 sdData = require('sharify').data
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )
@@ -73,9 +73,9 @@ describe 'Meta tags', ->
         API_URL: "http://localhost:5000"
         CURRENT_PATH: '/cool-profile/info'
         FAIR_ORGANIZER: fabricate 'fair_organizer'
-      @file = path.resolve __dirname, "../templates/meta.jade"
+      @file = path.resolve __dirname, "../templates/meta.pug"
       @profile = new Profile fabricate('profile')
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: @sd
         profile: @profile
 

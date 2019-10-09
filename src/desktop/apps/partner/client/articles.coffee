@@ -4,12 +4,12 @@ ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
 Articles = require '../../../collections/articles.coffee'
 Article = require '../../../models/article.coffee'
-articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
+articleTemplate = -> require('../../../components/article/templates/index.pug') arguments...
 sd = require('sharify').data
 { resize } = require '../../../components/resizer/index.coffee'
 embed = require 'particle'
 moment = require 'moment'
-jsonldTemplate = -> require('../../../components/main_layout/templates/json_ld.jade') arguments...
+jsonldTemplate = -> require('../../../components/main_layout/templates/json_ld.pug') arguments...
 { stringifyJSONForWeb } = require '../../../components/util/json.coffee'
 
 module.exports = class ArticlesAdapter

@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 markdown = require '../util/markdown.coffee'
 Page = require '../../models/page.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class MultiPageView extends Backbone.View
   className: 'multi-page-view'

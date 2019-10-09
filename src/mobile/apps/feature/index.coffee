@@ -10,7 +10,7 @@ app = module.exports = express()
 app.locals.accounting = accounting
 
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 app.get '/feature/:id', routes.index
 app.get '/feature/:id/:queryParams', routes.index
 

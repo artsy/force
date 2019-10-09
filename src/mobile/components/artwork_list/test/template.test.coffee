@@ -3,11 +3,11 @@ Artworks = require '../../../collections/artworks'
 { fabricate } = require 'antigravity'
 path = require 'path'
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 
 render = (locals) ->
-  filename = path.resolve __dirname, '../template.jade'
-  jade.compile(
+  filename = path.resolve __dirname, '../template.pug'
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   ) locals

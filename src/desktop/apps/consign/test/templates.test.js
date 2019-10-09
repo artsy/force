@@ -1,6 +1,6 @@
 import { extend } from "underscore"
 import fs from "fs"
-import jade from "jade"
+import pug from "pug"
 import moment from "moment"
 import path from "path"
 import jsonData from "./fixture.json"
@@ -11,8 +11,8 @@ describe("landing page", () => {
   let data
 
   const render = (filename, data) => {
-    const file = `${path.resolve(__dirname, "../")}/templates/${filename}.jade`
-    return jade.compile(fs.readFileSync(file), { filename: file })(data)
+    const file = `${path.resolve(__dirname, "../")}/templates/${filename}.pug`
+    return pug.compile(fs.readFileSync(file), { filename: file })(data)
   }
 
   before(() => {

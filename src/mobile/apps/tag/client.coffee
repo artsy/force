@@ -5,7 +5,7 @@ bootstrap = require '../../components/layout/bootstrap.coffee'
 Backbone = require 'backbone'
 Tag = require '../../models/tag.coffee'
 Artworks = require '../../collections/artworks.coffee'
-artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
+artworkColumnsTemplate = -> require('../../components/artwork_columns/template.pug') arguments...
 
 module.exports.TagArtworksView = class TagArtworksView extends Backbone.View
 

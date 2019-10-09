@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { allPeriods, displayPeriods } = require './period_map.coffee'
 { numberFormat } = require 'underscore.string'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class PeriodFilterView extends Backbone.View
   className: 'cf-periods cf-filter'

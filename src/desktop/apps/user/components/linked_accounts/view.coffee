@@ -1,6 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class LinkedAccountsView extends Backbone.View
   className: 'settings-linked-accounts'

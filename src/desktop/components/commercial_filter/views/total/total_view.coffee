@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 s = require 'underscore.string'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class TotalView extends Backbone.View
 

@@ -10,7 +10,7 @@ sd = require('sharify').data
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 app.locals.resize = resize
 app.locals.markdown = markdown
 app.get '/', routes.index

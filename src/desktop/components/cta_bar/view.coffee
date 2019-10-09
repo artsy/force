@@ -5,7 +5,7 @@ mediator = require '../../lib/mediator.coffee'
 Cookies = require '../cookies/index.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../models/current_user.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class CTABarView extends Backbone.View
   _.extend @prototype, Form

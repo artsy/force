@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 cheerio = require 'cheerio'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
@@ -10,7 +10,7 @@ Artwork = require '../../../models/artwork'
 Artworks = require '../../../collections/artworks'
 
 render = (templateName) ->
-  jade.compileFile(require.resolve "../templates/#{templateName}.jade")
+  pug.compileFile(require.resolve "../templates/#{templateName}.pug")
 
 xdescribe 'metadata', ->
   describe 'events', ->

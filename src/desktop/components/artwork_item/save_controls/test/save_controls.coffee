@@ -19,7 +19,7 @@ describe 'SaveControls', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
-        benv.render resolve(__dirname, '../template.jade'), {}, =>
+        benv.render resolve(__dirname, '../template.pug'), {}, =>
           @view = new SaveControls { artworkCollection: null, model: model, el: $('.overlay-container') }
           done()
 
@@ -38,7 +38,7 @@ describe 'SaveControls', ->
         benv.setup =>
           benv.expose { $: benv.require 'jquery' }
           Backbone.$ = $
-          benv.render resolve(__dirname, '../template.jade'), {}, =>
+          benv.render resolve(__dirname, '../template.pug'), {}, =>
             @view = new SaveControls { artworkCollection: artworkCollection, model: model, el: $('.overlay-container') }
             done()
 

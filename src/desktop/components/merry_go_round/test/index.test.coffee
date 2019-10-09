@@ -5,8 +5,8 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 existy = _.negate _.isUndefined
 initCarousel = rewire '../index'
-bottomNavTemplate = require('jade').compileFile(require.resolve '../templates/bottom_navigation.jade')
-horizontalNavTemplate = require('jade').compileFile(require.resolve '../templates/horizontal_navigation.jade')
+bottomNavTemplate = require('pug').compileFile(require.resolve '../templates/bottom_navigation.pug')
+horizontalNavTemplate = require('pug').compileFile(require.resolve '../templates/horizontal_navigation.pug')
 
 xdescribe 'MerryGoRound', ->
   before (done) ->

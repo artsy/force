@@ -1,5 +1,5 @@
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 Page = require '../../../models/page'
 { fabricate } = require 'antigravity'
@@ -9,11 +9,11 @@ describe 'Meta tags', ->
   describe 'press page', ->
 
     before ->
-      @file = "#{path.resolve __dirname, '../'}/meta/press.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/press.pug"
       @sd =
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: @sd
         asset: (->)
 
@@ -26,11 +26,11 @@ describe 'Meta tags', ->
   describe 'terms page', ->
 
     before ->
-      @file = "#{path.resolve __dirname, '../'}/meta/terms.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/terms.pug"
       @sd =
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: @sd
         asset: (->)
 
@@ -42,11 +42,11 @@ describe 'Meta tags', ->
   describe 'privacy page', ->
 
     before ->
-      @file = "#{path.resolve __dirname, '../'}/meta/privacy.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/privacy.pug"
       @sd =
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: @sd
         asset: (->)
 
@@ -59,11 +59,11 @@ describe 'Meta tags', ->
   describe 'security page', ->
 
     before ->
-      @file = "#{path.resolve __dirname, '../'}/meta/security.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/security.pug"
       @sd =
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
         APP_URL: 'http://localhost:5000'
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: @sd
         asset: (->)
 

@@ -18,7 +18,7 @@ describe 'ShowCityView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render path.resolve(__dirname, '../templates/city.jade'),
+      benv.render path.resolve(__dirname, '../templates/city.pug'),
         sd: {}
         asset: (->)
         city: { name: 'new-york' }

@@ -5,7 +5,7 @@ FairEntries = require '../../../collections/fair_entries.coffee'
 PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view.coffee'
 sd = require('sharify').data
 
-fairEntriesTemplate = -> require('../templates/fair_entries.jade') arguments...
+fairEntriesTemplate = -> require('../templates/fair_entries.pug') arguments...
 
 module.exports.FeedView = class FeedView extends PoliteInfiniteScrollView
   events:

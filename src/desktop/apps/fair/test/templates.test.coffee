@@ -1,6 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -23,13 +23,13 @@ sinon = require 'sinon'
 sdData = require('sharify').data
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
   sd = _.extend sdData,
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
     WEBFONT_URL: 'http://webfonts.artsy.net/'
     NODE_ENV: 'test'
-  jade.compile(
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

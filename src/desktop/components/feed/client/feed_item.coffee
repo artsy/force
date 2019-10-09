@@ -5,7 +5,7 @@ sd = require('sharify').data
 ShareView = require '../../share/view.coffee'
 SaveControls = require '../../artwork_item/save_controls.coffee'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
-artworkColumns = -> require('../../artwork_columns/template.jade') arguments...
+artworkColumns = -> require('../../artwork_columns/template.pug') arguments...
 Artwork = require('../../../models/artwork.coffee')
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View

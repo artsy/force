@@ -7,7 +7,7 @@ Profile = require '../../../models/profile.coffee'
 Show = require '../../../models/show.coffee'
 ShowsFeed = require '../../../collections/shows_feed.coffee'
 { FairTrendArtist, FairTrendPartner } = require '../../../models/fair_trend.coffee'
-imageNavItemTemplate = -> require('../templates/image_nav_item.jade') arguments...
+imageNavItemTemplate = -> require('../templates/image_nav_item.pug') arguments...
 
 module.exports.TrendingView = class TrendingView extends Backbone.View
 

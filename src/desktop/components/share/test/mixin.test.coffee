@@ -1,11 +1,11 @@
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 benv = require 'benv'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "#{templateName}.jade"
-  jade.compile fs.readFileSync(filename), filename: filename
+  filename = path.resolve __dirname, "#{templateName}.pug"
+  pug.compile fs.readFileSync(filename), filename: filename
 
 describe 'Share mixin', ->
   before (done) ->

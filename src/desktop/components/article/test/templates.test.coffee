@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 cheerio = require 'cheerio'
 embed = require 'particle'
 path = require 'path'
-jade = require 'jade'
+pug = require 'pug'
 fs = require 'fs'
 moment = require 'moment'
 markdown = require '../../../components/util/markdown'
@@ -12,8 +12,8 @@ Articles = require '../../../collections/articles'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

@@ -1,4 +1,4 @@
-template = require('jade').compileFile(require.resolve '../template.jade')
+template = require('pug').compileFile(require.resolve '../template.pug')
 cheerio = require 'cheerio'
 moment = require 'moment'
 {getLiveAuctionUrl} = require('../../../../utils/domain/auctions/urls')

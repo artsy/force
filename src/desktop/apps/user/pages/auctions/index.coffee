@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 MyActiveBids = require '../../../../components/my_active_bids/view.coffee'
 BidHistoryView = require '../../components/bid_history/view.coffee'
 AuctionRegistrationsView = require '../../components/auction_registrations/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class AuctionsView extends Backbone.View
   subViews: []

@@ -6,7 +6,7 @@ import { data as sd } from "sharify"
 
 export const app = express()
 
-app.set("view engine", "jade")
+app.set("view engine", "pug")
 app.set("views", `${__dirname}/templates`)
 app.locals.resize = resize
 app.locals.crop = crop

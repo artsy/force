@@ -10,7 +10,7 @@ describe 'Feature template', ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       @sd = API_URL: 'http://localhost:5000'
       @feature = new Feature fabricate('feature', image_versions: ['wide'])
-      benv.render resolve(__dirname, '../../templates/index.jade'), {
+      benv.render resolve(__dirname, '../../templates/index.pug'), {
         sd: @sd
         asset: (->)
         feature: @feature

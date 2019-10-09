@@ -41,10 +41,10 @@ block body
         if isRegistered || hasValidCreditCard
           .registration-form-content
             if isRegistered
-              include ./conditions-of-sale-message.jade
+              include ./conditions-of-sale-message.pug
               .auction-bid-form-confirm.avant-garde-button-black.is-block Confirm Bid
             else
-              include ./conditions-of-sale-checkbox.jade
+              include ./conditions-of-sale-checkbox.pug
               .auction-bid-form-confirm.avant-garde-button-black.is-block.is-disabled Confirm Bid
 
         else

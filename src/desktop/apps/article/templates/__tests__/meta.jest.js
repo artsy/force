@@ -1,13 +1,13 @@
 import * as _ from "underscore"
 import path from "path"
-import jade from "jade"
+import pug from "pug"
 import fs from "fs"
 import Article from "desktop/models/article.coffee"
 import { StandardArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 
 const render = templateName => {
-  const filename = path.resolve(__dirname, `../${templateName}.jade`)
-  return jade.compile(fs.readFileSync(filename), {
+  const filename = path.resolve(__dirname, `../${templateName}.pug`)
+  return pug.compile(fs.readFileSync(filename), {
     filename,
   })
 }

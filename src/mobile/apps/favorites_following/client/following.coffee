@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 Profiles = require '../../../collections/profiles.coffee'
-profilesTemplate = -> require('../templates/profiles.jade') arguments...
+profilesTemplate = -> require('../templates/profiles.pug') arguments...
 
 module.exports = class FollowingView extends Backbone.View
   initialize: (options = {}) ->

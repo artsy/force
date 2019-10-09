@@ -1,6 +1,6 @@
 _ = require 'underscore'
 fs = require 'fs'
-template = require('jade').compileFile(require.resolve '../templates/index.jade')
+template = require('pug').compileFile(require.resolve '../templates/index.pug')
 fixture = require './fixture'
 fixture.categories = _.groupBy fixture.jobs, 'category'
 resizer = require '../../../components/resizer'

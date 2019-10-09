@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class SettingsTabsView extends Backbone.View
   events:

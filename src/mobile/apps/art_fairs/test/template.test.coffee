@@ -28,7 +28,7 @@ describe 'Art fairs template', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
-        benv.render resolve(__dirname, '../templates/index.jade'),
+        benv.render resolve(__dirname, '../templates/index.pug'),
           sd: {}
           asset: (->)
           _: require 'underscore'
@@ -60,7 +60,7 @@ describe 'Art fairs template', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
-        benv.render resolve(__dirname, '../templates/index.jade'),
+        benv.render resolve(__dirname, '../templates/index.pug'),
           sd: {}
           _: require 'underscore'
           navItems: [

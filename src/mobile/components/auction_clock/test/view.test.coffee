@@ -9,11 +9,11 @@ moment = require 'moment'
 rewire = require 'rewire'
 AuctionClockView = rewire '../view'
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 
 omg = ->
-  filename = resolve __dirname, '../template.jade'
-  jade.compile(fs.readFileSync(filename), filename: filename)
+  filename = resolve __dirname, '../template.pug'
+  pug.compile(fs.readFileSync(filename), filename: filename)
 
 describe 'AuctionClockView', ->
   before (done) ->

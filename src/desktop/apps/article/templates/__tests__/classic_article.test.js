@@ -1,12 +1,12 @@
 import path from "path"
-import jade from "jade"
+import pug from "pug"
 import fs from "fs"
 import Article from "desktop/models/article.coffee"
 import Channel from "desktop/models/channel.coffee"
 
 const render = templateName => {
-  const filename = path.resolve(__dirname, `../${templateName}.jade`)
-  return jade.compile(fs.readFileSync(filename), { filename })
+  const filename = path.resolve(__dirname, `../${templateName}.pug`)
+  return pug.compile(fs.readFileSync(filename), { filename })
 }
 
 describe("Article Templates", () => {

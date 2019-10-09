@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 State = require './models/state.coffee'
 mediator = require '../../lib/mediator.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
-template = -> require('./templates/index.jade') arguments...
+template = -> require('./templates/index.pug') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
   className: 'auction-artworks-container'

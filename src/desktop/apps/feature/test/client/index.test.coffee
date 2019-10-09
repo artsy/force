@@ -31,7 +31,7 @@ describe 'FeatureView', ->
     sinon.stub Backbone, 'sync'
     @feature = new Feature fabricate 'feature'
 
-    benv.render resolve(__dirname, '../../templates/index.jade'), {
+    benv.render resolve(__dirname, '../../templates/index.pug'), {
       feature: @feature
       sd: { FEATURE: @feature }
       asset: (->)

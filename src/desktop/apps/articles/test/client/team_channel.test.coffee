@@ -37,7 +37,7 @@ describe 'TeamChannelView', ->
       mod.__set__ 'initCarousel', sinon.stub().returns @carousel
       mod.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       mod.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
-      benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
+      benv.render resolve(__dirname, '../../templates/team_channel.pug'), @options, =>
         @view = new @TeamChannelView
           el: $('body')
         done()

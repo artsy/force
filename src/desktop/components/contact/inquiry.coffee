@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Cookies = require '../cookies/index.coffee'
 ContactView = require './view.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-formTemplate = -> require('./templates/inquiry_form.jade') arguments...
+formTemplate = -> require('./templates/inquiry_form.pug') arguments...
 { SESSION_ID, API_URL } = sd = require('sharify').data
 
 module.exports = class InquiryView extends ContactView

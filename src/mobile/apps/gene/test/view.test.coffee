@@ -17,7 +17,7 @@ xdescribe 'GeneArtworksView', ->
       # artworks.url = "/api/v1/filter/artworks?gene_id=foo"
       # artworks.parse = sinon.stub()
       gene = new Gene fabricate 'gene', { type: { name: 'medium' } }
-      benv.render path.resolve(__dirname, '../templates/index.jade'),
+      benv.render path.resolve(__dirname, '../templates/index.pug'),
         sd: { PARAMS: gene_id: gene.id }
         asset: (->)
         gene: gene
@@ -64,7 +64,7 @@ describe 'GeneArtistsView', ->
       $.fn.error = sinon.stub()
       Backbone.$ = $
       @e = new $.Event('click')
-      benv.render path.resolve(__dirname, '../templates/index.jade'),
+      benv.render path.resolve(__dirname, '../templates/index.pug'),
         sd: {}
         asset: (->)
         gene: gene

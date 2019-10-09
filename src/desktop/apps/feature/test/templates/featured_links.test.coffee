@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 benv = require 'benv'
@@ -9,8 +9,8 @@ FeaturedLink = require '../../../../models/featured_link.coffee'
 FeaturedLinks = require '../../../../collections/featured_links.coffee'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
-  jade.compile(fs.readFileSync(filename), filename: filename)
+  filename = path.resolve __dirname, "../../templates/#{templateName}.pug"
+  pug.compile(fs.readFileSync(filename), filename: filename)
 
 describe 'Featured Links', ->
   before (done) ->

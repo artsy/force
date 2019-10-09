@@ -17,7 +17,7 @@ describe 'SaleArtworks', ->
       @artwork = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')
       @sale = new Sale fabricate 'sale', is_auction: true
 
-      benv.render resolve(__dirname, '../templates/artwork.jade'), {
+      benv.render resolve(__dirname, '../templates/artwork.pug'), {
         artwork: @artwork
         displayPurchase: true
       }, =>

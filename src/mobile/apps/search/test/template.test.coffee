@@ -1,6 +1,6 @@
 benv = require 'benv'
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -28,7 +28,7 @@ describe 'Search results template', ->
 
   describe 'No results', ->
     beforeEach (done) ->
-      @template = benv.render(resolve(__dirname, '../template.jade'), {
+      @template = benv.render(resolve(__dirname, '../template.pug'), {
         sd: {}
         results: []
         mainHeaderSearchBoxValue: 'foobar'
@@ -61,7 +61,7 @@ describe 'Search results template', ->
       @search.add @artworks
       @search.add @artists
 
-      @template = benv.render(resolve(__dirname, '../template.jade'), {
+      @template = benv.render(resolve(__dirname, '../template.pug'), {
         sd: {}
         results: @search.models
         mainHeaderSearchBoxValue: 'foobar'

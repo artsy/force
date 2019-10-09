@@ -34,7 +34,7 @@ xdescribe 'NotificationsView', ->
     CurrentUser.orNull.returns new CurrentUser fabricate 'user'
     artists = null
     location.search = ''
-    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) , artists: artists }, =>
+    benv.render resolve(__dirname, '../../templates/index.pug'), { sd: {}, asset: (->) , artists: artists }, =>
       { @NotificationsView } = mod = rewire '../../client/index.coffee'
       mod.__set__ 'SidebarView', sinon.stub()
       mod.__set__ 'scrollFrame', sinon.stub()

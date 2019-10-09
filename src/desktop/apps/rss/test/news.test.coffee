@@ -1,7 +1,7 @@
 _ = require 'underscore'
 fs = require 'fs'
-newsTemplate = require('jade').compileFile(require.resolve '../templates/news.jade')
-articleTemplate = require('jade').compileFile(require.resolve '../templates/article.jade')
+newsTemplate = require('pug').compileFile(require.resolve '../templates/news.pug')
+articleTemplate = require('pug').compileFile(require.resolve '../templates/article.pug')
 sd =
   APP_URL: 'http://localhost'
 { fabricate } = require 'antigravity'

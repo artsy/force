@@ -1,6 +1,6 @@
 hasSeen = require '../../../../components/has_seen/index.coffee'
 mediator = require '../../../../lib/mediator.coffee'
-template =-> require('./index.jade') arguments...
+template =-> require('./index.pug') arguments...
 
 module.exports = (user) ->
   return unless user

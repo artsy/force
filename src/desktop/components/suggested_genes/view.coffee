@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Genes = require '../../collections/genes.coffee'
 OrderedSets = require '../../collections/ordered_sets.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class SuggestedGenesView extends Backbone.View
 

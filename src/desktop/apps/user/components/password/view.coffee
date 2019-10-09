@@ -2,7 +2,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 GenericFormView = require '../generic_form/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class SettingsPasswordView extends GenericFormView
   className: 'settings-password'

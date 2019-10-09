@@ -11,7 +11,7 @@ blurb = require '../../../components/gradient_blurb/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
 FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
 FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
-template = require '../components/artwork_columns_metaphysics/template.jade'
+template = require '../components/artwork_columns_metaphysics/template.pug'
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW

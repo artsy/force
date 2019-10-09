@@ -17,7 +17,7 @@ describe 'SearchBarView', ->
       Bloodhound.tokenizers = obj: whitespace: sinon.stub()
       SearchBarView.__set__ 'Bloodhound', Bloodhound
       location.assign = sinon.stub()
-      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
+      benv.render resolve(__dirname, '../templates/index.pug'), {}, =>
         @$input = $('#main-layout-search-bar-input')
         @$input.typeahead = sinon.stub()
         @view = new SearchBarView el: $('#main-layout-search-bar-container'), $input: @$input, mode: 'suggest'

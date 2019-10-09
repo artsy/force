@@ -127,12 +127,12 @@ export async function index(req, res, next) {
     try {
       const layout = await stitch({
         basePath: res.app.get("views"),
-        layout: "../../../../components/main_layout/templates/react_index.jade",
+        layout: "../../../../components/main_layout/templates/react_index.pug",
         config: {
           styledComponents: true,
         },
         blocks: {
-          head: "meta.jade",
+          head: "meta.pug",
           body: props => <App store={store} {...props} />,
         },
         locals: {

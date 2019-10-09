@@ -11,7 +11,7 @@ describe 'FilterArtworksNav', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       $.fn.hidehover = sinon.stub()
-      benv.render resolve(__dirname, '../template.jade'), { sd: {}, filterRoot: '/browse/artworks' }, =>
+      benv.render resolve(__dirname, '../template.pug'), { sd: {}, filterRoot: '/browse/artworks' }, =>
         FilterArtworksNav = benv.require resolve(__dirname, '../view')
         @view = new FilterArtworksNav
           el: $('.filter-nav')

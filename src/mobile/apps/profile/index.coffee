@@ -44,7 +44,7 @@ vanityRoutes = [
 ]
 
 app.set 'views', __dirname
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get(route, routes.setProfile) for route in vanityRoutes
 app.get '/profile/:id', routes.index

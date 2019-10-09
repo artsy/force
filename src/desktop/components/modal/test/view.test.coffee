@@ -15,7 +15,7 @@ xdescribe 'ModalView', ->
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
 
-      benv.render resolve(__dirname, '../template.jade'), {}, =>
+      benv.render resolve(__dirname, '../template.pug'), {}, =>
         @closeSpy = sinon.spy ModalView.prototype, 'close'
         @openSpy = sinon.spy ModalView.prototype, 'open'
         @mediatorSpy = sinon.spy mediator, 'trigger'

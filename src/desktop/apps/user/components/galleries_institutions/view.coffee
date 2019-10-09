@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 FillwidthView = require '../../../../components/fillwidth_row/view.coffee'
 Profiles = require '../../../../collections/profiles.coffee'
 QuasiInfiniteView = require '../quasi_infinite/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class GalleriesInstitutionsView extends QuasiInfiniteView
   className: 'settings-galleries-institutions'

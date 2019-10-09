@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = -> require('./templates/context.jade') arguments...
+template = -> require('./templates/context.pug') arguments...
 
 module.exports = class FollowedArtistsView extends Backbone.View
 

@@ -103,7 +103,7 @@ xdescribe 'ArticleView', ->
     @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
     @setupMaxImageHeights = sinon.spy(@ArticleView::, 'setupMaxImageHeights')
     @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
-    benv.render resolve(__dirname, '../templates/index.jade'), @locals, =>
+    benv.render resolve(__dirname, '../templates/index.pug'), @locals, =>
       @view = new @ArticleView
         el: $('body')
         article: @article

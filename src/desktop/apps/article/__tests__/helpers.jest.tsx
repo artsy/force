@@ -212,14 +212,14 @@ describe("#getLayoutTemplate", () => {
   it("returns expected template for standard", () => {
     const layout = getLayoutTemplate(StandardArticle)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_index.jade"
+      "../../../components/main_layout/templates/react_index.pug"
     )
   })
 
   it("returns expected template for feature", () => {
     const layout = getLayoutTemplate(FeatureArticle)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_index.jade"
+      "../../../components/main_layout/templates/react_index.pug"
     )
   })
 
@@ -232,35 +232,35 @@ describe("#getLayoutTemplate", () => {
     }
     const layout = getLayoutTemplate(article)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_blank_index.jade"
+      "../../../components/main_layout/templates/react_blank_index.pug"
     )
   })
 
   it("returns expected template for news", () => {
     const layout = getLayoutTemplate(NewsArticle)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_index.jade"
+      "../../../components/main_layout/templates/react_index.pug"
     )
   })
 
   it("returns expected template for video", () => {
     const layout = getLayoutTemplate(VideoArticle)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_blank_index.jade"
+      "../../../components/main_layout/templates/react_blank_index.pug"
     )
   })
 
   it("returns expected template for series", () => {
     const layout = getLayoutTemplate(SeriesArticle)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_blank_index.jade"
+      "../../../components/main_layout/templates/react_blank_index.pug"
     )
   })
 
   it("returns expected template for superArticle", () => {
     const layout = getLayoutTemplate(SuperArticle)
     expect(layout).toBe(
-      "../../../components/main_layout/templates/react_index.jade"
+      "../../../components/main_layout/templates/react_index.pug"
     )
   })
 })
@@ -275,9 +275,9 @@ describe("#getSuperArticleTemplates", () => {
     const templates = getSuperArticleTemplates(SuperArticle)
     expect(templates).toEqual({
       SuperArticleFooter:
-        "../../../components/article/templates/super_article_footer.jade",
+        "../../../components/article/templates/super_article_footer.pug",
       SuperArticleHeader:
-        "../../../components/article/templates/super_article_sticky_header.jade",
+        "../../../components/article/templates/super_article_sticky_header.pug",
     })
   })
 
@@ -289,9 +289,9 @@ describe("#getSuperArticleTemplates", () => {
     const templates = getSuperArticleTemplates(article)
     expect(templates).toEqual({
       SuperArticleFooter:
-        "../../../components/article/templates/super_article_footer.jade",
+        "../../../components/article/templates/super_article_footer.pug",
       SuperArticleHeader:
-        "../../../components/article/templates/super_article_sticky_header.jade",
+        "../../../components/article/templates/super_article_sticky_header.pug",
     })
   })
 })

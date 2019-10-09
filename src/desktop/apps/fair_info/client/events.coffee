@@ -5,7 +5,7 @@ geo = require '../../../components/geo/index.coffee'
 openMapModal = require '../../../components/map_modal/index.coffee'
 AddToCalendarView = require '../../../components/add_to_calendar/index.coffee'
 FairEvents = require '../../../collections/fair_events.coffee'
-template = -> require('../templates/map_modal.jade') arguments...
+template = -> require('../templates/map_modal.pug') arguments...
 
 module.exports = class FairInfoEvents extends Backbone.View
   events:

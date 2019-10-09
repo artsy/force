@@ -38,7 +38,7 @@ app.get("/ssr-experiments/stitch", adminOnly, async (_req, res, next) => {
   try {
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
+      layout: "../../components/main_layout/templates/react_redesign.pug",
       config: {
         styledComponents: true,
       },
@@ -97,7 +97,7 @@ app.get("/ssr-experiments/all*", adminOnly, async (req, res, next) => {
 
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
+      layout: "../../components/main_layout/templates/react_redesign.pug",
       blocks: {
         body: bodyHTML,
       },

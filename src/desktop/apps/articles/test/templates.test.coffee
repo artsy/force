@@ -1,6 +1,6 @@
 _ = require 'underscore'
 path = require 'path'
-jade = require 'jade'
+pug = require 'pug'
 fs = require 'fs'
 moment = require 'moment'
 Articles = require '../../../collections/articles'
@@ -8,8 +8,8 @@ Section = require '../../../models/section'
 fixtures = require '../../../test/helpers/fixtures'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

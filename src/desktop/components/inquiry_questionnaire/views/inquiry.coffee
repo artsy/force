@@ -7,7 +7,7 @@ ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 alertable = require '../../alertable_input/index.coffee'
 hasSeen = require '../../has_seen/index.coffee'
 sd = require('sharify').data
-template = -> require('../templates/inquiry.jade') arguments...
+template = -> require('../templates/inquiry.pug') arguments...
 
 module.exports = class Inquiry extends StepView
 

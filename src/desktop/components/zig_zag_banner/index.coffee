@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class ZigZagBanner extends Backbone.View
   className: 'zig-zag-banner'

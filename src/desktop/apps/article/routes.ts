@@ -143,7 +143,7 @@ export const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: "meta.jade",
+        head: "meta.pug",
         body: App,
       },
       locals: {

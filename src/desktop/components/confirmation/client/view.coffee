@@ -1,5 +1,5 @@
 { View } = require 'backbone'
-template = -> require('../index.jade') arguments...
+template = -> require('../index.pug') arguments...
 
 module.exports = class ConfirmationModal extends View
   class: 'confirmation-modal'

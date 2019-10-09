@@ -3,7 +3,7 @@ _ = require 'underscore'
 { fabricate } = require 'antigravity'
 Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
-template = require('jade').compileFile(require.resolve '../../templates/visitors.jade')
+template = require('pug').compileFile(require.resolve '../../templates/visitors.pug')
 data = _.extend {}, asset: (->), sd: {CURRENT_PATH: '/info/visitors'}, markdown: (->)
 InfoMenu = require '../../../../components/info_menu/index.coffee'
 

@@ -27,7 +27,7 @@ describe 'FairsView', ->
     @profile = { is_published: true, icon: { url: "https://www.example.com/cat.jpg" } }
     fair = fabricate('fair', image: @image, profile: @profile)
     @fairs = [fair]
-    benv.render resolve(__dirname, '../templates/index.jade'), {
+    benv.render resolve(__dirname, '../templates/index.pug'), {
       sd: FAIRS: @fairs
       featuredFairs: @fairs
       currentFairRows: ViewHelpers.currentRows(@fairs)

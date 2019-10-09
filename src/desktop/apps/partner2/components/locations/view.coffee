@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 { API_URL } = require('sharify').data
 
 module.exports = class LocationsView extends Backbone.View

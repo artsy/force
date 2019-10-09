@@ -35,8 +35,7 @@ export const checkoutFlow = async (req, res, next) => {
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
-      layout:
-        "../../components/main_layout/templates/react_minimal_header.jade",
+      layout: "../../components/main_layout/templates/react_minimal_header.pug",
       blocks: {
         head: () => headTags,
         body: bodyHTML,

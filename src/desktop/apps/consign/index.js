@@ -6,7 +6,7 @@ import express from "express"
 export const app = express()
 
 app.set("views", `${__dirname}/templates`)
-app.set("view engine", "jade")
+app.set("view engine", "pug")
 
 const landing = new JSONPage({
   name: "consignments-landing",

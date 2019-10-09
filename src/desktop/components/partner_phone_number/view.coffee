@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 logOnce = _.once (locations) ->
   analyticsHooks.trigger 'show_number:displayed' if locations.length

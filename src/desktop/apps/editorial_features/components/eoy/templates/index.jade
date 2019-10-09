@@ -1,4 +1,4 @@
-extends ../../../../../components/main_layout/templates/blank.jade
+extends ../../../../../components/main_layout/templates/blank.pug
 
 append locals
   - assetPackage = 'editorial_features'
@@ -10,7 +10,7 @@ block head
 block body
   - var superArticle = article
   .eoy-feature__sa-header
-    include ../../../../../components/article/templates/super_article_sticky_header.jade
+    include ../../../../../components/article/templates/super_article_sticky_header.pug
 
   .eoy-feature
     video(class='video' autoplay=true, controls=false, loop=true, muted=true, playsinline=true poster='https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-cover-placeholder.png').eoy-feature__background.active
@@ -23,12 +23,12 @@ block body
         img.article-sa-primary-logo.ubs(src=superArticle.get('super_article').partner_fullscreen_header_logo)
       a(href='/articles').back-to-magazine Back to Magazine
     .eoy-feature__content
-      include ./scroller.jade
+      include ./scroller.pug
 
     .article-body
       //- rendered on client
       section.footer
-        include ../../../../../components/article/templates/super_article_footer.jade
+        include ../../../../../components/article/templates/super_article_footer.pug
         .caption Video footage by Alex John Beck for Artsy with additional footage of Christo and Jeanne-Claude, "The Floating Piers, Lake Iseo, Italy," 2014-16, © 2016 Christo.
 
   include ../../../../../components/main_layout/templates/json_ld

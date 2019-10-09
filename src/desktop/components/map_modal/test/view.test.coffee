@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 PartnerShow = require '../../../models/partner_show'
 Partner = require '../../../models/partner'
 MapModalView = require '../view.coffee'
-template = require('jade').compileFile(require.resolve './fixtures/template.jade')
+template = require('pug').compileFile(require.resolve './fixtures/template.pug')
 
 describe 'MapModalView', ->
   beforeEach (done) ->

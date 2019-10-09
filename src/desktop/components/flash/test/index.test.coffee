@@ -14,7 +14,7 @@ describe 'FlashMessage', ->
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
       @sandbox = sinon.sandbox.create()
       @startTimerStub = @sandbox.stub FlashMessage::, 'startTimer'
-      benv.render resolve(__dirname, '../template.jade'), {}, =>
+      benv.render resolve(__dirname, '../template.pug'), {}, =>
         done()
 
   afterEach ->

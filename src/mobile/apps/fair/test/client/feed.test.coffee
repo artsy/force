@@ -16,7 +16,7 @@ describe 'Fair feed page client-side code', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/feed.jade'), {
+      benv.render resolve(__dirname, '../../templates/feed.pug'), {
         fair: new Fair(fabricate 'fair')
         sd: {}
       }, =>

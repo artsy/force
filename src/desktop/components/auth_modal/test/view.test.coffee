@@ -6,13 +6,13 @@ rewire = require 'rewire'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator'
 LoggedOutUser = rewire '../../../models/logged_out_user'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

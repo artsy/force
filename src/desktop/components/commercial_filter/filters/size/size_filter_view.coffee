@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 createSlider = require '../../../slider/index.coffee'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class SizeFilterView extends Backbone.View
   classNames: 'cf-size cf-filter'

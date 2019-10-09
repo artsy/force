@@ -6,9 +6,9 @@ A little link that allows a user to add a date to one of their calendar clients.
 
 ## Example
 
-Include the jade mixin passing in an `event` model that uses in the [Calendar Urls](https://github.com/artsy/artsy-backbone-mixins/blob/master/lib/calendar_urls.coffee) mixin.
+Include the pug mixin passing in an `event` model that uses in the [Calendar Urls](https://github.com/artsy/artsy-backbone-mixins/blob/master/lib/calendar_urls.coffee) mixin.
 
-```jade
+```pug
 include ../components/add_to_calendar
 
 .fair-event-calendars

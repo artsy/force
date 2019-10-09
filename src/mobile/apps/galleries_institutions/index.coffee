@@ -7,7 +7,7 @@ routes = require './routes'
 
 app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/galleries', routes.index
 app.get '/galleries/all', routes.galleries_institutions

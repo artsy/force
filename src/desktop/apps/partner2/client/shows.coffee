@@ -5,7 +5,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 Partner = require '../../../models/partner.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 PartnerShowsGrid = require './shows_grid.coffee'
-template = -> require('../templates/shows.jade') arguments...
+template = -> require('../templates/shows.pug') arguments...
 
 module.exports = class PartnerShowsView extends Backbone.View
 

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../../../components/my_active_bids/query.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class BidHistoryView extends Backbone.View
   className: 'settings-bid-history'

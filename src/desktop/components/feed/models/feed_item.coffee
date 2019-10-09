@@ -24,7 +24,7 @@ module.exports = class FeedItem extends Backbone.Model
     response.title = DOMPurify.sanitize(response.title)
       # DOMPurify replaces normal ampersands with HTML entities.
       # *I think* Jade should render HTML entities without having to completely unescape but...
-      # https://github.com/visionmedia/jade/issues/966
+      # https://github.com/visionmedia/pug/issues/966
       # We can't completely unescape because that template is sometimes rendered on the server
       # and we don't have a server-side sanitization solution, yet.
       ?.replace(' &amp; ', ' & ')

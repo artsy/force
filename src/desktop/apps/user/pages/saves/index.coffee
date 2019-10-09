@@ -4,7 +4,7 @@ SavedArtworksView = require '../../components/saved_artworks/view.coffee'
 ArtistsView = require '../../components/artists/view.coffee'
 CategoriesView = require '../../components/categories/view.coffee'
 GalleriesInstitutions = require '../../components/galleries_institutions/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class SavesView extends Backbone.View
   subViews: []

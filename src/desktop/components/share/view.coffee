@@ -1,7 +1,7 @@
 { map } = require 'underscore'
 Backbone = require 'backbone'
 { APP_URL, CURRENT_PATH } = require('sharify').data
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class ShareView extends Backbone.View
   className: 'share-menu'

@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Artwork = require '../../models/artwork.coffee'
 
-resolvedImage = -> require('./templates/image.jade') arguments...
+resolvedImage = -> require('./templates/image.pug') arguments...
 
 module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
 

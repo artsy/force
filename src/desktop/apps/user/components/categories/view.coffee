@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 FillwidthView = require '../../../../components/fillwidth_row/view.coffee'
 Categories = require '../../../../collections/genes.coffee'
 QuasiInfiniteView = require '../quasi_infinite/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class CategoriesView extends QuasiInfiniteView
   className: 'settings-categories'

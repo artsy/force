@@ -11,9 +11,9 @@
       a#tag-filter-all-artists.filter-button.is-active All Artists
       label By Work:&nbsp;
     span#tag-filter-artworks-nav
-      include ../../../components/filter/artworks_nav/template.jade
+      include ../../../components/filter/artworks_nav/template.pug
   unless tag.isSubjectMatter()
     #tag-artists
       .loading-spinner
   #tag-artworks
-    include ../../../components/filter/artworks/template.jade
+    include ../../../components/filter/artworks/template.pug

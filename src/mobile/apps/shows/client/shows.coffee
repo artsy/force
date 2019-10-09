@@ -5,7 +5,7 @@ Show = require '../../../models/show.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view.coffee'
 {Cities, FeaturedCities} = require 'places'
-showTemplate = -> require('../templates/show-list.jade') arguments...
+showTemplate = -> require('../templates/show-list.pug') arguments...
 
 module.exports.ShowCityView = class ShowCityView extends PoliteInfiniteScrollView
 

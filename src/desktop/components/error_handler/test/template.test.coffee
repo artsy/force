@@ -1,11 +1,11 @@
-jade = require 'jade'
+pug = require 'pug'
 cheerio = require 'cheerio'
 path = require 'path'
 fs = require 'fs'
 
 render = ->
-  filename = path.resolve __dirname, "../index.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../index.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

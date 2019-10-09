@@ -4,7 +4,7 @@
 #
 # Why not just drop in a bunch of .html files on S3 and use shortcuts?
 # Who wants to write html!? This lets us be lazy about easily leveraging
-# existing UI components and preprocessors like stylus/jade. ༼;´༎ຶ ۝ ༎ຶ༽
+# existing UI components and preprocessors like stylus/pug. ༼;´༎ຶ ۝ ༎ຶ༽
 #
 
 express = require 'express'
@@ -12,7 +12,7 @@ Page = require '../../models/page'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/the-future-of-art', (req, res) ->
   new Page(id: 'future-of-art').fetch

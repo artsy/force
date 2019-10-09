@@ -41,7 +41,7 @@ describe 'BidForm', ->
 
   describe '#placeBid while registered', ->
     beforeEach (done) ->
-      benv.render resolve(__dirname, '../../templates/bid-form.jade'), {
+      benv.render resolve(__dirname, '../../templates/bid-form.pug'), {
         sd: {}
         sale: @sale
         monthRange: DateHelpers.getMonthRange()
@@ -132,7 +132,7 @@ describe 'BidForm', ->
   describe '#placeBid while not registered', ->
     beforeEach (done) ->
       @acceptConditions = => @view.$acceptConditions.prop('checked', true)
-      benv.render resolve(__dirname, '../../templates/bid-form.jade'), {
+      benv.render resolve(__dirname, '../../templates/bid-form.pug'), {
         sd: {}
         sale: @sale
         monthRange: DateHelpers.getMonthRange()

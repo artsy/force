@@ -24,7 +24,7 @@ xdescribe 'Auction results client-side code', ->
     @artworks = new Artworks [fabricate 'artwork']
     @auctionLots = new AuctionLots [@lot], state: totalRecords: 1
 
-    benv.render resolve(__dirname, '../../templates/detail.jade'), {
+    benv.render resolve(__dirname, '../../templates/detail.pug'), {
       sd: {}
       lot: @lot
       artist: @artist

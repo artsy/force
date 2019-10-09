@@ -3,7 +3,7 @@ _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 Representatives = require '../../../collections/representatives.coffee'
-template = -> require('../templates/specialist.jade') arguments...
+template = -> require('../templates/specialist.pug') arguments...
 
 module.exports = class Specialist extends StepView
   className: 'iq-loadable is-loading'

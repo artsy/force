@@ -4,7 +4,7 @@ sd = require('sharify').data
 Sticky = require '../../sticky/index.coffee'
 CountView = require './header_count_view.coffee'
 aggregationsMap = require '../aggregations_map.coffee'
-template = -> require('../templates/filters.jade') arguments...
+template = -> require('../templates/filters.pug') arguments...
 
 module.exports = class ArtworkFiltersView extends Backbone.View
   truncate:

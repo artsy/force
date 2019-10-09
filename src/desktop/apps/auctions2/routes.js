@@ -16,9 +16,9 @@ export async function index(req, res, next) {
 
     const layout = await stitch({
       basePath: res.app.get("views"),
-      layout: "../../../components/main_layout/templates/react_index.jade",
+      layout: "../../../components/main_layout/templates/react_index.pug",
       blocks: {
-        head: "meta.jade",
+        head: "meta.pug",
         body: props => <App store={store} {...props} />,
       },
       locals: {

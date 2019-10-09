@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = -> require('./form.jade') arguments...
+template = -> require('./form.pug') arguments...
 _ = require 'underscore'
 gemup = require '@artsy/gemup'
 

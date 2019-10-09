@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Partner = require '../../../models/partner.coffee'
 overviewLayoutFactory = require './overview_layout_factory.coffee'
-template = -> require('../templates/overview.jade') arguments...
+template = -> require('../templates/overview.pug') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
 

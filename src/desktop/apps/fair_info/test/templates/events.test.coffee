@@ -5,7 +5,7 @@ Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 FairEvent = require '../../../../models/fair_event'
 FairEvents = require '../../../../collections/fair_events'
-template = require('jade').compileFile(require.resolve '../../templates/events.jade')
+template = require('pug').compileFile(require.resolve '../../templates/events.pug')
 InfoMenu = require '../../../../components/info_menu/index.coffee'
 data = _.extend {}, asset: (->), sd: {CURRENT_PATH: '/info/events'}, markdown: (->)
 

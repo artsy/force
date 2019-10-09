@@ -10,7 +10,7 @@ routes = require './routes'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 app.get '/:profileId', routes.requireFair, routes.mainPage
 app.get '/:profileId/feed', routes.requireFair, routes.feed  # Instagram feed introduced at The Armory 2015
 app.get '/:profileId/live', routes.requireFair, routes.trending  # This changed to "Trending", but routes were in place

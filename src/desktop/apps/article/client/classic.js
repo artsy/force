@@ -22,7 +22,7 @@ let TeamChannelNavView = _TeamChannelNavView
 let ArticleView = _ArticleView
 
 const promotedTemplate = args => {
-  return require("desktop/apps/article/templates/promoted_content.jade")(args)
+  return require("desktop/apps/article/templates/promoted_content.pug")(args)
 }
 
 export const init = () => {

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
 setupSaveControls = require '../save_artworks/index.coffee'

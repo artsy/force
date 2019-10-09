@@ -9,7 +9,7 @@ FollowProfiles = require '../../../collections/follow_profiles.coffee'
 FollowButtonView = require '../../../components/follow_button/view.coffee'
 FairOrganizer = require '../../../models/fair_organizer.coffee'
 
-articlesTemplate = -> require('../templates/articles.jade') arguments...
+articlesTemplate = -> require('../templates/articles.pug') arguments...
 
 
 module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View

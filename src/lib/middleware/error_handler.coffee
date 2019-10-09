@@ -6,7 +6,7 @@ path = require 'path'
 module.exports = (err, req, res, next) ->
   file = path.resolve(
     __dirname,
-    '../../desktop/components/error_handler/index.jade'
+    '../../desktop/components/error_handler/index.pug'
   )
 
   enableLogging = NODE_ENV is 'development' or argv.verbose or VERBOSE_LOGGING is true

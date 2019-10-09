@@ -1,5 +1,5 @@
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 sd = require('sharify').data
 { fabricate } = require 'antigravity'
 PartnerShow = require '../../../models/partner_show'
@@ -10,9 +10,9 @@ xdescribe 'Meta tags', ->
   describe 'Partner Show', ->
 
     beforeEach ->
-      @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
+      @file = "#{path.resolve __dirname, '../'}/templates/meta.pug"
       @show = new PartnerShow fabricate('show')
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: sd
         asset: (->)
         show: @show
@@ -28,7 +28,7 @@ xdescribe 'Meta tags', ->
       @show = new PartnerShow fabricate('show')
       @show.set 'image_url', ''
       @show.set 'image_version', []
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         sd: sd
         asset: (->)
         show: @show

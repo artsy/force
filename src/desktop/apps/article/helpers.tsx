@@ -44,11 +44,11 @@ export const getLayoutTemplate = article => {
     ["series", "video"].includes(article.layout) || isFeatureInSeries
 
   let layoutTemplate =
-    "../../../components/main_layout/templates/react_index.jade"
+    "../../../components/main_layout/templates/react_index.pug"
 
   if (hasSeriesNav) {
     layoutTemplate =
-      "../../../components/main_layout/templates/react_blank_index.jade"
+      "../../../components/main_layout/templates/react_blank_index.pug"
   }
   return layoutTemplate
 }
@@ -58,9 +58,9 @@ export const getSuperArticleTemplates = article => {
   if (article.is_super_article || article.is_super_sub_article) {
     templates = {
       SuperArticleFooter:
-        "../../../components/article/templates/super_article_footer.jade",
+        "../../../components/article/templates/super_article_footer.pug",
       SuperArticleHeader:
-        "../../../components/article/templates/super_article_sticky_header.jade",
+        "../../../components/article/templates/super_article_sticky_header.pug",
     }
   }
   return templates

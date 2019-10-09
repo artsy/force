@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class KeywordFilterView extends Backbone.View
   className: 'cf-keyword'

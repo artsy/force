@@ -8,7 +8,7 @@ A wrapper for [Flickity](http://flickity.metafizzy.co/).
 @import '../components/merry_go_round'
 ```
 
-```jade
+```pug
 section.js-my-carousel
   .mgr-cells.js-mgr-cells
     for image in images.models

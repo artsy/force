@@ -1,10 +1,10 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-jade = require 'jade'
+pug = require 'pug'
 markdown = require '../../../components/util/markdown'
 
 render = (data) ->
-  template = jade.compileFile(require.resolve '../templates/hero_unit.jade')
+  template = pug.compileFile(require.resolve '../templates/hero_unit.pug')
   template _.extend {}, {
     _s: _s
     markdown: markdown,

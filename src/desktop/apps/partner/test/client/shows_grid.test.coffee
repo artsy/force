@@ -20,7 +20,7 @@ describe 'PartnerShowsGridView', ->
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
 
-        benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
+        benv.render resolve(__dirname, '../../templates/shows_grid.pug'), {
           partner: { href: -> }
           params: {}
         }, =>
@@ -112,7 +112,7 @@ describe '#maybeFetchAndRenderShows', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
+      benv.render resolve(__dirname, '../../templates/shows_grid.pug'), {
         partner: { href: -> }
         params: {}
       }, =>

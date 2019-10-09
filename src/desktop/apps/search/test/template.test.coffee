@@ -1,7 +1,7 @@
 benv = require 'benv'
 _ = require 'underscore'
 _s = require 'underscore.string'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -12,8 +12,8 @@ sinon = require 'sinon'
 fixture = require '../../../test/helpers/fixtures.coffee'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

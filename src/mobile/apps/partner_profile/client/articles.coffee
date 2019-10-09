@@ -1,6 +1,6 @@
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 Articles = require '../../../collections/articles.coffee'
-articleFigureTemplate = -> require('../../../components/article_figure/template.jade') arguments...
+articleFigureTemplate = -> require('../../../components/article_figure/template.pug') arguments...
 
 $ ->
   bootstrap()

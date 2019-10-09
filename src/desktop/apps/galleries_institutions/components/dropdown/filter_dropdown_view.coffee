@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-suggestionTemplate = -> require('./suggestion.jade') arguments...
+suggestionTemplate = -> require('./suggestion.pug') arguments...
 
 module.exports = class FilterDropdownView extends Backbone.View
   events:

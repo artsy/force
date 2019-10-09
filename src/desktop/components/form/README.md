@@ -9,7 +9,7 @@ Handles form serialization, submission, validation and UI state handling. It's b
 
 ## Usage
 
-```jade
+```pug
 form
   // Provide `name` attributes for your input fields
   input( name='full_name' )

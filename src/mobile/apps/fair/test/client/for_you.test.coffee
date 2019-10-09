@@ -19,7 +19,7 @@ describe 'For You View', ->
       $.onInfiniteScroll = ->
       sinon.stub(CurrentUser, 'orNull').returns @user
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/for_you.jade'), {
+      benv.render resolve(__dirname, '../../templates/for_you.pug'), {
         fair: @fair = new Fair(fabricate 'fair')
         profile: @profile = new Profile(fabricate 'fair_profile')
         sd: {}

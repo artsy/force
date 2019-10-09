@@ -31,7 +31,7 @@ describe 'ArticleView', ->
         contributing_authors: []
         section_ids: []
 
-      benv.render resolve(__dirname, '../templates/index.jade'), {
+      benv.render resolve(__dirname, '../templates/index.pug'), {
         article: new Article @article
         asset: (->)
         sd: {}

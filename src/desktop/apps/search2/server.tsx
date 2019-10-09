@@ -26,7 +26,7 @@ app.get(
     try {
       const layout = await stitch({
         basePath: __dirname,
-        layout: "templates/index.jade",
+        layout: "templates/index.pug",
         locals: {
           ...res.locals,
           assetPackage: "search2",

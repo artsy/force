@@ -30,7 +30,7 @@ describe 'PartnerRouter', ->
 
       @profile = new Profile (fabricate 'partner_profile')
 
-      benv.render resolve(__dirname, '../../templates/index.jade'), {
+      benv.render resolve(__dirname, '../../templates/index.pug'), {
         sd: {}
         profile: @profile
         asset: (->)

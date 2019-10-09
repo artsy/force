@@ -130,13 +130,13 @@ export async function news(_req, res, next) {
 
     const layout = await stitch({
       basePath: res.app.get("views"),
-      layout: "../../../components/main_layout/templates/react_index.jade",
+      layout: "../../../components/main_layout/templates/react_index.pug",
       config: {
         styledComponents: true,
       },
       blocks: {
         body: App,
-        head: "./meta/news.jade",
+        head: "./meta/news.pug",
       },
       locals: {
         ...res.locals,

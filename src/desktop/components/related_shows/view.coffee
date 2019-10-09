@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class RelatedShowsView extends Backbone.View
   defaults:

@@ -26,7 +26,7 @@ describe 'Location Based', ->
 
     describe 'on the first page', ->
       before (done) ->
-        benv.render resolve(__dirname, '../templates/location_based.jade'), _.defaults({
+        benv.render resolve(__dirname, '../templates/location_based.pug'), _.defaults({
           opening: [new Show fabricate 'show']
           upcoming: []
           current: new Shows [fabricate 'show'], state: currentPage: 1, pageSize: 1, totalRecords: 1
@@ -40,7 +40,7 @@ describe 'Location Based', ->
 
     describe 'on the second page', ->
       before (done) ->
-        benv.render resolve(__dirname, '../templates/location_based.jade'), _.defaults({
+        benv.render resolve(__dirname, '../templates/location_based.pug'), _.defaults({
           opening: [new Show fabricate 'show']
           upcoming: []
           current: new Shows _.times(2, -> fabricate 'show'), state: currentPage: 2, pageSize: 1, totalRecords: 2

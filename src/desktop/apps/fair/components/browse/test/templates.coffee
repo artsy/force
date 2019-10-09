@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 benv = require 'benv'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -14,8 +14,8 @@ cheerio = require 'cheerio'
 FilterArtworks = require '../../../../../collections/filter_artworks'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

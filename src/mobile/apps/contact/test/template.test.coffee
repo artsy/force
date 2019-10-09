@@ -1,6 +1,6 @@
 _ = require 'underscore'
 fs = require 'fs'
-template = require('jade').compileFile(require.resolve '../templates/template.jade')
+template = require('pug').compileFile(require.resolve '../templates/template.pug')
 fixture = require '../fixtures/contact.json'
 data = _.extend {}, asset: (->), sd: {}, data: fixture, markdown: (->)
 

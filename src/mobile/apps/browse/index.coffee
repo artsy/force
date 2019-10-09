@@ -4,7 +4,7 @@ sd = require('sharify').data
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/browse', routes.to '/collect'
 app.get '/browse/artworks', routes.to '/collect'

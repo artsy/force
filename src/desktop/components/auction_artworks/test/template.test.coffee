@@ -1,13 +1,13 @@
 _ = require 'underscore'
 $ = require 'cheerio'
-jade = require 'jade'
+pug = require 'pug'
 { fabricate } = require 'antigravity'
 Auction = require '../../../models/auction'
 Artwork = require '../../../models/artwork'
 
 templates =
-  grid: jade.compileFile(require.resolve '../templates/artwork/grid.jade')
-  list: jade.compileFile(require.resolve '../templates/artwork/list.jade')
+  grid: pug.compileFile(require.resolve '../templates/artwork/grid.pug')
+  list: pug.compileFile(require.resolve '../templates/artwork/list.pug')
 
 describe 'templates', ->
   beforeEach ->

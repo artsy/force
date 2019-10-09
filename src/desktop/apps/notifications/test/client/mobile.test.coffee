@@ -32,7 +32,7 @@ xdescribe 'NotificationsView', ->
 
   describe 'without artist_id', ->
     beforeEach (done) ->
-      benv.render require.resolve('../../templates/mobile/index.jade'), { sd: {} }, =>
+      benv.render require.resolve('../../templates/mobile/index.pug'), { sd: {} }, =>
         @view = new NotificationsView el: $('body')
         done()
 
@@ -60,7 +60,7 @@ xdescribe 'NotificationsView', ->
 
   describe 'with artist_id', ->
     beforeEach (done) ->
-      benv.render require.resolve('../../templates/mobile/index.jade'), { sd: {} }, =>
+      benv.render require.resolve('../../templates/mobile/index.pug'), { sd: {} }, =>
         sinon.stub(NotificationsView::, 'params').returns artist_id: 'emile-ajar'
         @view = new NotificationsView el: $('body')
         done()

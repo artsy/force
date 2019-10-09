@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 AboutYouView = require '../../components/about_you/view.coffee'
 ArtistsYouCollectView = require '../../components/artists_you_collect/view.coffee'
 GalleryIntroView = require '../../components/gallery_intro/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class ProfileView extends Backbone.View
   subviews: []

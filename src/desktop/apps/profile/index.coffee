@@ -8,7 +8,7 @@ routes = require './routes'
 
 app = module.exports = express()
 app.set 'views', __dirname
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/:id', routes.setProfile
 app.get '/:id/:tab*', routes.setProfile

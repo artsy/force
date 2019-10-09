@@ -1,14 +1,14 @@
 fs = require 'fs'
 path = require 'path'
-jade = require 'jade'
+pug = require 'pug'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
   describe 'index', ->
     before ->
       @sd = APP_URL: 'http://localhost:5000'
-      @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
-      @html = jade.render fs.readFileSync(@file).toString(), sd: @sd, asset: ((u) -> u)
+      @file = "#{path.resolve __dirname, '../'}/templates/meta.pug"
+      @html = pug.render fs.readFileSync(@file).toString(), sd: @sd, asset: ((u) -> u)
 
     it 'includes canonical url, twitter card, og tags, title, description', ->
       @html.should.containEql '<title>Art Gallery Shows and Museum Exhibitions | Artsy</title>'
@@ -25,8 +25,8 @@ describe 'Meta tags', ->
   describe 'city', ->
     before ->
       @sd = APP_URL: 'http://localhost:5000'
-      @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
-      @html = jade.render fs.readFileSync(@file).toString(), asset: ((u) -> u), sd: @sd, city: name: 'Cool Place'
+      @file = "#{path.resolve __dirname, '../'}/templates/meta.pug"
+      @html = pug.render fs.readFileSync(@file).toString(), asset: ((u) -> u), sd: @sd, city: name: 'Cool Place'
 
     it 'includes canonical url, twitter card, og tags, title, description', ->
       @html.should.containEql '<title>Cool Place Art Gallery Shows and Museum Exhibitions | Artsy</title>'

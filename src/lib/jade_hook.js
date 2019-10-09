@@ -1,14 +1,14 @@
 /**
- * Hook for compiling jade templates from Mocha tests. Works in hand with new
+ * Hook for compiling pug templates from Mocha tests. Works in hand with new
  * server-side React-based flow fallbacks
  */
-import jade from "jade"
+import pug from "pug"
 
 function compile(module, filename) {
-  const template = jade.compileFile(filename)
+  const template = pug.compileFile(filename)
   module.exports = template
 }
 
 if (require.extensions) {
-  require.extensions[".jade"] = compile
+  require.extensions[".pug"] = compile
 }

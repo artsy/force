@@ -1,7 +1,7 @@
 _s = require 'underscore.string'
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 { crop } = require '../resizer/index.coffee'
 
 module.exports = class RelatedArticlesView extends Backbone.View

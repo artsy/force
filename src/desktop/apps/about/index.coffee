@@ -5,7 +5,7 @@ JSONPage = require '../../components/json_page'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 page = new JSONPage name: 'about', paths: show: '/about', edit: '/about/edit'
 { data, edit, upload } = require('../../components/json_page/routes')(page)

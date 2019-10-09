@@ -22,7 +22,7 @@ import blurb from "../../components/gradient_blurb/index.coffee"
 imagesLoaded.makeJQueryPlugin($)
 
 const relatedArtistsTemplate = args => {
-  return require("./templates/related_artists.jade")(args)
+  return require("./templates/related_artists.pug")(args)
 }
 
 // Update URL with current filters/mode/sort, for ease of sharing.

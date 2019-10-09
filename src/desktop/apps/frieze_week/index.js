@@ -31,7 +31,7 @@ export class EditableFriezeWeekPage extends JSONPage {
       const data = await this.jsonPage.get()
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_index.jade",
+        layout: "../../components/main_layout/templates/react_index.pug",
         config: {
           styledComponents: true,
         },

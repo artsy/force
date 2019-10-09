@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 { resize } = require '../../../../components/resizer'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class CategoryFilterView extends Backbone.View
   events:

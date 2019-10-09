@@ -1,7 +1,7 @@
 moment = require 'moment'
 Backbone = require 'backbone'
 countdown = require './index.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class ClockView extends Backbone.View
   initialize: ({ @label, @timestamp }) ->

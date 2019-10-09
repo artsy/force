@@ -27,7 +27,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
-      layout: `../../components/main_layout/templates/${layoutTemplate}.jade`,
+      layout: `../../components/main_layout/templates/${layoutTemplate}.pug`,
       blocks: {
         head: () => headTags,
         body: bodyHTML,

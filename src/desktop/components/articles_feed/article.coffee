@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 ShareView = require '../share/view.coffee'
-template = -> require('./templates/article.jade') arguments...
+template = -> require('./templates/article.pug') arguments...
 
 module.exports = class ArticleFeedArticleView extends Backbone.View
   className: 'articles-feed-item'

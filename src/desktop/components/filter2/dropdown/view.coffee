@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class DropdownView extends Backbone.View
 

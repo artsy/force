@@ -1,4 +1,4 @@
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 cheerio = require 'cheerio'
@@ -11,8 +11,8 @@ fixtures = require '../../../test/helpers/fixtures'
 { GALLERY_DEFAULT, GALLERY_ONE, ACTIVE_PARTNER_LAYOUTS } = require '../../../models/partner'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

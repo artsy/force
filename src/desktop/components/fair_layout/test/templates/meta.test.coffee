@@ -1,6 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 { fabricate } = require 'antigravity'
@@ -12,12 +12,12 @@ cheerio = require 'cheerio'
 @profile = new Profile fabricate 'fair_profile'
 
 render = (templateName, locals) ->
-  filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
+  filename = path.resolve __dirname, "../../templates/#{templateName}.pug"
   sd =
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
     NODE_ENV: 'test'
-  jade.compile(
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
 )

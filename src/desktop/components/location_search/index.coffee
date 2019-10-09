@@ -4,7 +4,7 @@ geo = require '../geo/index.coffee'
 { isTouchDevice } = require '../util/device.coffee'
 mediator = require '../../lib/mediator.coffee'
 
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class LocationSearchView extends Backbone.View
   events:

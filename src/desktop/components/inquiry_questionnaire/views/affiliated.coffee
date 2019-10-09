@@ -4,7 +4,7 @@ Form = require '../../form/index.coffee'
 TypeaheadView = require '../../typeahead/view.coffee'
 ResultsListView = require '../../results_list/view.coffee'
 StepView = require './step.coffee'
-template = -> require('../templates/affiliated.jade') arguments...
+template = -> require('../templates/affiliated.pug') arguments...
 
 Galaxy =
   headers:

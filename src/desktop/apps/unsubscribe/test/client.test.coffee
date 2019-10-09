@@ -23,7 +23,7 @@ describe 'Unsubscribe View', ->
   beforeEach (done) ->
     benv.setup =>
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../templates/index.jade'), {
+      benv.render resolve(__dirname, '../templates/index.pug'), {
         sd: {}
         asset: (->)
         emailTypes: emailTypes

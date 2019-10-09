@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-footerTemplate = -> require('../templates/footer.jade') arguments...
+footerTemplate = -> require('../templates/footer.pug') arguments...
 
 module.exports = class FairFooter extends Backbone.View
 

@@ -3,7 +3,7 @@ import { index, resetPassword, redirectLoggedInHome } from "./routes"
 
 export const app = express()
 
-app.set("view engine", "jade")
+app.set("view engine", "pug")
 app.set("views", `${__dirname}/templates`)
 
 app.get("/login", redirectLoggedInHome, index)

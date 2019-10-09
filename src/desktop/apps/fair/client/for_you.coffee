@@ -13,7 +13,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
+exhibitorsTemplate = -> require('../templates/exhibitors_columns.pug') arguments...
 
 module.exports = class ForYouView extends Backbone.View
 

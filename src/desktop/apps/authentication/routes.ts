@@ -87,7 +87,7 @@ export const index = async (req, res, next) => {
   try {
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_blank_index.jade",
+      layout: "../../components/main_layout/templates/react_blank_index.pug",
       config: {
         styledComponents: true,
       },

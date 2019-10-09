@@ -2,7 +2,7 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PartnerArtists = require '../../../../collections/partner_artists.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class PartnerArtistsListView extends Backbone.View
 

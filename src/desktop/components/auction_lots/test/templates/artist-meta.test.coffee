@@ -1,5 +1,5 @@
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 Artist = require '../../../../models/artist'
 { fabricate } = require 'antigravity'
@@ -7,7 +7,7 @@ Artist = require '../../../../models/artist'
 describe 'Meta tags', ->
 
   before ->
-    @file = "#{path.resolve __dirname, '../../'}/templates/meta/artist.jade"
+    @file = "#{path.resolve __dirname, '../../'}/templates/meta/artist.pug"
     @sd =
       APP_URL: 'http://localhost:5000'
       API_URL: 'http://localhost:5000'
@@ -17,7 +17,7 @@ describe 'Meta tags', ->
 
     beforeEach ->
       @artist = new Artist fabricate 'artist'
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
         asset: (->)
@@ -34,7 +34,7 @@ describe 'Meta tags', ->
     beforeEach ->
       @artist = new Artist fabricate 'artist'
       @artist.set image_versions: ["large"]
-      @html = jade.render fs.readFileSync(@file).toString(),
+      @html = pug.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
         asset: (->)

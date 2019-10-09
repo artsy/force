@@ -1,7 +1,7 @@
 _ = require 'underscore'
 FeedView = require('./feed.coffee')
 PartnerShowButtons = require '../../partner_buttons/show_buttons.coffee'
-feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
+feedItemsContainerTemplate = -> require('../templates/feed_items_container.pug') arguments...
 
 module.exports = class ShowsFeed extends FeedView
 

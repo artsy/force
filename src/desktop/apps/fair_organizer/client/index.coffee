@@ -10,7 +10,7 @@ Clock = require '../../../components/clock/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-articlesTemplate = -> require('../templates/articles.jade') arguments...
+articlesTemplate = -> require('../templates/articles.pug') arguments...
 
 module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
 

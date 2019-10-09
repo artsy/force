@@ -1,6 +1,6 @@
 { extend } = require 'underscore'
 GenericFormView = require '../generic_form/view.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class EmailPreferencesView extends GenericFormView
   className: 'settings-email-preferences'

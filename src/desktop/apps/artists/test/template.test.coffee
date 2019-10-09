@@ -1,15 +1,15 @@
 $ = require 'cheerio'
 _ = require 'underscore'
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 fixture = require './fixtures/artists'
 { fabricate } = require 'antigravity'
 ArtistsByLetter = require '../collections/artists_by_letter'
 sd = require('sharify').data
 
 render = (template) ->
-  filename = require.resolve "../templates/#{template}.jade"
-  jade.compile fs.readFileSync(filename), filename: filename
+  filename = require.resolve "../templates/#{template}.pug"
+  pug.compile fs.readFileSync(filename), filename: filename
 
 describe 'Artists', ->
   describe '#index', ->

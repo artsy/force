@@ -42,7 +42,7 @@ module.exports = ['dimension_range', 'medium', 'price_range', 'total']
 
 And the template:
 
-```jade
+```pug
     #tag-filter
       #tag-filter-nav.filter-fixed-header-nav
         .filter-fixed-header-left

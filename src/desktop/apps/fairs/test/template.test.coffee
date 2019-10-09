@@ -22,7 +22,7 @@ describe 'Fairs template', ->
     beforeEach (done) ->
       benv.setup =>
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-        benv.render resolve(__dirname, '../templates/index.jade'),
+        benv.render resolve(__dirname, '../templates/index.pug'),
           sd: {}
           asset: (->)
           featuredFairs: @currentFairs
@@ -37,7 +37,7 @@ describe 'Fairs template', ->
       benv.teardown()
 
     # TODO: Intermittent failure, we should probably refactor this suite to use
-    # cheerio and jade.render to avoid DOM finickyness
+    # cheerio and pug.render to avoid DOM finickyness
     xit 'renders correctly', ->
       $('.fairs__current-fairs h1.fair-header').text().should.equal 'Current Fairs'
       $('.fairs__current-fair').length.should.equal 2
@@ -50,7 +50,7 @@ describe 'Fairs template', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-        benv.render resolve(__dirname, '../templates/index.jade'),
+        benv.render resolve(__dirname, '../templates/index.pug'),
           sd: {}
           asset: (->)
           featuredFairs: @pastFairs

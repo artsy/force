@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Partner = require '../../../models/partner.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
+artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.pug') arguments...
 
 module.exports.PartnerArtworksView = class PartnerArtworksView extends Backbone.View
 

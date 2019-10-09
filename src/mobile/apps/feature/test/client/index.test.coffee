@@ -28,7 +28,7 @@ xdescribe 'Feature page client-side code', ->
       }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/page.jade'), {
+      benv.render resolve(__dirname, '../../templates/page.pug'), {
         feature: new Feature fabricate 'feature'
         sd: { API_URL: 'foo/bar' }
       }, =>

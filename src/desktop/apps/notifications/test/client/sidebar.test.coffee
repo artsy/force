@@ -31,7 +31,7 @@ describe 'SidebarView', ->
     artist1 = get: -> { name: 'Kina', id: 'kina-abe', published_artworks_count: 4 }
     artist2 = get: -> { name: 'Kana', id: 'kana-abe', published_artworks_count: 5 }
     artists.models = [ artist1, artist2 ]
-    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: { FOLLOWING: artists }, asset: (->) }, =>
+    benv.render resolve(__dirname, '../../templates/index.pug'), { sd: { FOLLOWING: artists }, asset: (->) }, =>
       @SidebarView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/sidebar.coffee'), ['filterArtistTemplate']
       )

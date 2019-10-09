@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 cheerio = require 'cheerio'
@@ -15,7 +15,7 @@ InfoMenu = require '../../info_menu.coffee'
 describe 'Fair Information ', ->
   describe 'Fair with no articles ', ->
     beforeEach ->
-      filename = path.resolve __dirname, "../../templates/index.jade"
+      filename = path.resolve __dirname, "../../templates/index.pug"
       @profile = new Profile fabricate 'profile'
       @fair = new Fair fabricate 'fair'
       @articles = new Articles [ new Article fabricate 'article' ]
@@ -27,7 +27,7 @@ describe 'Fair Information ', ->
         aboutTheFair: false
       }
 
-      @page = jade.compile(fs.readFileSync(filename), filename: filename) {
+      @page = pug.compile(fs.readFileSync(filename), filename: filename) {
         profile: @profile
         fair: @fair
         location: new PartnerLocation @fair.get('location')
@@ -44,7 +44,7 @@ describe 'Fair Information ', ->
 
   describe 'Fair with articles ', ->
     beforeEach ->
-      filename = path.resolve __dirname, "../../templates/index.jade"
+      filename = path.resolve __dirname, "../../templates/index.pug"
       @profile = new Profile fabricate 'profile'
       @fair = new Fair fabricate 'fair'
       @articles = new Articles [ new Article fabricate 'article' ]
@@ -56,7 +56,7 @@ describe 'Fair Information ', ->
         aboutTheFair: true
       }
 
-      @page = jade.compile(fs.readFileSync(filename), filename: filename) {
+      @page = pug.compile(fs.readFileSync(filename), filename: filename) {
         profile: @profile
         fair: @fair
         article: @articles.first()

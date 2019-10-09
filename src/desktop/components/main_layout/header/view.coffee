@@ -13,7 +13,7 @@ activatePulldowns = require '../../hover_pulldown/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
-bundleTemplate = -> require('./templates/bundles.jade') arguments...
+bundleTemplate = -> require('./templates/bundles.pug') arguments...
 { Following } = require '../../follow_button/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View

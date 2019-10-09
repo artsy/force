@@ -4,7 +4,7 @@ s = require 'underscore.string'
 mediumMap = require '../../filters/medium/medium_map.coffee'
 { formatMoney } = require 'accounting'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class PillboxView extends Backbone.View
   events:

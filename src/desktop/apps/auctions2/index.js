@@ -4,7 +4,7 @@ import express from "express"
 
 export const app = express()
 
-app.set("view engine", "jade")
+app.set("view engine", "pug")
 app.set("views", `${__dirname}/components`)
 
 app.get("/auctions2", adminOnly, routes.index)

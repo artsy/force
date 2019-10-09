@@ -13,7 +13,7 @@ describe 'Follows client-side code', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       $.onInfiniteScroll = ->
-      benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {} }, =>
+      benv.render resolve(__dirname, '../../templates/index.pug'), { sd: {} }, =>
         @profiles = -> _.times 5, -> { profile: fabricate 'profile', id: _.uniqueId() }
         sinon.stub(Backbone, 'sync').yieldsTo 'success', @profiles()
         @view = new FollowingView el: $('body')

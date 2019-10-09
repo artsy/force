@@ -7,7 +7,7 @@ express = require 'express'
 
 app = module.exports = express()
 app.set 'views', __dirname
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/personalize', (_, res) => res.redirect('/personalize/interests')
 app.get '/personalize/:slug', ensureLoggedInUser, index

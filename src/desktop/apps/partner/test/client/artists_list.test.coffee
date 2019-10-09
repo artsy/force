@@ -17,7 +17,7 @@ describe 'PartnerArtistsListView', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
-        benv.render resolve(__dirname, '../../templates/artists_list.jade'), { groups: {} }, =>
+        benv.render resolve(__dirname, '../../templates/artists_list.pug'), { groups: {} }, =>
           @template = sinon.stub()
           PartnerArtistsListView.__set__ 'template', @template
           done()
@@ -151,7 +151,7 @@ describe 'PartnerArtistsListView', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
-        benv.render resolve(__dirname, '../../templates/artists_list.jade'), { groups: {} }, =>
+        benv.render resolve(__dirname, '../../templates/artists_list.pug'), { groups: {} }, =>
           @PartnerArtistsListView = mod =
             benv.requireWithJadeify resolve(__dirname, '../../client/artists_list'), ['template']
           @partner = fabricate('partner', default_profile_id: 'taipei-fine-art-museum')

@@ -65,12 +65,12 @@ block body
             = error.message
         if registered || hasQualifiedCreditCard
           if registered
-            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-message.jade
+            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-message.pug
             button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button
               | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner
           else
-            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-checkbox.jade
+            include ../../../../desktop/apps/auction_support/templates/conditions-of-sale-checkbox.pug
             button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button.is-disabled
               | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner

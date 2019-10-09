@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 { numberFormat } = require 'underscore.string'
 User = require '../../../../models/user.coffee'
 mediator = require '../../../../lib/mediator.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class FollowedArtistsFilterView extends Backbone.View
   className: 'cf-followed_artists cf-filter'

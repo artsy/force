@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class PaginatorView extends Backbone.View
   maxPage: 100

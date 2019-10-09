@@ -6,7 +6,7 @@ JSONPageRoutes = require '../../components/json_page/routes'
 
 app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 pageFactory = (name) ->
   page: page = new JSONPage name: name, paths: show: "/press/#{name}", edit: "/press/#{name}/edit"

@@ -1,15 +1,15 @@
 import * as _ from "underscore"
 import embed from "particle"
 import fs from "fs"
-import jade from "jade"
+import pug from "pug"
 import path from "path"
 import * as Fixtures from "reaction/Components/Publishing/Fixtures/Components"
 import Article from "desktop/models/article.coffee"
 import fixtures from "desktop/test/helpers/fixtures.coffee"
 
 const render = templateName => {
-  const filename = path.resolve(__dirname, `../${templateName}.jade`)
-  return jade.compile(fs.readFileSync(filename), { filename })
+  const filename = path.resolve(__dirname, `../${templateName}.pug`)
+  return pug.compile(fs.readFileSync(filename), { filename })
 }
 
 describe("AMP Templates", () => {

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 Backbone = require 'backbone'
 module.exports = class RelatedArticlesView extends Backbone.View

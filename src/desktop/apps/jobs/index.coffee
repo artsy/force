@@ -4,7 +4,7 @@ adminOnly = require '../../lib/admin_only'
 
 app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 JSONPage = require '../../components/json_page'
 page = new JSONPage name: 'jobs', paths: show: '/jobs', edit: '/jobs/edit'

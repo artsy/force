@@ -23,7 +23,7 @@ class Page extends Component {
 
 If used within a non-React context, `index.jsx` will automatically mount provided there is a default `#react-mount-auction-block` somewhere present in the DOM:
 
-```jade
+```pug
 .container
   #react-mount-auction-block
 ```

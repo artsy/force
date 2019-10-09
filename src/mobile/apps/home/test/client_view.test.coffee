@@ -14,7 +14,7 @@ describe 'HomePageView', ->
         Element: window.Element
 
       Backbone.$ = $
-      benv.render resolve(__dirname, '../templates/page.jade'), {
+      benv.render resolve(__dirname, '../templates/page.pug'), {
         heroUnits: []
         sd: {}
       }, =>

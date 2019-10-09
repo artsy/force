@@ -10,7 +10,7 @@ jsonPageRoutes = require '../../components/json_page/routes'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 # Randomly redirect this link for a marketing A/B testing
 app.get '/partnership-opportunities', routes.mktoABTest

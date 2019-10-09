@@ -9,7 +9,7 @@ CurrentUser = require '../../models/current_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 
-template = -> require('./templates/index.jade') arguments...
+template = -> require('./templates/index.pug') arguments...
 
 module.exports = class ContactView extends ModalView
   _.extend @prototype, Form

@@ -1,4 +1,4 @@
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -9,8 +9,8 @@ Show = require '../../../../models/show'
 Location = require '../../../../models/location'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../../templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

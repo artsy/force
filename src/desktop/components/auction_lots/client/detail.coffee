@@ -1,7 +1,7 @@
 _ = require 'underscore'
 ModalView = require '../../../components/modal/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-template = -> require('../templates/modal.jade') arguments...
+template = -> require('../templates/modal.pug') arguments...
 imagesLoaded = require 'imagesloaded'
 
 module.exports = class DetailView extends ModalView

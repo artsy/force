@@ -1,7 +1,7 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main.pug
 
 mixin eventListItem(event)
-  include ./list_item.jade
+  include ./list_item.pug
 
 block content
   #fair-info.main-side-margin.mobile-app-top-padding
@@ -9,7 +9,7 @@ block content
       h1.fair-page-module-heading Armory Arts Week
 
       nav.fair-info-event-nav
-        include ./event_nav.jade
+        include ./event_nav.pug
 
       each events, day in eventsByDay
         .fair-info-events-for-day( data-day=day )

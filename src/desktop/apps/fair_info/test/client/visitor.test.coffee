@@ -34,7 +34,7 @@ describe 'FairInfoVisitorsView', ->
       aboutTheFair: false
     }
 
-    benv.render resolve(__dirname, '../../templates/visitors.jade'), {
+    benv.render resolve(__dirname, '../../templates/visitors.pug'), {
       sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info/visitors' }
       fair: @fair
       profile: @profile

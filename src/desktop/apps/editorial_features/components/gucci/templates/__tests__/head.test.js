@@ -1,12 +1,12 @@
 import * as _ from "underscore"
 import path from "path"
-import jade from "jade"
+import pug from "pug"
 import fs from "fs"
 import Curation from "desktop/models/curation.coffee"
 
 const render = templateName => {
-  const filename = path.resolve(__dirname, `../${templateName}.jade`)
-  return jade.compile(fs.readFileSync(filename), { filename })
+  const filename = path.resolve(__dirname, `../${templateName}.pug`)
+  return pug.compile(fs.readFileSync(filename), { filename })
 }
 
 describe("Meta template", () => {

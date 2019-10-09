@@ -9,9 +9,9 @@ export const index = async (req, res, next) => {
       config: {
         styledComponents: true,
       },
-      layout: "../../components/main_layout/templates/react_blank_index.jade",
+      layout: "../../components/main_layout/templates/react_blank_index.pug",
       blocks: {
-        head: "./meta.jade",
+        head: "./meta.pug",
         body: App,
       },
       locals: {

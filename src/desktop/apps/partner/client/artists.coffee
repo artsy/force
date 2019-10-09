@@ -7,7 +7,7 @@ Artist = require '../../../models/artist.coffee'
 PartnerArtists = require '../../../collections/partner_artists.coffee'
 ArtistView = require './artists_artist.coffee'
 ArtistsListView = require './artists_list.coffee'
-template = -> require('../templates/artists.jade') arguments...
+template = -> require('../templates/artists.pug') arguments...
 
 module.exports = class PartnerArtistsView extends Backbone.View
 

@@ -4,7 +4,7 @@ geo = require '../../../../components/geo/index.coffee'
 colors = require '../../../../components/stylus_lib/colors'
 { getMapLink } = require '../../../../components/util/google_maps.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class MapModalView extends Backbone.View
   className: 'map-modal'

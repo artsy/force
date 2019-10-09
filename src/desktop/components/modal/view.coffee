@@ -4,7 +4,7 @@ mediator = require '../../lib/mediator.coffee'
 Transition = require '../mixins/transition.coffee'
 { isTouchDevice } = require '../util/device.coffee'
 Scrollbar = require '../scrollbar/index.coffee'
-modalTemplate = -> require('./modal.jade') arguments...
+modalTemplate = -> require('./modal.pug') arguments...
 
 module.exports = class ModalView extends Backbone.View
   id: 'modal'

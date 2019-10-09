@@ -8,7 +8,7 @@ sd = require('sharify').data
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 { NODE_ENV } = require '../../config'
 app.set 'view cache', NODE_ENV is 'production'

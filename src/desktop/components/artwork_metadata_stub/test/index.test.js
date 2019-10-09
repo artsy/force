@@ -1,11 +1,11 @@
 import cheerio from "cheerio"
 import fs from "fs"
-import jade from "jade"
+import pug from "pug"
 import path from "path"
 
 function render(locals) {
-  const filename = path.resolve(__dirname, "../index.jade")
-  return jade.compile(fs.readFileSync(filename), { filename })(locals)
+  const filename = path.resolve(__dirname, "../index.pug")
+  return pug.compile(fs.readFileSync(filename), { filename })(locals)
 }
 
 describe("metadata template", () => {

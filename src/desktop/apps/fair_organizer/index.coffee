@@ -11,7 +11,7 @@ app = module.exports = express()
 app.locals.resize = resize
 app.locals.crop = crop
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 getFairOrgData = [
   timeout('25s')

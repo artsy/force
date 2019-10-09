@@ -1,12 +1,12 @@
 _ = require 'underscore'
 $ = require 'cheerio'
 benv = require 'benv'
-jade = require 'jade'
+pug = require 'pug'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
 
 templates =
-  overlay: jade.compileFile(require.resolve '../templates/overlay.jade')
+  overlay: pug.compileFile(require.resolve '../templates/overlay.pug')
 
 describe 'templates', ->
   before (done) ->

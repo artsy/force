@@ -11,7 +11,7 @@ for item, i in items
     case item.get('type')
       when 'artworks'
         if isAuction
-          include ./filter.jade
+          include ./filter.pug
           != auctionArtworksTemplate({ artworks: item.get('data').models, auction: sale })
         else
           != artworkListTemplate({ artworks: item.get('data').models })

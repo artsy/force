@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 sd = require('sharify').data
@@ -7,8 +7,8 @@ cheerio = require 'cheerio'
 useragent = require 'useragent'
 
 render = ->
-  filename = path.resolve __dirname, "../template.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../template.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

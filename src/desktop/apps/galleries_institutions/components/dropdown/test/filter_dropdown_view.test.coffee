@@ -36,7 +36,7 @@ describe 'FilterDropdownView', ->
         displayName: 'Locations'
         aggregations: @aggregations
 
-      benv.render resolve(__dirname, '../template.jade'), { facet: @facet, params: @params }, =>
+      benv.render resolve(__dirname, '../template.pug'), { facet: @facet, params: @params }, =>
         @dropdown = new FilterDropdownView params: @params, facet: @facet, el: $('.partners-facet-dropdown')
         @$input = @dropdown.$input
         done()
@@ -136,7 +136,7 @@ describe 'FilterDropdownView', ->
         aggregations: @aggregations
         search: true
 
-      benv.render resolve(__dirname, '../template.jade'), { facet: @facet, params: @params }, =>
+      benv.render resolve(__dirname, '../template.pug'), { facet: @facet, params: @params }, =>
         @dropdown = new FilterDropdownView params: @params, facet: @facet, el: $('.partners-facet-dropdown')
         @$input = @dropdown.$input
         sinon.stub @dropdown, 'goToProfile'

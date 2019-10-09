@@ -3,7 +3,7 @@ _ = require 'underscore'
 { formatMoney } = require 'accounting'
 createSlider = require '../../../slider/index.coffee'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class RangeFilterView extends Backbone.View
   classNames: 'cf-price cf-filter'

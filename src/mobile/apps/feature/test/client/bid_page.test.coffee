@@ -18,7 +18,7 @@ describe 'BidPageView', ->
         Backbone.$ = $
         @e = $.Event('click')
         sinon.stub Backbone, 'sync'
-        benv.render resolve(__dirname, '../../templates/bid_page.jade'), {
+        benv.render resolve(__dirname, '../../templates/bid_page.pug'), {
           sd: {}
           artwork: new Artwork fabricate 'artwork'
           saleArtwork: new SaleArtwork fabricate 'sale_artwork'
@@ -110,7 +110,7 @@ describe 'BidPageView', ->
         Backbone.$ = $
         @e = $.Event('click')
         sinon.stub Backbone, 'sync'
-        benv.render resolve(__dirname, '../../templates/bid_page.jade'), {
+        benv.render resolve(__dirname, '../../templates/bid_page.pug'), {
           sd: {}
           artwork: new Artwork fabricate 'artwork'
           saleArtwork: new SaleArtwork fabricate 'sale_artwork'

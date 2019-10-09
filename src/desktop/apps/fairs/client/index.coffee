@@ -12,7 +12,7 @@ query = require '../query.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
-pastFairsTemplate = -> require('../templates/past_fairs.jade') arguments...
+pastFairsTemplate = -> require('../templates/past_fairs.pug') arguments...
 
 module.exports.FairsView = class FairsView extends Backbone.View
   events:

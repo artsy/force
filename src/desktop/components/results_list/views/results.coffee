@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = -> require('../templates/results.jade') arguments...
+template = -> require('../templates/results.pug') arguments...
 
 module.exports = class ResultsView extends Backbone.View
   className: 'results-list'

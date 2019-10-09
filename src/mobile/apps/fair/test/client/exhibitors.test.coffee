@@ -15,7 +15,7 @@ describe 'Exhibitors page client-side code', ->
       Backbone.$ = $
       $.onInfiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/exhibitors_page.jade'), {
+      benv.render resolve(__dirname, '../../templates/exhibitors_page.pug'), {
         fair: new Fair(fabricate 'fair')
         shows: new ShowsFeed
         showParams: {}

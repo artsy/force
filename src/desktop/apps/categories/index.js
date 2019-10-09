@@ -3,7 +3,7 @@ import * as routes from "./routes"
 
 export const app = express()
 
-app.set("view engine", "jade")
+app.set("view engine", "pug")
 app.set("views", `${__dirname}/components`)
 
 app.get("/categories", routes.index)

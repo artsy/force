@@ -16,7 +16,7 @@ describe 'Main page client-side code', ->
       $.onInfiniteScroll = ->
       sinon.stub Backbone.history, 'start'
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/main_page.jade'), {
+      benv.render resolve(__dirname, '../../templates/main_page.pug'), {
         fair: new Fair(fabricate 'fair')
         profile: new Profile(fabricate 'profile')
         sections: new Backbone.Collection([

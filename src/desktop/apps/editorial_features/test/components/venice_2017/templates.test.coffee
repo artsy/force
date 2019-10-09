@@ -1,14 +1,14 @@
 _ = require 'underscore'
 path = require 'path'
-jade = require 'jade'
+pug = require 'pug'
 fs = require 'fs'
 moment = require 'moment'
 Curation = require '../../../../../models/curation.coffee'
 Article = require '../../../../../models/article.coffee'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../../../components/venice_2017/templates/#{templateName}.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../../../components/venice_2017/templates/#{templateName}.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )

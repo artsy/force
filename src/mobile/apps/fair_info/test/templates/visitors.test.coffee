@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 cheerio = require 'cheerio'
@@ -21,8 +21,8 @@ describe 'Visitors', ->
     }
 
   render = (fair, location) ->
-    filename = path.resolve __dirname, "../../templates/visitors.jade"
-    jade.compile(fs.readFileSync(filename), filename: filename)
+    filename = path.resolve __dirname, "../../templates/visitors.pug"
+    pug.compile(fs.readFileSync(filename), filename: filename)
       fair: fair
       location: location
       infoMenu: @infoMenu

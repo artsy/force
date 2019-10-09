@@ -17,7 +17,7 @@ describe 'ContactPartnerView', ->
       sinon.stub Backbone, 'sync'
       @artwork = new Artwork fabricate 'artwork'
       @partner = new Partner fabricate 'partner', locations: null
-      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
+      benv.render resolve(__dirname, '../templates/index.pug'), {}, =>
         ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
         ContactPartnerView.__set__ 'Cookies', { set: (->), get: (->) }
         sinon.stub ContactPartnerView.prototype, 'isLoading'

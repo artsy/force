@@ -70,7 +70,7 @@ describe 'MagazineView', ->
           ]
         }
       ]
-      benv.render path.resolve(__dirname, '../../templates/articles.jade'),
+      benv.render path.resolve(__dirname, '../../templates/articles.pug'),
         sd: {}
         asset: (->)
         articles: @articles

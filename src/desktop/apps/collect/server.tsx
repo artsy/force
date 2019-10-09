@@ -33,7 +33,7 @@ const index = async (req, res, next) => {
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
+      layout: "../../components/main_layout/templates/react_redesign.pug",
       blocks: {
         head: () => <Meta appUrl={APP_URL} headTags={headTags} />,
         body: bodyHTML,

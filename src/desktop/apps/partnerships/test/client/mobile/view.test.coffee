@@ -14,7 +14,7 @@ describe 'GalleryPartnershipsView', ->
       @GalleryPartnershipsView = rewire '../../../client/mobile/view'
       $.fn.waypoint = sinon.stub()
       data = _.extend require('../../fixture/content.json'), sd: {}
-      benv.render resolve(__dirname, '../../../templates/mobile/index.jade'), data, ->
+      benv.render resolve(__dirname, '../../../templates/mobile/index.pug'), data, ->
         done()
 
   after ->

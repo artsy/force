@@ -1,6 +1,6 @@
 { map, extend } = require 'underscore'
 slider = require 'nouislider'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = ({ $container, start, min, max, name, step, append = "", range, formatter = (val) -> val }) ->
   return unless $container

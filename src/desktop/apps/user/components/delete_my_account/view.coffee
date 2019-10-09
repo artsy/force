@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Form = require '../../../../components/form/index.coffee'
 FlashMessage = require '../../../../components/flash/index.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class DeleteMyAccountView extends Backbone.View
   className: 'settings-delete-my-account'

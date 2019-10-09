@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 module.exports = class EventsModalView extends Backbone.View
   className: 'show-events-modal'

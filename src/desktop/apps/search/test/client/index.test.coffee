@@ -10,7 +10,7 @@ _s = require 'underscore.string'
 describe 'SearchResultsView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.render path.resolve(__dirname, '../../templates/template.jade'), {
+      benv.render path.resolve(__dirname, '../../templates/template.pug'), {
         sd: {}
         asset: (->)
         results: [new SearchResult fixture.searchResult]

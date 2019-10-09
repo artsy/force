@@ -33,14 +33,14 @@ function Footer(props) {
               articleFigureHTML = renderTemplate(
                 path.resolve(
                   __dirname,
-                  "../../../../components/article_figure/template.jade"
+                  "../../../../components/article_figure/template.pug"
                 ),
                 { locals: { article, sd } }
               )
 
               // Client
             } else {
-              articleFigureHTML = require("../../../../components/article_figure/template.jade")(
+              articleFigureHTML = require("../../../../components/article_figure/template.pug")(
                 { article, ...sd }
               )
             }

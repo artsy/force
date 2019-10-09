@@ -9,7 +9,7 @@ Curation = require '../../../../../models/curation.coffee'
 Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
 { Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
-videoDescription = -> require('../templates/video_description.jade') arguments...
+videoDescription = -> require('../templates/video_description.pug') arguments...
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 markdown = require '../../../../../components/util/markdown.coffee'
 

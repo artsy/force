@@ -4,7 +4,7 @@ ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 openInquiryQuestionnaireFor = require '../../inquiry_questionnaire/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-template = -> require('../templates/index.jade') arguments...
+template = -> require('../templates/index.pug') arguments...
 
 module.exports = class ArtworkRailView extends Backbone.View
   className: 'arv-container'

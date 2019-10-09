@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 User = require '../../models/user.coffee'
 initCarousel = require '../merry_go_round/horizontal_nav_mgr.coffee'
 ArtworkBrickView = require '../artwork_brick/view.coffee'
-template = -> require('./templates/index.jade') arguments...
+template = -> require('./templates/index.pug') arguments...
 
 module.exports = class ArtworkBrickRailView extends Backbone.View
   className: 'abrv-container'

@@ -1,9 +1,9 @@
 $ = require 'cheerio'
 fs = require 'fs'
-jade = require 'jade'
+pug = require 'pug'
 { fabricate } = require 'antigravity'
 Profile = require '../../../../../models/profile'
-template = jade.compile fs.readFileSync(filename = require.resolve '../template.jade'), filename: filename
+template = pug.compile fs.readFileSync(filename = require.resolve '../template.pug'), filename: filename
 
 describe 'PrimaryCarousel template', ->
 

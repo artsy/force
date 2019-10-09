@@ -3,7 +3,7 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../../collections/filter_artworks.coffee'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class HeroArtworksCarousel extends Backbone.View
 

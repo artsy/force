@@ -11,7 +11,7 @@ Params = require './models/params.coffee'
 Filter = require './models/filter.coffee'
 qs = require 'querystring'
 sd = require('sharify').data
-template = -> require('./templates/index.jade') arguments...
+template = -> require('./templates/index.pug') arguments...
 
 module.exports = class ArtworkFilterView extends Backbone.View
   subviews: []

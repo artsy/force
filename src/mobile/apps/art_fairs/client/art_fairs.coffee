@@ -1,7 +1,7 @@
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 AvantGardeTabsView = require '../../../components/avant_garde_tabs/view.coffee'
 Helpers = require '../helpers.coffee'
-pastFairsTemplate = -> require('../templates/past-fairs.jade') arguments...
+pastFairsTemplate = -> require('../templates/past-fairs.pug') arguments...
 sd = require('sharify').data
 Backbone = require 'backbone'
 query = require '../query.coffee'

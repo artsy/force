@@ -12,7 +12,7 @@ FilteredArtworks = require './artworks_filter.coffee'
 ArtistsView = require './artists.coffee'
 ArticlesView = require './articles.coffee'
 ContactView = require './contact.coffee'
-tablistTemplate = -> require('../templates/tablist.jade') arguments...
+tablistTemplate = -> require('../templates/tablist.pug') arguments...
 mediator = require '../../../lib/mediator.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 

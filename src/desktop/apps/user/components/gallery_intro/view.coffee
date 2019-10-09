@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 Introduction = require '../../../../components/introduction/index.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class GalleryIntroView extends Backbone.View
   className: 'settings-gallery-intro'

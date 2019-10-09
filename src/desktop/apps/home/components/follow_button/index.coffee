@@ -1,7 +1,7 @@
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 Artist = require '../../../../models/artist.coffee'
 Gene = require '../../../../models/gene.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 
 followableObject =
   followed_artist: (module) ->

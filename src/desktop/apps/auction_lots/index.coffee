@@ -8,7 +8,7 @@ timeout = require 'connect-timeout'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 
 app.get '/artist/:artist_id/auction-result/:id', timeout('25s'), routes.detail
 app.get '/artwork/:id/auction-results', timeout('25s'), routes.artwork

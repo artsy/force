@@ -9,8 +9,8 @@ mediator = require '../../../lib/mediator.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ForYouView = require './for_you.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
-fairOverviewTop = -> require('../templates/overview_top.jade')
+forYouTemplate = -> require('../templates/for_you_logged_in.pug') arguments...
+fairOverviewTop = -> require('../templates/overview_top.pug')
 
 module.exports = class Overview extends Backbone.View
 

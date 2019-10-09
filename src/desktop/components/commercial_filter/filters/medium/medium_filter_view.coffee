@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 mediumMap = require './medium_map.coffee'
 
-template = -> require('./index.jade') arguments...
+template = -> require('./index.pug') arguments...
 
 module.exports = class MediumFilterView extends Backbone.View
   className: 'cf-mediums cf-filter'

@@ -17,7 +17,7 @@ describe 'PartnerArtistsArtistView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      benv.render resolve(__dirname, '../../templates/artists_artist.jade'), { artist: { get: -> } }, =>
+      benv.render resolve(__dirname, '../../templates/artists_artist.pug'), { artist: { get: -> } }, =>
         @template = sinon.stub()
         PartnerArtistsArtistView.__set__ 'template', @template
 

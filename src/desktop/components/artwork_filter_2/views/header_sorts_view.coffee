@@ -1,6 +1,6 @@
 _ = require 'underscore'
 BorderedPulldown = require '../../bordered_pulldown/view.coffee'
-template = -> require('../templates/header_sorts_view.jade') arguments...
+template = -> require('../templates/header_sorts_view.pug') arguments...
 
 
 module.exports = class ArtworkFiltersSortsView extends BorderedPulldown

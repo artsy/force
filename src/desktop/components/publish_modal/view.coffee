@@ -1,7 +1,7 @@
 _ = require 'underscore'
 ModalView = require '../modal/view.coffee'
 mediator = require '../../lib/mediator.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 Cookies = require 'cookies-js'
 
 module.exports = class PublishModal extends ModalView

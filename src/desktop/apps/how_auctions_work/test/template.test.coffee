@@ -1,5 +1,5 @@
 _ = require 'underscore'
-template = require('jade').compileFile(require.resolve '../templates/index.jade')
+template = require('pug').compileFile(require.resolve '../templates/index.pug')
 fixture = require './fixture'
 bidIncrements = require '../bid_increments'
 data = _.extend {}, asset: (->), sd: {}, fixture, markdown: (->), bidIncrements: bidIncrements

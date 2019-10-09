@@ -10,7 +10,7 @@ Profile = require '../../../models/profile.coffee'
 Profiles = require '../../../collections/profiles.coffee'
 Artists = require '../../../collections/artists.coffee'
 ShowsFeed = require '../../../collections/shows_feed.coffee'
-imageNavItemTemplate = -> require('../templates/image_nav_item.jade') arguments...
+imageNavItemTemplate = -> require('../templates/image_nav_item.pug') arguments...
 
 module.exports.ForYouView = class ForYouView extends Backbone.View
 

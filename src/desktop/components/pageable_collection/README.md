@@ -12,6 +12,6 @@ module.exports = class PageableArtists extends PageableCollection
 ```
 
 Use with the pagination template mixin:
-```jade
+```pug
 +paginate(pageableArtists.state.currentPage, pageableArtists.state.totalPages)
 ```

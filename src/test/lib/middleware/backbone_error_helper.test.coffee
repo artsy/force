@@ -1,7 +1,7 @@
 rewire = require 'rewire'
 sinon = require 'sinon'
 express = require 'express'
-jade = require 'jade'
+pug = require 'pug'
 fs = require 'fs'
 backboneErrorHelper = rewire '../../../lib/middleware/backbone_error_helper'
 

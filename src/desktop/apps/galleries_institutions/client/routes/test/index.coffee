@@ -21,7 +21,7 @@ describe 'PartnersView', ->
       done()
 
   beforeEach (done) ->
-    benv.render resolve(__dirname, '../../../templates/index_landing.jade'), {
+    benv.render resolve(__dirname, '../../../templates/index_landing.pug'), {
       facets: []
       profiles: []
       categories: []

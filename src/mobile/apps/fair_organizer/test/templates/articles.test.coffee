@@ -1,5 +1,5 @@
 _ = require 'underscore'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
@@ -8,7 +8,7 @@ fixtures = require '../../../../test/helpers/fixtures'
 
 describe 'Article template', ->
   beforeEach ->
-    @filename = path.resolve __dirname, "../../templates/articles.jade"
+    @filename = path.resolve __dirname, "../../templates/articles.pug"
 
     @article = new Article _.extend(
       _.clone(fixtures.article)
@@ -21,7 +21,7 @@ describe 'Article template', ->
     }
 
   it 'renders a non-editorial article correctly', ->
-    @page = jade.compile(fs.readFileSync(@filename), filename: @filename) @props
+    @page = pug.compile(fs.readFileSync(@filename), filename: @filename) @props
     # FIXME: @page.should.containEql 'Top Ten Booths at miart 2014'
     @page.should.containEql '/article/ten-booths-miart-2014'
     @page.should.containEql 'https://artsy-media-uploads.s3.amazonaws.com/9-vuUwfMbo9-dibbqjZQHQ%2FSterling_Ruby_2013_%282%29.jpg'
@@ -30,14 +30,14 @@ describe 'Article template', ->
 
   it 'renders an editorial article correctly', ->
     @article.set('author', {id: '456', name: 'Artsy Editorial'})
-    @page = jade.compile(fs.readFileSync(@filename), filename: @filename) @props
+    @page = pug.compile(fs.readFileSync(@filename), filename: @filename) @props
     @page.should.containEql 'Artsy Editorial'
     @page.should.not.containEql 'has-contributing-author'
 
   it 'renders a single contributing author', ->
     @article.set('contributing_authors', [{id: '523783258b3b815f7100055a', name: 'Casey Lesser'}])
     @article.set('author', {id: '456', name: 'Artsy Editorial'})
-    @page = jade.compile(fs.readFileSync(@filename), filename: @filename) @props
+    @page = pug.compile(fs.readFileSync(@filename), filename: @filename) @props
     @page.should.containEql 'Artsy Editorial'
     @page.should.containEql 'Casey Lesser'
     @page.should.containEql 'article-item-contributing-name">By'
@@ -48,7 +48,7 @@ describe 'Article template', ->
       {id: '532783258b3b815f7100055b', name: 'Molly Gottschalk'}
     ])
     @article.set('author', {id: '456', name: 'Artsy Editorial'})
-    @page = jade.compile(fs.readFileSync(@filename), filename: @filename) @props
+    @page = pug.compile(fs.readFileSync(@filename), filename: @filename) @props
     @page.should.containEql 'Artsy Editorial'
     @page.should.containEql 'article-item-contributing-name">By'
     @page.should.containEql 'Casey Lesser&nbspand&nbsp'
@@ -61,7 +61,7 @@ describe 'Article template', ->
       {id: '532783258b3b815f7100055c', name: 'Demie Kim'}
     ])
     @article.set('author', {id: '456', name: 'Artsy Editorial'})
-    @page = jade.compile(fs.readFileSync(@filename), filename: @filename) @props
+    @page = pug.compile(fs.readFileSync(@filename), filename: @filename) @props
     @page.should.containEql 'Artsy Editorial'
     @page.should.containEql 'article-item-contributing-name">By'
     @page.should.containEql 'Casey Lesser,&nbsp'

@@ -5,7 +5,7 @@ ModalPageView = require '../../../components/modal/page.coffee'
 mediator = require '../../../lib/mediator.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
+myActiveBidsTemplate = -> require('../templates/my_active_bids.pug') arguments...
 
 setupClocks = ($clocks, auctions) ->
   auctions.map (auction) ->

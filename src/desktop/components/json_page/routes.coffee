@@ -15,8 +15,8 @@ module.exports = (page) ->
       res.locals.sd.PATHS = page.paths
 
       # Render the template irrespective of app/views context
-      file = path.resolve(__dirname, './templates/index.jade')
-      template = require('jade').compileFile(file)
+      file = path.resolve(__dirname, './templates/index.pug')
+      template = require('pug').compileFile(file)
       res.write template(res.locals) # Pass locals that were set up in middlewares
       res.end()
 

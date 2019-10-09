@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 { MAIN_PROFILES } = require('sharify').data
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./template.pug') arguments...
 fetchProfiles = require './fetch.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
 

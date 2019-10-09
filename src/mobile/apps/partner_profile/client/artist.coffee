@@ -11,7 +11,7 @@ FollowButtonView = require '../../../components/follow_button/view.coffee'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 ShareView = require '../../../components/share/view.coffee'
 
-artworksTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
+artworksTemplate = -> require('../../../components/artwork_columns/template.pug') arguments...
 
 module.exports.PartnerArtistView = class PartnerArtistView extends Backbone.View
 

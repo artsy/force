@@ -1,15 +1,15 @@
 _ = require 'underscore'
 $ = require 'cheerio'
 benv = require 'benv'
-jade = require 'jade'
+pug = require 'pug'
 path = require 'path'
 fs = require 'fs'
 CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
 
 render = (opts) ->
-  filename = path.resolve __dirname, "../templates/index.jade"
-  jade.compile(
+  filename = path.resolve __dirname, "../templates/index.pug"
+  pug.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )(_.extend require('./fixture/auction_content.json'), { sd: {}, asset: (->), crop: (->), subject: 'auction', path: '/auction-partnerships' }, opts)

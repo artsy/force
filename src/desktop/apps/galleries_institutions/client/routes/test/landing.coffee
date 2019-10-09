@@ -58,7 +58,7 @@ describe 'LandingCarouselView', ->
       done()
 
   beforeEach (done) ->
-    benv.render resolve(__dirname, '../../../templates/index_landing.jade'), {
+    benv.render resolve(__dirname, '../../../templates/index_landing.pug'), {
       profiles: []
       facets: []
       categories: [@category]
