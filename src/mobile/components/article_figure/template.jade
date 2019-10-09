@@ -20,9 +20,9 @@
             = article.get('author') ? article.get('author').name : ''
 
       .article-item-contributing
-        include contributing_authors.jade
+        include contributing_authors
 
     .article-share-section
       - url = sd && (sd.APP_URL + article.href())
       - description = (article.get('share_description') || article.get('thumbnail_title')) + ' @Artsy'
-      include share.jade
+      include share

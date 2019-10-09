@@ -14,4 +14,4 @@ for category in categories.models
       data-state= (!category.related().artworks.length ? 'loading' : 'loaded')
     )
       for artwork in category.related().artworks.models
-        include ../../../../components/artwork_item/templates/artwork.jade
+        include ../../../../components/artwork_item/templates/artwork

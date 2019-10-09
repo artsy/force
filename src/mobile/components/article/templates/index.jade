@@ -4,7 +4,7 @@
       if article.get('hero_section') && article.get('hero_section').type === 'video'
         .article-large-format-video
           - video = article.get('hero_section')
-          include sections/video.jade
+          include sections/video
       if article.get('hero_section') && article.get('hero_section').type === 'image'
         .article-large-format-image
          img( src=article.get('hero_section').url)
@@ -13,7 +13,7 @@
         = article.get('title')
 
       .article-subheader
-        include byline.jade
+        include byline
 
       .article-lead-paragraph
         if article.get('lead_paragraph') && article.get('lead_paragraph').length > 11
@@ -23,16 +23,16 @@
       section.article-section-container( data-layout=section.layout, data-section-type=section.type )
         case section.type
           when 'slideshow'
-            include sections/slideshow.jade
+            include sections/slideshow
           when 'text'
             - text = section
-            include sections/text.jade
+            include sections/text
           when 'image_collection'
             - images = section.images
-            include sections/images.jade
+            include sections/images
           when 'video'
             - video = section
-            include sections/video.jade
+            include sections/video
 
 .article-footer-container
   footer.article-footer
@@ -40,12 +40,12 @@
       if article.get('section_ids').length
         h2 More From #{featuredSection.get('title')}
         for article in featuredSectionArticles.models
-          include ../../article_figure/template.jade
+          include ../../article_figure/template
       else if footerArticles
         h2 What to Read Next
         for article in footerArticles.models
-          include ../../article_figure/template.jade
+          include ../../article_figure/template
       a.avant-garde-box-button( href='/articles' ) Show More
 
 .article-fixed-share.js--article-fixed-share
-  include fixed_share.jade
+  include fixed_share

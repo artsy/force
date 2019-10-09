@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/index.jade
+extends ../../../components/main_layout/templates/index
 
 block head
-  include meta.jade
+  include meta
 
 append locals
   - bodyClass = bodyClass + ' body-no-margins'
@@ -10,9 +10,9 @@ append locals
 block body
   .how-auctions-work-page
     for section, i in sections.sort(function(a, b) { return a.position > b.position })
-      include section.jade
+      include section
 
-    include mobile_cta.jade
+    include mobile_cta
 
     .haw-multi-page.js-multi-page-embed
       //- Rendered client-side

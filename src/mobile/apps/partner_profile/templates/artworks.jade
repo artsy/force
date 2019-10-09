@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main
 
 block content
   .main-side-margin
@@ -7,7 +7,7 @@ block content
       span= sectionLabel
   #partner-artworks-list.main-side-margin
     if artworkColumns.length
-      include ../../../components/artwork_columns/template.jade
+      include ../../../components/artwork_columns/template
   #partner-artworks-spinner.loading-spinner
   .main-side-margin
     a.partner-back-link( href='/' + profile.get('id') ) Go to #{profile.get('owner').name}

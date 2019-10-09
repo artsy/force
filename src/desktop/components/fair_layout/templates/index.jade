@@ -6,7 +6,7 @@ doctype html
 html( data-useragent=userAgent )
   head
     block head
-    include head.jade
+    include head
 
     link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/all-webfonts.css')
     link( type='text/css', rel='stylesheet', href=asset('/assets/fairs.css') )
@@ -15,18 +15,18 @@ html( data-useragent=userAgent )
       link( type='text/css', rel='stylesheet', href=asset("/assets/#{assetPackage}.css") )
 
   body( class= bodyClass )
-    include ../../modal/template.jade
-    include ../../flash/template.jade
-    include ./header.jade
+    include ../../modal/template
+    include ../../flash/template
+    include ./header
     block coverImage
       .fair-layout-cover-image-spacer
     .fair-layout-container
       block nav
-        include nav.jade
+        include nav
       block body
-    include ../../main_layout/footer/template.jade
+    include ../../main_layout/footer/template
     #scripts
-      include ../../main_layout/templates/scripts.jade
+      include ../../main_layout/templates/scripts
       script( src=asset('/assets/fairs.js') )
       if assetPackage
         script( src=asset("/assets/#{assetPackage}.js") )

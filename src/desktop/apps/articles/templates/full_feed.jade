@@ -26,7 +26,7 @@
     .articles-feed-articles.js-articles-feed-articles
       for article in articles.feed()
         .articles-feed-item( data-tier= article.get('tier') )
-          include ../../../components/articles_feed/templates/article.jade
+          include ../../../components/articles_feed/templates/article
 
     .js-articles-feed-more
-      include ../../../components/articles_feed/templates/button.jade
+      include ../../../components/articles_feed/templates/button

@@ -29,7 +29,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom' xmlns:content='http:
           enclosure(url=image length=0 type="image/#{mimeType}")
         content:encoded
           | <![CDATA[
-          include article.jade
+          include article
           | ]]>
         pubDate= new Date(article.get('published_at')).toUTCString()
         guid(isPermaLink='false') #{sd.APP_URL}/article/#{article.get('slug')}

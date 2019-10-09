@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/index.jade
+extends ../../../components/main_layout/templates/index
 
 block head
-  include meta.jade
+  include meta
 
 append locals
   - assetPackage = 'auctions'
@@ -9,7 +9,7 @@ append locals
 block body
   #auctions-page.aggregate-page.main-layout-container
     unless currentAuctions.length
-      include ./placeholder.jade
+      include ./placeholder
 
     .aggregate-page-items
       .aggregate-page-items-featured
@@ -17,19 +17,19 @@ block body
           .aggregate-page-items-featured-set
             h2.auctions-header Current Auctions
             for auction in currentAuctions
-              include auction.jade
+              include auction
 
         if promoAuctions.length
           .auctions-list.auctions-list--promo.leader-dots-list
             h2.aggregate-page-subheader Auction Previews
             for auction in promoAuctions
-              include small_auction.jade
+              include small_auction
 
         if upcomingAuctions.length && !currentAuctions.length
           .auctions-list.auctions-list--upcoming.leader-dots-list
             h2.aggregate-page-subheader Upcoming Auctions
             for auction in upcomingAuctions
-              include small_auction.jade
+              include small_auction
 
         if pastAuctions.length
           .auctions-list.leader-dots-list

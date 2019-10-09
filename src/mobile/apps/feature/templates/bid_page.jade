@@ -1,9 +1,9 @@
-extends ../../../components/layout/templates/scaffold.jade
+extends ../../../components/layout/templates/scaffold
 
 block body
   if saleArtwork.get('reserve_status') == 'reserve_not_met'
     - message = 'Reserve not met.'
-    include ../../../components/alert/template.jade
+    include ../../../components/alert/template
 
   #feature-bid-page-container.mobile-app-top-padding
     h1.feature-bid-page-h1 Confirm your bid
@@ -17,7 +17,7 @@ block body
           br
         em= artwork.get('title')
 
-    include ../../../components/bid_numbers/template.jade
+    include ../../../components/bid_numbers/template
 
     if registered && !qualified
       a#feature-bid-page-register-button.avant-garde-box-button.is-disabled(
@@ -75,4 +75,4 @@ block body
               | Bid #{accounting.formatMoney(bidButtonValue, saleArtwork.get('symbol'), 0)}
               .loading-spinner
     #feature-clock-container.js-auction-clock
-      include ../../../../desktop/components/clock/template.jade
+      include ../../../../desktop/components/clock/template

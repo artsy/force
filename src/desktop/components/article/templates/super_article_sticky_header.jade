@@ -24,7 +24,7 @@ if fullscreenSuperArticle || hasFullscreenHero
             a.article-sa-related( href=subArticle.href() )
               img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
               .article-sa-related__title= subArticle.get('thumbnail_title')
-      include ../../merry_go_round/templates/horizontal_navigation.jade
+      include ../../merry_go_round/templates/horizontal_navigation
       a.article-sa-related__magazine-link(href=sd.APP_URL + '/articles')
         i.icon-chevron-left
         .article-sa-related__magazine-text Back to the Magazine Homepage

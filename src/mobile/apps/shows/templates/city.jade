@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main
 
 block head
   title #{city.name} Art Gallery Shows and Museum Exhibitions | Artsy
@@ -11,17 +11,17 @@ block content
       if opening.length
         .avant-garde-header.shows-city-sub-header.shows-city--opening-shows Opening this week
         - var shows = opening
-        include show-list.jade
+        include show-list
 
       if upcoming.length
         .avant-garde-header.shows-city-sub-header.shows-city--upcoming-shows Upcoming Shows
         - var shows = upcoming
-        include show-list.jade
+        include show-list
 
       if current.length
         .avant-garde-header.shows-city-sub-header.shows-city--current-shows Current Shows
         - var shows = current
-        include show-list.jade
+        include show-list
 
       if (opening.length + upcoming.length + current.length) === 0
         .avant-garde-header.shows-city-sub-header Current Shows in #{city.name}
@@ -31,7 +31,7 @@ block content
       if (opening.length + upcoming.length + current.length) < 6 && past.length
         .avant-garde-header.shows-city-sub-header.shows-city--past-shows Past Shows
         - var shows = past
-        include show-list.jade
+        include show-list
       
       if (current.length) >= size
         #shows-city__show-more.avant-garde-box-button.is-show-more-button.is-hidden Show More 

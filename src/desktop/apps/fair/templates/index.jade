@@ -1,29 +1,29 @@
-extends ../../../components/fair_layout/templates/index.jade
+extends ../../../components/fair_layout/templates/index
 
 block head
   if sd.SECTION == 'info'
-    include ./meta_info.jade
+    include ./meta_info
   else if sd.SECTION == 'posts'
-    include ./meta_posts.jade
+    include ./meta_posts
   else if sd.CURRENT_PATH.match(/artworks/)
-    include ./meta_artworks.jade
+    include ./meta_artworks
   else if sd.CURRENT_PATH.match(/booths/)
-    include ./meta_booths.jade
+    include ./meta_booths
   else if sd.CURRENT_PATH.match(/artist/)
-    include ./meta_artist.jade
+    include ./meta_artist
 
 block body
   .fair-page-content
     if sd.SECTION == 'search'
-      include ./search_results.jade
+      include ./search_results
     else if sd.SECTION == 'browse'
       #fair-browse-spacer
-      include ../components/browse/template.jade
+      include ../components/browse/template
     else if sd.SECTION == 'forYou'
-      include ./for_you.jade
+      include ./for_you
   .fair-page-footer
 
-  include ../../../components/main_layout/templates/json_ld.jade
+  include ../../../components/main_layout/templates/json_ld
 
 
-extends ../../../components/fair_layout/templates/index.jade
+extends ../../../components/fair_layout/templates/index

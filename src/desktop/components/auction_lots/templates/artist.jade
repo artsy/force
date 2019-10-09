@@ -5,8 +5,8 @@ header.auction-lots-header
     .auction-lots-sources-label Results provided by
     .auction-lots-sources-image
 
-include ../../../components/bordered_pulldown/mixin.jade
-include ../../../../../node_modules/artsy-ezel-components/pagination/paginator.jade
+include ../../../components/bordered_pulldown/mixin
+include ../../../../../node_modules/artsy-ezel-components/pagination/paginator
 
 .auction-lots-interstital
   .auction-lots-page-total
@@ -22,6 +22,6 @@ include ../../../../../node_modules/artsy-ezel-components/pagination/paginator.j
           a( href="?sort=#{v}" )= k
 
 table.auction-lots-table
-  include ./auction_lots_table.jade
+  include ./auction_lots_table
 
 +paginate(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')

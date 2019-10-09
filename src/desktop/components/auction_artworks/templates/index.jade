@@ -1,5 +1,5 @@
 if artworks.length
-  include ./nav.jade
+  include ./nav
   section.auction-artworks.js-auction-artworks( data-mode= state.get('mode') )
     for artwork in artworks
       - artist = artwork.related().artist
@@ -12,6 +12,6 @@ if artworks.length
         - href = artwork.href()
 
       if state.get('mode') === 'grid'
-        include ./artwork/grid.jade
+        include ./artwork/grid
       else
-        include ./artwork/list.jade
+        include ./artwork/list

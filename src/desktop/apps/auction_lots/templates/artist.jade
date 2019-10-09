@@ -1,8 +1,8 @@
-extends ../../../components/main_layout/templates/index.jade
-include ../../../../../node_modules/artsy-ezel-components/pagination/paginator.jade
+extends ../../../components/main_layout/templates/index
+include ../../../../../node_modules/artsy-ezel-components/pagination/paginator
 
 block head
-  include ../../../components/auction_lots/templates/meta/artist.jade
+  include ../../../components/auction_lots/templates/meta/artist
   +paginateHead(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')
 
 append locals
@@ -14,4 +14,4 @@ block body
       i.icon-chevron-small-left
       | Back to #{artist.get('name')}
 
-    include ../../../components/auction_lots/templates/artist.jade
+    include ../../../components/auction_lots/templates/artist

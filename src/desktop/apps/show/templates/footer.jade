@@ -13,7 +13,7 @@ if partner_show.press_release || (partner_show.artists && partner_show.artists.l
           | Follow Artists In This Show
 
         - artists = partner_show.artists
-        include ../components/follow_artists/template.jade
+        include ../components/follow_artists/template
 
       if !partner_show.press_release && partner_show.artists && partner_show.artists.length > 0
         //- Force 50% layout

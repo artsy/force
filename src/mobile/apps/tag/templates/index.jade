@@ -1,9 +1,9 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main
 include ../../../components/filter/dropdown_mixin.jade
 
 block content
   #tag-content.main-side-margin
-    include header.jade
+    include header
     .tag-artworks
       .tag-artworks-filters
         +filter-dropdown('Price','price_range', {

@@ -12,7 +12,7 @@ html(
   lang="en"
 )
   head
-    include head.jade
+    include head
     block head
 
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
@@ -23,11 +23,11 @@ html(
 
   body( class=bodyClass )
     //- Global component mixins
-    include ../../modal/template.jade
-    include ../../flash/template.jade
+    include ../../modal/template
+    include ../../flash/template
 
     //- Header, body block, footer
-    include ../header/templates/index.jade
+    include ../header/templates/index
 
     #main-layout-container
       block body
@@ -39,7 +39,7 @@ html(
       //- Don't replace this block, rather prepend or append!
       block scripts
 
-        include scripts.jade
+        include scripts
         script( src= asset('/assets/main_layout.js') )
 
         if assetPackage

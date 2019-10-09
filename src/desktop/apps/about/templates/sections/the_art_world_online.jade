@@ -1,7 +1,7 @@
 - section = sections['the-art-world-online']
 
 .about-container
-  include header.jade
+  include header
   p.about-section-preamble= section.preamble
 
 //- "Our collection comes from leading..."
@@ -65,13 +65,13 @@
         a.about-image-container( href= artwork.href )
           img( data-src=artwork.src )
           .icon-heart
-          include artwork_details.jade
+          include artwork_details
     .span2
       for artwork in secondHalf(section.pullBlurb3.artworks)
         a.about-image-container( href= artwork.href )
           img( data-src=artwork.src )
           .icon-heart
-          include artwork_details.jade
+          include artwork_details
 
 //- "Access from anywhere..."
 .about-container

@@ -1,8 +1,8 @@
 figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href)
-      include ./variable_width_image.jade
-      include ../save_controls/template.jade
+      include ./variable_width_image
+      include ../save_controls/template
   figcaption.artwork-item-caption
     if artwork.artists.length
       p.artwork-item-artist.artwork-item-overflow

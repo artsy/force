@@ -1,4 +1,4 @@
-extends ../../../components/main_layout/templates/minimal_header.jade
+extends ../../../components/main_layout/templates/minimal_header
 
 append locals
   - assetPackage = 'auctions'
@@ -7,7 +7,7 @@ append locals
 block body
   #auction-registration-page
     .auction-bid-clock-container.js-auction-clock(data-id='#{sale.id}')
-      include ../../../components/clock/template.jade
+      include ../../../components/clock/template
     .auction-bid-form-container
       h2.garamond-header-center Confirm Your Bid
       .credit-card-form
@@ -52,6 +52,6 @@ block body
           p.registration-info= sd.BIDDER_INFO_COPY_P2
           .form-bottom
             .bid-registration-form-contents
-              include ./registration-form.jade
+              include ./registration-form
               .registration-form-content
                 .auction-bid-form-confirm.avant-garde-button-black.is-block.is-disabled Confirm Bid

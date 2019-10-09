@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/index.jade
+extends ../../../components/main_layout/templates/index
 
 block head
-  include meta.jade
+  include meta
 
 append locals
   unless sd.IS_MOBILE
@@ -11,7 +11,7 @@ append locals
 block body
   if sd.IS_MOBILE
     #gallery-partnerships.gallery-partnerships-container
-      include mobile/index.jade
+      include mobile/index
   else
     .partnerships-container
-      include content.jade
+      include content

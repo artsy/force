@@ -1,12 +1,12 @@
-extends ../../../components/main_layout/templates/index.jade
-include ../../../components/article_figure/mixin.jade
+extends ../../../components/main_layout/templates/index
+include ../../../components/article_figure/mixin
 
 block head
-  include meta/articles.jade
+  include meta/articles
 
 append locals
   - assetPackage = 'articles'
   - bodyClass = bodyClass + ' body-articles'
 
 block body
-  include full_feed.jade
+  include full_feed

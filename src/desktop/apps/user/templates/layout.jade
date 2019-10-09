@@ -1,4 +1,4 @@
-extends ../../../components/main_layout/templates/index.jade
+extends ../../../components/main_layout/templates/index
 
 block head
   title Settings | Artsy
@@ -16,7 +16,7 @@ block body
         h1.settings-page__header__name
           = user.get('name')
 
-        include ../components/tabs/index.jade
+        include ../components/tabs/index
 
       .settings-page__content
         .settings-page__content__main(

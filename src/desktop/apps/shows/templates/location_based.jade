@@ -1,8 +1,8 @@
-extends ../../../components/main_layout/templates/index.jade
-include ../../../../../node_modules/artsy-ezel-components/pagination/paginator.jade
+extends ../../../components/main_layout/templates/index
+include ../../../../../node_modules/artsy-ezel-components/pagination/paginator
 
 block head
-  include meta.jade
+  include meta
 
 append locals
   - assetPackage = 'partners'
@@ -10,13 +10,13 @@ append locals
 block body
   - var locationString = onlineExclusive ? "Online Exclusive shows" : "Shows in " + city.name
   #shows-page.main-layout-container
-    include nav.jade
+    include nav
 
     //- Only display opening if we are on the first page
     if opening.length && (current.state.currentPage <= 1)
       h1.shows-page-header Opening This Week
       - var shows = opening
-      .shows-page-featured-section: include ../../../components/featured_shows/small.jade
+      .shows-page-featured-section: include ../../../components/featured_shows/small
 
     if current.length
       h2.shows-page-header
@@ -25,13 +25,13 @@ block body
           |  (#{current.state.totalRecords})
       - var shows = current.models
       .shows-page-featured-section
-        include ../../../components/featured_shows/small.jade
+        include ../../../components/featured_shows/small
         +paginate(current.state.currentPage, current.state.totalPages)
 
     if upcoming.length
       h1.shows-page-header Upcoming Shows
       - var shows = upcoming
-      .shows-page-featured-section: include ../../../components/featured_shows/small.jade
+      .shows-page-featured-section: include ../../../components/featured_shows/small
 
     if (opening.length + upcoming.length + current.length) === 0
       h1.shows-page-header Current #{locationString}
@@ -41,6 +41,6 @@ block body
     if (opening.length + upcoming.length + current.length) < 6 && past.length
       h2.shows-page-header Past #{locationString}
       - var shows = past.models
-      .shows-page-featured-section: include ../../../components/featured_shows/small.jade
+      .shows-page-featured-section: include ../../../components/featured_shows/small
 
-    include nav.jade
+    include nav

@@ -11,7 +11,7 @@ if section.items.length > 0
         +artwork(item)
       when 'video'
         - video = item
-        include ../sections/video.jade
+        include ../sections/video
   else
     //- Render the actual slideshow sans any video
     .article-section.article-section-slideshow( data-items= section.items )
@@ -22,4 +22,4 @@ if section.items.length > 0
     for item in section.items
       if item.type === 'video'
         - video = item
-        include ../sections/video.jade
+        include ../sections/video

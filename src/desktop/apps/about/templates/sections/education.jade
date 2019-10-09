@@ -1,7 +1,7 @@
 - section = sections.education
 
 .about-container
-  include header.jade
+  include header
   p.about-section-preamble= section.preamble
 
 //- "Images for learning..."
@@ -31,7 +31,7 @@
     +pull-blurb(section.pullBlurb3)
     #about-section4-pull-blurb-3-details
       a( href=artwork.href )
-        include artwork_details.jade
+        include artwork_details
 
 //- "Current Art News"
 .about-container

@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main
 
 mixin artworkColumnsTemplate(artworkColumns)
   include ../../../components/artwork_columns/template.jade
@@ -11,21 +11,21 @@ block head
 
 block content
   if installShots.length && !show.has('fair')
-    include carousel.jade
+    include carousel
   #show-page
     if show.has('fair')
-      include header/fair.jade
+      include header/fair
     else
-      include header/show.jade
+      include header/show
 
     if show.related().showEvents.length
-      include events.jade
+      include events
 
     if artworks.length
-      include artworks.jade
+      include artworks
 
     if show.get('description')
-      include description.jade
+      include description
 
     #show-page-related-articles-container
       //- rendered client side
@@ -33,8 +33,8 @@ block content
     if show.related().artists.length
       #show-page-follow-artists
         - artists = show.related().artists.models
-        include ../components/follow_artists/template.jade
+        include ../components/follow_artists/template
 
     if show.get('press_release')
-      include press_release.jade
+      include press_release
 

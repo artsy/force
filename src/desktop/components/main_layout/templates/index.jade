@@ -12,7 +12,7 @@ html(
   lang="en"
 )
   head
-    include head.jade
+    include head
     block head
 
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
@@ -23,21 +23,21 @@ html(
 
   body( class=bodyClass )
     //- Global component mixins
-    include ../../modal/template.jade
-    include ../../flash/template.jade
+    include ../../modal/template
+    include ../../flash/template
 
     //- Header, body block, footer
-    include ../header/templates/index.jade
+    include ../header/templates/index
 
     #main-layout-container.responsive-layout-container(role='main')
       block body
 
     #scroll-frame-spinner: .loading-spinner
-    include ../footer/template.jade
+    include ../footer/template
 
     //- Javascripts
     #scripts
-      include scripts.jade
+      include scripts
       script( src= asset('/assets/main_layout.js') )
 
       if assetPackage

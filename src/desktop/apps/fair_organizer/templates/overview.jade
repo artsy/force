@@ -1,11 +1,11 @@
-extends ../../../components/main_layout/templates/index.jade
+extends ../../../components/main_layout/templates/index
 
 append locals
   - assetPackage = 'fairs'
   - bodyClass = 'body-transparent-header body-header-fixed'
 
 block head
-  include meta.jade
+  include meta
 
 block body
   if coverImage && coverImage.hasImage('wide')
@@ -43,12 +43,12 @@ block body
           .fair-organizer-content__header Revisit Previous Fairs
           .fair-organizer-content__section.fair-organizer-content__section--past-fairs
             for fair in pastFairs
-              include fair.jade
+              include fair
 
         .fair-organizer-content__header Latest from #{fairOrg.get('name')}
         .fair-organizer-content__section.fair-organizer-content__section--articles
           #fair-organizer-articles
-            include ./articles.jade
+            include ./articles
           .avant-garde-button-white.is-block#fair-organizer-more-articles Show More
 
         .fair-organizer-content__header Get the App

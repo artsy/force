@@ -15,20 +15,20 @@
 figure.artwork-item( data-artwork= artwork.get('id') data-id= artwork.get('_id') )
   .artwork-item-image-container
     a.artwork-item-image-link( href= artwork.href() )
-      include ./partials/image.jade
-      include ./partials/save.jade
+      include ./partials/image
+      include ./partials/save
 
   figcaption.artwork-item-caption
-    include ./partials/artist.jade
-    include ./partials/title.jade
-    include ./partials/partner.jade
-    include ./partials/price.jade
-    include ./partials/auction_info.jade
+    include ./partials/artist
+    include ./partials/title
+    include ./partials/partner
+    include ./partials/price
+    include ./partials/auction_info
     if hasAuctionPartner && !isAuction
-      include ./partials/bid_now.jade
+      include ./partials/bid_now
     if showBuyButton
-      include ./partials/buy_button.jade
+      include ./partials/buy_button
     else if showBuyLink
-      include ./partials/buy_link.jade
+      include ./partials/buy_link
     else if showContact && !hasAuctionPartner
-      include ./partials/contact.jade
+      include ./partials/contact

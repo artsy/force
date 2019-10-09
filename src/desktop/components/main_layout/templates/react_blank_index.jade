@@ -1,4 +1,4 @@
-extends blank.jade
+extends blank
 
 append locals
   - assetPackage = locals.assetPackage || ''
@@ -16,4 +16,4 @@ block body
     != body
 
   if jsonLD
-    include ./json_ld.jade
+    include ./json_ld

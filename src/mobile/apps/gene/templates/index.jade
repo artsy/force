@@ -1,11 +1,11 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main
 
 block head
   title #{gene.get('name')} | Artsy
 
 block content
   #gene-content.main-side-margin
-    include header.jade
+    include header
     if gene.isSubjectMatter()
       .gene-artworks
         .gene-artworks-filters

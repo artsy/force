@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/index.jade
+extends ../../../components/main_layout/templates/index
 
 block head
-  include meta.jade
+  include meta
 
 append locals
   - assetPackage = 'fairs'
@@ -11,16 +11,16 @@ block body
     if currentFairRows.length
       .fairs__current-fairs
         h1.fair-header Current Fairs
-        include current_fairs.jade
+        include current_fairs
     else
-      include promo.jade
+      include promo
     .fairs__past-fairs
       h1.fair-header.fair-header--underlined Past Fairs
       .fairs__past-fairs-list
-        include past_fairs.jade
+        include past_fairs
       button#fairs-see-more.avant-garde-button-white.is-block
         | View More
     .fairs__upcoming-fairs
       h1.fair-header.fair-header--underlined Upcoming Fairs
       for fair in upcomingFairs
-        include fair_upcoming.jade
+        include fair_upcoming

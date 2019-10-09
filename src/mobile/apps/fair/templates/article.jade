@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main.jade
+extends ../../../components/layout/templates/main
 
 append locals
   - assetPackage = 'mobile_articles'
@@ -6,9 +6,9 @@ append locals
 block content
 
   #article-body-container
-    include ../../../components/article/templates/index.jade
+    include ../../../components/article/templates/index
 
   .article-fixed-share.js--article-fixed-share
     //- Rendered on client
 
-  include ../../../components/layout/templates/json_ld.jade
+  include ../../../components/layout/templates/json_ld
