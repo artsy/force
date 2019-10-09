@@ -1,10 +1,10 @@
-extends ../index
+extends ../index.jade
 
 block head
-  include meta
+  include meta.jade
 
 block content
   section.press-items( data-page='in-the-media' )
     .press-items-list.large-chevron-list
       for item in items.reverse()
-        include ../item
+        include ../item.jade

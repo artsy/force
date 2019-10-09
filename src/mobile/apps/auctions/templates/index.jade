@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 block head
   title Auctions | Artsy
@@ -21,12 +21,12 @@ block content
           .auction-page-content--sign-up-container__label Get notified when auctions open
           a.avant-garde-box-button.avant-garde-box-button-gray( href="/sign_up?redirect-to=/auctions&signupIntent=signup&intent=signup&trigger=click&contextModule=Auctions+Header" ) Sign up
 
-      include ../../../components/avant_garde_tabs/nav
+      include ../../../components/avant_garde_tabs/nav.jade
 
       .avant-garde-tabs-list.avant-garde-tabs-list--active.auctions-page-list(data-list="current")
         if currentAuctions && currentAuctions.length
           for auction in currentAuctions
-            include auction
+            include auction.jade
 
       .avant-garde-tabs-list.auctions-page-list(data-list="upcoming" class= currentAuctions.length ? '' : 'avant-garde-tabs-list--active')
         if upcomingAuctions
@@ -38,4 +38,4 @@ block content
       .avant-garde-tabs-list.auctions-page-list(data-list="past" class= upcomingAuctions.length ? '' : 'avant-garde-tabs-list--active')
         if pastAuctions && pastAuctions.length
           for auction in pastAuctions
-            include auction
+            include auction.jade

@@ -12,4 +12,4 @@ mixin article-figure(article, width, showDate)
             = article.get('author') ? article.get('author').name : ''
 
         if article.get('contributing_authors') && article.get('contributing_authors').length > 0
-          include contributing_authors
+          include contributing_authors.jade

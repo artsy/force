@@ -1,4 +1,4 @@
-include ../../../bordered_pulldown/mixin
+include ../../../bordered_pulldown/mixin.jade
 +bordered-pulldown(map[currentSort], 'Sort by:', isDisabled)
   each val, key in map
     a( data-sort=key, href="#" )= val

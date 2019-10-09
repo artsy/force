@@ -1,18 +1,18 @@
-extends ../../../components/fair_layout/templates/index
+extends ../../../components/fair_layout/templates/index.jade
 
 block coverImage
-  include fair_cover_image
+  include fair_cover_image.jade
 
 block icon
   .fair-overview-icon-spacer
 
 block body
   if primarySets
-    include ./overview_top
-  include ./sections
+    include ./overview_top.jade
+  include ./sections.jade
   if primarySets
-    include ./overview_bottom
+    include ./overview_bottom.jade
   .for-you-container
   h2.overview-section-heading Browse the fair
   .fair-page-content.main-layout-container
-    include ../components/browse/template
+    include ../components/browse/template.jade

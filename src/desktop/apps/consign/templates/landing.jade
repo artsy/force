@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/minimal_header
+extends ../../../components/main_layout/templates/minimal_header.jade
 
 block head
-  include meta
+  include meta.jade
 
 append locals
   - assetPackage = 'misc'
@@ -11,7 +11,7 @@ append locals
 block body
   - submissionPath = '/consign/submission'
 
-  include ./header
+  include ./header.jade
   .consignments-page
     header.consignments-header(
       style='background-image: url(#{header.image.src});'
@@ -163,4 +163,4 @@ block body
         a.avant-garde-button-white.consignments-header__consign-button( href=submissionPath )
           = sections.footer.button_cta
 
-  include ./faq
+  include ./faq.jade

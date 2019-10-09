@@ -1,7 +1,7 @@
 #partner2-overview
   .partner2-overview-container
     if showBanner
-      include overview_banner
+      include overview_banner.jade
     for module in layout
       if module.component || module.template
         section.partner2-overview-section( data-module=module.name, data-component=(module.component ? module.component.name : null) )

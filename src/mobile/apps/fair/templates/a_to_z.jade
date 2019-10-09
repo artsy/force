@@ -1,10 +1,10 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 block content
   #fair-page-main-content.main-side-margin.mobile-app-top-padding
     .fair-page-header
       .fair-page-az-header.avant-garde-header-center= title
-    include exhibitors_subheader
+    include exhibitors_subheader.jade
     ul#fair-page-az-list
       for models, letter in groups
         ul

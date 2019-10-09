@@ -4,7 +4,7 @@ mixin artists-a-to-z
     h1.large-garamond-header
       | Artists at #{fair.get('name')}
     section.fair-artists-list.a-to-z-container
-      include ../../../../components/a_to_z_list/template
+      include ../../../../components/a_to_z_list/template.jade
 
 mixin exhibitors-a-to-z
   - aToZGroup = exhibitorsAToZGroup
@@ -15,14 +15,14 @@ mixin exhibitors-a-to-z
       href="#{fair.href()}/browse/booths"
     ) Show as Grid View
     section.fair-exhibitors-list.a-to-z-container
-      include ../../../../components/a_to_z_list/template
+      include ../../../../components/a_to_z_list/template.jade
 
 #fair-browse( data-section='booths' )
   #fair-browse-header
     .filter-fixed-header-nav
-      include ../booths/nav
+      include ../booths/nav.jade
       label By Work:
-      include ../../../../components/filter2/dropdown_group/template
+      include ../../../../components/filter2/dropdown_group/template.jade
       label By Artists:
       a#fair-filter-all-artists.filter-button(
         href="#{fair.href()}/browse/artists"
@@ -32,12 +32,12 @@ mixin exhibitors-a-to-z
       +artists-a-to-z
     .browse-section.exhibitors-a-to-z
       +exhibitors-a-to-z
-    include ../booths/section
+    include ../booths/section.jade
     .browse-section.artworks
       h1.large-garamond-header
       .artworks
         h1#fair-browse-artworks-header.large-garamond-header
-        include ../../../../components/filter2/template
+        include ../../../../components/filter2/template.jade
     .browse-section.artist
       h1.large-garamond-header
       .feed

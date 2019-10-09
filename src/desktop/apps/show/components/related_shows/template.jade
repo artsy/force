@@ -3,7 +3,7 @@
 
 .show-related-shows
   for show in shows
-    include ./templates/show
+    include ./templates/show.jade
 
   if fromShowGuide && city && (title !== 'Featured Shows')
     a.avant-garde-button-white.show-related-shows__more( href= '/shows/#{city.slug}' )

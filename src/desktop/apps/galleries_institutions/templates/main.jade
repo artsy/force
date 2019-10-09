@@ -1,8 +1,8 @@
-extends ../../../components/main_layout/templates/index
-include ../../../components/util/activator
+extends ../../../components/main_layout/templates/index.jade
+include ../../../components/util/activator.jade
 
 block head
-  include meta
+  include meta.jade
 
 append locals
   - assetPackage = 'partners'
@@ -28,4 +28,4 @@ block body
             | Gallery Insights
 
     block content
-    include ./footer
+    include ./footer.jade

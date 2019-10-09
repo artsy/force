@@ -1,11 +1,11 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/index.jade
 
 block head
-  include ../../../components/auction_lots/templates/meta/detail
+  include ../../../components/auction_lots/templates/meta/detail.jade
 
 append locals
   - assetPackage = 'auctions'
 
 block body
   #auction-result-detail-page.main-layout-container
-    include ../../../components/auction_lots/templates/detail
+    include ../../../components/auction_lots/templates/detail.jade

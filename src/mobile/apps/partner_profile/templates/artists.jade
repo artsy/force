@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 block content
   - partnerArtist = true
@@ -10,7 +10,7 @@ block content
       if represented.length
         h1.avant-garde-header-center.partner-profile-large-header Represented Artists
         - artists = represented
-        include ../../../components/artist_list/template
+        include ../../../components/artist_list/template.jade
       if unrepresented.length
         h1.avant-garde-header-center.partner-profile-large-header
           if profile.get('id').match('gagosian')
@@ -18,9 +18,9 @@ block content
           else
             | Works Available By
         - artists = unrepresented
-        include ../../../components/artist_list/template
+        include ../../../components/artist_list/template.jade
     else
       h1.avant-garde-header-center.partner-profile-large-header Artists
       - artists = represented.concat(unrepresented)
-      include ../../../components/artist_list/template
+      include ../../../components/artist_list/template.jade
     a.partner-back-link( href='/' + profile.get('id') ) Go to #{profile.get('owner').name}

@@ -1,10 +1,10 @@
-include ../../templates/mixins
+include ../../templates/mixins.jade
 
 +settings-section('active-bids', 'Active Bids')
   | Nothing yet.
 
 +settings-section('bid-history', 'Bid History')
-  include ../../components/bid_history/index
+  include ../../components/bid_history/index.jade
 
 +settings-section('auction-registrations', 'Registration for Upcoming Auctions', 'Registration Status')
-  include ../../components/auction_registrations/index
+  include ../../components/auction_registrations/index.jade

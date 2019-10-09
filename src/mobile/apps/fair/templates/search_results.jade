@@ -1,5 +1,5 @@
-extends ../../../components/layout/templates/scaffold
-include ../../../components/layout/templates/login-signup
+extends ../../../components/layout/templates/scaffold.jade
+include ../../../components/layout/templates/login-signup.jade
 
 block body
   #content
@@ -25,7 +25,7 @@ block body
               | at 
               = fair.get('name')
           for result in fairResults
-            include ../../../components/search_results/result
+            include ../../../components/search_results/result.jade
         else
           .search-page-result-header
             | Sorry, no results for 
@@ -47,7 +47,7 @@ block body
                 | &rdquo; 
               | on Artsy
           for result in results
-            include ../../../components/search_results/result
+            include ../../../components/search_results/result.jade
         else
           .garamond-header-center
             | Sorry, no results for 

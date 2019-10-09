@@ -1,8 +1,8 @@
-extends ../../../components/main_layout/templates/index
-include ../../../components/share/mixin
+extends ../../../components/main_layout/templates/index.jade
+include ../../../components/share/mixin.jade
 
 block head
-  include meta
+  include meta.jade
 
 append locals
   - assetPackage = 'categories'
@@ -32,4 +32,4 @@ block body
         .related-artists.related-links.bisected-header-cell-section
           //- Rendered client-side
 
-    include filter
+    include filter.jade

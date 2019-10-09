@@ -1,7 +1,7 @@
-extends ../../../components/fair_layout/templates/conditional
+extends ../../../components/fair_layout/templates/conditional.jade
 
 block head
-  include classic_meta
+  include classic_meta.jade
 
 append locals
   - assetPackage = 'article'
@@ -13,15 +13,15 @@ block body
   - var showClass = ''
   if channel && channel.isTeam()
     - showClass = 'is-team-channel'
-    include ../../../components/channel_nav/index
+    include ../../../components/channel_nav/index.jade
 
   #articles-show(class=showClass)
 
     //- Article body
     #articles-body-container(role='article')
-      include ../../../components/article/templates/index
+      include ../../../components/article/templates/index.jade
 
   section#articles-footer.responsive-layout-container
     //- Rendered on client
 
-  include ../../../components/main_layout/templates/json_ld
+  include ../../../components/main_layout/templates/json_ld.jade

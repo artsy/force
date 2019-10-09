@@ -16,19 +16,19 @@
       if artworks && artworks.length
         ul.abrv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
           li.abrv-context.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
-            include context
+            include context.jade
           for artwork in artworks
             li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
-              include ../../../../../components/artwork_brick_rail/templates/brick
+              include ../../../../../components/artwork_brick_rail/templates/brick.jade
           li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
-            include ../../../../../components/artwork_brick_rail/templates/view_all
+            include ../../../../../components/artwork_brick_rail/templates/view_all.jade
       else
         if includeContext
           .abrv-context.abrv-fillwidth-row.abrv-context--float.arbv-context--followed-artists
-            include context
+            include context.jade
         .arbv-follow-search-container
-          include search
+          include search.jade
       if artworks && artworks.length
         nav.mgr-navigation.js-mgr-navigation
           if artworks && artworks.length
-            include ../../../../../components/merry_go_round/templates/horizontal_navigation
+            include ../../../../../components/merry_go_round/templates/horizontal_navigation.jade

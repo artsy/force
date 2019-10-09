@@ -14,7 +14,7 @@
     .search-results
       if fairResults.length > 0
         for result in fairResults
-          include ../../search/templates/search_result
+          include ../../search/templates/search_result.jade
       else
         .garamond-header-center
           | Sorry, no results for
@@ -40,7 +40,7 @@
       if results.length > 0
         for result in results
           .artsy-search-result
-            include ../../search/templates/search_result
+            include ../../search/templates/search_result.jade
             .search-result-artsy-link Visit On Artsy
       else
         .garamond-header-center

@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 append locals
   - assetPackage = 'mobile_articles'
@@ -18,7 +18,7 @@ block content
     if (featuredArticles = articles.featured()).length
       .articles-section__featured
         - article = featuredArticles[0]
-        include ../../../components/article_figure/template
+        include ../../../components/article_figure/template.jade
 
     if featuredSection.get('featured_links')
       .articles-section__sticky.chevron-nav-list
@@ -32,7 +32,7 @@ block content
       if featuredArticles
         for article in featuredArticles.slice(1,5)
           .articles-feed-item( data-tier= article.get('tier') )
-            include ../../../components/article_figure/template
+            include ../../../components/article_figure/template.jade
       for article in articles.feed()
         .articles-feed-item( data-tier= article.get('tier') )
-          include ../../../components/article_figure/template
+          include ../../../components/article_figure/template.jade

@@ -1,11 +1,11 @@
-extends ./scaffold
-include ./login-signup
+extends ./scaffold.jade
+include ./login-signup.jade
 
 block body
   #content
     block banner
       if showMarketingSignupModal
-        include ../../marketing_signup_modal/index
+        include ../../marketing_signup_modal/index.jade
       else
         mixin login-signup("Header")
 
@@ -15,4 +15,4 @@ block body
     main
       block content
 
-    include footer
+    include footer.jade

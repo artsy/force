@@ -1,4 +1,4 @@
-extends redesign
+extends redesign.jade
 
 append locals
   - assetPackage = locals.assetPackage || ''
@@ -15,7 +15,7 @@ block body
   #react-portal
 
   if jsonLD
-    include ./json_ld
+    include ./json_ld.jade
 
 //- All hydration data should be loaded before React et al
 block prepend scripts

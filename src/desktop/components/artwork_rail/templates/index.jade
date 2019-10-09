@@ -15,7 +15,7 @@
         if artworks && artworks.length
           for artwork in artworks
             li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
-              include ../../artwork_item/templates/artwork
+              include ../../artwork_item/templates/artwork.jade
           if viewAllCell
             li.arv-fillwidth-row.mgr-cell.js-mgr-cell.view-all-rail-cell
               .view-all-rail-cell__inner
@@ -23,5 +23,5 @@
                   .view-all-rail-cell__text View All
 
       if artworks && artworks.length
-        include ../../merry_go_round/templates/horizontal_navigation
+        include ../../merry_go_round/templates/horizontal_navigation.jade
 

@@ -1,9 +1,9 @@
-extends ../../../components/main_layout/templates/index
-include ../../../components/util/activator
-include ../../../../../node_modules/artsy-ezel-components/pagination/paginator
+extends ../../../components/main_layout/templates/index.jade
+include ../../../components/util/activator.jade
+include ../../../../../node_modules/artsy-ezel-components/pagination/paginator.jade
 
 block head
-  include letter_meta
+  include letter_meta.jade
   +paginateHead(artists.state.currentPage, artists.state.totalPages, sd.APP_URL + sd.CURRENT_PATH + "?")
 
 append locals

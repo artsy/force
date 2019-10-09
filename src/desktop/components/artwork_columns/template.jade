@@ -9,7 +9,7 @@ if artworkColumns
       for artwork in column
         if setHeight
           - artworkSize = artwork.defaultImage().imageSizeForHeight(setHeight)
-        include ../artwork_item/templates/artwork
+        include ../artwork_item/templates/artwork.jade
 
 if numberOfColumns
   - for (var i = 0; i < numberOfColumns; i++)

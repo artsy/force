@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/index.jade
 
 block head
-  include meta
+  include meta.jade
 
 append locals
   - assetPackage = 'artists_artworks'
@@ -62,4 +62,4 @@ block body
             .artists-featured-genes-artists
               for artist in gene.trending_artists
                 .grid-item
-                  include ./../../../components/artist_cell/index
+                  include ./../../../components/artist_cell/index.jade

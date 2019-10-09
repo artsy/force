@@ -26,14 +26,14 @@
 
           for artwork in artworks
             li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
-              include brick
+              include brick.jade
 
         if viewAllUrl
           li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
-            include view_all
+            include view_all.jade
 
         else
-          include ./loading
+          include ./loading.jade
 
       if artworks && artworks.length
-        include ../../merry_go_round/templates/horizontal_navigation
+        include ../../merry_go_round/templates/horizontal_navigation.jade

@@ -2,6 +2,6 @@
   .article-author
     = article.related().author.get('name')
   .article-contributing
-    include ../../article_figure/contributing_authors
+    include ../../article_figure/contributing_authors.jade
   .article-timestamp
     = article.date('published_at').format('MMMM D, YYYY H:mm A')

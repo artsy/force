@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 block head
   title Preview Top Art Fairs on Artsy | Artsy
@@ -20,7 +20,7 @@ block content
           .art-fairs-content--sign-up-container__label Get notified when fair previews open
           a.avant-garde-box-button.avant-garde-box-button-gray( href="/sign_up?intent=signup&signupIntent=signup&trigger=click&contextModule=Fairs+Page" ) Sign up
 
-      include ../../../components/avant_garde_tabs/nav
+      include ../../../components/avant_garde_tabs/nav.jade
 
       .avant-garde-tabs-list.current-fairs.avant-garde-tabs-list--active(data-list="current")
         if currentFairs
@@ -28,7 +28,7 @@ block content
             .current-art-fairs
               a.fairs-link(href=fair.href)
                 .current-art-fairs__image(style="background-image: url(#{fair.image.url})")
-                include fair-details
+                include fair-details.jade
 
       .avant-garde-tabs-list(data-list="upcoming" class= currentFairs && currentFairs.length ? '' : 'avant-garde-tabs-list--active')
         if upcomingFairs
@@ -39,4 +39,4 @@ block content
 
       .avant-garde-tabs-list.past-fairs(data-list="past" class= upcomingFairs && upcomingFairs.length ? '' : 'avant-garde-tabs-list--active')
         if pastFairs
-          include past-fairs
+          include past-fairs.jade

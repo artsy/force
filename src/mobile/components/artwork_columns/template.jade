@@ -1,8 +1,8 @@
 mixin artworkItemTemplate(artwork, size)
   if isAuction || artwork.get('sale')
-    include auction_artwork
+    include auction_artwork.jade
   else
-    include artwork
+    include artwork.jade
 
 - size = 'tall'
 - className = 'artwork-columns'

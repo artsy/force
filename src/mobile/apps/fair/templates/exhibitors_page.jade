@@ -1,12 +1,12 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 block content
   .main-side-margin.mobile-app-top-padding
     .fair-page-header
       if title
         h1.fair-page-az-header.avant-garde-header-center!= title
-    include exhibitors_subheader
+    include exhibitors_subheader.jade
     ul#fair-exhibitors
-      include exhibitors
+      include exhibitors.jade
     if scrolling
       #fair-exhibitors-spinner.loading-spinner

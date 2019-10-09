@@ -1,22 +1,22 @@
-extends ./layout
+extends ./layout.jade
 
 block main
   case sd.CURRENT_PATH
     when '/user/saves'
       .settings-page__saves
-        include ../pages/saves/index
+        include ../pages/saves/index.jade
     when '/user/edit'
       .settings-page__settings
-        include ../pages/settings/index
+        include ../pages/settings/index.jade
     when '/profile/edit'
       .settings-page__profile
-        include ../pages/profile/index
+        include ../pages/profile/index.jade
     when '/user/delete'
       .settings-page__delete
-        include ../pages/delete/index
+        include ../pages/delete/index.jade
     when '/user/auctions'
       .settings-page__auctions
-        include ../pages/auctions/index
+        include ../pages/auctions/index.jade
     when '/user/payments'
       .settings-page__payments
-        include ../pages/payments/index
+        include ../pages/payments/index.jade

@@ -1,14 +1,14 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 append locals
   - assetPackage = 'mobile_articles'
 
 block head
-  include ../meta/articles
+  include ../meta/articles.jade
 
 block content
   #articles-page.main-side-margin
     .articles-feed.js-articles-feed
-      include articles_feed
+      include articles_feed.jade
     .avant-garde-box-button.is-show-more-button.is-hidden Show More
     .loading-spinner

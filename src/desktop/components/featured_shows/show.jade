@@ -24,11 +24,11 @@ if show.has('image_versions') && show.get('image_versions').length
 
       if displayLocation
         .fsfs-running-dates
-          include metadata/location_with_dates
+          include metadata/location_with_dates.jade
 
       else
         if show.formatStreetAddress()
           .fsfs-street-address
             = show.formatStreetAddress()
 
-        include metadata/dates
+        include metadata/dates.jade

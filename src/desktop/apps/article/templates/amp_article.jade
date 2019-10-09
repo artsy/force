@@ -1,5 +1,5 @@
-include amp_mixins
-include ../../../components/article/templates/mixins
+include amp_mixins.jade
+include ../../../components/article/templates/mixins.jade
 
 <!doctype html>
 html(amp)
@@ -36,4 +36,4 @@ html(amp)
             +amp_callout(section)
           when 'image_set'
             +amp_image_set(section)
-    include ../../../components/main_layout/footer/mobile_footer_menu
+    include ../../../components/main_layout/footer/mobile_footer_menu.jade

@@ -1,7 +1,7 @@
-extends ../../../components/main_layout/templates/blank
+extends ../../../components/main_layout/templates/blank.jade
 
 block head
-  include meta/team_channel
+  include meta/team_channel.jade
 
 append locals
   - assetPackage = 'articles'
@@ -10,7 +10,7 @@ append locals
 
 block body
 
-  include ../../../components/channel_nav/index
+  include ../../../components/channel_nav/index.jade
 
   .team-channel-body
     //- Header
@@ -31,17 +31,17 @@ block body
             //- Pinned Articles
             for article in pinnedArticles.models
               .mgr-cell.js-mgr-cell.team-channel-featured__item
-                include ../../../components/article_figure/template
+                include ../../../components/article_figure/template.jade
             //- Parsely Articles
             for article in parselyArticles
               .mgr-cell.js-mgr-cell.team-channel-featured__item
-                include ../../../components/article_figure/parsely_figure
+                include ../../../components/article_figure/parsely_figure.jade
           - length = 6
           nav.mgr-navigation.js-mgr-navigation
-            include ../../../components/merry_go_round/templates/horizontal_navigation
+            include ../../../components/merry_go_round/templates/horizontal_navigation.jade
 
       //- Grid
       .team-channel-grid
         //- Rendered on Client
   .team-channel-footer
-    include ../../../components/main_layout/footer/template
+    include ../../../components/main_layout/footer/template.jade

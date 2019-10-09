@@ -12,7 +12,7 @@
         a.fine-faux-underline( href= nextAuction.href() )
           = nextAuction.get('name')
       .apu-clock.js-apu-clock( data-id= nextAuction.id )
-        include ../../../components/clock/template
+        include ../../../components/clock/template.jade
     else
       //- No upcoming auction
       unless user

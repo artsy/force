@@ -1,4 +1,4 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/index.jade
 
 block head
   title Works by Artists You Follow | Artsy
@@ -9,6 +9,6 @@ append locals
 
 block body
   if sd.IS_MOBILE
-    include ./mobile/index
+    include ./mobile/index.jade
   else
-    include ./desktop
+    include ./desktop.jade

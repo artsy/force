@@ -1,4 +1,4 @@
-extends ../../../components/main_layout/templates/blank
+extends ../../../components/main_layout/templates/blank.jade
 
 append locals
   - assetPackage = 'artists_artworks'
@@ -49,12 +49,12 @@ block body
           strong With pre-qualification turned on
           hr
           .debug-embedded-inquiry-form.js-embedded-inquiry-form-prequalified-container
-            include ../../../components/embedded_inquiry/templates/index
+            include ../../../components/embedded_inquiry/templates/index.jade
 
         .grid-item
           strong Default
           hr
           .debug-embedded-inquiry-form.js-embedded-inquiry-form-container
-            include ../../../components/embedded_inquiry/templates/index
+            include ../../../components/embedded_inquiry/templates/index.jade
 
       hr.is-invisible

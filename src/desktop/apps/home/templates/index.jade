@@ -1,14 +1,14 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/index.jade
 
 block head
-  include meta
+  include meta.jade
 
 append locals
   - assetPackage = 'home'
   - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header' + (heroUnits.length && heroUnits[0].mode.match('LIGHT') ? '-white' : '')
 
 block body
-  include hero_units
+  include hero_units.jade
 
   #home-foreground
     #home-hero-units-controls( data-length= heroUnits.length )
@@ -18,10 +18,10 @@ block body
 
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
-        include featured_links
+        include featured_links.jade
         unless user
-          include browse
-    include rails
+          include browse.jade
+    include rails.jade
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
         #js-home-featured-shows
@@ -29,4 +29,4 @@ block body
         #js-home-featured-articles
           // loaded by HomeView#setupFeaturedArticles (template: /templates/featured_articles.jade )
 
-  include ../../../components/main_layout/templates/json_ld
+  include ../../../components/main_layout/templates/json_ld.jade

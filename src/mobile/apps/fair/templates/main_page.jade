@@ -1,4 +1,4 @@
-extends ../../../components/layout/templates/main
+extends ../../../components/layout/templates/main.jade
 
 block head
   title #{fair.get('name')} | Artsy
@@ -16,7 +16,7 @@ block content
       h2#fair-page-subtitle!= fair.subtitle()
 
       - placeholder = 'Find exhibitors & artists'
-      include ../../../components/autocomplete/templates/index
+      include ../../../components/autocomplete/templates/index.jade
 
       #fair-page-primary-featured-links
 

@@ -1,9 +1,9 @@
-include ../../../components/util/activator
+include ../../../components/util/activator.jade
 
 header.fair-layout-nav
   block icon
     a.fair-layout-logo( alt=fair.get('name'), title=fair.get('name'), href=profile.href() )
-      include ../../profile_badge/profile_icon
+      include ../../profile_badge/profile_icon.jade
   .fair-layout-search
     input.fair-layout-search-input.bordered-input(
       placeholder='Search exhibitors & artists'

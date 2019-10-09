@@ -5,7 +5,7 @@ header.auction-result-detail-header
     |  &mdash; Auction Result
 
 section.auction-result-detail
-  include ./_detail
+  include ./_detail.jade
 section.auction-result-artist
   header.ara-header
     .ara-header-cell
@@ -29,7 +29,7 @@ if auctionLots.length
     h2: a( href= "#{artist.href()}/auction-results" ) More auction results for #{artist.get('name')}
 
     table.auction-lots-table
-      include ./auction_lots_table
+      include ./auction_lots_table.jade
 
     a.avant-garde-jump-link( href= "#{artist.href()}/auction-results" )
       | See all auction results for #{artist.get('name')}

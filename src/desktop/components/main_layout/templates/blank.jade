@@ -6,7 +6,7 @@ block locals
 doctype html
 html( data-useragent= userAgent lang="en")
   head
-    include head
+    include head.jade
     block head
 
     link( type='text/css', rel='stylesheet', href= asset('/assets/main_layout.css') )
@@ -15,15 +15,15 @@ html( data-useragent= userAgent lang="en")
 
   body( class= bodyClass )
     if options.modal
-      include ../../modal/template
+      include ../../modal/template.jade
 
     if options.flash
-      include ../../flash/template
+      include ../../flash/template.jade
 
     #blank-layout-container: block body
 
     #scripts
-      include scripts
+      include scripts.jade
       script( src= asset('/assets/main_layout.js') )
       if assetPackage
         script( src= asset('/assets/#{assetPackage}.js') )

@@ -1,4 +1,4 @@
-extends ../main_layout/templates/blank
+extends ../main_layout/templates/blank.jade
 
 append locals
   - bodyClass = "error-handler-body"
@@ -10,7 +10,7 @@ block head
 block body
   body.error-handler-body
     - try {
-      include ../main_layout/header/templates/index
+      include ../main_layout/header/templates/index.jade
     - } catch (e) {
       a.error-handler-logo( href='/' )
         include ../main_layout/public/icons/logo.svg
@@ -42,4 +42,4 @@ block body
         .error-handler-return: a( href='/' )
           | Go to Artsy homepage
 
-  include ../main_layout/footer/template
+  include ../main_layout/footer/template.jade

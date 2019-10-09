@@ -27,13 +27,13 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
 
     .show-metadata
       if partner_show.fair
-        include metadata/fair
+        include metadata/fair.jade
       else
         .show-dates
           = ViewHelpers.runningDates(partner_show)
-        include metadata/location
+        include metadata/location.jade
         if partner_show.events.length > 0
-          include metadata/events
+          include metadata/events.jade
 
 //- Rendered client-side
 .js-related-articles

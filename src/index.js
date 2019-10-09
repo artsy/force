@@ -43,6 +43,11 @@ setAliases({
 
 global.Promise = require("bluebird")
 
+// Stitch will try to use `consolidate.jade` based on the extname of our
+// templates, so just make that an alias to `consolidate.pug`.
+const consolidate = require("consolidate")
+consolidate.jade = consolidate.pug
+
 const artsyXapp = require("artsy-xapp")
 const cache = require("./lib/cache.coffee")
 const express = require("express")

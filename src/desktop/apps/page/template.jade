@@ -1,21 +1,21 @@
-extends ../../components/main_layout/templates/index
+extends ../../components/main_layout/templates/index.jade
 
 block head
   case page.get('id')
     when 'terms'
-      include meta/terms
+      include meta/terms.jade
     when 'past-terms'
-      include meta/terms
+      include meta/terms.jade
     when 'past-terms-10-29-12'
-      include meta/terms
+      include meta/terms.jade
     when 'privacy'
-      include meta/privacy
+      include meta/privacy.jade
     when 'security'
-      include meta/security
+      include meta/security.jade
     when 'press'
-      include meta/press
+      include meta/press.jade
     default
-      include meta/default
+      include meta/default.jade
 
 append locals
   - assetPackage = 'misc'

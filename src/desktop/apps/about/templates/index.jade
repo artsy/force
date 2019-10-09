@@ -1,11 +1,11 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/index.jade
 
 block head
-  include meta
+  include meta.jade
 
 append locals
   - bodyClass = bodyClass + ' body-no-margins body-transparent-header body-transparent-header-white body-about'
   - assetPackage = 'misc'
 
 block body
-  include sections/index
+  include sections/index.jade
