@@ -3,5 +3,7 @@
 #
 
 module.exports = (req, res, next) ->
-  res.set('X-Frame-Options', 'SAMEORIGIN')
+  if !res.headersSent
+    res.set('X-Frame-Options', 'SAMEORIGIN')
+
   next()

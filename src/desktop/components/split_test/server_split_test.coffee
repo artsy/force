@@ -5,7 +5,8 @@ module.exports = class ServerSplitTest extends SplitTest
     super test
 
   set: (outcome) ->
-    @res.cookie @_key(), outcome, expires: new Date(Date.now() + 31536000000)
+    if !@res.headersSent
+      @res.cookie @_key(), outcome, expires: new Date(Date.now() + 31536000000)
     outcome
 
   get: ->
