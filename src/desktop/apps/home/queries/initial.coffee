@@ -1,5 +1,5 @@
 module.exports = """
-  query HomePageQuery($showHeroUnits: Boolean!) {
+  query HomePageQuery($showHeroUnits: Boolean!, $showCollectionsHubs: Boolean!) {
     home_page {
       artwork_modules(
         max_rails: -1,
@@ -37,6 +37,13 @@ module.exports = """
         background_image_url
         credit_line
       }
+    }
+
+    marketingHubCollections @include(if: $showCollectionsHubs){
+      id
+      slug
+      title
+      thumbnail
     }
   }
 """

@@ -2,7 +2,7 @@
 metaphysics = require '../../../lib/metaphysics.coffee'
 
 query = """
-  query HomePageModulesQuery {
+  query HomePageModulesQuery($showCollectionsHubs:Boolean!) {
     home_page {
       hero_units(platform: MARTSY) {
         mode
@@ -13,12 +13,25 @@ query = """
         background_image_url
       }
     }
+
+    marketingHubCollections @include(if: $showCollectionsHubs){
+      id
+      slug
+      title
+      thumbnail
+    }
   }
 """
 
 module.exports.index = (req, res, next) ->
   res.locals.sd.PAGE_TYPE = 'home'
-  metaphysics(query: query)
-    .then ({ home_page  }) ->
-      res.render 'page', heroUnits: home_page.hero_units, resize: resize
+
+  showCollectionsHubs = res.locals.sd.COLLECTION_HUBS == "experiment"
+
+  metaphysics(query: query, variables: {showCollectionsHubs: showCollectionsHubs})
+    .then ({ home_page, marketingHubCollections }) ->
+      res.render 'page', 
+        heroUnits: home_page.hero_units, 
+        resize: resize, 
+        collectionsHubs: marketingHubCollections
     .catch next

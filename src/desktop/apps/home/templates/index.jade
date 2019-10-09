@@ -19,8 +19,17 @@ block body
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
         include featured_links
-        unless user
-          include browse
+
+    if collectionsHubs && collectionsHubs.length
+      #home-layout-container.responsive-layout-container
+        .main-layout-container: #home-body
+          include hubs_entry
+    else 
+      unless user
+        #home-layout-container.responsive-layout-container
+          .main-layout-container: #home-body
+            include browse
+
     include rails
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
