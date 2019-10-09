@@ -153,10 +153,10 @@
     use-deep-compare-effect "^1.2.0"
     yup "^0.24.1"
 
-"@artsy/stitch@6.1.5":
-  version "6.1.5"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.5.tgz#fd23dab1a0dd4fd36e165773fd061c0609031705"
-  integrity sha512-mijUkSiEUzLmTxpdIs0uXojiRAFu9x7/cOho8tBFZqxygO9UBWQyj9bEmnBC3/qRGAHzWe1yOIQujhQFLWd7HQ==
+"@artsy/stitch@6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.6.tgz#f91308ac2f0910e8acc4abd056aa132eeb7a9dbd"
+  integrity sha512-3BOpqvX9Lp4ufsFPYqMqWuO4DPOFYUM4xkMzRkt7emn/2DdRCwdsak0TzPISJS8g6utKPzdHlKvLaf0gS9H1eQ==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
