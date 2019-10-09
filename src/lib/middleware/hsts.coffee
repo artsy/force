@@ -10,5 +10,5 @@
 module.exports = (req, res, next) ->
   protocol = req.get('X-Forwarded-Proto') or req.protocol
   if protocol is 'https' and parse(APP_URL).protocol is 'https:'
-    res.set('Strict-Transport-Security', 'max-age=31536000')
+    res.set('Strict-Transport-Security', 'max-age=31536000') unless res.headersSent
   next()
