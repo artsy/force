@@ -31,6 +31,7 @@ exports.baseConfig = {
             options: {
               doctype: "html",
               root: __dirname,
+              inlineRuntimeFunctions: false,
             },
           },
         ],
@@ -70,6 +71,7 @@ exports.baseConfig = {
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
+      pug: "pug-runtime/index.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
   ],
