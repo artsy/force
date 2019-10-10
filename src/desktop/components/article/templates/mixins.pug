@@ -28,7 +28,7 @@ mixin video(video)
   .article-video-container
     if video.cover_image_url
       .article-video-cover-image(
-        style=("background-image: url(#{resize(video.cover_image_url, { width: 1100 })})")
+        style=("background-image: url(" + resize(video.cover_image_url, { width: 1100 }) + ")")
       )
         button.article-video-play-button
           .article-video-play-button-caret

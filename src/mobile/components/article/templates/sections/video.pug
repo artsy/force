@@ -1,7 +1,7 @@
 .article-video-container
   if video.cover_image_url
     .article-video-cover-image(
-      style=("background-image: url(#{crop(video.cover_image_url, { width: 700, height: 400 })})")
+      style=("background-image: url(" + crop(video.cover_image_url, { width: 700, height: 400 }) + ")")
     )
       button.article-video-play-button
         .article-video-play-button-caret
