@@ -113,7 +113,7 @@
   ],
   "dependencies": {
     "@airbnb/node-memwatch": "1.0.2",
-    "@artsy/arc": "1.4.7",
+    "@artsy/arc": "1.4.8",
     "@artsy/express-reloadable": "1.4.7",
     "@artsy/gemup": "0.0.3",
     "@artsy/palette": "4.17.16",
