@@ -10,10 +10,10 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
-"@artsy/arc@1.4.7":
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/@artsy/arc/-/arc-1.4.7.tgz#da20d57959758210f6375f3f9d1c7ff032df4188"
-  integrity sha512-87otkCbqWIfTOJ6m0n3n5h6N3pW6awfWuX7iSZm+GuJAHb0dqD8QTWbTlgR+LB745WNrfInntYK4mKvVqs9Lyw==
+"@artsy/arc@1.4.8":
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/@artsy/arc/-/arc-1.4.8.tgz#a1e71310ec702829fca78ec61a17377c45aa030e"
+  integrity sha512-SHrASp7ztfjm78mjuaimMzhuoiIY57TScqkkry4gwZadlUvTXK58CFDnW8lNE4EOxmIBtitpez8UfQ4IxzB6Hw==
   dependencies:
     farce "0.2.6"
     found "0.3.14"
