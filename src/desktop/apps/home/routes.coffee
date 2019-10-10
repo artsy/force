@@ -17,10 +17,10 @@ positionWelcomeHeroMethod = (req, res) ->
   res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)
   method
 
-fetchMetaphysicsData = (req, showHeroUnits)->
+fetchMetaphysicsData = (req, showHeroUnits, showCollectionsHubs)->
   deferred = Q.defer()
 
-  metaphysics(query: query, req: req, variables: {showHeroUnits: showHeroUnits})
+  metaphysics(query: query, req: req, variables: {showHeroUnits: showHeroUnits, showCollectionsHubs: showCollectionsHubs})
     .then (data) -> deferred.resolve data
     .catch (err) ->
       deferred.resolve
@@ -45,16 +45,18 @@ fetchMetaphysicsData = (req, showHeroUnits)->
       "query-input": "required name=search_term_string"
     }
   }
-
+  
+  showCollectionsHubs = res.locals.sd.COLLECTION_HUBS == "experiment"
   res.locals.sd.PAGE_TYPE = 'home'
   initialFetch = Q
     .allSettled [
-      fetchMetaphysicsData req, true
+      fetchMetaphysicsData req, true, showCollectionsHubs
       featuredLinks.fetch cache: true
     ]
   initialFetch
     .then (results) ->
       homePage = results?[0].value.home_page
+      collectionsHubs = results?[0].value.marketingHubCollections
       heroUnits = homePage.hero_units
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
@@ -72,5 +74,6 @@ fetchMetaphysicsData = (req, showHeroUnits)->
         viewHelpers: viewHelpers
         browseCategories: browseCategories
         jsonLD: JSON.stringify jsonLD
-
+        collectionsHubs: collectionsHubs
+        
     .catch next
