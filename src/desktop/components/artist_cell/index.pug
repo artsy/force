@@ -3,7 +3,7 @@
     .hoverable-image-link
       .hoverable-image.is-four-three.is-cropped(
         data-initials= artist.initials
-        style= artist.image && 'background-image: url(#{artist.image.cropped.url})'
+        style= artist.image && 'background-image: url(' + artist.image.cropped.url + ')'
       )
 
     .artist-cell-item__artist-information

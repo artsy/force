@@ -11,7 +11,7 @@ html( data-useragent= userAgent lang="en")
     block head
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
     if assetPackage
-      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
+      link( type='text/css', rel='stylesheet', href=asset('/assets/' + assetPackage + '.css') )
 
   body( class=bodyClass )
     -if (!hideHeaderOnEigen)
@@ -30,4 +30,4 @@ html( data-useragent= userAgent lang="en")
         script( src= asset('/assets/main_layout.js') )
 
         if assetPackage
-          script( src=asset('/assets/#{assetPackage}.js') )
+          script( src=asset('/assets/' + assetPackage + '.js') )

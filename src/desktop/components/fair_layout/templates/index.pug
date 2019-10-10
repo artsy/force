@@ -12,7 +12,7 @@ html( data-useragent=userAgent )
     link( type='text/css', rel='stylesheet', href=asset('/assets/fairs.css') )
 
     if assetPackage
-      link( type='text/css', rel='stylesheet', href=asset("/assets/#{assetPackage}.css") )
+      link( type='text/css', rel='stylesheet', href=asset("/assets/" + assetPackage + ".css") )
 
   body( class= bodyClass )
     include ../../modal/template
@@ -29,4 +29,4 @@ html( data-useragent=userAgent )
       include ../../main_layout/templates/scripts
       script( src=asset('/assets/fairs.js') )
       if assetPackage
-        script( src=asset("/assets/#{assetPackage}.js") )
+        script( src=asset("/assets/" + assetPackage + ".js") )

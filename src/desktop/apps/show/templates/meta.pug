@@ -4,14 +4,14 @@
 
 title= title
 meta( name="description", content= description )
-link( rel="canonical", href=sd.APP_URL + "" + partner_show.href )
+link( rel="canonical", href=sd.APP_URL + partner_show.href )
 
 
 //- Open Graph
 meta( property="og:title", content= title )
 meta( property="og:description", content= description )
 meta( property="og:name", content= title )
-meta( property="og:url", content=sd.APP_URL + "" + partner_show.href )
+meta( property="og:url", content=sd.APP_URL + partner_show.href )
 meta( property="og:type", content=sd.FACEBOOK_APP_NAMESPACE + ":exhibition" )
 meta( property="og:start_time", content= moment(partner_show.start_at).toISOString() )
 meta( property="og:end_time", content= moment(partner_show.end_at).toISOString() )

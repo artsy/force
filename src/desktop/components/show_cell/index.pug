@@ -2,7 +2,7 @@
   a.artist-rail-cell__link.show-cell-item__link.artist-rail-hoverable( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
     .hoverable-image-link
       .hoverable-image.is-four-three.is-cropped(
-        style= show.cover_image && 'background-image: url(#{show.cover_image.cropped.url})'
+        style= show.cover_image && 'background-image: url(' + show.cover_image.cropped.url + ')'
         alt= show.name
         onerror='this.style.display="none";'
       )

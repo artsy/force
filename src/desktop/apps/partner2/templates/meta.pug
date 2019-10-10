@@ -13,7 +13,7 @@ if profile.iconImageUrl()
   meta( property="og:image", content= profile.iconImageUrl() )
   meta( name="thumbnail", content= profile.iconImageUrl() )
 if params.artistId
-  link( rel="canonical", href=("#{sd.APP_URL}/artist/#{params.artistId}") )
+  link( rel="canonical", href=(sd.APP_URL + "/artist/" + params.artistId) )
 else
   link( rel="canonical", href=(sd.APP_URL + sd.CURRENT_PATH) )
 if sd.INCLUDE_ESCAPED_FRAGMENT

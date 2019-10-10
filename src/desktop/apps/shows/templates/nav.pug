@@ -14,7 +14,7 @@ nav.shows-page-cities-nav.horizontal-list-nav
     for city in featuredCities
       a.hln-link.shows-location(
         href="/shows/" + city.slug
-        class= activeClass("/shows/#{city.slug}")
+        class= activeClass("/shows/" + city.slug)
       )= city.name
   .hln-cell
     label.bordered-select
