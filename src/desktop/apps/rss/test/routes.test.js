@@ -55,7 +55,9 @@ describe("Routes", () => {
       },
     })
 
-    routes.__set__("sd", { ARTSY_EDITORIAL_CHANNEL: "foo" })
+    routes.__set__("sd", {
+      ARTSY_EDITORIAL_CHANNEL: "foo",
+    })
     routes.__set__("request", request)
     routes.__set__("positronql", sinon.stub().returns(Promise.resolve(results)))
 
@@ -111,7 +113,11 @@ describe("Routes", () => {
 
       routes.__set__(
         "positronql",
-        sinon.stub().returns(Promise.resolve({ articles: articlesWithVideo }))
+        sinon.stub().returns(
+          Promise.resolve({
+            articles: articlesWithVideo,
+          })
+        )
       )
 
       const findArticlesWithEmbedsStub = sinon.stub()
@@ -166,6 +172,13 @@ describe("Routes", () => {
       request.get.args[0][0].should.eql(
         "https://api.instagram.com/oembed?url=https://www.instagram.com/p/Bh-Az5_gaVB/?taken-by=artsy"
       )
+    })
+
+    it("This case is about fetching the undefined data", async () => {
+      section = undefined
+      const newSection = await routes.maybeFetchSocialEmbed(section)
+      const result = newSection === undefined
+      result.should.be.true()
     })
   })
 })

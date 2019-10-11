@@ -13,7 +13,9 @@ let request = _request
 let positronql = _positronql
 
 export const news = (req, res, next) => {
-  const query = { query: newsQuery }
+  const query = {
+    query: newsQuery,
+  }
   return positronql(query)
     .then(async result => {
       try {
@@ -27,7 +29,10 @@ export const news = (req, res, next) => {
           articlesWithoutUnpublishedVideos
         )
         res.set("Content-Type", "application/rss+xml")
-        return res.render("news", { articles, pretty: true })
+        return res.render("news", {
+          articles,
+          pretty: true,
+        })
       } catch (err) {
         console.error(err)
       }
@@ -46,7 +51,10 @@ export const partnerUpdates = (req, res, next) =>
     error: res.backboneError,
     success: articles => {
       res.set("Content-Type", "application/rss+xml")
-      return res.render("partner_updates", { articles, pretty: true })
+      return res.render("partner_updates", {
+        articles,
+        pretty: true,
+      })
     },
   })
 
@@ -80,10 +88,11 @@ export const findSocialEmbeds = article => {
 
 export const maybeFetchSocialEmbed = section => {
   return new Promise((resolve, reject) => {
-    if (section.type !== "social_embed") {
+    const type = section && section.type
+    if (type !== "social_embed") {
       return resolve(section)
     } else {
-      const { url } = section
+      const url = section && section.url
       const service = url.includes("twitter")
         ? "publish.twitter"
         : "api.instagram"
