@@ -9,6 +9,11 @@ sinon = require 'sinon'
 fixtures = require '../helpers/fixtures'
 moment = require 'moment'
 momentTimezone = require 'moment-timezone'
+{ JSDOM } = require 'jsdom'
+
+jsdom = new JSDOM("<!doctype html><html><body></body></html>")
+global.Node = jsdom.window.Node
+global.DOMParser = jsdom.window.DOMParse
 
 describe "Article", ->
   beforeEach ->
@@ -340,7 +345,7 @@ describe "Article", ->
         published: true
         layout: 'series'
       @article.hasAMP().should.be.false()
-    
+
     it 'returns false if article is a video', ->
       @article.set
         sections: [ type: 'text' ]
@@ -348,24 +353,6 @@ describe "Article", ->
         published: true
         layout: 'video'
       @article.hasAMP().should.be.false()
-
-    it 'preps article for AMP', ->
-      @article.set sections: [
-        {
-          type: 'text',
-          body: '<a class="jump-link"></a><p>Preparing the article for AMP.</p>'
-        }
-        {
-          type: 'image_collection'
-          images: [
-            type: 'image'
-            caption: '<p isrender=true style="background-color:black;">A caption is <i isrender=true>really</i> important</p>'
-          ]
-        }
-      ]
-      @article.prepForAMP()
-      @article.get('sections')[0].body.should.not.containEql '<a class="jump-link></a>"'
-      @article.get('sections')[1].images[0].caption.should.equal '<p>A caption is <i>really</i> important</p>'
 
     it 'returns the full AMP href', ->
       @article.ampHref().should.containEql '/amp'
