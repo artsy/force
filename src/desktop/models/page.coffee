@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
 { Markdown } = require 'artsy-backbone-mixins'
-sanitizeHtml = require('sanitize-html')
+insane = require('insane')
 _ = require 'underscore'
 
 module.exports = class Page extends Backbone.Model
@@ -11,7 +11,5 @@ module.exports = class Page extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/page"
 
   sanitizedHtml: (attr) ->
-    clean = sanitizeHtml(@get(attr), {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'h1', 'h2', 'summary', 'details' ])
-    })
+    clean = insane(@get(attr))
     Markdown.mdToHtml.apply { get: -> clean }, [null, sanitize: false]
