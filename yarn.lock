@@ -86,22 +86,27 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
+"@artsy/react-html-parser@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.0.tgz#0d8f640644824765b81760e0b8fe2e99d89e61da"
+  integrity sha512-GTCfk0OMTfXWggQVJYWa2wf8Qmv03iuw8TAtFjrEHlTPaC+yJ/o8WySqc76ceXC9p96Y/rVDGMpZGqIarCWQzA==
+
 "@artsy/react-responsive-media@^2.0.0-beta.5":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@21.7.1":
-  version "21.7.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.7.1.tgz#3574082286d6554828aac1bd45fcce9c96ca2f31"
-  integrity sha512-PiHBQChGbnQHQy4lSMTw6uufxCsMgzSv5d/4TA901GfpCP1SHyofIjH9tuiCDBdvvWboX3FPR26vPOtlgCltsA==
+"@artsy/reaction@21.7.4":
+  version "21.7.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.7.4.tgz#12f79dde8b8aa51b423137da876bc1731e05cfe9"
+  integrity sha512-gupiNwOPv1fw8VNo0FdBy878ueho6BIa4lA7BdGNMU8GAfx5bJoLnNbg21JpYahvcySgdZ9p5aUxdOyajjOSFQ==
   dependencies:
     "@artsy/arc" "^1.4.2"
     "@artsy/detect-responsive-traits" "^0.0.5"
+    "@artsy/react-html-parser" "^3.0.0"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@types/luxon" "^1.15.1"
     autosuggest-highlight "^3.1.1"
-    cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
     formik "^1.5.8"
     history "^4.6.1"
@@ -119,7 +124,6 @@
     react-css-transition-replace "^3.0.2"
     react-gpt "^2.0.1"
     react-head "^3.0.0"
-    react-html-parser "^2.0.2"
     react-lazy-load-image-component "^1.1.1"
     react-lines-ellipsis "^0.14.0"
     react-markdown "^2.5.0"
@@ -7698,7 +7702,7 @@ html-entities@^1.2.0:
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
   integrity sha1-DfKTUfByEWNRXfueVUPl9u7VFi8=
 
-htmlparser2@3.10.1, htmlparser2@^3.9.0, htmlparser2@^3.9.1:
+htmlparser2@3.10.1, htmlparser2@^3.9.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.10.1.tgz#bd679dc3f59897b6a34bb10749c855bb53a9392f"
   integrity sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==
@@ -12752,13 +12756,6 @@ react-head@^3.0.0:
   dependencies:
     "@babel/runtime" "^7.0.0"
     tiny-invariant "^1.0.0"
-
-react-html-parser@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-html-parser/-/react-html-parser-2.0.2.tgz#6dbe1ddd2cebc1b34ca15215158021db5fc5685e"
-  integrity sha512-XeerLwCVjTs3njZcgCOeDUqLgNIt/t+6Jgi5/qPsO/krUWl76kWKXMeVs2LhY2gwM6X378DkhLjur0zUQdpz0g==
-  dependencies:
-    htmlparser2 "^3.9.0"
 
 react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.3, react-is@^16.8.4, react-is@^16.8.6:
   version "16.8.3"

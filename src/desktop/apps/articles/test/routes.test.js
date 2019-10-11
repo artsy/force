@@ -3,6 +3,12 @@ import sinon from "sinon"
 import articlesJSON from "./fixtures.coffee"
 import fixtures from "desktop/test/helpers/fixtures.coffee"
 import { extend, cloneDeep } from "lodash"
+import { JSDOM } from "jsdom"
+
+const jsdom = new JSDOM("<!doctype html><html><body></body></html>")
+const { window } = jsdom
+global.Node = window.Node
+global.DOMParser = window.DOMParser
 
 const rewire = require("rewire")("../routes")
 const { articles, news, section, teamChannel } = rewire
