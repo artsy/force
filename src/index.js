@@ -1,5 +1,6 @@
 require("source-map-support").install()
 require("regenerator-runtime/runtime")
+require("@artsy/reaction/dist/Polyfills/DOMParser")
 
 const {
   APP_URL,

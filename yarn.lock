@@ -86,24 +86,24 @@
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-"@artsy/react-html-parser@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.0.tgz#0d8f640644824765b81760e0b8fe2e99d89e61da"
-  integrity sha512-GTCfk0OMTfXWggQVJYWa2wf8Qmv03iuw8TAtFjrEHlTPaC+yJ/o8WySqc76ceXC9p96Y/rVDGMpZGqIarCWQzA==
+"@artsy/react-html-parser@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
+  integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
 "@artsy/react-responsive-media@^2.0.0-beta.5":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@21.7.6":
-  version "21.7.6"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.7.6.tgz#ea88012b96a03e69e20bf5f947e256f706046b88"
-  integrity sha512-3sZrPraxqZa08SsSb9e9Cs6tPWITf5LoNTUIwruIVSGhMM9c0ggwnr0xcXRUucxsRWzayv0lWjS0CPYfjh1h2w==
+"@artsy/reaction@21.7.7":
+  version "21.7.7"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.7.7.tgz#2077da88638b84888af7297cb3b5b90bbcd05e21"
+  integrity sha512-Vbfd0qRbIdq+nAIbx2MNA2SIB347lMH032BP5Am8s2JbFXW2ZHGqZXU5q3rbuASNRqn1n/h0qjaB7e3SrqQZUA==
   dependencies:
     "@artsy/arc" "^1.4.2"
     "@artsy/detect-responsive-traits" "^0.0.5"
-    "@artsy/react-html-parser" "^3.0.0"
+    "@artsy/react-html-parser" "^3.0.2"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@types/luxon" "^1.15.1"
     autosuggest-highlight "^3.1.1"
