@@ -67,6 +67,13 @@ yarn start:prod
 
 This creates a production-ready bundle of client and server-side code and boots the server. (This will take a while to compile.)
 
+In case you want to ease debugging the server-side code, you can set the `DEBUG`
+environment variable to disable webpack optimizations.
+
+```sh
+env DEBUG=true yarn start:prod
+```
+
 ## Creating a Review App
 
 If wanting to create a deploy for a WIP feature or for QA, [Hokusai](), supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md). This can be automated via the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script:
@@ -76,23 +83,24 @@ If wanting to create a deploy for a WIP feature or for QA, [Hokusai](), supports
 ```
 
 When this process is done (and it will take a while) it should output a url similar to
+
 ```sh
 a99199101d01011e9aff2127c3b176f7-1359163722.us-east-1.elb.amazonaws.com
 ```
 
-This is your Review App url, which should support all of the basic features inside of Force. 
+This is your Review App url, which should support all of the basic features inside of Force.
 
 If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration) then an additional non-automated step is required via DynDNS:
 
-1) [Login to DynDNS](https://manage.dynect.net/qcke/artsy.net) 
-1) Click `Add New Record`
-1) Enter a new subdomain under `Node`
-1) Change `Type` dropdown to `CNAME`
-1) Paste in URL output by `build_review_app.sh` script into `RData` field, and add a `.` at the end
-1) Scroll to bottom and hit `Save` and then publish changes
-1) DNS will propagate and after a few minutes the review app will be available via `<your-subdomain>.artsy.net`
+1. [Login to DynDNS](https://manage.dynect.net/qcke/artsy.net)
+1. Click `Add New Record`
+1. Enter a new subdomain under `Node`
+1. Change `Type` dropdown to `CNAME`
+1. Paste in URL output by `build_review_app.sh` script into `RData` field, and add a `.` at the end
+1. Scroll to bottom and hit `Save` and then publish changes
+1. DNS will propagate and after a few minutes the review app will be available via `<your-subdomain>.artsy.net`
 
-Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done. 
+Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
 
 ## Create a Topic Branch
 
