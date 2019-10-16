@@ -35,9 +35,6 @@ jobs:
       - run:
           name: Duplicates Report
           command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
-      - run:
-          name: Verify bundle sizes
-          command: npx bundlesize
 
   danger:
     executor: node/build
@@ -87,10 +84,8 @@ workflows:
           <<: *not_staging_or_release
       - acceptance:
           <<: *not_staging_or_release
-      # Nothing actually relies on this at the moment
       - build:
           <<: *not_staging_or_release
-          context: bundlesizes
       - danger:
           <<: *not_staging_or_release
 
