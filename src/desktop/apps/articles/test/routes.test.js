@@ -6,12 +6,11 @@ import { extend, cloneDeep } from "lodash"
 import { JSDOM } from "jsdom"
 
 const jsdom = new JSDOM("<!doctype html><html><body></body></html>")
-const { window } = jsdom
-global.Node = window.Node
-global.DOMParser = window.DOMParser
+global.Node = jsdom.window.Node
+global.DOMParser = jsdom.window.DOMParser
 
 const rewire = require("rewire")("../routes")
-const { articles, news, section, teamChannel } = rewire
+const { articles, section, teamChannel } = rewire
 
 describe("Articles routes", () => {
   let req

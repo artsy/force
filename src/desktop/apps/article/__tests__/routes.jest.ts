@@ -385,47 +385,72 @@ describe("Article Routes", () => {
           },
         ],
       })
-      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
-        options.success({ article: new Article(article) })
-      })
       routes.amp(req, res, next)
       expect(next).toBeCalled()
     })
 
     it("skips if it isnt featured", () => {
       article.featured = false
-      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
-        options.success({ article: new Article(article) })
-      })
       routes.amp(req, res, next)
       expect(next).toBeCalled()
     })
 
     it("skips if it is series", () => {
       article.layout = "series"
-      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
-        options.success({ article: new Article(article) })
-      })
       routes.amp(req, res, next)
       expect(next).toBeCalled()
     })
 
     it("skips if it is video", () => {
       article.layout = "video"
-      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
-        options.success({ article: new Article(article) })
-      })
       routes.amp(req, res, next)
       expect(next).toBeCalled()
     })
 
     it("redirects to the main slug if an older slug is queried", () => {
       article.slug = "zoobar"
-      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
-        options.success({ article: new Article(article) })
-      })
       routes.amp(req, res, next)
       expect(res.redirect).toBeCalledWith("/article/zoobar/amp")
+    })
+
+    it("preps article for AMP", () => {
+      article.layout = "standard"
+      article.sections = [
+        {
+          type: "text",
+          body:
+            '<a class="jump-link"></a><p>Preparing the article for AMP.</p>',
+        },
+        {
+          type: "image_collection",
+          images: [
+            {
+              type: "image",
+              caption:
+                '<p isrender=true style="background-color:black;">A caption is <i isrender=true>really</i> important</p>',
+            },
+          ],
+        },
+      ]
+      routes.amp(req, res, next)
+      expect(res.render.mock.calls[0][1].article.get("sections"))
+        .toMatchInlineSnapshot(`
+Array [
+  Object {
+    "body": "<p>Preparing the article for AMP.</p>",
+    "type": "text",
+  },
+  Object {
+    "images": Array [
+      Object {
+        "caption": "<p>A caption is <i>really</i> important</p>",
+        "type": "image",
+      },
+    ],
+    "type": "image_collection",
+  },
+]
+`)
     })
   })
 

@@ -26,6 +26,8 @@ import {
   getLayoutTemplate,
   getSuperArticleTemplates,
 } from "./helpers"
+import cheerio from "cheerio"
+
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -228,7 +230,7 @@ export const amp = (req, res, next) => {
         return next()
       }
 
-      data.article = data.article.prepForAMP()
+      data.article = prepForAMP(data.article)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
       return res.render("amp_article", {
         resize,
@@ -246,3 +248,45 @@ export const redirectPost = (req, res, _next) =>
 
 export const redirectAMP = (req, res, _next) =>
   res.redirect(301, req.url.replace("/amp", ""))
+
+/**
+ * NOTE: This function exists here instead of in ./helpers.tsx, because the
+ *       latter is also imported in client-side source files and doing so for
+ *       this function would lead to the `cheerio` dependency be included in the
+ *       client bundle, which is not what we want.
+ */
+function prepForAMP(article) {
+  const sections = article.get("sections").map(section => {
+    if (section.type === "text") {
+      const $ = cheerio.load(section.body)
+      $("a:empty").remove()
+      $("p").each((_, el) => $(el).removeAttr("isrender"))
+      return {
+        ...section,
+        body: $.html(),
+      }
+    } else if (["image_set", "image_collection"].includes(section.type)) {
+      const images = section.images.map(image => {
+        if (image.type === "image" && image.caption) {
+          const $ = cheerio.load(image.caption)
+          $("p, i").each((_, el) => {
+            $(el).removeAttr("isrender")
+            $(el).removeAttr("style")
+          })
+          return {
+            ...image,
+            caption: $.html(),
+          }
+        } else {
+          return image
+        }
+      })
+      return {
+        ...section,
+        images,
+      }
+    }
+    return section
+  })
+  return article.set("sections", sections)
+}
