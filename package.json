@@ -289,6 +289,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "7.6.0",
+    "@bundle-analyzer/webpack-plugin": "^0.5.0",
     "@graphql-inspector/core": "1.14.0",
     "@sentry/cli": "1.41.2",
     "@types/dd-trace": "0.6.0",
