@@ -1082,7 +1082,7 @@
     gzip-size "^5.1.1"
     omit-deep "^0.3.0"
 
-"@bundle-analyzer/webpack-plugin@^0.5.0":
+"@bundle-analyzer/webpack-plugin@0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@bundle-analyzer/webpack-plugin/-/webpack-plugin-0.5.0.tgz#14d6f88086f28c28834c93a62503dcda39695bcf"
   integrity sha512-z8rfjy7LssV6uPsG0m2atE6IucQaBklV6RPvGvhC8FFRCB0c51fqIqqqC18GyzGN921MECxMdrhN3cZoHsobMA==
