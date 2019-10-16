@@ -14,7 +14,6 @@ Channel = require '../models/channel.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
 { compactObject } = require './mixins/compact_object.coffee'
-cheerio = require 'cheerio'
 
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations
@@ -193,31 +192,6 @@ module.exports = class Article extends Backbone.Model
     subArticles.length > 0 and
     not @get('is_super_article') and
     superArticle?.id is sd.EOY_2016_ARTICLE
-
-  prepForAMP: ->
-    sections =  _.map @get('sections'), (section) ->
-      if section.type is 'text'
-        $ = cheerio.load(section.body)
-        $('a:empty').remove()
-        $('p').each ->
-          $(this).removeAttr 'isrender'
-        section.body = $.html()
-        section
-      else if section.type in ['image_set', 'image_collection']
-        section.images = _.map section.images, (image) ->
-          if image.type is 'image' and image.caption
-            $ = cheerio.load(image.caption)
-            $('p, i').each ->
-              $(this).removeAttr 'isrender'
-              $(this).removeAttr 'style'
-            image.caption = $.html()
-            image
-          else
-            image
-        section
-      else
-        section
-    @set 'sections', sections
 
   hasAMP: ->
     isValidLayout = @get('layout') in ['standard', 'feature', 'news']
