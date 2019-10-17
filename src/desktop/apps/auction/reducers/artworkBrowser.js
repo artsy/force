@@ -105,7 +105,8 @@ export default function auctionArtworkFilter(state = initialState, action) {
       )
     }
     case actions.UPDATE_ALL_FETCHED: {
-      if (state.saleArtworks.length === state.total) {
+      const currentPage = state.filterParams.page
+      if (currentPage > 100 || state.saleArtworks.length === state.total) {
         return u(
           {
             allFetched: true,
