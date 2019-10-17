@@ -22,7 +22,9 @@ const index = async (req, res, next) => {
       routes: collectRoutes,
       url: req.url,
       userAgent: req.header("User-Agent"),
-      context: buildServerAppContext(req, res, { COLLECTION_HUBS }),
+      context: buildServerAppContext(req, res, {
+        COLLECTION_HUBS,
+      }),
     })
 
     if (redirect) {
