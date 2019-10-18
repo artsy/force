@@ -25,6 +25,19 @@ factory.__set__ 'ShowsGrid', ShowsGrid = sinon.stub()
 factory.__set__ 'LocationsView', LocationsView = sinon.stub()
 
 describe 'overview_layout_factory', ->
+
+  describe 'gallery_four', ->
+    beforeEach ->
+      @profile = new Profile fabricate 'partner_profile', full_bio: 'full_bio here'
+      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_four', display_artists_section: true
+
+    it 'returns modules including a hero with 10 shows for profile_banner_display: "Shows", profile_artists_layout: "Grid"', ->
+      @partner.set profile_banner_display: 'Shows'
+      @partner.set profile_artists_layout: 'Grid'
+      factory(@partner, @profile).should.containEql(
+        { name: 'hero', component: HeroShowsCarousel, options: { partner: @partner, maxNumberOfShows: 10 } }
+      )
+
   describe 'gallery_three', ->
     beforeEach ->
       @profile = new Profile fabricate 'partner_profile', full_bio: 'full_bil'

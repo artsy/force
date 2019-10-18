@@ -55,6 +55,15 @@ module.exports = (partner, profile) ->
       galleryThreeArtists partner, profile
       galleryThreeArticles partner, profile
     ]
+    gallery_four: [
+      galleryFourHero partner, profile
+      galleryTwoAbout partner, profile
+      galleryTwoNews partner, profile
+      galleryTwoShows partner, profile
+      galleryTwoFairBooths partner, profile
+      galleryTwoArtists partner, profile
+      galleryTwoArticles partner, profile
+    ]
 
   contract[partner.get('profile_layout')] or []
 
@@ -201,6 +210,24 @@ galleryThreeHero = (partner, profile) ->
     options =
       partner: partner
       maxNumberOfShows: 10
+    switch partner.get('profile_banner_display')
+      when 'Artworks' then _.pick options, 'partner'
+      else _.pick options, 'partner', 'maxNumberOfShows'
+  )
+
+#
+# Sections for gallery_four layout.
+#
+galleryFourHero = (partner, profile) ->
+  name: 'hero'
+  component:
+    switch partner.get('profile_banner_display')
+      when 'Artworks' then HeroArtworksCarousel
+      else HeroShowsCarousel
+  options: (
+    options =
+      partner: partner
+      maxNumberOfShows: 10 # HeroShowsCarousel options
     switch partner.get('profile_banner_display')
       when 'Artworks' then _.pick options, 'partner'
       else _.pick options, 'partner', 'maxNumberOfShows'
