@@ -4,6 +4,7 @@ orbs:
   yarn: artsy/yarn@2.1.1
   hokusai: artsy/hokusai@0.7.0
   node: artsy/node@0.1.0
+  horizon: artsy/release@0.0.1
 
 jobs:
   acceptance:
@@ -77,6 +78,11 @@ only_release: &only_release
 workflows:
   default:
     jobs:
+      - horizon/block:
+          <<: *only_release
+          context: horizon
+          project_id: 11
+
       # Pre-staging
       - yarn/update-cache:
           <<: *not_staging_or_release
@@ -110,4 +116,5 @@ workflows:
       - hokusai/deploy-production:
           <<: *only_release
           requires:
+            - horizon/block
             - validate_production_schema
