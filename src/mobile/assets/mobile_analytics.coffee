@@ -26,7 +26,6 @@ $ -> analytics.ready ->
     analyticsHooks.on 'auth:logged-out', -> analytics.reset()
 
   require '../analytics/global.js'
-  require '../analytics/impressions.js'
   require '../analytics/show_page.js'
   require '../analytics/bidding.js'
   require '../analytics/commercial_filter.js'
