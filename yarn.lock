@@ -21,17 +21,6 @@
     found-scroll "0.1.5"
     react-relay "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
 
-"@artsy/arc@^1.4.2":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@artsy/arc/-/arc-1.4.5.tgz#3b6cc41f9ed6c0b4ce41abcaf68171b3f606cd38"
-  integrity sha512-Yu9G4PyGJW6VGi7I1ZOL4TXPOQUW/cNkCCAqsT7x5BbGXSCkFM+5NseH3F0cetnWwdiwoLZDjBm6ldjj/7sCdQ==
-  dependencies:
-    farce "0.2.6"
-    found "0.3.14"
-    found-relay "0.3.1"
-    found-scroll "0.1.5"
-    react-relay "https://github.com/artsy/relay/releases/download/v1.5.0-artsy.3/react-relay-1.5.0-artsy.3.tgz"
-
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
@@ -96,19 +85,22 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@21.10.11":
-  version "21.10.11"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.10.11.tgz#27996fafbdbd24e36306aa36c3005f5654aa9076"
-  integrity sha512-ZlaaKcr745lKEYwh2PYixZBvlxeumQltuNpuBh8MRja7UaO+WIuBGXm+L/suXIQcRk1FRAclKF4Uq5P9XeWC6Q==
+"@artsy/reaction@21.11.0":
+  version "21.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.11.0.tgz#ba087bb54c29f213b18756554c29acd6cac2fe34"
+  integrity sha512-795apeX4JtNqEcZyw7btQhdYuAqTQEIgUhlMxsxjBeT+79V5Yvg696WLbBfSYJarAEXxvYOSMN6m6Igms5MBJw==
   dependencies:
-    "@artsy/arc" "^1.4.2"
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-html-parser" "^3.0.2"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@types/luxon" "^1.15.1"
     autosuggest-highlight "^3.1.1"
     currency.js "^1.2.1"
+    farce "^0.2.6"
     formik "^1.5.8"
+    found "^0.3.14"
+    found-relay "^0.3.1"
+    found-scroll "^0.1.5"
     history "^4.6.1"
     isomorphic-fetch "^2.2.1"
     jsonp "^0.2.1"
@@ -5236,7 +5228,7 @@ dom-align@^1.7.0:
   resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.8.0.tgz#c0e89b5b674c6e836cd248c52c2992135f093654"
   integrity sha512-B85D4ef2Gj5lw0rK0KM2+D5/pH7yqNxg2mB+E8uzFaolpm7RQmsxEfjyEuNiF8UBBkffumYDeKRzTzc3LePP+w==
 
-dom-helpers@^3.2.1, dom-helpers@^3.3.1:
+dom-helpers@^3.2.1, dom-helpers@^3.3.1, dom-helpers@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
   integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -6417,6 +6409,18 @@ farce@0.2.6, farce@^0.2.1, farce@^0.2.6:
     redux "^4.0.0"
     warning "^3.0.0"
 
+farce@^0.2.7:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/farce/-/farce-0.2.8.tgz#bd9c5343b5970357d9446d43212a2036f27886ed"
+  integrity sha512-x4N70Ti9nOo6/waNJUZMLDd/U6+WA0gV+AUE1gFS/npD/FliTUCKbBLNQYbgeejzDdw0MgtPCCjRX8kPTHjspA==
+  dependencies:
+    dom-helpers "^3.4.0"
+    invariant "^2.2.4"
+    is-promise "^2.1.0"
+    query-string "^5.1.1"
+    redux "^4.0.1"
+    warning "^4.0.3"
+
 fast-deep-equal@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.1.0.tgz#c053477817c86b51daa853c81e059b733d023614"
@@ -6863,7 +6867,7 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-found-relay@0.3.1:
+found-relay@0.3.1, found-relay@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.3.1.tgz#b525339595e5b3aa24af555423e60fdb33a5cb16"
   integrity sha512-N9lADMedKGkl+PNY/L/qf0rDy+3HRbO9IX8Gcvjpy2tgRmPy6Z2QM/zVOufCvvD8rYGP84CuqtmTWJvJrLPFYw==
@@ -6884,6 +6888,15 @@ found-scroll@0.1.5:
     prop-types "^15.6.0"
     scroll-behavior "^0.9.3"
 
+found-scroll@^0.1.5:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/found-scroll/-/found-scroll-0.1.6.tgz#93adbbcf923eb31d406f57ab7cedbe3ae564b12e"
+  integrity sha512-jbHT0hgHQ1f/Yu13pIjoTNmP1KdGe+FLVX12dWMIZ+RuFQiPRYGWutf3SNQ1cMPisSOqYKe7Fac/9N333DqrBA==
+  dependencies:
+    farce "^0.2.7"
+    prop-types "^15.7.2"
+    scroll-behavior "^0.9.10"
+
 found@0.3.14:
   version "0.3.14"
   resolved "https://registry.yarnpkg.com/found/-/found-0.3.14.tgz#0bfe2e7433951bf2df223e65c73756565d97ba8c"
@@ -6900,6 +6913,23 @@ found@0.3.14:
     react-static-container "^1.0.2"
     redux "^4.0.0"
     warning "^3.0.0"
+
+found@^0.3.14:
+  version "0.3.21"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.3.21.tgz#9eebf2fb69f10259680762c62d10173efe740033"
+  integrity sha512-iaeGVTBirrTAravFPcIfWPuJHIaFNqnJ87AMvnpB4Ig8RTB97C4PipVopmSxK+lLeMdEybUwaW+BhNDhLPEUSw==
+  dependencies:
+    babel-runtime "^6.26.0"
+    farce "^0.2.6"
+    is-promise "^2.1.0"
+    lodash "^4.17.11"
+    path-to-regexp "^1.7.0"
+    prop-types "^15.6.2"
+    prop-types-extra "^1.1.0"
+    react-redux "^5.1.1"
+    react-static-container "^1.0.2"
+    redux "^4.0.1"
+    warning "^4.0.2"
 
 fp-ts@^1.0.0, fp-ts@^1.0.1:
   version "1.13.0"
@@ -13001,6 +13031,19 @@ react-redux@5.1.1, react-redux@^5.0.7:
     react-is "^16.6.0"
     react-lifecycles-compat "^3.0.0"
 
+react-redux@^5.1.1:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.1.2.tgz#b19cf9e21d694422727bf798e934a916c4080f57"
+  integrity sha512-Ns1G0XXc8hDyH/OcBHOxNgQx9ayH3SPxBnFCOidGKSle8pKihysQw2rG/PmciUQRoclhVBO8HMhiRmGXnDja9Q==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    hoist-non-react-statics "^3.3.0"
+    invariant "^2.2.4"
+    loose-envify "^1.1.0"
+    prop-types "^15.6.1"
+    react-is "^16.6.0"
+    react-lifecycles-compat "^3.0.0"
+
 react-relay-network-modern-ssr@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-relay-network-modern-ssr/-/react-relay-network-modern-ssr-1.2.2.tgz#9f611872113cc91839600939b0d4edf97a4f8adc"
@@ -13436,6 +13479,14 @@ redux@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
+
+redux@^4.0.1:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
+  integrity sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q==
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
@@ -14153,6 +14204,14 @@ scmp@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/scmp/-/scmp-0.0.3.tgz#3648df2d7294641e7f78673ffc29681d9bad9073"
   integrity sha1-NkjfLXKUZB5/eGc//CloHZutkHM=
+
+scroll-behavior@^0.9.10:
+  version "0.9.10"
+  resolved "https://registry.yarnpkg.com/scroll-behavior/-/scroll-behavior-0.9.10.tgz#c8953adeeb3586060b903328d860aa8346d62861"
+  integrity sha512-JVJQkBkqMLEM4ATtbHTKare97zhz/qlla9mNttFYY/bcpyOb4BuBGEQ/N9AQWXvshzf6zo9jP60TlphnJ4YPoQ==
+  dependencies:
+    dom-helpers "^3.2.1"
+    invariant "^2.2.2"
 
 scroll-behavior@^0.9.3:
   version "0.9.9"
@@ -16245,6 +16304,13 @@ warning@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.2.tgz#aa6876480872116fa3e11d434b0d0d8d91e44607"
   integrity sha512-wbTp09q/9C+jJn4KKJfJfoS6VleK/Dti0yqWSm6KMvJ4MRCXFQNapHuJXutJIrWV0Cf4AhTdeIe4qdKHR1+Hug==
+  dependencies:
+    loose-envify "^1.0.0"
+
+warning@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   dependencies:
     loose-envify "^1.0.0"
 
