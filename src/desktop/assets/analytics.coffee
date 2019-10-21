@@ -58,7 +58,6 @@ $ -> analytics.ready ->
   setupSplitTests()
 
   require '../analytics/global.js'
-  require '../analytics/impressions.js'
   require '../analytics/articles.js'
   require '../analytics/article_impressions.js'
   require '../analytics/partner_application.js'
