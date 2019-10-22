@@ -56,7 +56,7 @@ module.exports = (partner, profile) ->
       galleryThreeArticles partner, profile
     ]
     gallery_four: [
-      galleryFourHero partner, profile
+      galleryThreeHero partner, profile
       galleryTwoAbout partner, profile
       galleryTwoNews partner, profile
       galleryTwoShows partner, profile
@@ -210,24 +210,6 @@ galleryThreeHero = (partner, profile) ->
     options =
       partner: partner
       maxNumberOfShows: 10
-    switch partner.get('profile_banner_display')
-      when 'Artworks' then _.pick options, 'partner'
-      else _.pick options, 'partner', 'maxNumberOfShows'
-  )
-
-#
-# Sections for gallery_four layout.
-#
-galleryFourHero = (partner, profile) ->
-  name: 'hero'
-  component:
-    switch partner.get('profile_banner_display')
-      when 'Artworks' then HeroArtworksCarousel
-      else HeroShowsCarousel
-  options: (
-    options =
-      partner: partner
-      maxNumberOfShows: 10 # HeroShowsCarousel options
     switch partner.get('profile_banner_display')
       when 'Artworks' then _.pick options, 'partner'
       else _.pick options, 'partner', 'maxNumberOfShows'

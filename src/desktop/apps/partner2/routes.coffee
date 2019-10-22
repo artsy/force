@@ -11,6 +11,7 @@ layoutContains = (res = {}, types = []) ->
     'gallery_one'
     'gallery_two'
     'gallery_three'
+    'gallery_four'
     'institution'
   ]
   if newLayout
