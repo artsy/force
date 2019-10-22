@@ -153,6 +153,22 @@ describe("auction/actions/artworkBrowser.test.js", () => {
         ])
         notAllArtworksFetched.artworkBrowser.total.should.eql(10)
       })
+
+      it("updates allFetched to true if the current page exceeds 100", () => {
+        const maxPageResponse = auctions(
+          {
+            artworkBrowser: {
+              total: 1,
+              saleArtworks: [],
+              filterParams: { page: 100 },
+            },
+          },
+          {}
+        )
+        const tooHighPage = auctions(maxPageResponse, actions.updatePage(false))
+        const notAllFetched = auctions(tooHighPage, actions.updateAllFetched())
+        notAllFetched.artworkBrowser.allFetched.should.eql(true)
+      })
     })
 
     describe("#updateArtistId", () => {

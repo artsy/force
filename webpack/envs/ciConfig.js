@@ -39,6 +39,7 @@ export const ciConfig = {
   devtool: false,
   plugins: [
     plugins.duplicatesReport,
-    new BundleAnalyzerPlugin({ token: process.env.BUNDLE_ANALYZER_TOKEN }),
-  ],
+    process.env.BUNDLE_ANALYZER_TOKEN &&
+      new BundleAnalyzerPlugin({ token: process.env.BUNDLE_ANALYZER_TOKEN }),
+  ].filter(p => !!p),
 }
