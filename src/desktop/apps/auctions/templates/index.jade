@@ -15,7 +15,7 @@ block body
       .aggregate-page-items-featured
         if currentAuctions.length
           .aggregate-page-items-featured-set
-            h2.auctions-header Current Auctions
+            h1.auctions-header Current Auctions
             for auction in currentAuctions
               include auction
 
@@ -45,16 +45,16 @@ block body
           .auction-cta-group__left
             img( src="/images/mobile-cta.png" alt="Bid from your phone" )
           .auction-cta-group__right
-            h1 Bid from your phone
-            h2 Download Artsy for iPhone
+            h2 Bid from your phone
+            h3 Download Artsy for iPhone
         a.auction-cta-group(href="/how-auctions-work")
           .auction-cta-group__left
             img( src="/images/kiosk-cta.png" alt="How to Bid on Artsy" )
           .auction-cta-group__right
-            h1 How to Bid on Artsy
+            h2 How to Bid on Artsy
         a.auction-cta-group(href="/auction-partnerships")
           .auction-cta-group__full
-            h1
+            h2
               | Interested in partnering with
               br
               | Artsy for your next auction?
