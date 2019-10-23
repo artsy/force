@@ -55,6 +55,15 @@ module.exports = (partner, profile) ->
       galleryThreeArtists partner, profile
       galleryThreeArticles partner, profile
     ]
+    gallery_four: [
+      galleryFourHero partner, profile
+      galleryFourAbout partner, profile
+      galleryFourNews partner, profile
+      galleryFourShows partner, profile
+      galleryFourFairBooths partner, profile
+      galleryFourArtists partner, profile
+      galleryFourArticles partner, profile
+    ]
 
   contract[partner.get('profile_layout')] or []
 
@@ -205,3 +214,15 @@ galleryThreeHero = (partner, profile) ->
       when 'Artworks' then _.pick options, 'partner'
       else _.pick options, 'partner', 'maxNumberOfShows'
   )
+
+
+#
+# Sections for gallery_four layout.
+#
+galleryFourAbout = galleryTwoAbout
+galleryFourNews = galleryTwoNews
+galleryFourShows = galleryTwoShows
+galleryFourFairBooths = galleryTwoFairBooths
+galleryFourArtists = galleryTwoArtists
+galleryFourArticles = galleryTwoArticles
+galleryFourHero = galleryThreeHero

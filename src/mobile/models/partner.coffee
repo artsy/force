@@ -16,8 +16,9 @@ GALLERY_DEPRECATED = 'gallery_deprecated'
 GALLERY_ONE        = 'gallery_one'
 GALLERY_TWO        = 'gallery_two'
 GALLERY_THREE      = 'gallery_three'
+GALLERY_FOUR       = 'gallery_four'
 
-ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE ]
+ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE, GALLERY_FOUR ]
 
 module.exports = class Partner extends Backbone.Model
   _.extend @prototype, Relations
@@ -131,5 +132,6 @@ module.exports.GALLERY_DEPRECATED = GALLERY_DEPRECATED
 module.exports.GALLERY_ONE        = GALLERY_ONE
 module.exports.GALLERY_TWO        = GALLERY_TWO
 module.exports.GALLERY_THREE      = GALLERY_THREE
+module.exports.GALLERY_FOUR       = GALLERY_FOUR
 
 module.exports.ACTIVE_PARTNER_LAYOUTS = ACTIVE_PARTNER_LAYOUTS

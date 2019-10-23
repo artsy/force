@@ -25,6 +25,115 @@ factory.__set__ 'ShowsGrid', ShowsGrid = sinon.stub()
 factory.__set__ 'LocationsView', LocationsView = sinon.stub()
 
 describe 'overview_layout_factory', ->
+
+  describe 'gallery_four', ->
+    beforeEach ->
+      @profile = new Profile fabricate 'partner_profile', full_bio: 'full_bio here'
+      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_four', display_artists_section: true
+
+    it 'returns modules properly for profile_banner_display: "Shows", profile_artists_layout: "Grid"', ->
+      @partner.set profile_banner_display: 'Shows'
+      @partner.set profile_artists_layout: 'Grid'
+      factory(@partner, @profile).should.eql [
+        { name: 'hero', component: HeroShowsCarousel, options: { partner: @partner, maxNumberOfShows: 10 } }
+        { name: 'about', template: '<article></article>', title: 'About' }
+        { name: 'news', component: NewsView, options: { partner: @partner }, title: 'News' }
+        {
+          name: 'shows',
+          component: FixedCellsCountCarousel
+          options:
+            partner: @partner
+            collection: new PartnerShows
+            fetchOptions: [
+              { partner_id: @partner.get('_id'), status: 'current', at_a_fair: false, displayable: true, size: 9, sort: 'start_at' }
+              { partner_id: @partner.get('_id'), status: 'closed', at_a_fair: false, displayable: true, size: 9, sort: '-end_at' }
+            ]
+            template: showsTemplate
+          title: 'Shows'
+          viewAll: "#{@partner.href()}/shows"
+        }
+        {
+          name: 'fair-booths'
+          component: FixedCellsCountCarousel
+          options:
+            partner: @partner
+            collection: new PartnerShows
+            fetchOptions: [
+              { partner_id: @partner.get('_id'), status: 'current', at_a_fair: true, displayable: true, size: 9, sort: 'start_at' }
+              { partner_id: @partner.get('_id'), status: 'closed', at_a_fair: true, displayable: true, size: 9, sort: '-end_at' }
+            ]
+            template: fairBoothsTemplate
+          title: 'Fair Booths'
+          viewAll: "#{@partner.href()}/shows"
+        }
+        { name: 'artists', component: ArtistsGridView, options: { partner: @partner }, title: undefined, viewAll: undefined }
+        {
+          name: 'articles'
+          component: FixedCellsCountCarousel
+          options:
+            partner: @partner
+            collection: new Articles
+            fetchOptions: partner_id: @partner.get('_id'), published: true, limit: 9, sort: '-published_at'
+            template: articlesTemplate
+          title: 'Articles'
+          viewAll: "#{@partner.href()}/articles"
+        }
+      ]
+
+    it 'returns modules properly for profile_banner_display: "Artworks", profile_artists_layout: "List"', ->
+      @partner.set profile_banner_display: 'Artworks'
+      @partner.set profile_artists_layout: 'List'
+      factory(@partner, @profile).should.eql [
+        { name: 'hero', component: HeroArtworksCarousel, options: { partner: @partner } }
+        { name: 'about', template: '<article></article>', title: 'About' }
+        { name: 'news', component: NewsView, options: { partner: @partner }, title: 'News' }
+        {
+          name: 'shows',
+          component: FixedCellsCountCarousel
+          options:
+            partner: @partner
+            collection: new PartnerShows
+            fetchOptions: [
+              { partner_id: @partner.get('_id'), status: 'current', at_a_fair: false, displayable: true, size: 9, sort: 'start_at' }
+              { partner_id: @partner.get('_id'), status: 'closed', at_a_fair: false, displayable: true, size: 9, sort: '-end_at' }
+            ]
+            template: showsTemplate
+          title: 'Shows'
+          viewAll: "#{@partner.href()}/shows"
+        }
+        {
+          name: 'fair-booths'
+          component: FixedCellsCountCarousel
+          options:
+            partner: @partner
+            collection: new PartnerShows
+            fetchOptions: [
+              { partner_id: @partner.get('_id'), status: 'current', at_a_fair: true, displayable: true, size: 9, sort: 'start_at' }
+              { partner_id: @partner.get('_id'), status: 'closed', at_a_fair: true, displayable: true, size: 9, sort: '-end_at' }
+            ]
+            template: fairBoothsTemplate
+          title: 'Fair Booths'
+          viewAll: "#{@partner.href()}/shows"
+        }
+        { name: 'artists', component: ArtistsListView, options: { partner: @partner }, title: 'Artists', viewAll: "#{@partner.href()}/artists" }
+        {
+          name: 'articles'
+          component: FixedCellsCountCarousel
+          options:
+            partner: @partner
+            collection: new Articles
+            fetchOptions: partner_id: @partner.get('_id'), published: true, limit: 9, sort: '-published_at'
+            template: articlesTemplate
+          title: 'Articles'
+          viewAll: "#{@partner.href()}/articles"
+        }
+      ]
+
+    it 'does not return the "Artists" module when display_artists_section is false', ->
+      @partner.set display_artists_section: false
+      modules = factory(@partner, @profile)
+      modules.should.containDeep [{ name: 'artists', component: undefined }]
+
   describe 'gallery_three', ->
     beforeEach ->
       @profile = new Profile fabricate 'partner_profile', full_bio: 'full_bil'
