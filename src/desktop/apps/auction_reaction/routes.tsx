@@ -74,3 +74,13 @@ export const bidderRegistration = async (req, res, next) => {
 export const auctionFAQRoute = async (req, res, next) => {
   await renderPage({ layoutTemplate: "react_index" }, req, res, next)
 }
+
+export const confirmBidRoute = async (req, res, next) => {
+  if (!res.locals.sd.CURRENT_USER) {
+    return res.redirect(
+      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+    )
+  } else {
+    await renderPage({ layoutTemplate: "react_minimal_header" }, req, res, next)
+  }
+}
