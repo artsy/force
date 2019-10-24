@@ -30,5 +30,11 @@ module.exports = {
     outcomes:
       control: 50
       experiment: 50
-    edge: 'experiment'
+    edge: "experiment"
+  homepage_collection_hub_entrypoints_test_qa:
+    key: "homepage_collection_hub_entrypoints_test_qa"
+    outcomes:
+      control: 100
+      experiment: 0
+    edge: "experiment"
 }
