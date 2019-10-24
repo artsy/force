@@ -40,6 +40,7 @@ app.get("/*", async (req, res, next) => {
       },
       locals: {
         ...res.locals,
+        assetPackage: "experimental-app-shell",
         scripts,
         styleTags,
       },
