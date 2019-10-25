@@ -20,5 +20,4 @@ app.get '/auction/:id/bid/:artworkId', routes.bid
 # have been called for > 30 days. Investigate removal.
 app.get '/artwork/:id/confirm-registration', routes.confirmRegistration('artwork')
 
-# Also:
 app.get '/auctions/:id/bid/:artworkId', routes.bid

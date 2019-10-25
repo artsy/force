@@ -35,6 +35,41 @@ describe("Reaction Auction app routes", () => {
     })
   })
 
+  describe("confirmBid", () => {
+    let req
+    let res
+
+    beforeEach(() => {
+      jest.resetAllMocks()
+      req = {
+        query: {},
+        header: jest.fn(),
+        originalUrl: "testurl.artsy.net/auction/auctionid/bid2/artworkid",
+      }
+      res = {
+        locals: { sd: { CURRENT_USER: { access_token: "1" } } },
+        redirect: mockRedirect,
+        status: () => ({ send: mockSend }),
+      }
+      mockStitch.mockResolvedValue(layout)
+    })
+
+    it("redirects if user is not present", async () => {
+      delete res.locals.sd.CURRENT_USER
+      await bidderRegistration(req, res, mockNext)
+      expect(mockRedirect).toHaveBeenCalledWith(
+        "/login?redirectTo=testurl.artsy.net%2Fauction%2Fauctionid%2Fbid2%2Fartworkid"
+      )
+      expect(mockSend).not.toHaveBeenCalled()
+    })
+
+    it("does not defer handling", async () => {
+      await bidderRegistration(req, res, mockNext)
+      expect(mockNext).not.toHaveBeenCalled()
+      expect(mockSend).toHaveBeenCalledWith(layout)
+    })
+  })
+
   describe("bidderRegistration", () => {
     let req
     let res
