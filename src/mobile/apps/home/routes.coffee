@@ -26,7 +26,7 @@ query = """
 module.exports.index = (req, res, next) ->
   res.locals.sd.PAGE_TYPE = 'home'
 
-  showCollectionsHubs = res.locals.sd.COLLECTION_HUBS == "experiment"
+  showCollectionsHubs = res.locals.sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST_QA == "experiment"
 
   metaphysics(query: query, variables: {showCollectionsHubs: showCollectionsHubs})
     .then ({ home_page, marketingHubCollections }) ->

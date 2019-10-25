@@ -10,7 +10,11 @@ export const app = express()
 
 const index = async (req, res, next) => {
   try {
-    const { APP_URL, IS_MOBILE, COLLECTION_HUBS } = res.locals.sd
+    const {
+      APP_URL,
+      IS_MOBILE,
+      COLLECTION_HUB_ENTRYPOINTS_TEST,
+    } = res.locals.sd
 
     const {
       headTags,
@@ -23,7 +27,7 @@ const index = async (req, res, next) => {
       url: req.url,
       userAgent: req.header("User-Agent"),
       context: buildServerAppContext(req, res, {
-        COLLECTION_HUBS,
+        COLLECTION_HUB_ENTRYPOINTS_TEST,
       }),
     })
 

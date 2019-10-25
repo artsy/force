@@ -46,7 +46,7 @@ fetchMetaphysicsData = (req, showHeroUnits, showCollectionsHubs)->
     }
   }
   
-  showCollectionsHubs = res.locals.sd.COLLECTION_HUBS == "experiment"
+  showCollectionsHubs = res.locals.sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST_QA == "experiment"
   res.locals.sd.PAGE_TYPE = 'home'
   initialFetch = Q
     .allSettled [
