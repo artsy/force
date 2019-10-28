@@ -59,4 +59,14 @@ describe("CTA", () => {
 
     expect(mockMetaphysics).toBeCalledWith(options)
   })
+
+  it("should set up a scroll event listener when in the experiment group", async () => {
+    const spy = jest.spyOn(window, "addEventListener")
+    mockMetaphysics.mockReturnValue(Promise.resolve({ artist }))
+    await setupArtistSignUpModal()
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy.mock.calls[0][0]).toBe("scroll")
+    expect(spy.mock.calls[0][2]).toEqual({ once: true })
+  })
 })

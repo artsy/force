@@ -37,10 +37,4 @@ module.exports = {
       control: 100
       experiment: 0
     edge: "experiment"
-  artist_page_signup_modal:
-    key: "artist_page_signup_modal"
-    outcomes:
-      control: 100
-      experiment: 0
-    edge: "experiment"
 }
