@@ -47,6 +47,7 @@ global.Promise = require("bluebird")
 const artsyXapp = require("artsy-xapp")
 const cache = require("./lib/cache.coffee")
 const express = require("express")
+const once = require("lodash").once
 const setup = require("./lib/setup").default
 
 const app = (module.exports = express())
@@ -55,37 +56,55 @@ if (PROFILE_MEMORY) {
   require("./lib/memory_profiler")()
 }
 
+const startServer = once(() => {
+  if (module === require.main) {
+    const message =
+      NODE_ENV === "development"
+        ? `\n\n  [Force] Booting on port ${PORT}... \n`
+        : `\n\n  [Force] Started on ${APP_URL}. \n`
+
+    const server = app.listen(PORT, "0.0.0.0", () => console.log(message))
+    if (KEEPALIVE_TIMEOUT) {
+      console.log("Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT + " ms")
+      server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT)
+    }
+  }
+})
+
 // Connect to Redis
 cache.setup(() => {
   // Add all of the middleware and global setup
   setup(app)
 
-  // if we can't get an xapp token, just exit and let the whole system try
-  // again - this prevents a sustained broken state when gravity returns a
-  // 502 during force startup.
+  // If we can't get an xapp token, start the server
+  // but retry every 30 seconds. Until an xapp token is fetched,
+  // the `ARTSY_XAPP_TOKEN` sharify value will not be present,
+  // and any requests made via the Force server (or a user's browser)
+  // directly to gravity will fail.
+  //
+  // When an xapp token is fetched, any subsequent requests to Force
+  // will have `ARTSY_XAPP_TOKEN` set and direct gravity requests will
+  // resolve.
   artsyXapp.on("error", err => {
+    startServer()
     console.error(`
-Could not start Force because it could not set up the xapp token, this is likely
+Force could not fetch an xapp token. This can be
 due to \`API_URL\`, \`CLIENT_ID\` and \`CLIENT_SECRET\` not being set, but
-also could be gravity being down.`)
+also could be gravity being down. Retrying...`)
     console.error(err)
-    process.exit()
+    setTimeout(() => {
+      artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET })
+    }, 30000)
   })
 
   // Get an xapp token
-  artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
-    // Start the server
-    if (module === require.main) {
-      const message =
-        NODE_ENV === "development"
-          ? `\n\n  [Force] Booting on port ${PORT}... \n`
-          : `\n\n  [Force] Started on ${APP_URL}. \n`
-
-      const server = app.listen(PORT, "0.0.0.0", () => console.log(message))
-      if (KEEPALIVE_TIMEOUT) {
-        console.log("Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT + " ms")
-        server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT)
+  artsyXapp.init(
+    { url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET },
+    err => {
+      if (!err) {
+        console.log("Successfully fetched xapp token.")
+        startServer()
       }
     }
-  })
+  )
 })
