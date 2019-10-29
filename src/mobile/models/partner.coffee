@@ -17,8 +17,11 @@ GALLERY_ONE        = 'gallery_one'
 GALLERY_TWO        = 'gallery_two'
 GALLERY_THREE      = 'gallery_three'
 GALLERY_FOUR       = 'gallery_four'
+GALLERY_FIVE       = 'gallery_five'
+GALLERY_SIX        = 'gallery_six'
+GALLERY_SEVEN      = 'gallery_seven'
 
-ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE, GALLERY_FOUR ]
+ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE, GALLERY_FOUR, GALLERY_FIVE, GALLERY_SIX, GALLERY_SEVEN ]
 
 module.exports = class Partner extends Backbone.Model
   _.extend @prototype, Relations
@@ -133,5 +136,8 @@ module.exports.GALLERY_ONE        = GALLERY_ONE
 module.exports.GALLERY_TWO        = GALLERY_TWO
 module.exports.GALLERY_THREE      = GALLERY_THREE
 module.exports.GALLERY_FOUR       = GALLERY_FOUR
+module.exports.GALLERY_FIVE       = GALLERY_FIVE
+module.exports.GALLERY_SIX        = GALLERY_SIX
+module.exports.GALLERY_SEVEN      = GALLERY_SEVEN
 
 module.exports.ACTIVE_PARTNER_LAYOUTS = ACTIVE_PARTNER_LAYOUTS

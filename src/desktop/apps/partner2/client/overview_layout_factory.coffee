@@ -64,6 +64,29 @@ module.exports = (partner, profile) ->
       galleryFourArtists partner, profile
       galleryFourArticles partner, profile
     ]
+    gallery_five: [
+      galleryFiveHero partner, profile
+      galleryFiveAbout partner, profile
+      galleryFiveNews partner, profile
+      galleryFiveShows partner, profile
+      galleryFiveFairBooths partner, profile
+      galleryFiveArtists partner, profile
+      galleryFiveArticles partner, profile
+    ]
+    gallery_six: [
+      gallerySixHero partner, profile
+      gallerySixAbout partner, profile
+      gallerySixShows partner, profile
+      gallerySixFairBooths partner, profile
+      gallerySixArtists partner, profile
+    ]
+    gallery_seven: [
+      gallerySevenHero partner, profile
+      gallerySevenAbout partner, profile
+      gallerySevenShows partner, profile
+      gallerySevenFairBooths partner, profile
+      gallerySevenArtists partner, profile
+    ]
 
   contract[partner.get('profile_layout')] or []
 
@@ -215,14 +238,42 @@ galleryThreeHero = (partner, profile) ->
       else _.pick options, 'partner', 'maxNumberOfShows'
   )
 
-
 #
 # Sections for gallery_four layout.
 #
+galleryFourHero = galleryThreeHero
 galleryFourAbout = galleryTwoAbout
 galleryFourNews = galleryTwoNews
 galleryFourShows = galleryTwoShows
 galleryFourFairBooths = galleryTwoFairBooths
 galleryFourArtists = galleryTwoArtists
 galleryFourArticles = galleryTwoArticles
-galleryFourHero = galleryThreeHero
+
+#
+# Sections for gallery_five layout.
+#
+galleryFiveHero = galleryThreeHero
+galleryFiveAbout = galleryThreeAbout
+galleryFiveNews = galleryThreeNews
+galleryFiveShows = galleryThreeShows
+galleryFiveFairBooths = galleryThreeFairBooths
+galleryFiveArtists = galleryThreeArtists
+galleryFiveArticles = galleryThreeArticles
+
+#
+# Sections for gallery_six layout.
+#
+gallerySixHero = galleryOneHero
+gallerySixAbout = galleryOneAbout
+gallerySixShows = galleryOneShows
+gallerySixFairBooths = galleryOneFairBooths
+gallerySixArtists = galleryOneArtists
+
+#
+# Sections for gallery_seven layout.
+#
+gallerySevenHero = galleryOneHero
+gallerySevenAbout = galleryOneAbout
+gallerySevenShows = galleryOneShows
+gallerySevenFairBooths = galleryOneFairBooths
+gallerySevenArtists = galleryOneArtists
