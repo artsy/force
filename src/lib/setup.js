@@ -216,7 +216,7 @@ export default function(app) {
   app.use(escapedFragmentMiddleware)
   app.use(logger)
   app.use(unsupportedBrowserCheck)
-  app.use(splitTestMiddleware)
+  if (NODE_ENV !== "test") app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
 
   // Routes for pinging system time and up
