@@ -7,11 +7,12 @@ export const unsupportedBrowserCheck = (req, res, next) => {
     res.locals.sd.BROWSER = ua
   }
   if (
+    req.path !== "/unsupported-browser" &&
     isUnsupported(ua, req) &&
     !/\/unsupported-browser|assets|fonts|images/.test(req.path)
   ) {
     res.locals.sd.UNSUPPORTED_BROWSER_REDIRECT = getRedirectTo(req)
-    res.redirect("/unsupported-browser")
+    return res.redirect("/unsupported-browser")
   }
   next()
 }
