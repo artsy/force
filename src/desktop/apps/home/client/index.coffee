@@ -20,6 +20,7 @@ splitTest = require '../../../components/split_test/index.coffee'
 sd = require('sharify').data
 _ = require 'underscore'
 _s = require 'underscore.string'
+# Waypoint = require("waypoint")
 
 module.exports.HomeView = class HomeView extends Backbone.View
 
@@ -27,6 +28,20 @@ module.exports.HomeView = class HomeView extends Backbone.View
     # Set up a router for the /log_in /sign_up and /forgot routes
     new HomeAuthRouter
     Backbone.history.start pushState: true
+
+    targetElement = if sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST_QA is "experiment" then ".home-hubs-entry" else ".home-browse-module"
+    # .home-browse-module
+
+    # Remove after closing the homepage hubs entry points test
+    $(targetElement).waypoint(() ->
+      # Fire experiment viewed event
+      splitTest("homepage_collection_hub_entrypoints_test_qa").view()
+    ,
+    {
+      triggerOnce: true,
+      offset: 75,
+    }
+    )
 
     # Render Featured Sections
     @setupHeroUnits()
