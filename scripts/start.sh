@@ -13,6 +13,10 @@ function version {
 : ${MAX_OLD_SPACE_SIZE:=3072}
 OPT=(--max_old_space_size=$MAX_OLD_SPACE_SIZE -r dotenv/config)
 
+if [ ! -z "$ENABLE_PREOOMKILLER" ]; then
+  exec python ./preoomkiller.py &
+fi
+
 if [ "$NODE_ENV" != "production" ]; then
   if [ ! -f "./.env" ]; then
     echo -e "\033[1;31m WARNING: Missing .env file, see CONTRIBUTING.md. \033[0m"
