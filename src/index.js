@@ -49,6 +49,8 @@ const cache = require("./lib/cache.coffee")
 const express = require("express")
 const once = require("lodash").once
 const setup = require("./lib/setup").default
+const http = require("http")
+const withGracefulShutdown = require("http-shutdown")
 
 const app = (module.exports = express())
 
@@ -63,11 +65,23 @@ const startServer = once(() => {
         ? `\n\n  [Force] Booting on port ${PORT}... \n`
         : `\n\n  [Force] Started on ${APP_URL}. \n`
 
-    const server = app.listen(PORT, "0.0.0.0", () => console.log(message))
+    const server = withGracefulShutdown(http.createServer(app))
+
     if (KEEPALIVE_TIMEOUT) {
       console.log("Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT + " ms")
       server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT)
     }
+
+    const stopServer = once(() => {
+      server.shutdown(() => {
+        console.log("Closed existing connections.")
+        process.exit(0)
+      })
+    })
+
+    server.listen(PORT, "0.0.0.0", () => console.log(message))
+
+    process.on("SIGTERM", stopServer)
   }
 })
 
