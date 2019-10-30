@@ -52,6 +52,8 @@ const setup = require("./lib/setup").default
 
 const app = (module.exports = express())
 
+let server, isShuttingDown
+
 if (PROFILE_MEMORY) {
   require("./lib/memory_profiler")()
 }
@@ -63,7 +65,10 @@ const startServer = once(() => {
         ? `\n\n  [Force] Booting on port ${PORT}... \n`
         : `\n\n  [Force] Started on ${APP_URL}. \n`
 
-    const server = app.listen(PORT, "0.0.0.0", () => console.log(message))
+    server = require("http-shutdown")(
+      app.listen(PORT, "0.0.0.0", () => console.log(message))
+    )
+
     if (KEEPALIVE_TIMEOUT) {
       console.log("Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT + " ms")
       server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT)
@@ -108,3 +113,15 @@ also could be gravity being down. Retrying...`)
     }
   )
 })
+
+process.on("SIGTERM", gracefulExit)
+
+function gracefulExit() {
+  if (isShuttingDown) return
+  isShuttingDown = true
+  console.log("Received signal SIGTERM, shutting down")
+  server.shutdown(function() {
+    console.log("Closed existing connections.")
+    process.exit(0)
+  })
+}
