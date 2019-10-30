@@ -27,7 +27,8 @@ import {
   getSuperArticleTemplates,
 } from "./helpers"
 import cheerio from "cheerio"
-
+import React from "react"
+import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -75,13 +76,6 @@ export const index = async (req, res, next) => {
     let customMetaContent
     if (customEditorial === "VANGUARD_2019") {
       customMetaContent = getVanguardSubArticleContent(req.path, article)
-      // Use subArticle content for meta if not master page
-      if (customMetaContent) {
-        res.locals.customMetaContent = {
-          ...article,
-          ...customMetaContent,
-        }
-      }
     }
 
     if (articleId !== article.slug && !customEditorial) {
@@ -145,7 +139,13 @@ export const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: "meta.jade",
+        head: () => (
+          <ArticleMeta
+            sd={res.locals.sd}
+            article={article}
+            customMetaContent={customMetaContent}
+          />
+        ),
         body: App,
       },
       locals: {
