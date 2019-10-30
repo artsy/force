@@ -20,7 +20,6 @@ splitTest = require '../../../components/split_test/index.coffee'
 sd = require('sharify').data
 _ = require 'underscore'
 _s = require 'underscore.string'
-# Waypoint = require("waypoint")
 
 module.exports.HomeView = class HomeView extends Backbone.View
 
@@ -30,7 +29,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
     Backbone.history.start pushState: true
 
     targetElement = if sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST_QA is "experiment" then ".home-hubs-entry" else ".home-browse-module"
-    # .home-browse-module
 
     # Remove after closing the homepage hubs entry points test
     $(targetElement).waypoint(() ->
