@@ -162,6 +162,7 @@
     "helmet": "2.3.0",
     "history": "4.7.2",
     "http-proxy": "1.16.2",
+    "http-shutdown": "^1.2.1",
     "insane": "2.6.1",
     "invariant": "2.2.4",
     "ip": "1.1.5",
