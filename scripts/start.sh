@@ -10,7 +10,7 @@ function version {
   printf "%03d%03d%03d" $(echo "$1" | tr '.' ' ')
 }
 
-OPT=(--max_old_space_size=4096 -r dotenv/config)
+OPT=(--max_old_space_size=3072 -r dotenv/config)
 
 if [ "$NODE_ENV" != "production" ]; then
   if [ ! -f "./.env" ]; then
