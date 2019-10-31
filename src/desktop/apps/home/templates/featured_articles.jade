@@ -1,9 +1,9 @@
 if featuredArticles.length
   #home-featured-articles-section( data-context='featured articles' )
-    h2.home-featured-header Artsy Magazine
+    h2.home-featured-header Artsy Editorial
       .home-browse-all-right
         a( href='/articles' )
-          | Explore the Magazine
+          | Explore Editorial
     ul#home-featured-articles.home-featured-list
       - articles = featuredArticles.take(7)
       for article, i in articles
