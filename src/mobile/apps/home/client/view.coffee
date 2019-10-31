@@ -5,6 +5,7 @@ ShowsFeed = require '../../../collections/shows_feed.coffee'
 PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view.coffee'
 Flickity = require 'flickity'
 { seeMoreArtworks } = require '../../../components/show_more_works/index.coffee'
+splitTest = require '../../../../desktop/components/split_test/index.coffee'
 
 featuredItemsTemplate = -> require('../../../components/featured_items/template.jade') arguments...
 currentShowsTemplate = -> require('../templates/current_shows.jade') arguments...
@@ -20,6 +21,7 @@ module.exports = class HomePageView extends PoliteInfiniteScrollView
 
   initialize: ->
     @collection = new ShowsFeed
+    splitTest("homepage_collection_hub_entrypoints_test_qa").view()
 
     @slideshow = new Flickity '#carousel-track',
       cellAlign: 'left'
