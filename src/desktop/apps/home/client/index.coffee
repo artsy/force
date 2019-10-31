@@ -28,6 +28,19 @@ module.exports.HomeView = class HomeView extends Backbone.View
     new HomeAuthRouter
     Backbone.history.start pushState: true
 
+    targetElement = if sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST_QA is "experiment" then ".home-hubs-entry" else ".home-browse-module"
+
+    # Remove after closing the homepage hubs entry points test
+    $(targetElement).waypoint(() ->
+      # Fire experiment viewed event
+      splitTest("homepage_collection_hub_entrypoints_test_qa").view()
+    ,
+    {
+      triggerOnce: true,
+      offset: 75,
+    }
+    )
+
     # Render Featured Sections
     @setupHeroUnits()
     @setupFeaturedShows()

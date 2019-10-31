@@ -29,10 +29,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@5.1.3":
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-5.1.3.tgz#baffab887e23878279597407cb77429ea8c1c302"
-  integrity sha512-r+aAQzZsvccXBQHePRCoV3v84RhtV6YsF1btUIxZU5YgXPEKzYipXYkyjnsm0+pFIN3LJHc2b+soXi23CP8GJQ==
+"@artsy/palette@5.1.4":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-5.1.4.tgz#a4446b19ccc536beb1bd79fb43ddb1da067e35c7"
+  integrity sha512-bMhYVb8GsTb3sLitDQ3BD7tblAmja7YuwjW/ORR3lI3n361Dm3890agjoG8H0WTSEJZnKBIDe+B5hJvWkcOYJQ==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -74,10 +74,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@21.17.2":
-  version "21.17.2"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.17.2.tgz#2ba3297d01bf535111787ea5b2038c585f084035"
-  integrity sha512-5GpPShivfGIStCQclW/eczaiEl5ozTXBPdoGEFFmMli6B7LjP19Tii9yBjqYFv0MjB5zZ1m2Rjkkg6B8dUE+zg==
+"@artsy/reaction@21.17.6":
+  version "21.17.6"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-21.17.6.tgz#371426021e02b6737a70f4e784140f0bb50a22ab"
+  integrity sha512-Yx7CGRGqIB1usxEAPWpMiKG5ev18wwg8vfpVAo0Dc+tgLGaJkHRih70NfLN2Y+nW0co1U7qmD2BT8POlZfg4Vg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-html-parser" "^3.0.2"
@@ -7826,6 +7826,11 @@ http-proxy@1.16.2:
   dependencies:
     eventemitter3 "1.x.x"
     requires-port "1.x.x"
+
+http-shutdown@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/http-shutdown/-/http-shutdown-1.2.1.tgz#f3be43af70d54c32c26ab7aa22d143d737ef761a"
+  integrity sha512-EVttBpDbynTLq1Xz4Y2/AfGv+7HbARU6TmwqtecgUulY3zFvPsgWW3MHMgAU9nwNZeJwgrjCIwk/1g9Be2vVPQ==
 
 http-signature@~1.1.0:
   version "1.1.1"
