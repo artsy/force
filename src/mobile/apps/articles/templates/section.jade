@@ -12,7 +12,7 @@ block content
           a(href=featuredSection.get('partner_website_url'))
             img( src=featuredSection.get('partner_logo_url') )
       .articles-section-header__headline
-        a( href='/posts' ) Magazine
+        a( href='/posts' ) Editorial
         h1= featuredSection.get('title')
 
     if (featuredArticles = articles.featured()).length
