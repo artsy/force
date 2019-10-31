@@ -11,7 +11,6 @@ import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
-import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
 import {
   isCustomEditorial,
   getCustomEditorialId,
@@ -130,7 +129,6 @@ export const index = async (req, res, next) => {
     const isTablet = IS_TABLET
     const showTooltips = !isMobile && !isTablet
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
-    res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     const layout = await stitch({
       basePath: res.app.get("views"),
@@ -139,13 +137,7 @@ export const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: () => (
-          <ArticleMeta
-            sd={res.locals.sd}
-            article={article}
-            customMetaContent={customMetaContent}
-          />
-        ),
+        head: () => <ArticleMeta article={customMetaContent || article} />,
         body: App,
       },
       locals: {

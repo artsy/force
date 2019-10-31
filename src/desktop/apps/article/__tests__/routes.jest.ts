@@ -582,7 +582,7 @@ Array [
             blocks: { head },
           } = stitch.mock.calls[0][0]
 
-          expect(head().props.customMetaContent.thumbnail_title).toBe(
+          expect(head().props.article.thumbnail_title).toBe(
             "The Emerging Artists to Know"
           )
           done()
@@ -618,7 +618,7 @@ Array [
           const {
             blocks: { head },
           } = stitch.mock.calls[0][0]
-          expect(head().props.customMetaContent.thumbnail_title).toBe(
+          expect(head().props.article.thumbnail_title).toBe(
             "Vanguard 2019: Genesis Belanger"
           )
           done()
