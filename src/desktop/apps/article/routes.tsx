@@ -11,7 +11,6 @@ import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
-import { createMediaStyle } from "@artsy/reaction/dist/Utils/Responsive"
 import {
   isCustomEditorial,
   getCustomEditorialId,
@@ -27,7 +26,8 @@ import {
   getSuperArticleTemplates,
 } from "./helpers"
 import cheerio from "cheerio"
-
+import React from "react"
+import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -75,13 +75,6 @@ export const index = async (req, res, next) => {
     let customMetaContent
     if (customEditorial === "VANGUARD_2019") {
       customMetaContent = getVanguardSubArticleContent(req.path, article)
-      // Use subArticle content for meta if not master page
-      if (customMetaContent) {
-        res.locals.customMetaContent = {
-          ...article,
-          ...customMetaContent,
-        }
-      }
     }
 
     if (articleId !== article.slug && !customEditorial) {
@@ -136,7 +129,6 @@ export const index = async (req, res, next) => {
     const isTablet = IS_TABLET
     const showTooltips = !isMobile && !isTablet
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
-    res.locals.sd.RESPONSIVE_CSS = createMediaStyle()
 
     const layout = await stitch({
       basePath: res.app.get("views"),
@@ -145,7 +137,7 @@ export const index = async (req, res, next) => {
         styledComponents: true,
       },
       blocks: {
-        head: "meta.jade",
+        head: () => <ArticleMeta article={customMetaContent || article} />,
         body: App,
       },
       locals: {

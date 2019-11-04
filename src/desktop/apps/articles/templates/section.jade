@@ -12,7 +12,7 @@ append locals
 block body
   header.articles-section-header.main-layout-container
     .articles-section-header-left
-      a( href='/posts' ) Magazine
+      a( href='/posts' ) Editorial
       h1= section.get('title')
       p!= section.mdToHtml('description')
     if section.get('partner_logo_url')

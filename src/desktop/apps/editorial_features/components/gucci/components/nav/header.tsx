@@ -33,7 +33,7 @@ export const Header: React.SFC<HeaderProps> = props => {
 
       <BackLink size="3" weight="medium">
         <Media greaterThan="sm">
-          <a href="/articles">Back to Magazine</a>
+          <a href="/articles">Back to Editorial</a>
         </Media>
       </BackLink>
 
