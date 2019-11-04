@@ -578,7 +578,11 @@ Array [
         req.params = { slug: "emerging" }
         req.path = "/series/artsy-vanguard-2019/emerging"
         routes.index(req, res, next).then(() => {
-          expect(res.locals.customMetaContent.thumbnail_title).toBe(
+          const {
+            blocks: { head },
+          } = stitch.mock.calls[0][0]
+
+          expect(head().props.article.thumbnail_title).toBe(
             "The Emerging Artists to Know"
           )
           done()
@@ -611,7 +615,10 @@ Array [
         req.params = { slug: "genesis-belanger" }
         req.path = "/series/artsy-vanguard-2019/genesis-belanger"
         routes.index(req, res, next).then(() => {
-          expect(res.locals.customMetaContent.thumbnail_title).toBe(
+          const {
+            blocks: { head },
+          } = stitch.mock.calls[0][0]
+          expect(head().props.article.thumbnail_title).toBe(
             "Vanguard 2019: Genesis Belanger"
           )
           done()
