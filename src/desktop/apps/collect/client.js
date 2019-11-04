@@ -10,7 +10,6 @@ buildClientApp({
   context: {
     user: sd.CURRENT_USER,
     mediator,
-    COLLECTION_HUB_ENTRYPOINTS_TEST: sd.COLLECTION_HUB_ENTRYPOINTS_TEST,
   },
 })
   .then(({ ClientApp }) => {
