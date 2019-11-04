@@ -17,6 +17,13 @@ if (!excludedRoutes.includes(pageType)) {
   analytics.page(properties, { integrations: { Marketo: false } })
 }
 
+if (pageType == "auction") {
+  window.addEventListener("load", function() {
+    // distinct event required for marketing integrations (Criteo)
+    window.analytics.track("Auction Pageview")
+  })
+}
+
 // Track pageload speed
 if (
   window.performance &&
