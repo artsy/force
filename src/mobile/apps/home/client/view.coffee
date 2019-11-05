@@ -21,6 +21,11 @@ module.exports = class HomePageView extends PoliteInfiniteScrollView
 
   initialize: ->
     @collection = new ShowsFeed
+    analytics.track("Impression", {
+      context_page: "Home",
+      context_module: "HubEntrypoint",
+      subject: "Featured Categories",
+    })
     splitTest("homepage_collection_hub_entrypoints_test_qa").view()
 
     @slideshow = new Flickity '#carousel-track',
