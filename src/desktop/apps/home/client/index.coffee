@@ -37,7 +37,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
     ,
     {
       triggerOnce: true,
-      offset: 75,
+      offset: 500,
     }
     )
 
