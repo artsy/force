@@ -35,12 +35,6 @@
           "reaction": "@artsy/reaction/dist"
         }
       }
-    ],
-    [
-      "relay",
-      {
-        "artifactDirectory": "./src/__generated__"
-      }
     ]
   ]
 }
