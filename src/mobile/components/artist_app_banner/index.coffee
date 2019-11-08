@@ -25,5 +25,5 @@ module.exports = ->
     banner.remove()
 
   $el.find('.artist-app-banner-button').on 'click', (e) ->
-    $img = $('<img src="https://app.adjust.com/r0hk13" />')
+    $img = $('<img src="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080" />')
     $el.append($img)
