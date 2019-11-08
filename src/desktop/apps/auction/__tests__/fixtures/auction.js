@@ -32,7 +32,8 @@ export default {
     },
     footerItems: [
       {
-        href: "https://app.adjust.com/v627ct",
+        href:
+          "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
         target: "_blank",
         src: "/images/preview-iphone.jpg",
         alt: "iPhone",
