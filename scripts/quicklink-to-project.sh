@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if [ -z "$1" ] && [ -z "$PROJECT_PATH" ]; then
   echo "Must supply a project name or set the PROJECT_PATH env"
 fi

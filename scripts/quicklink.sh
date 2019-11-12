@@ -1,4 +1,4 @@
-
+#!/bin/sh
 
 # Add package as a "linked" package to force
 echo ""
