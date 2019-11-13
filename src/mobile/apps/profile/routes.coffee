@@ -25,7 +25,3 @@ module.exports.setProfile = (req, res, next) ->
 
 module.exports.redirectEditorial = (req, res, next) ->
   res.redirect 301, req.url.replace 'editorial', 'articles'
-
-module.exports.redirectCollect = (req, res, next) ->
-  console.log("we are redirecting collect!")
-  next()
