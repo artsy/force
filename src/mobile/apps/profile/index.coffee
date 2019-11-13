@@ -49,4 +49,5 @@ app.set 'view engine', 'jade'
 app.get(route, routes.setProfile) for route in vanityRoutes
 app.get '/profile/:id', routes.index
 app.get '/editorial', routes.redirectEditorial
+app.get '/collect', routes.redirectCollect
 app.get '/:id', routes.index
