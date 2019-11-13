@@ -11,7 +11,7 @@ describe("Artist page", () => {
 
   before(async () => {
     ;({ metaphysics, browser } = await setup())
-    metaphysics.post("/", (req, res) => {
+    metaphysics.post("/v2", (req, res) => {
       res.send(require("./fixtures/metaphysics/artist"))
     })
   })
