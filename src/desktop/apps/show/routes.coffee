@@ -147,7 +147,7 @@ query = """
       res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.PARTNER_SHOW?
       res.locals.ViewHelpers = ViewHelpers
       res.locals.DateHelpers = DateHelpers
-      res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
+      res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show if data.partner_show.has_location
       data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
       res.render 'index', data
     .catch next

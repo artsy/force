@@ -21,4 +21,5 @@ block body
     include columns
     include footer
 
-  include ../../../components/main_layout/templates/json_ld
+  - if (jsonLD)
+    include ../../../components/main_layout/templates/json_ld
