@@ -16,7 +16,7 @@ export default async () => {
 
   const isReleasePR = danger.github.pr.base.ref === "release"
   const versionToCheck = isReleasePR ? "production" : "staging"
-  const changes: string[] = await getBreakingChanges(versionToCheck)
+  const changes: string[] = await getBreakingChanges(versionToCheck, 2)
 
   // There are breaking changes with the schema
   if (changes.length) {
