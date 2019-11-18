@@ -74,10 +74,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@22.0.8":
-  version "22.0.8"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-22.0.8.tgz#121f7a1c113aef0cb722bbdb42f34c219f360323"
-  integrity sha512-PhkuYEbnw+d4SgPcZDGGiKCAbWPxF6o3utt9KmBkKjOS2pKZowzRkXJBc4z2JBotf3elZmAfKKQaScIsIAXzYA==
+"@artsy/reaction@22.1.0":
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-22.1.0.tgz#797c62c67c760d246160bfb01ddb4cc85938d43d"
+  integrity sha512-j2HbhHznjd63Xz9jLq8uYhezBqI5S/9PdTJS5fhbaVCs6emX+C4wIawoHLl1TQva878AB5zyKkD+t90KjRGdfw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-html-parser" "^3.0.2"
@@ -110,7 +110,7 @@
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
     react-overlays "^0.8.3"
-    react-relay "< 7"
+    react-relay "^7.1.0"
     react-relay-network-modern "^2.5.1"
     react-relay-network-modern-ssr "^1.2.2"
     react-responsive-decorator "^0.0.1"
@@ -125,7 +125,7 @@
     react-url-query "^1.1.4"
     react-waypoint "^7.3.3"
     relay-mock-network-layer "^2.0.0"
-    relay-runtime "< 7"
+    relay-runtime "^7.1.0"
     serialize-javascript "^1.5.0"
     sharify "^0.1.6"
     styled-system "^3.1.11"
@@ -10861,7 +10861,7 @@ nugget@^2.0.0, nugget@^2.0.1:
     single-line-log "^1.1.2"
     throttleit "0.0.2"
 
-nullthrows@^1.1.0:
+nullthrows@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"
   integrity sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==
@@ -12648,15 +12648,15 @@ react-relay-network-modern@^2.5.1:
   resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.5.1.tgz#a081ae2691dbf2cfa53129cd6eb41a1e91a071aa"
   integrity sha512-Edp9XWAWLiAntrtNmfeLZMPMcwUmTpBhAoxHCaSKcet7gWN5RS0Z2OhKpVhKg3p1qZz+VLMMvWg8eQghBe0auQ==
 
-"react-relay@< 7":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-6.0.0.tgz#2a54274a471ef801a465704e58f1db91059ad1d3"
-  integrity sha512-F0UO50TNIyfkTaCnKgbniATIWPpaX0ukQ5QPdaRRwL1qxslx90Umi83XaaiHyy1etKVePMZ+DHCd1aV7yw1AKA==
+react-relay@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-7.1.0.tgz#8a97357914d079f7a537f757782ed126b041a7ac"
+  integrity sha512-O0MTyeVnrnG990rLdEQcFqGf0f7VBT2Y+mRYEC6nTPAxN+M/DB2U6VGPHNjrfoW8PQ2BUyp2ddNGM9b2PtnEwg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
-    nullthrows "^1.1.0"
-    relay-runtime "6.0.0"
+    nullthrows "^1.1.1"
+    relay-runtime "7.1.0"
 
 react-responsive-decorator@^0.0.1:
   version "0.0.1"
@@ -13230,10 +13230,10 @@ relay-mock-network-layer@^2.0.0:
   dependencies:
     graphql-tools "^4.0.2"
 
-relay-runtime@6.0.0, "relay-runtime@< 7":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-6.0.0.tgz#073ec2408f41a28c3a7310d71dd5f42f8e4e4bf3"
-  integrity sha512-zIXQqFfe0zBCVzKbMGEPMvKFxfbE3pY2RbZsKBvHAr/vMDj6OX9E+f4R4udE5xvMbI7g+baYFHi2I9NDEydGaQ==
+relay-runtime@7.1.0, relay-runtime@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-7.1.0.tgz#3a1b38cb55fae7ab2fbb404f7db7a5b900ef963f"
+  integrity sha512-19WV0dC4rcbXnVBKEA4ZL41ccfJRUZ7/KKfQsgc9SwjqCi2g3+yYIR9wJ4KoC+rEfG2yN3W1vWBEqr+igH/rzA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
