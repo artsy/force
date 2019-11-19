@@ -11,8 +11,8 @@ describe 'HomePageView', ->
     benv.setup =>
       benv.expose
         $: benv.require 'jquery'
+        analytics: { track: sinon.stub() }
         Element: window.Element
-
       Backbone.$ = $
       benv.render resolve(__dirname, '../templates/page.jade'), {
         heroUnits: []
