@@ -1,7 +1,7 @@
 patch-package
 --- a/node_modules/relay-runtime/lib/store/RelayResponseNormalizer.js
 +++ b/node_modules/relay-runtime/lib/store/RelayResponseNormalizer.js
-@@ -349,7 +349,7 @@ function () {
+@@ -407,7 +407,7 @@ function () {
          //
          // Otherwise, missing fields usually indicate a server or user error (
          // the latter for manually constructed payloads).
