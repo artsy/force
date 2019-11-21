@@ -8,6 +8,7 @@ import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
 import { Contents } from "reaction/Components/Gene"
+import { GeneRelatedLinksQueryRenderer as RelatedLinks } from "reaction/Components/Gene/GeneRelatedLinks"
 import { SystemContextProvider } from "reaction/Artsy"
 
 import Gene from "../../models/gene.coffee"
@@ -17,13 +18,10 @@ import {
   FollowButton,
 } from "../../components/follow_button/index.coffee"
 import ShareView from "../../components/share/view.coffee"
-import RelatedGenesView from "../../components/related_links/types/gene_genes.coffee"
 import blurb from "../../components/gradient_blurb/index.coffee"
-imagesLoaded.makeJQueryPlugin($)
+import { Theme } from "@artsy/palette"
 
-const relatedArtistsTemplate = args => {
-  return require("./templates/related_artists.jade")(args)
-}
+imagesLoaded.makeJQueryPlugin($)
 
 // Update URL with current filters/mode/sort, for ease of sharing.
 const onStateChange = ({ filters, sort, mode }) => {
@@ -66,18 +64,17 @@ function setupGenePage() {
     document.getElementById("gene-filter")
   )
 
+  ReactDOM.render(
+    <SystemContextProvider user={user ? user.toJSON() : null}>
+      <Theme>
+        <RelatedLinks geneID={sd.GENE.id} />
+      </Theme>
+    </SystemContextProvider>,
+    document.getElementById("gene-related-links")
+  )
+
   // Load related artists
   const gene = new Gene(sd.GENE)
-  gene.relatedArtists.on("sync", artists => {
-    const html = relatedArtistsTemplate({
-      artists: artists.models,
-    })
-
-    $(".related-artists")
-      .html(html)
-      .addClass("is-fade-in")
-  })
-  gene.fetchArtists("related")
 
   // Setup user
   const following = user ? new Following(null, { kind: "gene" }) : null
@@ -95,12 +92,6 @@ function setupGenePage() {
 
   // Setup blurb
   blurb($(".js-gene-blurb"), { limit: 250 })
-
-  // Setup related gene view
-  new RelatedGenesView({
-    el: $(".main-layout-container .related-genes"),
-    id: gene.id,
-  })
 }
 
 export default { setupGenePage }

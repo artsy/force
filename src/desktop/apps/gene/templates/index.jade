@@ -27,9 +27,6 @@ block body
             .gene-blurb.js-gene-blurb
               != gene.mdToHtml('description')
       .bisected-header-cell
-        .related-genes.related-links.bisected-header-cell-section
-          //- Rendered client-side
-        .related-artists.related-links.bisected-header-cell-section
-          //- Rendered client-side
+        #gene-related-links
 
     include filter
