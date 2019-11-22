@@ -21,12 +21,13 @@ module.exports = class HomePageView extends PoliteInfiniteScrollView
 
   initialize: ->
     @collection = new ShowsFeed
-    analytics.track("Impression", {
-      context_page: "Home",
-      context_module: "HubEntrypoint",
-      subject: "Featured Categories",
-    })
-    splitTest("homepage_collection_hub_entrypoints_test_qa").view()
+    if sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST == "experiment" 
+      analytics.track("Impression", {
+        context_page: "Home",
+        context_module: "HubEntrypoint",
+        subject: "Featured Categories",
+      })
+    splitTest("homepage_collection_hub_entrypoints_test").view()
 
     @slideshow = new Flickity '#carousel-track',
       cellAlign: 'left'
