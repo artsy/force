@@ -22,6 +22,7 @@ describe 'HomePageView', ->
           ['featuredItemsTemplate', 'currentShowsTemplate', 'artworkColumnsTemplate']
         sinon.stub Backbone, 'sync'
         @HomePageView.__set__ 'Flickity', @Flickity = sinon.stub()
+        @HomePageView.__set__ 'sd', {}
         @view = new @HomePageView
         done()
 
