@@ -32,12 +32,18 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     # Remove after closing the homepage hubs entry points test
     $(targetElement).waypoint(() ->
+      # Fire impression event
+      analytics.track("Impression", {
+        context_page: "Home",
+        context_module: "HubEntrypoint",
+        subject: "Featured Categories",
+      })
       # Fire experiment viewed event
       splitTest("homepage_collection_hub_entrypoints_test_qa").view()
     ,
     {
       triggerOnce: true,
-      offset: 75,
+      offset: 500,
     }
     )
 
