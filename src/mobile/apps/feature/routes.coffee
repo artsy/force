@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 accounting = require 'accounting'
+sd = require('sharify').data
 Feature = require '../../models/feature'
 Sale = require '../../models/sale'
 Artwork = require '../../models/artwork'
@@ -42,77 +43,80 @@ module.exports.auctionRegister = (req, res, next) ->
               yearRange: sale.getYearRange()
 
 module.exports.bid = (req, res, next) ->
-  res.locals.error = req.session.error
-  req.session.error = null
-
-  if req.query && req.query.bid
-    maxBid = req.query.bid / 100
+  if sd.ENABLE_NEW_CONFIRM_BID_FORM
+    next()
   else
-    maxBid = ''
+    res.locals.error = req.session.error
+    req.session.error = null
 
-  saleArtwork = null; auction = null; registered = false; qualified = false; hasQualifiedCreditCard = false
-  artwork = new Artwork id: req.params.artworkId
-  fullURL = req.protocol + "://" + req.get('host') + req.url
-  render = _.after 3, ->
-    res.render 'bid_page',
-      artwork: artwork
-      saleArtwork: saleArtwork
-      auction: auction
-      registered: registered
-      qualified: qualified
-      hasQualifiedCreditCard: hasQualifiedCreditCard
-      maxBid: maxBid
-      registerUrl: auction.registerUrl(fullURL)
-  artwork.fetch
-    cache: true
-    success: render
-    error: res.backboneError
-  artwork.fetchAuctionAndSaleArtwork
-    success: (a, sa) ->
-      saleArtwork = sa
-      auction = a
-      res.locals.sd.SALE_ARTWORK = _.extend saleArtwork.toJSON(), sale: auction.toJSON()
-      res.locals.sd.AUCTION = auction
-      render()
+    if req.query && req.query.bid
+      maxBid = req.query.bid / 100
+    else
+      maxBid = ''
 
-    error: res.backboneError
-  # TODO: Refactor all of this junk to use MP, or drop it in favor of
-  # inline bidding component, see: https://github.com/artsy/force/issues/5118
-  metaphysics
-    req: req
-    query: """ {
-      artwork(id: "#{req.params.artworkId}") {
-        sale_artwork {
-          bid_increments
+    saleArtwork = null; auction = null; registered = false; qualified = false; hasQualifiedCreditCard = false
+    artwork = new Artwork id: req.params.artworkId
+    fullURL = req.protocol + "://" + req.get('host') + req.url
+    render = _.after 3, ->
+      res.render 'bid_page',
+        artwork: artwork
+        saleArtwork: saleArtwork
+        auction: auction
+        registered: registered
+        qualified: qualified
+        hasQualifiedCreditCard: hasQualifiedCreditCard
+        maxBid: maxBid
+        registerUrl: auction.registerUrl(fullURL)
+    artwork.fetch
+      cache: true
+      success: render
+      error: res.backboneError
+    artwork.fetchAuctionAndSaleArtwork
+      success: (a, sa) ->
+        saleArtwork = sa
+        auction = a
+        res.locals.sd.SALE_ARTWORK = _.extend saleArtwork.toJSON(), sale: auction.toJSON()
+        res.locals.sd.AUCTION = auction
+        render()
+
+      error: res.backboneError
+    # TODO: Refactor all of this junk to use MP, or drop it in favor of
+    # inline bidding component, see: https://github.com/artsy/force/issues/5118
+    metaphysics
+      req: req
+      query: """ {
+        artwork(id: "#{req.params.artworkId}") {
+          sale_artwork {
+            bid_increments
+          }
         }
-      }
-      me {
-        has_qualified_credit_cards
-        bidders(sale_id: "#{req.params.id}") {
-          id
-          qualified_for_bidding
-        }
-        lot_standing(
-          artwork_id: "#{req.params.artworkId}"
-          sale_id: "#{req.params.id}"
-        ) {
-          most_recent_bid {
-            max_bid {
-              cents
+        me {
+          has_qualified_credit_cards
+          bidders(sale_id: "#{req.params.id}") {
+            id
+            qualified_for_bidding
+          }
+          lot_standing(
+            artwork_id: "#{req.params.artworkId}"
+            sale_id: "#{req.params.id}"
+          ) {
+            most_recent_bid {
+              max_bid {
+                cents
+              }
             }
           }
         }
-      }
-    } """
-  .then ({ artwork, me }) ->
-    res.locals.bidIncrements = artwork.sale_artwork.bid_increments
-    res.locals.myLastMaxBid = me?.lot_standing?.most_recent_bid.max_bid.cents
-    registered = Boolean(me?.bidders?.length > 0)
-    res.locals.sd.REGISTERED = registered
-    qualified = get(me, 'bidders.0.qualified_for_bidding', false)
-    hasQualifiedCreditCard = get(me, 'has_qualified_credit_cards', false)
-    render()
-  .catch next
+      } """
+    .then ({ artwork, me }) ->
+      res.locals.bidIncrements = artwork.sale_artwork.bid_increments
+      res.locals.myLastMaxBid = me?.lot_standing?.most_recent_bid.max_bid.cents
+      registered = Boolean(me?.bidders?.length > 0)
+      res.locals.sd.REGISTERED = registered
+      qualified = get(me, 'bidders.0.qualified_for_bidding', false)
+      hasQualifiedCreditCard = get(me, 'has_qualified_credit_cards', false)
+      render()
+    .catch next
 
 module.exports.confirmRegistration = (from) ->
   return (req, res, next) ->
