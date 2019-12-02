@@ -1,5 +1,7 @@
 // Forked and modified from UXM: https://github.com/treosh/uxm
 
+import ttiPolyfill from "tti-polyfill"
+
 declare let PerformancePaintTiming: any
 
 /**
@@ -158,4 +160,9 @@ export function getDomContentLoadedEnd() {
 export function getDomComplete() {
   if (!timingAvailable) return null
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domComplete)
+}
+
+export async function getTTI() {
+  if (!timingAvailable) return null
+  return Math.round(await ttiPolyfill.getFirstConsistentlyInteractive())
 }

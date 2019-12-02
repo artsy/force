@@ -7,10 +7,11 @@ import {
   getFirstContentfulPaint,
   getDomContentLoadedEnd,
   getDomContentLoadedStart,
+  getTTI,
 } from "./userPerformanceMetrics"
 
 interface MetricMap {
-  [metricName: string]: () => number | null
+  [metricName: string]: () => Promise<number> | number | null
 }
 
 const defaultMetrics: MetricMap = {
@@ -20,10 +21,11 @@ const defaultMetrics: MetricMap = {
   "load-event-end": getLoadEventEnd,
   "first-paint": getFirstPaint,
   "first-contentful-paint": getFirstContentfulPaint,
+  "time-to-interactive": getTTI,
 }
 
-export const metricPayload = (pageType, deviceType, name, duration) =>
-  !duration
+export const metricPayload = (pageType, deviceType, name, duration) => {
+  return !duration
     ? null
     : {
         type: "timing",
@@ -35,6 +37,7 @@ export const metricPayload = (pageType, deviceType, name, duration) =>
           `mark:${name}`,
         ],
       }
+}
 
 export async function reportLoadTimeToVolley(
   pageType,
@@ -42,16 +45,16 @@ export async function reportLoadTimeToVolley(
   metricsMap: MetricMap = defaultMetrics
 ) {
   if (sd.VOLLEY_ENDPOINT) {
-    const metrics = Object.keys(metricsMap)
-      .map(metricName =>
+    const metrics = (await Promise.all(
+      Object.keys(metricsMap).map(async metricName =>
         metricPayload(
           pageType,
           deviceType,
           metricName,
-          metricsMap[metricName]()
+          await metricsMap[metricName]()
         )
       )
-      .filter(metric => metric != null)
+    )).filter(metric => metric != null)
     if (metrics.length > 0) {
       return request.post(sd.VOLLEY_ENDPOINT).send({
         serviceName: "force",

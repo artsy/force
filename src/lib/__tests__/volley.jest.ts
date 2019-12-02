@@ -41,8 +41,8 @@ describe("Reporting metrics to Volley", () => {
     jest.resetAllMocks()
   })
 
-  it("reports valid metrics", () => {
-    reportLoadTimeToVolley("", "desktop", {
+  it("reports valid metrics", async () => {
+    await reportLoadTimeToVolley("", "desktop", {
       "dom-complete": () => 10,
       "load-event-end": () => 5,
     })
@@ -67,8 +67,8 @@ describe("Reporting metrics to Volley", () => {
     )
   })
 
-  it("reports valid metrics with 'mobile' as the device type when on mobile", () => {
-    reportLoadTimeToVolley("", "mobile", {
+  it("reports valid metrics with 'mobile' as the device type when on mobile", async () => {
+    await reportLoadTimeToVolley("", "mobile", {
       "dom-complete": () => 10,
       "load-event-end": () => 5,
     })
@@ -93,8 +93,8 @@ describe("Reporting metrics to Volley", () => {
     )
   })
 
-  it("reports valid metrics with 'desktop' as the device type when not on mobile", () => {
-    reportLoadTimeToVolley("", "desktop", {
+  it("reports valid metrics with 'desktop' as the device type when not on mobile", async () => {
+    await reportLoadTimeToVolley("", "desktop", {
       "dom-complete": () => 10,
       "load-event-end": () => 5,
     })
@@ -119,8 +119,8 @@ describe("Reporting metrics to Volley", () => {
     )
   })
 
-  it("omits an invalid metric", () => {
-    reportLoadTimeToVolley("", "desktop", {
+  it("omits an invalid metric", async () => {
+    await reportLoadTimeToVolley("", "desktop", {
       "dom-complete": () => 10,
       "load-event-end": () => null,
     })
@@ -139,8 +139,8 @@ describe("Reporting metrics to Volley", () => {
     )
   })
 
-  it("doesn't send anything if called with no valid data", () => {
-    reportLoadTimeToVolley("", "desktop", {})
+  it("doesn't send anything if called with no valid data", async () => {
+    await reportLoadTimeToVolley("", "desktop", {})
     expect(mockSend.mock.calls.length).toBe(0)
   })
 })
