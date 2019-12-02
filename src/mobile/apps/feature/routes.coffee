@@ -113,17 +113,3 @@ module.exports.bid = (req, res, next) ->
     hasQualifiedCreditCard = get(me, 'has_qualified_credit_cards', false)
     render()
   .catch next
-
-module.exports.confirmRegistration = (from) ->
-  return (req, res, next) ->
-    locals = switch from
-      when 'artwork'
-        href: "/artwork/#{req.params.id}"
-        buttonCopy: 'Continue Bidding'
-      when 'bid'
-        href: "/auction/#{req.params.id}/bid/#{req.params.artworkId}"
-        buttonCopy: 'Continue Bidding'
-    locals = _.extend locals,
-      h1Copy: 'Registration Complete'
-      h2Copy: "We'll notify you when the auction opens."
-    res.render "confirm_page", locals
