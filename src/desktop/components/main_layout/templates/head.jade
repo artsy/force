@@ -31,3 +31,7 @@ script( type="text/javascript" )
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'Other'
   link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/all-webfonts.css')
+
+//- TTI measurement
+script( type="text/javascript" )
+  include ../../../../lib/tti-init.js
