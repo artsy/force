@@ -53,8 +53,6 @@ app.use(require("./apps/order/server").app)
 app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 
-// FIXME: Do we need this now that search2 is in?
-// app.use(require("./apps/search"))
 app.use(require("./apps/show"))
 app.use(require("./apps/shows"))
 app.use(require("./apps/tag"))
