@@ -9,6 +9,7 @@ append locals
 
 block body
   include hero_units
+  #test Welcome to Art.sy
 
   #home-foreground
     #home-hero-units-controls( data-length= heroUnits.length )
@@ -24,7 +25,7 @@ block body
       #home-layout-container.responsive-layout-container
         .main-layout-container: #home-body
           include hubs_entry
-    else 
+    else
       unless user
         #home-layout-container.responsive-layout-container
           .main-layout-container: #home-body
