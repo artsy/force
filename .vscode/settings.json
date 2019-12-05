@@ -26,5 +26,6 @@
     "typings",
     "**/*.snap",
     "**/*.story.tsx"
-  ]
+  ],
+  "editor.formatOnSave": true
 }

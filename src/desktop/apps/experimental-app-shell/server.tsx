@@ -1,5 +1,5 @@
 import React from "react"
-import express from "express"
+import express, { Request } from "express"
 import { buildServerApp } from "@artsy/reaction/dist/Artsy/Router/server"
 import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
@@ -10,7 +10,7 @@ const Artwork = require("desktop/models/artwork.coffee")
 
 export const app = express()
 
-app.get("/*", async (req, res, next) => {
+app.get("/*", async (req: Request, res, next) => {
   try {
     const {
       bodyHTML,
@@ -31,7 +31,23 @@ app.get("/*", async (req, res, next) => {
       return
     }
 
+    // Turn off pre-fetching, since those will be intercepted
+    // and routed client-side.
     res.locals.sd.ENABLE_INSTANT_PAGE = false
+
+    const pageParts = req.path.split("/")
+
+    // Page-specific bootstrapping.
+    const pageType = pageParts[1]
+    if (pageType === "artist") {
+      const artistID = pageParts[2]
+      const user = req.user && req.user.toJSON()
+      const { APP_URL, IS_MOBILE, REFERRER } = res.locals.sd
+      const isExternalReferer = !(REFERRER && REFERRER.includes(APP_URL))
+      res.locals.sd.ARTIST_PAGE_CTA_ENABLED =
+        !user && isExternalReferer && !IS_MOBILE
+      res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = artistID
+    }
 
     const layout = await stitch({
       basePath: __dirname,

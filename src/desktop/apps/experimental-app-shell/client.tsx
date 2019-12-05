@@ -5,6 +5,7 @@ import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { data as sd } from "sharify"
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
+import { setupArtistSignUpModal } from "desktop/apps/artist/components/cta"
 
 const $ = require("jquery")
 const mediator = require("desktop/lib/mediator.coffee")
@@ -33,11 +34,13 @@ if (module.hot) {
   module.hot.accept()
 }
 
+const pageType = window.location.pathname.split("/")[1]
+
 /**
  * Artwork Page
  */
 
-if (location.pathname.includes("/artwork/")) {
+if (pageType === "artwork") {
   const artworkSlug = location.pathname.replace(/\/artwork\//, "")
   recordArtworkView(artworkSlug, sd.CURRENT_USER)
 }
@@ -161,3 +164,7 @@ mediator.on("artist:tabclick", ({ to }) => {
     }
   )
 })
+
+if (pageType === "artist") {
+  setupArtistSignUpModal()
+}
