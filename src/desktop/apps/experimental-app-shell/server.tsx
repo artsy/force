@@ -31,6 +31,8 @@ app.get("/*", async (req, res, next) => {
       return
     }
 
+    res.locals.sd.ENABLE_INSTANT_PAGE = false
+
     const layout = await stitch({
       basePath: __dirname,
       layout: "../../components/main_layout/templates/react_blank_index.jade",
