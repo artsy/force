@@ -74,10 +74,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@22.10.0":
-  version "22.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-22.10.0.tgz#1316c7fa9765f6d63562e6f9c12bee6367c31036"
-  integrity sha512-ClFXzBvVZz/D3foBy39CswHcd0Mk5odSLLOPBAVprM38QUzG+1gPyjWbHlfKYL+fKgBY7/gfDAwWoD/058r/RQ==
+"@artsy/reaction@22.10.2":
+  version "22.10.2"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-22.10.2.tgz#2def4a1b40c9536c3eac7e7a38c6c546748a6ea3"
+  integrity sha512-uUVHg6TZdx8e4wBgSX5zObtuUzuTiQpOi3FIlxTeiULDH9JrMt4CgziuRV9FpEvz46opqo+FrHgJArbTFTJKSw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-html-parser" "^3.0.2"
@@ -105,7 +105,7 @@
     react-css-transition-replace "^3.0.2"
     react-gpt "^2.0.1"
     react-head "^3.0.0"
-    react-lazy-load-image-component "^1.1.1"
+    react-lazy-load-image-component "^1.4.0-beta.1"
     react-lines-ellipsis "^0.14.0"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
@@ -12543,14 +12543,6 @@ react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
-
-react-lazy-load-image-component@^1.1.1:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.1.5.tgz#0f27b7811265de932992dbad8abb7515e6ca0c42"
-  integrity sha512-mx7+1G4Gl1vaaQ2ZPB+bi0xKnZOeXHPRluQTf9BOYXFuBse/XdJWSpBkT4sHHGhGMwVjB/j7t2yGhT5xyEbAQA==
-  dependencies:
-    lodash.debounce "^4.0.8"
-    lodash.throttle "^4.1.1"
 
 react-lazy-load-image-component@^1.4.0-beta.1:
   version "1.4.0-beta.1"
