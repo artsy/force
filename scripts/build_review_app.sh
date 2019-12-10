@@ -103,7 +103,7 @@ hokusai review_app refresh $NAME
 echo $(kubectl get service force-web --namespace $NAME --context staging -o json \
   | jq .status.loadBalancer.ingress[].hostname)
 #
-# you may do this in the DynDNS interface. Credentials are in 1pass
+# you may do this in the Cloudflare interface. Credentials are in 1pass
 echo "[build_review_app.sh] SUCCESS"
 
 exit 0
