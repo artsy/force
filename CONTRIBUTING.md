@@ -116,15 +116,17 @@ This is your Review App url, which should support all of the basic features insi
 
 If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration) then an additional non-automated step is required via DynDNS:
 
-1. [Login to DynDNS](https://manage.dynect.net/qcke/artsy.net)
-1. Click `Add New Record`
-1. Enter a new subdomain under `Node`
+1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
+1. Click `+ Add Record`
 1. Change `Type` dropdown to `CNAME`
-1. Paste in URL output by `build_review_app.sh` script into `RData` field, and add a `.` at the end
-1. Scroll to bottom and hit `Save` and then publish changes
+1. Under `Name` enter a new subdomain
+1. Under `Target` paste in URL output by `build_review_app.sh` script
+1. Hit `Save`
 1. DNS will propagate and after a few minutes the review app will be available via `<your-subdomain>.artsy.net`
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
+
+😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>`
 
 ## Create a Topic Branch
 
