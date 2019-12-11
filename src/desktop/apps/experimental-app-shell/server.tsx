@@ -4,97 +4,88 @@ import { buildServerApp } from "@artsy/reaction/dist/Artsy/Router/server"
 import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import request from "superagent"
-
-const Artwork = require("desktop/models/artwork.coffee")
+import { SearchResultsSkeleton } from "reaction/Apps/Search/Components/SearchResultsSkeleton"
+import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
+import { artistMiddleware } from "./artist/middleware"
+import { searchMiddleware } from "./search/middleware"
+import { handleArtworkImageDownload } from "./artwork/middleware"
 
 export const app = express()
 
-app.get("/*", async (req: Request, res, next) => {
-  try {
-    const {
-      bodyHTML,
-      headTags,
-      redirect,
-      status,
-      styleTags,
-      scripts,
-    } = await buildServerApp({
-      context: buildServerAppContext(req, res),
-      routes: getAppRoutes(),
-      url: req.url,
-      userAgent: req.header("User-Agent"),
-    })
-
-    if (redirect) {
-      res.redirect(302, redirect.url)
-      return
-    }
-
-    // Turn off pre-fetching, since those will be intercepted
-    // and routed client-side.
-    res.locals.sd.ENABLE_INSTANT_PAGE = false
-
-    const pageParts = req.path.split("/")
-
-    // Page-specific bootstrapping.
-    const pageType = pageParts[1]
-    if (pageType === "artist") {
-      const artistID = pageParts[2]
-      const user = req.user && req.user.toJSON()
-      const { APP_URL, IS_MOBILE, REFERRER } = res.locals.sd
-      const isExternalReferer = !(REFERRER && REFERRER.includes(APP_URL))
-      res.locals.sd.ARTIST_PAGE_CTA_ENABLED =
-        !user && isExternalReferer && !IS_MOBILE
-      res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = artistID
-    }
-
-    const layout = await stitch({
-      basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_blank_index.jade",
-      blocks: {
-        body: bodyHTML,
-        head: () => <>{headTags}</>,
-      },
-      locals: {
-        ...res.locals,
-        assetPackage: "experimental-app-shell",
-        scripts,
-        styleTags,
-      },
-    })
-
-    res.status(status).send(layout)
-  } catch (error) {
-    console.log(error)
-    next(error)
-  }
-})
-
-// Artwork Page
-
-export const handleArtworkImageDownload = async (req, res, next) => {
-  const artwork = new Artwork({ id: req.params.artworkID })
-  await artwork.fetch({
-    cache: true,
-  })
-
-  if (artwork.isDownloadable(req.user)) {
-    const imageRequest = request.get(artwork.downloadableUrl(req.user))
-    if (req.user) {
-      imageRequest.set("X-ACCESS-TOKEN", req.user.get("accessToken"))
-    }
-    req
-      .pipe(
-        imageRequest,
-        { end: false }
-      )
-      .pipe(res)
-  } else {
-    const error: any = new Error("Not authorized to download this image.")
-    error.status = 403
-    next(error)
-  }
-}
-
+// Non-Reaction routes
 app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
+
+app.get(
+  "/*",
+  searchMiddleware,
+  artistMiddleware,
+  async (req: Request, res, next) => {
+    try {
+      const pageParts = req.path.split("/")
+      const pageType = pageParts[1]
+      let serverApp
+
+      // Search intentionally bypasses SSR
+      if (pageType !== "search") {
+        serverApp = await buildServerApp({
+          context: buildServerAppContext(req, res),
+          routes: getAppRoutes(),
+          url: req.url,
+          userAgent: req.header("User-Agent"),
+        })
+      }
+
+      const { styleTags, scripts, redirect, bodyHTML, headTags } =
+        serverApp || {}
+
+      if (redirect) {
+        res.redirect(302, redirect.url)
+        return
+      }
+
+      // Turn off pre-fetching, since those will be intercepted
+      // and routed client-side.
+      res.locals.sd.ENABLE_INSTANT_PAGE = false
+
+      let status
+      let blocks
+      // Search-specific loading state and skeleton.
+      if (pageType === "search") {
+        status = 200
+        blocks = {
+          loadingComponent: _props => {
+            return (
+              <StitchWrapper>
+                <SearchResultsSkeleton />
+              </StitchWrapper>
+            )
+          },
+        }
+      } else {
+        blocks = {
+          body: bodyHTML,
+          head: () => <>{headTags}</>,
+        }
+        status = serverApp.status
+      }
+
+      const layout = await stitch({
+        basePath: __dirname,
+        layout: "../../components/main_layout/templates/react_blank_index.jade",
+        blocks,
+        locals: {
+          ...res.locals,
+          scripts,
+          styleTags,
+          pageType,
+          assetPackage: "experimental-app-shell",
+        },
+      })
+
+      res.status(status).send(layout)
+    } catch (error) {
+      console.log(error)
+      next(error)
+    }
+  }
+)

@@ -12,6 +12,9 @@ block head
 block body
   #react-root
     != body
+  if pageType == 'search'
+    #loading-container
+      != loadingComponent
   #react-portal
 
   if jsonLD
