@@ -1,0 +1,443 @@
+# Orb 'artsy/yarn@2.1.1' resolved to 'artsy/yarn@2.1.1'
+# Orb 'artsy/hokusai@0.7.0' resolved to 'artsy/hokusai@0.7.0'
+# Orb 'artsy/node@0.1.0' resolved to 'artsy/node@0.1.0'
+# Orb 'artsy/release@0.0.1' resolved to 'artsy/release@0.0.1'
+version: 2
+jobs:
+  validate_production_schema:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Validate Production Schema
+        command: node scripts/validateSchemas.js production
+  horizon/block:
+    docker:
+    - image: artsy/orb-scripts
+    steps:
+    - run:
+        name: Check for deploy blocks
+        description: Check horizon to see if there's an unresolved deployment block
+        command: |
+          set -eo pipefail
+
+          RESULT=$(curl --max-time 5 -s -f -u ${HORIZON_USER}:${HORIZON_PASS} "https://releases.artsy.net/api/deploy_blocks?project_id=${TEST_DEPLOY_BLOCK_PROJECT_ID:-11}&resolved=false")
+          if [ "$RESULT" == "[]" ]; then
+            exit 0
+          else
+            echo "Deployment currently blocked, check https://releases.artsy.net"
+            echo "$RESULT" | jq
+            exit 5
+          fi
+  acceptance:
+    docker:
+    - image: circleci/node:10-stretch-browsers
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Acceptance Tests
+        command: yarn acceptance src/test/acceptance/*.js
+  yarn/update-cache:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - save_cache:
+        key: yarn-deps-{{ checksum "yarn.lock" }}
+        paths:
+        - ./node_modules
+  hokusai/deploy-staging:
+    docker:
+    - image: artsy/hokusai:0.5
+    steps:
+    - add_ssh_keys
+    - checkout
+    - run:
+        name: Install AWS IAM Authenticator
+        command: |
+          curl -L -o aws-iam-authenticator https://artsy-provisioning-public.s3.amazonaws.com/aws-iam-authenticator_0.4.0_linux_amd64
+          chmod +x ./aws-iam-authenticator
+          mv aws-iam-authenticator /usr/local/bin/
+    - run:
+        name: Configure Hokusai
+        command: |
+          mkdir -p ~/.hokusai
+          curl -o ~/.hokusai/config.yml https://artsy-provisioning-public.s3.amazonaws.com/hokusai/config-ci.yml
+          hokusai configure
+    - run:
+        name: Validate Kubernetes Yaml
+        command: hokusai staging update --skip-checks --dry-run
+    - run:
+        name: Deploy
+        command: hokusai staging deploy $CIRCLE_SHA1 --update-config
+        no_output_timeout: 20m
+    - run:
+        name: Update Staging branch
+        command: git push git@github.com:artsy/force.git $CIRCLE_SHA1:refs/heads/staging --force
+  hokusai/deploy-production:
+    docker:
+    - image: artsy/hokusai:0.5
+    steps:
+    - add_ssh_keys
+    - checkout
+    - run:
+        name: Install AWS IAM Authenticator
+        command: |
+          curl -L -o aws-iam-authenticator https://artsy-provisioning-public.s3.amazonaws.com/aws-iam-authenticator_0.4.0_linux_amd64
+          chmod +x ./aws-iam-authenticator
+          mv aws-iam-authenticator /usr/local/bin/
+    - run:
+        name: Configure Hokusai
+        command: |
+          mkdir -p ~/.hokusai
+          curl -o ~/.hokusai/config.yml https://artsy-provisioning-public.s3.amazonaws.com/hokusai/config-ci.yml
+          hokusai configure
+    - run:
+        name: Validate Kubernetes Yaml
+        command: hokusai production update --skip-checks --dry-run
+    - run:
+        name: What's being deployed
+        command: hokusai pipeline gitcompare --org-name artsy || true
+    - run:
+        name: Changes with migrations
+        command: hokusai pipeline gitlog | grep migration || true
+    - run:
+        name: Deploy
+        command: hokusai pipeline promote --update-config
+        no_output_timeout: 20m
+  build:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Build force assets
+        command: yarn assets
+    - store_artifacts:
+        path: ~/project/.artifacts
+    - run:
+        name: Duplicates Report
+        command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
+  danger:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Danger
+        command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
+  upload_sourcemaps_to_sentry_staging:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Upload source maps to Sentry
+        command: DEPLOY_ENV=staging scripts/sentry.sh
+  upload_sourcemaps_to_sentry_production:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Upload source maps to Sentry
+        command: DEPLOY_ENV=staging scripts/sentry.sh
+  test:
+    docker:
+    - image: circleci/node:10
+    parallelism: 2
+    steps:
+    - add_ssh_keys
+    - checkout
+    - restore_cache:
+        keys:
+        - yarn-deps-{{ checksum "yarn.lock" }}
+    - run:
+        command: yarn
+    - run:
+        name: Test
+        command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
+    - store_test_results:
+        path: reports
+  push-staging-image:
+    docker:
+    - image: artsy/hokusai:0.5
+    steps:
+    - add_ssh_keys
+    - checkout
+    - setup_remote_docker
+    - run:
+        name: Push
+        command: |
+          if hokusai registry images --limit 1000 | grep -q $CIRCLE_SHA1; then
+            echo "Skipping push as the tag $CIRCLE_SHA1 already exists in the Docker registry"
+          else
+            hokusai registry push --tag $CIRCLE_SHA1
+          fi
+workflows:
+  default:
+    jobs:
+    - horizon/block:
+        filters:
+          branches:
+            only: release
+        context: horizon
+    - yarn/update-cache:
+        filters:
+          branches:
+            ignore:
+            - staging
+            - release
+    - test:
+        filters:
+          branches:
+            ignore:
+            - staging
+            - release
+    - acceptance:
+        filters:
+          branches:
+            ignore:
+            - staging
+            - release
+    - build:
+        filters:
+          branches:
+            ignore:
+            - staging
+            - release
+    - danger:
+        filters:
+          branches:
+            ignore:
+            - staging
+            - release
+    - push-staging-image:
+        filters:
+          branches:
+            only: master
+        requires:
+        - test
+        - acceptance
+        - build
+        context: hokusai
+    - hokusai/deploy-staging:
+        filters:
+          branches:
+            only: master
+        requires:
+        - upload_sourcemaps_to_sentry_staging
+        - push-staging-image
+        context: hokusai
+    - upload_sourcemaps_to_sentry_staging:
+        filters:
+          branches:
+            only: master
+        context: hokusai
+    - upload_sourcemaps_to_sentry_production:
+        filters:
+          branches:
+            only: release
+        context: hokusai
+    - validate_production_schema:
+        filters:
+          branches:
+            only: release
+        context: hokusai
+    - hokusai/deploy-production:
+        filters:
+          branches:
+            only: release
+        requires:
+        - horizon/block
+        - upload_sourcemaps_to_sentry_production
+        - validate_production_schema
+        context: hokusai
+  version: 2
+
+# Original config.yml file:
+# version: 2.1
+# 
+# orbs:
+#   yarn: artsy/yarn@2.1.1
+#   hokusai: artsy/hokusai@0.7.0
+#   node: artsy/node@0.1.0
+#   horizon: artsy/release@0.0.1
+# 
+# jobs:
+#   acceptance:
+#     docker:
+#       - image: circleci/node:10-stretch-browsers
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Acceptance Tests
+#           command: yarn acceptance src/test/acceptance/*.js
+# 
+#   validate_production_schema:
+#     executor: node/build
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Validate Production Schema
+#           command: node scripts/validateSchemas.js production
+# 
+#   upload_sourcemaps_to_sentry_staging:
+#     executor: node/build
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Upload source maps to Sentry
+#           command: DEPLOY_ENV=staging scripts/sentry.sh
+# 
+#   upload_sourcemaps_to_sentry_production:
+#     executor: node/build
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Upload source maps to Sentry
+#           command: DEPLOY_ENV=staging scripts/sentry.sh
+# 
+#   build:
+#     executor: node/build
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Build force assets
+#           command: yarn assets
+#       - store_artifacts:
+#           path: ~/project/.artifacts
+#       - run:
+#           name: Duplicates Report
+#           command: curl \"https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM\"
+# 
+#   danger:
+#     executor: node/build
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Danger
+#           command: DANGER_GITHUB_API_TOKEN=\"15e52de81a772b174cc5\"\"e1813d0083564c69c325\" yarn danger ci
+# 
+#   test:
+#     executor: node/build
+#     parallelism: 2
+#     steps:
+#       - yarn/setup
+#       - run:
+#           name: Test
+#           command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
+#       - store_test_results:
+#           path: reports
+# 
+# not_staging_or_release: &not_staging_or_release
+#   filters:
+#     branches:
+#       ignore:
+#         - staging
+#         - release
+# 
+# only_master: &only_master
+#   context: hokusai
+#   filters:
+#     branches:
+#       only: master
+# 
+# only_release: &only_release
+#   context: hokusai
+#   filters:
+#     branches:
+#       only: release
+# 
+# workflows:
+#   default:
+#     jobs:
+#       - horizon/block:
+#           <<: *only_release
+#           context: horizon
+#           project_id: 11
+# 
+#       # Pre-staging
+#       - yarn/update-cache:
+#           <<: *not_staging_or_release
+#       - test:
+#           <<: *not_staging_or_release
+#       - acceptance:
+#           <<: *not_staging_or_release
+#       - build:
+#           <<: *not_staging_or_release
+#       - danger:
+#           <<: *not_staging_or_release
+# 
+#       # Staging
+#       - hokusai/push:
+#           name: push-staging-image
+#           <<: *only_master
+#           requires:
+#             - test
+#             - acceptance
+#             - build
+# 
+#       - hokusai/deploy-staging:
+#           <<: *only_master
+#           project-name: force
+#           requires:
+#             - upload_sourcemaps_to_sentry_staging
+#             - push-staging-image
+# 
+#       - upload_sourcemaps_to_sentry_staging:
+#           <<: *only_master
+#       # Release
+#       - upload_sourcemaps_to_sentry_production:
+#           <<: *only_release
+#       - validate_production_schema:
+#           <<: *only_release
+#       - hokusai/deploy-production:
+#           <<: *only_release
+#           requires:
+#             - horizon/block
+#             - upload_sourcemaps_to_sentry_production
+#             - validate_production_schema

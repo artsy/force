@@ -24,6 +24,22 @@ jobs:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
 
+  upload_sourcemaps_to_sentry_staging:
+    executor: node/build
+    steps:
+      - yarn/setup
+      - run:
+          name: Upload source maps to Sentry
+          command: DEPLOY_ENV=staging scripts/sentry.sh
+
+  upload_sourcemaps_to_sentry_production:
+    executor: node/build
+    steps:
+      - yarn/setup
+      - run:
+          name: Upload source maps to Sentry
+          command: DEPLOY_ENV=production scripts/sentry.sh
+
   build:
     executor: node/build
     steps:
@@ -104,17 +120,28 @@ workflows:
             - acceptance
             - build
 
+      - upload_sourcemaps_to_sentry_staging:
+        <<: *only_master
+        requires:
+          - build
+
       - hokusai/deploy-staging:
           <<: *only_master
           project-name: force
           requires:
+            - upload_sourcemaps_to_sentry_staging
             - push-staging-image
 
       # Release
+      - upload_sourcemaps_to_sentry_production:
+          <<: *only_release
+          requires:
+            - build
       - validate_production_schema:
           <<: *only_release
       - hokusai/deploy-production:
           <<: *only_release
           requires:
             - horizon/block
+            - upload_sourcemaps_to_sentry_production
             - validate_production_schema
