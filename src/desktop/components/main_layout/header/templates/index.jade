@@ -1,4 +1,7 @@
 include ../../../util/activator
 
 header
-  != stitch && stitch.components.NavBar({ notificationCount: sd.NOTIFICATION_COUNT, searchQuery: sd.searchQuery, user: sd.CURRENT_USER,  })
+  if sd.DESKTOP_GLOBAL_NAVIGATION == "experiment"
+    != stitch && stitch.components.NavBarTest({ notificationCount: sd.NOTIFICATION_COUNT, searchQuery: sd.searchQuery, user: sd.CURRENT_USER,  })
+  else
+    != stitch && stitch.components.NavBar({ notificationCount: sd.NOTIFICATION_COUNT, searchQuery: sd.searchQuery, user: sd.CURRENT_USER,  })
