@@ -5,11 +5,14 @@ MarketingSignupModal = require '../marketing_signup_modal/index.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
+splitTest = require '../../components/split_test/index.coffee'
 
 module.exports = ->
   globalClientSetup()
   checkForAfterSignUpAction()
   checkForPersonalizeFlash()
+  splitTest('desktop_global_navigation').view()
+
 
   new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
