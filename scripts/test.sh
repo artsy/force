@@ -8,15 +8,9 @@ run () {
   case $CIRCLE_NODE_INDEX in
   0)
     yarn mocha $(find src -name '*.test.*')
-    if [ "$CI" = "true" ]; then
-      yarn report-coverage
-    fi
     ;;
   1)
     yarn jest
-    if [ "$CI" = "true" ]; then
-      yarn report-coverage
-    fi
     ;;
   esac
 }

@@ -5,6 +5,7 @@ orbs:
   hokusai: artsy/hokusai@0.7.0
   node: artsy/node@0.1.0
   horizon: artsy/release@0.0.1
+  codecov: codecov/codecov@1.0.5
 
 jobs:
   acceptance:
@@ -88,6 +89,11 @@ workflows:
           <<: *not_staging_or_release
       - test:
           <<: *not_staging_or_release
+          post-steps:
+            - codecov/upload:
+              file: coverage/lcov.info
+            - codecov/upload:
+              file: reports/mocha/test-results.xml
       - acceptance:
           <<: *not_staging_or_release
       - build:
