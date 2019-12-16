@@ -5,6 +5,7 @@ import express from "express"
 import React from "react"
 import { Meta } from "./meta"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/skipIfClientSideRoutingEnabled"
 
 export const app = express()
 
@@ -54,7 +55,7 @@ const index = async (req, res, next) => {
   }
 }
 
-app.get("/collect", index)
-app.get("/collect/:medium?", index)
-app.get("/collection/:slug", index)
-app.get("/collections", index)
+app.get("/collect", skipIfClientSideRoutingEnabled, index)
+app.get("/collect/:medium?", skipIfClientSideRoutingEnabled, index)
+app.get("/collection/:slug", skipIfClientSideRoutingEnabled, index)
+app.get("/collections", skipIfClientSideRoutingEnabled, index)

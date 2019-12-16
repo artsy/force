@@ -25,13 +25,11 @@ app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
 
-// FIXME: Remove experiment
-if (!process.env.EXPERIMENTAL_APP_SHELL) {
-  app.use(require("./apps/artist/server").app)
-  app.use(require("./apps/artwork/server").app)
-  app.use(require("./apps/collect/server").app)
-  app.use(require("./apps/search2/server").app)
-}
+// TODO: Remove after AB test ends.
+app.use(require("./apps/artist/server").app)
+app.use(require("./apps/artwork/server").app)
+app.use(require("./apps/collect/server").app)
+app.use(require("./apps/search2/server").app)
 
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction").app)
@@ -95,7 +93,6 @@ app.use(require("./apps/user"))
 // Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
 
-// FIXME: Remove experiment
 if (process.env.EXPERIMENTAL_APP_SHELL) {
   app.use(require("./apps/experimental-app-shell/server").app)
 }

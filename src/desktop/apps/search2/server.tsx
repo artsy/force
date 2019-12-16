@@ -4,11 +4,13 @@ import { stringify } from "querystring"
 import { SearchResultsSkeleton } from "reaction/Apps/Search/Components/SearchResultsSkeleton"
 import React from "react"
 import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
+import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/skipIfClientSideRoutingEnabled"
 
 export const app = express()
 
 app.get(
   "/search/:tab?",
+  skipIfClientSideRoutingEnabled,
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.query.term) {
       if (req.query.q) {

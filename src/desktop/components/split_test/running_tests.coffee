@@ -31,4 +31,11 @@ module.exports = {
       control: 50
       experiment: 50
     edge: "experiment"
+
+  client_side_routing:
+    key: "client_side_routing"
+    outcomes:
+      control: 50
+      experiment: 50
+    edge: "experiment"
 }

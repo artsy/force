@@ -6,6 +6,7 @@ import { data as sd } from "sharify"
 import { client as artworkClient } from "./artwork/client"
 import { client as artistClient } from "./artist/client"
 const mediator = require("desktop/lib/mediator.coffee")
+const splitTest = require("desktop/components/split_test/index.coffee")
 
 buildClientApp({
   routes: getAppRoutes(),
@@ -20,6 +21,8 @@ buildClientApp({
       document.getElementById("react-root"),
       () => {
         const pageType = window.location.pathname.split("/")[1]
+        splitTest("client_side_routing").view()
+
         if (pageType === "search") {
           document.getElementById("loading-container").remove()
           document.getElementById("search-page-header").remove()
