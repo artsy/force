@@ -1,0 +1,151 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: experimental-app-shell
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: force-web
+  namespace: experimental-app-shell
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: force
+        component: web
+        layer: application
+      name: force-web
+      namespace: default
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+      containers:
+      - env:
+        - name: PORT
+          value: '5000'
+        - name: EXPERIMENTAL_APP_SHELL
+          value: 'true'
+        - name: DD_TRACE_AGENT_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        envFrom:
+        - configMapRef:
+            name: force-environment
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:experimental-app-shell
+        imagePullPolicy: Always
+        name: force-web
+        ports:
+        - containerPort: 5000
+          name: force-http
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: X-FORWARDED-PROTO
+              value: https
+            path: /system/up
+            port: force-http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            memory: 1.5Gi
+          requests:
+            cpu: 700m
+            memory: 1Gi
+      - env:
+        - name: NGINX_DEFAULT_CONF
+          valueFrom:
+            configMapKeyRef:
+              key: force
+              name: nginx-config
+        image: artsy/docker-nginx:latest
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /usr/sbin/nginx
+              - -s
+              - quit
+        name: force-nginx
+        ports:
+        - containerPort: 8080
+          name: nginx-http
+        - containerPort: 443
+          name: nginx-https
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          tcpSocket:
+            port: nginx-http
+          timeoutSeconds: 10
+      dnsConfig:
+        options:
+        - name: ndots
+          value: '1'
+      dnsPolicy: ClusterFirst
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: force-web
+  namespace: experimental-app-shell
+spec:
+  maxReplicas: 3
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: force-web
+  targetCPUUtilizationPercentage: 70
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: '60'
+    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: artsy-elb-logs
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: staging-force
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '300'
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+  labels:
+    app: force
+    component: web
+    layer: application
+  name: force-web
+  namespace: experimental-app-shell
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: nginx-http
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: nginx-http
+  selector:
+    app: force
+    component: web
+    layer: application
+  sessionAffinity: None
+  type: LoadBalancer
