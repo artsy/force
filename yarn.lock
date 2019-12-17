@@ -74,16 +74,17 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@23.0.5":
-  version "23.0.5"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-23.0.5.tgz#2b938239f29d5ba7bf550a3c26d82c9acfffa933"
-  integrity sha512-bwpjAPRY2ubIILLRRyill4fVdRkPbRdNN5+cw7NDATUDqDuOWMFMh6fBv51vghhgAVIkEinba5PC6Ag8br/9jQ==
+"@artsy/reaction@24.0.0":
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.0.0.tgz#fa18aef778f24b2dc28dc1dcedb4b43e636f3fbc"
+  integrity sha512-zSDK68fmfYGKaWPG5CfV7b3mlr6DUDyIpN9UB+2JiTC2GsWOPUsKkizo5JmjSrHagUyeR6MUd5uqq6qD0Biv8Q==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-html-parser" "^3.0.2"
     "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@types/luxon" "^1.15.1"
     autosuggest-highlight "^3.1.1"
+    cheerio "^1.0.0-rc.2"
     currency.js "^1.2.1"
     farce "^0.2.6"
     formik "^1.5.8"
