@@ -5,6 +5,7 @@ import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
 import request from "superagent"
+import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/skipIfClientSideRoutingEnabled"
 
 const Artwork = require("desktop/models/artwork.coffee")
 
@@ -42,6 +43,7 @@ app.get("/artwork/:artworkID/download/:filename", handleDownload)
 
 app.get(
   "/artwork/:artworkID*",
+  skipIfClientSideRoutingEnabled,
   async (req: Request, res: Response, next: NextFunction) => {
     const { GOOGLE_ADWORDS_ID } = res.locals.sd
 

@@ -46,6 +46,9 @@ module.exports =
   EF_VENICE: '58f5eb75faef6a3a8e7fe1ad'
   EF_GUCCI: '5a009372c88a280f5e9efa7e'
   EF_VIDEO_GUIDE: '5901d64b4682400017f0e3cb'
+
+  # FIXME: Remove experimental flag
+  EXPERIMENTAL_APP_SHELL: false,
   FACEBOOK_APP_NAMESPACE: "artsyinc"
   FACEBOOK_DOMAIN_VERIFICATION: 'yeg3dqrlq548zc77ggvfipouil1l1e'
   FACEBOOK_ID: null

@@ -4,11 +4,13 @@ import { routes } from "reaction/Apps/Artist/routes"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
+import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/skipIfClientSideRoutingEnabled"
 
 export const app = express()
 
 app.get(
   "/artist/:artistID*",
+  skipIfClientSideRoutingEnabled,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user && req.user.toJSON()

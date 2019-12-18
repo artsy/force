@@ -51,6 +51,9 @@ sharify.data = _.extend(
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
+
+    // FIXME: Remove experimental flag
+    "EXPERIMENTAL_APP_SHELL",
     "FACEBOOK_APP_NAMESPACE",
     "FACEBOOK_ID",
     "FORCE_CLOUDFRONT_URL",
