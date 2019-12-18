@@ -86,6 +86,16 @@ describe("Routes", () => {
   })
 
   describe("#news", () => {
+    let originalConsoleError = console.error
+
+    beforeEach(() => {
+      console.error = () => {}
+    })
+
+    afterEach(() => {
+      console.error = originalConsoleError
+    })
+
     it("renders the rss feed if #findArticlesWithEmbeds rejects", async () => {
       request.get = sinon.stub().returns({
         end: cb => {
