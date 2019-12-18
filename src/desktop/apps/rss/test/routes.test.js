@@ -139,6 +139,17 @@ describe("Routes", () => {
     })
   })
 
+  describe("#findSocialEmbeds", () => {
+    let article = {
+      sections: [{}, undefined],
+    }
+
+    it("filters out undefined sections from an article", async () => {
+      const sections = await routes.findSocialEmbeds(article)
+      sections.length.should.eql(1)
+    })
+  })
+
   describe("#maybeFetchSocialEmbed", () => {
     let section = {}
 
