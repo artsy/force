@@ -23,7 +23,6 @@
     "prettier-write": "yarn run prettier --write",
     "publish-assets:local": "yarn assets && yarn publish-assets",
     "publish-assets": "node scripts/uploadToS3.js",
-    "report-coverage": "./node_modules/.bin/codecov -c $COMMIT_HASH_FULL -b $BRANCH_NAME",
     "sentry": "scripts/sentry.sh",
     "start:prod": "yarn assets && yarn build:server && NODE_ENV=production yarn start",
     "start": "scripts/start.sh",
@@ -122,7 +121,6 @@
     "cheerio": "0.22.0",
     "chokidar": "1.7.0",
     "classnames": "2.2.6",
-    "codecov": "3.3.0",
     "coffee-script": "1.12.7",
     "coffeescript": "1.11.1",
     "compression": "1.7.2",
@@ -370,8 +368,7 @@
   },
   "nyc": {
     "check-coverage": true,
-    "temp-dir": "./.nyc_output/",
-    "report-dir": "./coverage/",
+    "report-dir": "./.nyc_output/",
     "reporter": [
       "lcov",
       "text-summary"
