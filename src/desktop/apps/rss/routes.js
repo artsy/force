@@ -82,7 +82,7 @@ export const findSocialEmbeds = article => {
       }
     })
   ).then(res => {
-    return res
+    return res.filter(x => !!x)
   })
 }
 

@@ -86,6 +86,16 @@ describe("Routes", () => {
   })
 
   describe("#news", () => {
+    let originalConsoleError = console.error
+
+    beforeEach(() => {
+      console.error = () => {}
+    })
+
+    afterEach(() => {
+      console.error = originalConsoleError
+    })
+
     it("renders the rss feed if #findArticlesWithEmbeds rejects", async () => {
       request.get = sinon.stub().returns({
         end: cb => {
@@ -136,6 +146,17 @@ describe("Routes", () => {
 
       res.render.args[0][0].should.containEql("news")
       res.render.args[0][1].articles.length.should.eql(3)
+    })
+  })
+
+  describe("#findSocialEmbeds", () => {
+    let article = {
+      sections: [{}, undefined],
+    }
+
+    it("filters out undefined sections from an article", async () => {
+      const sections = await routes.findSocialEmbeds(article)
+      sections.length.should.eql(1)
     })
   })
 
