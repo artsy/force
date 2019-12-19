@@ -5,6 +5,7 @@ orbs:
   hokusai: artsy/hokusai@0.7.0
   node: artsy/node@0.1.0
   horizon: artsy/release@0.0.1
+  codecov: codecov/codecov@1.0.5
 
 jobs:
   acceptance:
@@ -45,17 +46,6 @@ jobs:
           name: Danger
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
-  test:
-    executor: node/build
-    parallelism: 2
-    steps:
-      - yarn/setup
-      - run:
-          name: Test
-          command: COMMIT_HASH_FULL=$(git rev-parse HEAD) CODECOV_TOKEN=$CODECOV_TOKEN BRANCH_NAME=$CIRCLE_BRANCH yarn test
-      - store_test_results:
-          path: reports
-
 not_staging_or_release: &not_staging_or_release
   filters:
     branches:
@@ -84,9 +74,30 @@ workflows:
           project_id: 11
 
       # Pre-staging
-      - yarn/update-cache:
+      - hokusai/test:
+          name: test
           <<: *not_staging_or_release
-      - test:
+          post-steps:
+            - run: mkdir -p ./coverage ./.nyc_output ./reports
+            - run:
+                name: Copy jest coverage artifacts
+                command: docker cp hokusai_force_1:/app/coverage ./
+                when: always
+            - codecov/upload:
+                file: ./coverage/lcov.info
+            - run:
+                name: Copy mocha coverage artifacts
+                command: docker cp hokusai_force_1:/app/.nyc_output ./
+                when: always
+            - codecov/upload:
+                file: ./.nyc_output/lcov.info
+            - run:
+                name: Copy coverage reports
+                command: docker cp hokusai_force_1:/app/reports ./
+                when: always
+            - store_test_results:
+                path: ./reports
+      - yarn/update-cache:
           <<: *not_staging_or_release
       - acceptance:
           <<: *not_staging_or_release
