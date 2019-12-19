@@ -15,7 +15,6 @@ Articles = require '../../../collections/articles'
 Items = require '../../../collections/items'
 featuredArticlesTemplate = -> require('../templates/featured_articles.jade') arguments...
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
-splitTest = require '../../../components/split_test/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 sd = require('sharify').data
 _ = require 'underscore'
@@ -27,25 +26,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
     # Set up a router for the /log_in /sign_up and /forgot routes
     new HomeAuthRouter
     Backbone.history.start pushState: true
-
-    if !sd.CURRENT_USER
-      isExperiment = sd.HOMEPAGE_COLLECTION_HUB_ENTRYPOINTS_TEST is "experiment"
-      targetElement = if isExperiment then ".home-hubs-entry" else ".home-browse-module"
-      # Remove after closing the homepage hubs entry points test
-      $(targetElement).waypoint(() ->
-        # Fire impression event
-        analytics.track("Impression", {
-          context_page: "Home",
-          context_module: "HubEntrypoint",
-          subject: if isExperiment then "Featured Categories" else "Browse Works for Sale",
-        })
-        # Fire experiment or control viewed event
-        splitTest("homepage_collection_hub_entrypoints_test").view()
-      ,
-      {
-        triggerOnce: true,
-        offset: 500,
-      })
 
     # Render Featured Sections
     @setupHeroUnits()
