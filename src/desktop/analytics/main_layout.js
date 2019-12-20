@@ -5,7 +5,6 @@
 
 import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
-const splitTest = require("desktop/components/split_test/index.coffee")
 
 // Track pageview
 const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
@@ -100,9 +99,4 @@ if (sd.SHOW_ANALYTICS_CALLS) {
   analyticsHooks.on("all", function(name, data) {
     console.info("ANALYTICS HOOK: ", name, data)
   })
-}
-
-// TODO: Remove after AB test ends
-if (sd.EXPERIMENTAL_APP_SHELL && sd.CLIENT_SIDE_ROUTING === "control") {
-  splitTest("client_side_routing").view()
 }
