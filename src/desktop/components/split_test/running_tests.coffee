@@ -25,8 +25,8 @@
 # module.exports = {}
 
 module.exports = {
-  client_side_routing:
-    key: "client_side_routing"
+  client_navigation:
+    key: "client_navigation"
     outcomes:
       control: 50
       experiment: 50
