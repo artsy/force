@@ -6,6 +6,9 @@
       span &copy; #{(new Date).getFullYear()} Artsy
       a( href='/terms' ) Terms of Use
       a( href='/privacy' ) Privacy Policy
+      if sd.PAGE_TYPE === 'home'
+        span#ccpa-request
+          != stitch && stitch.components.CCPARequest({ user: sd.CURRENT_USER })
       a( href='/security' ) Security
       a( href='/conditions-of-sale' ) Conditions of Sale
   nav#main-layout-footer-external
