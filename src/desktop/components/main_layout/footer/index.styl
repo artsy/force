@@ -57,12 +57,21 @@ mlf-upper-column-width = ((100% - mlf-upper-column-aside-width) / 4)
 
   // Lower
   #main-layout-footer-internal
-    a
-    span
-      display inline-block
-      margin 0 7px
-      vertical-align middle
+    span#ccpa-request
       text-decoration none
+      display inline-block
+      vertical-align middle
+      a
+        margin 0
+        text-decoration underline
+        vertical-align unset
+
+    a
+    span:not(.ccpa-request)
+      display inline-block
+      text-decoration none
+      vertical-align middle
+      margin 0 7px
       &:first-child
         margin-left 0
       &:last-child
