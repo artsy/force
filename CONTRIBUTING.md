@@ -114,7 +114,7 @@ a99199101d01011e9aff2127c3b176f7-1359163722.us-east-1.elb.amazonaws.com
 
 This is your Review App url, which should support all of the basic features inside of Force.
 
-If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration) then an additional non-automated step is required via DynDNS:
+If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration) then an additional non-automated step is required via Cloudflare:
 
 1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
 1. Click `+ Add Record`
