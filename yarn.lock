@@ -74,10 +74,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
   integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
 
-"@artsy/reaction@24.0.13":
-  version "24.0.13"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.0.13.tgz#82a37fc94052a6adf075df288e7ae4fa33c200ba"
-  integrity sha512-I9fp3PVftZwuasbnFr0BkR6C/I83BNrjXxCO0P3lzUXVZYLzrClIVn1rQ5QDApxmzFFdJ+cnXEHyQlSE6YdhwA==
+"@artsy/reaction@24.0.14":
+  version "24.0.14"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.0.14.tgz#6607b28677ca88c5e89bcfb8e70d3b8a11ddf21a"
+  integrity sha512-6ZznZpvF445EroPd4c5vCOkSi5sqX+crZCIlzGrsthbFKUOSslzyCHlIAUEJmK6QcFjVB8MN6bfeSa4EnNRbUA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/react-html-parser" "^3.0.2"
@@ -106,7 +106,7 @@
     react-css-transition-replace "^3.0.2"
     react-gpt "^2.0.1"
     react-head "^3.0.0"
-    react-lazy-load-image-component "^1.4.0-beta.1"
+    react-lazy-load-image-component "^1.4.0"
     react-lines-ellipsis "^0.14.0"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
@@ -12533,14 +12533,6 @@ react-lazy-load-image-component@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.4.0.tgz#10c73ca46afc039864b395191d6b54a46a673b60"
   integrity sha512-o/L93CyJVvXPuA2P/ouUZI7ZXJRrdE/eqP45AH5/SakOU0bzAk2ZP6qNT/WaaXhf+JtE7hhjXxMr7KGsLNX64w==
-  dependencies:
-    lodash.debounce "^4.0.8"
-    lodash.throttle "^4.1.1"
-
-react-lazy-load-image-component@^1.4.0-beta.1:
-  version "1.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.4.0-beta.1.tgz#9728b2de583cfee2146f4e81db60562b63fe866f"
-  integrity sha512-0hsmYC1aVbs2FiPaGli/kLBy/adrZWVDAond/vYZZA1i1pfA+pltT6TrIOmV1hzGhVwNHohkSzDqXvlgVelciQ==
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
