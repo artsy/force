@@ -1,8 +1,8 @@
 import path from "path"
 import jade from "jade"
 import fs from "fs"
-import Article from "desktop/models/article.coffee"
-import Channel from "desktop/models/channel.coffee"
+const Article = require("desktop/models/article.coffee")
+const Channel = require("desktop/models/channel.coffee")
 
 const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)
@@ -24,8 +24,8 @@ describe("Article Templates", () => {
       }),
       crop: url => url,
       resize: url => url,
-      moment: () => {},
-      asset: () => {},
+      moment: jest.fn(),
+      asset: jest.fn(),
       sd: {},
       stitch: {
         components: {
@@ -33,8 +33,8 @@ describe("Article Templates", () => {
         },
       },
     })
-    html.should.containEql("is-team-channel")
-    html.should.containEql("team-channel-nav")
-    html.should.containEql("Gallery Insights")
+    expect(html).toContain("is-team-channel")
+    expect(html).toContain("team-channel-nav")
+    expect(html).toContain("Gallery Insights")
   })
 })
