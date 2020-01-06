@@ -4,8 +4,8 @@ import fs from "fs"
 import jade from "jade"
 import path from "path"
 import * as Fixtures from "reaction/Components/Publishing/Fixtures/Components"
-import Article from "desktop/models/article.coffee"
-import fixtures from "desktop/test/helpers/fixtures.coffee"
+const Article = require("desktop/models/article.coffee")
+const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
 const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)
@@ -21,8 +21,8 @@ describe("AMP Templates", () => {
       crop: url => url,
       embed,
       resize: url => url,
-      moment: () => {},
-      asset: () => {},
+      moment: jest.fn(),
+      asset: jest.fn(),
       sd: {},
       _,
     }
@@ -31,23 +31,23 @@ describe("AMP Templates", () => {
   it("renders headers and footers", () => {
     const html = render("amp_article")(res)
 
-    html.should.containEql("icon-logotype")
-    html.should.containEql(
+    expect(html).toContain("icon-logotype")
+    expect(html).toContain(
       '<h1 class="large-garamond-header">Top Ten Booths</h1>'
     )
-    html.should.containEql("Just before the lines start forming")
-    html.should.containEql('<div class="article-author">Elena Soboleva</div>')
+    expect(html).toContain("Just before the lines start forming")
+    expect(html).toContain('<div class="article-author">Elena Soboleva</div>')
   })
 
   it("renders article content", () => {
     const html = render("amp_article")(res)
 
-    html.should.containEql("Lisson Gallery")
-    html.should.containEql("Courtesy of Guggenheim.")
-    html.should.containEql(
+    expect(html).toContain("Lisson Gallery")
+    expect(html).toContain("Courtesy of Guggenheim.")
+    expect(html).toContain(
       "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ2/larger.jpg"
     )
-    html.should.containEql(
+    expect(html).toContain(
       '<amp-img src="http://img.jpg" layout="responsive" width="600" height="NaN"></amp-img>'
     )
   })
@@ -58,7 +58,7 @@ describe("AMP Templates", () => {
         sections: Fixtures.Embeds,
       })
       const html = render("amp_article")(res)
-      html.should.containEql(
+      expect(html).toContain(
         '<amp-iframe src="https://artsy-vanity-files-production.s3.amazonaws.com/documents/1parrasch.html"'
       )
     })
@@ -68,7 +68,7 @@ describe("AMP Templates", () => {
         sections: [Fixtures.SocialEmbedTwitter],
       })
       const html = render("amp_article")(res)
-      html.should.containEql('<amp-twitter data-tweetid="965246051107164160"')
+      expect(html).toContain('<amp-twitter data-tweetid="965246051107164160"')
     })
 
     it("renders social_embed instagram", () => {
@@ -76,7 +76,7 @@ describe("AMP Templates", () => {
         sections: [Fixtures.SocialEmbedInstagram],
       })
       const html = render("amp_article")(res)
-      html.should.containEql('<amp-instagram data-shortcode="BfJ2TU9F6sm"')
+      expect(html).toContain('<amp-instagram data-shortcode="BfJ2TU9F6sm"')
     })
   })
 
@@ -98,8 +98,8 @@ describe("AMP Templates", () => {
       })
       const html = render("amp_article")(res)
 
-      html.should.containEql('<amp-img src="http://image.com"')
-      html.should.containEql("An image caption.")
+      expect(html).toContain('<amp-img src="http://image.com"')
+      expect(html).toContain("An image caption.")
     })
 
     it("renders image_set sections", () => {
@@ -119,9 +119,9 @@ describe("AMP Templates", () => {
       })
       const html = render("amp_article")(res)
 
-      html.should.containEql("<amp-carousel")
-      html.should.containEql('<amp-img src="http://image.com"')
-      html.should.containEql("An image caption.")
+      expect(html).toContain("<amp-carousel")
+      expect(html).toContain('<amp-img src="http://image.com"')
+      expect(html).toContain("An image caption.")
     })
   })
 
@@ -131,8 +131,8 @@ describe("AMP Templates", () => {
         sections: [_.extend(Fixtures.Videos[0], { type: "video" })],
       })
       const html = render("amp_article")(res)
-      html.should.containEql("<amp-youtube")
-      html.should.containEql(
+      expect(html).toContain("<amp-youtube")
+      expect(html).toContain(
         "What motivates patrons to fund artists’ wildest dreams?"
       )
     })
@@ -142,8 +142,8 @@ describe("AMP Templates", () => {
         sections: [_.extend(Fixtures.Videos[1], { type: "video" })],
       })
       const html = render("amp_article")(res)
-      html.should.containEql("<amp-vimeo")
-      html.should.containEql(
+      expect(html).toContain("<amp-vimeo")
+      expect(html).toContain(
         "2016 was a memorable year for the world, and art along with it."
       )
     })
@@ -153,8 +153,8 @@ describe("AMP Templates", () => {
     res.article.set({ channel_id: null })
     const html = render("amp_article")(res)
 
-    html.should.containEql('"properties.articleSection": "Other"')
-    html.should.containEql('<amp-analytics type="segment">')
+    expect(html).toContain('"properties.articleSection": "Other"')
+    expect(html).toContain('<amp-analytics type="segment">')
   })
 
   it("includes artsy-icon fonts and fonts.com link", () => {
@@ -162,10 +162,10 @@ describe("AMP Templates", () => {
     res.sd = { WEBFONT_URL: "https://webfonts.artsy.net" }
     const html = render("amp_article")(res)
 
-    html.should.containEql(
+    expect(html).toContain(
       "https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css"
     )
-    html.should.containEql("https://webfonts.artsy.net/artsy-icons.eot?uo9ko")
-    html.should.containEql('<style type="text/css" amp-custom="amp-custom">')
+    expect(html).toContain("https://webfonts.artsy.net/artsy-icons.eot?uo9ko")
+    expect(html).toContain('<style type="text/css" amp-custom="amp-custom">')
   })
 })
