@@ -30,7 +30,3 @@ buildClientApp({
 if (module.hot) {
   module.hot.accept()
 }
-
-mediator.on("artist:tabclick", ({ to }) => {
-  window.analytics.page({ path: to }, { integrations: { Marketo: false } })
-})
