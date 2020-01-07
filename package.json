@@ -316,7 +316,7 @@
     "tslint-config-standard": "8.0.1",
     "tslint-react": "3.6.0",
     "webpack": "4.30.0",
-    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-bundle-analyzer": "3.6.0",
     "webpack-cli": "3.2.1",
     "webpack-dev-middleware": "3.5.1",
     "webpack-hot-middleware": "2.24.3",
