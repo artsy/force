@@ -27,7 +27,7 @@ describe("InfiniteScrollArticle", () => {
   const getWrapper = (passedProps = props) => {
     return mount(
       <SystemContextProvider user={null}>
-        <InfiniteScrollArticle {...passedProps} />
+        <InfiniteScrollArticle {...passedProps} showTooltips={false} />
       </SystemContextProvider>
     )
   }
@@ -50,20 +50,21 @@ describe("InfiniteScrollArticle", () => {
     expect(component.html()).toMatch("StandardLayout")
   })
 
-  it("fetches more articles at the end of the page", async () => {
+  it("fetches more articles at the end of the page", () => {
     const data = { articles: [StandardArticle, ShortStandardArticle] }
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
     const instance = component
       .find(InfiniteScrollArticle)
       .instance() as InfiniteScrollArticle
-    await instance.fetchNextArticles()
-    component.update()
 
-    expect(component.find(Article).length).toBe(3)
+    return instance.fetchNextArticles().then(() => {
+      component.update()
+      expect(component.find(Article).length).toBe(3)
+    })
   })
 
-  xit("renders Related Articles", () => {
+  it("renders Related Articles", () => {
     props.article = clone({
       ...StandardArticle,
       relatedArticlesCanvas: [StandardArticle],
