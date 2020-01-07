@@ -6,7 +6,6 @@ const stripAnsi = require("strip-ansi")
 const { promisify } = require("util")
 const { DuplicatesPlugin } = require("inspectpack/plugin")
 const { NODE_ENV, basePath } = require("../../src/lib/environment")
-const BundleAnalyzerPlugin = require("@bundle-analyzer/webpack-plugin")
 
 const mkdir = promisify(fs.mkdir)
 const writeFile = promisify(fs.writeFile)
@@ -37,9 +36,5 @@ const plugins = {
 export const ciConfig = {
   mode: NODE_ENV,
   devtool: false,
-  plugins: [
-    plugins.duplicatesReport,
-    process.env.BUNDLE_ANALYZER_TOKEN &&
-      new BundleAnalyzerPlugin({ token: process.env.BUNDLE_ANALYZER_TOKEN }),
-  ].filter(p => !!p),
+  plugins: [plugins.duplicatesReport].filter(p => !!p),
 }

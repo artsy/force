@@ -232,14 +232,12 @@
     "uuid": "3.3.2",
     "validator": "7.0.0",
     "waypoints": "4.0.0",
-    "webpack-bundle-analyzer": "3.3.2",
     "webpack-node-externals": "1.7.2",
     "xss-filters": "1.2.7",
     "yargs": "11.0.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "7.6.0",
-    "@bundle-analyzer/webpack-plugin": "0.5.0",
     "@graphql-inspector/core": "1.14.0",
     "@sentry/cli": "1.41.2",
     "@types/dd-trace": "0.6.0",
@@ -318,6 +316,7 @@
     "tslint-config-standard": "8.0.1",
     "tslint-react": "3.6.0",
     "webpack": "4.30.0",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "3.2.1",
     "webpack-dev-middleware": "3.5.1",
     "webpack-hot-middleware": "2.24.3",
