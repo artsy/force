@@ -24,6 +24,11 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
+"@artsy/fresnel@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-1.0.13.tgz#4bbbda274e74e0d63b471a36d72360d33d571598"
+  integrity sha512-Gg/43i30aIqkryVE6eLhNe4j9G1fk41qIJqYfj/b+mv3bYCl8H9HSaedcM7exuh0RlexZGLMD2aYnugiobrpxQ==
+
 "@artsy/gemup@0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
@@ -69,19 +74,14 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/react-responsive-media@^2.0.0-beta.5":
-  version "2.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@artsy/react-responsive-media/-/react-responsive-media-2.0.0-beta.5.tgz#d61e1a9f215d38d90ec2bb97dc1ff7409d0346fa"
-  integrity sha512-XRYA77v/j3mVInwy5EYb8NtmMkkAD1/XDxDi45BO0oduv4hsljJfjtjK7jN0ziJ6JUm2QTx/t6QwuaT9E7vTuA==
-
-"@artsy/reaction@24.0.18":
-  version "24.0.18"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.0.18.tgz#51be35fe7d1c6e5265f4a1cca2a54ae8f69a2ac5"
-  integrity sha512-GuY0EwHPHi0Rahw1qFH+SqYr3ICODQrMwiNhD1uurRWeMwKbGK9rvY57L2rOO41594YghBaOIASm+17jGMW+IQ==
+"@artsy/reaction@24.0.20":
+  version "24.0.20"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.0.20.tgz#433b26f68255fee68cf37b75cfb59813b460a0eb"
+  integrity sha512-3sB0lmm0fEzjiL6MDgw3idQTf1WJJ48I0rMkkGIuwUDC2ZHAFhWOna5MVS9hBqtQ2soWJZmNma0y8YQ5AFJeRg==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
+    "@artsy/fresnel" "^1.0.13"
     "@artsy/react-html-parser" "^3.0.2"
-    "@artsy/react-responsive-media" "^2.0.0-beta.5"
     "@types/luxon" "^1.15.1"
     autosuggest-highlight "^3.1.1"
     cheerio "^1.0.0-rc.2"
