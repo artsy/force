@@ -1,8 +1,0 @@
-.artwork-container
-  - if artwork.hasDefaultImage()
-    .artwork-image-container
-      img( src=artwork.defaultImageUrl() )
-  .artwork-info-container
-    - if artwork.get('artist')
-      .artist-name= artwork.artistName()
-    h3!= artwork.titleAndYear()

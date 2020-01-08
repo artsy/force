@@ -30,9 +30,6 @@ hash =
   '^/unsubscribe*': ->
     require('../apps/unsubscribe/client.coffee').init()
 
-  '^/auction/.*/bid/.*': ->
-    require('../apps/feature/client/bid_page.coffee').init()
-
   '^/feature/([^/]+)$': ->
     require('../apps/feature/client/index.coffee').init()
 
@@ -53,9 +50,6 @@ hash =
 
   '^/auctions': ->
     require('../apps/auctions/client/auctions.coffee').init()
-
-  '^/auction-registration/.*': ->
-    require('../apps/auction_support/client/index.coffee').init()
 
   '^/shows': ->
     require('../apps/shows/client/shows.coffee').init()
