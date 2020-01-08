@@ -522,9 +522,4 @@ import { data as sd } from "sharify"
     .on("artwork:contact-specialist", function() {
       analytics.track("Clicked 'Contact Artsy Specialist'")
     })
-    .on("artwork:confirm-registration", function() {
-      analytics.track("Showed 'Confirm registration on artwork page'", {
-        nonInteraction: 1,
-      })
-    })
 })()
