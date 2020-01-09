@@ -16,10 +16,10 @@ module.exports =
       endDate: (new Date(show.get('end_at'))).toISOString()
       location: @toJSONLDLocation(show.location()) if show.location()
       performer: @performers(show)
-    }
+    } if show.location()?
 
   performers: (show) ->
-    @toJSONLDShortArtist(artist) for artist in show.get('artists')
+    @toJSONLDShortArtist(artist) for artist in show.get('artists') if show.get('artists')?
 
   toJSONLDShortArtist: (artist) ->
     compactObject {

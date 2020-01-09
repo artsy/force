@@ -40,7 +40,7 @@ module.exports.index = (req, res, next) ->
 
     res.locals.sd.SHOW = show
     res.locals.sd.INSTALL_SHOTS = show.related().installShots
-    res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD show if show.location()
+    res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD show
     res.render 'index',
       show: show
       fair: show.related().fair
