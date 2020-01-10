@@ -259,6 +259,7 @@
     "cache-loader": "1.2.2",
     "coffee-loader": "0.8.0",
     "core-js": "2.6.5",
+    "cypress": "^3.8.2",
     "danger": "7.0.16",
     "electron": "3.0.16",
     "enzyme": "3.10.0",
