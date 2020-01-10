@@ -3,6 +3,7 @@ Q = require 'bluebird-q'
 moment = require 'moment'
 Show = require '../../models/show.coffee'
 Location = require '../../models/location.coffee'
+ViewHelpers = require '../../apps/show/helpers/view_helpers'
 
 
 module.exports.index = (req, res, next) ->
@@ -39,7 +40,7 @@ module.exports.index = (req, res, next) ->
 
     res.locals.sd.SHOW = show
     res.locals.sd.INSTALL_SHOTS = show.related().installShots
-
+    res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD show
     res.render 'index',
       show: show
       fair: show.related().fair
