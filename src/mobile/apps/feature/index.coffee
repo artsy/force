@@ -13,11 +13,3 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 app.get '/feature/:id', routes.index
 app.get '/feature/:id/:queryParams', routes.index
-
-app.get '/auction/:id/bid/:artworkId', routes.bid
-
-# TODO: as of 7/15/19 none of these confirm-registration routes
-# have been called for > 30 days. Investigate removal.
-app.get '/artwork/:id/confirm-registration', routes.confirmRegistration('artwork')
-
-app.get '/auctions/:id/bid/:artworkId', routes.bid
