@@ -2,6 +2,7 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "reaction/Apps/Auction/routes"
 import { stitch } from "@artsy/stitch"
+import { data as sd } from "sharify"
 
 const renderPage = async ({ layoutTemplate }, req, res, next) => {
   try {
@@ -82,5 +83,17 @@ export const confirmBidRoute = async (req, res, next) => {
     )
   } else {
     await renderPage({ layoutTemplate: "react_minimal_header" }, req, res, next)
+  }
+}
+
+export const confirmBidRouteOverride = async (req, res, next) => {
+  try {
+    if (sd.ENABLE_NEW_CONFIRM_BID_FORM) {
+      await confirmBidRoute(req, res, next)
+    } else {
+      next()
+    }
+  } catch (error) {
+    next(error)
   }
 }
