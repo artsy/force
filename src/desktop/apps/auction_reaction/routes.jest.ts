@@ -44,7 +44,7 @@ describe("Reaction Auction app routes", () => {
       req = {
         query: {},
         header: jest.fn(),
-        originalUrl: "testurl.artsy.net/auction/auctionid/bid2/artworkid",
+        originalUrl: "testurl.artsy.net/auction/auctionid/bid/artworkid",
       }
       res = {
         locals: { sd: { CURRENT_USER: { access_token: "1" } } },
@@ -58,7 +58,7 @@ describe("Reaction Auction app routes", () => {
       delete res.locals.sd.CURRENT_USER
       await bidderRegistration(req, res, mockNext)
       expect(mockRedirect).toHaveBeenCalledWith(
-        "/login?redirectTo=testurl.artsy.net%2Fauction%2Fauctionid%2Fbid2%2Fartworkid"
+        "/login?redirectTo=testurl.artsy.net%2Fauction%2Fauctionid%2Fbid%2Fartworkid"
       )
       expect(mockSend).not.toHaveBeenCalled()
     })
