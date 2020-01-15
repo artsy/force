@@ -4,7 +4,7 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { FairsView } = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
   'pastFairsTemplate'
 ]
@@ -14,7 +14,7 @@ moment = require 'moment'
 describe 'FairsView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

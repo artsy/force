@@ -1,6 +1,6 @@
 SaleArtwork = require '../../../models/sale_artwork'
 Artworks = require '../../../collections/artworks'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 path = require 'path'
 fs = require 'fs'
 jade = require 'jade'

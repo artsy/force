@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Artist = require '../../../../models/artist'
 
 elWidth = 1000

@@ -3,7 +3,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 LoggedOutUser = rewire '../../models/logged_out_user'
 

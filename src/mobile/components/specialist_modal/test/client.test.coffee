@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{fabricate} = require('antigravity')
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 benv = require 'benv'
 { resolve } = require 'path'

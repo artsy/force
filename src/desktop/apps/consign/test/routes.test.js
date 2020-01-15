@@ -1,7 +1,7 @@
 import Backbone from "backbone"
 import CurrentUser from "../../../models/current_user.coffee"
 import sinon from "sinon"
-import { fabricate } from "antigravity"
+import { fabricate } from "@artsy/antigravity"
 
 const rewire = require("rewire")("../routes")
 const routes = rewire

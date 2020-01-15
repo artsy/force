@@ -6,12 +6,12 @@ Profile = require '../../../../models/profile.coffee'
 Contact = require '../../client/contact.coffee'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Contact page', ->
 
   beforeEach (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
       Backbone.$ = $

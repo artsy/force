@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 Partner = require '../../models/partner'
 PartnerLocations = require '../../collections/partner_locations'
 Artist = require '../../models/artist'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Partner', ->
 

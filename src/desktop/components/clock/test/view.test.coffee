@@ -8,7 +8,7 @@ path = require 'path'
 rewire = require 'rewire'
 ClockView = rewire '../view.coffee'
 Sale = require '../../../models/sale'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ClockView', ->
 

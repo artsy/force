@@ -1,6 +1,6 @@
 Auctions = require '../../collections/auctions'
 Auction = require '../../models/auction'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 moment = require 'moment'
 
 describe 'Auctions', ->

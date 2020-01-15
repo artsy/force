@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 FilterableListView = benv.requireWithJadeify resolve(__dirname, '../view'), [
   'filtersTemplate'
   'itemsTemplate'
@@ -13,7 +13,7 @@ FilterableListView = benv.requireWithJadeify resolve(__dirname, '../view'), [
 
 describe 'FilterableListView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()

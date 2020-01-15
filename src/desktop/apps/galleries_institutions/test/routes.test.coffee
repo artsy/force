@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 _ = require 'underscore'
 Q = require 'bluebird-q'
 sinon = require 'sinon'

@@ -3,7 +3,7 @@ fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 benv = require 'benv'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 PartnerShows = require '../../../collections/partner_shows'
 
 render = (template) ->
@@ -12,7 +12,7 @@ render = (template) ->
 
 describe 'Featured Shows templates', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 

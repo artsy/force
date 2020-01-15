@@ -1,6 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Backbone = require 'backbone'
 BidderPosition = require '../../models/bidder_position'
 

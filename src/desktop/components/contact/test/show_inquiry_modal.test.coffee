@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Partner = require '../../../models/partner'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ShowInquiryModal', ->
 

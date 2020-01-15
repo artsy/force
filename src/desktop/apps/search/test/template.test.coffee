@@ -5,7 +5,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Search = require '../../../collections/search'
 SearchResult = require '../../../models/search_result'
 sinon = require 'sinon'
@@ -20,7 +20,7 @@ render = (templateName) ->
 
 describe 'Search results template', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery'}
       done()
 

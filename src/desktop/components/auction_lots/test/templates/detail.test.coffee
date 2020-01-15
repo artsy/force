@@ -4,7 +4,7 @@ path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
 benv = require 'benv'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 
 Artist = require '../../../../models/artist'

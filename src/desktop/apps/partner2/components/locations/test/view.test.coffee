@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 Partner = require '../../../../../models/partner.coffee'
 PartnerLocations = require '../../../../../collections/partner_locations'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 LocationsView = benv.requireWithJadeify resolve(
   __dirname, '../view.coffee'

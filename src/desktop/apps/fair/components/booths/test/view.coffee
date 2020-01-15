@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Fair = require '../../../../../models/fair'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'BoothsView', ->
 

@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 routes = require '../routes'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Show = require '../../../models/show'
 Location = require '../../../models/location'
 

@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 Artwork = require '../../../models/artwork'
 Partner = require '../../../models/partner'
 rewire = require 'rewire'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 
 describe 'ContactPartnerView', ->

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 benv = require 'benv'
 Backbone = require 'backbone'

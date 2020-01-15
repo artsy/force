@@ -1,7 +1,7 @@
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { extend } = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 routes = rewire '../routes'
 Items = require '../../../collections/items'

@@ -1,6 +1,6 @@
 sinon = require 'sinon'
 Inquiry = require '../../models/inquiry'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Inquiry', ->
 

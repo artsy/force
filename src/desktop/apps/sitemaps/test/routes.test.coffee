@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'

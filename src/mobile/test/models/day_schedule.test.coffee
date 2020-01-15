@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
 DaySchedule = require '../../models/day_schedule'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 
 describe 'DaySchedule', ->
 
- beforeEach ->
+  beforeEach ->
     @daySchedule = new DaySchedule
       _id: "55919db972616960090000a3"
       start_time: 36000

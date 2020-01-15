@@ -1,6 +1,6 @@
 sinon = require 'sinon'
 FeaturedLink = require '../../models/featured_link'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'FeaturedLink', ->
 

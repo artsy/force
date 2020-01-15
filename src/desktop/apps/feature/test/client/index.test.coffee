@@ -9,7 +9,7 @@ Feature = require '../../../../models/feature.coffee'
 Sale = require '../../../../models/sale.coffee'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'FeatureView', ->
   before (done) ->

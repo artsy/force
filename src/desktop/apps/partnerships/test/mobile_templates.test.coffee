@@ -4,7 +4,7 @@ benv = require 'benv'
 jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 render = (opts) ->
   filename = path.resolve __dirname, "../templates/mobile/index.jade"
