@@ -237,6 +237,7 @@
     "yargs": "11.0.0"
   },
   "devDependencies": {
+    "@artsy/antigravity": "^0.2.0",
     "@babel/plugin-transform-modules-commonjs": "7.6.0",
     "@graphql-inspector/core": "1.14.0",
     "@sentry/cli": "1.41.2",
