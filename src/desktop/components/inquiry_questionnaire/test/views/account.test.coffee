@@ -3,6 +3,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 setup = require './setup'
 { resolve } = require 'path'
+rewire = require 'rewire'
+Form = rewire '../../../form/index.coffee'
 
 Account = benv.requireWithJadeify resolve(__dirname, '../../views/account'), [
   'templates.login'
@@ -36,6 +38,39 @@ describe 'Account', setup ->
       @view.active.set 'mode', 'register'
       @view.$('.iq-headline').text()
         .should.containEql 'Create an account to send your message'
+
+  describe '#onSubmit', ->
+    beforeEach ->
+      @view = new Account user: @loggedOutUser, artwork: @artwork, state: @state, inquiry: @inquiry
+      @view.render()
+
+    it 'prevents default', ->
+      submitEvent = { preventDefault: sinon.stub() }
+      @view.onSubmit(submitEvent)
+      submitEvent.preventDefault.called.should.eql true
+
+    it 'returns if form is not ready', ->
+      # TODO
+
+    it 'changes form state to loading', ->
+      # TODO
+
+    it 'calls #submit with recaptcha token', ->
+      submitFunc = sinon.stub()
+      Account::submit = submitFunc
+      view = new Account user: @loggedOutUser, artwork: @artwork, state: @state, inquiry: @inquiry
+      view.render()
+      submitEvent = { preventDefault: sinon.stub() }
+      view.onSubmit(submitEvent)
+      submitFunc.called.should.eql true
+
+  describe '#submit', ->
+    it 'sets form data on user', ->
+      # TODO
+    it 'displays form errors if present', ->
+      # TODO
+    it 'does a thing on success', ->
+      # TODO
 
   describe '#forgot', ->
     beforeEach ->

@@ -14,11 +14,15 @@ module.exports = (cb) -> _.wrap cb, (cb) ->
   before (done) ->
     sinon.stub _, 'defer', (cb) -> cb()
     benv.setup ->
-      benv.expose 
+      benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
         sd: {
           AP: { loginPagePath: '/login' }
+        }
+        grecaptcha: {
+          ready: (cb) -> cb(),
+          execute: sinon.stub().returns("token")
         }
       Backbone.$ = $
       done()
