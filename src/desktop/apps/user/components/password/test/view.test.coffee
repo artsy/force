@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../../models/current_user'
 PasswordView = benv.requireWithJadeify require.resolve('../view'), ['template']
 

@@ -3,7 +3,7 @@ fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Artwork = require '../../../models/artwork'
 Artworks = require '../../../collections/artworks'
 

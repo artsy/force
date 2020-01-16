@@ -9,7 +9,7 @@ Artwork = require '../../../../../models/artwork.coffee'
 FilterArtworks = require '../../../../../collections/filter_artworks.coffee'
 Artworks = require '../../../../../collections/artworks.coffee'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 HeroArtworksCarousel = benv.requireWithJadeify resolve(
   __dirname, '../view.coffee'

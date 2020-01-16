@@ -2,7 +2,7 @@ _ = require 'underscore'
 routes = require '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe '#index', ->
 

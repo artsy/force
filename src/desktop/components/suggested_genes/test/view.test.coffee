@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 OrderedSets = require '../../../collections/ordered_sets.coffee'
 Gene = require '../../../models/gene'
 Genes = require '../../../collections/genes'
@@ -12,7 +12,7 @@ SuggestedGenesView = mod = benv.requireWithJadeify resolve(__dirname, '../view')
 describe 'SuggestedGenesView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

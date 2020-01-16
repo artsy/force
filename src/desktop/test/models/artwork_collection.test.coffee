@@ -9,12 +9,12 @@ benv = require 'benv'
 sd = require('sharify').data
 _ = require 'underscore'
 
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ArtworkCollection', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       done()
 
   after -> benv.teardown()

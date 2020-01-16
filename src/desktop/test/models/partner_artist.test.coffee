@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 should = require 'should'
 Backbone = require 'backbone'
 PartnerArtist = require '../../models/partner_artist'

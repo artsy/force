@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../models/current_user'
 LoggedOutUser = require '../../../../models/logged_out_user'
 Artwork = require '../../../../models/artwork'
@@ -14,7 +14,7 @@ module.exports = (cb) -> _.wrap cb, (cb) ->
   before (done) ->
     sinon.stub _, 'defer', (cb) -> cb()
     benv.setup ->
-      benv.expose 
+      benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
         sd: {

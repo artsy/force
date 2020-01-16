@@ -8,12 +8,12 @@ Profile = require '../../../../models/profile.coffee'
 Articles = require '../../../../collections/articles.coffee'
 _ = require 'underscore'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'PartnerView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

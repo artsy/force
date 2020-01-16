@@ -10,12 +10,12 @@ rewire = require 'rewire'
 Artwork = require '../../../../models/artwork'
 BidForm = rewire '../../client/bid_form'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 DateHelpers = require '../../../../components/util/date_helpers.coffee'
 
 describe 'BidForm', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()

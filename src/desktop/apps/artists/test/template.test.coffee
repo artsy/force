@@ -3,7 +3,7 @@ _ = require 'underscore'
 fs = require 'fs'
 jade = require 'jade'
 fixture = require './fixtures/artists'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 ArtistsByLetter = require '../collections/artists_by_letter'
 sd = require('sharify').data
 

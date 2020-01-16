@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 Fair = require '../../models/fair'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 
 describe 'Fair', ->

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { Image } = require 'artsy-backbone-mixins'
 ImageSizes = require '../../../models/mixins/image_sizes'
 sd = require('sharify').data

@@ -7,12 +7,12 @@ PartnerShows = require '../../../../collections/partner_shows.coffee'
 PartnerArtists = require '../../../../collections/partner_artists.coffee'
 _ = require 'underscore'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'PartnerOverviewView', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()

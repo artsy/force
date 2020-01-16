@@ -3,7 +3,7 @@ sinon = require 'sinon'
 moment = require 'moment'
 rewire = require 'rewire'
 Q = require 'bluebird-q'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 routes = rewire '../routes'
 ViewHelpers = require '../helpers/view_helpers.coffee'
 

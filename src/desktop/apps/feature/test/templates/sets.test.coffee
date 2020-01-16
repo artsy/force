@@ -2,7 +2,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 benv = require 'benv'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 FeaturedSet = require '../../../../models/featured_set.coffee'
 FeaturedLinks = require '../../../../collections/featured_links.coffee'
 
@@ -12,7 +12,7 @@ render = (templateName) ->
 
 describe 'Featured Sets', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 

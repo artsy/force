@@ -1,14 +1,14 @@
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { Cities, FeaturedCities } = require 'places'
 Show = require '../../../models/partner_show'
 Shows = require '../shows'
 
 describe 'Location Based', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 

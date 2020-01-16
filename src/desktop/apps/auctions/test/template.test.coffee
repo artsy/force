@@ -1,7 +1,7 @@
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Auction = require '../../../models/auction'
 moment = require 'moment'
 

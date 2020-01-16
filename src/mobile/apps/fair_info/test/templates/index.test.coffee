@@ -10,7 +10,7 @@ Article = require '../../../../models/article'
 PartnerLocation = require '../../../../models/partner_location.coffee'
 Articles = require '../../../../collections/articles'
 InfoMenu = require '../../info_menu.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Fair Information ', ->
   describe 'Fair with no articles ', ->
@@ -34,7 +34,6 @@ describe 'Fair Information ', ->
         article: @articles.first()
         infoMenu: @infoMenu.infoMenu
         sd: { FAIR: @fair, PROFILE: @profile }
-        fair: new Fair fabricate 'fair'
       }
 
     it 'renders fair information correctly', ->
@@ -63,7 +62,6 @@ describe 'Fair Information ', ->
         location: new PartnerLocation @fair.get('location')
         infoMenu: @infoMenu.infoMenu
         sd: { FAIR: @fair, PROFILE: @profile }
-        fair: new Fair fabricate 'fair'
       }
 
     it 'renders fair information correctly', ->

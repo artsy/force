@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 FairEvent = require '../../models/fair_event.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 moment = require 'moment'
 
 describe 'Fair', ->

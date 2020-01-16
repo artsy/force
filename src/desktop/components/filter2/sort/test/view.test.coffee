@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ fabricate2 } = require 'antigravity'
+{ fabricate2 } = require '@artsy/antigravity'
 FilterArtworks = require '../../../../collections/filter_artworks.coffee'
 
 describe 'Filter / Sort', ->

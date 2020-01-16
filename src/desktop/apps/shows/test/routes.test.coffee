@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 PartnerShow = require '../../../models/partner_show'
 PartnerCities = require '../../../collections/partner_cities'
 PartnerFeaturedCities = require '../../../collections/partner_featured_cities'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 routes = require '../routes'
 
 describe 'Shows routes', ->

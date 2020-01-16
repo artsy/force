@@ -8,7 +8,7 @@ Articles = require '../../../../collections/articles.coffee'
 Profile = require '../../../../models/profile.coffee'
 Partner = require '../../../../models/partner.coffee'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 factory = rewire '../../client/overview_layout_factory.coffee'
 factory.__set__ 'HeroShowsCarousel', HeroShowsCarousel = sinon.stub()

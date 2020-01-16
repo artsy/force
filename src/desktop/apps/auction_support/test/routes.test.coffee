@@ -3,7 +3,7 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../models/current_user.coffee'
 moment = require 'moment'
 Q = require 'bluebird-q'
@@ -151,7 +151,7 @@ describe '#bid', ->
       )
       routes.__set__ 'metaphysics', metaphysicsStub
 
-      @resolve = (a, b, c) =>
+      @resolve = (a, b, c) ->
         Backbone.sync.args[0][2].success a or openSale
         Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
         Backbone.sync.args[2][2].success c or [fabricate('bidder_position')]
@@ -190,7 +190,7 @@ describe '#bid', ->
       )
       routes.__set__ 'metaphysics', metaphysicsStub
 
-      @resolve = (a, b, c) =>
+      @resolve = (a, b, c) ->
         Backbone.sync.args[0][2].success a or openSale
         Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
         Backbone.sync.args[2][2].success c or [fabricate('bidder_position')]

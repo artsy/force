@@ -1,5 +1,5 @@
 ViewHelpers = require '../../helpers/view_helpers'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ViewHelpers', ->
   describe 'sailthruTags', ->

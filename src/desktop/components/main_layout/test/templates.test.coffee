@@ -1,7 +1,7 @@
 jade = require 'jade'
 fs = require 'fs'
 Profile = require '../../../models/profile'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 sd = require('sharify').data
 

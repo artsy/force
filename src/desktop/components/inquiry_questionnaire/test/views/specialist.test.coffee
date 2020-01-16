@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 setup = require './setup'
 Specialist = benv.requireWithJadeify require.resolve('../../views/specialist'), ['template']
 

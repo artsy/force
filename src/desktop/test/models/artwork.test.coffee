@@ -2,7 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 should = require 'should'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Artwork = require '../../models/artwork'
 
 describe 'Artwork', ->

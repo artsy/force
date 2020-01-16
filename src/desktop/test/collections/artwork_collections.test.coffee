@@ -4,7 +4,7 @@ sinon = require 'sinon'
 CurrentUser = require '../../models/current_user'
 ArtworkCollections = require '../../collections/artwork_collections'
 Artwork = require '../../models/artwork'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ArtworkCollections', ->
 

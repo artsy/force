@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 PartnerShows = require '../../collections/partner_shows'
 moment = require 'moment'
 

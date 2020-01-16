@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 Show = require '../../models/show'
 Artwork = require '../../models/artwork'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 moment = require 'moment'
 
 describe 'Show', ->

@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 RelatedLinksView = require '../view'
 Genes = require '../../../collections/genes'
 

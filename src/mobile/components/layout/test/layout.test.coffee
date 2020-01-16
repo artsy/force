@@ -8,7 +8,7 @@ sd = require('sharify').data
 rewire = require 'rewire'
 sinon = require 'sinon'
 
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 xdescribe 'Bootstrapping client-side environment', ->
   # FIXME: this whole file errors setting up due to react-flickity jquery errors

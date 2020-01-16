@@ -9,7 +9,7 @@ Profile = require '../../../../models/profile'
 Article = require '../../../../models/article'
 Articles = require '../../../../collections/articles'
 InfoMenu = require '../../info_menu.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Article template', ->
   describe 'Article from writer', ->
@@ -32,7 +32,6 @@ describe 'Article template', ->
         article: @articles.first()
         infoMenu: @infoMenu.infoMenu
         sd: { FAIR: @fair, ARTICLE: @articles.first() }
-        fair: new Fair fabricate 'fair'
       }
 
     it 'renders correctly', ->

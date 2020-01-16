@@ -8,7 +8,7 @@ PartnerShow = require '../../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../../collections/partner_shows.coffee'
 PartnerShowEvents = require '../../../../../collections/partner_show_events.coffee'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 NewsView = benv.requireWithJadeify resolve(
   __dirname, '../view.coffee'

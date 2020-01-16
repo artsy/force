@@ -93,7 +93,6 @@
     "accounting": "0.4.1",
     "analytics-node": "2.4.1",
     "annyang": "mzikherman/annyang",
-    "antigravity": "artsy/antigravity",
     "artsy-backbone-mixins": "artsy/artsy-backbone-mixins",
     "artsy-eigen-web-association": "artsy/artsy-eigen-web-association",
     "artsy-ezel-components": "artsy/artsy-ezel-components",
@@ -237,6 +236,7 @@
     "yargs": "11.0.0"
   },
   "devDependencies": {
+    "@artsy/antigravity": "^0.2.0",
     "@babel/plugin-transform-modules-commonjs": "7.6.0",
     "@graphql-inspector/core": "1.14.0",
     "@sentry/cli": "1.41.2",

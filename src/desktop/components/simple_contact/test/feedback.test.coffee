@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../models/current_user'
 FeedbackView = benv.requireWithJadeify require.resolve('../views/feedback'), ['template']
 

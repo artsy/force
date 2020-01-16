@@ -6,7 +6,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Follow = require '../model'
 Profile = require '../../../models/profile'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Following = require '../collection'
 CurrentUser = require '../../../models/current_user.coffee'
 

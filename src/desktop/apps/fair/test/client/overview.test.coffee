@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 moment = require 'moment'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Fair = require '../../../../models/fair.coffee'
 
 xdescribe 'ForYouView', ->
