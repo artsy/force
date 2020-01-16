@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require '@artsy/antigravity'
-setup = require './setup'
+{ setup } = require './setup'
 Specialist = benv.requireWithJadeify require.resolve('../../views/specialist'), ['template']
 
 describe 'Specialist', setup ->

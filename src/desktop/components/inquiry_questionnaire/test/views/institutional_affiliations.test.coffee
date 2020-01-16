@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-setup = require './setup'
+{ setup } = require './setup'
 InstitutionalAffiliations = benv.requireWithJadeify require.resolve('../../views/institutional_affiliations'), [
   'template'
 ]

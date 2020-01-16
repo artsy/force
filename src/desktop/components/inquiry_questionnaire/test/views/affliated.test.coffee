@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
-setup = require './setup'
+{ setup } = require './setup'
 
 Affiliated = null
 ResultsView = null
