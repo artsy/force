@@ -15,6 +15,7 @@ docs
 
 .env
 .env.*
+!.env.oss
 log
 tmp
 node_modules

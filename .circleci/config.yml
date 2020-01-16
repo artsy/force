@@ -16,6 +16,9 @@ jobs:
       - run:
           name: Acceptance Tests
           command: yarn acceptance src/test/acceptance/*.js
+      - run:
+          name: Cypress Tests
+          command: yarn test:smoke
 
   validate_production_schema:
     executor: node/build
