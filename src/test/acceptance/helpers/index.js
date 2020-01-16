@@ -6,7 +6,7 @@ import url from "url"
 import chalk from "chalk"
 import bodyParser from "body-parser"
 import cors from "cors"
-import { fabricate } from "antigravity"
+import { fabricate } from "@artsy/antigravity"
 
 const {
   ACCEPTANCE_TIMEOUT,

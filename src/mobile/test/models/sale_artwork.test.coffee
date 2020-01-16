@@ -1,5 +1,5 @@
 SaleArtwork = require '../../models/sale_artwork'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Backone = require 'backbone'
 sinon = require 'sinon'
 _ = require 'underscore'

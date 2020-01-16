@@ -6,7 +6,7 @@ PartnerShows = require '../../../../collections/partner_shows.coffee'
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 
 PartnerShowsGridView = rewire '../../client/shows_grid'

@@ -4,7 +4,7 @@ moment = require 'moment'
 cheerio = require 'cheerio'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Helpers = require '../helpers.coffee'
 
 describe 'Art fairs template', ->

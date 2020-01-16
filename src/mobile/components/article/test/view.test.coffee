@@ -6,7 +6,7 @@ Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 sd = require('sharify').data
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ArticleView', ->
 

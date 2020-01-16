@@ -1,6 +1,6 @@
 _ = require 'underscore'
 benv = require 'benv'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 SaleArtwork = require '../../../../models/sale_artwork'

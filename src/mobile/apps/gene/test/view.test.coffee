@@ -6,7 +6,7 @@ Artworks = require '../../../collections/artworks.coffee'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 Artists = require '../../../collections/artists.coffee'
 Gene = require '../../../models/gene.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 xdescribe 'GeneArtworksView', ->
   # FIXME: conflicts with jsdom in beforeEach from filter2

@@ -2,7 +2,7 @@ jade = require 'jade'
 path = require 'path'
 cheerio = require 'cheerio'
 fs = require 'fs'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"

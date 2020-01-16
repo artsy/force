@@ -10,7 +10,7 @@ Profile = require '../../../models/profile'
 PartnerLocation = require '../../../models/partner_location'
 Artist = require '../../../models/artist'
 Article = require '../../../models/article'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 SearchResult = require '../../../models/search_result'
 Artworks = require '../../../collections/artworks'
 

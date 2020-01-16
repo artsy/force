@@ -5,14 +5,14 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 
 ArtworkColumnsView = null
 
 xdescribe 'ArtworkColumns', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'

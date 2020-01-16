@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 Fair = require '../../../../../models/fair'
 Profile = require '../../../../../models/profile'
 { resolve } = require 'path'
-{ fabricate, fabricate2 } = require 'antigravity'
+{ fabricate, fabricate2 } = require '@artsy/antigravity'
 FilterArtworks = require '../../../../../collections/filter_artworks'
 
 describe 'FairBrowseView', ->

@@ -2,7 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 moment = require 'moment'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Fair = require '../../models/fair'
 Fairs = require '../../collections/fairs'
 

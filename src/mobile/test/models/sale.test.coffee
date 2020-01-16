@@ -1,7 +1,7 @@
 sinon = require 'sinon'
 moment = require 'moment'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Sale = require '../../models/sale'
 
 describe 'Sale', ->

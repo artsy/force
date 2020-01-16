@@ -5,7 +5,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 CurrentUser = require '../../../models/current_user'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 render = (opts) ->
   filename = path.resolve __dirname, "../templates/index.jade"

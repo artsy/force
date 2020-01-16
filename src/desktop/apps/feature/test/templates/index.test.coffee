@@ -1,6 +1,6 @@
 benv = require 'benv'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve }  = require 'path'
 Feature = require '../../../../models/feature'
 
@@ -14,7 +14,7 @@ describe 'Feature template', ->
         sd: @sd
         asset: (->)
         feature: @feature
-      }, => done()
+      }, -> done()
 
   after ->
     benv.teardown()

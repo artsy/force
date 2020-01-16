@@ -1,7 +1,7 @@
 $ = require 'cheerio'
 _ = require 'underscore'
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 Article = require '../../../../models/article'

@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../../models/current_user'
 DeleteMyAccountFormView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
@@ -77,7 +77,7 @@ describe 'DeleteMyAccountFormView', ->
     it 'adds the access token to the request', ->
       @user.set 'accessToken', 'xxx'
       @view.submit $.Event()
-        .then =>
+        .then ->
           $.ajax.args[0][0].method.should.equal 'DELETE'
           $.ajax.args[0][0].data.access_token.should.equal 'xxx'
 

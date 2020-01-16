@@ -3,13 +3,13 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 Artwork = require '../../../models/artwork'
 
 describe 'Inquiry', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()

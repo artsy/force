@@ -1,5 +1,5 @@
 should = require 'should'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 FairEvent = require '../../models/fair_event'
 FairEvents = require '../../collections/fair_events'
 

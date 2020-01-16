@@ -3,7 +3,7 @@ routes = require '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe '/user', ->
 

@@ -2,13 +2,13 @@ _ = require 'underscore'
 benv = require 'benv'
 moment = require 'moment'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Show = require '../../../models/show'
 {Cities, FeaturedCities} = require 'places'
 
 describe 'Shows template', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require 'jquery'
       done()
 

@@ -1,6 +1,6 @@
 $ = require 'cheerio'
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../models/current_user'
 template = require('jade').compileFile(require.resolve '../templates/index.jade')
 fixture = require './fixture/content.json'

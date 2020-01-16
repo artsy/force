@@ -2,7 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 moment = require 'moment'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 ClockMixin = require '../../../models/mixins/clock'
 sd = require('sharify').data
 

@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../../models/current_user'
 EmailPreferencesView = benv.requireWithJadeify require.resolve('../view'), ['template']
 

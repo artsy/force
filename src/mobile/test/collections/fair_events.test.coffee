@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 FairEvent = require '../../models/fair_event.coffee'
 Fair = require '../../models/fair.coffee'
 FairEvents = require '../../collections/fair_events.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'FairEvents', ->
 

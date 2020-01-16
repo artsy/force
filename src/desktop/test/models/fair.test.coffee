@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 should = require 'should'
 Backbone = require 'backbone'

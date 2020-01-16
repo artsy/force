@@ -2,7 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Artist = rewire '../../models/artist'
 
 

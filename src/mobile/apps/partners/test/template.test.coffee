@@ -4,7 +4,7 @@ path = require 'path'
 fs = require 'fs'
 cheerio = require 'cheerio'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Partner = require '../../../models/partner'
 Profiles = require '../../../collections/profiles'
 

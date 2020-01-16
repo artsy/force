@@ -8,7 +8,7 @@ moment = require 'moment'
 Articles = require '../../../collections/articles'
 Article = require '../../../models/article'
 request = require 'superagent'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Article routes', ->
   beforeEach ->

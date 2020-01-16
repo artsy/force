@@ -2,7 +2,7 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 CurrentUser = require '../../../../models/current_user'
 Sale = require '../../../../models/sale'

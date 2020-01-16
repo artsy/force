@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../lib/current_user'
 
 describe 'CurrentUser', ->

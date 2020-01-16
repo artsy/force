@@ -8,16 +8,16 @@ Fair = require '../../../../models/fair'
 PartnerLocation = require '../../../../models/partner_location'
 Profile = require '../../../../models/profile'
 InfoMenu = require '../../info_menu.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Visitors', ->
   beforeEach ->
     @infoMenu = new InfoMenu fair: new Fair fabricate 'fair'
     @infoMenu.infoMenu = {
-     events: true,
-     programming: true,
-     artsyAtTheFair: false,
-     aboutTheFair: false
+      events: true,
+      programming: true,
+      artsyAtTheFair: false,
+      aboutTheFair: false
     }
 
   render = (fair, location) ->

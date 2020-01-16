@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
 DaySchedules = require '../../collections/day_schedules'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 
 describe 'DaySchedules', ->
 
- beforeEach ->
+  beforeEach ->
     @daySchedules = new DaySchedules [
       {
         _id: "55919db972616960090000a3"

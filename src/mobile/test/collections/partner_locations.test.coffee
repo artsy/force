@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 PartnerLocations = require '../../collections/partner_locations'
 
 describe 'PartnerLocations', ->

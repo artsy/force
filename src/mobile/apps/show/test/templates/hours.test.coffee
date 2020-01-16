@@ -4,7 +4,7 @@ fs = require 'fs'
 Backbone = require 'backbone'
 cheerio = require 'cheerio'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Show = require '../../../../models/show'
 Location = require '../../../../models/location'
 

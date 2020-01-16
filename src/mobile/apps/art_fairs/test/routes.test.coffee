@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 moment = require 'moment'
@@ -15,7 +15,7 @@ describe '#index', ->
 
   beforeEach ->
     profile = { is_published: true, icon: { url: "https://www.example.com/cat.jpg" } }
-    unpublished_profile = { is_published: false, icon: { url: "https://www.example.com/cat.jpg" } } 
+    unpublished_profile = { is_published: false, icon: { url: "https://www.example.com/cat.jpg" } }
     @currentFairs = _.times 2, ->
       fabricate('fair', profile: profile, id: _.uniqueId('current'), is_published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'))
     @pastFairs = _.times 4, ->
