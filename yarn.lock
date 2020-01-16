@@ -10,7 +10,7 @@
     bindings "^1.3.0"
     nan "^2.9.2"
 
-"@artsy/antigravity@^0.2.0":
+"@artsy/antigravity@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@artsy/antigravity/-/antigravity-0.2.0.tgz#4876bd5bee1a95247916441b4c4830ad00979aa1"
   integrity sha512-QfgQSFQAVHdIvKsgeDDw8AB7lpF4n0wVwtV813Etd0uarFsPXhYPgp1bb8eGFjj9rSKnWukD+GZjEIUatixM+w==
