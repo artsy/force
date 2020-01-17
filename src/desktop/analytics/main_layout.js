@@ -28,7 +28,8 @@ if (!excludedRoutes.includes(pageType)) {
 if (pageType === "auction") {
   window.addEventListener("load", function() {
     // distinct event required for marketing integrations (Criteo)
-    window.analytics.track("Auction Pageview")
+    const saleSlug = window.location.pathname.split("/")[2]
+    window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
   })
 }
 
