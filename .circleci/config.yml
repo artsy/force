@@ -1,11 +1,12 @@
 version: 2.1
 
 orbs:
-  yarn: artsy/yarn@2.1.1
-  hokusai: artsy/hokusai@0.7.0
-  node: artsy/node@0.1.0
-  horizon: artsy/release@0.0.1
+  artsy-remote-docker: artsy/remote-docker@0.1.0
   codecov: codecov/codecov@1.0.5
+  hokusai: artsy/hokusai@0.7.0
+  horizon: artsy/release@0.0.1
+  node: artsy/node@0.1.0
+  yarn: artsy/yarn@2.1.1
 
 jobs:
   acceptance:
@@ -75,11 +76,19 @@ workflows:
           <<: *only_release
           context: horizon
           project_id: 11
-
+      - artsy-remote-docker/build:
+          <<: *not_staging_or_release
+          name: docker_build
+          context: hokusai
       # Pre-staging
       - hokusai/test:
           name: test
+          context: hokusai
           <<: *not_staging_or_release
+          requires:
+            - docker_build
+          pre-steps:
+            - run: hokusai registry pull --tag "$CIRCLE_SHA1"
           post-steps:
             - run: mkdir -p ./coverage ./.nyc_output ./reports
             - run:
