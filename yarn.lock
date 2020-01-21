@@ -8919,9 +8919,9 @@ jquery.payment@3.0.0:
   dependencies:
     jquery ">=1.7"
 
-jquery.transition@dzucconi/jquery.transition:
+jquery.transition@artsy/jquery.transition:
   version "0.1.1"
-  resolved "https://codeload.github.com/dzucconi/jquery.transition/tar.gz/9e1ced2d91227d54d6cc2627a4a6a32c341b2434"
+  resolved "https://codeload.github.com/artsy/jquery.transition/tar.gz/cecefffb9d572df5cdcf7ae230268da0073d2b00"
 
 jquery@2.2.4, jquery@>=1.7:
   version "2.2.4"
