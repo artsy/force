@@ -6820,9 +6820,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-geoformatter@dzucconi/geo_formatter:
+geoformatter@artsy/geoformatter:
   version "0.0.0"
-  resolved "https://codeload.github.com/dzucconi/geo_formatter/tar.gz/8861ae0a8efb36608a755f5be65360d4ba49ff50"
+  resolved "https://codeload.github.com/artsy/geoformatter/tar.gz/56f0f25a91a210a6a4a7db7de7bb2cb7085ed1fa"
 
 geolib@2.0.22:
   version "2.0.22"
