@@ -83,10 +83,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@24.1.1":
-  version "24.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.1.1.tgz#4d39fe9352c006fd574e53e20b495de69d85a705"
-  integrity sha512-EpMAe1hOEr/JhQPMKl1GTAqoEjWwQb7BhYswYWwA83PYxN1J6WfqOZUJFsb+dvj+Q7s2sGsa+ybfV3XffOsDoQ==
+"@artsy/reaction@24.1.3":
+  version "24.1.3"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-24.1.3.tgz#4fa83f662a0490859c2f40a1182f78f94c486a24"
+  integrity sha512-LNOAJSMDlDHSi6bMQYT1X+vbNSMh6imjZCYjcvzT9fVIyrv8SS8C3S4kOkWFCRpetZYZ+5/ZHQn++dcVgJhZ6A==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -115,7 +115,7 @@
     react-css-transition-replace "^3.0.2"
     react-gpt "^2.0.1"
     react-head "^3.0.0"
-    react-lazy-load-image-component "^1.4.0"
+    react-lazy-load-image-component "^1.4.1-beta.0"
     react-lines-ellipsis "^0.14.0"
     react-markdown "^2.5.0"
     react-oembed-container "^0.3.0"
@@ -12873,14 +12873,6 @@ react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
-
-react-lazy-load-image-component@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.4.0.tgz#10c73ca46afc039864b395191d6b54a46a673b60"
-  integrity sha512-o/L93CyJVvXPuA2P/ouUZI7ZXJRrdE/eqP45AH5/SakOU0bzAk2ZP6qNT/WaaXhf+JtE7hhjXxMr7KGsLNX64w==
-  dependencies:
-    lodash.debounce "^4.0.8"
-    lodash.throttle "^4.1.1"
 
 react-lazy-load-image-component@^1.4.1-beta.0:
   version "1.4.1-beta.0"
