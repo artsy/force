@@ -1,6 +1,6 @@
 import { buildClientApp } from "reaction/Artsy/Router/client"
 import { data as sd } from "sharify"
-import { routes } from "reaction/Apps/Artist/routes"
+import { routes } from "reaction/Apps/Purchase/routes"
 import React from "react"
 import ReactDOM from "react-dom"
 import { setupArtistSignUpModal } from "desktop/apps/artist/components/cta"

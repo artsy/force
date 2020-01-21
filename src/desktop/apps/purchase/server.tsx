@@ -1,6 +1,6 @@
 import { buildServerApp } from "reaction/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
-import { routes } from "reaction/Apps/Artist/routes"
+import { routes } from "reaction/Apps/Purchase/routes"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
@@ -13,7 +13,7 @@ app.get(
   skipIfClientSideRoutingEnabled,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = req.user && req.user.toJSON()
+      // const user = req.user && req.user.toJSON()
 
       const context = buildServerAppContext(req, res, {})
       const {
