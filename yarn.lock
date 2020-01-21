@@ -6820,9 +6820,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-geoformatter@dzucconi/geo_formatter:
+geoformatter@artsy/geoformatter:
   version "0.0.0"
-  resolved "https://codeload.github.com/dzucconi/geo_formatter/tar.gz/8861ae0a8efb36608a755f5be65360d4ba49ff50"
+  resolved "https://codeload.github.com/artsy/geoformatter/tar.gz/56f0f25a91a210a6a4a7db7de7bb2cb7085ed1fa"
 
 geolib@2.0.22:
   version "2.0.22"
@@ -8919,9 +8919,9 @@ jquery.payment@3.0.0:
   dependencies:
     jquery ">=1.7"
 
-jquery.transition@dzucconi/jquery.transition:
+jquery.transition@artsy/jquery.transition:
   version "0.1.1"
-  resolved "https://codeload.github.com/dzucconi/jquery.transition/tar.gz/9e1ced2d91227d54d6cc2627a4a6a32c341b2434"
+  resolved "https://codeload.github.com/artsy/jquery.transition/tar.gz/cecefffb9d572df5cdcf7ae230268da0073d2b00"
 
 jquery@2.2.4, jquery@>=1.7:
   version "2.2.4"
