@@ -53,6 +53,8 @@ jobs:
   test:
     executor: hokusai/deploy
     steps:
+      - add_ssh_keys
+      - checkout
       - run: hokusai registry pull --tag "$CIRCLE_SHA1"
       - run: hokusai test
 
