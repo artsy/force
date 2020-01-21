@@ -55,6 +55,7 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
+      - setup_remote_docker
       - run: hokusai registry pull --tag "$CIRCLE_SHA1"
       - run: hokusai test
 
