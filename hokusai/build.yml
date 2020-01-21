@@ -1,5 +1,6 @@
-version: "2"
+version: "2.4"
 services:
   force:
     build:
       context: ../
+    image: "hokusai_force:${BUILD_TAG:-latest}"
