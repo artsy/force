@@ -1,9 +1,26 @@
-describe("artist", () => {
-  it("renders meta title and page content", () => {
+describe("/artist/:id", () => {
+  before(() => {
     cy.visit("/artist/pablo-picasso")
-    cy.get("h1").should("contain", "Pablo Picasso")
-    cy.get("h2").should("contain", "Spanish, 1881-1973")
+  })
+
+  it("renders metadata", () => {
     cy.title().should("contain", "Pablo Picasso")
     cy.title().should("contain", "Artworks, Bio & Shows on Artsy")
+    cy.get("meta[name='description']")
+      .should("have.attr", "content")
+      .and(
+        "eq",
+        "Find the latest shows, biography, and artworks for sale by Pablo Picasso. A prolific and tireless innovator of art forms, Pablo Picasso impacted the course o…"
+      )
+  })
+
+  it("renders page content", () => {
+    cy.get("h1").should("contain", "Pablo Picasso")
+    cy.get("h2").should("contain", "Spanish, 1881-1973")
+    cy.get("div[data-test='ArtworkGrid']").should("have.length.of", 1)
+    cy.get("div[data-test='ArtworkGridItem']").should(
+      "have.length.of.at.least",
+      1
+    )
   })
 })
