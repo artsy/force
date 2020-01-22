@@ -13,3 +13,5 @@ describe("/collection/:id (a collection hub)", function() {
     cy.title().should("eq", "Contemporary - For Sale on Artsy")
   })
 })
+
+// TODO: confirm artwork grid is present
