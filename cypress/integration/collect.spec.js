@@ -1,4 +1,4 @@
-describe("/collect", function() {
+describe("/collect", () => {
   before(() => {
     cy.visit("/collect")
   })
