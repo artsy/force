@@ -1,3 +1,5 @@
+import { artworkGridRenders } from "../helpers/artworkGridRenders"
+
 describe("/collect", () => {
   before(() => {
     cy.visit("/collect")
@@ -15,9 +17,6 @@ describe("/collect", () => {
 
   it("renders page content", () => {
     cy.get("h1").should("contain", "Collect art and design online")
-    cy.get("div[data-test='ArtworkGridItem']").should(
-      "have.length.of.at.least",
-      1
-    )
+    artworkGridRenders()
   })
 })

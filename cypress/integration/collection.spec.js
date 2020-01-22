@@ -1,3 +1,5 @@
+import { artworkGridRenders } from "../helpers/artworkGridRenders"
+
 describe("/collection/:id", () => {
   before(() => {
     cy.visit("/collection/emerging-photographers")
@@ -39,10 +41,6 @@ describe("/collection/:id (a collection hub)", () => {
 
   it("renders page content", () => {
     cy.get("h1").should("contain", "Contemporary")
-    cy.get("div[data-test='ArtworkGrid']").should("have.length.of", 1)
-    cy.get("div[data-test='ArtworkGridItem']").should(
-      "have.length.of.at.least",
-      1
-    )
+    artworkGridRenders()
   })
 })
