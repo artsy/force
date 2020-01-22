@@ -17,11 +17,7 @@ describe("/collection/:id", () => {
 
   it("renders page content", () => {
     cy.get("h1").should("contain", "Emerging Photographers")
-    cy.get("div[data-test='ArtworkGrid']").should("have.length.of", 1)
-    cy.get("div[data-test='ArtworkGridItem']").should(
-      "have.length.of.at.least",
-      1
-    )
+    artworkGridRenders()
   })
 })
 
