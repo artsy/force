@@ -6,7 +6,7 @@ PartnerArtistArtworks = require '../../../../collections/partner_artist_artworks
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 
 PartnerArtistsArtistView = benv.requireWithJadeify require.resolve('../../client/artists_artist'), ['template']

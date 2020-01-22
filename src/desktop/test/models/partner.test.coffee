@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Partner = require '../../models/partner'
 
 describe 'Partner', ->

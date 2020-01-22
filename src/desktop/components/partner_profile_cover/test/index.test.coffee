@@ -2,9 +2,9 @@ _ = require 'underscore'
 benv = require 'benv'
 Profile = require '../../../models/profile'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
-render = (data, done) =>
+render = (data, done) ->
   benv.render resolve(__dirname, '../template.jade'), data, done
 
 describe 'Template', ->

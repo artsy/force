@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
 Search = require '../../../collections/search'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Search routes', ->
   beforeEach ->

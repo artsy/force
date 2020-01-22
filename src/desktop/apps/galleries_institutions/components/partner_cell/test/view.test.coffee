@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Partner = require '../../../../../models/partner'
 PartnerCellView = benv.requireWithJadeify require.resolve('../view'), ['template']
 

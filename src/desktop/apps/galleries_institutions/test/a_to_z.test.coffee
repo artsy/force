@@ -1,6 +1,6 @@
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Profiles = require '../../../collections/profiles'
 
 describe 'Galleries / Institutions', ->

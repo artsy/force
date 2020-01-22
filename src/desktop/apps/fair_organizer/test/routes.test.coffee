@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 _ = require 'underscore'
 Q = require 'bluebird-q'

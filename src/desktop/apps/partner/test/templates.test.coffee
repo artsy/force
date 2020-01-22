@@ -2,7 +2,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Profile = require '../../../models/profile'
 
 render = (templateName) ->

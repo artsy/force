@@ -1,5 +1,5 @@
 ViewHelpers = require '../helpers/view_helpers.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Fairs', ->
   describe '#fillRows', ->

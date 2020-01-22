@@ -9,7 +9,7 @@ Profile = require '../../../../models/profile.coffee'
 fixtures = require '../../../../test/helpers/fixtures'
 
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'PartnerRouter', ->

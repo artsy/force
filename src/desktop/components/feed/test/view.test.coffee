@@ -5,7 +5,7 @@ sinon = require 'sinon'
 sd = require('sharify').data
 FeedItem = require '../models/feed_item'
 FeedItems = require '../collections/feed_items'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 xdescribe 'FeedView', ->
 

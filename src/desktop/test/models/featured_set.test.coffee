@@ -3,7 +3,7 @@ should = require 'should'
 Backbone = require 'backbone'
 FeaturedLink = require '../../models/featured_link.coffee'
 FeaturedSet = require '../../models/featured_set.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'FeaturedSet', ->
 

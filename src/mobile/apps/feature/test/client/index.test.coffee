@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 sinon = require 'sinon'
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Feature = require '../../../../models/feature'
 Sale = require '../../../../models/sale'
 Artworks = require '../../../../collections/artworks'

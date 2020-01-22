@@ -6,7 +6,7 @@ AuctionLot = require '../../../../models/auction_lot'
 AuctionLots = require '../../../../collections/auction_lots'
 Artworks = require '../../../../collections/artworks'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 xdescribe 'Auction results client-side code', ->
   before (done) ->

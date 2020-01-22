@@ -1,4 +1,4 @@
-fabricate = require('antigravity').fabricate
+fabricate = require('@artsy/antigravity').fabricate
 rewire = require 'rewire'
 SearchResult = rewire '../../models/search_result.coffee'
 Fair = require '../../models/fair.coffee'

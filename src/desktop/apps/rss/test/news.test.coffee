@@ -4,7 +4,7 @@ newsTemplate = require('jade').compileFile(require.resolve '../templates/news.ja
 articleTemplate = require('jade').compileFile(require.resolve '../templates/article.jade')
 sd =
   APP_URL: 'http://localhost'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 moment = require 'moment'

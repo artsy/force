@@ -1,6 +1,6 @@
 $ = require 'cheerio'
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 template = require('jade').compileFile(require.resolve '../../templates/visitors.jade')

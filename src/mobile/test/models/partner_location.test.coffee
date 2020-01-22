@@ -1,5 +1,5 @@
 PartnerLocation = require '../../models/partner_location'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'PartnerLocation', ->
 

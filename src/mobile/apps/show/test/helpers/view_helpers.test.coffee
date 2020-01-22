@@ -1,6 +1,6 @@
 sinon = require 'sinon'
 Show = require '../../../../models/show'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 ViewHelper = require '../../helpers/view_helpers.coffee'
 
 describe 'toJSONLD', ->
@@ -13,7 +13,7 @@ describe 'toJSONLD', ->
       @jsonLD.name.should.containEql('Inez & Vinoodh')
 
     it 'jsonld has the show url', ->
-      @jsonLD.url.should.containEql('http://artsy.net/show/gagosian-gallery-inez-and-vinoo')
+      @jsonLD.url.should.containEql('/show/gagosian-gallery-inez-and-vinoo')
 
     it 'jsonld has the image', ->
       @jsonLD.image.should.containEql('/local/partner_show_images/51f6a51d275b24a787000c36/1/:version.jpg')

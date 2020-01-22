@@ -1,7 +1,7 @@
 fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Feature = require '../../../../models/feature'
 
 describe 'Meta tags', ->

@@ -1,5 +1,5 @@
 Video = require '../../models/video'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Video', ->
 

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Introduction = require '../model'
 LoggedOutUser = require '../../../models/logged_out_user'
 Artist = require '../../../models/artist'

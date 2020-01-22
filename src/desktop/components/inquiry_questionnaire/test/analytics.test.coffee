@@ -1,7 +1,7 @@
 rewire = require 'rewire'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../models/current_user'
 Artwork = require '../../../models/artwork'
 ArtworkInquiry = require '../../../models/artwork_inquiry'

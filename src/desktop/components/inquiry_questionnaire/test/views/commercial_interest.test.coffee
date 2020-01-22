@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-setup = require './setup'
+{ setup } = require './setup'
 CommercialInterest = benv.requireWithJadeify require.resolve('../../views/commercial_interest'), ['template']
 
 describe 'CommercialInterest', setup ->

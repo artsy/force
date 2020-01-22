@@ -4,7 +4,7 @@ sinon = require 'sinon'
 sd = require('sharify').data
 benv = require 'benv'
 CurrentUser = require '../../../models/current_user'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'UserSettingsView', ->
 

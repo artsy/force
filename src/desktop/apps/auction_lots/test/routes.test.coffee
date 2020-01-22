@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 Q = require 'bluebird-q'
 totalCount = sinon.stub()
@@ -25,7 +25,7 @@ xdescribe 'Auction results routes', ->
 
     it 'makes the appropriate requests', (done) ->
       routes.detail @req, @res
-      _.defer => _.defer =>
+      _.defer -> _.defer ->
         Backbone.sync.args.length.should.equal 4
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/auction_lot/a-lot'
         Backbone.sync.args[1][1].url().should.containEql '/api/v1/artist/andy-foobar'

@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user'
 Artist = require '../../../models/artist'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 ArtistFillwidthList = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['mainTemplate', 'listTemplate']
 
@@ -16,7 +16,7 @@ ArtistFillwidthList.__set__ 'FillwidthView', class FillwidthView
 describe 'ArtistFillwidthList', ->
 
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         sd: {}

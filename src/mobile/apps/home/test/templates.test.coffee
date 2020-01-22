@@ -6,7 +6,7 @@ fs = require 'fs'
 Shows = require '../../../collections/shows_feed'
 Artworks = require '../../../collections/artworks'
 FeaturedLinks = require '../../../collections/featured_links'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -60,7 +60,7 @@ describe 'Index', ->
       { title: 'Diary of a cat' }
       { title: 'Diary of a dog' }
     ]
-    html = render('page')(heroUnits: heroUnits, sd: {}, _s: _s, resize: () => {})
+    html = render('page')(heroUnits: heroUnits, sd: {}, _s: _s, resize: () -> {})
     html.should.containEql 'Diary of a cat'
     $ = cheerio.load html
 

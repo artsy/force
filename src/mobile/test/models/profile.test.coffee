@@ -1,7 +1,7 @@
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Profile = require '../../models/profile'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Profile', ->
 

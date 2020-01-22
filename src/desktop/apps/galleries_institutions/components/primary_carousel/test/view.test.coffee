@@ -4,11 +4,11 @@ Backbone = require 'backbone'
 Profiles = require '../../../../../collections/profiles.coffee'
 rewire = require 'rewire'
 PrimaryCarousel = rewire '../view.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'PrimaryCarousel', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
       Backbone.$ = $

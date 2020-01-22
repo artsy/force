@@ -4,7 +4,7 @@ sinon = require 'sinon'
 path = require 'path'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 Show = require '../../../models/show.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'ShowCityView', ->
 

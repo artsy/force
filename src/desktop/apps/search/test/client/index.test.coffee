@@ -1,7 +1,7 @@
 benv = require 'benv'
 Backbone = require 'backbone'
 fixture = require '../../../../test/helpers/fixtures.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 sinon = require 'sinon'
 path = require 'path'
 SearchResult = require '../../../../models/search_result.coffee'

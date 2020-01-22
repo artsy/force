@@ -1,7 +1,7 @@
 _ = require 'underscore'
 $ = require 'cheerio'
 jade = require 'jade'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Auction = require '../../../models/auction'
 Artwork = require '../../../models/artwork'
 

@@ -2,7 +2,7 @@ Artwork = require '../../models/artwork.coffee'
 Backbone = require 'backbone'
 Fair = require '../../models/fair.coffee'
 { FairTrendArtist, FairTrendPartner } = require '../../models/fair_trend.coffee'
-fabricate = require 'antigravity'
+fabricate = require '@artsy/antigravity'
 sinon = require 'sinon'
 
 xdescribe 'FairTrend', ->

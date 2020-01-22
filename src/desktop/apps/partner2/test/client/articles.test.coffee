@@ -6,7 +6,7 @@ Profile = require '../../../../models/profile.coffee'
 Articles = require '../../../../collections/articles.coffee'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 fixtures = require '../../../../test/helpers/fixtures.coffee'
 
 describe 'ArticlesAdapter', ->

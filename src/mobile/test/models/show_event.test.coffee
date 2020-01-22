@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Show = require '../../models/show'
 
 describe 'ShowEvent', ->

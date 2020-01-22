@@ -6,7 +6,7 @@ Profile = require '../../../models/profile.coffee'
 Artist = require '../../../models/artist.coffee'
 rewire = require 'rewire'
 FollowButton = rewire '../view.coffee'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Following = require '../collection'
 
 describe 'FollowButton', ->

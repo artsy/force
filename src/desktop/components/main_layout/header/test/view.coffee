@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 mediator = require '../../../../lib/mediator.coffee'
 CurrentUser = require '../../../../models/current_user'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 { resolve } = require 'path'
 
