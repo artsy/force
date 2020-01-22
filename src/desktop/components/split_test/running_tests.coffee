@@ -31,10 +31,4 @@ module.exports = {
       control: 50
       experiment: 50
     edge: "experiment"
-  desktop_global_navigation:
-    key: "desktop_global_navigation"
-    outcomes:
-      control: 50
-      experiment: 50
-    edge: "experiment"
 }
