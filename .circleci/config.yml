@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@0.1.1
   codecov: codecov/codecov@1.0.5
-  hokusai: artsy/hokusai@dev:cc679125947a4d541ef9cd163cff8344
+  hokusai: artsy/hokusai@0.7.1
   horizon: artsy/release@0.0.1
   node: artsy/node@0.1.0
   yarn: artsy/yarn@2.1.1
@@ -83,45 +83,41 @@ workflows:
           <<: *only_release
           context: horizon
           project_id: 11
+
       - artsy-remote-docker/build:
           <<: *not_staging_or_release
           name: docker_build
           context: hokusai
+
       # Pre-staging
       - test:
           context: hokusai
           <<: *not_staging_or_release
           requires:
             - docker_build
+          post-steps:
+            - run: mkdir -p ./coverage ./.nyc_output ./reports
+            - run:
+                name: Copy jest coverage artifacts
+                command: docker cp hokusai_force_1:/app/coverage ./
+                when: always
+            - codecov/upload:
+                file: ./coverage/lcov.info
+            - run:
+                name: Copy mocha coverage artifacts
+                command: docker cp hokusai_force_1:/app/.nyc_output ./
+                when: always
+            - codecov/upload:
+                file: ./.nyc_output/lcov.info
+            - run:
+                name: Copy coverage reports
+                command: docker cp hokusai_force_1:/app/reports ./
+                when: always
+            - store_test_results:
+                path: ./reports
 
-      # - hokusai/test:
-      #     name: test
-      #     context: hokusai
+      # - yarn/update-cache:
       #     <<: *not_staging_or_release
-      #     requires:
-      #       - docker_build
-      #     post-steps:
-      #       - run: mkdir -p ./coverage ./.nyc_output ./reports
-      #       - run:
-      #           name: Copy jest coverage artifacts
-      #           command: docker cp hokusai_force_1:/app/coverage ./
-      #           when: always
-      #       - codecov/upload:
-      #           file: ./coverage/lcov.info
-      #       - run:
-      #           name: Copy mocha coverage artifacts
-      #           command: docker cp hokusai_force_1:/app/.nyc_output ./
-      #           when: always
-      #       - codecov/upload:
-      #           file: ./.nyc_output/lcov.info
-      #       - run:
-      #           name: Copy coverage reports
-      #           command: docker cp hokusai_force_1:/app/reports ./
-      #           when: always
-      #       - store_test_results:
-      #           path: ./reports
-      - yarn/update-cache:
-          <<: *not_staging_or_release
       - acceptance:
           <<: *not_staging_or_release
       - build:
@@ -147,6 +143,7 @@ workflows:
       # Release
       - validate_production_schema:
           <<: *only_release
+
       - hokusai/deploy-production:
           <<: *only_release
           requires:
