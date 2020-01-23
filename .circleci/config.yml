@@ -29,18 +29,18 @@ jobs:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
 
-  build:
-    executor: node/build
-    steps:
-      - yarn/setup
-      - run:
-          name: Build force assets
-          command: yarn assets
-      - store_artifacts:
-          path: ~/project/.artifacts
-      - run:
-          name: Duplicates Report
-          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
+  # build:
+  # executor: node/build
+  # steps:
+  #   - yarn/setup
+  #   - run:
+  #       name: Build force assets
+  #       command: yarn assets
+  #   - store_artifacts:
+  #       path: ~/project/.artifacts
+  #   - run:
+  #       name: Duplicates Report
+  #       command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
 
   danger:
     executor: node/build
@@ -56,6 +56,15 @@ jobs:
       - hokusai/setup-docker
       - run: hokusai registry pull --tag "$CIRCLE_SHA1"
       - run: hokusai test --no-build
+
+  duplicates:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run:
+          name: Duplicates Report
+          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
 
 not_staging_or_release: &not_staging_or_release
   filters:
@@ -88,40 +97,46 @@ workflows:
           <<: *not_staging_or_release
           name: docker_build
           context: hokusai
+          post-steps:
+            - store_artifacts:
+                path: ~/project/.artifacts
+
+      - duplicates:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - docker_build
 
       # Pre-staging
       - test:
-          context: hokusai
           <<: *not_staging_or_release
+          context: hokusai
           requires:
             - docker_build
           post-steps:
-            - run: mkdir -p ./coverage ./.nyc_output ./reports
             - run:
                 name: Copy jest coverage artifacts
-                command: docker cp hokusai_force_1:/app/coverage ./
+                command: mkdir -p ./coverage && docker cp hokusai_force_1:/app/coverage ./
                 when: always
             - codecov/upload:
                 file: ./coverage/lcov.info
             - run:
                 name: Copy mocha coverage artifacts
-                command: docker cp hokusai_force_1:/app/.nyc_output ./
+                command: mkdir -p ./.nyc_output && docker cp hokusai_force_1:/app/.nyc_output ./
                 when: always
             - codecov/upload:
                 file: ./.nyc_output/lcov.info
             - run:
                 name: Copy coverage reports
-                command: docker cp hokusai_force_1:/app/reports ./
+                command: mkdir -p ./reports && docker cp hokusai_force_1:/app/reports ./
                 when: always
             - store_test_results:
                 path: ./reports
 
-      # - yarn/update-cache:
-      #     <<: *not_staging_or_release
       - acceptance:
           <<: *not_staging_or_release
-      - build:
-          <<: *not_staging_or_release
+      # - build:
+      #     <<: *not_staging_or_release
       - danger:
           <<: *not_staging_or_release
 
@@ -132,7 +147,7 @@ workflows:
           requires:
             - test
             - acceptance
-            - build
+            # - build
 
       - hokusai/deploy-staging:
           <<: *only_master
