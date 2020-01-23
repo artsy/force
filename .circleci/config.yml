@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@0.1.1
   codecov: codecov/codecov@1.0.5
-  hokusai: artsy/hokusai@0.7.1
+  hokusai: artsy/hokusai@dev:cc679125947a4d541ef9cd163cff8344
   horizon: artsy/release@0.0.1
   node: artsy/node@0.1.0
   yarn: artsy/yarn@2.1.1
@@ -55,7 +55,8 @@ jobs:
     steps:
       - hokusai/setup-docker
       - run: hokusai registry pull --tag "$CIRCLE_SHA1"
-      - run: hokusai test --no-build
+      - hokusai/run-tests:
+          flags: --no-build
 
   duplicates:
     executor: hokusai/deploy
