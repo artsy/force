@@ -55,7 +55,7 @@ jobs:
     steps:
       - hokusai/setup-docker
       - run: hokusai registry pull --tag "$CIRCLE_SHA1"
-      - run: hokusai test
+      - run: hokusai test --no-build
 
 not_staging_or_release: &not_staging_or_release
   filters:
