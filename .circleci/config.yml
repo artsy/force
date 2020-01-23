@@ -29,19 +29,6 @@ jobs:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
 
-  # build:
-  # executor: node/build
-  # steps:
-  #   - yarn/setup
-  #   - run:
-  #       name: Build force assets
-  #       command: yarn assets
-  #   - store_artifacts:
-  #       path: ~/project/.artifacts
-  #   - run:
-  #       name: Duplicates Report
-  #       command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
-
   danger:
     executor: node/build
     steps:
@@ -99,8 +86,10 @@ workflows:
           name: docker_build
           context: hokusai
           post-steps:
-            - store_artifacts:
-                path: ~/project/.artifacts
+            - run:
+                name: Copy dupe report artifacts
+                command: mkdir -p ./.artifacts && docker cp hokusai_force_1:/app/.artifacts ./
+                when: always
 
       - duplicates:
           <<: *not_staging_or_release
@@ -114,30 +103,10 @@ workflows:
           context: hokusai
           requires:
             - docker_build
-          post-steps:
-            - run:
-                name: Copy jest coverage artifacts
-                command: mkdir -p ./coverage && docker cp hokusai_force_1:/app/coverage ./
-                when: always
-            - codecov/upload:
-                file: ./coverage/lcov.info
-            - run:
-                name: Copy mocha coverage artifacts
-                command: mkdir -p ./.nyc_output && docker cp hokusai_force_1:/app/.nyc_output ./
-                when: always
-            - codecov/upload:
-                file: ./.nyc_output/lcov.info
-            - run:
-                name: Copy coverage reports
-                command: mkdir -p ./reports && docker cp hokusai_force_1:/app/reports ./
-                when: always
-            - store_test_results:
-                path: ./reports
 
       - acceptance:
           <<: *not_staging_or_release
-      # - build:
-      #     <<: *not_staging_or_release
+
       - danger:
           <<: *not_staging_or_release
 
@@ -148,7 +117,6 @@ workflows:
           requires:
             - test
             - acceptance
-            # - build
 
       - hokusai/deploy-staging:
           <<: *only_master
