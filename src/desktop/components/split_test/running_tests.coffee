@@ -25,14 +25,8 @@
 # module.exports = {}
 
 module.exports = {
-  client_navigation:
-    key: "client_navigation"
-    outcomes:
-      control: 50
-      experiment: 50
-    edge: "experiment"
-  desktop_global_navigation:
-    key: "desktop_global_navigation"
+  client_navigation_v2:
+    key: "client_navigation_v2"
     outcomes:
       control: 50
       experiment: 50
