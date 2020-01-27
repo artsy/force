@@ -14,9 +14,6 @@ jobs:
     steps:
       - yarn/setup
       - run:
-          name: Acceptance Tests
-          command: yarn acceptance src/test/acceptance/*.js
-      - run:
           name: Cypress Tests
           command: yarn test:smoke
 

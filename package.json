@@ -7,8 +7,6 @@
     "yarn": "1.x.x"
   },
   "scripts": {
-    "acceptance-record": "scripts/acceptance_record.sh",
-    "acceptance": "scripts/acceptance.sh",
     "assets": "NODE_ENV=production yarn build",
     "build:server": "BUILD_SERVER=true NODE_ENV=production yarn webpack",
     "build": "yarn clean && yarn webpack",
@@ -180,7 +178,6 @@
     "moment-timezone": "0.5.25",
     "moment-twitter": "0.2.0",
     "nib": "1.1.2",
-    "nock": "9.0.13",
     "node-uuid": "1.4.8",
     "nouislider": "9.2.0",
     "nyc": "13.3.0",
@@ -297,7 +294,6 @@
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
     "mocha-multi-reporters": "1.1.7",
-    "nightmare": "2.10.0",
     "patch-package": "5.0.0",
     "postinstall-prepare": "1.0.1",
     "prettier": "1.15.2",
