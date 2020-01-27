@@ -40,6 +40,7 @@ coverage*
 reports*
 junit.xml
 cypress/videos
+cypress/screenshots
 
 .yalc
 yalc.lock
