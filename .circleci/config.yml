@@ -15,7 +15,7 @@ jobs:
       - yarn/setup
       - run:
           name: Cypress Tests
-          command: yarn test:smoke
+          command: yarn test:acceptance
 
   validate_production_schema:
     executor: node/build

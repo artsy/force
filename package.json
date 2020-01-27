@@ -27,7 +27,7 @@
     "start:prod": "yarn assets && yarn build:server && NODE_ENV=production yarn start",
     "start": "scripts/start.sh",
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
-    "test:smoke": "scripts/smoke_test.sh",
+    "test:acceptance": "scripts/acceptance.sh",
     "test": "scripts/test.sh",
     "type-check": "tsc --pretty --noEmit",
     "unlink-all": "yalc remove --all && yarn --check-files",
