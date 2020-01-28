@@ -37,6 +37,10 @@ describe 'Inquiry', setup ->
         @view.$('.scontact-from').text()
           .should.equal 'From: Craig Spaeth (craigspaeth@gmail.com)'
 
+      it 'fires a recaptcha impression', ->
+        window.grecaptcha.execute.args[0][0].should.equal 'RECAPTCHA_KEY'
+        window.grecaptcha.execute.args[0][1].action.should.equal 'inquiry_impression'
+
     describe 'user without contact details', ->
       beforeEach ->
         @loggedOutUser.unset 'name'
