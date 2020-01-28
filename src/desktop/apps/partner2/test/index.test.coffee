@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 _ = require 'underscore'
 express = require 'express'
 sinon = require 'sinon'

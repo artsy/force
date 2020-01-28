@@ -6,7 +6,7 @@ benv = require 'benv'
 Partner = require '../../../../../models/partner.coffee'
 PartnerShow = require '../../../../../models/partner_show.coffee'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 HeroShowsCarousel = benv.requireWithJadeify resolve(
   __dirname, '../view.coffee'

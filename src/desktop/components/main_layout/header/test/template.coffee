@@ -3,7 +3,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../models/current_user'
 
 render = (templateName) ->

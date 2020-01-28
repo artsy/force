@@ -9,6 +9,7 @@ templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
+{ repcaptcha } = require "@artsy/reaction/dist/Utils/repcaptcha"
 
 module.exports = class Account extends StepView
   _.extend @prototype, FormMixin
@@ -19,10 +20,9 @@ module.exports = class Account extends StepView
     templates[@mode()] arguments...
 
   __events__:
-    'click button': 'submit'
+    'click button': 'onSubmit'
     'click .js-mode': 'change'
     'click .js-iq-save-skip': 'next'
-    'click #signup-fb': 'fbSignup'
 
   initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
     @modal?.dialog 'bounce-in'
@@ -43,16 +43,22 @@ module.exports = class Account extends StepView
     else
       mode
 
-  submit: (e) ->
+  onSubmit: (e) ->
     e.preventDefault()
-
     form = new Form model: @user, $form: @$('form'), $submit: @$('.js-form-submit')
     return unless form.isReady()
-
     form.state 'loading'
 
-    @user.set form.data()
-    @user[@mode()] # `login` or `signup`
+    repcaptcha("signup_submit", (recaptcha_token) =>
+      @submit(form, recaptcha_token)
+    )
+
+  submit: (form, recaptcha_token) ->
+    data = Object.assign {},
+      form.data(),
+      recaptcha_token: recaptcha_token
+    @user.set data
+    @user[@mode()] # `login` or `register`
       error: form.error.bind form
       trigger_login: false
       success: (model, { user }) =>

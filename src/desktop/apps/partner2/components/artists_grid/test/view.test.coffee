@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 Partner = require '../../../../../models/partner.coffee'
 PartnerArtists = require '../../../../../collections/partner_artists.coffee'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 PartnerArtistsGridView = benv.requireWithJadeify resolve(
   __dirname, '../view.coffee'

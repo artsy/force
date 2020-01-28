@@ -1,6 +1,6 @@
 _ = require 'underscore'
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Backbone = require 'backbone'
 User = require '../../models/user'
 CurrentUser = require '../../models/current_user'

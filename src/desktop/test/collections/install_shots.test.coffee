@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 InstallShots = require '../../collections/install_shots'
 
 # A WILD API RESPONSE APPEARS

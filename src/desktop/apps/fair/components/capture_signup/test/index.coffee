@@ -5,7 +5,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Fair = require '../../../../../models/fair.coffee'
 rewire = require 'rewire'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../../models/current_user.coffee'
 capture = rewire '../index.coffee'
 

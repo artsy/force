@@ -7,7 +7,7 @@ Partner = require '../../../../../models/partner.coffee'
 PartnerShow = require '../../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../../collections/partner_shows.coffee'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 FixedCellsCountCarousel = rewire '../view.coffee'
 

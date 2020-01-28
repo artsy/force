@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 Article = rewire '../../models/article'
 Articles = require '../../collections/articles'

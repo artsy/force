@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 DeepZoom = require '../../../models/mixins/deep_zoom'
 { Image } = require 'artsy-backbone-mixins'
 

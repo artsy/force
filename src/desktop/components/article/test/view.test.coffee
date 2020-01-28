@@ -7,7 +7,7 @@ Articles = require '../../../collections/articles'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 sd = require('sharify').data
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
 embed = require 'particle'
 

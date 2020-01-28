@@ -1,7 +1,7 @@
 fs = require 'fs'
 jade = require 'jade'
 sd = require('sharify').data
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 PartnerShow = require '../../../models/partner_show'
 cheerio = require 'cheerio'
 

@@ -1,8 +1,8 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
-setup = require './setup'
+{ fabricate } = require '@artsy/antigravity'
+{ setup } = require './setup'
 Inquiry = benv.requireWithJadeify require.resolve('../../views/inquiry'), [
   'template'
 ]

@@ -1,6 +1,6 @@
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 ShowsFeed = require '../../collections/shows_feed'
 
 describe 'ShowsFeed', ->

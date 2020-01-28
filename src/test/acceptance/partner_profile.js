@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { setup, teardown } from "./helpers"
-import { server as antigravity } from "antigravity"
+import { server as antigravity } from "@artsy/antigravity"
 import sinon from "sinon"
 
 describe("Partner profile page", () => {

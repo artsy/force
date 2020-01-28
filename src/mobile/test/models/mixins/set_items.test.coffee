@@ -1,5 +1,5 @@
 sinon = require 'sinon'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 _ = require 'underscore'
 Backbone = require 'backbone'
 setItems = require '../../../models/mixins/set_items'

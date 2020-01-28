@@ -1,7 +1,7 @@
 sinon = require 'sinon'
 path = require 'path'
 Sale = require '../../../models/sale'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Backbone = require 'backbone'
 benv = require 'benv'
 moment = require 'moment'

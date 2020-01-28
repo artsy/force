@@ -3,7 +3,7 @@ sinon = require 'sinon'
 moment = require 'moment'
 Backbone = require 'backbone'
 PartnerShow = require '../../../models/show'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 routes = require '../routes'
 
 describe 'Shows routes', ->

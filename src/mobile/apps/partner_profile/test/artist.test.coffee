@@ -9,7 +9,7 @@ Artworks = require '../../../collections/artworks'
 FollowArtist = require '../../../models/follow_artist'
 CurrentUser = require '../../../models/current_user'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'PartnerArtistView', ->
 

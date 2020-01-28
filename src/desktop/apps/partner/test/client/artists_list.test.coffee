@@ -4,7 +4,7 @@ PartnerArtists = require '../../../../collections/partner_artists.coffee'
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 rewire = require 'rewire'
 
 PartnerArtistsListView = rewire '../../client/artists_list'

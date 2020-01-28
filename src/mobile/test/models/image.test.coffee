@@ -1,5 +1,5 @@
 Image = require '../../models/image'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Image', ->
 

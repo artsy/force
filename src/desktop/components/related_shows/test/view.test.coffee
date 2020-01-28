@@ -3,7 +3,7 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Artist = require '../../../models/artist'
 RelatedShowsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
 

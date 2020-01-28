@@ -1,4 +1,4 @@
-{ fabricate, fabricate2 } = require 'antigravity'
+{ fabricate, fabricate2 } = require '@artsy/antigravity'
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -177,7 +177,7 @@ describe '#fetchFairData', ->
     sinon.stub Backbone, 'sync'
     sinon.stub Fair.prototype, 'fetchOverviewData'
     sinon.stub Fair.prototype, 'fetchPrimarySets'
-    @success = =>
+    @success = ->
       Fair::fetchPrimarySets.args[0][0].success()
       Fair::fetchOverviewData.args[0][0].success(
         fair: new Fair(fabricate 'fair', id: 'the-foo-show' )

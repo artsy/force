@@ -1,1 +1,1 @@
-module.exports = require('antigravity').fabricate
+module.exports = require('@artsy/antigravity').fabricate

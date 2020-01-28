@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
 FollowingView = benv.requireWithJadeify resolve(__dirname, '../../client/following'),
   ['profilesTemplate']

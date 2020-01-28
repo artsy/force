@@ -6,7 +6,7 @@ CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 sd = require('sharify').data
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
 
 describe 'ImageSetView', ->

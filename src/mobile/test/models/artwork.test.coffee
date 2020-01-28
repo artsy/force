@@ -2,7 +2,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Artwork = require '../../models/artwork'
 Sale = require '../../models/sale'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'Artwork', ->
 

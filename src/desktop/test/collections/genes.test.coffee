@@ -1,6 +1,6 @@
 Gene = require '../../models/gene'
 Genes = require '../../collections/genes'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 _ = require 'underscore'
 
 describe 'Genes', ->

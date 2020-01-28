@@ -1,10 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "standard",
-    "standard-react",
-    "prettier"
-  ],
+  "extends": ["standard", "standard-react", "prettier"],
   "env": {
     "browser": true,
     "jest": true,
@@ -17,5 +13,8 @@
     "no-new": 0,
     "react/jsx-indent": 0,
     "react/prop-types": 0
+  },
+  "globals": {
+    "cy": true
   }
 }

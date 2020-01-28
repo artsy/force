@@ -1,13 +1,13 @@
 $ = require 'cheerio'
 fs = require 'fs'
 jade = require 'jade'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 Profile = require '../../../../../models/profile'
 template = jade.compile fs.readFileSync(filename = require.resolve '../template.jade'), filename: filename
 
 describe 'PrimaryCarousel template', ->
 
-  describe 'with at least one profile to show', ->    
+  describe 'with at least one profile to show', ->
     before ->
       @profile = new Profile fabricate 'profile', owner_type: 'PartnerGallery'
       partner = @profile.related().owner
@@ -29,7 +29,7 @@ describe 'PrimaryCarousel template', ->
       @$('.gpc-location-dates').text()
         .should.equal 'New York, Jul 12 – Aug 23, 2013'
 
-    describe 'with more than one profile to show', ->    
+    describe 'with more than one profile to show', ->
       it 'shows navigation arrows', ->
         @html = template profiles: [@profile, @profile]
         @$ = $.load @html

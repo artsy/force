@@ -1,7 +1,7 @@
 sinon = require 'sinon'
 Backbone = require 'backbone'
 FeaturedLinks = require '../../collections/featured_links'
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 
 describe 'FeaturedLinks', ->
 

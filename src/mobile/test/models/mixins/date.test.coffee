@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate } = require '@artsy/antigravity'
 _ = require 'underscore'
 Backbone = require 'backbone'
 dateMixin = require '../../../models/mixins/date'
