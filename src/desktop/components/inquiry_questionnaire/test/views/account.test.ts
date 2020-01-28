@@ -10,6 +10,7 @@ const Artwork = require("../../../../models/artwork.coffee")
 const ArtworkInquiry = require("../../../../models/artwork_inquiry.coffee")
 const State = require("../../../branching_state/index.coffee")
 const Form = rewire("../../../form/index.coffee")
+const CurrentUser = require("../../../../models/current_user.coffee")
 
 const Account = benv.requireWithJadeify(
   resolve(__dirname, "../../views/account"),
@@ -69,6 +70,61 @@ describe(
           .$(".iq-headline")
           .text()
           .should.containEql("Create an account to send your message")
+      })
+    })
+
+    describe("recaptcha", () => {
+      it("fires a repcaptcha impression for register", () => {
+        view.render()
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][1].action.should.equal(
+          "inquiry_register_impression"
+        )
+      })
+
+      it("fires a recaptcha impression for login", () => {
+        // @ts-ignore
+        window.grecaptcha.execute.reset()
+        CurrentUser.prototype.related = sinon
+          .stub()
+          .returns({ account: { id: "foo" } })
+        view = new Account({
+          user: new CurrentUser(fabricate("user")),
+          artwork: new Artwork(fabricate("artwork")),
+          state: new State(),
+          inquiry: new ArtworkInquiry(),
+        })
+        view.render()
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][1].action.should.equal(
+          "inquiry_login_impression"
+        )
+      })
+      it("fires a recaptcha impression for forgot", () => {
+        // @ts-ignore
+        window.grecaptcha.execute.reset()
+        CurrentUser.prototype.related = sinon
+          .stub()
+          .returns({ account: { id: "foo" } })
+        Account.prototype.sendResetOnce = sinon.stub()
+        view = new Account({
+          user: new CurrentUser(fabricate("user")),
+          artwork: new Artwork(fabricate("artwork")),
+          state: new State(),
+          inquiry: new ArtworkInquiry(),
+        })
+        view.render()
+        view.active.set("mode", "forgot")
+        // @ts-ignore
+        window.grecaptcha.execute.args[1][0].should.equal("RECAPTCHA_KEY")
+        // @ts-ignore
+        window.grecaptcha.execute.args[1][1].action.should.equal(
+          "inquiry_forgot_impression"
+        )
       })
     })
 

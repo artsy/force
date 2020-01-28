@@ -27,11 +27,13 @@ module.exports = class Account extends StepView
   initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
     @modal?.dialog 'bounce-in'
     @active = new Backbone.Model mode: 'auth'
-   
     @listenTo @active, 'change:mode', @render
     @listenTo @active, 'change:mode', @forgot
-
+    @fireRecaptchaImpression()
     super
+
+  fireRecaptchaImpression: ->
+    repcaptcha("inquiry_" + @mode() + "_impression")
 
   setup: ->
     if @user.forgot?
@@ -75,6 +77,7 @@ module.exports = class Account extends StepView
                   @next()
 
   forgot: (active, mode) ->
+    @fireRecaptchaImpression()
     return unless mode is 'forgot'
     @sendResetOnce()
 
