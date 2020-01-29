@@ -13,8 +13,6 @@ app.get(
   skipIfClientSideRoutingEnabled,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // const user = req.user && req.user.toJSON()
-
       const context = buildServerAppContext(req, res, {})
       const {
         bodyHTML,
