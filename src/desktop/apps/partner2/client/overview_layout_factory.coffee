@@ -74,11 +74,13 @@ module.exports = (partner, profile) ->
       articlesSection partner, profile
     ]
     gallery_six: [
-      oneShowOnlyHero partner, profile
+      configurable10ShowsHero partner, profile
       aboutSection partner, profile
+      newsSection partner, profile
       showsCarousel partner, profile
       fairBoothsSection partner, profile
-      artistsGrid partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_seven: [
       oneShowOnlyHero partner, profile
