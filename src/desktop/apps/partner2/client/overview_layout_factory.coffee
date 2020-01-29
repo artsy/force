@@ -17,161 +17,99 @@ articlesTemplate = -> require('../components/fixed_cells_count_carousel/articles
 module.exports = (partner, profile) ->
   contract =
     institution: [
-      galleryTwoHero partner, profile
-      galleryTwoAbout partner, profile
-      galleryTwoNews partner, profile
-      galleryTwoShows partner, profile
-      galleryTwoFairBooths partner, profile
-      galleryTwoArtists partner, profile
-      galleryTwoArticles partner, profile
+      configurable2ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_default: [
-      galleryDefaultShows partner, profile
-      galleryDefaultArtists partner, profile
-      galleryDefaultLocations partner, profile
+      showsGrid partner, profile
+      possiblyUnclaimedPartnerArtists partner, profile
+      locationsSection partner, profile
     ]
     gallery_one: [
-      galleryOneHero partner, profile
-      galleryOneAbout partner, profile
-      galleryOneShows partner, profile
-      galleryOneFairBooths partner, profile
-      galleryOneArtists partner, profile
+      oneShowOnlyHero partner, profile
+      aboutSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      artistsGrid partner, profile
     ]
     gallery_two: [
-      galleryTwoHero partner, profile
-      galleryTwoAbout partner, profile
-      galleryTwoNews partner, profile
-      galleryTwoShows partner, profile
-      galleryTwoFairBooths partner, profile
-      galleryTwoArtists partner, profile
-      galleryTwoArticles partner, profile
+      configurable2ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_three: [
-      galleryThreeHero partner, profile
-      galleryThreeAbout partner, profile
-      galleryThreeNews partner, profile
-      galleryThreeShows partner, profile
-      galleryThreeFairBooths partner, profile
-      galleryThreeArtists partner, profile
-      galleryThreeArticles partner, profile
+      configurable10ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_four: [
-      galleryFourHero partner, profile
-      galleryFourAbout partner, profile
-      galleryFourNews partner, profile
-      galleryFourShows partner, profile
-      galleryFourFairBooths partner, profile
-      galleryFourArtists partner, profile
-      galleryFourArticles partner, profile
+      configurable10ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_five: [
-      galleryFiveHero partner, profile
-      galleryFiveAbout partner, profile
-      galleryFiveNews partner, profile
-      galleryFiveShows partner, profile
-      galleryFiveFairBooths partner, profile
-      galleryFiveArtists partner, profile
-      galleryFiveArticles partner, profile
+      configurable10ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_six: [
-      gallerySixHero partner, profile
-      gallerySixAbout partner, profile
-      gallerySixShows partner, profile
-      gallerySixFairBooths partner, profile
-      gallerySixArtists partner, profile
+      configurable10ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
     gallery_seven: [
-      gallerySevenHero partner, profile
-      gallerySevenAbout partner, profile
-      gallerySevenShows partner, profile
-      gallerySevenFairBooths partner, profile
-      gallerySevenArtists partner, profile
+      oneShowOnlyHero partner, profile
+      aboutSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      artistsGrid partner, profile
+    ]
+    gallery_eight: [
+      configurable10ShowsHero partner, profile
+      aboutSection partner, profile
+      newsSection partner, profile
+      showsCarousel partner, profile
+      fairBoothsSection partner, profile
+      configurableArtists partner, profile
+      articlesSection partner, profile
     ]
 
   contract[partner.get('profile_layout')] or []
 
 #
-# Sections for gallery_default layout.
+# Hero Section
 #
-galleryDefaultShows = (partner, profile) ->
-  name: 'shows'
-  component: ShowsGrid
-  options:
-    partner: partner
-    isCombined: true
-    numberOfFeatured: if partner.claimed() then 1 else 0
-    numberOfShows: 6
-    seeAll: partner.claimed()
-    heading: 'Shows & Fair Booths' unless partner.claimed()
-
-galleryDefaultArtists = (partner, profile) ->
-  name: 'artists'
-  component: (
-    ArtistsGridView if partner.claimed()
-  )
-  options: partner: partner
-
-galleryDefaultLocations = (partner, profile) ->
-  name: 'locations'
-  title: 'Locations'
-  component: (
-    LocationsView unless partner.claimed()
-  )
-  options: partner: partner
-
-#
-# Sections for gallery_one layout.
-#
-galleryOneHero = (partner, profile) ->
+oneShowOnlyHero = (partner, profile) ->
   name: 'hero'
   component: HeroShowsCarousel
   options: partner: partner, maxNumberOfShows: 1
 
-galleryOneAbout = (partner, profile) ->
-  name: 'about'
-  template: aboutTemplate profile: profile if profile.get('full_bio')
-  title: 'About'
-
-galleryOneShows = (partner, profile) ->
-  name: 'shows'
-  component: FixedCellsCountCarousel
-  options:
-    partner: partner
-    collection: new PartnerShows
-    fetchOptions: [
-      { partner_id: partner.get('_id'), status: 'current', at_a_fair: false, displayable: true, size: 9, sort: 'start_at' }
-      { partner_id: partner.get('_id'), status: 'closed', at_a_fair: false, displayable: true, size: 9, sort: '-end_at' }
-    ]
-    template: showsTemplate
-  title: 'Shows'
-  viewAll: "#{partner.href()}/shows"
-
-galleryOneFairBooths = (partner, profile) ->
-  name: 'fair-booths'
-  component: FixedCellsCountCarousel
-  options:
-    partner: partner
-    collection: new PartnerShows
-    fetchOptions: [
-      { partner_id: partner.get('_id'), status: 'current', at_a_fair: true, displayable: true, size: 9, sort: 'start_at' }
-      { partner_id: partner.get('_id'), status: 'closed', at_a_fair: true, displayable: true, size: 9, sort: '-end_at' }
-    ]
-    template: fairBoothsTemplate
-  title: 'Fair Booths'
-  viewAll: "#{partner.href()}/shows"
-
-galleryOneArtists = (partner, profile) ->
-  name: 'artists'
-  component: ArtistsGridView
-  options: partner: partner
-
-#
-# Sections for gallery_two layout.
-#
-galleryTwoAbout = galleryOneAbout
-galleryTwoShows = galleryOneShows
-galleryTwoFairBooths = galleryOneFairBooths
-galleryTwoHero = (partner, profile) ->
+configurable2ShowsHero = (partner, profile) ->
   name: 'hero'
   component:
     switch partner.get('profile_banner_display')
@@ -186,44 +124,7 @@ galleryTwoHero = (partner, profile) ->
       else _.pick options, 'partner', 'maxNumberOfShows'
   )
 
-galleryTwoNews = (partner, parfile) ->
-  name: 'news'
-  component: NewsView
-  options: partner: partner
-  title: 'News'
-
-galleryTwoArtists = (partner, profile) ->
-  name: 'artists'
-  component:
-    if partner.get('display_artists_section')
-      switch partner.get('profile_artists_layout')
-        when 'Grid' then ArtistsGridView
-        else ArtistsListView
-  options: partner: partner
-  title: 'Artists' unless partner.get('profile_artists_layout') is 'Grid'
-  viewAll: "#{partner.href()}/artists" unless partner.get('profile_artists_layout') is 'Grid'
-
-galleryTwoArticles = (partner, profile) ->
-  name: 'articles'
-  component: FixedCellsCountCarousel
-  options:
-    partner: partner
-    collection: new Articles
-    fetchOptions: partner_id: partner.get('_id'), published: true, limit: 9, sort: '-published_at'
-    template: articlesTemplate
-  title: 'Articles'
-  viewAll: "#{partner.href()}/articles"
-
-#
-# Sections for gallery_three layout.
-#
-galleryThreeAbout = galleryTwoAbout
-galleryThreeNews = galleryTwoNews
-galleryThreeShows = galleryTwoShows
-galleryThreeFairBooths = galleryTwoFairBooths
-galleryThreeArtists = galleryTwoArtists
-galleryThreeArticles = galleryTwoArticles
-galleryThreeHero = (partner, profile) ->
+configurable10ShowsHero = (partner, profile) ->
   name: 'hero'
   component:
     switch partner.get('profile_banner_display')
@@ -238,42 +139,122 @@ galleryThreeHero = (partner, profile) ->
       else _.pick options, 'partner', 'maxNumberOfShows'
   )
 
-#
-# Sections for gallery_four layout.
-#
-galleryFourHero = galleryThreeHero
-galleryFourAbout = galleryTwoAbout
-galleryFourNews = galleryTwoNews
-galleryFourShows = galleryTwoShows
-galleryFourFairBooths = galleryTwoFairBooths
-galleryFourArtists = galleryTwoArtists
-galleryFourArticles = galleryTwoArticles
 
 #
-# Sections for gallery_five layout.
+# About Section
 #
-galleryFiveHero = galleryThreeHero
-galleryFiveAbout = galleryThreeAbout
-galleryFiveNews = galleryThreeNews
-galleryFiveShows = galleryThreeShows
-galleryFiveFairBooths = galleryThreeFairBooths
-galleryFiveArtists = galleryThreeArtists
-galleryFiveArticles = galleryThreeArticles
+aboutSection = (partner, profile) ->
+  name: 'about'
+  template: aboutTemplate profile: profile if profile.get('full_bio')
+  title: 'About'
+
 
 #
-# Sections for gallery_six layout.
+# News Section
 #
-gallerySixHero = galleryOneHero
-gallerySixAbout = galleryOneAbout
-gallerySixShows = galleryOneShows
-gallerySixFairBooths = galleryOneFairBooths
-gallerySixArtists = galleryOneArtists
+newsSection = (partner, parfile) ->
+  name: 'news'
+  component: NewsView
+  options: partner: partner
+  title: 'News'
+
 
 #
-# Sections for gallery_seven layout.
+# Shows Section
 #
-gallerySevenHero = galleryOneHero
-gallerySevenAbout = galleryOneAbout
-gallerySevenShows = galleryOneShows
-gallerySevenFairBooths = galleryOneFairBooths
-gallerySevenArtists = galleryOneArtists
+showsGrid = (partner, profile) ->
+  name: 'shows'
+  component: ShowsGrid
+  options:
+    partner: partner
+    isCombined: true
+    numberOfFeatured: if partner.claimed() then 1 else 0
+    numberOfShows: 6
+    seeAll: partner.claimed()
+    heading: 'Shows & Fair Booths' unless partner.claimed()
+
+showsCarousel = (partner, profile) ->
+  name: 'shows'
+  component: FixedCellsCountCarousel
+  options:
+    partner: partner
+    collection: new PartnerShows
+    fetchOptions: [
+      { partner_id: partner.get('_id'), status: 'current', at_a_fair: false, displayable: true, size: 9, sort: 'start_at' }
+      { partner_id: partner.get('_id'), status: 'closed', at_a_fair: false, displayable: true, size: 9, sort: '-end_at' }
+    ]
+    template: showsTemplate
+  title: 'Shows'
+  viewAll: "#{partner.href()}/shows"
+
+
+#
+# Fair Booths Section
+#
+fairBoothsSection = (partner, profile) ->
+  name: 'fair-booths'
+  component: FixedCellsCountCarousel
+  options:
+    partner: partner
+    collection: new PartnerShows
+    fetchOptions: [
+      { partner_id: partner.get('_id'), status: 'current', at_a_fair: true, displayable: true, size: 9, sort: 'start_at' }
+      { partner_id: partner.get('_id'), status: 'closed', at_a_fair: true, displayable: true, size: 9, sort: '-end_at' }
+    ]
+    template: fairBoothsTemplate
+  title: 'Fair Booths'
+  viewAll: "#{partner.href()}/shows"
+
+
+#
+# Artists Section
+#
+possiblyUnclaimedPartnerArtists = (partner, profile) ->
+  name: 'artists'
+  component: (
+    ArtistsGridView if partner.claimed()
+  )
+  options: partner: partner
+
+artistsGrid = (partner, profile) ->
+  name: 'artists'
+  component: ArtistsGridView
+  options: partner: partner
+
+configurableArtists = (partner, profile) ->
+  name: 'artists'
+  component:
+    if partner.get('display_artists_section')
+      switch partner.get('profile_artists_layout')
+        when 'Grid' then ArtistsGridView
+        else ArtistsListView
+  options: partner: partner
+  title: 'Artists' unless partner.get('profile_artists_layout') is 'Grid'
+  viewAll: "#{partner.href()}/artists" unless partner.get('profile_artists_layout') is 'Grid'
+
+
+#
+# Locations Section
+#
+locationsSection = (partner, profile) ->
+  name: 'locations'
+  title: 'Locations'
+  component: (
+    LocationsView unless partner.claimed()
+  )
+  options: partner: partner
+
+
+#
+# Articles Section
+#
+articlesSection = (partner, profile) ->
+  name: 'articles'
+  component: FixedCellsCountCarousel
+  options:
+    partner: partner
+    collection: new Articles
+    fetchOptions: partner_id: partner.get('_id'), published: true, limit: 9, sort: '-published_at'
+    template: articlesTemplate
+  title: 'Articles'
+  viewAll: "#{partner.href()}/articles"
