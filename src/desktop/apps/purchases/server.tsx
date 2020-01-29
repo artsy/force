@@ -43,7 +43,7 @@ app.get(
         },
         locals: {
           ...res.locals,
-          assetPackage: "purchase",
+          assetPackage: "purchases",
           scripts,
           styleTags,
         },
