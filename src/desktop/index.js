@@ -27,6 +27,7 @@ app.use(require("./apps/auction_lots"))
 
 // TODO: Remove after AB test ends.
 app.use(require("./apps/artist/server").app)
+app.use(require("./apps/purchases/server").app)
 app.use(require("./apps/artwork/server").app)
 app.use(require("./apps/collect/server").app)
 app.use(require("./apps/search2/server").app)
