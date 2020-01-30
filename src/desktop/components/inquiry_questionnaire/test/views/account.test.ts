@@ -73,7 +73,7 @@ describe(
     })
 
     describe("recaptcha", () => {
-      it("fires a repcaptcha impression for register", () => {
+      it("fires a recaptcha impression for register", () => {
         view.render()
         // @ts-ignore
         window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")

@@ -8,7 +8,7 @@ mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 Form = require('../mixins/form.coffee')
 FormErrorHelpers = require('../auth_modal/helpers')
-{ repcaptcha } = require "@artsy/reaction/dist/Utils/repcaptcha"
+{ recaptcha } = require "@artsy/reaction/dist/Utils/recaptcha"
 
 class MarketingSignupModalInner extends Backbone.View
   _.extend @prototype, Form
@@ -95,7 +95,7 @@ class MarketingSignupModalInner extends Backbone.View
     return if @formIsSubmitting()
     e.preventDefault()
     @$('form button').addClass 'is-loading'
-    repcaptcha("signup_submit", (token) =>
+    recaptcha("signup_submit", (token) =>
       @submit(token)
     )
 
