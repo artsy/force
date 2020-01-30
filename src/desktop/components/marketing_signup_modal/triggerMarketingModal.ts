@@ -10,7 +10,7 @@ export const triggerMarketingModal = (isScrolling?: boolean) => {
   const modalData = findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
 
   if (sd.MARKETING_SIGNUP_MODALS && modalData) {
-    if (!sd.CURRENT_USER && !sd.IS_MOBILE) {
+    if (!sd.CURRENT_USER) {
       if (isScrolling) {
         scrollingMarketingModal(modalData)
       } else {
@@ -21,25 +21,27 @@ export const triggerMarketingModal = (isScrolling?: boolean) => {
 }
 
 export const scrollingMarketingModal = modalData => {
-  window.addEventListener(
-    "scroll",
-    () => {
-      setTimeout(() => {
-        const { image, copy } = modalData
-        mediator.trigger("open:auth", {
-          copy,
-          mode: "signup",
-          intent: "signup",
-          signupIntent: "signup",
-          trigger: "scroll",
-          triggerSeconds: 2,
-          destination: location.href,
-          image,
-        })
-      }, 2000)
-    },
-    { once: true }
-  )
+  if (!sd.IS_MOBILE) {
+    window.addEventListener(
+      "scroll",
+      () => {
+        setTimeout(() => {
+          const { image, copy } = modalData
+          mediator.trigger("open:auth", {
+            copy,
+            mode: "signup",
+            intent: "signup",
+            signupIntent: "signup",
+            trigger: "scroll",
+            triggerSeconds: 2,
+            destination: location.href,
+            image,
+          })
+        }, 2000)
+      },
+      { once: true }
+    )
+  }
 }
 
 export const staticMarketingModal = modalData => {

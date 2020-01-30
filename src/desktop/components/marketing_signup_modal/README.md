@@ -6,18 +6,19 @@ A modal that pops up after 3 seconds when a logged out user from outside Artsy l
 
 ## Usage
 
-This uses config variables to determine where it's applied. Use `heroku config:set` to configure a campaign. e.g. Set `MARKETING_SIGNUP_MODAL_SLUG=miami` to allow the query param ?m-id=miami to be added to any page for a modal to appear.
+This uses config variables to determine where it's applied. Use `hokusai [staging|production] env [get|set] MARKETING_SIGNUP_MODALS` to add a new campaign to the array of existing modals.
 
-Examples:
+Examples
 
-````
-MARKETING_SIGNUP_MODAL_SLUG=miami
-MARKETING_SIGNUP_MODAL_COPY=Sign up for early access
-MARKETING_SIGNUP_MODAL_IMG=http://placekitten.com/200/200
-MARKETING_SIGNUP_MODAL_PHOTO_CREDIT= Photo by Artsy
-````
-
-If this expirment results in a worthwhile amount of collector acquistion then eventually the idea is we will replace this config data with a tool we give Marketing to manage themselves.
+```
+MARKETING_SIGNUP_MODALS=[
+  {
+    slug: "ca3",
+    copy: "Discover and Buy Works from Art Fairs",
+    image: "http://files.artsy.net/images/art-fair.jpg",
+  }
+]
+```
 
 ## Implementation
 
