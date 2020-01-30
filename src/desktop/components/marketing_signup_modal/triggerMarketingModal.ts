@@ -3,6 +3,11 @@ import qs from "querystring"
 import { findWhere } from "underscore"
 const mediator = require("desktop/lib/mediator.coffee")
 
+interface ModalData {
+  image: string
+  copy: string
+}
+
 export const triggerMarketingModal = (isScrolling?: boolean) => {
   const query = qs.parse(location.search.replace(/^\?/, ""))
   const isTargetCampaign = sd.CURRENT_PATH === sd.TARGET_CAMPAIGN_URL
@@ -20,7 +25,7 @@ export const triggerMarketingModal = (isScrolling?: boolean) => {
   }
 }
 
-export const scrollingMarketingModal = modalData => {
+export const scrollingMarketingModal = (modalData: ModalData) => {
   if (!sd.IS_MOBILE) {
     window.addEventListener(
       "scroll",
@@ -44,7 +49,7 @@ export const scrollingMarketingModal = modalData => {
   }
 }
 
-export const staticMarketingModal = modalData => {
+export const staticMarketingModal = (modalData: ModalData) => {
   const { image, copy } = modalData
   mediator.trigger("open:auth", {
     copy,

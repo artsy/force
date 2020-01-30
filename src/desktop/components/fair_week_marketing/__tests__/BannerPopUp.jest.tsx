@@ -17,7 +17,7 @@ jest.mock("sharify", () => ({
 jest.mock("desktop/lib/mediator.coffee", () => ({
   trigger: jest.fn(),
 }))
-const mockMediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
+const mediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
 
 describe("BannerPopUp", () => {
   let props = {
@@ -39,7 +39,7 @@ describe("BannerPopUp", () => {
   it("Calls #triggerMarketingModal on click", () => {
     const component = getWrapper(props)
     component.find(Container).simulate("click")
-    expect(mockMediator).toBeCalledWith("open:auth", {
+    expect(mediator).toBeCalledWith("open:auth", {
       copy: "Discover and Buy Works from Art Fairs",
       destination: "https://artsy.net/",
       image: "http://files.artsy.net/images/art-fair.jpg",
