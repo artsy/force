@@ -9,7 +9,7 @@ templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
-{ repcaptcha } = require "@artsy/reaction/dist/Utils/repcaptcha"
+{ recaptcha } = require "@artsy/reaction/dist/Utils/recaptcha"
 
 module.exports = class Account extends StepView
   _.extend @prototype, FormMixin
@@ -33,7 +33,7 @@ module.exports = class Account extends StepView
     super
 
   fireRecaptchaImpression: ->
-    repcaptcha("inquiry_" + @mode() + "_impression")
+    recaptcha("inquiry_" + @mode() + "_impression")
 
   setup: ->
     if @user.forgot?
@@ -51,7 +51,7 @@ module.exports = class Account extends StepView
     return unless form.isReady()
     form.state 'loading'
 
-    repcaptcha("signup_submit", (recaptcha_token) =>
+    recaptcha("signup_submit", (recaptcha_token) =>
       @submit(form, recaptcha_token)
     )
 
