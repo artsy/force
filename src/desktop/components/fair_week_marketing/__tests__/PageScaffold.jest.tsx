@@ -2,7 +2,7 @@ import React from "react"
 import { extend, cloneDeep } from "lodash"
 import { mount } from "enzyme"
 import { FairWeekPageScaffold } from "../PageScaffold"
-import Fixture from "desktop/apps/armory_week/fixture.json"
+const Fixture = require("desktop/apps/armory_week/fixture.json")
 
 describe("FairWeekPageScaffold", () => {
   const getWrapper = (data = {}) => {
@@ -27,7 +27,9 @@ describe("FairWeekPageScaffold", () => {
   describe("fair_coverage", () => {
     it("Renders a list of fairs", () => {
       const component = getWrapper()
-      const { fair_coverage: { fairs } } = Fixture
+      const {
+        fair_coverage: { fairs },
+      } = Fixture
 
       expect(component.html()).toMatch(fairs[0].logo_url)
       expect(component.html()).toMatch(fairs[0].site_url)

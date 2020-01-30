@@ -1,19 +1,19 @@
-import React from "react"
-import queryString from "query-string"
-import { merge } from "lodash"
-import { stitch } from "@artsy/stitch"
-
+import { stitch as _stitch } from "@artsy/stitch"
 import adminOnly from "../../lib/admin_only"
 import JSONPage from "../../components/json_page/es6"
-import MiamiFairWeekPage from "./components/MiamiFairWeekPage"
+import { FairWeekPageScaffold } from "desktop/components/fair_week_marketing/PageScaffold"
+import { FairWeekMeta } from "desktop/components/fair_week_marketing/Meta"
+import { merge } from "lodash"
+import queryString from "query-string"
 
-const SLUG = "artsy-in-miami"
-const MARKETING_MODAL_ID = "ca12"
+let stitch = _stitch
+const SLUG = "london-art-fair-week"
+const MARKETING_MODAL_ID = "ca18"
 
-class EditableMiamFairWeekPage extends JSONPage {
+export class EditableFriezeWeekPage extends JSONPage {
   registerRoutes() {
     this.app.get(this.jsonPage.paths.show, this.show.bind(this))
-    this.app.get(this.jsonPage.paths.show + "/data", adminOnly, this.data)
+    this.app.get(this.jsonPage.paths.show + "/data", this.data)
     this.app.get(this.jsonPage.paths.edit, adminOnly, this.edit)
     this.app.post(this.jsonPage.paths.edit, adminOnly, this.upload)
   }
@@ -22,7 +22,9 @@ class EditableMiamFairWeekPage extends JSONPage {
     try {
       if (req.query["m-id"] !== MARKETING_MODAL_ID) {
         const queryStringAsString = queryString.stringify(
-          merge({}, req.query, { "m-id": MARKETING_MODAL_ID })
+          merge({}, req.query, {
+            "m-id": MARKETING_MODAL_ID,
+          })
         )
 
         return res.redirect(`/${SLUG}?${queryStringAsString}`)
@@ -36,12 +38,16 @@ class EditableMiamFairWeekPage extends JSONPage {
           styledComponents: true,
         },
         blocks: {
-          head: "templates/meta.jade",
-          body: MiamiFairWeekPage,
+          head: FairWeekMeta,
+          body: FairWeekPageScaffold,
+        },
+        locals: {
+          assetPackage: "banner_pop_up",
         },
         data: {
           ...res.locals,
           ...data,
+          displayStickyFooter: !req.user,
           data,
         },
       })
@@ -53,7 +59,10 @@ class EditableMiamFairWeekPage extends JSONPage {
   }
 }
 
-export default new EditableMiamFairWeekPage({
+export const app = new EditableFriezeWeekPage({
   name: SLUG,
-  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
+  paths: {
+    show: `/${SLUG}`,
+    edit: `/${SLUG}/edit`,
+  },
 }).app

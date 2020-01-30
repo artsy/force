@@ -1,9 +1,8 @@
-import PropTypes from "prop-types"
 import React from "react"
 import styled from "styled-components"
 import colors from "reaction/Assets/Colors"
 import InvertedButton from "reaction/Components/Buttons/Inverted"
-import MarketingModal from "desktop/components/marketing_signup_modal/index.coffee"
+import { triggerMarketingModal } from "desktop/components/marketing_signup_modal/triggerMarketingModal"
 
 const StickyFooter = styled.div`
   position: fixed;
@@ -73,32 +72,25 @@ const CtaImageContainer = styled(FixedCol)`
     display: none;
   }
 `
-
-export class BannerPopUp extends React.Component {
-  openModal = () => {
-    new MarketingModal().open()
-  }
-
-  render() {
-    const { ctaTitle, ctaImageUrl } = this.props
-
-    return (
-      <StickyFooter>
-        <Container onClick={this.openModal}>
-          <CtaImageContainer>
-            <CtaImage src={ctaImageUrl} />
-          </CtaImageContainer>
-          <FullWidthCol>{ctaTitle}</FullWidthCol>
-          <FixedCol>
-            <Button>Sign Up</Button>
-          </FixedCol>
-        </Container>
-      </StickyFooter>
-    )
-  }
+interface BannerPopUpProps {
+  ctaTitle: string
+  ctaImageUrl: string
 }
 
-BannerPopUp.propTypes = {
-  ctaTitle: PropTypes.string,
-  ctaImageUrl: PropTypes.string,
+export const BannerPopUp: React.SFC<BannerPopUpProps> = props => {
+  const { ctaTitle, ctaImageUrl } = props
+
+  return (
+    <StickyFooter>
+      <Container onClick={() => triggerMarketingModal()}>
+        <CtaImageContainer>
+          <CtaImage src={ctaImageUrl} />
+        </CtaImageContainer>
+        <FullWidthCol>{ctaTitle}</FullWidthCol>
+        <FixedCol>
+          <Button>Sign Up</Button>
+        </FixedCol>
+      </Container>
+    </StickyFooter>
+  )
 }

@@ -1,19 +1,18 @@
-import { stitch as _stitch } from "@artsy/stitch"
-import adminOnly from "../../lib/admin_only"
-import JSONPage from "../../components/json_page/es6"
+import { stitch } from "@artsy/stitch"
+import adminOnly from "desktop/lib/admin_only"
+import JSONPage from "desktop/components/json_page/es6"
 import { FairWeekPageScaffold } from "desktop/components/fair_week_marketing/PageScaffold"
 import { FairWeekMeta } from "desktop/components/fair_week_marketing/Meta"
 import { merge } from "lodash"
 import queryString from "query-string"
 
-let stitch = _stitch
-const SLUG = "basel-art-week"
+const SLUG = "armory-week"
 const MARKETING_MODAL_ID = "ca18"
 
-export class EditableBaselWeekPage extends JSONPage {
+class EditableArmoryWeekPage extends JSONPage {
   registerRoutes() {
     this.app.get(this.jsonPage.paths.show, this.show.bind(this))
-    this.app.get(this.jsonPage.paths.show + "/data", this.data)
+    this.app.get(this.jsonPage.paths.show + "/data", adminOnly, this.data)
     this.app.get(this.jsonPage.paths.edit, adminOnly, this.edit)
     this.app.post(this.jsonPage.paths.edit, adminOnly, this.upload)
   }
@@ -57,7 +56,7 @@ export class EditableBaselWeekPage extends JSONPage {
   }
 }
 
-export default new EditableBaselWeekPage({
+export const app = new EditableArmoryWeekPage({
   name: SLUG,
   paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
 }).app

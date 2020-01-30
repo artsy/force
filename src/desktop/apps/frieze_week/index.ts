@@ -7,7 +7,7 @@ import { merge } from "lodash"
 import queryString from "query-string"
 
 let stitch = _stitch
-const SLUG = "london-art-fair-week"
+const SLUG = "spring-art-fairs"
 const MARKETING_MODAL_ID = "ca18"
 
 export class EditableFriezeWeekPage extends JSONPage {
@@ -22,9 +22,7 @@ export class EditableFriezeWeekPage extends JSONPage {
     try {
       if (req.query["m-id"] !== MARKETING_MODAL_ID) {
         const queryStringAsString = queryString.stringify(
-          merge({}, req.query, {
-            "m-id": MARKETING_MODAL_ID,
-          })
+          merge({}, req.query, { "m-id": MARKETING_MODAL_ID })
         )
 
         return res.redirect(`/${SLUG}?${queryStringAsString}`)
@@ -59,10 +57,7 @@ export class EditableFriezeWeekPage extends JSONPage {
   }
 }
 
-export default new EditableFriezeWeekPage({
+export const app = new EditableFriezeWeekPage({
   name: SLUG,
-  paths: {
-    show: `/${SLUG}`,
-    edit: `/${SLUG}/edit`,
-  },
+  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
 }).app
