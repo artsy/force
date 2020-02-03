@@ -8,7 +8,7 @@ import { data as sd } from "sharify"
 
 export const init = () => {
   // Rehydrate data from Server
-  const bootstrapData = (window as any).__BOOTSTRAP__
+  const bootstrapData = window.__BOOTSTRAP__
   const el = document.getElementById("react-root")
   const Component: any = sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
 
