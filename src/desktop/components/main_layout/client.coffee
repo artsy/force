@@ -1,10 +1,10 @@
 { globalClientSetup } = require '../../lib/global_client_setup'
 HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
-MarketingSignupModal = require '../marketing_signup_modal/index.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
+{ triggerMarketingModal } = require '../marketing_signup_modal/triggerMarketingModal.ts'
 
 module.exports = ->
   globalClientSetup()
@@ -14,7 +14,7 @@ module.exports = ->
 
   new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
-  new MarketingSignupModal
+  triggerMarketingModal(true)
 
 checkForAfterSignUpAction = ->
   currentUser = CurrentUser.orNull()
