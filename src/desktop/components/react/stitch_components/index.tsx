@@ -1,19 +1,19 @@
-export { SearchBar } from "./SearchBar"
-export { NavBar } from "./NavBar"
+/**
+ * Export globally available React components from this file.
+ *
+ * Keep in mind that components exported from here (and their dependencies)
+ * increase the size of our `common.js` bundle, so when the stitched component
+ * is no longer used be sure to remove it from this list.
+ *
+ * To find which components are still being stiched can search for
+ * ".SomeComponentName(", since this is how the component is invoked from our
+ * jade / pug components.
+ */
 
-export {
-  ReactionArtworkArtistInfo as ArtworkArtistInfo,
-} from "./ReactionArtworkArtistInfo"
-export {
-  ArtworkDetailsQueryRenderer as ArtworkDetails,
-} from "reaction/Apps/Artwork/Components/ArtworkDetails"
+export { StitchWrapper } from "./StitchWrapper"
+export { NavBar } from "./NavBar"
 export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
-export {
-  ReactionTooltipQuestion as TooltipQuestion,
-} from "./ReactionTooltipQuestion"
 export {
   UserSettingsPaymentsQueryRenderer as UserSettingsPayments,
 } from "reaction/Components/Payment/UserSettingsPayments"
-export { StitchWrapper } from "./StitchWrapper"
-export { StagingBanner } from "./StagingBanner"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"
