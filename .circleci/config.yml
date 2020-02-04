@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@0.1.1
   codecov: codecov/codecov@1.0.5
-  hokusai: artsy/hokusai@dev:cc679125947a4d541ef9cd163cff8344
+  hokusai: artsy/hokusai@0.7.2
   horizon: artsy/release@0.0.1
   node: artsy/node@0.1.0
   yarn: artsy/yarn@2.1.1
@@ -17,6 +17,12 @@ jobs:
       - run:
           name: Acceptance Tests
           command: yarn acceptance src/test/acceptance/*.js
+
+  acceptance_cypress:
+    docker:
+      - image: circleci/node:10-stretch-browsers
+    steps:
+      - yarn/setup
       - run:
           name: Cypress Tests
           command: yarn test:smoke
@@ -37,22 +43,13 @@ jobs:
           name: Danger
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
-  test:
-    executor: hokusai/deploy
-    steps:
-      - hokusai/setup-docker
-      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
-      - hokusai/run-tests:
-          flags: --no-build
-
-  duplicates:
-    executor: hokusai/deploy
-    steps:
-      - hokusai/setup-docker
-      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
-      - run:
-          name: Duplicates Report
-          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
+not_master_or_staging_or_release: &not_master_or_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - master
+        - staging
+        - release
 
 not_staging_or_release: &not_staging_or_release
   filters:
@@ -105,6 +102,10 @@ workflows:
             - docker_build
 
       - acceptance:
+          <<: *not_master_or_staging_or_release
+      - acceptance_cypress:
+          <<: *not_master_or_staging_or_release
+      - build:
           <<: *not_staging_or_release
 
       - danger:

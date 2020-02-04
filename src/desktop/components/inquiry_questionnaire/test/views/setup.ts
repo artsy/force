@@ -22,7 +22,7 @@ export const setup = cb =>
             AP: { loginPagePath: "/login" },
           },
           grecaptcha: {
-            ready(cb) {
+            ready: cb => {
               return cb()
             },
             execute: sinon.stub().returns("test-token"),
@@ -41,6 +41,8 @@ export const setup = cb =>
     })
 
     beforeEach(function() {
+      // @ts-ignore
+      window.grecaptcha.execute.reset()
       this.currentUser = new CurrentUser(fabricate("user"))
       this.loggedOutUser = new LoggedOutUser(fabricate("user"))
       this.artwork = new Artwork(fabricate("artwork"))

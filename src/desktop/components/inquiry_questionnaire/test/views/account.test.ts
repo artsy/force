@@ -72,6 +72,46 @@ describe(
       })
     })
 
+    describe("recaptcha", () => {
+      it("fires a recaptcha impression for register", () => {
+        view.render()
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][1].action.should.equal(
+          "inquiry_register_impression"
+        )
+      })
+
+      it("fires a recaptcha impression for login", () => {
+        view.user.related = sinon.stub().returns({ account: { id: "foo" } })
+        // @ts-ignore
+        window.grecaptcha.execute.reset()
+        view.active.set("mode", "login")
+        view.render()
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][1].action.should.equal(
+          "inquiry_login_impression"
+        )
+      })
+
+      it("fires a recaptcha impression for forgot", () => {
+        view.user.related = sinon.stub().returns({ account: { id: "foo" } })
+        // @ts-ignore
+        window.grecaptcha.execute.reset()
+        view.active.set("mode", "forgot")
+        view.render()
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
+        // @ts-ignore
+        window.grecaptcha.execute.args[0][1].action.should.equal(
+          "inquiry_forgot_impression"
+        )
+      })
+    })
+
     describe("#onSubmit", () => {
       beforeEach(() => {
         sinon.stub(Backbone, "sync")

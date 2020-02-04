@@ -1,6 +1,5 @@
 import React from "react"
 import styled, { ThemeProvider } from "styled-components"
-
 import colors from "reaction/Assets/Colors"
 import { Row, Col } from "@artsy/palette"
 import Text from "reaction/Components/Text"
@@ -22,6 +21,8 @@ const SectionTitle = styled(Title)`
 
 const IntroductionText = styled(Text)`
   line-height: 31px;
+  margin-bottom: 20px;
+  color: ${colors.grayDark};
   @media (max-width: 24em) {
     font-size: 20px;
     line-height: 26px;
@@ -33,6 +34,15 @@ const FairLogo = styled.img`
   display: inline;
   @media (min-width: 48em) {
     max-width: 160px;
+  }
+`
+
+const ResponsiveRow = styled(Row)`
+  ${props =>
+    props.paddingBottom &&
+    `padding-bottom: ${props.paddingBottom}px;`} @media (max-width: 48em) {
+    margin-left: -8px;
+    margin-right: -8px;
   }
 `
 
@@ -59,46 +69,50 @@ const theme = {
   },
 }
 
-export default ({
+interface FairWeekPageScaffoldProps {
+  introduction: any
+  fair_coverage: any
+  event: any
+  prepare_for_fairs: any
+  displayStickyFooter: boolean
+}
+
+export const FairWeekPageScaffold: React.SFC<FairWeekPageScaffoldProps> = ({
   introduction,
   fair_coverage,
-  artsy_in_miami,
+  event,
   prepare_for_fairs,
+  displayStickyFooter,
 }) => (
   <ThemeProvider theme={theme}>
     <Container>
-      <Row style={{ paddingBottom: 50 }}>
+      <ResponsiveRow paddingBottom={50}>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle
             titleSize="large"
             dangerouslySetInnerHTML={{ __html: introduction.title }}
           />
         </Col>
+
         <Col lg={8} md={8} sm={12} xs={12}>
           <ReveredColumnOnMobile>
-            <IntroductionText
-              textSize="xlarge"
-              color={colors.grayDark}
-              style={{ marginBottom: 20 }}
-            >
+            <IntroductionText textSize="xlarge">
               {introduction.description}
             </IntroductionText>
-            <div>
-              <img
-                style={{ marginTop: 30, marginBottom: 20, maxWidth: "100%" }}
-                src={introduction.image}
-              />
-            </div>
+            <img
+              style={{ marginTop: 30, marginBottom: 20, maxWidth: "100%" }}
+              src={introduction.image}
+            />
           </ReveredColumnOnMobile>
         </Col>
-      </Row>
+      </ResponsiveRow>
 
-      <Row style={{ paddingBottom: 50 }}>
+      <ResponsiveRow paddingBottom={50}>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle titleSize="large">{fair_coverage.title}</SectionTitle>
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
-          <Row style={{ marginBottom: 20 }}>
+          <ResponsiveRow paddingBottom={20}>
             {fair_coverage.fairs.map(fair => (
               <Col lg={3} md={3} sm={3} xs={6} key={fair.logo_url}>
                 {fair.site_url && fair.site_url.startsWith("http") ? (
@@ -110,38 +124,40 @@ export default ({
                 )}
               </Col>
             ))}
-          </Row>
+          </ResponsiveRow>
         </Col>
-      </Row>
+      </ResponsiveRow>
 
-      <Row style={{ paddingBottom: 45 }}>
-        <Col lg={4} md={4} sm={12} xs={12}>
-          <SectionTitle titleSize="large">{artsy_in_miami.title}</SectionTitle>
-        </Col>
-        <Col lg={8} md={8} sm={12} xs={12}>
-          <img
-            style={{ marginBottom: 10, width: "100%" }}
-            src={artsy_in_miami.banner_image_url}
-          />
+      {event && (
+        <ResponsiveRow paddingBottom={45}>
+          <Col lg={4} md={4} sm={12} xs={12}>
+            <SectionTitle titleSize="large">{event.title}</SectionTitle>
+          </Col>
+          <Col lg={8} md={8} sm={12} xs={12}>
+            <img
+              style={{ marginBottom: 10, width: "100%" }}
+              src={event.banner_image_url}
+            />
 
-          <Row>
-            <Col lg={7} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text textSize="medium">{artsy_in_miami.description}</Text>
-            </Col>
-            <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
-              <Text
-                textSize="medium"
-                color={colors.grayDark}
-                dangerouslySetInnerHTML={{
-                  __html: artsy_in_miami.public_viewing_date,
-                }}
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+            <ResponsiveRow>
+              <Col lg={7} md={8} sm={12} xs={12} style={{ marginBottom: 25 }}>
+                <Text textSize="medium">{event.description}</Text>
+              </Col>
+              <Col lg={5} md={12} sm={12} xs={12} style={{ marginBottom: 25 }}>
+                <Text
+                  textSize="medium"
+                  color={colors.grayDark}
+                  dangerouslySetInnerHTML={{
+                    __html: event.public_viewing_date,
+                  }}
+                />
+              </Col>
+            </ResponsiveRow>
+          </Col>
+        </ResponsiveRow>
+      )}
 
-      <Row>
+      <ResponsiveRow>
         <Col lg={4} md={4} sm={12} xs={12}>
           <SectionTitle titleSize="large">
             {prepare_for_fairs.title}
@@ -149,7 +165,7 @@ export default ({
         </Col>
         <Col lg={8} md={8} sm={12} xs={12}>
           {prepare_for_fairs.articles.map(article => (
-            <Row style={{ marginBottom: 25 }} key={article.title}>
+            <ResponsiveRow paddingBottom={25} key={article.title}>
               <Col lg={7} md={7} sm={6} xs={12}>
                 <a href={article.article_url} target="_blank">
                   <img
@@ -175,10 +191,12 @@ export default ({
                   </Text>
                 </a>
               </Col>
-            </Row>
+            </ResponsiveRow>
           ))}
         </Col>
-      </Row>
+      </ResponsiveRow>
+
+      {displayStickyFooter && <div id="react-root-for-cta" />}
     </Container>
   </ThemeProvider>
 )

@@ -9,7 +9,7 @@ templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
-{ repcaptcha } = require "@artsy/reaction/dist/Utils/repcaptcha"
+{ recaptcha } = require "@artsy/reaction/dist/Utils/recaptcha"
 
 module.exports = class Account extends StepView
   _.extend @prototype, FormMixin
@@ -27,11 +27,13 @@ module.exports = class Account extends StepView
   initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
     @modal?.dialog 'bounce-in'
     @active = new Backbone.Model mode: 'auth'
-   
     @listenTo @active, 'change:mode', @render
     @listenTo @active, 'change:mode', @forgot
-
+    @fireRecaptchaImpression()
     super
+
+  fireRecaptchaImpression: ->
+    recaptcha("inquiry_" + @mode() + "_impression")
 
   setup: ->
     if @user.forgot?
@@ -49,7 +51,7 @@ module.exports = class Account extends StepView
     return unless form.isReady()
     form.state 'loading'
 
-    repcaptcha("signup_submit", (recaptcha_token) =>
+    recaptcha("signup_submit", (recaptcha_token) =>
       @submit(form, recaptcha_token)
     )
 
@@ -75,6 +77,7 @@ module.exports = class Account extends StepView
                   @next()
 
   forgot: (active, mode) ->
+    @fireRecaptchaImpression()
     return unless mode is 'forgot'
     @sendResetOnce()
 
