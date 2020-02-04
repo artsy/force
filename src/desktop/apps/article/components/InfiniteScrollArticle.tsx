@@ -9,7 +9,6 @@ import {
   ArticleProps,
 } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
-import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 
@@ -20,7 +19,6 @@ interface InfiniteScrollArticleState {
   articles: ArticleData[]
   offset: number
   error: boolean
-  following: any
   isEnabled: boolean
 }
 
@@ -36,17 +34,12 @@ export class InfiniteScrollArticle extends React.Component<
       articles: [props.article],
       offset: 0,
       error: false,
-      following: setupFollows() || null,
       isEnabled: true,
     }
   }
 
-  componentDidMount() {
-    setupFollowButtons(this.state.following)
-  }
-
   fetchNextArticles = async () => {
-    const { articles, following, offset } = this.state
+    const { articles, offset } = this.state
 
     this.setState({
       isLoading: true,
@@ -68,7 +61,6 @@ export class InfiniteScrollArticle extends React.Component<
           isLoading: false,
           offset: offset + 3,
         })
-        setupFollowButtons(following)
       } else {
         this.setState({
           isEnabled: false,

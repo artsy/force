@@ -11,12 +11,6 @@ import Waypoint from "react-waypoint"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
-jest.mock("../FollowButton", () => ({
-  setupFollows: jest.fn(),
-  setupFollowButtons: jest.fn(),
-}))
-const mockSetupFollows = require("../FollowButton").setupFollows as jest.Mock
-
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
 }))
@@ -63,11 +57,6 @@ describe("InfiniteScrollNewsArticle", () => {
     }
 
     sd.CURRENT_USER = { id: "123" }
-  })
-
-  it("sets up follow buttons", () => {
-    getWrapper()
-    expect(mockSetupFollows).toBeCalled()
   })
 
   it("#hasNewDate returns true if article date is different from previous article", () => {

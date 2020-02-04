@@ -10,12 +10,6 @@ import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { clone } from "lodash"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 
-jest.mock("../FollowButton", () => ({
-  setupFollows: jest.fn(),
-  setupFollowButtons: jest.fn(),
-}))
-const mockSetupFollows = require("../FollowButton").setupFollows as jest.Mock
-
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
 }))
@@ -37,11 +31,6 @@ describe("InfiniteScrollArticle", () => {
       article: StandardArticle,
       articles: [StandardArticle],
     }
-  })
-
-  it("sets up follow buttons", () => {
-    getWrapper()
-    expect(mockSetupFollows).toBeCalled()
   })
 
   it("renders the initial article", () => {

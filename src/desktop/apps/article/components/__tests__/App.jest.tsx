@@ -11,11 +11,6 @@ import {
 } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import React from "react"
 
-jest.mock("../FollowButton", () => ({
-  setupFollows: jest.fn(),
-  setupFollowButtons: jest.fn(),
-}))
-
 describe("App", () => {
   let props
   const getWrapper = (passedProps = props) => {

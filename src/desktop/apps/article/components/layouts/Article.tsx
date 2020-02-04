@@ -8,37 +8,19 @@ import {
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import { setupFollows, setupFollowButtons } from "../FollowButton"
 
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 
-interface ArticleLayoutState {
-  following: any // Backbone collection
-}
-
 interface ArticleModalOptions extends ModalOptions {
   signupIntent: string
 }
 
-export class ArticleLayout extends React.Component<
-  AppProps,
-  ArticleLayoutState
-> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      following: setupFollows() || null,
-    }
-  }
-
+export class ArticleLayout extends React.Component<AppProps> {
   componentDidMount() {
     const { article, isSuper } = this.props
-    // TODO: Replace with relay follow
-    setupFollowButtons(this.state.following)
-
     if (isSuper) {
       // @ts-ignore
       const _superArticleView = new SuperArticleView({
