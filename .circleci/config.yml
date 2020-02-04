@@ -43,6 +43,23 @@ jobs:
           name: Danger
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
+  test:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - hokusai/run-tests:
+          flags: --no-build
+
+  duplicates:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run:
+          name: Duplicates Report
+          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
+
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
     branches:
@@ -82,11 +99,11 @@ workflows:
           <<: *not_staging_or_release
           name: docker_build
           context: hokusai
-          post-steps:
-            - run:
-                name: Copy dupe report artifacts
-                command: mkdir -p ./.artifacts && docker cp hokusai_force_1:/app/.artifacts ./
-                when: always
+          # post-steps:
+          #   - run:
+          #       name: Copy dupe report artifacts
+          #       command: mkdir -p ./.artifacts && docker cp hokusai_force_1:/app/.artifacts ./
+          #       when: always
 
       - duplicates:
           <<: *not_staging_or_release
@@ -105,9 +122,6 @@ workflows:
           <<: *not_master_or_staging_or_release
       - acceptance_cypress:
           <<: *not_master_or_staging_or_release
-      - build:
-          <<: *not_staging_or_release
-
       - danger:
           <<: *not_staging_or_release
 
