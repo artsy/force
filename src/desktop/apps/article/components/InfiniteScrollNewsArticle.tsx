@@ -15,7 +15,6 @@ import {
   RelatedArticleCanvasData,
 } from "reaction/Components/Publishing/Typings"
 import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
-import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
@@ -40,7 +39,6 @@ interface State {
   articles: ArticleData[]
   date: string
   error: boolean
-  following: object[]
   isEnabled: boolean
   isLoading: boolean
   offset: number
@@ -65,7 +63,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       articles: props.articles,
       date,
       error: false,
-      following: setupFollows() || null,
       isEnabled: true,
       isLoading: false,
       offset,
@@ -75,8 +72,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   componentDidMount() {
-    setupFollowButtons(this.state.following)
-
     const editorialAuthDismissedCookie = Cookies.get(
       "editorial-signup-dismissed"
     )
@@ -95,7 +90,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   fetchNextArticles = async () => {
-    const { articles, following, offset, omit, relatedArticles } = this.state
+    const { articles, offset, omit, relatedArticles } = this.state
 
     this.setState({
       isLoading: true,
@@ -121,7 +116,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
           isLoading: false,
           offset: offset + 6,
         })
-        setupFollowButtons(following)
       } else {
         this.setState({
           isEnabled: false,
