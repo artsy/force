@@ -8,8 +8,6 @@ import {
 } from "desktop/apps/article/queries/promotedContent"
 import metaphysics from "lib/metaphysics.coffee"
 import Article from "desktop/models/article.coffee"
-import Articles from "desktop/collections/articles.coffee"
-import _ArticlesGridView from "desktop/components/articles_grid/view.coffee"
 import _ArticleView from "desktop/components/article/client/view.coffee"
 import Channel from "desktop/models/channel.coffee"
 import _TeamChannelNavView from "desktop/components/channel_nav/view.coffee"
@@ -17,7 +15,6 @@ import _TeamChannelNavView from "desktop/components/channel_nav/view.coffee"
 // FIXME: Rewire
 let $ = _$
 let sd = _sd
-let ArticlesGridView = _ArticlesGridView
 let TeamChannelNavView = _TeamChannelNavView
 let ArticleView = _ArticleView
 
@@ -42,29 +39,7 @@ export const init = () => {
     })
   }
 
-  setupFooterArticles(channel)
   setupPromotedContent(article)
-}
-
-const setupFooterArticles = channel => {
-  const data = {
-    published: true,
-    sort: "-published_at",
-    limit: 12,
-    channel_id: channel.get("id"),
-  }
-  const collection = new Articles()
-
-  new ArticlesGridView({
-    el: $("#articles-footer").addClass("articles-grid"),
-    hideMore: true,
-    header: `More from ${channel.get("name") || "Artsy"}`,
-    collection,
-  })
-
-  collection.fetch({
-    data: data,
-  })
 }
 
 const setupPromotedContent = article => {

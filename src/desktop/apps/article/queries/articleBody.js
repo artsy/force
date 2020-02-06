@@ -17,6 +17,7 @@ export const articleBody = `
   featured
   channel_id
   partner_channel_id
+  lead_paragraph
   indexable
   keywords
   published
@@ -64,12 +65,18 @@ export const articleBody = `
     author
     image_url
   }
+  author {
+    name
+  }
   authors {
     image_url
     twitter_handle
     name
     id
     bio
+  }
+  channel {
+    name
   }
   contributing_authors {
     name

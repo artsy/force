@@ -63,7 +63,17 @@ export const index = async (req, res, next) => {
       if (article.channel_id === sd.GALLERY_INSIGHTS_CHANNEL) {
         return res.redirect("https://partners.artsy.net")
       }
-      return classic(req, res, next)
+      if (req.params.slug !== article.slug) {
+        return res.redirect(`/article/${article.slug}`)
+      }
+      // if (data.partner) {
+      //   return res.redirect(
+      //     `/${data.partner.get(
+      //       "default_profile_id"
+      //     )}/article/${data.article.get("slug")}`
+      //   )
+      // }
+      return newClassic(req, res, next, article)
     }
 
     if (isVanguardSubArticle(article)) {
@@ -86,7 +96,7 @@ export const index = async (req, res, next) => {
     }
 
     if (
-      !["standard", "feature"].includes(article.layout) &&
+      !["classic", "standard", "feature"].includes(article.layout) &&
       req.path.includes("/article")
     ) {
       return res.redirect(`/${article.layout}/${article.slug}${search}`)
@@ -162,6 +172,45 @@ export const index = async (req, res, next) => {
       templates: getSuperArticleTemplates(article),
     })
 
+    res.send(layout)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const newClassic = async (_req, res, next, article) => {
+  const { CURRENT_USER, IS_MOBILE } = res.locals.sd
+  const isMobile = IS_MOBILE
+  const isLoggedIn = typeof CURRENT_USER !== "undefined"
+
+  try {
+    const layout = await stitch({
+      basePath: res.app.get("views"),
+      layout: getLayoutTemplate(article),
+      config: {
+        styledComponents: true,
+      },
+      blocks: {
+        head: () => <ArticleMeta article={article} />,
+        body: App,
+      },
+      locals: {
+        ...res.locals,
+        assetPackage: "article",
+        bodyClass: getBodyClass(article),
+        crop,
+        markdown,
+      },
+      data: {
+        article,
+        isLoggedIn,
+        isMobile,
+        jsonLD: getJsonLd(article),
+      },
+      templates: {
+        ArticlesGridView: "../../../components/articles_grid/view.coffee",
+      },
+    })
     res.send(layout)
   } catch (error) {
     next(error)
