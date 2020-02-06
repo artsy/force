@@ -5,6 +5,8 @@ import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { data as sd } from "sharify"
 import { client as artworkClient } from "./artwork/client"
 import { client as artistClient } from "./artist/client"
+import { loadableReady } from "@loadable/component"
+
 const mediator = require("desktop/lib/mediator.coffee")
 
 buildClientApp({
@@ -15,18 +17,20 @@ buildClientApp({
   } as any,
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(
-      <ClientApp />,
-      document.getElementById("react-root"),
-      () => {
-        const pageType = window.location.pathname.split("/")[1]
+    loadableReady(() => {
+      ReactDOM.hydrate(
+        <ClientApp />,
+        document.getElementById("react-root"),
+        () => {
+          const pageType = window.location.pathname.split("/")[1]
 
-        if (pageType === "search") {
-          document.getElementById("loading-container").remove()
-          document.getElementById("search-page-header").remove()
+          if (pageType === "search") {
+            document.getElementById("loading-container").remove()
+            document.getElementById("search-page-header").remove()
+          }
         }
-      }
-    )
+      )
+    })
   })
   .catch(error => {
     console.error(error)

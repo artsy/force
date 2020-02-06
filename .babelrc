@@ -4,7 +4,9 @@
       "@babel/env",
       {
         "targets": {
-          "browsers": ["last 2 versions"]
+          "browsers": [
+            "last 2 versions"
+          ]
         },
         "useBuiltIns": "usage",
         "corejs": 2
@@ -25,12 +27,19 @@
     ],
     "inline-react-svg",
     "lodash",
-    "loadable-components/babel",
+    "@loadable/babel-plugin",
     [
       "module-resolver",
       {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "root": ["./src"],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "root": [
+          "./src"
+        ],
         "alias": {
           "reaction": "@artsy/reaction/dist"
         }

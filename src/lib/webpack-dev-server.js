@@ -17,5 +17,8 @@ app.use(
     publicPath: webpackConfig.output.publicPath,
     serverSideRender: true,
     stats: "errors-only",
+    writeToDisk(filePath) {
+      return /loadable-stats/.test(filePath)
+    },
   })
 )
