@@ -9,7 +9,8 @@ const {
   CLIENT_SECRET,
   NODE_ENV,
   PORT,
-  KEEPALIVE_TIMEOUT,
+  KEEPALIVE_TIMEOUT_SECONDS,
+  HEADERS_TIMEOUT_SECONDS,
   PROFILE_MEMORY,
 } = process.env
 
@@ -67,17 +68,26 @@ const startServer = once(() => {
 
     const server = withGracefulShutdown(http.createServer(app))
 
-    if (KEEPALIVE_TIMEOUT) {
-      console.log("Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT + " ms")
-      server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT)
-    }
-
     const stopServer = once(() => {
       server.shutdown(() => {
         console.log("Closed existing connections.")
         process.exit(0)
       })
     })
+
+    if (KEEPALIVE_TIMEOUT_SECONDS) {
+      console.log(
+        "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec."
+      )
+      server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
+    }
+
+    if (HEADERS_TIMEOUT_SECONDS) {
+      console.log(
+        "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec."
+      )
+      server.headersTimeout = Number(HEADERS_TIMEOUT_SECONDS) * 1000
+    }
 
     server.listen(PORT, "0.0.0.0", () => console.log(message))
 
