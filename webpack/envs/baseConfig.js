@@ -14,7 +14,8 @@ const {
 exports.baseConfig = {
   mode: NODE_ENV,
   devtool: "cheap-module-source-map",
-  stats: "errors-only",
+  stats: "normal",
+  // stats: "errors-only",
   entry: getEntrypoints(),
   output: {
     filename: "[name].js",
