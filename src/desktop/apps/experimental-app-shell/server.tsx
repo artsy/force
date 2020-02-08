@@ -78,7 +78,7 @@ app.get(
           scripts,
           styleTags,
           pageType,
-          assetPackage: "experimental-app-shell",
+          // assetPackage: "experimental-app-shell",
         },
       })
 
