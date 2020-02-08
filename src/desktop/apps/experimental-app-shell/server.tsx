@@ -71,14 +71,23 @@ app.get(
 
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_blank_index.jade",
+        layout:
+          "../../components/main_layout/templates/experimental_app_shell.jade",
         blocks,
         locals: {
           ...res.locals,
           scripts,
           styleTags,
           pageType,
-          assetPackage: "experimental-app-shell",
+
+          /**
+           * NOTE: The asset package isn't needed here because we're dynamically
+           * injecting it into `scripts` array in buildServerApp.tsx, which gets
+           * mounted directly in the template with other split bundles.
+           *
+           * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/buildServerApp.tsx
+           */
+          // assetPackage: "experimental-app-shell",
         },
       })
 
