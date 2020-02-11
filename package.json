@@ -8,7 +8,7 @@
   },
   "scripts": {
     "acceptance-record": "scripts/acceptance_record.sh",
-    "acceptance": "scripts/acceptance.sh",
+    "acceptance": "scripts/acceptance.sh src/test/acceptance/*.js",
     "assets": "NODE_ENV=production yarn build",
     "build:server": "BUILD_SERVER=true NODE_ENV=production yarn webpack",
     "build": "yarn clean && yarn webpack",

@@ -10,13 +10,13 @@ orbs:
 
 jobs:
   acceptance:
-    docker:
-      - image: circleci/node:10-stretch-browsers
+    executor: hokusai/deploy
     steps:
-      - yarn/setup
-      - run:
-          name: Acceptance Tests
-          command: yarn acceptance src/test/acceptance/*.js
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - hokusai/run-tests:
+          flags: --no-build
+          filename: ./hokusai/acceptance.yml
 
   acceptance_cypress:
     docker:
@@ -28,17 +28,19 @@ jobs:
           command: yarn test:smoke
 
   validate_production_schema:
-    executor: node/build
+    executor: hokusai/deploy
     steps:
-      - yarn/setup
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
       - run:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
 
   danger:
-    executor: node/build
+    executor: hokusai/deploy
     steps:
-      - yarn/setup
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
       - run:
           name: Danger
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
@@ -99,11 +101,6 @@ workflows:
           <<: *not_staging_or_release
           name: docker_build
           context: hokusai
-          # post-steps:
-          #   - run:
-          #       name: Copy dupe report artifacts
-          #       command: mkdir -p ./.artifacts && docker cp hokusai_force_1:/app/.artifacts ./
-          #       when: always
 
       - duplicates:
           <<: *not_staging_or_release
@@ -120,10 +117,17 @@ workflows:
 
       - acceptance:
           <<: *not_master_or_staging_or_release
-      - acceptance_cypress:
-          <<: *not_master_or_staging_or_release
-      - danger:
-          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - docker_build
+
+      # - acceptance_cypress:
+      #     <<: *not_master_or_staging_or_release
+      # - danger:
+      #     <<: *not_staging_or_release
+      #     context: hokusai
+      #     requires:
+      #       - docker_build
 
       # Staging
       - hokusai/push:

@@ -2,7 +2,7 @@
 
 set -ex
 
-mocha \
+yarn mocha \
   --retries 5 \
   --require test.config.js \
   -t 60000 \

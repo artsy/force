@@ -1,0 +1,11 @@
+version: "2.4"
+services:
+  force:
+    command: yarn acceptance
+    extends:
+      file: build.yml
+      service: force
+    environment:
+      - CI=true
+      - CIRCLE_NODE_INDEX
+    env_file: ../.env.test
