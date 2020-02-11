@@ -17,6 +17,7 @@ export const articleBody = `
   featured
   channel_id
   partner_channel_id
+  partner_ids
   lead_paragraph
   indexable
   keywords

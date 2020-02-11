@@ -24,15 +24,21 @@ import {
   getJsonLd,
   getLayoutTemplate,
   getSuperArticleTemplates,
+  // fetchPartner,
 } from "./helpers"
 import cheerio from "cheerio"
 import React from "react"
+import {
+  partnerQuery,
+  auctionQuery,
+} from "desktop/apps/article/queries/promotedContent"
 import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const Article = require("desktop/models/article.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
+const metaphysics = require("lib/metaphysics.coffee")
 
 export const index = async (req, res, next) => {
   let articleId = req.params.slug
@@ -64,15 +70,21 @@ export const index = async (req, res, next) => {
         return res.redirect("https://partners.artsy.net")
       }
       if (req.params.slug !== article.slug) {
+        // Redirect to most recent slug
         return res.redirect(`/article/${article.slug}`)
       }
-      // if (data.partner) {
-      //   return res.redirect(
-      //     `/${data.partner.get(
-      //       "default_profile_id"
-      //     )}/article/${data.article.get("slug")}`
-      //   )
-      // }
+
+      if (article.partner_channel_id) {
+        // redirect partner channels to partner page
+        const { partner } = await metaphysics({
+          method: "post",
+          query: partnerQuery(article.partner_channel_id),
+        }).then(data => data)
+
+        return res.redirect(
+          `/${partner.default_profile_id}/article/${article.slug}`
+        )
+      }
       return newClassic(req, res, next, article)
     }
 
@@ -183,6 +195,28 @@ export const newClassic = async (_req, res, next, article) => {
   const isMobile = IS_MOBILE
   const isLoggedIn = typeof CURRENT_USER !== "undefined"
 
+  if (article.channel_id === sd.PC_ARTSY_CHANNEL && article.partner_ids) {
+    const send = {
+      method: "post",
+      query: partnerQuery(article.partner_ids[0]),
+    }
+    await metaphysics(send).then(data => {
+      article.partner = data.partner
+      console.log("article", article)
+    })
+  }
+
+  if (article.channel_id === sd.PC_AUCTION_CHANNEL && article.auction_ids) {
+    const send = {
+      method: "post",
+      query: auctionQuery(article.auction_ids[0]),
+    }
+    await metaphysics(send).then(data => {
+      console.log("article", article)
+      article.sale = data.sale
+    })
+  }
+
   try {
     const layout = await stitch({
       basePath: res.app.get("views"),
@@ -217,43 +251,43 @@ export const newClassic = async (_req, res, next, article) => {
   }
 }
 
-export const classic = (req, res, _next) => {
-  const article = new Article({
-    id: req.params.slug,
-  })
-  const accessToken = req.user ? req.user.get("accessToken") : null
+// export const classic = (req, res, _next) => {
+//   const article = new Article({
+//     id: req.params.slug,
+//   })
+//   const accessToken = req.user ? req.user.get("accessToken") : null
 
-  article.fetchWithRelated({
-    accessToken,
-    error: res.backboneError,
-    success: data => {
-      if (req.params.slug !== data.article.get("slug")) {
-        return res.redirect(`/article/${data.article.get("slug")}`)
-      }
+//   article.fetchWithRelated({
+//     accessToken,
+//     error: res.backboneError,
+//     success: data => {
+//       if (req.params.slug !== data.article.get("slug")) {
+//         return res.redirect(`/article/${data.article.get("slug")}`)
+//       }
 
-      if (data.partner) {
-        return res.redirect(
-          `/${data.partner.get(
-            "default_profile_id"
-          )}/article/${data.article.get("slug")}`
-        )
-      }
+//       if (data.partner) {
+//         return res.redirect(
+//           `/${data.partner.get(
+//             "default_profile_id"
+//           )}/article/${data.article.get("slug")}`
+//         )
+//       }
 
-      res.locals.sd.ARTICLE = data.article.toJSON()
-      res.locals.sd.INCLUDE_SAILTHRU =
-        res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
-      res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
-      res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
+//       res.locals.sd.ARTICLE = data.article.toJSON()
+//       res.locals.sd.INCLUDE_SAILTHRU =
+//         res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
+//       res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
+//       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      res.render("article", {
-        embed,
-        crop,
-        resize,
-        ...data,
-      })
-    },
-  })
-}
+//       res.render("article", {
+//         embed,
+//         crop,
+//         resize,
+//         ...data,
+//       })
+//     },
+//   })
+// }
 
 export const amp = (req, res, next) => {
   const article = new Article({

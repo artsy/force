@@ -11,7 +11,6 @@ export class CLassicArticleLayout extends React.Component<AppProps> {
     const { article } = this.props
 
     if (article.channel_id) {
-      // @ts-ignore
       this.setupFooterArticles()
     }
   }
