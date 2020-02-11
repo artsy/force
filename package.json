@@ -73,7 +73,7 @@
     "@airbnb/node-memwatch": "1.0.2",
     "@artsy/express-reloadable": "1.4.7",
     "@artsy/gemup": "0.0.3",
-    "@artsy/palette": "5.1.16",
+    "@artsy/palette": "6.0.0",
     "@artsy/passport": "1.1.10",
     "@artsy/reaction": "25.5.8",
     "@artsy/stitch": "6.1.6",
