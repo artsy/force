@@ -25,6 +25,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: KEEPALIVE_TIMEOUT_SECONDS
+              value: "95"
+            - name: HEADERS_TIMEOUT_SECONDS
+              value: "105"
           envFrom:
             - configMapRef:
                 name: force-environment
@@ -121,7 +125,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: "60"
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "artsy-elb-logs"
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "staging-force"
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "90"
 spec:
   ports:
     - port: 80
