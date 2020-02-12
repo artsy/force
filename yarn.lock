@@ -61,10 +61,10 @@
     styled-system "^3.1.11"
     trunc-html "^1.1.2"
 
-"@artsy/passport@1.1.10":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.10.tgz#68823223c6bac9791b6a8faba13666860c3b8cc5"
-  integrity sha512-v2T3VJZjbuOKa52YhqEjXw52jx1wAAYGRnFa3FoXocuzXSxf0uUJXXNeDiGCWdWpxQyalzu5Zck5NC2yqC2nGg==
+"@artsy/passport@1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.11.tgz#dde3cc317c6bbf6030750245a1b262ddaf9d5046"
+  integrity sha512-/FEME3LPZBf0Esae2Wp8pXjAndgPXB6vv8qR7Ac1Ma89RW/LW9LfEkex9ihvbqptjzPN655Wfy+HQQtaz+OWLw==
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
