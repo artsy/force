@@ -1,11 +1,19 @@
 const chalk = require("chalk")
 const heapdump = require("heapdump")
 const knox = require("knox")
-const memwatch = require("@airbnb/node-memwatch")
 const moment = require("moment")
 const os = require("os")
 const path = require("path")
 const uuid = require("uuid")
+
+let memwatch
+try {
+  require("@airbnb/node-memwatch")
+} catch (e) {
+  throw new Error(
+    "node-memwatch isn't available (not compatibile with node 12), you need to replace it with a different tool before this script will work"
+  )
+}
 
 const {
   ENABLE_MEMORY_PROFILING,
