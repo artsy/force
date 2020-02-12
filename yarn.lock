@@ -7531,10 +7531,12 @@ he@0.5.0:
   resolved "https://registry.yarnpkg.com/he/-/he-0.5.0.tgz#2c05ffaef90b68e860f3fd2b54ef580989277ee2"
   integrity sha1-LAX/rvkLaOhg8/0rVO9YCYknfuI=
 
-heapdump@0.3.9:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/heapdump/-/heapdump-0.3.9.tgz#03c74eb0df5d67be0982e83429ba9c9d2b3b7f78"
-  integrity sha1-A8dOsN9dZ74Jgug0KbqcnSs7f3g=
+heapdump@^0.3.15:
+  version "0.3.15"
+  resolved "https://registry.yarnpkg.com/heapdump/-/heapdump-0.3.15.tgz#631a8a2585588ea64778d8ec80a64c6c025f6a08"
+  integrity sha512-n8aSFscI9r3gfhOcAECAtXFaQ1uy4QSke6bnaL+iymYZ/dWs9cqDqHM+rALfsHUwukUbxsdlECZ0pKmJdQ/4OA==
+  dependencies:
+    nan "^2.13.2"
 
 helmet-csp@1.2.2:
   version "1.2.2"
@@ -10776,6 +10778,11 @@ nan@^2.12.1, nan@^2.9.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
   integrity sha512-TghvYc72wlMGMVMluVo9WRJc0mB8KxxF/gZ4YYFy7V2ZQX9l7rgbPg7vjS9mt6U5HXODVFVI2bOduCzwOMv/lw==
+
+nan@^2.13.2:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
+  integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
 
 nanomatch@^1.2.9:
   version "1.2.13"
