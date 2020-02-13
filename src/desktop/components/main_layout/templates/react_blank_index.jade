@@ -20,7 +20,7 @@ block body
   if jsonLD
     include ./json_ld
 
-//- All hydration data should be loaded before React et al
+//- All hydration data should be loaded before React et al.
 block prepend scripts
   script.
     var __BOOTSTRAP__ = !{JSON.stringify(data)}
