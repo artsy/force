@@ -16,6 +16,14 @@ app.use(
     quiet: true,
     publicPath: webpackConfig.output.publicPath,
     serverSideRender: true,
-    stats: "errors-only",
+    writeToDisk(filePath) {
+      /**
+       * Emit the stats file to disk during dev so that loadable-compoents can
+       * read in which each webpack chunk and load split bundles correctly.
+       *
+       * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/buildServerApp.tsx
+       */
+      return /loadable-stats/.test(filePath)
+    },
   })
 )

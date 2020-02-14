@@ -4,6 +4,7 @@ import { routes } from "reaction/Apps/Artist/routes"
 import React from "react"
 import ReactDOM from "react-dom"
 import { setupArtistSignUpModal } from "desktop/apps/artist/components/cta"
+import { loadableReady } from "@loadable/component"
 
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -15,13 +16,15 @@ buildClientApp({
   } as any,
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(
-      <ClientApp />,
-      document.getElementById("react-root"),
-      () => {
-        setupArtistSignUpModal()
-      }
-    )
+    loadableReady(() => {
+      ReactDOM.hydrate(
+        <ClientApp />,
+        document.getElementById("react-root"),
+        () => {
+          setupArtistSignUpModal()
+        }
+      )
+    })
   })
   .catch(error => {
     console.error(error)
