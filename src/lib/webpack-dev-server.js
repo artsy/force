@@ -23,7 +23,7 @@ app.use(
        *
        * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/buildServerApp.tsx
        */
-      return /loadable-stats/.test(filePath)
+      return /loadable-stats/.test(filePath) || /manifest/.test(filePath)
     },
   })
 )
