@@ -1182,14 +1182,14 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@loadable/babel-plugin@^5.12.0":
+"@loadable/babel-plugin@5.12.0":
   version "5.12.0"
   resolved "https://registry.yarnpkg.com/@loadable/babel-plugin/-/babel-plugin-5.12.0.tgz#de18d4637eb8f4bdecd694a6737880b3e2094d4c"
   integrity sha512-hb4TDUalaGogsCASEi0fD9Jn0Y2nQybupGgJQAxmx2KrLKxRoWfg78bJMabvownonsq3MEWgUWqb0c3m0uX9vQ==
   dependencies:
     "@babel/plugin-syntax-dynamic-import" "^7.7.4"
 
-"@loadable/component@^5.12.0":
+"@loadable/component@5.12.0", "@loadable/component@^5.12.0":
   version "5.12.0"
   resolved "https://registry.yarnpkg.com/@loadable/component/-/component-5.12.0.tgz#34d056d15f53dc08d04e9203cad6867cf4f7306c"
   integrity sha512-eDG7FPZ8tCFA/mqu2IrYV6eS+UxGBo21PwtEV9QpkpYrx25xKRXzJUm36yfQPK3o7jXu43xpPkwiU4mLWcjJlw==
@@ -1204,7 +1204,7 @@
   dependencies:
     lodash "^4.17.15"
 
-"@loadable/webpack-plugin@^5.12.0":
+"@loadable/webpack-plugin@5.12.0":
   version "5.12.0"
   resolved "https://registry.yarnpkg.com/@loadable/webpack-plugin/-/webpack-plugin-5.12.0.tgz#b28c6e7a979e9c2f8d8b743a634de0ede124c76f"
   integrity sha512-9G/DOSvR0BZHF8DCd7jWTVEjfLnyLKB+S5KhBOSCK8pTMwDcTKeb0oVd4iwPyeAfPAN4ibqN90r9qnSKnJ+WEQ==
