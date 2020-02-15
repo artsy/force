@@ -1,6 +1,9 @@
 import React from "react"
 import express, { Request } from "express"
-import { buildServerApp } from "@artsy/reaction/dist/Artsy/Router/server"
+import {
+  buildServerApp,
+  ServerAppResolve,
+} from "@artsy/reaction/dist/Artsy/Router/server"
 import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
@@ -23,10 +26,19 @@ app.get(
     try {
       const pageParts = req.path.split("/")
       const pageType = pageParts[1]
-      let serverApp
+      let serverApp: ServerAppResolve = {}
 
-      // Search intentionally bypasses SSR
-      if (pageType !== "search") {
+      /**
+       * Search intentionally bypasses SSR, but we still need to inject the
+       * experimental-app-shell asset into the page. Because of bundle splitting
+       * we now get that back dynamically from `buildServerApp` below.
+       *
+       * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/buildServerApp.tsx#L157
+       */
+      if (pageType === "search") {
+        const { CDN_URL = "" } = process.env
+        serverApp.scripts = `<script async data-chunk="experimental-app-shell" src="${CDN_URL}/assets/experimental-app-shell.js"></script>`
+      } else {
         serverApp = await buildServerApp({
           context: buildServerAppContext(req, res),
           routes: getAppRoutes(),
@@ -35,8 +47,7 @@ app.get(
         })
       }
 
-      const { styleTags, scripts, redirect, bodyHTML, headTags } =
-        serverApp || {}
+      const { styleTags, scripts, redirect, bodyHTML, headTags } = serverApp
 
       if (redirect) {
         res.redirect(302, redirect.url)
