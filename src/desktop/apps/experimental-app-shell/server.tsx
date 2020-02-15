@@ -36,8 +36,9 @@ app.get(
        * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/buildServerApp.tsx#L157
        */
       if (pageType === "search") {
-        const { CDN_URL = "" } = process.env
-        serverApp.scripts = `<script async data-chunk="experimental-app-shell" src="${CDN_URL}/assets/experimental-app-shell.js"></script>`
+        // Use helper defined in assetMiddleware to return fingerprinted url
+        const scriptUrl = res.locals.asset("/assets/experimental-app-shell.js")
+        serverApp.scripts = `<script async data-chunk="experimental-app-shell" src="${scriptUrl}"></script>`
       } else {
         serverApp = await buildServerApp({
           context: buildServerAppContext(req, res),
