@@ -4,4 +4,4 @@ import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/sk
 
 export const app = express()
 
-app.get("/orders/:orderID*", checkoutFlow, skipIfClientSideRoutingEnabled)
+app.get("/orders/:orderID*", skipIfClientSideRoutingEnabled, checkoutFlow)
