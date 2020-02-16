@@ -12,19 +12,35 @@ import { StitchWrapper } from "desktop/components/react/stitch_components/Stitch
 
 import { handleArtworkImageDownload } from "./artwork/artworkMiddleware"
 import { artistMiddleware } from "./artist/artistMiddleware"
-import { searchMiddleware } from "./search/middleware"
+import { bidderRegistrationMiddleware } from "./auction/bidderRegistrationMiddleware"
+import { confirmBidMiddleware } from "./auction/confirmBidMiddleware"
 import { orderMiddleware } from "./order/orderMiddleware"
+import { searchMiddleware } from "./search/middleware"
 
 export const app = express()
 
 // Non-Reaction routes
 app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 
+/**
+ * Mount routes that will connect to global SSR router
+ */
 app.get(
   "/*",
-  searchMiddleware,
+
+  /**
+   * Mount middleware for handling server-side portions of apps mounted into
+   * global router.
+   */
   artistMiddleware,
+  bidderRegistrationMiddleware,
+  confirmBidMiddleware,
   orderMiddleware,
+  searchMiddleware,
+
+  /**
+   * Route handler
+   */
   async (req: Request, res, next) => {
     try {
       const pageParts = req.path.split("/")
