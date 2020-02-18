@@ -19,6 +19,7 @@ const index = async (req, res, next) => {
       redirect,
       scripts,
       styleTags,
+      status,
     } = await buildServerApp({
       routes: collectRoutes,
       url: req.url,
@@ -48,6 +49,7 @@ const index = async (req, res, next) => {
       },
     })
 
+    res.locals.PAGE_CACHE = { status, key: req.url, html: layout }
     res.send(layout)
   } catch (error) {
     console.log(error)

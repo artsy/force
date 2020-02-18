@@ -85,6 +85,12 @@ module.exports =
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   NODE_ENV: 'development'
   OPENREDIS_URL: null
+  PAGE_CACHE_ENABLED: false
+  PAGE_CACHE_TYPES: 'artist'
+  PAGE_CACHE_NAMESPACE: 'page-cache'
+  PAGE_CACHE_VERSION: '1'
+  PAGE_CACHE_EXPIRY_SECONDS: 600
+  PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: 400
   PARSELY_KEY: 'artsy.net'
   EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video|^\/news'
   PARSELY_SECRET: null

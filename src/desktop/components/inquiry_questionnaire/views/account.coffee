@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 FormMixin = require '../../mixins/form'
-FormErrorHelpers = require '../../auth_modal/helpers'
+FormErrorHelpers = require '../helpers'
 sd = require('sharify').data
 templates =
   register: -> require('../templates/account/register.jade') arguments...

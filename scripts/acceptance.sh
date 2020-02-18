@@ -2,6 +2,8 @@
 
 set -ex
 
+yarn webpack
+
 mocha \
   --retries 5 \
   --require test.config.js \

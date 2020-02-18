@@ -29,7 +29,7 @@ const trackAccountCreation = options => {
 // Created account (via email)
 $(document).one(
   "submit",
-  ".auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form, .gdpr-signup form",
+  ".auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form",
   () => {
     $(document).one("ajaxComplete", (e, xhr, options) =>
       mediator.trigger("auth:sign_up:email", {
@@ -46,7 +46,7 @@ $(document).one(
 // Created account (via social)
 
 // 1. Upon clicking the social signup button
-$(document).on("click", ".auth-signup-facebook, .gdpr-signup__fb", e => {
+$(document).on("click", ".auth-signup-facebook", e => {
   // 2. Store some data in cookies before being redirected everywhere
   mediator.trigger("auth:sign_up:fb", {
     service: "facebook",

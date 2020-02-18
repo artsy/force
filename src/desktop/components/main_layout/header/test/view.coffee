@@ -31,7 +31,6 @@ describe 'HeaderView', ->
         ['bundleTemplate']
       )
       @HeaderView.__set__ 'SearchBarView', Backbone.View
-      @HeaderView.__set__ 'AuthModalView', sinon.stub()
       @HeaderView.__set__ 'FlashMessage', sinon.stub()
       @HeaderView.__set__ 'sd', @sd
       @view = new @HeaderView
@@ -45,11 +44,6 @@ describe 'HeaderView', ->
 
   afterEach ->
     Backbone.sync.restore()
-
-  describe '#openAuth', ->
-    it 'opens with custom copy', ->
-      @view.openAuth copy: 'Sign up to foo bar'
-      @HeaderView.__get__('AuthModalView').args[0][0].copy.should.containEql 'Sign up to foo bar'
 
   describe '#login', ->
     it 'triggers the mediator', ->
@@ -80,7 +74,6 @@ describe 'HeaderView', ->
         )
         @HeaderView.__set__ 'CurrentUser', { orNull: => @user }
         @HeaderView.__set__ 'SearchBarView', Backbone.View
-        @HeaderView.__set__ 'AuthModalView', sinon.stub()
         @HeaderView.__set__ 'FlashMessage', sinon.stub()
         @HeaderView.__set__ 'sd', sd
         @view = new @HeaderView
