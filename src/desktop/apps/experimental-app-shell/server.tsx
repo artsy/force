@@ -9,9 +9,11 @@ import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { SearchResultsSkeleton } from "reaction/Apps/Search/Components/SearchResultsSkeleton"
 import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
-import { artistMiddleware } from "./artist/middleware"
+
+import { handleArtworkImageDownload } from "./artwork/artworkMiddleware"
+import { artistMiddleware } from "./artist/artistMiddleware"
 import { searchMiddleware } from "./search/middleware"
-import { handleArtworkImageDownload } from "./artwork/middleware"
+import { orderMiddleware } from "./order/orderMiddleware"
 
 export const app = express()
 
@@ -22,6 +24,7 @@ app.get(
   "/*",
   searchMiddleware,
   artistMiddleware,
+  orderMiddleware,
   async (req: Request, res, next) => {
     try {
       const pageParts = req.path.split("/")
@@ -91,6 +94,14 @@ app.get(
           scripts,
           styleTags,
           pageType,
+
+          // TODO: Follow up with Justin on stripe include in scripts.jade
+          // template. Right now the order app explicitly sets this to true,
+          // but looking over there it seems we're already including it on
+          // every page, with `async` and `defer`.
+          // options: {
+          //   stripev3: true, // for order app
+          // },
 
           /**
            * NOTE: The asset package isn't needed here because we're dynamically
