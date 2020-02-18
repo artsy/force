@@ -6,7 +6,7 @@ import { handleOpenAuthModal } from "desktop/apps/article/helpers"
 const ArticlesGridView = require("desktop/components/articles_grid/view.coffee")
 const Articles = require("desktop/collections/articles.coffee")
 
-export class CLassicArticleLayout extends React.Component<AppProps> {
+export class ClassicArticleLayout extends React.Component<AppProps> {
   componentDidMount() {
     const { article } = this.props
 

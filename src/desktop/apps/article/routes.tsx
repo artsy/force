@@ -24,7 +24,6 @@ import {
   getJsonLd,
   getLayoutTemplate,
   getSuperArticleTemplates,
-  // fetchPartner,
 } from "./helpers"
 import cheerio from "cheerio"
 import React from "react"
@@ -85,7 +84,7 @@ export const index = async (req, res, next) => {
           `/${partner.default_profile_id}/article/${article.slug}`
         )
       }
-      return newClassic(req, res, next, article)
+      return classic(req, res, next, article)
     }
 
     if (isVanguardSubArticle(article)) {
@@ -190,7 +189,7 @@ export const index = async (req, res, next) => {
   }
 }
 
-export const newClassic = async (_req, res, next, article) => {
+export const classic = async (_req, res, next, article) => {
   const { CURRENT_USER, IS_MOBILE } = res.locals.sd
   const isMobile = IS_MOBILE
   const isLoggedIn = typeof CURRENT_USER !== "undefined"
@@ -200,9 +199,9 @@ export const newClassic = async (_req, res, next, article) => {
       method: "post",
       query: partnerQuery(article.partner_ids[0]),
     }
+
     await metaphysics(send).then(data => {
       article.partner = data.partner
-      console.log("article", article)
     })
   }
 
@@ -211,8 +210,8 @@ export const newClassic = async (_req, res, next, article) => {
       method: "post",
       query: auctionQuery(article.auction_ids[0]),
     }
+
     await metaphysics(send).then(data => {
-      console.log("article", article)
       article.sale = data.sale
     })
   }
@@ -250,44 +249,6 @@ export const newClassic = async (_req, res, next, article) => {
     next(error)
   }
 }
-
-// export const classic = (req, res, _next) => {
-//   const article = new Article({
-//     id: req.params.slug,
-//   })
-//   const accessToken = req.user ? req.user.get("accessToken") : null
-
-//   article.fetchWithRelated({
-//     accessToken,
-//     error: res.backboneError,
-//     success: data => {
-//       if (req.params.slug !== data.article.get("slug")) {
-//         return res.redirect(`/article/${data.article.get("slug")}`)
-//       }
-
-//       if (data.partner) {
-//         return res.redirect(
-//           `/${data.partner.get(
-//             "default_profile_id"
-//           )}/article/${data.article.get("slug")}`
-//         )
-//       }
-
-//       res.locals.sd.ARTICLE = data.article.toJSON()
-//       res.locals.sd.INCLUDE_SAILTHRU =
-//         res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
-//       res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
-//       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
-
-//       res.render("article", {
-//         embed,
-//         crop,
-//         resize,
-//         ...data,
-//       })
-//     },
-//   })
-// }
 
 export const amp = (req, res, next) => {
   const article = new Article({

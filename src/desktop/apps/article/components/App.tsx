@@ -7,7 +7,7 @@ import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
-import { CLassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
+import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
 
 export interface AppProps extends ArticleProps {
   templates?: {
@@ -42,7 +42,7 @@ export class App extends React.Component<AppProps> {
         )
       }
       case "classic": {
-        return <CLassicArticleLayout {...this.props} />
+        return <ClassicArticleLayout {...this.props} />
       }
       default: {
         return <ArticleLayout {...this.props} />

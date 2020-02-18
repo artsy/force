@@ -1,10 +1,8 @@
 import { isCustomEditorial } from "./editorial_features"
 import { ModalOptions } from "@artsy/reaction/dist/Components/Authentication/Types"
-import { partnerQuery } from "desktop/apps/article/queries/promotedContent"
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const Article = require("desktop/models/article.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
-const metaphysics = require("lib/metaphysics.coffee")
 
 // Helper method to determine how frequently ads should be rendered in Article components
 export const shouldAdRender = (
@@ -83,18 +81,5 @@ export const handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
   mediator.trigger("open:auth", {
     mode,
     ...options,
-  })
-}
-
-export const fetchPartner = (partnerChannelId: string) => {
-  // partner = new Partner(id: @get('partner_channel_id'))).fetch(cache: true)
-  const send = {
-    method: "post",
-    query: partnerQuery(partnerChannelId),
-  }
-
-  metaphysics(send).then(data => {
-    console.log("in here", data)
-    return data
   })
 }
