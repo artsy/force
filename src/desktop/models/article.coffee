@@ -215,7 +215,7 @@ module.exports = class Article extends Backbone.Model
     if @get('channel_id') is ARTSY_EDITORIAL_CHANNEL
       'Editorial'
     else if @get('channel_id')
-      @get('channel')?.name
+      @get('channel')?.name || @get('channel')?.get('name')
     else if @get('partner_channel_id')
       'Partner'
     else
