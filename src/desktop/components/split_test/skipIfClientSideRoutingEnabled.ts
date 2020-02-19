@@ -1,7 +1,7 @@
-export const skipIfClientSideRoutingEnabled = (_req, res, next) => {
+export const skipIfClientSideRoutingEnabled = (_req, _res, next) => {
   if (
-    process.env.EXPERIMENTAL_APP_SHELL &&
-    res.locals.sd.CLIENT_NAVIGATION_V2 === "experiment"
+    process.env.EXPERIMENTAL_APP_SHELL
+    // && res.locals.sd.CLIENT_NAVIGATION_V2 === "experiment"
   ) {
     return next("route")
   } else {

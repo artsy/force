@@ -4,10 +4,7 @@ include ./login-signup
 block body
   #content
     block banner
-      if showMarketingSignupModal
-        include ../../marketing_signup_modal/index
-      else
-        mixin login-signup("Header")
+      mixin login-signup("Header")
 
     header
       != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })

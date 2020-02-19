@@ -7,6 +7,8 @@ registerAndRedirect = (sale, req, res, next) ->
   req.user.fetchCreditCards
     error: res.backboneError
     success: (creditCards) ->
+
+      # FIXME: What happens when creditCards.length === 0? Noticing that the app hangs
       if (creditCards.length > 0)
         # If the user did not accept conditions explicitly
         # (through the AcceptConditionsOfSaleModal) redirect to the auction flow
@@ -29,12 +31,16 @@ registerAndRedirect = (sale, req, res, next) ->
                 }
               )
               res.redirect sale.registrationSuccessUrl()
+      else
+        # FIXME: Not sure how to handle this case
+        console.log('Error: No credit card...')
+        res.redirect sale.redirectUrl(sale.get('href'))
 
 
 @modalAuctionRegistration = (req, res, next) ->
   unless req.user
     return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
-    
+
   new Sale(id: req.params.id).fetch
     error: res.backboneError
     success: (sale) ->

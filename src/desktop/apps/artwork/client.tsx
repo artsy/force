@@ -5,6 +5,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
+import { loadableReady } from "@loadable/component"
 
 const $ = require("jquery")
 const mediator = require("desktop/lib/mediator.coffee")
@@ -23,7 +24,9 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+    loadableReady(() => {
+      ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+    })
   })
   .catch(error => {
     console.error(error)

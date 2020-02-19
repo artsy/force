@@ -5,7 +5,6 @@ Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-AuthModalView = require '../../auth_modal/view.coffee'
 FlashMessage = require '../../flash/index.coffee'
 
 module.exports = class FairHeaderView extends Backbone.View

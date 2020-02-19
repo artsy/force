@@ -45,6 +45,7 @@ import compression from "compression"
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 import { unsupportedBrowserCheck } from "lib/middleware/unsupportedBrowser"
+import { pageCacheMiddleware } from "lib/middleware/pageCacheMiddleware"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
@@ -218,6 +219,7 @@ export default function(app) {
   app.use(unsupportedBrowserCheck)
   if (NODE_ENV !== "test") app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
+  app.use(pageCacheMiddleware)
 
   // Routes for pinging system time and up
   app.get("/system/time", (req, res) =>

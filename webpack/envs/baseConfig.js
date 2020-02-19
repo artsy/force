@@ -2,6 +2,7 @@
 
 const path = require("path")
 const webpack = require("webpack")
+const LoadablePlugin = require("@loadable/webpack-plugin")
 const { getEntrypoints } = require("../utils/getEntrypoints")
 const {
   BUILD_SERVER,
@@ -13,7 +14,7 @@ const {
 exports.baseConfig = {
   mode: NODE_ENV,
   devtool: "cheap-module-source-map",
-  stats: "errors-only",
+  stats: "normal", // or, `errors-only`
   entry: getEntrypoints(),
   output: {
     filename: "[name].js",
@@ -90,6 +91,7 @@ exports.baseConfig = {
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
+    new LoadablePlugin(),
   ],
   resolve: {
     alias: {
