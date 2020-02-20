@@ -18,7 +18,7 @@ export const GalleryInsightsRedirects = {
   "gallery-insights-3-misconceptions-about-professional-art-buyers":
     "resource/professional-art-buyers",
 
-  "gallery-insights-vr-galleries-04-04-17?": "resource/vr-for-galleries",
+  "gallery-insights-vr-galleries-04-04-17": "resource/vr-for-galleries",
 
   "gallery-insights-focus-in-on-better-gallery-photography":
     "resource/focus-in-on-better-gallery-photography",
