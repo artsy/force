@@ -26,37 +26,37 @@ describe("ClassicArticleLayout", () => {
   })
 
   it("renders an article", () => {
-    const component = getWrapper()
-    expect(component.html()).toMatch("ClassicHeader")
-    expect(component.html()).toMatch(
+    const component = getWrapper().html()
+    expect(component).toMatch("ClassicHeader")
+    expect(component).toMatch(
       "New Study of Yale Grads Shows the Gender Pay Gap for Artists Is Not So Simple"
     )
-    expect(component.html()).toMatch("Joanne Artman Gallery")
+    expect(component).toMatch("Joanne Artman Gallery")
   })
 
   it("renders a team-channel article", () => {
     props.article = ClassicArticleInternalChannel
-    const component = getWrapper()
-    expect(component.html()).toMatch("ClassicHeader")
-    expect(component.html()).toMatch("Consignments Intern")
-    expect(component.html()).toMatch("Artsy Jobs")
+    const component = getWrapper().html()
+    expect(component).toMatch("ClassicHeader")
+    expect(component).toMatch("Consignments Intern")
+    expect(component).toMatch("Artsy Jobs")
   })
 
   it("renders a sponsored article", () => {
     props.article = ClassicArticlePromotedContent
-    const component = getWrapper()
-    expect(component.html()).toMatch("ClassicHeader")
-    expect(component.html()).toMatch("Promoted Content")
-    expect(component.html()).toMatch(
+    const component = getWrapper().html()
+    expect(component).toMatch("ClassicHeader")
+    expect(component).toMatch("Promoted Content")
+    expect(component).toMatch(
       "ICI: Benefit Auction 2019 Curatorial Committee Picks"
     )
-    expect(component.html()).toMatch("Independent Curators International")
+    expect(component).toMatch("Independent Curators International")
   })
 
   it("renders ArticlesGrid", () => {
     props.article = ClassicArticleInternalChannel
-    const component = getWrapper()
-    expect(component.html()).toMatch("articles-grid-view")
+    const component = getWrapper().html()
+    expect(component).toMatch("articles-grid-view")
     expect(ArticlesGridView).toBeCalled()
     expect(ArticlesGridView.mock.calls[0][0].header).toMatch(
       "More from Artsy Jobs"
