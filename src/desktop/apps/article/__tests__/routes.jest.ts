@@ -3,6 +3,7 @@ import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publish
 import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import * as routes from "../routes"
 import { extend } from "lodash"
+import { GalleryInsightsRedirects } from "../gallery_insights_redirects"
 const Article = require("desktop/models/article.coffee")
 const Channel = require("desktop/models/channel.coffee")
 
@@ -169,6 +170,22 @@ describe("Article Routes", () => {
 
       routes.index(req, res, next).then(() => {
         expect(res.redirect).toBeCalledWith("https://partners.artsy.net")
+        done()
+      })
+    })
+
+    it("redirects to specific partners.artsy.net content if slug exists in redirect mapping", done => {
+      const slug = Object.keys(GalleryInsightsRedirects)[0]
+      const redirectSlug = GalleryInsightsRedirects[slug]
+
+      article.channel_id = "987"
+      article.slug = slug
+      positronql.mockReturnValue(Promise.resolve({ article }))
+
+      routes.index(req, res, next).then(() => {
+        expect(res.redirect).toBeCalledWith(
+          `https://partners.artsy.net/${redirectSlug}`
+        )
         done()
       })
     })
