@@ -1,6 +1,6 @@
 import * as _ from "underscore"
 import embed from "particle"
-import { URL } from "url"
+import { URL, resolve } from "url"
 import { App } from "desktop/apps/article/components/App"
 import ArticleQuery from "desktop/apps/article/queries/article"
 import {
@@ -28,6 +28,7 @@ import {
 import cheerio from "cheerio"
 import React from "react"
 import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
+import { GalleryInsightsRedirects } from "./gallery_insights_redirects"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -61,7 +62,15 @@ export const index = async (req, res, next) => {
     if (article.channel_id !== sd.ARTSY_EDITORIAL_CHANNEL) {
       // Redirect deprecated Gallery Insights articles
       if (article.channel_id === sd.GALLERY_INSIGHTS_CHANNEL) {
-        return res.redirect("https://partners.artsy.net")
+        const resourceSlug = GalleryInsightsRedirects[article.slug]
+
+        if (resourceSlug) {
+          return res.redirect(
+            resolve("https://partners.artsy.net", resourceSlug)
+          )
+        } else {
+          return res.redirect("https://partners.artsy.net")
+        }
       }
       return classic(req, res, next)
     }
