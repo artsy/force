@@ -21,6 +21,9 @@ exports.productionConfig = {
   devtool: "source-map",
   output: {
     filename: "[name].[contenthash].js",
+    publicPath: process.env.CDN_URL
+      ? `${process.env.CDN_URL}/assets/`
+      : undefined,
   },
   plugins: [
     new HashedModuleIdsPlugin(),
