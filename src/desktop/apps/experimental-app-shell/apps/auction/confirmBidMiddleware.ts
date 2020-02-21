@@ -1,6 +1,7 @@
+import { getPageType } from "../../utils/getPageType"
+
 export const confirmBidMiddleware = (req, res, next) => {
-  const pageParts = req.path.split("/")
-  const pageType = pageParts[1]
+  const { pageType } = getPageType(req)
 
   if (pageType === "auction") {
     if (!res.locals.sd.CURRENT_USER) {

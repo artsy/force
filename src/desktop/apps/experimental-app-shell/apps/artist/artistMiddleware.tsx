@@ -1,6 +1,8 @@
+import { getPageType } from "../../utils/getPageType"
+
 export const artistMiddleware = (req, res, next) => {
-  const pageParts = req.path.split("/")
-  const pageType = pageParts[1]
+  const { pageType, pageParts } = getPageType(req)
+
   if (pageType === "artist") {
     const artistID = pageParts[2]
     const user = req.user && req.user.toJSON()

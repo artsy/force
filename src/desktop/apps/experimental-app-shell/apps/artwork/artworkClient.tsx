@@ -2,7 +2,7 @@ import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
 import { data as sd } from "sharify"
 
-export const client = () => {
+export const artworkClient = () => {
   const User = require("desktop/models/user.coffee")
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
@@ -12,12 +12,8 @@ export const client = () => {
   const $ = require("jquery")
   const mediator = require("desktop/lib/mediator.coffee")
 
-  const pageType = window.location.pathname.split("/")[1]
-
-  if (pageType === "artwork") {
-    const artworkSlug = location.pathname.replace(/\/artwork\//, "")
-    recordArtworkView(artworkSlug, sd.CURRENT_USER)
-  }
+  const artworkSlug = location.pathname.replace(/\/artwork\//, "")
+  recordArtworkView(artworkSlug, sd.CURRENT_USER)
 
   const openInquireableModal = (
     artworkId: string,

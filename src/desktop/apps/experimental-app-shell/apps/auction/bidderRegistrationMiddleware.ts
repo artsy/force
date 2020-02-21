@@ -1,7 +1,7 @@
+import { getPageType } from "../../utils/getPageType"
+
 export const bidderRegistrationMiddleware = (req, res, next) => {
-  const pageParts = req.path.split("/")
-  const pageType = pageParts[1]
-  console.log(req.params)
+  const { pageType } = getPageType(req)
 
   if (
     pageType === "auction-registration" ||

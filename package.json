@@ -31,6 +31,7 @@
     "sync-schema": "rm -rf data && mkdir data && graphql-fetch-schema https://metaphysics-staging.artsy.net -o data",
     "test:smoke": "scripts/smoke_test.sh",
     "test": "scripts/test.sh",
+    "test:jest": "node node_modules/.bin/jest",
     "type-check": "tsc --pretty --noEmit",
     "unlink-all": "yalc remove --all && yarn --check-files",
     "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
