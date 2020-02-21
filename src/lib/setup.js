@@ -249,7 +249,7 @@ export default function(app) {
 
     // Mount reloadable desktop
     mountAndReload(path.resolve("src/desktop"), {
-      watchModules: ["@artsy/reaction", "@artsy/stitch"],
+      watchModules: ["@artsy/reaction", "@artsy/stitch", "@artsy/palette"],
     })
 
     // In staging or prod, mount routes normally
