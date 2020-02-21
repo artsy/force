@@ -1,16 +1,16 @@
 version: 2.1
 
 orbs:
-  yarn: artsy/yarn@4.0.0
+  yarn: artsy/yarn@dev:cfbc411ee961792773c79ebfa9806c7d
   hokusai: artsy/hokusai@0.7.2
-  node: artsy/node@0.1.0
+  node: artsy/node@dev:dc523d4428b2260798906013dc4d8221
   horizon: artsy/release@0.0.1
   codecov: codecov/codecov@1.0.5
 
 jobs:
   acceptance:
     docker:
-      - image: circleci/node:10-stretch-browsers
+      - image: circleci/node:12-stretch-browsers
     steps:
       - yarn/setup
       - run:
@@ -19,7 +19,7 @@ jobs:
 
   acceptance_cypress:
     docker:
-      - image: circleci/node:10-stretch-browsers
+      - image: circleci/node:12-stretch-browsers
     steps:
       - yarn/setup
       - run:
