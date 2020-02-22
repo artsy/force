@@ -17,20 +17,12 @@ buildClientApp({
   } as any,
 })
   .then(({ ClientApp }) => {
-    const pageType = window.location.pathname.split("/")[1] as
-      | "artist"
-      | "artwork"
-
     /**
      * Mount route-specific client code here
      */
     const mountClientAppSupport = () => {
-      switch (pageType) {
-        case "artist":
-          return artistClient()
-        case "artwork":
-          return artworkClient()
-      }
+      artistClient()
+      artworkClient()
     }
 
     loadableReady(() => {
