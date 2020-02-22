@@ -33,9 +33,13 @@ const path = require("path")
 const { setAliases } = require("require-control")
 
 // Force resolution of potentially `yarn link`'d modules to the local node_modules
-// folder. This gets around SSR issues involving single react context requirements.
-// This is server-side only. Client-side must be resolved via webpack.
+// folder. This gets around SSR issues involving single react context requirements,
+// amongst other things. This is server-side only. Client-side must be resolved
+// via webpack.
 setAliases({
+  "express-http-context": path.resolve(
+    path.join(__dirname, "../node_modules/express-http-context")
+  ),
   react: path.resolve(path.join(__dirname, "../node_modules/react")),
   "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
   "styled-components": path.resolve(
