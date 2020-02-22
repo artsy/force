@@ -66,6 +66,10 @@ export const searchMiddleware = async (req, res, next) => {
         html: layout,
       }
       res.status(status).send(layout)
+
+      // Return early, we don't want to `next()` down the chain since search
+      // renders its own page.
+      return
     } catch (error) {
       console.log(error)
       next(error)

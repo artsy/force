@@ -24,6 +24,7 @@ import siteAssociation from "artsy-eigen-web-association"
 import superSync from "backbone-super-sync"
 import { IpFilter as ipfilter } from "express-ipfilter"
 import timeout from "connect-timeout"
+import httpContext from "express-http-context"
 import "./setup_sharify"
 import cache from "./cache"
 import downcase from "./middleware/downcase"
@@ -208,6 +209,18 @@ export default function(app) {
   )
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 
+  /**
+   * Add support for request-scoped contexts; meaning, a variable set in the
+   * scope of a request can be accessed outside of the express chain. Think,
+   * A/B tests.
+   *
+   * NOTE: some popular middlewares (such as body-parser, express-jwt) may cause
+   * context to get lost. To workaround such issues, you are advised to use any
+   * third party middleware that does NOT need the context BEFORE you use this
+   * middleware.
+   */
+  app.use(httpContext.middleware)
+
   // Redirect requests before they even have to deal with Force routing
   app.use(downcase)
   app.use(hardcodedRedirects)
@@ -217,6 +230,7 @@ export default function(app) {
   app.use(escapedFragmentMiddleware)
   app.use(logger)
   app.use(unsupportedBrowserCheck)
+
   if (NODE_ENV !== "test") app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
   app.use(pageCacheMiddleware)
