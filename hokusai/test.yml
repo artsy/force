@@ -8,6 +8,4 @@ services:
     environment:
       - CI=true
       - CIRCLE_NODE_INDEX
-      - CDN_PRODUCTION_URL
-      - CDN_STAGING_URL
     env_file: ../.env.test
