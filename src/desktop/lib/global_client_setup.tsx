@@ -1,3 +1,10 @@
+/**
+ * Set webpack public-path asset lookup to CDN in production
+ */
+if (process.env.NODE_ENV === "production") {
+  __webpack_public_path__ = process.env.CDN_URL + "/assets/"
+}
+
 import $ from "jquery"
 import Backbone from "backbone"
 import _ from "underscore"
