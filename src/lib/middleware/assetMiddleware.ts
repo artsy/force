@@ -19,7 +19,7 @@ export const assetMiddleware = () => {
     return (_req, res, next) => {
       res.locals.asset = filename => {
         let manifestFile = manifest[filename] || filename
-        if (CDN_URL && !manifestFile.includes(CDN_URL)) {
+        if (CDN_URL) {
           manifestFile = CDN_URL + manifestFile
         }
         return manifestFile
