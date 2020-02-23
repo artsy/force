@@ -6,7 +6,6 @@ const LoadablePlugin = require("@loadable/webpack-plugin")
 const { getEntrypoints } = require("../utils/getEntrypoints")
 const {
   BUILD_SERVER,
-  CDN_URL,
   NODE_ENV,
   basePath,
   isCI,
@@ -66,7 +65,6 @@ exports.baseConfig = {
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        CDN_URL: JSON.stringify(CDN_URL),
       },
     }),
     // Remove moment.js localization files

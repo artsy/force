@@ -1,18 +1,3 @@
-/**
- * Set webpack public-path asset lookup to CDN in production
- */
-if (process.env.NODE_ENV === "production") {
-  __webpack_public_path__ = "https://d1rmpw1xlv9rxa.cloudfront.net/assets/"
-}
-
-// @ts-ignore
-window._setPublicPath = path => {
-  __webpack_public_path__ = path + "/assets/"
-}
-
-// @ts-ignore
-window._getPublicPath = () => __webpack_public_path__
-
 import $ from "jquery"
 import Backbone from "backbone"
 import _ from "underscore"
