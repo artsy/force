@@ -65,7 +65,6 @@ exports.baseConfig = {
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        CDN_URL: JSON.stringify(process.env.CDN_URL),
       },
     }),
     // Remove moment.js localization files
@@ -74,16 +73,16 @@ exports.baseConfig = {
     ...(BUILD_SERVER
       ? []
       : [
-        // Remove server side of relay network layer.
-        new webpack.IgnorePlugin(
-          /^react-relay-network-modern-ssr\/node8\/server/
-        ),
-        // No matter what, we don't want the graphql-js package in client
-        // bundles. This /may/ lead to a broken build when e.g. a reaction
-        // module that's used on the client side imports something from
-        // graphql-js, but that's better than silently including this.
-        new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-      ]),
+          // Remove server side of relay network layer.
+          new webpack.IgnorePlugin(
+            /^react-relay-network-modern-ssr\/node8\/server/
+          ),
+          // No matter what, we don't want the graphql-js package in client
+          // bundles. This /may/ lead to a broken build when e.g. a reaction
+          // module that's used on the client side imports something from
+          // graphql-js, but that's better than silently including this.
+          new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
+        ]),
     new webpack.NamedModulesPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
