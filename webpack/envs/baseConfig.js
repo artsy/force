@@ -65,8 +65,6 @@ exports.baseConfig = {
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        CND_PRODUCTION_URL: JSON.stringify(process.env.CND_PRODUCTION_URL),
-        CDN_STAGING_URL: JSON.stringify(process.env.CDN_STAGING_URL),
       },
     }),
     // Remove moment.js localization files

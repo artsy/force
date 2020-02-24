@@ -66,6 +66,7 @@ export const searchMiddleware = async (req, res, next) => {
         html: layout,
       }
       res.status(status).send(layout)
+      return
     } catch (error) {
       console.log(error)
       next(error)
