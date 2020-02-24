@@ -8,7 +8,7 @@ export const GalleryInsightsRedirects = {
   "gallery-insights-brett-gorvy-new-storefont":
     "resource/brett-gorvy-online-storefront",
 
-  "gallery-insights-the-pop-up-gallery-checklist?": "resource/pop-up-galleries",
+  "gallery-insights-the-pop-up-gallery-checklist": "resource/pop-up-galleries",
 
   "gallery-insights-artful-pitch": "resource/press-for-your-gallery",
 
