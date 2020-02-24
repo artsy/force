@@ -11,9 +11,12 @@ export const artworkClient = () => {
   const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
   const $ = require("jquery")
   const mediator = require("desktop/lib/mediator.coffee")
+  const pageType = window.location.pathname.split("/")[1]
 
-  const artworkSlug = location.pathname.replace(/\/artwork\//, "")
-  recordArtworkView(artworkSlug, sd.CURRENT_USER)
+  if (pageType === "artwork") {
+    const artworkSlug = location.pathname.replace(/\/artwork\//, "")
+    recordArtworkView(artworkSlug, sd.CURRENT_USER)
+  }
 
   const openInquireableModal = (
     artworkId: string,

@@ -1,5 +1,7 @@
 # Centralizes configuration for currently running split tests
 #
+# USE: Append `?split_test[test_name]=experiment` query param in url.
+#
 # eg.
 # header_design:
 #   key: 'header_design'
@@ -24,4 +26,10 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {}
+module.exports = {
+  client_navigation_v3:
+    key: "client_navigation_v3"
+    outcomes:
+      control: 50
+      experiment: 50
+}
