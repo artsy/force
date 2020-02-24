@@ -17,7 +17,8 @@ module.exports = (req, res, next) ->
       res.locals.sd[k.toUpperCase()] = v
 
   # TODO: Remove when the client nav AB test ends.
-  res.locals.sd['EXPERIMENTAL_APP_SHELL'] = Boolean(res.locals.sd['CLIENT_NAVIGATION_V3'] is 'experiment')
+  if runningTests['CLIENT_NAVIGATION_V3']
+    res.locals.sd['EXPERIMENTAL_APP_SHELL'] = Boolean(res.locals.sd['CLIENT_NAVIGATION_V3'] is 'experiment')
 
   # Store value in globally available location.
   setSplitTest('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
