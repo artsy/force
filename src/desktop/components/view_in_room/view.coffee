@@ -80,6 +80,8 @@ module.exports = class ViewInRoom extends Backbone.View
         artworkTransformCSS[key] = Math.abs artworkTransformCSS[key] * @roomScalingFactor()
       artworkTransformCSS['left'] = Math.floor ($(window).innerWidth() - artworkTransformCSS['width']) / 2
 
+    $('.js-view-in-room-close').css('opacity', 1)
+
     @$artwork
       .addClass 'is-transition'
       .css artworkTransformCSS
@@ -161,6 +163,7 @@ module.exports = class ViewInRoom extends Backbone.View
     })
 
   remove: ->
+    $('.js-view-in-room-close').remove()
     $(window).off 'resize.view-in-room'
     @transitionOut()
       .one $.support.transition.end, =>
