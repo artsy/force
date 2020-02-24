@@ -2,8 +2,6 @@ FROM node:12.14-alpine
 
 WORKDIR /app
 
-ENV CDN_PRODUCTION_URL=https://d1s2w0upia4e9w.cloudfront.net CDN_STAGING_URL=https://d1rmpw1xlv9rxa.cloudfront.net
-
 # Install system dependencies
 # Add deploy user
 RUN apk --no-cache --quiet add \
