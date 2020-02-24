@@ -1,22 +1,18 @@
 import React from "react"
 import { once } from "lodash"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
-import {
-  ModalOptions,
-  ModalType,
-} from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
-import { shouldAdRender } from "desktop/apps/article/helpers"
+import {
+  shouldAdRender,
+  handleOpenAuthModal,
+} from "desktop/apps/article/helpers"
 
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
-
-interface ArticleModalOptions extends ModalOptions {
-  signupIntent: string
-}
 
 export class ArticleLayout extends React.Component<AppProps> {
   componentDidMount() {
@@ -51,7 +47,7 @@ export class ArticleLayout extends React.Component<AppProps> {
         "scroll",
         once(() => {
           setTimeout(() => {
-            this.handleOpenAuthModal("register", {
+            handleOpenAuthModal("register", {
               mode: ModalType.signup,
               intent: "Viewed editorial",
               signupIntent: "signup",
@@ -68,13 +64,6 @@ export class ArticleLayout extends React.Component<AppProps> {
         { once: true }
       )
     }
-  }
-
-  handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
-    mediator.trigger("open:auth", {
-      mode,
-      ...options,
-    })
   }
 
   render() {
@@ -110,7 +99,7 @@ export class ArticleLayout extends React.Component<AppProps> {
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
-            onOpenAuthModal={this.handleOpenAuthModal}
+            onOpenAuthModal={handleOpenAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}
@@ -121,7 +110,7 @@ export class ArticleLayout extends React.Component<AppProps> {
           <InfiniteScrollArticle
             article={article}
             isMobile={isMobile}
-            onOpenAuthModal={this.handleOpenAuthModal}
+            onOpenAuthModal={handleOpenAuthModal}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             shouldAdRender={renderAd}

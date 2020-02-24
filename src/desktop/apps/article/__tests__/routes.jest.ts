@@ -5,11 +5,12 @@ import * as routes from "../routes"
 import { extend } from "lodash"
 import { GalleryInsightsRedirects } from "../gallery_insights_redirects"
 const Article = require("desktop/models/article.coffee")
-const Channel = require("desktop/models/channel.coffee")
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
 }))
+
+jest.mock("lib/metaphysics.coffee", () => jest.fn())
 
 jest.mock("sharify", () => ({
   data: {
@@ -17,6 +18,8 @@ jest.mock("sharify", () => ({
     GALLERY_INSIGHTS_CHANNEL: "987",
     APP_URL: "https://artsy.net",
     EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
+    PC_ARTSY_CHANNEL: "5759e508b5989e6f98f77999",
+    PC_AUCTION_CHANNEL: "5759e4d7b5989e6f98f77997",
   },
 }))
 
@@ -26,6 +29,7 @@ jest.mock("@artsy/stitch", () => ({
 
 const positronql = require("desktop/lib/positronql").positronql as jest.Mock
 const stitch = require("@artsy/stitch").stitch as jest.Mock
+const metaphysics = require("lib/metaphysics.coffee") as jest.Mock
 
 describe("Article Routes", () => {
   let req
@@ -68,6 +72,7 @@ describe("Article Routes", () => {
   afterEach(() => {
     positronql.mockClear()
     stitch.mockClear()
+    metaphysics.mockClear()
   })
 
   describe("#index", () => {
@@ -159,7 +164,9 @@ describe("Article Routes", () => {
       positronql.mockReturnValue(Promise.resolve({ article }))
 
       routes.index(req, res, next).then(() => {
-        expect(res.render.mock.calls[0][0]).toBe("article")
+        const { data, locals } = stitch.mock.calls[0][0]
+        expect(locals.assetPackage).toBe("article")
+        expect(data.article.title).toBe("New York's Next Art District")
         done()
       })
     })
@@ -333,39 +340,71 @@ describe("Article Routes", () => {
   })
 
   describe("#classic", () => {
-    let channel
-
-    beforeEach(() => {
-      channel = new Channel({ name: "Foo" })
-      article = extend(fixtures.ClassicArticle, {
-        slug: "foobar",
-      })
-
-      Article.prototype.fetchWithRelated.mockImplementation(options => {
-        options.success({ article: new Article(article), channel })
+    it("renders a classic article", done => {
+      routes.classic(req, res, next, fixtures.ClassicArticle).then(() => {
+        const { data } = stitch.mock.calls[0][0]
+        expect(data.article.title).toBe(
+          "New Study of Yale Grads Shows the Gender Pay Gap for Artists Is Not So Simple"
+        )
+        done()
       })
     })
 
-    it("renders a classic article", () => {
-      routes.classic(req, res, next)
-      expect(res.render.mock.calls[0][1].article.get("slug")).toBe("foobar")
-      expect(res.render.mock.calls[0][1].channel.get("name")).toBe("Foo")
-    })
-
-    it("renders a ghosted article (no channel)", () => {
-      Article.prototype.fetchWithRelated.mockImplementationOnce(options => {
-        options.success({ article: new Article(article) })
+    it("fetches partner for gallery promoted content", done => {
+      article = Object.assign({}, fixtures.ClassicArticlePromotedContent, {
+        channel_id: sd.PC_ARTSY_CHANNEL,
+        partner_ids: ["123"],
+        sale: null,
       })
-      routes.classic(req, res, next)
-      expect(res.render.mock.calls[0][1].article.get("slug")).toBe("foobar")
-    })
-
-    it("sets the correct jsonld", () => {
-      routes.classic(req, res, next)
-      expect(res.locals.jsonLD).toMatch(
-        "Gender Pay Gap for Artists Is Not So Simple"
+      metaphysics.mockReturnValue(
+        Promise.resolve({ partner: fixtures.ClassicArticlePartner })
       )
-      expect(res.locals.jsonLD).toMatch("Partner")
+
+      routes.classic(req, res, next, article).then(() => {
+        const { data } = stitch.mock.calls[0][0]
+        expect(data.article.partner.name).toBe("Contessa Gallery")
+        done()
+      })
+    })
+
+    it("fetches sale for auction promoted content", done => {
+      article = Object.assign({}, fixtures.ClassicArticlePromotedContent)
+      delete article.sale
+      metaphysics.mockReturnValue(
+        Promise.resolve({ sale: fixtures.ClassicArticleSale })
+      )
+
+      routes.classic(req, res, next, article).then(() => {
+        const { data } = stitch.mock.calls[0][0]
+        expect(data.article.sale.name).toBe("ICI: Benefit Auction 2019")
+        done()
+      })
+    })
+
+    it("renders a ghosted article (no channel)", done => {
+      article = Object.assign({}, fixtures.ClassicArticle)
+      delete article.channel_id
+      delete article.author
+      delete article.partner_channel_id
+
+      routes.classic(req, res, next, article).then(() => {
+        const { data } = stitch.mock.calls[0][0]
+        expect(data.article.title).toBe(
+          "New Study of Yale Grads Shows the Gender Pay Gap for Artists Is Not So Simple"
+        )
+        done()
+      })
+    })
+
+    it("sets the correct jsonld", done => {
+      routes.classic(req, res, next, fixtures.ClassicArticle).then(() => {
+        const {
+          data: { jsonLD },
+        } = stitch.mock.calls[0][0]
+        expect(jsonLD).toMatch("Gender Pay Gap for Artists Is Not So Simple")
+        expect(jsonLD).toMatch("Partner")
+        done()
+      })
     })
   })
 

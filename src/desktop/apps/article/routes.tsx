@@ -27,6 +27,10 @@ import {
 } from "./helpers"
 import cheerio from "cheerio"
 import React from "react"
+import {
+  partnerQuery,
+  auctionQuery,
+} from "desktop/apps/article/queries/promotedContent"
 import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 import { GalleryInsightsRedirects } from "./gallery_insights_redirects"
 const Articles = require("desktop/collections/articles.coffee")
@@ -34,6 +38,7 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const Article = require("desktop/models/article.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
+const metaphysics = require("lib/metaphysics.coffee")
 
 export const index = async (req, res, next) => {
   let articleId = req.params.slug
@@ -72,7 +77,23 @@ export const index = async (req, res, next) => {
           return res.redirect("https://partners.artsy.net")
         }
       }
-      return classic(req, res, next)
+      if (req.params.slug !== article.slug) {
+        // Redirect to most recent slug
+        return res.redirect(`/article/${article.slug}`)
+      }
+
+      if (article.partner_channel_id) {
+        // redirect partner channels to partner page
+        const { partner } = await metaphysics({
+          method: "post",
+          query: partnerQuery(article.partner_channel_id),
+        }).then(data => data)
+
+        return res.redirect(
+          `/${partner.default_profile_id}/article/${article.slug}`
+        )
+      }
+      return classic(req, res, next, article)
     }
 
     if (isVanguardSubArticle(article)) {
@@ -95,7 +116,7 @@ export const index = async (req, res, next) => {
     }
 
     if (
-      !["standard", "feature"].includes(article.layout) &&
+      !["classic", "standard", "feature"].includes(article.layout) &&
       req.path.includes("/article")
     ) {
       return res.redirect(`/${article.layout}/${article.slug}${search}`)
@@ -177,42 +198,65 @@ export const index = async (req, res, next) => {
   }
 }
 
-export const classic = (req, res, _next) => {
-  const article = new Article({
-    id: req.params.slug,
-  })
-  const accessToken = req.user ? req.user.get("accessToken") : null
+export const classic = async (_req, res, next, article) => {
+  const { CURRENT_USER, IS_MOBILE } = res.locals.sd
+  const isMobile = IS_MOBILE
+  const isLoggedIn = typeof CURRENT_USER !== "undefined"
 
-  article.fetchWithRelated({
-    accessToken,
-    error: res.backboneError,
-    success: data => {
-      if (req.params.slug !== data.article.get("slug")) {
-        return res.redirect(`/article/${data.article.get("slug")}`)
-      }
+  if (article.channel_id === sd.PC_ARTSY_CHANNEL && article.partner_ids) {
+    const send = {
+      method: "post",
+      query: partnerQuery(article.partner_ids[0]),
+    }
 
-      if (data.partner) {
-        return res.redirect(
-          `/${data.partner.get(
-            "default_profile_id"
-          )}/article/${data.article.get("slug")}`
-        )
-      }
+    await metaphysics(send).then(data => {
+      article.partner = data.partner
+    })
+  }
 
-      res.locals.sd.ARTICLE = data.article.toJSON()
-      res.locals.sd.INCLUDE_SAILTHRU =
-        res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
-      res.locals.sd.ARTICLE_CHANNEL = data.channel && data.channel.toJSON()
-      res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
+  if (article.channel_id === sd.PC_AUCTION_CHANNEL && article.auction_ids) {
+    const send = {
+      method: "post",
+      query: auctionQuery(article.auction_ids[0]),
+    }
 
-      res.render("article", {
-        embed,
+    await metaphysics(send).then(data => {
+      article.sale = data.sale
+    })
+  }
+
+  try {
+    const layout = await stitch({
+      basePath: res.app.get("views"),
+      layout: getLayoutTemplate(article),
+      config: {
+        styledComponents: true,
+      },
+      blocks: {
+        head: () => <ArticleMeta article={article} />,
+        body: App,
+      },
+      locals: {
+        ...res.locals,
+        assetPackage: "article",
+        bodyClass: getBodyClass(article),
         crop,
-        resize,
-        ...data,
-      })
-    },
-  })
+        markdown,
+      },
+      data: {
+        article,
+        isLoggedIn,
+        isMobile,
+        jsonLD: getJsonLd(article),
+      },
+      templates: {
+        ArticlesGridView: "../../../components/articles_grid/view.coffee",
+      },
+    })
+    res.send(layout)
+  } catch (error) {
+    next(error)
+  }
 }
 
 export const amp = (req, res, next) => {

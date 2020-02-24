@@ -7,11 +7,13 @@ import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
+import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
 
 export interface AppProps extends ArticleProps {
   templates?: {
     SuperArticleFooter: string
     SuperArticleHeader: string
+    ArticlesGridView: string
   }
 }
 
@@ -38,6 +40,9 @@ export class App extends React.Component<AppProps> {
         return (
           <InfiniteScrollNewsArticle articles={[article]} {...this.props} />
         )
+      }
+      case "classic": {
+        return <ClassicArticleLayout {...this.props} />
       }
       default: {
         return <ArticleLayout {...this.props} />
