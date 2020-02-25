@@ -95,9 +95,4 @@ app.use(require("./apps/user"))
 // Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
 
-if (
-  getSplitTest("EXPERIMENTAL_APP_SHELL") ||
-  process.env.EXPERIMENTAL_APP_SHELL
-) {
-  app.use(require("./apps/experimental-app-shell/server").app)
-}
+app.use(require("./apps/experimental-app-shell/server").app)

@@ -11,6 +11,7 @@ import { bidderRegistrationMiddleware } from "./apps/auction/bidderRegistrationM
 import { confirmBidMiddleware } from "./apps/auction/confirmBidMiddleware"
 import { orderMiddleware } from "./apps/order/orderMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
+import { getSplitTest } from "desktop/components/split_test/splitTestContext"
 
 export const app = express()
 
@@ -24,7 +25,15 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  */
 app.get(
   "/*",
-
+  (_req, _res, next) => {
+    if (
+      !getSplitTest("EXPERIMENTAL_APP_SHELL") &&
+      !process.env.EXPERIMENTAL_APP_SHELL
+    ) {
+      return next("route")
+    }
+    return next()
+  },
   /**
    * Mount middleware for handling server-side portions of apps mounted into
    * global router.
