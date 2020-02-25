@@ -6,7 +6,6 @@ export const skipIfClientSideRoutingEnabled = (_req, _res, next) => {
     process.env.EXPERIMENTAL_APP_SHELL
   ) {
     return next("route")
-  } else {
-    return next()
   }
+  return next()
 }
