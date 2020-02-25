@@ -8,10 +8,9 @@ import express, { Request, Response, NextFunction } from "express"
 export const app = express()
 
 app.get(
-  "/user/conversations",
+  "/user/conversations*",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const context = buildServerAppContext(req, res, {})
       const {
         bodyHTML,
         redirect,
@@ -20,10 +19,10 @@ app.get(
         styleTags,
         scripts,
       } = await buildServerApp({
+        context: buildServerAppContext(req, res),
         routes: conversationRoutes,
         url: req.url,
         userAgent: req.header("User-Agent"),
-        context,
       })
 
       if (redirect) {
