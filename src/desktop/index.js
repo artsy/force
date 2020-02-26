@@ -1,6 +1,5 @@
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
-import { getSplitTest } from "desktop/components/split_test/splitTestContext"
 
 const app = (module.exports = require("express")())
 
