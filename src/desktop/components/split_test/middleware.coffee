@@ -21,13 +21,7 @@ module.exports = (req, res, next) ->
   if runningTests['client_navigation_v3']
     res.locals.sd['EXPERIMENTAL_APP_SHELL'] = Boolean(res.locals.sd['CLIENT_NAVIGATION_V3'] is 'experiment')
 
-
-  # See https://github.com/skonves/express-http-context/issues/13
-  if process.env.NODE_ENV != 'test'
-    httpContext.ns.bindEmitter(req)
-    httpContext.ns.bindEmitter(res)
-
-  # Store value in globally available location.
-  setSplitTest('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
+    # Store value in globally available location.
+    setSplitTest('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
 
   next()
