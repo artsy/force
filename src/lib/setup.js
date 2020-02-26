@@ -209,18 +209,6 @@ export default function(app) {
   )
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 
-  /**
-   * Add support for request-scoped contexts; meaning, a variable set in the
-   * scope of a request can be accessed outside of the express chain. Think,
-   * A/B tests.
-   *
-   * NOTE: some popular middlewares (such as body-parser, express-jwt) may cause
-   * context to get lost. To workaround such issues, you are advised to use any
-   * third party middleware that does NOT need the context BEFORE you use this
-   * middleware.
-   */
-  app.use(httpContext.middleware)
-
   // Redirect requests before they even have to deal with Force routing
   app.use(downcase)
   app.use(hardcodedRedirects)
@@ -230,8 +218,6 @@ export default function(app) {
   app.use(escapedFragmentMiddleware)
   app.use(logger)
   app.use(unsupportedBrowserCheck)
-
-  if (NODE_ENV !== "test") app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
   app.use(pageCacheMiddleware)
 
@@ -245,6 +231,22 @@ export default function(app) {
 
   // Sets up mobile marketing signup modal
   app.use(marketingModals)
+
+  /**
+   * Add support for request-scoped contexts; meaning, a variable set in the
+   * scope of a request can be accessed outside of the express chain. Think,
+   * A/B tests.
+   *
+   * NOTE: some popular middlewares (such as body-parser, express-jwt) may cause
+   * context to get lost. To workaround such issues, you are advised to use any
+   * third party middleware that does NOT need the context BEFORE you use this
+   * middleware.
+   */
+  app.use(httpContext.middleware)
+
+  if (NODE_ENV !== "test") {
+    app.use(splitTestMiddleware)
+  }
 
   // Setup hot-swap loader. See https://github.com/artsy/express-reloadable
   if (isDevelopment) {
