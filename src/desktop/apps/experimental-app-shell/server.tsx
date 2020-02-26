@@ -24,7 +24,7 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  * Mount routes that will connect to global SSR router
  */
 app.get(
-  "*",
+  "/*",
   (_req, _res, next) => {
     console.log(
       `[force] EXPERIMENTAL_APP_SHELL A/B test: getSplitTest: ${getSplitTest(
