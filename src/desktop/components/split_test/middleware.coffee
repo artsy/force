@@ -23,8 +23,9 @@ module.exports = (req, res, next) ->
 
 
   # See https://github.com/skonves/express-http-context/issues/13
-  httpContext.ns.bindEmitter(req)
-  httpContext.ns.bindEmitter(res)
+  if process.env.NODE_ENV != 'test'
+    httpContext.ns.bindEmitter(req)
+    httpContext.ns.bindEmitter(res)
 
   # Store value in globally available location.
   httpContext.set('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
