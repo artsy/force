@@ -28,6 +28,6 @@ module.exports = (req, res, next) ->
     httpContext.ns.bindEmitter(res)
 
   # Store value in globally available location.
-  httpContext.set('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
+  setSplitTest('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
 
   next()
