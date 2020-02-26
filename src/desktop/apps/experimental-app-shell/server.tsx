@@ -25,18 +25,7 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  */
 app.get(
   "*",
-  async (_req, _res, next) => {
-    await new Promise(resolve => {
-      setImmediate(() => {
-        console.log(
-          `[force - nextTick] EXPERIMENTAL_APP_SHELL A/B test: getSplitTest: ${getSplitTest(
-            "EXPERIMENTAL_APP_SHELL"
-          )} | env var: ${process.env.EXPERIMENTAL_APP_SHELL}`
-        )
-        resolve()
-      })
-    })
-
+  (_req, _res, next) => {
     console.log(
       `[force] EXPERIMENTAL_APP_SHELL A/B test: getSplitTest: ${getSplitTest(
         "EXPERIMENTAL_APP_SHELL"
