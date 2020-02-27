@@ -37,9 +37,6 @@ const { setAliases } = require("require-control")
 // amongst other things. This is server-side only. Client-side must be resolved
 // via webpack.
 setAliases({
-  "express-http-context": path.resolve(
-    path.join(__dirname, "../node_modules/express-http-context")
-  ),
   react: path.resolve(path.join(__dirname, "../node_modules/react")),
   "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
   "styled-components": path.resolve(
