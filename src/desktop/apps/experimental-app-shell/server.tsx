@@ -25,7 +25,7 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 app.get(
   "/*",
   (_req, res, next) => {
-    const isExperiment = res.locals.sd.CLIENT_NAVIGATION_V3
+    const isExperiment = res.locals.sd.CLIENT_NAVIGATION_V3 === "experiment"
 
     if (!isExperiment) {
       return next("route")
@@ -60,7 +60,10 @@ app.get(
         bodyHTML,
         headTags,
       } = await buildServerApp({
-        context: buildServerAppContext(req, res),
+        context: buildServerAppContext(req, res, {
+          EXPERIMENTAL_APP_SHELL:
+            res.locals.sd.CLIENT_NAVIGATION_V3 === "experiment",
+        }),
         routes: getAppRoutes(),
         url: req.url,
         userAgent: req.header("User-Agent"),
