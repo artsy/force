@@ -22,6 +22,6 @@ module.exports = (req, res, next) ->
     res.locals.sd['EXPERIMENTAL_APP_SHELL'] = Boolean(res.locals.sd['CLIENT_NAVIGATION_V3'] is 'experiment')
 
     # Store value in globally available location.
-    setSplitTest('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
+    httpContext.set('EXPERIMENTAL_APP_SHELL', res.locals.sd['EXPERIMENTAL_APP_SHELL'])
 
   next()
