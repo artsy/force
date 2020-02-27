@@ -61,8 +61,7 @@ app.get(
         headTags,
       } = await buildServerApp({
         context: buildServerAppContext(req, res, {
-          EXPERIMENTAL_APP_SHELL:
-            res.locals.sd.CLIENT_NAVIGATION_V3 === "experiment",
+          EXPERIMENTAL_APP_SHELL: true,
         }),
         routes: getAppRoutes(),
         url: req.url,
