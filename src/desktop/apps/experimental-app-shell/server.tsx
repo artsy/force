@@ -11,7 +11,6 @@ import { bidderRegistrationMiddleware } from "./apps/auction/bidderRegistrationM
 import { confirmBidMiddleware } from "./apps/auction/confirmBidMiddleware"
 import { orderMiddleware } from "./apps/order/orderMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
-import { getSplitTest } from "desktop/components/split_test/splitTestContext"
 
 export const app = express()
 
@@ -25,17 +24,10 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  */
 app.get(
   "/*",
-  (_req, _res, next) => {
-    console.log(
-      `[force] EXPERIMENTAL_APP_SHELL A/B test: getSplitTest: ${getSplitTest(
-        "EXPERIMENTAL_APP_SHELL"
-      )} | env var: ${process.env.EXPERIMENTAL_APP_SHELL}`
-    )
+  (_req, res, next) => {
+    const isExperiment = res.locals.sd.CLIENT_NAVIGATION_V3 === "experiment"
 
-    if (
-      !getSplitTest("EXPERIMENTAL_APP_SHELL") &&
-      !process.env.EXPERIMENTAL_APP_SHELL
-    ) {
+    if (!isExperiment) {
       return next("route")
     }
     return next()
@@ -68,7 +60,9 @@ app.get(
         bodyHTML,
         headTags,
       } = await buildServerApp({
-        context: buildServerAppContext(req, res),
+        context: buildServerAppContext(req, res, {
+          EXPERIMENTAL_APP_SHELL: true,
+        }),
         routes: getAppRoutes(),
         url: req.url,
         userAgent: req.header("User-Agent"),

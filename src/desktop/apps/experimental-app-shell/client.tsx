@@ -12,6 +12,7 @@ const mediator = require("desktop/lib/mediator.coffee")
 buildClientApp({
   routes: getAppRoutes(),
   context: {
+    EXPERIMENTAL_APP_SHELL: true,
     user: sd.CURRENT_USER,
     mediator,
   } as any,
