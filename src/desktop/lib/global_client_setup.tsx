@@ -23,6 +23,9 @@ if (process.env.NODE_ENV === "production") {
   }
 
   __webpack_public_path__ = cdnUrl + "/assets/"
+
+  // @ts-ignore
+  window.__getPublicPath = () => __webpack_public_path__
 }
 
 import $ from "jquery"
