@@ -24,17 +24,6 @@ export const searchMiddleware = async (req, res, next) => {
         res.locals.sd.searchQuery = req.query.term
       }
 
-      /**
-       * Search intentionally bypasses SSR, but we still need to inject the
-       * experimental-app-shell asset into the page. Because of bundle splitting
-       * we now get that back dynamically from `buildServerApp` below.
-       *
-       * @see https://github.com/artsy/reaction/blob/master/src/Artsy/Router/buildServerApp.tsx#L157
-       */
-      // Use helper defined in assetMiddleware to return fingerprinted url
-      const scriptUrl = res.locals.asset("/assets/experimental-app-shell.js")
-      const scripts = `<script async data-chunk="experimental-app-shell" src="${scriptUrl}"></script>`
-
       // Turn off pre-fetching, since those will be intercepted
       // and routed client-side.
       res.locals.sd.ENABLE_INSTANT_PAGE = false
@@ -54,7 +43,6 @@ export const searchMiddleware = async (req, res, next) => {
         },
         locals: {
           ...res.locals,
-          scripts,
           pageType,
         },
       })
