@@ -3,9 +3,10 @@ import { data as sd } from "sharify"
 import { loadableReady } from "@loadable/component"
 
 import { routes } from "reaction/Apps/IdentityVerification/routes"
-import mediator from "desktop/lib/mediator.coffee"
 import React from "react"
 import ReactDOM from "react-dom"
+
+const mediator = require("desktop/lib/mediator.coffee")
 
 buildClientApp({
   routes,
