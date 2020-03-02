@@ -27,8 +27,8 @@
 # module.exports = {}
 
 module.exports = {
-  client_navigation_v3:
-    key: "client_navigation_v3"
+  client_navigation_v4:
+    key: "client_navigation_v4"
     outcomes:
       control: 50
       experiment: 50
