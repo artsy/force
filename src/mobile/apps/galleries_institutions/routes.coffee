@@ -36,11 +36,9 @@ module.exports.index = (req, res, next) ->
         featuredPartner: _.first(profiles.shuffle())
 
 module.exports.galleries_institutions = (req, res, next) ->
-  # If city is a part of the params, get it
-  # otherwise the route is /:partner_type/all
-  if req.params.city
-    city = _.findWhere Cities, slug: req.params.city
-    return next() unless city?
+  return next() unless req.params.city
+  city = _.findWhere Cities, slug: req.params.city
+  return next() unless city?
 
   type = req.path.split('/')[1]
 
@@ -54,7 +52,7 @@ module.exports.galleries_institutions = (req, res, next) ->
     has_full_profile: true
     partnerPlural: partnerPlural
 
-  _.extend options, near: city.coords.toString() if city?
+  _.extend options, near: city.coords.toString()
 
   partners = new Partners
   partners.fetchUntilEndInParallel
@@ -65,7 +63,7 @@ module.exports.galleries_institutions = (req, res, next) ->
     res.locals.sd.PARTNERS = partners.map (partner) -> partner.pick('id', 'name')
 
     res.render 'partners',
-      city: city or name: "All #{partnerPlural}"
+      city: city
       aToZGroup: partners.groupByAlpha()
 
   .catch next
