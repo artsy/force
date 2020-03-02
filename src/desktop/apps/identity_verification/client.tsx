@@ -6,14 +6,10 @@ import { routes } from "reaction/Apps/IdentityVerification/routes"
 import React from "react"
 import ReactDOM from "react-dom"
 
-const mediator = require("desktop/lib/mediator.coffee")
-
 buildClientApp({
   routes,
   context: {
     user: sd.CURRENT_USER,
-    mediator,
-    isEigen: sd.EIGEN,
   },
 })
   .then(({ ClientApp }) => {

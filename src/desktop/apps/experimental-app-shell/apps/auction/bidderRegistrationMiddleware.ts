@@ -19,10 +19,6 @@ export const bidderRegistrationMiddleware = (req, res, next) => {
         "/auction-registration-modal/"
       )
       return res.redirect(newUrl)
-    } else if (!res.locals.sd.CURRENT_USER) {
-      return res.redirect(
-        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
-      )
     }
   }
 

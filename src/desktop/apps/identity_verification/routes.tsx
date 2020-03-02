@@ -2,7 +2,6 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "reaction/Apps/IdentityVerification/routes"
 import { stitch } from "@artsy/stitch"
-// const metaphysics = require("lib/metaphysics.coffee")
 
 export const identityVerification = async (req, res, next) => {
   if (!res.locals.sd.CURRENT_USER) {
@@ -43,7 +42,6 @@ export const identityVerification = async (req, res, next) => {
         ...res.locals,
         assetPackage: "identity_verification",
         headerLogoHref: res.locals.sd.APP_URL,
-        hideHeaderOnEigen: res.locals.sd.EIGEN,
         scripts,
         styleTags,
       },

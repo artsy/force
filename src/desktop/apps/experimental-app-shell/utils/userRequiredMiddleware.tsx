@@ -1,12 +1,16 @@
 import { getPageType } from "./getPageType"
 
-const userRequiredPages = ["orders", "identity-verification"]
+const USER_REQUIRED_PAGES = [
+  "orders",
+  "identity-verification",
+  "auction-registration",
+  "auction-registration2",
+]
 
 export const userRequiredMiddleware = (req, res, next) => {
   const { pageType } = getPageType(req)
 
-  // if this page is not in the userRequiredPages, require user
-  if (userRequiredPages.includes(pageType)) {
+  if (USER_REQUIRED_PAGES.includes(pageType)) {
     if (!res.locals.sd.CURRENT_USER) {
       return res.redirect(
         `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
