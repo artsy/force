@@ -99,7 +99,7 @@
     "analytics-node": "2.4.1",
     "annyang": "mzikherman/annyang",
     "artsy-backbone-mixins": "artsy/artsy-backbone-mixins",
-    "artsy-eigen-web-association": "artsy/artsy-eigen-web-association",
+    "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
     "artsy-ezel-components": "artsy/artsy-ezel-components",
     "artsy-morgan": "artsy/artsy-morgan",
     "artsy-xapp": "artsy/artsy-xapp",

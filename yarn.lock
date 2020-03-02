@@ -2329,9 +2329,9 @@ artsy-backbone-mixins@artsy/artsy-backbone-mixins:
     qs "5.2.0"
     underscore "*"
 
-artsy-eigen-web-association@artsy/artsy-eigen-web-association:
+"artsy-eigen-web-association@git://github.com/artsy/artsy-eigen-web-association.git":
   version "1.0.7"
-  resolved "https://codeload.github.com/artsy/artsy-eigen-web-association/tar.gz/0d28dc247b6a1366fabe0b95f365a61b95261c1e"
+  resolved "git://github.com/artsy/artsy-eigen-web-association.git#faf724b5486912cc3da3876b881d1bda12f187f6"
   dependencies:
     express "*"
 
