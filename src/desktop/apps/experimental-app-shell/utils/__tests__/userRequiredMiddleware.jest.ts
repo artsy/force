@@ -1,4 +1,4 @@
-import { orderMiddleware } from "../orderMiddleware"
+import { userRequiredMiddleware } from "../userRequiredMiddleware"
 
 describe("orderMiddleware", () => {
   it("skips middleware if not correct pageType", () => {
@@ -14,7 +14,7 @@ describe("orderMiddleware", () => {
     }
 
     const next = jest.fn()
-    orderMiddleware(req, res, next)
+    userRequiredMiddleware(req, res, next)
     expect(next).toHaveBeenCalled()
   })
 
@@ -38,7 +38,7 @@ describe("orderMiddleware", () => {
     }
 
     const next = jest.fn()
-    orderMiddleware(req, res, next)
+    userRequiredMiddleware(req, res, next)
     expect(spy).toHaveBeenCalledWith(
       `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
     )

@@ -8,6 +8,7 @@ type PageTypes =
   | "auction-registration2"
   | "orders"
   | "search"
+  | "identity-verification"
 
 export function getPageType(
   req: Request
