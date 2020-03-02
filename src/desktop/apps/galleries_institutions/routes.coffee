@@ -67,7 +67,7 @@ fetchPartnerCategories = (type) ->
 
       res.render 'index',
         ViewHelpers: ViewHelpers
-        showAZLink: true
+        showAZLink: false
         type: type
         profiles: profiles.models
         categories: _.shuffle categories
