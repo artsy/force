@@ -9,7 +9,7 @@ import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { bidderRegistrationMiddleware } from "./apps/auction/bidderRegistrationMiddleware"
 import { confirmBidMiddleware } from "./apps/auction/confirmBidMiddleware"
-import { orderMiddleware } from "./apps/order/orderMiddleware"
+import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 
 export const app = express()
@@ -32,6 +32,9 @@ app.get(
     }
     return next()
   },
+
+  userRequiredMiddleware,
+
   /**
    * Mount middleware for handling server-side portions of apps mounted into
    * global router.
@@ -39,7 +42,6 @@ app.get(
   artistMiddleware,
   bidderRegistrationMiddleware,
   confirmBidMiddleware,
-  orderMiddleware,
 
   // Search exits early and renders its own page, since SSR is not needed
   searchMiddleware,
