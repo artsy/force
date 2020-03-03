@@ -47,14 +47,3 @@ describe 'Galleries routes', ->
         @res.render.args[0][0].should.equal 'partners'
         @res.render.args[0][1].city.name.should.equal 'New York'
         done()
-
-    it 'renders all galleries if no city param is passed', (done) ->
-      req = path: '/galleries/all', params: {}
-      routes.galleries_institutions req, @res, @next
-
-      Backbone.sync.args[0][2].success @partners
-      _.defer => _.defer =>
-        @res.render.called.should.be.true()
-        @res.render.args[0][0].should.equal 'partners'
-        @res.render.args[0][1].city.name.should.equal 'All Galleries'
-        done()

@@ -67,7 +67,6 @@ fetchPartnerCategories = (type) ->
 
       res.render 'index',
         ViewHelpers: ViewHelpers
-        showAZLink: true
         type: type
         profiles: profiles.models
         categories: _.shuffle categories
@@ -75,29 +74,3 @@ fetchPartnerCategories = (type) ->
         state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
     .catch -> next()
-
-# A to Z page
-
-@partnersAZ = (req, res, next) ->
-  type = mapType[req.params.type]
-
-  partners = new Partners()
-  partners.fetchUntilEndInParallel
-    cache: true
-    data:
-      size: 40
-      type: mapTypeClasses[req.params.type]
-      sort: 'sortable_id'
-      has_full_profile: true
-      eligible_for_listing: true
-
-  .then ->
-    aToZGroup = partners.groupByAlphaWithColumns 3
-    res.render 'a_z',
-      type: type
-      showBrowseLink: true
-      aToZGroup: aToZGroup
-
-  .catch next
-  .done()
-
