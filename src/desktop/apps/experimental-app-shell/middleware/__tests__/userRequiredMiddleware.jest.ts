@@ -1,6 +1,6 @@
 import { userRequiredMiddleware } from "../userRequiredMiddleware"
 
-describe("orderMiddleware", () => {
+describe("userRequiredMiddleware", () => {
   it("skips middleware if not correct pageType", () => {
     const req = {
       path: "/do-not-match",

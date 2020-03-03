@@ -9,7 +9,7 @@ import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { bidderRegistrationMiddleware } from "./apps/auction/bidderRegistrationMiddleware"
 import { confirmBidMiddleware } from "./apps/auction/confirmBidMiddleware"
-import { userRequiredMiddleware } from "./utils/userRequiredMiddleware"
+import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 
 export const app = express()

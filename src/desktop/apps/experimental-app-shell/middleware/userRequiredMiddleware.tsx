@@ -1,4 +1,4 @@
-import { getPageType } from "./getPageType"
+import { getPageType } from "../utils/getPageType"
 
 const USER_REQUIRED_PAGES = [
   "auction-registration",
