@@ -5,9 +5,11 @@ import { formattedLocation } from "../../helpers"
 import { makeDescribeWorkDesktop } from "../describe_work_desktop"
 import { makeDescribeWorkMobile } from "../describe_work_mobile"
 import { isEmpty, pick } from "underscore"
+import { data as sd } from "sharify"
 
 function DescribeWorkContainer(props) {
-  const { isMobile, phone, submission } = props
+  const isMobile = sd.IS_MOBILE
+  const { phone, submission } = props
   const location = formattedLocation(
     submission.location_city,
     submission.location_state,
