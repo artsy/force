@@ -76,7 +76,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@^25.26.1":
+"@artsy/reaction@25.26.1":
   version "25.26.1"
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-25.26.1.tgz#434f908352f99900b90bd0e3cea45e4331fb032e"
   integrity sha512-DeMqJWm66LIQxd50bT7We6S53gaDMopinKfVYaWBuFKshPzLhNDhsga/OrvYuRXvI5z5NLgIPx1NNMU3NTcgQw==
