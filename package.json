@@ -335,6 +335,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
     "webpack-notifier": "1.7.0",
+    "webpack-retry-chunk-load-plugin": "^1.2.0",
     "yalc": "1.0.0-pre.34"
   },
   "license": "MIT",

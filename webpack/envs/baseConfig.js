@@ -3,6 +3,7 @@
 const path = require("path")
 const webpack = require("webpack")
 const LoadablePlugin = require("@loadable/webpack-plugin")
+const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const { getEntrypoints } = require("../utils/getEntrypoints")
 const {
   BUILD_SERVER,
@@ -92,6 +93,9 @@ exports.baseConfig = {
       waypoints: "jquery-waypoints/waypoints.js",
     }),
     new LoadablePlugin(),
+    new RetryChunkLoadPlugin({
+      maxRetries: 5,
+    }),
   ],
   resolve: {
     alias: {
