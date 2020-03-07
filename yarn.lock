@@ -16613,7 +16613,7 @@ webpack-notifier@1.7.0:
     object-assign "^4.1.0"
     strip-ansi "^3.0.1"
 
-webpack-retry-chunk-load-plugin@^1.2.0:
+webpack-retry-chunk-load-plugin@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/webpack-retry-chunk-load-plugin/-/webpack-retry-chunk-load-plugin-1.2.0.tgz#bf818a6e9f07a79af141f159ff7c48735d24925d"
   integrity sha512-NyE+7e4jzpF9YbDZEEmwpRw5krfiuSdFQvFfOGzLS9cIurTXFHfQMtFrqGHj53+CzQtrPbeAHC6VJGmuVLnkrQ==
