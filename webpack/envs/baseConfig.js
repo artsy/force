@@ -93,6 +93,14 @@ exports.baseConfig = {
       waypoints: "jquery-waypoints/waypoints.js",
     }),
     new LoadablePlugin(),
+
+    /**
+     * If something goes wrong while loading a dynmic split chunk (import())
+     * retry the fetch once per second up to `maxRetries`.
+     *
+     * NOTE: Since this plugin patches the native loading mechanism from webpack
+     * we (may) need to revist once we upgrade to Webpack 5.
+     */
     new RetryChunkLoadPlugin({
       maxRetries: 5,
       cacheBust: `function() {
