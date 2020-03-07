@@ -95,6 +95,9 @@ exports.baseConfig = {
     new LoadablePlugin(),
     new RetryChunkLoadPlugin({
       maxRetries: 5,
+      cacheBust: `function() {
+        return "cache-bust=" + Date.now();
+      }`,
     }),
   ],
   resolve: {
