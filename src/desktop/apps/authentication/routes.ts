@@ -119,7 +119,7 @@ export const index = async (req, res, next) => {
         },
       },
     })
-
+    console.log("did i error?", layout.data.options)
     res.send(layout)
   } catch (error) {
     next(error)
