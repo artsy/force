@@ -30,7 +30,7 @@ export class MobileAuthStatic extends React.Component<Props> {
         <MobileContainer>
           <FormSwitcher
             {...this.props}
-            title={options.title}
+            title={options.title || options.copy}
             type={type as ModalType}
             handleSubmit={handleSubmit.bind(this, type, options)}
             onBackButtonClicked={() => {
