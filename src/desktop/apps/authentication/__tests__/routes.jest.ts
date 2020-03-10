@@ -28,6 +28,7 @@ describe("Routes", () => {
           },
         },
         send: jest.fn(),
+        cookie: jest.fn(),
       }
       next = jest.fn()
       stitch.mockReset()
@@ -134,30 +135,36 @@ describe("Routes", () => {
 
       it("Options returns all expected fields from query", done => {
         req.query = {
-          afterSignUpAction: "after signup",
-          destination: "/foo",
-          redirectTo: "/bar",
-          signupIntent: "follow partner",
+          action: "follow",
+          contextModule: "Artist header",
+          kind: "profile",
+          objectId: "david-zwirner",
+          copy: "Sign up to follow David Zwirner",
           intent: "follow partner",
-          signupReferer: "referrer",
+          mode: "signup",
+          trigger: "scroll",
+          "redirect-to": "/david-zwirner",
         }
 
         index(req, res, next).then(() => {
           const {
-            afterSignUpAction,
-            destination,
+            action,
+            contextModule,
+            copy,
+            intent,
+            kind,
+            objectId,
             redirectTo,
-            signupIntent,
-            signupReferer,
-            title,
+            trigger,
           } = stitch.mock.calls[0][0].data.options
-
-          expect(afterSignUpAction).toBe(req.query.afterSignUpAction)
-          expect(destination).toBe(req.query.destination)
-          expect(redirectTo).toBe(req.query.redirectTo)
-          expect(signupIntent).toBe(req.query.signupIntent)
-          expect(signupReferer).toBe(req.query.signupReferer)
-          expect(title).toBe("Sign up to follow partners")
+          expect(action).toBe("follow")
+          expect(contextModule).toBe("Artist header")
+          expect(copy).toBe("Sign up to follow David Zwirner")
+          expect(intent).toBe("follow partner")
+          expect(kind).toBe("profile")
+          expect(objectId).toBe("david-zwirner")
+          expect(redirectTo).toBe("/david-zwirner")
+          expect(trigger).toBe("scroll")
           done()
         })
       })
@@ -196,8 +203,6 @@ describe("Routes", () => {
           signupIntent: "follow artist",
           signupReferer: "referrer",
         }
-
-        res.cookie = jest.fn()
 
         index(req, res, next).then(() => {
           expect(res.cookie.mock.calls[0][1]).toBe(

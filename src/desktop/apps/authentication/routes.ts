@@ -8,7 +8,6 @@ import { parse } from "url"
 export const index = async (req, res, next) => {
   let type: ModalType
   const template = res.locals.sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
-  let title
 
   switch (req.path) {
     case "/signup":
@@ -46,16 +45,16 @@ export const index = async (req, res, next) => {
     action,
     afterSignUpAction,
     contextModule,
+    copy,
     destination,
     error,
-    entityName,
     kind,
     objectId,
-    signupIntent,
     intent,
     trigger,
   } = req.query
 
+  let title
   switch (intent) {
     case "save artwork":
       title = `Sign up to ${intent}s`
@@ -64,7 +63,7 @@ export const index = async (req, res, next) => {
       title = `Sign up to ${intent}s`
       break
     case "follow artist":
-      title = `Sign up to follow ${entityName || "artists"}`
+      title = copy || "Sign up to follow artists"
       break
     default:
       title = `Sign up for Artsy`
@@ -104,15 +103,19 @@ export const index = async (req, res, next) => {
         meta,
         error,
         options: {
+          action,
           afterSignUpAction,
           contextModule,
+          copy,
           destination,
+          error,
           intent,
+          kind,
+          objectId,
           redirectTo,
-          signupIntent,
           signupReferer,
-          trigger,
           title,
+          trigger,
         },
       },
     })
