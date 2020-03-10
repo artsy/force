@@ -4,11 +4,8 @@ import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
-import {
-  shouldAdRender,
-  handleOpenAuthModal,
-} from "desktop/apps/article/helpers"
-
+import { shouldAdRender } from "desktop/apps/article/helpers"
+import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
@@ -47,10 +44,9 @@ export class ArticleLayout extends React.Component<AppProps> {
         "scroll",
         once(() => {
           setTimeout(() => {
-            handleOpenAuthModal("register", {
+            handleOpenAuthModal(ModalType.signup, {
               mode: ModalType.signup,
               intent: "Viewed editorial",
-              signupIntent: "signup",
               trigger: "timed",
               triggerSeconds: 2,
               copy: "Sign up for the Best Stories in Art and Visual Culture",
@@ -58,7 +54,7 @@ export class ArticleLayout extends React.Component<AppProps> {
               afterSignUpAction: {
                 action: "editorialSignup",
               },
-            } as any)
+            })
           }, 2000)
         }),
         { once: true }

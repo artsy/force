@@ -12,6 +12,16 @@ import { captureException } from "@sentry/browser"
 const mediator = require("../../lib/mediator.coffee")
 const LoggedOutUser = require("../../models/logged_out_user.coffee")
 
+/**
+ * Helper to open authentication modals
+ */
+export const handleOpenAuthModal = (mode: ModalType, options: ModalOptions) => {
+  mediator.trigger("open:auth", {
+    mode,
+    ...options,
+  })
+}
+
 export const handleSubmit = (
   type: ModalType,
   modalOptions: ModalOptions,

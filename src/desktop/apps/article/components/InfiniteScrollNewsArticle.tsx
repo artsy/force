@@ -5,10 +5,7 @@ import React, { Component, Fragment } from "react"
 import { flatten, debounce, once } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
-import {
-  ModalOptions,
-  ModalType,
-} from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
@@ -18,13 +15,9 @@ import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
-import { shouldAdRender } from "desktop/apps/article/helpers"
 const Cookies = require("desktop/components/cookies/index.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
-
-interface ArticleModalOptions extends ModalOptions {
-  signupIntent: string
-}
+import { shouldAdRender } from "desktop/apps/article/helpers"
+import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
 
 export interface Props {
   article?: ArticleData
@@ -235,10 +228,9 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       "scroll",
       once(() => {
         setTimeout(() => {
-          this.handleOpenAuthModal("register", {
+          handleOpenAuthModal(ModalType.signup, {
             mode: ModalType.signup,
             intent: "Viewed editorial",
-            signupIntent: "signup",
             trigger: "timed",
             triggerSeconds: 2,
             copy: "Sign up for the Best Stories in Art and Visual Culture",
@@ -246,18 +238,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
             afterSignUpAction: {
               action: "editorialSignup",
             },
-          } as any)
+          })
         }, 2000)
       }),
       { once: true }
     )
-  }
-
-  handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
-    mediator.trigger("open:auth", {
-      mode,
-      ...options,
-    })
   }
 
   render() {
