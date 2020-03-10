@@ -1,11 +1,6 @@
 import { getPageType } from "../utils/getPageType"
 
-const USER_REQUIRED_PAGES = [
-  "auction-registration",
-  "auction-registration2",
-  "identity-verification",
-  "orders",
-]
+const USER_REQUIRED_PAGES = ["identity-verification", "orders"]
 
 export const userRequiredMiddleware = (req, res, next) => {
   const { pageType } = getPageType(req)
