@@ -1,8 +1,4 @@
-import {
-  scrollingMarketingModal,
-  staticMarketingModal,
-  triggerMarketingModal,
-} from "../triggerMarketingModal"
+import { triggerMarketingModal } from "../triggerMarketingModal"
 import { data as sd } from "sharify"
 
 jest.mock("desktop/lib/mediator.coffee", () => ({
@@ -66,7 +62,6 @@ describe("MarketingSignupModal", () => {
         image: "http://files.artsy.net/images/fair.jpg",
         intent: "signup",
         mode: "signup",
-        signupIntent: "signup",
       })
     })
 
@@ -82,7 +77,6 @@ describe("MarketingSignupModal", () => {
         image: "http://files.artsy.net/images/art.jpg",
         intent: "signup",
         mode: "signup",
-        signupIntent: "signup",
       })
     })
 
@@ -96,8 +90,7 @@ describe("MarketingSignupModal", () => {
         image: "http://files.artsy.net/images/fair.jpg",
         intent: "signup",
         mode: "signup",
-        signupIntent: "signup",
-        trigger: "scroll",
+        trigger: "timed",
         triggerSeconds: 2,
       })
     })
@@ -110,59 +103,6 @@ describe("MarketingSignupModal", () => {
         image: "http://files.artsy.net/images/fair.jpg",
         intent: "signup",
         mode: "signup",
-        signupIntent: "signup",
-      })
-    })
-  })
-
-  describe("#scrollingMarketingModal", () => {
-    it("calls the mediator with expected args", () => {
-      scrollingMarketingModal({
-        copy: "Discover Works from Art Fairs",
-        image: "http://files.artsy.net/images/art.jpg",
-      })
-      expect(window.addEventListener).toBeCalled()
-      jest.runAllTimers()
-
-      expect(mediator).toBeCalledWith("open:auth", {
-        copy: "Discover Works from Art Fairs",
-        destination: "https://artsy.net/",
-        image: "http://files.artsy.net/images/art.jpg",
-        intent: "signup",
-        mode: "signup",
-        signupIntent: "signup",
-        trigger: "scroll",
-        triggerSeconds: 2,
-      })
-    })
-
-    it("does nothing if sd.IS_MOBILE", () => {
-      sd.IS_MOBILE = true
-
-      expect(window.addEventListener).not.toBeCalled()
-      jest.runAllTimers()
-
-      scrollingMarketingModal({
-        copy: "Discover Works from Art Fairs",
-        image: "http://files.artsy.net/images/art.jpg",
-      })
-      expect(mediator).not.toBeCalled()
-    })
-  })
-
-  describe("#staticMarketingModal", () => {
-    it("calls the mediator with expected args", () => {
-      staticMarketingModal({
-        copy: "Discover Works from Art Fairs",
-        image: "http://files.artsy.net/images/art.jpg",
-      })
-      expect(mediator).toBeCalledWith("open:auth", {
-        copy: "Discover Works from Art Fairs",
-        destination: "https://artsy.net/",
-        image: "http://files.artsy.net/images/art.jpg",
-        intent: "signup",
-        mode: "signup",
-        signupIntent: "signup",
       })
     })
   })

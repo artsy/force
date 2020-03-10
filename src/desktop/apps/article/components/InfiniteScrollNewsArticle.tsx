@@ -2,7 +2,7 @@ import { data as sd } from "sharify"
 import moment from "moment"
 import styled from "styled-components"
 import React, { Component, Fragment } from "react"
-import { flatten, debounce, once } from "lodash"
+import { flatten, debounce } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
@@ -17,7 +17,7 @@ import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
 const Cookies = require("desktop/components/cookies/index.coffee")
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
+import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
 
 export interface Props {
   article?: ArticleData
@@ -224,25 +224,15 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   showAuthModal() {
-    window.addEventListener(
-      "scroll",
-      once(() => {
-        setTimeout(() => {
-          handleOpenAuthModal(ModalType.signup, {
-            mode: ModalType.signup,
-            intent: "Viewed editorial",
-            trigger: "timed",
-            triggerSeconds: 2,
-            copy: "Sign up for the Best Stories in Art and Visual Culture",
-            destination: location.href,
-            afterSignUpAction: {
-              action: "editorialSignup",
-            },
-          })
-        }, 2000)
-      }),
-      { once: true }
-    )
+    handleScrollingAuthModal({
+      mode: ModalType.signup,
+      intent: "Viewed editorial",
+      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      destination: location.href,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
+    })
   }
 
   render() {
