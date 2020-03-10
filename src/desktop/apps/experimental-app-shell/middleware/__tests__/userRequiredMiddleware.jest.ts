@@ -19,33 +19,6 @@ describe("userRequiredMiddleware", () => {
   })
 
   describe("user-required routes perform redirect if CURRENT_USER=undefined", () => {
-    it("performs redirect on an /auction-registration route", () => {
-      const spy = jest.fn()
-      const req = {
-        path: "/auction-registration/",
-        url: "/auction-registration/",
-        originalUrl: "/auction-registration/",
-        query: {
-          "accepted-conditions": false,
-        },
-      }
-      const res = {
-        redirect: spy,
-        locals: {
-          sd: {
-            CURRENT_USER: null,
-          },
-        },
-      }
-
-      const next = jest.fn()
-      userRequiredMiddleware(req, res, next)
-      expect(spy).toHaveBeenCalledWith(
-        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
-      )
-      expect(next).not.toHaveBeenCalled()
-    })
-
     it("performs redirect on a /orders route", () => {
       const spy = jest.fn()
       const req = {
