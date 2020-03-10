@@ -62,7 +62,7 @@
     "domelementtype": "1.3.1",
     "graceful-fs": "4.2.3",
     "graphql": "0.13.2",
-    "htmlparser2": "3.10.1",
+    "htmlparser2": "4.1.0",
     "moment": "2.22.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
