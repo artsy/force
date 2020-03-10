@@ -5,7 +5,6 @@ import React, { Component, Fragment } from "react"
 import { flatten, debounce } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
@@ -225,7 +224,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   showAuthModal() {
     handleScrollingAuthModal({
-      mode: ModalType.signup,
       intent: "Viewed editorial",
       copy: "Sign up for the Best Stories in Art and Visual Culture",
       destination: location.href,

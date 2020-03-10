@@ -196,7 +196,6 @@ describe("InfiniteScrollNewsArticle", () => {
       copy: "Sign up for the Best Stories in Art and Visual Culture",
       destination: "https://artsy.net/",
       intent: "Viewed editorial",
-      mode: "signup",
     })
   })
 
