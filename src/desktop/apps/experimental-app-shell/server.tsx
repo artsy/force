@@ -7,8 +7,6 @@ import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
-import { bidderRegistrationMiddleware } from "./apps/auction/bidderRegistrationMiddleware"
-import { confirmBidMiddleware } from "./apps/auction/confirmBidMiddleware"
 import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 
@@ -40,8 +38,6 @@ app.get(
    * global router.
    */
   artistMiddleware,
-  bidderRegistrationMiddleware,
-  confirmBidMiddleware,
 
   // Search exits early and renders its own page, since SSR is not needed
   searchMiddleware,

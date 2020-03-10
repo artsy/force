@@ -145,6 +145,14 @@ function setupJquery() {
 function setupErrorReporting() {
   if (sd.NODE_ENV === "production") {
     Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
+
+    // FIXME: Remove once A/B test ends
+    Sentry.addBreadcrumb({
+      category: "experimental-app-shell-ab-test",
+      message: `A/B test group: ${sd.CLIENT_NAVIGATION_V4}`,
+      level: Sentry.Severity.Info,
+    })
+
     const user = sd && sd.CURRENT_USER
 
     if (sd.CURRENT_USER) {

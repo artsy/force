@@ -6,9 +6,5 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-# Used in EXPERIMENTAL_APP_SHELL A/B test
-# FIXME: Remove once A/B test completes
-app.get '/auction-registration-modal/:id', routes.modalAuctionRegistration
-
 app.get '/auction-registration/:id', routes.modalAuctionRegistration
 app.get '/auction/:id/buyers-premium', routes.buyersPremium
