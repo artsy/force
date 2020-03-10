@@ -119,7 +119,6 @@ describe("AuthWrapper", () => {
     expect(mediatorTrigger).toBeCalledWith("open:auth", {
       mode: "signup",
       intent: "Viewed editorial",
-      signupIntent: "signup",
       trigger: "timed",
       triggerSeconds: 2,
       copy: "Sign up for the Best Stories in Art and Visual Culture",
