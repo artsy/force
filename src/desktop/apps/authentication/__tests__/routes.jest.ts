@@ -133,7 +133,7 @@ describe("Routes", () => {
         })
       })
 
-      it.only("Options returns all expected fields from query", done => {
+      it("Options returns all expected fields from query", done => {
         req.query = {
           action: "follow",
           contextModule: "Artist header",
