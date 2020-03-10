@@ -32,8 +32,7 @@ export const identityVerification = async (req, res, next) => {
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
-      layout:
-        "../../components/main_layout/templates/react_minimal_header.jade",
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       blocks: {
         head: () => headTags,
         body: bodyHTML,
@@ -41,7 +40,6 @@ export const identityVerification = async (req, res, next) => {
       locals: {
         ...res.locals,
         assetPackage: "identity_verification",
-        headerLogoHref: res.locals.sd.APP_URL,
         scripts,
         styleTags,
       },
