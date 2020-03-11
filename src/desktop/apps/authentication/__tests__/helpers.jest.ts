@@ -1,5 +1,6 @@
-import Cookies from "cookies-js"
 import {
+  handleOpenAuthModal,
+  handleScrollingAuthModal,
   handleSubmit,
   setCookies,
   getRedirect,
@@ -7,9 +8,18 @@ import {
 } from "../helpers"
 import Backbone from "backbone"
 import $ from "jquery"
-import { data as sd } from "sharify"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
-jest.mock("cookies-js")
+jest.mock("desktop/lib/mediator.coffee", () => ({
+  trigger: jest.fn(),
+}))
+const mediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
+
+jest.mock("cookies-js", () => ({
+  set: jest.fn(),
+}))
+const Cookies = require("cookies-js").set as jest.Mock
+
 jest.mock("sharify", () => {
   return {
     data: {
@@ -21,25 +31,83 @@ jest.mock("sharify", () => {
     },
   }
 })
+const sd = require("sharify").data
+
+jest.useFakeTimers()
 
 describe("Authentication Helpers", () => {
   beforeEach(() => {
-    delete window.location
-    window.location = {
-      href: sd.APP_URL,
-    }
+    // @ts-ignore
+    window.addEventListener = jest.fn((_type, cb) => cb())
+    window.location.assign = jest.fn()
+    sd.IS_MOBILE = false
+    sd.CURRENT_USER = null
+  })
+
+  afterEach(() => {
+    mediator.mockClear()
+    // @ts-ignore
+    window.addEventListener.mockClear()
+  })
+
+  describe("#handleOpenAuthModal", () => {
+    it("opens the mediator with expected args", () => {
+      handleOpenAuthModal(ModalType.signup, {
+        intent: "follow artist",
+      })
+      expect(mediator).toBeCalledWith("open:auth", {
+        intent: "follow artist",
+        mode: "signup",
+      })
+    })
+  })
+
+  describe("#handleScrollingAuthModal", () => {
+    it("opens the mediator with expected args", () => {
+      handleScrollingAuthModal({
+        intent: "follow artist",
+      })
+      expect(window.addEventListener).toBeCalled()
+      jest.runAllTimers()
+      expect(mediator).toBeCalledWith("open:auth", {
+        intent: "follow artist",
+        mode: "signup",
+        trigger: "timed",
+        triggerSeconds: 2,
+      })
+    })
+
+    it("does not open auth on mobile", () => {
+      sd.IS_MOBILE = true
+      handleScrollingAuthModal({
+        intent: "follow artist",
+      })
+      expect(window.addEventListener).not.toBeCalled()
+      jest.runAllTimers()
+      expect(mediator).not.toBeCalled()
+    })
+
+    it("does not open auth if current user", () => {
+      sd.CURRENT_USER = { id: "123" }
+      handleScrollingAuthModal({
+        intent: "follow artist",
+      })
+      expect(window.addEventListener).not.toBeCalled()
+      jest.runAllTimers()
+      expect(mediator).not.toBeCalled()
+    })
   })
 
   describe("#setCookies", () => {
     beforeEach(() => {
-      Cookies.set = jest.fn()
+      Cookies.mockClear()
     })
 
     it("Sets a cookie for afterSignUpAction ", () => {
       setCookies({
         afterSignUpAction: "an action",
       })
-      const cookie = Cookies.set.mock.calls[0]
+      const cookie = Cookies.mock.calls[0]
 
       expect(cookie[0]).toBe("afterSignUpAction")
       expect(cookie[1]).toMatch("an action")
@@ -49,7 +117,7 @@ describe("Authentication Helpers", () => {
       setCookies({
         destination: "/foo",
       })
-      const cookie = Cookies.set.mock.calls[0]
+      const cookie = Cookies.mock.calls[0]
 
       expect(cookie[0]).toBe("destination")
       expect(cookie[1]).toMatch("/foo")
@@ -67,13 +135,14 @@ describe("Authentication Helpers", () => {
       Backbone.sync = jest.fn()
       window.analytics = {
         track: jest.fn(),
-      }
+      } as any
+      // @ts-ignore
       global.$ = global.jQuery = $
     })
 
     it("can login a user", () => {
       handleSubmit(
-        "login",
+        ModalType.login,
         {
           contextModule: "Header",
           copy: "Log in yo",
@@ -99,7 +168,7 @@ describe("Authentication Helpers", () => {
 
     it("can signup a user", () => {
       handleSubmit(
-        "signup",
+        ModalType.signup,
         {
           contextModule: "Header",
           copy: "Sign up please",
@@ -136,7 +205,7 @@ describe("Authentication Helpers", () => {
 
     it("can handle forgotten passwords", () => {
       handleSubmit(
-        "forgot",
+        ModalType.forgot,
         {
           contextModule: "Header",
           copy: "Forgot Password",
@@ -157,7 +226,7 @@ describe("Authentication Helpers", () => {
 
     it("can handle errors", () => {
       handleSubmit(
-        "login",
+        ModalType.login,
         {
           contextModule: "Header",
           copy: "Log in yo",
@@ -184,7 +253,7 @@ describe("Authentication Helpers", () => {
 
     it("makes an analytics call on success for login", () => {
       handleSubmit(
-        "login",
+        ModalType.login,
         {
           contextModule: "Header",
           copy: "Log in yo",
@@ -204,6 +273,7 @@ describe("Authentication Helpers", () => {
           accessToken: "foobar",
         },
       })
+      // @ts-ignore
       expect(window.analytics.track).toBeCalledWith("Successfully logged in", {
         action: "Successfully logged in",
         user_id: 123,
@@ -218,7 +288,7 @@ describe("Authentication Helpers", () => {
 
     it("makes an analytics call on success for signup", () => {
       handleSubmit(
-        "signup",
+        ModalType.signup,
         {
           contextModule: "Header",
           copy: "Sign up please",
@@ -240,6 +310,7 @@ describe("Authentication Helpers", () => {
           accessToken: "foobar",
         },
       })
+      // @ts-ignore
       expect(window.analytics.track).toBeCalledWith("Created account", {
         action: "Created account",
         user_id: 123,
@@ -262,7 +333,7 @@ describe("Authentication Helpers", () => {
 
     describe("when there isn't a current user", () => {
       it("returns the app url, not an api url", () => {
-        const response = {}
+        const response: any = {}
         const redirectPath = new URL("/any-path", "https://app.example.com")
 
         return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {
@@ -274,6 +345,7 @@ describe("Authentication Helpers", () => {
     describe("when there is a current user", () => {
       describe("when we can get a trust token from the api", () => {
         beforeEach(() => {
+          // @ts-ignore
           global.fetch = jest.fn(() =>
             Promise.resolve({
               status: 200,
@@ -289,7 +361,7 @@ describe("Authentication Helpers", () => {
         })
 
         it("returns an API URL", () => {
-          const response = { user: { accessToken: "some-access-token" } }
+          const response: any = { user: { accessToken: "some-access-token" } }
           const redirectPath = new URL("/any-path", "https://app.example.com")
 
           return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {
@@ -298,7 +370,7 @@ describe("Authentication Helpers", () => {
         })
 
         it("returns with an application URL as the redirect uri", () => {
-          const response = { user: { accessToken: "some-access-token" } }
+          const response: any = { user: { accessToken: "some-access-token" } }
           const redirectPath = new URL("/any-path", "https://app.example.com")
           const expectedRedirectUri = encodeURIComponent(
             "https://app.example.com/any-path"
@@ -312,7 +384,7 @@ describe("Authentication Helpers", () => {
         })
 
         it("returns with the trust token from the api", () => {
-          const response = { user: { accessToken: "some-access-token" } }
+          const response: any = { user: { accessToken: "some-access-token" } }
           const redirectPath = new URL("/any-path", "https://app.example.com")
 
           return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {
@@ -323,6 +395,7 @@ describe("Authentication Helpers", () => {
 
       describe("when we aren't authorized to get a trust token from the api", () => {
         beforeEach(() => {
+          // @ts-ignore
           global.fetch = jest.fn(() =>
             Promise.resolve({
               status: 401,
@@ -337,7 +410,7 @@ describe("Authentication Helpers", () => {
         })
 
         it("returns the app URL, not the api url", () => {
-          const response = { user: { accessToken: "some-access-token" } }
+          const response: any = { user: { accessToken: "some-access-token" } }
           const redirectPath = new URL("/any-path", "https://app.example.com")
 
           return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {
@@ -350,13 +423,14 @@ describe("Authentication Helpers", () => {
 
       describe("when the api is down", () => {
         beforeEach(() => {
+          // @ts-ignore
           global.fetch = jest.fn(() =>
             Promise.resolve(new Error("gravity is down"))
           )
         })
 
         it("returns the app URL, not the api url", () => {
-          const response = { user: { accessToken: "some-access-token" } }
+          const response: any = { user: { accessToken: "some-access-token" } }
           const redirectPath = new URL("/any-path", "https://app.example.com")
 
           return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {
@@ -391,7 +465,7 @@ describe("Authentication Helpers", () => {
       window.history.pushState({}, "", "/magazine")
       const redirectTo = getRedirect("login")
 
-      expect(redirectTo.toString()).toBe("https://app.example.com/")
+      expect(redirectTo.toString()).toBe("https://artsy.net/magazine")
     })
   })
 })

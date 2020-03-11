@@ -121,7 +121,7 @@ export const handleSubmit = (
 
       const result = await apiAuthWithRedirectUrl(res, afterAuthURL)
 
-      window.location.href = result.href
+      window.location.assign(result.href)
     },
     error: (_, res) => {
       const error = res.responseJSON
@@ -197,6 +197,7 @@ export async function apiAuthWithRedirectUrl(
 export function getRedirect(type): URL {
   const appBaseURL = new URL(sd.APP_URL)
   const { location } = window
+
   switch (type) {
     case "login":
     case "forgot":
