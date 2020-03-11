@@ -79,7 +79,7 @@ describe("CTA", () => {
       destination: "https://artsy.net/",
       image: "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA",
       intent: "signup",
-      trigger: "scroll",
+      trigger: "timed",
       triggerSeconds: 4,
     })
 
