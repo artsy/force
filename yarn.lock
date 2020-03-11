@@ -76,10 +76,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@25.27.13":
-  version "25.27.13"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-25.27.13.tgz#034ad43958767b9ce2523140c708260d1448ad05"
-  integrity sha512-bJBsH69McBmXODK6bHNT13OIn21urKpfnwfrrE94sbDVvLWSbtSNRXCCivfTtl52oT3Y5s/FkXtpk/bP3FzETQ==
+"@artsy/reaction@25.27.14":
+  version "25.27.14"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-25.27.14.tgz#e7ddbe9f48c75c5e61c45b2bcb730059df811f29"
+  integrity sha512-6zB5mQTfUDLL7qXO0dz05k1bbMhQoY6cHDPf5/C0pY58+iPinGY4+OYMUx01dCnAbh75UCrM5D/prafyQ1wzaQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -102,7 +102,7 @@
     luxon "^1.15"
     memoize-one "^4.0.3"
     numeral "^2.0.4"
-    openseadragon "^2.3.1"
+    openseadragon "^2.4.2"
     prop-types "^15.5.10"
     qs "^6.5.0"
     rc-slider "^8.6.2"
@@ -11603,10 +11603,15 @@ opener@^1.5.1:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openseadragon@2.4.0, openseadragon@^2.3.1:
+openseadragon@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.0.tgz#d0b28b37a953602c82432a0dbd8a3779dadf756f"
   integrity sha512-e2fsoEiCDkmwc3vyrv396lkYu4c9CGlpbSX4kYE07eW0ZlEF5DnLbeY2PhqPTskkC1jlsPu2TGZwaZ9VhaAn/w==
+
+openseadragon@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.2.tgz#f25d833d0ab9941599d65a3e2b44bec546c9f15c"
+  integrity sha512-398KbZwRtOYA6OmeWRY4Q0737NTacQ9Q6whmr9Lp1MNQO3p0eBz5LIASRne+4gwequcSM1vcHcjfy3dIndQziw==
 
 opentracing@0.14.1:
   version "0.14.1"
