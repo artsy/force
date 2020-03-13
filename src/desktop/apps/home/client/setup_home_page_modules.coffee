@@ -98,7 +98,7 @@ module.exports = ->
           module: module
           user: user
 
-         if contexts[module.key]?
+          if contexts[module.key]?
             html = contexts[module.key](module)
             $el.find(".abrv-context").html html
 

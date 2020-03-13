@@ -5,7 +5,6 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
-HomeAuthRouter = require './auth_router.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 SearchBarView = require '../../../components/search_bar/view.coffee'
 setupHomePageModules = require './setup_home_page_modules.coffee'
@@ -23,8 +22,6 @@ _s = require 'underscore.string'
 module.exports.HomeView = class HomeView extends Backbone.View
 
   initialize: () ->
-    # Set up a router for the /log_in /sign_up and /forgot routes
-    new HomeAuthRouter
     Backbone.history.start pushState: true
 
     # Render Featured Sections
