@@ -19,7 +19,16 @@
   }
 
   bindOnce = function(name, handler) {
-    analyticsHooks.once(namespace(name), handler)
+    // In the experimental page shell, we might have multiple inquiries
+    // _per session_, and therefore can't rely on `once`, as subsequent
+    // inquiries would then not get tracked as there's no "hard jumps"
+    // between pages. See: https://github.com/artsy/force/pull/5232
+    // FIXME: Remove once A/B test completes
+    if (window.sd.CLIENT_NAVIGATION_V4 === "experiment") {
+      analyticsHooks.on(namespace(name), handler)
+    } else {
+      analyticsHooks.once(namespace(name), handler)
+    }
   }
 
   // DOM events
