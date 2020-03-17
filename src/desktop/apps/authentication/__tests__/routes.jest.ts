@@ -131,6 +131,83 @@ describe("Routes", () => {
             done()
           })
         })
+
+        it("returns the correct title for forgot", done => {
+          req.path = "/forgot"
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.meta.title).toBe(
+              "Reset your password"
+            )
+            done()
+          })
+        })
+      })
+
+      describe("intent", () => {
+        it("returns correct title for save artwork intent", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "save artwork",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+              "Sign up to save artworks"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title for follow partner intent", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "follow partner",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+              "Sign up to follow partners"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title for follow artist intent", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "follow artist",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+              "Sign up to follow artists"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title when other intent provided", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "viewedEditorial",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+              "Signup for Artsy"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title when other intent provided", done => {
+          req.path = "/forgot"
+          req.query = {
+            set_password: "reset",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+              "Set your password"
+            )
+            done()
+          })
+        })
       })
 
       it("Options returns all expected fields from query", done => {
