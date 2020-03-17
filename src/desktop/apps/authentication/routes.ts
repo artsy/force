@@ -73,6 +73,8 @@ export const index = async (req, res, next) => {
   if (type === ModalType.forgot) {
     res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
       req.query.reset_password_redirect_to
+
+    // Used to customize reset copy/emails for partners etc
     res.locals.sd.SET_PASSWORD = req.query.set_password
     if (req.query.set_password) {
       title = "Set your password"
