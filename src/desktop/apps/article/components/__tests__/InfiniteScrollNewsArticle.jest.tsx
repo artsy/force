@@ -5,7 +5,6 @@ import { NewsArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures
 import { NewsLayout } from "@artsy/reaction/dist/Components/Publishing/Layouts/NewsLayout"
 import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
 import { extend, times } from "lodash"
-import { data as sd } from "sharify"
 import moment from "moment"
 import Waypoint from "react-waypoint"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
@@ -35,6 +34,12 @@ const handleScrollingAuthModal = require("desktop/apps/authentication/helpers")
   .handleScrollingAuthModal as jest.Mock
 
 jest.useFakeTimers()
+jest.mock("sharify", () => {
+  return {
+    data: {},
+  }
+})
+const sd = require("sharify").data
 
 describe("InfiniteScrollNewsArticle", () => {
   let props
@@ -42,7 +47,7 @@ describe("InfiniteScrollNewsArticle", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <SystemContextProvider user={null}>
+      <SystemContextProvider user={null} relayEnvironment={{ environment: {} }}>
         <InfiniteScrollNewsArticle {...passedProps} />
       </SystemContextProvider>
     )

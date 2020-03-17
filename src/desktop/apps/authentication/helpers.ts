@@ -27,24 +27,25 @@ export const handleOpenAuthModal = (mode: ModalType, options: ModalOptions) => {
  * Opens 2 seconds after first scroll by default
  */
 export const handleScrollingAuthModal = (options: ModalOptions) => {
-  if (!sd.CURRENT_USER && !sd.IS_MOBILE) {
-    const modalOptions = Object.assign(
-      {
-        triggerSeconds: 2,
-        trigger: "timed",
-      },
-      options
-    )
-    window.addEventListener(
-      "scroll",
-      () => {
-        setTimeout(() => {
-          handleOpenAuthModal(ModalType.signup, modalOptions)
-        }, 2000)
-      },
-      { once: true }
-    )
+  if (sd.CURRENT_USER || sd.IS_MOBILE) {
+    return
   }
+  const modalOptions = Object.assign(
+    {
+      triggerSeconds: 2,
+      trigger: "timed",
+    },
+    options
+  )
+  window.addEventListener(
+    "scroll",
+    () => {
+      setTimeout(() => {
+        handleOpenAuthModal(ModalType.signup, modalOptions)
+      }, 2000)
+    },
+    { once: true }
+  )
 }
 
 export const handleSubmit = (
