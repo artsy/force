@@ -7,6 +7,7 @@ import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
 import { extend, times } from "lodash"
 import moment from "moment"
 import Waypoint from "react-waypoint"
+import { Environment } from "react-relay"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
@@ -47,7 +48,10 @@ describe("InfiniteScrollNewsArticle", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <SystemContextProvider user={null} relayEnvironment={{ environment: {} }}>
+      <SystemContextProvider
+        user={null}
+        relayEnvironment={{ environment: {} } as Environment}
+      >
         <InfiniteScrollNewsArticle {...passedProps} />
       </SystemContextProvider>
     )
