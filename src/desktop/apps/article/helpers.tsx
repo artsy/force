@@ -1,8 +1,6 @@
 import { isCustomEditorial } from "./editorial_features"
-import { ModalOptions } from "@artsy/reaction/dist/Components/Authentication/Types"
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const Article = require("desktop/models/article.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
 
 // Helper method to determine how frequently ads should be rendered in Article components
 export const shouldAdRender = (
@@ -40,7 +38,8 @@ export const getLayoutTemplate = article => {
   const isFeatureInSeries =
     article.seriesArticle &&
     article.layout === "feature" &&
-    (article.hero_section && article.hero_section.type === "fullscreen")
+    article.hero_section &&
+    article.hero_section.type === "fullscreen"
 
   const hasSeriesNav =
     ["series", "video"].includes(article.layout) || isFeatureInSeries
@@ -71,15 +70,4 @@ export const getSuperArticleTemplates = article => {
 export const getJsonLd = article => {
   const articleModel = new Article(article)
   return stringifyJSONForWeb(articleModel.toJSONLD())
-}
-
-interface ArticleModalOptions extends ModalOptions {
-  signupIntent: string
-}
-
-export const handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
-  mediator.trigger("open:auth", {
-    mode,
-    ...options,
-  })
 }

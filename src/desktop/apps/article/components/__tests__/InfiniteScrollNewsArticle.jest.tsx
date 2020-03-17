@@ -5,12 +5,12 @@ import { NewsArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures
 import { NewsLayout } from "@artsy/reaction/dist/Components/Publishing/Layouts/NewsLayout"
 import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
 import { extend, times } from "lodash"
-import { data as sd } from "sharify"
 import moment from "moment"
 import Waypoint from "react-waypoint"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
+jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
 }))
@@ -27,7 +27,19 @@ jest.mock("desktop/lib/mediator.coffee", () => ({
 }))
 const mockMediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
 
+jest.mock("desktop/apps/authentication/helpers", () => ({
+  handleScrollingAuthModal: jest.fn(),
+}))
+const handleScrollingAuthModal = require("desktop/apps/authentication/helpers")
+  .handleScrollingAuthModal as jest.Mock
+
 jest.useFakeTimers()
+jest.mock("sharify", () => {
+  return {
+    data: {},
+  }
+})
+const sd = require("sharify").data
 
 describe("InfiniteScrollNewsArticle", () => {
   let props
@@ -35,7 +47,7 @@ describe("InfiniteScrollNewsArticle", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <SystemContextProvider user={null}>
+      <SystemContextProvider user={null} relayEnvironment={{ environment: {} }}>
         <InfiniteScrollNewsArticle {...passedProps} />
       </SystemContextProvider>
     )
@@ -57,6 +69,10 @@ describe("InfiniteScrollNewsArticle", () => {
     }
 
     sd.CURRENT_USER = { id: "123" }
+  })
+
+  afterEach(() => {
+    mockMediator.mockClear()
   })
 
   it("#hasNewDate returns true if article date is different from previous article", () => {
@@ -172,27 +188,20 @@ describe("InfiniteScrollNewsArticle", () => {
   })
 
   it("triggers mediator with correct args", () => {
-    mockPositronql.mockReturnValue(Promise.resolve({ articles: [] }))
     mockCookies.mockReturnValue(null)
+    sd.CURRENT_USER = null
     const component = getWrapper()
-    component.update()
-    window.dispatchEvent(new Event("scroll"))
+    const instance = component
+      .find(InfiniteScrollNewsArticle)
+      .instance() as InfiniteScrollNewsArticle
+    instance.componentDidMount()
 
-    const registerOptions = {
-      mode: "signup",
-      intent: "Viewed editorial",
-      signupIntent: "signup",
-      trigger: "timed",
-      triggerSeconds: 2,
+    expect(handleScrollingAuthModal).toBeCalledWith({
+      afterSignUpAction: { action: "editorialSignup" },
       copy: "Sign up for the Best Stories in Art and Visual Culture",
-      destination: location.href,
-      afterSignUpAction: {
-        action: "editorialSignup",
-      },
-    }
-    setTimeout(() => {
-      expect(mockMediator).toBeCalledWith("open:auth", registerOptions)
-    }, 2000)
+      destination: "https://artsy.net/",
+      intent: "Viewed editorial",
+    })
   })
 
   describe("/news - news index", () => {

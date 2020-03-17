@@ -1,8 +1,7 @@
 import { get } from "lodash"
 import { data as sd } from "sharify"
-
+import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
 const metaphysics = require("lib/metaphysics.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
 
 export const query = `
 query ArtistCTAQuery($artistID: String!) {
@@ -29,28 +28,14 @@ export const setupArtistSignUpModal = () => {
     return metaphysics(send).then(({ artist: artistData }) => {
       const image = get(artistData, "artworks[0].image.cropped.url")
 
-      if (!sd.CURRENT_USER && !sd.IS_MOBILE) {
-        window.addEventListener(
-          "scroll",
-          () => {
-            setTimeout(() => {
-              mediator.trigger("open:auth", {
-                copy: `Join Artsy to discover new works by ${
-                  artistData.name
-                } and more artists you love`,
-                mode: "signup",
-                intent: "signup",
-                signupIntent: "signup",
-                trigger: "scroll",
-                triggerSeconds: 4,
-                destination: location.href,
-                image,
-              })
-            }, 4000)
-          },
-          { once: true }
-        )
-      }
+      handleScrollingAuthModal({
+        copy: `Join Artsy to discover new works by ${artistData.name} and more artists you love`,
+        intent: "signup",
+        trigger: "timed",
+        triggerSeconds: 4,
+        destination: location.href,
+        image,
+      })
     })
   }
 }

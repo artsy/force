@@ -1,14 +1,12 @@
 import React from "react"
-import { once } from "lodash"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
+import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
-  shouldAdRender,
   handleOpenAuthModal,
-} from "desktop/apps/article/helpers"
-
+  handleScrollingAuthModal,
+} from "desktop/apps/authentication/helpers"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
@@ -42,28 +40,14 @@ export class ArticleLayout extends React.Component<AppProps> {
   }
 
   showAuthModal() {
-    if (!this.props.isLoggedIn && !this.props.isMobile) {
-      window.addEventListener(
-        "scroll",
-        once(() => {
-          setTimeout(() => {
-            handleOpenAuthModal("register", {
-              mode: ModalType.signup,
-              intent: "Viewed editorial",
-              signupIntent: "signup",
-              trigger: "timed",
-              triggerSeconds: 2,
-              copy: "Sign up for the Best Stories in Art and Visual Culture",
-              destination: location.href,
-              afterSignUpAction: {
-                action: "editorialSignup",
-              },
-            } as any)
-          }, 2000)
-        }),
-        { once: true }
-      )
-    }
+    handleScrollingAuthModal({
+      intent: "Viewed editorial",
+      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      destination: location.href,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
+    })
   }
 
   render() {
@@ -110,7 +94,6 @@ export class ArticleLayout extends React.Component<AppProps> {
           <InfiniteScrollArticle
             article={article}
             isMobile={isMobile}
-            onOpenAuthModal={handleOpenAuthModal}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             shouldAdRender={renderAd}

@@ -11,6 +11,7 @@ import {
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { shouldAdRender } from "desktop/apps/article/helpers"
+import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
 
 const FETCH_TOP_OFFSET = 200
 
@@ -132,7 +133,6 @@ export class InfiniteScrollArticle extends React.Component<
       isMobile,
       showTooltips,
       showCollectionsRail,
-      onOpenAuthModal,
     } = this.props
     const { articles } = this.state
 
@@ -152,7 +152,7 @@ export class InfiniteScrollArticle extends React.Component<
               isMobile={isMobile}
               showTooltips={showTooltips}
               showCollectionsRail={showCollectionsRail}
-              onOpenAuthModal={onOpenAuthModal}
+              onOpenAuthModal={handleOpenAuthModal}
               infiniteScrollEntrySlug={slug}
               shouldAdRender={renderAd}
               articleSerial={i + 1}

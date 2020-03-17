@@ -142,7 +142,7 @@ describe("Routes", () => {
           copy: "Sign up to follow David Zwirner",
           intent: "follow partner",
           mode: "signup",
-          trigger: "scroll",
+          trigger: "timed",
           "redirect-to": "/david-zwirner",
         }
 
@@ -164,7 +164,7 @@ describe("Routes", () => {
           expect(kind).toBe("profile")
           expect(objectId).toBe("david-zwirner")
           expect(redirectTo).toBe("/david-zwirner")
-          expect(trigger).toBe("scroll")
+          expect(trigger).toBe("timed")
           done()
         })
       })
