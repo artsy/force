@@ -4,7 +4,7 @@ import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
-  handleOpenAuthModal,
+  openAuthModal,
   handleScrollingAuthModal,
 } from "desktop/apps/authentication/helpers"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
@@ -83,7 +83,7 @@ export class ArticleLayout extends React.Component<AppProps> {
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
-            onOpenAuthModal={handleOpenAuthModal}
+            onOpenAuthModal={openAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}

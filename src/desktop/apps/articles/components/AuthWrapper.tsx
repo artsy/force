@@ -3,7 +3,7 @@ import { data as sd } from "sharify"
 import qs from "querystring"
 import Waypoint from "react-waypoint"
 import { once } from "lodash"
-import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
+import { openAuthModal } from "desktop/apps/authentication/helpers"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
@@ -40,7 +40,7 @@ export class AuthWrapper extends React.Component {
   }
 
   onOpenModal = () => {
-    handleOpenAuthModal(ModalType.signup, {
+    openAuthModal(ModalType.signup, {
       intent: "Viewed editorial",
       trigger: "timed",
       triggerSeconds: 2,

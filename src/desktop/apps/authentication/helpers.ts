@@ -15,7 +15,7 @@ const LoggedOutUser = require("../../models/logged_out_user.coffee")
 /**
  * Open authentication modal via 'click' trigger
  */
-export const handleOpenAuthModal = (mode: ModalType, options: ModalOptions) => {
+export const openAuthModal = (mode: ModalType, options: ModalOptions) => {
   mediator.trigger("open:auth", {
     mode,
     ...options,
@@ -41,7 +41,7 @@ export const handleScrollingAuthModal = (options: ModalOptions) => {
     "scroll",
     () => {
       setTimeout(() => {
-        handleOpenAuthModal(ModalType.signup, modalOptions)
+        openAuthModal(ModalType.signup, modalOptions)
       }, 2000)
     },
     { once: true }
