@@ -42,7 +42,7 @@ export class ArticleLayout extends React.Component<AppProps> {
   showAuthModal() {
     handleScrollingAuthModal({
       intent: "Viewed editorial",
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
       afterSignUpAction: {
         action: "editorialSignup",
