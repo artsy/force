@@ -93,7 +93,7 @@ export const handleSubmit = (
           action = "Created account"
           break
         case ModalType.forgot:
-          action = "Forgot Password"
+          action = "Reset your password"
           break
       }
 

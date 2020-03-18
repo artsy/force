@@ -92,12 +92,12 @@ module.exports = class LoggedOutUser extends User
   forgot: (options = {}) ->
     attrs = @pick('email')
     attrs.reset_password_redirect_to = sd.RESET_PASSWORD_REDIRECT_TO || null
-    attrs.mode = if sd.SET_PASSWORD is 'true' then 'fair_set_password' else null
+    attrs.mode = if sd.SET_PASSWORD == 'true' then 'fair_set_password' else sd.SET_PASSWORD || null
 
     new Backbone.Model()
       .save attrs, _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
-        success: _.wrap options.success, (success, args...) =>
+        success: _.wrap options.success, (success, args...) ->
           success? args...
 
   repossess: (subsequent_user_id, options = {}) ->

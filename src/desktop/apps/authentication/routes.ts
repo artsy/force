@@ -33,7 +33,7 @@ export const index = async (req, res, next) => {
       pageTitle = "Signup for Artsy"
       break
     case ModalType.forgot:
-      pageTitle = "Forgot Password"
+      pageTitle = "Reset your password"
       break
   }
   const meta = {
@@ -66,14 +66,19 @@ export const index = async (req, res, next) => {
       title = copy || "Sign up to follow artists"
       break
     default:
-      title = `Sign up for Artsy`
+      title = pageTitle || `Sign up for Artsy`
       break
   }
 
   if (type === ModalType.forgot) {
     res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
       req.query.reset_password_redirect_to
+
+    // Used to customize reset copy/emails for partners etc
     res.locals.sd.SET_PASSWORD = req.query.set_password
+    if (req.query.set_password) {
+      title = "Set your password"
+    }
   }
 
   const redirectTo = getRedirectTo(req)
