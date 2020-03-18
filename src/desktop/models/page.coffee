@@ -11,5 +11,13 @@ module.exports = class Page extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/page"
 
   sanitizedHtml: (attr) ->
-    clean = insane(@get(attr))
+    clean = insane(@get(attr), {
+      allowedAttributes: {
+        a: ["href", "name", "target"],
+        img: ["src"],
+        h1: ['style'],
+        h2: ['style'],
+        div: ['style']
+      }
+    })
     Markdown.mdToHtml.apply { get: -> clean }, [null, sanitize: false]
