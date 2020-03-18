@@ -1,5 +1,5 @@
 import {
-  handleOpenAuthModal,
+  openAuthModal,
   handleScrollingAuthModal,
   handleSubmit,
   setCookies,
@@ -50,9 +50,9 @@ describe("Authentication Helpers", () => {
     window.addEventListener.mockClear()
   })
 
-  describe("#handleOpenAuthModal", () => {
+  describe("#openAuthModal", () => {
     it("opens the mediator with expected args", () => {
-      handleOpenAuthModal(ModalType.signup, {
+      openAuthModal(ModalType.signup, {
         intent: "follow artist",
       })
       expect(mediator).toBeCalledWith("open:auth", {
