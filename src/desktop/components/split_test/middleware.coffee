@@ -15,4 +15,8 @@ module.exports = (req, res, next) ->
       test.set v
       res.locals.sd[k.toUpperCase()] = v
 
+  # FIXME: Remove when new A/B test launches
+  if runningTests['client_navigation_v4']
+    res.locals.sd['CLIENT_NAVIGATION_V4'] = 'control'
+
   next()
