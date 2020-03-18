@@ -68,6 +68,7 @@ export class ModalContainer extends React.Component<any> {
         submitUrls={{
           login: sd.AP.loginPagePath,
           signup: sd.AP.signupPagePath,
+          apple: sd.AP.applePath,
           facebook: sd.AP.facebookPath,
           twitter: sd.AP.twitterPath,
         }}

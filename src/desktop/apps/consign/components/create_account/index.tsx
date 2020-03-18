@@ -46,6 +46,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             login: "/log_in",
             forgot: "/forgot_password",
             signup: "/sign_up",
+            apple: "/users/auth/apple",
             facebook: "/users/auth/facebook",
             twitter: "/users/auth/twitter",
           }}
@@ -77,7 +78,4 @@ const mapDispatchToProps = {
   updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount)
