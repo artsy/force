@@ -9,7 +9,7 @@ CurrentUser = require '../../../../models/current_user'
 
 { resolve } = require 'path'
 
-describe 'HeaderView', ->
+xdescribe 'HeaderView', ->
 
   before (done) ->
     benv.setup =>

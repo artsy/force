@@ -202,7 +202,7 @@ describe("InfiniteScrollNewsArticle", () => {
 
     expect(handleScrollingAuthModal).toBeCalledWith({
       afterSignUpAction: { action: "editorialSignup" },
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      copy: "Sign up for the best stories in art and visual culture",
       destination: "https://artsy.net/",
       intent: "Viewed editorial",
     })
