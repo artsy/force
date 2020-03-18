@@ -23,7 +23,7 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 app.get(
   "/*",
   (_req, res, next) => {
-    const isExperiment = res.locals.sd.CLIENT_NAVIGATION_V4 === "experiment"
+    const isExperiment = res.locals.sd.CLIENT_NAVIGATION_V5 === "experiment"
 
     if (!isExperiment) {
       return next("route")

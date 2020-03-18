@@ -149,7 +149,7 @@ function setupErrorReporting() {
     // FIXME: Remove once A/B test ends
     Sentry.addBreadcrumb({
       category: "experimental-app-shell-ab-test",
-      message: `A/B test group: ${sd.CLIENT_NAVIGATION_V4}`,
+      message: `A/B v5 test group: ${sd.CLIENT_NAVIGATION_V5}`,
       level: Sentry.Severity.Info,
     })
 
