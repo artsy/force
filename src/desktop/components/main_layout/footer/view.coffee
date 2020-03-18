@@ -2,7 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
 openMultiPageModal = require '../../multi_page_modal/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../apps/authentication/helpers'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
 
 module.exports = class FooterView extends Backbone.View
@@ -46,20 +47,17 @@ module.exports = class FooterView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup'
-      trigger: 'click'
+    openAuthModal(ModalType.signup, {
       contextModule: 'Footer'
       destination: location.href
       intent: 'signup'
-      signupIntent: 'signup'
+    })
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'login'
-      trigger: 'click'
+    openAuthModal(ModalType.login, {
       contextModule: 'Footer'
       destination: location.href
-      signupIntent: 'login'
-      intent: 'login'
+      intent: 'signup'
+    })
+

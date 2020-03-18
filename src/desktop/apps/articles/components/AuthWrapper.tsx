@@ -1,7 +1,7 @@
 import React from "react"
+import { data as sd } from "sharify"
 import qs from "querystring"
 import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
-import { data as sd } from "sharify"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
@@ -15,8 +15,8 @@ export class AuthWrapper extends React.Component {
     if (
       !hasCookie &&
       !this.isFromSailthru() &&
-      !sd.CURRENT_USER &&
-      !sd.IS_MOBILE
+      !sd.IS_MOBILE &&
+      !sd.CURRENT_USER
     ) {
       mediator.on("modal:closed", this.setDismissCookie)
       mediator.on("auth:sign_up:success", this.setDismissCookie)
