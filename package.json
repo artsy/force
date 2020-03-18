@@ -74,7 +74,7 @@
   "dependencies": {
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/gemup": "0.0.3",
-    "@artsy/palette": "7.1.4",
+    "@artsy/palette": "7.2.0",
     "@artsy/passport": "1.1.11",
     "@artsy/reaction": "25.32.5",
     "@artsy/stitch": "6.1.6",
