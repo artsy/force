@@ -114,6 +114,7 @@ module.exports =
   S3_SECRET: null
   S3_BUCKET: null
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
+  SAILTHRU_CUSTOMER_ID: null
   SAILTHRU_KEY: null
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_SECRET: null
