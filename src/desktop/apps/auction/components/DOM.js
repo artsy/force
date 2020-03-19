@@ -4,7 +4,7 @@ import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
 import { Component } from "react"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"
-import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
+import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 class DOM extends Component {
@@ -80,9 +80,10 @@ class DOM extends Component {
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     if (!me) {
-      handleOpenAuthModal(ModalType.signup, {
+      openAuthModal(ModalType.signup, {
         redirectTo: auction.registrationFlowUrl(),
         intent: "register to bid",
+        copy: "Sign up to bid on artworks",
         trigger: "click",
       })
 

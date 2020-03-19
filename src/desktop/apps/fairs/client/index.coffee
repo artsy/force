@@ -2,14 +2,14 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Profile = require '../../../models/profile.coffee'
 initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../helpers/view_helpers.coffee'
 query = require '../query.coffee'
-
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 pastFairsTemplate = -> require('../templates/past_fairs.jade') arguments...
@@ -45,19 +45,17 @@ module.exports.FairsView = class FairsView extends Backbone.View
 
   triggerOpenAuth: (e)->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup'
-      copy: "Sign up to follow fairs"
+    openAuthModal(ModalType.signup, {
       intent: 'signup'
-      signupIntent: 'signup'
+      copy: "Sign up to follow fairs"
       destination: location.href
-      trigger: 'click'
+    })
 
   renderPastFairs: (fairs)->
     @$('#fairs-see-more').removeClass 'is-loading'
     @$('#fairs-see-more').hide() if fairs.length < 40
     @$('.fairs__past-fairs-list').append pastFairsTemplate
-      pastFairs: _.filter(fairs, (fair) => ViewHelpers.isPast(fair))
+      pastFairs: _.filter(fairs, (fair) -> ViewHelpers.isPast(fair))
       ViewHelpers: ViewHelpers
 
     @setupFollows fairs

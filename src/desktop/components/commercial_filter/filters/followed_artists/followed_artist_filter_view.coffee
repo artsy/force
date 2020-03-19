@@ -2,7 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { numberFormat } = require 'underscore.string'
 User = require '../../../../models/user.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 template = -> require('./index.jade') arguments...
 
 module.exports = class FollowedArtistsFilterView extends Backbone.View
@@ -29,13 +30,11 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
+    openAuthModal(ModalType.signup, {
       copy: "Sign up to receive alerts when new works are available by artists you follow.",
       intent: 'artists you follow filter'
-      signupIntent: 'artists you follow filter'
-      trigger: 'click'
       destination: location.href
+    })
 
   trackAnalytics: ->
     if @params.get('include_artworks_by_followed_artists')

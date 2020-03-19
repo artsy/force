@@ -3,7 +3,6 @@ Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 ModalView = require '../modal/view.coffee'
-mediator = require '../../lib/mediator.coffee'
 Form = require '../mixins/form.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'

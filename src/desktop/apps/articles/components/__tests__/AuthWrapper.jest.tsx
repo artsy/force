@@ -2,6 +2,7 @@ import React from "react"
 import { mount } from "enzyme"
 import { AuthWrapper } from "../AuthWrapper"
 import sharify, { data as sd } from "sharify"
+import * as helpers from "desktop/lib/openAuthModal"
 
 jest.mock("sharify")
 jest.mock("querystring", () => ({
@@ -23,6 +24,10 @@ const CookiesGetMock = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
 const CookiesSetMock = require("desktop/components/cookies/index.coffee")
   .set as jest.Mock
+jest.spyOn(helpers, "handleScrollingAuthModal")
+
+const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
+  .handleScrollingAuthModal as jest.Mock
 
 jest.useFakeTimers()
 
@@ -30,10 +35,15 @@ describe("AuthWrapper", () => {
   beforeEach(() => {
     delete sd.IS_MOBILE
     delete sd.CURRENT_USER
+    window.addEventListener = jest.fn()
   })
 
   afterEach(() => {
+    mediatorOn.mockClear()
+    mediatorTrigger.mockClear()
+    mediatorOn.mockClear()
     sharify.mockClear()
+    handleScrollingAuthModal.mockClear()
   })
 
   const getWrapper = () => {
@@ -43,42 +53,35 @@ describe("AuthWrapper", () => {
   describe("#componentWillMount", () => {
     it("does nothing if IS_MOBILE", () => {
       sd.IS_MOBILE = true
-      const component = getWrapper().instance() as AuthWrapper
-      expect(component.openModal).toBe(undefined)
+      getWrapper()
       expect(mediatorOn).not.toBeCalled()
+      expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
     it("does nothing if CURRENT_USER", () => {
       sd.CURRENT_USER = { name: "Carter" }
-      const component = getWrapper().instance() as AuthWrapper
-      expect(component.openModal).toBe(undefined)
+      getWrapper()
       expect(mediatorOn).not.toBeCalled()
+      expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
     it("does nothing if user has dismiss cookie", () => {
       CookiesGetMock.mockReturnValueOnce(1)
-      const component = getWrapper().instance() as AuthWrapper
-      expect(component.openModal).toBe(undefined)
+      getWrapper()
       expect(mediatorOn).not.toBeCalled()
+      expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
     it("does nothing if source is sailthru", () => {
       qsMock.mockReturnValueOnce({
         utm_source: "sailthru",
       })
-      const component = getWrapper().instance() as AuthWrapper
-      expect(component.openModal).toBe(undefined)
+      getWrapper()
       expect(mediatorOn).not.toBeCalled()
+      expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
-    it("sets this.openModal", () => {
-      const component = getWrapper().instance() as AuthWrapper
-      component.onOpenModal = jest.fn()
-      expect(component.openModal).toBeInstanceOf(Function)
-      expect(mediatorOn).toBeCalled()
-    })
-
-    it("tells mediator to set cookie on close", () => {
+    it("sets up scrolling auth modal", () => {
       const component = getWrapper().instance() as AuthWrapper
       expect(mediatorOn).toBeCalledWith(
         "modal:closed",
@@ -88,6 +91,15 @@ describe("AuthWrapper", () => {
         "auth:sign_up:success",
         component.setDismissCookie
       )
+      expect(window.addEventListener).toBeCalled()
+      expect(handleScrollingAuthModal).toBeCalledWith({
+        afterSignUpAction: {
+          action: "editorialSignup",
+        },
+        copy: "Sign up for the best stories in art and visual culture",
+        destination: "https://artsy.net/",
+        intent: "Viewed editorial",
+      })
     })
   })
 
@@ -110,19 +122,6 @@ describe("AuthWrapper", () => {
       })
       const component = getWrapper().instance() as AuthWrapper
       expect(component.isFromSailthru()).toBe(true)
-    })
-  })
-
-  it("#onOpenModal calls mediator with correct args", () => {
-    const component = getWrapper().instance() as AuthWrapper
-    component.onOpenModal()
-    expect(mediatorTrigger).toBeCalledWith("open:auth", {
-      mode: "signup",
-      intent: "Viewed editorial",
-      trigger: "timed",
-      triggerSeconds: 2,
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
-      destination: location.href,
     })
   })
 

@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class HeroUnitView extends Backbone.View
   pauseLength: 6500
@@ -93,10 +94,7 @@ module.exports = class HeroUnitView extends Backbone.View
 
   signUp: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
+    openAuthModal(ModalType.signup, {
       intent: 'signup'
-      signupIntent: 'signup'
-      trigger: 'click'
-      context_module: 'Homepage banner'
-      destination: location.href
+      contextModule: 'Homepage banner'
+    })

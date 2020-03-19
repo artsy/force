@@ -1,8 +1,9 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
 { CURRENT_USER } = require('sharify').data
-mediator = require '../../lib/mediator.coffee'
 ArtworkSaveView = require '../artwork_save/view.coffee'
+{ openAuthModal } = require '../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View
   subViews: []
@@ -15,15 +16,11 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
   bid: (e) ->
     if not CURRENT_USER?
       e.preventDefault()
-
-      return mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
         intent: 'bid'
-        signupIntent: 'bid'
-        trigger: 'click'
         redirectTo: $(e.currentTarget).attr 'href'
-
+      })
     else
       # Passes through to `href`
 

@@ -77,7 +77,4 @@ const mapDispatchToProps = {
   updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount)

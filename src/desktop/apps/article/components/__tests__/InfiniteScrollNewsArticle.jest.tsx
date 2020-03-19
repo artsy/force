@@ -28,10 +28,10 @@ jest.mock("desktop/lib/mediator.coffee", () => ({
 }))
 const mockMediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
 
-jest.mock("desktop/apps/authentication/helpers", () => ({
+jest.mock("desktop/lib/openAuthModal", () => ({
   handleScrollingAuthModal: jest.fn(),
 }))
-const handleScrollingAuthModal = require("desktop/apps/authentication/helpers")
+const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
   .handleScrollingAuthModal as jest.Mock
 
 jest.useFakeTimers()
@@ -202,7 +202,7 @@ describe("InfiniteScrollNewsArticle", () => {
 
     expect(handleScrollingAuthModal).toBeCalledWith({
       afterSignUpAction: { action: "editorialSignup" },
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      copy: "Sign up for the best stories in art and visual culture",
       destination: "https://artsy.net/",
       intent: "Viewed editorial",
     })

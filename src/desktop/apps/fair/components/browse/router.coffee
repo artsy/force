@@ -2,10 +2,11 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'querystring'
 FairBrowseView = require './view.coffee'
-mediator = require '../../../../lib/mediator.coffee'
 { humanize } = require 'underscore.string'
 { signupSuccess, validActions } = require '../capture_signup/index.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
+{ openAuthModal } = require '../../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -43,15 +44,11 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   signup: (id, action = "attendee") =>
     return unless validActions[action]
-
-    mediator.trigger 'open:auth',
-      mode: 'signup'
+    openAuthModal(ModalType.signup, {
+      intent: 'signup'
       copy: "Sign up to receive updates about #{@fair.nameSansYear()}"
       destination: "#{@fair.href()}/capture/#{action}"
-      intent: 'signup'
-      signupIntent: 'signup'
-      trigger: 'timed'
-      triggerSeconds: 0
+    })
 
   capture: (id, action)=>
     signupSuccess fair: @fair, action: action, user: CurrentUser.orNull()

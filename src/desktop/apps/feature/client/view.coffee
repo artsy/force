@@ -6,6 +6,8 @@ SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.c
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate = -> require('../templates/sets.jade') arguments...
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class FeatureView extends Backbone.View
   initialize: (options = {}) ->
@@ -16,7 +18,7 @@ module.exports = class FeatureView extends Backbone.View
         # Redirect to the dedicated auction pages
         @redirectToAuction()
 
-     @model.fetchSets
+    @model.fetchSets
       setsSuccess: (sets) =>
         @$('#feature-sets-container').html setsTemplate(sets: sets)
       artworkPageSuccess: @artworkPageSuccess
@@ -51,7 +53,7 @@ module.exports = class FeatureView extends Backbone.View
   isAuction: =>
     @sale?.isAuction()
 
-  doneFetchingSaleArtworks: (saleFeaturedSet) =>
+  doneFetchingSaleArtworks: (saleFeaturedSet) ->
     artworks = saleFeaturedSet.get 'data'
 
   appendArtworks: (artworks) ->
@@ -82,10 +84,8 @@ module.exports = class FeatureView extends Backbone.View
   authOrPass: (e) =>
     unless @currentUser
       e.preventDefault()
-      mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
+        intent: 'bid'
         copy: 'Sign up to bid on artworks'
         redirectTo: @sale.registerUrl()
-        signupIntent: 'bid'
-        intent: 'bid'
-        trigger: 'click'
+      })

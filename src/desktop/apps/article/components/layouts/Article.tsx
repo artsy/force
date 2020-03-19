@@ -4,9 +4,9 @@ import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
-  handleOpenAuthModal,
+  openAuthModal,
   handleScrollingAuthModal,
-} from "desktop/apps/authentication/helpers"
+} from "desktop/lib/openAuthModal"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
@@ -42,7 +42,7 @@ export class ArticleLayout extends React.Component<AppProps> {
   showAuthModal() {
     handleScrollingAuthModal({
       intent: "Viewed editorial",
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
       afterSignUpAction: {
         action: "editorialSignup",
@@ -83,7 +83,7 @@ export class ArticleLayout extends React.Component<AppProps> {
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
-            onOpenAuthModal={handleOpenAuthModal}
+            onOpenAuthModal={openAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}

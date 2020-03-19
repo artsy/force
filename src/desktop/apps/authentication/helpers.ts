@@ -9,44 +9,8 @@ import * as qs from "query-string"
 import { Response } from "express"
 import { captureException } from "@sentry/browser"
 
-const mediator = require("../../lib/mediator.coffee")
-const LoggedOutUser = require("../../models/logged_out_user.coffee")
-
-/**
- * Open authentication modal via 'click' trigger
- */
-export const handleOpenAuthModal = (mode: ModalType, options: ModalOptions) => {
-  mediator.trigger("open:auth", {
-    mode,
-    ...options,
-  })
-}
-
-/**
- * Set up scroll event to open authentication modal via 'timed' trigger
- * Opens 2 seconds after first scroll by default
- */
-export const handleScrollingAuthModal = (options: ModalOptions) => {
-  if (sd.CURRENT_USER || sd.IS_MOBILE) {
-    return
-  }
-  const modalOptions = Object.assign(
-    {
-      triggerSeconds: 2,
-      trigger: "timed",
-    },
-    options
-  )
-  window.addEventListener(
-    "scroll",
-    () => {
-      setTimeout(() => {
-        handleOpenAuthModal(ModalType.signup, modalOptions)
-      }, 2000)
-    },
-    { once: true }
-  )
-}
+const mediator = require("desktop/lib/mediator.coffee")
+const LoggedOutUser = require("desktop/models/logged_out_user.coffee")
 
 export const handleSubmit = (
   type: ModalType,

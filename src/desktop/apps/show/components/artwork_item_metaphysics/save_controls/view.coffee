@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
-mediator = require '../../../../../lib/mediator.coffee'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
+{ openAuthModal } = require '../../../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
@@ -10,7 +11,7 @@ module.exports = class SaveControls extends Backbone.View
     'click .overlay-button-save': 'save'
 
   initialize: (options) ->
-    throw 'You must pass an el' unless @el?
+    throw new Error 'You must pass an el' unless @el?
     return unless options.artwork
 
     { @artworkCollection, @artwork, @context_page } = options
@@ -28,17 +29,15 @@ module.exports = class SaveControls extends Backbone.View
   save: (e) ->
     unless @artworkCollection
       analyticsHooks.trigger 'save:sign-up'
-      mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
         intent: 'save artwork'
-        signupIntent: 'save artwork'
-        trigger: 'click'
         destination: location.href
         afterSignUpAction: {
           action: 'save',
           objectId: @artwork.id
         }
+      })
       return false
 
     trackedProperties = {

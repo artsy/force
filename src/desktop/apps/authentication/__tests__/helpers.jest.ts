@@ -1,6 +1,4 @@
 import {
-  handleOpenAuthModal,
-  handleScrollingAuthModal,
   handleSubmit,
   setCookies,
   getRedirect,
@@ -9,11 +7,6 @@ import {
 import Backbone from "backbone"
 import $ from "jquery"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-}))
-const mediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
 
 jest.mock("cookies-js", () => ({
   set: jest.fn(),
@@ -45,57 +38,8 @@ describe("Authentication Helpers", () => {
   })
 
   afterEach(() => {
-    mediator.mockClear()
     // @ts-ignore
     window.addEventListener.mockClear()
-  })
-
-  describe("#handleOpenAuthModal", () => {
-    it("opens the mediator with expected args", () => {
-      handleOpenAuthModal(ModalType.signup, {
-        intent: "follow artist",
-      })
-      expect(mediator).toBeCalledWith("open:auth", {
-        intent: "follow artist",
-        mode: "signup",
-      })
-    })
-  })
-
-  describe("#handleScrollingAuthModal", () => {
-    it("opens the mediator with expected args", () => {
-      handleScrollingAuthModal({
-        intent: "follow artist",
-      })
-      expect(window.addEventListener).toBeCalled()
-      jest.runAllTimers()
-      expect(mediator).toBeCalledWith("open:auth", {
-        intent: "follow artist",
-        mode: "signup",
-        trigger: "timed",
-        triggerSeconds: 2,
-      })
-    })
-
-    it("does not open auth on mobile", () => {
-      sd.IS_MOBILE = true
-      handleScrollingAuthModal({
-        intent: "follow artist",
-      })
-      expect(window.addEventListener).not.toBeCalled()
-      jest.runAllTimers()
-      expect(mediator).not.toBeCalled()
-    })
-
-    it("does not open auth if current user", () => {
-      sd.CURRENT_USER = { id: "123" }
-      handleScrollingAuthModal({
-        intent: "follow artist",
-      })
-      expect(window.addEventListener).not.toBeCalled()
-      jest.runAllTimers()
-      expect(mediator).not.toBeCalled()
-    })
   })
 
   describe("#setCookies", () => {

@@ -5,6 +5,9 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 ArtistSuggestions = require './artist_suggestions.coffee'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
+{ openAuthModal } = require '../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -52,8 +55,7 @@ module.exports = class FollowButton extends Backbone.View
     unless @following
       mediator.trigger 'clickFollowButton'
       return if ARTIST_PAGE_CTA_ENABLED
-      mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
         copy: "Sign up to follow #{@label}"
         destination: @href
         afterSignUpAction: {
@@ -62,7 +64,7 @@ module.exports = class FollowButton extends Backbone.View
           objectId: @model.id
         }
         intent: "follow #{@modelName}"
-        signupIntent: "follow #{@modelName}"
+      })
       return false
 
     # remove null values

@@ -12,7 +12,6 @@ ABM = require 'artsy-backbone-mixins'
 { API_URL, CURRENT_USER } = sd = require('sharify').data
 Following = require '../desktop/components/follow_button/collection.coffee'
 Artists = require '../desktop/collections/artists.coffee'
-mediator = require '../desktop/lib/mediator.coffee'
 Genes = require '../desktop/collections/genes.coffee'
 Artworks = require '../desktop/collections/artworks.coffee'
 Genes = require '../desktop/collections/genes.coffee'

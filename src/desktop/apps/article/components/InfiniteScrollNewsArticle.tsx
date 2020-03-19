@@ -16,7 +16,7 @@ import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
 const Cookies = require("desktop/components/cookies/index.coffee")
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 
 export interface Props {
   article?: ArticleData
@@ -225,7 +225,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   showAuthModal() {
     handleScrollingAuthModal({
       intent: "Viewed editorial",
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
       afterSignUpAction: {
         action: "editorialSignup",

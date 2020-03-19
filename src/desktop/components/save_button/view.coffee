@@ -1,8 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
+{ openAuthModal } = require '../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class SaveButton extends Backbone.View
   events:
@@ -30,18 +31,15 @@ module.exports = class SaveButton extends Backbone.View
 
   toggle: (e) ->
     unless @saved
-      mediator.trigger 'open:auth',
-        mode: 'signup',
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks',
         afterSignUpAction: {
           action: 'save',
           objectId: @model.id
         }
-        trigger: 'click'
         intent: 'save artwork'
-        signupIntent: 'save artwork'
         destination: location.href
-
+      })
       return false
 
     trackedProperties = {

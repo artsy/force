@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 zoom = require '../../../components/zoom/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user.coffee'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
@@ -56,13 +57,11 @@ module.exports = class AuctionResultsView extends Backbone.View
 
   signUp: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
+    openAuthModal(ModalType.signup, {
       copy: 'Sign up to see full auction records — for free'
-      trigger: 'click'
       intent: 'view auction results'
-      signupIntent: 'view auction results'
       destination: location.href
+    })
 
   onRowClick: (e) =>
     return if @user

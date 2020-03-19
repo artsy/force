@@ -1,6 +1,6 @@
 import { get } from "lodash"
 import { data as sd } from "sharify"
-import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 const metaphysics = require("lib/metaphysics.coffee")
 
 export const query = `

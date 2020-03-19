@@ -1,11 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { isTouchDevice } = require '../../../components/util/device.coffee'
-mediator = require '../../../lib/mediator.coffee'
 zoom = require '../../../components/zoom/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -34,12 +35,11 @@ module.exports = class AboutView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
-      intent: 'save artwork'
-      signupIntent: 'save artwork'
-      trigger: 'click',
+    openAuthModal(ModalType.signup, {
+      copy: "Sign up to save artworks"
+      intent: "save artwork",
       destination: location.href
+    })
 
   intercept: (e) ->
     e.preventDefault()

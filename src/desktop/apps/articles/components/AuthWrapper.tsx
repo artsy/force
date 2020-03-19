@@ -1,10 +1,7 @@
 import React from "react"
 import { data as sd } from "sharify"
 import qs from "querystring"
-import Waypoint from "react-waypoint"
-import { once } from "lodash"
-import { handleOpenAuthModal } from "desktop/apps/authentication/helpers"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
@@ -23,8 +20,7 @@ export class AuthWrapper extends React.Component {
     ) {
       mediator.on("modal:closed", this.setDismissCookie)
       mediator.on("auth:sign_up:success", this.setDismissCookie)
-      const timedModal = () => setTimeout(this.onOpenModal, 2000)
-      this.openModal = once(timedModal)
+      this.onOpenModal()
     }
   }
 
@@ -40,12 +36,13 @@ export class AuthWrapper extends React.Component {
   }
 
   onOpenModal = () => {
-    handleOpenAuthModal(ModalType.signup, {
+    handleScrollingAuthModal({
       intent: "Viewed editorial",
-      trigger: "timed",
-      triggerSeconds: 2,
-      copy: "Sign up for the Best Stories in Art and Visual Culture",
+      copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
     })
   }
 
@@ -54,6 +51,6 @@ export class AuthWrapper extends React.Component {
   }
 
   render() {
-    return <Waypoint topOffset={100} onPositionChange={this.openModal} />
+    return null
   }
 }

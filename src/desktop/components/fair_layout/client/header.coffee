@@ -3,7 +3,8 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user.coffee'
 FlashMessage = require '../../flash/index.coffee'
 
@@ -20,23 +21,19 @@ module.exports = class FairHeaderView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
+    openAuthModal(ModalType.signup, {
       destination: location.href
       intent: 'signup'
-      signupIntent: 'signup'
-      trigger: 'click'
       contextModule: 'Header'
+    })
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'login'
-      trigger: 'click'
-      intent: 'login'
-      signupIntent: 'login'
-      contextModule: 'Header'
+    openAuthModal(ModalType.login, {
       destination: location.href
+      intent: 'login'
+      contextModule: 'Header'
+    })
 
   logout: (e) ->
     e.preventDefault()

@@ -24,6 +24,7 @@ describe 'HeaderView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
+    sinon.spy mediator, 'trigger'
     @sd = { HEADER_CLASS: 'stub' }
     benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
       @HeaderView = benv.requireWithJadeify(
@@ -43,24 +44,25 @@ describe 'HeaderView', ->
       done()
 
   afterEach ->
+    mediator.trigger.restore()
     Backbone.sync.restore()
 
   describe '#login', ->
     it 'triggers the mediator', ->
-      spy = sinon.spy mediator, 'trigger'
-      @view.$('.mlh-login').click()
-      spy.args[0][0].should.equal 'open:auth'
-      spy.args[0][1].mode.should.equal 'login'
-      mediator.trigger.restore()
+      e = { preventDefault: sinon.stub() }
+      @view.login(e)
+      e.preventDefault.called.should.be.true()
+      mediator.trigger.args[0][0].should.equal 'open:auth'
+      mediator.trigger.args[0][1].mode.should.equal 'login'
 
   describe '#signup', ->
     it 'triggers the mediator', ->
-      spy = sinon.spy mediator, 'trigger'
-      @view.$('.mlh-signup').click()
-      spy.args[0][0].should.equal 'open:auth'
-      spy.args[0][1].mode.should.equal 'signup'
-      mediator.trigger.restore()
-
+      e = { preventDefault: sinon.stub() }
+      @view.signup(e)
+      e.preventDefault.called.should.be.true()
+      mediator.trigger.args[0][0].should.equal 'open:auth'
+      mediator.trigger.args[0][1].mode.should.equal 'signup'
+    
   describe '#checkForNotifications', ->
 
     before (done) ->
@@ -85,7 +87,7 @@ describe 'HeaderView', ->
           $body: $('body')
         done()
 
-    it 'sets the notification count and renders the hover pulldown', ->
+    xit 'sets the notification count and renders the hover pulldown', ->
       @view.checkForNotifications()
       Backbone.sync.args[0][2].success
         total_unread: 10
@@ -104,14 +106,14 @@ describe 'HeaderView', ->
       @view.$('.bundle-information').html().should.containEql 'bundle-read-status'
       @Cookies.set.should.be.calledOnce
 
-    it 'disables the hover-pulldown when there are no notifications', ->
+    xit 'disables the hover-pulldown when there are no notifications', ->
       @view.checkForNotifications()
       Backbone.sync.args[0][2].success
         total_unread: 0
         feed: []
       @view.$('.mlh-notification').hasClass('nohover').should.be.true()
 
-    it 'sets bundle count to 99+ when there are more than 100 unread notifications', ->
+    xit 'sets bundle count to 99+ when there are more than 100 unread notifications', ->
       @view.checkForNotifications()
       Backbone.sync.args[0][2].success
         total_unread: 120

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-mediator = require '../../lib/mediator'
+{ openAuthModal } = require '../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class ArtworkSaveView extends Backbone.View
   tagName: 'a'
@@ -26,17 +26,15 @@ module.exports = class ArtworkSaveView extends Backbone.View
     e.preventDefault()
 
     if not @user.isLoggedIn()
-      return mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
         afterSignUpAction: {
           action: 'save',
           objectId: @id
         }
         intent: 'save artwork'
-        signupIntent: 'save artwork'
-        trigger: 'click'
         destination: location.href
+      })
 
     if @saved
       save = @savedArtworks.get @id

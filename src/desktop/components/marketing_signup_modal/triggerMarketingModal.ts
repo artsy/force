@@ -3,8 +3,8 @@ import qs from "querystring"
 import { findWhere } from "underscore"
 import {
   handleScrollingAuthModal,
-  handleOpenAuthModal,
-} from "desktop/apps/authentication/helpers"
+  openAuthModal,
+} from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 export const triggerMarketingModal = (isScrolling?: boolean) => {
@@ -25,7 +25,7 @@ export const triggerMarketingModal = (isScrolling?: boolean) => {
     if (isScrolling) {
       handleScrollingAuthModal(options)
     } else {
-      handleOpenAuthModal(ModalType.signup, options)
+      openAuthModal(ModalType.signup, options)
     }
   }
 }
