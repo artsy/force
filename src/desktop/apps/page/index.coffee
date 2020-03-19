@@ -25,6 +25,7 @@ app.get '/rrf-emerging-curator-competition-official-rules', routes.vanityUrl('rr
 app.get '/past-privacy-8-5-13', routes.vanityUrl('past-privacy-8-5-13')
 app.get '/past-terms-9-26-13', routes.vanityUrl('past-terms-9-26-13')
 app.get '/buy-now-feature-faq', routes.vanityUrl('buy-now-feature-faq')
+app.get '/identity-verification-faq', routes.vanityUrl('identity-verification-faq')
 
 app.get '/page/:id', routes.index
 app.get '/job/:id', routes.index

@@ -91,10 +91,24 @@ main
 .is-scrolling-disabled
   overflow-y hidden
 
+// Hide second header, used for pushing layout down the appropriate amount
+main
+  .login-signup, #main-layout-header
+    visibility hidden
+
+#header-content
+  position absolute
+  z-index 1001
+  width 100%
+
 // Logged in layout
 html.layout-logged-in
   .login-signup
     display none
+
+  // Fix the entire header for logged-in user
+  #header-content #main-layout-header
+    position fixed
 
 // Hide the header and footer if the Artsy Mobile app is looking at the page
 html.layout-artsy-mobile-app

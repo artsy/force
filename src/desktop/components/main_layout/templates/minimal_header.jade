@@ -1,5 +1,6 @@
 //- Override any locals with `append locals`
 block locals
+  - attributes = {}
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed minimal-header') : ''
   - defaultOptions = {modal: true, flash: true, stripev3: false, sailthru: true, marketo: true, quantcast: false}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
@@ -13,7 +14,7 @@ html( data-useragent= userAgent lang="en")
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
-  body( class=bodyClass )
+  body( class=bodyClass )&attributes(attributes)
     -if (!hideHeaderOnEigen)
       include ../header/templates/minimal_header
     include ../../modal/template
