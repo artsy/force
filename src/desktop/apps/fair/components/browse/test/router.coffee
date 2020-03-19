@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
+mediator = require '../../../../../lib/mediator.coffee'
 
 describe 'BrowseRouter', ->
 
@@ -12,14 +13,19 @@ describe 'BrowseRouter', ->
       FilterRouter = benv.require resolve(__dirname, '../router.coffee')
       FilterRouter.__set__ 'FairBrowseView', @FairBrowseView = sinon.stub()
       sinon.stub Backbone.history, 'start'
+      fair = new Backbone.Model
+      fair.nameSansYear = sinon.stub().returns('Armory Fair')
+      fair.href = sinon.stub().returns('armory-fair')
+      sinon.spy mediator, 'trigger'
       @router = new FilterRouter
-        fair: new Backbone.Model
+        fair: fair
         profile: new Backbone.Model
       @router.boothParams = new Backbone.Model
       @router.artworkParams = new Backbone.Model
 
   afterEach ->
     benv.teardown()
+    mediator.trigger.restore()
     Backbone.history.start.restore()
 
   describe '#initialize', ->
@@ -51,3 +57,14 @@ describe 'BrowseRouter', ->
     it 'sets the region', ->
       @router.boothsRegion '', 'foo'
       @router.boothParams.get('region').should.equal 'foo'
+
+  describe '#signup', ->
+    it 'opens the mediator with expected args', ->
+      @router.signup 'foo'
+      mediator.trigger.args[0][0].should.equal 'open:auth'
+      mediator.trigger.args[0][1].should.match {
+        mode: 'signup',
+        intent: 'signup',
+        copy: 'Sign up to receive updates about Armory Fair',
+        destination: 'armory-fair/capture/attendee'
+      }
