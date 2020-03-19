@@ -3,6 +3,7 @@ extends blank
 append locals
   - assetPackage = locals.assetPackage || ''
   - bodyClass = bodyClass + ' ' + (locals.bodyClass || '')
+  - attributes = { 'data-test': "SSRApp" }
 
 block head
   != head
