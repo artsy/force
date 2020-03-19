@@ -1,7 +1,7 @@
 import React from "react"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
-import { openAuthModal } from "desktop/apps/authentication/helpers"
+import { openAuthModal } from "desktop/lib/openAuthModal"
 
 const ArticlesGridView = require("desktop/components/articles_grid/view.coffee")
 const Articles = require("desktop/collections/articles.coffee")

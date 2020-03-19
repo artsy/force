@@ -5,7 +5,7 @@ ModalPageView = require '../../../components/modal/page.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
-{ openAuthModal } = require '../../../apps/authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 setupClocks = ($clocks, auctions) ->

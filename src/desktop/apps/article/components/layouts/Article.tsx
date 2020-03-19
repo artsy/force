@@ -6,7 +6,7 @@ import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
   openAuthModal,
   handleScrollingAuthModal,
-} from "desktop/apps/authentication/helpers"
+} from "desktop/lib/openAuthModal"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")

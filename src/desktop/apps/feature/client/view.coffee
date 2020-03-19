@@ -6,7 +6,7 @@ SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.c
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate = -> require('../templates/sets.jade') arguments...
-{ openAuthModal } = require '../../authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class FeatureView extends Backbone.View

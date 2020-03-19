@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-{ openAuthModal } = require '../../authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class HeroUnitView extends Backbone.View

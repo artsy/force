@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
-{ openAuthModal } = require '../../../../authentication/helpers'
+{ openAuthModal } = require '../../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class SaveControls extends Backbone.View

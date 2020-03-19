@@ -1,5 +1,5 @@
 import { setupArtistSignUpModal, query } from "../cta"
-import * as helpers from "desktop/apps/authentication/helpers"
+import * as helpers from "desktop/lib/openAuthModal"
 
 jest.mock("lib/metaphysics.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))
@@ -7,7 +7,7 @@ jest.mock("lib/metaphysics.coffee", () =>
 
 jest.spyOn(helpers, "handleScrollingAuthModal")
 
-const handleScrollingAuthModal = require("desktop/apps/authentication/helpers")
+const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
   .handleScrollingAuthModal
 const mockMetaphysics = require("lib/metaphysics.coffee")
 

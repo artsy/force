@@ -5,7 +5,7 @@ FairBrowseView = require './view.coffee'
 { humanize } = require 'underscore.string'
 { signupSuccess, validActions } = require '../capture_signup/index.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
-{ openAuthModal } = require '../../../authentication/helpers'
+{ openAuthModal } = require '../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class BrowseRouter extends Backbone.Router

@@ -16,7 +16,7 @@ import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
 const Cookies = require("desktop/components/cookies/index.coffee")
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 
 export interface Props {
   article?: ArticleData

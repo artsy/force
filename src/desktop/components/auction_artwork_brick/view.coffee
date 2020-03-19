@@ -2,7 +2,7 @@
 Backbone = require 'backbone'
 { CURRENT_USER } = require('sharify').data
 ArtworkSaveView = require '../artwork_save/view.coffee'
-{ openAuthModal } = require '../../apps/authentication/helpers'
+{ openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View

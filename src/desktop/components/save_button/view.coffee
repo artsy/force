@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
-{ openAuthModal } = require '../../apps/authentication/helpers'
+{ openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class SaveButton extends Backbone.View

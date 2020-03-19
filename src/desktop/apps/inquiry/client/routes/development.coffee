@@ -6,7 +6,7 @@ ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../../../components/logger/index.coffee'
-{ openAuthModal } = require '../../../authentication/helpers'
+{ openAuthModal } = require '../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = ->

@@ -2,7 +2,7 @@ import React from "react"
 import { mount } from "enzyme"
 import { AuthWrapper } from "../AuthWrapper"
 import sharify, { data as sd } from "sharify"
-import * as helpers from "desktop/apps/authentication/helpers"
+import * as helpers from "desktop/lib/openAuthModal"
 
 jest.mock("sharify")
 jest.mock("querystring", () => ({
@@ -26,7 +26,7 @@ const CookiesSetMock = require("desktop/components/cookies/index.coffee")
   .set as jest.Mock
 jest.spyOn(helpers, "handleScrollingAuthModal")
 
-const handleScrollingAuthModal = require("desktop/apps/authentication/helpers")
+const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
   .handleScrollingAuthModal as jest.Mock
 
 jest.useFakeTimers()

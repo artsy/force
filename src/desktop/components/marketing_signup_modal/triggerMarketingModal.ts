@@ -4,7 +4,7 @@ import { findWhere } from "underscore"
 import {
   handleScrollingAuthModal,
   openAuthModal,
-} from "desktop/apps/authentication/helpers"
+} from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 export const triggerMarketingModal = (isScrolling?: boolean) => {

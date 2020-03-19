@@ -4,7 +4,7 @@ import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
 import { Component } from "react"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"
-import { openAuthModal } from "desktop/apps/authentication/helpers"
+import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
 class DOM extends Component {

@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
 openMultiPageModal = require '../../multi_page_modal/index.coffee'
-{ openAuthModal } = require '../../../apps/authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
 

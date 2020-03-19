@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 State = require './models/state.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
-{ openAuthModal } = require '../../apps/authentication/helpers'
+{ openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 template = -> require('./templates/index.jade') arguments...
 

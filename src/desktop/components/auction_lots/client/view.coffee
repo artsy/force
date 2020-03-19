@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 zoom = require '../../../components/zoom/index.coffee'
-{ openAuthModal } = require '../../../apps/authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user.coffee'
 { isTouchDevice } = require '../../../components/util/device.coffee'

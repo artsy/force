@@ -28,10 +28,10 @@ jest.mock("desktop/lib/mediator.coffee", () => ({
 }))
 const mockMediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
 
-jest.mock("desktop/apps/authentication/helpers", () => ({
+jest.mock("desktop/lib/openAuthModal", () => ({
   handleScrollingAuthModal: jest.fn(),
 }))
-const handleScrollingAuthModal = require("desktop/apps/authentication/helpers")
+const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
   .handleScrollingAuthModal as jest.Mock
 
 jest.useFakeTimers()

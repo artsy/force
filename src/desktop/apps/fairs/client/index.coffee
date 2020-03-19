@@ -8,7 +8,7 @@ initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee
 metaphysics = require '../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../helpers/view_helpers.coffee'
 query = require '../query.coffee'
-{ openAuthModal } = require '../../authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 

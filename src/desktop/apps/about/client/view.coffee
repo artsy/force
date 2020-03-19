@@ -5,7 +5,7 @@ zoom = require '../../../components/zoom/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
-{ openAuthModal } = require '../../../apps/authentication/helpers'
+{ openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 
 module.exports = class AboutView extends Backbone.View

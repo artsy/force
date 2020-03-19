@@ -1,7 +1,7 @@
 import React from "react"
 import { data as sd } from "sharify"
 import qs from "querystring"
-import { handleScrollingAuthModal } from "desktop/apps/authentication/helpers"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
