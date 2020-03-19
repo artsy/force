@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+mediator = require '../../../lib/mediator.coffee'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
 openMultiPageModal = require '../../multi_page_modal/index.coffee'
 { openAuthModal } = require '../../../apps/authentication/helpers'

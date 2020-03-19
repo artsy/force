@@ -1,5 +1,4 @@
 hasSeen = require '../../../../components/has_seen/index.coffee'
-mediator = require '../../../../lib/mediator.coffee'
 template =-> require('./index.jade') arguments...
 
 module.exports = (user) ->

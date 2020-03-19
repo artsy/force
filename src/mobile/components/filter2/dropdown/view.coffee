@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
 SelectView = require '../../select/client/select_view.coffee'
 template = -> require('./template.jade') arguments...
 

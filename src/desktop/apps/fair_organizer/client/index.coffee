@@ -7,7 +7,6 @@ Profile = require '../../../models/profile.coffee'
 FairOrganizer = require '../../../models/fair_organizer.coffee'
 Articles = require '../../../collections/articles.coffee'
 Clock = require '../../../components/clock/view.coffee'
-mediator = require '../../../lib/mediator.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 articlesTemplate = -> require('../templates/articles.jade') arguments...

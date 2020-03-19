@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-mediator = require '../../../lib/mediator.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 { jump } = require '../../../components/jump/view.coffee'
 
