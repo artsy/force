@@ -83,6 +83,7 @@ class DOM extends Component {
       openAuthModal(ModalType.signup, {
         redirectTo: auction.registrationFlowUrl(),
         intent: "register to bid",
+        copy: "Sign up to bid on artworks",
         trigger: "click",
       })
 
