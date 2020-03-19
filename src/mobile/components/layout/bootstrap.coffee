@@ -48,6 +48,8 @@ module.exports = ->
   if sd.stitch?.renderQueue?
     mountStitch()
 
+  handleNavBarScroll()
+
 mountStitch = ->
   hydrateStitch({
     sharifyData: sd
@@ -90,3 +92,18 @@ checkForAfterSignUpAction = ->
     ops and ops(@currentUser, objectId, kind)
 
     Cookies.expire 'afterSignUpAction'
+
+handleNavBarScroll = ->
+  # We only need this special case when the user sees the "login/signup"
+  # banner on mobile web.
+  if !CurrentUser.orNull()
+    $mainNav = $("#header-content #main-layout-header")
+    $loginSignupBanner = $('#header-content .login-signup')
+
+    window.addEventListener "scroll", () ->
+      if $(window).scrollTop() > $loginSignupBanner.outerHeight()
+        $loginSignupBanner.css('display', 'none')
+        $mainNav.css('position', 'fixed')
+      else
+        $loginSignupBanner.css('display', 'block')
+        $mainNav.css('position', 'relative')

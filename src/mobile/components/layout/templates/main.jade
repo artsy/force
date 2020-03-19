@@ -3,13 +3,15 @@ include ./login-signup
 
 block body
   #content
-    block banner
-      mixin login-signup("Header")
-
-    header
-      != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
+    #header-content
+      block banner
+        mixin login-signup("Header")
+      header
+        != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
 
     main
+      mixin login-signup("Header")
+      != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
       block content
 
     include footer
