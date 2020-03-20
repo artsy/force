@@ -12,7 +12,6 @@ module.exports = class AboutView extends Backbone.View
   events:
     'click .about-nav-link': 'intercept'
     'click .about-signup-button': 'signup'
-    'submit #about-phone-link': 'submitPhoneLink'
     'click .about-image-zoom': 'zoomImage'
     'click .about-section2-contact-specialist': 'contactSpecialistModal'
 
@@ -103,22 +102,6 @@ module.exports = class AboutView extends Backbone.View
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
       offset: '50%'
-
-  submitPhoneLink: (e) ->
-    e.preventDefault()
-    @$('#about-phone-link button').addClass 'is-loading'
-    $.ajax
-      type: 'POST'
-      url: '/about/sms'
-      data: to: @$('#about-phone-link input').val()
-      error: (xhr) ->
-        $('.about-section1-phone-success').hide()
-        $('.about-section1-phone-error').show().text(xhr.responseJSON.msg)
-      success: ->
-        $('.about-section1-phone-success').show().text('Message sent, please check your phone.')
-        $('.about-section1-phone-error').hide()
-      complete: ->
-        $('#about-phone-link button').removeClass 'is-loading'
 
   setupGenes: ->
     @$genes.waypoint (direction) ->
