@@ -35,10 +35,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-7.3.0.tgz#ac79fe03640b0e76d4134123adc357e0aade16e1"
-  integrity sha512-JHd/YWBvsXVsM7INMNtz3gcopX9dsqcfoP0Vc5UyN2hxSaD46L2aKaKqRahVtgAEKoLpQcBTRPwoZkUlTymjBA==
+"@artsy/palette@7.4.0":
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-7.4.0.tgz#f9dd2355890321bbf2a84fea5cb4bfb7855da9fe"
+  integrity sha512-BrdxJ4F28DnBg2yo/HUE3sIPsbTewfSQ9KtLEQA2hW5C+IBfEkhpyBhladJtP+5CPuZ5vrS00T7Tu0IAfTeDpg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
