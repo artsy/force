@@ -8,6 +8,7 @@ artworkColumns = -> require('../../../components/artwork_columns/template.jade')
 setsTemplate = -> require('../templates/sets.jade') arguments...
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class FeatureView extends Backbone.View
   initialize: (options = {}) ->
@@ -85,7 +86,7 @@ module.exports = class FeatureView extends Backbone.View
     unless @currentUser
       e.preventDefault()
       openAuthModal(ModalType.signup, {
-        intent: 'bid'
+        intent: AuthIntent.bid
         copy: 'Sign up to bid on artworks'
         redirectTo: @sale.registerUrl()
       })

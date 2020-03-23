@@ -17,6 +17,7 @@ bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -100,16 +101,16 @@ module.exports = class HeaderView extends Backbone.View
   signup: (e) ->
     e.preventDefault()
     openAuthModal(ModalType.signup, {
-      intent: 'signup'
-      contextModule: 'Header'
+      intent: AuthIntent.signup
+      contextModule: ContextModule.header
       destination: location.href
     })
 
   login: (e) ->
     e.preventDefault()
     openAuthModal(ModalType.login, {
-      intent: 'login'
-      contextModule: 'Header'
+      intent: AuthIntent.login
+      contextModule: ContextModule.header
       destination: location.href
     })
 

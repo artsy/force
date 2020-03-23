@@ -7,6 +7,7 @@ import {
   openAuthModal,
   handleScrollingAuthModal,
 } from "desktop/lib/openAuthModal"
+import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
@@ -41,7 +42,7 @@ export class ArticleLayout extends React.Component<AppProps> {
 
   showAuthModal() {
     handleScrollingAuthModal({
-      intent: "Viewed editorial",
+      intent: AuthIntent.viewEditorial,
       copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
       afterSignUpAction: {

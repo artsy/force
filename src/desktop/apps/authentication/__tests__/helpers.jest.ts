@@ -92,7 +92,6 @@ describe("Authentication Helpers", () => {
           copy: "Log in yo",
           destination: "/articles",
           redirectTo: "/",
-          trigger: "click",
         },
         {
           email: "foo@foo.com",
@@ -117,7 +116,6 @@ describe("Authentication Helpers", () => {
           contextModule: "Header",
           copy: "Sign up please",
           destination: "/articles",
-          trigger: "timed",
           triggerSeconds: 2,
           intent: "follow artist",
         },
@@ -154,7 +152,6 @@ describe("Authentication Helpers", () => {
           contextModule: "Header",
           copy: "Forgot Password",
           destination: "/articles",
-          trigger: "timed",
           triggerSeconds: 2,
           intent: "follow artist",
         },
@@ -176,7 +173,6 @@ describe("Authentication Helpers", () => {
           copy: "Log in yo",
           destination: "/articles",
           redirectTo: "/",
-          trigger: "click",
         },
         {
           email: "foo@foo.com",
@@ -203,7 +199,6 @@ describe("Authentication Helpers", () => {
           copy: "Log in yo",
           destination: "/articles",
           redirectTo: "/",
-          trigger: "click",
         },
         {
           email: "foo@foo.com",
@@ -237,7 +232,6 @@ describe("Authentication Helpers", () => {
           contextModule: "Header",
           copy: "Sign up please",
           destination: "/articles",
-          trigger: "timed",
           triggerSeconds: 2,
           intent: "follow artist",
         },

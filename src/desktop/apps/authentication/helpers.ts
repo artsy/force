@@ -26,7 +26,6 @@ export const handleSubmit = (
     redirectTo,
     intent,
     signupReferer,
-    trigger,
     triggerSeconds,
   } = modalOptions
 
@@ -65,7 +64,7 @@ export const handleSubmit = (
         const properties = {
           action,
           user_id: res && res.user && res.user.id,
-          trigger,
+          trigger: triggerSeconds ? "timed" : "click",
           trigger_seconds: triggerSeconds,
           intent,
           type,

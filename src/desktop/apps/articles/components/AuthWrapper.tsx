@@ -2,6 +2,7 @@ import React from "react"
 import { data as sd } from "sharify"
 import qs from "querystring"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
+import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
@@ -37,7 +38,7 @@ export class AuthWrapper extends React.Component {
 
   onOpenModal = () => {
     handleScrollingAuthModal({
-      intent: "Viewed editorial",
+      intent: AuthIntent.viewEditorial,
       copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
       afterSignUpAction: {

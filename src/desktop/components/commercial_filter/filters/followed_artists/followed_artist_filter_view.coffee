@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 User = require '../../../../models/user.coffee'
 { openAuthModal } = require '../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+
 template = -> require('./index.jade') arguments...
 
 module.exports = class FollowedArtistsFilterView extends Backbone.View
@@ -32,6 +33,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
     e.preventDefault()
     openAuthModal(ModalType.signup, {
       copy: "Sign up to receive alerts when new works are available by artists you follow.",
+      # FIXME: This component may be deprecated, not adding typed context
       intent: 'artists you follow filter'
       destination: location.href
     })

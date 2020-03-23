@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
@@ -37,7 +38,7 @@ module.exports = class SaveControls extends Backbone.View
           action: 'save',
           objectId: @model.id
         }
-        intent: 'save artwork'
+        intent: AuthIntent.saveArtwork
         destination: location.href
       })
       return false

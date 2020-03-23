@@ -58,7 +58,6 @@ describe("Authentication Helpers", () => {
       expect(mediator).toBeCalledWith("open:auth", {
         intent: "follow artist",
         mode: "signup",
-        trigger: "timed",
         triggerSeconds: 2,
       })
     })

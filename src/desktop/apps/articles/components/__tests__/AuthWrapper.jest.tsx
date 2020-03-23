@@ -98,7 +98,7 @@ describe("AuthWrapper", () => {
         },
         copy: "Sign up for the best stories in art and visual culture",
         destination: "https://artsy.net/",
-        intent: "Viewed editorial",
+        intent: "viewEditorial",
       })
     })
   })

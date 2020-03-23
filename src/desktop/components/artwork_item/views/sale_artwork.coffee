@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class SaleArtworkView extends Backbone.View
   events:
@@ -35,7 +36,7 @@ module.exports = class SaleArtworkView extends Backbone.View
       e.preventDefault()
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
-        intent: 'bid'
+        intent: AuthIntent.bid
         redirectTo: @sale.redirectUrl @model
       })
 

@@ -1,6 +1,7 @@
 import { get } from "lodash"
 import { data as sd } from "sharify"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
+import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 const metaphysics = require("lib/metaphysics.coffee")
 
 export const query = `
@@ -30,8 +31,7 @@ export const setupArtistSignUpModal = () => {
 
       handleScrollingAuthModal({
         copy: `Join Artsy to discover new works by ${artistData.name} and more artists you love`,
-        intent: "signup",
-        trigger: "timed",
+        intent: AuthIntent.signup,
         triggerSeconds: 4,
         destination: location.href,
         image,

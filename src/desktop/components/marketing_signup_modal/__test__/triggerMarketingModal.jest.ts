@@ -90,7 +90,6 @@ describe("MarketingSignupModal", () => {
         image: "http://files.artsy.net/images/fair.jpg",
         intent: "signup",
         mode: "signup",
-        trigger: "timed",
         triggerSeconds: 2,
       })
     })

@@ -4,6 +4,8 @@ State = require './models/state.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
@@ -49,7 +51,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
     else
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
-        intent: 'bid'
+        intent: AuthIntent.bid
         redirectTo: $(e.currentTarget).attr('href')
       })
     return true
