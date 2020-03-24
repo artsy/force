@@ -146,38 +146,34 @@ if options.quantcast
     img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast" )
 
 //- Sailthru Horizon JS - user interest data, personalization
-if options.sailthru
-  if sd.INCLUDE_SAILTHRU
-    script( type="text/javascript" ).
-      (function() {
-        function loadHorizon() {
-          var s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.async = true;
-          s.src = location.protocol + '//ak.sail-horizon.com/horizon/v1.js';
-          var x = document.getElementsByTagName('script')[0];
-          x.parentNode.insertBefore(s, x);
+if options.sailthru && sd.SAILTHRU_CUSTOMER_ID
+  script( type="text/javascript" ).
+    (function() {
+      function loadHorizon() {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = location.protocol + '//ak.sail-horizon.com/spm/spm.v1.min.js';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      }
+      loadHorizon();
+      function loadSailthru() {
+        if(typeof Sailthru !== "undefined"){
+          Sailthru.init({ customerId: sd.SAILTHRU_CUSTOMER_ID });
         }
-        loadHorizon();
-        function loadSailthru() {
-          if(typeof Sailthru !== "undefined"){
-            Sailthru.setup({
-              domain: 'horizon.artsy.net',
-              useStoredTags: false
-            });
-          }
-          else{
-              setTimeout(loadSailthru, 250);
-          }
+        else{
+          setTimeout(loadSailthru, 250);
         }
-        var oldOnLoad = window.onload;
-        window.onload = function() {
-          if (typeof oldOnLoad === 'function') {
-            oldOnLoad();
-          }
-          loadSailthru();
-        };
-      })();
+      }
+      var oldOnLoad = window.onload;
+      window.onload = function() {
+        if (typeof oldOnLoad === 'function') {
+          oldOnLoad();
+        }
+        loadSailthru();
+      };
+    })();
 
 //- Prefetch links on hover. See: https://instant.page/
 if sd.ENABLE_INSTANT_PAGE

@@ -43,6 +43,7 @@ module.exports =
   S3_BUCKET: null
   S3_KEY: null
   S3_SECRET: null
+  SAILTHRU_CUSTOMER_ID: null
   SAILTHRU_KEY: ''
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_SECRET: ''
