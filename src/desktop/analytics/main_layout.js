@@ -94,6 +94,15 @@ if (sd.SHOW_ANALYTICS_CALLS) {
   analytics.on("track", function() {
     console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
   })
+  analytics.on("page", function() {
+    console.info(
+      "PAGEVIEW TRACKED: ",
+      arguments[2],
+      arguments[3],
+      JSON.stringify(arguments[2]),
+      JSON.stringify(arguments[3])
+    )
+  })
 }
 
 if (sd.SHOW_ANALYTICS_CALLS) {
