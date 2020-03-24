@@ -5,7 +5,8 @@ metadata:
 spec:
   strategy:
     rollingUpdate:
-      maxUnavailable: 1
+      maxSurge: 2
+      maxUnavailable: 0
     type: RollingUpdate
   template:
     metadata:
@@ -52,6 +53,10 @@ spec:
               memory: 1Gi
             limits:
               memory: 1.5Gi
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
         - name: force-nginx
           image: artsy/docker-nginx:latest
           ports:
@@ -68,7 +73,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/usr/sbin/nginx", "-s", "quit"]
+                command: ["sh", "-c", "sleep 5 && /usr/sbin/nginx -s quit"]
           env:
             - name: "NGINX_DEFAULT_CONF"
               valueFrom:
