@@ -89,6 +89,7 @@ sharify.data = _.extend(
     "PREDICTION_URL",
     "RECAPTCHA_KEY",
     "S3_BUCKET",
+    "SAILTHRU_CUSTOMER_ID",
     "SAILTHRU_MASTER_LIST",
     "SECURE_IMAGES_URL",
     "SEGMENT_AMP_WRITE_KEY",

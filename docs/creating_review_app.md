@@ -58,4 +58,20 @@ If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say,
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
 
+## Updating a Review App 
+
+If you want to push subsequent changes to the review app you can push a new build to the same tag with the `--overwrite` flag:
+
+```sh
+hokusai registry push --overwrite --skip-latest --force --tag <name>
+```
+
+and you need to redeploy your app:
+
+```sh
+hokusai review_app deploy <name> <name>
+```
+
 😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>`
+
+For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
