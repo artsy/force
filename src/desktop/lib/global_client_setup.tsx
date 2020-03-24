@@ -83,20 +83,18 @@ export function syncAuth() {
 }
 
 function logoutEventHandler() {
-  if (sd.CURRENT_USER) {
-    $.ajax({
-      url: "/users/sign_out",
-      type: "DELETE",
-      success() {
-        analyticsHooks.trigger("auth:logged-out")
-        location.reload()
-      },
-      error(_xhr, _status, errorMessage) {
-        // tslint:disable-next-line:no-unused-expression
-        new FlashMessage({ message: errorMessage })
-      },
-    })
-  }
+  $.ajax({
+    url: "/users/sign_out",
+    type: "DELETE",
+    success() {
+      analyticsHooks.trigger("auth:logged-out")
+      location.reload()
+    },
+    error(_xhr, _status, errorMessage) {
+      // tslint:disable-next-line:no-unused-expression
+      new FlashMessage({ message: errorMessage })
+    },
+  })
 }
 
 function setupReferrerTracking() {
