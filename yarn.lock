@@ -76,10 +76,17 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
+<<<<<<< HEAD
 "@artsy/reaction@26.0.3":
   version "26.0.3"
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.0.3.tgz#ad0ab80d6ae9bd60f8677dbd535275cd7bd9421e"
   integrity sha512-576m2K9KZotxKVItD0aFQ5h3U25MUdVpTGAHpCqExzEoUPg/Y47izIYtzAfDdLFC9oWJqHJQ56ZIyWCyZ4s10g==
+=======
+"@artsy/reaction@^25.36.1-canary.3-3285":
+  version "25.36.1-canary.3-3285"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-25.36.1-canary.3-3285.tgz#0f6e7c2ce41c62b625b5d7782611e7c7f259d276"
+  integrity sha512-f36sNj9jZuDB4mTtpysdSJ6u5FSEI5RhPP+XOSZUAoJlDLYGlIssMYejFUecjXtA7ZKQshbj7iE+N6jZXZqfVg==
+>>>>>>> Bump canary
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
