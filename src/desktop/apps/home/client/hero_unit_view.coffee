@@ -97,5 +97,5 @@ module.exports = class HeroUnitView extends Backbone.View
     e.preventDefault()
     openAuthModal(ModalType.signup, {
       intent: AuthIntent.signup
-      contextModule: ContextModule.homeBanner
+      contextModule: ContextModule.mainCarousel
     })

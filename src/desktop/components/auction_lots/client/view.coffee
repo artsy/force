@@ -60,7 +60,7 @@ module.exports = class AuctionResultsView extends Backbone.View
     openAuthModal(ModalType.signup, {
       copy: 'Sign up to see full auction records — for free'
       intent: AuthIntent.viewAuctionResults
-      destination: location.href
+      destination: location.href,
     })
 
   onRowClick: (e) =>

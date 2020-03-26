@@ -7,7 +7,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 setupClocks = ($clocks, auctions) ->
   auctions.map (auction) ->
@@ -38,4 +38,5 @@ module.exports.init = ->
     openAuthModal(ModalType.signup, {
       intent: AuthIntent.signup
       destination: location.href
+      contextModule: ContextModule.auctionsInfo
     })

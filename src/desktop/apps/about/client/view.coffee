@@ -7,7 +7,7 @@ openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -39,6 +39,7 @@ module.exports = class AboutView extends Backbone.View
       copy: "Sign up to save artworks"
       intent: AuthIntent.saveArtwork,
       destination: location.href
+      contextModule: ContextModule.saveWorksCTA
     })
 
   intercept: (e) ->
