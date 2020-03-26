@@ -45,6 +45,7 @@ describe("BannerPopUp", () => {
       image: "http://files.artsy.net/images/art-fair.jpg",
       intent: "signup",
       mode: "signup",
+      contextModule: "bannerPopUp",
     })
   })
 })

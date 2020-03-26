@@ -57,6 +57,7 @@ describe("MarketingSignupModal", () => {
     it("can parse modal data from slug/querystring", () => {
       triggerMarketingModal()
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "bannerPopUp",
         copy: "Buy Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/fair.jpg",
@@ -72,6 +73,7 @@ describe("MarketingSignupModal", () => {
       triggerMarketingModal()
 
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "bannerPopUp",
         copy: "Discover Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/art.jpg",
@@ -85,6 +87,7 @@ describe("MarketingSignupModal", () => {
       expect(window.addEventListener).toBeCalled()
       jest.runAllTimers()
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "popUpModal",
         copy: "Buy Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/fair.jpg",
@@ -97,6 +100,7 @@ describe("MarketingSignupModal", () => {
     it("calls staticMarketingModal if isScrolling is false", () => {
       triggerMarketingModal()
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "bannerPopUp",
         copy: "Buy Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/fair.jpg",

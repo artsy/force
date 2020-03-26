@@ -103,6 +103,7 @@ describe("DOM Interactions", () => {
         redirectTo: "/auction/auction-id/registration-flow",
         intent: "registerToBid",
         copy: "Sign up to bid on artworks",
+        contextModule: "auctionInfo",
       })
     })
 
