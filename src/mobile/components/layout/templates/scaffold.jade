@@ -53,7 +53,7 @@ html( class=htmlClass )
             }
             loadHorizon();
             function loadSailthru() {
-              if(typeof Sailthru !== "undefined"){
+              if(typeof Sailthru !== "undefined" && typeof Sailthru.init === "function"){
                 Sailthru.init({ customerId: sd.SAILTHRU_CUSTOMER_ID });
               }
               else{
