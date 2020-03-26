@@ -49,6 +49,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
     if @user
       location.assign $(e.target).attr('href')
     else
+      # FIXME: Maybe not used?
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
         intent: AuthIntent.bid

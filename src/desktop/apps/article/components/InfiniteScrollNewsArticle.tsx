@@ -17,7 +17,10 @@ import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDiv
 const Cookies = require("desktop/components/cookies/index.coffee")
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
-import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import {
+  AuthIntent,
+  ContextModule,
+} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 export interface Props {
   article?: ArticleData
@@ -231,6 +234,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       afterSignUpAction: {
         action: "editorialSignup",
       },
+      contextModule: ContextModule.popUpModal,
     })
   }
 

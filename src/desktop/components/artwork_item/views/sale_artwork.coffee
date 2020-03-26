@@ -32,6 +32,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     new ContactPartnerView artwork: @model, partner: @model.related().partner
 
   bid: (e) ->
+    # FIXME: Maybe not used?
     unless @currentUser
       e.preventDefault()
       openAuthModal(ModalType.signup, {

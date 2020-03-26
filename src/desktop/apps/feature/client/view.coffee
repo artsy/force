@@ -83,6 +83,7 @@ module.exports = class FeatureView extends Backbone.View
     new ShareView el: @$('.js-feature-share')
 
   authOrPass: (e) =>
+    # FIXME: Maybe not used?
     unless @currentUser
       e.preventDefault()
       openAuthModal(ModalType.signup, {

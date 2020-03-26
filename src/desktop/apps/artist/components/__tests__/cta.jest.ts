@@ -80,6 +80,7 @@ describe("CTA", () => {
       image: "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA",
       intent: "signup",
       triggerSeconds: 4,
+      contextModule: "popUpModal",
     })
 
     expect(addEventListener).toHaveBeenCalled()

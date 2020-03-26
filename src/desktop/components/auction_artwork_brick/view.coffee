@@ -15,6 +15,7 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
   initialize: ({ @id, @user, @context_page, @context_module }) -> #
 
   bid: (e) ->
+    # FIXME: Maybe not used?
     if not CURRENT_USER?
       e.preventDefault()
       openAuthModal(ModalType.signup, {
