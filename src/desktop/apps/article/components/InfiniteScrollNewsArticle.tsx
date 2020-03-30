@@ -147,7 +147,11 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   onDateChange = date => {
     const hasNewDate = !moment(date).isSame(this.state.date, "day")
     if (hasNewDate) {
-      this.setState({ date })
+      // Commenting this out as we're noticing that when a user is scrolling
+      // and the top date is updated, it leads to a reset of the current scroll
+      // position, preventing the user from scrolling down the page.
+      // FIXME: Reenable once newsfeed scrolling bug tracked down.
+      // this.setState({ date })
     }
   }
 
