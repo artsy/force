@@ -1,5 +1,22 @@
-import { setupArtistSignUpModal, query } from "../cta"
+import { setupArtistSignUpModal, setCookie, query } from "../cta"
 import * as helpers from "desktop/lib/openAuthModal"
+
+jest.mock("desktop/components/cookies/index.coffee", () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+}))
+jest.mock("desktop/lib/mediator.coffee", () => ({
+  trigger: jest.fn(),
+  on: jest.fn(),
+}))
+
+const CookiesSetMock = require("desktop/components/cookies/index.coffee")
+  .set as jest.Mock
+
+const CookiesGetMock = require("desktop/components/cookies/index.coffee")
+  .get as jest.Mock
+
+const mediatorOn = require("desktop/lib/mediator.coffee").on as jest.Mock
 
 jest.mock("lib/metaphysics.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))
@@ -60,6 +77,11 @@ describe("CTA", () => {
     mockMetaphysics.mockReturnValue(Promise.resolve({ artist }))
   })
 
+  afterEach(() => {
+    mediatorOn.mockClear()
+    handleScrollingAuthModal.mockClear()
+  })
+
   it("should get artist data when artist cta is enabled and there is an artist id", async () => {
     await setupArtistSignUpModal()
 
@@ -86,5 +108,21 @@ describe("CTA", () => {
     expect(addEventListener).toHaveBeenCalled()
     expect(addEventListener.mock.calls[0][0]).toBe("scroll")
     expect(addEventListener.mock.calls[0][2]).toEqual({ once: true })
+  })
+  it("#setCookie sets a cookie", () => {
+    setCookie()
+    expect(CookiesSetMock).toBeCalledWith("artist-page-signup-dismissed", 1, {
+      expires: 3600000,
+    })
+  })
+  it("calls set cookie on modal close", async () => {
+    await setupArtistSignUpModal()
+    expect(mediatorOn).toBeCalledWith("modal:closed", setCookie)
+  })
+
+  it("doesn't open the modal if the dismissed modal cookie is set", () => {
+    CookiesGetMock.mockReturnValueOnce(true)
+    setupArtistSignUpModal()
+    expect(handleScrollingAuthModal).not.toHaveBeenCalled()
   })
 })
