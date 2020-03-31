@@ -9,7 +9,7 @@ setupSaveControls = require '../save_artworks/index.coffee'
 module.exports = class ArtworkColumnsView extends Backbone.View
   initialize: (options = {}) ->
     { @page, @showId, @artworks } = options
-
+    setupSaveControls @artworks
     $(window).on 'scroll.partner_show.artworks', _.throttle(@infiniteScroll, 150)
 
   fetch: =>

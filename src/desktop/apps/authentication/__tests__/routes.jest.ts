@@ -274,7 +274,6 @@ describe("Routes", () => {
           kind: "artist",
           destination: "/foo",
           redirectTo: "/bar",
-          signupIntent: "follow artist",
           signupReferer: "referrer",
         }
 

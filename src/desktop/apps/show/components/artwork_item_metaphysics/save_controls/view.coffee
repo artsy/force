@@ -14,8 +14,7 @@ module.exports = class SaveControls extends Backbone.View
   initialize: (options) ->
     throw new Error 'You must pass an el' unless @el?
     return unless options.artwork
-
-    { @artworkCollection, @artwork, @context_page } = options
+    { @artworkCollection, @artwork, @context_page, @context_module } = options
     @$button = @$('.overlay-button-save')
 
     @listenTo @artworkCollection, "add:#{@artwork.id}", @onArtworkSaveChange
@@ -33,6 +32,7 @@ module.exports = class SaveControls extends Backbone.View
       analyticsHooks.trigger 'save:sign-up'
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
+        contextModule: @context_module
         intent: AuthIntent.saveArtwork
         destination: location.href
         afterSignUpAction: {

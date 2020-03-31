@@ -7,7 +7,7 @@ FairBrowseView = require './view.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 { openAuthModal } = require '../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -49,6 +49,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       intent: AuthIntent.signup
       copy: "Sign up to receive updates about #{@fair.nameSansYear()}"
       destination: "#{@fair.href()}/capture/#{action}"
+      contextModule: ContextModule.browseFair
     })
 
   capture: (id, action)=>

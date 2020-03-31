@@ -12,12 +12,12 @@ module.exports = class SaveControls extends Backbone.View
     'click .overlay-button-save': 'save'
 
   initialize: (options) ->
+    { @context_page, @context_module } = options
     throw new Error 'You must pass an el' unless @el?
     throw new Error 'You must pass a model' unless @model?
     return unless options.artworkCollection
 
-    { @artworkCollection, @context_page, @context_module } = options
-
+    { @artworkCollection } = options
     @$button = @$('.overlay-button-save')
 
     @listenTo @artworkCollection, "add:#{@model.id}", @onArtworkSaveChange
@@ -34,6 +34,7 @@ module.exports = class SaveControls extends Backbone.View
       analyticsHooks.trigger 'save:sign-up'
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
+        contextModule: @context_module
         afterSignUpAction: {
           action: 'save',
           objectId: @model.id

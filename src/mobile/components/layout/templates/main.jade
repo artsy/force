@@ -5,12 +5,12 @@ block body
   #content
     #header-content
       block banner
-        mixin login-signup("Header")
+        mixin login-signup("header")
       header
         != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
 
     main
-      mixin login-signup("Header")
+      mixin login-signup("header")
       != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
       block content
 

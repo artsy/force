@@ -1,6 +1,7 @@
 _ = require 'underscore'
 CurrentUser = require '../../../../models/current_user.coffee'
 SaveControls = require './../artwork_item_metaphysics/save_controls/view.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = (artworks) ->
   if user = CurrentUser.orNull()
@@ -11,6 +12,11 @@ module.exports = (artworks) ->
 
   $artworks = $('.artwork-item')
 
-  _.each artworks, (artwork) =>
+  _.each artworks, (artwork) ->
     $el = $artworks.filter("[data-artwork='#{artwork.id}']").find '.overlay-container'
-    new SaveControls el: $el, artworkCollection: saved, artwork: artwork, context_page: 'Show page'
+    new SaveControls
+      el: $el
+      artworkCollection: saved
+      artwork: artwork
+      context_page: 'Show page'
+      context_module: ContextModule.artworkGrid

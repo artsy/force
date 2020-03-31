@@ -27,7 +27,6 @@ module.exports = class FollowButtonView extends Backbone.View
 
   onToggle: (e) ->
     return false if @$el.hasClass('.is-clicked')
-
     if @isLoggedIn
       if @collection.isFollowing @followId
         @collection.unfollow @followId
@@ -52,6 +51,6 @@ module.exports = class FollowButtonView extends Backbone.View
         setTimeout (=> @$el.removeClass 'is-clicked'), 1500
     else
       analyticsHooks.trigger 'follow:signup'
-      location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&redirect-to=#{window.location}&signupIntent=follow+#{@type.toLowerCase()}&intent=follow+#{@type.toLowerCase()}&trigger=click&contextModule=#{@context_module}"
+      location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&destination=#{window.location}&intent=follow+#{@type.toLowerCase()}&contextModule=#{@context_module}"
 
     false

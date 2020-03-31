@@ -35,6 +35,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
         }
         intent: AuthIntent.saveArtwork
         destination: location.href
+        contextModule: @context_module
       })
 
     if @saved

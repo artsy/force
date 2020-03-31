@@ -22,6 +22,7 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
         copy: 'Sign up to bid'
         intent: AuthIntent.bid
         redirectTo: $(e.currentTarget).attr 'href'
+        contextModule: @context_module
       })
     else
       # Passes through to `href`

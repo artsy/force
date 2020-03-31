@@ -10,6 +10,7 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 BlurbView = require '../../../components/blurb/view.coffee'
 template = -> require('../templates/artists_artist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class PartnerArtistsArtistView extends Backbone.View
 
@@ -77,6 +78,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
             allowDuplicates: true
             artworkSize: 'tall'
             context_page:'Partner profile page'
+            context_module: ContextModule.artistsTab
 
           ++@nextPage
 
@@ -103,7 +105,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     following = new Following null, kind: 'artist' if sd.CURRENT_USER?
     new FollowButton
       context_page: "Partner profile page"
-      context_module: "Artists tab"
+      context_module: ContextModule.artistsTab
       following: following
       model: @artist
       modelName: 'artist'

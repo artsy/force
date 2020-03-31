@@ -49,6 +49,11 @@ module.exports = class FollowButton extends Backbone.View
     state = if @following.isFollowing(@model.id) then 'following' else 'follow'
     @$el.attr 'data-state', state
 
+  getAuthIntent: ->
+    switch @modelName
+      when "artist" then AuthIntent.followArtist
+      when "profile" then AuthIntent.followPartner
+
   toggle: (e) ->
     @trigger 'click'
 
@@ -64,7 +69,7 @@ module.exports = class FollowButton extends Backbone.View
           action: 'follow'
           objectId: @model.id
         }
-        intent: AuthIntent["follow#{@modelName}"]
+        intent: @getAuthIntent()
       })
       return false
 

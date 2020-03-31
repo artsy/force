@@ -45,6 +45,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             copy: this.props.title,
             contextModule: ContextModule.consignSubmissionFlow,
             intent: AuthIntent.consign,
+            redirectTo: window.location.href,
           }}
           type={this.props.type}
           handleSubmit={this.handleSubmit}
