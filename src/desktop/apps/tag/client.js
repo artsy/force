@@ -6,8 +6,9 @@ import ReactDOM from "react-dom"
 import { Contents } from "reaction/Components/Tag"
 import { SystemContextProvider } from "reaction/Artsy"
 
-import Tag from "../../models/tag.coffee"
-import CurrentUser from "../../models/current_user.coffee"
+const Tag = require("../../models/tag.coffee")
+const CurrentUser = require("../../models/current_user.coffee")
+const mediator = require("desktop/lib/mediator.coffee")
 
 // Update URL with current filters/mode/sort, for ease of sharing.
 const onStateChange = ({ filters, sort }) => {
@@ -16,7 +17,7 @@ const onStateChange = ({ filters, sort }) => {
   window.history.replaceState({}, new Tag(sd.GENE).toPageTitle(), fragment)
 }
 
-function setupTagPage() {
+export const setupTagPage = () => {
   // Pull out sort and filters from URL, if present
   const urlParams = qs.parse(location.search.replace(/^\?/, ""))
   let sort
@@ -33,11 +34,12 @@ function setupTagPage() {
   )
   const user = CurrentUser.orNull()
   ReactDOM.render(
-    <SystemContextProvider user={user ? user.toJSON() : null}>
+    <SystemContextProvider
+      user={user ? user.toJSON() : null}
+      mediator={mediator}
+    >
       <Contents {...options} onStateChange={onStateChange} />
     </SystemContextProvider>,
     document.getElementById("tag-filter")
   )
 }
-
-export default { setupTagPage }
