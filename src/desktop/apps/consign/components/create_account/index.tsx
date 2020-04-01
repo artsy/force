@@ -20,6 +20,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
       {
         copy: this.props.title,
         contextModule: "consignments",
+        redirectTo: "/consign/submission",
       },
       values,
       formikBag
@@ -38,6 +39,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         <FormSwitcher
           options={{
             title: this.props.title,
+            redirectTo: "/consign/submission",
           }}
           type={this.props.type}
           handleSubmit={this.handleSubmit}
