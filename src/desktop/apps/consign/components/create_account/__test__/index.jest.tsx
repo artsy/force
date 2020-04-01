@@ -104,6 +104,7 @@ describe("React components", () => {
         contextModule: "consignSubmissionFlow",
         copy: "Log In",
         intent: "consign",
+        redirectTo: "/consign/submission",
       },
       { email: "user@email.com", password: "mypassword" },
       {}

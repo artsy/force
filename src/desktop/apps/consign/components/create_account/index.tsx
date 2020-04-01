@@ -25,6 +25,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         copy: this.props.title,
         contextModule: ContextModule.consignSubmissionFlow,
         intent: AuthIntent.consign,
+        redirectTo: "/consign/submission",
       },
       values,
       formikBag
@@ -45,7 +46,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             copy: this.props.title,
             contextModule: ContextModule.consignSubmissionFlow,
             intent: AuthIntent.consign,
-            redirectTo: window.location.href,
+            redirectTo: "/consign/submission",
           }}
           type={this.props.type}
           handleSubmit={this.handleSubmit}
