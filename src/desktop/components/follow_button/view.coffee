@@ -53,6 +53,7 @@ module.exports = class FollowButton extends Backbone.View
     switch @modelName
       when "artist" then AuthIntent.followArtist
       when "profile" then AuthIntent.followPartner
+      when "partner" then AuthIntent.followPartner
       when "gene" then AuthIntent.followGene
 
   toggle: (e) ->

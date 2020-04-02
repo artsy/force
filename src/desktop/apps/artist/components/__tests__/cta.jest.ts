@@ -78,7 +78,7 @@ describe("CTA", () => {
         "Join Artsy to discover new works by Claes Oldenburg and more artists you love",
       destination: "https://artsy.net/",
       image: "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA",
-      intent: "signup",
+      intent: "viewArtist",
       triggerSeconds: 4,
       contextModule: "popUpModal",
     })

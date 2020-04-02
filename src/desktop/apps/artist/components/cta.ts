@@ -34,7 +34,7 @@ export const setupArtistSignUpModal = () => {
 
       handleScrollingAuthModal({
         copy: `Join Artsy to discover new works by ${artistData.name} and more artists you love`,
-        intent: AuthIntent.signup,
+        intent: AuthIntent.viewArtist,
         triggerSeconds: 4,
         destination: location.href,
         image,

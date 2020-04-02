@@ -5,6 +5,7 @@ CurrentUser = require '../../models/current_user.coffee'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
 { triggerMarketingModal } = require '../marketing_signup_modal/triggerMarketingModal.ts'
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = ->
   globalClientSetup()
@@ -14,7 +15,7 @@ module.exports = ->
 
   new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
-  triggerMarketingModal(true)
+  triggerMarketingModal(AuthIntent.viewFair, true)
 
 checkForAfterSignUpAction = ->
   currentUser = CurrentUser.orNull()

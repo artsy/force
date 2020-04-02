@@ -14,7 +14,10 @@ import {
   ContextModule,
 } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
-export const triggerMarketingModal = (isScrolling?: boolean) => {
+export const triggerMarketingModal = (
+  intent: AuthIntent,
+  isScrolling?: boolean
+) => {
   const query = qs.parse(location.search.replace(/^\?/, ""))
   const isTargetCampaign = sd.CURRENT_PATH === sd.TARGET_CAMPAIGN_URL
   const slug = query["m-id"] || (isTargetCampaign && "ca3")
@@ -24,7 +27,7 @@ export const triggerMarketingModal = (isScrolling?: boolean) => {
     const { image, copy } = modalData
     const options: ModalOptions = {
       copy,
-      intent: AuthIntent.signup,
+      intent,
       destination: location.href,
       image,
       contextModule: isScrolling

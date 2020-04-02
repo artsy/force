@@ -88,7 +88,7 @@ class DOM extends Component {
         redirectTo: auction.registrationFlowUrl(),
         intent: AuthIntent.registerToBid,
         copy: "Sign up to bid on artworks",
-        contextModule: ContextModule.auctionInfo,
+        contextModule: ContextModule.auctionSidebar,
       })
 
       // If the user is already registered, just ignore this and fix the url.
