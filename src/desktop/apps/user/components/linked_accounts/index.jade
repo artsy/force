@@ -1,3 +1,6 @@
+
+include ./mixin
+
 .form-errors( class='js-form-errors' )
   if sd.ERROR
     != sd.ERROR
@@ -15,4 +18,5 @@ for service in ['Apple', 'Facebook']
         data-service= service.toLowerCase()
         data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
       )
-        i( class='icon-#{service.toLowerCase()}' )
+        i(class='svg-icon')
+          +providerIcon(service.toLowerCase())
