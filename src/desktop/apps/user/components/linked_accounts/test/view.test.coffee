@@ -5,6 +5,9 @@ Backbone = require 'backbone'
 { fabricate } = require '@artsy/antigravity'
 CurrentUser = require '../../../../../models/current_user'
 LinkedAccountsView = benv.requireWithJadeify require.resolve('../view'), ['template']
+LinkedAccountsView.__set__ 'sd', AP:
+  applePath: '/users/auth/apple'
+  facebookPath: '/users/auth/facebook'
 
 describe "LinkedAccountsView", ->
   before (done) ->
@@ -21,10 +24,23 @@ describe "LinkedAccountsView", ->
 
     @user = new CurrentUser fabricate 'user'
     @view = new LinkedAccountsView user: @user
+
     @view.render()
 
   afterEach ->
     Backbone.sync.restore()
+
+  describe 'apple feature flag', ->
+    it 'does not render apple by default', ->
+      @view.$('#apple-svg-icon').length.should.eql 0
+
+    it 'renders apple when feature flag is enabled', ->
+      sd = LinkedAccountsView.__get__ 'sd'
+      LinkedAccountsView.__set__ 'sd', extend {}, sd,
+        ENABLE_SIGN_IN_WITH_APPLE: true
+      enabled_view = new LinkedAccountsView user: @user
+      enabled_view.render()
+      enabled_view.$('#apple-svg-icon').length.should.eql 1
 
   describe '#toggleService', ->
     for provider in ['apple', 'facebook']
