@@ -18,5 +18,5 @@ for service in ['Apple', 'Facebook']
         data-service= service.toLowerCase()
         data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
       )
-        i(class='svg-icon')
+        i(id="#{(service.toLowerCase())}-svg-icon")
           +providerIcon(service.toLowerCase())
