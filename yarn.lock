@@ -78,6 +78,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@artsy/reaction@26.0.3":
   version "26.0.3"
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.0.3.tgz#ad0ab80d6ae9bd60f8677dbd535275cd7bd9421e"
@@ -94,6 +95,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-25.36.1-canary.4-3285.tgz#fa4638ceb2bb7d0101c5542ed162123d8ca486c0"
   integrity sha512-Nq3cASXjxAssDTSA9RoMSZJJ7Gbzo5m0CYUUPF0PD6jqHCSMOOaKPIXvYTmo9PecC8f9u/p+ABpc0jtZwp9pGg==
 >>>>>>> Similfy inquiry reload
+=======
+"@artsy/reaction@^26.0.1-canary.0-3285":
+  version "26.0.1-canary.0-3285"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.0.1-canary.0-3285.tgz#906c6f486b119a8dcbc95694e3692ae2b4fc926e"
+  integrity sha512-jMJ92wTZWTU+nBNopKThZ3+pV9oXdFsJj7u5WaYIEIC7klIYWKzHlqVMeqHWSWXAZocNYVm81F67em0/yGwCvw==
+>>>>>>> Bump canary
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
