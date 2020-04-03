@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 FooterView = require '../view'
 
-describe 'FooterView', ->
+xdescribe 'FooterView', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')

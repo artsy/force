@@ -6,6 +6,10 @@ import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import {
+  AuthIntent,
+  ContextModule,
+} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 interface CreateAccountProps {
   title: string
@@ -19,7 +23,8 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
       this.props.type,
       {
         copy: this.props.title,
-        contextModule: "consignments",
+        contextModule: ContextModule.consignSubmissionFlow,
+        intent: AuthIntent.consign,
         redirectTo: "/consign/submission",
       },
       values,
@@ -38,7 +43,9 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         <ModalHeader title={this.props.title} />
         <FormSwitcher
           options={{
-            title: this.props.title,
+            copy: this.props.title,
+            contextModule: ContextModule.consignSubmissionFlow,
+            intent: AuthIntent.consign,
             redirectTo: "/consign/submission",
           }}
           type={this.props.type}
@@ -49,7 +56,6 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             forgot: "/forgot_password",
             signup: "/sign_up",
             facebook: "/users/auth/facebook",
-            twitter: "/users/auth/twitter",
           }}
           showRecaptchaDisclaimer={true}
         />

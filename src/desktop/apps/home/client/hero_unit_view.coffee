@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class HeroUnitView extends Backbone.View
   pauseLength: 6500
@@ -95,6 +96,6 @@ module.exports = class HeroUnitView extends Backbone.View
   signUp: (e) ->
     e.preventDefault()
     openAuthModal(ModalType.signup, {
-      intent: 'signup'
-      contextModule: 'Homepage banner'
+      intent: AuthIntent.signup
+      contextModule: ContextModule.mainCarousel
     })

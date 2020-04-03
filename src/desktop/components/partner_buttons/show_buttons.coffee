@@ -17,7 +17,7 @@ module.exports = class PartnerShowButtons extends Backbone.View
       modelName: 'profile'
       model: new Profile(id: @model.get('partner')?.default_profile_id)
       following: @following
-      context_module: 'Partner show module'
+      context_module: options.context_module
 
     @following.syncFollows [@model.get('partner')?.default_profile_id] if user
 

@@ -2,6 +2,12 @@ import { buildServerApp } from "reaction/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "reaction/Apps/Auction/routes"
 import { stitch } from "@artsy/stitch"
+import { getMobileAuthLink } from "@artsy/reaction/dist/Utils/openAuthModal"
+import {
+  ModalType,
+  ModalOptions,
+} from "@artsy/reaction/dist/Components/Authentication/Types"
+import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 const renderPage = async ({ layoutTemplate }, req, res, next) => {
   try {
@@ -77,9 +83,13 @@ export const auctionFAQRoute = async (req, res, next) => {
 
 export const confirmBidRoute = async (req, res, next) => {
   if (!res.locals.sd.CURRENT_USER) {
-    return res.redirect(
-      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
-    )
+    const options: ModalOptions = {
+      intent: AuthIntent.bid,
+      redirectTo: encodeURIComponent(req.originalUrl),
+      contextModule: req.query.contextModule,
+    }
+    const href = getMobileAuthLink(ModalType.login, options)
+    return res.redirect(href)
   } else {
     await renderPage({ layoutTemplate: "react_minimal_header" }, req, res, next)
   }

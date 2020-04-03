@@ -14,6 +14,7 @@ FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class ForYouView extends Backbone.View
 
@@ -97,6 +98,7 @@ module.exports = class ForYouView extends Backbone.View
           feed = new ShowsFeed
             el: @$('.foryou-section.partners .feed').show()
             feedItems: feedItems
+            context_module: ContextModule.browseFair
           for exhibitor in followingExhibitors.models
             @fetchAndAppendBooth exhibitor.get('profile'), feed
         else

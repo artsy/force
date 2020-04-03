@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 ArtworkSaveView = require '../artwork_save/view.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View
   subViews: []
@@ -14,12 +15,14 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
   initialize: ({ @id, @user, @context_page, @context_module }) -> #
 
   bid: (e) ->
+    # FIXME: Maybe not used?
     if not CURRENT_USER?
       e.preventDefault()
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
-        intent: 'bid'
+        intent: AuthIntent.bid
         redirectTo: $(e.currentTarget).attr 'href'
+        contextModule: @context_module
       })
     else
       # Passes through to `href`

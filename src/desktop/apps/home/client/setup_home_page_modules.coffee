@@ -9,6 +9,7 @@ ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coff
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
 setupFollowButton = require '../components/follow_button/index.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 relatedArtistsAnnotation = -> require('../components/related_artists_context/annotation.jade') arguments ...
 popularArtistsTemplate = -> require('../components/popular_artists_context/templates/index.jade') arguments...
@@ -52,6 +53,13 @@ auctionClosesLabel = (auction) ->
   else
     "Closes #{moment(auction.end_at).format("MMM D [at] ha", timezone: moment.tz.guess())}"
 
+getContextModule = (key) ->
+  switch key
+    when 'genes' then ContextModule.categoryRail
+    when 'generic_gene' then ContextModule.categoryRail
+    when 'popular_artists' then ContextModule.worksByPopularArtistsRail
+    when 'live_auctions' then ContextModule.liveAuctionsRail
+
 module.exports = ->
   user = User.instantiate()
 
@@ -84,6 +92,7 @@ module.exports = ->
         hasContext: contexts[module.key]?
         user: user
         category: module.key is 'genes' or module.key is 'generic_gene'
+        context_module: getContextModule(module.key)
 
       if module.key is 'related_artists'
         options.annotation = relatedArtistsAnnotation

@@ -6,6 +6,7 @@ FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require '../partner_cell/view_helpers.coffee'
 template = -> require('./template.jade') arguments...
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class PartnerCellCarouselView extends Backbone.View
   className: 'partner-category-carousel'
@@ -22,6 +23,7 @@ module.exports = class PartnerCellCarouselView extends Backbone.View
         model: new Profile id: id
         modelName: 'profile'
         context_page: 'Galleries / Institutions page'
+        context_module: ContextModule.categoryRail
     )
 
   render: ->

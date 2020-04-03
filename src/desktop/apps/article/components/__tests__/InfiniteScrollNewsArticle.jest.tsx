@@ -204,7 +204,8 @@ describe("InfiniteScrollNewsArticle", () => {
       afterSignUpAction: { action: "editorialSignup" },
       copy: "Sign up for the best stories in art and visual culture",
       destination: "https://artsy.net/",
-      intent: "Viewed editorial",
+      intent: "viewEditorial",
+      contextModule: "popUpModal",
     })
   })
 

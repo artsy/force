@@ -101,14 +101,12 @@ describe("React components", () => {
     expect(handleSubmitMock).toBeCalledWith(
       "login",
       {
+        contextModule: "consignSubmissionFlow",
         copy: "Log In",
-        contextModule: "consignments",
+        intent: "consign",
         redirectTo: "/consign/submission",
       },
-      {
-        email: "user@email.com",
-        password: "mypassword",
-      },
+      { email: "user@email.com", password: "mypassword" },
       {}
     )
   })

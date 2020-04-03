@@ -1,6 +1,7 @@
 Profile = require '../../../../models/profile.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = (profileId) ->
   user = CurrentUser.orNull()
@@ -15,5 +16,6 @@ module.exports = (profileId) ->
     modelName: 'profile'
     model: profile
     context_page: "Show page"
+    context_module: ContextModule.showHeader
 
   following.syncFollows [profileId] if user

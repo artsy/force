@@ -31,7 +31,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     _.extend @, options
 
     unless @collection and @collection.groupByColumnsInOrder
-      throw 'You must pass an Artworks collection'
+      throw new Error 'You must pass an Artworks collection'
 
     unless @collectionLength
       @collectionLength = @collection.length

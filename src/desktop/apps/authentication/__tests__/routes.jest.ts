@@ -213,13 +213,12 @@ describe("Routes", () => {
       it("Options returns all expected fields from query", done => {
         req.query = {
           action: "follow",
-          contextModule: "Artist header",
+          contextModule: "artistHeader",
           kind: "profile",
           objectId: "david-zwirner",
           copy: "Sign up to follow David Zwirner",
-          intent: "follow partner",
+          intent: "followPartner",
           mode: "signup",
-          trigger: "timed",
           "redirect-to": "/david-zwirner",
         }
 
@@ -232,16 +231,14 @@ describe("Routes", () => {
             kind,
             objectId,
             redirectTo,
-            trigger,
           } = stitch.mock.calls[0][0].data.options
           expect(action).toBe("follow")
-          expect(contextModule).toBe("Artist header")
+          expect(contextModule).toBe("artistHeader")
           expect(copy).toBe("Sign up to follow David Zwirner")
-          expect(intent).toBe("follow partner")
+          expect(intent).toBe("followPartner")
           expect(kind).toBe("profile")
           expect(objectId).toBe("david-zwirner")
           expect(redirectTo).toBe("/david-zwirner")
-          expect(trigger).toBe("timed")
           done()
         })
       })
@@ -277,7 +274,6 @@ describe("Routes", () => {
           kind: "artist",
           destination: "/foo",
           redirectTo: "/bar",
-          signupIntent: "follow artist",
           signupReferer: "referrer",
         }
 

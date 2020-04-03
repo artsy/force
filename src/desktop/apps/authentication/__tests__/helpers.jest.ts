@@ -7,6 +7,10 @@ import {
 import Backbone from "backbone"
 import $ from "jquery"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import {
+  ContextModule,
+  AuthIntent,
+} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 jest.mock("cookies-js", () => ({
   set: jest.fn(),
@@ -88,11 +92,10 @@ describe("Authentication Helpers", () => {
       handleSubmit(
         ModalType.login,
         {
-          contextModule: "Header",
-          copy: "Log in yo",
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
           destination: "/articles",
-          redirectTo: "/",
-          trigger: "click",
+          triggerSeconds: 2,
         },
         {
           email: "foo@foo.com",
@@ -114,12 +117,10 @@ describe("Authentication Helpers", () => {
       handleSubmit(
         ModalType.signup,
         {
-          contextModule: "Header",
-          copy: "Sign up please",
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
           destination: "/articles",
-          trigger: "timed",
           triggerSeconds: 2,
-          intent: "follow artist",
         },
         {
           name: "foo",
@@ -151,12 +152,10 @@ describe("Authentication Helpers", () => {
       handleSubmit(
         ModalType.forgot,
         {
-          contextModule: "Header",
-          copy: "Forgot Password",
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
           destination: "/articles",
-          trigger: "timed",
           triggerSeconds: 2,
-          intent: "follow artist",
         },
         {
           email: "foo@foo.com",
@@ -172,11 +171,10 @@ describe("Authentication Helpers", () => {
       handleSubmit(
         ModalType.login,
         {
-          contextModule: "Header",
-          copy: "Log in yo",
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
           destination: "/articles",
-          redirectTo: "/",
-          trigger: "click",
+          triggerSeconds: 2,
         },
         {
           email: "foo@foo.com",
@@ -199,11 +197,10 @@ describe("Authentication Helpers", () => {
       handleSubmit(
         ModalType.login,
         {
-          contextModule: "Header",
-          copy: "Log in yo",
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
           destination: "/articles",
-          redirectTo: "/",
-          trigger: "click",
+          triggerSeconds: 2,
         },
         {
           email: "foo@foo.com",
@@ -220,13 +217,14 @@ describe("Authentication Helpers", () => {
       // @ts-ignore
       expect(window.analytics.track).toBeCalledWith("Successfully logged in", {
         action: "Successfully logged in",
-        user_id: 123,
-        trigger: "click",
-        context_module: "Header",
-        modal_copy: "Log in yo",
-        auth_redirect: "/",
+        auth_redirect: "/articles",
+        context_module: "popUpModal",
+        intent: "viewEditorial",
         service: "email",
+        trigger: "timed",
+        trigger_seconds: 2,
         type: "login",
+        user_id: 123,
       })
     })
 
@@ -234,12 +232,10 @@ describe("Authentication Helpers", () => {
       handleSubmit(
         ModalType.signup,
         {
-          contextModule: "Header",
-          copy: "Sign up please",
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
           destination: "/articles",
-          trigger: "timed",
           triggerSeconds: 2,
-          intent: "follow artist",
         },
         {
           email: "foo@foo.com",
@@ -257,15 +253,14 @@ describe("Authentication Helpers", () => {
       // @ts-ignore
       expect(window.analytics.track).toBeCalledWith("Created account", {
         action: "Created account",
-        user_id: 123,
+        auth_redirect: "/articles",
+        context_module: "popUpModal",
+        intent: "viewEditorial",
+        service: "email",
         trigger: "timed",
         trigger_seconds: 2,
-        context_module: "Header",
-        modal_copy: "Sign up please",
-        auth_redirect: "/articles",
-        intent: "follow artist",
-        service: "email",
         type: "signup",
+        user_id: 123,
       })
     })
   })

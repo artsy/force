@@ -6,6 +6,10 @@ import { connect } from "react-redux"
 import { showModal } from "../actions/app"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import {
+  AuthIntent,
+  ContextModule,
+} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 class DOM extends Component {
   static propTypes = {
@@ -82,9 +86,9 @@ class DOM extends Component {
     if (!me) {
       openAuthModal(ModalType.signup, {
         redirectTo: auction.registrationFlowUrl(),
-        intent: "register to bid",
+        intent: AuthIntent.registerToBid,
         copy: "Sign up to bid on artworks",
-        trigger: "click",
+        contextModule: ContextModule.auctionSidebar,
       })
 
       // If the user is already registered, just ignore this and fix the url.
