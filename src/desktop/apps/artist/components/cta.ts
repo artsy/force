@@ -29,7 +29,7 @@ const send = {
   variables: { artistID: sd.ARTIST_PAGE_CTA_ARTIST_ID },
 }
 export const setCookie = () => {
-  Cookies.set("artist-page-signup-dismissed", 1, { expires: 3600000 })
+  Cookies.set("artist-page-signup-dismissed", 1, { expires: 3600 })
 }
 export const setupArtistSignUpModal = () => {
   const artistPageAuthDismissedCookie = Cookies.get(
