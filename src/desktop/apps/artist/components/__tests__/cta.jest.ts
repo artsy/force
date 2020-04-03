@@ -112,7 +112,7 @@ describe("CTA", () => {
   it("#setCookie sets a cookie", () => {
     setCookie()
     expect(CookiesSetMock).toBeCalledWith("artist-page-signup-dismissed", 1, {
-      expires: 3600000,
+      expires: 3600,
     })
   })
   it("calls set cookie on modal close", async () => {
