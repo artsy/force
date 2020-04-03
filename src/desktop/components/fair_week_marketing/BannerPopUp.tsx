@@ -3,6 +3,7 @@ import styled from "styled-components"
 import colors from "reaction/Assets/Colors"
 import InvertedButton from "reaction/Components/Buttons/Inverted"
 import { triggerMarketingModal } from "desktop/components/marketing_signup_modal/triggerMarketingModal"
+import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 const StickyFooter = styled.div`
   position: fixed;
@@ -82,7 +83,7 @@ export const BannerPopUp: React.SFC<BannerPopUpProps> = props => {
 
   return (
     <StickyFooter>
-      <Container onClick={() => triggerMarketingModal()}>
+      <Container onClick={() => triggerMarketingModal(AuthIntent.viewFair)}>
         <CtaImageContainer>
           <CtaImage src={ctaImageUrl} />
         </CtaImageContainer>

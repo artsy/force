@@ -124,7 +124,7 @@ describe 'PartnerArtistView', ->
         spy.called.should.be.false()
         @view.followArtists.follow.restore()
         location.href.should.containEql "/sign_up?action=follow&objectId=pablo-picasso"
-        location.href.should.containEql "kind=artist&redirect-to=about:blank"
+        location.href.should.containEql "kind=artist&destination=about:blank"
 
     describe '#resetArtworks', ->
 

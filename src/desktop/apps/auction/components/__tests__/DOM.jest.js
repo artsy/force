@@ -101,9 +101,9 @@ describe("DOM Interactions", () => {
       expect(mediator.trigger).toHaveBeenCalledWith("open:auth", {
         mode: "signup",
         redirectTo: "/auction/auction-id/registration-flow",
-        intent: "register to bid",
+        intent: "registerToBid",
         copy: "Sign up to bid on artworks",
-        trigger: "click",
+        contextModule: "auctionSidebar",
       })
     })
 

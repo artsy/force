@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 FeedView = require '../../../components/feed/client/shows_feed.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 BorderedPulldown = require '../../../components/bordered_pulldown/view.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports.ShowsView = class ShowsView extends Backbone.View
   url: "#{sd.API_URL}/api/v1/shows/feed"
@@ -15,7 +16,10 @@ module.exports.ShowsView = class ShowsView extends Backbone.View
       success: (items) =>
         if items.models.length
           items.urlRoot = @url
-          new FeedView el: @$('#shows-feed'), feedItems: items
+          new FeedView
+            el: @$('#shows-feed')
+            feedItems: items
+            context_module: ContextModule.currentShowsRail
         else
           callback?.error()
       error: =>

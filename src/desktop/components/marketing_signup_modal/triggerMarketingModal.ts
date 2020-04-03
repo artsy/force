@@ -5,9 +5,19 @@ import {
   handleScrollingAuthModal,
   openAuthModal,
 } from "desktop/lib/openAuthModal"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import {
+  ModalType,
+  ModalOptions,
+} from "@artsy/reaction/dist/Components/Authentication/Types"
+import {
+  AuthIntent,
+  ContextModule,
+} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
-export const triggerMarketingModal = (isScrolling?: boolean) => {
+export const triggerMarketingModal = (
+  intent: AuthIntent,
+  isScrolling?: boolean
+) => {
   const query = qs.parse(location.search.replace(/^\?/, ""))
   const isTargetCampaign = sd.CURRENT_PATH === sd.TARGET_CAMPAIGN_URL
   const slug = query["m-id"] || (isTargetCampaign && "ca3")
@@ -15,11 +25,14 @@ export const triggerMarketingModal = (isScrolling?: boolean) => {
 
   if (sd.MARKETING_SIGNUP_MODALS && modalData && !sd.CURRENT_USER) {
     const { image, copy } = modalData
-    const options = {
+    const options: ModalOptions = {
       copy,
-      intent: "signup",
+      intent,
       destination: location.href,
       image,
+      contextModule: isScrolling
+        ? ContextModule.popUpModal
+        : ContextModule.bannerPopUp,
     }
 
     if (isScrolling) {

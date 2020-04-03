@@ -8,6 +8,7 @@ openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionna
 Logger = require '../../../../components/logger/index.coffee'
 { openAuthModal } = require '../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = ->
   logger = new Logger 'inquiry-questionnaire-log'
@@ -49,7 +50,7 @@ module.exports = ->
   $('.js-login').click (e) ->
     e.preventDefault()
     openAuthModal(ModalType.login, {
-      intent: 'inquire'
+      intent: AuthIntent.inquire
       redirectTo: location.href
     })
 

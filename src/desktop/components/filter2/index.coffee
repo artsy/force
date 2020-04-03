@@ -17,6 +17,7 @@ module.exports =
       forSale: null
 
     { aggregations,
+      context_module,
       el,
       stuckParam,
       defaultHeading,
@@ -58,6 +59,7 @@ module.exports =
       includeFixedHeader: includeFixedHeader
       facets: facets
       aggregations: aggregations
+      context_module: context_module
 
     router = new FilterRouter
       params: params

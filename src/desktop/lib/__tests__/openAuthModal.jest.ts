@@ -1,5 +1,9 @@
 import { openAuthModal, handleScrollingAuthModal } from "../openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import {
+  AuthIntent,
+  ContextModule,
+} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 jest.mock("desktop/lib/mediator.coffee", () => ({
   trigger: jest.fn(),
@@ -39,10 +43,12 @@ describe("Authentication Helpers", () => {
   describe("#openAuthModal", () => {
     it("opens the mediator with expected args", () => {
       openAuthModal(ModalType.signup, {
-        intent: "follow artist",
+        intent: AuthIntent.followArtist,
+        contextModule: ContextModule.artistHeader,
       })
       expect(mediator).toBeCalledWith("open:auth", {
-        intent: "follow artist",
+        contextModule: "artistHeader",
+        intent: "followArtist",
         mode: "signup",
       })
     })
@@ -51,14 +57,15 @@ describe("Authentication Helpers", () => {
   describe("#handleScrollingAuthModal", () => {
     it("opens the mediator with expected args", () => {
       handleScrollingAuthModal({
-        intent: "follow artist",
+        intent: AuthIntent.followArtist,
+        contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).toBeCalled()
       jest.runAllTimers()
       expect(mediator).toBeCalledWith("open:auth", {
-        intent: "follow artist",
+        contextModule: "popUpModal",
+        intent: "followArtist",
         mode: "signup",
-        trigger: "timed",
         triggerSeconds: 2,
       })
     })
@@ -67,6 +74,7 @@ describe("Authentication Helpers", () => {
       sd.IS_MOBILE = true
       handleScrollingAuthModal({
         intent: "follow artist",
+        contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).not.toBeCalled()
       jest.runAllTimers()
@@ -77,6 +85,7 @@ describe("Authentication Helpers", () => {
       sd.CURRENT_USER = { id: "123" }
       handleScrollingAuthModal({
         intent: "follow artist",
+        contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).not.toBeCalled()
       jest.runAllTimers()

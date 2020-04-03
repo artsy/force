@@ -2,11 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Clock = require '../../../components/clock/view.coffee'
-FeedItems = require '../../../components/feed/collections/feed_items.coffee'
-FeedView = require '../../../components/feed/client/feed.coffee'
 Artists = require '../../../collections/artists.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ForYouView = require './for_you.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
 fairOverviewTop = -> require('../templates/overview_top.jade')
@@ -64,6 +63,7 @@ module.exports = class Overview extends Backbone.View
       model: @model
       label: @model.name
       context_page: "Fair page"
+      context_module: ContextModule.fairInfo
     @following?.syncFollows [@model.id]
 
 

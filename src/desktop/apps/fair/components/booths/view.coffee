@@ -8,6 +8,7 @@ qs = require 'querystring'
 FilterNav = require '../../../../components/filter/nav/view.coffee'
 deslugify = require '../../../../components/deslugify/index.coffee'
 mediator = require '../../../../lib/mediator.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 navSectionsTemplate = -> require('./nav_sections.jade') arguments...
 
@@ -21,7 +22,7 @@ module.exports = class BoothsView extends Backbone.View
     # Set up a @params model to maintain the query param state for the @shows collection
     # attched to /api/v1/fair/:id/shows
     @params = new Backbone.Model sort: '-featured', private_partner: false
-    @shows = new FeedItems
+    @shows = new FeedItems context_module: ContextModule.browseFair
     @shows.url = "#{@fair.url()}/shows"
 
     # Add child view
@@ -65,7 +66,7 @@ module.exports = class BoothsView extends Backbone.View
       additionalParams: @params.toJSON()
       hideSeeMoreButtons: false
       context_page: 'Fair page'
-      context_module: 'Booth'
+      context_module: ContextModule.browseFair
     @feedView.feedName = 'Fair Feed'
 
   hideSpinner: ->

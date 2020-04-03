@@ -12,6 +12,7 @@ attachRelatedShows = require '../components/related_shows/index.coffee'
 FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
 FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
 template = require '../components/artwork_columns_metaphysics/template.jade'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
@@ -53,5 +54,6 @@ module.exports.init = ->
     artworks: bootstrappedShow.artworks,
     el: furtherArtworksEl,
     sd: sd
+    context_module: ContextModule.artworkGrid
 
   new ShareView el: $('.js-show-share')

@@ -43,8 +43,9 @@ describe("BannerPopUp", () => {
       copy: "Discover and Buy Works from Art Fairs",
       destination: "https://artsy.net/",
       image: "http://files.artsy.net/images/art-fair.jpg",
-      intent: "signup",
+      intent: "viewFair",
       mode: "signup",
+      contextModule: "bannerPopUp",
     })
   })
 })

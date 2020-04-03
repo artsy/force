@@ -5,6 +5,7 @@ scrollFrame = require 'scroll-frame'
 Backbone = require 'backbone'
 Partner = require '../../../models/partner.coffee'
 { setupFilter } = require '../../../components/filter2/index.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 template = -> require('../templates/artworks_filter.jade') arguments...
 
@@ -47,3 +48,4 @@ module.exports = class PartnerArtworksView extends Backbone.View
       forSale: @forSale
       filterRoot: @filterRoot
       defaultHeading: 'Artworks'
+      context_module: ContextModule.artworkGrid

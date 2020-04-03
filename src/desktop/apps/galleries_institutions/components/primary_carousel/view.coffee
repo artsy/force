@@ -6,6 +6,7 @@ FollowButtonView = require '../../../../components/follow_button/view.coffee'
 template = -> require('./template.jade') arguments...
 fetchProfiles = require './fetch.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class PrimaryCarousel extends Backbone.View
   events:
@@ -65,7 +66,7 @@ module.exports = class PrimaryCarousel extends Backbone.View
         model: profile
         modelName: 'profile'
         context_page: "Galleries / Institutions page"
-        context_module: "Main carousel"
+        context_module: ContextModule.mainCarousel
 
   remove: ->
     @destroyFlickity()

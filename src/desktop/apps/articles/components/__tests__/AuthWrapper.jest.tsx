@@ -93,12 +93,11 @@ describe("AuthWrapper", () => {
       )
       expect(window.addEventListener).toBeCalled()
       expect(handleScrollingAuthModal).toBeCalledWith({
-        afterSignUpAction: {
-          action: "editorialSignup",
-        },
+        afterSignUpAction: { action: "editorialSignup" },
+        contextModule: "popUpModal",
         copy: "Sign up for the best stories in art and visual culture",
         destination: "https://artsy.net/",
-        intent: "Viewed editorial",
+        intent: "viewEditorial",
       })
     })
   })

@@ -5,6 +5,7 @@ tabQuery = require './query.coffee'
 artistSuggestionQuery = require './artist_suggestion_query.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 cellsTemplate = -> require('./templates/_cells.jade') arguments...
 resultsTemplate = -> require('./templates/results.jade') arguments...
@@ -59,7 +60,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
   _addFollowButton: (id, $el) ->
     new FollowButton
       context_page: "Home page"
-      context_module: "Artists to follow rail"
+      context_module: ContextModule.artistsToFollowRail
       following: @following
       model: new Backbone.Model id: id
       modelName: 'artist'

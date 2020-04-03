@@ -5,7 +5,7 @@ zoom = require '../../../components/zoom/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
-
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports = class AuctionResultsView extends Backbone.View
@@ -59,8 +59,8 @@ module.exports = class AuctionResultsView extends Backbone.View
     e.preventDefault()
     openAuthModal(ModalType.signup, {
       copy: 'Sign up to see full auction records — for free'
-      intent: 'view auction results'
-      destination: location.href
+      intent: AuthIntent.viewAuctionResults
+      destination: location.href,
     })
 
   onRowClick: (e) =>

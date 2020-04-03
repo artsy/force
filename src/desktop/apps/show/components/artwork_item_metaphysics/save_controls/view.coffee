@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 { openAuthModal } = require '../../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
@@ -13,8 +14,7 @@ module.exports = class SaveControls extends Backbone.View
   initialize: (options) ->
     throw new Error 'You must pass an el' unless @el?
     return unless options.artwork
-
-    { @artworkCollection, @artwork, @context_page } = options
+    { @artworkCollection, @artwork, @context_page, @context_module } = options
     @$button = @$('.overlay-button-save')
 
     @listenTo @artworkCollection, "add:#{@artwork.id}", @onArtworkSaveChange
@@ -27,11 +27,13 @@ module.exports = class SaveControls extends Backbone.View
     @$button.attr 'data-state', state
 
   save: (e) ->
+    e.preventDefault()
     unless @artworkCollection
       analyticsHooks.trigger 'save:sign-up'
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
-        intent: 'save artwork'
+        contextModule: @context_module
+        intent: AuthIntent.saveArtwork
         destination: location.href
         afterSignUpAction: {
           action: 'save',

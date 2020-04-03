@@ -1,5 +1,6 @@
 import { triggerMarketingModal } from "../triggerMarketingModal"
 import { data as sd } from "sharify"
+import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
 
 jest.mock("desktop/lib/mediator.coffee", () => ({
   trigger: jest.fn(),
@@ -44,23 +45,24 @@ describe("MarketingSignupModal", () => {
   describe("#triggerMarketingModal", () => {
     it("does nothing if sd.MARKETING_SIGNUP_MODALS is not present", () => {
       delete sd.MARKETING_SIGNUP_MODALS
-      triggerMarketingModal()
+      triggerMarketingModal(AuthIntent.viewFair)
       expect(mediator).not.toBeCalled()
     })
 
     it("does nothing if sd.CURRENT_USER is present", () => {
       sd.CURRENT_USER = { id: "567" }
-      triggerMarketingModal()
+      triggerMarketingModal(AuthIntent.viewFair)
       expect(mediator).not.toBeCalled()
     })
 
     it("can parse modal data from slug/querystring", () => {
-      triggerMarketingModal()
+      triggerMarketingModal(AuthIntent.viewFair)
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "bannerPopUp",
         copy: "Buy Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/fair.jpg",
-        intent: "signup",
+        intent: "viewFair",
         mode: "signup",
       })
     })
@@ -69,39 +71,41 @@ describe("MarketingSignupModal", () => {
       qs.mockReturnValueOnce({})
       sd.TARGET_CAMPAIGN_URL = "fair-page"
       sd.CURRENT_PATH = "fair-page"
-      triggerMarketingModal()
+      triggerMarketingModal(AuthIntent.viewFair)
 
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "bannerPopUp",
         copy: "Discover Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/art.jpg",
-        intent: "signup",
+        intent: "viewFair",
         mode: "signup",
       })
     })
 
     it("calls scrollingMarketingModal if isScrolling is true", () => {
-      triggerMarketingModal(true)
+      triggerMarketingModal(AuthIntent.viewFair, true)
       expect(window.addEventListener).toBeCalled()
       jest.runAllTimers()
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "popUpModal",
         copy: "Buy Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/fair.jpg",
-        intent: "signup",
+        intent: "viewFair",
         mode: "signup",
-        trigger: "timed",
         triggerSeconds: 2,
       })
     })
 
     it("calls staticMarketingModal if isScrolling is false", () => {
-      triggerMarketingModal()
+      triggerMarketingModal(AuthIntent.viewFair)
       expect(mediator).toBeCalledWith("open:auth", {
+        contextModule: "bannerPopUp",
         copy: "Buy Works from Art Fairs",
         destination: "https://artsy.net/",
         image: "http://files.artsy.net/images/fair.jpg",
-        intent: "signup",
+        intent: "viewFair",
         mode: "signup",
       })
     })

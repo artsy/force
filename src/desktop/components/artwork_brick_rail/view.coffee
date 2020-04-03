@@ -21,6 +21,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       @annotation,
       @user,
       @category
+      @context_module
     } = options
 
   render: ->
@@ -68,6 +69,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
           el: $el
           id: id
           user: @user
+          context_module: @context_module
 
         view.postRender()
         view

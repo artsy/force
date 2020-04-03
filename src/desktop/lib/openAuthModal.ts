@@ -27,7 +27,6 @@ export const handleScrollingAuthModal = (options: ModalOptions) => {
   const modalOptions = Object.assign(
     {
       triggerSeconds: 2,
-      trigger: "timed",
     },
     options
   )
