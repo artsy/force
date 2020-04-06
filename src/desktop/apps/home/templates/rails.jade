@@ -6,7 +6,7 @@ if modules
       - viewAllUrl = viewHelpers.viewAllUrl(module)
     .responsive-layout-container
       .main-layout-container
-        div(id="hpm-#{railId}-#{index}").abrv-container
+        div(id="hpm-#{railId}-#{index}", data-test="rail-#{railId}").abrv-container
           include ../../../components/artwork_brick_rail/templates/index
     //- if we are on the third or last rail, show artists_to_follow
     if index == 3
