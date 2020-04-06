@@ -11,6 +11,8 @@ templates =
   forgot: -> require('../templates/account/forgot.jade') arguments...
 { recaptcha } = require "@artsy/reaction/dist/Utils/recaptcha"
 
+mediator = require('../../../lib/mediator.coffee')
+
 module.exports = class Account extends StepView
   _.extend @prototype, FormMixin
   _.extend @prototype, FormErrorHelpers
@@ -67,6 +69,7 @@ module.exports = class Account extends StepView
         @user.repossess user.id,
           error: form.error.bind form
           success: =>
+            mediator.trigger('auth:login:inquiry_form', @user.toJSON())
             if sd.COMMERCIAL?.enableNewInquiryFlow
               @next()
             else

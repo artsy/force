@@ -24,7 +24,7 @@
     // inquiries would then not get tracked as there's no "hard jumps"
     // between pages. See: https://github.com/artsy/force/pull/5232
     // FIXME: Remove once A/B test completes
-    if (window.sd.CLIENT_NAVIGATION_V4 === "experiment") {
+    if (window.sd.CLIENT_NAVIGATION_V5 === "experiment") {
       analyticsHooks.on(namespace(name), handler)
     } else {
       analyticsHooks.once(namespace(name), handler)

@@ -83,20 +83,18 @@ export function syncAuth() {
 }
 
 function logoutEventHandler() {
-  if (sd.CURRENT_USER) {
-    $.ajax({
-      url: "/users/sign_out",
-      type: "DELETE",
-      success() {
-        analyticsHooks.trigger("auth:logged-out")
-        location.reload()
-      },
-      error(_xhr, _status, errorMessage) {
-        // tslint:disable-next-line:no-unused-expression
-        new FlashMessage({ message: errorMessage })
-      },
-    })
-  }
+  $.ajax({
+    url: "/users/sign_out",
+    type: "DELETE",
+    success() {
+      analyticsHooks.trigger("auth:logged-out")
+      location.reload()
+    },
+    error(_xhr, _status, errorMessage) {
+      // tslint:disable-next-line:no-unused-expression
+      new FlashMessage({ message: errorMessage })
+    },
+  })
 }
 
 function setupReferrerTracking() {
@@ -149,7 +147,7 @@ function setupErrorReporting() {
     // FIXME: Remove once A/B test ends
     Sentry.addBreadcrumb({
       category: "experimental-app-shell-ab-test",
-      message: `A/B test group: ${sd.CLIENT_NAVIGATION_V4}`,
+      message: `A/B v5 test group: ${sd.CLIENT_NAVIGATION_V5}`,
       level: Sentry.Severity.Info,
     })
 

@@ -8,6 +8,7 @@ Trail = require './trail.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
 sd = require('sharify').data
+mediator = require('../../lib/mediator.coffee')
 { steps, decisions, views } = require './map.coffee'
 
 module.exports = ({ user, artwork, inquiry, bypass, state_attrs, ask_specialist }) ->
@@ -53,6 +54,10 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs, ask_specialist 
   analytics.attach state.context
   modal.view.on 'closed', ->
     analytics.teardown state.context
+
+    # Dispatch a reload event to the new reaction app shell. If user has created
+    # account or logged in, page will reload to sync logged in state.
+    mediator.trigger('auth:login:inquiry_form:maybeReloadOnModalClose')
 
   # Log to both the `Logger` and the `Trail`
   log = (step) ->
