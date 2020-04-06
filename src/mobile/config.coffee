@@ -60,6 +60,11 @@ module.exports =
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
   TRACK_PAGELOAD_PATHS: null
   VOLLEY_ENDPOINT: null
+  ENABLE_SIGN_IN_WITH_APPLE: false
+  APPLE_CLIENT_ID: null
+  APPLE_TEAM_ID: null
+  APPLE_KEY_ID: null
+  APPLE_PRIVATE_KEY: null
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
 # "['foo']" and config will attempt to JSON.parse them into non-string types.

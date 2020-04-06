@@ -55,6 +55,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             login: "/log_in",
             forgot: "/forgot_password",
             signup: "/sign_up",
+            apple: "/users/auth/apple",
             facebook: "/users/auth/facebook",
           }}
           showRecaptchaDisclaimer={true}

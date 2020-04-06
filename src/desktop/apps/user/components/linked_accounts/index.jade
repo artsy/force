@@ -1,19 +1,27 @@
+
+include ./mixin
+
 .form-errors( class='js-form-errors' )
   if sd.ERROR
     != sd.ERROR
 
-- service = 'Facebook'
+if sd.ENABLE_SIGN_IN_WITH_APPLE
+  - services = ['Facebook', 'Apple']
+else
+  - services = ['Facebook']
 
-.settings-linked-accounts__service.settings-split
-  .settings-split__left
-    .settings-linked-accounts__service__name
-      = service
+for service in services
+  .settings-linked-accounts__service.settings-split
+    .settings-split__left
+      .settings-linked-accounts__service__name
+        = service
 
-  .settings-split__right
-    a.settings-linked-accounts__service__toggle.avant-garde-button-white(
-      class='js-settings-linked-accounts__service__toggle'
-      href= sd.AP[service.toLowerCase() + 'Path']
-      data-service= service.toLowerCase()
-      data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
-    )
-      i( class='icon-#{service.toLowerCase()}' )
+    .settings-split__right
+      a.settings-linked-accounts__service__toggle.avant-garde-button-white(
+        class='js-settings-linked-accounts__service__toggle'
+        href= sd.AP[service.toLowerCase() + 'Path']
+        data-service= service.toLowerCase()
+        data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
+      )
+        i(id="#{(service.toLowerCase())}-svg-icon")
+          +providerIcon(service.toLowerCase())
