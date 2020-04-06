@@ -32,6 +32,7 @@ app.use(require("./apps/conversations/server").app)
 app.use(require("./apps/artwork/server").app)
 app.use(require("./apps/collect/server").app)
 app.use(require("./apps/search2/server").app)
+app.use(require("./apps/art_keeps_going/server").app)
 
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction").app)
