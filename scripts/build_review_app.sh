@@ -23,6 +23,7 @@ fi
 
 # Generate the Kubernetes YAML needed to provision the application.
 hokusai review_app setup $NAME
+review_app_file_path="hokusai/$NAME.yml"
 
 # Create the Docker image of your current working direct of Force, and push
 # it to Artsy's docker registry.
@@ -34,21 +35,16 @@ hokusai review_app setup $NAME
 # --tag to name the image.
 # WARNING: This is likely going to take ~10 mins on your MBP.
 # Be patient and grab some baby carrots.
-hokusai registry push --force --skip-latest --verbose --tag $NAME
+hokusai registry push --force --skip-latest --overwrite --verbose --tag $NAME
 
 # Edit the K8S YAML to reference the proper Docker image
-# sed -i '' 's/:staging/:auct-281/g' hokusai/auct-281.yml
-#
-# The weird `-i ''` is needed on MacOS:
-# https://stackoverflow.com/a/44864004
-# WARNING: This might not work on Linux.
-sed -i '' "s/:staging/:$NAME/g" hokusai/$NAME.yml
+sed -i.bak "s/:staging/:$NAME/g" $review_app_file_path && rm $review_app_file_path.bak
 
 # Edit the K8S YAML to remove the instructions that enforce that the service
 # can only be accessible via Cloudflare
 #
 # First, remove the `loadBalancerSourceRanges:` line
-sed -i '' '/loadBalancer/d' hokusai/$NAME.yml
+sed -i.bak '/loadBalancer/d' $review_app_file_path && rm $review_app_file_path.bak
 
 # Then, delete all the IP address lines.
 #
@@ -56,7 +52,7 @@ sed -i '' '/loadBalancer/d' hokusai/$NAME.yml
 # delete any line of the form "- [number][number][number].". This is my best
 # approx for an regex for an IP address, and I'm sure that there are better
 # ones.
-sed -i '' "/- [[:digit:]][[:digit:]][[:digit:]]./d" hokusai/$NAME.yml
+sed -i.bak "/- [[:digit:]][[:digit:]][[:digit:]]./d" $review_app_file_path && rm $review_app_file_path.bak
 
 # Provision the review app
 hokusai review_app create $NAME --verbose
