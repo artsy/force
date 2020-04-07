@@ -46,7 +46,6 @@ export const index = async (req, res, next) => {
     afterSignUpAction,
     contextModule,
     copy,
-    destination,
     error,
     kind,
     objectId,
@@ -63,7 +62,7 @@ export const index = async (req, res, next) => {
       title = `Sign up to ${intent}s`
       break
     case "follow artist":
-      title = copy || "Sign up to follow artists"
+      title = "Sign up to follow artists"
       break
     default:
       title = pageTitle || `Sign up for Artsy`
@@ -82,6 +81,7 @@ export const index = async (req, res, next) => {
   }
 
   const redirectTo = getRedirectTo(req)
+  const destination = req.query.destination || (isStaticAuthRoute && "/")
   const signupReferer = req.header("Referer") || req.hostname
 
   if (action) {
@@ -111,7 +111,7 @@ export const index = async (req, res, next) => {
           action,
           afterSignUpAction,
           contextModule,
-          copy,
+          copy: copy || title,
           destination,
           error,
           intent,
@@ -119,7 +119,6 @@ export const index = async (req, res, next) => {
           objectId,
           redirectTo,
           signupReferer,
-          title,
           trigger,
         },
       },
@@ -150,8 +149,8 @@ export const resetPassword = (req, res) => {
 
 export const redirectLoggedInHome = (req, res, next) => {
   if (req.user) {
-    const pathname = parse(req.url || "").pathname
-    if (["/log_in", "/login", "/sign_up", "/signup"].includes(pathname)) {
+    const isStaticAuth = isStaticAuthRoute(req)
+    if (isStaticAuth) {
       req.query["redirect-to"] = req.query["redirect-to"] || "/"
     }
     res.redirect(getRedirectTo(req))
@@ -160,14 +159,26 @@ export const redirectLoggedInHome = (req, res, next) => {
   }
 }
 
+export const isStaticAuthRoute = req => {
+  const pathname = req.path || parse(req.url || "").pathname
+  const isStaticAuthRoute = [
+    "/log_in",
+    "/login",
+    "/sign_up",
+    "/signup",
+  ].includes(pathname)
+  return isStaticAuthRoute
+}
+
 export const getRedirectTo = req => {
   let referrer = parse(req.get("Referrer") || "").path || "/"
+  const isStaticAuth = isStaticAuthRoute(req)
   const redirectTo =
     req.query["redirectTo"] ||
     req.body["redirect-to"] ||
     req.query["redirect-to"] ||
     req.query["redirect_uri"] ||
-    referrer
+    (!isStaticAuth ? referrer : undefined)
 
   if (redirectTo === "/reset_password") {
     return "/"
