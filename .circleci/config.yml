@@ -117,6 +117,8 @@ workflows:
                 path: ./reports
       - yarn/update-cache:
           <<: *not_staging_or_release
+      - yarn/type-check:
+          <<: *not_staging_or_release
       - acceptance:
           <<: *not_staging_or_release
       - acceptance_cypress:
