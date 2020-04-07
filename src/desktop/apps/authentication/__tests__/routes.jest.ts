@@ -150,7 +150,7 @@ describe("Routes", () => {
             intent: "save artwork",
           }
           index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
               "Sign up to save artworks"
             )
             done()
@@ -163,7 +163,7 @@ describe("Routes", () => {
             intent: "follow partner",
           }
           index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
               "Sign up to follow partners"
             )
             done()
@@ -176,7 +176,7 @@ describe("Routes", () => {
             intent: "follow artist",
           }
           index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
               "Sign up to follow artists"
             )
             done()
@@ -189,7 +189,7 @@ describe("Routes", () => {
             intent: "viewedEditorial",
           }
           index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
               "Signup for Artsy"
             )
             done()
@@ -202,7 +202,7 @@ describe("Routes", () => {
             set_password: "reset",
           }
           index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.options.title).toBe(
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
               "Set your password"
             )
             done()
@@ -251,6 +251,58 @@ describe("Routes", () => {
         index(req, res, next).then(() => {
           const { redirectTo } = stitch.mock.calls[0][0].data.options
           expect(redirectTo).toBe("/bar")
+          done()
+        })
+      })
+
+      it("adds destination for static /login routes", done => {
+        req.query = {}
+        req.path = "/login"
+        index(req, res, next).then(() => {
+          const {
+            redirectTo,
+            destination,
+          } = stitch.mock.calls[0][0].data.options
+          expect(destination).toBe("/")
+          expect(redirectTo).toBe(undefined)
+          done()
+        })
+      })
+
+      it("respects redirectTo for static /login routes", done => {
+        req.query = {
+          redirectTo: "/consign",
+        }
+        req.path = "/login"
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/consign")
+          done()
+        })
+      })
+
+      it("adds destination for static /signup routes", done => {
+        req.query = {}
+        req.path = "/signup"
+        index(req, res, next).then(() => {
+          const {
+            redirectTo,
+            destination,
+          } = stitch.mock.calls[0][0].data.options
+          expect(destination).toBe("/")
+          expect(redirectTo).toBe(undefined)
+          done()
+        })
+      })
+
+      it("respects redirectTo for static /signup routes", done => {
+        req.query = {
+          redirectTo: "/consign",
+        }
+        req.path = "/signup"
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/consign")
           done()
         })
       })
