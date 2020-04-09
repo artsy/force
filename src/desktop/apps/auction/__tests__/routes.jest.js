@@ -105,7 +105,7 @@ describe("routes", () => {
 
       expect(sale).toEqual({
         ...saleV1,
-        require_identity_verification: true,
+        requireIdentityVerification: true,
       })
     })
 

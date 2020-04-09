@@ -4,7 +4,7 @@ export function MeV2Query(sale_id) {
       me {
         id: internalID
         has_credit_cards: hasCreditCards
-        identity_verified: identityVerified
+        identityVerified
         bidders(saleID: "${sale_id}") {
           qualified_for_bidding: qualifiedForBidding
         }

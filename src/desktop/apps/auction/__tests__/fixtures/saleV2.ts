@@ -68,7 +68,7 @@ export const saleV2 = {
     },
   },
   registration_ends_at: null,
-  require_identity_verification: true,
+  requireIdentityVerification: true,
   start_at: "2020-04-13T22:26:00+00:00",
   status: "preview",
   symbol: "CHF",

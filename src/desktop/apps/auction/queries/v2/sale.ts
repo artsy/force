@@ -69,7 +69,7 @@ export function SaleV2Query(id) {
           }
         }
         registration_ends_at: registrationEndsAt
-        require_identity_verification: requireIdentityVerification
+        requireIdentityVerification
         start_at: startAt
         status
         symbol
