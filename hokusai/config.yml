@@ -1,4 +1,6 @@
 project-name: force
 pre-deploy: yarn publish-assets
 post-deploy: .circleci/deploy_event.sh
-hokusai-required-version: ">=0.5.4"
+hokusai-required-version: ">=0.5.8"
+template-config-files:
+  - s3://artsy-citadel/k8s/hokusai-vars.yml
