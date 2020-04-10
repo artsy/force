@@ -8,11 +8,11 @@ function Registration(props) {
   const {
     isClosed,
     isEcommerceSale,
-    isLiveOpen,
     isQualifiedForBidding,
     isRegistrationEnded,
     numBidders,
     showContactInfo,
+    userNeedsIdentityVerification,
   } = props
 
   const b = block("auction-Registration")
@@ -20,6 +20,10 @@ function Registration(props) {
   if (isEcommerceSale) {
     return null
   }
+
+  const registerText = userNeedsIdentityVerification
+    ? "Identity verification required to bid"
+    : "Registration required to bid"
 
   return (
     <div className={b()}>
@@ -59,7 +63,7 @@ function Registration(props) {
               <button className="avant-garde-button-black is-block js-register-button">
                 Register to bid
               </button>
-              <div className={b("small")}>Registration required to bid</div>
+              <div className={b("small")}>{registerText}</div>
             </div>
           )
         }
@@ -89,7 +93,7 @@ function Registration(props) {
 Registration.propTypes = {
   isClosed: PropTypes.bool.isRequired,
   isEcommerceSale: PropTypes.bool,
-  isLiveOpen: PropTypes.bool,
+  userNeedsIdentityVerification: PropTypes.bool,
   isQualifiedForBidding: PropTypes.bool.isRequired,
   isRegistrationEnded: PropTypes.bool.isRequired,
   numBidders: PropTypes.number.isRequired,
@@ -97,7 +101,13 @@ Registration.propTypes = {
 }
 
 const mapStateToProps = state => {
-  const { auction, isEcommerceSale, isMobile, me } = state.app
+  const {
+    auction,
+    isEcommerceSale,
+    isMobile,
+    me,
+    userNeedsIdentityVerification,
+  } = state.app
   const numBidders = get(me, "bidders.length", 0)
   const isQualifiedForBidding = get(me, "bidders.0.qualified_for_bidding", true)
   const showContactInfo = !isMobile
@@ -111,6 +121,7 @@ const mapStateToProps = state => {
     isRegistrationEnded: auction.isRegistrationEnded(),
     numBidders,
     showContactInfo,
+    userNeedsIdentityVerification,
   }
 }
 
