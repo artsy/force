@@ -75,12 +75,11 @@ export async function index(req, res, next) {
       }
     }
 
-    const registeredToBid =
-      me && me.bidders.length > 0 && me.bidders[0].qualified_for_bidding
+    const qualifiedForBidding = get(me, "bidders.0.qualified_for_bidding")
     const identityVerified = me && me.identity_verified
 
     const userNeedsIdentityVerification =
-      !registeredToBid &&
+      !qualifiedForBidding &&
       sale.require_identity_verification &&
       !identityVerified
 

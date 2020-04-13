@@ -40,30 +40,31 @@ export default function SaleQuery(id) {
         id
         name
         sale_artworks:saleArtworksConnection {
-          edges{
-             node{
-            artwork{
-                        id
-            title
-            date
-            sale_message:saleMessage
-            is_in_auction:isInAuction
-            image {
-              placeholder
-              url
-              aspect_ratio:aspectRatio
+          edges {
+            node {
+              artwork {
+                id
+                title
+                date
+                sale_message:saleMessage
+                is_in_auction:isInAuction
+                image {
+                  placeholder
+                  url
+                  aspect_ratio:aspectRatio
+                }
+                artists {
+                  id
+                  href
+                  name
+                }
+                partner {
+                  name
+                }
+                href
+                is_acquireable:isAcquireable
+              }
             }
-            artists {
-              id
-              href
-              name
-            }
-            partner {
-              name
-            }
-            href
-            is_acquireable:isAcquireable
-            }}
           }
         }
       }

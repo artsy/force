@@ -3,6 +3,7 @@ import React from "react"
 import block from "bem-cn-lite"
 import { get } from "lodash"
 import { connect } from "react-redux"
+import { Button, Sans } from "@artsy/palette"
 
 function Registration(props) {
   const {
@@ -21,10 +22,6 @@ function Registration(props) {
     return null
   }
 
-  const registerText = userNeedsIdentityVerification
-    ? "Identity verification required to bid"
-    : "Registration required to bid"
-
   return (
     <div className={b()}>
       {(() => {
@@ -33,37 +30,57 @@ function Registration(props) {
         } else if (!isQualifiedForBidding) {
           return (
             <div className={b("wrapper")}>
-              <button className="avant-garde-button-black is-block is-disabled">
+              <Button width="100%" size="large" isDisabled>
                 Registration pending
-              </button>
-              <div className={b("small", { warning: true })}>
+              </Button>
+              <Sans mt="1" size="3" color="yellow100" textAlign="center">
                 Reviewing submitted information
-              </div>
+              </Sans>
             </div>
           )
         } else if (numBidders > 0) {
           return (
             <div className={b("approved")}>
               <span className="icon-check" />
-              Approved to Bid
+              <Sans mt="1" size="3" color="black60" textAlign="center">
+                Approved to Bid
+              </Sans>
             </div>
           )
         } else if (isRegistrationEnded) {
           return (
             <div className={b("wrapper")}>
-              <button className="avant-garde-button-black is-block is-disabled">
+              <Button width="100%" size="large" isDisabled>
                 Registration closed
-              </button>
-              <div className={b("small")}>Registration required to bid</div>
+              </Button>
+              <Sans mt="1" size="3" color="black60" textAlign="center">
+                Registration required to bid
+              </Sans>
             </div>
           )
         } else {
           return (
             <div className={b("wrapper")}>
-              <button className="avant-garde-button-black is-block js-register-button">
-                Register to bid
-              </button>
-              <div className={b("small")}>{registerText}</div>
+              <div className="js-register-button">
+                <Button width="100%" size="large">
+                  Register to bid
+                </Button>
+              </div>
+              {userNeedsIdentityVerification ? (
+                <Sans mt="1" size="3" color="black60" textAlign="center">
+                  Identity verification required to bid.{" "}
+                  <a
+                    target="_blank"
+                    href="https://www.artsy.net/identity-verification-faq"
+                  >
+                    FAQ
+                  </a>
+                </Sans>
+              ) : (
+                <Sans mt="1" size="3" color="black60" textAlign="center">
+                  Registration required to bid
+                </Sans>
+              )}
             </div>
           )
         }

@@ -1,4 +1,4 @@
-export default function MeQueryV2(sale_id, live = true) {
+export default function MeQueryV2(sale_id) {
   return `
   query AuctionsMeQuery {
     me {
@@ -8,7 +8,7 @@ export default function MeQueryV2(sale_id, live = true) {
         qualified_for_bidding: qualifiedForBidding
       }
 
-      lot_standings: lotStandings(saleID: "${sale_id}", live: ${live}) {
+      lot_standings: lotStandings(saleID: "${sale_id}", live: true) {
         active_bid: activeBid {
           id
         }
