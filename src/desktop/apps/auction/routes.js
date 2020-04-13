@@ -1,6 +1,8 @@
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
 import App from "desktop/apps/auction/components/App"
 import Articles from "desktop/collections/articles.coffee"
+import { MeV2Query } from "desktop/apps/auction/queries/me_v2"
+import { SaleV2Query } from "desktop/apps/auction/queries/sale_v2"
 import ArticlesQuery from "desktop/apps/auction/queries/articles"
 import Auction from "desktop/models/auction.coffee"
 import MeQuery from "desktop/apps/auction/queries/me"
@@ -9,8 +11,9 @@ import SaleQuery from "desktop/apps/auction/queries/sale"
 import auctionReducer from "desktop/apps/auction/reducers"
 import configureStore from "desktop/components/react/utils/configureStore"
 import footerItems from "desktop/apps/auction/utils/footerItems"
-import { get } from "lodash"
+import { get, isEmpty } from "lodash"
 import _metaphysics from "lib/metaphysics.coffee"
+import _metaphysics2 from "lib/metaphysics2.coffee"
 import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
@@ -19,16 +22,24 @@ import { stitch as _stitch } from "@artsy/stitch"
 
 // FIXME: Metaphysics
 let metaphysics = _metaphysics
+let metaphysics2 = _metaphysics2
 let stitch = _stitch
 
 export async function index(req, res, next) {
   const saleId = req.params.id
 
   try {
-    const { sale } = await metaphysics({
-      query: SaleQuery(saleId),
+    const { sale } = await metaphysics2({
+      query: SaleV2Query(saleId),
       req,
     })
+
+    // For compatibility for MP V1
+    if (!isEmpty(sale?.promoted_sale?.sale_artworks?.edges)) {
+      sale.promoted_sale.sale_artworks = sale.promoted_sale.sale_artworks.edges.map(
+        ({ node }) => node
+      )
+    }
 
     res.locals.sd.AUCTION = sale
     fetchUser(req, res)
@@ -61,8 +72,8 @@ export async function index(req, res, next) {
 
     if (!isEcommerceSale) {
       try {
-        ;({ me } = await metaphysics({
-          query: MeQuery(sale.id),
+        ;({ me } = await metaphysics2({
+          query: MeV2Query(sale._id),
           req,
         }))
       } catch (error) {
@@ -72,6 +83,14 @@ export async function index(req, res, next) {
         )
       }
     }
+
+    const qualifiedForBidding = get(me, "bidders.0.qualified_for_bidding")
+    const identityVerified = me && me.identity_verified
+
+    const userNeedsIdentityVerification =
+      !qualifiedForBidding &&
+      sale.require_identity_verification &&
+      !identityVerified
 
     // If an e-commerce sale, remove all sort options that are Auction related
     let artworkBrowserSortOptions = auctionWorksInitialState.sortMap
@@ -97,6 +116,7 @@ export async function index(req, res, next) {
             isLoggedIn: Boolean(me),
           }),
           me,
+          userNeedsIdentityVerification: userNeedsIdentityVerification,
         },
         appInitialState
       ),
