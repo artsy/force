@@ -41,8 +41,8 @@ function Registration(props) {
         } else if (numBidders > 0) {
           return (
             <div className={b("approved")}>
-              <span className="icon-check" />
-              <Sans mt="1" size="3" color="black60" textAlign="center">
+              <Sans mt="1" size="3" color="green100">
+                <span className="icon-check" />
                 Approved to Bid
               </Sans>
             </div>
