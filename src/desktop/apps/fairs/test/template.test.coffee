@@ -39,7 +39,7 @@ describe 'Fairs template', ->
     # TODO: Intermittent failure, we should probably refactor this suite to use
     # cheerio and jade.render to avoid DOM finickyness
     xit 'renders correctly', ->
-      $('.fairs__current-fairs h1.fair-header').text().should.equal 'Current Fairs'
+      $('.fairs__current-fairs h1.fair-header').text().should.equal 'Current Events'
       $('.fairs__current-fair').length.should.equal 2
 
     xit 'groups the splits the current fairs into one row', ->
@@ -66,5 +66,5 @@ describe 'Fairs template', ->
 
     xit 'renders correctly, with a fair promo', ->
       $('.fairs__promo').length.should.equal 1
-      $('.fairs__past-fairs h1.fair-header').text().should.equal 'Past Fairs'
+      $('.fairs__past-fairs h1.fair-header').text().should.equal 'Past Events'
       $('.fairs__past-fair').length.should.equal 4

@@ -18,10 +18,10 @@ block body
           img.large-profile-image( alt=fairOrg.get('name'), title=fairOrg.get('name'), src=profile.icon().imageUrl('square') )
         .fair-organizer-top__header
           h1 Explore #{fairOrg.get('name')} on Artsy
-        .fair-organizer-top__sub-header Discover the fair and stay connected with the latest news
+        .fair-organizer-top__sub-header Discover and stay connected with the latest news
         a#fair-organizer-follow.fair-organizer-top__notify.avant-garde-follow-button-black.follow-button(data-id="#{profile.id}")
         .fair-organizer-top__countdown
-          .fair-organizer-top__countdown__headline Fair opens in:
+          .fair-organizer-top__countdown__headline Opens in:
           .fair-organizer-top__countdown__clock
             .clock
               ul.clock-value
@@ -40,7 +40,7 @@ block body
 
       .fair-organizer-content__right
         if pastFairs.length
-          .fair-organizer-content__header Revisit Previous Fairs
+          .fair-organizer-content__header Past Events
           .fair-organizer-content__section.fair-organizer-content__section--past-fairs
             for fair in pastFairs
               include fair
@@ -56,8 +56,6 @@ block body
           .mobile-section-iphone &nbsp;
           a(href="https://iphone.artsy.net/")
             .fair-organizer-content__section--app__copy
-              | Going to the fair?
-              br
               i Download Artsy for iPhone
               br
               //- | — Your personal guide to #{fairOrg.get('name'}
