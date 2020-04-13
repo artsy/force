@@ -1,11 +1,13 @@
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
 import App from "desktop/apps/auction/components/App"
 import Articles from "desktop/collections/articles.coffee"
-import MeQuery from "desktop/apps/auction/queries/me_v2"
-import SaleQuery from "desktop/apps/auction/queries/sale_v2"
+import MeV2Query from "desktop/apps/auction/queries/me_v2"
+import SaleV2Query from "desktop/apps/auction/queries/sale_v2"
 import ArticlesQuery from "desktop/apps/auction/queries/articles"
 import Auction from "desktop/models/auction.coffee"
+import MeQuery from "desktop/apps/auction/queries/me"
 import React from "react"
+import SaleQuery from "desktop/apps/auction/queries/sale"
 import auctionReducer from "desktop/apps/auction/reducers"
 import configureStore from "desktop/components/react/utils/configureStore"
 import footerItems from "desktop/apps/auction/utils/footerItems"
@@ -28,7 +30,7 @@ export async function index(req, res, next) {
 
   try {
     const { sale } = await metaphysics2({
-      query: SaleQuery(saleId),
+      query: SaleV2Query(saleId),
       req,
     })
 
@@ -64,7 +66,7 @@ export async function index(req, res, next) {
     if (!isEcommerceSale) {
       try {
         ;({ me } = await metaphysics2({
-          query: MeQuery(sale._id),
+          query: MeV2Query(sale._id),
           req,
         }))
       } catch (error) {
@@ -169,7 +171,7 @@ export async function index(req, res, next) {
 
 export async function redirectLive(req, res, next) {
   try {
-    const { sale } = await metaphysics2({
+    const { sale } = await metaphysics({
       query: SaleQuery(req.params.id),
       req,
     })
