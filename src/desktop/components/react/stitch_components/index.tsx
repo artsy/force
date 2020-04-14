@@ -16,4 +16,7 @@ export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
 export {
   UserSettingsPaymentsQueryRenderer as UserSettingsPayments,
 } from "reaction/Components/Payment/UserSettingsPayments"
+export {
+  UserSettingsTwoFactorAuthenticationQueryRenderer as UserSettingsTwoFactorAuthentication,
+} from "reaction/Components/UserSettingsTwoFactorAuthentication"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"

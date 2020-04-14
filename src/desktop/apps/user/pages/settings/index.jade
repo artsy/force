@@ -6,6 +6,11 @@ include ../../templates/mixins
 +settings-section('password', 'Password')
   include ../../components/password/index
 
+if user.get('type') === 'Admin'
+  +settings-section('two-factor-authentication', '')
+    #stitch-two-factor-authentication
+      != stitch.components.UserSettingsTwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
+
 +settings-section('linked-accounts', 'Linked Accounts')
   include ../../components/linked_accounts/index
 
