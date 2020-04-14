@@ -6,7 +6,7 @@ include ../../templates/mixins
 +settings-section('password', 'Password')
   include ../../components/password/index
 
-if user.get('type') === 'Admin'
+if user.get('roles').includes('team')
   +settings-section('two-factor-authentication', '')
     #stitch-two-factor-authentication
       != stitch.components.UserSettingsTwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
