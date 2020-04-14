@@ -61,6 +61,6 @@ describe 'Article template', ->
         sd: { FAIR: @fair }
       }
     it 'renders fallback correctly', ->
-      @page.should.containEql 'About The Fair'
+      @page.should.containEql 'About'
       @page.should.containEql 'fair-info2-content'
       @page.should.not.containEql 'On The Heels of A Stellar Year in the West'

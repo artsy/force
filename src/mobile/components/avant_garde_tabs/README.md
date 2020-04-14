@@ -3,9 +3,10 @@
 ===
 
 This component is a work-in-progress (like all of us). It:
- - 1. provides event handling for tab navigation
- - 2. animates a cursor to the active tab
- - 3. provides a template to include to construct the nav bar
+
+- 1.  provides event handling for tab navigation
+- 2.  animates a cursor to the active tab
+- 3.  provides a template to include to construct the nav bar
 
 ## Avant Garde Tab Nav
 
@@ -18,11 +19,11 @@ res.render 'index',
       { name: 'Upcoming', hasItems: upcomingFairs.length },
       { name: 'Past', hasItems: pastFairs.length }
     ]
-    emptyMessage: "Past Fairs"
+    emptyMessage: "Past Events"
     extraClasses: "art-fairs-tabs"
 ```
 
-The part(s) we are concerned with here are `navItems`, `emptyMessage`, and `extraClasses`.  `navItems` should be an array of objects, each with a name and `hasItems` (which should be either a boolean or length of a collection).
+The part(s) we are concerned with here are `navItems`, `emptyMessage`, and `extraClasses`. `navItems` should be an array of objects, each with a name and `hasItems` (which should be either a boolean or length of a collection).
 
 Once these variables are passed to the template, you can simply include the nav:
 

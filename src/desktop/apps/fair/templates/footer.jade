@@ -1,6 +1,6 @@
 .fair-page-footer
   .fair-footer-left
-    .footer-section-heading Explore the Fair
+    .footer-section-heading Explore the Event
     .footer-square-sections
       a.footer-square-section( href=profile.href() + "/browse" )
         img(src=fair.imageUrl('large_rectangle') )
@@ -19,7 +19,7 @@
 
   .fair-footer-right
     if editorialItems
-      .footer-section-heading Read Highlights from the Fair
+      .footer-section-heading Read Highlights from the Event
       .fair-footer-posts-container
         for item in editorialItems.slice(0, 2)
           a.small-post( href=item.get('href') )
