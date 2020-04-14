@@ -5,6 +5,33 @@ import { get } from "lodash"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
 
+function RegistrationText(props) {
+  const {
+    userNeedsIdentityVerification,
+    defaultText = "Registration required to bid",
+    defaultColor = "black60",
+  } = props
+  if (userNeedsIdentityVerification) {
+    return (
+      <Sans mt="1" size="3" color="black60" textAlign="center">
+        Identity verification required to bid.{" "}
+        <a
+          target="_blank"
+          href="https://www.artsy.net/identity-verification-faq"
+        >
+          FAQ
+        </a>
+      </Sans>
+    )
+  } else {
+    return (
+      <Sans mt="1" size="3" color={defaultColor} textAlign="center">
+        {defaultText}
+      </Sans>
+    )
+  }
+}
+
 function Registration(props) {
   const {
     isClosed,
@@ -33,9 +60,11 @@ function Registration(props) {
               <Button width="100%" size="large" isDisabled>
                 Registration pending
               </Button>
-              <Sans mt="1" size="3" color="yellow100" textAlign="center">
-                Reviewing submitted information
-              </Sans>
+              <RegistrationText
+                userNeedsIdentityVerification={userNeedsIdentityVerification}
+                defaultText="Reviewing submitted information"
+                defaultColor="yellow100"
+              />
             </div>
           )
         } else if (numBidders > 0) {
@@ -66,21 +95,9 @@ function Registration(props) {
                   Register to bid
                 </Button>
               </div>
-              {userNeedsIdentityVerification ? (
-                <Sans mt="1" size="3" color="black60" textAlign="center">
-                  Identity verification required to bid.{" "}
-                  <a
-                    target="_blank"
-                    href="https://www.artsy.net/identity-verification-faq"
-                  >
-                    FAQ
-                  </a>
-                </Sans>
-              ) : (
-                <Sans mt="1" size="3" color="black60" textAlign="center">
-                  Registration required to bid
-                </Sans>
-              )}
+              <RegistrationText
+                userNeedsIdentityVerification={userNeedsIdentityVerification}
+              />
             </div>
           )
         }
