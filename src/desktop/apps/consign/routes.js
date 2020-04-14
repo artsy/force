@@ -5,6 +5,8 @@ import _metaphysics from "lib/metaphysics.coffee"
 import _request from "superagent"
 import { extend } from "underscore"
 import { fetchToken as _fetchToken } from "./helpers"
+import Analytics from "analytics-node"
+import { AnalyticsSchema } from "@artsy/reaction/dist/Artsy"
 
 // FIXME: Rewire
 let request = _request
@@ -44,7 +46,14 @@ export const landingPage = async (req, res, next) => {
 }
 
 export const submissionFlow = async (req, res, next) => {
-  res.render("submission_flow", { user: req.user })
+  try {
+    // When entering submission flow from /artist/id/consign or /consign, send
+    // initial event indicating the submission process has started.
+    sendTrackingEvent(req, res)
+    res.render("submission_flow", { user: req.user })
+  } catch (error) {
+    next(error)
+  }
 }
 
 export const redirectToSubmissionFlow = async (req, res, next) => {
@@ -65,7 +74,9 @@ export const submissionFlowWithFetch = async (req, res, next) => {
           `${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`
         )
         .set("Authorization", `Bearer ${token}`)
-      const { artist: { name } } = await metaphysics({
+      const {
+        artist: { name },
+      } = await metaphysics({
         query: ArtistQuery(submission.body.artist_id),
         req,
       })
@@ -76,6 +87,34 @@ export const submissionFlowWithFetch = async (req, res, next) => {
   } catch (e) {
     next(e)
   }
+}
+
+export function trackSubmissionSuccess(req, res, next) {
+  try {
+    // Send second event indicating a submission has successfully been sent
+    const event = sendTrackingEvent(req, res)
+    res.json(event)
+  } catch (error) {
+    next(error)
+  }
+}
+
+function sendTrackingEvent(req, res) {
+  if (!req.user) {
+    return
+  }
+
+  const { contextPath, subject } = req.query
+  const analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
+  const event = {
+    event: AnalyticsSchema.ActionType.ClickedConsign,
+    context_page_path: contextPath,
+    flow: AnalyticsSchema.Flow.Consignments,
+    subject,
+    userId: req.user.id,
+  }
+  analytics.track(event)
+  return event
 }
 
 function ArtistQuery(artistId) {

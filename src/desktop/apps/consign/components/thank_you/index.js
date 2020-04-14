@@ -1,20 +1,42 @@
 import Document from "../../../../components/main_layout/public/icons/consignments-doc.svg"
 import GreenCheck from "../../../../components/main_layout/public/icons/green-check.svg"
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useEffect } from "react"
 import Select from "../../../../components/main_layout/public/icons/consignments-select.svg"
 import SpeechBubble from "../../../../components/main_layout/public/icons/consignments-speech-bubble.svg"
 import block from "bem-cn-lite"
 import { get } from "lodash"
 import { connect } from "react-redux"
+import request from "superagent"
+import { AnalyticsSchema } from "@artsy/reaction/dist/Artsy"
 
-function ThankYou({ isMobile, submission, processingImages, uploadedImages }) {
+function ThankYou({
+  contextPath,
+  isMobile,
+  submission,
+  processingImages,
+  uploadedImages,
+}) {
   const b = block("consignments-submission-thank-you")
   const uploadedImageSrc = get(uploadedImages, "0.src")
   const submissionImage =
     uploadedImageSrc && processingImages.length === 0
       ? uploadedImageSrc
       : "/images/missing_image.png"
+
+  /**
+   * To get around the possibility that an AdBlocker might block a successful
+   * submission event send the event via API request.
+   */
+  useEffect(() => {
+    request
+      .post(
+        `/consign/track-submission-success?contextPath=${contextPath}&subject=${AnalyticsSchema.Subject.SubmitForReview}`
+      )
+      .catch(error => {
+        console.error("Error tracking submission", error)
+      })
+  }, [])
 
   return (
     <div className={b({ mobile: isMobile })}>
@@ -69,6 +91,7 @@ function ThankYou({ isMobile, submission, processingImages, uploadedImages }) {
 }
 
 const mapStateToProps = state => ({
+  contextPath: state.submissionFlow.contextPath,
   isMobile: state.submissionFlow.isMobile,
   processingImages: state.submissionFlow.processingImages,
   submission: state.submissionFlow.submission,

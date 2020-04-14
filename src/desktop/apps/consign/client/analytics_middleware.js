@@ -1,5 +1,6 @@
 import * as actions from "./actions"
 import _analyticsHooks from "../../../lib/analytics_hooks.coffee"
+import { data as sd } from "sharify"
 
 // FIXME: Rewire
 let analyticsHooks = _analyticsHooks
@@ -21,7 +22,11 @@ const analyticsMiddleware = store => next => action => {
     }
     case actions.SUBMISSION_CREATED: {
       analyticsHooks.trigger("consignment:submitted", {
+        contextPath: nextState.submissionFlow.contextPath,
         submissionId: action.payload.submissionId,
+        subject: nextState.submissionFlow.subject,
+        userId: sd.CURRENT_USER.id,
+        userEmail: sd.CURRENT_USER.email,
       })
       return result
     }
