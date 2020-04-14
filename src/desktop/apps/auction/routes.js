@@ -1,8 +1,8 @@
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
 import App from "desktop/apps/auction/components/App"
 import Articles from "desktop/collections/articles.coffee"
-import { MeV2Query } from "desktop/apps/auction/queries/v2/me"
-import { SaleV2Query } from "desktop/apps/auction/queries/v2/sale"
+import { meV2Query } from "desktop/apps/auction/queries/v2/me"
+import { saleV2Query } from "desktop/apps/auction/queries/v2/sale"
 import ArticlesQuery from "desktop/apps/auction/queries/articles"
 import Auction from "desktop/models/auction.coffee"
 import MeQuery from "desktop/apps/auction/queries/me"
@@ -29,7 +29,8 @@ export async function index(req, res, next) {
 
   try {
     const { sale } = await metaphysics2({
-      query: SaleV2Query(saleId),
+      query: saleV2Query,
+      variables: { saleId },
       req,
     })
 
@@ -72,7 +73,8 @@ export async function index(req, res, next) {
     if (!isEcommerceSale) {
       try {
         ;({ me } = await metaphysics2({
-          query: MeV2Query(sale._id),
+          query: meV2Query,
+          variables: { saleId: sale._id },
           req,
         }))
       } catch (error) {
