@@ -77,10 +77,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.14.3":
-  version "26.14.3"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.14.3.tgz#3c2046841d94d28aca0484e78f5984e841942506"
-  integrity sha512-pvpIpEUejjue+oBaNBFy0rS0kvr9oGCM/z+hLt4nIi3Jjq7n0ArO9RDHjZGKJrZwP/PQuy59RoofsRtarVPrJg==
+"@artsy/reaction@26.16.0":
+  version "26.16.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.16.0.tgz#db13cf7a287d0cb02f631d752ebe7b78cc7923c3"
+  integrity sha512-nq8GwLnhIErBy14gqPb4ZtbS1BmDD5ePalfvWWgu/nbuEn0GLKZfwai+a1PbK0zCLI33ZbUZXwP94kiUx+5OGA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -105,6 +105,7 @@
     numeral "^2.0.4"
     openseadragon "^2.4.2"
     prop-types "^15.5.10"
+    qrcode.react "^1.0.0"
     qs "^6.5.0"
     rc-slider "^8.6.2"
     react-autosuggest "^9.4.3"
@@ -12760,6 +12761,20 @@ q@^1.1.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
   integrity sha1-3QG6ydBtMObyGa7LglPunr3DCPE=
+
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
+
+qrcode.react@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-1.0.0.tgz#7e8889db3b769e555e8eb463d4c6de221c36d5de"
+  integrity sha512-jBXleohRTwvGBe1ngV+62QvEZ/9IZqQivdwzo9pJM4LQMoCM2VnvNBnKdjvGnKyDZ/l0nCDgsPod19RzlPvm/Q==
+  dependencies:
+    loose-envify "^1.4.0"
+    prop-types "^15.6.0"
+    qr.js "0.0.0"
 
 qs@1.2.0:
   version "1.2.0"
