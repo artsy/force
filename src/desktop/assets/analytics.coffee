@@ -40,7 +40,23 @@ Events.onEvent (data) =>
     analytics.track data.action, _.omit data, 'action'
   else if data.action_type
     # New analytics schema
-    analytics.track data.action_type, _.omit data, 'action_type'
+    trackingData = _.omit data, 'action_type'
+    trackingOptions = {}
+
+    # FIXME: Remove after A/B test ends
+    if sd.CLIENT_NAVIGATION_V5 == "experiment"
+      referrer = analytics.__artsyReferrer
+      # Grab referrer from our trackingMiddleware in Reaction, since we're in a
+      # single-page-app context and the value will need to be refreshed on route
+      # change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+      if referrer
+        trackingOptions = {
+          page: {
+            referrer: referrer
+          }
+        }
+
+    analytics.track data.action_type, trackingData, trackingOptions
   else
     console.error("Unknown analytics schema being used: #{JSON.stringify(data)}")
 
