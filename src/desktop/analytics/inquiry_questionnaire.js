@@ -1,17 +1,40 @@
 ;(function() {
   "use strict"
 
-  var namespace, track, bind, bindOnce
+  var namespace, track, trackWithoutNamespace, bind, bindOnce
+
+  function getTrackingOptions() {
+    var trackingOptions = {}
+
+    // FIXME: Remove once A/B test completes
+    if (sd.CLIENT_NAVIGATION_V5 === "experiment") {
+      const referrer = window.analytics.__artsyReferrer
+      // Grab referrer from our trackingMiddleware in Reaction, since we're in a
+      // single-page-app context and the value will need to be refreshed on route
+      // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+      if (referrer) {
+        trackingOptions = {
+          page: {
+            referrer,
+          },
+        }
+      }
+    }
+
+    return trackingOptions
+  }
 
   namespace = function(name) {
     return "inquiry_questionnaire:" + name
   }
 
-  track = function() {
-    var args
-    args = arguments
-    args[0] = namespace(" " + args[0])
-    analytics.track.apply(null, args)
+  track = function(event, props = {}) {
+    event = namespace(" " + event)
+    analytics.track(event, props, getTrackingOptions())
+  }
+
+  trackWithoutNamespace = function(event, props = {}) {
+    analytics.track(event, props, getTrackingOptions())
   }
 
   bind = function(name, handler) {
@@ -172,19 +195,19 @@
 
   // Non-namespaced events
   bind("user:login", function(context) {
-    analytics.track("Successfully logged in", {
+    trackWithoutNamespace("Successfully logged in", {
       context: "inquiry_questionnaire",
     })
   })
 
   bind("user:signup", function(context) {
-    analytics.track("Created account", {
+    trackWithoutNamespace("Created account", {
       context: "inquiry_questionnaire",
     })
   })
 
   bindOnce("inquiry:sync", function(context) {
-    analytics.track("Sent artwork inquiry", {
+    trackWithoutNamespace("Sent artwork inquiry", {
       artwork_id: context.artwork.get("_id"),
       products: [
         {
@@ -199,27 +222,27 @@
   })
 
   bindOnce("inquiry:show", function(context) {
-    analytics.track("Sent show inquiry", {
+    trackWithoutNamespace("Sent show inquiry", {
       label: context.label,
     })
   })
 
   bindOnce("contact:hover", function(context) {
-    analytics.track("Hovered over contact form 'Send' button")
+    trackWithoutNamespace("Hovered over contact form 'Send' button")
   })
 
   bindOnce("contact:close-x", function(context) {
-    analytics.track("Closed the inquiry form via the '×' button")
+    trackWithoutNamespace("Closed the inquiry form via the '×' button")
   })
 
   bindOnce("contact:close-back", function(context) {
-    analytics.track(
+    trackWithoutNamespace(
       "Closed the inquiry form by clicking the modal window backdrop"
     )
   })
 
   bindOnce("contact:submitted", function(context) {
-    analytics.track("Contact form submitted", context.attributes)
+    trackWithoutNamespace("Contact form submitted", context.attributes)
   })
 
   bind("inquiry:sent", function(context) {

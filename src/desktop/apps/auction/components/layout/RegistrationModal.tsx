@@ -10,6 +10,7 @@ export const RegistrationModal = ({ auction, onClose }) => {
     }
   }
   return (
+    // @ts-ignore
     <AuctionRegistrationModal
       auction={auction.attributes}
       onClose={onClose}
