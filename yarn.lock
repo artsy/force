@@ -82,10 +82,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.18.0":
-  version "26.18.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.18.0.tgz#c1d582bd08fa781991c5ba76416632b183b84677"
-  integrity sha512-3ESl2JFf11rKCfWMU66+wGVEQnWaaI0Y4X0/2ZAGxCFjGdVOqBKgiPCimqzUhsDEGJsesT4MBPqVfTrDB8vAaw==
+"@artsy/reaction@26.20.0":
+  version "26.20.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.20.0.tgz#d22cdbe7c878a5aefb3d8b508fc10954965ad593"
+  integrity sha512-D0gWldVYEpYXnPIPkAPzRawyZv8C+mlPWpDBB/+huQ39kRYsBQceUlBfe1zIIVSeEjsV0xQmrQ7kl59SGO52Vg==
   dependencies:
     "@artsy/cohesion" "0.0.3"
     "@artsy/detect-responsive-traits" "^0.0.5"
