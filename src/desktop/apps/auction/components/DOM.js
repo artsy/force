@@ -6,10 +6,7 @@ import { connect } from "react-redux"
 import { showModal } from "../actions/app"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import {
-  AuthIntent,
-  ContextModule,
-} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 class DOM extends Component {
   static propTypes = {

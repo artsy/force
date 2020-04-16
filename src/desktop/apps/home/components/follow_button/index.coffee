@@ -1,7 +1,7 @@
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 Artist = require '../../../../models/artist.coffee'
 Gene = require '../../../../models/gene.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 template = -> require('./template.jade') arguments...
 
 followableObject =

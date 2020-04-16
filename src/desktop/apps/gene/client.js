@@ -8,7 +8,7 @@ import ReactDOM from "react-dom"
 import { Contents } from "reaction/Components/Gene"
 import { GeneRelatedLinksQueryRenderer as RelatedLinks } from "reaction/Components/Gene/GeneRelatedLinks"
 import { SystemContextProvider } from "reaction/Artsy"
-import { ContextModule } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { ContextModule } from "@artsy/cohesion"
 
 const Gene = require("../../models/gene.coffee")
 const CurrentUser = require("../../models/current_user.coffee")

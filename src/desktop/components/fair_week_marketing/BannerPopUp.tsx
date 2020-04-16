@@ -3,7 +3,7 @@ import styled from "styled-components"
 import colors from "reaction/Assets/Colors"
 import InvertedButton from "reaction/Components/Buttons/Inverted"
 import { triggerMarketingModal } from "desktop/components/marketing_signup_modal/triggerMarketingModal"
-import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { AuthIntent } from "@artsy/cohesion"
 
 const StickyFooter = styled.div`
   position: fixed;

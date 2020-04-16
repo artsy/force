@@ -6,7 +6,7 @@ FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require '../partner_cell/view_helpers.coffee'
 template = -> require('./template.jade') arguments...
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 module.exports = class PartnerCellCarouselView extends Backbone.View
   className: 'partner-category-carousel'

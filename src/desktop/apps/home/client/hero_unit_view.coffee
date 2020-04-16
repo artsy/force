@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class HeroUnitView extends Backbone.View
   pauseLength: 6500

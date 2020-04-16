@@ -1,6 +1,6 @@
 import { triggerMarketingModal } from "../triggerMarketingModal"
 import { data as sd } from "sharify"
-import { AuthIntent } from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { AuthIntent } from "@artsy/cohesion"
 
 jest.mock("desktop/lib/mediator.coffee", () => ({
   trigger: jest.fn(),

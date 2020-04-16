@@ -7,7 +7,7 @@ Fair = require '../../../models/fair.coffee'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user.coffee'
 FlashMessage = require '../../flash/index.coffee'
-{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class FairHeaderView extends Backbone.View
 

@@ -7,10 +7,7 @@ import {
 import Backbone from "backbone"
 import $ from "jquery"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import {
-  ContextModule,
-  AuthIntent,
-} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { ContextModule, AuthIntent } from "@artsy/cohesion"
 
 jest.mock("cookies-js", () => ({
   set: jest.fn(),

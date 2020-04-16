@@ -10,7 +10,7 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 BlurbView = require '../../../components/blurb/view.coffee'
 template = -> require('../templates/artists_artist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 module.exports = class PartnerArtistsArtistView extends Backbone.View
 

@@ -9,7 +9,7 @@ ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coff
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
 setupFollowButton = require '../components/follow_button/index.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 relatedArtistsAnnotation = -> require('../components/related_artists_context/annotation.jade') arguments ...
 popularArtistsTemplate = -> require('../components/popular_artists_context/templates/index.jade') arguments...

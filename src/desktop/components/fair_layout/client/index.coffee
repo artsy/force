@@ -4,7 +4,7 @@ FooterView = require '../../main_layout/footer/view.coffee'
 lightDetector = require '../../light_detector/index.coffee'
 FairNavView = require './nav.coffee'
 { triggerMarketingModal } = require '../../marketing_signup_modal/triggerMarketingModal.ts'
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = (options) ->
   globalClientSetup()

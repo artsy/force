@@ -5,7 +5,7 @@ scrollFrame = require 'scroll-frame'
 Backbone = require 'backbone'
 Partner = require '../../../models/partner.coffee'
 { setupFilter } = require '../../../components/filter2/index.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 template = -> require('../templates/artworks_filter.jade') arguments...
 

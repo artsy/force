@@ -6,7 +6,7 @@ FollowButtonView = require '../../../../components/follow_button/view.coffee'
 template = -> require('./template.jade') arguments...
 fetchProfiles = require './fetch.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 module.exports = class PrimaryCarousel extends Backbone.View
   events:
