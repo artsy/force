@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 ArtworkSaveView = require '../artwork_save/view.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View
   subViews: []

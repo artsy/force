@@ -11,7 +11,7 @@ query = require '../query.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 pastFairsTemplate = -> require('../templates/past_fairs.jade') arguments...
 

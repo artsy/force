@@ -1,7 +1,7 @@
 Profile = require '../../../../models/profile.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 module.exports = (profileId) ->
   user = CurrentUser.orNull()

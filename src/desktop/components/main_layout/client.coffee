@@ -5,7 +5,7 @@ CurrentUser = require '../../models/current_user.coffee'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
 { triggerMarketingModal } = require '../marketing_signup_modal/triggerMarketingModal.ts'
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = ->
   globalClientSetup()

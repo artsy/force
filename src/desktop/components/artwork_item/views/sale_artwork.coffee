@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = class SaleArtworkView extends Backbone.View
   events:

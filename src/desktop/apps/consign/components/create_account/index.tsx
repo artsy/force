@@ -6,10 +6,7 @@ import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import {
-  AuthIntent,
-  ContextModule,
-} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 interface CreateAccountProps {
   title: string

@@ -5,7 +5,7 @@ zoom = require '../../../components/zoom/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports = class AuctionResultsView extends Backbone.View

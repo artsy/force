@@ -5,7 +5,7 @@ tabQuery = require './query.coffee'
 artistSuggestionQuery = require './artist_suggestion_query.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 cellsTemplate = -> require('./templates/_cells.jade') arguments...
 resultsTemplate = -> require('./templates/results.jade') arguments...

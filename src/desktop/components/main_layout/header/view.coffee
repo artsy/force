@@ -17,7 +17,7 @@ bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class HeaderView extends Backbone.View
   events:

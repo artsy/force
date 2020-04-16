@@ -9,10 +9,7 @@ import {
   ModalType,
   ModalOptions,
 } from "@artsy/reaction/dist/Components/Authentication/Types"
-import {
-  AuthIntent,
-  ContextModule,
-} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 export const triggerMarketingModal = (
   intent: AuthIntent,

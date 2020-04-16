@@ -7,7 +7,7 @@ openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent, ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class AboutView extends Backbone.View
   events:

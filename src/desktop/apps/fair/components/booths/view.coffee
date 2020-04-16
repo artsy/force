@@ -8,7 +8,7 @@ qs = require 'querystring'
 FilterNav = require '../../../../components/filter/nav/view.coffee'
 deslugify = require '../../../../components/deslugify/index.coffee'
 mediator = require '../../../../lib/mediator.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 navSectionsTemplate = -> require('./nav_sections.jade') arguments...
 

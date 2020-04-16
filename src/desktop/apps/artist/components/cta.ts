@@ -3,10 +3,7 @@ import { data as sd } from "sharify"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
-import {
-  AuthIntent,
-  ContextModule,
-} from "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 const metaphysics = require("lib/metaphysics.coffee")
 
 export const query = `

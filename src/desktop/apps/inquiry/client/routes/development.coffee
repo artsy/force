@@ -8,7 +8,7 @@ openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionna
 Logger = require '../../../../components/logger/index.coffee'
 { openAuthModal } = require '../../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = ->
   logger = new Logger 'inquiry-questionnaire-log'

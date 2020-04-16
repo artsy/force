@@ -8,7 +8,7 @@ artworkColumns = -> require('../../../components/artwork_columns/template.jade')
 setsTemplate = -> require('../templates/sets.jade') arguments...
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = class FeatureView extends Backbone.View
   initialize: (options = {}) ->

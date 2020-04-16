@@ -14,7 +14,7 @@ FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 module.exports = class ForYouView extends Backbone.View
 

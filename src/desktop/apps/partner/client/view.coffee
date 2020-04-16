@@ -15,7 +15,7 @@ OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
-{ ContextModule } = require "@artsy/reaction/dist/Artsy/Analytics/v2/Schema"
+{ ContextModule } = require "@artsy/cohesion"
 
 sectionToView =
   contact: ContactView
