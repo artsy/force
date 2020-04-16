@@ -27,6 +27,7 @@ function Layout(props) {
     showInfoWindow,
     showMyActiveBids,
     showFooter,
+    me,
     modalType,
     dispatch,
   } = props
@@ -49,6 +50,7 @@ function Layout(props) {
       {Modal && (
         <Modal
           auction={auction}
+          me={me}
           onClose={() => {
             dispatch(showModal(null))
           }}
@@ -81,6 +83,7 @@ function Layout(props) {
 
 Layout.propTypes = {
   associatedSale: PropTypes.object,
+  me: PropTypes.object,
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
   showInfoWindow: PropTypes.bool.isRequired,
@@ -122,6 +125,7 @@ const mapStateToProps = state => {
     associatedSale: associated_sale,
     auction,
     isMobile,
+    me,
     modalType,
     showAssociatedAuctions,
     showFilter,

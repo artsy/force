@@ -5,8 +5,9 @@ import {
   ContentKey,
   PostRegistrationModal,
 } from "reaction/Components/Auction/PostRegistrationModal"
+import { bidderNeedsIdentityVerification } from "reaction/Utils/identityVerificationRequirements"
 
-const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
+const _ConfirmRegistrationModal = ({ me, modalType, onClose, sale }) => {
   useEffect(() => {
     const replaceModalTriggerPath = location.pathname.replace(
       "/confirm-registration",
@@ -25,11 +26,12 @@ const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
   let contentKey: ContentKey
   if (bidder.qualified_for_bidding) {
     contentKey = "registrationConfirmed"
+  } else if (modalType === "ConfirmBidAndRegistration") {
+    contentKey = "bidPending"
+  } else if (bidderNeedsIdentityVerification({ sale, user: me })) {
+    contentKey = "registrationPendingUnverified"
   } else {
-    contentKey =
-      modalType === "ConfirmBidAndRegistration"
-        ? "bidPending"
-        : "registrationPending"
+    contentKey = "registrationPending"
   }
 
   return <PostRegistrationModal contentKey={contentKey} onClose={onClose} />
@@ -38,6 +40,7 @@ const _ConfirmRegistrationModal = ({ me, modalType, onClose }) => {
 const mapStateToProps = state => ({
   me: state.app.me,
   modalType: state.app.modalType,
+  sale: state.app.auction.attributes,
 })
 
 export const ConfirmRegistrationModal = connect(mapStateToProps)(

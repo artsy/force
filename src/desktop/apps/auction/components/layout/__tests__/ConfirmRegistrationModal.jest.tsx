@@ -2,6 +2,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 import { ConfirmRegistrationModal } from "../ConfirmRegistrationModal"
 import { act } from "react-dom/test-utils"
 import { Button } from "@artsy/palette"
+
 describe("Confirm Registration Modal", () => {
   beforeAll(() => {
     jest.spyOn(history, "replaceState")
@@ -135,15 +136,70 @@ describe("Confirm Registration Modal", () => {
                     qualified_for_bidding: false,
                   },
                 ],
+                identityVerified: false,
+              },
+              sale: {
+                requireIdentityVerification: false,
               },
             },
           },
         })
-        expect(wrapper.text()).not.toEqual(
-          expect.stringContaining("We're sorry, your bid could not be placed.")
-        )
-        expect(wrapper.text()).toEqual(
-          expect.stringContaining("Registration pending")
+
+        expect(wrapper.text()).toContain("Registration pending")
+        expect(wrapper.text()).toContain("Artsy is reviewing your registration")
+      })
+
+      it("shows a registration pending message if the sale requires IDV and the user is verified", () => {
+        const { wrapper } = renderTestComponent({
+          Component: ConfirmRegistrationModal,
+          options: { renderMode: "mount" },
+          data: {
+            app: {
+              modalType: "ConfirmRegistration",
+              me: {
+                bidders: [
+                  {
+                    qualified_for_bidding: false,
+                  },
+                ],
+                identityVerified: true,
+              },
+              sale: {
+                requireIdentityVerification: true,
+              },
+            },
+          },
+        })
+
+        expect(wrapper.text()).toContain("Registration pending")
+        expect(wrapper.text()).toContain("Artsy is reviewing your registration")
+      })
+
+      it("shows an IDV registration pending message if the sale requires IDV but the user is not verified", () => {
+        const { wrapper } = renderTestComponent({
+          Component: ConfirmRegistrationModal,
+          options: { renderMode: "mount" },
+          data: {
+            app: {
+              modalType: "ConfirmRegistration",
+              me: {
+                bidders: [
+                  {
+                    qualified_for_bidding: false,
+                  },
+                ],
+                identityVerified: false,
+              },
+              auction: {
+                requireIdentityVerification: true,
+              },
+            },
+          },
+        })
+
+        expect(wrapper.text()).toContain("Registration pending")
+        expect(wrapper.text()).toContain(
+          "This auction requires Artsy to verify your identity before bidding."
         )
       })
     })

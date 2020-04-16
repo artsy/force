@@ -4,6 +4,7 @@ import block from "bem-cn-lite"
 import { get } from "lodash"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
+import { bidderNeedsIdentityVerification } from "reaction/Utils/identityVerificationRequirements"
 
 function RegistrationText(props) {
   const {
@@ -57,7 +58,7 @@ function Registration(props) {
         } else if (!isQualifiedForBidding) {
           return (
             <div className={b("wrapper")}>
-              <Button width="100%" size="large" isDisabled>
+              <Button width="100%" size="large" disabled>
                 Registration pending
               </Button>
               <RegistrationText
@@ -79,7 +80,7 @@ function Registration(props) {
         } else if (isRegistrationEnded) {
           return (
             <div className={b("wrapper")}>
-              <Button width="100%" size="large" isDisabled>
+              <Button width="100%" size="large" disabled>
                 Registration closed
               </Button>
               <Sans mt="1" size="3" color="black60" textAlign="center">
@@ -135,16 +136,16 @@ Registration.propTypes = {
 }
 
 const mapStateToProps = state => {
-  const {
-    auction,
-    isEcommerceSale,
-    isMobile,
-    me,
-    userNeedsIdentityVerification,
-  } = state.app
-  const numBidders = get(me, "bidders.length", 0)
-  const isQualifiedForBidding = get(me, "bidders.0.qualified_for_bidding", true)
+  const { auction, isEcommerceSale, isMobile, me } = state.app
+
+  const numBidders = me?.bidders?.length || 0
+  const isQualifiedForBidding = get(me, "bidders.0.qualified_for_bidding", true) // TODO: the default value is `true`?
   const showContactInfo = !isMobile
+  const userNeedsIdentityVerification = bidderNeedsIdentityVerification({
+    sale: auction.attributes,
+    user: me,
+    bidder: me?.bidders?.[0],
+  })
 
   return {
     isClosed: auction.isClosed() || auction.get("clockState") === "closed",
