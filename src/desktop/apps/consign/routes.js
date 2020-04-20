@@ -89,16 +89,6 @@ export const submissionFlowWithFetch = async (req, res, next) => {
   }
 }
 
-export function trackSubmissionSuccess(req, res, next) {
-  try {
-    // Send second event indicating a submission has successfully been sent
-    const event = sendTrackingEvent(req, res)
-    res.json(event)
-  } catch (error) {
-    next(error)
-  }
-}
-
 function sendTrackingEvent(req, res) {
   if (!req.user) {
     return
@@ -114,7 +104,6 @@ function sendTrackingEvent(req, res) {
     userId: req.user.id,
   }
   analytics.track(event)
-  return event
 }
 
 function ArtistQuery(artistId) {

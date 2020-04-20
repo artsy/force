@@ -17,8 +17,13 @@ interface CreateAccountProps {
 }
 
 export class CreateAccount extends React.Component<CreateAccountProps> {
+  get redirectUrl() {
+    const { contextPath, subject } = this.props
+    return `/consign/submission?contextPath=${contextPath}&subject=${subject}`
+  }
+
   handleSubmit = (values, formikBag) => {
-    const { contextPath, subject, title, type } = this.props
+    const { title, type } = this.props
 
     handleSubmit(
       type,
@@ -26,7 +31,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         copy: title,
         contextModule: ContextModule.consignSubmissionFlow,
         intent: AuthIntent.consign,
-        redirectTo: `/consign/submission?contextPath=${contextPath}&subject=${subject}`,
+        redirectTo: this.redirectUrl,
       },
       values,
       formikBag
@@ -47,7 +52,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             copy: this.props.title,
             contextModule: ContextModule.consignSubmissionFlow,
             intent: AuthIntent.consign,
-            redirectTo: "/consign/submission",
+            redirectTo: this.redirectUrl,
           }}
           type={this.props.type}
           handleSubmit={this.handleSubmit}
