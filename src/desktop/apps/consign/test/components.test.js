@@ -99,7 +99,6 @@ describe("React components", () => {
 
   describe("UploadedImage", () => {
     it("correctly displays the processing state when there are no processing images", () => {
-      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
       const file = {
         fileName: "astronaut.jpg",
         src: "blahblabhalh",
@@ -114,7 +113,6 @@ describe("React components", () => {
     })
 
     it("correctly displays the processing state when the image is processing", () => {
-      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
       initialStore.dispatch(actions.startProcessingImage("astronaut.jpg"))
       const file = {
         fileName: "astronaut.jpg",
@@ -130,7 +128,6 @@ describe("React components", () => {
     })
 
     it("correctly displays the processing state when a different image is processing", () => {
-      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
       initialStore.dispatch(actions.startProcessingImage("another-image.jpg"))
       const file = {
         fileName: "astronaut.jpg",
@@ -202,21 +199,12 @@ describe("React components", () => {
   })
 
   describe("UploadPhoto", () => {
-    it("disables the submit button when there are no photos and the skip checkbox is not clicked", () => {
+    it("disables the submit button when there are no photos", () => {
       const wrapper = shallow(<UploadPhoto store={initialStore} />)
       const rendered = wrapper.render()
       rendered
         .find(".consignments-submission-upload-photo__submit-button[disabled]")
         .length.should.eql(1)
-    })
-
-    it("enables the button when the skip upload button is checked", () => {
-      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
-      const wrapper = shallow(<UploadPhoto store={initialStore} />)
-      const rendered = wrapper.render()
-      rendered
-        .find(".consignments-submission-upload-photo__submit-button[disabled]")
-        .length.should.eql(0)
     })
 
     describe("with photos", () => {
