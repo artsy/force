@@ -1,10 +1,19 @@
 import Backbone from "backbone"
-import CurrentUser from "../../../models/current_user.coffee"
 import sinon from "sinon"
+import request from "superagent"
 import { fabricate } from "@artsy/antigravity"
 
-const rewire = require("rewire")("../routes")
-const routes = rewire
+const metaphysics = require("lib/metaphysics.coffee")
+
+const CurrentUser = require("../../../models/current_user.coffee")
+
+import * as routes from "../routes"
+
+jest.mock("superagent")
+jest.mock("lib/metaphysics.coffee")
+jest.mock("desktop/apps/consign/helpers", () => ({
+  fetchToken: () => "foo-token",
+}))
 
 describe("#redirectToSubmissionFlow", () => {
   let req
@@ -35,7 +44,6 @@ describe("#submissionFlowWithFetch", () => {
   let req
   let res
   let next
-  let request
 
   beforeEach(() => {
     sinon.stub(Backbone, "sync")
@@ -66,17 +74,23 @@ describe("#submissionFlowWithFetch", () => {
         name: "Andy Warhol",
       },
     }
-    request = sinon.stub()
-    request.get = sinon.stub().returns(request)
-    request.set = sinon.stub().returns({ body: { id: "my-submission" } })
 
-    rewire.__set__("request", request)
-    rewire.__set__("fetchToken", sinon.stub().returns("foo-token"))
-    rewire.__set__(
-      "metaphysics",
-      sinon.stub().returns(Promise.resolve(artistQuery))
-    )
+    request.get.mockImplementation(() => {
+      return {
+        set: () => {
+          return {
+            body: { id: "my-submission" },
+          }
+        },
+      }
+    })
+
+    metaphysics.mockImplementation(() => {
+      return artistQuery
+    })
+
     await routes.submissionFlowWithFetch(req, res, next)
+
     res.render.args[0][0].should.eql("submission_flow")
     res.render.args[0][1].user.should.not.eql(undefined)
     res.locals.sd.SUBMISSION.id.should.eql("my-submission")

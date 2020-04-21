@@ -8,13 +8,7 @@ import block from "bem-cn-lite"
 import { get } from "lodash"
 import { connect } from "react-redux"
 
-function ThankYou({
-  contextPath,
-  isMobile,
-  submission,
-  processingImages,
-  uploadedImages,
-}) {
+function ThankYou({ isMobile, submission, processingImages, uploadedImages }) {
   const b = block("consignments-submission-thank-you")
   const uploadedImageSrc = get(uploadedImages, "0.src")
   const submissionImage =
@@ -75,7 +69,6 @@ function ThankYou({
 }
 
 const mapStateToProps = state => ({
-  contextPath: state.submissionFlow.contextPath,
   isMobile: state.submissionFlow.isMobile,
   processingImages: state.submissionFlow.processingImages,
   submission: state.submissionFlow.submission,

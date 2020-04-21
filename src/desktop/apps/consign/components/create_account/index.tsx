@@ -19,7 +19,11 @@ interface CreateAccountProps {
 export class CreateAccount extends React.Component<CreateAccountProps> {
   get redirectUrl() {
     const { contextPath, subject } = this.props
-    return `/consign/submission?contextPath=${contextPath}&subject=${subject}`
+    let analyticsParams = ""
+    if (contextPath && subject) {
+      analyticsParams = `?contextPath=${contextPath}&subject=${subject}`
+    }
+    return `/consign/submission${analyticsParams}`
   }
 
   handleSubmit = (values, formikBag) => {

@@ -15,7 +15,7 @@ describe("landing page", () => {
     return jade.compile(fs.readFileSync(file), { filename: file })(data)
   }
 
-  before(() => {
+  beforeAll(() => {
     data = extend(jsonData, {
       asset: () => {},
       inDemand: new OrderedSets([]),
