@@ -74,7 +74,6 @@ const initialState = {
   progressBars: {},
   redirectOnAuth: true,
   resetPasswordSuccess: false,
-  skipPhotoSubmission: false,
   steps: [],
   submission: sd.SUBMISSION || {},
   submissionIdFromServer: sd.SUBMISSION_ID,
@@ -380,14 +379,6 @@ function submissionFlow(state = initialState, action) {
             ...state.progressBars,
             ...updatedProgress,
           },
-        },
-        state
-      )
-    }
-    case actions.UPDATE_SKIP_PHOTO_SUBMISSION: {
-      return u(
-        {
-          skipPhotoSubmission: action.payload.skip,
         },
         state
       )

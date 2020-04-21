@@ -15,7 +15,7 @@ function UploadPhotoLanding({ isMobile, user }) {
             Add photos to your consignment submission
           </div>
           <div className={b("step-form")}>
-            <UploadPhoto hideCheckbox />
+            <UploadPhoto />
           </div>
         </div>
       ) : (
