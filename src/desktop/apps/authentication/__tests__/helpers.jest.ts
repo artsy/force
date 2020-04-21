@@ -307,9 +307,12 @@ describe("Authentication Helpers", () => {
 
         it("returns with an application URL as the redirect uri", () => {
           const response: any = { user: { accessToken: "some-access-token" } }
-          const redirectPath = new URL("/any-path", "https://app.example.com")
+          const redirectPath = new URL(
+            "/any-path?withQueryParams=true",
+            "https://app.example.com"
+          )
           const expectedRedirectUri = encodeURIComponent(
-            "https://app.example.com/any-path"
+            "https://app.example.com/any-path?withQueryParams=true"
           )
 
           return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {

@@ -1,17 +1,43 @@
-import benv from "benv"
 import configureMockStore from "redux-mock-store"
-import reducers from "../client/reducers"
+import reducers from "desktop/apps/consign/client/reducers"
 import thunk from "redux-thunk"
 import sinon from "sinon"
+import request from "superagent"
 
-const rewire = require("rewire")("../client/actions")
-const actions = rewire
+import * as actions from "desktop/apps/consign/client/actions"
+
+jest.mock("qs", () => ({
+  parse: () => ({
+    contextPath: "foo",
+    subject: "bar",
+  }),
+}))
+
+jest.mock("superagent")
+jest.mock("desktop/apps/consign/helpers", () => ({
+  fetchToken: () => "fooToken",
+}))
+
+jest.mock("sharify", () => ({
+  data: {
+    CURRENT_USER: { accessToken: "foo" },
+    CONVECTION_APP_ID: "myapp",
+  },
+}))
 
 describe("Reducers", () => {
   describe("actions", () => {
-    it("returns the initial state", () => {
-      const { submissionFlow } = reducers(undefined, {})
-      submissionFlow.currentStep.should.eql("createAccount")
+    describe("setup", () => {
+      it("returns the initial state", () => {
+        const { submissionFlow } = reducers(undefined, {})
+        submissionFlow.currentStep.should.eql("createAccount")
+      })
+
+      it("passes URL queryParams into state", () => {
+        const initialState = reducers(undefined, {})
+        expect(initialState.submissionFlow.contextPath).toEqual("foo")
+        expect(initialState.submissionFlow.subject).toEqual("bar")
+      })
     })
 
     describe("with initial state", () => {
@@ -75,21 +101,20 @@ describe("Reducers", () => {
           store = mockStore({
             submissionFlow: { user: { accessToken: "foo" } },
           })
-          const request = sinon.stub()
-          request.get = sinon.stub().returns(request)
-          request.query = sinon.stub().returns(request)
-          request.set = sinon.stub().returns({
-            body: [{ name: "andy-warhol" }, { name: "kara-walker" }],
-          })
 
-          rewire.__set__("request", request)
-          rewire.__set__("sd", {
-            CURRENT_USER: { accessToken: "foo" },
+          request.get.mockImplementation(() => {
+            return {
+              query: () => {
+                return {
+                  set: () => {
+                    return {
+                      body: [{ name: "andy-warhol" }, { name: "kara-walker" }],
+                    }
+                  },
+                }
+              },
+            }
           })
-        })
-
-        afterEach(() => {
-          benv.teardown()
         })
 
         it("calls the correct actions", done => {
@@ -114,11 +139,8 @@ describe("Reducers", () => {
 
       describe("#createSubmission", () => {
         let store
-        let request
-        let rewires = []
 
         beforeEach(() => {
-          benv.setup(() => {})
           const middlewares = [thunk]
           const mockStore = configureMockStore(middlewares)
 
@@ -129,24 +151,20 @@ describe("Reducers", () => {
               inputs: { phone: "12345" },
             },
           })
-          request = sinon.stub()
-          request.post = sinon.stub().returns(request)
-          request.set = sinon.stub().returns(request)
-          request.send = sinon.stub().returns({ body: { id: "sub1" } })
 
-          rewires.push(
-            rewire.__set__("request", request),
-            rewire.__set__("fetchToken", sinon.stub().returns("fooToken")),
-            rewire.__set__("sd", {
-              CURRENT_USER: { accessToken: "foo" },
-              CONVECTION_APP_ID: "myapp",
-            })
-          )
-        })
-
-        afterEach(() => {
-          benv.teardown()
-          rewires.forEach(reset => reset())
+          request.post.mockImplementation(() => {
+            return {
+              set: () => {
+                return {
+                  send: () => {
+                    return {
+                      body: { id: "sub1" },
+                    }
+                  },
+                }
+              },
+            }
+          })
         })
 
         it("sends the correct actions on success without updating phone", done => {
@@ -593,11 +611,8 @@ describe("Reducers", () => {
 
       describe("#uploadImageToConvection", () => {
         let store
-        let request
-        let rewires = []
 
         beforeEach(() => {
-          benv.setup(() => {})
           const middlewares = [thunk]
           const mockStore = configureMockStore(middlewares)
 
@@ -607,26 +622,20 @@ describe("Reducers", () => {
               submission: { id: "sub1" },
             },
           })
-          request = sinon.stub()
-          request.post = sinon.stub().returns({
-            set: sinon.stub().returns({
-              send: sinon.stub().returns({ body: { token: "i-have-access" } }),
-            }),
+
+          request.post.mockImplementation(() => {
+            return {
+              set: () => {
+                return {
+                  send: () => {
+                    return {
+                      body: { token: "i-have-access" },
+                    }
+                  },
+                }
+              },
+            }
           })
-
-          rewires.push(
-            rewire.__set__("request", request),
-            rewire.__set__("fetchToken", sinon.stub().returns("fooToken")),
-            rewire.__set__("sd", {
-              CURRENT_USER: { accessToken: "foo" },
-              CONVECTION_APP_ID: "myapp",
-            })
-          )
-        })
-
-        afterEach(() => {
-          benv.teardown()
-          rewires.forEach(reset => reset())
         })
 
         it("stops processing the image if it succeeds", done => {

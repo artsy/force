@@ -9,7 +9,7 @@ import { reducer as formReducer } from "redux-form"
 import { responsiveWindowReducer } from "../../../components/react/responsive_window"
 import { routerReducer } from "react-router-redux"
 
-const queryParams = qs.parse(location.search.replace(/^\?/, ""))
+const queryParams = qs.parse(window.location.search.replace(/^\?/, ""))
 
 const createAccountStep = "createAccount"
 const chooseArtistStep = "chooseArtist"
