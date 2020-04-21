@@ -12,6 +12,11 @@ import { ForgotPasswordForm } from "@artsy/reaction/dist/Components/Authenticati
 import { SignUpForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/SignUpForm"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 
+jest.mock("@artsy/reaction/dist/Artsy/SystemContext", () => ({
+  SystemContextProvider: ({ children }) => children,
+  withSystemContext: Component => Component,
+}))
+
 jest.mock("desktop/apps/authentication/helpers", () => ({
   handleSubmit: jest.fn(),
 }))

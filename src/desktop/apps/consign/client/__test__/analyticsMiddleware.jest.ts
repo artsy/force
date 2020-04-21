@@ -1,18 +1,27 @@
-import reducers from "../client/reducers"
+import reducers from "../reducers"
 import { applyMiddleware, createStore } from "redux"
 import sinon from "sinon"
 
-const rewire = require("rewire")("../client/analytics_middleware")
-const analyticsMiddleware = rewire.default
+import analyticsMiddleware from "../analytics_middleware"
+const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
 
-describe("analytics middleware", () => {
+jest.mock("desktop/lib/analytics_hooks.coffee")
+jest.mock("sharify", () => ({
+  data: {
+    CURRENT_USER: {
+      id: "some-id",
+      email: "some@email.com",
+    },
+  },
+}))
+
+describe("analyticsMiddleware", () => {
   let triggerStub
 
   beforeEach(() => {
     triggerStub = sinon.spy()
-    rewire.__set__("analyticsHooks", {
-      trigger: triggerStub,
-    })
+    const mockAnalytics = analyticsHooks
+    mockAnalytics.trigger.mockImplementation(triggerStub)
   })
 
   it("tracks an artist confirmed action", () => {
@@ -23,10 +32,10 @@ describe("analytics middleware", () => {
     })
     store.dispatch({ type: "SUBMIT_ARTIST" })
 
-    triggerStub.callCount.should.eql(1)
+    expect(triggerStub.callCount).toBe(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:artist:confirmed")
-    analyticsArgs[1].should.containEql({
+    expect(analyticsArgs[0]).toBe("consignment:artist:confirmed")
+    expect(analyticsArgs[1]).toEqual({
       artistId: "andy-warhol",
     })
   })
@@ -38,10 +47,10 @@ describe("analytics middleware", () => {
       payload: { errorType: "convection_create" },
     })
 
-    triggerStub.callCount.should.eql(1)
+    expect(triggerStub.callCount).toBe(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:submission:error")
-    analyticsArgs[1].should.containEql({
+    expect(analyticsArgs[0]).toBe("consignment:submission:error")
+    expect(analyticsArgs[1]).toEqual({
       type: "convection_create",
       errors: "Error creating submission",
     })
@@ -54,10 +63,10 @@ describe("analytics middleware", () => {
       payload: { errorType: "convection_complete_submission" },
     })
 
-    triggerStub.callCount.should.eql(1)
+    expect(triggerStub.callCount).toBe(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:submission:error")
-    analyticsArgs[1].should.containEql({
+    expect(analyticsArgs[0]).toBe("consignment:submission:error")
+    expect(analyticsArgs[1]).toEqual({
       type: "convection_complete_submission",
       errors: "Error completing submission",
     })
@@ -70,12 +79,14 @@ describe("analytics middleware", () => {
       payload: { submissionId: 123 },
     })
 
-    triggerStub.callCount.should.eql(1)
+    expect(triggerStub.callCount).toBe(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:submitted")
-    analyticsArgs[1].should.containEql({
-      submissionId: 123,
-    })
+    expect(analyticsArgs[0]).toBe("consignment:submitted")
+    expect(analyticsArgs[1]).toEqual(
+      expect.objectContaining({
+        submissionId: 123,
+      })
+    )
   })
 
   it("tracks a submission completed with no assets", () => {
@@ -86,10 +97,10 @@ describe("analytics middleware", () => {
     })
     store.dispatch({ type: "SUBMISSION_COMPLETED" })
 
-    triggerStub.callCount.should.eql(1)
+    expect(triggerStub.callCount).toBe(1)
     const analyticsArgs = triggerStub.firstCall.args
-    analyticsArgs[0].should.eql("consignment:completed")
-    analyticsArgs[1].should.containEql({
+    expect(analyticsArgs[0]).toBe("consignment:completed")
+    expect(analyticsArgs[1]).toEqual({
       submissionId: 123,
       assetIds: [],
     })
