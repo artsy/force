@@ -70,7 +70,7 @@ describe("Authentication Helpers", () => {
     it("does not open auth on mobile", () => {
       sd.IS_MOBILE = true
       handleScrollingAuthModal({
-        intent: "follow artist",
+        intent: AuthIntent.followArtist,
         contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).not.toBeCalled()
@@ -81,7 +81,7 @@ describe("Authentication Helpers", () => {
     it("does not open auth if current user", () => {
       sd.CURRENT_USER = { id: "123" }
       handleScrollingAuthModal({
-        intent: "follow artist",
+        intent: AuthIntent.followArtist,
         contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).not.toBeCalled()
