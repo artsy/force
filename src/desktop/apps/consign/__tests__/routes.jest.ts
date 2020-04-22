@@ -2,14 +2,14 @@ import Backbone from "backbone"
 import sinon from "sinon"
 import request from "superagent"
 import { fabricate } from "@artsy/antigravity"
-
-const metaphysics = require("lib/metaphysics.coffee")
-
-const CurrentUser = require("../../../models/current_user.coffee")
-
+import Analytics from "analytics-node"
 import * as routes from "../routes"
 
+const metaphysics = require("lib/metaphysics.coffee")
+const CurrentUser = require("../../../models/current_user.coffee")
+
 jest.mock("superagent")
+jest.mock("analytics-node", () => jest.fn())
 jest.mock("lib/metaphysics.coffee")
 jest.mock("desktop/apps/consign/helpers", () => ({
   fetchToken: () => "foo-token",
@@ -95,5 +95,37 @@ describe("#submissionFlowWithFetch", () => {
     res.render.args[0][1].user.should.not.eql(undefined)
     res.locals.sd.SUBMISSION.id.should.eql("my-submission")
     res.locals.sd.SUBMISSION_ARTIST_NAME.should.eql("Andy Warhol")
+  })
+
+  describe("analytics", () => {
+    it("does not track if no user", async () => {
+      req.user = null
+      const spy = jest.fn()
+      Analytics.mockImplementation(() => ({
+        track: spy,
+      }))
+      await routes.submissionFlow(req, res, next)
+      expect(spy).not.toHaveBeenCalled()
+    })
+
+    it("sends tracking event", async () => {
+      req.user = { id: "some-userid" }
+      req.query = {
+        contextPath: "foo",
+        subject: "bar",
+      }
+      const spy = jest.fn()
+      Analytics.mockImplementation(() => ({
+        track: spy,
+      }))
+      await routes.submissionFlow(req, res, next)
+      expect(spy).toHaveBeenCalledWith({
+        context_page_path: "foo",
+        event: "Clicked consign",
+        flow: "Consignments",
+        subject: "bar",
+        userId: "some-userid",
+      })
+    })
   })
 })

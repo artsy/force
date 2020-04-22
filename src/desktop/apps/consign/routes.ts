@@ -1,12 +1,13 @@
-import Items from "../../collections/items"
-import JSONPage from "../../components/json_page"
-import markdown from "../../components/util/markdown"
-import metaphysics from "lib/metaphysics.coffee"
 import request from "superagent"
 import { extend } from "underscore"
 import { fetchToken } from "./helpers"
 import Analytics from "analytics-node"
 import { AnalyticsSchema } from "@artsy/reaction/dist/Artsy"
+
+const Items = require("../../collections/items")
+const JSONPage = require("../../components/json_page")
+const markdown = require("../../components/util/markdown")
+const metaphysics = require("lib/metaphysics.coffee")
 
 const landing = new JSONPage({ name: "consignments-landing" })
 
@@ -47,15 +48,16 @@ export const submissionFlow = async (req, res, next) => {
     sendTrackingEvent(req, res)
     res.render("submission_flow", { user: req.user })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
 
-export const redirectToSubmissionFlow = async (req, res, next) => {
+export const redirectToSubmissionFlow = async (_req, res, _next) => {
   return res.redirect("/consign/submission")
 }
 
-export const submissionFlowWithId = async (req, res, next) => {
+export const submissionFlowWithId = async (req, res, _next) => {
   res.locals.sd.SUBMISSION_ID = req.params.id
   res.render("submission_flow", { user: req.user })
 }
@@ -90,7 +92,7 @@ function sendTrackingEvent(req, res) {
     return
   }
 
-  const { contextPath, subject } = req.query
+  const { contextPath, subject } = req.query || {}
   const analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
   const event = {
     event: AnalyticsSchema.ActionType.ClickedConsign,
