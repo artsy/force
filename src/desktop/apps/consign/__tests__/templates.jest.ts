@@ -18,7 +18,9 @@ describe("landing page", () => {
 
   beforeAll(() => {
     data = extend(jsonData, {
-      asset: () => {},
+      asset: () => {
+        // noop
+      },
       inDemand: new OrderedSets([]),
       markdown,
       moment,
