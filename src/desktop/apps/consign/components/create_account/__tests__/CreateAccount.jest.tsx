@@ -114,5 +114,29 @@ describe("React components", () => {
       { email: "user@email.com", password: "mypassword" },
       {}
     )
+
+    const wrapperWithTrackingParams = mount(
+      <UnconnectedCreateAccount {...props} contextPath="foo" subject="bar" />
+    ).instance() as UnconnectedCreateAccount
+
+    wrapperWithTrackingParams.handleSubmit(
+      {
+        email: "user@email.com",
+        password: "mypassword",
+      },
+      {}
+    )
+
+    expect(handleSubmitMock).toBeCalledWith(
+      "login",
+      {
+        contextModule: "consignSubmissionFlow",
+        copy: "Log In",
+        intent: "consign",
+        redirectTo: "/consign/submission?contextPath=foo&subject=bar",
+      },
+      { email: "user@email.com", password: "mypassword" },
+      {}
+    )
   })
 })

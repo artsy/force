@@ -126,7 +126,7 @@ export async function apiAuthWithRedirectUrl(
   response: Response,
   redirectPath: URL
 ): Promise<URL> {
-  const redirectUrl = sd.APP_URL + redirectPath.pathname
+  const redirectUrl = sd.APP_URL + redirectPath.pathname + redirectPath.search
   const accessToken = (response["user"] || {}).accessToken
   const appRedirectURL = new URL(redirectUrl)
 

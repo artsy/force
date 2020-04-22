@@ -1,5 +1,6 @@
 import * as actions from "./actions"
 import u from "updeep"
+import qs from "qs"
 import { combineReducers } from "redux"
 import { composeReducers } from "../../../components/react/utils/composeReducers"
 import { data as sd } from "sharify"
@@ -7,6 +8,8 @@ import { contains } from "underscore"
 import { reducer as formReducer } from "redux-form"
 import { responsiveWindowReducer } from "../../../components/react/responsive_window"
 import { routerReducer } from "react-router-redux"
+
+const queryParams = qs.parse(window.location.search.replace(/^\?/, ""))
 
 const createAccountStep = "createAccount"
 const chooseArtistStep = "chooseArtist"
@@ -36,6 +39,7 @@ const initialState = {
     "Textile Arts",
     "Other",
   ],
+
   currencyOptions: ["USD", "GBP"],
   currentStep: createAccountStep,
   error: null,
@@ -79,6 +83,12 @@ const initialState = {
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: [],
   user: sd.CURRENT_USER,
+
+  /*
+    Tracking parameters from Reaction
+  */
+  contextPath: queryParams.contextPath, // Typically set if a user has entered a consignment from an artist /consign microfunnel page.
+  subject: queryParams.subject, // The subject of the event
 }
 
 function submissionFlow(state = initialState, action) {

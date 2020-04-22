@@ -1,6 +1,5 @@
 import _request from "superagent"
 import gemup from "@artsy/gemup"
-import { get } from "lodash"
 import stepsConfig from "./steps_config"
 import { data as _sd } from "sharify"
 import { fetchToken as _fetchToken, formattedLocation } from "../helpers"

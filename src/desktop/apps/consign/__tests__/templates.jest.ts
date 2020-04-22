@@ -3,9 +3,10 @@ import fs from "fs"
 import jade from "jade"
 import moment from "moment"
 import path from "path"
-import jsonData from "./fixture.json"
-import markdown from "../../../components/util/markdown"
-import OrderedSets from "../../../collections/ordered_sets"
+
+const jsonData = require("./fixture.json")
+const markdown = require("../../../components/util/markdown")
+const OrderedSets = require("../../../collections/ordered_sets")
 
 describe("landing page", () => {
   let data
@@ -15,9 +16,11 @@ describe("landing page", () => {
     return jade.compile(fs.readFileSync(file), { filename: file })(data)
   }
 
-  before(() => {
+  beforeAll(() => {
     data = extend(jsonData, {
-      asset: () => {},
+      asset: () => {
+        // noop
+      },
       inDemand: new OrderedSets([]),
       markdown,
       moment,

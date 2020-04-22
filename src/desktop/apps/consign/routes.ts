@@ -1,15 +1,13 @@
-import Items from "../../collections/items"
-import JSONPage from "../../components/json_page"
-import markdown from "../../components/util/markdown"
-import _metaphysics from "lib/metaphysics.coffee"
-import _request from "superagent"
+import request from "superagent"
 import { extend } from "underscore"
-import { fetchToken as _fetchToken } from "./helpers"
+import { fetchToken } from "./helpers"
+import Analytics from "analytics-node"
+import { AnalyticsSchema } from "@artsy/reaction/dist/Artsy"
 
-// FIXME: Rewire
-let request = _request
-let fetchToken = _fetchToken
-let metaphysics = _metaphysics
+const Items = require("../../collections/items")
+const JSONPage = require("../../components/json_page")
+const markdown = require("../../components/util/markdown")
+const metaphysics = require("lib/metaphysics.coffee")
 
 const landing = new JSONPage({ name: "consignments-landing" })
 
@@ -44,14 +42,22 @@ export const landingPage = async (req, res, next) => {
 }
 
 export const submissionFlow = async (req, res, next) => {
-  res.render("submission_flow", { user: req.user })
+  try {
+    // When entering submission flow from /artist/id/consign or /consign, send
+    // initial event indicating the submission process has started.
+    sendTrackingEvent(req, res)
+    res.render("submission_flow", { user: req.user })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
 }
 
-export const redirectToSubmissionFlow = async (req, res, next) => {
+export const redirectToSubmissionFlow = async (_req, res, _next) => {
   return res.redirect("/consign/submission")
 }
 
-export const submissionFlowWithId = async (req, res, next) => {
+export const submissionFlowWithId = async (req, res, _next) => {
   res.locals.sd.SUBMISSION_ID = req.params.id
   res.render("submission_flow", { user: req.user })
 }
@@ -65,7 +71,9 @@ export const submissionFlowWithFetch = async (req, res, next) => {
           `${res.locals.sd.CONVECTION_APP_URL}/api/submissions/${req.params.id}`
         )
         .set("Authorization", `Bearer ${token}`)
-      const { artist: { name } } = await metaphysics({
+      const {
+        artist: { name },
+      } = await metaphysics({
         query: ArtistQuery(submission.body.artist_id),
         req,
       })
@@ -74,8 +82,26 @@ export const submissionFlowWithFetch = async (req, res, next) => {
     }
     res.render("submission_flow", { user: req.user })
   } catch (e) {
+    console.log(e)
     next(e)
   }
+}
+
+function sendTrackingEvent(req, res) {
+  if (!req.user) {
+    return
+  }
+
+  const { contextPath, subject } = req.query || {}
+  const analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
+  const event = {
+    event: AnalyticsSchema.ActionType.ClickedConsign,
+    context_page_path: contextPath,
+    flow: AnalyticsSchema.Flow.Consignments,
+    subject,
+    userId: req.user.id,
+  }
+  analytics.track(event)
 }
 
 function ArtistQuery(artistId) {

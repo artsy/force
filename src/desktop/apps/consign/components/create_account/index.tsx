@@ -9,20 +9,33 @@ import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 interface CreateAccountProps {
+  contextPath: string
+  subject: string
   title: string
   type: ModalType
   updateAuthFormStateAndClearErrorAction: (type: ModalType) => void
 }
 
 export class CreateAccount extends React.Component<CreateAccountProps> {
+  get redirectUrl() {
+    const { contextPath, subject } = this.props
+    let analyticsParams = ""
+    if (contextPath && subject) {
+      analyticsParams = `?contextPath=${contextPath}&subject=${subject}`
+    }
+    return `/consign/submission${analyticsParams}`
+  }
+
   handleSubmit = (values, formikBag) => {
+    const { title, type } = this.props
+
     handleSubmit(
-      this.props.type,
+      type,
       {
-        copy: this.props.title,
+        copy: title,
         contextModule: ContextModule.consignSubmissionFlow,
         intent: AuthIntent.consign,
-        redirectTo: "/consign/submission",
+        redirectTo: this.redirectUrl,
       },
       values,
       formikBag
@@ -43,7 +56,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             copy: this.props.title,
             contextModule: ContextModule.consignSubmissionFlow,
             intent: AuthIntent.consign,
-            redirectTo: "/consign/submission",
+            redirectTo: this.redirectUrl,
           }}
           type={this.props.type}
           handleSubmit={this.handleSubmit}
@@ -64,7 +77,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
 
 const mapStateToProps = state => {
   const {
-    submissionFlow: { authFormState },
+    submissionFlow: { authFormState, contextPath, subject },
   } = state
 
   const stateToTitle = {
@@ -74,6 +87,8 @@ const mapStateToProps = state => {
   }
 
   return {
+    contextPath,
+    subject,
     type: authFormState,
     title: stateToTitle[authFormState],
   }

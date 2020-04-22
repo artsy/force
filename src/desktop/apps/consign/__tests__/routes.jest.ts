@@ -1,10 +1,19 @@
 import Backbone from "backbone"
-import CurrentUser from "../../../models/current_user.coffee"
 import sinon from "sinon"
+import request from "superagent"
 import { fabricate } from "@artsy/antigravity"
+import Analytics from "analytics-node"
+import * as routes from "../routes"
 
-const rewire = require("rewire")("../routes")
-const routes = rewire
+const metaphysics = require("lib/metaphysics.coffee")
+const CurrentUser = require("../../../models/current_user.coffee")
+
+jest.mock("superagent")
+jest.mock("analytics-node", () => jest.fn())
+jest.mock("lib/metaphysics.coffee")
+jest.mock("desktop/apps/consign/helpers", () => ({
+  fetchToken: () => "foo-token",
+}))
 
 describe("#redirectToSubmissionFlow", () => {
   let req
@@ -35,7 +44,6 @@ describe("#submissionFlowWithFetch", () => {
   let req
   let res
   let next
-  let request
 
   beforeEach(() => {
     sinon.stub(Backbone, "sync")
@@ -66,20 +74,58 @@ describe("#submissionFlowWithFetch", () => {
         name: "Andy Warhol",
       },
     }
-    request = sinon.stub()
-    request.get = sinon.stub().returns(request)
-    request.set = sinon.stub().returns({ body: { id: "my-submission" } })
 
-    rewire.__set__("request", request)
-    rewire.__set__("fetchToken", sinon.stub().returns("foo-token"))
-    rewire.__set__(
-      "metaphysics",
-      sinon.stub().returns(Promise.resolve(artistQuery))
-    )
+    request.get.mockImplementation(() => {
+      return {
+        set: () => {
+          return {
+            body: { id: "my-submission" },
+          }
+        },
+      }
+    })
+
+    metaphysics.mockImplementation(() => {
+      return artistQuery
+    })
+
     await routes.submissionFlowWithFetch(req, res, next)
+
     res.render.args[0][0].should.eql("submission_flow")
     res.render.args[0][1].user.should.not.eql(undefined)
     res.locals.sd.SUBMISSION.id.should.eql("my-submission")
     res.locals.sd.SUBMISSION_ARTIST_NAME.should.eql("Andy Warhol")
+  })
+
+  describe("analytics", () => {
+    it("does not track if no user", async () => {
+      req.user = null
+      const spy = jest.fn()
+      Analytics.mockImplementation(() => ({
+        track: spy,
+      }))
+      await routes.submissionFlow(req, res, next)
+      expect(spy).not.toHaveBeenCalled()
+    })
+
+    it("sends tracking event", async () => {
+      req.user = { id: "some-userid" }
+      req.query = {
+        contextPath: "foo",
+        subject: "bar",
+      }
+      const spy = jest.fn()
+      Analytics.mockImplementation(() => ({
+        track: spy,
+      }))
+      await routes.submissionFlow(req, res, next)
+      expect(spy).toHaveBeenCalledWith({
+        context_page_path: "foo",
+        event: "Clicked consign",
+        flow: "Consignments",
+        subject: "bar",
+        userId: "some-userid",
+      })
+    })
   })
 })
