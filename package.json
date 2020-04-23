@@ -69,7 +69,7 @@
     "react-test-renderer": "16.8.6",
     "react-is": "16.8.3",
     "regenerator-runtime": "0.13.5",
-    "superagent": "3.8.3"
+    "superagent": "5.2.2"
   },
   "dependencies": {
     "@artsy/cohesion": "0.2.6",
@@ -224,7 +224,7 @@
     "stickyfill": "1.1.1",
     "styled-components": "4.3.2",
     "stylus": "0.54.5",
-    "superagent": "3.8.3",
+    "superagent": "5.2.2",
     "tti-polyfill": "0.2.2",
     "twilio": "2.11.1",
     "typeahead.js": "0.10.5",
