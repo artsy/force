@@ -11,10 +11,10 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
-"@artsy/cohesion@0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-0.2.2.tgz#1fee5d9dc8ca780151cbe0c2e5e11d2100b62cbf"
-  integrity sha512-w+WpcwMTCA9D9731auixGxCzTqQSIEg9Nws0Vv6h39V8YFlsi/MrKW4D6Yx9JHikM62+v+OXJcTw2aSeLzQ33w==
+"@artsy/cohesion@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-0.2.7.tgz#93196d1097e9b264262719a0683bdd73a01076bc"
+  integrity sha512-L2J+mJxm7F0+NYmmb5GuefIMT6PYXT8h2nWXJ35/lopsBWYsGxLdlZyhcLwpWqAmidGS4o4+Pa/ROkYIQMP7XQ==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-8.1.3.tgz#f858fd7ba5f17d62287c772ef66635a5f8637007"
-  integrity sha512-INWqPSvlbVGM1uUr3Q1Qak3aOSo1eNAvR+Y4f8IbAd34yBoQ2WTLv66OYfqRoWpdOtzFHoRB7005VY38PViDtA==
+"@artsy/palette@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-8.2.0.tgz#16f30116b069e081688507496175b549304c5fc8"
+  integrity sha512-C6Wj44eJ9M8+KGM+36I4H8a7FmCVDOLc7wdA2X37hQPzzvgtmr7UzXGw3ilD7ZVNRG4UMmjj8Nf7DOKuw7DZdg==
   dependencies:
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
@@ -82,10 +82,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.23.0":
-  version "26.23.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.23.0.tgz#d09a1e70af05b7862d6b27781d9f4c9865ffd955"
-  integrity sha512-OFLwfb6wOxGV8lYW//tzH8m2On4y+FItd1Fl1/CSaRX/ecU56GrV7ebEyG6gBiUjnm4e0nJg87/KoDlCb1NCzw==
+"@artsy/reaction@26.24.1":
+  version "26.24.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.24.1.tgz#72e212bb5c8094a219e1804771fc31b6ad162279"
+  integrity sha512-sx7vr5gRn8Hwz3b2FMgL63XeGJe3Lhkgz1QLWibIetNSnfX6Ieds3qrqPvX7b0+9Q9lzN9v6soxmO2i0xxpziQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
