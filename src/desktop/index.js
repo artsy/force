@@ -28,13 +28,16 @@ app.use(require("./apps/auction_lots"))
 // TODO: Remove after AB test ends.
 app.use(require("./apps/artist/server").app)
 app.use(require("./apps/purchases/server").app)
+app.use(require("./apps/conversations/server").app)
 app.use(require("./apps/artwork/server").app)
 app.use(require("./apps/collect/server").app)
 app.use(require("./apps/search2/server").app)
+app.use(require("./apps/art_keeps_going/server").app)
 
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction").app)
 app.use(require("./apps/auction_support"))
+app.use(require("./apps/identity_verification/server").app)
 app.use(require("./apps/about"))
 app.use(require("./apps/categories").app)
 app.use(require("./apps/consign").app)
@@ -94,6 +97,4 @@ app.use(require("./apps/user"))
 // Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
 
-if (process.env.EXPERIMENTAL_APP_SHELL) {
-  app.use(require("./apps/experimental-app-shell/server").app)
-}
+app.use(require("./apps/experimental-app-shell/server").app)

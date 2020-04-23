@@ -1,6 +1,7 @@
 extends minimal_header
 
 append locals
+  - attributes = { "data-test-ssr-app": true }
   - assetPackage = locals.assetPackage || ''
   - bodyClass = bodyClass + ' ' + (locals.bodyClass || '')
 

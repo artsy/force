@@ -5,7 +5,8 @@ metadata:
 spec:
   strategy:
     rollingUpdate:
-      maxUnavailable: 1
+      maxSurge: 2
+      maxUnavailable: 0
     type: RollingUpdate
   template:
     metadata:
@@ -25,6 +26,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: KEEPALIVE_TIMEOUT_SECONDS
+              value: "95"
+            - name: HEADERS_TIMEOUT_SECONDS
+              value: "105"
           envFrom:
             - configMapRef:
                 name: force-environment
@@ -48,6 +53,10 @@ spec:
               memory: 1Gi
             limits:
               memory: 1.5Gi
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
         - name: force-nginx
           image: artsy/docker-nginx:latest
           ports:
@@ -64,7 +73,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/usr/sbin/nginx", "-s", "quit"]
+                command: ["sh", "-c", "sleep 5 && /usr/sbin/nginx -s quit"]
           env:
             - name: "NGINX_DEFAULT_CONF"
               valueFrom:
@@ -112,7 +121,7 @@ metadata:
   name: force-web
   namespace: default
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{ artsyNetWildcardSSLCert }}
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
@@ -121,7 +130,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: "60"
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "artsy-elb-logs"
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "staging-force"
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "90"
 spec:
   ports:
     - port: 80

@@ -28,6 +28,7 @@ describe("Routes", () => {
           },
         },
         send: jest.fn(),
+        cookie: jest.fn(),
       }
       next = jest.fn()
       stitch.mockReset()
@@ -130,34 +131,114 @@ describe("Routes", () => {
             done()
           })
         })
+
+        it("returns the correct title for forgot", done => {
+          req.path = "/forgot"
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.meta.title).toBe(
+              "Reset your password"
+            )
+            done()
+          })
+        })
+      })
+
+      describe("intent", () => {
+        it("returns correct title for save artwork intent", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "save artwork",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
+              "Sign up to save artworks"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title for follow partner intent", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "follow partner",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
+              "Sign up to follow partners"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title for follow artist intent", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "follow artist",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
+              "Sign up to follow artists"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title when other intent provided", done => {
+          req.path = "/signup"
+          req.query = {
+            intent: "viewedEditorial",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
+              "Signup for Artsy"
+            )
+            done()
+          })
+        })
+
+        it("returns correct title when other intent provided", done => {
+          req.path = "/forgot"
+          req.query = {
+            set_password: "reset",
+          }
+          index(req, res, next).then(() => {
+            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
+              "Set your password"
+            )
+            done()
+          })
+        })
       })
 
       it("Options returns all expected fields from query", done => {
         req.query = {
-          afterSignUpAction: "after signup",
-          destination: "/foo",
-          redirectTo: "/bar",
-          signupIntent: "follow partner",
-          intent: "follow partner",
-          signupReferer: "referrer",
+          action: "follow",
+          contextModule: "artistHeader",
+          kind: "profile",
+          objectId: "david-zwirner",
+          copy: "Sign up to follow David Zwirner",
+          intent: "followPartner",
+          mode: "signup",
+          "redirect-to": "/david-zwirner",
         }
 
         index(req, res, next).then(() => {
           const {
-            afterSignUpAction,
-            destination,
+            action,
+            contextModule,
+            copy,
+            intent,
+            kind,
+            objectId,
             redirectTo,
-            signupIntent,
-            signupReferer,
-            title,
           } = stitch.mock.calls[0][0].data.options
-
-          expect(afterSignUpAction).toBe(req.query.afterSignUpAction)
-          expect(destination).toBe(req.query.destination)
-          expect(redirectTo).toBe(req.query.redirectTo)
-          expect(signupIntent).toBe(req.query.signupIntent)
-          expect(signupReferer).toBe(req.query.signupReferer)
-          expect(title).toBe("Sign up to follow partners")
+          expect(action).toBe("follow")
+          expect(contextModule).toBe("artistHeader")
+          expect(copy).toBe("Sign up to follow David Zwirner")
+          expect(intent).toBe("followPartner")
+          expect(kind).toBe("profile")
+          expect(objectId).toBe("david-zwirner")
+          expect(redirectTo).toBe("/david-zwirner")
           done()
         })
       })
@@ -170,6 +251,58 @@ describe("Routes", () => {
         index(req, res, next).then(() => {
           const { redirectTo } = stitch.mock.calls[0][0].data.options
           expect(redirectTo).toBe("/bar")
+          done()
+        })
+      })
+
+      it("adds destination for static /login routes", done => {
+        req.query = {}
+        req.path = "/login"
+        index(req, res, next).then(() => {
+          const {
+            redirectTo,
+            destination,
+          } = stitch.mock.calls[0][0].data.options
+          expect(destination).toBe("/")
+          expect(redirectTo).toBe(undefined)
+          done()
+        })
+      })
+
+      it("respects redirectTo for static /login routes", done => {
+        req.query = {
+          redirectTo: "/consign",
+        }
+        req.path = "/login"
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/consign")
+          done()
+        })
+      })
+
+      it("adds destination for static /signup routes", done => {
+        req.query = {}
+        req.path = "/signup"
+        index(req, res, next).then(() => {
+          const {
+            redirectTo,
+            destination,
+          } = stitch.mock.calls[0][0].data.options
+          expect(destination).toBe("/")
+          expect(redirectTo).toBe(undefined)
+          done()
+        })
+      })
+
+      it("respects redirectTo for static /signup routes", done => {
+        req.query = {
+          redirectTo: "/consign",
+        }
+        req.path = "/signup"
+        index(req, res, next).then(() => {
+          const { redirectTo } = stitch.mock.calls[0][0].data.options
+          expect(redirectTo).toBe("/consign")
           done()
         })
       })
@@ -193,11 +326,8 @@ describe("Routes", () => {
           kind: "artist",
           destination: "/foo",
           redirectTo: "/bar",
-          signupIntent: "follow artist",
           signupReferer: "referrer",
         }
-
-        res.cookie = jest.fn()
 
         index(req, res, next).then(() => {
           expect(res.cookie.mock.calls[0][1]).toBe(

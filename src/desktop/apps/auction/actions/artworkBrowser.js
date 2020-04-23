@@ -51,7 +51,9 @@ export function getArtworksSuccess() {
 
 export function fetchArtworks() {
   return async (dispatch, getState) => {
-    const { artworkBrowser: { filterParams, requestID, user } } = getState()
+    const {
+      artworkBrowser: { filterParams, requestID, user },
+    } = getState()
 
     try {
       dispatch(getArtworksRequest())
@@ -142,7 +144,9 @@ export function fetchArtworksByFollowedArtists() {
 
 export function fetchMoreArtworks() {
   return async (dispatch, getState) => {
-    const { artworkBrowser: { filterParams, user } } = getState()
+    const {
+      artworkBrowser: { filterParams, user },
+    } = getState()
 
     try {
       dispatch(getArtworksRequest())
@@ -165,7 +169,9 @@ export function fetchMoreArtworks() {
 
 export function infiniteScroll() {
   return (dispatch, getState) => {
-    const { artworkBrowser: { allFetched, isFetchingArtworks } } = getState()
+    const {
+      artworkBrowser: { allFetched, isFetchingArtworks },
+    } = getState()
     if (!isFetchingArtworks && !allFetched) {
       dispatch(updatePage(false))
       dispatch(fetchMoreArtworks())
@@ -175,7 +181,9 @@ export function infiniteScroll() {
 
 export function resetArtworks() {
   return (dispatch, getState) => {
-    const { artworkBrowser: { isFetchingArtworks } } = getState()
+    const {
+      artworkBrowser: { isFetchingArtworks },
+    } = getState()
     if (!isFetchingArtworks) {
       dispatch(updatePage(true))
       dispatch(fetchArtworks())

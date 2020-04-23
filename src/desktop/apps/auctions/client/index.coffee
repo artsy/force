@@ -2,10 +2,12 @@
 Auctions = require '../../../collections/auctions.coffee'
 Clock = require '../../../components/clock/view.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
-mediator = require '../../../lib/mediator.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 setupClocks = ($clocks, auctions) ->
   auctions.map (auction) ->
@@ -33,9 +35,8 @@ module.exports.init = ->
 
   $('.js-sign-up-button').click (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup'
-      trigger: 'click'
-      intent: 'signup'
-      signupIntent: 'signup'
+    openAuthModal(ModalType.signup, {
+      intent: AuthIntent.signup
       destination: location.href
+      contextModule: ContextModule.auctionsInfo
+    })

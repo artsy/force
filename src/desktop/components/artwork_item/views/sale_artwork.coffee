@@ -2,7 +2,9 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = class SaleArtworkView extends Backbone.View
   events:
@@ -30,15 +32,14 @@ module.exports = class SaleArtworkView extends Backbone.View
     new ContactPartnerView artwork: @model, partner: @model.related().partner
 
   bid: (e) ->
+    # FIXME: Maybe not used?
     unless @currentUser
       e.preventDefault()
-      mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
-        intent: 'bid'
-        signupIntent: 'bid'
-        trigger: 'click'
+        intent: AuthIntent.bid
         redirectTo: @sale.redirectUrl @model
+      })
 
   hideBidStatuses: ->
     @$('.artwork-item-auction-bid-status').hide()

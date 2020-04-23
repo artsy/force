@@ -2,30 +2,22 @@ import { data as sd } from "sharify"
 import moment from "moment"
 import styled from "styled-components"
 import React, { Component, Fragment } from "react"
-import { flatten, debounce, once } from "lodash"
+import { flatten, throttle } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
-import {
-  ModalOptions,
-  ModalType,
-} from "@artsy/reaction/dist/Components/Authentication/Types"
 import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
   RelatedArticleCanvasData,
 } from "reaction/Components/Publishing/Typings"
 import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
-import { setupFollows, setupFollowButtons } from "./FollowButton"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
-import { shouldAdRender } from "desktop/apps/article/helpers"
 const Cookies = require("desktop/components/cookies/index.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
-
-interface ArticleModalOptions extends ModalOptions {
-  signupIntent: string
-}
+import { shouldAdRender } from "desktop/apps/article/helpers"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 export interface Props {
   article?: ArticleData
@@ -40,7 +32,6 @@ interface State {
   articles: ArticleData[]
   date: string
   error: boolean
-  following: object[]
   isEnabled: boolean
   isLoading: boolean
   offset: number
@@ -49,7 +40,7 @@ interface State {
 }
 
 export class InfiniteScrollNewsArticle extends Component<Props, State> {
-  private debouncedDateChange
+  private throttledDateChange
   constructor(props) {
     super(props)
 
@@ -58,14 +49,13 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     const omit = props.article ? props.article.id : null
     const offset = props.article ? 0 : 6
 
-    this.debouncedDateChange = debounce(this.onDateChange, 200)
+    this.throttledDateChange = throttle(this.onDateChange, 50)
 
     this.state = {
       activeArticle: "",
       articles: props.articles,
       date,
       error: false,
-      following: setupFollows() || null,
       isEnabled: true,
       isLoading: false,
       offset,
@@ -75,8 +65,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   componentDidMount() {
-    setupFollowButtons(this.state.following)
-
     const editorialAuthDismissedCookie = Cookies.get(
       "editorial-signup-dismissed"
     )
@@ -95,7 +83,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   fetchNextArticles = async () => {
-    const { articles, following, offset, omit, relatedArticles } = this.state
+    const { articles, offset, omit, relatedArticles } = this.state
 
     this.setState({
       isLoading: true,
@@ -121,7 +109,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
           isLoading: false,
           offset: offset + 6,
         })
-        setupFollowButtons(following)
       } else {
         this.setState({
           isEnabled: false,
@@ -161,6 +148,10 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   onDateChange = date => {
     const hasNewDate = !moment(date).isSame(this.state.date, "day")
     if (hasNewDate) {
+      // Commenting this out as we're noticing that when a user is scrolling
+      // and the top date is updated, it leads to a reset of the current scroll
+      // position, preventing the user from scrolling down the page.
+      // FIXME: Reenable once newsfeed scrolling bug tracked down.
       this.setState({ date })
     }
   }
@@ -220,7 +211,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
               isMobile={isMobile || false}
               article={article}
               isTruncated={isTruncated}
-              onDateChange={this.debouncedDateChange}
+              onDateChange={this.throttledDateChange}
               nextArticle={articles[i + 1] as any}
               onActiveArticleChange={id => this.onActiveArticleChange(id)}
               isActive={activeArticle === article.id}
@@ -237,32 +228,14 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   showAuthModal() {
-    window.addEventListener(
-      "scroll",
-      once(() => {
-        setTimeout(() => {
-          this.handleOpenAuthModal("register", {
-            mode: ModalType.signup,
-            intent: "Viewed editorial",
-            signupIntent: "signup",
-            trigger: "timed",
-            triggerSeconds: 2,
-            copy: "Sign up for the Best Stories in Art and Visual Culture",
-            destination: location.href,
-            afterSignUpAction: {
-              action: "editorialSignup",
-            },
-          } as any)
-        }, 2000)
-      }),
-      { once: true }
-    )
-  }
-
-  handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
-    mediator.trigger("open:auth", {
-      mode,
-      ...options,
+    handleScrollingAuthModal({
+      intent: AuthIntent.viewEditorial,
+      copy: "Sign up for the best stories in art and visual culture",
+      destination: location.href,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
+      contextModule: ContextModule.popUpModal,
     })
   }
 

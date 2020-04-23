@@ -21,8 +21,8 @@ export class MobileAuthStatic extends React.Component<Props> {
       login: "/log_in",
       forgot: "/forgot_password",
       signup: "/sign_up",
+      apple: "/users/auth/apple",
       facebook: "/users/auth/facebook",
-      twitter: "/users/auth/twitter",
     }
 
     return (
@@ -30,7 +30,7 @@ export class MobileAuthStatic extends React.Component<Props> {
         <MobileContainer>
           <FormSwitcher
             {...this.props}
-            title={options.title}
+            title={options.title || options.copy}
             type={type as ModalType}
             handleSubmit={handleSubmit.bind(this, type, options)}
             onBackButtonClicked={() => {

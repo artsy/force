@@ -4,6 +4,14 @@
   &__service
     block-margins(gutter)
 
+    #apple-svg-icon,#facebook-svg-icon
+      vertical-align: -3px
+      margin: 0 15px 0px -5px
+
+    svg
+      height: 16px
+      width: 16px
+
     &__name
       avant-garde-size('body')
       margin-bottom 5px
@@ -14,10 +22,19 @@
     &__toggle
       &:after
         content 'Connect'
+
+      &[data-connected='disconnected']
+        &:hover
+          svg
+            fill: #6e1fff
+
       &[data-connected='connected']
         &:after
           content 'Connected'
         &:hover
           color red-color
+          svg
+            fill: red-color
+
           &:after
             content 'Disconnect'

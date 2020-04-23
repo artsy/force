@@ -3,10 +3,11 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user.coffee'
-AuthModalView = require '../../auth_modal/view.coffee'
 FlashMessage = require '../../flash/index.coffee'
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class FairHeaderView extends Backbone.View
 
@@ -21,23 +22,19 @@ module.exports = class FairHeaderView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
+    openAuthModal(ModalType.signup, {
       destination: location.href
-      intent: 'signup'
-      signupIntent: 'signup'
-      trigger: 'click'
-      contextModule: 'Header'
+      intent: AuthIntent.signup
+      contextModule: ContextModule.header
+    })
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'login'
-      trigger: 'click'
-      intent: 'login'
-      signupIntent: 'login'
-      contextModule: 'Header'
+    openAuthModal(ModalType.login, {
       destination: location.href
+      intent: AuthIntent.login
+      contextModule: ContextModule.header
+    })
 
   logout: (e) ->
     e.preventDefault()

@@ -9,8 +9,8 @@ import * as qs from "query-string"
 import { Response } from "express"
 import { captureException } from "@sentry/browser"
 
-const mediator = require("../../lib/mediator.coffee")
-const LoggedOutUser = require("../../models/logged_out_user.coffee")
+const mediator = require("desktop/lib/mediator.coffee")
+const LoggedOutUser = require("desktop/models/logged_out_user.coffee")
 
 export const handleSubmit = (
   type: ModalType,
@@ -26,7 +26,6 @@ export const handleSubmit = (
     redirectTo,
     intent,
     signupReferer,
-    trigger,
     triggerSeconds,
   } = modalOptions
 
@@ -57,7 +56,7 @@ export const handleSubmit = (
           action = "Created account"
           break
         case ModalType.forgot:
-          action = "Forgot Password"
+          action = "Reset your password"
           break
       }
 
@@ -65,7 +64,7 @@ export const handleSubmit = (
         const properties = {
           action,
           user_id: res && res.user && res.user.id,
-          trigger,
+          trigger: triggerSeconds ? "timed" : "click",
           trigger_seconds: triggerSeconds,
           intent,
           type,
@@ -86,7 +85,7 @@ export const handleSubmit = (
 
       const result = await apiAuthWithRedirectUrl(res, afterAuthURL)
 
-      window.location.href = result.href
+      window.location.assign(result.href)
     },
     error: (_, res) => {
       const error = res.responseJSON
@@ -127,7 +126,7 @@ export async function apiAuthWithRedirectUrl(
   response: Response,
   redirectPath: URL
 ): Promise<URL> {
-  const redirectUrl = sd.APP_URL + redirectPath.pathname
+  const redirectUrl = sd.APP_URL + redirectPath.pathname + redirectPath.search
   const accessToken = (response["user"] || {}).accessToken
   const appRedirectURL = new URL(redirectUrl)
 
@@ -162,6 +161,7 @@ export async function apiAuthWithRedirectUrl(
 export function getRedirect(type): URL {
   const appBaseURL = new URL(sd.APP_URL)
   const { location } = window
+
   switch (type) {
     case "login":
     case "forgot":

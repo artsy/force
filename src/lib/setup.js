@@ -45,6 +45,7 @@ import compression from "compression"
 import { assetMiddleware } from "./middleware/assetMiddleware"
 import { isDevelopment, isProduction } from "lib/environment"
 import { unsupportedBrowserCheck } from "lib/middleware/unsupportedBrowser"
+import { pageCacheMiddleware } from "lib/middleware/pageCacheMiddleware"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
@@ -216,8 +217,8 @@ export default function(app) {
   app.use(escapedFragmentMiddleware)
   app.use(logger)
   app.use(unsupportedBrowserCheck)
-  if (NODE_ENV !== "test") app.use(splitTestMiddleware)
   app.use(addIntercomUserHash)
+  app.use(pageCacheMiddleware)
 
   // Routes for pinging system time and up
   app.get("/system/time", (req, res) =>
@@ -229,6 +230,10 @@ export default function(app) {
 
   // Sets up mobile marketing signup modal
   app.use(marketingModals)
+
+  if (NODE_ENV !== "test") {
+    app.use(splitTestMiddleware)
+  }
 
   // Setup hot-swap loader. See https://github.com/artsy/express-reloadable
   if (isDevelopment) {
@@ -247,7 +252,7 @@ export default function(app) {
 
     // Mount reloadable desktop
     mountAndReload(path.resolve("src/desktop"), {
-      watchModules: ["@artsy/reaction", "@artsy/stitch"],
+      watchModules: ["@artsy/reaction", "@artsy/stitch", "@artsy/palette"],
     })
 
     // In staging or prod, mount routes normally

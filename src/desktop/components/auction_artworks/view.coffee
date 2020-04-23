@@ -1,8 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 State = require './models/state.coffee'
-mediator = require '../../lib/mediator.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
+{ openAuthModal } = require '../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/cohesion"
+
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
@@ -46,13 +49,12 @@ module.exports = class AuctionArtworksView extends Backbone.View
     if @user
       location.assign $(e.target).attr('href')
     else
-      mediator.trigger 'open:auth',
-        mode: 'signup'
+      # FIXME: Maybe not used?
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
-        intent: 'bid'
-        signupIntent: 'bid'
-        trigger: 'click'
+        intent: AuthIntent.bid
         redirectTo: $(e.currentTarget).attr('href')
+      })
     return true
 
   inquire: (e) ->

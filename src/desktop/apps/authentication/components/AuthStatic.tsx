@@ -36,8 +36,8 @@ export class AuthStatic extends React.Component<Props> {
               login: "/log_in",
               forgot: "/forgot_password",
               signup: "/sign_up",
+              apple: "/users/auth/apple",
               facebook: "/users/auth/facebook",
-              twitter: "/users/auth/twitter",
             }}
             showRecaptchaDisclaimer={true}
           />

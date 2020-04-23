@@ -25,7 +25,7 @@ module.exports.index = (req, res, next) ->
         { name: 'Upcoming', hasItems: upcomingFairs.length },
         { name: 'Past', hasItems: pastFairs.length }
       ]
-      emptyMessage: "Past Fairs"
+      emptyMessage: "Past Events"
       extraClasses: "art-fairs-tabs"
       currentFairs: currentFairs
       upcomingFairs: upcomingFairs

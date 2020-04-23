@@ -1,9 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+mediator = require '../../../lib/mediator.coffee'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
 openMultiPageModal = require '../../multi_page_modal/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class FooterView extends Backbone.View
   events:
@@ -46,20 +49,17 @@ module.exports = class FooterView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup'
-      trigger: 'click'
-      contextModule: 'Footer'
+    openAuthModal(ModalType.signup, {
+      contextModule: ContextModule.footer
       destination: location.href
-      intent: 'signup'
-      signupIntent: 'signup'
+      intent: AuthIntent.signup
+    })
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'login'
-      trigger: 'click'
-      contextModule: 'Footer'
+    openAuthModal(ModalType.login, {
+      contextModule: ContextModule.footer
       destination: location.href
-      signupIntent: 'login'
-      intent: 'login'
+      intent: AuthIntent.login
+    })
+

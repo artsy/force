@@ -25,7 +25,7 @@ module.exports = class FilterView extends Backbone.View
     'click .filter-artworks-see-more' : 'nextPage'
 
   initialize: (options) ->
-    { @collection, @params, @defaultHeading, @aggregations } = options
+    { @collection, @params, @defaultHeading, @aggregations, @context_module } = options
     { @giveUpCount,
       @columnWidth,
       @includeFixedHeader,
@@ -112,6 +112,7 @@ module.exports = class FilterView extends Backbone.View
       artworkSize: 'tall'
       numberOfColumns: Math.round $el.width() / @columnWidth
       gutterWidth: 40
+      context_module: @context_module
 
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or

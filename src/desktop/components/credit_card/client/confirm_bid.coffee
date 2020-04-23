@@ -1,7 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
 ModalView = require '../../modal/view.coffee'
-mediator = require '../../../lib/mediator.coffee'
 
 template = -> require('../templates/bid-confirmation.jade') arguments...
 

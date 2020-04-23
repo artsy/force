@@ -9,7 +9,7 @@ append locals
   - options = {modal: false, flash: false}
 
 block body
-  - submissionPath = '/consign/submission'
+  - submissionPath = '/consign/submission?contextPath=/consign&subject=Submit for review'
 
   include ./header
   .consignments-page
@@ -130,6 +130,8 @@ block body
                   p= sale.name
 
       //- Questions
+      a(id='faq')
+
       section.consignments-section.consignments-section__questions
         .consignments-section__content
           .consignments-section__questions__header-section

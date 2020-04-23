@@ -3,10 +3,12 @@ _ = require 'underscore'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
-mediator = require '../../../../lib/mediator.coffee'
 EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../../../components/logger/index.coffee'
+{ openAuthModal } = require '../../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = ->
   logger = new Logger 'inquiry-questionnaire-log'
@@ -47,12 +49,10 @@ module.exports = ->
   # Handle login/out
   $('.js-login').click (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'login'
-      trigger: 'click'
-      intent: 'inquire'
-      signupIntent: 'inquire'
+    openAuthModal(ModalType.login, {
+      intent: AuthIntent.inquire
       redirectTo: location.href
+    })
 
   $('.js-logout').click (e) ->
     e.preventDefault()

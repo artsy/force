@@ -9,11 +9,11 @@ routes =
 
   '''
   /tag
-  ''': require('../apps/tag/client.js').default.setupTagPage
+  ''': require('../apps/tag/client.js').setupTagPage
 
   '''
   /gene/.*
-  ''': require('../apps/gene/client.js').default.setupGenePage
+  ''': require('../apps/gene/client.js').setupGenePage
 
 for paths, init of routes
   for path in paths.split('\n')

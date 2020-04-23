@@ -1,14 +1,22 @@
 import Backbone from "backbone"
+
 import metaphysics from "lib/metaphysics.coffee"
+import metaphysics2 from "lib/metaphysics2.coffee"
 import CurrentUser from "desktop/models/current_user.coffee"
 import * as routes from "../routes"
 
-jest.mock("backbone")
+import { meV1 } from "./fixtures/meV1"
+import { meV2 } from "./fixtures/meV2"
+import { saleV1 } from "./fixtures/saleV1"
+import { saleV2 } from "./fixtures/saleV2"
+
 jest.mock("lib/metaphysics.coffee")
+jest.mock("lib/metaphysics2.coffee")
 
 jest.mock("@artsy/stitch", () => ({
-  stitch: () => "<html />",
+  stitch: jest.fn(),
 }))
+
 jest.mock("desktop/apps/auction/actions/artworkBrowser", () => ({
   fetchArtworksByFollowedArtists: () => ({
     type: "GET_ARTWORKS_SUCCESS",
@@ -18,9 +26,13 @@ jest.mock("desktop/apps/auction/actions/artworkBrowser", () => ({
   }),
 }))
 
-xdescribe("routes", () => {
+import { stitch } from "@artsy/stitch"
+
+describe("routes", () => {
   beforeEach(() => {
+    jest.clearAllMocks()
     Backbone.sync = jest.fn()
+    stitch.mockResolvedValue("<html />")
   })
 
   describe("#index", () => {
@@ -53,31 +65,43 @@ xdescribe("routes", () => {
     })
 
     it("renders the index with the correct variables", async () => {
-      const mockAuctionQueries = {
-        sale: {
-          id: "foo",
-          is_auction: true,
-          auction_state: "open",
-          is_live_open: true,
-        },
-        me: {
-          bidders: [
-            {
-              id: "me",
-              qualified_for_bidding: true,
-              sale: {
-                id: "foo",
-              },
-            },
-          ],
-        },
-      }
+      metaphysics.mockResolvedValue({ articles: [] })
+      metaphysics2.mockResolvedValue({
+        sale: saleV2,
+        me: meV2,
+      })
 
-      metaphysics.mockResolvedValue(mockAuctionQueries)
-
-      // FIXME: Need to write more robust output test
       await routes.index(req, res, next)
+
+      expect(stitch).toBeCalled()
       expect(res.send).toBeCalledWith("<html />")
+
+      const { me } = stitch.mock.calls[0][0].data.app
+
+      expect(me).toEqual({
+        ...meV1,
+        identityVerified: true,
+      })
+    })
+
+    it("renders the index with a promoted sale", async () => {
+      metaphysics.mockResolvedValue({ articles: [] })
+      metaphysics2.mockResolvedValue({
+        sale: saleV2,
+        me: null,
+      })
+
+      await routes.index(req, res, next)
+
+      expect(stitch).toBeCalled()
+      expect(res.send).toBeCalledWith("<html />")
+
+      const sale = stitch.mock.calls[0][0].data.app.auction.toJSON()
+
+      expect(sale).toEqual({
+        ...saleV1,
+        requireIdentityVerification: true,
+      })
     })
 
     xit("works even with the Metaphysics module throwing an error", async () => {
@@ -91,7 +115,7 @@ xdescribe("routes", () => {
     })
   })
 
-  describe("#redirectLive", async () => {
+  xdescribe("#redirectLive", async () => {
     let req
     let res
     let next

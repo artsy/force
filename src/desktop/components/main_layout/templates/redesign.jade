@@ -3,6 +3,7 @@ block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
   - defaultOptions = {modal: true, flash: true, stripev3: false, sailthru: true, marketo: true, quantcast: false}
   - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
+  - attributes = {}
 
 doctype html
 html(
@@ -21,7 +22,7 @@ html(
       if assetPackage
         link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
-  body( class=bodyClass )
+  body( class=bodyClass )&attributes(attributes)
     //- Global component mixins
     include ../../modal/template
     include ../../flash/template

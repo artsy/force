@@ -38,7 +38,7 @@ describe 'Fair Information ', ->
 
     it 'renders fair information correctly', ->
       @page.should.containEql 'visitors'
-      @page.should.containEql 'about the fair'
+      @page.should.containEql 'about'
       @page.should.containEql 'events'
 
   describe 'Fair with articles ', ->
@@ -66,7 +66,7 @@ describe 'Fair Information ', ->
 
     it 'renders fair information correctly', ->
       @page.should.containEql 'visitors'
-      @page.should.containEql 'about the fair'
+      @page.should.containEql 'about'
       @page.should.containEql 'events'
-      @page.should.containEql 'artsy at the fair'
+      @page.should.containEql 'artsy at the event'
       @page.should.containEql 'programming'

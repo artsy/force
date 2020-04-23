@@ -10,17 +10,17 @@ block body
   #fairs-page.main-layout-container
     if currentFairRows.length
       .fairs__current-fairs
-        h1.fair-header Current Fairs
+        h1.fair-header Current Events
         include current_fairs
     else
       include promo
     .fairs__past-fairs
-      h1.fair-header.fair-header--underlined Past Fairs
+      h1.fair-header.fair-header--underlined Past Events
       .fairs__past-fairs-list
         include past_fairs
       button#fairs-see-more.avant-garde-button-white.is-block
         | View More
     .fairs__upcoming-fairs
-      h1.fair-header.fair-header--underlined Upcoming Fairs
+      h1.fair-header.fair-header--underlined Upcoming Events
       for fair in upcomingFairs
         include fair_upcoming

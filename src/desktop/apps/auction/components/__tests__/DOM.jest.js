@@ -1,6 +1,5 @@
 import { test } from "../DOM"
 import mediator from "desktop/lib/mediator.coffee"
-import { AuctionRegistrationModal } from "reaction/Components/Auction/AuctionRegistrationModal"
 
 const { DOM } = test
 
@@ -102,9 +101,9 @@ describe("DOM Interactions", () => {
       expect(mediator.trigger).toHaveBeenCalledWith("open:auth", {
         mode: "signup",
         redirectTo: "/auction/auction-id/registration-flow",
-        signupIntent: "register to bid",
-        intent: "register to bid",
-        trigger: "click",
+        intent: "registerToBid",
+        copy: "Sign up to bid on artworks",
+        contextModule: "auctionSidebar",
       })
     })
 

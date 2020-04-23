@@ -8,7 +8,7 @@ mediator = require '../../../lib/mediator'
 model = new Backbone.Model(id: 'artwork')
 model.isSaved = sinon.stub()
 
-xdescribe 'SaveButton', ->
+describe 'SaveButton', ->
   describe '#save', ->
     beforeEach (done) ->
       benv.setup =>
@@ -20,7 +20,7 @@ xdescribe 'SaveButton', ->
     afterEach ->
       benv.teardown()
 
-    it 'triggers the register modal if theres no saved', ->
+    it 'triggers the register modal if theres no user', ->
       sinon.spy mediator, 'trigger'
       @view.$el.click()
       mediator.trigger.args[0][0].should.equal 'open:auth'

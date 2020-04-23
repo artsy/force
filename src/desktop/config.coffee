@@ -85,6 +85,12 @@ module.exports =
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   NODE_ENV: 'development'
   OPENREDIS_URL: null
+  PAGE_CACHE_ENABLED: false
+  PAGE_CACHE_TYPES: 'artist'
+  PAGE_CACHE_NAMESPACE: 'page-cache'
+  PAGE_CACHE_VERSION: '1'
+  PAGE_CACHE_EXPIRY_SECONDS: 600
+  PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: 400
   PARSELY_KEY: 'artsy.net'
   EDITORIAL_PATHS: '^\/article|^\/2016-year-in-art|^\/venice-biennale|^\/gender-equality|^\/series|^\/video|^\/news'
   PARSELY_SECRET: null
@@ -108,6 +114,7 @@ module.exports =
   S3_SECRET: null
   S3_BUCKET: null
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
+  SAILTHRU_CUSTOMER_ID: null
   SAILTHRU_KEY: null
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_SECRET: null
@@ -134,6 +141,11 @@ module.exports =
   WEBFONT_URL: 'http://webfonts.artsy.net'
   ALLOWED_VANITY_ASSETS: 'videos/*|vrview/*|hls-videos/*'
   VERBOSE_LOGGING: false
+  ENABLE_SIGN_IN_WITH_APPLE: false
+  APPLE_CLIENT_ID: null
+  APPLE_TEAM_ID: null
+  APPLE_KEY_ID: null
+  APPLE_PRIVATE_KEY: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

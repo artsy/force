@@ -1,3 +1,33 @@
+/**
+ * Set webpack public-path asset lookup to CDN in production, but only on
+ * the client, as we use the assetMiddleware helper to map URLs on the server.
+ * @see https://github.com/artsy/force/blob/master/src/lib/middleware/assetMiddleware.ts
+ *
+ * FIXME: Move this into Circle config and or Docker
+ */
+if (process.env.NODE_ENV === "production") {
+  const { hostname } = window.location
+  let cdnUrl
+
+  // Production
+  if (hostname === "www.artsy.net") {
+    cdnUrl = "https://d1s2w0upia4e9w.cloudfront.net"
+
+    // Localhost
+  } else if (hostname === "localhost") {
+    cdnUrl = ""
+
+    // Everything else
+  } else {
+    cdnUrl = "https://d1rmpw1xlv9rxa.cloudfront.net"
+  }
+
+  __webpack_public_path__ = cdnUrl + "/assets/"
+
+  // @ts-ignore
+  window.__getPublicPath = () => __webpack_public_path__
+}
+
 import $ from "jquery"
 import Backbone from "backbone"
 import _ from "underscore"
@@ -53,20 +83,18 @@ export function syncAuth() {
 }
 
 function logoutEventHandler() {
-  if (sd.CURRENT_USER) {
-    $.ajax({
-      url: "/users/sign_out",
-      type: "DELETE",
-      success() {
-        analyticsHooks.trigger("auth:logged-out")
-        location.reload()
-      },
-      error(_xhr, _status, errorMessage) {
-        // tslint:disable-next-line:no-unused-expression
-        new FlashMessage({ message: errorMessage })
-      },
-    })
-  }
+  $.ajax({
+    url: "/users/sign_out",
+    type: "DELETE",
+    success() {
+      analyticsHooks.trigger("auth:logged-out")
+      location.reload()
+    },
+    error(_xhr, _status, errorMessage) {
+      // tslint:disable-next-line:no-unused-expression
+      new FlashMessage({ message: errorMessage })
+    },
+  })
 }
 
 function setupReferrerTracking() {
@@ -115,6 +143,14 @@ function setupJquery() {
 function setupErrorReporting() {
   if (sd.NODE_ENV === "production") {
     Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
+
+    // FIXME: Remove once A/B test ends
+    Sentry.addBreadcrumb({
+      category: "experimental-app-shell-ab-test",
+      message: `A/B v5 test group: ${sd.CLIENT_NAVIGATION_V5}`,
+      level: Sentry.Severity.Info,
+    })
+
     const user = sd && sd.CURRENT_USER
 
     if (sd.CURRENT_USER) {

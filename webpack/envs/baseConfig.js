@@ -2,6 +2,8 @@
 
 const path = require("path")
 const webpack = require("webpack")
+const LoadablePlugin = require("@loadable/webpack-plugin")
+const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const { getEntrypoints } = require("../utils/getEntrypoints")
 const {
   BUILD_SERVER,
@@ -12,8 +14,8 @@ const {
 
 exports.baseConfig = {
   mode: NODE_ENV,
-  devtool: "cheap-module-source-map",
-  stats: "errors-only",
+  devtool: "source-map",
+  stats: "normal", // or, `errors-only`
   entry: getEntrypoints(),
   output: {
     filename: "[name].js",
@@ -89,6 +91,21 @@ exports.baseConfig = {
       "window.jQuery": "jquery",
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
+    }),
+    new LoadablePlugin(),
+
+    /**
+     * If something goes wrong while loading a dynmic split chunk (import())
+     * retry the fetch once per second up to `maxRetries`.
+     *
+     * NOTE: Since this plugin patches the native loading mechanism from webpack
+     * we (may) need to revist once we upgrade to Webpack 5.
+     */
+    new RetryChunkLoadPlugin({
+      maxRetries: 5,
+      cacheBust: `function() {
+        return "cache-bust=" + Date.now();
+      }`,
     }),
   ],
   resolve: {

@@ -4,7 +4,9 @@
       "@babel/env",
       {
         "targets": {
-          "browsers": ["last 2 versions"]
+          "browsers": [
+            "last 2 versions"
+          ]
         },
         "useBuiltIns": "usage",
         "corejs": 2
@@ -16,6 +18,8 @@
   "plugins": [
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-nullish-coalescing-operator",
     [
       "babel-plugin-styled-components",
       {
@@ -23,14 +27,22 @@
         "displayName": true
       }
     ],
+    "@loadable/babel-plugin",
     "inline-react-svg",
     "lodash",
     "loadable-components/babel",
     [
       "module-resolver",
       {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "root": ["./src"],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "root": [
+          "./src"
+        ],
         "alias": {
           "reaction": "@artsy/reaction/dist"
         }

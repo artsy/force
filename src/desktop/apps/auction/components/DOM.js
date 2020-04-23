@@ -1,9 +1,12 @@
+// @ts-check
 import PropTypes from "prop-types"
-import mediator from "desktop/lib/mediator.coffee"
 import scrollToTop from "desktop/apps/auction/utils/scrollToTop"
 import { Component } from "react"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"
+import { openAuthModal } from "desktop/lib/openAuthModal"
+import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 class DOM extends Component {
   static propTypes = {
@@ -74,16 +77,15 @@ class DOM extends Component {
     }
   }
 
-  handleRegister = event => {
+  handleRegister = _event => {
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     if (!me) {
-      mediator.trigger("open:auth", {
-        mode: "signup",
+      openAuthModal(ModalType.signup, {
         redirectTo: auction.registrationFlowUrl(),
-        intent: "register to bid",
-        signupIntent: "register to bid",
-        trigger: "click",
+        intent: AuthIntent.registerToBid,
+        copy: "Sign up to bid on artworks",
+        contextModule: ContextModule.auctionSidebar,
       })
 
       // If the user is already registered, just ignore this and fix the url.

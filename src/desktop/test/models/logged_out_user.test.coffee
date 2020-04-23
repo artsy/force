@@ -110,19 +110,19 @@ describe 'LoggedOutUser', ->
         attributes = Backbone.sync.args[0][1].attributes
         attributes.should.containEql reset_password_redirect_to: 'https://cms.artsy.net'
 
-      it 'sends the mode when set password is true', ->
+      it 'sets the mode to fair_set_password when set password is true', ->
         LoggedOutUser.__set__ 'sd', SET_PASSWORD: 'true'
         user = new LoggedOutUser email: 'foo@bar.com'
         user.forgot()
         attributes = Backbone.sync.args[0][1].attributes
         attributes.should.containEql mode: 'fair_set_password'
 
-      it 'ignores other values of SET_PASSWORD', ->
-        LoggedOutUser.__set__ 'sd', SET_PASSWORD: 'invalid'
+      it 'passes value of SET_PASSWORD when present and not "true"', ->
+        LoggedOutUser.__set__ 'sd', SET_PASSWORD: 'reset'
         user = new LoggedOutUser email: 'foo@bar.com'
         user.forgot()
         attributes = Backbone.sync.args[0][1].attributes
-        attributes.should.containEql mode: null
+        attributes.should.containEql mode: 'reset'
 
       it 'accepts options and overwrites the default success', (done) ->
         user = new LoggedOutUser email: 'foo@bar.com'

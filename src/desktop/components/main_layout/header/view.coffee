@@ -15,6 +15,9 @@ Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 { Following } = require '../../follow_button/index.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -97,23 +100,19 @@ module.exports = class HeaderView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
-      intent: 'signup'
-      signupIntent: 'signup'
-      trigger: 'click'
-      contextModule: 'Header'
+    openAuthModal(ModalType.signup, {
+      intent: AuthIntent.signup
+      contextModule: ContextModule.header
       destination: location.href
+    })
 
   login: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'login'
-      intent: 'login'
-      signupIntent: 'login'
-      trigger: 'click'
-      contextModule: 'Header'
+    openAuthModal(ModalType.login, {
+      intent: AuthIntent.login
+      contextModule: ContextModule.header
       destination: location.href
+    })
 
   logout: (e) ->
     e.preventDefault()

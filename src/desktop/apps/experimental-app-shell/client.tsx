@@ -3,30 +3,48 @@ import ReactDOM from "react-dom"
 import { buildClientApp } from "reaction/Artsy/Router/client"
 import { getAppRoutes } from "reaction/Apps/getAppRoutes"
 import { data as sd } from "sharify"
-import { client as artworkClient } from "./artwork/client"
-import { client as artistClient } from "./artist/client"
+import { artworkClient } from "./apps/artwork/artworkClient"
+import { artistClient } from "./apps/artist/artistClient"
+import { loadableReady } from "@loadable/component"
+
 const mediator = require("desktop/lib/mediator.coffee")
 
 buildClientApp({
   routes: getAppRoutes(),
   context: {
+    EXPERIMENTAL_APP_SHELL: true,
     user: sd.CURRENT_USER,
     mediator,
   } as any,
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(
-      <ClientApp />,
-      document.getElementById("react-root"),
-      () => {
-        const pageType = window.location.pathname.split("/")[1]
+    /**
+     * Mount route-specific client code here
+     */
+    const mountClientAppSupport = () => {
+      artistClient()
+      artworkClient()
+    }
 
-        if (pageType === "search") {
-          document.getElementById("loading-container").remove()
-          document.getElementById("search-page-header").remove()
+    loadableReady(() => {
+      mountClientAppSupport()
+
+      /**
+       * Render app
+       */
+      ReactDOM.hydrate(
+        <ClientApp />,
+        document.getElementById("react-root"),
+        () => {
+          const pageType = window.location.pathname.split("/")[1]
+
+          if (pageType === "search") {
+            document.getElementById("loading-container").remove()
+            document.getElementById("search-page-header").remove()
+          }
         }
-      }
-    )
+      )
+    })
   })
   .catch(error => {
     console.error(error)
@@ -35,6 +53,3 @@ buildClientApp({
 if (module.hot) {
   module.hot.accept()
 }
-
-artworkClient()
-artistClient()

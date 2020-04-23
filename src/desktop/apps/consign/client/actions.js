@@ -1,6 +1,5 @@
 import _request from "superagent"
 import gemup from "@artsy/gemup"
-import { get } from "lodash"
 import stepsConfig from "./steps_config"
 import { data as _sd } from "sharify"
 import { fetchToken as _fetchToken, formattedLocation } from "../helpers"
@@ -52,7 +51,6 @@ export const UPDATE_LOCATION_CITY_VALUE = "UPDATE_LOCATION_CITY_VALUE"
 export const UPDATE_LOCATION_SUGGESTIONS = "UPDATE_LOCATION_SUGGESTIONS"
 export const UPDATE_LOCATION_VALUES = "UPDATE_LOCATION_VALUES"
 export const UPDATE_PROGRESS_BAR = "UPDATE_PROGRESS_BAR"
-export const UPDATE_SKIP_PHOTO_SUBMISSION = "UPDATE_SKIP_PHOTO_SUBMISSION"
 export const UPDATE_STEPS_WITH_USER = "UPDATE_STEPS_WITH_USER"
 export const UPDATE_STEPS_WITHOUT_USER = "UPDATE_STEPS_WITHOUT_USER"
 export const UPDATE_SUBMISSION = "UPDATE_SUBMISSION"
@@ -684,15 +682,6 @@ export function updateProgressBar(fileName, percent) {
     payload: {
       fileName,
       percent,
-    },
-  }
-}
-
-export function updateSkipPhotoSubmission(skip) {
-  return {
-    type: UPDATE_SKIP_PHOTO_SUBMISSION,
-    payload: {
-      skip,
     },
   }
 }

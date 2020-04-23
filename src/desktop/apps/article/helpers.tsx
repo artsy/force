@@ -38,7 +38,8 @@ export const getLayoutTemplate = article => {
   const isFeatureInSeries =
     article.seriesArticle &&
     article.layout === "feature" &&
-    (article.hero_section && article.hero_section.type === "fullscreen")
+    article.hero_section &&
+    article.hero_section.type === "fullscreen"
 
   const hasSeriesNav =
     ["series", "video"].includes(article.layout) || isFeatureInSeries

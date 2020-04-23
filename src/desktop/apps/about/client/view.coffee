@@ -1,17 +1,18 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { isTouchDevice } = require '../../../components/util/device.coffee'
-mediator = require '../../../lib/mediator.coffee'
 zoom = require '../../../components/zoom/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class AboutView extends Backbone.View
   events:
     'click .about-nav-link': 'intercept'
     'click .about-signup-button': 'signup'
-    'submit #about-phone-link': 'submitPhoneLink'
     'click .about-image-zoom': 'zoomImage'
     'click .about-section2-contact-specialist': 'contactSpecialistModal'
 
@@ -34,12 +35,12 @@ module.exports = class AboutView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup',
-      intent: 'save artwork'
-      signupIntent: 'save artwork'
-      trigger: 'click',
+    openAuthModal(ModalType.signup, {
+      copy: "Sign up to save artworks"
+      intent: AuthIntent.saveArtwork,
       destination: location.href
+      contextModule: ContextModule.saveWorksCTA
+    })
 
   intercept: (e) ->
     e.preventDefault()
@@ -103,22 +104,6 @@ module.exports = class AboutView extends Backbone.View
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
       offset: '50%'
-
-  submitPhoneLink: (e) ->
-    e.preventDefault()
-    @$('#about-phone-link button').addClass 'is-loading'
-    $.ajax
-      type: 'POST'
-      url: '/about/sms'
-      data: to: @$('#about-phone-link input').val()
-      error: (xhr) ->
-        $('.about-section1-phone-success').hide()
-        $('.about-section1-phone-error').show().text(xhr.responseJSON.msg)
-      success: ->
-        $('.about-section1-phone-success').show().text('Message sent, please check your phone.')
-        $('.about-section1-phone-error').hide()
-      complete: ->
-        $('#about-phone-link button').removeClass 'is-loading'
 
   setupGenes: ->
     @$genes.waypoint (direction) ->

@@ -8,7 +8,6 @@ import { parse } from "url"
 export const index = async (req, res, next) => {
   let type: ModalType
   const template = res.locals.sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
-  let title
 
   switch (req.path) {
     case "/signup":
@@ -34,7 +33,7 @@ export const index = async (req, res, next) => {
       pageTitle = "Signup for Artsy"
       break
     case ModalType.forgot:
-      pageTitle = "Forgot Password"
+      pageTitle = "Reset your password"
       break
   }
   const meta = {
@@ -46,16 +45,15 @@ export const index = async (req, res, next) => {
     action,
     afterSignUpAction,
     contextModule,
-    destination,
+    copy,
     error,
-    entityName,
     kind,
     objectId,
-    signupIntent,
     intent,
     trigger,
   } = req.query
 
+  let title
   switch (intent) {
     case "save artwork":
       title = `Sign up to ${intent}s`
@@ -64,20 +62,26 @@ export const index = async (req, res, next) => {
       title = `Sign up to ${intent}s`
       break
     case "follow artist":
-      title = `Sign up to follow ${entityName || "artists"}`
+      title = "Sign up to follow artists"
       break
     default:
-      title = `Sign up for Artsy`
+      title = pageTitle || `Sign up for Artsy`
       break
   }
 
   if (type === ModalType.forgot) {
     res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
       req.query.reset_password_redirect_to
+
+    // Used to customize reset copy/emails for partners etc
     res.locals.sd.SET_PASSWORD = req.query.set_password
+    if (req.query.set_password) {
+      title = "Set your password"
+    }
   }
 
   const redirectTo = getRedirectTo(req)
+  const destination = req.query.destination || (isStaticAuthRoute && "/")
   const signupReferer = req.header("Referer") || req.hostname
 
   if (action) {
@@ -104,15 +108,18 @@ export const index = async (req, res, next) => {
         meta,
         error,
         options: {
+          action,
           afterSignUpAction,
           contextModule,
+          copy: copy || title,
           destination,
+          error,
           intent,
+          kind,
+          objectId,
           redirectTo,
-          signupIntent,
           signupReferer,
           trigger,
-          title,
         },
       },
     })
@@ -142,8 +149,8 @@ export const resetPassword = (req, res) => {
 
 export const redirectLoggedInHome = (req, res, next) => {
   if (req.user) {
-    const pathname = parse(req.url || "").pathname
-    if (["/log_in", "/login", "/sign_up", "/signup"].includes(pathname)) {
+    const isStaticAuth = isStaticAuthRoute(req)
+    if (isStaticAuth) {
       req.query["redirect-to"] = req.query["redirect-to"] || "/"
     }
     res.redirect(getRedirectTo(req))
@@ -152,14 +159,26 @@ export const redirectLoggedInHome = (req, res, next) => {
   }
 }
 
+export const isStaticAuthRoute = req => {
+  const pathname = req.path || parse(req.url || "").pathname
+  const isStaticAuthRoute = [
+    "/log_in",
+    "/login",
+    "/sign_up",
+    "/signup",
+  ].includes(pathname)
+  return isStaticAuthRoute
+}
+
 export const getRedirectTo = req => {
   let referrer = parse(req.get("Referrer") || "").path || "/"
+  const isStaticAuth = isStaticAuthRoute(req)
   const redirectTo =
     req.query["redirectTo"] ||
     req.body["redirect-to"] ||
     req.query["redirect-to"] ||
     req.query["redirect_uri"] ||
-    referrer
+    (!isStaticAuth ? referrer : undefined)
 
   if (redirectTo === "/reset_password") {
     return "/"

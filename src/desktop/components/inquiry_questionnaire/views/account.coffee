@@ -3,13 +3,15 @@ Backbone = require 'backbone'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 FormMixin = require '../../mixins/form'
-FormErrorHelpers = require '../../auth_modal/helpers'
+FormErrorHelpers = require '../helpers'
 sd = require('sharify').data
 templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
 { recaptcha } = require "@artsy/reaction/dist/Utils/recaptcha"
+
+mediator = require('../../../lib/mediator.coffee')
 
 module.exports = class Account extends StepView
   _.extend @prototype, FormMixin
@@ -67,6 +69,7 @@ module.exports = class Account extends StepView
         @user.repossess user.id,
           error: form.error.bind form
           success: =>
+            mediator.trigger('auth:login:inquiry_form', @user.toJSON())
             if sd.COMMERCIAL?.enableNewInquiryFlow
               @next()
             else

@@ -1,5 +1,7 @@
 multiPageView = require '../../../components/multi_page/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports.init = ->
   view = multiPageView 'auction-faqs'
@@ -17,11 +19,8 @@ module.exports.init = ->
   $('.js-register-button').click (e) ->
     # TODO: remove dead code
     e.preventDefault()
-    mediator.trigger 'open:auth',
-      mode: 'signup'
+    openAuthModal(ModalType.signup, {
       copy: 'Sign up to bid on artworks'
-      signupIntent: 'register to bid'
-      intent: 'register to bid'
-      trigger: 'click'
+      intent: AuthIntent.registerToBid
       destination: location.href
-
+    })

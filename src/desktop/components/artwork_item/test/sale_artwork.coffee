@@ -7,16 +7,17 @@ Backbone = require 'backbone'
 Artwork = require '../../../models/artwork'
 Sale = require '../../../models/sale'
 CurrentUser = require '../../../models/current_user'
+mediator = require '../../../lib/mediator.coffee'
 
 describe 'SaleArtworks', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
+      sinon.spy mediator, 'trigger'
 
       @artwork = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')
       @sale = new Sale fabricate 'sale', is_auction: true
-
       benv.render resolve(__dirname, '../templates/artwork.jade'), {
         artwork: @artwork
         displayPurchase: true
@@ -32,7 +33,21 @@ describe 'SaleArtworks', ->
     @view.hideBuyNowButtons.restore()
     @view.hideBidStatuses.restore()
     @view.appendAuctionId.restore()
+    mediator.trigger.restore()
     benv.teardown()
+
+  it '#bid opens the auth modal with expected args', ->
+    e = { preventDefault: sinon.stub() }
+    @view.sale = @sale
+    @view.bid(e)
+    e.preventDefault.called.should.be.true()
+    mediator.trigger.args[0][0].should.containEql 'open:auth'
+    mediator.trigger.args[0][1].should.match {
+      mode: 'signup',
+      copy: 'Sign up to bid',
+      intent: 'bid',
+      redirectTo: '/auction/whtney-art-party'
+    }
 
   describe '#appendAuctionId', ->
     it 'appends auction id to all the links to the artwork', ->

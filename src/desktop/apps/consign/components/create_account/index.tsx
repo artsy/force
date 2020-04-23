@@ -6,20 +6,36 @@ import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 
 interface CreateAccountProps {
+  contextPath: string
+  subject: string
   title: string
   type: ModalType
   updateAuthFormStateAndClearErrorAction: (type: ModalType) => void
 }
 
 export class CreateAccount extends React.Component<CreateAccountProps> {
+  get redirectUrl() {
+    const { contextPath, subject } = this.props
+    let analyticsParams = ""
+    if (contextPath && subject) {
+      analyticsParams = `?contextPath=${contextPath}&subject=${subject}`
+    }
+    return `/consign/submission${analyticsParams}`
+  }
+
   handleSubmit = (values, formikBag) => {
+    const { title, type } = this.props
+
     handleSubmit(
-      this.props.type,
+      type,
       {
-        copy: this.props.title,
-        contextModule: "consignments",
+        copy: title,
+        contextModule: ContextModule.consignSubmissionFlow,
+        intent: AuthIntent.consign,
+        redirectTo: this.redirectUrl,
       },
       values,
       formikBag
@@ -37,7 +53,10 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         <ModalHeader title={this.props.title} />
         <FormSwitcher
           options={{
-            title: this.props.title,
+            copy: this.props.title,
+            contextModule: ContextModule.consignSubmissionFlow,
+            intent: AuthIntent.consign,
+            redirectTo: this.redirectUrl,
           }}
           type={this.props.type}
           handleSubmit={this.handleSubmit}
@@ -46,8 +65,8 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
             login: "/log_in",
             forgot: "/forgot_password",
             signup: "/sign_up",
+            apple: "/users/auth/apple",
             facebook: "/users/auth/facebook",
-            twitter: "/users/auth/twitter",
           }}
           showRecaptchaDisclaimer={true}
         />
@@ -58,7 +77,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
 
 const mapStateToProps = state => {
   const {
-    submissionFlow: { authFormState },
+    submissionFlow: { authFormState, contextPath, subject },
   } = state
 
   const stateToTitle = {
@@ -68,6 +87,8 @@ const mapStateToProps = state => {
   }
 
   return {
+    contextPath,
+    subject,
     type: authFormState,
     title: stateToTitle[authFormState],
   }
@@ -77,7 +98,4 @@ const mapDispatchToProps = {
   updateAuthFormStateAndClearErrorAction: updateAuthFormStateAndClearError,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount)

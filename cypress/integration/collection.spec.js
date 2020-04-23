@@ -26,12 +26,12 @@ describe("/collection/:id (a collection hub)", () => {
     cy.visit("/collection/contemporary")
   })
   it("renders metadata", () => {
-    cy.title().should("eq", "Contemporary - For Sale on Artsy")
+    cy.title().should("eq", "Contemporary Art - For Sale on Artsy")
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
         "eq",
-        "Buy, bid, and inquire on Contemporary on Artsy. Spanning from 1970 to the present day, the contemporary period of art history represents the most diverse and widely-collected era of artistic production. …"
+        "Buy, bid, and inquire on Contemporary Art on Artsy. Spanning from 1970 to the present day, the contemporary period of art history represents the most diverse and widely-collected era of artistic production. …"
       )
   })
 

@@ -1,6 +1,8 @@
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ openAuthModal } = require '../../../lib/openAuthModal'
+{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ AuthIntent } = require "@artsy/cohesion"
 
 module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
@@ -10,12 +12,12 @@ module.exports = class SaveControls extends Backbone.View
     'click .overlay-button-save': 'save'
 
   initialize: (options) ->
-    throw 'You must pass an el' unless @el?
-    throw 'You must pass a model' unless @model?
+    { @context_page, @context_module } = options
+    throw new Error 'You must pass an el' unless @el?
+    throw new Error 'You must pass a model' unless @model?
     return unless options.artworkCollection
 
-    { @artworkCollection, @context_page, @context_module } = options
-
+    { @artworkCollection } = options
     @$button = @$('.overlay-button-save')
 
     @listenTo @artworkCollection, "add:#{@model.id}", @onArtworkSaveChange
@@ -30,17 +32,16 @@ module.exports = class SaveControls extends Backbone.View
   save: (e) ->
     unless @artworkCollection
       analyticsHooks.trigger 'save:sign-up'
-      mediator.trigger 'open:auth',
-        mode: 'signup'
+      openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
+        contextModule: @context_module
         afterSignUpAction: {
           action: 'save',
           objectId: @model.id
         }
-        intent: 'save artwork'
-        signupIntent: 'save artwork'
-        trigger: 'click'
+        intent: AuthIntent.saveArtwork
         destination: location.href
+      })
       return false
 
     trackedProperties = {

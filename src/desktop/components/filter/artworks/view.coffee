@@ -148,3 +148,4 @@ module.exports = class FilterArtworksView extends Backbone.View
       artworkSize: 'tall'
       numberOfColumns: Math.round $el.width() / COLUMN_WIDTH
       gutterWidth: 40
+      context_module: @context_module

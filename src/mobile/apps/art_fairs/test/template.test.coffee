@@ -37,7 +37,7 @@ describe 'Art fairs template', ->
             { name: 'Upcoming', hasItems: @upcomingFairs.length },
             { name: 'Past', hasItems: @pastFairs.length }
           ]
-          emptyMessage: "Past Fairs"
+          emptyMessage: "Past Events"
           extraClasses: "art-fairs-tabs"
           featuredFairs: @currentFairs
           currentFairs: @currentFairs
@@ -68,7 +68,7 @@ describe 'Art fairs template', ->
             { name: 'Upcoming', hasItems: @upcomingFairs.length },
             { name: 'Past', hasItems: @pastFairs.length }
           ]
-          emptyMessage: "Past Fairs"
+          emptyMessage: "Past Events"
           extraClasses: "art-fairs-tabs"
           asset: (->)
           currentFairs: []

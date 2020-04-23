@@ -1,44 +1,21 @@
 import React from "react"
-import { once } from "lodash"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
-import {
-  ModalOptions,
-  ModalType,
-} from "@artsy/reaction/dist/Components/Authentication/Types"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import { setupFollows, setupFollowButtons } from "../FollowButton"
-
+import {
+  openAuthModal,
+  handleScrollingAuthModal,
+} from "desktop/lib/openAuthModal"
+import { AuthIntent, ContextModule } from "@artsy/cohesion"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 
-interface ArticleLayoutState {
-  following: any // Backbone collection
-}
-
-interface ArticleModalOptions extends ModalOptions {
-  signupIntent: string
-}
-
-export class ArticleLayout extends React.Component<
-  AppProps,
-  ArticleLayoutState
-> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      following: setupFollows() || null,
-    }
-  }
-
+export class ArticleLayout extends React.Component<AppProps> {
   componentDidMount() {
     const { article, isSuper } = this.props
-    // TODO: Replace with relay follow
-    setupFollowButtons(this.state.following)
-
     if (isSuper) {
       // @ts-ignore
       const _superArticleView = new SuperArticleView({
@@ -64,34 +41,14 @@ export class ArticleLayout extends React.Component<
   }
 
   showAuthModal() {
-    if (!this.props.isLoggedIn && !this.props.isMobile) {
-      window.addEventListener(
-        "scroll",
-        once(() => {
-          setTimeout(() => {
-            this.handleOpenAuthModal("register", {
-              mode: ModalType.signup,
-              intent: "Viewed editorial",
-              signupIntent: "signup",
-              trigger: "timed",
-              triggerSeconds: 2,
-              copy: "Sign up for the Best Stories in Art and Visual Culture",
-              destination: location.href,
-              afterSignUpAction: {
-                action: "editorialSignup",
-              },
-            } as any)
-          }, 2000)
-        }),
-        { once: true }
-      )
-    }
-  }
-
-  handleOpenAuthModal = (mode, options: ArticleModalOptions) => {
-    mediator.trigger("open:auth", {
-      mode,
-      ...options,
+    handleScrollingAuthModal({
+      intent: AuthIntent.viewEditorial,
+      copy: "Sign up for the best stories in art and visual culture",
+      destination: location.href,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
+      contextModule: ContextModule.popUpModal,
     })
   }
 
@@ -128,7 +85,7 @@ export class ArticleLayout extends React.Component<
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
-            onOpenAuthModal={this.handleOpenAuthModal}
+            onOpenAuthModal={openAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}
@@ -139,7 +96,6 @@ export class ArticleLayout extends React.Component<
           <InfiniteScrollArticle
             article={article}
             isMobile={isMobile}
-            onOpenAuthModal={this.handleOpenAuthModal}
             showTooltips={showTooltips}
             showCollectionsRail={showCollectionsRail}
             shouldAdRender={renderAd}

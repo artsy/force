@@ -49,6 +49,7 @@ if (
   })
 }
 
+// FIXME: Move this to reaction
 class PageTimeTracker {
   constructor(path, delay, description) {
     this.path = path
@@ -64,10 +65,31 @@ class PageTimeTracker {
 
   track() {
     this.timer = setTimeout(() => {
-      window.analytics.track("Time on page", {
-        category: this.description,
-        message: this.path,
-      })
+      let trackingOptions = {}
+
+      // FIXME: Remove once A/B test completes
+      if (sd.CLIENT_NAVIGATION_V5 === "experiment") {
+        const referrer = window.analytics.__artsyReferrer
+        // Grab referrer from our trackingMiddleware in Reaction, since we're in a
+        // single-page-app context and the value will need to be refreshed on route
+        // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+        if (referrer) {
+          trackingOptions = {
+            page: {
+              referrer,
+            },
+          }
+        }
+      }
+
+      window.analytics.track(
+        "Time on page",
+        {
+          category: this.description,
+          message: this.path,
+        },
+        trackingOptions
+      )
     }, this.delay)
   }
 
@@ -93,6 +115,15 @@ window.desktopPageTimeTrackers = [
 if (sd.SHOW_ANALYTICS_CALLS) {
   analytics.on("track", function() {
     console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
+  })
+  analytics.on("page", function() {
+    console.info(
+      "PAGEVIEW TRACKED: ",
+      arguments[2],
+      arguments[3],
+      JSON.stringify(arguments[2]),
+      JSON.stringify(arguments[3])
+    )
   })
 }
 

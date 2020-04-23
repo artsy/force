@@ -12,8 +12,7 @@ metadata:
 spec:
   strategy:
     rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 0
+      maxUnavailable: 1
     type: RollingUpdate
   template:
     metadata:
@@ -37,12 +36,14 @@ spec:
       - env:
         - name: PORT
           value: '5000'
-        - name: EXPERIMENTAL_APP_SHELL
-          value: 'true'
         - name: DD_TRACE_AGENT_HOSTNAME
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        - name: KEEPALIVE_TIMEOUT_SECONDS
+          value: '95'
+        - name: HEADERS_TIMEOUT_SECONDS
+          value: '105'
         envFrom:
         - configMapRef:
             name: force-environment
@@ -123,7 +124,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: staging-force
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
     service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '300'
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '90'
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:iam::585031190124:server-certificate/2018-01-17_artsy-net-wildcard
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
