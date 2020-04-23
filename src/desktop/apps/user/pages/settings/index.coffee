@@ -5,6 +5,7 @@ InformationView = require '../../components/information/view.coffee'
 LinkedAccountsView = require '../../components/linked_accounts/view.coffee'
 EmailPreferencesView = require '../../components/email_preferences/view.coffee'
 template = -> require('./index.jade') arguments...
+sd = require('sharify').data
 
 module.exports = class SettingsView extends Backbone.View
   subViews: []
@@ -38,6 +39,7 @@ module.exports = class SettingsView extends Backbone.View
   render: ->
     @$el.html template
       user: @user
+      stitch: sd.stitch
     @postRender()
     this
 
