@@ -120,11 +120,13 @@ describe("#submissionFlowWithFetch", () => {
       }))
       await routes.submissionFlow(req, res, next)
       expect(spy).toHaveBeenCalledWith({
-        context_page_path: "foo",
         event: "Clicked consign",
-        flow: "Consignments",
-        subject: "bar",
         userId: "some-userid",
+        properties: {
+          context_page_path: "foo",
+          flow: "Consignments",
+          subject: "bar",
+        },
       })
     })
   })
