@@ -17,6 +17,6 @@ export {
   UserSettingsPaymentsQueryRenderer as UserSettingsPayments,
 } from "reaction/Components/Payment/UserSettingsPayments"
 export {
-  UserSettingsTwoFactorAuthenticationQueryRenderer as UserSettingsTwoFactorAuthentication,
-} from "reaction/Components/UserSettingsTwoFactorAuthentication/UserSettingsTwoFactorAuthentication"
+  TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
+} from "reaction/Components/UserSettings/TwoFactorAuthentication"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"
