@@ -96,10 +96,12 @@ function sendTrackingEvent(req, res) {
   const analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
   const event = {
     event: AnalyticsSchema.ActionType.ClickedConsign,
-    context_page_path: contextPath,
-    flow: AnalyticsSchema.Flow.Consignments,
-    subject,
     userId: req.user.id,
+    properties: {
+      context_page_path: contextPath,
+      flow: AnalyticsSchema.Flow.Consignments,
+      subject,
+    },
   }
   analytics.track(event)
 }
