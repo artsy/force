@@ -11,10 +11,10 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
-"@artsy/cohesion@0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-0.2.7.tgz#93196d1097e9b264262719a0683bdd73a01076bc"
-  integrity sha512-L2J+mJxm7F0+NYmmb5GuefIMT6PYXT8h2nWXJ35/lopsBWYsGxLdlZyhcLwpWqAmidGS4o4+Pa/ROkYIQMP7XQ==
+"@artsy/cohesion@0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-0.2.8.tgz#c0f62c75dc196a7cfd3e2d27672895c8e1daa366"
+  integrity sha512-4vdmWkBoHwl/MJMRFLKtYlba5k+9Aa0kcpFgtgcrjTYVgZRj/WqLdTVNJl3t3iUcKpHC/gtFq4O123SsKlPEcQ==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -82,10 +82,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.24.1":
-  version "26.24.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.24.1.tgz#72e212bb5c8094a219e1804771fc31b6ad162279"
-  integrity sha512-sx7vr5gRn8Hwz3b2FMgL63XeGJe3Lhkgz1QLWibIetNSnfX6Ieds3qrqPvX7b0+9Q9lzN9v6soxmO2i0xxpziQ==
+"@artsy/reaction@26.27.5":
+  version "26.27.5"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.27.5.tgz#0122cb1f53fa0097f88242a7bdf6ba6c672cbf71"
+  integrity sha512-PSBVCAjxv4S+sCRqwrnJ4HuOR3fg/tP9blLBQeUR3/hq8Wg1cadSyS1QBc1nn3GA8ueEtnmFk/dbdTvQ3a1IiA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"

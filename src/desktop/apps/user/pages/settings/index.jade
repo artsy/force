@@ -9,7 +9,7 @@ include ../../templates/mixins
 if user.get('roles').includes('team')
   +settings-section('two-factor-authentication', '')
     #stitch-two-factor-authentication
-      != stitch.components.UserSettingsTwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
+      != stitch.components.TwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
 
 +settings-section('linked-accounts', 'Linked Accounts')
   include ../../components/linked_accounts/index
