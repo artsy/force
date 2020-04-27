@@ -1,5 +1,4 @@
 { globalClientSetup } = require '../../lib/global_client_setup'
-HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FlashMessage = require '../flash/index.coffee'
@@ -12,8 +11,6 @@ module.exports = ->
   checkForAfterSignUpAction()
   checkForPersonalizeFlash()
 
-
-  new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
   triggerMarketingModal(AuthIntent.viewFair, true)
 
