@@ -26,6 +26,7 @@ export const handleSubmit = (
   const user = new LoggedOutUser()
   const {
     contextModule,
+    copy,
     destination,
     redirectTo,
     intent,
@@ -55,6 +56,7 @@ export const handleSubmit = (
         let options = {
           authRedirect: redirectTo || destination,
           contextModule,
+          copy,
           intent,
           service: "email" as AuthService,
           triggerSeconds,
@@ -67,7 +69,10 @@ export const handleSubmit = (
             analyticsOptions = successfullyLoggedIn(options)
             break
           case ModalType.signup:
-            analyticsOptions = createdAccount(options)
+            analyticsOptions = createdAccount({
+              onboarding: redirectTo && true,
+              ...options,
+            })
             break
           case ModalType.forgot:
             analyticsOptions = resetYourPassword(options)
