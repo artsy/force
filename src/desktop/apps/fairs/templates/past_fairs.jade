@@ -6,7 +6,7 @@ for fair in pastFairs
     .fairs__past-fair__cell.fairs__past-fair__cell--name
       .fairs-fair__name= fair.name
       .fairs-fair__follow
-        .entity-follow.profile-follow( data-id= fair.profile.id )
+        .entity-follow.profile-follow( data-id= fair.profile.id, data-test="followButton")
     .fairs__past-fair__cell.fairs__past-fair__cell--info
       .fairs-fair__info #{ViewHelpers.formatDates(fair)}
       if fair.location && (fair.location.city || fair.location.country)
