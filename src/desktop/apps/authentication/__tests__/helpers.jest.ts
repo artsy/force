@@ -212,11 +212,12 @@ describe("Authentication Helpers", () => {
         },
       })
       // @ts-ignore
-      expect(window.analytics.track).toBeCalledWith("Successfully logged in", {
-        action: "Successfully logged in",
+      expect(window.analytics.track).toBeCalledWith({
+        action: "successfullyLoggedIn",
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",
+        modal_copy: undefined,
         service: "email",
         trigger: "timed",
         trigger_seconds: 2,
@@ -231,7 +232,7 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: AuthIntent.viewEditorial,
-          destination: "/articles",
+          redirectTo: "/articles",
           triggerSeconds: 2,
         },
         {
@@ -248,11 +249,13 @@ describe("Authentication Helpers", () => {
         },
       })
       // @ts-ignore
-      expect(window.analytics.track).toBeCalledWith("Created account", {
-        action: "Created account",
+      expect(window.analytics.track).toBeCalledWith({
+        action: "createdAccount",
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",
+        modal_copy: undefined,
+        onboarding: true,
         service: "email",
         trigger: "timed",
         trigger_seconds: 2,
