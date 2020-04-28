@@ -11,10 +11,10 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
-"@artsy/cohesion@0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-0.2.8.tgz#c0f62c75dc196a7cfd3e2d27672895c8e1daa366"
-  integrity sha512-4vdmWkBoHwl/MJMRFLKtYlba5k+9Aa0kcpFgtgcrjTYVgZRj/WqLdTVNJl3t3iUcKpHC/gtFq4O123SsKlPEcQ==
+"@artsy/cohesion@0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-0.2.9.tgz#1463a13b5b03aba63e81f884a0ebb31f5cdfc6fd"
+  integrity sha512-5Daoq9HMlKZJ5VWv/mcUH4sEwAVjqJ+K6SoYLNXSsXsFmUdY+JpL9Cw9NOMl5cPt80JalnhrCOaMK1RypGT/MA==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
