@@ -108,6 +108,17 @@ describe("#submissionFlowWithFetch", () => {
       expect(spy).not.toHaveBeenCalled()
     })
 
+    it("does not track if no subject and contextPath", async () => {
+      req.user = { id: "some-userid" }
+      req.query = {}
+      const spy = jest.fn()
+      Analytics.mockImplementation(() => ({
+        track: spy,
+      }))
+      await routes.submissionFlow(req, res, next)
+      expect(spy).not.toHaveBeenCalled()
+    })
+
     it("sends tracking event", async () => {
       req.user = { id: "some-userid" }
       req.query = {
