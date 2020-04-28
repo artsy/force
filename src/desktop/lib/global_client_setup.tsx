@@ -38,6 +38,7 @@ import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
+import { successfullyLoggedIn, createdAccount } from "@artsy/cohesion"
 
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
@@ -61,6 +62,7 @@ export function globalClientSetup() {
   initModalManager()
   mountStitchComponents()
   syncAuth()
+  trackAuthenticationEvents()
   mediator.on("auth:logout", logoutEventHandler)
 }
 
@@ -166,5 +168,46 @@ function mountStitchComponents() {
     sharifyData: sd,
     modules: globalReactModules as Components,
     wrapper: globalReactModules.StitchWrapper,
+  })
+}
+
+function trackAuthenticationEvents() {
+  const modes = ["login", "signup"]
+
+  modes.forEach(mode => {
+    if (Cookies.get(`analytics-${mode}`)) {
+      const data = JSON.parse(Cookies.get(`analytics-${mode}`))
+      Cookies.expire(`analytics-${mode}`)
+      const user = sd && sd.CURRENT_USER
+
+      if (user) {
+        const options = {
+          ...data,
+          userId: user.id,
+        }
+
+        let analyticsOptions
+        switch (mode) {
+          case "login":
+            analyticsOptions = successfullyLoggedIn(options)
+            break
+          case "signup":
+            analyticsOptions = createdAccount(options)
+            break
+        }
+        window.analytics.track(analyticsOptions)
+        analyticsIdentify(user)
+      }
+    }
+  })
+}
+
+function analyticsIdentify(user) {
+  // FIXME: add typings for user
+  window.analytics.identify(user.id, user.email, {
+    integrations: {
+      All: false,
+      Marketo: true,
+    },
   })
 }
