@@ -4,10 +4,15 @@ import {
   ModalOptions,
 } from "reaction/Components/Authentication/Types"
 import { data as sd } from "sharify"
-import { pickBy, identity } from "lodash"
 import * as qs from "query-string"
 import { Response } from "express"
 import { captureException } from "@sentry/browser"
+import {
+  createdAccount,
+  AuthService,
+  successfullyLoggedIn,
+  resetYourPassword,
+} from "@artsy/cohesion"
 
 const mediator = require("desktop/lib/mediator.coffee")
 const LoggedOutUser = require("desktop/models/logged_out_user.coffee")
@@ -21,7 +26,6 @@ export const handleSubmit = (
   const user = new LoggedOutUser()
   const {
     contextModule,
-    copy,
     destination,
     redirectTo,
     intent,
@@ -47,33 +51,29 @@ export const handleSubmit = (
       formikBag.setSubmitting(false)
       const analytics = (window as any).analytics
 
-      let action
-      switch (type) {
-        case ModalType.login:
-          action = "Successfully logged in"
-          break
-        case ModalType.signup:
-          action = "Created account"
-          break
-        case ModalType.forgot:
-          action = "Reset your password"
-          break
-      }
-
       if (analytics) {
-        const properties = {
-          action,
-          user_id: res && res.user && res.user.id,
-          trigger: triggerSeconds ? "timed" : "click",
-          trigger_seconds: triggerSeconds,
+        let options = {
+          authRedirect: redirectTo || destination,
+          contextModule,
           intent,
-          type,
-          context_module: contextModule,
-          modal_copy: copy,
-          auth_redirect: redirectTo || destination,
-          service: "email",
+          service: "email" as AuthService,
+          triggerSeconds,
+          userId: res && res.user && res.user.id,
         }
-        analytics.track(action, pickBy(properties, identity))
+
+        let analyticsOptions
+        switch (type) {
+          case ModalType.login:
+            analyticsOptions = successfullyLoggedIn(options)
+            break
+          case ModalType.signup:
+            analyticsOptions = createdAccount(options)
+            break
+          case ModalType.forgot:
+            analyticsOptions = resetYourPassword(options)
+            break
+        }
+        analytics.track(analyticsOptions)
       }
 
       let afterAuthURL: URL
