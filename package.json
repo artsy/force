@@ -72,7 +72,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "0.2.8",
+    "@artsy/cohesion": "0.2.9",
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/gemup": "0.0.3",
     "@artsy/palette": "8.2.1",
