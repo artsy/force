@@ -15,12 +15,12 @@
       .fair-overview-browse-heading.overview-heading Browse all exhibitors
       .fair-overview-browse-subheading Updated Daily
 
-.fair-overview-below-top-container
+.fair-overview-below-top-container( data-test="fairInfo")
   .fair-overview-below-top
     .container-left
       .fair-follow
         p Follow for updates and personalized recommendations.
-        button.avant-garde-follow-button-black.follow-button.no-touch( id='fair-follow-button', data-id= fair.get('default_profile_id') )
+        button.avant-garde-follow-button-black.follow-button.no-touch( id='fair-follow-button', data-id= fair.get('default_profile_id'), data-test="followButton" )
       if primarySets.where({ key: 'explore' })
         for set in primarySets.where({ key: 'explore' })
           for item in set.get('items').models.slice(0,2)
