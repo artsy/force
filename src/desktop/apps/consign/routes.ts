@@ -93,6 +93,10 @@ function sendTrackingEvent(req, res) {
   }
 
   const { contextPath, subject } = req.query || {}
+  if (!(contextPath && subject)) {
+    return
+  }
+
   const analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
   const event = {
     event: AnalyticsSchema.ActionType.ClickedConsign,
