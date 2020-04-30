@@ -7,7 +7,7 @@ import {
 import Backbone from "backbone"
 import $ from "jquery"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import { ContextModule, AuthIntent } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 jest.mock("cookies-js", () => ({
   set: jest.fn(),
@@ -90,7 +90,7 @@ describe("Authentication Helpers", () => {
         ModalType.login,
         {
           contextModule: ContextModule.popUpModal,
-          intent: AuthIntent.viewEditorial,
+          intent: Intent.viewEditorial,
           destination: "/articles",
           triggerSeconds: 2,
         },
@@ -115,7 +115,7 @@ describe("Authentication Helpers", () => {
         ModalType.signup,
         {
           contextModule: ContextModule.popUpModal,
-          intent: AuthIntent.viewEditorial,
+          intent: Intent.viewEditorial,
           destination: "/articles",
           triggerSeconds: 2,
         },
@@ -150,7 +150,7 @@ describe("Authentication Helpers", () => {
         ModalType.forgot,
         {
           contextModule: ContextModule.popUpModal,
-          intent: AuthIntent.viewEditorial,
+          intent: Intent.viewEditorial,
           destination: "/articles",
           triggerSeconds: 2,
         },
@@ -169,7 +169,7 @@ describe("Authentication Helpers", () => {
         ModalType.login,
         {
           contextModule: ContextModule.popUpModal,
-          intent: AuthIntent.viewEditorial,
+          intent: Intent.viewEditorial,
           destination: "/articles",
           triggerSeconds: 2,
         },
@@ -195,7 +195,7 @@ describe("Authentication Helpers", () => {
         ModalType.login,
         {
           contextModule: ContextModule.popUpModal,
-          intent: AuthIntent.viewEditorial,
+          intent: Intent.viewEditorial,
           destination: "/articles",
           triggerSeconds: 2,
         },
@@ -230,7 +230,7 @@ describe("Authentication Helpers", () => {
         ModalType.signup,
         {
           contextModule: ContextModule.popUpModal,
-          intent: AuthIntent.viewEditorial,
+          intent: Intent.viewEditorial,
           destination: "/articles",
           triggerSeconds: 2,
         },

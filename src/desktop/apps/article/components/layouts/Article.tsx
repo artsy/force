@@ -7,7 +7,7 @@ import {
   openAuthModal,
   handleScrollingAuthModal,
 } from "desktop/lib/openAuthModal"
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { Intent, ContextModule } from "@artsy/cohesion"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
@@ -42,7 +42,7 @@ export class ArticleLayout extends React.Component<AppProps> {
 
   showAuthModal() {
     handleScrollingAuthModal({
-      intent: AuthIntent.viewEditorial,
+      intent: Intent.viewEditorial,
       copy: "Sign up for the best stories in art and visual culture",
       destination: location.href,
       afterSignUpAction: {

@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/cohesion"
+{ Intent } = require "@artsy/cohesion"
 
 module.exports = class ArtworkSaveView extends Backbone.View
   tagName: 'a'
@@ -33,7 +33,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
           action: 'save',
           objectId: @id
         }
-        intent: AuthIntent.saveArtwork
+        intent: Intent.saveArtwork
         destination: location.href
         contextModule: @context_module
       })

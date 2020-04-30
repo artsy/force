@@ -9,10 +9,10 @@ import {
   ModalType,
   ModalOptions,
 } from "@artsy/reaction/dist/Components/Authentication/Types"
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { Intent, ContextModule } from "@artsy/cohesion"
 
 export const triggerMarketingModal = (
-  intent: AuthIntent,
+  intent: Intent,
   isScrolling?: boolean
 ) => {
   const query = qs.parse(location.search.replace(/^\?/, ""))

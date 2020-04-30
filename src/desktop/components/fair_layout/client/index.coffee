@@ -4,7 +4,7 @@ FooterView = require '../../main_layout/footer/view.coffee'
 lightDetector = require '../../light_detector/index.coffee'
 FairNavView = require './nav.coffee'
 { triggerMarketingModal } = require '../../marketing_signup_modal/triggerMarketingModal.ts'
-{ AuthIntent } = require "@artsy/cohesion"
+{ Intent } = require "@artsy/cohesion"
 
 module.exports = (options) ->
   globalClientSetup()
@@ -12,7 +12,7 @@ module.exports = (options) ->
 
   new FairHeaderView el: $('.fair-layout-header'), model: model, fair: fair
   new FairNavView el: $('.fair-layout-nav'), model: model, fair: fair
-  triggerMarketingModal(AuthIntent.viewFair, true)
+  triggerMarketingModal(Intent.viewFair, true)
 
   # check for feature image light/dark class
   if $('.feature-image').length

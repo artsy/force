@@ -7,7 +7,7 @@ openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent, ContextModule } = require "@artsy/cohesion"
+{ Intent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -37,7 +37,7 @@ module.exports = class AboutView extends Backbone.View
     e.preventDefault()
     openAuthModal(ModalType.signup, {
       copy: "Sign up to save artworks"
-      intent: AuthIntent.saveArtwork,
+      intent: Intent.saveArtwork,
       destination: location.href
       contextModule: ContextModule.saveWorksCTA
     })

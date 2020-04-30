@@ -1,9 +1,9 @@
 import { get } from "lodash"
 import { data as sd } from "sharify"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
+import { Intent, ContextModule } from "@artsy/cohesion"
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
 const metaphysics = require("lib/metaphysics.coffee")
 
 export const query = `
@@ -43,7 +43,7 @@ export const setupArtistSignUpModal = () => {
       mediator.on("modal:closed", setCookie)
       handleScrollingAuthModal({
         copy: `Join Artsy to discover new works by ${artistData.name} and more artists you love`,
-        intent: AuthIntent.viewArtist,
+        intent: Intent.viewArtist,
         triggerSeconds: 4,
         destination: location.href,
         image,
