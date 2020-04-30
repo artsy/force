@@ -81,7 +81,7 @@ export class ModalContainer extends React.Component<any> {
       analyticsOptions = successfullyLoggedIn(options)
     }
 
-    Cookies.set(`analytics-${data.mode}`, JSON.stringify(analyticsOptions), {
+    Cookies.set(`analytics-${mode}`, JSON.stringify(analyticsOptions), {
       expires: 60 * 60 * 24,
     })
   }

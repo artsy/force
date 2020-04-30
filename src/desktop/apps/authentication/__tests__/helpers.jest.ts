@@ -211,7 +211,7 @@ describe("Authentication Helpers", () => {
           accessToken: "foobar",
         },
       })
-      // @ts-ignore
+
       expect(window.analytics.track).toBeCalledWith({
         action: "successfullyLoggedIn",
         auth_redirect: "/articles",
@@ -248,7 +248,7 @@ describe("Authentication Helpers", () => {
           accessToken: "foobar",
         },
       })
-      // @ts-ignore
+
       expect(window.analytics.track).toBeCalledWith({
         action: "createdAccount",
         auth_redirect: "/articles",
@@ -261,6 +261,41 @@ describe("Authentication Helpers", () => {
         trigger_seconds: 2,
         type: "signup",
         user_id: 123,
+      })
+    })
+
+    it("makes an analytics call on success for forgot", () => {
+      handleSubmit(
+        ModalType.forgot,
+        {
+          contextModule: ContextModule.popUpModal,
+          intent: AuthIntent.viewEditorial,
+          redirectTo: "/articles",
+          triggerSeconds: 2,
+        },
+        {
+          email: "foo@foo.com",
+        },
+        formikBag
+      )
+
+      Backbone.sync.mock.calls[0][2].success({
+        user: {
+          id: 123,
+          accessToken: "foobar",
+        },
+      })
+
+      expect(window.analytics.track).toBeCalledWith({
+        action: "resetYourPassword",
+        auth_redirect: "/articles",
+        context_module: "popUpModal",
+        intent: "viewEditorial",
+        modal_copy: undefined,
+        service: "email",
+        trigger: "timed",
+        trigger_seconds: 2,
+        type: "forgot",
       })
     })
   })

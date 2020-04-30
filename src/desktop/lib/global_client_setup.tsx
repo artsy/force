@@ -38,7 +38,6 @@ import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
-import { successfullyLoggedIn, createdAccount } from "@artsy/cohesion"
 
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
@@ -171,31 +170,24 @@ function mountStitchComponents() {
   })
 }
 
-function trackAuthenticationEvents() {
+/**
+ * Track signup and account creation
+ * Cookies are set when authenticating via social services
+ */
+export function trackAuthenticationEvents() {
   const modes = ["login", "signup"]
+  const user = sd && sd.CURRENT_USER
 
   modes.forEach(mode => {
     if (Cookies.get(`analytics-${mode}`)) {
       const data = JSON.parse(Cookies.get(`analytics-${mode}`))
       Cookies.expire(`analytics-${mode}`)
-      const user = sd && sd.CURRENT_USER
 
       if (user) {
-        const options = {
+        window.analytics.track({
           ...data,
-          userId: user.id,
-        }
-
-        let analyticsOptions
-        switch (mode) {
-          case "login":
-            analyticsOptions = successfullyLoggedIn(options)
-            break
-          case "signup":
-            analyticsOptions = createdAccount(options)
-            break
-        }
-        window.analytics.track(analyticsOptions)
+          userId: user && user.id,
+        })
         analyticsIdentify(user)
       }
     }
