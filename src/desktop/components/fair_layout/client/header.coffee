@@ -7,7 +7,7 @@ Fair = require '../../../models/fair.coffee'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user.coffee'
 FlashMessage = require '../../flash/index.coffee'
-{ AuthIntent, ContextModule } = require "@artsy/cohesion"
+{ Intent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class FairHeaderView extends Backbone.View
 
@@ -24,7 +24,7 @@ module.exports = class FairHeaderView extends Backbone.View
     e.preventDefault()
     openAuthModal(ModalType.signup, {
       destination: location.href
-      intent: AuthIntent.signup
+      intent: Intent.signup
       contextModule: ContextModule.header
     })
 
@@ -32,7 +32,7 @@ module.exports = class FairHeaderView extends Backbone.View
     e.preventDefault()
     openAuthModal(ModalType.login, {
       destination: location.href
-      intent: AuthIntent.login
+      intent: Intent.login
       contextModule: ContextModule.header
     })
 

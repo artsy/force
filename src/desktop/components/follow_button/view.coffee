@@ -7,7 +7,7 @@ ArtistSuggestions = require './artist_suggestions.coffee'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/cohesion"
+{ Intent } = require "@artsy/cohesion"
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -49,12 +49,12 @@ module.exports = class FollowButton extends Backbone.View
     state = if @following.isFollowing(@model.id) then 'following' else 'follow'
     @$el.attr 'data-state', state
 
-  getAuthIntent: ->
+  getIntent: ->
     switch @modelName
-      when "artist" then AuthIntent.followArtist
-      when "profile" then AuthIntent.followPartner
-      when "partner" then AuthIntent.followPartner
-      when "gene" then AuthIntent.followGene
+      when "artist" then Intent.followArtist
+      when "profile" then Intent.followPartner
+      when "partner" then Intent.followPartner
+      when "gene" then Intent.followGene
 
   toggle: (e) ->
     @trigger 'click'
@@ -71,7 +71,7 @@ module.exports = class FollowButton extends Backbone.View
           action: 'follow'
           objectId: @model.id
         }
-        intent: @getAuthIntent()
+        intent: @getIntent()
       })
       return false
 

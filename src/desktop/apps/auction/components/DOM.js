@@ -6,7 +6,7 @@ import { connect } from "react-redux"
 import { showModal } from "../actions/app"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { Intent, ContextModule } from "@artsy/cohesion"
 
 class DOM extends Component {
   static propTypes = {
@@ -83,7 +83,7 @@ class DOM extends Component {
     if (!me) {
       openAuthModal(ModalType.signup, {
         redirectTo: auction.registrationFlowUrl(),
-        intent: AuthIntent.registerToBid,
+        intent: Intent.registerToBid,
         copy: "Sign up to bid on artworks",
         contextModule: ContextModule.auctionSidebar,
       })

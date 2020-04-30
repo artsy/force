@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 ArtworkSaveView = require '../artwork_save/view.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/cohesion"
+{ Intent } = require "@artsy/cohesion"
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View
   subViews: []
@@ -20,7 +20,7 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
       e.preventDefault()
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to bid'
-        intent: AuthIntent.bid
+        intent: Intent.bid
         redirectTo: $(e.currentTarget).attr 'href'
         contextModule: @context_module
       })

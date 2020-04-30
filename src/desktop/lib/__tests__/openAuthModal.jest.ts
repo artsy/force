@@ -1,6 +1,6 @@
 import { openAuthModal, handleScrollingAuthModal } from "../openAuthModal"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { Intent, ContextModule } from "@artsy/cohesion"
 
 jest.mock("desktop/lib/mediator.coffee", () => ({
   trigger: jest.fn(),
@@ -40,7 +40,7 @@ describe("Authentication Helpers", () => {
   describe("#openAuthModal", () => {
     it("opens the mediator with expected args", () => {
       openAuthModal(ModalType.signup, {
-        intent: AuthIntent.followArtist,
+        intent: Intent.followArtist,
         contextModule: ContextModule.artistHeader,
       })
       expect(mediator).toBeCalledWith("open:auth", {
@@ -54,7 +54,7 @@ describe("Authentication Helpers", () => {
   describe("#handleScrollingAuthModal", () => {
     it("opens the mediator with expected args", () => {
       handleScrollingAuthModal({
-        intent: AuthIntent.followArtist,
+        intent: Intent.followArtist,
         contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).toBeCalled()
@@ -70,7 +70,7 @@ describe("Authentication Helpers", () => {
     it("does not open auth on mobile", () => {
       sd.IS_MOBILE = true
       handleScrollingAuthModal({
-        intent: AuthIntent.followArtist,
+        intent: Intent.followArtist,
         contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).not.toBeCalled()
@@ -81,7 +81,7 @@ describe("Authentication Helpers", () => {
     it("does not open auth if current user", () => {
       sd.CURRENT_USER = { id: "123" }
       handleScrollingAuthModal({
-        intent: AuthIntent.followArtist,
+        intent: Intent.followArtist,
         contextModule: ContextModule.popUpModal,
       })
       expect(window.addEventListener).not.toBeCalled()

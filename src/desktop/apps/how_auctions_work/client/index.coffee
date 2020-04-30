@@ -1,7 +1,7 @@
 multiPageView = require '../../../components/multi_page/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/cohesion"
+{ Intent } = require "@artsy/cohesion"
 
 module.exports.init = ->
   view = multiPageView 'auction-faqs'
@@ -21,6 +21,6 @@ module.exports.init = ->
     e.preventDefault()
     openAuthModal(ModalType.signup, {
       copy: 'Sign up to bid on artworks'
-      intent: AuthIntent.registerToBid
+      intent: Intent.registerToBid
       destination: location.href
     })
