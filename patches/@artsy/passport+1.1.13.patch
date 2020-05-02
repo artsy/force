@@ -1,0 +1,34 @@
+patch-package
+--- a/node_modules/@artsy/passport/dist/passport/callbacks.js
++++ b/node_modules/@artsy/passport/dist/passport/callbacks.js
+@@ -29,7 +29,7 @@
+     }
+   };
+
+-  this.local = function(req, username, password, done) {
++  this.local = function(req, username, password, otp, done) {
+     var post, ref;
+     post = request.post(opts.ARTSY_URL + "/oauth2/access_token").set({
+       'User-Agent': req.get('user-agent')
+@@ -38,7 +38,9 @@
+       client_secret: opts.ARTSY_SECRET,
+       grant_type: 'credentials',
+       email: username,
+-      password: password
++      password: password,
++      otp_attempt: otp
++
+     });
+     if ((req != null ? (ref = req.connection) != null ? ref.remoteAddress : void 0 : void 0) != null) {
+       post.set('X-Forwarded-For', resolveProxies(req));
+--- a/node_modules/@artsy/passport/dist/passport/index.js
++++ b/node_modules/@artsy/passport/dist/passport/index.js
+@@ -21,7 +21,8 @@
+     passport.deserializeUser(deserialize);
+     passport.use(new LocalStrategy({
+       usernameField: 'email',
++      otpField: 'otp_attempt',
+       passReqToCallback: true
+     }, callbacks.local));
+     if (opts.FACEBOOK_ID && opts.FACEBOOK_SECRET) {
+       passport.use(new FacebookStrategy({
