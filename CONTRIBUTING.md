@@ -76,15 +76,11 @@ env DEBUG=true yarn start:prod
 
 ## Authentication in your local Force app
 
-Authentication in Force is handled through OAuth, with [Gravity](https://github.com/artsy/gravity) authenticating the user and redirecting back to Force. For security reasons, the `localhost` origin [is forbidden as a redirect URL by Gravity in the staging environment](https://github.com/artsy/gravity/blob/543373d7d4413f5c8b1c8f84f73b2a592c00cba2/app/models/util/url_validation.rb#L23). This means that when running Force locally at `http://localhost:5000`, you won't be able to sign up or log in.
+Authentication in Force is handled by a modified OAuth flow, with [Gravity](https://github.com/artsy/gravity) authenticating the user and redirecting back to Force. For security reasons, the `localhost` origin [is forbidden as a redirect URL by Gravity in the staging environment](https://github.com/artsy/gravity/blob/543373d7d4413f5c8b1c8f84f73b2a592c00cba2/app/models/util/url_validation.rb#L23). This means that when running Force locally at `http://localhost:5000`, the staging Gravity environment won't redirect back to your locally running app to complete the flow.
 
-### Browse locally while logged in
+For most local development in Force, this shouldn't be a problem. The login will still take effect and you can manually visit the desired local URL after logging in.
 
-If you need to run Force locally while logged in but don't need authentication to run locally, you can log into `http://staging.artsy.net`. The user information will propagate to your local browsing session.
-
-### Run authentication logic locally
-
-If you need to run authentication logic locally, you can configure Force to run at an `*.artsy.net` subdomain. Gravity's staging environment considers `*.artsy.net` subdomains to be valid redirect URLs, and authentication actions will succeed.
+If you require the authentication flow to redirect back to your local version, you can configure Force to run locally at an `*.artsy.net` subdomain. Gravity's staging environment considers all `*.artsy.net` subdomains to be valid redirect URLs.
 
 1. Add the following entry to your local hosts file (`/etc/hosts`):
 
