@@ -4,22 +4,27 @@ import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { Intent, ContextModule } from "@artsy/cohesion"
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
-const metaphysics = require("lib/metaphysics.coffee")
+const metaphysics2 = require("lib/metaphysics2.coffee")
 
 export const query = `
 query ArtistCTAQuery($artistID: String!) {
   artist(id: $artistID) {
     name
-    artworks(size: 1) {
-      image {
-        cropped(width: 390, height: 644) {
-          url
+    filterArtworksConnection(first: 1, marketable: true, sort: "-decayed_merch") {
+      edges {
+        node {
+          image {
+            cropped(width: 390, height: 644) {
+              url
+            }
+          }
         }
       }
     }
   }
 }
 `
+
 const send = {
   method: "post",
   query,
@@ -38,8 +43,11 @@ export const setupArtistSignUpModal = () => {
     sd.ARTIST_PAGE_CTA_ARTIST_ID &&
     !artistPageAuthDismissedCookie
   ) {
-    return metaphysics(send).then(({ artist: artistData }) => {
-      const image = get(artistData, "artworks[0].image.cropped.url")
+    return metaphysics2(send).then(({ artist: artistData }) => {
+      const image = get(
+        artistData,
+        "filterArtworksConnection.edges[0].node.image.cropped.url"
+      )
       mediator.on("modal:closed", setCookie)
       handleScrollingAuthModal({
         copy: `Join Artsy to discover new works by ${artistData.name} and more artists you love`,
