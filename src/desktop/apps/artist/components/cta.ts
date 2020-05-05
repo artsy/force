@@ -10,7 +10,7 @@ export const query = `
 query ArtistCTAQuery($artistID: String!) {
   artist(id: $artistID) {
     name
-    filterArtworksConnection(first: 1, marketable: true) {
+    filterArtworksConnection(first: 1, marketable: true, sort: "-decayed_merch") {
       edges {
         node {
           image {
