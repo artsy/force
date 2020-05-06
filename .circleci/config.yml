@@ -4,9 +4,9 @@ orbs:
   codecov: codecov/codecov@1.0.5
   hokusai: artsy/hokusai@0.7.2
   horizon: artsy/release@0.0.1
-  node: artsy/node@dev:dc523d4428b2260798906013dc4d8221
+  node: artsy/node@0.1.0
   slack: circleci/slack@3.4.2
-  yarn: artsy/yarn@dev:cfbc411ee961792773c79ebfa9806c7d
+  yarn: artsy/yarn@4.0.2
 
 jobs:
   acceptance:
