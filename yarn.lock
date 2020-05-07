@@ -58,11 +58,19 @@
     styled-system "^3.1.11"
     trunc-html "^1.1.2"
 
-"@artsy/passport@1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.1.13.tgz#320afafedf904eec94921a6c805a8ae0c7f43a44"
-  integrity sha512-Q1nfPknUrNgYvEszfjIMvigGoSFTHXWOxw5kfn9zzOPBN/+KaRPjE2T0J4GDgs0ytgTBmiw5ODbveDOWeTDH4A==
+"@artsy/passport-local-with-otp@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/passport-local-with-otp/-/passport-local-with-otp-0.3.0.tgz#c27bf342ad0cff13378ace9caae7395bec3c46fd"
+  integrity sha512-gzN4InPgDdtNLxmziTk9ZmrMAf41zCGxG0CP8Fm5Q5RxWZxBJt6FkCqfQeBhpihU2L74lvseDxi5LYI8mkdOdQ==
   dependencies:
+    passport-strategy "1.x.x"
+
+"@artsy/passport@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.2.0.tgz#1f405254b61f3cffacdc5def5d220c960b701787"
+  integrity sha512-3jRlEfMkisREQyETd0ls24Tz2SIvcMiQpNZ885tab6oRcUomfbPjOkWFp/ojqWYjaXxen72t83tAoih/tleIpQ==
+  dependencies:
+    "@artsy/passport-local-with-otp" "^0.3.0"
     "@nicokaiser/passport-apple" "^0.2.1"
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -73,7 +81,6 @@
     mailcheck "^1.1.1"
     passport "^0.3.0"
     passport-facebook "^2.0.0"
-    passport-local "^1.0.0"
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
@@ -12019,13 +12026,6 @@ passport-facebook@^2.0.0:
   integrity sha1-w50LUq5NWRYyRaTiGnubYyEwMxE=
   dependencies:
     passport-oauth2 "1.x.x"
-
-passport-local@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
-  integrity sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
-  dependencies:
-    passport-strategy "1.x.x"
 
 passport-oauth2@1.x.x:
   version "1.4.0"
