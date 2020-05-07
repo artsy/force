@@ -76,9 +76,7 @@ jobs:
             kubectl config use-context staging
 
             if $(kubectl get namespace | grep -qi $review_app_name); then
-              hokusai registry push --force --skip-latest --overwrite --verbose --tag $review_app_name
-              hokusai review_app setup $review_app_name
-              hokusai review_app deploy $review_app_name $review_app_name
+              ./scripts/update_review_app.sh $review_app_name
             else
               ./scripts/build_review_app.sh $review_app_name
             fi

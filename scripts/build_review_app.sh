@@ -10,7 +10,7 @@
 
 echo "[build_review_app.sh] START"
 
-# Bail out of script on first expression failure and sprint the commands as
+# Bail out of script on first expression failure and echo the commands as
 # they are being run.
 set -ev
 
