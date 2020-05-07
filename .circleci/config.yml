@@ -56,7 +56,7 @@ jobs:
           name: Danger
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
-  update_review_app:
+  create_or_update_review_app:
     executor: hokusai/deploy
     steps:
       - hokusai/setup-docker
@@ -180,7 +180,7 @@ workflows:
             - horizon/block
             - validate_production_schema
 
-      - update_review_app:
+      - create_or_update_review_app:
           context: hokusai
           filters:
             branches:
