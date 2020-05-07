@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -ev
-
 # Bail out of script on first expression failure and echo the commands as
 # they are being run.
 set -ev
