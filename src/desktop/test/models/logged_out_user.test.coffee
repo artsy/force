@@ -48,6 +48,11 @@ describe 'LoggedOutUser', ->
         user.login()
         $.ajaxSettings.headers['X-ACCESS-TOKEN'].should.equal 'secrets'
 
+      it 'passes through the supplied OTP attempt', ->
+        user = new LoggedOutUser email: 'foo@bar.com', password: 'foobar', otp_attempt: '123456'
+        user.login()
+        Backbone.sync.args[0][1].attributes.should.containEql otp_attempt: '123456'
+
     describe '#signup', ->
       it 'registers the user model', ->
         LoggedOutUser.__set__ 'sd', AP: signupPagePath: '/users/sign_in'
