@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.0.5
-  hokusai: artsy/hokusai@0.7.2
+  hokusai: artsy/hokusai@0.7.3
   horizon: artsy/release@0.0.1
   node: artsy/node@1.0.0
   slack: circleci/slack@3.4.2
