@@ -56,6 +56,31 @@ jobs:
           name: Danger
           command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
 
+  create_or_update_review_app:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - hokusai/install-aws-iam-authenticator
+      - hokusai/configure-hokusai
+      - run:
+          name: Install jq
+          command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
+      - run:
+          name: Make jq executable
+          command: chmod u+x /usr/local/bin/jq
+      - run:
+          name: "Create or update review app"
+          command: |
+            review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
+
+            kubectl config use-context staging
+
+            if $(kubectl get namespace | grep -qi $review_app_name); then
+              ./scripts/update_review_app.sh $review_app_name
+            else
+              ./scripts/build_review_app.sh $review_app_name
+            fi
+
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
     branches:
@@ -154,3 +179,9 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
+
+      - create_or_update_review_app:
+          context: hokusai
+          filters:
+            branches:
+              only: /^review-app-.*/
