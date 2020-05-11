@@ -232,7 +232,7 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
-          destination: "/articles",
+          redirectTo: "/articles",
           triggerSeconds: 2,
         },
         {
