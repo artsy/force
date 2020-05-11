@@ -4,7 +4,7 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
-{ AuthIntent } = require "@artsy/cohesion"
+{ Intent } = require "@artsy/cohesion"
 
 module.exports = class SaveButton extends Backbone.View
   events:
@@ -38,7 +38,7 @@ module.exports = class SaveButton extends Backbone.View
           action: 'save',
           objectId: @model.id
         }
-        intent: AuthIntent.saveArtwork
+        intent: Intent.saveArtwork
         destination: location.href
       })
       return false

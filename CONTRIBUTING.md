@@ -74,6 +74,28 @@ environment variable to disable webpack optimizations.
 env DEBUG=true yarn start:prod
 ```
 
+## Authentication in your local Force app
+
+Authentication in Force is handled by a modified OAuth flow, with [Gravity](https://github.com/artsy/gravity) authenticating the user and redirecting back to Force. For security reasons, the `localhost` origin [is forbidden as a redirect URL by Gravity in the staging environment](https://github.com/artsy/gravity/blob/543373d7d4413f5c8b1c8f84f73b2a592c00cba2/app/models/util/url_validation.rb#L23). This means that when running Force locally at `http://localhost:5000`, the staging Gravity environment won't redirect back to your locally running app to complete the flow.
+
+For most local development in Force, this shouldn't be a problem. The login will still take effect and you can manually visit the desired local URL after logging in.
+
+If you require the authentication flow to redirect back to your local version, you can configure Force to run locally at an `*.artsy.net` subdomain. Gravity's staging environment considers all `*.artsy.net` subdomains to be valid redirect URLs.
+
+1. Add the following entry to your local hosts file (`/etc/hosts`):
+
+```
+127.0.0.1 local.artsy.net
+```
+
+2. Update your `.env` file with the following setting:
+
+```
+APP_URL=http://local.artsy.net:5000
+```
+
+3. Visit [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
+
 ## Creating a Review App
 
 See [the docs](docs/creating_review_app.md).

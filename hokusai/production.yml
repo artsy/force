@@ -50,6 +50,10 @@ spec:
               memory: 1536Mi
             limits:
               memory: 3.5Gi
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
         - name: force-nginx
           image: artsy/docker-nginx:latest
           ports:
@@ -66,7 +70,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/usr/sbin/nginx", "-s", "quit"]
+                command: ["sh", "-c", "sleep 5 && /usr/sbin/nginx -s quit"]
           env:
             - name: "NGINX_DEFAULT_CONF"
               valueFrom:

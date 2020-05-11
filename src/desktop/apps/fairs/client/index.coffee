@@ -11,7 +11,7 @@ query = require '../query.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-{ AuthIntent, ContextModule } = require "@artsy/cohesion"
+{ Intent, ContextModule } = require "@artsy/cohesion"
 
 pastFairsTemplate = -> require('../templates/past_fairs.jade') arguments...
 
@@ -48,7 +48,7 @@ module.exports.FairsView = class FairsView extends Backbone.View
   triggerOpenAuth: (e)->
     e.preventDefault()
     openAuthModal(ModalType.signup, {
-      intent: AuthIntent.signup
+      intent: Intent.signup
       contextModule: ContextModule.fairsHeader
       copy: "Sign up to follow fairs"
       destination: location.href

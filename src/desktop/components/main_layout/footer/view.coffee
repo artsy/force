@@ -6,7 +6,7 @@ openMultiPageModal = require '../../multi_page_modal/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
 { setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
-{ AuthIntent, ContextModule } = require "@artsy/cohesion"
+{ Intent, ContextModule } = require "@artsy/cohesion"
 
 module.exports = class FooterView extends Backbone.View
   events:
@@ -52,7 +52,7 @@ module.exports = class FooterView extends Backbone.View
     openAuthModal(ModalType.signup, {
       contextModule: ContextModule.footer
       destination: location.href
-      intent: AuthIntent.signup
+      intent: Intent.signup
     })
 
   login: (e) ->
@@ -60,6 +60,6 @@ module.exports = class FooterView extends Backbone.View
     openAuthModal(ModalType.login, {
       contextModule: ContextModule.footer
       destination: location.href
-      intent: AuthIntent.login
+      intent: Intent.login
     })
 

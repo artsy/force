@@ -4,7 +4,7 @@ If wanting to create a deploy for a WIP feature or for QA, [Hokusai](), supports
 
 The process for launching the review app differs somewhat depending on whether your unmerged changes are in Reaction or in Force.
 
-### If your unmerged changes are in Reaction
+### Pre-building steps for Reaction diff
 
 You will first cut a release of Reaction and publish it as a "canary" version to the NPM registry. You will then install this canary release into your copy of Force and launch _that_ as review app.
 
@@ -22,9 +22,24 @@ You will first cut a release of Reaction and publish it as a "canary" version to
 
 From here on out follow the steps in the next section for launching a Force review app. When you are done with the review process revert your change in step 2 above so that Reaction will resume normal versioning.
 
-### If your unmerged changes are in Force
+### Building Review Apps
 
 Launching a Force review app can be automated via the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script.
+
+#### Building on Circle
+
+The easiest and fastest way to spin up a review app is to push your work to
+a branch starting with `review-app`. For example, `review-app-new-form`.
+
+CircleCI will match the `review-app` prefix and either:
+
+1. Create a review app using `build_review_app.sh` if the review app doesn't
+   exist yet (i.e. first successful push of the branch), or
+2. Update an existing review app using `update_review_app.sh`
+
+#### Manual Steps
+
+##### Manual Build
 
 First, make sure `jq` is installed:
 
@@ -38,7 +53,28 @@ Then launch the script:
 ./scripts/build_review_app.sh review-app-name
 ```
 
-When this process is done (and it will take a while) it should output a url similar to
+
+##### Manual Update
+
+If you want to push subsequent changes to the review app you can push a new build to the same tag with the `--overwrite` flag:
+
+```sh
+hokusai registry push --overwrite --skip-latest --force --tag <name>
+```
+
+and you need to redeploy your app:
+
+```sh
+hokusai review_app deploy <name> <name>
+```
+
+😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>`
+
+For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
+
+#### DNS Setup
+
+Regardless of how you created a review app (CircleCI or manually), `build_review_app.sh` will output a hostname like the following:
 
 ```sh
 a99199101d01011e9aff2127c3b176f7-1359163722.us-east-1.elb.amazonaws.com
@@ -57,21 +93,3 @@ If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say,
 1. DNS will propagate and after a few minutes the review app will be available via `<your-subdomain>.artsy.net`
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
-
-## Updating a Review App 
-
-If you want to push subsequent changes to the review app you can push a new build to the same tag with the `--overwrite` flag:
-
-```sh
-hokusai registry push --overwrite --skip-latest --force --tag <name>
-```
-
-and you need to redeploy your app:
-
-```sh
-hokusai review_app deploy <name> <name>
-```
-
-😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>`
-
-For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).

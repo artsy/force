@@ -6,7 +6,7 @@ import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
-import { AuthIntent, ContextModule } from "@artsy/cohesion"
+import { Intent, ContextModule } from "@artsy/cohesion"
 
 interface CreateAccountProps {
   contextPath: string
@@ -34,7 +34,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
       {
         copy: title,
         contextModule: ContextModule.consignSubmissionFlow,
-        intent: AuthIntent.consign,
+        intent: Intent.consign,
         redirectTo: this.redirectUrl,
       },
       values,
@@ -55,7 +55,7 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
           options={{
             copy: this.props.title,
             contextModule: ContextModule.consignSubmissionFlow,
-            intent: AuthIntent.consign,
+            intent: Intent.consign,
             redirectTo: this.redirectUrl,
           }}
           type={this.props.type}

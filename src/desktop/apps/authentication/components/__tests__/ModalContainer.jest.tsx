@@ -3,7 +3,7 @@ import { data as sd } from "sharify"
 import React from "react"
 import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
 import { ModalContainer } from "../ModalContainer"
-import { ContextModule, AuthIntent } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
 const mediator = require("../../../../lib/mediator.coffee")
 
@@ -63,7 +63,7 @@ describe("ModalContainer", () => {
     component.onSocialAuthEvent({
       contextModule: ContextModule.popUpModal,
       mode: ModalType.signup,
-      intent: AuthIntent.viewArtist,
+      intent: Intent.viewArtist,
       service: "facebook",
       redirectTo: "/artist/andy-warhol",
       triggerSeconds: 2,
@@ -81,7 +81,7 @@ describe("ModalContainer", () => {
     component.onSocialAuthEvent({
       contextModule: ContextModule.popUpModal,
       mode: ModalType.login,
-      intent: AuthIntent.viewArtist,
+      intent: Intent.viewArtist,
       service: "apple",
       redirectTo: "/artist/andy-warhol",
       triggerSeconds: 2,

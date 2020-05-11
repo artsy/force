@@ -18,7 +18,7 @@ const CookiesGetMock = require("desktop/components/cookies/index.coffee")
 
 const mediatorOn = require("desktop/lib/mediator.coffee").on as jest.Mock
 
-jest.mock("lib/metaphysics.coffee", () =>
+jest.mock("lib/metaphysics2.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))
 )
 
@@ -26,7 +26,7 @@ jest.spyOn(helpers, "handleScrollingAuthModal")
 
 const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
   .handleScrollingAuthModal
-const mockMetaphysics = require("lib/metaphysics.coffee")
+const mockMetaphysics = require("lib/metaphysics2.coffee")
 
 jest.mock("sharify", () => ({
   data: {
@@ -60,15 +60,20 @@ describe("CTA", () => {
         },
       },
     ],
-    artworks: [
-      {
-        image: {
-          cropped: {
-            url: "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA",
+    filterArtworksConnection: {
+      edges: [
+        {
+          node: {
+            image: {
+              cropped: {
+                url:
+                  "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA",
+              },
+            },
           },
         },
-      },
-    ],
+      ],
+    },
   }
 
   let addEventListener
