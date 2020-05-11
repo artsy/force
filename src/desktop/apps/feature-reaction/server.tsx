@@ -44,7 +44,7 @@ app.get(
         },
         locals: {
           ...res.locals,
-          assetPackage: "feature_reaction",
+          assetPackage: "feature-reaction",
           scripts,
           styleTags,
         },

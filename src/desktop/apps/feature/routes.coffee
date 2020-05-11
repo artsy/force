@@ -4,7 +4,7 @@ Feature = require '../../models/feature.coffee'
   new Feature(id: req.params.id).fetch
     error: res.backboneError
     success: (feature) ->
-      if feature.get('version') && feature.get('version') > 1
+      if feature.has('version') && feature.get('version') > 1
         next()
       else
         res.locals.sd.FEATURE = feature

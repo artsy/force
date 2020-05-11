@@ -12,7 +12,7 @@ buildClientApp({
   context: {
     user: sd.CURRENT_USER,
     mediator,
-  } as any,
+  },
 })
   .then(({ ClientApp }) => {
     loadableReady(() => {
