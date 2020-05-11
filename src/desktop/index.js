@@ -92,6 +92,9 @@ app.use(require("./apps/fair_info"))
 app.use(require("./apps/fair_organizer"))
 app.use(require("./apps/feature"))
 
+// Must appear _after_ /feature so that we properly pass through in only some cases
+app.use(require("./apps/feature-reaction/server").app)
+
 // User profiles
 app.use(require("./apps/user"))
 
