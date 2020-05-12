@@ -17,3 +17,9 @@ describe '#index', ->
     Backbone.sync.args[0][2].success fabricate 'feature', name: 'Awesome Feature'
     renderStub.args[0][0].should.equal 'page'
     renderStub.args[0][1].feature.get('name').should.equal 'Awesome Feature'
+
+  it 'passes through the route if the version is too high', ->
+    next = sinon.stub()
+    routes.index { params: { id: 'awesome-feature' } }, { locals: { sd: {} }, render: renderStub = sinon.stub() }, next
+    Backbone.sync.args[0][2].success fabricate 'feature', name: 'Awesome Feature', version: 2
+    next.calledOnce.should.be.ok()
