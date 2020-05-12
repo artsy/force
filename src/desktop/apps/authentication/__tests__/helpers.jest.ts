@@ -212,8 +212,7 @@ describe("Authentication Helpers", () => {
         },
       })
 
-      expect(window.analytics.track).toBeCalledWith({
-        action: "successfullyLoggedIn",
+      expect(window.analytics.track).toBeCalledWith("successfullyLoggedIn", {
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",
@@ -249,8 +248,7 @@ describe("Authentication Helpers", () => {
         },
       })
 
-      expect(window.analytics.track).toBeCalledWith({
-        action: "createdAccount",
+      expect(window.analytics.track).toBeCalledWith("createdAccount", {
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",
@@ -286,8 +284,7 @@ describe("Authentication Helpers", () => {
         },
       })
 
-      expect(window.analytics.track).toBeCalledWith({
-        action: "resetYourPassword",
+      expect(window.analytics.track).toBeCalledWith("resetYourPassword", {
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",

@@ -78,7 +78,9 @@ export const handleSubmit = (
             analyticsOptions = resetYourPassword(options)
             break
         }
-        analytics.track(analyticsOptions)
+        const { action } = analyticsOptions
+        delete analyticsOptions.action
+        analytics.track(action, analyticsOptions)
       }
 
       let afterAuthURL: URL

@@ -184,7 +184,9 @@ export function trackAuthenticationEvents() {
       Cookies.expire(`analytics-${mode}`)
 
       if (user) {
-        window.analytics.track({
+        const { action } = data
+        delete data.action
+        window.analytics.track(action, {
           ...data,
           userId: user && user.id,
         })

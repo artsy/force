@@ -25,8 +25,7 @@ describe("globalClientSetup", () => {
         { expires: 86400 }
       )
       trackAuthenticationEvents()
-      expect(window.analytics.track).toBeCalledWith({
-        action: "createdAccount",
+      expect(window.analytics.track).toBeCalledWith("createdAccount", {
         auth_redirect: "/artist/andy-warhol",
         context_module: "popUpModal",
         intent: "viewArtist",
@@ -54,8 +53,7 @@ describe("globalClientSetup", () => {
         { expires: 86400 }
       )
       trackAuthenticationEvents()
-      expect(window.analytics.track).toBeCalledWith({
-        action: "successfullyLoggedIn",
+      expect(window.analytics.track).toBeCalledWith("successfullyLoggedIn", {
         auth_redirect: "/artist/andy-warhol",
         context_module: "popUpModal",
         intent: "viewArtist",
