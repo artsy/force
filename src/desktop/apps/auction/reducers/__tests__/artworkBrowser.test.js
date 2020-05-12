@@ -273,6 +273,21 @@ describe("auction/actions/artworkBrowser.test.js", () => {
           false
         )
       })
+
+      it("includes the full list of aggregations", () => {
+        initialResponse.artworkBrowser.filterParams.artist_ids.should.eql([])
+        const oneArtist = auctions(
+          initialResponse,
+          actions.updateArtistId("artist1")
+        )
+        oneArtist.artworkBrowser.filterParams.artist_ids.should.eql(["artist1"])
+        oneArtist.artworkBrowser.filterParams.aggregations.should.eql([
+          "ARTIST",
+          "FOLLOWED_ARTISTS",
+          "MEDIUM",
+          "TOTAL",
+        ])
+      })
     })
 
     describe("#updateArtworks", () => {
@@ -371,6 +386,22 @@ describe("auction/actions/artworkBrowser.test.js", () => {
           "40000-2000000"
         )
       })
+
+      it("includes the full list of aggregations", () => {
+        initialResponse.artworkBrowser.filterParams.estimate_range.should.eql(
+          ""
+        )
+        const updatedEstimateRange = auctions(
+          initialResponse,
+          actions.updateEstimateRangeParams(100, 20000)
+        )
+        updatedEstimateRange.artworkBrowser.filterParams.estimate_range.should.eql(
+          "10000-2000000"
+        )
+        updatedEstimateRange.artworkBrowser.filterParams.aggregations.should.eql(
+          ["ARTIST", "FOLLOWED_ARTISTS", "MEDIUM", "TOTAL"]
+        )
+      })
     })
 
     describe("#updateInitialMediumMap", () => {
@@ -441,26 +472,60 @@ describe("auction/actions/artworkBrowser.test.js", () => {
         )
         allMediums.artworkBrowser.filterParams.gene_ids.should.eql([])
       })
+
+      it("includes the full list of aggregations", () => {
+        initialResponse.artworkBrowser.filterParams.gene_ids.should.eql([])
+        const oneMedium = auctions(
+          initialResponse,
+          actions.updateMediumId("gene-1")
+        )
+        oneMedium.artworkBrowser.filterParams.gene_ids.should.eql(["gene-1"])
+        oneMedium.artworkBrowser.filterParams.aggregations.should.eql([
+          "ARTIST",
+          "FOLLOWED_ARTISTS",
+          "MEDIUM",
+          "TOTAL",
+        ])
+      })
     })
 
     describe("#updatePage", () => {
-      it("updates the page param", () => {
+      it("updates the page param, and doesn't over-fetch aggregations", () => {
         initialResponse.artworkBrowser.filterParams.page.should.eql(1)
+        initialResponse.artworkBrowser.filterParams.aggregations.should.eql([
+          "ARTIST",
+          "FOLLOWED_ARTISTS",
+          "MEDIUM",
+          "TOTAL",
+        ])
         const incrementedPage = auctions(
           initialResponse,
           actions.updatePage(false)
         )
         incrementedPage.artworkBrowser.filterParams.page.should.eql(2)
+        incrementedPage.artworkBrowser.filterParams.aggregations.should.eql([
+          "TOTAL",
+          "FOLLOWED_ARTISTS",
+        ])
         const furtherIncrementedPage = auctions(
           incrementedPage,
           actions.updatePage(false)
         )
         furtherIncrementedPage.artworkBrowser.filterParams.page.should.eql(3)
+        furtherIncrementedPage.artworkBrowser.filterParams.aggregations.should.eql(
+          ["TOTAL", "FOLLOWED_ARTISTS"]
+        )
         const resetPage = auctions(
           furtherIncrementedPage,
           actions.updatePage(true)
         )
         resetPage.artworkBrowser.filterParams.page.should.eql(1)
+        resetPage.artworkBrowser.filterParams.aggregations.should.eql([
+          "ARTIST",
+          "FOLLOWED_ARTISTS",
+          "MEDIUM",
+          "TOTAL",
+        ])
       })
     })
 
