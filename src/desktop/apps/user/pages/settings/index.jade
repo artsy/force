@@ -6,10 +6,9 @@ include ../../templates/mixins
 +settings-section('password', 'Password')
   include ../../components/password/index
 
-if user.get('roles').includes('team') || user.get('lab_features').includes('2FA')
-  +settings-section('two-factor-authentication', '')
-    #stitch-two-factor-authentication
-      != stitch.components.TwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
++settings-section('two-factor-authentication', '')
+  #stitch-two-factor-authentication
+    != stitch.components.TwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
 
 +settings-section('linked-accounts', 'Linked Accounts')
   include ../../components/linked_accounts/index
