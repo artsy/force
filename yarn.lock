@@ -89,10 +89,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.37.0":
-  version "26.37.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.37.0.tgz#85cade29bf505a61e41383410a8eac954fe22cde"
-  integrity sha512-wJfhKAbyZ4z7ZRDXm+kdjnpGmMXSaUOoZ3IS6trHej42ze9NwMLkunMAjg9SxQXV1QNmCi9gJTypSh8XcLVhqA==
+"@artsy/reaction@26.38.0":
+  version "26.38.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.38.0.tgz#f275e745b42d414d0a8ea44bb2cd0d6994a9a9ca"
+  integrity sha512-D9tkvGRQg5s9bUVjlgSxw9kUrR4ov77O9Kf+J49HS85wNSUwaDJeTlFRhWR5/78JUQ5wyfN+0Q08Jb51Pw6tOw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
