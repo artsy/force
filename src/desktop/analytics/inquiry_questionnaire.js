@@ -1,3 +1,13 @@
+import { data as sd } from "sharify"
+import {
+  createdAccount,
+  successfullyLoggedIn,
+  ContextModule,
+  Intent,
+} from "@artsy/cohesion"
+import $ from "jquery"
+const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
+const analytics = window.analytics
 ;(function() {
   "use strict"
 
@@ -195,15 +205,27 @@
 
   // Non-namespaced events
   bind("user:login", function(context) {
-    trackWithoutNamespace("Successfully logged in", {
-      context: "inquiry_questionnaire",
+    const userId = context.user.get("id")
+    const analyticsOptions = successfullyLoggedIn({
+      authRedirect: location.href,
+      contextModule: ContextModule.artworkSidebar,
+      intent: Intent.inquire,
+      service: "email",
+      userId,
     })
+    trackWithoutNamespace(analyticsOptions.action, analyticsOptions)
   })
 
   bind("user:signup", function(context) {
-    trackWithoutNamespace("Created account", {
-      context: "inquiry_questionnaire",
+    const userId = context.user.get("id")
+    const analyticsOptions = createdAccount({
+      authRedirect: location.href,
+      contextModule: ContextModule.artworkSidebar,
+      intent: Intent.inquire,
+      service: "email",
+      userId,
     })
+    trackWithoutNamespace(analyticsOptions.action, analyticsOptions)
   })
 
   bindOnce("inquiry:sync", function(context) {
