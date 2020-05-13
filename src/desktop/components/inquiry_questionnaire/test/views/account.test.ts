@@ -34,7 +34,7 @@ describe(
         view.render()
       })
 
-      it("renders the login page the first time it renders", () => {
+      it("renders the register page the first time it renders", () => {
         view
           .$(".iq-headline")
           .text()
@@ -109,6 +109,86 @@ describe(
         window.grecaptcha.execute.args[0][1].action.should.equal(
           "inquiry_forgot_impression"
         )
+      })
+    })
+
+    describe("two-factor authentication", () => {
+      beforeEach(() => {
+        view.user.related = sinon.stub().returns({ account: { id: "user-id" } })
+        view.active.set("mode", "login")
+        view.render()
+      })
+
+      it("hides the OTP field initially in login form", () => {
+        view
+          .$(".iq-otp-field")
+          .hasClass("is-hidden")
+          .should.be.true()
+      })
+
+      describe("when OTP is required but missing", () => {
+        beforeEach(() => {
+          view.user.related = sinon
+            .stub()
+            .returns({ account: { id: "user-id-2fa-enabled" } })
+          sinon
+            .stub(Backbone, "sync")
+            .onCall(0)
+            .yieldsTo("error", {
+              responseJSON: {
+                error: "missing two-factor authentication code",
+              },
+            })
+        })
+
+        afterEach(() => {
+          Backbone.sync.restore()
+        })
+
+        it("reveals the OTP field", done => {
+          view.$("button").click()
+
+          setTimeout(() => {
+            view
+              .$(".iq-otp-field")
+              .hasClass("is-hidden")
+              .should.be.false()
+            done()
+          }, 1)
+        })
+      })
+
+      describe("when OTP is required but incorrect", () => {
+        beforeEach(() => {
+          view.user.related = sinon
+            .stub()
+            .returns({ account: { id: "user-id-2fa-enabled" } })
+          sinon
+            .stub(Backbone, "sync")
+            .onCall(0)
+            .yieldsTo("error", {
+              responseJSON: {
+                error: "invalid two-factor authentication code",
+              },
+            })
+        })
+
+        afterEach(() => {
+          Backbone.sync.restore()
+        })
+
+        it("displays the error inline", done => {
+          view.$("input#otp_attempt").val("haha jk")
+          view.$("button").click()
+
+          setTimeout(() => {
+            view
+              .$(".js-form-errors")
+              .text()
+              .should.eql("invalid two-factor authentication code")
+            done()
+          }, 0)
+        })
       })
     })
 
@@ -204,7 +284,11 @@ describe(
         sinon
           .stub(Backbone, "sync")
           .onCall(0)
-          .yieldsTo("error")
+          .yieldsTo("error", {
+            responseJSON: {
+              error: "some error message",
+            },
+          })
         view.render()
         view.$('input[name="name"]').val("")
         view.$('input[type="email"]').val("human@email.com")

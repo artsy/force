@@ -57,13 +57,31 @@ module.exports = class Account extends StepView
       @submit(form, recaptcha_token)
     )
 
+  handle2FAError: (form, response) ->
+    errorMessage = response.responseJSON.error
+    if errorMessage is "missing two-factor authentication code"
+      # reset form state
+      form.state.call(form, null)
+      form.reenable.call(form)
+      # reveal OTP field
+      form.$form.find('.iq-otp-field').removeClass('is-hidden')
+      wasHandled = true
+    else if errorMessage is "invalid two-factor authentication code"
+      # display error
+      form.error.call(form, errorMessage)
+      wasHandled = true
+    else
+      wasHandled = false
+    return wasHandled
+
   submit: (form, recaptcha_token) ->
     data = Object.assign {},
       form.data(),
       recaptcha_token: recaptcha_token
     @user.set data
     @user[@mode()] # `login` or `register`
-      error: form.error.bind form
+      error: _.wrap form.error.bind(form), (errorFn, _model, response) =>
+        errorFn() unless @handle2FAError(form, response)
       trigger_login: false
       success: (model, { user }) =>
         @user.repossess user.id,
