@@ -70,7 +70,7 @@ export const handleSubmit = (
             break
           case ModalType.signup:
             analyticsOptions = createdAccount({
-              onboarding: redirectTo && true,
+              onboarding: !redirectTo,
               ...options,
             })
             break

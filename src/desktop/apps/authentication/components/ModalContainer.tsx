@@ -74,7 +74,7 @@ export class ModalContainer extends React.Component<any> {
     let analyticsOptions
     if (mode === "signup") {
       analyticsOptions = createdAccount({
-        onboarding: redirectTo && true,
+        onboarding: !redirectTo,
         ...options,
       })
     } else {

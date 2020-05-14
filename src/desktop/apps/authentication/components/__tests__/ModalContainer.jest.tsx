@@ -29,7 +29,7 @@ describe("ModalContainer", () => {
   it("Mediator can open a login modal", () => {
     const component = mount(<ModalContainer />)
     mediator.trigger("open:auth", { mode: "login" })
-    jest.runTimersToTime(1000)
+    jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
     expect(form.currentType).toBe("login")
   })
@@ -37,7 +37,7 @@ describe("ModalContainer", () => {
   it("Mediator can open a signup modal", () => {
     const component = mount(<ModalContainer />)
     mediator.trigger("open:auth", { mode: "signup" })
-    jest.runTimersToTime(1000)
+    jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
     expect(form.currentType).toBe("signup")
   })
@@ -46,7 +46,7 @@ describe("ModalContainer", () => {
     const component = mount(<ModalContainer />)
     mediator.trigger("open:auth", { mode: "reset_password" })
 
-    jest.runTimersToTime(1000)
+    jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
     expect(form.currentType).toBe("reset_password")
   })
@@ -71,7 +71,7 @@ describe("ModalContainer", () => {
 
     expect(cookieSet).toBeCalledWith(
       "analytics-signup",
-      '{"action":"createdAccount","auth_redirect":"/artist/andy-warhol","context_module":"popUpModal","intent":"viewArtist","onboarding":true,"service":"facebook","trigger":"timed","trigger_seconds":2,"type":"signup"}',
+      '{"action":"createdAccount","auth_redirect":"/artist/andy-warhol","context_module":"popUpModal","intent":"viewArtist","onboarding":false,"service":"facebook","trigger":"timed","trigger_seconds":2,"type":"signup"}',
       { expires: 86400 }
     )
   })

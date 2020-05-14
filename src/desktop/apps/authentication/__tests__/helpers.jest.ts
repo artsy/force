@@ -253,7 +253,7 @@ describe("Authentication Helpers", () => {
         context_module: "popUpModal",
         intent: "viewEditorial",
         modal_copy: undefined,
-        onboarding: true,
+        onboarding: false,
         service: "email",
         trigger: "timed",
         trigger_seconds: 2,
