@@ -6,6 +6,7 @@ import {
   Intent,
 } from "@artsy/cohesion"
 import $ from "jquery"
+import { omit } from "lodash"
 const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
 const analytics = window.analytics
 ;(function() {
@@ -213,7 +214,10 @@ const analytics = window.analytics
       service: "email",
       userId,
     })
-    trackWithoutNamespace(analyticsOptions.action, analyticsOptions)
+    trackWithoutNamespace(
+      analyticsOptions.action,
+      omit(analyticsOptions, "action")
+    )
   })
 
   bind("user:signup", function(context) {
@@ -225,7 +229,10 @@ const analytics = window.analytics
       service: "email",
       userId,
     })
-    trackWithoutNamespace(analyticsOptions.action, analyticsOptions)
+    trackWithoutNamespace(
+      analyticsOptions.action,
+      omit(analyticsOptions, "action")
+    )
   })
 
   bindOnce("inquiry:sync", function(context) {

@@ -38,6 +38,7 @@ import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
+import { omit } from "lodash"
 
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
@@ -185,10 +186,10 @@ export function trackAuthenticationEvents() {
 
       if (user) {
         const { action } = data
-        delete data.action
+        const analyticsOptions = omit(data, "action")
         window.analytics.track(action, {
-          ...data,
-          userId: user && user.id,
+          ...analyticsOptions,
+          user_id: user && user.id,
         })
         analyticsIdentify(user)
       }

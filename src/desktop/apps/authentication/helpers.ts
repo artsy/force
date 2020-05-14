@@ -13,6 +13,7 @@ import {
   successfullyLoggedIn,
   resetYourPassword,
 } from "@artsy/cohesion"
+import { omit } from "lodash"
 
 const mediator = require("desktop/lib/mediator.coffee")
 const LoggedOutUser = require("desktop/models/logged_out_user.coffee")
@@ -78,9 +79,10 @@ export const handleSubmit = (
             analyticsOptions = resetYourPassword(options)
             break
         }
-        const { action } = analyticsOptions
-        delete analyticsOptions.action
-        analytics.track(action, analyticsOptions)
+        analytics.track(
+          analyticsOptions.action,
+          omit(analyticsOptions, "action")
+        )
       }
 
       let afterAuthURL: URL

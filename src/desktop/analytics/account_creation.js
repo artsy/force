@@ -1,4 +1,9 @@
 import mediator from "../lib/mediator.coffee"
+import _ from "underscore"
+import $ from "jquery"
+const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
+const analytics = window.analytics
+
 //
 // Generic events for tracking events around account creation.
 //
@@ -59,20 +64,6 @@ analyticsHooks.on("auth:login", (options = {}) => {
   analytics.track("Successfully logged in", options)
 })
 
-// Triggered sign up form via save button
-if (!sd.CURRENT_USER) {
-  $(".artwork-item-image-container .overlay-button-save").click(function() {
-    analytics.track("Triggered sign up form via save button")
-  })
-}
-
-// Triggered sign up form via follow button
-if (!sd.CURRENT_USER) {
-  $(".follow-button, .entity-follow").click(function() {
-    analytics.track("Triggered sign up form via follow button")
-  })
-}
-
 // Clicked sign up via the header
 $(".mlh-signup").click(function() {
   analytics.track("Clicked sign up via the header")
@@ -83,19 +74,10 @@ $(".mlh-logout").click(function() {
   analytics.track("Clicked logout via the header")
 })
 
-// Viewed sign up options
-var trackViewSignup = (options = {}) => {
-  analytics.track("Viewed sign up options", options)
-}
-
 analyticsHooks.on("mediator:open:auth", (options = {}) => {
-  if (options.mode === "signup") trackViewSignup(options)
-
   analytics.trackLink($(".auth-signup-facebook")[0], "Created account")
   analytics.trackLink($(".auth-signup-twitter")[0], "Created account")
 })
-
-$("#auth-footer [href*=sign_up]").click(trackViewSignup)
 
 // Created account via consignments submission page
 analyticsHooks.on("consignment:account:created", function(options) {
