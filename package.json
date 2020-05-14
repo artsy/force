@@ -189,6 +189,7 @@
     "nyc": "13.3.0",
     "openseadragon": "2.4.0",
     "particle": "artsy/particle",
+    "path-to-regexp": "^6.1.0",
     "places": "artsy/places",
     "popover": "2.4.1",
     "prop-types": "15.7.2",
