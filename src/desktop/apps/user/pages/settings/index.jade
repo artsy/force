@@ -6,7 +6,7 @@ include ../../templates/mixins
 +settings-section('password', 'Password')
   include ../../components/password/index
 
-if user.get('roles').includes('team')
+if user.get('roles').includes('team') || user.get('lab_features').includes('2FA')
   +settings-section('two-factor-authentication', '')
     #stitch-two-factor-authentication
       != stitch.components.TwoFactorAuthentication({ mountId: 'stitch-two-factor-authentication' })
