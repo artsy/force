@@ -20,6 +20,7 @@ const excludedRoutes = [
   "collection",
   "collect",
   "collections",
+  "campaign",
 ]
 if (!excludedRoutes.includes(pageType)) {
   analytics.page(properties, { integrations: { Marketo: false } })
