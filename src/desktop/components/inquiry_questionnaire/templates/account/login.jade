@@ -16,6 +16,11 @@ form.stacked-form
     | Enter your password
   include password
 
+  .iq-otp-field.is-hidden
+    label.avant-garde-form-label( for='otp_attempt' )
+      | Enter an authentication code
+    include otp_attempt
+
   button.avant-garde-button-black.js-form-submit.js-login-email( type='submit' )
     | Log in
 

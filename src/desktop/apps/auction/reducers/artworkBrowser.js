@@ -254,11 +254,15 @@ export default function auctionArtworkFilter(state = initialState, action) {
     }
     case actions.UPDATE_PAGE: {
       const reset = action.payload.reset
+      const {
+        filterParams: { aggregations },
+      } = initialState
       if (reset === true) {
         return u(
           {
             filterParams: {
               page: 1,
+              aggregations,
             },
           },
           state
@@ -269,6 +273,7 @@ export default function auctionArtworkFilter(state = initialState, action) {
           {
             filterParams: {
               page: currentPage + 1,
+              aggregations: ["TOTAL", "FOLLOWED_ARTISTS"],
             },
           },
           state

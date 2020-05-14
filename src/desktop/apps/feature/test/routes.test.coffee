@@ -15,15 +15,21 @@ describe '#index', ->
       locals:
         sd:
           API_URL: 'http://localhost:5000'
+    @next = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
 
   it 'renders the feature page', ->
-    routes.index @req, @res
+    routes.index @req, @res, @next
     Backbone.sync.args[0][2].success fabricate 'feature', name: 'Awesome Feature'
     @res.render.args[0][0].should.equal 'templates/index'
     @res.render.args[0][1].feature.get('name').should.equal 'Awesome Feature'
+
+  it 'passes through the route if the version is too high', ->
+    routes.index @req, @res, @next
+    Backbone.sync.args[0][2].success fabricate 'feature', name: 'Awesome Feature', version: 2
+    @next.calledOnce.should.be.ok()
 
 describe '#redirectCityGuide', ->
 

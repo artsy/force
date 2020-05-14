@@ -1,6 +1,6 @@
 import { buildClientApp } from "reaction/Artsy/Router/client"
 import { data as sd } from "sharify"
-import { routes as viewingRoomRoutes } from "reaction/Apps/ViewingRoom/routes"
+import { routes as featureRoutes } from "reaction/Apps/Feature/routes"
 import React from "react"
 import ReactDOM from "react-dom"
 import { loadableReady } from "@loadable/component"
@@ -8,7 +8,7 @@ import { loadableReady } from "@loadable/component"
 const mediator = require("desktop/lib/mediator.coffee")
 
 buildClientApp({
-  routes: viewingRoomRoutes,
+  routes: featureRoutes,
   context: {
     user: sd.CURRENT_USER,
     mediator,
