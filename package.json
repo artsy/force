@@ -148,6 +148,7 @@
     "factor-bundle": "2.5.0",
     "fastclick": "1.0.6",
     "flickity": "2.1.2",
+    "flickity-imagesloaded": "^2.0.0",
     "forever": "0.15.3",
     "geoformatter": "artsy/geoformatter",
     "geolib": "2.0.22",
