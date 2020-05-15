@@ -6755,7 +6755,7 @@ flatiron@~0.4.2:
     optimist "0.6.0"
     prompt "0.2.14"
 
-flickity-imagesloaded@^2.0.0:
+flickity-imagesloaded@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/flickity-imagesloaded/-/flickity-imagesloaded-2.0.0.tgz#a2d1d6aae6c26369ef2fa44f3eb948ea474e976b"
   integrity sha1-otHWqubCY2nvL6RPPrlI6kdOl2s=
