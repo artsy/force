@@ -5,14 +5,12 @@ import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
 import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/skipIfClientSideRoutingEnabled"
-import adminOnly from "desktop/lib/admin_only"
 
 export const app = express()
 
 app.get(
   "/viewing-room*",
   skipIfClientSideRoutingEnabled,
-  adminOnly,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {
