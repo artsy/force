@@ -34,7 +34,7 @@ describe("globalClientSetup", () => {
         trigger: "timed",
         trigger_seconds: 2,
         type: "signup",
-        userId: "123",
+        user_id: "123",
       })
       expect(window.analytics.identify).toBeCalledWith(
         "123",
@@ -61,7 +61,7 @@ describe("globalClientSetup", () => {
         trigger: "timed",
         trigger_seconds: 2,
         type: "login",
-        userId: "123",
+        user_id: "123",
       })
       expect(window.analytics.identify).toBeCalledWith(
         "123",
