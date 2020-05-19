@@ -172,8 +172,11 @@ function mountStitchComponents() {
 }
 
 /**
- * Track signup and account creation
- * Cookies are set when authenticating via social services
+ * Track signups and account creation via social services
+ * Look for a pre-set cookie containing analytics info after login
+ *
+ * Cookies are set while authenticating
+ * See desktop/apps/authentication/components/ModalContainer
  */
 export function trackAuthenticationEvents() {
   const modes = ["login", "signup"]
