@@ -5,6 +5,7 @@
 
 import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
+import { match } from "path-to-regexp"
 
 // Track pageview
 const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
@@ -13,24 +14,46 @@ var properties = { path: location.pathname }
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
 const excludedRoutes = [
-  "artwork",
-  "orders",
-  "artist",
-  "search",
-  "collection",
-  "collect",
-  "collections",
+  "/artist(.*)",
+  "/artwork(.*)",
+  "/auction-faq",
+  "/auction/:saleID/bid(2)?/:artworkID",
+  "/auction-registration(2)?/:saleID",
+  "/campaign(.*)",
+  "/collect(.*)",
+  "/collection(.*)",
+  "/collections(.*)",
+  "/identity-verification(.*)",
+  "/orders(.*)",
+  "/search(.*)",
+  "/viewing-room(.*)",
+  "/user/conversations(.*)",
+  "/user/purchases(.*)",
 ]
-if (!excludedRoutes.includes(pageType)) {
+
+const foundExcludedPath = excludedRoutes.some(excludedPath => {
+  const matcher = match(excludedPath, { decode: decodeURIComponent })
+  const foundMatch = !!matcher(window.location.pathname)
+  return foundMatch
+})
+
+if (!foundExcludedPath) {
   analytics.page(properties, { integrations: { Marketo: false } })
 }
 
 if (pageType === "auction") {
-  window.addEventListener("load", function() {
-    // distinct event required for marketing integrations (Criteo)
-    const saleSlug = window.location.pathname.split("/")[2]
-    window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
+  // Let reaction track reaction-based app routes
+  const matcher = match("/auction/:saleID/bid(2)?/:artworkID", {
+    decode: decodeURIComponent,
   })
+  const matchedBidRoute = matcher(window.location.pathname)
+  if (!matchedBidRoute) {
+    window.addEventListener("load", function() {
+      // distinct event required for marketing integrations (Criteo)
+      const saleSlug = window.location.pathname.split("/")[2]
+      window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
+    })
+  }
 }
 
 // Track pageload speed
