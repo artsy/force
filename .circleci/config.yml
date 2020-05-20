@@ -54,7 +54,7 @@ jobs:
       - yarn/setup
       - run:
           name: Danger
-          command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5""e1813d0083564c69c325" yarn danger ci
+          command: DANGER_GITHUB_API_TOKEN="15e52de81a772b174cc5e1813d0083564c69c325" yarn danger ci
 
   create_or_update_review_app:
     executor: hokusai/deploy
