@@ -7,11 +7,11 @@ block body
       block banner
         mixin login-signup("header")
       header
-        != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
+        != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, bannerCode: sd.bannerCode, notificationCount: sd.NOTIFICATION_COUNT })
 
     main
       mixin login-signup("header")
-      != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, notificationCount: sd.NOTIFICATION_COUNT })
+      != stitch && stitch.components.NavBar({ user: sd.CURRENT_USER, bannerCode: sd.bannerCode, notificationCount: sd.NOTIFICATION_COUNT })
       block content
 
     include footer

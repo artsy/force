@@ -245,6 +245,12 @@ export default function(app) {
     app.use(splitTestMiddleware)
   }
 
+  // Maybe the url wants to display a banner
+  app.use((req, res, next) => {
+    res.locals.sd.bannerCode = req.query.banner
+    next()
+  })
+
   // Setup hot-swap loader. See https://github.com/artsy/express-reloadable
   if (isDevelopment) {
     const { createReloadable } = require("@artsy/express-reloadable")
