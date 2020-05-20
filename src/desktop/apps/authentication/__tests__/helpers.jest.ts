@@ -211,12 +211,12 @@ describe("Authentication Helpers", () => {
           accessToken: "foobar",
         },
       })
-      // @ts-ignore
-      expect(window.analytics.track).toBeCalledWith("Successfully logged in", {
-        action: "Successfully logged in",
+
+      expect(window.analytics.track).toBeCalledWith("successfullyLoggedIn", {
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",
+        modal_copy: undefined,
         service: "email",
         trigger: "timed",
         trigger_seconds: 2,
@@ -231,7 +231,7 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
-          destination: "/articles",
+          redirectTo: "/articles",
           triggerSeconds: 2,
         },
         {
@@ -247,17 +247,52 @@ describe("Authentication Helpers", () => {
           accessToken: "foobar",
         },
       })
-      // @ts-ignore
-      expect(window.analytics.track).toBeCalledWith("Created account", {
-        action: "Created account",
+
+      expect(window.analytics.track).toBeCalledWith("createdAccount", {
         auth_redirect: "/articles",
         context_module: "popUpModal",
         intent: "viewEditorial",
+        modal_copy: undefined,
+        onboarding: false,
         service: "email",
         trigger: "timed",
         trigger_seconds: 2,
         type: "signup",
         user_id: 123,
+      })
+    })
+
+    it("makes an analytics call on success for forgot", () => {
+      handleSubmit(
+        ModalType.forgot,
+        {
+          contextModule: ContextModule.popUpModal,
+          intent: Intent.viewEditorial,
+          redirectTo: "/articles",
+          triggerSeconds: 2,
+        },
+        {
+          email: "foo@foo.com",
+        },
+        formikBag
+      )
+
+      Backbone.sync.mock.calls[0][2].success({
+        user: {
+          id: 123,
+          accessToken: "foobar",
+        },
+      })
+
+      expect(window.analytics.track).toBeCalledWith("resetYourPassword", {
+        auth_redirect: "/articles",
+        context_module: "popUpModal",
+        intent: "viewEditorial",
+        modal_copy: undefined,
+        service: "email",
+        trigger: "timed",
+        trigger_seconds: 2,
+        type: "forgot",
       })
     })
   })

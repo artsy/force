@@ -31,7 +31,7 @@ const excludedRoutes = [
   "/user/purchases(.*)",
 ]
 
-const foundExcludedPath = excludedRoutes.some((excludedPath) => {
+const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })
   const foundMatch = !!matcher(window.location.pathname)
   return foundMatch
@@ -48,7 +48,7 @@ if (pageType === "auction") {
   })
   const matchedBidRoute = matcher(window.location.pathname)
   if (!matchedBidRoute) {
-    window.addEventListener("load", function () {
+    window.addEventListener("load", function() {
       // distinct event required for marketing integrations (Criteo)
       const saleSlug = window.location.pathname.split("/")[2]
       window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
@@ -62,9 +62,9 @@ if (
   window.performance.timing &&
   sd.TRACK_PAGELOAD_PATHS
 ) {
-  window.addEventListener("load", function () {
+  window.addEventListener("load", function() {
     if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
-      window.setTimeout(function () {
+      window.setTimeout(function() {
         var deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
         reportLoadTimeToVolley(pageType, deviceType)
       }, 0)
@@ -136,10 +136,10 @@ window.desktopPageTimeTrackers = [
 
 // debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {
-  analytics.on("track", function () {
+  analytics.on("track", function() {
     console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
   })
-  analytics.on("page", function () {
+  analytics.on("page", function() {
     console.info(
       "PAGEVIEW TRACKED: ",
       arguments[2],
@@ -151,7 +151,7 @@ if (sd.SHOW_ANALYTICS_CALLS) {
 }
 
 if (sd.SHOW_ANALYTICS_CALLS) {
-  analyticsHooks.on("all", function (name, data) {
+  analyticsHooks.on("all", function(name, data) {
     console.info("ANALYTICS HOOK: ", name, data)
   })
 }

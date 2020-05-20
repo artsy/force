@@ -38,6 +38,7 @@ import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
+import { omit } from "lodash"
 
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
@@ -61,6 +62,7 @@ export function globalClientSetup() {
   initModalManager()
   mountStitchComponents()
   syncAuth()
+  trackAuthenticationEvents()
   mediator.on("auth:logout", logoutEventHandler)
 }
 
@@ -124,7 +126,7 @@ function setupJquery() {
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and
   // the menu will hide and then remove the `display` property so the default
   // CSS will kick in again.
-  $.fn.hidehover = function () {
+  $.fn.hidehover = function() {
     const $el = $(this)
     $el.css({ display: "none" })
     return setTimeout(() => $el.css({ display: "" }), 200)
@@ -154,7 +156,7 @@ function setupErrorReporting() {
     const user = sd && sd.CURRENT_USER
 
     if (sd.CURRENT_USER) {
-      Sentry.configureScope((scope) => {
+      Sentry.configureScope(scope => {
         scope.setUser(_.pick(user, "id", "email"))
       })
     }
@@ -166,5 +168,44 @@ function mountStitchComponents() {
     sharifyData: sd,
     modules: globalReactModules as Components,
     wrapper: globalReactModules.StitchWrapper,
+  })
+}
+
+/**
+ * Track signups and account creation via social services
+ * Look for a pre-set cookie containing analytics info after login
+ *
+ * Cookies are set while authenticating
+ * See desktop/apps/authentication/components/ModalContainer
+ */
+export function trackAuthenticationEvents() {
+  const modes = ["login", "signup"]
+  const user = sd && sd.CURRENT_USER
+
+  modes.forEach(mode => {
+    if (Cookies.get(`analytics-${mode}`)) {
+      const data = JSON.parse(Cookies.get(`analytics-${mode}`))
+      Cookies.expire(`analytics-${mode}`)
+
+      if (user) {
+        const { action } = data
+        const analyticsOptions = omit(data, "action")
+        window.analytics.track(action, {
+          ...analyticsOptions,
+          user_id: user && user.id,
+        })
+        analyticsIdentify(user)
+      }
+    }
+  })
+}
+
+function analyticsIdentify(user) {
+  // FIXME: add typings for user
+  window.analytics.identify(user.id, user.email, {
+    integrations: {
+      All: false,
+      Marketo: true,
+    },
   })
 }

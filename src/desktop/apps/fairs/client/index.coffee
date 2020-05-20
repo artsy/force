@@ -51,7 +51,7 @@ module.exports.FairsView = class FairsView extends Backbone.View
       intent: Intent.signup
       contextModule: ContextModule.fairsHeader
       copy: "Sign up to follow fairs"
-      destination: location.href
+      destination: '/art-fairs'
     })
 
   renderPastFairs: (fairs)->

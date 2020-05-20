@@ -2,6 +2,11 @@ import Cookies from "cookies-js"
 import React from "react"
 import { data as sd } from "sharify"
 
+import {
+  createdAccount,
+  AuthService,
+  successfullyLoggedIn,
+} from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "../helpers"
 import { ModalManager } from "@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager"
 import {
@@ -10,6 +15,10 @@ import {
 } from "reaction/Components/Authentication/Types"
 
 const mediator = require("../../../lib/mediator.coffee")
+
+interface SocialAuthArgs extends ModalOptions {
+  service: AuthService
+}
 
 export class ModalContainer extends React.Component<any> {
   public manager: ModalManager | null
@@ -42,21 +51,37 @@ export class ModalContainer extends React.Component<any> {
     }
   }
 
-  onSocialAuthEvent = (data: any) => {
-    const analyticsOptions = {
-      action:
-        data.mode === "signup" ? "Created account" : "Successfully logged in",
-      type: data.mode,
-      context_module: data.contextModule,
-      modal_copy: data.copy,
-      trigger: data.trigger || "click",
-      trigger_seconds: data.triggerSeconds,
-      intent: data.intent,
-      auth_redirect: data.redirectTo || data.destination,
-      service: data.service,
+  onSocialAuthEvent = ({
+    contextModule,
+    copy,
+    destination,
+    intent,
+    mode,
+    redirectTo,
+    service,
+    triggerSeconds,
+  }: SocialAuthArgs) => {
+    const options = {
+      authRedirect: redirectTo || destination,
+      contextModule,
+      copy,
+      intent,
+      service,
+      triggerSeconds,
+      userId: sd.CURRENT_USER && sd.CURRENT_USER.id,
     }
 
-    Cookies.set(`analytics-${data.mode}`, JSON.stringify(analyticsOptions), {
+    let analyticsOptions
+    if (mode === "signup") {
+      analyticsOptions = createdAccount({
+        onboarding: !redirectTo,
+        ...options,
+      })
+    } else {
+      analyticsOptions = successfullyLoggedIn(options)
+    }
+
+    Cookies.set(`analytics-${mode}`, JSON.stringify(analyticsOptions), {
       expires: 60 * 60 * 24,
     })
   }
