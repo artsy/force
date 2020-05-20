@@ -56,7 +56,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["sh", "-c", "sleep 10"]
+                command: ["sh", "-c", "sleep 35"]
         - name: force-nginx
           image: artsy/docker-nginx:latest
           ports:
@@ -73,7 +73,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["sh", "-c", "sleep 5 && /usr/sbin/nginx -s quit"]
+                command: ["sh", "-c", "sleep 30 && /usr/sbin/nginx -s quit"]
           env:
             - name: "NGINX_DEFAULT_CONF"
               valueFrom:
