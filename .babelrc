@@ -4,7 +4,9 @@
       "@babel/env",
       {
         "targets": {
-          "browsers": ["last 2 versions"]
+          "browsers": [
+            "last 2 versions"
+          ]
         },
         "useBuiltIns": "usage",
         "corejs": 2
@@ -15,15 +17,15 @@
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-nullish-coalescing-operator",
     [
       "@babel/plugin-proposal-decorators",
       {
         "legacy": true
       }
     ],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-nullish-coalescing-operator",
     "@loadable/babel-plugin",
     "@babel/plugin-syntax-dynamic-import",
     [
@@ -44,11 +46,20 @@
     [
       "module-resolver",
       {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "root": ["./src"],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "root": [
+          "./src"
+        ],
         "alias": {
+          "package.json": "./package.json",
           "reaction": "@artsy/reaction/dist",
-          "storybook": "./src/__stories__"
+          "storybook": "./src/v2/__stories__",
+          "v2": "./src/v2"
         }
       }
     ]

@@ -1,6 +1,6 @@
 import { SystemContextProvider } from "v2/Artsy"
 import React from "react"
-import { storiesOfPublishing } from "../../../__stories__/storiesOf.js"
+import { storiesOfPublishing } from "storybook/storiesOf"
 import { Article } from "../Article"
 import {
   ImageHeavyStandardArticle,

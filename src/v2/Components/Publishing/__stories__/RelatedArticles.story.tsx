@@ -1,5 +1,5 @@
 import React from "react"
-import { storiesOfPublishing } from "../../../__stories__/storiesOf.js"
+import { storiesOfPublishing } from "storybook/storiesOf.js"
 import { RelatedCanvas, RelatedPanel } from "../Fixtures/Components"
 import { RelatedArticlesCanvas } from "../RelatedArticles/Canvas/RelatedArticlesCanvas"
 import { RelatedArticlesPanel } from "../RelatedArticles/Panel/RelatedArticlesPanel"

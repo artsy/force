@@ -22,9 +22,18 @@
     "sourceMap": true,
     "target": "es2016",
     "paths": {
-      "reaction/*": ["../node_modules/@artsy/reaction/dist/*"],
-      "v2/*": ["./v2/*"],
-      "storybook/*": ["./v2/__stories__/*"]
+      "package.json": [
+        "./package.json"
+      ],
+      "reaction/*": [
+        "../node_modules/@artsy/reaction/dist/*"
+      ],
+      "storybook/*": [
+        "./v2/__stories__/*"
+      ],
+      "v2/*": [
+        "./v2/*"
+      ],
     },
     "plugins": [
       {
@@ -33,7 +42,11 @@
     ],
     "strict": false
   },
-  "include": ["./src", "./src/v2/Typings/*.d.ts", "typings/*.d.ts"],
+  "include": [
+    "./src",
+    "./src/v2/Typings/*.d.ts",
+    "typings/*.d.ts"
+  ],
   "exclude": [
     "node_modules/*",
     "dist",
