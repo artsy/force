@@ -4,13 +4,17 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "downlevelIteration": true,
+    // "declaration": true,
+    // "emitDeclarationOnly": true,
+    // "incremental": true,
+    "noEmit": true,
+    // Need output directory for incremental type-checking
+    "outDir": ".cache/tsc",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "incremental": true,
     "jsx": "react",
     "module": "es2015",
     "moduleResolution": "node",
-    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
@@ -33,6 +37,7 @@
   },
   "include": [
     "./src",
+    "./src/v2/Typings/*.d.ts",
     "typings/*.d.ts"
   ],
   "exclude": [
