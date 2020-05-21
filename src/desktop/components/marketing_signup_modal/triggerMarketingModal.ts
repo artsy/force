@@ -21,6 +21,8 @@ export const triggerMarketingModal = (
   const modalData = findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
 
   if (sd.MARKETING_SIGNUP_MODALS && modalData && !sd.CURRENT_USER) {
+    // FIXME: reaction migration
+    // @ts-ignore
     const { image, copy } = modalData
     const options: ModalOptions = {
       copy,

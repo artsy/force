@@ -13,35 +13,29 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedParameters": true,
     "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "es2016",
     "paths": {
-      "reaction/*": [
-        "../node_modules/@artsy/reaction/dist/*"
-      ],
-      "v2/*": [
-        "./v2/*"
-      ],
+      "reaction/*": ["../node_modules/@artsy/reaction/dist/*"],
+      "v2/*": ["./v2/*"],
+      "storybook/*": ["./v2/__stories__/*"]
     },
     "plugins": [
       {
         "name": "typescript-styled-plugin"
       }
     ],
+    "strict": false
   },
-  "include": [
-    "./src",
-    "./src/v2/Typings/*.d.ts",
-    "typings/*.d.ts"
-  ],
+  "include": ["./src", "./src/v2/Typings/*.d.ts", "typings/*.d.ts"],
   "exclude": [
-    "node_modules",
+    "node_modules/*",
     "dist",
     "data",
     "externals",

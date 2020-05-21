@@ -17,6 +17,8 @@ describe("trackingMiddleware", () => {
   const noop = x => x
 
   beforeEach(() => {
+    // FIXME: reaction migration
+    // @ts-ignore
     window.analytics = { page: jest.fn() }
   })
 

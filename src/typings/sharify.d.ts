@@ -23,8 +23,8 @@ declare module "sharify" {
       readonly CLIENT_NAVIGATION_V5: "experiment" | "control" // TODO: Remove after A/B test.
       readonly CMS_URL: string
       readonly CDN_URL: string
-      readonly CURRENT_PATH: string
-      CURRENT_USER: object
+      CURRENT_PATH: string
+      CURRENT_USER: User
       readonly ENABLE_SIGN_IN_WITH_APPLE: string // TODO: Remove once sign in with apple is rolled out.
       readonly ENABLE_PRICE_TRANSPARENCY: string
       readonly FACEBOOK_APP_NAMESPACE: string
@@ -34,7 +34,7 @@ declare module "sharify" {
       readonly GENOME_URL: string
       readonly GOOGLE_ADWORDS_ID: string
       readonly IMAGE_LAZY_LOADING: boolean
-      readonly IS_MOBILE: boolean
+      IS_MOBILE: boolean
       readonly DEPLOY_ENV: string
       readonly METAPHYSICS_ENDPOINT: string
       readonly NODE_ENV: string
@@ -45,6 +45,36 @@ declare module "sharify" {
       readonly STRIPE_PUBLISHABLE_KEY: string
       readonly VOLLEY_ENDPOINT: string
       readonly XAPP_TOKEN: string
+
+      // FORCE Tokens
+      AP: {
+        applePath?: string
+        facebookPath?: string
+        twitterPath?: string
+        signupPagePath?: string
+        loginPagePath?: string
+      }
+      API_URL: string
+      APPLICATION_NAME: string
+      ARTIST_PAGE_CTA_ARTIST_ID: string
+      ARTIST_PAGE_CTA_ENABLED: string
+      ARTSY_EDITORIAL_CHANNEL: string
+      ARTSY_XAPP_TOKEN: string
+      CSRF_TOKEN: string
+      GALLERY_INSIGHTS_CHANNEL: string
+      INTERCOM_BUYER_APP_ID: string
+      INTERCOM_BUYER_ENABLED: boolean
+      INTERCOM_BUYER_HASH: string
+      JSON_PAGE_DATA: any
+      MARKETING_SIGNUP_MODALS: any
+      MARKETING_SIGNUP_MODALS: any[]
+      PC_ARTSY_CHANNEL: string
+      PC_AUCTION_CHANNEL: string
+      POSITRON_URL: string
+      TARGET_CAMPAIGN_URL: string
+
+      // FIXME: reaction migration
+      stitch: any
     }
 
     export interface ResponseLocalData extends GlobalData {

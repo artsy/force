@@ -42,6 +42,8 @@ describe("AuthWrapper", () => {
     mediatorOn.mockClear()
     mediatorTrigger.mockClear()
     mediatorOn.mockClear()
+    // FIXME: reaction migration
+    // @ts-ignore
     sharify.mockClear()
     handleScrollingAuthModal.mockClear()
   })

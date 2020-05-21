@@ -30,6 +30,8 @@ describe("ModalContainer", () => {
     mediator.trigger("open:auth", { mode: "login" })
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
+    // FIXME: reaction migration
+    // @ts-ignore
     expect(form.currentType).toBe("login")
   })
 
@@ -38,6 +40,8 @@ describe("ModalContainer", () => {
     mediator.trigger("open:auth", { mode: "signup" })
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
+    // FIXME: reaction migration
+    // @ts-ignore
     expect(form.currentType).toBe("signup")
   })
 
@@ -47,6 +51,8 @@ describe("ModalContainer", () => {
 
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
+    // FIXME: reaction migration
+    // @ts-ignore
     expect(form.currentType).toBe("reset_password")
   })
 

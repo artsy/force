@@ -37,7 +37,7 @@ const FairLogo = styled.img`
   }
 `
 
-const ResponsiveRow = styled(Row)`
+const ResponsiveRow = styled(Row)<any>`
   ${props =>
     props.paddingBottom &&
     `padding-bottom: ${props.paddingBottom}px;`} @media (max-width: 48em) {
