@@ -97,7 +97,7 @@ export class ModalContainer extends React.Component<any> {
           facebook: sd.AP.facebookPath,
           twitter: sd.AP.twitterPath,
         }}
-        csrf={sd.CSRF_TOKEN}
+        csrf={Cookies && Cookies.get && Cookies.get("CSRF_TOKEN")}
         handleSubmit={handleSubmit}
         onSocialAuthEvent={this.onSocialAuthEvent}
         onModalClose={() => {

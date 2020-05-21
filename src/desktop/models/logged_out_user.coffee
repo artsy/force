@@ -1,7 +1,8 @@
 Q = require 'bluebird-q'
 _ = require 'underscore'
+Cookies = require 'cookies-js'
 Backbone = require 'backbone'
-{ API_URL, CSRF_TOKEN, APP_URL, SESSION_ID } = require('sharify').data
+{ API_URL, APP_URL, SESSION_ID } = require('sharify').data
 User = require './user.coffee'
 sd = require('sharify').data
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
@@ -29,7 +30,7 @@ module.exports = class LoggedOutUser extends User
   __isRecentlyRegistered__: false
 
   defaults:
-    _csrf: CSRF_TOKEN
+    _csrf: Cookies && Cookies.get && Cookies.get 'CSRF_TOKEN' || undefined
 
   initialize: ->
     syncWithSessionId()
