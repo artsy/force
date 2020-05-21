@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { NavBar as ReactionNavBar } from "v2/Components/NavBar"
-import { EmailConfirmationBanner } from "reaction/Components/EmailConfirmationBanner"
+import { FlashBanner } from "v2/Components/FlashBanner"
 import { data as sd } from "sharify"
 
 import { SystemContextProvider, SystemContextProps } from "v2/Artsy"
@@ -24,17 +24,16 @@ interface NavBarProps {
   user: SystemContextProps["user"]
   notificationCount: number
   searchQuery?: string
-  bannerCode?: string
+  flashMessage?: string
 }
 
 export const NavBar: React.FC<NavBarProps> = ({
-  bannerCode,
+  flashMessage,
   notificationCount,
   searchQuery,
   user,
 }) => {
   const showStagingBanner = sd.APPLICATION_NAME === "force-staging"
-  console.log({ bannerCode })
   return (
     <SystemContextProvider
       mediator={mediator}
@@ -45,16 +44,8 @@ export const NavBar: React.FC<NavBarProps> = ({
       <NavBarContainer id="main-layout-header">
         {showStagingBanner && <StagingBanner />}
         <ReactionNavBar />
-        {bannerCode && <UserAlertBanner messageCode={bannerCode} />}
+        {flashMessage && <FlashBanner messageCode={flashMessage as any} />}
       </NavBarContainer>
     </SystemContextProvider>
   )
-}
-
-const UserAlertBanner: React.FC<{ messageCode: string }> = ({
-  messageCode,
-}) => {
-  return messageCode ? (
-    <EmailConfirmationBanner messageCode={messageCode} />
-  ) : null
 }
