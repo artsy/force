@@ -30,9 +30,6 @@ hash =
   '^/unsubscribe*': ->
     require('../apps/unsubscribe/client.coffee').init()
 
-  '^/feature/([^/]+)$': ->
-    require('../apps/feature/client/index.coffee').init()
-
   '^/profile/.*': ->
     require '../apps/profile/client.coffee'
 

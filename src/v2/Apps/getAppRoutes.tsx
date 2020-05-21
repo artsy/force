@@ -4,6 +4,7 @@ import { routes as artistRoutes } from "v2/Apps/Artist/routes"
 import { routes as artworkRoutes } from "v2/Apps/Artwork/routes"
 import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/routes"
+import { routes as featureRoutes } from "v2/Apps/Feature/routes"
 import { routes as identityVerificationRoutes } from "v2/Apps/IdentityVerification/routes"
 import { routes as orderRoutes } from "v2/Apps/Order/routes"
 import { routes as purchasesRoutes } from "v2/Apps/Purchase/routes"
@@ -23,6 +24,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: conversationRoutes,
+    },
+    {
+      routes: featureRoutes,
     },
     {
       routes: identityVerificationRoutes,

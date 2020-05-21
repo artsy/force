@@ -11,8 +11,6 @@ routes =
 
   '/contact': require('../apps/contact/client/index.coffee').init
 
-  '/feature': require('../apps/feature/client/index.coffee').init
-
   '/jobs': require('../apps/jobs/client/index.coffee').init
 
   '/unsubscribe': require('../apps/unsubscribe/client/index.coffee').init

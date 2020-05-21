@@ -23,6 +23,7 @@ const excludedRoutes = [
   "/collect(.*)",
   "/collection(.*)",
   "/collections(.*)",
+  "/feature(.*)",
   "/identity-verification(.*)",
   "/orders(.*)",
   "/search(.*)",
