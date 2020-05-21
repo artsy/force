@@ -3,6 +3,10 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "incremental": true,
     "jsx": "react",
     "module": "es2015",
     "moduleResolution": "node",
@@ -14,8 +18,30 @@
     "sourceMap": true,
     "target": "es2016",
     "paths": {
-      "reaction/*": ["../node_modules/@artsy/reaction/dist/*"]
-    }
+      "reaction/*": [
+        "../node_modules/@artsy/reaction/dist/*"
+      ],
+      "v2/*": [
+        "./v2/*"
+      ],
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ],
   },
-  "include": ["./src", "typings/*.d.ts"]
+  "include": [
+    "./src",
+    "typings/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "data",
+    "externals",
+    "danger",
+    "src/__generated__/**.ts",
+    "src/v2/__generated__/**.ts"
+  ]
 }
