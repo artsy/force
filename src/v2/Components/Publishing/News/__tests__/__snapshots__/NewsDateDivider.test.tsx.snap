@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsDateDivider renders a news date header properly 1`] = `
+.c1 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 25px;
+  line-height: 1.1em;
+}
+
+.c0 {
+  margin-top: 80px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width:720px) {
+  .c1 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 {
+    margin-top: 40px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    Jul 19, 2018
+  </div>
+</div>
+`;

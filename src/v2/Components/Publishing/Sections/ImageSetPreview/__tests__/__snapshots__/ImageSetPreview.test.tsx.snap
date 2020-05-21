@@ -1,0 +1,494 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a full image set properly 1`] = `
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c4 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  padding-bottom: 8px;
+}
+
+.c6 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c7 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  padding-left: 20px;
+}
+
+.c8 {
+  height: 45px;
+  position: relative;
+  margin-left: 40px;
+  text-align: right;
+}
+
+.c8 > svg {
+  height: 98%;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 {
+  position: relative;
+  width: 100%;
+}
+
+.c1 {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  min-height: 50px;
+  width: auto;
+  max-width: calc(100% - 80px);
+  border-radius: 2px;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.c1:hover {
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+.c1:hover path,
+.c1:hover polygon {
+  fill: white;
+}
+
+.c9 {
+  height: auto;
+  width: 100%;
+}
+
+@media screen and (min-width:40em) {
+  .c4 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c4 {
+    line-height: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c6 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c6 {
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c7 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c7 {
+    line-height: 24px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+  >
+    <div
+      className="c2"
+    >
+      <div
+        className="c3"
+      >
+        <div
+          className="c4"
+          fontFamily={
+            Object {
+              "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+              "fontWeight": 500,
+            }
+          }
+          fontSize={
+            Array [
+              "16px",
+              "18px",
+            ]
+          }
+          style={Object {}}
+        >
+          The Work of Bruce M. Sherman
+        </div>
+        <div
+          className="c5"
+        >
+          <div
+            className="c6"
+            fontFamily={
+              Object {
+                "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                "fontWeight": 500,
+              }
+            }
+            fontSize={
+              Array [
+                "12px",
+                "14px",
+              ]
+            }
+            style={Object {}}
+          >
+            View Slideshow
+          </div>
+          <div
+            className="c7"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize={
+              Array [
+                "12px",
+                "14px",
+              ]
+            }
+            style={Object {}}
+          >
+            3 Images
+          </div>
+        </div>
+      </div>
+      <div
+        className="fresnel-container fresnel-greaterThanOrEqual-sm"
+        suppressHydrationWarning={false}
+      >
+        <div
+          className="c8"
+        >
+          <svg
+            className="image-set"
+            viewBox="0 0 44 44"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6760.67,551.72h-32v-32h32v32Zm-30-2h28v-28h-28v28Z"
+              fill="black"
+              transform="translate(-6728.67 -507.72)"
+            />
+            <polygon
+              fill="black"
+              points="38 37 36 37 36 8 7 8 7 6 38 6 38 37"
+            />
+            <polygon
+              fill="black"
+              points="44 31 42 31 42 2 13 2 13 0 44 0 44 31"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className=""
+  >
+    <img
+      alt="The Work of Bruce M. Sherman"
+      className="c9"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=800&quality=80"
+    />
+  </div>
+</div>
+`;
+
+exports[`renders a mini image set properly 1`] = `
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c6 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  padding-bottom: 8px;
+}
+
+.c8 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c9 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  padding-left: 20px;
+}
+
+.c10 {
+  height: 45px;
+  position: relative;
+  margin-left: 40px;
+  text-align: right;
+}
+
+.c10 > svg {
+  height: 98%;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 {
+  position: relative;
+  width: 100%;
+}
+
+.c3 {
+  height: auto;
+  width: 100%;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100px;
+  padding: 10px 0 10px 10px;
+  border: 1px solid #E5E5E5;
+  cursor: pointer;
+}
+
+.c1 .c2 {
+  height: 100%;
+  width: auto;
+}
+
+@media screen and (min-width:40em) {
+  .c6 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c6 {
+    line-height: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c8 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c8 {
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c9 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c9 {
+    line-height: 24px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+  >
+    <img
+      alt="The Work of Bruce M. Sherman"
+      className="c2 c3"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=200&quality=80"
+    />
+    <div
+      className="c4"
+    >
+      <div
+        className="c5"
+      >
+        <div
+          className="c6"
+          fontFamily={
+            Object {
+              "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+              "fontWeight": 500,
+            }
+          }
+          fontSize={
+            Array [
+              "16px",
+              "18px",
+            ]
+          }
+          style={Object {}}
+        >
+          The Work of Bruce M. Sherman
+        </div>
+        <div
+          className="c7"
+        >
+          <div
+            className="c8"
+            fontFamily={
+              Object {
+                "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                "fontWeight": 500,
+              }
+            }
+            fontSize={
+              Array [
+                "12px",
+                "14px",
+              ]
+            }
+            style={Object {}}
+          >
+            View Slideshow
+          </div>
+          <div
+            className="c9"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize={
+              Array [
+                "12px",
+                "14px",
+              ]
+            }
+            style={Object {}}
+          >
+            3 Images
+          </div>
+        </div>
+      </div>
+      <div
+        className="fresnel-container fresnel-greaterThanOrEqual-sm"
+        suppressHydrationWarning={false}
+      >
+        <div
+          className="c10"
+        >
+          <svg
+            className="image-set"
+            viewBox="0 0 44 44"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6760.67,551.72h-32v-32h32v32Zm-30-2h28v-28h-28v28Z"
+              fill="black"
+              transform="translate(-6728.67 -507.72)"
+            />
+            <polygon
+              fill="black"
+              points="38 37 36 37 36 8 7 8 7 6 38 6 38 37"
+            />
+            <polygon
+              fill="black"
+              points="44 31 42 31 42 2 13 2 13 0 44 0 44 31"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

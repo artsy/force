@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+.c3 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.c7 {
+  font-family: artsy-icons;
+  color: black;
+  font-size: 24px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: black;
+}
+
+.c2 {
+  margin-right: 20px;
+  min-width: 60px;
+  min-height: 60px;
+  border-radius: 50%;
+  background: url(https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F9vcX6FR21rKHatmvJ8K0sg%252FAbigail.jpg&width=200&quality=80) no-repeat center center;
+  background-size: cover;
+}
+
+.c8 {
+  margin-right: 20px;
+  min-width: 60px;
+  min-height: 60px;
+  border-radius: 50%;
+  background: url(https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=http%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmolly_01.jpg&width=200&quality=80) no-repeat center center;
+  background-size: cover;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.c1 a {
+  color: black;
+}
+
+.c4 {
+  margin-right: 20px;
+}
+
+.c5 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.c5 .c6 {
+  vertical-align: middle;
+  margin: 0;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media (max-width:600px) {
+  .c2 {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+@media (max-width:600px) {
+  .c8 {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    color="black"
+  >
+    <div
+      className="c2"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F9vcX6FR21rKHatmvJ8K0sg%252FAbigail.jpg&width=200&quality=80"
+    />
+    <div
+      className="c3"
+      fontFamily={
+        Object {
+          "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+          "fontWeight": 500,
+        }
+      }
+      fontSize="16px"
+      style={Object {}}
+    >
+      <span
+        className="c4"
+      >
+        <span>
+          <a
+            href="https://artsy.net/abigail"
+          >
+            Abigail Cain
+          </a>
+           is an Art Market Editor at Artsy
+        </span>
+      </span>
+      <span>
+        <a
+          className="c5"
+          href="http://twitter.com/abigailcain"
+        >
+          <div
+            className="c6 c7"
+          >
+            
+          </div>
+          @abigailcain
+        </a>
+      </span>
+    </div>
+  </div>
+  <div
+    className="c1"
+    color="black"
+  >
+    <div
+      className="c8"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=http%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmolly_01.jpg&width=200&quality=80"
+    />
+    <div
+      className="c3"
+      fontFamily={
+        Object {
+          "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+          "fontWeight": 500,
+        }
+      }
+      fontSize="16px"
+      style={Object {}}
+    >
+      <span
+        className="c4"
+      >
+        <span>
+          <a
+            href="https://artsy.net/molly"
+          >
+            Molly Gottschalk
+          </a>
+           is a Features Producer at Artsy. She is a photographer and lover of cats.
+        </span>
+      </span>
+      <span>
+        <a
+          className="c5"
+          href="http://twitter.com/mollygottschalk"
+        >
+          <div
+            className="c6 c7"
+          >
+            
+          </div>
+          @mollygottschalk
+        </a>
+      </span>
+    </div>
+  </div>
+  <div
+    className="c1"
+    color="black"
+  >
+    <div
+      className="c3"
+      fontFamily={
+        Object {
+          "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+          "fontWeight": 500,
+        }
+      }
+      fontSize="16px"
+      style={Object {}}
+    >
+      <span
+        className="c4"
+      >
+        <span>
+          <a
+            href="https://artsy.net/molly"
+          >
+            Halley Johnson
+          </a>
+           is an Writer Guru at Artsy. She enjoys speaking Georgian.
+        </span>
+      </span>
+      <span>
+        <a
+          className="c5"
+          href="http://twitter.com/halleyjohnson"
+        >
+          <div
+            className="c6 c7"
+          >
+            
+          </div>
+          @halleyjohnson
+        </a>
+      </span>
+    </div>
+  </div>
+  <div
+    className="c1"
+    color="black"
+  >
+    <div
+      className="c3"
+      fontFamily={
+        Object {
+          "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+          "fontWeight": 500,
+        }
+      }
+      fontSize="16px"
+      style={Object {}}
+    >
+      <span
+        className="c4"
+      >
+        <div>
+          Kana Abe
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;

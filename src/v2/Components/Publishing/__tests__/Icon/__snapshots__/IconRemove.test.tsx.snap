@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+<svg
+  className="remove"
+  enableBackground="new 0 0 1000 1000"
+  viewBox="0 0 1000 1000"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle
+    cx="500.937"
+    cy="489.704"
+    fill="black"
+    r="468.769"
+  />
+  <polygon
+    fill="white"
+    points="485.251,550.605 374.762,661.094 308.487,594.819 418.976,484.33 308.487,373.84 374.762,307.565 485.251,418.055 595.741,307.565 662.016,373.84 551.526,484.33 662.016,594.819 595.741,661.094 "
+  />
+</svg>
+`;
+
+exports[`renders with fill props 1`] = `
+<svg
+  className="remove"
+  enableBackground="new 0 0 1000 1000"
+  viewBox="0 0 1000 1000"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle
+    cx="500.937"
+    cy="489.704"
+    fill="red"
+    r="468.769"
+  />
+  <polygon
+    fill="white"
+    points="485.251,550.605 374.762,661.094 308.487,594.819 418.976,484.33 308.487,373.84 374.762,307.565 485.251,418.055 595.741,307.565 662.016,373.84 551.526,484.33 662.016,594.819 595.741,661.094 "
+  />
+</svg>
+`;

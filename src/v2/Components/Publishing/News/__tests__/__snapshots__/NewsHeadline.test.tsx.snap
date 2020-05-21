@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a headline with children properly 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 780;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c1 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+@media screen and (min-width:40em) {
+  .c1 {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c1 {
+    line-height: initial;
+  }
+}
+
+<div
+  className=""
+>
+  <div
+    className="c0"
+  >
+    <h1
+      className="c1"
+      fontFamily={
+        Object {
+          "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+          "fontWeight": 600,
+        }
+      }
+      fontSize={
+        Array [
+          "26px",
+          "32px",
+        ]
+      }
+      style={Object {}}
+    >
+      <div>
+        Child 
+        title
+      </div>
+    </h1>
+  </div>
+</div>
+`;
+
+exports[`renders a news headline properly 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 780;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c1 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+@media screen and (min-width:40em) {
+  .c1 {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c1 {
+    line-height: initial;
+  }
+}
+
+<div
+  className=""
+>
+  <div
+    className="c0"
+  >
+    <h1
+      className="c1"
+      fontFamily={
+        Object {
+          "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+          "fontWeight": 600,
+        }
+      }
+      fontSize={
+        Array [
+          "26px",
+          "32px",
+        ]
+      }
+      style={Object {}}
+    >
+      The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.
+    </h1>
+  </div>
+</div>
+`;

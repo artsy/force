@@ -1,0 +1,325 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+.c8 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.c10 {
+  margin-right: 30px;
+}
+
+.c11 {
+  white-space: nowrap;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c7 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c7 .title,
+.c7 .title a {
+  font-style: italic;
+}
+
+.c5 {
+  display: none;
+}
+
+.c6 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c6 a {
+  color: black;
+}
+
+.c12 {
+  margin-left: 20px;
+  white-space: nowrap;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 30px 60px;
+}
+
+.c3 p {
+  margin: 0;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+}
+
+.c2 {
+  display: block;
+  background: url(https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=1200&quality=80) no-repeat center;
+  background-size: contain;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 50px 60px;
+}
+
+.c1 {
+  min-height: 25px;
+  padding: 30px 60px 0 60px;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+}
+
+@media screen and (min-width:40em) {
+  .c8 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c8 {
+    line-height: 26px;
+  }
+}
+
+@media (max-width:720px) {
+  .c7 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:720px) {
+  .c9.artist-name {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width:720px) {
+  .c5 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .c5 span {
+    border-bottom: 1px solid black;
+  }
+}
+
+@media (max-width:720px) {
+  .c6 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    display: none;
+    margin-top: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c12 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:720px) {
+  .c3 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vh;
+    padding: 20px;
+  }
+}
+
+@media (max-width:720px) {
+  .c2 {
+    margin: 20px 0 80px 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c1 {
+    padding: 20px 60px 0 20px;
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 19px;
+    line-height: 1.5em;
+  }
+}
+
+<div
+  onClose={[MockFunction]}
+  show={true}
+>
+  <div
+    className="c0"
+  >
+    <div
+      className="c1"
+    >
+      
+    </div>
+    <div
+      className="c2"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=1200&quality=80"
+    />
+    <div
+      className="c3"
+    >
+      <div
+        className="c4"
+      >
+        <div
+          className="fullscreen-viewer__caption-toggle c5"
+        >
+          <span>
+            View Caption
+          </span>
+        </div>
+        <div
+          className="c6"
+        >
+          <div>
+            <div
+              className="c7 c8"
+              fontFamily={
+                Object {
+                  "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  "fontWeight": 500,
+                }
+              }
+              fontSize={
+                Array [
+                  "14px",
+                  "16px",
+                ]
+              }
+              style={Object {}}
+            >
+              <div
+                className="c9"
+              >
+                <span
+                  className="c10"
+                >
+                  <span
+                    className="c11"
+                  >
+                    <a
+                      href="/artist/fernando-botero"
+                    >
+                      Fernando Botero
+                    </a>
+                  </span>
+                </span>
+              </div>
+              <div>
+                <div
+                  className="c9"
+                >
+                  <span
+                    className="title"
+                  >
+                    <a
+                      href="/artwork/fernando-botero-nude-on-the-beach"
+                    >
+                      Nude on the Beach
+                    </a>
+                  </span>
+                  <span>
+                    , 
+                  </span>
+                  <span
+                    className="date"
+                  >
+                    2000
+                  </span>
+                </div>
+                <div
+                  className="c9"
+                >
+                  <a
+                    href="/gary-nader"
+                  >
+                    Gary Nader
+                  </a>
+                  <span>
+                    . 
+                  </span>
+                  <span
+                    className="credit"
+                  >
+                    Courtesy of Gary Nader
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c12"
+      >
+        undefined of undefined
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoControls renders properly 1`] = `
+.c11 {
+  width: 28px;
+  height: 28px;
+}
+
+.c9 {
+  height: 28px;
+  cursor: pointer;
+}
+
+.c4 {
+  width: 32px;
+  height: 32px;
+}
+
+.c3 {
+  height: 28px;
+  width: 28px;
+  cursor: pointer;
+}
+
+.c12 {
+  width: 100%;
+  background-size: 0% 100%;
+  height: 18px;
+  margin-top: 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+.c12::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c12::-ms-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: transparent;
+  border: 0px;
+  color: transparent;
+}
+
+.c12::-webkit-slider-runnable-track {
+  height: 2px;
+  cursor: pointer;
+  -webkit-animate: 0.2s;
+  animate: 0.2s;
+  background-color: white;
+  border: 0px;
+}
+
+.c12::-moz-range-track {
+  height: 2px;
+  cursor: pointer;
+  -webkit-animate: 0.2s;
+  animate: 0.2s;
+  background-color: white;
+  border: 0px;
+}
+
+.c12::-webkit-slider-thumb {
+  color: white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c12::-moz-range-thumb {
+  color: white;
+  box-shadow: 0px 0px 0px white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c12::-ms-fill-lower {
+  background: white;
+  border: 0px;
+}
+
+.c12::-ms-fill-upper {
+  background: white;
+  border: 0px;
+}
+
+.c12::-ms-thumb {
+  color: white;
+  box-shadow: 0px 0px 0px white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c12:focus::-webkit-slider-runnable-track {
+  background: white;
+}
+
+.c12:focus {
+  outline: none;
+}
+
+.c7 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.c0 {
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 20px;
+  margin: 20px;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.c0 .c6 {
+  margin-right: 30px;
+}
+
+.c0 .c8 {
+  margin-right: 20px;
+}
+
+.c0 .c10 {
+  cursor: pointer;
+}
+
+.c5 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  margin-left: 20px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="c2"
+    >
+      <div
+        className="c3"
+        onClick={[MockFunction]}
+      >
+        <svg
+          className="c4"
+          version="1.1"
+          viewBox="0 0 40 56"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <g
+            fill="none"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="1"
+          >
+            <polygon
+              fill="white"
+              points="0 0 0 56 39.3600006 28"
+            />
+          </g>
+        </svg>
+      </div>
+      <div
+        className="c5"
+      >
+        Video Title
+      </div>
+    </div>
+    <div
+      className="c2"
+    >
+      <div
+        className="c6 c7"
+      >
+        00:00
+         / 
+        23:20
+      </div>
+      <div
+        className="c8 c9"
+        onClick={[MockFunction]}
+      >
+        <svg
+          height="30px"
+          width="30px"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="white"
+          >
+            <path
+              d="M19.1285714,15.3428571 L19.1285714,28.7571429 L11.8285714,21.4714286 L0.757142857,21.4714286 L0.757142857,8.04285714 L11.8285714,8.04285714 L19.1285714,0.757142857 L19.1285714,15.3428571 Z"
+            />
+          </g>
+        </svg>
+      </div>
+      <svg
+        className="c10 c11"
+        height="32px"
+        onClick={[MockFunction]}
+        viewBox="0 0 28 28"
+        width="32px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="none"
+          fillRule="evenodd"
+          transform="translate(-1151 -22)"
+        >
+          <rect
+            height="92"
+            rx="4"
+            stroke="white"
+            width="1200"
+          />
+          <path
+            d="M1150 21h30v30h-30z"
+          />
+          <g
+            fill="#FFF"
+          >
+            <path
+              d="M1151 40h2v10h-2z"
+            />
+            <path
+              d="M1161 48v2h-10v-2zM1161 22v2h-10v-2z"
+            />
+            <path
+              d="M1153 32h-2V22h2z"
+            />
+            <g>
+              <path
+                d="M1179 32h-2V22h2z"
+              />
+              <path
+                d="M1169 24v-2h10v2z"
+              />
+            </g>
+            <g>
+              <path
+                d="M1169 50v-2h10v2z"
+              />
+              <path
+                d="M1177 40h2v10h-2z"
+              />
+            </g>
+          </g>
+          <path
+            d="M1157 28h16v16h-16z"
+            fill="#FFF"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+  <input
+    className="c12"
+    max="5000.0000"
+    onChange={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    step="any"
+    type="range"
+    value={0}
+  />
+</div>
+`;

@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Video Info Block matches the snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  margin-right: 20px;
+}
+
+.c3 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.c4 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 42px;
+  line-height: 50px;
+}
+
+.c1 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<div>
+  <div
+    className="c0"
+  >
+    <div
+      className="c1 c2"
+      fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+      fontSize="14px"
+      style={Object {}}
+    >
+      The Future of Art
+    </div>
+    <div
+      className="c3"
+      fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+      fontSize="14px"
+      style={Object {}}
+    >
+      02:28
+    </div>
+  </div>
+  <h1
+    className="c4"
+    fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    fontSize="42px"
+    style={Object {}}
+  >
+    Trevor Paglan
+  </h1>
+</div>
+`;
+
+exports[`Video Info Block matches the snapshot with edit props 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  margin-right: 20px;
+}
+
+.c3 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.c4 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 42px;
+  line-height: 50px;
+}
+
+.c1 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<div>
+  <div
+    className="c0"
+  >
+    <div
+      className="c1 c2"
+      fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+      fontSize="14px"
+      style={Object {}}
+    >
+      The Future of Art
+    </div>
+    <div
+      className="c3"
+      fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+      fontSize="14px"
+      style={Object {}}
+    >
+      02:28
+    </div>
+  </div>
+  <h1
+    className="c4"
+    fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    fontSize="42px"
+    style={Object {}}
+  >
+    <div>
+      Child 
+      title
+    </div>
+  </h1>
+</div>
+`;

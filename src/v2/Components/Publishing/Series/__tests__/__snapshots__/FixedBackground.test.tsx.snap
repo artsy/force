@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FixedBackground ignores video for now 1`] = `
+.c0 {
+  background-color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`FixedBackground renders the provided background color if no image available 1`] = `
+.c0 {
+  background-color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`FixedBackground renders the provided background image 1`] = `
+.c0 {
+  background-color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.c1 {
+  background-image: url(https://foo.com/image.png);
+  background-size: cover;
+  background-position: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+}
+
+.c2 {
+  background: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  />
+  <div
+    className="c2"
+  />
+</div>
+`;

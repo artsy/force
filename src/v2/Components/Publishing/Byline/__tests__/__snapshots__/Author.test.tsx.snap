@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Author Snapshots Multiple authors 1`] = `
+Array [
+  Object {
+    "name": "Molly Gottschalk",
+  },
+  Object {
+    "name": "Casey Lesser",
+  },
+  Object {
+    "name": "Anna Louie Sussman",
+  },
+]
+`;
+
+exports[`Author Snapshots Single author 1`] = `
+Array [
+  Object {
+    "name": "Molly Gottschalk",
+  },
+]
+`;

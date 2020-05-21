@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArtworkCaption snapshot renders a classic caption properly 1`] = `
+.c1 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 14px;
+  line-height: 18px;
+  color: #666;
+}
+
+.c0 {
+  margin-top: 10px;
+  display: block;
+}
+
+.c0 a {
+  color: #666;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0 .c2 {
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.c0 .c2::after {
+  content: ", ";
+}
+
+.c0 .title {
+  font-style: italic;
+}
+
+<div>
+  <div
+    className="display-artwork__caption c0 c1"
+    color="#666"
+    fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+    fontSize="14px"
+    style={Object {}}
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<span><span class=\\"c2 ciyMlo\\"><span class=\\"name\\">Fernando Botero</span></span><span class=\\"title\\">Nude on the Beach</span><span>, </span><span class=\\"date\\">2000</span>. Gary Nader</span>",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`ArtworkCaption snapshot renders a fullscreen caption properly 1`] = `
+.c1 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.c3 {
+  margin-right: 30px;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0 .title,
+.c0 .title a {
+  font-style: italic;
+}
+
+@media screen and (min-width:40em) {
+  .c1 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c1 {
+    line-height: 26px;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:720px) {
+  .c2.artist-name {
+    margin-bottom: 5px;
+  }
+}
+
+<div>
+  <div
+    className="c0 c1"
+    fontFamily={
+      Object {
+        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        "fontWeight": 500,
+      }
+    }
+    fontSize={
+      Array [
+        "14px",
+        "16px",
+      ]
+    }
+    style={Object {}}
+  >
+    <div
+      className="c2"
+    >
+      <span
+        className="c3"
+      >
+        <span
+          className="name"
+        >
+          Fernando Botero
+        </span>
+      </span>
+    </div>
+    <div>
+      <div
+        className="c2"
+      >
+        <span
+          className="title"
+        >
+          Nude on the Beach
+        </span>
+        <span>
+          , 
+        </span>
+        <span
+          className="date"
+        >
+          2000
+        </span>
+      </div>
+      <div
+        className="c2"
+      >
+        Gary Nader
+        <span>
+          . 
+        </span>
+        <span
+          className="credit"
+        >
+          Courtesy of Gary Nader
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ArtworkCaption snapshot renders a standard caption properly 1`] = `
+.c1 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  color: #C2C2C2;
+}
+
+.c3 {
+  margin-right: 30px;
+}
+
+.c0 {
+  padding: 0;
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 a {
+  color: #C2C2C2;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0 .title,
+.c0 .title a {
+  font-style: italic;
+}
+
+.c4 .c2 {
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.c4 .c2::after {
+  content: ", ";
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 0 10px;
+  }
+}
+
+<div>
+  <div
+    className="c0 c1"
+    color="#C2C2C2"
+    fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    fontSize="14px"
+    style={Object {}}
+  >
+    <span
+      className="c2 c3"
+    >
+      <span
+        className="name"
+      >
+        Fernando Botero
+      </span>
+    </span>
+    <div>
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<span><span class=\\"title\\">Nude on the Beach</span><span>, </span><span class=\\"date\\">2000</span></span>",
+          }
+        }
+      />
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<span>Gary Nader<span>. </span><span class=\\"credit\\">Courtesy of Gary Nader</span></span>",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,504 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+.c9 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.c17 {
+  font-family: artsy-icons;
+  color: gray;
+  font-size: 24px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: gray;
+}
+
+.c11 {
+  margin-right: 30px;
+}
+
+.c12 {
+  white-space: nowrap;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c8 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c8 .title,
+.c8 .title a {
+  font-style: italic;
+}
+
+.c6 {
+  display: none;
+}
+
+.c7 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c7 a {
+  color: black;
+}
+
+.c13 {
+  margin-left: 20px;
+  white-space: nowrap;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 30px 60px;
+}
+
+.c4 p {
+  margin: 0;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c1 {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+}
+
+.c3 {
+  display: block;
+  background: url(https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=1200&quality=80) no-repeat center;
+  background-size: contain;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 50px 60px;
+}
+
+.c14 {
+  display: block;
+  background: url(https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fco8j2xq40ROMyBrJQm_4eQ%252FDafenOilPaintingVillage_AK03.jpg&width=1200&quality=80) no-repeat center;
+  background-size: contain;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 50px 60px;
+}
+
+.c15 {
+  display: block;
+  background: url(https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCpHY-DRr7KW0HGXLslCXHw%2Flarger.jpg&width=1200&quality=80) no-repeat center;
+  background-size: contain;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 50px 60px;
+}
+
+.c2 {
+  min-height: 25px;
+  padding: 30px 60px 0 60px;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+}
+
+.c0 {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  z-index: 1070;
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+
+.c16 {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 20px;
+  cursor: pointer;
+}
+
+@media screen and (min-width:40em) {
+  .c9 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c9 {
+    line-height: 26px;
+  }
+}
+
+@media (max-width:720px) {
+  .c8 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:720px) {
+  .c10.artist-name {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width:720px) {
+  .c6 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .c6 span {
+    border-bottom: 1px solid black;
+  }
+}
+
+@media (max-width:720px) {
+  .c7 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    display: none;
+    margin-top: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c13 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:720px) {
+  .c4 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vh;
+    padding: 20px;
+  }
+}
+
+@media (max-width:720px) {
+  .c3 {
+    margin: 20px 0 80px 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c14 {
+    margin: 20px 0 80px 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c15 {
+    margin: 20px 0 80px 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c2 {
+    padding: 20px 60px 0 20px;
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 19px;
+    line-height: 1.5em;
+  }
+}
+
+<div>
+  <div
+    className="c0"
+    onKeyDown={[Function]}
+  >
+    <div>
+      <div>
+        <div
+          className="c1"
+        >
+          <div
+            className="c2"
+          >
+            
+          </div>
+          <div
+            className="c3"
+            src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=1200&quality=80"
+          />
+          <div
+            className="c4"
+          >
+            <div
+              className="c5"
+            >
+              <div
+                className="fullscreen-viewer__caption-toggle c6"
+                onClick={[Function]}
+              >
+                <span>
+                  View Caption
+                </span>
+              </div>
+              <div
+                className="c7"
+                open={false}
+              >
+                <div>
+                  <div
+                    className="c8 c9"
+                    fontFamily={
+                      Object {
+                        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                        "fontWeight": 500,
+                      }
+                    }
+                    fontSize={
+                      Array [
+                        "14px",
+                        "16px",
+                      ]
+                    }
+                    style={Object {}}
+                  >
+                    <div
+                      className="c10"
+                    >
+                      <span
+                        className="c11"
+                      >
+                        <span
+                          className="c12"
+                        >
+                          <a
+                            href="/artist/fernando-botero"
+                          >
+                            Fernando Botero
+                          </a>
+                        </span>
+                      </span>
+                    </div>
+                    <div>
+                      <div
+                        className="c10"
+                      >
+                        <span
+                          className="title"
+                        >
+                          <a
+                            href="/artwork/fernando-botero-nude-on-the-beach"
+                          >
+                            Nude on the Beach
+                          </a>
+                        </span>
+                        <span>
+                          , 
+                        </span>
+                        <span
+                          className="date"
+                        >
+                          2000
+                        </span>
+                      </div>
+                      <div
+                        className="c10"
+                      >
+                        <a
+                          href="/gary-nader"
+                        >
+                          Gary Nader
+                        </a>
+                        <span>
+                          . 
+                        </span>
+                        <span
+                          className="credit"
+                        >
+                          Courtesy of Gary Nader
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="c13"
+            >
+              1 of 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          className="c1"
+        >
+          <div
+            className="c2"
+          >
+            New York City
+          </div>
+          <div
+            className="c14"
+            src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fco8j2xq40ROMyBrJQm_4eQ%252FDafenOilPaintingVillage_AK03.jpg&width=1200&quality=80"
+          />
+          <div
+            className="c4"
+          >
+            <div
+              className="c5"
+            >
+              <div
+                className="fullscreen-viewer__caption-toggle c6"
+                onClick={[Function]}
+              >
+                <span>
+                  View Caption
+                </span>
+              </div>
+              <div
+                className="c7"
+                open={false}
+              >
+                <div
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<p>Photo by Adam Kuehl for Artsy.</p>",
+                    }
+                  }
+                />
+              </div>
+            </div>
+            <div
+              className="c13"
+            >
+              2 of 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          className="c1"
+        >
+          <div
+            className="c2"
+          >
+            New York City
+          </div>
+          <div
+            className="c15"
+            src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCpHY-DRr7KW0HGXLslCXHw%2Flarger.jpg&width=1200&quality=80"
+          />
+          <div
+            className="c4"
+          >
+            <div
+              className="c5"
+            >
+              <div
+                className="fullscreen-viewer__caption-toggle c6"
+                onClick={[Function]}
+              >
+                <span>
+                  View Caption
+                </span>
+              </div>
+              <div
+                className="c7"
+                open={false}
+              >
+                <div
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<p>Photo by <a href='artsy.net'>Adam Kuehl</a> for Artsy. Image courtesy of the Guggenheim Museum.</p>",
+                    }
+                  }
+                />
+              </div>
+            </div>
+            <div
+              className="c13"
+            >
+              3 of 3
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="c16"
+      onClick={[Function]}
+    >
+      <div
+        className="c17"
+      >
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,2900 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`News Layout renders the news layout on mobile 1`] = `
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 780;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c3 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.c16 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c18 {
+  margin: 10px 20px 0 0;
+}
+
+.c18::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 5px 5px 1px 0;
+  background-color: black;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999999;
+}
+
+.c19 a {
+  color: #999999;
+}
+
+.c20 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1em;
+  margin-top: 5px;
+}
+
+.c21 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.c21:hover {
+  opacity: 0.6;
+}
+
+.c21:first-child {
+  padding-left: 0;
+}
+
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.c14 .c17 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c7 {
+  position: relative;
+}
+
+.c7:hover .c23 {
+  opacity: 1;
+}
+
+.c7 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c7 .image-loaded {
+  opacity: 1;
+}
+
+.c8 {
+  display: block;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c10 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c10 > p,
+.c10 p,
+.c10 .public-DraftEditorPlaceholder-root,
+.c10 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c10 > a,
+.c10 a {
+  color: #999;
+}
+
+.c10 > a:hover,
+.c10 a:hover {
+  color: black;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c6 {
+  margin-right: 0px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.c6 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c12 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c12 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c12 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c12 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c12 p,
+.c12 ul,
+.c12 ol,
+.c12 .paragraph,
+.c12 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c12 p:first-child,
+.c12 .paragraph:first-child,
+.c12 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c12 p:last-child,
+.c12 .paragraph:last-child,
+.c12 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c12 ul,
+.c12 ol {
+  padding-left: 1em;
+}
+
+.c12 ul {
+  list-style: disc;
+}
+
+.c12 ol {
+  list-style: decimal;
+}
+
+.c12 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c12 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c12 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c12 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c12 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c12 h2 .c24 {
+  background-position: bottom !important;
+}
+
+.c12 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c12 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c12 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c12 blockquote {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 560px;
+  margin: auto;
+}
+
+.c12 blockquote a {
+  background-size: 1.25px 1px;
+}
+
+.c12 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c12 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c12 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c12 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c12 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+.c4 {
+  margin-bottom: 20px;
+}
+
+.c11 {
+  max-width: 660px;
+  margin-bottom: 20px;
+}
+
+.c13 {
+  max-width: 780px;
+  margin-top: 30px;
+}
+
+.c0 .c25 {
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.c22 {
+  width: 80px;
+  height: 30px;
+  background-color: black;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  display: block;
+  opacity: 0;
+  cursor: pointer;
+  padding: 0;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  line-height: 1em;
+}
+
+.c22:focus {
+  outline: 0;
+}
+
+.c22:hover {
+  color: #E5E5E5;
+}
+
+.c1 {
+  position: relative;
+  max-width: 780px;
+  padding: 20px 30px 30px;
+  margin: 40px auto;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+@media screen and (min-width:40em) {
+  .c3 {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c3 {
+    line-height: initial;
+  }
+}
+
+@media (max-width:720px) {
+  .c19 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 12px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:600px) {
+  .c20 {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width:720px) {
+  .c7 .c23 {
+    opacity: 1;
+  }
+}
+
+@media (max-width:600px) {
+  .c9 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c10 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:600px) {
+  .c5 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c6 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c12 p,
+  .c12 ul,
+  .c12 ol,
+  .c12 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c12 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c12 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c12 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c12 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c12 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c12 blockquote {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    margin: 0 10px;
+  }
+
+  .c12 .content-start {
+    font-size: 55px;
+  }
+}
+
+@media (max-width:720px) {
+  .c4 {
+    margin: 0 0 15px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c11 {
+    margin: 0 0 15px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c13 {
+    margin: 30px 0 0 0;
+    padding: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c22 {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width:720px) {
+  .c1 {
+    margin: 40px 5px;
+    padding: 10px 15px 20px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className=""
+    >
+      <div
+        className="c2"
+      >
+        <h1
+          className="c3"
+          fontFamily={
+            Object {
+              "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+              "fontWeight": 600,
+            }
+          }
+          fontSize={
+            Array [
+              "26px",
+              "32px",
+            ]
+          }
+          style={Object {}}
+        >
+          The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.
+        </h1>
+      </div>
+    </div>
+    <div>
+      <div
+        className="c4"
+        type="image_collection"
+      >
+        <div
+          className="c5"
+        >
+          <div
+            className="c6"
+          >
+            <div
+              className="article-image"
+            >
+              <div
+                className="c7"
+              >
+                <img
+                  alt="Illustration by Tomi Um for Artsy."
+                  className="BlockImage__container c8"
+                  height="auto"
+                  src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FN13JE8AbtWFAgvueH8G1uQ%2Flarger.jpg&width=1200&quality=80"
+                  width="100%"
+                />
+              </div>
+              <div
+                className="c9"
+              >
+                <div
+                  className="c10"
+                >
+                  <div
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<p>Illustration by Tomi Um for Artsy.</p>",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p><strong>The design for the as-yet-uncompleted sculpture</strong>, <span style='text-decoration:line-through;'><em>Bouquet of Tulips</em></span>, was donated by Koons to the French capital in November 2016 as a memorial to the recent terrorist attacks that have taken place in the city. But Koons, <a href='#'>one of the world’s richest living artists</a>, didn’t donate the $4.3 million needed to create 40-foot-tall sculpture, which was raised separately via donations. And the work, slated for installation in front of the Palais de Tokyo and Paris’s Museum of Modern Art, has attracted opposition. In a letter published in the French newspaper Libération on Sunday, signatories—including Frédéric Mitterrand, the country’s former culture minister—demanded that the city halt its plans to install the sculpture, calling it “shocking.” </p>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="social_embed"
+      />
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote>It is understood the [British Museum] has been in talks about a possible loan of the tapestry for several years, but there will be other contenders to host it.</blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote>The bookmaker Ladbrokes is offering odds on where it might go, with the British Museum evens favourite, followed by Westminster Cathedral at 3/1, Canterbury Cathedral at 5/1 and Hastings at 8/1.</blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote><a href='#'>The Guardian</a></blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p>It further criticized Koons for using the opportunity as a publicity stunt, as the sculpture’s planned location is in a tourist-heavy area far from where the 2015 terrorist attacks actually took place. “We appreciate gifts, [but ones that are] free, unconditional, and without ulterior motives,” the letter said. In any case, Parisian officials have not yet granted authorization to install the sculpture, according to the <em>New York Times</em>.</p>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="social_embed"
+      />
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<h3><strong>Takeaway</strong></h3><h3>Should Prince lose at trial and on appeal the resulting precedent would reign in the broader <em>fair use interpretations</em> now afforded to artists.</h3>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c13"
+      >
+        <div
+          className="c14"
+        >
+          <div
+            className="c15"
+          >
+            <div
+              className="c16"
+              fontFamily={
+                Object {
+                  "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  "fontWeight": 500,
+                }
+              }
+              fontSize="14px"
+              style={Object {}}
+            >
+              <div
+                className="c17 c18"
+                color="black"
+              >
+                Casey Lesser
+              </div>
+            </div>
+            <div
+              className="c19"
+            >
+              Jul 19, 2018 at 1:19pm
+              , via
+               
+              <a
+                href="http://nytimes.com"
+                onClick={[Function]}
+                target="_blank"
+              >
+                The New York Times
+              </a>
+            </div>
+          </div>
+          <div
+            className="c20"
+          >
+            <a
+              className="c21"
+              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 14 14"
+                width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M13.22846,-0.00014 L0.77266,-0.00014 C0.34566,-0.00014 -0.00014,0.34636 -0.00014,0.77266 L-0.00014,13.22706 C-0.00014,13.65336 0.34566,13.99986 0.77266,13.99986 L7.47866,13.99986 L7.47866,8.57836 L5.65376,8.57836 L5.65376,6.46576 L7.47866,6.46576 L7.47866,4.90686 C7.47866,3.09876 8.58256,2.11456 10.19606,2.11456 C10.74066,2.11246 11.28526,2.14046 11.82706,2.19786 L11.82706,4.08576 L10.70776,4.08576 C9.83066,4.08576 9.65846,4.50366 9.65846,5.11476 L9.65846,6.46366 L11.75146,6.46366 L11.47846,8.57696 L9.65986,8.57696 L9.65986,13.99986 L13.22776,13.99986 C13.65406,13.99986 13.99986,13.65406 13.99986,13.22706 L13.99986,0.77266 C13.99986,0.34636 13.65406,-0.00014 13.22776,-0.00014"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+            <a
+              className="c21"
+              href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article&text=The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.&url=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article&via=artsy"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 16 14"
+                width="16px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M15.9786472,1.9961647 C15.3802193,2.26166928 14.7456495,2.43612386 14.0957888,2.51257805 C14.7810964,2.1018105 15.2933396,1.45542502 15.537298,0.69435824 C14.8936926,1.07732426 14.189619,1.34699907 13.4542686,1.49087197 C12.8342946,0.828500604 11.967582,0.45318 11.0598622,0.45318 C9.25067784,0.458740305 7.78762253,1.92735593 7.78831756,3.73584521 C7.78762253,3.98744902 7.81542405,4.23835779 7.87033207,4.48370626 C5.23335731,4.35095397 2.77639743,3.10475056 1.11108601,1.05577808 C0.819169985,1.55620555 0.665566552,2.1254418 0.666261591,2.70510362 C0.664871514,3.80256887 1.21256158,4.82775015 2.12653675,5.4352135 C1.60595318,5.42061769 1.09649021,5.28021999 0.642630293,5.02583602 L0.642630293,5.06684327 C0.639155103,6.62859401 1.74009554,7.97488291 3.27195963,8.28139474 C2.99116422,8.36062909 2.70063827,8.40163634 2.40941728,8.40302642 C2.20229591,8.40372145 1.99517454,8.38426039 1.7922234,8.34603329 C2.22106194,9.68120158 3.45127948,10.5958718 4.85317144,10.6229783 C3.69315276,11.5362584 2.25928904,12.0311256 0.783028001,12.0283454 C0.520998616,12.0283454 0.25966427,12.0130546 -0.00028,11.9810828 C1.49961234,12.9437107 3.24554818,13.4552588 5.02762601,13.4531737 C11.0612522,13.4531737 14.3585132,8.45584932 14.3585132,4.12298146 C14.3585132,3.9798036 14.3585132,3.83940589 14.3473926,3.69970322 C14.9896079,3.23611277 15.5442483,2.66201126 15.9855976,2.00311509"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+            <a
+              className="c21"
+              href="mailto:?subject=The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.&body=Check out The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe. on Artsy: https://www.artsy.net/article/news-article"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 17 14"
+                width="17px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M8.09330005,8.15962873 L16.0866701,1.92619024 L16.0866701,1.14909566 C16.0866701,0.764718818 15.7752762,0.45402 15.3915944,0.45402 L0.795005656,0.45402 C0.411323894,0.45402 0.09993,0.764718818 0.09993,1.14909566 L0.09993,1.92619024 L8.09330005,8.15962873 Z M16.0866701,3.68820703 L16.0866701,12.7589443 C16.0866701,13.1426261 15.7752762,13.45402 15.3915944,13.45402 L0.795005656,13.45402 C0.411323894,13.45402 0.09993,13.1426261 0.09993,12.7589443 L0.09993,3.68820703 L7.66582852,9.58939935 C7.79163721,9.68740502 7.94246863,9.73606031 8.09330005,9.73606031 C8.24413147,9.73606031 8.39496288,9.68740502 8.52077158,9.58939935 L16.0866701,3.68820703 Z"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="c22"
+      onClick={[Function]}
+    >
+      Expand
+    </button>
+  </div>
+</div>
+`;
+
+exports[`News Layout renders the news layout properly 1`] = `
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 780;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c3 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.c16 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c18 {
+  margin: 10px 20px 0 0;
+}
+
+.c18::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 5px 5px 1px 0;
+  background-color: black;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999999;
+}
+
+.c19 a {
+  color: #999999;
+}
+
+.c20 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1em;
+  margin-top: 5px;
+}
+
+.c21 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.c21:hover {
+  opacity: 0.6;
+}
+
+.c21:first-child {
+  padding-left: 0;
+}
+
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.c14 .c17 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c7 {
+  position: relative;
+}
+
+.c7:hover .c23 {
+  opacity: 1;
+}
+
+.c7 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c7 .image-loaded {
+  opacity: 1;
+}
+
+.c8 {
+  display: block;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c10 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c10 > p,
+.c10 p,
+.c10 .public-DraftEditorPlaceholder-root,
+.c10 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c10 > a,
+.c10 a {
+  color: #999;
+}
+
+.c10 > a:hover,
+.c10 a:hover {
+  color: black;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c6 {
+  margin-right: 0px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.c6 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c12 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c12 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c12 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c12 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c12 p,
+.c12 ul,
+.c12 ol,
+.c12 .paragraph,
+.c12 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c12 p:first-child,
+.c12 .paragraph:first-child,
+.c12 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c12 p:last-child,
+.c12 .paragraph:last-child,
+.c12 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c12 ul,
+.c12 ol {
+  padding-left: 1em;
+}
+
+.c12 ul {
+  list-style: disc;
+}
+
+.c12 ol {
+  list-style: decimal;
+}
+
+.c12 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c12 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c12 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c12 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c12 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c12 h2 .c24 {
+  background-position: bottom !important;
+}
+
+.c12 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c12 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c12 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c12 blockquote {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 560px;
+  margin: auto;
+}
+
+.c12 blockquote a {
+  background-size: 1.25px 1px;
+}
+
+.c12 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c12 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c12 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c12 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c12 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+.c4 {
+  margin-bottom: 20px;
+}
+
+.c11 {
+  max-width: 660px;
+  margin-bottom: 20px;
+}
+
+.c13 {
+  max-width: 780px;
+  margin-top: 30px;
+}
+
+.c0 .c25 {
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.c22 {
+  width: 80px;
+  height: 30px;
+  background-color: black;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  display: block;
+  opacity: 0;
+  cursor: pointer;
+  padding: 0;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  line-height: 1em;
+}
+
+.c22:focus {
+  outline: 0;
+}
+
+.c22:hover {
+  color: #E5E5E5;
+}
+
+.c1 {
+  position: relative;
+  max-width: 780px;
+  padding: 20px 30px 30px;
+  margin: 40px auto;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+@media screen and (min-width:40em) {
+  .c3 {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c3 {
+    line-height: initial;
+  }
+}
+
+@media (max-width:720px) {
+  .c19 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 12px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:720px) {
+  .c7 .c23 {
+    opacity: 1;
+  }
+}
+
+@media (max-width:600px) {
+  .c9 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c10 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:600px) {
+  .c5 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c6 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c12 p,
+  .c12 ul,
+  .c12 ol,
+  .c12 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c12 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c12 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c12 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c12 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c12 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c12 blockquote {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    margin: 0 10px;
+  }
+
+  .c12 .content-start {
+    font-size: 55px;
+  }
+}
+
+@media (max-width:720px) {
+  .c4 {
+    margin: 0 0 15px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c11 {
+    margin: 0 0 15px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c13 {
+    margin: 30px 0 0 0;
+    padding: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c22 {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width:720px) {
+  .c1 {
+    margin: 40px 5px;
+    padding: 10px 15px 20px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className=""
+    >
+      <div
+        className="c2"
+      >
+        <h1
+          className="c3"
+          fontFamily={
+            Object {
+              "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+              "fontWeight": 600,
+            }
+          }
+          fontSize={
+            Array [
+              "26px",
+              "32px",
+            ]
+          }
+          style={Object {}}
+        >
+          The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.
+        </h1>
+      </div>
+    </div>
+    <div>
+      <div
+        className="c4"
+        type="image_collection"
+      >
+        <div
+          className="c5"
+        >
+          <div
+            className="c6"
+          >
+            <div
+              className="article-image"
+            >
+              <div
+                className="c7"
+              >
+                <img
+                  alt="Illustration by Tomi Um for Artsy."
+                  className="BlockImage__container c8"
+                  height="auto"
+                  src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FN13JE8AbtWFAgvueH8G1uQ%2Flarger.jpg&width=1200&quality=80"
+                  width="100%"
+                />
+              </div>
+              <div
+                className="c9"
+              >
+                <div
+                  className="c10"
+                >
+                  <div
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<p>Illustration by Tomi Um for Artsy.</p>",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p><strong>The design for the as-yet-uncompleted sculpture</strong>, <span style='text-decoration:line-through;'><em>Bouquet of Tulips</em></span>, was donated by Koons to the French capital in November 2016 as a memorial to the recent terrorist attacks that have taken place in the city. But Koons, <a href='#'>one of the world’s richest living artists</a>, didn’t donate the $4.3 million needed to create 40-foot-tall sculpture, which was raised separately via donations. And the work, slated for installation in front of the Palais de Tokyo and Paris’s Museum of Modern Art, has attracted opposition. In a letter published in the French newspaper Libération on Sunday, signatories—including Frédéric Mitterrand, the country’s former culture minister—demanded that the city halt its plans to install the sculpture, calling it “shocking.” </p>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="social_embed"
+      />
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote>It is understood the [British Museum] has been in talks about a possible loan of the tapestry for several years, but there will be other contenders to host it.</blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote>The bookmaker Ladbrokes is offering odds on where it might go, with the British Museum evens favourite, followed by Westminster Cathedral at 3/1, Canterbury Cathedral at 5/1 and Hastings at 8/1.</blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote><a href='#'>The Guardian</a></blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p>It further criticized Koons for using the opportunity as a publicity stunt, as the sculpture’s planned location is in a tourist-heavy area far from where the 2015 terrorist attacks actually took place. “We appreciate gifts, [but ones that are] free, unconditional, and without ulterior motives,” the letter said. In any case, Parisian officials have not yet granted authorization to install the sculpture, according to the <em>New York Times</em>.</p>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="social_embed"
+      />
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<h3><strong>Takeaway</strong></h3><h3>Should Prince lose at trial and on appeal the resulting precedent would reign in the broader <em>fair use interpretations</em> now afforded to artists.</h3>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c13"
+      >
+        <div
+          className="c14"
+        >
+          <div
+            className="c15"
+          >
+            <div
+              className="c16"
+              fontFamily={
+                Object {
+                  "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  "fontWeight": 500,
+                }
+              }
+              fontSize="14px"
+              style={Object {}}
+            >
+              <div
+                className="c17 c18"
+                color="black"
+              >
+                Casey Lesser
+              </div>
+            </div>
+            <div
+              className="c19"
+            >
+              Jul 19, 2018 at 1:19pm
+              , via
+               
+              <a
+                href="http://nytimes.com"
+                onClick={[Function]}
+                target="_blank"
+              >
+                The New York Times
+              </a>
+            </div>
+          </div>
+          <div
+            className="c20"
+          >
+            <a
+              className="c21"
+              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 14 14"
+                width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M13.22846,-0.00014 L0.77266,-0.00014 C0.34566,-0.00014 -0.00014,0.34636 -0.00014,0.77266 L-0.00014,13.22706 C-0.00014,13.65336 0.34566,13.99986 0.77266,13.99986 L7.47866,13.99986 L7.47866,8.57836 L5.65376,8.57836 L5.65376,6.46576 L7.47866,6.46576 L7.47866,4.90686 C7.47866,3.09876 8.58256,2.11456 10.19606,2.11456 C10.74066,2.11246 11.28526,2.14046 11.82706,2.19786 L11.82706,4.08576 L10.70776,4.08576 C9.83066,4.08576 9.65846,4.50366 9.65846,5.11476 L9.65846,6.46366 L11.75146,6.46366 L11.47846,8.57696 L9.65986,8.57696 L9.65986,13.99986 L13.22776,13.99986 C13.65406,13.99986 13.99986,13.65406 13.99986,13.22706 L13.99986,0.77266 C13.99986,0.34636 13.65406,-0.00014 13.22776,-0.00014"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+            <a
+              className="c21"
+              href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article&text=The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.&url=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article&via=artsy"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 16 14"
+                width="16px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M15.9786472,1.9961647 C15.3802193,2.26166928 14.7456495,2.43612386 14.0957888,2.51257805 C14.7810964,2.1018105 15.2933396,1.45542502 15.537298,0.69435824 C14.8936926,1.07732426 14.189619,1.34699907 13.4542686,1.49087197 C12.8342946,0.828500604 11.967582,0.45318 11.0598622,0.45318 C9.25067784,0.458740305 7.78762253,1.92735593 7.78831756,3.73584521 C7.78762253,3.98744902 7.81542405,4.23835779 7.87033207,4.48370626 C5.23335731,4.35095397 2.77639743,3.10475056 1.11108601,1.05577808 C0.819169985,1.55620555 0.665566552,2.1254418 0.666261591,2.70510362 C0.664871514,3.80256887 1.21256158,4.82775015 2.12653675,5.4352135 C1.60595318,5.42061769 1.09649021,5.28021999 0.642630293,5.02583602 L0.642630293,5.06684327 C0.639155103,6.62859401 1.74009554,7.97488291 3.27195963,8.28139474 C2.99116422,8.36062909 2.70063827,8.40163634 2.40941728,8.40302642 C2.20229591,8.40372145 1.99517454,8.38426039 1.7922234,8.34603329 C2.22106194,9.68120158 3.45127948,10.5958718 4.85317144,10.6229783 C3.69315276,11.5362584 2.25928904,12.0311256 0.783028001,12.0283454 C0.520998616,12.0283454 0.25966427,12.0130546 -0.00028,11.9810828 C1.49961234,12.9437107 3.24554818,13.4552588 5.02762601,13.4531737 C11.0612522,13.4531737 14.3585132,8.45584932 14.3585132,4.12298146 C14.3585132,3.9798036 14.3585132,3.83940589 14.3473926,3.69970322 C14.9896079,3.23611277 15.5442483,2.66201126 15.9855976,2.00311509"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+            <a
+              className="c21"
+              href="mailto:?subject=The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.&body=Check out The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe. on Artsy: https://www.artsy.net/article/news-article"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 17 14"
+                width="17px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M8.09330005,8.15962873 L16.0866701,1.92619024 L16.0866701,1.14909566 C16.0866701,0.764718818 15.7752762,0.45402 15.3915944,0.45402 L0.795005656,0.45402 C0.411323894,0.45402 0.09993,0.764718818 0.09993,1.14909566 L0.09993,1.92619024 L8.09330005,8.15962873 Z M16.0866701,3.68820703 L16.0866701,12.7589443 C16.0866701,13.1426261 15.7752762,13.45402 15.3915944,13.45402 L0.795005656,13.45402 C0.411323894,13.45402 0.09993,13.1426261 0.09993,12.7589443 L0.09993,3.68820703 L7.66582852,9.58939935 C7.79163721,9.68740502 7.94246863,9.73606031 8.09330005,9.73606031 C8.24413147,9.73606031 8.39496288,9.68740502 8.52077158,9.58939935 L16.0866701,3.68820703 Z"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="c22"
+      onClick={[Function]}
+    >
+      Expand
+    </button>
+  </div>
+</div>
+`;
+
+exports[`News Layout with display ads renders the news layout properly with display ads 1`] = `
+.c24 {
+  margin: auto;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 780;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c3 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.c16 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c25 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  color: black30;
+  margin: 4px;
+}
+
+.c23 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 1px;
+  padding-bottom: 4px;
+  padding-top: 32px;
+  margin: 0 auto;
+  border-top: none;
+  background: #F8F8F8;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+}
+
+.c18 {
+  margin: 10px 20px 0 0;
+}
+
+.c18::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 5px 5px 1px 0;
+  background-color: black;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999999;
+}
+
+.c19 a {
+  color: #999999;
+}
+
+.c20 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1em;
+  margin-top: 5px;
+}
+
+.c21 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.c21:hover {
+  opacity: 0.6;
+}
+
+.c21:first-child {
+  padding-left: 0;
+}
+
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.c14 .c17 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c7 {
+  position: relative;
+}
+
+.c7:hover .c26 {
+  opacity: 1;
+}
+
+.c7 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c7 .image-loaded {
+  opacity: 1;
+}
+
+.c8 {
+  display: block;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c10 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c10 > p,
+.c10 p,
+.c10 .public-DraftEditorPlaceholder-root,
+.c10 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c10 > a,
+.c10 a {
+  color: #999;
+}
+
+.c10 > a:hover,
+.c10 a:hover {
+  color: black;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c6 {
+  margin-right: 0px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.c6 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c12 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c12 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c12 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c12 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c12 p,
+.c12 ul,
+.c12 ol,
+.c12 .paragraph,
+.c12 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c12 p:first-child,
+.c12 .paragraph:first-child,
+.c12 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c12 p:last-child,
+.c12 .paragraph:last-child,
+.c12 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c12 ul,
+.c12 ol {
+  padding-left: 1em;
+}
+
+.c12 ul {
+  list-style: disc;
+}
+
+.c12 ol {
+  list-style: decimal;
+}
+
+.c12 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c12 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c12 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c12 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c12 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c12 h2 .c27 {
+  background-position: bottom !important;
+}
+
+.c12 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c12 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c12 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c12 blockquote {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 560px;
+  margin: auto;
+}
+
+.c12 blockquote a {
+  background-size: 1.25px 1px;
+}
+
+.c12 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c12 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c12 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c12 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c12 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+.c4 {
+  margin-bottom: 20px;
+}
+
+.c11 {
+  max-width: 660px;
+  margin-bottom: 20px;
+}
+
+.c13 {
+  max-width: 780px;
+  margin-top: 30px;
+}
+
+.c0 .c28 {
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.c22 {
+  width: 80px;
+  height: 30px;
+  background-color: black;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  display: block;
+  opacity: 0;
+  cursor: pointer;
+  padding: 0;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  line-height: 1em;
+}
+
+.c22:focus {
+  outline: 0;
+}
+
+.c22:hover {
+  color: #E5E5E5;
+}
+
+.c1 {
+  position: relative;
+  max-width: 780px;
+  padding: 20px 30px 30px;
+  margin: 40px auto;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+@media screen and (min-width:40em) {
+  .c3 {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c3 {
+    line-height: initial;
+  }
+}
+
+@media (max-width:720px) {
+  .c19 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 12px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:720px) {
+  .c7 .c26 {
+    opacity: 1;
+  }
+}
+
+@media (max-width:600px) {
+  .c9 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c10 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:600px) {
+  .c5 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c6 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c12 p,
+  .c12 ul,
+  .c12 ol,
+  .c12 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c12 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c12 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c12 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c12 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c12 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c12 blockquote {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    margin: 0 10px;
+  }
+
+  .c12 .content-start {
+    font-size: 55px;
+  }
+}
+
+@media (max-width:720px) {
+  .c4 {
+    margin: 0 0 15px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c11 {
+    margin: 0 0 15px 0;
+    padding: 0;
+  }
+}
+
+@media (max-width:720px) {
+  .c13 {
+    margin: 30px 0 0 0;
+    padding: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c22 {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width:720px) {
+  .c1 {
+    margin: 40px 5px;
+    padding: 10px 15px 20px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className=""
+    >
+      <div
+        className="c2"
+      >
+        <h1
+          className="c3"
+          fontFamily={
+            Object {
+              "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+              "fontWeight": 600,
+            }
+          }
+          fontSize={
+            Array [
+              "26px",
+              "32px",
+            ]
+          }
+          style={Object {}}
+        >
+          The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.
+        </h1>
+      </div>
+    </div>
+    <div>
+      <div
+        className="c4"
+        type="image_collection"
+      >
+        <div
+          className="c5"
+        >
+          <div
+            className="c6"
+          >
+            <div
+              className="article-image"
+            >
+              <div
+                className="c7"
+              >
+                <img
+                  alt="Illustration by Tomi Um for Artsy."
+                  className="BlockImage__container c8"
+                  height="auto"
+                  src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FN13JE8AbtWFAgvueH8G1uQ%2Flarger.jpg&width=1200&quality=80"
+                  width="100%"
+                />
+              </div>
+              <div
+                className="c9"
+              >
+                <div
+                  className="c10"
+                >
+                  <div
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<p>Illustration by Tomi Um for Artsy.</p>",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p><strong>The design for the as-yet-uncompleted sculpture</strong>, <span style='text-decoration:line-through;'><em>Bouquet of Tulips</em></span>, was donated by Koons to the French capital in November 2016 as a memorial to the recent terrorist attacks that have taken place in the city. But Koons, <a href='#'>one of the world’s richest living artists</a>, didn’t donate the $4.3 million needed to create 40-foot-tall sculpture, which was raised separately via donations. And the work, slated for installation in front of the Palais de Tokyo and Paris’s Museum of Modern Art, has attracted opposition. In a letter published in the French newspaper Libération on Sunday, signatories—including Frédéric Mitterrand, the country’s former culture minister—demanded that the city halt its plans to install the sculpture, calling it “shocking.” </p>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="social_embed"
+      />
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote>It is understood the [British Museum] has been in talks about a possible loan of the tapestry for several years, but there will be other contenders to host it.</blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote>The bookmaker Ladbrokes is offering odds on where it might go, with the British Museum evens favourite, followed by Westminster Cathedral at 3/1, Canterbury Cathedral at 5/1 and Hastings at 8/1.</blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<blockquote><a href='#'>The Guardian</a></blockquote>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p>It further criticized Koons for using the opportunity as a publicity stunt, as the sculpture’s planned location is in a tourist-heavy area far from where the 2015 terrorist attacks actually took place. “We appreciate gifts, [but ones that are] free, unconditional, and without ulterior motives,” the letter said. In any case, Parisian officials have not yet granted authorization to install the sculpture, according to the <em>New York Times</em>.</p>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c11"
+        type="social_embed"
+      />
+      <div
+        className="c11"
+        type="text"
+      >
+        <div
+          className="article__text-section c12"
+          color="black"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<h3><strong>Takeaway</strong></h3><h3>Should Prince lose at trial and on appeal the resulting precedent would reign in the broader <em>fair use interpretations</em> now afforded to artists.</h3>",
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="c13"
+      >
+        <div
+          className="c14"
+        >
+          <div
+            className="c15"
+          >
+            <div
+              className="c16"
+              fontFamily={
+                Object {
+                  "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  "fontWeight": 500,
+                }
+              }
+              fontSize="14px"
+              style={Object {}}
+            >
+              <div
+                className="c17 c18"
+                color="black"
+              >
+                Casey Lesser
+              </div>
+            </div>
+            <div
+              className="c19"
+            >
+              Jul 19, 2018 at 1:19pm
+              , via
+               
+              <a
+                href="http://nytimes.com"
+                onClick={[Function]}
+                target="_blank"
+              >
+                The New York Times
+              </a>
+            </div>
+          </div>
+          <div
+            className="c20"
+          >
+            <a
+              className="c21"
+              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 14 14"
+                width="14px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M13.22846,-0.00014 L0.77266,-0.00014 C0.34566,-0.00014 -0.00014,0.34636 -0.00014,0.77266 L-0.00014,13.22706 C-0.00014,13.65336 0.34566,13.99986 0.77266,13.99986 L7.47866,13.99986 L7.47866,8.57836 L5.65376,8.57836 L5.65376,6.46576 L7.47866,6.46576 L7.47866,4.90686 C7.47866,3.09876 8.58256,2.11456 10.19606,2.11456 C10.74066,2.11246 11.28526,2.14046 11.82706,2.19786 L11.82706,4.08576 L10.70776,4.08576 C9.83066,4.08576 9.65846,4.50366 9.65846,5.11476 L9.65846,6.46366 L11.75146,6.46366 L11.47846,8.57696 L9.65986,8.57696 L9.65986,13.99986 L13.22776,13.99986 C13.65406,13.99986 13.99986,13.65406 13.99986,13.22706 L13.99986,0.77266 C13.99986,0.34636 13.65406,-0.00014 13.22776,-0.00014"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+            <a
+              className="c21"
+              href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article&text=The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.&url=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fnews-article&via=artsy"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 16 14"
+                width="16px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M15.9786472,1.9961647 C15.3802193,2.26166928 14.7456495,2.43612386 14.0957888,2.51257805 C14.7810964,2.1018105 15.2933396,1.45542502 15.537298,0.69435824 C14.8936926,1.07732426 14.189619,1.34699907 13.4542686,1.49087197 C12.8342946,0.828500604 11.967582,0.45318 11.0598622,0.45318 C9.25067784,0.458740305 7.78762253,1.92735593 7.78831756,3.73584521 C7.78762253,3.98744902 7.81542405,4.23835779 7.87033207,4.48370626 C5.23335731,4.35095397 2.77639743,3.10475056 1.11108601,1.05577808 C0.819169985,1.55620555 0.665566552,2.1254418 0.666261591,2.70510362 C0.664871514,3.80256887 1.21256158,4.82775015 2.12653675,5.4352135 C1.60595318,5.42061769 1.09649021,5.28021999 0.642630293,5.02583602 L0.642630293,5.06684327 C0.639155103,6.62859401 1.74009554,7.97488291 3.27195963,8.28139474 C2.99116422,8.36062909 2.70063827,8.40163634 2.40941728,8.40302642 C2.20229591,8.40372145 1.99517454,8.38426039 1.7922234,8.34603329 C2.22106194,9.68120158 3.45127948,10.5958718 4.85317144,10.6229783 C3.69315276,11.5362584 2.25928904,12.0311256 0.783028001,12.0283454 C0.520998616,12.0283454 0.25966427,12.0130546 -0.00028,11.9810828 C1.49961234,12.9437107 3.24554818,13.4552588 5.02762601,13.4531737 C11.0612522,13.4531737 14.3585132,8.45584932 14.3585132,4.12298146 C14.3585132,3.9798036 14.3585132,3.83940589 14.3473926,3.69970322 C14.9896079,3.23611277 15.5442483,2.66201126 15.9855976,2.00311509"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+            <a
+              className="c21"
+              href="mailto:?subject=The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe.&body=Check out The oldest known depiction of a supernova was found in a work of 5,000 year old rock art, scientists believe. on Artsy: https://www.artsy.net/article/news-article"
+              onClick={[Function]}
+              target="_blank"
+            >
+              <svg
+                height="14px"
+                version="1.1"
+                viewBox="0 0 17 14"
+                width="17px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="none"
+                  strokeWidth="1"
+                >
+                  <path
+                    d="M8.09330005,8.15962873 L16.0866701,1.92619024 L16.0866701,1.14909566 C16.0866701,0.764718818 15.7752762,0.45402 15.3915944,0.45402 L0.795005656,0.45402 C0.411323894,0.45402 0.09993,0.764718818 0.09993,1.14909566 L0.09993,1.92619024 L8.09330005,8.15962873 Z M16.0866701,3.68820703 L16.0866701,12.7589443 C16.0866701,13.1426261 15.7752762,13.45402 15.3915944,13.45402 L0.795005656,13.45402 C0.411323894,13.45402 0.09993,13.1426261 0.09993,12.7589443 L0.09993,3.68820703 L7.66582852,9.58939935 C7.79163721,9.68740502 7.94246863,9.73606031 8.09330005,9.73606031 C8.24413147,9.73606031 8.39496288,9.68740502 8.52077158,9.58939935 L16.0866701,3.68820703 Z"
+                    fill="black"
+                  />
+                </g>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="c22"
+      onClick={[Function]}
+    >
+      Expand
+    </button>
+  </div>
+  <div
+    className="c23"
+    height="1px"
+    onClick={[Function]}
+  >
+    <div
+      className="c24"
+    >
+      <div
+        style={
+          Object {
+            "height": 250,
+            "width": 970,
+          }
+        }
+      />
+      <div
+        className="c25"
+        color="black30"
+        fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        fontSize="10px"
+        style={Object {}}
+      >
+        Advertisement
+      </div>
+    </div>
+  </div>
+</div>
+`;

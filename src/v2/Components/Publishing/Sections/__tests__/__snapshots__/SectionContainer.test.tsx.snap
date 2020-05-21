@@ -1,0 +1,871 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SectionContainer Snapshots renders column_width properly 1`] = `
+.c0 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 680px;
+  max-width: 100%;
+}
+
+.c1 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c1 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c1 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c1 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c1 p,
+.c1 ul,
+.c1 ol,
+.c1 .paragraph,
+.c1 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c1 p:first-child,
+.c1 .paragraph:first-child,
+.c1 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c1 p:last-child,
+.c1 .paragraph:last-child,
+.c1 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c1 ul,
+.c1 ol {
+  padding-left: 1em;
+}
+
+.c1 ul {
+  list-style: disc;
+}
+
+.c1 ol {
+  list-style: decimal;
+}
+
+.c1 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c1 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c1 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c1 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c1 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c1 h2 .c2 {
+  background-position: bottom !important;
+}
+
+.c1 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c1 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c1 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c1 blockquote {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 40px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.c1 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c1 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c1 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c1 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c1 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+@media (max-width:1280px) {
+  .c0 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c0 {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 p,
+  .c1 ul,
+  .c1 ol,
+  .c1 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c1 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c1 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c1 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c1 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c1 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c1 blockquote {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 34px;
+    line-height: 1.1em;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .c1 .content-start {
+    font-size: 55px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="article__text-section c1"
+    color="black"
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>Hello, world!</p>",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`SectionContainer Snapshots renders fillwidth properly 1`] = `
+.c0 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 680px;
+  max-width: 100%;
+}
+
+.c1 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c1 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c1 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c1 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c1 p,
+.c1 ul,
+.c1 ol,
+.c1 .paragraph,
+.c1 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c1 p:first-child,
+.c1 .paragraph:first-child,
+.c1 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c1 p:last-child,
+.c1 .paragraph:last-child,
+.c1 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c1 ul,
+.c1 ol {
+  padding-left: 1em;
+}
+
+.c1 ul {
+  list-style: disc;
+}
+
+.c1 ol {
+  list-style: decimal;
+}
+
+.c1 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c1 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c1 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c1 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c1 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c1 h2 .c2 {
+  background-position: bottom !important;
+}
+
+.c1 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c1 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c1 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c1 blockquote {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 40px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.c1 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c1 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c1 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c1 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c1 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+@media (max-width:1280px) {
+  .c0 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c0 {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 p,
+  .c1 ul,
+  .c1 ol,
+  .c1 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c1 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c1 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c1 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c1 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c1 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c1 blockquote {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 34px;
+    line-height: 1.1em;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .c1 .content-start {
+    font-size: 55px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="article__text-section c1"
+    color="black"
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>Hello, world!</p>",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`SectionContainer Snapshots renders overflow_fillwidth properly 1`] = `
+.c0 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 780px;
+  max-width: 100%;
+}
+
+.c1 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c1 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c1 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c1 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c1 p,
+.c1 ul,
+.c1 ol,
+.c1 .paragraph,
+.c1 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c1 p:first-child,
+.c1 .paragraph:first-child,
+.c1 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c1 p:last-child,
+.c1 .paragraph:last-child,
+.c1 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c1 ul,
+.c1 ol {
+  padding-left: 1em;
+}
+
+.c1 ul {
+  list-style: disc;
+}
+
+.c1 ol {
+  list-style: decimal;
+}
+
+.c1 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c1 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c1 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c1 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c1 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c1 h2 .c2 {
+  background-position: bottom !important;
+}
+
+.c1 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c1 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c1 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c1 blockquote {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 40px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.c1 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c1 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c1 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c1 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c1 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+@media (max-width:1280px) {
+  .c0 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c0 {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 p,
+  .c1 ul,
+  .c1 ol,
+  .c1 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c1 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c1 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c1 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c1 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c1 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c1 blockquote {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 34px;
+    line-height: 1.1em;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .c1 .content-start {
+    font-size: 55px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="article__text-section c1"
+    color="black"
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>Hello, world!</p>",
+        }
+      }
+    />
+  </div>
+</div>
+`;

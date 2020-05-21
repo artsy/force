@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsDateHeader renders a news date header properly 1`] = `
+.c0 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 25px;
+  line-height: 1.1em;
+}
+
+@media (max-width:720px) {
+  .c0 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+}
+
+<div
+  className="c0"
+>
+  Jul 19, 2018
+</div>
+`;

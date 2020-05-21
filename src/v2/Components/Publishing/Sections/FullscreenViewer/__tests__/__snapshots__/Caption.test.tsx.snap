@@ -1,0 +1,391 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders an artwork caption properly 1`] = `
+.c5 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.c7 {
+  margin-right: 30px;
+}
+
+.c8 {
+  white-space: nowrap;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c4 .title,
+.c4 .title a {
+  font-style: italic;
+}
+
+.c2 {
+  display: none;
+}
+
+.c3 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c3 a {
+  color: black;
+}
+
+.c9 {
+  margin-left: 20px;
+  white-space: nowrap;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 30px 60px;
+}
+
+.c0 p {
+  margin: 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media screen and (min-width:40em) {
+  .c5 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c5 {
+    line-height: 26px;
+  }
+}
+
+@media (max-width:720px) {
+  .c4 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:720px) {
+  .c6.artist-name {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width:720px) {
+  .c2 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .c2 span {
+    border-bottom: 1px solid black;
+  }
+}
+
+@media (max-width:720px) {
+  .c3 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width:720px) {
+  .c9 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vh;
+    padding: 20px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="fullscreen-viewer__caption-toggle c2"
+    >
+      <span>
+        Hide
+      </span>
+    </div>
+    <div
+      className="c3"
+      open={true}
+    >
+      <div>
+        <div
+          className="c4 c5"
+          fontFamily={
+            Object {
+              "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+              "fontWeight": 500,
+            }
+          }
+          fontSize={
+            Array [
+              "14px",
+              "16px",
+            ]
+          }
+          style={Object {}}
+        >
+          <div
+            className="c6"
+          >
+            <span
+              className="c7"
+            >
+              <span
+                className="c8"
+              >
+                <a
+                  href="/artist/fernando-botero"
+                >
+                  Fernando Botero
+                </a>
+              </span>
+            </span>
+          </div>
+          <div>
+            <div
+              className="c6"
+            >
+              <span
+                className="title"
+              >
+                <a
+                  href="/artwork/fernando-botero-nude-on-the-beach"
+                >
+                  Nude on the Beach
+                </a>
+              </span>
+              <span>
+                , 
+              </span>
+              <span
+                className="date"
+              >
+                2000
+              </span>
+            </div>
+            <div
+              className="c6"
+            >
+              <a
+                href="/gary-nader"
+              >
+                Gary Nader
+              </a>
+              <span>
+                . 
+              </span>
+              <span
+                className="credit"
+              >
+                Courtesy of Gary Nader
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c9"
+  >
+    2 of 10
+  </div>
+</div>
+`;
+
+exports[`renders an image caption properly 1`] = `
+.c2 {
+  display: none;
+}
+
+.c3 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c3 a {
+  color: black;
+}
+
+.c4 {
+  margin-left: 20px;
+  white-space: nowrap;
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 30px 60px;
+}
+
+.c0 p {
+  margin: 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media (max-width:720px) {
+  .c2 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .c2 span {
+    border-bottom: 1px solid black;
+  }
+}
+
+@media (max-width:720px) {
+  .c3 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width:720px) {
+  .c4 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vh;
+    padding: 20px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="fullscreen-viewer__caption-toggle c2"
+    >
+      <span>
+        Hide
+      </span>
+    </div>
+    <div
+      className="c3"
+      open={true}
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Photo by Adam Kuehl for Artsy.</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c4"
+  >
+    3 of 10
+  </div>
+</div>
+`;

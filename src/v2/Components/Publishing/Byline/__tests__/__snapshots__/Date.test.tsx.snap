@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Date Snapshots renders a condensed date 1`] = `
+.c1 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c0 {
+  margin: 5px 20px 0 0;
+  white-space: nowrap;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    fontFamily={
+      Object {
+        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        "fontWeight": 500,
+      }
+    }
+    fontSize="12px"
+    style={Object {}}
+  >
+    May 19, 2017
+  </div>
+</div>
+`;
+
+exports[`Date Snapshots renders a date 1`] = `
+.c1 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c0 {
+  margin: 5px 20px 0 0;
+  white-space: nowrap;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    fontFamily={
+      Object {
+        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        "fontWeight": 500,
+      }
+    }
+    fontSize="14px"
+    style={Object {}}
+  >
+    May 19, 2017 9:09am
+  </div>
+</div>
+`;

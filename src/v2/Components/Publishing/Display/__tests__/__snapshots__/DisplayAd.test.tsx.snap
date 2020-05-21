@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display Ad renders the new canvas in standard layout 1`] = `
+.c1 {
+  margin: auto;
+}
+
+.c2 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  color: black30;
+  margin: 4px;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 1px;
+  padding-bottom: 4px;
+  padding-top: 32px;
+  margin: 0 auto;
+  border-top: none;
+  background: #F8F8F8;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+}
+
+<div
+  className="c0"
+  height="1px"
+  onClick={[Function]}
+>
+  <div
+    className="c1"
+  >
+    <div
+      style={
+        Object {
+          "height": 250,
+          "width": 970,
+        }
+      }
+    />
+    <div
+      className="c2"
+      color="black30"
+      fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+      fontSize="10px"
+      style={Object {}}
+    >
+      Advertisement
+    </div>
+  </div>
+</div>
+`;

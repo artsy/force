@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Play/Pause Button matches the snapshot 1`] = `
+.c1 {
+  width: 32px;
+  height: 32px;
+}
+
+.c0 {
+  height: 28px;
+  width: 28px;
+  cursor: pointer;
+}
+
+<div
+  className="c0"
+  onClick={[MockFunction]}
+>
+  <svg
+    className="c1"
+    version="1.1"
+    viewBox="0 0 40 56"
+    x="0px"
+    xmlns="http://www.w3.org/2000/svg"
+    y="0px"
+  >
+    <g
+      fill="none"
+      fillRule="evenodd"
+      stroke="none"
+      strokeWidth="1"
+    >
+      <polygon
+        fill="white"
+        points="0 0 0 56 39.3600006 28"
+      />
+    </g>
+  </svg>
+</div>
+`;

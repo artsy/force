@@ -1,0 +1,542 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav renders a Nav 1`] = `
+.c5 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 32px;
+  color: white;
+  text-align: center;
+}
+
+.c3 {
+  font-family: artsy-icons;
+  color: white;
+  font-size: 32px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: white;
+}
+
+.c1 {
+  z-index: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.c1 img {
+  max-height: 34px;
+  vertical-align: middle;
+  -ms-interpolation-mode: bicubic;
+}
+
+.c1 .c6 {
+  margin: 0 20px;
+}
+
+.c1 .c2 {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: black;
+  border-bottom: 1px solid white;
+  position: relative;
+  height: 52px;
+  width: 100%;
+  z-index: 10;
+}
+
+.c4 {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: white;
+}
+
+.c4 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  z-index: 10;
+}
+
+@media (max-width:720px) {
+  .c1 img {
+    max-height: 24px;
+  }
+
+  .c1 .c2 {
+    font-size: 24px;
+  }
+
+  .c1 .c6 {
+    margin: 0 10px;
+  }
+}
+
+<div>
+  <div
+    className="c0"
+    color="white"
+  >
+    <div
+      className="PartnerInline c1"
+    >
+      <a
+        href="/"
+      >
+        <div
+          className="c2 c3"
+        >
+          
+        </div>
+      </a>
+      
+    </div>
+    <div
+      className="fresnel-container fresnel-greaterThan-xs"
+      suppressHydrationWarning={false}
+    >
+      <div
+        className="c4 c5"
+        color="white"
+        fontFamily={
+          Object {
+            "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+            "fontWeight": 600,
+          }
+        }
+        fontSize="22px"
+        style={Object {}}
+      >
+        <a
+          href="/articles"
+        >
+          Artsy Editorial
+        </a>
+      </div>
+    </div>
+  </div>
+  <span
+    style={
+      Object {
+        "fontSize": 0,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Nav renders a sponsored nav 1`] = `
+.c7 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 32px;
+  color: white;
+  text-align: center;
+}
+
+.c3 {
+  font-family: artsy-icons;
+  color: white;
+  font-size: 32px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: white;
+}
+
+.c5 {
+  width: 15px;
+  height: 15px;
+}
+
+.c1 {
+  z-index: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.c1 img {
+  max-height: 34px;
+  vertical-align: middle;
+  -ms-interpolation-mode: bicubic;
+}
+
+.c1 .c4 {
+  margin: 0 20px;
+}
+
+.c1 .c2 {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: black;
+  border-bottom: 1px solid white;
+  position: relative;
+  height: 52px;
+  width: 100%;
+  z-index: 10;
+}
+
+.c6 {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: white;
+}
+
+.c6 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  z-index: 10;
+}
+
+@media (max-width:900px) {
+  .c5 {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+@media (max-width:720px) {
+  .c1 img {
+    max-height: 24px;
+  }
+
+  .c1 .c2 {
+    font-size: 24px;
+  }
+
+  .c1 .c4 {
+    margin: 0 10px;
+  }
+}
+
+<div>
+  <div
+    className="c0"
+    color="white"
+  >
+    <div
+      className="PartnerInline c1"
+    >
+      <a
+        href="/"
+      >
+        <div
+          className="c2 c3"
+        >
+          
+        </div>
+      </a>
+      <svg
+        className="c4 c5"
+        version="1.1"
+        viewBox="0 0 15 15"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="none"
+          fillRule="evenodd"
+          stroke="none"
+          strokeWidth="2"
+        >
+          <g
+            fill="white"
+            transform="translate(-101.000000, -18.000000)"
+          >
+            <g
+              transform="translate(101.000000, 18.000000)"
+            >
+              <rect
+                height="1"
+                width="15"
+                x="0"
+                y="7"
+              />
+              <rect
+                height="1"
+                transform="translate(7.500000, 7.500000) rotate(-90.000000) translate(-7.500000, -7.500000) "
+                width="15"
+                x="0"
+                y="7"
+              />
+            </g>
+          </g>
+        </g>
+      </svg>
+      <a
+        href="http://artsy.net"
+        onClick={[Function]}
+        target="_blank"
+      >
+        <img
+          src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGEu3iYW6CQhbVxsjpOYwZQ%252FGKL_Wort-Bildmarke_negative_rgb%2B2.png&width=240&quality=80"
+        />
+      </a>
+    </div>
+    <div
+      className="fresnel-container fresnel-greaterThan-xs"
+      suppressHydrationWarning={false}
+    >
+      <div
+        className="c6 c7"
+        color="white"
+        fontFamily={
+          Object {
+            "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+            "fontWeight": 600,
+          }
+        }
+        fontSize="22px"
+        style={Object {}}
+      >
+        <a
+          href="/articles"
+        >
+          Artsy Editorial
+        </a>
+      </div>
+    </div>
+  </div>
+  <span
+    style={
+      Object {
+        "fontSize": 0,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Nav renders a transparent nav 1`] = `
+.c5 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 32px;
+  color: white;
+  text-align: center;
+}
+
+.c3 {
+  font-family: artsy-icons;
+  color: white;
+  font-size: 32px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: white;
+}
+
+.c1 {
+  z-index: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.c1 img {
+  max-height: 34px;
+  vertical-align: middle;
+  -ms-interpolation-mode: bicubic;
+}
+
+.c1 .c6 {
+  margin: 0 20px;
+}
+
+.c1 .c2 {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: transparent;
+  border-bottom: 1px solid white;
+  position: relative;
+  height: 52px;
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+}
+
+.c4 {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: white;
+}
+
+.c4 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  z-index: 10;
+}
+
+@media (max-width:720px) {
+  .c1 img {
+    max-height: 24px;
+  }
+
+  .c1 .c2 {
+    font-size: 24px;
+  }
+
+  .c1 .c6 {
+    margin: 0 10px;
+  }
+}
+
+<div>
+  <div
+    className="c0"
+    color="white"
+  >
+    <div
+      className="PartnerInline c1"
+    >
+      <a
+        href="/"
+      >
+        <div
+          className="c2 c3"
+        >
+          
+        </div>
+      </a>
+      
+    </div>
+    <div
+      className="fresnel-container fresnel-greaterThan-xs"
+      suppressHydrationWarning={false}
+    >
+      <div
+        className="c4 c5"
+        color="white"
+        fontFamily={
+          Object {
+            "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+            "fontWeight": 600,
+          }
+        }
+        fontSize="22px"
+        style={Object {}}
+      >
+        <a
+          href="/articles"
+        >
+          Artsy Editorial
+        </a>
+      </div>
+    </div>
+  </div>
+  <span
+    style={
+      Object {
+        "fontSize": 0,
+      }
+    }
+  />
+</div>
+`;

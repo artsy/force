@@ -1,0 +1,2431 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sections snapshots tests renders properly 1`] = `
+.c25 {
+  margin: auto;
+}
+
+.c35 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c18 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  color: #C2C2C2;
+}
+
+.c26 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  color: black30;
+  margin: 4px;
+}
+
+.c36 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  padding-bottom: 8px;
+}
+
+.c38 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.c39 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  padding-left: 20px;
+}
+
+.c45 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.c24 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 1px;
+  padding-bottom: 4px;
+  padding-top: 32px;
+  margin: 0 auto;
+  border-top: none;
+  background: #F8F8F8;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+}
+
+.c19 {
+  margin-right: 30px;
+}
+
+.c20 {
+  white-space: nowrap;
+}
+
+.c17 {
+  padding: 0;
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c17 a {
+  color: #C2C2C2;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c17 .title,
+.c17 .title a {
+  font-style: italic;
+}
+
+.c11 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c11:hover {
+  opacity: 1;
+}
+
+.c10 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c7 {
+  position: relative;
+}
+
+.c7:hover .c9 {
+  opacity: 1;
+}
+
+.c7 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c7 .image-loaded {
+  opacity: 1;
+}
+
+.c8 {
+  display: block;
+}
+
+.c16 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c13 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c13 > p,
+.c13 p,
+.c13 .public-DraftEditorPlaceholder-root,
+.c13 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c13 > a,
+.c13 a {
+  color: #999;
+}
+
+.c13 > a:hover,
+.c13 a:hover {
+  color: black;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c6 {
+  margin-right: 10px;
+  width: 197px;
+  max-width: 100%;
+}
+
+.c6 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c14 {
+  margin-right: 0px;
+  width: 264px;
+  max-width: 100%;
+}
+
+.c14 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c21 {
+  margin-right: 10px;
+  width: 219px;
+  max-width: 100%;
+}
+
+.c21 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c22 {
+  margin-right: 0px;
+  width: 219px;
+  max-width: 100%;
+}
+
+.c22 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c27 {
+  margin-right: 0px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.c27 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c29 {
+  margin-right: 10px;
+  width: 216px;
+  max-width: 100%;
+}
+
+.c29 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c30 {
+  margin-right: 0px;
+  width: 222px;
+  max-width: 100%;
+}
+
+.c30 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 680px;
+  max-width: 100%;
+}
+
+.c3 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 780px;
+  max-width: 100%;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 780px;
+  max-width: 100%;
+}
+
+.c31 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 680px;
+  max-width: 100%;
+}
+
+.c42 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 680px;
+  max-width: 100%;
+}
+
+.c49 {
+  font-family: artsy-icons;
+  color: black;
+  font-size: 24px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: black;
+}
+
+.c44 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.c44 a {
+  color: black;
+}
+
+.c46 {
+  margin-right: 20px;
+}
+
+.c47 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.c47 .c48 {
+  vertical-align: middle;
+  margin: 0;
+}
+
+.c43 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c28 {
+  width: 100%;
+  height: 1000px;
+}
+
+.c40 {
+  height: 45px;
+  position: relative;
+  margin-left: 40px;
+  text-align: right;
+}
+
+.c40 > svg {
+  height: 98%;
+}
+
+.c34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+}
+
+.c37 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c32 {
+  position: relative;
+  width: 100%;
+}
+
+.c33 {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  min-height: 50px;
+  width: auto;
+  max-width: calc(100% - 80px);
+  border-radius: 2px;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.c33:hover {
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+.c33:hover path,
+.c33:hover polygon {
+  fill: white;
+}
+
+.c41 {
+  height: auto;
+  width: 100%;
+}
+
+.c2 {
+  position: relative;
+  width: 100%;
+  color: black;
+}
+
+.c2 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,#333 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c2 a:hover {
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.c2 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c2 p,
+.c2 ul,
+.c2 ol,
+.c2 .paragraph,
+.c2 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c2 p:first-child,
+.c2 .paragraph:first-child,
+.c2 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c2 p:last-child,
+.c2 .paragraph:last-child,
+.c2 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c2 ul,
+.c2 ol {
+  padding-left: 1em;
+}
+
+.c2 ul {
+  list-style: disc;
+}
+
+.c2 ol {
+  list-style: decimal;
+}
+
+.c2 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c2 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c2 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c2 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c2 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c2 h2 .c50 {
+  background-position: bottom !important;
+}
+
+.c2 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c2 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c2 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c2 blockquote {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 40px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.c2 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c2 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c2 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c2 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c2 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  max-width: 780px;
+}
+
+.c23 {
+  margin-top: calc(100% - 96%);
+  width: 100%;
+  margin-left: 0;
+}
+
+@media screen and (min-width:40em) {
+  .c36 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c36 {
+    line-height: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c38 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c38 {
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c39 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c39 {
+    line-height: 24px;
+  }
+}
+
+@media (max-width:600px) {
+  .c17 {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width:720px) {
+  .c7 .c9 {
+    opacity: 1;
+  }
+}
+
+@media (max-width:600px) {
+  .c12 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c13 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:600px) {
+  .c5 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c6 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c14 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c14 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c21 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c21 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c22 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c22 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c27 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c27 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c29 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c29 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c30 {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .c30 img {
+    width: 100%;
+  }
+}
+
+@media (max-width:1280px) {
+  .c1 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c1 {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width:1280px) {
+  .c3 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c3 {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width:1280px) {
+  .c4 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c4 {
+    padding: 0;
+  }
+}
+
+@media (max-width:1280px) {
+  .c31 {
+    width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c31 {
+    padding: 0;
+  }
+}
+
+@media (max-width:900px) {
+  .c42 {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width:720px) {
+  .c28 {
+    height: 1300px;
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c2 p,
+  .c2 ul,
+  .c2 ol,
+  .c2 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c2 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c2 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c2 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c2 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c2 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c2 blockquote {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 34px;
+    line-height: 1.1em;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .c2 .content-start {
+    font-size: 55px;
+  }
+}
+
+@media (max-width:1280px) {
+  .c0 {
+    max-width: 680px;
+  }
+}
+
+@media (max-width:900px) {
+  .c0 {
+    max-width: 780px;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    max-width: 780px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p><a href='https://www.artsy.net/artist/pablo-picasso'>What would Antoine Court</a>’s de Gébelin think of the Happy Squirrel? </p><p>De Gébelin was a Protestant minister born in the 18th century. He authored the multi-volume tome <em>Le Monde primitif</em>, which insisted that the tarot deck contained secrets of the ancient Egyptians, whose priests had distilled their occult wisdom into the cards’ illustrations, imbuing them with great mystical power. Before that point, tarot was primarily a card game—meant for fun, not prophecy.</p><p>It was a bold and somewhat absurd assertion, given that de Gébelin could not read Egyptian hieroglyphics (no one could at the time, since they weren’t deciphered until the 19th century). Despite a total lack of historical evidence to back his claim, the theory stuck: Tarot decks, once a novelty, became popular tools for divination after the publication of de Gébelin’s book.</p><p>Which brings us back to the Happy Squirrel, a relatively recent addition to the tarot’s Major Arcana, and one whose provenance is less hazy: it originated on season six of <em>The Simpsons</em>. Lisa visits a fortune teller who is unconcerned when Lisa picks Death, but gasps in horror when the next card she draws is the Happy Squirrel. (When Lisa asks if the fuzzy rodent is a bad sign, the fortune teller demurs, saying that “the cards are vague and mysterious.”) Although it began as a cartoon joke, the Happy Squirrel card has made its way into over a dozen commercially available tarot decks. </p><p>So what would de Gébelin’s reaction be? The answer depends on whether tarot is a collection of timeless, mystical wisdom—or a flexible framework that has endured by changing with the times. Although tarot imagery employs supposedly universal archetypes, new decks are constantly being invented, and old decks altered. The art of tarot cards can never fully transcend its milieu. Which begs a second question: How do the cards’ art and design relate to the social changes, technological advances, and aesthetic sensibilities of their particular eras?</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<h3><strong>Galleries Section, Booth 10221</strong></h3><h2>neugerriemschneider</h2><h3>With works by Franz Ackermann, Ai Weiwei, Pawel Althamer, Billy Childish, Keith Edmier, Olafur Eliasson, Andreas Eriksson, Noa Eshkol, Mario García Torres, Renata Lucas, Michel Majerus, Mike Nelson, Jorge Pardo, Elizabeth Peyton, Tobias Rehberger, Thaddeus Strode, Rirkrit Tiravanija, Pae White</h3><p>The resultant work allows Salley the chance to recount her experiences of the aftermath of her scandal in her own words. In the film, Fujiwara and Salley are shown meeting professionals from public relations, advertising, and fashion companies as they seek to construct a new public image for her. Alongside the film, light boxes display fashion photographer Andreas Larsson’s pictures of Salley, which were taken as part of the project to rebuild her profile. While the show tackles public identity, female iconography, and Salley’s voice as an artist, the pair’s close working relationship—one in which the conventional power relationship has been overturned—no doubt aided their collaboration.</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c3"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<blockquote>The fixed stars exhibit no regular arrangement, either in their magnitudes, distances, or positions.</blockquote>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<h2>A Wealthy Family’s Trick-Taking Game</h2>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c4"
+  >
+    <div
+      className="c5"
+    >
+      <div
+        className="c6"
+        width={197}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="John Elisle, The Star, from the reimagined female Tarot cards. Courtesy of the artist. "
+              className="BlockImage__container c8"
+              height={351}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F5ZP7vKuVPqiynVU0jpFewQ%252Funnamed.png&width=1200&quality=80"
+              width={197}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>John Elisle, <em>The Star</em>, from the reimagined female Tarot cards. Courtesy of the artist. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c6"
+        width={197}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="John Elisle, The Magician, from the reimagined female Tarot cards. Courtesy of the artist. "
+              className="BlockImage__container c8"
+              height={351}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FPcvH_rh89gRGxRXgCyGGng%252Funnamed-5.png&width=1200&quality=80"
+              width={197}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>John Elisle, <em>The Magician</em>, from the reimagined female Tarot cards. Courtesy of the artist. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c14"
+        width={264}
+      >
+        <div
+          className="c15"
+        >
+          <a
+            className="c16"
+            href="/artwork/matt-devine-brass-tax"
+          >
+            <div
+              className="c7"
+            >
+              <img
+                alt="Brass Tax"
+                className="BlockImage__container c8"
+                height={352}
+                src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FlSBz0tsfvOAm2qKdWwgxLw%2Flarger.jpg&width=1200&quality=80"
+                width={264}
+              />
+              <div
+                className="c9 c10"
+              >
+                <div
+                  className="c11"
+                  onClick={[Function]}
+                >
+                  <svg
+                    className="expand"
+                    version="1.1"
+                    viewBox="0 0 27 27"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <g>
+                        <circle
+                          cx="13.9575195"
+                          cy="13.0588379"
+                          fill="#000000"
+                          fillRule="nonzero"
+                          r="13"
+                        />
+                        <g
+                          stroke="#FFFFFF"
+                          transform="translate(8.000000, 7.000000)"
+                        >
+                          <g>
+                            <g
+                              transform="translate(0.382532, 0.382532)"
+                            >
+                              <polyline
+                                points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                              />
+                              <polyline
+                                points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                                transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                              />
+                              <path
+                                d="M10.360254,0.796942618 L0.796942618,10.360254"
+                                strokeLinecap="square"
+                              />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+          <div>
+            <div
+              className="c17 c18"
+              color="#C2C2C2"
+              fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+              fontSize="14px"
+              style={Object {}}
+            >
+              <span
+                className="c19"
+              >
+                <span
+                  className="c20"
+                >
+                  <a
+                    href="/artist/matt-devine"
+                  >
+                    Matt Devine
+                  </a>
+                </span>
+              </span>
+              <div>
+                <div
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": <span>
+                        <span
+                          className="title"
+                        >
+                          <a
+                            href="/artwork/matt-devine-brass-tax"
+                          >
+                            Brass Tax
+                          </a>
+                        </span>
+                        <span>
+                          , 
+                        </span>
+                        <span
+                          className="date"
+                        >
+                          2000
+                        </span>
+                      </span>,
+                    }
+                  }
+                />
+                <div
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": <span>
+                        <a
+                          href="/joanne-artman-gallery"
+                        >
+                          Joanne Artman Gallery
+                        </a>
+                        <span>
+                          . 
+                        </span>
+                        <span
+                          className="credit"
+                        >
+                          Courtesy of The Metropolitan Museum of Art
+                        </span>
+                      </span>,
+                    }
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Despite their aura of mystery, medieval tarot cards were not used for divination, and were probably <em>not</em> created by ancient Egyptian magicians. The earliest surviving tarot decks—now preserved in various museum collections—are Italian, and were commissioned by wealthy patrons, the same way one might have hired an artist to paint a portrait or illuminated prayerbook. </p><p>The Visconti-Sforza Tarot is a collection of decks, none complete, commissioned by the Visconti and Sforza families from the workshop of Milanese court painter Bonifacio Bembo. Cards such as Death, who rides a horse and swings a giant scythe like a player in the world’s most high-stakes polo match, will seem familiar to contemporary enthusiasts. So will the Pope, who sits on a golden throne; and the Lovers, who hold hands beneath a string of heraldic flags. Rather than looking to these cards for mystic guidance, the Visconti and Sforza families would have used them to play a trick-taking card game similar to modern-day Bridge. (Although it’s unlikely—given the good condition of the decks—that they were ever handled with much frequency).</p><p>The cards each have intricately tooled gold backgrounds that glow like the luxury items that they were. Bembo is believed to have included portraits of the families in many of the cards, as well as adding the Visconti family motto here and there for good measure. Akin to the work of <a href=\\"https://www.artsy.net/artist/fra-angelico\\">Fra Angelico</a> and other early-Renaissance artists, the cards are opulent but pictorially flat, although the bodies appear in naturalistic perspective and their clothing billows around them, suggesting volume and form. </p><p><br></p><h2>The 18th-Century Conver Classic</h2>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c4"
+  >
+    <div
+      className="c5"
+    >
+      <div
+        className="c21"
+        width={219}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Nicolas Conver, Tarot card from Tarot de Marseille, ca. 1760. Via Wikimedia Commons. "
+              className="BlockImage__container c8"
+              height={425}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGwIVCQftjauWBCQie9oQ-A%252FTarot_de_Marseille_major21_world.jpg&width=1200&quality=80"
+              width={219}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Nicolas Conver, Tarot card from Tarot de Marseille, ca. 1760. Via Wikimedia Commons. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c21"
+        width={219}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Nicolas Conver, Queen of Clubs. Tarot card from Tarot de Marseille, ca. 1760. Via Wikimedia Commons. "
+              className="BlockImage__container c8"
+              height={425}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FUaNPuL9iz-X7Xm-SNtat7Q%252FTarot_de_Marseille_clubs13_queen.jpg&width=1200&quality=80"
+              width={219}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Nicolas Conver, <em>Queen of Clubs</em>. Tarot card from Tarot de Marseille, ca. 1760. Via Wikimedia Commons. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c22"
+        width={219}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Nicolas Conver, Tarot card from Tarot de Marseille, ca. 1760. Via Wikimedia Commons. "
+              className="BlockImage__container c8"
+              height={426}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fx5EcmVNBKoUJqQa8BQgqJA%252FTarot_de_Marseille_major06_lovers.jpg&width=1200&quality=80"
+              width={219}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Nicolas Conver, Tarot card from Tarot de Marseille, ca. 1760. Via Wikimedia Commons. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="c23"
+    >
+      <div
+        className="c24"
+        height="1px"
+        onClick={[Function]}
+      >
+        <div
+          className="c25"
+        >
+          <div
+            style={
+              Object {
+                "height": 250,
+                "width": 300,
+              }
+            }
+          />
+          <div
+            className="c26"
+            color="black30"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize="10px"
+            style={Object {}}
+          >
+            Advertisement
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Produced in 1760, French engraver Nicolas Conver’s deck of delicate woodcuts, the Tarot de Marseille, is the template on which many contemporary decks are based. Like the Visconti-Sforza Tarot, the deck’s design likely originated in 15th-century Italy before traveling north to France. It’s a favorite of many tarot enthusiasts, most notably the cult film director Alejandro Jodorowsky, who <a href=\\"http://www.nytimes.com/2011/11/13/fashion/alejandro-jodorowsky-and-his-tarot-de-marseille.html?mcubz=1\\">designed his own deck</a> based on the style. While the Conver deck wasn’t the first to be called the Tarot de Marseille, it’s highly prized by collectors for its delicate color palette of sky blues and minty greens. The graphic black outlines and blunt shading of the prints give the cards a simple and rough-hewn appearance, which adds to the ambience of ancient wisdom. The popularity of the tarot grew due to advances in printing technology and via the writings of 19th-century French occultists such as Éliphas Lévi and Etteilla, which popularized the use of tarot as a method of fortune-telling and assigned additional divinatory meaning to the cards.</p><p><br></p><h2>The New Mystics</h2>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c4"
+  >
+    <div
+      className="c5"
+    >
+      <div
+        className="c27"
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Pamela Colman Smith, The Empress, c. 1937. Courtesy of the Beinecke Rare Book &amp; Manuscript Library at Yale University."
+              className="BlockImage__container c8"
+              height="auto"
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=1200&quality=80"
+              width="100%"
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Pamela Colman Smith, <em>The Empress</em>, c. 1937. Courtesy of the Beinecke Rare Book &amp; Manuscript Library at Yale University.</p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>The Rider-Waite Smith deck, which debuted in 1909, remains the most recognizable and popular today. Designed by artist Pamela Colman Smith under the direction of the mystic A.E. Waite, it was the first to be mass-produced in English, and was intended for divination rather than gameplay. Smith and Waite were both active members of the Order of the Golden Dawn, a secretive organization devoted to the exploration of the paranormal and occult (allegedly Bram Stoker, Aleister Crowley, and Sir Arthur Conan Doyle were also members). </p><p>In addition to Smith’s occult bonafides, she was also an accomplished artist, championed by <a href=\\"https://www.artsy.net/artist/alfred-stieglitz\\">Alfred Stieglitz</a>, who collected her work and showed it at his gallery. Smith created fully-realized illustrations of all 78 cards that made the deck a treasure-trove for cartomancers, who now had a much richer store of images to work with. (Previously, only the 22 Major Arcana cards such as the Fool, the Magician, and the Lovers had been elaborately illustrated—traditionally, the Minor Arcana cards, which are roughly analogous to the suits in a deck of modern playing cards, were not.) The Major Arcana were based on the Tarot de Marseille drawings, but rendered in an illustrative <a href=\\"https://www.artsy.net/gene/art-nouveau\\">Art Nouveau</a> style rich with patterns. Even the Fool looks debonaire; he carelessly approaches the cliff, a feather in his cap and a blooming rose in his elegant fingers, wearing a floral tunic that looks straight out of <a href=\\"https://www.artsy.net/artist/william-morris\\">William Morris</a>’s workshop.</p><p><br></p><h2>An Occultist’s Pure Geometry</h2>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c3"
+  >
+    <iframe
+      className="c28"
+      frameBorder="0"
+      height={1000}
+      scrolling="no"
+      src="http://files.artsy.net/documents/1parrasch.html"
+    />
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>The Thoth deck, named for the Ibis-faced Egyptian god more commonly known as Horus, was painted by the artist Frieda Harris based on direction from the infamous occultist-about-town Aleister Crowley. Completed in the early 1940s, but not widely available until 1969, it features <a href=\\"https://www.artsy.net/gene/art-deco\\">Art Deco</a> borders resembling the pattern of a butterfly wing. </p><p>The deck is an aesthetic departure from the Rider-Waite’s homey <a href=\\"https://www.artsy.net/gene/arts-and-crafts-movement\\">Arts and Crafts</a> aesthetic. Shaped by Harris’s interest in pure geometry, the cards are reminiscent of the work of Swedish painter <a href=\\"https://www.artsy.net/artist/hilma-af-klint\\">Hilma af Klint</a> (a visionary artist who shared Harris’s interest in spiritualism and the writings of Austrian philosopher Rudolf Steiner, both popular subjects of study among the middle and upper classes in the early 20th century). Harris’s shaded orbs and compass-inscribed curves that fill the background of each card bear more than a passing resemblance to Klint’s highly-saturated geometries. Klint, considered by some to be Europe’s first abstract painter, believed that her luminous compositions were the created under the influence of spirits. (The same could easily be said of Harris because she was taking direction from Crowley, who was believed to be a medium, able to channel ancient and magical forces.) </p><p>It’s no coincidence that Klint’s paintings and Harris’s Thoth illustrations were shown in the same pavilion at the 2013 Venice Biennale, which was intended to amplify voices that had previously been excluded and “cover 100 years of dreams and visions,” <a href=\\"http://www.nytimes.com/2013/05/26/arts/design/massimiliano-gioni-of-venice-biennale.html\\">according</a> to curator Massimiliano Gioni.</p><p><br></p><h2>Sex &amp; Self-Help, ’70s Style</h2>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c4"
+  >
+    <div
+      className="c5"
+    >
+      <div
+        className="c29"
+        width={216}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Bill Greer and Lloyd Morgan, card from Morgan-Greer Tarot, 1979. "
+              className="BlockImage__container c8"
+              height={387}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fjmrvzuo7VfRidule-4zWNA%252F07272017170054-0001%2B%2528dragged%2529%2Bcopy.jpg&width=1200&quality=80"
+              width={216}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Bill Greer and Lloyd Morgan, card from Morgan-Greer Tarot, 1979. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c21"
+        width={219}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Bill Greer and Lloyd Morgan, card from Morgan-Greer Tarot, 1979. "
+              className="BlockImage__container c8"
+              height={388}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F66XOTGwZQzAAa0igYKSNTQ%252F07272017170207-0001%2B%2528dragged%2529.jpg&width=1200&quality=80"
+              width={219}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Bill Greer and Lloyd Morgan, card from Morgan-Greer Tarot, 1979. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="c30"
+        width={222}
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Bill Greer and Lloyd Morgan, card from Morgan-Greer Tarot, 1979. "
+              className="BlockImage__container c8"
+              height={388}
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fl0Qu946mLja0Dbv4ME4MHg%252F07272017170259-0001%2B%2528dragged%2529.jpg&width=1200&quality=80"
+              width={222}
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Bill Greer and Lloyd Morgan, card from Morgan-Greer Tarot, 1979. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Created by the artist Bill Greer under the direction of Lloyd Morgan, the Morgan-Greer deck is, like the 1970s themselves, both opulent and optimistic. The Magician sports a mustache that would make Tom Selleck blush, and the naked and embracing Lovers would fit right in with the hirsute and curvaceous illustrations in the original 1972 edition of <em>The Joy of Sex</em>.</p><p>The ‘70s enthusiasm for all things New Age created a renewed interest in tarot as a tool for self-discovery, and the Morgan Greer deck was there to greet it. The cards’ colors are lush and the lines are fluid. Greer chose to crop his figures tightly and removed the borders, allowing the illustrations to extend to the edges. The effect is fresh and personal. Formally, the Morgan-Greer illustrations have more in common with Jefferson Starship’s <em>Spitfire</em> (1976) album cover than with contemporary painting of the same period—the pendulum had swung away from figuration and would take a few years longer to swing back—but it’s possible to find a resonance between this deck’s art and a work like <a href=\\"https://www.artsy.net/artist/judy-chicago\\">Judy </a><a href=\\"https://www.artsy.net/artist/judy-chicago\\">Chicago</a>’s <em>Dinner Party </em>(1979), with its powerful goddess and blooming flowers. Greer’s strong women and frank sexuality make the deck very much of its time.</p><p><br></p><h2>Minimalism &amp; Identity in the Present Day</h2>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c31"
+  >
+    <div
+      className="c32"
+    >
+      <div
+        className="c33"
+        onClick={[Function]}
+      >
+        <div
+          className="c34"
+        >
+          <div
+            className="c35"
+          >
+            <div
+              className="c36"
+              fontFamily={
+                Object {
+                  "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  "fontWeight": 500,
+                }
+              }
+              fontSize={
+                Array [
+                  "16px",
+                  "18px",
+                ]
+              }
+              style={Object {}}
+            >
+              The Work of Bruce M. Sherman
+            </div>
+            <div
+              className="c37"
+            >
+              <div
+                className="c38"
+                fontFamily={
+                  Object {
+                    "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                    "fontWeight": 500,
+                  }
+                }
+                fontSize={
+                  Array [
+                    "12px",
+                    "14px",
+                  ]
+                }
+                style={Object {}}
+              >
+                View Slideshow
+              </div>
+              <div
+                className="c39"
+                fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+                fontSize={
+                  Array [
+                    "12px",
+                    "14px",
+                  ]
+                }
+                style={Object {}}
+              >
+                3 Images
+              </div>
+            </div>
+          </div>
+          <div
+            className="fresnel-container fresnel-greaterThanOrEqual-sm"
+            suppressHydrationWarning={false}
+          >
+            <div
+              className="c40"
+            >
+              <svg
+                className="image-set"
+                viewBox="0 0 44 44"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6760.67,551.72h-32v-32h32v32Zm-30-2h28v-28h-28v28Z"
+                  fill="black"
+                  transform="translate(-6728.67 -507.72)"
+                />
+                <polygon
+                  fill="black"
+                  points="38 37 36 37 36 8 7 8 7 6 38 6 38 37"
+                />
+                <polygon
+                  fill="black"
+                  points="44 31 42 31 42 2 13 2 13 0 44 0 44 31"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className=""
+      >
+        <img
+          alt="The Work of Bruce M. Sherman"
+          className="c41"
+          src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FCzofaZln2q-XhtXFqIio5A%252F07272017133815-0001%2B%2528dragged%2529%2Bcopy.jpg&width=800&quality=80"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Created by graphic designer Kati Forner for a Los Angeles-based fashion retailer, the Dreslyn tarot is the epitome of techno-minimalism. Although the deck is lovingly printed with high-gloss embossing, its illustrations are simple enough to be mistaken for the icon of an elegant iPhone app. It’s a radical departure from the historical approach, where each card is full to bursting with details, signs, and symbols—instead, each card has been paired down the bare minimum. The Dreslyn’s Lovers image is just two slender circles bisecting a line; its Eight of Wands is simply eight diagonal rules. The deck’s aesthetic mirrors the contemporary fear of clutter, as well as the increasing simplicity of the interfaces we use every day.</p><p>Tarot decks have also increasingly become more personal, and occasionally political, while reflecting a greater diversity. Illustrator John Elisle, in a commission for Missy Magazine, created seven all-women tarot cards, a chic sci-fi universe that includes a dominatrix Devil and a psychedelic High Priestess.</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c31"
+  >
+    <div
+      className="c5"
+    >
+      <div
+        className="c27"
+      >
+        <div
+          className="article-image"
+        >
+          <div
+            className="c7"
+          >
+            <img
+              alt="Designed by Kati Forner for The Dreslyn, courtesy of the artist. "
+              className="BlockImage__container c8"
+              height="auto"
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGk95i1tUaDJKeqQ-jcq6Cw%252FIMG_2142.jpg&width=1200&quality=80"
+              width="100%"
+            />
+            <div
+              className="c9 c10"
+            >
+              <div
+                className="c11"
+                onClick={[Function]}
+              >
+                <svg
+                  className="expand"
+                  version="1.1"
+                  viewBox="0 0 27 27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g>
+                      <circle
+                        cx="13.9575195"
+                        cy="13.0588379"
+                        fill="#000000"
+                        fillRule="nonzero"
+                        r="13"
+                      />
+                      <g
+                        stroke="#FFFFFF"
+                        transform="translate(8.000000, 7.000000)"
+                      >
+                        <g>
+                          <g
+                            transform="translate(0.382532, 0.382532)"
+                          >
+                            <polyline
+                              points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                            />
+                            <polyline
+                              points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                              transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                            />
+                            <path
+                              d="M10.360254,0.796942618 L0.796942618,10.360254"
+                              strokeLinecap="square"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            className="c12"
+          >
+            <div
+              className="c13"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Designed by Kati Forner for The Dreslyn, courtesy of the artist. </p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c1"
+  >
+    <div
+      className="article__text-section c2"
+      color="black"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>The Black Power Tarot was conceived by musician King Khan in consultation with Alejandro Jodorowsky, and designed by illustrator Michael Eaton in 2015. The deck celebrates the strength and achievements of Black musicians, artists, and activists while staying faithful to the imagery and composition of the classic Tarot de Marseilles. The familiar faces of Malcolm X, James Brown, Tina Turner, Howlin’ Wolf, Sister Rosetta Tharpe, and others emerge from the Major Arcana. Sun Ra is there too, appropriately imagined as the Sun card. At a time when Black Americans are at a high risk of being the victims of state-sponsored violence, the Black Power Tarot feels especially urgent. By situating these figures within a centuries-old framework of esoteric wisdom, Khan affirms their value and influence, the importance of their legacy. By placing them on cards used for fortune-telling, he extends their power into the future.<span class=\\"content-end\\"> </span></p>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="c42"
+  >
+    <div
+      className="c43"
+    >
+      <div
+        className="c44"
+        color="black"
+      >
+        <div
+          className="c45"
+          fontFamily={
+            Object {
+              "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+              "fontWeight": 500,
+            }
+          }
+          fontSize="16px"
+          style={Object {}}
+        >
+          <span
+            className="c46"
+          >
+            <span>
+              <a
+                href="http://artsy.net"
+              >
+                Casey Lesser
+              </a>
+               is a well-known author and a long-time baker.
+            </span>
+          </span>
+          <span>
+            <a
+              className="c47"
+              href="http://twitter.com/caseylesser"
+            >
+              <div
+                className="c48 c49"
+              >
+                
+              </div>
+              @caseylesser
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+.c0 {
+  max-width: 580px;
+  width: 100%;
+  height: 150px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 {
+  font-family: 'ITC Avant Garde Gothic W04','AvantGardeGothicITCW01D 731075',AvantGardeGothicITCW01Dm,Helvetica,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  -webkit-letter-spacing: 1px;
+  -moz-letter-spacing: 1px;
+  -ms-letter-spacing: 1px;
+  letter-spacing: 1px;
+  font-size: 11px;
+  line-height: 1.65em;
+  line-height: 1.35em;
+  margin: 0;
+}
+
+.c1 {
+  min-width: 50px;
+  padding: 10px;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+}
+
+.c2 {
+  width: 32px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.c3 {
+  position: absolute;
+  left: 8px;
+  top: 14px;
+}
+
+<div
+  className="imageset-preview c0"
+>
+  <div
+    className="imageset-preview__container"
+    style={
+      Object {
+        "display": "flex",
+      }
+    }
+  >
+    <img
+      alt="Nude on the Beach"
+      className="imageset-preview__image"
+      height={150}
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=500&quality=80"
+      style={
+        Object {
+          "marginRight": 10,
+        }
+      }
+    />
+    <img
+      alt="Photo by Adam Kuehl for Artsy."
+      className="imageset-preview__image"
+      height={150}
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fco8j2xq40ROMyBrJQm_4eQ%252FDafenOilPaintingVillage_AK03.jpg&width=500&quality=80"
+      style={
+        Object {
+          "marginRight": 10,
+        }
+      }
+    />
+    <img
+      alt="Photo by Adam Kuehl for Artsy. Image courtesy of the Guggenheim Museum."
+      className="imageset-preview__image"
+      height={150}
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCpHY-DRr7KW0HGXLslCXHw%2Flarger.jpg&width=500&quality=80"
+      style={
+        Object {
+          "marginRight": 10,
+        }
+      }
+    />
+  </div>
+  <div
+    className="imageset-preview__remaining c1"
+  >
+    <div
+      className="imageset-preview__icon-container c2"
+    >
+      <svg
+        className="image-set"
+        viewBox="0 0 44 44"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6760.67,551.72h-32v-32h32v32Zm-30-2h28v-28h-28v28Z"
+          fill="black"
+          transform="translate(-6728.67 -507.72)"
+        />
+        <polygon
+          fill="black"
+          points="38 37 36 37 36 8 7 8 7 6 38 6 38 37"
+        />
+        <polygon
+          fill="black"
+          points="44 31 42 31 42 2 13 2 13 0 44 0 44 31"
+        />
+      </svg>
+      <div
+        className="imageset-preview__length c3"
+      >
+        <div
+          className="c4"
+        >
+          3
+        </div>
+      </div>
+    </div>
+    <div
+      className="imageset-preview__text c4"
+    >
+      Enter Slideshow
+    </div>
+  </div>
+</div>
+`;

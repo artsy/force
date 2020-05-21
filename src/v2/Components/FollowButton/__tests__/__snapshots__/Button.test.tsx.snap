@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FollowButton snapshots Renders FollowButton properly 1`] = `
+.c0 {
+  border: 1px solid #e5e5e5;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 12px;
+  line-height: 1.4em;
+  width: 80px;
+  height: 24px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: black;
+  cursor: pointer;
+}
+
+.c0:hover {
+  border-color: black;
+  background: black;
+  color: white;
+}
+
+<div
+  className="c0"
+  data-test="followButton"
+  onClick={[MockFunction]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  Follow
+</div>
+`;

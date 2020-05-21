@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedArticlesPanel renders the related articles panel 1`] = `
+.c2 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c6 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000;
+}
+
+.c4 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  margin-bottom: 20px;
+}
+
+.c5 {
+  min-width: 80px;
+  height: 55px;
+  margin-right: 10px;
+}
+
+.c0 {
+  max-width: 360px;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c1 {
+  margin-bottom: 10px;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1 c2"
+    fontFamily={
+      Object {
+        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        "fontWeight": 500,
+      }
+    }
+    fontSize="14px"
+    style={Object {}}
+  >
+    Related Stories
+  </div>
+  <span
+    style={
+      Object {
+        "fontSize": 0,
+      }
+    }
+  />
+  <div
+    className="c3"
+  >
+    <a
+      className="c4"
+      href="/article/artsy-editorial-15-top-art-schools-united-states"
+      onClick={[Function]}
+    >
+      <img
+        className="c5"
+        src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F4Tq-iYkN8dOpshFoKRXyYw%252Fcustom-Custom_Size___PoetterHall_Exterior%2Bcopy.jpg&width=160&height=110&quality=80"
+      />
+      <div
+        className="c6"
+        color="#000"
+        fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+        fontSize="18px"
+        style={Object {}}
+      >
+        The 15 Top Art Schools in the United States
+      </div>
+    </a>
+    <a
+      className="c4"
+      href="/article/artsy-editorial-four-years-walter-de-marias-death-final-work-complete"
+      onClick={[Function]}
+    >
+      <img
+        className="c5"
+        src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F6IqxBTQCkExip2auQ7ZWCA%252FDEMAR-2011.0006-B.jpg&width=160&height=110&quality=80"
+      />
+      <div
+        className="c6"
+        color="#000"
+        fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+        fontSize="18px"
+        style={Object {}}
+      >
+        Four Years after Walter De Maria’s Death, His Final Work Is Complete
+      </div>
+    </a>
+    <a
+      className="c4"
+      href="/news/artsy-editorial-french-art-history-in-a-nutshell"
+      onClick={[Function]}
+    >
+      <img
+        className="c5"
+        src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FlEcCm2XbfZ7bPAVgLlM21w%252Flarger-21.jpg&width=160&height=110&quality=80"
+      />
+      <div
+        className="c6"
+        color="#000"
+        fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+        fontSize="18px"
+        style={Object {}}
+      >
+        French Art History in a Nutshell
+      </div>
+    </a>
+  </div>
+</div>
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mute/Unmute Button matches the snapshot 1`] = `
+.c0 {
+  height: 28px;
+  cursor: pointer;
+}
+
+<div
+  className="c0"
+  onClick={[MockFunction]}
+>
+  <svg
+    height="30px"
+    width="30px"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      fill="white"
+    >
+      <path
+        d="M19.1285714,15.3428571 L19.1285714,28.7571429 L11.8285714,21.4714286 L0.757142857,21.4714286 L0.757142857,8.04285714 L11.8285714,8.04285714 L19.1285714,0.757142857 L19.1285714,15.3428571 Z"
+      />
+    </g>
+  </svg>
+</div>
+`;

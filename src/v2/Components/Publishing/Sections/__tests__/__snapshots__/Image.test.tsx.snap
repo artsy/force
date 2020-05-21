@@ -1,0 +1,578 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image snapshots renders a long caption properly 1`] = `
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c6 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c6 > p,
+.c6 p,
+.c6 .public-DraftEditorPlaceholder-root,
+.c6 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c6 > a,
+.c6 a {
+  color: #999;
+}
+
+.c6 > a:hover,
+.c6 a:hover {
+  color: black;
+}
+
+.c4 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c4:hover {
+  opacity: 1;
+}
+
+.c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0:hover .c2 {
+  opacity: 1;
+}
+
+.c0 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c0 .image-loaded {
+  opacity: 1;
+}
+
+.c1 {
+  display: block;
+}
+
+@media (max-width:600px) {
+  .c5 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 .c2 {
+    opacity: 1;
+  }
+}
+
+<div
+  className="article-image"
+>
+  <div
+    className="c0"
+  >
+    <img
+      alt="Photo by Adam Kuehl for Artsy. Image courtesy of the Guggenheim Museum."
+      className="BlockImage__container c1"
+      height="auto"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCpHY-DRr7KW0HGXLslCXHw%2Flarger.jpg&width=1200&quality=80"
+      width="100%"
+    />
+    <div
+      className="c2 c3"
+    >
+      <div
+        className="c4"
+        onClick={[Function]}
+      >
+        <svg
+          className="expand"
+          version="1.1"
+          viewBox="0 0 27 27"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="1"
+          >
+            <g>
+              <circle
+                cx="13.9575195"
+                cy="13.0588379"
+                fill="#000000"
+                fillRule="nonzero"
+                r="13"
+              />
+              <g
+                stroke="#FFFFFF"
+                transform="translate(8.000000, 7.000000)"
+              >
+                <g>
+                  <g
+                    transform="translate(0.382532, 0.382532)"
+                  >
+                    <polyline
+                      points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                    />
+                    <polyline
+                      points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                      transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                    />
+                    <path
+                      d="M10.360254,0.796942618 L0.796942618,10.360254"
+                      strokeLinecap="square"
+                    />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c5"
+  >
+    <div
+      className="c6"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Photo by <a href='artsy.net'>Adam Kuehl</a> for Artsy. Image courtesy of the Guggenheim Museum.</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Image snapshots renders a react child as caption properly 1`] = `
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c6 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c6 > p,
+.c6 p,
+.c6 .public-DraftEditorPlaceholder-root,
+.c6 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c6 > a,
+.c6 a {
+  color: #999;
+}
+
+.c6 > a:hover,
+.c6 a:hover {
+  color: black;
+}
+
+.c4 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c4:hover {
+  opacity: 1;
+}
+
+.c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0:hover .c2 {
+  opacity: 1;
+}
+
+.c0 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c0 .image-loaded {
+  opacity: 1;
+}
+
+.c1 {
+  display: block;
+}
+
+@media (max-width:600px) {
+  .c5 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 .c2 {
+    opacity: 1;
+  }
+}
+
+<div
+  className="article-image"
+>
+  <div
+    className="c0"
+  >
+    <img
+      alt="Photo by Adam Kuehl for Artsy. Image courtesy of the Guggenheim Museum."
+      className="BlockImage__container c1"
+      height="auto"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCpHY-DRr7KW0HGXLslCXHw%2Flarger.jpg&width=1200&quality=80"
+      width="100%"
+    />
+    <div
+      className="c2 c3"
+    >
+      <div
+        className="c4"
+        onClick={[Function]}
+      >
+        <svg
+          className="expand"
+          version="1.1"
+          viewBox="0 0 27 27"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="1"
+          >
+            <g>
+              <circle
+                cx="13.9575195"
+                cy="13.0588379"
+                fill="#000000"
+                fillRule="nonzero"
+                r="13"
+              />
+              <g
+                stroke="#FFFFFF"
+                transform="translate(8.000000, 7.000000)"
+              >
+                <g>
+                  <g
+                    transform="translate(0.382532, 0.382532)"
+                  >
+                    <polyline
+                      points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                    />
+                    <polyline
+                      points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                      transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                    />
+                    <path
+                      d="M10.360254,0.796942618 L0.796942618,10.360254"
+                      strokeLinecap="square"
+                    />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c5"
+  >
+    <div
+      className="c6"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Photo by <a href='artsy.net'>Adam Kuehl</a> for Artsy. Image courtesy of the Guggenheim Museum.</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div>
+    Child 
+    A React child.
+  </div>
+</div>
+`;
+
+exports[`Image snapshots renders properly 1`] = `
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.c6 {
+  padding: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.c6 > p,
+.c6 p,
+.c6 .public-DraftEditorPlaceholder-root,
+.c6 .public-DraftStyleDefault-block {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+  color: #999;
+  margin: 0;
+  display: inline;
+}
+
+.c6 > a,
+.c6 a {
+  color: #999;
+}
+
+.c6 > a:hover,
+.c6 a:hover {
+  color: black;
+}
+
+.c4 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c4:hover {
+  opacity: 1;
+}
+
+.c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0:hover .c2 {
+  opacity: 1;
+}
+
+.c0 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c0 .image-loaded {
+  opacity: 1;
+}
+
+.c1 {
+  display: block;
+}
+
+@media (max-width:600px) {
+  .c5 {
+    padding: 0px 10px;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    padding: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c0 .c2 {
+    opacity: 1;
+  }
+}
+
+<div
+  className="article-image"
+>
+  <div
+    className="c0"
+  >
+    <img
+      alt="Photo by Adam Kuehl for Artsy."
+      className="BlockImage__container c1"
+      height="auto"
+      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fco8j2xq40ROMyBrJQm_4eQ%252FDafenOilPaintingVillage_AK03.jpg&width=1200&quality=80"
+      width="100%"
+    />
+    <div
+      className="c2 c3"
+    >
+      <div
+        className="c4"
+        onClick={[Function]}
+      >
+        <svg
+          className="expand"
+          version="1.1"
+          viewBox="0 0 27 27"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="1"
+          >
+            <g>
+              <circle
+                cx="13.9575195"
+                cy="13.0588379"
+                fill="#000000"
+                fillRule="nonzero"
+                r="13"
+              />
+              <g
+                stroke="#FFFFFF"
+                transform="translate(8.000000, 7.000000)"
+              >
+                <g>
+                  <g
+                    transform="translate(0.382532, 0.382532)"
+                  >
+                    <polyline
+                      points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                    />
+                    <polyline
+                      points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                      transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                    />
+                    <path
+                      d="M10.360254,0.796942618 L0.796942618,10.360254"
+                      strokeLinecap="square"
+                    />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c5"
+  >
+    <div
+      className="c6"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>Photo by Adam Kuehl for Artsy.</p>",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

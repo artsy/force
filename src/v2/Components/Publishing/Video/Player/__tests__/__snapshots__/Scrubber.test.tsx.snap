@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Scrubber matches the snapshot 1`] = `
+.c0 {
+  width: 100%;
+  background-size: 0% 100%;
+  height: 18px;
+  margin-top: 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+.c0::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c0::-ms-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: transparent;
+  border: 0px;
+  color: transparent;
+}
+
+.c0::-webkit-slider-runnable-track {
+  height: 2px;
+  cursor: pointer;
+  -webkit-animate: 0.2s;
+  animate: 0.2s;
+  background-color: white;
+  border: 0px;
+}
+
+.c0::-moz-range-track {
+  height: 2px;
+  cursor: pointer;
+  -webkit-animate: 0.2s;
+  animate: 0.2s;
+  background-color: white;
+  border: 0px;
+}
+
+.c0::-webkit-slider-thumb {
+  color: white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c0::-moz-range-thumb {
+  color: white;
+  box-shadow: 0px 0px 0px white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c0::-ms-fill-lower {
+  background: white;
+  border: 0px;
+}
+
+.c0::-ms-fill-upper {
+  background: white;
+  border: 0px;
+}
+
+.c0::-ms-thumb {
+  color: white;
+  box-shadow: 0px 0px 0px white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c0:focus::-webkit-slider-runnable-track {
+  background: white;
+}
+
+.c0:focus {
+  outline: none;
+}
+
+<input
+  className="c0"
+  max="5000.0000"
+  onChange={[Function]}
+  onMouseDown={[Function]}
+  onMouseUp={[Function]}
+  step="any"
+  type="range"
+  value={0}
+/>
+`;

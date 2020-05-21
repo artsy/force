@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+.c0 {
+  width: 100%;
+  height: 1000px;
+}
+
+@media (max-width:720px) {
+  .c0 {
+    height: 1300px;
+    width: 100%;
+  }
+}
+
+<iframe
+  className="c0"
+  frameBorder="0"
+  height={1000}
+  scrolling="no"
+  src="https://artsy-vanity-files-production.s3.amazonaws.com/documents/1parrasch.html"
+/>
+`;

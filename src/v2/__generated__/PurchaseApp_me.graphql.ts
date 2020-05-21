@@ -1,0 +1,32 @@
+/* tslint:disable */
+
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type PurchaseApp_me = {
+    readonly " $fragmentRefs": FragmentRefs<"PurchaseHistory_me">;
+    readonly " $refType": "PurchaseApp_me";
+};
+export type PurchaseApp_me$data = PurchaseApp_me;
+export type PurchaseApp_me$key = {
+    readonly " $data"?: PurchaseApp_me$data;
+    readonly " $fragmentRefs": FragmentRefs<"PurchaseApp_me">;
+};
+
+
+
+const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "PurchaseApp_me",
+  "type": "Me",
+  "metadata": null,
+  "argumentDefinitions": [],
+  "selections": [
+    {
+      "kind": "FragmentSpread",
+      "name": "PurchaseHistory_me",
+      "args": null
+    }
+  ]
+};
+(node as any).hash = 'e70a36883f4593860107a31d2f840614';
+export default node;

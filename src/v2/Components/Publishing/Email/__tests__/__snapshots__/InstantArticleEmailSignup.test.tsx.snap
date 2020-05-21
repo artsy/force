@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailSignup renders an email signup 1`] = `
+.c4 {
+  padding: 10px;
+  box-shadow: none;
+  -webkit-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+  margin-right: 10px;
+  resize: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  border: 1px solid #e5e5e5;
+  -webkit-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+  width: 100%;
+  border-width: 1px;
+  color: black;
+}
+
+.c4::-webkit-input-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c4::-moz-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c4:-ms-input-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c4::placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c4:hover,
+.c4:focus,
+.c4.focused {
+  border-color: #6e1fff;
+  outline: 0;
+}
+
+.c4:disabled {
+  border: 2px dotted #e5e5e5;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 500px;
+  padding: 30px 0;
+  margin: 0 20px;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.c2 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 30px;
+}
+
+.c1 {
+  font-family: 'ITC Avant Garde Gothic W04','AvantGardeGothicITCW01D 731075',AvantGardeGothicITCW01Dm,Helvetica,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  -webkit-letter-spacing: 1px;
+  -moz-letter-spacing: 1px;
+  -ms-letter-spacing: 1px;
+  letter-spacing: 1px;
+  font-size: 11px;
+  line-height: 1.65em;
+  margin-bottom: 10px;
+}
+
+.c5 {
+  font-family: 'ITC Avant Garde Gothic W04','AvantGardeGothicITCW01D 731075',AvantGardeGothicITCW01Dm,Helvetica,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  -webkit-letter-spacing: 1px;
+  -moz-letter-spacing: 1px;
+  -ms-letter-spacing: 1px;
+  letter-spacing: 1px;
+  font-size: 13px;
+  line-height: 1.65em;
+  background: #e5e5e5;
+  color: black;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 15px 30px;
+  line-height: 1;
+  outline: 0;
+  -webkit-transition: background-color 0.25s,color 0.25s;
+  transition: background-color 0.25s,color 0.25s;
+  margin: 10px;
+  border: none;
+  box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 2px;
+  background: black;
+  color: white;
+  border-radius: 2px;
+  height: 30px;
+  width: 80px;
+  margin-left: -100px;
+  font-family: 'ITC Avant Garde Gothic W04','AvantGardeGothicITCW01D 731075',AvantGardeGothicITCW01Dm,Helvetica,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  -webkit-letter-spacing: 1px;
+  -moz-letter-spacing: 1px;
+  -ms-letter-spacing: 1px;
+  letter-spacing: 1px;
+  font-size: 11px;
+  line-height: 1.65em;
+}
+
+.c5:hover:not(:disabled) {
+  cursor: pointer;
+  background: #cccccc;
+}
+
+.c5:hover:not(:disabled) {
+  background: #6e1fff;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    The Daily Editorial Newsletter
+  </div>
+  <div
+    className="c2"
+  >
+    The latest art-world news and stories in your inbox
+  </div>
+  <div
+    className="c3"
+  >
+    <input
+      className="c4"
+      onChange={[Function]}
+      placeholder="Enter Your Email..."
+      readOnly={false}
+      type="email"
+      value=""
+    />
+    <button
+      className="c5"
+      disabled={false}
+      onClick={[Function]}
+    >
+      <span>
+        Subscribe
+      </span>
+    </button>
+  </div>
+</div>
+`;

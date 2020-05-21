@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Artwork snapshots renders properly 1`] = `
+.c8 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  color: #C2C2C2;
+}
+
+.c9 {
+  margin-right: 30px;
+}
+
+.c10 {
+  white-space: nowrap;
+}
+
+.c7 {
+  padding: 0;
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c7 a {
+  color: #C2C2C2;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c7 .title,
+.c7 .title a {
+  font-style: italic;
+}
+
+.c6 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c6:hover {
+  opacity: 1;
+}
+
+.c5 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c2 {
+  position: relative;
+}
+
+.c2:hover .c4 {
+  opacity: 1;
+}
+
+.c2 .BlockImage__container {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.c2 .image-loaded {
+  opacity: 1;
+}
+
+.c3 {
+  display: block;
+}
+
+.c1 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media (max-width:600px) {
+  .c7 {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width:720px) {
+  .c2 .c4 {
+    opacity: 1;
+  }
+}
+
+<div
+  className="c0"
+>
+  <a
+    className="c1"
+    href="/artwork/fernando-botero-nude-on-the-beach"
+  >
+    <div
+      className="c2"
+    >
+      <img
+        alt="Nude on the Beach"
+        className="BlockImage__container c3"
+        height="auto"
+        src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0aRUvnVgQKbQk5dj8xcCAg%2Flarger.jpg&width=1200&quality=80"
+        width="100%"
+      />
+      <div
+        className="c4 c5"
+      >
+        <div
+          className="c6"
+          onClick={[Function]}
+        >
+          <svg
+            className="expand"
+            version="1.1"
+            viewBox="0 0 27 27"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              fill="none"
+              fillRule="evenodd"
+              stroke="none"
+              strokeWidth="1"
+            >
+              <g>
+                <circle
+                  cx="13.9575195"
+                  cy="13.0588379"
+                  fill="#000000"
+                  fillRule="nonzero"
+                  r="13"
+                />
+                <g
+                  stroke="#FFFFFF"
+                  transform="translate(8.000000, 7.000000)"
+                >
+                  <g>
+                    <g
+                      transform="translate(0.382532, 0.382532)"
+                    >
+                      <polyline
+                        points="4.78165571 0 11.1571966 0 11.1571966 6.37554094"
+                      />
+                      <polyline
+                        points="-1.01881144e-06 4.78165537 6.37553992 4.78165537 6.37553992 11.1571963"
+                        transform="translate(3.187769, 7.969426) rotate(-180.000000) translate(-3.187769, -7.969426) "
+                      />
+                      <path
+                        d="M10.360254,0.796942618 L0.796942618,10.360254"
+                        strokeLinecap="square"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </a>
+  <div>
+    <div
+      className="c7 c8"
+      color="#C2C2C2"
+      fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+      fontSize="14px"
+      style={Object {}}
+    >
+      <span
+        className="c9"
+      >
+        <span
+          className="c10"
+        >
+          <a
+            href="/artist/fernando-botero"
+          >
+            Fernando Botero
+          </a>
+        </span>
+      </span>
+      <div>
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": <span>
+                <span
+                  className="title"
+                >
+                  <a
+                    href="/artwork/fernando-botero-nude-on-the-beach"
+                  >
+                    Nude on the Beach
+                  </a>
+                </span>
+                <span>
+                  , 
+                </span>
+                <span
+                  className="date"
+                >
+                  2000
+                </span>
+              </span>,
+            }
+          }
+        />
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": <span>
+                <a
+                  href="/gary-nader"
+                >
+                  Gary Nader
+                </a>
+                <span>
+                  . 
+                </span>
+                <span
+                  className="credit"
+                >
+                  Courtesy of Gary Nader
+                </span>
+              </span>,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

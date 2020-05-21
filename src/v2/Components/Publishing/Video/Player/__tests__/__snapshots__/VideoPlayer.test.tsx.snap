@@ -1,0 +1,378 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoPlayer matches the snapshot 1`] = `
+.c14 {
+  width: 28px;
+  height: 28px;
+}
+
+.c12 {
+  height: 28px;
+  cursor: pointer;
+}
+
+.c7 {
+  width: 32px;
+  height: 32px;
+}
+
+.c6 {
+  height: 28px;
+  width: 28px;
+  cursor: pointer;
+}
+
+.c15 {
+  width: 100%;
+  background-size: NaN% 100%;
+  height: 18px;
+  margin-top: 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+.c15::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c15::-ms-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: transparent;
+  border: 0px;
+  color: transparent;
+}
+
+.c15::-webkit-slider-runnable-track {
+  height: 2px;
+  cursor: pointer;
+  -webkit-animate: 0.2s;
+  animate: 0.2s;
+  background-color: white;
+  border: 0px;
+}
+
+.c15::-moz-range-track {
+  height: 2px;
+  cursor: pointer;
+  -webkit-animate: 0.2s;
+  animate: 0.2s;
+  background-color: white;
+  border: 0px;
+}
+
+.c15::-webkit-slider-thumb {
+  color: white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c15::-moz-range-thumb {
+  color: white;
+  box-shadow: 0px 0px 0px white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c15::-ms-fill-lower {
+  background: white;
+  border: 0px;
+}
+
+.c15::-ms-fill-upper {
+  background: white;
+  border: 0px;
+}
+
+.c15::-ms-thumb {
+  color: white;
+  box-shadow: 0px 0px 0px white;
+  border: 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  margin-top: -5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.c15:focus::-webkit-slider-runnable-track {
+  background: white;
+}
+
+.c15:focus {
+  outline: none;
+}
+
+.c10 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.c3 {
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 20px;
+  margin: 20px;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.c3 .c9 {
+  margin-right: 30px;
+}
+
+.c3 .c11 {
+  margin-right: 20px;
+}
+
+.c3 .c13 {
+  cursor: pointer;
+}
+
+.c8 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  margin-left: 20px;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.c0 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: black;
+}
+
+.c0 video {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.c0 .c2 {
+  opacity: 1;
+}
+
+<div
+  className="c0"
+>
+  <video
+    muted={false}
+    playsInline={true}
+    src="http://files.artsy.net/videos/placeholder.mp4"
+  />
+  <div
+    className="c1"
+  >
+    <div
+      className="c2 c3"
+    >
+      <div
+        className="c4"
+      >
+        <div
+          className="c5"
+        >
+          <div
+            className="c6"
+            onClick={[Function]}
+          >
+            <svg
+              className="c7"
+              version="1.1"
+              viewBox="0 0 40 56"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              y="0px"
+            >
+              <g
+                fill="none"
+                fillRule="evenodd"
+                stroke="none"
+                strokeWidth="1"
+              >
+                <polygon
+                  fill="white"
+                  points="0 0 0 56 39.3600006 28"
+                />
+              </g>
+            </svg>
+          </div>
+          <div
+            className="c8"
+          >
+            The Video Title
+          </div>
+        </div>
+        <div
+          className="c5"
+        >
+          <div
+            className="c9 c10"
+          >
+            00:00
+             / 
+            00:00
+          </div>
+          <div
+            className="c11 c12"
+            onClick={[Function]}
+          >
+            <svg
+              height="30px"
+              width="30px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                fill="white"
+              >
+                <path
+                  d="M19.1285714,15.3428571 L19.1285714,28.7571429 L11.8285714,21.4714286 L0.757142857,21.4714286 L0.757142857,8.04285714 L11.8285714,8.04285714 L19.1285714,0.757142857 L19.1285714,15.3428571 Z"
+                />
+              </g>
+            </svg>
+          </div>
+          <svg
+            className="c13 c14"
+            height="32px"
+            onClick={[Function]}
+            viewBox="0 0 28 28"
+            width="32px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              fill="none"
+              fillRule="evenodd"
+              transform="translate(-1151 -22)"
+            >
+              <rect
+                height="92"
+                rx="4"
+                stroke="white"
+                width="1200"
+              />
+              <path
+                d="M1150 21h30v30h-30z"
+              />
+              <g
+                fill="#FFF"
+              >
+                <path
+                  d="M1151 40h2v10h-2z"
+                />
+                <path
+                  d="M1161 48v2h-10v-2zM1161 22v2h-10v-2z"
+                />
+                <path
+                  d="M1153 32h-2V22h2z"
+                />
+                <g>
+                  <path
+                    d="M1179 32h-2V22h2z"
+                  />
+                  <path
+                    d="M1169 24v-2h10v2z"
+                  />
+                </g>
+                <g>
+                  <path
+                    d="M1169 50v-2h10v2z"
+                  />
+                  <path
+                    d="M1177 40h2v10h-2z"
+                  />
+                </g>
+              </g>
+              <path
+                d="M1157 28h16v16h-16z"
+                fill="#FFF"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+      <input
+        className="c15"
+        max={0}
+        onChange={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        step="any"
+        type="range"
+        value={0}
+      />
+    </div>
+  </div>
+</div>
+`;

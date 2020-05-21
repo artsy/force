@@ -1,0 +1,3355 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`series layout renders a series 1`] = `
+.c15 {
+  color: white;
+}
+
+.c33 {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 40px;
+}
+
+.c43 {
+  margin: auto;
+}
+
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column-reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+  padding: 20px;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.c35 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.c40 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+}
+
+.c6 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 32px;
+  color: white;
+  text-align: center;
+}
+
+.c14 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 42px;
+  line-height: 50px;
+  margin-bottom: 8px;
+}
+
+.c20 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+
+.c21 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  margin-bottom: 20px;
+}
+
+.c22 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 18px;
+  line-height: 26px;
+  margin-bottom: 20px;
+}
+
+.c24 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c30 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1em;
+}
+
+.c36 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.c37 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+
+.c44 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  color: black30;
+  margin: 4px;
+}
+
+.c42 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 1px;
+  padding-bottom: 4px;
+  padding-top: 32px;
+  margin: 0 auto;
+  border-top: 1px solid #E5E5E5;
+  background: #000;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+}
+
+.c4 {
+  font-family: artsy-icons;
+  color: white;
+  font-size: 32px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: white;
+}
+
+.c2 {
+  z-index: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.c2 img {
+  max-height: 34px;
+  vertical-align: middle;
+  -ms-interpolation-mode: bicubic;
+}
+
+.c2 .c45 {
+  margin: 0 20px;
+}
+
+.c2 .c3 {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: transparent;
+  border-bottom: 1px solid white;
+  position: relative;
+  height: 52px;
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+}
+
+.c5 {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: white;
+}
+
+.c5 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.c32 {
+  margin: 10px 20px 0 0;
+}
+
+.c32::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 5px 1px 0;
+  background-color: white;
+}
+
+.c23 {
+  margin: 5px 20px 0 0;
+  white-space: nowrap;
+}
+
+.c38 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1em;
+  margin-top: 5px;
+}
+
+.c39 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.c39:hover {
+  opacity: 0.6;
+}
+
+.c39:first-child {
+  padding-left: 0;
+}
+
+.c31 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  color: white;
+}
+
+.c29 {
+  width: 32px;
+  height: 32px;
+}
+
+.c27 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  -webkit-transition: opacity 0.15s;
+  transition: opacity 0.15s;
+  display: block;
+}
+
+.c25 {
+  margin-bottom: 10px;
+  margin-left: 0px;
+  width: 100%;
+  position: relative;
+  height: inherit;
+  background: white;
+}
+
+.c17 {
+  border: 1px solid;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: block;
+}
+
+.c17 .c26 {
+  opacity: 1;
+}
+
+.c17:hover .c26 {
+  opacity: 0.7;
+}
+
+.c28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+}
+
+.c28 svg {
+  height: 40px;
+}
+
+.c16 {
+  margin-bottom: 40px;
+}
+
+.c7 {
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.c8 {
+  background-image: url(https://artsy-media-uploads.s3.amazonaws.com/GXvnaBYBdP2z6LKIBQF7XA%2FArtboard.jpg);
+  background-size: cover;
+  background-position: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+}
+
+.c9 {
+  background: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.c41 {
+  position: relative;
+  width: 100%;
+  color: white;
+}
+
+.c41 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,white 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c41 a:hover {
+  color: white;
+  opacity: .65;
+}
+
+.c41 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c41 p,
+.c41 ul,
+.c41 ol,
+.c41 .paragraph,
+.c41 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c41 p:first-child,
+.c41 .paragraph:first-child,
+.c41 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c41 p:last-child,
+.c41 .paragraph:last-child,
+.c41 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c41 ul,
+.c41 ol {
+  padding-left: 1em;
+}
+
+.c41 ul {
+  list-style: disc;
+}
+
+.c41 ol {
+  list-style: decimal;
+}
+
+.c41 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c41 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c41 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c41 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c41 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c41 h2 .c47 {
+  background-position: bottom !important;
+}
+
+.c41 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c41 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c41 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c41 blockquote {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 40px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.c41 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c41 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c41 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c41 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c41 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+.c34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.c13 {
+  color: white;
+  text-align: center;
+}
+
+.c13 .c46 {
+  padding-top: 5px;
+  padding-bottom: 40px;
+}
+
+.c13 .c46 img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c11 {
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.c11 .c12 {
+  margin-bottom: 90px;
+}
+
+.c0 {
+  color: white;
+}
+
+.c0 .c10 {
+  padding: 90px 20px 150px;
+}
+
+@media screen and (min-width:40em) {
+  .c33 {
+    padding-top: 40px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c33 {
+    padding-top: 60px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c18 {
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c18 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 30px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c18 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c19 {
+    margin-bottom: 0px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c19 {
+    margin-bottom: 5px;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c19 {
+    margin-bottom: 5px;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c35 {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c35 {
+    width: 33.33333333333333%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c35 {
+    width: 33.33333333333333%;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c40 {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c40 {
+    width: 66.66666666666666%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c40 {
+    width: 66.66666666666666%;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c14 {
+    font-size: 60px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c14 {
+    font-size: 100px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c14 {
+    line-height: 66px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c14 {
+    line-height: 104px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c14 {
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c21 {
+    font-size: 28px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c21 {
+    font-size: 42px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c21 {
+    font-size: 42px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c21 {
+    line-height: 36px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c21 {
+    line-height: 50px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c21 {
+    line-height: 50px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c22 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c22 {
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c22 {
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c22 {
+    line-height: 26px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c22 {
+    line-height: 32px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c22 {
+    line-height: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c36 {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c36 {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c36 {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c37 {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c37 {
+    margin-bottom: 0px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c37 {
+    margin-bottom: 0px;
+  }
+}
+
+@media (max-width:720px) {
+  .c2 img {
+    max-height: 24px;
+  }
+
+  .c2 .c3 {
+    font-size: 24px;
+  }
+
+  .c2 .c45 {
+    margin: 0 10px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c25 {
+    margin-bottom: 10px;
+    margin-left: 0px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c25 {
+    margin-bottom: 0px;
+    margin-left: 30px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c25 {
+    margin-bottom: 0px;
+    margin-left: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c25 {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c25 {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c25 {
+    width: 50%;
+  }
+}
+
+@media (max-width:900px) {
+  .c28 svg {
+    height: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c16 {
+    margin-bottom: 60px;
+  }
+}
+
+@media (max-width:600px) {
+  .c41 p,
+  .c41 ul,
+  .c41 ol,
+  .c41 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c41 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c41 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c41 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c41 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c41 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c41 blockquote {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 34px;
+    line-height: 1.1em;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .c41 .content-start {
+    font-size: 55px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c34 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c34 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c34 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media (max-width:900px) {
+  .c13 .c46 {
+    padding-bottom: 0;
+  }
+}
+
+<div
+  className="c0"
+  color="white"
+>
+  <div>
+    <div
+      className="c1"
+      color="white"
+    >
+      <div
+        className="PartnerInline c2"
+      >
+        <a
+          href="/"
+        >
+          <div
+            className="c3 c4"
+          >
+            
+          </div>
+        </a>
+        
+      </div>
+      <div
+        className="fresnel-container fresnel-greaterThan-xs"
+        suppressHydrationWarning={false}
+      >
+        <div
+          className="c5 c6"
+          color="white"
+          fontFamily={
+            Object {
+              "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+              "fontWeight": 600,
+            }
+          }
+          fontSize="22px"
+          style={Object {}}
+        >
+          <a
+            href="/articles"
+          >
+            Artsy Editorial
+          </a>
+        </div>
+      </div>
+    </div>
+    <span
+      style={
+        Object {
+          "fontSize": 0,
+        }
+      }
+    />
+  </div>
+  <div
+    className="c7"
+  >
+    <div
+      className="c8"
+    />
+    <div
+      className="c9"
+    />
+  </div>
+  <div
+    className="c10 c11"
+  >
+    <div
+      className="c12 c13"
+      color="white"
+    >
+      <h1
+        className="c14"
+        fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        fontSize={
+          Array [
+            "42px",
+            "60px",
+            "100px",
+          ]
+        }
+        style={Object {}}
+      >
+        The Future of Art
+      </h1>
+    </div>
+    <div
+      className="c15"
+      color="white"
+    >
+      <div
+        className="c16"
+      >
+        <a
+          className="ArticleCard c17"
+          color="white"
+          href="joanne-artman-gallery-poetry-naturerefinement-form"
+          onClick={[Function]}
+        >
+          <div
+            className="c18"
+          >
+            <div
+              className="c19"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <div>
+                <div
+                  className="c20"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  The Future of Art
+                </div>
+                <div
+                  className="c21"
+                  fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+                  fontSize={
+                    Array [
+                      "28px",
+                      "28px",
+                      "42px",
+                      "42px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  New Study Shows the Gender Pay Gap for Artists Is Not So Simple
+                </div>
+                <div
+                  className="c22"
+                  fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+                  fontSize={
+                    Array [
+                      "18px",
+                      "18px",
+                      "22px",
+                      "22px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  The elegant spiral of the Nautilus shell, the sinuous pattern of the banks of a river, or the swirling vortex street of clouds - patterns exist.
+                </div>
+              </div>
+              <div
+                className="c23"
+              >
+                <div
+                  className="c24"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  Aug 28, 2017
+                </div>
+              </div>
+            </div>
+            <div
+              className="c25"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <img
+                className="c26 c27"
+                src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FwHFgQlrTrHav5O6bQRJ0dg%252FUntitled%2BSuspended_30x67x33%2B%25282%2529_sm%2Bcropped.jpg&width=680&height=450&quality=80"
+              />
+              <div
+                className="c28"
+              >
+                <svg
+                  className="c29"
+                  version="1.1"
+                  viewBox="0 0 40 56"
+                  x="0px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  y="0px"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <polygon
+                      fill="white"
+                      points="0 0 0 56 39.3600006 28"
+                    />
+                  </g>
+                </svg>
+                <div
+                  className="c30"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  02:28
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div
+        className="c16"
+      >
+        <a
+          className="ArticleCard c17"
+          color="white"
+          href="new-yorks-next-art-district"
+          onClick={[Function]}
+        >
+          <div
+            className="c18"
+          >
+            <div
+              className="c19"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <div>
+                <div
+                  className="c20"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  The Future of Art
+                </div>
+                <div
+                  className="c21"
+                  fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+                  fontSize={
+                    Array [
+                      "28px",
+                      "28px",
+                      "42px",
+                      "42px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  New York's Next Art District
+                </div>
+                <div
+                  className="c22"
+                  fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+                  fontSize={
+                    Array [
+                      "18px",
+                      "18px",
+                      "22px",
+                      "22px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  Land exhibitions, make influential contacts, and gain valuable feedback about your work.
+                </div>
+              </div>
+              <div
+                className="Byline c31"
+                color="white"
+              >
+                <div
+                  className="c24"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  <div
+                    className="c32"
+                    color="white"
+                  >
+                    Casey Lesser
+                  </div>
+                </div>
+                <div
+                  className="c23"
+                >
+                  <div
+                    className="c24"
+                    fontFamily={
+                      Object {
+                        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                        "fontWeight": 500,
+                      }
+                    }
+                    fontSize="14px"
+                    style={Object {}}
+                  >
+                    May 19, 2017
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="c25"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <img
+                className="c26 c27"
+                src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F7lsxxsw0qPAuKl37jEYitw%252Farticle%2Basset%2B1-hig%2Bres%2Bcopy.jpg&width=680&height=450&quality=80"
+              />
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div
+      className="c33"
+    >
+      <div
+        className="c34"
+        color="white"
+        width="100%"
+      >
+        <div
+          className="c35"
+          width={
+            Array [
+              1,
+              1,
+              0.3333333333333333,
+              0.3333333333333333,
+            ]
+          }
+        >
+          <div>
+            <div
+              className="c36"
+              color="white"
+              fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+              fontSize="28px"
+              style={Object {}}
+            >
+              About the Series
+            </div>
+            <div
+              className="c37"
+              fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+              fontSize="18px"
+              style={Object {}}
+            >
+              <div
+                className="c38"
+              >
+                <a
+                  className="c39"
+                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.artsy.net%2Farticle%2Ffuture-of-art"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <svg
+                    height="14px"
+                    version="1.1"
+                    viewBox="0 0 14 14"
+                    width="14px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <path
+                        d="M13.22846,-0.00014 L0.77266,-0.00014 C0.34566,-0.00014 -0.00014,0.34636 -0.00014,0.77266 L-0.00014,13.22706 C-0.00014,13.65336 0.34566,13.99986 0.77266,13.99986 L7.47866,13.99986 L7.47866,8.57836 L5.65376,8.57836 L5.65376,6.46576 L7.47866,6.46576 L7.47866,4.90686 C7.47866,3.09876 8.58256,2.11456 10.19606,2.11456 C10.74066,2.11246 11.28526,2.14046 11.82706,2.19786 L11.82706,4.08576 L10.70776,4.08576 C9.83066,4.08576 9.65846,4.50366 9.65846,5.11476 L9.65846,6.46366 L11.75146,6.46366 L11.47846,8.57696 L9.65986,8.57696 L9.65986,13.99986 L13.22776,13.99986 C13.65406,13.99986 13.99986,13.65406 13.99986,13.22706 L13.99986,0.77266 C13.99986,0.34636 13.65406,-0.00014 13.22776,-0.00014"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
+                </a>
+                <a
+                  className="c39"
+                  href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fwww.artsy.net%2Farticle%2Ffuture-of-art&text=undefined&url=https%3A%2F%2Fwww.artsy.net%2Farticle%2Ffuture-of-art&via=artsy"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <svg
+                    height="14px"
+                    version="1.1"
+                    viewBox="0 0 16 14"
+                    width="16px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <path
+                        d="M15.9786472,1.9961647 C15.3802193,2.26166928 14.7456495,2.43612386 14.0957888,2.51257805 C14.7810964,2.1018105 15.2933396,1.45542502 15.537298,0.69435824 C14.8936926,1.07732426 14.189619,1.34699907 13.4542686,1.49087197 C12.8342946,0.828500604 11.967582,0.45318 11.0598622,0.45318 C9.25067784,0.458740305 7.78762253,1.92735593 7.78831756,3.73584521 C7.78762253,3.98744902 7.81542405,4.23835779 7.87033207,4.48370626 C5.23335731,4.35095397 2.77639743,3.10475056 1.11108601,1.05577808 C0.819169985,1.55620555 0.665566552,2.1254418 0.666261591,2.70510362 C0.664871514,3.80256887 1.21256158,4.82775015 2.12653675,5.4352135 C1.60595318,5.42061769 1.09649021,5.28021999 0.642630293,5.02583602 L0.642630293,5.06684327 C0.639155103,6.62859401 1.74009554,7.97488291 3.27195963,8.28139474 C2.99116422,8.36062909 2.70063827,8.40163634 2.40941728,8.40302642 C2.20229591,8.40372145 1.99517454,8.38426039 1.7922234,8.34603329 C2.22106194,9.68120158 3.45127948,10.5958718 4.85317144,10.6229783 C3.69315276,11.5362584 2.25928904,12.0311256 0.783028001,12.0283454 C0.520998616,12.0283454 0.25966427,12.0130546 -0.00028,11.9810828 C1.49961234,12.9437107 3.24554818,13.4552588 5.02762601,13.4531737 C11.0612522,13.4531737 14.3585132,8.45584932 14.3585132,4.12298146 C14.3585132,3.9798036 14.3585132,3.83940589 14.3473926,3.69970322 C14.9896079,3.23611277 15.5442483,2.66201126 15.9855976,2.00311509"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
+                </a>
+                <a
+                  className="c39"
+                  href="mailto:?subject=undefined&body=Check out undefined on Artsy: https://www.artsy.net/article/future-of-art"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <svg
+                    height="14px"
+                    version="1.1"
+                    viewBox="0 0 17 14"
+                    width="17px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <path
+                        d="M8.09330005,8.15962873 L16.0866701,1.92619024 L16.0866701,1.14909566 C16.0866701,0.764718818 15.7752762,0.45402 15.3915944,0.45402 L0.795005656,0.45402 C0.411323894,0.45402 0.09993,0.764718818 0.09993,1.14909566 L0.09993,1.92619024 L8.09330005,8.15962873 Z M16.0866701,3.68820703 L16.0866701,12.7589443 C16.0866701,13.1426261 15.7752762,13.45402 15.3915944,13.45402 L0.795005656,13.45402 C0.411323894,13.45402 0.09993,13.1426261 0.09993,12.7589443 L0.09993,3.68820703 L7.66582852,9.58939935 C7.79163721,9.68740502 7.94246863,9.73606031 8.09330005,9.73606031 C8.24413147,9.73606031 8.39496288,9.68740502 8.52077158,9.58939935 L16.0866701,3.68820703 Z"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            className="fresnel-container fresnel-greaterThanOrEqual-md"
+            suppressHydrationWarning={false}
+          />
+        </div>
+        <div
+          className="c40"
+          width={
+            Array [
+              1,
+              1,
+              0.6666666666666666,
+              0.6666666666666666,
+            ]
+          }
+        >
+          <div
+            className="SeriesAbout__description"
+          >
+            <div
+              className="article__text-section c41"
+              color="white"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. <a href='http://artsy.net'>Curabitur blandit</a> tempus porttitor. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo.</p><p>Donec sed odio dui. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam quis risus eget urna mollis ornare vel eu leo. Nulla vitae elit libero, a pharetra augue.</p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+          <div
+            className="fresnel-container fresnel-lessThan-md"
+            suppressHydrationWarning={false}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c42"
+    height="1px"
+    onClick={[Function]}
+  >
+    <div
+      className="c43"
+    >
+      <div
+        style={
+          Object {
+            "height": 250,
+            "width": 970,
+          }
+        }
+      />
+      <div
+        className="c44"
+        color="black30"
+        fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        fontSize="10px"
+        style={Object {}}
+      >
+        Advertisement
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`series layout renders a sponsored series 1`] = `
+.c21 {
+  color: white;
+}
+
+.c39 {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 40px;
+}
+
+.c51 {
+  margin: auto;
+}
+
+.c46 {
+  margin-bottom: 4px;
+}
+
+.c49 {
+  margin-top: 60px;
+}
+
+.c24 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column-reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+  padding: 20px;
+}
+
+.c25 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.c41 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.c47 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+}
+
+.c8 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 32px;
+  color: white;
+  text-align: center;
+}
+
+.c16 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 42px;
+  line-height: 50px;
+  margin-bottom: 8px;
+}
+
+.c26 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+
+.c27 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  margin-bottom: 20px;
+}
+
+.c28 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 18px;
+  line-height: 26px;
+  margin-bottom: 20px;
+}
+
+.c30 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.c36 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1em;
+}
+
+.c42 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.c43 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+
+.c52 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  color: black30;
+  margin: 4px;
+}
+
+.c50 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 1px;
+  padding-bottom: 4px;
+  padding-top: 32px;
+  margin: 0 auto;
+  border-top: 1px solid #E5E5E5;
+  background: #000;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+}
+
+.c4 {
+  font-family: artsy-icons;
+  color: white;
+  font-size: 32px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-letter-spacing: 0;
+  -moz-letter-spacing: 0;
+  -ms-letter-spacing: 0;
+  letter-spacing: 0;
+  position: relative;
+  color: white;
+}
+
+.c6 {
+  width: 15px;
+  height: 15px;
+}
+
+.c2 {
+  z-index: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.c2 img {
+  max-height: 34px;
+  vertical-align: middle;
+  -ms-interpolation-mode: bicubic;
+}
+
+.c2 .c5 {
+  margin: 0 20px;
+}
+
+.c2 .c3 {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: transparent;
+  border-bottom: 1px solid white;
+  position: relative;
+  height: 52px;
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+}
+
+.c7 {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: white;
+}
+
+.c7 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.c38 {
+  margin: 10px 20px 0 0;
+}
+
+.c38::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 5px 1px 0;
+  background-color: white;
+}
+
+.c29 {
+  margin: 5px 20px 0 0;
+  white-space: nowrap;
+}
+
+.c44 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1em;
+  margin-top: 5px;
+}
+
+.c45 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.c45:hover {
+  opacity: 0.6;
+}
+
+.c45:first-child {
+  padding-left: 0;
+}
+
+.c37 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  color: white;
+}
+
+.c35 {
+  width: 32px;
+  height: 32px;
+}
+
+.c33 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  -webkit-transition: opacity 0.15s;
+  transition: opacity 0.15s;
+  display: block;
+}
+
+.c31 {
+  margin-bottom: 10px;
+  margin-left: 0px;
+  width: 100%;
+  position: relative;
+  height: inherit;
+  background: white;
+}
+
+.c23 {
+  border: 1px solid;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: block;
+}
+
+.c23 .c32 {
+  opacity: 1;
+}
+
+.c23:hover .c32 {
+  opacity: 0.7;
+}
+
+.c34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+}
+
+.c34 svg {
+  height: 40px;
+}
+
+.c22 {
+  margin-bottom: 40px;
+}
+
+.c9 {
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.c10 {
+  background-image: url(https://artsy-media-uploads.s3.amazonaws.com/GXvnaBYBdP2z6LKIBQF7XA%2FArtboard.jpg);
+  background-size: cover;
+  background-position: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+}
+
+.c11 {
+  background: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.6));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.c17 {
+  display: block;
+}
+
+.c20 img {
+  max-width: 240px;
+  max-height: 40px;
+  object-fit: contain;
+  object-position: left;
+}
+
+.c18 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+  margin-bottom: 20px;
+}
+
+.c48 {
+  position: relative;
+  width: 100%;
+  color: white;
+}
+
+.c48 a {
+  color: white;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-image: linear-gradient( to bottom,transparent 0,white 1px,transparent 0 );
+  background-size: 1.25px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.c48 a:hover {
+  color: white;
+  opacity: .65;
+}
+
+.c48 div[class*='ToolTip'] a {
+  background-image: none;
+  opacity: 1;
+  color: inherit;
+}
+
+.c48 p,
+.c48 ul,
+.c48 ol,
+.c48 .paragraph,
+.c48 div[data-block=true] .public-DraftStyleDefault-block {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: 0;
+  font-style: inherit;
+}
+
+.c48 p:first-child,
+.c48 .paragraph:first-child,
+.c48 div[data-block=true]:first-child .public-DraftStyleDefault-block {
+  padding-top: 0;
+}
+
+.c48 p:last-child,
+.c48 .paragraph:last-child,
+.c48 div[data-block=true]:last-child .public-DraftStyleDefault-block {
+  padding-bottom: 0;
+}
+
+.c48 ul,
+.c48 ol {
+  padding-left: 1em;
+}
+
+.c48 ul {
+  list-style: disc;
+}
+
+.c48 ol {
+  list-style: decimal;
+}
+
+.c48 li {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 23px;
+  line-height: 1.5em;
+  -webkit-font-smoothing: antialiased;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.c48 h1 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 40px;
+  line-height: 1.1em;
+  font-weight: normal;
+  padding-top: 107px;
+  padding-bottom: 46px;
+  margin: 0;
+  position: relative;
+  text-align: center;
+}
+
+.c48 h1::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 69px;
+  right: calc(50% - 4px);
+}
+
+.c48 h2 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 32px;
+  line-height: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c48 h2 a {
+  background-size: 1.25px 1px;
+}
+
+.c48 h2 .c54 {
+  background-position: bottom !important;
+}
+
+.c48 h3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+  font-weight: normal;
+  padding-top: 23px;
+  margin: 0;
+}
+
+.c48 h3 strong {
+  font-weight: normal;
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.c48 h3 a {
+  background-size: 1.25px 1px;
+}
+
+.c48 blockquote {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 40px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  font-weight: normal;
+  padding-top: 46px;
+  padding-bottom: 46px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.c48 .preventLineBreak {
+  white-space: nowrap;
+}
+
+.c48 .content-end {
+  display: inline-block;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.c48 .artist-follow {
+  vertical-align: middle;
+  margin-left: 10px;
+  cursor: pointer;
+  background: none transparent;
+}
+
+.c48 .artist-follow::before {
+  font-family: "artsy-icons";
+  content: "";
+  vertical-align: -8.5px;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+.c48 .artist-follow::after {
+  content: "Follow";
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+}
+
+.c40 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.c15 {
+  color: white;
+  text-align: center;
+}
+
+.c15 .c19 {
+  padding-top: 5px;
+  padding-bottom: 40px;
+}
+
+.c15 .c19 img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c53 .c14 {
+  margin-bottom: 90px;
+}
+
+.c13 {
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.c13 .c14 {
+  margin-bottom: 60px;
+}
+
+.c0 {
+  color: white;
+}
+
+.c0 .c12 {
+  padding: 90px 20px 150px;
+}
+
+@media screen and (min-width:40em) {
+  .c39 {
+    padding-top: 40px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c39 {
+    padding-top: 60px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c24 {
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c24 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 30px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c24 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c25 {
+    margin-bottom: 0px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c25 {
+    margin-bottom: 5px;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c25 {
+    margin-bottom: 5px;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c41 {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c41 {
+    width: 33.33333333333333%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c41 {
+    width: 33.33333333333333%;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c47 {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c47 {
+    width: 66.66666666666666%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c47 {
+    width: 66.66666666666666%;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c16 {
+    font-size: 60px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c16 {
+    font-size: 100px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c16 {
+    line-height: 66px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c16 {
+    line-height: 104px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c16 {
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c27 {
+    font-size: 28px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c27 {
+    font-size: 42px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c27 {
+    font-size: 42px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c27 {
+    line-height: 36px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c27 {
+    line-height: 50px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c27 {
+    line-height: 50px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c28 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c28 {
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c28 {
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c28 {
+    line-height: 26px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c28 {
+    line-height: 32px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c28 {
+    line-height: 32px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c42 {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c42 {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c42 {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c43 {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c43 {
+    margin-bottom: 0px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c43 {
+    margin-bottom: 0px;
+  }
+}
+
+@media (max-width:900px) {
+  .c6 {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+@media (max-width:720px) {
+  .c2 img {
+    max-height: 24px;
+  }
+
+  .c2 .c3 {
+    font-size: 24px;
+  }
+
+  .c2 .c5 {
+    margin: 0 10px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c31 {
+    margin-bottom: 10px;
+    margin-left: 0px;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c31 {
+    margin-bottom: 0px;
+    margin-left: 30px;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c31 {
+    margin-bottom: 0px;
+    margin-left: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c31 {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c31 {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c31 {
+    width: 50%;
+  }
+}
+
+@media (max-width:900px) {
+  .c34 svg {
+    height: 30px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c22 {
+    margin-bottom: 60px;
+  }
+}
+
+@media (max-width:720px) {
+  .c18 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
+}
+
+@media (max-width:600px) {
+  .c48 p,
+  .c48 ul,
+  .c48 ol,
+  .c48 div[data-block=true] .public-DraftStyleDefault-block {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c48 li {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 19px;
+    line-height: 1.5em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .c48 h1 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 34px;
+    line-height: 1.1em;
+  }
+
+  .c48 h2 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 32px;
+    line-height: 1.1em;
+  }
+
+  .c48 h3 {
+    font-family: Unica77LLWebRegular,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+    line-height: 1.5em;
+  }
+
+  .c48 h3 strong {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+
+  .c48 blockquote {
+    font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+    font-size: 34px;
+    line-height: 1.1em;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .c48 .content-start {
+    font-size: 55px;
+  }
+}
+
+@media screen and (min-width:40em) {
+  .c40 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width:52em) {
+  .c40 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:64em) {
+  .c40 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media (max-width:900px) {
+  .c15 .c19 {
+    padding-bottom: 0;
+  }
+}
+
+<div
+  className="c0"
+  color="white"
+>
+  <div>
+    <div
+      className="c1"
+      color="white"
+    >
+      <div
+        className="PartnerInline c2"
+      >
+        <a
+          href="/"
+        >
+          <div
+            className="c3 c4"
+          >
+            
+          </div>
+        </a>
+        <svg
+          className="c5 c6"
+          version="1.1"
+          viewBox="0 0 15 15"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="2"
+          >
+            <g
+              fill="white"
+              transform="translate(-101.000000, -18.000000)"
+            >
+              <g
+                transform="translate(101.000000, 18.000000)"
+              >
+                <rect
+                  height="1"
+                  width="15"
+                  x="0"
+                  y="7"
+                />
+                <rect
+                  height="1"
+                  transform="translate(7.500000, 7.500000) rotate(-90.000000) translate(-7.500000, -7.500000) "
+                  width="15"
+                  x="0"
+                  y="7"
+                />
+              </g>
+            </g>
+          </g>
+        </svg>
+        <a
+          href="http://artsy.net"
+          onClick={[Function]}
+          target="_blank"
+        >
+          <img
+            src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGEu3iYW6CQhbVxsjpOYwZQ%252FGKL_Wort-Bildmarke_negative_rgb%2B2.png&width=240&quality=80"
+          />
+        </a>
+      </div>
+      <div
+        className="fresnel-container fresnel-greaterThan-xs"
+        suppressHydrationWarning={false}
+      >
+        <div
+          className="c7 c8"
+          color="white"
+          fontFamily={
+            Object {
+              "fontFamily": "'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif",
+              "fontWeight": 600,
+            }
+          }
+          fontSize="22px"
+          style={Object {}}
+        >
+          <a
+            href="/articles"
+          >
+            Artsy Editorial
+          </a>
+        </div>
+      </div>
+    </div>
+    <span
+      style={
+        Object {
+          "fontSize": 0,
+        }
+      }
+    />
+  </div>
+  <div
+    className="c9"
+  >
+    <div
+      className="c10"
+    />
+    <div
+      className="c11"
+    />
+  </div>
+  <div
+    className="c12 c13"
+  >
+    <div
+      className="c14 c15"
+      color="white"
+    >
+      <h1
+        className="c16"
+        fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        fontSize={
+          Array [
+            "42px",
+            "60px",
+            "100px",
+          ]
+        }
+        style={Object {}}
+      >
+        The Future of Art
+      </h1>
+      <div
+        className="PartnerBlock c17"
+      >
+        <div
+          className="c18"
+        >
+          Presented in Partnership with
+        </div>
+        <div
+          className="c19 c20"
+        >
+          <a
+            href="http://artsy.net"
+            onClick={[Function]}
+            target="_blank"
+          >
+            <img
+              src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGEu3iYW6CQhbVxsjpOYwZQ%252FGKL_Wort-Bildmarke_negative_rgb%2B2.png&width=240&quality=80"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      className="c21"
+      color="white"
+    >
+      <div
+        className="c22"
+      >
+        <a
+          className="ArticleCard c23"
+          color="white"
+          href="joanne-artman-gallery-poetry-naturerefinement-form"
+          onClick={[Function]}
+        >
+          <div
+            className="c24"
+          >
+            <div
+              className="c25"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <div>
+                <div
+                  className="c26"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  The Future of Art
+                </div>
+                <div
+                  className="c27"
+                  fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+                  fontSize={
+                    Array [
+                      "28px",
+                      "28px",
+                      "42px",
+                      "42px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  New Study Shows the Gender Pay Gap for Artists Is Not So Simple
+                </div>
+                <div
+                  className="c28"
+                  fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+                  fontSize={
+                    Array [
+                      "18px",
+                      "18px",
+                      "22px",
+                      "22px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  The elegant spiral of the Nautilus shell, the sinuous pattern of the banks of a river, or the swirling vortex street of clouds - patterns exist.
+                </div>
+              </div>
+              <div
+                className="c29"
+              >
+                <div
+                  className="c30"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  Aug 28, 2017
+                </div>
+              </div>
+            </div>
+            <div
+              className="c31"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <img
+                className="c32 c33"
+                src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FwHFgQlrTrHav5O6bQRJ0dg%252FUntitled%2BSuspended_30x67x33%2B%25282%2529_sm%2Bcropped.jpg&width=680&height=450&quality=80"
+              />
+              <div
+                className="c34"
+              >
+                <svg
+                  className="c35"
+                  version="1.1"
+                  viewBox="0 0 40 56"
+                  x="0px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  y="0px"
+                >
+                  <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <polygon
+                      fill="white"
+                      points="0 0 0 56 39.3600006 28"
+                    />
+                  </g>
+                </svg>
+                <div
+                  className="c36"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  02:28
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div
+        className="c22"
+      >
+        <a
+          className="ArticleCard c23"
+          color="white"
+          href="new-yorks-next-art-district"
+          onClick={[Function]}
+        >
+          <div
+            className="c24"
+          >
+            <div
+              className="c25"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <div>
+                <div
+                  className="c26"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  The Future of Art
+                </div>
+                <div
+                  className="c27"
+                  fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+                  fontSize={
+                    Array [
+                      "28px",
+                      "28px",
+                      "42px",
+                      "42px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  New York's Next Art District
+                </div>
+                <div
+                  className="c28"
+                  fontFamily="'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', Times, serif"
+                  fontSize={
+                    Array [
+                      "18px",
+                      "18px",
+                      "22px",
+                      "22px",
+                    ]
+                  }
+                  style={Object {}}
+                >
+                  Land exhibitions, make influential contacts, and gain valuable feedback about your work.
+                </div>
+              </div>
+              <div
+                className="Byline c37"
+                color="white"
+              >
+                <div
+                  className="c30"
+                  fontFamily={
+                    Object {
+                      "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      "fontWeight": 500,
+                    }
+                  }
+                  fontSize="14px"
+                  style={Object {}}
+                >
+                  <div
+                    className="c38"
+                    color="white"
+                  >
+                    Casey Lesser
+                  </div>
+                </div>
+                <div
+                  className="c29"
+                >
+                  <div
+                    className="c30"
+                    fontFamily={
+                      Object {
+                        "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                        "fontWeight": 500,
+                      }
+                    }
+                    fontSize="14px"
+                    style={Object {}}
+                  >
+                    May 19, 2017
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="c31"
+              width={
+                Array [
+                  "100%",
+                  "100%",
+                  "50%",
+                  "50%",
+                ]
+              }
+            >
+              <img
+                className="c32 c33"
+                src="https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F7lsxxsw0qPAuKl37jEYitw%252Farticle%2Basset%2B1-hig%2Bres%2Bcopy.jpg&width=680&height=450&quality=80"
+              />
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div
+      className="c39"
+    >
+      <div
+        className="c40"
+        color="white"
+        width="100%"
+      >
+        <div
+          className="c41"
+          width={
+            Array [
+              1,
+              1,
+              0.3333333333333333,
+              0.3333333333333333,
+            ]
+          }
+        >
+          <div>
+            <div
+              className="c42"
+              color="white"
+              fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+              fontSize="28px"
+              style={Object {}}
+            >
+              About the Series
+            </div>
+            <div
+              className="c43"
+              fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+              fontSize="18px"
+              style={Object {}}
+            >
+              <div
+                className="c44"
+              >
+                <a
+                  className="c45"
+                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.artsy.net%2Farticle%2Ffuture-of-art"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <svg
+                    height="14px"
+                    version="1.1"
+                    viewBox="0 0 14 14"
+                    width="14px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <path
+                        d="M13.22846,-0.00014 L0.77266,-0.00014 C0.34566,-0.00014 -0.00014,0.34636 -0.00014,0.77266 L-0.00014,13.22706 C-0.00014,13.65336 0.34566,13.99986 0.77266,13.99986 L7.47866,13.99986 L7.47866,8.57836 L5.65376,8.57836 L5.65376,6.46576 L7.47866,6.46576 L7.47866,4.90686 C7.47866,3.09876 8.58256,2.11456 10.19606,2.11456 C10.74066,2.11246 11.28526,2.14046 11.82706,2.19786 L11.82706,4.08576 L10.70776,4.08576 C9.83066,4.08576 9.65846,4.50366 9.65846,5.11476 L9.65846,6.46366 L11.75146,6.46366 L11.47846,8.57696 L9.65986,8.57696 L9.65986,13.99986 L13.22776,13.99986 C13.65406,13.99986 13.99986,13.65406 13.99986,13.22706 L13.99986,0.77266 C13.99986,0.34636 13.65406,-0.00014 13.22776,-0.00014"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
+                </a>
+                <a
+                  className="c45"
+                  href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fwww.artsy.net%2Farticle%2Ffuture-of-art&text=undefined&url=https%3A%2F%2Fwww.artsy.net%2Farticle%2Ffuture-of-art&via=artsy"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <svg
+                    height="14px"
+                    version="1.1"
+                    viewBox="0 0 16 14"
+                    width="16px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <path
+                        d="M15.9786472,1.9961647 C15.3802193,2.26166928 14.7456495,2.43612386 14.0957888,2.51257805 C14.7810964,2.1018105 15.2933396,1.45542502 15.537298,0.69435824 C14.8936926,1.07732426 14.189619,1.34699907 13.4542686,1.49087197 C12.8342946,0.828500604 11.967582,0.45318 11.0598622,0.45318 C9.25067784,0.458740305 7.78762253,1.92735593 7.78831756,3.73584521 C7.78762253,3.98744902 7.81542405,4.23835779 7.87033207,4.48370626 C5.23335731,4.35095397 2.77639743,3.10475056 1.11108601,1.05577808 C0.819169985,1.55620555 0.665566552,2.1254418 0.666261591,2.70510362 C0.664871514,3.80256887 1.21256158,4.82775015 2.12653675,5.4352135 C1.60595318,5.42061769 1.09649021,5.28021999 0.642630293,5.02583602 L0.642630293,5.06684327 C0.639155103,6.62859401 1.74009554,7.97488291 3.27195963,8.28139474 C2.99116422,8.36062909 2.70063827,8.40163634 2.40941728,8.40302642 C2.20229591,8.40372145 1.99517454,8.38426039 1.7922234,8.34603329 C2.22106194,9.68120158 3.45127948,10.5958718 4.85317144,10.6229783 C3.69315276,11.5362584 2.25928904,12.0311256 0.783028001,12.0283454 C0.520998616,12.0283454 0.25966427,12.0130546 -0.00028,11.9810828 C1.49961234,12.9437107 3.24554818,13.4552588 5.02762601,13.4531737 C11.0612522,13.4531737 14.3585132,8.45584932 14.3585132,4.12298146 C14.3585132,3.9798036 14.3585132,3.83940589 14.3473926,3.69970322 C14.9896079,3.23611277 15.5442483,2.66201126 15.9855976,2.00311509"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
+                </a>
+                <a
+                  className="c45"
+                  href="mailto:?subject=undefined&body=Check out undefined on Artsy: https://www.artsy.net/article/future-of-art"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <svg
+                    height="14px"
+                    version="1.1"
+                    viewBox="0 0 17 14"
+                    width="17px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      fill="none"
+                      fillRule="evenodd"
+                      stroke="none"
+                      strokeWidth="1"
+                    >
+                      <path
+                        d="M8.09330005,8.15962873 L16.0866701,1.92619024 L16.0866701,1.14909566 C16.0866701,0.764718818 15.7752762,0.45402 15.3915944,0.45402 L0.795005656,0.45402 C0.411323894,0.45402 0.09993,0.764718818 0.09993,1.14909566 L0.09993,1.92619024 L8.09330005,8.15962873 Z M16.0866701,3.68820703 L16.0866701,12.7589443 C16.0866701,13.1426261 15.7752762,13.45402 15.3915944,13.45402 L0.795005656,13.45402 C0.411323894,13.45402 0.09993,13.1426261 0.09993,12.7589443 L0.09993,3.68820703 L7.66582852,9.58939935 C7.79163721,9.68740502 7.94246863,9.73606031 8.09330005,9.73606031 C8.24413147,9.73606031 8.39496288,9.68740502 8.52077158,9.58939935 L16.0866701,3.68820703 Z"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            className="fresnel-container fresnel-greaterThanOrEqual-md"
+            suppressHydrationWarning={false}
+          >
+            <div
+              className="c46"
+            >
+              <div
+                className="PartnerBlock c17"
+              >
+                <div
+                  className="c18"
+                >
+                  Presented in Partnership with
+                </div>
+                <div
+                  className="c19 c20"
+                >
+                  <a
+                    href="http://artsy.net"
+                    onClick={[Function]}
+                    target="_blank"
+                  >
+                    <img
+                      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGEu3iYW6CQhbVxsjpOYwZQ%252FGKL_Wort-Bildmarke_negative_rgb%2B2.png&width=240&quality=80"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="c47"
+          width={
+            Array [
+              1,
+              1,
+              0.6666666666666666,
+              0.6666666666666666,
+            ]
+          }
+        >
+          <div
+            className="SeriesAbout__description"
+          >
+            <div
+              className="article__text-section c48"
+              color="white"
+            >
+              <div
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. <a href='http://artsy.net'>Curabitur blandit</a> tempus porttitor. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo.</p><p>Donec sed odio dui. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam quis risus eget urna mollis ornare vel eu leo. Nulla vitae elit libero, a pharetra augue.</p>",
+                  }
+                }
+              />
+            </div>
+          </div>
+          <div
+            className="fresnel-container fresnel-lessThan-md"
+            suppressHydrationWarning={false}
+          >
+            <div
+              className="c49"
+            >
+              <div
+                className="PartnerBlock c17"
+              >
+                <div
+                  className="c18"
+                >
+                  Presented in Partnership with
+                </div>
+                <div
+                  className="c19 c20"
+                >
+                  <a
+                    href="http://artsy.net"
+                    onClick={[Function]}
+                    target="_blank"
+                  >
+                    <img
+                      src="https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FGEu3iYW6CQhbVxsjpOYwZQ%252FGKL_Wort-Bildmarke_negative_rgb%2B2.png&width=240&quality=80"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="c50"
+    height="1px"
+    onClick={[Function]}
+  >
+    <div
+      className="c51"
+    >
+      <div
+        style={
+          Object {
+            "height": 250,
+            "width": 970,
+          }
+        }
+      />
+      <div
+        className="c52"
+        color="black30"
+        fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        fontSize="10px"
+        style={Object {}}
+      >
+        Advertisement
+      </div>
+    </div>
+  </div>
+</div>
+`;

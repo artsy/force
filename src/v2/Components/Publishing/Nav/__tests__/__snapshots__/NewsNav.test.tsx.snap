@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsNav renders NewsNav 1`] = `
+.c2 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 25px;
+  line-height: 1.1em;
+}
+
+.c3 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 25px;
+  line-height: 1.1em;
+  text-align: center;
+  position: absolute;
+  left: 30px;
+}
+
+.c1 {
+  position: relative;
+  max-width: 780px;
+  margin: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: 26px;
+}
+
+.c0 {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px 0;
+  background: white;
+  z-index: 11;
+}
+
+@media (max-width:720px) {
+  .c2 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+}
+
+@media (max-width:720px) {
+  .c3 {
+    font-family: Unica77LLWebMedium,Arial,serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+}
+
+@media (max-width:720px) {
+  .c3 {
+    left: 20px;
+  }
+}
+
+@media (max-width:720px) {
+  .c1 {
+    min-height: 16px;
+  }
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="c2"
+    >
+      Jun 29, 2017
+    </div>
+    <div
+      className="c3"
+    >
+      News
+    </div>
+  </div>
+</div>
+`;

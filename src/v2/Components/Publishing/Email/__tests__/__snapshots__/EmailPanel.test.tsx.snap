@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailSignup renders an email signup 1`] = `
+.c3 {
+  width: 100%;
+  border-width: 1px;
+  color: black;
+  padding: 10px;
+  box-shadow: none;
+  -webkit-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+  margin-right: 10px;
+  resize: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  border: 1px solid #e5e5e5;
+  -webkit-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+}
+
+.c3::-webkit-input-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c3::-moz-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c3:-ms-input-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c3::placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c3:hover,
+.c3:focus,
+.c3.focused {
+  border-color: #6e1fff;
+  outline: 0;
+}
+
+.c3:disabled {
+  border: 2px dotted #e5e5e5;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 350px;
+  width: 100%;
+}
+
+.c1 {
+  font-family: Unica77LLWebMedium,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+}
+
+.c4 {
+  font-family: 'ITC Avant Garde Gothic W04','AvantGardeGothicITCW01D 731075',AvantGardeGothicITCW01Dm,Helvetica,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  -webkit-letter-spacing: 1px;
+  -moz-letter-spacing: 1px;
+  -ms-letter-spacing: 1px;
+  letter-spacing: 1px;
+  font-size: 13px;
+  line-height: 1.65em;
+  background: #e5e5e5;
+  color: black;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 15px 30px;
+  line-height: 1;
+  outline: 0;
+  -webkit-transition: background-color 0.25s,color 0.25s;
+  transition: background-color 0.25s,color 0.25s;
+  margin: 10px;
+  border: none;
+  box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 2px;
+  background: black;
+  color: white;
+  border-radius: 2px;
+  height: 30px;
+  width: 80px;
+  margin-left: -100px;
+  font-family: 'ITC Avant Garde Gothic W04','AvantGardeGothicITCW01D 731075',AvantGardeGothicITCW01Dm,Helvetica,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  -webkit-letter-spacing: 1px;
+  -moz-letter-spacing: 1px;
+  -ms-letter-spacing: 1px;
+  letter-spacing: 1px;
+  font-size: 11px;
+  line-height: 1.65em;
+}
+
+.c4:hover:not(:disabled) {
+  cursor: pointer;
+  background: #cccccc;
+}
+
+.c4:hover:not(:disabled) {
+  background: #6e1fff;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    Stay up to date with Artsy Editorial
+  </div>
+  <div
+    className="c2"
+  >
+    <input
+      className="c3"
+      onChange={[Function]}
+      placeholder="Enter Your Email..."
+      readOnly={false}
+      type="email"
+      value=""
+    />
+    <button
+      className="c4"
+      disabled={false}
+      onClick={[Function]}
+    >
+      <span>
+        Subscribe
+      </span>
+    </button>
+  </div>
+</div>
+`;
