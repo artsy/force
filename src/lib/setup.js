@@ -176,11 +176,10 @@ export default function(app) {
   // Add CSRF to the cookie and remove it from the page. This will allows the
   // caching on the html.
   app.use((req, res, next) => {
-    const csrf = res.locals.sd.CSRF_TOKEN
     res.cookie("CSRF_TOKEN", res.locals.sd.CSRF_TOKEN)
     // Clear the embedded CSRF_TOKEN, an alternative method would be to update
     // @artsy/passport to make the CSRF_TOKEN optional.
-    res.locals.sd.CSRF_TOKEN = ""
+    delete res.locals.sd.CSRF_TOKEN
     next()
   })
 
