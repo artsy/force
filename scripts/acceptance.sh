@@ -6,6 +6,6 @@ yarn webpack
 
 mocha \
   --retries 5 \
-  --require test.jest.config.js \
+  --require test.config.js \
   -t 60000 \
   $@

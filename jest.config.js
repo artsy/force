@@ -17,7 +17,7 @@ module.exports = {
       moduleFileExtensions: ["coffee", "js", "json", "jsx", "ts", "tsx"],
       modulePathIgnorePatterns: ["v2"],
       testRegex: ".*\\.jest\\.(ts|tsx|js|jsx)$",
-      setupFiles: ["<rootDir>/test.jest.envSetup.js"],
+      setupFiles: ["<rootDir>/test.config.js"],
       roots: ["<rootDir>/src"],
       testURL: "https://artsy.net",
     },
