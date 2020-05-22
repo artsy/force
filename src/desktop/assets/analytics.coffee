@@ -5,7 +5,7 @@ window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
 
 PublishingEvents = require('@artsy/reaction/dist/Utils/Events.js').default
-ReactionEvents = require('v2/Utils/Events').default
+ReactionEvents = require('../../v2/Utils/Events').default
 
 # All Force mediator events can be hooked into for tracking purposes
 mediator.on 'all', (name, data) ->
