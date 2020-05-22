@@ -11,9 +11,6 @@ ReactionEvents = require('../../v2/Utils/Events').default
 mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
 
-# All Reaction events are sent directly to Segment
-PublishingEvents.onEvent trackEvent
-ReactionoEvents.onEvent trackEvent
 
 trackEvent = (data) ->
   # TODO: This is old schema
@@ -65,6 +62,10 @@ trackEvent = (data) ->
   else
     console.error("Unknown analytics schema being used: #{JSON.stringify(data)}")
 
+# All Reaction events are sent directly to Segment
+PublishingEvents.onEvent trackEvent
+ReactionEvents.onEvent trackEvent
+
 require '../analytics/main_layout.js'
 
 $ -> analytics.ready ->
@@ -114,3 +115,4 @@ $ -> analytics.ready ->
   require '../analytics/inquiry_questionnaire.js'
   require '../analytics/editorial_features.js'
   require '../analytics/gallery_partnerships.js'
+
