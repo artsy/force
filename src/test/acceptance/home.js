@@ -26,4 +26,17 @@ describe("Home page", () => {
     const $ = await browser.page("/")
     $.html().should.containEql("Browse Works for Sale")
   })
+
+  it("renders the email confirmed banner when flashMessage is confirmed", async () => {
+    const $ = await browser.page("/?flashMessage=confirmed")
+
+    $("div[class*=Banner__Wrapper]").should.have.length(1)
+    $.html().should.containEql("Your email has been confirmed")
+  })
+
+  it("ignores flashMessages that aren't explicitly supported", async () => {
+    const $ = await browser.page("/?flashMessage=l33thaxor")
+
+    $("div[class*=Banner__Wrapper]").should.have.length(0)
+  })
 })
