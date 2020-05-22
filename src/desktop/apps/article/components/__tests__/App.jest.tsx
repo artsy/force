@@ -23,7 +23,7 @@ describe("App", () => {
     }
   })
 
-  it("renders a standard article", () => {
+  it.only("renders a standard article", () => {
     const component = getWrapper()
 
     expect(component.find(Article).length).toBe(1)

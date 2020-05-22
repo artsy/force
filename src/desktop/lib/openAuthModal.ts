@@ -1,7 +1,4 @@
-import {
-  ModalType,
-  ModalOptions,
-} from "reaction/Components/Authentication/Types"
+import { ModalType, ModalOptions } from "v2/Components/Authentication/Types"
 import { data as sd } from "sharify"
 
 const mediator = require("desktop/lib/mediator.coffee")

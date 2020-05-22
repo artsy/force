@@ -1,6 +1,6 @@
-import { buildClientApp } from "reaction/Artsy/Router/client"
+import { buildClientApp } from "v2/Artsy/Router/client"
 import { data as sd } from "sharify"
-import { routes as viewingRoomRoutes } from "reaction/Apps/ViewingRoom/routes"
+import { routes as viewingRoomRoutes } from "v2/Apps/ViewingRoom/routes"
 import React from "react"
 import ReactDOM from "react-dom"
 import { loadableReady } from "@loadable/component"

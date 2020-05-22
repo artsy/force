@@ -1,7 +1,7 @@
 import React from "react"
 import { data as sd } from "sharify"
-import { SystemContextProvider } from "reaction/Artsy"
-import { MediaContextProvider } from "reaction/Utils/Responsive"
+import { SystemContextProvider } from "v2/Artsy"
+import { MediaContextProvider } from "v2/Utils/Responsive"
 import { Theme } from "@artsy/palette"
 
 const mediator = require("desktop/lib/mediator.coffee")

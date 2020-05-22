@@ -1,4 +1,4 @@
 import React from "react"
-import { CCPARequest } from "reaction/Components/CCPARequest"
+import { CCPARequest } from "v2/Components/CCPARequest"
 
 export const ReactionCCPARequest = props => <CCPARequest {...props} />

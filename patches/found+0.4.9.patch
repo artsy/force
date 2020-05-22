@@ -1,0 +1,37 @@
+diff --git a/node_modules/found/lib/index.d.ts b/node_modules/found/lib/index.d.ts
+index 02cc90c..b3706dd 100644
+--- a/node_modules/found/lib/index.d.ts
++++ b/node_modules/found/lib/index.d.ts
+@@ -111,6 +111,10 @@ declare module 'found' {
+      * matchContext from the router
+      */
+     context: any;
++    /**
++     * indices of the routes 🤷‍♀️
++     */
++    routeIndices: number[]
+   }
+ 
+   interface FoundState {
+@@ -267,6 +271,12 @@ declare module 'found' {
+      * loaded
+      */
+     data?: any;
++    /**
++     * added by found-relay
++     * specifies whether or not the render is as a result of a found-relay query
++     * true means yes
++     */
++    resolving: boolean
+   }
+ 
+   /**
+@@ -438,6 +448,8 @@ declare module 'found' {
+ 
+   function useRouter(): RouterState;
+   
++  const RouterContext: React.Context<any>;
++
+   function withRouter<Props extends RouterState>(
+     Component: React.ComponentType<Props>,
+   ): React.ComponentType<Omit<Props, keyof RouterState>>;

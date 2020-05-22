@@ -1,7 +1,7 @@
 import { stitch } from "@artsy/stitch"
 import express, { Request, Response, NextFunction } from "express"
 import { stringify } from "querystring"
-import { SearchResultsSkeleton } from "reaction/Apps/Search/Components/SearchResultsSkeleton"
+import { SearchResultsSkeleton } from "v2/Apps/Search/Components/SearchResultsSkeleton"
 import React from "react"
 import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
 import { skipIfClientSideRoutingEnabled } from "desktop/components/split_test/skipIfClientSideRoutingEnabled"

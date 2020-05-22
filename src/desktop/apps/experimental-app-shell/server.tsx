@@ -1,7 +1,7 @@
 import React from "react"
 import express, { Request } from "express"
-import { buildServerApp } from "@artsy/reaction/dist/Artsy/Router/server"
-import { getAppRoutes } from "reaction/Apps/getAppRoutes"
+import { buildServerApp } from "v2/Artsy/Router/server"
+import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"

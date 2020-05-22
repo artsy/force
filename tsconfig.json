@@ -3,19 +3,56 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
+    "downlevelIteration": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "incremental": true,
     "jsx": "react",
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "noEmit": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedParameters": true,
+    // Need output directory for incremental type-checking
+    "outDir": ".cache/tsc",
     "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "es2016",
     "paths": {
-      "reaction/*": ["../node_modules/@artsy/reaction/dist/*"]
-    }
+      "package.json": [
+        "./package.json"
+      ],
+      "reaction/*": [
+        "../node_modules/@artsy/reaction/dist/*"
+      ],
+      "storybook/*": [
+        "./v2/__stories__/*"
+      ],
+      "v2/*": [
+        "./v2/*"
+      ],
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ],
+    "strict": false
   },
-  "include": ["./src", "typings/*.d.ts"]
+  "include": [
+    "./src",
+    "./src/v2/Typings/*.d.ts",
+    "typings/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "data",
+    "externals",
+    "danger",
+    "src/__generated__/**.ts",
+    "src/v2/__generated__/**.ts"
+  ]
 }

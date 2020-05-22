@@ -1,6 +1,4 @@
-import { graphql } from "lib/graphql"
-
-export const meV2Query = graphql`
+export const meV2Query = `
   query meQuery($saleId: String!) {
     me {
       id: internalID

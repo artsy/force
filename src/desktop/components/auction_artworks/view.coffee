@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 State = require './models/state.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
-{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ ModalType } = require "../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
 
 template = -> require('./templates/index.jade') arguments...

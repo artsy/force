@@ -3,14 +3,16 @@ mediator = require '../lib/mediator.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
-Events = require('@artsy/reaction/dist/Utils/Events.js').default
+
+PublishingEvents = require('@artsy/reaction/dist/Utils/Events.js').default
+ReactionEvents = require('../../v2/Utils/Events').default
 
 # All Force mediator events can be hooked into for tracking purposes
 mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
 
-# All Reaction events are sent directly to Segment
-Events.onEvent (data) =>
+
+trackEvent = (data) ->
   # TODO: This is old schema
   if data.action
     # Send Reaction's read more as a page view
@@ -59,6 +61,10 @@ Events.onEvent (data) =>
     analytics.track data.action_type, trackingData, trackingOptions
   else
     console.error("Unknown analytics schema being used: #{JSON.stringify(data)}")
+
+# All Reaction events are sent directly to Segment
+PublishingEvents.onEvent trackEvent
+ReactionEvents.onEvent trackEvent
 
 require '../analytics/main_layout.js'
 
@@ -109,3 +115,4 @@ $ -> analytics.ready ->
   require '../analytics/inquiry_questionnaire.js'
   require '../analytics/editorial_features.js'
   require '../analytics/gallery_partnerships.js'
+

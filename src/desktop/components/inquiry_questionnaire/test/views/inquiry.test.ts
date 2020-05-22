@@ -10,6 +10,8 @@ const Inquiry = benv.requireWithJadeify(
 
 describe(
   "Inquiry",
+  // FIXME: Reaction migration
+  // @ts-ignore
   setup(() => {
     let view
     beforeEach(() => sinon.stub(Backbone, "sync"))

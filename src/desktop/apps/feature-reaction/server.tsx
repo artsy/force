@@ -1,6 +1,6 @@
-import { buildServerApp } from "reaction/Artsy/Router/server"
+import { buildServerApp } from "v2/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
-import { routes as featureRoutes } from "reaction/Apps/Feature/routes"
+import { routes as featureRoutes } from "v2/Apps/Feature/routes"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"

@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
-import { FormSwitcher } from "reaction/Components/Authentication/FormSwitcher"
+import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { MobileAuthStatic } from "../MobileAuthStatic"
 
 describe("MobileAuthStatic", () => {

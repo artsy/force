@@ -1,7 +1,7 @@
 import { bidderRegistration, auctionFAQRoute } from "./routes"
 import { stitch } from "@artsy/stitch"
 
-jest.mock("reaction/Artsy/Router/server", () => {
+jest.mock("v2/Artsy/Router/server", () => {
   return { buildServerApp: () => ({}) }
 })
 

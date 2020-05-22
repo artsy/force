@@ -121,26 +121,26 @@ workflows:
       - hokusai/test:
           name: test
           <<: *not_staging_or_release
-          post-steps:
-            - run: mkdir -p ./coverage ./.nyc_output ./reports
-            - run:
-                name: Copy jest coverage artifacts
-                command: docker cp hokusai_force_1:/app/coverage ./
-                when: always
-            - codecov/upload:
-                file: ./coverage/lcov.info
-            - run:
-                name: Copy mocha coverage artifacts
-                command: docker cp hokusai_force_1:/app/.nyc_output ./
-                when: always
-            - codecov/upload:
-                file: ./.nyc_output/lcov.info
-            - run:
-                name: Copy coverage reports
-                command: docker cp hokusai_force_1:/app/reports ./
-                when: always
-            - store_test_results:
-                path: ./reports
+          # post-steps:
+          #   - run: mkdir -p ./coverage ./.nyc_output ./reports
+          #   - run:
+          #       name: Copy jest coverage artifacts
+          #       command: docker cp hokusai_force_1:/app/coverage ./
+          #       when: always
+          #   - codecov/upload:
+          #       file: ./coverage/lcov.info
+          #   - run:
+          #       name: Copy mocha coverage artifacts
+          #       command: docker cp hokusai_force_1:/app/.nyc_output ./
+          #       when: always
+          #   - codecov/upload:
+          #       file: ./.nyc_output/lcov.info
+          #   - run:
+          #       name: Copy coverage reports
+          #       command: docker cp hokusai_force_1:/app/reports ./
+          #       when: always
+          #   - store_test_results:
+          #       path: ./reports
       - yarn/update-cache:
           <<: *not_staging_or_release
       - yarn/type-check:

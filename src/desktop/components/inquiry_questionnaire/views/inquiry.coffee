@@ -8,7 +8,7 @@ alertable = require '../../alertable_input/index.coffee'
 hasSeen = require '../../has_seen/index.coffee'
 sd = require('sharify').data
 template = -> require('../templates/inquiry.jade') arguments...
-{ recaptcha } = require "@artsy/reaction/dist/Utils/recaptcha"
+{ recaptcha } = require "../../../../v2/Utils/recaptcha"
 
 module.exports = class Inquiry extends StepView
 

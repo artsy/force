@@ -1,12 +1,12 @@
 import { stitch } from "@artsy/stitch"
-import { buildServerApp } from "reaction/Artsy/Router/server"
+import { buildServerApp } from "v2/Artsy/Router/server"
 import { checkoutFlow } from "../routes"
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
 }))
 
-jest.mock("reaction/Artsy/Router/server", () => ({
+jest.mock("v2/Artsy/Router/server", () => ({
   buildServerApp: jest.fn(),
 }))
 

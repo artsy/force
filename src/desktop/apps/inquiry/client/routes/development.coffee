@@ -7,7 +7,7 @@ EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coff
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../../../components/logger/index.coffee'
 { openAuthModal } = require '../../../../lib/openAuthModal'
-{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ ModalType } = require "../../../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
 
 module.exports = ->

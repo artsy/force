@@ -7,7 +7,7 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate = -> require('../templates/sets.jade') arguments...
 { openAuthModal } = require '../../../lib/openAuthModal'
-{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ ModalType } = require "../../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
 
 module.exports = class FeatureView extends Backbone.View

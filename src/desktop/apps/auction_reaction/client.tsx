@@ -1,5 +1,5 @@
-import { buildClientApp } from "reaction/Artsy/Router/client"
-import { routes } from "reaction/Apps/Auction/routes"
+import { buildClientApp } from "v2/Artsy/Router/client"
+import { routes } from "v2/Apps/Auction/routes"
 import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"

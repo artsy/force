@@ -8,11 +8,8 @@ import {
   successfullyLoggedIn,
 } from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "../helpers"
-import { ModalManager } from "@artsy/reaction/dist/Components/Authentication/Desktop/ModalManager"
-import {
-  ModalOptions,
-  ModalType,
-} from "reaction/Components/Authentication/Types"
+import { ModalManager } from "v2/Components/Authentication/Desktop/ModalManager"
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 
 const mediator = require("../../../lib/mediator.coffee")
 
@@ -90,6 +87,8 @@ export class ModalContainer extends React.Component<any> {
     return (
       <ModalManager
         ref={ref => (this.manager = ref)}
+        // FIXME: reaction migration
+        // @ts-ignore
         submitUrls={{
           login: sd.AP.loginPagePath,
           signup: sd.AP.signupPagePath,

@@ -4,8 +4,8 @@ import { connect } from "react-redux"
 import {
   ContentKey,
   PostRegistrationModal,
-} from "reaction/Components/Auction/PostRegistrationModal"
-import { bidderNeedsIdentityVerification } from "reaction/Utils/identityVerificationRequirements"
+} from "v2/Components/Auction/PostRegistrationModal"
+import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 
 const _ConfirmRegistrationModal = ({ me, modalType, onClose, sale }) => {
   useEffect(() => {

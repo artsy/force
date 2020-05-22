@@ -1,6 +1,6 @@
-import { buildServerApp } from "reaction/Artsy/Router/server"
+import { buildServerApp } from "v2/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
-import { routes } from "reaction/Apps/FeatureAKG/routes"
+import { routes } from "v2/Apps/FeatureAKG/routes"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
 import React from "react"

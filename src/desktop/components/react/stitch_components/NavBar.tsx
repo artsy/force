@@ -1,12 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { NavBar as ReactionNavBar } from "reaction/Components/NavBar"
+import { NavBar as ReactionNavBar } from "v2/Components/NavBar"
 import { data as sd } from "sharify"
 
-import {
-  SystemContextProvider,
-  SystemContextProps,
-} from "@artsy/reaction/dist/Artsy"
+import { SystemContextProvider, SystemContextProps } from "v2/Artsy"
 import { StagingBanner } from "./StagingBanner"
 
 const mediator = require("desktop/lib/mediator.coffee")
