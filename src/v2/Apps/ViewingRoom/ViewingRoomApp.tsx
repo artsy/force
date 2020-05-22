@@ -21,11 +21,12 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   return (
     <>
       <ViewingRoomMeta viewingRoom={viewingRoom} />
+
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
-        <Box my={[2, 3]}>
-          <ViewingRoomTabBar />
-        </Box>
+
+        <ViewingRoomTabBar mb={[2, 3]} />
+
         {children}
 
         <Box mx={2}>

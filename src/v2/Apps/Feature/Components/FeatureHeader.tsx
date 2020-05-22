@@ -56,6 +56,7 @@ export const FeatureHeader: React.FC<FeatureHeaderProps> = ({
             backgroundSize: "cover",
             backgroundPosition: "center center",
           }}
+          height={["50vh", "auto"]}
         />
       )}
 
