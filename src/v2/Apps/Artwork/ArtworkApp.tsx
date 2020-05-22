@@ -22,7 +22,7 @@ import { PricingContextFragmentContainer as PricingContext } from "./Components/
 import { SystemContextConsumer } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { trackExperimentViewed } from "v2/Artsy/Analytics/trackExperimentViewed"
+// import { trackExperimentViewed } from "v2/Artsy/Analytics/trackExperimentViewed"
 import { useRouteTracking } from "v2/Artsy/Analytics/useRouteTracking"
 import { Footer } from "v2/Components/Footer"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -92,9 +92,9 @@ export class ArtworkApp extends React.Component<Props> {
       window.analytics.page(properties, { integrations: { Marketo: false } })
 
       // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
-      if (sd.CLIENT_NAVIGATION_V5) {
-        trackExperimentViewed("client_navigation_v5", properties)
-      }
+      // if (sd.CLIENT_NAVIGATION_V5) {
+      //   trackExperimentViewed("client_navigation_v5", properties)
+      // }
     }
   }
 
