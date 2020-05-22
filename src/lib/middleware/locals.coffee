@@ -43,6 +43,7 @@ module.exports = (req, res, next) ->
   res.locals.sd.NOTIFICATION_COUNT = req.cookies?['notification-count']
   res.locals.sd.USER_AGENT = res.locals.userAgent = escape(ua)
   res.locals.sd.REQUEST_ID = req.id
+  res.locals.sd.FLASH_MESSAGE = req.query.flashMessage
   res.locals.sd.IS_MOBILE = Boolean(
     (ua.match(/iPhone/i) && !ua.match(/iPad/i)) ||
     (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
