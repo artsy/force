@@ -29,7 +29,9 @@ import "jsdom"
 
 if (typeof window !== "undefined") {
   window.open = jest.fn()
+  // Needed for new tests
   window.matchMedia = undefined
+
   window.grecaptcha = {
     ready: jest.fn(cb => cb()),
     execute: jest.fn().mockResolvedValue("recaptcha-token"),

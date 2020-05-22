@@ -85,7 +85,7 @@ describe("ArtistHeader", () => {
       biographyBlurb: null,
     })
     const html = wrapper.html()
-    expect(html).toBe(null)
+    expect(html).toBeFalsy()
   })
 })
 

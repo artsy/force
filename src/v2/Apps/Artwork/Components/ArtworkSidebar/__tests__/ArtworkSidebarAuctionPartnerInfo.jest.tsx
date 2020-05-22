@@ -10,7 +10,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
   const getWrapper = async (
     response: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"]
   ) => {
-    return await renderRelayTree({
+    return renderRelayTree({
       Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
       query: graphql`
         query ArtworkSidebarAuctionPartnerInfo_Test_Query @raw_response_type {
@@ -68,7 +68,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
           is_closed: true,
         },
       })
-      expect(wrapper.html()).toBeNull()
+      expect(wrapper.html()).toBeFalsy()
     })
   })
 })

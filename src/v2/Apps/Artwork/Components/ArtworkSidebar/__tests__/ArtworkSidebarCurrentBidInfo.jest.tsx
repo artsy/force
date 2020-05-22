@@ -29,7 +29,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
   const getWrapper = async (
     response: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"]
   ) => {
-    return await renderRelayTree({
+    return renderRelayTree({
       Component,
       query: graphql`
         query ArtworkSidebarCurrentBidInfo_Test_Query @raw_response_type {
@@ -74,7 +74,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
     it("does not display anything", async () => {
       const wrapper = await getWrapper(LiveAuctionInProgress)
 
-      expect(wrapper.html()).toBe(null)
+      expect(wrapper.html()).toBeFalsy()
     })
   })
 
@@ -90,7 +90,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
   describe("for auction preview with no start bid set", () => {
     it("displays nothing if current bid info is unavailable", async () => {
       const wrapper = await getWrapper(AuctionPreviewNoStartingBid)
-      expect(wrapper.html()).toBe(null)
+      expect(wrapper.html()).toBeFalsy()
     })
   })
 

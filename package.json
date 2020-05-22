@@ -392,55 +392,6 @@
   "optionalDependencies": {
     "fsevents": "*"
   },
-  "jest": {
-    "transform": {
-      "\\.graphql$": "jest-raw-loader",
-      "^.+\\.coffee$": "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
-      ".(ts|tsx|js|jsx)": "babel-jest"
-    },
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true,
-    "coverageReporters": [
-      "lcov",
-      "text-summary"
-    ],
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>/src"
-    ],
-    "moduleFileExtensions": [
-      "coffee",
-      "js",
-      "json",
-      "jsx",
-      "ts",
-      "tsx"
-    ],
-    "moduleNameMapper": {
-      "^luxon$": "<rootDir>/node_modules/luxon",
-      "^react$": "<rootDir>/node_modules/react"
-    },
-    "modulePathIgnorePatterns": [
-      "schema.graphql",
-      "<rootDir>../package.json"
-    ],
-
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/v2/setup_jest.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "ArtworkFilter\\.fixture\\.tsx"
-    ],
-    "testRegex": ".*\\.jest\\.(ts|tsx|js|jsx)$",
-    "testURL": "https://artsy.net"
-  },
   "reporterEnabled": "mocha-junit-reporter, spec",
   "mochaJunitReporterReporterOptions": {
     "mochaFile": "reports/mocha/test-results.xml"

@@ -37,7 +37,7 @@ describe("ArtworkBanner", () => {
     })
     it("renders nothing", () => {
       const html = wrapper.html()
-      expect(html).toBe(null)
+      expect(html).toBeFalsy()
     })
   })
 

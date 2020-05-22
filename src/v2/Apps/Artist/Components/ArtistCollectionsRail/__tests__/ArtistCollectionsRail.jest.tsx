@@ -41,7 +41,7 @@ describe("CollectionsRail", () => {
     props.collections = drop(CollectionsRailFixture, 1)
     const component = getWrapper()
 
-    expect(component.text()).toBe(null)
+    expect(component.text()).toBeFalsy()
     expect(component.find(ArtistCollectionEntity).length).toBe(0)
   })
 

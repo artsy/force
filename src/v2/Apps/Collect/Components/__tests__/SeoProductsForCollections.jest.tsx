@@ -246,6 +246,6 @@ describe("Seo Products for Collection Page", () => {
     const wrapper = renderProducts()
 
     const html = wrapper.html()
-    expect(html).toBeNull()
+    expect(html).toBeFalsy()
   })
 })

@@ -26,7 +26,7 @@ describe("ArtworkSidebarBidAction", () => {
   const getWrapper = async (
     response: ArtworkSidebarBidAction_Test_QueryRawResponse
   ) => {
-    return await renderRelayTree({
+    return renderRelayTree({
       Component: ArtworkSidebarBidActionFragmentContainer,
       query: graphql`
         query ArtworkSidebarBidAction_Test_Query @raw_response_type {
@@ -52,7 +52,7 @@ describe("ArtworkSidebarBidAction", () => {
         me: NotIDVedUser,
       })
 
-      expect(wrapper.html()).toBe(null)
+      expect(wrapper.html()).toBeFalsy()
     })
   })
 

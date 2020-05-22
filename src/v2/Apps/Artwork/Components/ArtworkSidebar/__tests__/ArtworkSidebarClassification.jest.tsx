@@ -19,7 +19,7 @@ describe("ArtworkSidebarClassification", () => {
       },
     }
   ) => {
-    return await renderRelayTree({
+    return renderRelayTree({
       Component: ArtworkSidebarClassificationFragmentContainer,
       query: graphql`
         query ArtworkSidebarClassification_Test_Query @raw_response_type {
@@ -81,7 +81,7 @@ describe("ArtworkSidebarClassification", () => {
     })
 
     it("does not render anything", () => {
-      expect(wrapper.html()).toBeNull()
+      expect(wrapper.html()).toBeFalsy()
     })
   })
 })

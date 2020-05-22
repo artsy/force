@@ -28,7 +28,7 @@ describe("NotificationsBadge", () => {
     })
 
     const wrapper = mount(<NotificationsBadge />)
-    expect(wrapper.html()).toEqual(null)
+    expect(wrapper.html()).toBeFalsy()
   })
 
   it("returns a cookie-cached circular count when fetching", () => {
