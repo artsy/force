@@ -60,6 +60,22 @@ describe("Works Route", () => {
       expect(wrapper.html()).toContain("Mock ArtistRecommendations")
       expect(wrapper.html()).toContain("Mock ArtistCollectionRail")
     })
+
+    it("includes the correct sort options", () => {
+      const sortOptions = wrapper
+        .find("div[title='Sort'] select option")
+        .map(el => el.text())
+
+      expect(sortOptions).toEqual([
+        "Default",
+        "Price (desc.)",
+        "Price (asc.)",
+        "Recently updated",
+        "Recently added",
+        "Artwork year (desc.)",
+        "Artwork year (asc.)",
+      ])
+    })
   })
 
   describe("Artist Recommendations", () => {
