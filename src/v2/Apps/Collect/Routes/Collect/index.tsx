@@ -95,7 +95,7 @@ export const CollectApp = track({
               { value: "-year", text: "Artwork year (desc.)" },
               { value: "year", text: "Artwork year (asc.)" },
             ]}
-            onChange={filters => {
+            onChange={(filters) => {
               const url = buildUrlForCollectApp(filters)
 
               if (typeof window !== "undefined") {

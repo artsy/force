@@ -3,5 +3,5 @@
 set -ex
 
 node \
-  --require test.config.js \
+  --require test.jest.config.js \
   $@

@@ -4,10 +4,10 @@
 // However, if/when more is exposed, be sure to not expose instance data that
 // may lead to sharing of data across requests.
 
-import { JSDOM } from "jsdom"
+const { JSDOM } = require("jsdom")
 
 const jsdom = new JSDOM()
 
-const _global = global as any
+const _global = global
 _global.DOMParser = jsdom.window.DOMParser
 _global.Node = jsdom.window.Node

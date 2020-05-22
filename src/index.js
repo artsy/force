@@ -1,6 +1,6 @@
 require("source-map-support").install()
 require("regenerator-runtime/runtime")
-require("v2/Polyfills/DOMParser")
+require("./lib/DOMParser")
 
 const {
   APP_URL,
