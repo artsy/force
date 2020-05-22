@@ -23,7 +23,6 @@ describe("ModalContainer", () => {
       loginPagePath: "/login",
       signupPagePath: "/signup",
     }
-    sd.CSRF_TOKEN = "sample-token"
   })
 
   it("Mediator can open a login modal", () => {
