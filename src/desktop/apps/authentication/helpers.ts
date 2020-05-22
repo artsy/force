@@ -40,7 +40,7 @@ export const handleSubmit = (
    * towards using `intent` on analytics, but Gravity expects `signupIntent`
    */
   const userAttributes = Object.assign({}, values, {
-    _csrf: sd.CSRF_TOKEN,
+    _csrf: Cookies && Cookies.get && Cookies.get("CSRF_TOKEN"),
     signupIntent: intent,
     signupReferer,
     agreed_to_receive_emails: values.accepted_terms_of_service,

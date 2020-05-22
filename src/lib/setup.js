@@ -173,6 +173,16 @@ export default function(app) {
     )
   )
 
+  // Add CSRF to the cookie and remove it from the page. This will allows the
+  // caching on the html.
+  app.use((req, res, next) => {
+    res.cookie("CSRF_TOKEN", res.locals.sd.CSRF_TOKEN)
+    // Clear the embedded CSRF_TOKEN, an alternative method would be to update
+    // @artsy/passport to make the CSRF_TOKEN optional.
+    delete res.locals.sd.CSRF_TOKEN
+    next()
+  })
+
   // Development servers
   if (isDevelopment) {
     app.use(require("./webpack-dev-server").app)
