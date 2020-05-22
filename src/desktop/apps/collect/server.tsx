@@ -1,6 +1,6 @@
-import { buildServerApp } from "reaction/Artsy/Router/buildServerApp"
+import { buildServerApp } from "v2/Artsy/Router/buildServerApp"
 import { stitch } from "@artsy/stitch"
-import { collectRoutes } from "reaction/Apps/Collect/collectRoutes"
+import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import express from "express"
 import React from "react"
 import { Meta } from "./meta"

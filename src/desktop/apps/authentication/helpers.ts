@@ -1,8 +1,5 @@
 import Cookies from "cookies-js"
-import {
-  ModalType,
-  ModalOptions,
-} from "reaction/Components/Authentication/Types"
+import { ModalType, ModalOptions } from "v2/Components/Authentication/Types"
 import { data as sd } from "sharify"
 import * as qs from "query-string"
 import { Response } from "express"

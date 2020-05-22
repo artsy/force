@@ -1,6 +1,6 @@
 import React from "react"
 import { Box } from "@artsy/palette"
-import { SearchBarQueryRenderer } from "reaction/Components/Search/SearchBar"
+import { SearchBarQueryRenderer } from "v2/Components/Search/SearchBar"
 import styled from "styled-components"
 
 const SearchBarContainer = styled(Box)`

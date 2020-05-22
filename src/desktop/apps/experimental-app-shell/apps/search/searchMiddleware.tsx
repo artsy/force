@@ -1,6 +1,6 @@
 import React from "react"
 import { stringify } from "querystring"
-import { SearchResultsSkeleton } from "reaction/Apps/Search/Components/SearchResultsSkeleton"
+import { SearchResultsSkeleton } from "v2/Apps/Search/Components/SearchResultsSkeleton"
 import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
 import { stitch } from "@artsy/stitch"
 import { getPageType } from "../../utils/getPageType"

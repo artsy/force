@@ -1,6 +1,6 @@
-import { buildServerApp } from "reaction/Artsy/Router/server"
+import { buildServerApp } from "v2/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import { routes } from "reaction/Apps/Order/routes"
+import { routes } from "v2/Apps/Order/routes"
 import { stitch } from "@artsy/stitch"
 const metaphysics = require("lib/metaphysics.coffee")
 

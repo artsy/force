@@ -1,10 +1,10 @@
 import { mount } from "enzyme"
 import { data as sd } from "sharify"
 import React from "react"
-import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
+import { ModalManager } from "v2/Components/Authentication/Desktop/ModalManager"
 import { ModalContainer } from "../ModalContainer"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalType } from "v2/Components/Authentication/Types"
 const mediator = require("../../../../lib/mediator.coffee")
 
 jest.mock("sharify")

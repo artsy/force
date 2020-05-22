@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import Scrollspy from "react-scrollspy"
 
-import colors from "reaction/Assets/Colors"
-import { avantgarde } from "reaction/Assets/Fonts"
+import colors from "v2/Assets/Colors"
+import { avantgarde } from "v2/Assets/Fonts"
 import FrameAnimator from "desktop/components/frame_animator"
 
 const propTypes = {

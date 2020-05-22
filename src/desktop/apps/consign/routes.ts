@@ -2,7 +2,7 @@ import request from "superagent"
 import { extend } from "underscore"
 import { fetchToken } from "./helpers"
 import Analytics from "analytics-node"
-import { AnalyticsSchema } from "@artsy/reaction/dist/Artsy"
+import { AnalyticsSchema } from "v2/Artsy"
 
 const Items = require("../../collections/items")
 const JSONPage = require("../../components/json_page")

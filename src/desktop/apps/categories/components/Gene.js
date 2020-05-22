@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 
-import colors from "reaction/Assets/Colors"
+import colors from "v2/Assets/Colors"
 
 const propTypes = {
   id: PropTypes.string.isRequired,

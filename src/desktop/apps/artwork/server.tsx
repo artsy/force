@@ -1,6 +1,6 @@
 import React from "react"
-import { buildServerApp } from "reaction/Artsy/Router/server"
-import { routes } from "reaction/Apps/Artwork/routes"
+import { buildServerApp } from "v2/Artsy/Router/server"
+import { routes } from "v2/Apps/Artwork/routes"
 import { stitch } from "@artsy/stitch"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import express, { Request, Response, NextFunction } from "express"
@@ -26,12 +26,7 @@ export const handleDownload = async (
     if (req.user) {
       imageRequest.set("X-ACCESS-TOKEN", req.user.get("accessToken"))
     }
-    req
-      .pipe(
-        imageRequest,
-        { end: false }
-      )
-      .pipe(res)
+    req.pipe(imageRequest, { end: false }).pipe(res)
   } else {
     const error: any = new Error("Not authorized to download this image.")
     error.status = 403

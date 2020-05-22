@@ -17,6 +17,7 @@ export interface ModalManagerProps {
     apple: string
     facebook: string
     twitter?: string
+    forgot?: string
   }
   csrf?: string
   redirectTo?: string
@@ -46,7 +47,7 @@ export interface ModalManagerState {
 export class ModalManager extends Component<
   ModalManagerProps,
   ModalManagerState
-  > {
+> {
   state: ModalManagerState = {
     currentType: null,
     options: {} as ModalOptions,

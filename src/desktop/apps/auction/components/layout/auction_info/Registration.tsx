@@ -4,7 +4,7 @@ import block from "bem-cn-lite"
 import { get } from "lodash"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
-import { bidderNeedsIdentityVerification } from "reaction/Utils/identityVerificationRequirements"
+import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 
 function RegistrationText(props) {
   const {

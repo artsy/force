@@ -6,13 +6,13 @@ import { mount } from "enzyme"
 import CreateAccount, {
   CreateAccount as UnconnectedCreateAccount,
 } from "../index"
-import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
-import { LoginForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/LoginForm"
-import { ForgotPasswordForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/ForgotPasswordForm"
-import { SignUpForm } from "@artsy/reaction/dist/Components/Authentication/Desktop/SignUpForm"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalHeader } from "v2/Components/Modal/ModalHeader"
+import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
+import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
+import { SignUpForm } from "v2/Components/Authentication/Desktop/SignUpForm"
+import { ModalType } from "v2/Components/Authentication/Types"
 
-jest.mock("@artsy/reaction/dist/Artsy/SystemContext", () => ({
+jest.mock("v2/Artsy/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
   withSystemContext: Component => Component,
 }))
