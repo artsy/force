@@ -22,8 +22,8 @@ export interface State {
 
 @track({ context_module: Schema.ContextModule.MinimalCtaBanner })
 export class MinimalCtaBanner extends React.Component<
-MinimalCtaBannerProps,
-State
+  MinimalCtaBannerProps,
+  State
 > {
   state = {
     dismissed: false,
@@ -57,8 +57,13 @@ State
                 <p>{this.props.copy}</p>
               </Sans>
             </a>
-            <IconContainer onClick={this.dismissCta.bind(this) as any}>
-              <Icon name="close" color={this.props.textColor} fontSize="16px" />
+            <IconContainer onClick={this.dismissCta.bind(this)}>
+              <Icon
+                name="close"
+                color={this.props.textColor}
+                fontSize="16px"
+                style={{ cursor: "pointer" }}
+              />
             </IconContainer>
           </Banner>
         </BannerContainer>
@@ -88,7 +93,6 @@ const Banner = styled.div.attrs<{ textColor: string }>({})`
   height: 100%;
   width: 100%;
   padding: 10px 10px;
-
   a {
     color: ${props => props.textColor || "black"};
     text-decoration: none;
