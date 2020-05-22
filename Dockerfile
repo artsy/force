@@ -23,13 +23,11 @@ RUN yarn install --frozen-lockfile --quiet
 # Copy application code
 COPY . ./
 
-# # Build application
-# # Update file/directory permissions
-# RUN yarn assets && \
-#     yarn build:server && \
-#     chown -R deploy:deploy ./
-
-RUN chown -R deploy:deploy ./
+# Build application
+# Update file/directory permissions
+RUN yarn assets && \
+    yarn build:server && \
+    chown -R deploy:deploy ./
 
 # Switch to less-privileged user
 USER deploy

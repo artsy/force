@@ -2,5 +2,5 @@
 
 set -ex
 
-yarn test:jest --maxWorkers=4
+yarn jest
 yarn mocha $(find src -name '*.test.*')
