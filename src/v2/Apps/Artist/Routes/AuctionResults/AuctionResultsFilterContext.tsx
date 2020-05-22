@@ -71,7 +71,7 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-let auctionResultsFilterResetState: AuctionResultsFilters = initialAuctionResultsFilterState
+export let auctionResultsFilterResetState: AuctionResultsFilters = initialAuctionResultsFilterState
 
 export const AuctionResultsFilterContextProvider: React.FC<SharedAuctionResultsFilterContextProps & {
   children: React.ReactNode

@@ -62,6 +62,12 @@ describe("AuctionResults", () => {
       expect(wrapper.html()).toContain("Showing 830 results")
     })
 
+    it("renders either realized price or price not avail", () => {
+      expect(wrapper.html()).toContain(
+        "Price not available" || "Realized price"
+      )
+    })
+
     it("renders proper select options", () => {
       const html = wrapper.find("SelectSmall").html()
       expect(html).toContain("Most recent")
@@ -117,10 +123,21 @@ describe("AuctionResults", () => {
             })
           )
         })
+
+        it("re-shows sign up to see price", () => {
+          const pagination = wrapper.find("Pagination")
+          pagination
+            .find("button")
+            .at(2)
+            .simulate("click")
+          wrapper.update()
+          const html = wrapper.html()
+          expect(html).toContain("Sign up to see price")
+        })
       })
       describe("filters", () => {
         describe("medium filter", () => {
-          it("triggers relay refetch with medium list", done => {
+          it("triggers relay refetch with medium list, and re-shows sign up to see price", done => {
             const filter = wrapper.find("MediumFilter")
 
             const checkboxes = filter.find("Checkbox")
@@ -171,13 +188,17 @@ describe("AuctionResults", () => {
                   allowEmptyCreatedDates: true,
                 },
               })
+
+              wrapper.update()
+              const html = wrapper.html()
+              expect(html).toContain("Sign up to see price")
+
               done()
             })
           })
         })
         describe("auction house filter", () => {
-          // TODO: Re-enable once we uncollapse auction house filters
-          it.skip("triggers relay refetch with organization list", done => {
+          it("triggers relay refetch with organization list, and re-shows sign up to see price", done => {
             const filter = wrapper.find("AuctionHouseFilter")
 
             const checkboxes = filter.find("Checkbox")
@@ -209,12 +230,17 @@ describe("AuctionResults", () => {
                   organizations: ["Phillips"],
                 })
               )
+
+              wrapper.update()
+              const html = wrapper.html()
+              expect(html).toContain("Sign up to see price")
+
               done()
             })
           })
         })
         describe("size filter", () => {
-          it("triggers relay refetch with size list and tracks events", done => {
+          it("triggers relay refetch with size list and tracks events, and re-shows sign up to see price", done => {
             const filter = wrapper.find("SizeFilter")
 
             const checkboxes = filter.find("Checkbox")
@@ -266,13 +292,17 @@ describe("AuctionResults", () => {
                 },
               })
 
+              wrapper.update()
+              const html = wrapper.html()
+              expect(html).toContain("Sign up to see price")
+
               done()
             })
           })
         })
         describe("year created filter", () => {
           const value = v => ({ target: { value: `${v}` } })
-          it("triggers relay refetch with created years and tracks events", () => {
+          it("triggers relay refetch with created years and tracks events, and re-shows sign up to see price", () => {
             const filter = wrapper.find("YearCreated")
             const selects = filter.find("select")
 
@@ -292,12 +322,16 @@ describe("AuctionResults", () => {
                 latestCreatedYear: 1973,
               })
             )
+
+            wrapper.update()
+            const html = wrapper.html()
+            expect(html).toContain("Sign up to see price")
           })
         })
       })
 
       describe("sort", () => {
-        it("triggers relay refetch with correct params", done => {
+        it("triggers relay refetch with correct params, and re-shows sign up to see price", done => {
           const sort = wrapper.find("SortSelect SelectSmall")
 
           sort
@@ -313,6 +347,11 @@ describe("AuctionResults", () => {
                 sort: "ESTIMATE_AND_DATE_DESC",
               })
             )
+
+            wrapper.update()
+            const html = wrapper.html()
+            expect(html).toContain("Sign up to see price")
+
             done()
           })
         })

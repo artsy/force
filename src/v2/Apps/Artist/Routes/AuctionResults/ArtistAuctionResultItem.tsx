@@ -1,4 +1,4 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -33,6 +33,8 @@ export interface Props extends SystemContextProps {
   index: number
   mediator?: Mediator
   lastChild: boolean
+  filtersAtDefault: boolean
+  paginated: boolean
 }
 
 const FullWidthBorderBox = styled(BorderBox)`
@@ -83,7 +85,12 @@ export const ArtistAuctionResultItem: SFC<Props> = props => {
             />
           </Row>
           <Box>
-            {renderSmallCollapse({ ...props, expanded }, user, mediator)}
+            {renderSmallCollapse(
+              { ...props, expanded },
+              user,
+              mediator,
+              props.filtersAtDefault
+            )}
           </Box>
         </FullWidthBorderBox>
       </Media>
@@ -101,7 +108,12 @@ export const ArtistAuctionResultItem: SFC<Props> = props => {
             </Row>
           </Box>
           <Box>
-            {renderLargeCollapse({ ...props, expanded }, user, mediator)}
+            {renderLargeCollapse(
+              { ...props, expanded },
+              user,
+              mediator,
+              props.filtersAtDefault
+            )}
           </Box>
         </FullWidthBorderBox>
       </Media>
@@ -144,8 +156,8 @@ const LargeAuctionItem: SFC<Props> = props => {
               Fallback={() => renderFallbackImage()}
             />
           ) : (
-              renderFallbackImage()
-            )}
+            renderFallbackImage()
+          )}
         </Flex>
       </Col>
       <Col sm={4}>
@@ -183,7 +195,9 @@ const LargeAuctionItem: SFC<Props> = props => {
               saleDate,
               props.user,
               props.mediator,
-              "lg"
+              "lg",
+              props.filtersAtDefault,
+              props.paginated
             )}
           </Flex>
           <Flex width="10%" justifyContent="flex-end">
@@ -217,11 +231,19 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
         {imageUrl ? (
           <StyledImage src={imageUrl} Fallback={() => renderFallbackImage()} />
         ) : (
-            renderFallbackImage()
-          )}
+          renderFallbackImage()
+        )}
       </Flex>
       <Flex ml={2} flexDirection="column" justifyContent="center" width="100%">
-        {renderPricing(salePrice, saleDate, props.user, props.mediator, "xs")}
+        {renderPricing(
+          salePrice,
+          saleDate,
+          props.user,
+          props.mediator,
+          "xs",
+          props.filtersAtDefault,
+          props.paginated
+        )}
         <Sans size="2" weight="medium" color="black60">
           {title}
           {title && date_text && ", "}
@@ -298,9 +320,22 @@ const getProps = (props: Props) => {
   }
 }
 
-const renderPricing = (salePrice, saleDate, user, mediator, size) => {
+const renderPricing = (
+  salePrice,
+  saleDate,
+  user,
+  mediator,
+  size,
+  filtersAtDefault,
+  paginated
+) => {
   const textSize = size === "xs" ? "2" : "3t"
-  if (user) {
+
+  // If user is logged in we show prices. Otherwise we show prices only for the default view - on page 1 and filters not changed.
+  // Ideally we get current page number from filter context 'page' property but somehow it is always '1'.
+  // So we resort to pagination detection. If user has paginated at all, prices will be hidden. even if user comes back to page 1.
+  // TODO: Fix filter context so its 'page' property has the current page number, then change this code.
+  if (user || (filtersAtDefault && !paginated)) {
     const textAlign = size === "xs" ? "left" : "right"
     const dateOfSale = DateTime.fromISO(saleDate)
     const now = DateTime.local()
@@ -396,9 +431,17 @@ const renderEstimate = (estimatedPrice, user, mediator, size) => {
   }
 }
 
-const renderRealizedPrice = (estimatedPrice, user, mediator, size) => {
+const renderRealizedPrice = (
+  estimatedPrice,
+  user,
+  mediator,
+  size,
+  filtersAtDefault,
+  paginated
+) => {
   const justifyContent = size === "xs" ? "flex-start" : "flex-end"
-  if (user) {
+  // Show prices if user is logged in. Otherwise, show prices only on default view - filters at default and no pagination has happened.
+  if (user || (filtersAtDefault && !paginated)) {
     return (
       <Flex justifyContent={justifyContent}>
         {estimatedPrice && (
@@ -432,7 +475,7 @@ const renderRealizedPrice = (estimatedPrice, user, mediator, size) => {
   }
 }
 
-const renderLargeCollapse = (props, user, mediator) => {
+const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
   const {
     expanded,
     auctionResult: {
@@ -503,7 +546,14 @@ const renderLargeCollapse = (props, user, mediator) => {
             </Box>
           </Col>
           <Col sm={4} pr="4.5%">
-            {renderRealizedPrice(salePrice, user, mediator, "lg")}
+            {renderRealizedPrice(
+              salePrice,
+              user,
+              mediator,
+              "lg",
+              filtersAtDefault,
+              props.paginated
+            )}
           </Col>
         </Row>
 
@@ -526,7 +576,7 @@ const renderLargeCollapse = (props, user, mediator) => {
   )
 }
 
-const renderSmallCollapse = (props, user, mediator) => {
+const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
   const {
     expanded,
     auctionResult: {
@@ -583,7 +633,14 @@ const renderSmallCollapse = (props, user, mediator) => {
             </Sans>
           </Col>
           <Col xs={8}>
-            {renderRealizedPrice(salePrice, user, mediator, "xs")}
+            {renderRealizedPrice(
+              salePrice,
+              user,
+              mediator,
+              "xs",
+              filtersAtDefault,
+              props.paginated
+            )}
           </Col>
         </Row>
 

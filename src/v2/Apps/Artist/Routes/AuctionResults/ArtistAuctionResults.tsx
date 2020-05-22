@@ -2,7 +2,7 @@ import { Col, Row } from "@artsy/palette"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { AuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import { TableSidebar } from "./Components/TableSidebar"
@@ -24,6 +24,7 @@ import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobile
 import { AuctionFilters } from "./Components/AuctionFilters"
 import { AuctionResultHeaderFragmentContainer as AuctionResultHeader } from "./Components/AuctionResultHeader"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
+import { auctionResultsFilterResetState } from "./AuctionResultsFilterContext"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -50,6 +51,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     allowEmptyCreatedDates,
   } = filterContext.filters
 
+  // Detect whether user has paginated at all.
+  const [paginated, togglePaginated] = useState(false)
+
   const loadNext = () => {
     const { hasNextPage, endCursor } = pageInfo
 
@@ -60,6 +64,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const loadAfter = cursor => {
     setIsLoading(true)
+    togglePaginated(true)
 
     relay.refetch(
       {
@@ -90,6 +95,12 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const tracking = useTracking()
+
+  // Is current filter state different from the default (reset) state?
+  const filtersAtDefault = isEqual(
+    filterContext.filters,
+    auctionResultsFilterResetState
+  )
 
   const previousFilters = usePrevious(filterContext.filters)
 
@@ -154,6 +165,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
               index={index}
               auctionResult={node}
               lastChild={index === auctionResultsLength - 1}
+              filtersAtDefault={filtersAtDefault}
+              paginated={paginated}
             />
           </React.Fragment>
         )
