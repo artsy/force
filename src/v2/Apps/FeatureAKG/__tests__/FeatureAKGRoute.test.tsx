@@ -8,7 +8,7 @@ import { FeatureAKGRoute_Test_QueryRawResponse } from "v2/__generated__/FeatureA
 import { FeatureAKGAppFragmentContainer } from "../FeatureAKGApp"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("FeatureAKG", () => {
   const trackEvent = jest.fn()

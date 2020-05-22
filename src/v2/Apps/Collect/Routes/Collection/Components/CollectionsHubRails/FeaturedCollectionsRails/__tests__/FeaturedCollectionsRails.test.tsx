@@ -11,7 +11,7 @@ import {
   StyledLink,
 } from "../index"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 jest.mock("found", () => ({
   Link: ({ children, ...props }) => <div {...props}>{children}</div>,
@@ -26,11 +26,11 @@ describe("FeaturedCollectionsRails", () => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[1],
     }
-      ; (useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   const memberData = () => {
@@ -101,11 +101,11 @@ describe("FeaturedCollectionEntity", () => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[1],
     }
-      ; (useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   it("Renders expected fields for FeaturedCollectionEntity", () => {

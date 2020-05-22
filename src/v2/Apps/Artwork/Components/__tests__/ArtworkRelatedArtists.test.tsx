@@ -4,7 +4,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { ArtworkRelatedArtists } from "../ArtworkRelatedArtists"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ArtworkRelatedArtists", () => {
   const getWrapper = props => {
@@ -16,7 +16,7 @@ describe("ArtworkRelatedArtists", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }

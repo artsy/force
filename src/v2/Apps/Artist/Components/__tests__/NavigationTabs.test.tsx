@@ -6,7 +6,7 @@ import React from "react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-jest.mock("Components/RouteTabs")
+jest.mock("v2/Components/RouteTabs")
 
 describe("ArtistHeader", () => {
   const getWrapper = async (

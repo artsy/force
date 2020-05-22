@@ -1,4 +1,4 @@
-const actual = require.requireActual("Utils/logger")
+const actual = require.requireActual("v2/Utils/logger")
 
 export const shouldCaptureError = actual.shouldCaptureError
 

@@ -10,7 +10,7 @@ import { ConsignRouteFragmentContainer } from "../index"
 import { ConsignRoute_Test_QueryRawResponse } from "v2/__generated__/ConsignRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ConsignRoute", () => {
   const trackEvent = jest.fn()

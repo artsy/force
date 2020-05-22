@@ -3,11 +3,11 @@ import * as Artsy from "v2/Artsy"
 import { render } from "enzyme"
 import React from "react"
 
-jest.mock("Artsy/Relay/createRelaySSREnvironment", () => ({
+jest.mock("v2/Artsy/Relay/createRelaySSREnvironment", () => ({
   createRelaySSREnvironment: config => ({
     description: `A mocked env for ${
       config.user ? config.user.id : "no-current-user"
-      }`,
+    }`,
   }),
 }))
 

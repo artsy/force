@@ -15,18 +15,18 @@ import { RespondFragmentContainer } from "../Respond"
 // Boot's `dispatch` tracking prop overrides the one injected by
 // mockTracking
 jest.unmock("react-tracking")
-jest.mock("Utils/Events", () => ({
+jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-const mockPostEvent = require("Utils/Events").postEvent as jest.Mock
+const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
-jest.mock("Utils/getCurrentTimeAsIsoString")
-jest.mock("Utils/logger")
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/Utils/logger")
 
 const NOW = "2018-12-05T13:47:16.446Z"
 const realSetInterval = global.setInterval
 
-require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
 jest.unmock("react-relay")
 

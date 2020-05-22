@@ -304,7 +304,7 @@
     "@types/webpack": "4.4.24",
     "@types/webpack-env": "1.13.6",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "23.6.0",
+    "babel-jest": "24.8.0",
     "babel-plugin-relay": "7.1.0",
     "benv": "3.3.0",
     "cache-loader": "1.2.2",
@@ -333,7 +333,7 @@
     "imagesloaded": "4.1.2",
     "inquirer": "1.2.3",
     "inspectpack": "4.1.2",
-    "jest": "23.6.0",
+    "jest": "24.9.0",
     "jest-coffee-preprocessor": "1.0.0",
     "jest-junit": "6.4.0",
     "jest-raw-loader": "1.0.1",
@@ -394,6 +394,7 @@
   },
   "jest": {
     "transform": {
+      "\\.graphql$": "jest-raw-loader",
       "^.+\\.coffee$": "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
       ".(ts|tsx|js|jsx)": "babel-jest"
     },
@@ -407,6 +408,10 @@
       "default",
       "jest-junit"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>/src"
+    ],
     "moduleFileExtensions": [
       "coffee",
       "js",
@@ -415,9 +420,22 @@
       "ts",
       "tsx"
     ],
-    "testRegex": ".*\\.jest\\.(ts|tsx|js|jsx)$",
+    "moduleNameMapper": {
+      "^luxon$": "<rootDir>/node_modules/luxon",
+      "^react$": "<rootDir>/node_modules/react"
+    },
+    "modulePathIgnorePatterns": [
+      "schema.graphql",
+      "<rootDir>../package.json"
+    ],
+    "testMatch": [
+      "**/v2/**/__tests__/*.(ts|tsx)"
+    ],
     "setupFiles": [
-      "<rootDir>/test.config.js"
+      "<rootDir>/test.config.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/v2/setup_jest.ts"
     ],
     "roots": [
       "<rootDir>/src"

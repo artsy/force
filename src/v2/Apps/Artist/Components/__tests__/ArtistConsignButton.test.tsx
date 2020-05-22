@@ -8,7 +8,7 @@ import { graphql } from "react-relay"
 import { ArtistConsignButtonFragmentContainer } from "../ArtistConsignButton"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ArtistConsignButton", () => {
   const trackEvent = jest.fn()

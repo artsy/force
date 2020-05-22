@@ -12,13 +12,14 @@ import {
 } from "@artsy/palette"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
-import { EMAIL_REGEX } from "v2/Components/Publishing/Constants"
 import React, { useEffect, useState } from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
+
+export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 const logger = createLogger("Components/V2/CCPARequest.tsx")
 
@@ -249,13 +250,13 @@ export const CCPARequest: React.SFC<Props> = props => {
       setNotes={setNotes.bind(this)}
     />
   ) : (
-        <LoggedInContents
-          notes={notes}
-          email={userEmail}
-          triggeredValidation={triggeredValidation}
-          setNotes={setNotes.bind(this)}
-        />
-      )
+    <LoggedInContents
+      notes={notes}
+      email={userEmail}
+      triggeredValidation={triggeredValidation}
+      setNotes={setNotes.bind(this)}
+    />
+  )
 
   useEffect(() => {
     if (clickedSubmit) {
@@ -278,16 +279,16 @@ export const CCPARequest: React.SFC<Props> = props => {
       Return to Artsy
     </Button>
   ) : (
-      <Button
-        width="100%"
-        onClick={() => {
-          setTriggeredValidation(true)
-          setClickedSubmit(true)
-        }}
-      >
-        Send message
-      </Button>
-    )
+    <Button
+      width="100%"
+      onClick={() => {
+        setTriggeredValidation(true)
+        setClickedSubmit(true)
+      }}
+    >
+      Send message
+    </Button>
+  )
 
   const onClose = () => {
     setEmail(null)

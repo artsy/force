@@ -9,8 +9,8 @@ import { MoreNavMenu, UserMenu } from "../Menus"
 import { NavBar } from "../NavBar"
 import { NavItem } from "../NavItem"
 
-jest.mock("Artsy/Analytics/useTracking")
-jest.mock("Utils/Hooks/useMatchMedia", () => ({
+jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({ sm: false }),
 }))
 
@@ -26,7 +26,7 @@ describe("NavBarTracking", () => {
   }
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
   })

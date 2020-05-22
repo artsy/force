@@ -8,11 +8,11 @@ import { SystemContextProvider } from "v2/Artsy"
 import React from "react"
 import { graphql } from "react-relay"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
-  ; (useTracking as jest.Mock).mockImplementation(() => {
-    return {}
-  })
+;(useTracking as jest.Mock).mockImplementation(() => {
+  return {}
+})
 
 describe("ArtworkDetails", () => {
   const getWrapper = async (

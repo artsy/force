@@ -7,8 +7,8 @@ import { Breakpoint } from "@artsy/palette"
 import { ViewingRoomStatementRouteFragmentContainer } from "../ViewingRoomStatementRoute"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Analytics/useTracking")
-jest.mock("Artsy/Router/useRouter", () => ({
+jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

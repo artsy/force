@@ -11,12 +11,13 @@ import {
 import { SendFeedbackSearchResultsMutation } from "v2/__generated__/SendFeedbackSearchResultsMutation.graphql"
 import { SystemContextProps } from "v2/Artsy"
 import { withSystemContext } from "v2/Artsy"
-import { EMAIL_REGEX } from "v2/Components/Publishing/Constants"
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import createLogger from "v2/Utils/logger"
+
+export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 interface Inputs {
   message: string

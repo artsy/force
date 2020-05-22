@@ -7,8 +7,8 @@ import { CountdownTimer } from "../CountdownTimer"
 const DATE = "2018-12-03T13:50:31.641Z"
 const SUMMER_DATE = "2018-08-03T13:50:31.641Z"
 
-jest.mock("Utils/getCurrentTimeAsIsoString")
-jest.mock("Utils/time")
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/Utils/time")
 
 import { renderUntil } from "v2/DevTools"
 import { getOffsetBetweenGravityClock } from "v2/Utils/time"
@@ -49,7 +49,7 @@ const getPropsWithTimeRemaining = duration => ({
 
 describe("CountdownTimer", () => {
   beforeEach(() => {
-    require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(DATE)
+    require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(DATE)
     mockGetOffsetBetweenGravityClock.mockReturnValue(Promise.resolve(0))
     Settings.defaultZoneName = "America/New_York"
   })
@@ -81,7 +81,9 @@ describe("CountdownTimer", () => {
 
   describe("in summer", () => {
     beforeEach(() => {
-      require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(SUMMER_DATE)
+      require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(
+        SUMMER_DATE
+      )
     })
     it("shows timezone as EDT", () => {
       const timer = mount(<CountdownTimer {...summerProps} />)

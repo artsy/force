@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { MoreNavMenu } from "../MoreNavMenu"
 
-jest.mock("Artsy/Analytics/useTracking", () => ({
+jest.mock("v2/Artsy/Analytics/useTracking", () => ({
   useTracking: () => ({
     trackEvent: x => x,
   }),

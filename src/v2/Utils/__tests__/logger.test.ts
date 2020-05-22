@@ -1,7 +1,7 @@
 import { sendErrorToService } from "v2/Utils/errors"
 import createLogger from "v2/Utils/logger"
 
-jest.mock("Utils/errors")
+jest.mock("v2/Utils/errors")
 jest.unmock("Utils/logger")
 
 describe("logger", () => {
@@ -47,7 +47,7 @@ describe("logger", () => {
 
         afterAll(() => {
           process.env = originalEnv
-            ; (sendErrorToService as any).mockReset()
+          ;(sendErrorToService as any).mockReset()
         })
 
         it("sends errors to service", () => {

@@ -2,7 +2,6 @@ import "isomorphic-fetch"
 import "regenerator-runtime/runtime"
 
 import { isEmpty } from "lodash"
-import { version as ReactionVersion } from "package.json"
 import RelayClientSSR from "react-relay-network-modern-ssr/node8/client"
 import RelayServerSSR from "react-relay-network-modern-ssr/node8/server"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
@@ -31,7 +30,7 @@ const METAPHYSICS_ENDPOINT = `${
   isServer ? process.env.METAPHYSICS_ENDPOINT : sd.METAPHYSICS_ENDPOINT
 }/v2`
 
-const USER_AGENT = `Reaction/${ReactionVersion}`
+const USER_AGENT = `Reaction/Migration`
 
 interface Config {
   cache?: object

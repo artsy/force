@@ -8,7 +8,7 @@ import {
   StyledLink,
 } from "../ArtistSeriesEntity"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("found", () => ({
   Link: ({ children, ...props }) => <div {...props}>{children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,
@@ -22,11 +22,11 @@ describe("ArtistSeriesEntity", () => {
     props = {
       member: CollectionsHubLinkedCollections.linkedCollections[0].members[0],
     }
-      ; (useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   it("showing the correct text, price guidance, amount of hits and image", () => {

@@ -23,10 +23,10 @@ import { PaymentPicker, PaymentPickerFragmentContainer } from "../PaymentPicker"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
-jest.mock("Utils/Events", () => ({
+jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-const mockPostEvent = require("Utils/Events").postEvent as jest.Mock
+const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 jest.mock("react-stripe-elements", () => {
   // tslint:disable-next-line:no-shadowed-variable
@@ -110,7 +110,7 @@ class PaymentPickerTestPage extends RootTestPage {
   }
 
   setName(name: string) {
-    ; (this.nameInput.instance() as any).value = name
+    ;(this.nameInput.instance() as any).value = name
     this.nameInput.simulate("change")
   }
 

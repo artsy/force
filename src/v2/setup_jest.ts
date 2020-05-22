@@ -10,7 +10,7 @@ const track = _track as jest.Mock<typeof _track>
 track.mockImplementation(y => x => x as any)
 
 jest.mock("react-sizeme", () => jest.fn(c => d => d))
-jest.mock("Utils/logger")
+jest.mock("v2/Utils/logger")
 
 /**
  * We want each test to have assertions, otherwise it’s too easy to write async
@@ -22,7 +22,7 @@ jest.mock("Utils/logger")
  */
 // afterEach(() => expect.hasAssertions())
 
-import "DevTools/renderUntil"
+import "v2/DevTools/renderUntil"
 Enzyme.configure({ adapter: new Adapter() })
 
 import "jsdom"

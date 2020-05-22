@@ -10,10 +10,10 @@ import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTe
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
-jest.mock("Utils/Events", () => ({
+jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-const mockPostEvent = require("Utils/Events").postEvent as jest.Mock
+const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 const mediator = {
   trigger: jest.fn(),

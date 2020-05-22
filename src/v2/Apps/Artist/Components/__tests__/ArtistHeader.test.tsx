@@ -13,7 +13,7 @@ import { Environment, graphql } from "react-relay"
 import { ArtistIndicator } from "../ArtistIndicator"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ArtistHeader", () => {
   let mediator: Mediator
@@ -21,11 +21,11 @@ describe("ArtistHeader", () => {
   beforeEach(() => {
     trackEvent = jest.fn()
     mediator = { trigger: jest.fn() }
-      ; (useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   const getWrapper = async (

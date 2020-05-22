@@ -7,7 +7,7 @@ import { Breakpoint } from "@artsy/palette"
 import { FEATURE_APP_FIXTURE } from "./fixtures"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Router/useRouter", () => ({
+jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

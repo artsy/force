@@ -8,7 +8,7 @@ import React from "react"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "../Components/ArtistRecommendations"
 import { FeaturedArticlesItem, OverviewRoute } from "../index"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("OverviewRoute", () => {
   function getWrapper(artistData, user: User = {}) {
@@ -24,7 +24,7 @@ describe("OverviewRoute", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }

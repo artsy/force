@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { ArtistConsignMeta } from "../ArtistConsignMeta"
 
-jest.mock("Utils/getENV", () => ({
+jest.mock("v2/Utils/getENV", () => ({
   getENV: () => "https://artsy.net",
 }))
 

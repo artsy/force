@@ -4,15 +4,15 @@ import { buildClientApp } from "v2/Artsy/Router/client"
 import { mount } from "enzyme"
 import React from "react"
 
-jest.mock("Components/NavBar/NavBar", () => ({
+jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))
 
-jest.mock("Artsy/Router/Boot", () => ({
+jest.mock("v2/Artsy/Router/Boot", () => ({
   Boot: ({ children }) => children,
 }))
 
-jest.mock("Artsy/Analytics/useTracking", () => ({
+jest.mock("v2/Artsy/Analytics/useTracking", () => ({
   useTracking: () => ({
     trackEvent: x => x,
   }),

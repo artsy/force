@@ -6,7 +6,7 @@ import { ViewingRoomApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRo
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Router/useRouter", () => ({
+jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

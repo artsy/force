@@ -10,13 +10,13 @@ import { Breakpoint } from "v2/Utils/Responsive"
 jest.unmock("react-relay")
 
 // Mocking the ArtworkCollectionsRail component because it is tested elsewhere
-jest.mock("Apps/Artist/Components/ArtistCollectionsRail", () => ({
+jest.mock("v2/Apps/Artist/Components/ArtistCollectionsRail", () => ({
   ArtistCollectionsRailContent: () => <div>Mock ArtistCollectionRail</div>,
 }))
 
 // Mocking the ArtistRecommendations component because it is tested elsewhere
 jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistRecommendations",
+  "v2/Apps/Artist/Routes/Overview/Components/ArtistRecommendations",
   () => ({
     ArtistRecommendationsQueryRenderer: () => (
       <div>Mock ArtistRecommendations</div>
@@ -31,7 +31,7 @@ describe("Works Route", () => {
     breakpoint: Breakpoint = "xl",
     worksMock = defaultWorks
   ) => {
-    return await renderRelayTree({
+    return renderRelayTree({
       Component: WorksRoute,
       query: graphql`
         query Works_Test_Query($artistID: String!) @raw_response_type {

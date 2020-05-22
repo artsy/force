@@ -6,7 +6,7 @@ import "jest-styled-components"
 import React from "react"
 import { ArtistSeriesRail } from "../index"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("found", () => ({
   Link: props => <div>{props.children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,
@@ -43,11 +43,11 @@ describe("ArtistSeriesRail", () => {
     props = {
       collectionGroup: CollectionsHubLinkedCollections.linkedCollections[0],
     }
-      ; (useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   it("showing the correct text, price guidance, and title", () => {

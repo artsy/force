@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { MobileLink } from "../MobileLink"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("", () => {
   const trackEvent = jest.fn()
@@ -16,7 +16,7 @@ describe("", () => {
   }
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
   })

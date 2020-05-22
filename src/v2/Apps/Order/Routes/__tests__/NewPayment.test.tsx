@@ -19,12 +19,12 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
-jest.mock("Utils/Events", () => ({
+jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
 jest.mock(
-  "Apps/Order/Components/PaymentPicker",
+  "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
@@ -35,9 +35,9 @@ jest.mock(
 const handleCardAction = jest.fn()
 const realSetInterval = global.setInterval
 
-jest.mock("Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
-require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
 Object.defineProperty(window, "location", {
   writable: true,
@@ -97,7 +97,7 @@ describe("Payment", () => {
   })
 
   beforeEach(() => {
-    ; (window.location.assign as any).mockReset()
+    ;(window.location.assign as any).mockReset()
     global.setInterval = jest.fn()
   })
 

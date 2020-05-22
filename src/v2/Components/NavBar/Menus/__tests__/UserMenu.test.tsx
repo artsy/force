@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { UserMenu } from "../UserMenu"
 
-jest.mock("Artsy/Analytics/useTracking", () => {
+jest.mock("v2/Artsy/Analytics/useTracking", () => {
   return {
     useTracking: () => ({
       trackEvent: jest.fn(),

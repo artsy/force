@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { NavItem } from "../NavItem"
 
-jest.mock("Artsy/Analytics/useTracking", () => {
+jest.mock("v2/Artsy/Analytics/useTracking", () => {
   return {
     useTracking: () => ({
       trackEvent: jest.fn(),
@@ -10,7 +10,7 @@ jest.mock("Artsy/Analytics/useTracking", () => {
   }
 })
 
-jest.mock("Utils/Hooks/useMatchMedia")
+jest.mock("v2/Utils/Hooks/useMatchMedia")
 
 describe("NavItem", () => {
   it("renders proper content", () => {

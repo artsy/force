@@ -11,7 +11,7 @@ import {
 } from "../../MobileNavMenu/MobileNavMenu"
 import { MobileLink } from "../MobileLink"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("MobileNavMenu", () => {
   const mediator = {
@@ -27,7 +27,7 @@ describe("MobileNavMenu", () => {
   }
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
   })
@@ -69,13 +69,13 @@ describe("MobileNavMenu", () => {
       const simpleLinks = linkContainer.children(MobileLink)
 
       expect(simpleLinks.length).toBe(8)
-        ; (menuData.links as SimpleLinkData[])
-          .slice(2)
-          .map(({ href, text }, index) => {
-            const simpleLink = simpleLinks.at(index)
-            expect(href).toEqual(simpleLink.prop("href"))
-            expect(text).toEqual(simpleLink.text())
-          })
+      ;(menuData.links as SimpleLinkData[])
+        .slice(2)
+        .map(({ href, text }, index) => {
+          const simpleLink = simpleLinks.at(index)
+          expect(href).toEqual(simpleLink.prop("href"))
+          expect(text).toEqual(simpleLink.text())
+        })
 
       linkText = linkContainer.text()
       expect(linkText).toContain("Sign Up")

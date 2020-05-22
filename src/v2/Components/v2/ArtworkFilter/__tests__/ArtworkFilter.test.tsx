@@ -1,6 +1,9 @@
 import { Breakpoint } from "@artsy/palette"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { ArtworkFilter, BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
+import {
+  ArtworkFilter,
+  BaseArtworkFilter,
+} from "v2/Components/v2/ArtworkFilter"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { renderToString } from "v2/DevTools/__tests__/MockRelayRendererFixtures"
 import React from "react"
@@ -8,7 +11,7 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 
 jest.unmock("react-relay")
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ArtworkFilter", () => {
   const getWrapper = async (
@@ -30,7 +33,7 @@ describe("ArtworkFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }

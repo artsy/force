@@ -7,7 +7,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("default collections header artworks", () => {
   it("duplicates header artworks when the quantity of artworks in collection are small in a large viewport", () => {
@@ -44,11 +44,11 @@ describe("default header component", () => {
       headerArtworks: defaultCollectionHeaderArtworks,
       defaultHeaderImageHeight: 1000,
     }
-      ; (useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   const getWrapper = headerProps => {

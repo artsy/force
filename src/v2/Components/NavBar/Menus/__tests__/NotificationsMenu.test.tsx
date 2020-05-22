@@ -3,13 +3,13 @@ import { mount } from "enzyme"
 import React from "react"
 import { NotificationMenuItems } from "../NotificationsMenu"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("NotificationsMenu", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }

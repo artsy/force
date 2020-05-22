@@ -11,7 +11,7 @@ jest.mock("sharify", () => ({
   data: { RECAPTCHA_KEY: "recaptcha-api-key" },
 }))
 
-jest.mock("Components/Authentication/helpers", () => ({
+jest.mock("v2/Components/Authentication/helpers", () => ({
   checkEmail: jest.fn().mockResolvedValue(true),
 }))
 
@@ -167,7 +167,7 @@ describe("MobileSignUpForm", () => {
   })
 
   it("renders password error", async () => {
-    ; (props.handleSubmit as jest.Mock).mockImplementation((values, actions) => {
+    ;(props.handleSubmit as jest.Mock).mockImplementation((values, actions) => {
       actions.setStatus({ error: "some password error" })
     })
 

@@ -5,7 +5,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { DropDownSection } from "../DropDownSection"
 
-jest.mock("Artsy/Analytics/useTracking")
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("DropDownMenu", () => {
   const trackEvent = jest.fn()
@@ -20,7 +20,7 @@ describe("DropDownMenu", () => {
   }
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
   })

@@ -2,7 +2,7 @@ import { DesktopModal } from "v2/Components/Authentication/Desktop/Components/De
 import { mount } from "enzyme"
 import React from "react"
 
-jest.mock("Utils/Events")
+jest.mock("v2/Utils/Events")
 
 describe("DesktopModal", () => {
   const getWrapper = (props: any = {}) =>

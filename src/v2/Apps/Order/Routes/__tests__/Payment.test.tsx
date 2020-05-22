@@ -18,14 +18,14 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
-jest.mock("Utils/Events", () => ({
+jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
-const mockPostEvent = require("Utils/Events").postEvent as jest.Mock
+const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 jest.mock(
-  "Apps/Order/Components/PaymentPicker",
+  "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
@@ -77,7 +77,7 @@ describe("Payment", () => {
       }
 
       setName(name: string) {
-        ; (this.nameInput.instance() as any).value = name
+        ;(this.nameInput.instance() as any).value = name
         this.nameInput.simulate("change")
       }
     },

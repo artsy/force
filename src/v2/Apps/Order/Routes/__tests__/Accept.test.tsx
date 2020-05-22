@@ -20,9 +20,9 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-relay")
 
-jest.mock("Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
-require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
 const realSetInterval = global.setInterval
 
@@ -73,7 +73,7 @@ describe("Accept seller offer", () => {
   })
 
   beforeEach(() => {
-    ; (window.location.assign as any).mockReset()
+    ;(window.location.assign as any).mockReset()
   })
 
   describe("with default data", () => {

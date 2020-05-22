@@ -4,7 +4,7 @@ import {
   createCreditCardAndUpdatePhoneSuccessful,
 } from "../__fixtures__/MutationResults/createCreditCardAndUpdatePhone"
 
-jest.mock("Apps/Auction/Routes/ConfirmBid/BidderPositionQuery", () => ({
+jest.mock("v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery", () => ({
   bidderPositionQuery: jest.fn(),
 }))
 
@@ -51,11 +51,11 @@ import { ValidFormValues } from "./Utils/RegisterTestPage"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
-jest.mock("Utils/Events", () => ({
+jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 const mockBidderPositionQuery = bidderPositionQuery as jest.Mock
-const mockPostEvent = require("Utils/Events").postEvent as jest.Mock
+const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 const createTokenMock = require("react-stripe-elements").__stripeMock
   .createToken as jest.Mock
 
@@ -85,11 +85,11 @@ const setupTestEnv = ({
     Component: (
       props: routes_ConfirmBidQueryResponse & { tracking: TrackingProp }
     ) => (
-        <ConfirmBidRouteFragmentContainer
-          match={{ location } as Match}
-          {...props}
-        />
-      ),
+      <ConfirmBidRouteFragmentContainer
+        match={{ location } as Match}
+        {...props}
+      />
+    ),
     query: graphql`
       query ConfirmBidValidTestQuery @raw_response_type {
         artwork(id: "artwork-id") {
@@ -136,7 +136,7 @@ describe("Routes/ConfirmBid", () => {
 
     // @ts-ignore
     // tslint:disable-next-line:no-empty
-    window.Stripe = () => { }
+    window.Stripe = () => {}
 
     Object.defineProperty(window, "location", {
       writable: true,

@@ -5,9 +5,9 @@ import { Timer } from "../Timer"
 
 jest.useFakeTimers()
 
-jest.mock("Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 
-require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
+require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2018-05-10T20:22:32.000Z"
 )
 

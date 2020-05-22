@@ -5,14 +5,14 @@ import { mount } from "enzyme"
 import React from "react"
 import { NavBar } from "../NavBar"
 
-jest.mock("Components/Search/SearchBar", () => {
+jest.mock("v2/Components/Search/SearchBar", () => {
   return {
     SearchBarQueryRenderer: () => <div />,
   }
 })
 
-jest.mock("Artsy/Analytics/useTracking")
-jest.mock("Utils/Hooks/useMatchMedia", () => ({
+jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
@@ -32,7 +32,7 @@ describe("NavBar", () => {
   }
 
   beforeEach(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }

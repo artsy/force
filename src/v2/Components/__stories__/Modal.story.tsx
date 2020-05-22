@@ -2,9 +2,11 @@ import { storiesOf } from "@storybook/react"
 import React from "react"
 
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { Images } from "v2/Components/Publishing/Fixtures/Components"
 import Button from "../Buttons/Default"
 import Modal from "../Modal/Modal"
+
+// FIXME: Reaction refactor
+const Images = [{ image: "" }]
 
 class ModalDemo extends React.Component<any, any> {
   constructor(props) {

@@ -8,15 +8,15 @@ import React from "react"
 import { buildAppRoutes } from "../buildAppRoutes"
 import { buildClientApp } from "../buildClientApp"
 
-jest.mock("Components/NavBar/NavBar", () => ({
+jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))
 
-jest.mock("Artsy/Router/Boot", () => ({
+jest.mock("v2/Artsy/Router/Boot", () => ({
   Boot: ({ children }) => children,
 }))
 
-jest.mock("Artsy/Analytics/useTracking", () => ({
+jest.mock("v2/Artsy/Analytics/useTracking", () => ({
   useTracking: () => ({
     trackEvent: x => x,
   }),

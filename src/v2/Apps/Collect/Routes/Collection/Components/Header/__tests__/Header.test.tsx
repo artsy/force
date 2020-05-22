@@ -24,7 +24,7 @@ jest.mock("found", () => ({
   RouterContext: jest.requireActual("found").RouterContext,
 }))
 
-jest.mock("Artsy/Analytics/useTracking", () => {
+jest.mock("v2/Artsy/Analytics/useTracking", () => {
   return {
     useTracking: () => ({
       trackEvent: jest.fn(),

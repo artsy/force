@@ -15,9 +15,9 @@ import {
 import { CounterFragmentContainer } from "../Counter"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
-jest.mock("Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
-require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 jest.unmock("react-relay")
 
 const realSetInterval = global.setInterval

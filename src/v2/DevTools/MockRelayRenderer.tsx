@@ -135,7 +135,7 @@ export interface MockRelayRendererState {
 export class MockRelayRenderer<T extends OperationType> extends React.Component<
   MockRelayRendererProps<T>,
   MockRelayRendererState
-  > {
+> {
   state = {
     caughtError: undefined,
   }
@@ -173,13 +173,13 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
 
     return mockData
       ? createMockNetworkLayer2({
-        mockData,
-        mockMutationResults,
-      })
+          mockData,
+          mockMutationResults,
+        })
       : createMockNetworkLayer({
-        Query: () => ({}),
-        ...mockResolvers,
-      })
+          Query: () => ({}),
+          ...mockResolvers,
+        })
   }
 
   render() {
@@ -188,11 +188,11 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     //       to test this in a generic way, plus with the rule we get fixes.
     if (
       typeof __webpack_require__ === "undefined" &&
-      QueryRenderer === require("../../__mocks__/react-relay").QueryRenderer
+      QueryRenderer === require("../../../__mocks__/react-relay").QueryRenderer
     ) {
       throw new Error(
         "The `react-relay` module has been mocked, be sure to unmock it with: " +
-        '`jest.unmock("react-relay")`'
+          '`jest.unmock("react-relay")`'
       )
     }
 
