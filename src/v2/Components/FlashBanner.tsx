@@ -17,14 +17,12 @@ export type FlashMessageKey =
   /* email confirmation token was expired */
   | "expired_token"
 
-type BannerMessage = string | React.FC
-
-const messages: Record<FlashMessageKey, BannerMessage> = {
+const messages: Record<FlashMessageKey, string | React.FC> = {
   confirmed: "Your email has been confirmed.",
   already_confirmed: "You have already confirmed your email.",
-  invalid_token: "Your token is invalid. Please try again.",
-  blank_token: "No token found. Please try again.",
-  expired_token: "An error has occurred. Please try again.",
+  invalid_token: "An error has occurred. Please contact support@artsy.net.",
+  blank_token: "An error has occurred. Please contact support@artsy.net.",
+  expired_token: "Link expired. Resend verification email.",
 }
 
 export const FlashBanner: React.FunctionComponent<Props> = ({
