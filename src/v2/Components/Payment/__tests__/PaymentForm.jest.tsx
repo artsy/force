@@ -24,7 +24,9 @@ import {
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ModalButton } from "v2/Components/Modal/ModalDialog"
-import PaymentForm, { PaymentFormProps } from "v2/Components/Payment/PaymentForm"
+import PaymentForm, {
+  PaymentFormProps,
+} from "v2/Components/Payment/PaymentForm"
 import { MockBoot } from "v2/DevTools"
 import { commitMutation, RelayProp } from "react-relay"
 import Input from "../../Input"

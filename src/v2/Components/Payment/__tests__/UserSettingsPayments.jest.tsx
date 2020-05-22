@@ -50,7 +50,7 @@ describe("UserSettingsPayments", () => {
   beforeAll(() => {
     // @ts-ignore
     // tslint:disable-next-line:no-empty
-    window.Stripe = () => { }
+    window.Stripe = () => {}
 
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
   })

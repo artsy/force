@@ -428,18 +428,17 @@
       "schema.graphql",
       "<rootDir>../package.json"
     ],
-    "testMatch": [
-      "**/v2/**/__tests__/*.(ts|tsx)"
-    ],
-    "setupFiles": [
-      "<rootDir>/test.config.ts"
+
+    "roots": [
+      "<rootDir>/src"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/v2/setup_jest.ts"
     ],
-    "roots": [
-      "<rootDir>/src"
+    "testPathIgnorePatterns": [
+      "ArtworkFilter\\.fixture\\.tsx"
     ],
+    "testRegex": ".*\\.jest\\.(ts|tsx|js|jsx)$",
     "testURL": "https://artsy.net"
   },
   "reporterEnabled": "mocha-junit-reporter, spec",

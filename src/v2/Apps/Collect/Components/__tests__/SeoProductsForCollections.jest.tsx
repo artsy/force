@@ -9,20 +9,20 @@ describe("Seo Products for Collection Page", () => {
   function buildPriceRange(minPrice?, maxPrice?) {
     const minPriceObject = minPrice
       ? {
-        minPrice: {
-          major: minPrice,
-          currencyCode: "USD",
-        },
-      }
+          minPrice: {
+            major: minPrice,
+            currencyCode: "USD",
+          },
+        }
       : {}
 
     const maxPriceObject = maxPrice
       ? {
-        maxPrice: {
-          major: maxPrice,
-          currencyCode: "USD",
-        },
-      }
+          maxPrice: {
+            major: maxPrice,
+            currencyCode: "USD",
+          },
+        }
       : {}
 
     return {

@@ -28,7 +28,7 @@ const render = (me: ConversationAppTestQueryRawResponse["me"], user: User) =>
           ...me,
         }}
         match={({ route: { displayFullPage: true } } as unknown) as Match}
-        router={{ replace: () => { } } as any}
+        router={{ replace: () => {} } as any}
         {...props}
       />
     ),

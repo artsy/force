@@ -37,7 +37,7 @@ describe("AuctionResults", () => {
 
   const trackEvent = jest.fn()
   beforeAll(() => {
-    ; (useTracking as jest.Mock).mockImplementation(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }

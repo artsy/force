@@ -9,7 +9,7 @@ jest.mock("../useTracking")
 
 describe("useTracking", () => {
   it("throws error if tracking context not present", () => {
-    ; (useTracking as jest.Mock).mockImplementationOnce(
+    ;(useTracking as jest.Mock).mockImplementationOnce(
       require.requireActual("../useTracking").useTracking
     )
 
@@ -28,9 +28,9 @@ describe("useTracking", () => {
 
   it("returns a react-tracking trackEvent object, that tracks events", () => {
     const trackEventFn = jest.fn()
-      ; (useTracking as jest.Mock).mockImplementationOnce(() => ({
-        trackEvent: trackEventFn,
-      }))
+    ;(useTracking as jest.Mock).mockImplementationOnce(() => ({
+      trackEvent: trackEventFn,
+    }))
 
     const App: React.FC = track()(() => {
       const { trackEvent } = useTracking()

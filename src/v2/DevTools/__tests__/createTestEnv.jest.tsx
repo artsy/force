@@ -114,40 +114,40 @@ const Component = createFragmentContainer(
     relay: RelayProp
     artwork: createTestEnv_artwork
   }) => (
-      <div>
-        <h1>This is the main heading</h1>
-        <p>
-          The artwork is {artwork.title} by {artwork.artist.name}
-        </p>
-        <button
-          onClick={() =>
-            commitMutation<createTestEnvOrderMutation>(relay.environment, {
-              onCompleted,
-              onError,
-              variables: { input: { artworkId: "artwork-id" } },
-              // tslint:disable-next-line:relay-operation-generics
-              mutation: orderMutation,
-            })
-          }
-        >
-          create the order
+    <div>
+      <h1>This is the main heading</h1>
+      <p>
+        The artwork is {artwork.title} by {artwork.artist.name}
+      </p>
+      <button
+        onClick={() =>
+          commitMutation<createTestEnvOrderMutation>(relay.environment, {
+            onCompleted,
+            onError,
+            variables: { input: { artworkId: "artwork-id" } },
+            // tslint:disable-next-line:relay-operation-generics
+            mutation: orderMutation,
+          })
+        }
+      >
+        create the order
       </button>
 
-        <button
-          onClick={() =>
-            commitMutation<createTestEnvCreditCardMutation>(relay.environment, {
-              onCompleted,
-              onError,
-              variables: { input: { token: "card-token", oneTimeUse: true } },
-              // tslint:disable-next-line:relay-operation-generics
-              mutation: creditCardMutation,
-            })
-          }
-        >
-          create the credit card
+      <button
+        onClick={() =>
+          commitMutation<createTestEnvCreditCardMutation>(relay.environment, {
+            onCompleted,
+            onError,
+            variables: { input: { token: "card-token", oneTimeUse: true } },
+            // tslint:disable-next-line:relay-operation-generics
+            mutation: creditCardMutation,
+          })
+        }
+      >
+        create the credit card
       </button>
-      </div>
-    ),
+    </div>
+  ),
   {
     artwork: graphql`
       fragment createTestEnv_artwork on Artwork {

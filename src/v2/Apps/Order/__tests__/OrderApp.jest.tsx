@@ -482,7 +482,7 @@ describe("OrderApp", () => {
   beforeAll(() => {
     // @ts-ignore
     // tslint:disable-next-line:no-empty
-    window.Stripe = () => { }
+    window.Stripe = () => {}
 
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
   })
@@ -496,7 +496,7 @@ describe("OrderApp", () => {
       location: { pathname: location || "/order/123/shipping" },
       router: {
         // tslint:disable-next-line:no-empty
-        addTransitionHook: () => { },
+        addTransitionHook: () => {},
         replace,
       },
       order: {

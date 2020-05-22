@@ -108,7 +108,7 @@ describe("LoginForm", () => {
     })
 
     it("renders password error", async () => {
-      ; (props.handleSubmit as jest.Mock).mockImplementation(
+      ;(props.handleSubmit as jest.Mock).mockImplementation(
         (values, actions) => {
           actions.setStatus({ error: "some password error" })
         }
@@ -143,7 +143,7 @@ describe("LoginForm", () => {
     })
 
     it("shows 2FA one-time password prompt", async () => {
-      ; (props.handleSubmit as jest.Mock).mockImplementation(
+      ;(props.handleSubmit as jest.Mock).mockImplementation(
         (values, actions) => {
           if (!values.otp_attempt) {
             actions.setStatus({
