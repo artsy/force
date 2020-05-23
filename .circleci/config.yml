@@ -149,6 +149,8 @@ workflows:
           <<: *only_master
           requires:
             # - test
+            - yarn/jest
+            - test:mocha
             - acceptance
             - build
 
