@@ -6,7 +6,7 @@ MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
 { openAuthModal } = require '../../../lib/openAuthModal'
-{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ ModalType } = require "../../../../v2/Components/Authentication/Types"
 { Intent, ContextModule } = require "@artsy/cohesion"
 
 setupClocks = ($clocks, auctions) ->

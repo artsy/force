@@ -1,11 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Box } from "@artsy/palette"
-import { FormSwitcher } from "@artsy/reaction/dist/Components/Authentication/FormSwitcher"
+import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "desktop/apps/authentication/helpers"
-import { ModalHeader } from "reaction/Components/Modal/ModalHeader"
+import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalType } from "v2/Components/Authentication/Types"
 import { Intent, ContextModule } from "@artsy/cohesion"
 
 interface CreateAccountProps {

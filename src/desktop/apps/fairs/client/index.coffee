@@ -9,7 +9,7 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../helpers/view_helpers.coffee'
 query = require '../query.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
-{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ ModalType } = require "../../../../v2/Components/Authentication/Types"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 { Intent, ContextModule } = require "@artsy/cohesion"
 

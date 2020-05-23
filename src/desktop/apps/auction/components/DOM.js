@@ -5,7 +5,7 @@ import { Component } from "react"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"
 import { openAuthModal } from "desktop/lib/openAuthModal"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalType } from "v2/Components/Authentication/Types"
 import { Intent, ContextModule } from "@artsy/cohesion"
 
 class DOM extends Component {

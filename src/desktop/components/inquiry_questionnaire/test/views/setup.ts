@@ -36,6 +36,7 @@ export const setup = cb =>
 
     // @ts-ignore
     after(function() {
+      // @ts-ignore
       _.defer.restore()
       return benv.teardown()
     })

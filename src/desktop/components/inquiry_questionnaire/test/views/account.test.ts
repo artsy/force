@@ -18,6 +18,8 @@ const Account = benv.requireWithJadeify(
 
 describe(
   "Account",
+  // FIXME: reaction migration
+  // @ts-ignore
   setup(() => {
     let view
     beforeEach(() => {

@@ -1,6 +1,6 @@
-import { buildServerApp } from "reaction/Artsy/Router/server"
+import { buildServerApp } from "v2/Artsy/Router/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import { routes } from "reaction/Apps/IdentityVerification/routes"
+import { routes } from "v2/Apps/IdentityVerification/routes"
 import { stitch } from "@artsy/stitch"
 
 export const identityVerification = async (req, res, next) => {

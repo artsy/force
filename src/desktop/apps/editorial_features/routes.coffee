@@ -13,7 +13,7 @@ Articles = require '../../collections/articles.coffee'
 { ALLOWED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER } = require '../../config.coffee'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
-{ createMediaStyle } = require "@artsy/reaction/dist/Utils/Responsive"
+{ createMediaStyle } = require "../../../v2/Utils/Responsive"
 
 mediaStyles = createMediaStyle()
 

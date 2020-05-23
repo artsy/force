@@ -2,5 +2,5 @@
 
 set -ex
 
-yarn mocha $(find src -name '*.test.*')
 yarn jest
+yarn test:mocha

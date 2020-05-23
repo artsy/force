@@ -1,10 +1,10 @@
 import React from "react"
 import styled, { ThemeProvider } from "styled-components"
 
-import colors from "reaction/Assets/Colors"
+import colors from "v2/Assets/Colors"
 import { Row, Col } from "@artsy/palette"
-import Text from "reaction/Components/Text"
-import Title from "reaction/Components/Title"
+import Text from "v2/Components/Text"
+import Title from "v2/Components/Title"
 
 const Container = styled.div`
   margin: 0 auto;

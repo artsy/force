@@ -3,8 +3,8 @@ import { data as sd } from "sharify"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import { Contents } from "reaction/Components/Tag"
-import { SystemContextProvider } from "reaction/Artsy"
+import { Contents } from "v2/Components/Tag"
+import { SystemContextProvider } from "v2/Artsy"
 
 const Tag = require("../../models/tag.coffee")
 const CurrentUser = require("../../models/current_user.coffee")

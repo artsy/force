@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MarketDataSummary snapshots renders correctly 1`] = `
+.c0 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
+}
+
+<div
+  className="c0"
+>
+  <div>
+    $63m
+     auction record
+  </div>
+  <div>
+    <div>
+      Represented by a top established gallery
+    </div>
+  </div>
+  <div>
+    Collected by a major museum
+  </div>
+</div>
+`;

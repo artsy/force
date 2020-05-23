@@ -1,10 +1,10 @@
 import { mount } from "enzyme"
 import { data as sd } from "sharify"
 import React from "react"
-import { ModalManager } from "reaction/Components/Authentication/Desktop/ModalManager"
+import { ModalManager } from "v2/Components/Authentication/Desktop/ModalManager"
 import { ModalContainer } from "../ModalContainer"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { ModalType } from "@artsy/reaction/dist/Components/Authentication/Types"
+import { ModalType } from "v2/Components/Authentication/Types"
 const mediator = require("../../../../lib/mediator.coffee")
 
 jest.mock("sharify")
@@ -30,6 +30,8 @@ describe("ModalContainer", () => {
     mediator.trigger("open:auth", { mode: "login" })
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
+    // FIXME: reaction migration
+    // @ts-ignore
     expect(form.currentType).toBe("login")
   })
 
@@ -38,6 +40,8 @@ describe("ModalContainer", () => {
     mediator.trigger("open:auth", { mode: "signup" })
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
+    // FIXME: reaction migration
+    // @ts-ignore
     expect(form.currentType).toBe("signup")
   })
 
@@ -47,6 +51,8 @@ describe("ModalContainer", () => {
 
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
+    // FIXME: reaction migration
+    // @ts-ignore
     expect(form.currentType).toBe("reset_password")
   })
 

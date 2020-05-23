@@ -50,6 +50,7 @@ describe("InfiniteScrollNewsArticle", () => {
     return mount(
       <SystemContextProvider
         user={null}
+        // @ts-ignore
         relayEnvironment={{ environment: {} } as Environment}
       >
         <InfiniteScrollNewsArticle {...passedProps} />

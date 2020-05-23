@@ -5,9 +5,9 @@ import { data as sd } from "sharify"
 import { Theme } from "@artsy/palette"
 import React from "react"
 import ReactDOM from "react-dom"
-import { Contents } from "reaction/Components/Gene"
-import { GeneRelatedLinksQueryRenderer as RelatedLinks } from "reaction/Components/Gene/GeneRelatedLinks"
-import { SystemContextProvider } from "reaction/Artsy"
+import { Contents } from "v2/Components/Gene"
+import { GeneRelatedLinksQueryRenderer as RelatedLinks } from "v2/Components/Gene/GeneRelatedLinks"
+import { SystemContextProvider } from "v2/Artsy"
 import { ContextModule } from "@artsy/cohesion"
 
 const Gene = require("../../models/gene.coffee")

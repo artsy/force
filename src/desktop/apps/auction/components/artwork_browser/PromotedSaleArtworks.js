@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
 import React, { Fragment } from "react"
 import { get } from "lodash"
-import { Artwork } from "reaction/Components/Artwork"
+import { Artwork } from "v2/Components/Artwork"
 import { ArtworkRail } from "../artwork_rail/ArtworkRail"
 import { connect } from "react-redux"
 import { RelayStubProvider } from "desktop/components/react/RelayStubProvider"
@@ -69,7 +69,9 @@ PromotedSaleArtworks.defaultProps = {
 }
 
 const mapStateToProps = state => {
-  const { app: { auction, isMobile } } = state
+  const {
+    app: { auction, isMobile },
+  } = state
 
   const auctionData = auction.toJSON()
   const promotedSaleArtworks = get(

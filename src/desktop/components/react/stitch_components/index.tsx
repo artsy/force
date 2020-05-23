@@ -15,8 +15,8 @@ export { NavBar } from "./NavBar"
 export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
 export {
   UserSettingsPaymentsQueryRenderer as UserSettingsPayments,
-} from "reaction/Components/Payment/UserSettingsPayments"
+} from "v2/Components/Payment/UserSettingsPayments"
 export {
   TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
-} from "reaction/Components/UserSettings/TwoFactorAuthentication"
+} from "v2/Components/UserSettings/TwoFactorAuthentication"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"

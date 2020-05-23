@@ -1,5 +1,5 @@
 import React from "react"
-import { AuctionRegistrationModal } from "reaction/Components/Auction/AuctionRegistrationModal"
+import { AuctionRegistrationModal } from "v2/Components/Auction/AuctionRegistrationModal"
 
 export const RegistrationModal = ({ auction, me, onClose }) => {
   const submitRegistration = ({ acceptedTerms }) => {

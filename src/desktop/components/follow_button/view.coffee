@@ -6,7 +6,7 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 ArtistSuggestions = require './artist_suggestions.coffee'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
 { openAuthModal } = require '../../lib/openAuthModal'
-{ ModalType } = require "@artsy/reaction/dist/Components/Authentication/Types"
+{ ModalType } = require "../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
 
 module.exports = class FollowButton extends Backbone.View

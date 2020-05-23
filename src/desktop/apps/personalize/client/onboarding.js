@@ -4,8 +4,8 @@ import { Router } from "react-router"
 import createHistory from "history/createBrowserHistory"
 import Cookies from "cookies-js"
 
-import { SystemContextProvider } from "reaction/Artsy"
-import { Wizard } from "reaction/Components/Onboarding/Wizard"
+import { SystemContextProvider } from "v2/Artsy"
+import { Wizard } from "v2/Components/Onboarding/Wizard"
 import { data as sd } from "sharify"
 
 export const init = () => {

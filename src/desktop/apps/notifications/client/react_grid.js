@@ -1,8 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { WorksForYou } from "reaction/Apps/WorksForYou"
+import { WorksForYou } from "v2/Apps/WorksForYou"
 
-import { SystemContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "v2/Artsy"
 
 import CurrentUser from "../../../models/current_user.coffee"
 

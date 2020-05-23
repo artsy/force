@@ -4,11 +4,11 @@ import jade from "jade"
 import moment from "moment"
 import path from "path"
 
-const jsonData = require("./fixture.json")
 const markdown = require("../../../components/util/markdown")
 const OrderedSets = require("../../../collections/ordered_sets")
 
-describe("landing page", () => {
+xdescribe("landing page", () => {
+  const jsonData = require("./fixture.json")
   let data
 
   const render = (filename, data) => {

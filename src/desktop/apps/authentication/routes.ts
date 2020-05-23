@@ -1,6 +1,6 @@
 import { stitch } from "@artsy/stitch"
 import { AuthStatic } from "./components/AuthStatic"
-import { ModalType } from "reaction/Components/Authentication/Types"
+import { ModalType } from "v2/Components/Authentication/Types"
 import { AuthenticationMeta } from "./components/meta"
 import { MobileAuthStatic } from "./components/MobileAuthStatic"
 import { parse } from "url"

@@ -1,0 +1,57 @@
+import {
+  CreateSmsSecondFactorInput,
+  CreateSmsSecondFactorMutation,
+  CreateSmsSecondFactorMutationResponse,
+} from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
+import { commitMutation, Environment, graphql } from "react-relay"
+
+export const CreateSmsSecondFactor = (
+  environment: Environment,
+  input: CreateSmsSecondFactorInput
+) => {
+  return new Promise<CreateSmsSecondFactorMutationResponse>(
+    async (resolve, reject) => {
+      commitMutation<CreateSmsSecondFactorMutation>(environment, {
+        onCompleted: data => {
+          const response = data.createSmsSecondFactor.secondFactorOrErrors
+
+          switch (response.__typename) {
+            case "SmsSecondFactor":
+              resolve(data)
+              break
+            case "Errors":
+              reject(response.errors)
+          }
+        },
+        onError: error => {
+          reject(error)
+        },
+        mutation: graphql`
+          mutation CreateSmsSecondFactorMutation(
+            $input: CreateSmsSecondFactorInput!
+          ) @raw_response_type {
+            createSmsSecondFactor(input: $input) {
+              secondFactorOrErrors {
+                ... on SmsSecondFactor {
+                  __typename
+                  internalID
+                }
+
+                ... on Errors {
+                  __typename
+                  errors {
+                    message
+                    code
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          input,
+        },
+      })
+    }
+  )
+}

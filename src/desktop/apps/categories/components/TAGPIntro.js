@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { garamond } from "reaction/Assets/Fonts"
+import { garamond } from "v2/Assets/Fonts"
 
 const Headline = styled.h1`
   font-size: 50px;

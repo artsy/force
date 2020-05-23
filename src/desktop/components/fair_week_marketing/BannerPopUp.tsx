@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import colors from "reaction/Assets/Colors"
-import InvertedButton from "reaction/Components/Buttons/Inverted"
+import colors from "v2/Assets/Colors"
+import InvertedButton from "v2/Components/Buttons/Inverted"
 import { triggerMarketingModal } from "desktop/components/marketing_signup_modal/triggerMarketingModal"
 import { Intent } from "@artsy/cohesion"
 

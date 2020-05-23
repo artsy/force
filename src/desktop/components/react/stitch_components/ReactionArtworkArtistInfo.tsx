@@ -1,6 +1,6 @@
 import React from "react"
 import { Box } from "@artsy/palette"
-import { ArtistInfoQueryRenderer } from "reaction/Apps/Artwork/Components/ArtistInfo"
+import { ArtistInfoQueryRenderer } from "v2/Apps/Artwork/Components/ArtistInfo"
 
 export const ReactionArtworkArtistInfo = props => {
   return (
