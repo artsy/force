@@ -18,7 +18,6 @@
     "compile": "babel src/v2 --out-dir dist/v2 -s --source-map --extensions '.js,.jsx,.ts,.tsx' --ignore src/v2/**/__tests__,src/v2/**/__stories__",
     "cypress:run": "./node_modules/.bin/cypress run",
     "cypress": "./node_modules/.bin/cypress open",
-    "dev": "concurrently --raw --kill-others 'yarn relay --watch' 'scripts.start.sh'",
     "integrate": "./scripts/quicklink-to-project.sh",
     "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
     "mocha": "scripts/mocha.sh",

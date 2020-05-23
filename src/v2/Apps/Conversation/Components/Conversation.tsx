@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { DateTime } from "luxon"
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { RelayProp, createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { MessageFragmentContainer as Message } from "./Message"
@@ -118,12 +118,26 @@ export interface ConversationProps {
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay } = props
 
+  const bottomOfPage = useRef()
+
+  const scrollToBottom = () => {
+    const bottomOfPageCurrent = bottomOfPage.current as any
+    bottomOfPageCurrent.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  })
+
+  useEffect(scrollToBottom, [conversation])
+
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
   }, [conversation, relay.environment, conversation.lastMessageID])
 
   return (
     <Flex flexDirection="column" width="100%">
+      x
       <Box>
         <Spacer mt="45px" />
         <Flex flexDirection="column" width="100%" px={1}>
@@ -167,7 +181,7 @@ const Conversation: React.FC<ConversationProps> = props => {
                       }
                       mb={
                         nextMessage &&
-                          nextMessage.isFromUser !== message.isFromUser
+                        nextMessage.isFromUser !== message.isFromUser
                           ? 1
                           : undefined
                       }
@@ -178,6 +192,7 @@ const Conversation: React.FC<ConversationProps> = props => {
             )
           })}
           <Spacer mb={9} />
+          <Box ref={bottomOfPage}></Box>
         </Flex>
       </Box>
       <Reply conversation={conversation} environment={relay.environment} />

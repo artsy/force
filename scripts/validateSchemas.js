@@ -37,28 +37,20 @@ const downloadMetaphysicsSchema = async endpoint => {
   return printSchema(buildClientSchema(data), { commentDescriptions: true })
 }
 
-const downloadGitHubReaction = async release => {
-  const response = await fetch(
-    `https://github.com/artsy/reaction/raw/v${release}/data/schema.graphql`
-  )
-
-  const body = await response.text()
-  return body
-}
-
 const getBreakingChanges = async (metaphysicsEnv, metaphysicsVersion = 2) => {
-  const packageJSON = JSON.parse(
-    readFileSync(path.join(__dirname, "/../package.json"), "utf8")
+  const localSchema = readFileSync(
+    path.join(__dirname, "../data/schema.graphql"),
+    {
+      encoding: "utf8",
+    }
   )
-  const reactionVersion = packageJSON["dependencies"]["@artsy/reaction"]
-  const reactionSchema = await downloadGitHubReaction(reactionVersion)
   const metaphysicsEndpoint = metaphysicsVersion === 2 ? "/v2" : ""
   const metaphyicsSchema = await downloadMetaphysicsSchema(
     `https://metaphysics-${metaphysicsEnv}.artsy.net${metaphysicsEndpoint}`
   )
 
   const allChanges = diff(
-    buildSchema(reactionSchema),
+    buildSchema(localSchema),
     buildSchema(metaphyicsSchema)
   )
   const breakings = allChanges.filter(c => c.criticality.level === "BREAKING")
@@ -84,11 +76,11 @@ if (require.main === module) {
       if (changes.length) {
         process.exitCode = 1
         console.error(
-          `The schema in Reaction is incompatible with ${env} Metaphysics's Schema:\n\n`
+          `The schema in Force is incompatible with ${env} Metaphysics's Schema:\n\n`
         )
         console.error(changes)
         console.error(
-          `\n\nYou should update Reaction's schema before releasing these changes`
+          `\n\nYou should update Force's schema before releasing these changes`
         )
       } else {
         console.log("No breaking changes found!")
