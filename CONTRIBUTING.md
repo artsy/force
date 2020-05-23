@@ -38,7 +38,7 @@ git clone git@github.com:artsy/force.git
 cd force
 ```
 
-\$## Run Force
+## Run Force
 
 Install [NVM](https://github.com/creationix/nvm) and Node 12.
 
