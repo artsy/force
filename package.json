@@ -20,7 +20,7 @@
     "cypress": "./node_modules/.bin/cypress open",
     "dev": "concurrently --raw --kill-others 'yarn relay --watch' 'scripts.start.sh'",
     "integrate": "./scripts/quicklink-to-project.sh",
-    "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
+    "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --maxWorkers=2",
     "mocha": "scripts/mocha.sh",
     "prepare": "patch-package",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",

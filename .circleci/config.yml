@@ -119,8 +119,9 @@ workflows:
           project_id: 11
 
       # Pre-staging
-      - yarn/jest:
-          args: --runInBand
+      - yarn/run:
+          name: test:jest
+          script: "jest"
           requires:
             - yarn/workflow-queue
 
@@ -149,6 +150,8 @@ workflows:
           <<: *only_master
           requires:
             # - test
+            - test:jest
+            - test:mocha
             - acceptance
             - build
 
