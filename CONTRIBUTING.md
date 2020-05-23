@@ -4,19 +4,41 @@ This project is work of [many developers](https://github.com/artsy/force/graphs/
 
 We accept [pull requests](https://github.com/artsy/force/pulls), and you may [propose features and discuss issues](https://github.com/artsy/force/issues).
 
-In the examples below, substitute your GitHub username for `contributor` in URLs.
+## Quick Start
 
-## Fork the Project
+- Install dependencies:
+
+        $ git clone git@github.com:artsy/force.git
+        $ cd force
+        $ cp .env.oss .env
+        $ yarn install
+
+- Development of components happen in [storybooks](https://storybook.js.org/):
+
+        $ yarn storybook
+        $ open http://localhost:9001
+
+- To run the full Artsy.net server
+
+        $ yarn start
+        $ open http://localhost:5000
+
+- Run the tests:
+
+        $ yarn test:jest
+
+## Setup Instructions
+
+### Clone the Project
 
 Fork the [project on GitHub](https://github.com/artsy/force) and check out your copy.
 
 ```sh
-git clone https://github.com/contributor/force.git
+git clone git@github.com:artsy/force.git
 cd force
-git remote add upstream https://github.com/artsy/force.git
 ```
 
-## Run Force
+\$## Run Force
 
 Install [NVM](https://github.com/creationix/nvm) and Node 12.
 
@@ -28,7 +50,7 @@ nvm alias default 12
 Install node modules with Yarn.
 
 ```sh
-npm i yarn -g
+brew install yarn
 yarn install
 ```
 
@@ -45,19 +67,6 @@ yarn start
 ```
 
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
-
-## Real-time development with [Reaction](https://github.com/artsy/reaction)
-
-When working with components built in Reaction and want to keep both environments in sync without publishing to NPM, run:
-
-```sh
-cd reaction
-yarn link && yarn watch
-
-# Open a new terminal pane
-cd force
-yarn link @artsy/reaction && yarn start
-```
 
 ## Running a local copy of Force in Production mode:
 
