@@ -132,7 +132,7 @@ workflows:
 
       # TODO: Disabled due to memory issues. Can we use our workflows above and
       # upload coverage that way (similar to reaction). We save a lot of time
-      # by operating outside of an unnecessary docker context.
+      # by running outside of an unnecessary docker context.
 
       # - hokusai/test:
       #     name: test
