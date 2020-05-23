@@ -119,9 +119,8 @@ workflows:
           project_id: 11
 
       # Pre-staging
-      - yarn/run:
-          name: test:jest
-          script: "jest"
+      - yarn/jest:
+          args: --runInBand
           requires:
             - yarn/workflow-queue
 
@@ -130,6 +129,34 @@ workflows:
           script: "test:mocha"
           requires:
             - yarn/workflow-queue
+
+      # TODO: Disabled due to memory issues. Can we use our workflows above and
+      # upload coverage that way (similar to reaction). We save a lot of time
+      # by operating outside of an unnecessary docker context.
+
+      # - hokusai/test:
+      #     name: test
+      #     <<: *not_staging_or_release
+      #     post-steps:
+      #       - run: mkdir -p ./coverage ./.nyc_output ./reports
+      #       - run:
+      #           name: Copy jest coverage artifacts
+      #           command: docker cp hokusai_force_1:/app/coverage ./
+      #           when: always
+      #       - codecov/upload:
+      #           file: ./coverage/lcov.info
+      #       - run:
+      #           name: Copy mocha coverage artifacts
+      #           command: docker cp hokusai_force_1:/app/.nyc_output ./
+      #           when: always
+      #       - codecov/upload:
+      #           file: ./.nyc_output/lcov.info
+      #       - run:
+      #           name: Copy coverage reports
+      #           command: docker cp hokusai_force_1:/app/reports ./
+      #           when: always
+      #       - store_test_results:
+      #           path: ./reports
 
       - yarn/update-cache:
           <<: *not_staging_or_release
@@ -149,8 +176,7 @@ workflows:
           name: push-staging-image
           <<: *only_master
           requires:
-            # - test
-            - test:jest
+            - yarn/jest
             - test:mocha
             - acceptance
             - build
