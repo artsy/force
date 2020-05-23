@@ -61,7 +61,7 @@ const node: ReaderFragment = {
               "name": "metadata",
               "storageKey": null,
               "args": null,
-              "concreteType": "ArtistTargetSupplyMicrofunnelMetadata",
+              "concreteType": "TargetSupplyMicrofunnelMetadata",
               "plural": false,
               "selections": [
                 {
