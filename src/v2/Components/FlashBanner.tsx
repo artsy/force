@@ -1,9 +1,6 @@
 import React from "react"
 import { Banner, Sans } from "@artsy/palette"
-
-interface Props {
-  messageCode: FlashMessageKey
-}
+import qs from "qs"
 
 export type FlashMessageKey =
   /* email confirmed */
@@ -25,9 +22,18 @@ const messages: Record<FlashMessageKey, string | React.FC> = {
   expired_token: "Link expired. Resend verification email.",
 }
 
-export const FlashBanner: React.FunctionComponent<Props> = ({
-  messageCode,
-}) => {
+export const FlashBanner: React.FunctionComponent = () => {
+  const [messageCode, setMessageCode] = React.useState(null)
+
+  React.useEffect(() => {
+    console.log("in effect")
+    if (typeof window !== "undefined") {
+      const query = qs.parse(window.location.search.slice(1))
+      console.log(query)
+      query["flash_message"] && setMessageCode(query["flash_message"])
+    }
+  }, [])
+
   const Message = messages[messageCode]
   if (!Message) return null
   return (
