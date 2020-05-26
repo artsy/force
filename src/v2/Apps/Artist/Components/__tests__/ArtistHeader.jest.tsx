@@ -32,7 +32,7 @@ describe("ArtistHeader", () => {
     response: ArtistHeader_Test_QueryRawResponse["artist"] = ArtistHeaderFixture,
     context = { mediator, relayEnvironment: {} as Environment, user: null }
   ) => {
-    return await renderRelayTree({
+    return renderRelayTree({
       Component: ({ artist }: any) => {
         return (
           <SystemContextProvider {...context}>
@@ -137,31 +137,5 @@ describe("ArtistHeader", () => {
     const wrapper = await getWrapper(artist)
     const html = wrapper.html()
     expect(html).not.toContain("Blue Chip")
-  })
-
-  it("renders the correct button on the carousel when there are no for sale artworks", async () => {
-    const wrapper = await getWrapper()
-    expect(
-      wrapper
-        .find(WorksForSaleButton)
-        .at(0)
-        .text()
-    ).toEqual("Browse artworks")
-  })
-
-  it("renders the correct button on the carousel when there are for sale artworks", async () => {
-    const wrapper = await getWrapper({
-      ...ArtistHeaderFixture,
-      counts: {
-        ...ArtistHeaderFixture.counts,
-        forSaleArtworks: 21,
-      },
-    })
-    expect(
-      wrapper
-        .find(WorksForSaleButton)
-        .at(0)
-        .text()
-    ).toEqual("Shop works for sale (21)")
   })
 })
