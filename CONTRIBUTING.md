@@ -32,7 +32,7 @@ We accept [pull requests](https://github.com/artsy/force/pulls), and you may [pr
 
 ### Clone the Project
 
-Fork the [project on GitHub](https://github.com/artsy/force) and check out your copy.
+Clone the [project on GitHub](https://github.com/artsy/force) and cd in:
 
 ```sh
 git clone git@github.com:artsy/force.git
@@ -41,27 +41,27 @@ cd force
 
 ## Run Force
 
-Install [NVM](https://github.com/creationix/nvm) and Node 12.
+Install [NVM](https://github.com/creationix/nvm) and Node 12:
 
 ```sh
 nvm install 12
 nvm alias default 12
 ```
 
-Install node modules with Yarn.
+Install node modules with Yarn:
 
 ```sh
 brew install yarn
 yarn install
 ```
 
-Copy the `.env.oss` file to a `.env` file.
+Copy the `.env.oss` file to a `.env` file:
 
 ```sh
 cp .env.oss .env
 ```
 
-Start the server.
+Start the server:
 
 ```sh
 yarn start
