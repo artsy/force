@@ -1,9 +1,9 @@
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
-import { FlashMessage } from "../FlashBanner"
+import { FlashMessage } from "../FlashMessage"
 
-describe("FlashBanner", () => {
+describe("FlashMessage", () => {
   it("renders a banner based on a message code", () => {
     const wrapper = mount(<FlashMessage messageCode="confirmed" />)
     expect(wrapper.text()).toContain("Your email has been confirmed.")

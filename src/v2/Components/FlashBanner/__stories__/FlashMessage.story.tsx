@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
-import { FlashMessage } from "v2/Components/FlashBanner"
+import { FlashMessage } from "v2/Components/FlashBanner/FlashMessage"
 
 storiesOf("Components/FlashBanner", module).add(
   "Successful Confirmation Message",
