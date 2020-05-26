@@ -3,7 +3,7 @@ import { data as sd } from "sharify"
 import { routes } from "v2/Apps/Purchase/routes"
 import React from "react"
 import ReactDOM from "react-dom"
-import { setupArtistSignUpModal } from "desktop/apps/artist/components/cta"
+import { setupArtistSignUpModal } from "desktop/components/artistSignupModal/artistSignupModal"
 
 const mediator = require("desktop/lib/mediator.coffee")
 

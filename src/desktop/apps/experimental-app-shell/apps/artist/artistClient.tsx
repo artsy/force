@@ -1,4 +1,4 @@
-import { setupArtistSignUpModal } from "desktop/apps/artist/components/cta"
+import { setupArtistSignUpModal } from "desktop/components/artistSignupModal/artistSignupModal"
 
 export const artistClient = () => {
   setupArtistSignUpModal()

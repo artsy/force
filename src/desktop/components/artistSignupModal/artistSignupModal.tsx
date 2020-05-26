@@ -2,6 +2,7 @@ import { get } from "lodash"
 import { data as sd } from "sharify"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { Intent, ContextModule } from "@artsy/cohesion"
+
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")
 const metaphysics2 = require("lib/metaphysics2.coffee")
