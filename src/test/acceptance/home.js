@@ -27,15 +27,15 @@ describe("Home page", () => {
     $.html().should.containEql("Browse Works for Sale")
   })
 
-  it("renders the email confirmed banner when flashMessage is confirmed", async () => {
-    const $ = await browser.page("/?flashMessage=confirmed")
+  it("renders the email confirmed banner when flash_message is confirmed", async () => {
+    const $ = await browser.page("/?flash_message=confirmed")
 
     $("div[class*=Banner__Wrapper]").should.have.length(1)
     $.html().should.containEql("Your email has been confirmed")
   })
 
-  it("ignores flashMessages that aren't explicitly supported", async () => {
-    const $ = await browser.page("/?flashMessage=l33thaxor")
+  it("ignores flash_message that isn't explicitly supported", async () => {
+    const $ = await browser.page("/?flash_message=l33thaxor")
 
     $("div[class*=Banner__Wrapper]").should.have.length(0)
   })
