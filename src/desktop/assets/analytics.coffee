@@ -4,13 +4,13 @@ setupSplitTests = require '../components/split_test/setup.coffee'
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
 
-PublishingEvents = require('@artsy/reaction/dist/Utils/Events.js').default
-ReactionEvents = require('../../v2/Utils/Events').default
+# This event bus also connects to reaction's publishing event emitter because
+# both piggyback on `window`. See Utils/Events for more info.
+Events = require('../../v2/Utils/Events').default
 
 # All Force mediator events can be hooked into for tracking purposes
 mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
-
 
 trackEvent = (data) ->
   # TODO: This is old schema
@@ -63,8 +63,7 @@ trackEvent = (data) ->
     console.error("Unknown analytics schema being used: #{JSON.stringify(data)}")
 
 # All Reaction events are sent directly to Segment
-PublishingEvents.onEvent trackEvent
-ReactionEvents.onEvent trackEvent
+Events.onEvent trackEvent
 
 require '../analytics/main_layout.js'
 
