@@ -24,16 +24,22 @@ const messages: Record<FlashMessageKey, string | React.FC> = {
 
 export const FlashBanner: React.FunctionComponent = () => {
   const [messageCode, setMessageCode] = React.useState(null)
+  const isClient = typeof window !== "undefined"
 
   React.useEffect(() => {
-    console.log("in effect")
-    if (typeof window !== "undefined") {
+    if (isClient) {
       const query = qs.parse(window.location.search.slice(1))
-      console.log(query)
       query["flash_message"] && setMessageCode(query["flash_message"])
     }
   }, [])
 
+  if (!messageCode) return null
+  return <FlashMessage messageCode={messageCode} />
+}
+
+export const FlashMessage: React.FC<{ messageCode: string }> = ({
+  messageCode,
+}) => {
   const Message = messages[messageCode]
   if (!Message) return null
   return (
