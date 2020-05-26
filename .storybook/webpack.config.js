@@ -43,7 +43,7 @@ const {
 } = process.env
 
 const isCI = CI || NETLIFY
-const notOnCI = (value) => (isCI ? [] : [value])
+const notOnCI = value => (isCI ? [] : [value])
 
 /**
  * Write out a file that stubs the data that’s normally shared with the client
@@ -138,7 +138,7 @@ module.exports = async ({ config, mode }) => {
   // Filter out default Storybooks progress bar plugin if CI, which is merged in
   // with custom plugins. See: https://github.com/storybooks/storybook/issues/1260#issuecomment-308036626
   if (isCI) {
-    config.plugins = config.plugins.filter((plugin) => {
+    config.plugins = config.plugins.filter(plugin => {
       return !(plugin instanceof webpack.ProgressPlugin)
     })
   }
@@ -168,7 +168,7 @@ module.exports = async ({ config, mode }) => {
         {
           loader: "babel-loader",
           options: {
-            cacheDirectory: path.join(cacheDirectory, "babel"),
+            cacheDirectory: path.join(cacheDirectory, "babel/storybook"),
           },
         },
       ],
