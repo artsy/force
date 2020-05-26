@@ -2,23 +2,36 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type routes_ViewingRoomQueryVariables = {
+export type ViewingRoomClosedApp_Test_QueryVariables = {
     slug: string;
 };
-export type routes_ViewingRoomQueryResponse = {
+export type ViewingRoomClosedApp_Test_QueryResponse = {
     readonly viewingRoom: {
         readonly " $fragmentRefs": FragmentRefs<"ViewingRoomApp_viewingRoom">;
     } | null;
 };
-export type routes_ViewingRoomQuery = {
-    readonly response: routes_ViewingRoomQueryResponse;
-    readonly variables: routes_ViewingRoomQueryVariables;
+export type ViewingRoomClosedApp_Test_QueryRawResponse = {
+    readonly viewingRoom: ({
+        readonly title: string;
+        readonly heroImageURL: string | null;
+        readonly partner: ({
+            readonly name: string | null;
+            readonly id: string | null;
+            readonly href: string | null;
+        }) | null;
+        readonly formattedEndAt: string | null;
+    }) | null;
+};
+export type ViewingRoomClosedApp_Test_Query = {
+    readonly response: ViewingRoomClosedApp_Test_QueryResponse;
+    readonly variables: ViewingRoomClosedApp_Test_QueryVariables;
+    readonly rawResponse: ViewingRoomClosedApp_Test_QueryRawResponse;
 };
 
 
 
 /*
-query routes_ViewingRoomQuery(
+query ViewingRoomClosedApp_Test_Query(
   $slug: ID!
 ) {
   viewingRoom(id: $slug) {
@@ -75,7 +88,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "routes_ViewingRoomQuery",
+    "name": "ViewingRoomClosedApp_Test_Query",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -100,7 +113,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "routes_ViewingRoomQuery",
+    "name": "ViewingRoomClosedApp_Test_Query",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -171,12 +184,12 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "routes_ViewingRoomQuery",
+    "name": "ViewingRoomClosedApp_Test_Query",
     "id": null,
-    "text": "query routes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomClosed_viewingRoom\n  formattedEndAt\n}\n\nfragment ViewingRoomClosed_viewingRoom on ViewingRoom {\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  formattedEndAt\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
+    "text": "query ViewingRoomClosedApp_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomClosed_viewingRoom\n  formattedEndAt\n}\n\nfragment ViewingRoomClosed_viewingRoom on ViewingRoom {\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  formattedEndAt\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = 'b1cb752158ced0421965b3b42705335a';
+(node as any).hash = 'f9660807415aa1bf205e182b3f2dd274';
 export default node;

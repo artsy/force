@@ -2,6 +2,7 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
+import { ViewingRoomClosedFragmentContainer as ViewingRoomClosed } from "./Components/ViewingRoomClosed"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -18,6 +19,8 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   children,
   viewingRoom,
 }) => {
+  // FIXME: We should rely on state to determin if VR is closed.
+
   return (
     <>
       <ViewingRoomMeta viewingRoom={viewingRoom} />
@@ -25,9 +28,14 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
 
-        <ViewingRoomTabBar mb={[2, 3]} />
-
-        {children}
+        {viewingRoom.formattedEndAt === "Closed" ? (
+          <ViewingRoomClosed viewingRoom={viewingRoom} />
+        ) : (
+          <>
+            <ViewingRoomTabBar mb={[2, 3]} />
+            {children}
+          </>
+        )}
 
         <Box mx={2}>
           <Separator mt={6} mb={3} />
@@ -44,6 +52,8 @@ export default createFragmentContainer(ViewingRoomApp, {
     fragment ViewingRoomApp_viewingRoom on ViewingRoom {
       ...ViewingRoomMeta_viewingRoom
       ...ViewingRoomHeader_viewingRoom
+      ...ViewingRoomClosed_viewingRoom
+      formattedEndAt
     }
   `,
 })

@@ -2,7 +2,7 @@ import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
-import { ViewingRoomApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_Test_Query.graphql"
+import { ViewingRoomClosedApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomClosedApp_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
@@ -22,7 +22,7 @@ describe("ViewingRoomApp", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: ViewingRoomApp_Test_QueryRawResponse = ViewingRoomAppFixture
+    response: ViewingRoomClosedApp_Test_QueryRawResponse = ViewingRoomClosedAppFixture
   ) => {
     return await renderRelayTree({
       Component: ({ viewingRoom }) => {
@@ -35,7 +35,7 @@ describe("ViewingRoomApp", () => {
         )
       },
       query: graphql`
-        query ViewingRoomApp_Test_Query($slug: ID!) @raw_response_type {
+        query ViewingRoomClosedApp_Test_Query($slug: ID!) @raw_response_type {
           viewingRoom(id: $slug) {
             ...ViewingRoomApp_viewingRoom
           }
@@ -53,9 +53,9 @@ describe("ViewingRoomApp", () => {
     expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
     expect(wrapper.find("AppContainer").length).toBe(1)
     expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
-    expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
-    expect(wrapper.find("ViewingRoomClosed").length).toBe(0)
-    expect(wrapper.html()).toContain("some child")
+    expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
+    expect(wrapper.find("ViewingRoomClosed").length).toBe(1)
+    expect(wrapper.html()).not.toContain("some child")
   })
 
   describe("ViewingRoomHeader", () => {
@@ -66,7 +66,7 @@ describe("ViewingRoomApp", () => {
         const html = wrapper.html()
         expect(html).toContain("Guy Yanai")
         expect(html).toContain("Subscription Demo GG")
-        expect(html).toContain("Closes in about 1 month")
+        expect(html).toContain("Closed")
       })
     })
 
@@ -77,23 +77,13 @@ describe("ViewingRoomApp", () => {
         const html = wrapper.html()
         expect(html).toContain("Guy Yanai")
         expect(html).toContain("Subscription Demo GG")
-        expect(html).toContain("Closes in about 1 month")
+        expect(html).toContain("Closed")
       })
-    })
-  })
-
-  describe("ViewingRoomTabBar", () => {
-    it("renders correct tabs", async () => {
-      const wrapper = await getWrapper()
-      expect(wrapper.find("Tab").length).toBe(2)
-      const html = wrapper.html()
-      expect(html).toContain(`href="/viewing-room/${slug}"`)
-      expect(html).toContain(`href="/viewing-room/${slug}/works"`)
     })
   })
 })
 
-const ViewingRoomAppFixture: ViewingRoomApp_Test_QueryRawResponse = {
+const ViewingRoomClosedAppFixture: ViewingRoomClosedApp_Test_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
     heroImageURL:
@@ -103,6 +93,6 @@ const ViewingRoomAppFixture: ViewingRoomApp_Test_QueryRawResponse = {
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
     },
-    formattedEndAt: "Closes in about 1 month",
+    formattedEndAt: "Closed",
   },
 }
