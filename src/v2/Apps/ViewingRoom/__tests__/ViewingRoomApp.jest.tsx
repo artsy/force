@@ -2,7 +2,8 @@ import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
-import { ViewingRoomApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_Test_Query.graphql"
+import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
+import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
@@ -23,7 +24,7 @@ describe("ViewingRoomApp", () => {
   describe("with open viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_Test_QueryRawResponse = OpenViewingRoomAppFixture
+      response: ViewingRoomApp_OpenTest_QueryRawResponse = OpenViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -36,7 +37,7 @@ describe("ViewingRoomApp", () => {
           )
         },
         query: graphql`
-          query ViewingRoomApp_Test_Query($slug: ID!) @raw_response_type {
+          query ViewingRoomApp_OpenTest_Query($slug: ID!) @raw_response_type {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -97,7 +98,7 @@ describe("ViewingRoomApp", () => {
   describe("with closed viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_Test_QueryRawResponse = ClosedViewingRoomAppFixture
+      response: ViewingRoomApp_ClosedTest_QueryRawResponse = ClosedViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -110,7 +111,7 @@ describe("ViewingRoomApp", () => {
           )
         },
         query: graphql`
-          query ViewingRoomApp_Test_Query($slug: ID!) @raw_response_type {
+          query ViewingRoomApp_ClosedTest_Query($slug: ID!) @raw_response_type {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -159,7 +160,7 @@ describe("ViewingRoomApp", () => {
   })
 })
 
-const OpenViewingRoomAppFixture: ViewingRoomApp_Test_QueryRawResponse = {
+const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
     heroImageURL:
@@ -173,7 +174,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_Test_QueryRawResponse = {
   },
 }
 
-const ClosedViewingRoomAppFixture: ViewingRoomApp_Test_QueryRawResponse = {
+const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
     heroImageURL:
