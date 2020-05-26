@@ -44,9 +44,6 @@ export type ArtistHeader_Test_QueryRawResponse = {
             readonly follows: number | null;
             readonly forSaleArtworks: number | null;
         }) | null;
-        readonly statuses: ({
-            readonly artworks: boolean | null;
-        }) | null;
         readonly id: string;
         readonly is_followed: boolean | null;
     }) | null;
@@ -101,9 +98,6 @@ fragment ArtistHeader_artist on Artist {
   counts {
     follows
     forSaleArtworks
-  }
-  statuses {
-    artworks
   }
   ...FollowArtistButton_artist
 }
@@ -407,24 +401,6 @@ return {
               }
             ]
           },
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "name": "statuses",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "ArtistStatuses",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "artworks",
-                "args": null,
-                "storageKey": null
-              }
-            ]
-          },
           (v2/*: any*/),
           {
             "kind": "ScalarField",
@@ -441,7 +417,7 @@ return {
     "operationKind": "query",
     "name": "ArtistHeader_Test_Query",
     "id": null,
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"cecily-brown\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  artistHightlights: highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  statuses {\n    artworks\n  }\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n",
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"cecily-brown\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  artistHightlights: highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n",
     "metadata": {}
   }
 };

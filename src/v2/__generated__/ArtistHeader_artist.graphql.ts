@@ -33,9 +33,6 @@ export type ArtistHeader_artist = {
         readonly follows: number | null;
         readonly forSaleArtworks: number | null;
     } | null;
-    readonly statuses: {
-        readonly artworks: boolean | null;
-    } | null;
     readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
@@ -291,24 +288,6 @@ return {
       ]
     },
     {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "statuses",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtistStatuses",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "artworks",
-          "args": null,
-          "storageKey": null
-        }
-      ]
-    },
-    {
       "kind": "FragmentSpread",
       "name": "FollowArtistButton_artist",
       "args": null
@@ -316,5 +295,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'a573c5c822ea7071dd1edcb0d3ca8ab2';
+(node as any).hash = '2a5daadf3e6c82010b50b022e3a24276';
 export default node;
