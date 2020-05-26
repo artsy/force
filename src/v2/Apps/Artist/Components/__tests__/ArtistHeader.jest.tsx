@@ -1,9 +1,6 @@
 import { ArtistHeader_Test_QueryRawResponse } from "v2/__generated__/ArtistHeader_Test_Query.graphql"
 import { ArtistHeaderFixture } from "v2/Apps/__tests__/Fixtures/Artist/Components/ArtistHeader"
-import {
-  ArtistHeaderFragmentContainer as ArtistHeader,
-  WorksForSaleButton,
-} from "v2/Apps/Artist/Components/ArtistHeader"
+import { ArtistHeaderFragmentContainer as ArtistHeader } from "v2/Apps/Artist/Components/ArtistHeader"
 import { Mediator, SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"

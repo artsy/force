@@ -87,7 +87,7 @@ export type Overview_artist = {
     readonly insights: ReadonlyArray<{
         readonly type: string | null;
     } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistBio_bio" | "CurrentEvent_artist" | "MarketInsights_artist" | "SelectedCareerAchievements_artist" | "Genes_artist" | "FollowArtistButton_artist" | "WorksForSaleRail_artist" | "ArtistConsignButton_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistBio_bio" | "CurrentEvent_artist" | "MarketInsights_artist" | "SelectedCareerAchievements_artist" | "Genes_artist" | "FollowArtistButton_artist" | "WorksForSaleRail_artist" | "ArtistConsignButton_artist" | "ArtistTopWorksRail_topRailArtworks">;
     readonly " $refType": "Overview_artist";
 };
 export type Overview_artist$data = Overview_artist;
@@ -718,9 +718,14 @@ return {
       "kind": "FragmentSpread",
       "name": "ArtistConsignButton_artist",
       "args": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "ArtistTopWorksRail_topRailArtworks",
+      "args": null
     }
   ]
 };
 })();
-(node as any).hash = 'ce0637f455881ec87586fa7b001d8155';
+(node as any).hash = '9f1a09d48e3ba374da110d2c174f79ae';
 export default node;

@@ -6,6 +6,7 @@ import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "v2/
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
+import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 
 export interface WorksRouteProps {
   artist: Works_artist
@@ -22,6 +23,10 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
 
   return (
     <>
+      <Box>
+        <ArtistTopWorksRail topRailArtworks={artist} />
+      </Box>
+
       <Box>
         <ArtistCollectionsRail
           artistID={artist.internalID}
@@ -77,7 +82,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         width: { type: "String" }
       ) {
       internalID
-
+      ...ArtistTopWorksRail_topRailArtworks
       related {
         artistsConnection(first: 1) {
           edges {
