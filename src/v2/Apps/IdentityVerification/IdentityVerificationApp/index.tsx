@@ -144,7 +144,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
               Keep in mind
             </Sans>
             <Sans size="4">
-              • Verification may take up to 5–10 minutes.
+              • Verification may take up to 5–10 minutes
               <br />
               • The name on your ID must match the name on your payment method
               <br />• Your ID and photo will only be used for verification
