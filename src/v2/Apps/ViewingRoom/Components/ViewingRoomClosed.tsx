@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Button, Flex, Sans } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 import { ViewingRoomClosed_viewingRoom } from "v2/__generated__/ViewingRoomClosed_viewingRoom.graphql"
 
@@ -15,10 +16,6 @@ const ViewingRoomClosed: React.FC<ViewingRoomClosedProps> = props => {
     },
   } = props
 
-  const handleViewGalleryClick = () => {
-    window.location.assign(href)
-  }
-
   return (
     <Box>
       <Flex flexDirection="column" alignItems="center">
@@ -27,11 +24,9 @@ const ViewingRoomClosed: React.FC<ViewingRoomClosedProps> = props => {
           current works.
         </Sans>
         {href && (
-          <Box>
-            <Button variant="secondaryGray" onClick={handleViewGalleryClick}>
-              View Gallery
-            </Button>
-          </Box>
+          <RouterLink to={href}>
+            <Button variant="secondaryGray">View Gallery</Button>
+          </RouterLink>
         )}
       </Flex>
     </Box>
