@@ -120,11 +120,13 @@ workflows:
 
       # Pre-staging
       - yarn/jest:
+          <<: *not_staging_or_release
           args: --runInBand
           requires:
             - yarn/workflow-queue
 
       - yarn/run:
+          <<: *not_staging_or_release
           name: test:mocha
           script: "test:mocha"
           requires:
