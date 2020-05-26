@@ -36,11 +36,6 @@ const H1 = styled.h1`
 
 const H2 = H1.withComponent("h2")
 
-export const WorksForSaleButton = styled(Box)`
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-`
-
 interface Props {
   artist: ArtistHeader_artist
   user?: User
@@ -319,9 +314,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           follows
           forSaleArtworks
         }
-        statuses {
-          artworks
-        }
+
         ...FollowArtistButton_artist
       }
     `,
