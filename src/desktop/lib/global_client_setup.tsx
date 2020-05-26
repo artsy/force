@@ -126,7 +126,7 @@ function setupJquery() {
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and
   // the menu will hide and then remove the `display` property so the default
   // CSS will kick in again.
-  $.fn.hidehover = function() {
+  $.fn.hidehover = function () {
     const $el = $(this)
     $el.css({ display: "none" })
     return setTimeout(() => $el.css({ display: "" }), 200)
@@ -156,7 +156,7 @@ function setupErrorReporting() {
     const user = sd && sd.CURRENT_USER
 
     if (sd.CURRENT_USER) {
-      Sentry.configureScope(scope => {
+      Sentry.configureScope((scope) => {
         scope.setUser(_.pick(user, "id", "email"))
       })
     }
@@ -182,7 +182,7 @@ export function trackAuthenticationEvents() {
   const modes = ["login", "signup"]
   const user = sd && sd.CURRENT_USER
 
-  modes.forEach(mode => {
+  modes.forEach((mode) => {
     if (Cookies.get(`analytics-${mode}`)) {
       const data = JSON.parse(Cookies.get(`analytics-${mode}`))
       Cookies.expire(`analytics-${mode}`)
