@@ -18,7 +18,7 @@ We accept [pull requests](https://github.com/artsy/force/pulls), and you may [pr
         $ yarn storybook
         $ open http://localhost:9001
 
-- To run the full Artsy.net server
+- To run the full Artsy.net server:
 
         $ yarn start
         $ open http://localhost:5000
