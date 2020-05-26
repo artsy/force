@@ -154,9 +154,9 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
               Compatible browsers
             </Sans>
             <Sans size="4">
-              • Safari on iOS
-              <br />• Chrome and Samsung Internet on Android
-              <br />• Safari, Chrome, Firefox and Microsoft Edge on Desktop
+              • iOS: Safari
+              <br />• Android: Chrome, Samsung Internet
+              <br />• Mac/PC: Safari, Chrome, Firefox, Microsoft Edge
               <br />
               <br />
               By clicking the button, you'll be redirected to our identity
