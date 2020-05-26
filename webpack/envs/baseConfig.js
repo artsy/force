@@ -27,7 +27,15 @@ exports.baseConfig = {
       {
         test: /\.coffee$/,
         include: path.resolve(basePath, "src"),
-        use: ["cache-loader", "coffee-loader"],
+        use: [
+          {
+            loader: "cache-loader",
+            options: {
+              cacheDirectory: ".cache",
+            },
+          },
+          "coffee-loader",
+        ],
       },
       {
         test: /\.(jade|pug)$/,
@@ -49,7 +57,8 @@ exports.baseConfig = {
           {
             loader: "babel-loader",
             options: {
-              cacheDirectory: !isCI && path.join(basePath, ".cache", "babel"),
+              cacheDirectory:
+                !isCI && path.join(basePath, ".cache", "babel/force"),
             },
           },
         ],
