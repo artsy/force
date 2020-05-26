@@ -13,7 +13,7 @@ import { PageLoader } from "./PageLoader"
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
 export const RenderPending = () => {
-  const { isFetching, setFetching, EXPERIMENTAL_APP_SHELL } = useSystemContext()
+  const { isFetching, setFetching } = useSystemContext()
 
   /**
    * First, set fetching to ensure that components that are listening for this
@@ -26,43 +26,25 @@ export const RenderPending = () => {
   }
 
   if (isFetching) {
-    if (EXPERIMENTAL_APP_SHELL) {
-      return (
-        <>
-          <Renderer>{null}</Renderer>
+    return (
+      <>
+        <Renderer>{null}</Renderer>
 
-          <PageLoader
-            className="reactionPageLoader" // positional styling comes from Force body.styl
-            showBackground={false}
-            step={10} // speed of progress bar, randomized between 1/x to simulate variable progress
-            style={{
-              position: "fixed",
-              left: 0,
-              top: -6,
-              zIndex: 1000,
-            }}
-          />
+        <PageLoader
+          className="reactionPageLoader" // positional styling comes from Force body.styl
+          showBackground={false}
+          step={10} // speed of progress bar, randomized between 1/x to simulate variable progress
+          style={{
+            position: "fixed",
+            left: 0,
+            top: -6,
+            zIndex: 1000,
+          }}
+        />
 
-          <NetworkTimeout />
-        </>
-      )
-    } else {
-      return (
-        <>
-          <Renderer>{null}</Renderer>
-          <PageLoader
-            className="reactionPageLoader" // positional styling comes from Force body.styl
-            showBackground={false}
-            style={{
-              position: "fixed",
-              left: 0,
-              top: -6,
-              zIndex: 1000,
-            }}
-          />
-        </>
-      )
-    }
+        <NetworkTimeout />
+      </>
+    )
   }
 }
 

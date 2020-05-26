@@ -54,7 +54,7 @@ export const NavBar: React.FC = track(
   }
 )(() => {
   const { trackEvent } = useTracking()
-  const { mediator, user, EXPERIMENTAL_APP_SHELL } = useContext(SystemContext)
+  const { mediator, user } = useContext(SystemContext)
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = useMatchMedia(themeProps.mediaQueries.xs)
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
@@ -84,12 +84,8 @@ export const NavBar: React.FC = track(
    * TODO: Find a less naive way to check if route is in appshell
    */
   const handleMobileNavClick = event => {
-    // FIXME: Remove once experimental A/B test completes
-    if (EXPERIMENTAL_APP_SHELL) {
-      // Includes /collect or /collections
-      if (event.target?.parentNode?.href?.includes("/collect")) {
-        toggleMobileNav(false)
-      }
+    if (event.target?.parentNode?.href?.includes("/collect")) {
+      toggleMobileNav(false)
     }
   }
 
@@ -130,9 +126,7 @@ export const NavBar: React.FC = track(
                         AnalyticsSchema.ContextModule.HeaderArtworksDropdown
                       }
                       onClick={() => {
-                        if (EXPERIMENTAL_APP_SHELL) {
-                          setIsVisible(false)
-                        }
+                        setIsVisible(false)
                       }}
                     />
                   </Box>
@@ -165,9 +159,7 @@ export const NavBar: React.FC = track(
                         AnalyticsSchema.ContextModule.HeaderArtistsDropdown
                       }
                       onClick={() => {
-                        if (EXPERIMENTAL_APP_SHELL) {
-                          setIsVisible(false)
-                        }
+                        setIsVisible(false)
                       }}
                     />
                   </Box>

@@ -17,18 +17,15 @@ const analytics = window.analytics
   function getTrackingOptions() {
     var trackingOptions = {}
 
-    // FIXME: Remove once A/B test completes
-    if (sd.CLIENT_NAVIGATION_V5 === "experiment") {
-      const referrer = window.analytics.__artsyReferrer
-      // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-      // single-page-app context and the value will need to be refreshed on route
-      // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
-      if (referrer) {
-        trackingOptions = {
-          page: {
-            referrer,
-          },
-        }
+    const referrer = window.analytics.__artsyReferrer
+    // Grab referrer from our trackingMiddleware in Reaction, since we're in a
+    // single-page-app context and the value will need to be refreshed on route
+    // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+    if (referrer) {
+      trackingOptions = {
+        page: {
+          referrer,
+        },
       }
     }
 
@@ -58,11 +55,7 @@ const analytics = window.analytics
     // inquiries would then not get tracked as there's no "hard jumps"
     // between pages. See: https://github.com/artsy/force/pull/5232
     // FIXME: Remove once A/B test completes
-    if (window.sd.CLIENT_NAVIGATION_V5 === "experiment") {
-      analyticsHooks.on(namespace(name), handler)
-    } else {
-      analyticsHooks.once(namespace(name), handler)
-    }
+    analyticsHooks.on(namespace(name), handler)
   }
 
   // DOM events

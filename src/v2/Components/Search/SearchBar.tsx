@@ -92,9 +92,6 @@ export class SearchBar extends Component<Props, State> {
   // this behaviour  is acceptable.
   private userClickedOnDescendant: boolean
 
-  // TODO: Remove references once things go live
-  private enableExperimentalAppShell: boolean
-
   state = {
     term: getSearchTerm(window.location),
     entityID: null,
@@ -151,12 +148,6 @@ export class SearchBar extends Component<Props, State> {
         this.trackSearch(term, edges.length > 0)
       }
     )
-  }
-
-  constructor(props) {
-    super(props)
-
-    this.enableExperimentalAppShell = props.EXPERIMENTAL_APP_SHELL
   }
 
   componentDidMount() {
@@ -259,28 +250,23 @@ export class SearchBar extends Component<Props, State> {
     this.userClickedOnDescendant = true
     const newHref = displayType === "Artist" ? `${href}/works-for-sale` : href
 
-    if (this.enableExperimentalAppShell) {
-      if (this.props.router) {
-        // @ts-ignore (routeConfig not found; need to update DT types)
-        const routes = this.props.router.matcher.routeConfig
-        // @ts-ignore (matchRoutes not found; need to update DT types)
-        const isSupportedInRouter = !!this.props.router.matcher.matchRoutes(
-          routes,
-          newHref
-        )
+    if (this.props.router) {
+      // @ts-ignore (routeConfig not found; need to update DT types)
+      const routes = this.props.router.matcher.routeConfig
+      // @ts-ignore (matchRoutes not found; need to update DT types)
+      const isSupportedInRouter = !!this.props.router.matcher.matchRoutes(
+        routes,
+        newHref
+      )
 
-        // Check if url exists within the global router context
-        if (isSupportedInRouter) {
-          this.props.router.push(newHref)
-          this.onBlur({})
-        } else {
-          window.location.assign(newHref)
-        }
-        // Outside of router context
+      // Check if url exists within the global router context
+      if (isSupportedInRouter) {
+        this.props.router.push(newHref)
+        this.onBlur({})
       } else {
         window.location.assign(newHref)
       }
-      // New router not enabled
+      // Outside of router context
     } else {
       window.location.assign(newHref)
     }
@@ -370,14 +356,12 @@ export class SearchBar extends Component<Props, State> {
         }
 
         // Clear input after submit
-        if (this.enableExperimentalAppShell) {
-          if (event.key === "Enter") {
-            setTimeout(() => {
-              this.setState({
-                term: "",
-              })
+        if (event.key === "Enter") {
+          setTimeout(() => {
+            this.setState({
+              term: "",
             })
-          }
+          })
         }
       },
     }
@@ -427,16 +411,14 @@ export class SearchBar extends Component<Props, State> {
         itemScope
         itemType="http://schema.org/SearchAction"
         onSubmit={event => {
-          if (this.enableExperimentalAppShell) {
-            if (router) {
-              event.preventDefault()
-              router.push(`/search?term=${this.state.term}`)
-              this.onBlur(event)
-            } else {
-              console.error(
-                "[Components/Search/SearchBar] `router` instance not found."
-              )
-            }
+          if (router) {
+            event.preventDefault()
+            router.push(`/search?term=${this.state.term}`)
+            this.onBlur(event)
+          } else {
+            console.error(
+              "[Components/Search/SearchBar] `router` instance not found."
+            )
           }
         }}
       >

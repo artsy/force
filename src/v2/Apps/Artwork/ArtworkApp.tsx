@@ -90,11 +90,6 @@ export class ArtworkApp extends React.Component<Props> {
       // See trackingMiddleware.ts
       window.analytics.__artsyReferrer = referrer
       window.analytics.page(properties, { integrations: { Marketo: false } })
-
-      // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
-      // if (sd.CLIENT_NAVIGATION_V5) {
-      //   trackExperimentViewed("client_navigation_v5", properties)
-      // }
     }
   }
 

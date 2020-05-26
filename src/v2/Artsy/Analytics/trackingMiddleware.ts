@@ -60,15 +60,16 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               trackingData.referrer = sd.APP_URL + referrer
             }
 
-            // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
-            if (
-              ["/collect", "/collections", "/collection/"].some(path =>
-                pathname.includes(path)
-              ) &&
-              referrer
-            ) {
-              trackingData.referrer = sd.APP_URL + referrer
-            }
+            // FIXME: Is this still needed?
+            // // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
+            // if (
+            //   ["/collect", "/collections", "/collection/"].some(path =>
+            //     pathname.includes(path)
+            //   ) &&
+            //   referrer
+            // ) {
+            //   trackingData.referrer = sd.APP_URL + referrer
+            // }
 
             /**
              * Store a global reference to the referrer. Since we're in an SPA
@@ -90,11 +91,6 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
                 Marketo: false,
               },
             })
-
-            // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
-            // if (sd.CLIENT_NAVIGATION_V5) {
-            //   trackExperimentViewed("client_navigation_v5", trackingData)
-            // }
           }
 
           // Reset timers that track time on page since we're tracking each order

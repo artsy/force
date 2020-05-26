@@ -29,7 +29,6 @@ export interface OrderAppProps extends RouterState {
     orderID: string
   }
   order: OrderApp_order
-  EXPERIMENTAL_APP_SHELL: boolean
 }
 
 interface OrderAppState {
@@ -124,20 +123,12 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
       )
     }
 
-    // FIXME: Remove after A/B test completes
-    let NavBar
-    if (this.props.EXPERIMENTAL_APP_SHELL) {
-      NavBar = MinimalNavBar
-    } else {
-      NavBar = Box // pass-through; nav bar comes from the server right now
-    }
-
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
           this.mediator = mediator
           return (
-            <NavBar to={artworkHref}>
+            <MinimalNavBar to={artworkHref}>
               <AppContainer>
                 <Title>Checkout | Artsy</Title>
                 {isEigen ? (
@@ -146,11 +137,11 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
                     content="width=device-width, user-scalable=no"
                   />
                 ) : (
-                    <Meta
-                      name="viewport"
-                      content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-                    />
-                  )}
+                  <Meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+                  />
+                )}
                 <SafeAreaContainer>
                   <StripeProvider stripe={this.state.stripe}>
                     <Elements>
@@ -161,7 +152,7 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
                 <StickyFooter orderType={order.mode} artworkId={artworkId} />
                 <ConnectedModalDialog />
               </AppContainer>
-            </NavBar>
+            </MinimalNavBar>
           )
         }}
       </SystemContextConsumer>

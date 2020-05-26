@@ -41,7 +41,6 @@ export interface ArtworkSidebarCommercialContainerProps
   mediator: Mediator
   router?: Router
   user: User
-  EXPERIMENTAL_APP_SHELL?: boolean
 }
 
 export interface ArtworkSidebarCommercialContainerState {
@@ -63,8 +62,8 @@ const logger = createLogger(
 
 @track()
 export class ArtworkSidebarCommercialContainer extends React.Component<
-ArtworkSidebarCommercialContainerProps,
-ArtworkSidebarCommercialContainerState
+  ArtworkSidebarCommercialContainerProps,
+  ArtworkSidebarCommercialContainerState
 > {
   state: ArtworkSidebarCommercialContainerState = {
     isCommittingCreateOrderMutation: false,
@@ -235,13 +234,7 @@ ArtworkSidebarCommercialContainerState
                       )
                     } else {
                       const url = `/orders/${orderOrError.order.internalID}`
-
-                      // FIXME: Remove once A/B test completes
-                      if (this.props.EXPERIMENTAL_APP_SHELL) {
-                        this.props.router.push(url)
-                      } else {
-                        window.location.assign(url)
-                      }
+                      this.props.router.push(url)
                     }
                   }
                 )
@@ -326,13 +319,7 @@ ArtworkSidebarCommercialContainerState
                       )
                     } else {
                       const url = `/orders/${orderOrError.order.internalID}/offer`
-
-                      // FIXME: Remove once A/B test completes
-                      if (this.props.EXPERIMENTAL_APP_SHELL) {
-                        this.props.router.push(url)
-                      } else {
-                        window.location.assign(url)
-                      }
+                      this.props.router.push(url)
                     }
                   }
                 )
@@ -378,16 +365,16 @@ ArtworkSidebarCommercialContainerState
             </>
           )
         ) : (
-            <>
-              {this.renderEditionSets(artworkEcommerceAvailable)}
-              {selectedEditionSet && (
-                <>
-                  <Separator mb={3} />
-                  {this.renderSaleMessage(selectedEditionSet.sale_message)}
-                </>
-              )}
-            </>
-          )}
+          <>
+            {this.renderEditionSets(artworkEcommerceAvailable)}
+            {selectedEditionSet && (
+              <>
+                <Separator mb={3} />
+                {this.renderSaleMessage(selectedEditionSet.sale_message)}
+              </>
+            )}
+          </>
+        )}
 
         {artworkEcommerceAvailable &&
           (artwork.shippingOrigin || artwork.shippingInfo) && <Spacer mt={1} />}
@@ -408,12 +395,12 @@ ArtworkSidebarCommercialContainerState
         )}
 
         {artwork.is_inquireable ||
-          artwork.is_acquireable ||
-          artwork.is_offerable ? (
-            artwork.sale_message && <Spacer mb={3} />
-          ) : (
-            <Separator mb={3} mt={3} />
-          )}
+        artwork.is_acquireable ||
+        artwork.is_offerable ? (
+          artwork.sale_message && <Spacer mb={3} />
+        ) : (
+          <Separator mb={3} mt={3} />
+        )}
         {artwork.is_acquireable && (
           <Button
             width="100%"
@@ -468,9 +455,7 @@ interface ArtworkSidebarCommercialProps {
 }
 
 export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = props => {
-  const { mediator, router, user, EXPERIMENTAL_APP_SHELL } = useContext(
-    SystemContext
-  )
+  const { mediator, router, user } = useContext(SystemContext)
 
   return (
     <ArtworkSidebarCommercialContainer
@@ -478,7 +463,6 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = props
       mediator={mediator}
       router={router}
       user={user}
-      EXPERIMENTAL_APP_SHELL={EXPERIMENTAL_APP_SHELL}
     />
   )
 }
