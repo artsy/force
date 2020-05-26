@@ -43,9 +43,12 @@ describe("AuctionResultsFilterContext", () => {
     it("#setFilter", done => {
       getWrapper()
       act(() => {
-        context.setFilter("page", 10)
+        context.setFilter("pageAndCursor", { page: 10, cursor: null })
         setTimeout(() => {
-          expect(context.filters.page).toEqual(10)
+          expect(context.filters.pageAndCursor).toEqual({
+            page: 10,
+            cursor: null,
+          })
           done()
         })
       })
@@ -54,14 +57,17 @@ describe("AuctionResultsFilterContext", () => {
     it("#setFilter resets pagination", done => {
       getWrapper({
         filters: {
-          page: 10,
+          pageAndCursor: { page: 10, cursor: null },
         },
       })
       act(() => {
-        expect(context.filters.page).toEqual(10)
+        expect(context.filters.pageAndCursor.page).toEqual(10)
         context.setFilter("sort", "relevant")
         setTimeout(() => {
-          expect(context.filters.page).toEqual(1)
+          expect(context.filters.pageAndCursor).toEqual({
+            page: 1,
+            cursor: null,
+          })
           done()
         })
       })
@@ -155,13 +161,16 @@ describe("AuctionResultsFilterContext", () => {
     it("#unsetFilter", done => {
       getWrapper()
       act(() => {
-        context.setFilter("page", 10)
+        context.setFilter("pageAndCursor", { page: 10, cursor: null })
         setTimeout(() => {
-          expect(context.filters.page).toEqual(10)
+          expect(context.filters.pageAndCursor.page).toEqual(10)
           act(() => {
-            context.unsetFilter("page")
+            context.unsetFilter("pageAndCursor")
             setTimeout(() => {
-              expect(context.filters.page).toEqual(1)
+              expect(context.filters.pageAndCursor).toEqual({
+                page: 1,
+                cursor: null,
+              })
               done()
             })
           })
@@ -172,15 +181,18 @@ describe("AuctionResultsFilterContext", () => {
     it("#unsetFilter resets pagination", done => {
       getWrapper({
         filters: {
-          page: 10,
+          pageAndCursor: { page: 10, cursor: null },
           sort: "relevant",
         },
       })
       act(() => {
-        expect(context.filters.page).toEqual(10)
+        expect(context.filters.pageAndCursor.page).toEqual(10)
         context.unsetFilter("sort")
         setTimeout(() => {
-          expect(context.filters.page).toEqual(1)
+          expect(context.filters.pageAndCursor).toEqual({
+            page: 1,
+            cursor: null,
+          })
           done()
         })
       })

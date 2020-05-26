@@ -108,28 +108,25 @@ describe("AuctionResults", () => {
         )
       })
       describe("pagination", () => {
-        it("triggers relay refetch with after", () => {
+        it("triggers relay refetch with after, and re-shows sign up to see price", done => {
           const pagination = wrapper.find("Pagination")
 
           pagination
             .find("button")
             .at(1)
             .simulate("click")
-          expect(refetchSpy).toHaveBeenCalledTimes(1)
-          expect(refetchSpy.mock.calls[0][0]).toEqual(
-            expect.objectContaining({
-              ...defaultRelayParams,
-              after: "YXJyYXljb25uZWN0aW9uOjk=",
-            })
-          )
-        })
 
-        it("re-shows sign up to see price", () => {
-          const pagination = wrapper.find("Pagination")
-          pagination
-            .find("button")
-            .at(2)
-            .simulate("click")
+          setTimeout(() => {
+            expect(refetchSpy).toHaveBeenCalledTimes(1)
+            expect(refetchSpy.mock.calls[0][0]).toEqual(
+              expect.objectContaining({
+                ...defaultRelayParams,
+                after: "YXJyYXljb25uZWN0aW9uOjk=",
+              })
+            )
+            done()
+          })
+
           wrapper.update()
           const html = wrapper.html()
           expect(html).toContain("Sign up to see price")
@@ -177,7 +174,7 @@ describe("AuctionResults", () => {
                 changed: { categories: ["Work on Paper"] },
                 current: {
                   categories: ["Work on Paper"],
-                  page: 1,
+                  pageAndCursor: { page: 1, cursor: null },
                   sort: "DATE_DESC",
                   organizations: [],
                   sizes: [],
@@ -280,7 +277,7 @@ describe("AuctionResults", () => {
                 changed: { sizes: ["MEDIUM"] },
                 current: {
                   sizes: ["MEDIUM"],
-                  page: 1,
+                  pageAndCursor: { page: 1, cursor: null },
                   sort: "DATE_DESC",
                   organizations: [],
                   categories: [],
