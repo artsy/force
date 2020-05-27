@@ -54,7 +54,6 @@ const analytics = window.analytics
     // _per session_, and therefore can't rely on `once`, as subsequent
     // inquiries would then not get tracked as there's no "hard jumps"
     // between pages. See: https://github.com/artsy/force/pull/5232
-    // FIXME: Remove once A/B test completes
     analyticsHooks.on(namespace(name), handler)
   }
 

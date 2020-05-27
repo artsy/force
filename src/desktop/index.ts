@@ -8,6 +8,7 @@ const app = (module.exports = require("express")())
 // See: https://github.com/artsy/stitch/tree/master/src/internal for more info.
 app.use(
   stitchMiddleware({
+    // @ts-ignore
     modules: globalReactModules,
     wrapper: globalReactModules.StitchWrapper,
   })
@@ -26,19 +27,13 @@ app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
 
 // TODO: Remove after AB test ends.
-app.use(require("./apps/artist/server").app)
 app.use(require("./apps/purchases/server").app)
 app.use(require("./apps/conversations/server").app)
-app.use(require("./apps/artwork/server").app)
-app.use(require("./apps/collect/server").app)
-app.use(require("./apps/search2/server").app)
 app.use(require("./apps/art_keeps_going/server").app)
-app.use(require("./apps/viewing-room/server").app)
 
 app.use(require("./apps/artists"))
 app.use(require("./apps/auction").app)
 app.use(require("./apps/auction_support"))
-app.use(require("./apps/identity_verification/server").app)
 app.use(require("./apps/about"))
 app.use(require("./apps/categories").app)
 app.use(require("./apps/consign").app)
@@ -52,7 +47,6 @@ app.use(require("./apps/gene"))
 app.use(require("./apps/geo"))
 app.use(require("./apps/jobs"))
 app.use(require("./apps/notifications"))
-app.use(require("./apps/order/server").app)
 app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 

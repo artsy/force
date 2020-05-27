@@ -7,7 +7,7 @@ export const artworkClient = () => {
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
   const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
-  const openAuctionBuyerPremium = require("desktop/apps/artwork/components/buyers_premium/index.coffee")
+  const openAuctionBuyerPremium = require("desktop/components/artworkBuyersPremium/index.coffee")
   const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
   const $ = require("jquery")
   const mediator = require("desktop/lib/mediator.coffee")
