@@ -27,7 +27,9 @@ module.exports.PartnerArtworksView = class PartnerArtworksView extends Backbone.
           @$('#partner-artworks-spinner').hide()
 
   render: =>
-    @$('#partner-artworks-list ul').append $(artworkColumnsTemplate(artworkColumns: @collection.groupByColumnsInOrder())).html()
+    $columns = $(artworkColumnsTemplate(artworkColumns: @collection.groupByColumnsInOrder()))
+    @$('#partner-artworks-list .artwork-columns-column').each (i, column) =>
+      $(column).append $columns.find('.artwork-columns-column').eq(i).html()
     @$('#partner-artworks-spinner').hide()
 
 module.exports.init = ->
