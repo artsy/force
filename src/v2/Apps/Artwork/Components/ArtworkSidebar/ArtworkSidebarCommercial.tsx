@@ -50,7 +50,7 @@ export interface ArtworkSidebarCommercialContainerState {
   selectedEditionSet: EditionSet
 }
 
-const Row: React.SFC<FlexProps> = ({ children, ...others }) => (
+const Row: React.FC<FlexProps> = ({ children, ...others }) => (
   <Flex justifyContent="left" {...others}>
     {children}
   </Flex>
