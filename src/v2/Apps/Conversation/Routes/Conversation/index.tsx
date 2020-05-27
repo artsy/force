@@ -80,5 +80,3 @@ export const ConversationFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export default ConversationFragmentContainer

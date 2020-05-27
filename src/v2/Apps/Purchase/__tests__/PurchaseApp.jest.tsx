@@ -9,7 +9,7 @@ import React from "react"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 import { PurchaseHistoryProps } from "../Components/PurchaseHistory"
-import { PurchaseAppFragmentContainer } from "../PurchaseApp"
+import PurchaseAppFragmentContainer from "../PurchaseApp"
 
 jest.unmock("react-relay")
 
@@ -72,7 +72,7 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
         }
       }
     `,
-    wrapper: children => (
+    wrapper: (children) => (
       <MockBoot>
         <HeadProvider>
           <SystemContextProvider user={user}>{children}</SystemContextProvider>
@@ -126,10 +126,7 @@ describe("Purchase app", () => {
         const pagination = component.find("LargePagination")
         expect(pagination.length).toBe(1)
         expect(pagination.text()).toContain("1234...7")
-        pagination
-          .find("button")
-          .at(1)
-          .simulate("click")
+        pagination.find("button").at(1).simulate("click")
         expect(refetchSpy).toHaveBeenCalledTimes(1)
         expect(refetchSpy.mock.calls[0][0]).toEqual(
           expect.objectContaining({ first: 10, after: "NQ" })

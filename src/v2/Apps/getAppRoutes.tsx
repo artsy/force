@@ -6,6 +6,7 @@ import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/routes"
 import { routes as identityVerificationRoutes } from "v2/Apps/IdentityVerification/routes"
 import { routes as orderRoutes } from "v2/Apps/Order/routes"
+import { routes as purchasesRoutes } from "v2/Apps/Purchase/routes"
 import { routes as searchRoutes } from "v2/Apps/Search/routes"
 import { routes as viewingRoomRoutes } from "./ViewingRoom/routes"
 
@@ -28,6 +29,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: orderRoutes,
+    },
+    {
+      routes: purchasesRoutes,
     },
     {
       routes: searchRoutes,

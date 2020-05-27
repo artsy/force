@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"
+import { ConversationFragmentContainer as ConversationRoute } from "./Routes/Conversation"
 
 export const conversationRoutes: RouteConfig[] = [
   {
@@ -26,7 +27,7 @@ export const conversationRoutes: RouteConfig[] = [
   {
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
-    getComponent: () => loadable(() => import("./Routes/Conversation")),
+    Component: ConversationRoute,
     prepareVariables: (params, _props) => {
       return {
         conversationID: params.conversationID,

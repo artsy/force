@@ -26,9 +26,7 @@ app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2").app)
 app.use(require("./apps/auction_lots"))
 
-// TODO: Remove after AB test ends.
-app.use(require("./apps/purchases/server").app)
-app.use(require("./apps/conversations/server").app)
+// FIXME: Remove once JSONPage + new app shell is worked out
 app.use(require("./apps/art_keeps_going/server").app)
 
 app.use(require("./apps/artists"))
