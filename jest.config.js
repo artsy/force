@@ -19,7 +19,7 @@ module.exports = {
      */
     {
       ...sharedConfig,
-      modulePathIgnorePatterns: ["v2", "data"],
+      modulePathIgnorePatterns: ["v2"],
       testRegex: ".*\\.jest\\.(ts|tsx|js|jsx)$",
       setupFiles: ["<rootDir>/test.config.js"],
       roots: ["<rootDir>/src"],
