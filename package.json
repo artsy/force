@@ -2,6 +2,7 @@
   "name": "force",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "engines": {
     "node": "12",
     "yarn": "1.x.x"
@@ -42,12 +43,6 @@
     "unlink-all": "yalc remove --all && yarn --check-files",
     "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
-  "prettier": {
-    "bracketSpacing": true,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "es5"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -56,8 +51,8 @@
   },
   "lint-staged": {
     "*.@(js|jsx|ts|tsx)": [
-      "npm run prettier-write --",
-      "git add"
+      "yarn lint --fix",
+      "yarn prettier-write"
     ]
   },
   "reporterEnabled": "mocha-junit-reporter, spec",
@@ -76,6 +71,12 @@
       ".js"
     ],
     "lines": 0
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "es5"
   },
   "resolutions": {
     "@types/react": "16.9.34",
@@ -357,7 +358,7 @@
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
     "konami-js": "0.0.2",
-    "lint-staged": "9.2.5",
+    "lint-staged": "10.0.8",
     "mime": "2.4.0",
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
@@ -402,7 +403,6 @@
     "webpack-notifier": "1.7.0",
     "webpack-retry-chunk-load-plugin": "1.2.0"
   },
-  "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
   }
