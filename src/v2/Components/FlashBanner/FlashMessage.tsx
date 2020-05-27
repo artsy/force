@@ -1,23 +1,11 @@
 import React from "react"
 import { Banner, Sans } from "@artsy/palette"
 
-interface Props {
-  messageCode: FlashMessageKey
-}
-
-export type FlashMessageKey =
-  /* email confirmed */
-  | "confirmed"
-  /* email already confirmed */
-  | "already_confirmed"
-  /* email confirmation token was invalid */
-  | "invalid_token"
-  /* email confirmation token was empty */
-  | "blank_token"
-  /* email confirmation token was expired */
-  | "expired_token"
-
-const messages: Record<FlashMessageKey, string | React.FC> = {
+/** Flash messages triggered by a url `flash_message` query param
+ * A message can be a string or a React Component that takes no props
+ * (that is, use relay or context if necessary)
+ */
+const messageByQueryParam: { [k: string]: string | React.FC } = {
   confirmed: "Your email has been confirmed.",
   already_confirmed: "You have already confirmed your email.",
   invalid_token: "An error has occurred. Please contact support@artsy.net.",
@@ -25,10 +13,10 @@ const messages: Record<FlashMessageKey, string | React.FC> = {
   expired_token: "Link expired. Resend verification email.",
 }
 
-export const FlashBanner: React.FunctionComponent<Props> = ({
+export const FlashMessage: React.FC<{ messageCode: string }> = ({
   messageCode,
 }) => {
-  const Message = messages[messageCode]
+  const Message = messageByQueryParam[messageCode]
   if (!Message) return null
   return (
     Message && (

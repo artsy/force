@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { NavBar as ReactionNavBar } from "v2/Components/NavBar"
+import { FlashBanner } from "v2/Components/FlashBanner"
 import { data as sd } from "sharify"
 
 import { SystemContextProvider, SystemContextProps } from "v2/Artsy"
@@ -42,6 +43,7 @@ export const NavBar: React.FC<NavBarProps> = ({
       <NavBarContainer id="main-layout-header">
         {showStagingBanner && <StagingBanner />}
         <ReactionNavBar />
+        <FlashBanner />
       </NavBarContainer>
     </SystemContextProvider>
   )
