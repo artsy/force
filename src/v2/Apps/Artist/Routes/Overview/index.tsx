@@ -49,7 +49,7 @@ interface NavLinkProps {
   label: string
 }
 
-const NavLink: React.FC<NavLinkProps> = props => {
+const NavLink: React.FC<NavLinkProps> = (props) => {
   const tracking = useTracking()
 
   return (
@@ -83,7 +83,7 @@ interface SectionHeaderProps {
   headerString: string
 }
 
-const SectionHeader: React.FC<SectionHeaderProps> = props => {
+const SectionHeader: React.FC<SectionHeaderProps> = (props) => {
   return (
     <Sans size="5" color="black100" mb={2}>
       {props.headerString}
@@ -110,7 +110,7 @@ export const FeaturedArticlesItem = styled(Flex)`
 
 @track()
 export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
-  @track<OverviewRouteProps>(props => ({
+  @track<OverviewRouteProps>((props) => ({
     action_type: Schema.ActionType.Click,
     // TODO: Feel like these should become enums too
     subject: "Learn more about consignment",
@@ -120,7 +120,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
     // no-op
   }
 
-  @track<OverviewRouteProps>(props => ({
+  @track<OverviewRouteProps>((props) => ({
     action_type: Schema.ActionType.Click,
     subject: "Browse all works for sale",
     context_module: "Overview",
@@ -160,12 +160,12 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
       showMarketInsights(this.props.artist) || artist.insights.length > 0
     const showArtistBio = Boolean(artist.biographyBlurb.text)
     const showRelatedCategories =
-      get(artist, a => a.related.genes.edges.length, 0) > 0
+      get(artist, (a) => a.related.genes.edges.length, 0) > 0
 
     const isClient = typeof window !== "undefined"
     const showRecommendations =
       isClient &&
-      get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
+      get(artist, (a) => a.related.artistsConnection.edges.length, 0) > 0
 
     const browseWorksButtonLabel =
       artist.counts.forSaleArtworks > 0
@@ -173,16 +173,23 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
         : "Browse all works"
 
     const currentShows =
-      get(artist, a => a.showsConnection.edges.length) &&
+      get(artist, (a) => a.showsConnection.edges.length) &&
       artist.showsConnection.edges.map(({ node }) => node)
 
     const featuredArticles =
-      get(artist, a => a.articlesConnection.edges.length) &&
+      get(artist, (a) => a.articlesConnection.edges.length) &&
       artist.articlesConnection.edges.map(({ node }) => node)
 
     return (
       <>
         <Media greaterThan="xs">
+          <Row>
+            <Col>
+              <ArtistTopWorksRail topRailArtworks={artist} />
+            </Col>
+          </Row>
+          <Separator mt={5} mb={2} />
+
           <Row>
             <Col sm={8}>
               <>
@@ -242,6 +249,9 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
         <Media at="xs">
           {showArtistBio && (
             <>
+              <ArtistTopWorksRail topRailArtworks={artist} />
+              <Separator mt={5} mb={2} />
+
               <Sans size="5">Biography</Sans>
               <Spacer mb={1} />
               <ArtistBio
@@ -255,12 +265,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             </>
           )}
         </Media>
-
-        <Row>
-          <Col>
-            <ArtistTopWorksRail topRailArtworks={artist} />
-          </Col>
-        </Row>
 
         <Row>
           <Col>
@@ -332,7 +336,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                 pageDots: false,
               }}
               data={currentShows}
-              render={slide => {
+              render={(slide) => {
                 return (
                   <Box maxWidth="240px" pr={2}>
                     <Link
@@ -342,9 +346,9 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                       mr={2}
                     >
                       <Image
-                        src={get(slide, i => i.coverImage.cropped.url)}
-                        width={get(slide, i => i.coverImage.cropped.width)}
-                        height={get(slide, i => i.coverImage.cropped.height)}
+                        src={get(slide, (i) => i.coverImage.cropped.url)}
+                        width={get(slide, (i) => i.coverImage.cropped.width)}
+                        height={get(slide, (i) => i.coverImage.cropped.height)}
                       />
                       <Serif size="3t" mt={1}>
                         <TruncatedLine>{slide.name}</TruncatedLine>
@@ -391,7 +395,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                     </Box>
                     <Box maxWidth={["90px", "120px"]}>
                       <Image
-                        src={get(article, i => i.thumbnailImage.cropped.url)}
+                        src={get(article, (i) => i.thumbnailImage.cropped.url)}
                         width="100%"
                       />
                     </Box>

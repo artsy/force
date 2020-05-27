@@ -14,10 +14,18 @@ const TruncatedLine = styled.div`
   white-space: nowrap;
 `
 
+const LightFontRegular = styled.span`
+  color: ${color("black60")};
+  font-size: 14px;
+`
+
 export interface Props extends React.HTMLProps<Details> {
   showSaleLine: boolean
   includeLinks: boolean
   artwork: Details_artwork
+  hideArtistName?: boolean
+  hidePartnerName?: boolean
+  useLighterFont?: boolean
 }
 
 export class Details extends React.Component<Props, null> {
@@ -28,12 +36,18 @@ export class Details extends React.Component<Props, null> {
 
   artistLine() {
     const { cultural_maker, artists } = this.props.artwork
-    const { includeLinks } = this.props
+    const { includeLinks, hideArtistName } = this.props
+
+    if (hideArtistName) {
+      return
+    }
 
     if (cultural_maker) {
       return (
         <TruncatedLine>
-          <strong>{cultural_maker}</strong>
+          <Sans size="3t" color="black100" weight="medium">
+            {cultural_maker}
+          </Sans>
         </TruncatedLine>
       )
     } else if (artists && artists.length) {
@@ -49,7 +63,9 @@ export class Details extends React.Component<Props, null> {
         .slice(1)
       return (
         <TruncatedLine>
-          <strong>{artistLine}</strong>
+          <Sans size="3t" color="black100" weight="medium">
+            {artistLine}
+          </Sans>
         </TruncatedLine>
       )
     }
@@ -59,7 +75,7 @@ export class Details extends React.Component<Props, null> {
     const { includeLinks } = this.props
     const artworkText = (
       <>
-        <em>{this.props.artwork.title}</em>
+        <LightFontRegular>{this.props.artwork.title}</LightFontRegular>
         {this.props.artwork.date && `, ${this.props.artwork.date}`}
       </>
     )
@@ -84,6 +100,10 @@ export class Details extends React.Component<Props, null> {
   }
 
   partnerLine() {
+    if (this.props.hidePartnerName) {
+      return
+    }
+
     if (this.props.artwork.collecting_institution) {
       return this.line(this.props.artwork.collecting_institution)
     } else if (this.props.artwork.partner) {
@@ -112,24 +132,22 @@ export class Details extends React.Component<Props, null> {
   }
 
   saleInfoLine() {
-    if (!this.props.showSaleLine) {
-      return null
-    }
+    const { useLighterFont } = this.props
 
     return (
       <>
         <Sans
           style={{ display: "inline" }}
-          color={color("black100")}
-          weight={"medium"}
-          size={"2"}
+          color={useLighterFont ? color("black60") : color("black100")}
+          weight="regular"
+          size="3t"
         >
           {this.saleMessage()}{" "}
         </Sans>
         <Sans
           style={{ display: "inline" }}
-          size={"2"}
-          color={color("black100")}
+          size="3t"
+          color={useLighterFont ? color("black60") : color("black100")}
           weight={"regular"}
         >
           {this.bidInfo()}
@@ -150,7 +168,7 @@ export class Details extends React.Component<Props, null> {
 
     const bidderPositionCounts = get(
       artwork,
-      a => a.sale_artwork.counts.bidder_positions,
+      (a) => a.sale_artwork.counts.bidder_positions,
       0
     )
 
@@ -174,11 +192,11 @@ export class Details extends React.Component<Props, null> {
       } else {
         const highestBidDisplay = get(
           artwork,
-          p => p.sale_artwork.highest_bid.display
+          (p) => p.sale_artwork.highest_bid.display
         )
         const openingBidDisplay = get(
           artwork,
-          p => p.sale_artwork.opening_bid.display
+          (p) => p.sale_artwork.opening_bid.display
         )
 
         return highestBidDisplay || openingBidDisplay || ""
@@ -199,10 +217,10 @@ export class Details extends React.Component<Props, null> {
         {({ user }) => {
           return (
             <div>
-              {this.saleInfoLine()}
               {this.artistLine()}
               {this.titleLine()}
               {this.partnerLine()}
+              {this.saleInfoLine()}
             </div>
           )
         }}

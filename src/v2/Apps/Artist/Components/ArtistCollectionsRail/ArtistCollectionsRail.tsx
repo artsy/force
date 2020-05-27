@@ -18,10 +18,10 @@ interface ArtistCollectionsRailProps {
 }
 
 @track(null, {
-  dispatch: data => Events.postEvent(data),
+  dispatch: (data) => Events.postEvent(data),
 })
 export class ArtistCollectionsRail extends React.Component<
-ArtistCollectionsRailProps
+  ArtistCollectionsRailProps
 > {
   @track({
     action_type: Schema.ActionType.Impression,
@@ -56,7 +56,7 @@ ArtistCollectionsRailProps
 
           {includeTopSpacer && <Separator my={3} />}
 
-          <Sans size="5" color="black100" mb={2}>
+          <Sans size="4" color="black100" my={1}>
             Iconic Collections
           </Sans>
 
