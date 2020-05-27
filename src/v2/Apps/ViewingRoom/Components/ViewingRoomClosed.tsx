@@ -19,7 +19,7 @@ const ViewingRoomClosed: React.FC<ViewingRoomClosedProps> = props => {
   return (
     <Box>
       <Flex flexDirection="column" alignItems="center">
-        <Sans size="4" mt={3} mb={1} textAlign="center" maxWidth="470px">
+        <Sans size="4" mt={50} mb={1} textAlign="center" maxWidth="470px">
           This viewing room is now closed. We invite you to view this gallery's
           current works.
         </Sans>
