@@ -5,6 +5,11 @@ import { FlashBanner } from "v2/Components/FlashBanner"
 storiesOf("Components/FlashBanner", module).add(
   "Successful Confirmation Message",
   () => {
-    return <FlashBanner messageCode="confirmed" />
+    return (
+      <FlashBanner
+        contentCode="confirmed"
+        me={{ canRequestEmailConfirmation: false } as any}
+      />
+    )
   }
 )
