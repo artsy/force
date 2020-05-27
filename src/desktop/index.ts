@@ -3,9 +3,24 @@ import * as globalReactModules from "desktop/components/react/stitch_components"
 
 const app = (module.exports = require("express")())
 
-// Configure stitch SSR functionality. Mounted here (rather than in setup) so
-// changes to stitched code can be hot reloaded.
-// See: https://github.com/artsy/stitch/tree/master/src/internal for more info.
+/**
+ * -----------------------------------------------------------------------------
+ *
+ * Developers! Wait!
+ *
+ * Before adding a new app to this file, can it live in  `v2/Apps/getAppRoutes?
+ * In most cases, apps built after Jan 2020 can take advantage of our Relay-based
+ * SSR router (./apps/artsy-v2) which requires no additional server-side setup.
+ *
+ * ----------------------------------------------------------------------------
+ */
+
+/**
+ * Configure stitch SSR functionality. Mounted here (rather than in setup) so
+ * changes to stitched code can be hot reloaded.
+ *
+ * @see https://github.com/artsy/stitch/tree/master/src/internal for more info.
+ */
 app.use(
   stitchMiddleware({
     // @ts-ignore
@@ -14,9 +29,10 @@ app.use(
   })
 )
 
-// NOTE:
-// App order matters as some apps establish logic that is shared inside of subapps.
-// Apps with hardcoded routes or "RESTful" routes
+/**
+ * NOTE: App order matters as some apps establish logic that is shared inside
+ * of subapps. Apps with hardcoded routes or "RESTful" routes.
+ */
 
 app.use(require("./apps/home"))
 app.use(require("./apps/editorial_features"))
@@ -93,4 +109,6 @@ app.use(require("./apps/user"))
 // Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
 
-app.use(require("./apps/experimental-app-shell/server").app)
+// Mount all `v2/Apps`. This ~must~ come last as it mounts our v2 apps in a
+// wild-card fashion.
+app.use(require("./apps/artsy-v2/server").app)

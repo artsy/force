@@ -13,12 +13,7 @@ export const handleArtworkImageDownload = async (req, res, next) => {
     if (req.user) {
       imageRequest.set("X-ACCESS-TOKEN", req.user.get("accessToken"))
     }
-    req
-      .pipe(
-        imageRequest,
-        { end: false }
-      )
-      .pipe(res)
+    req.pipe(imageRequest, { end: false }).pipe(res)
   } else {
     const error: any = new Error("Not authorized to download this image.")
     error.status = 403

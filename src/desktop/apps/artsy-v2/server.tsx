@@ -22,15 +22,6 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  */
 app.get(
   "/*",
-  // (_req, res, next) => {
-  //   const isExperiment = res.locals.sd.CLIENT_NAVIGATION_V5 === "experiment"
-
-  //   if (!isExperiment) {
-  //     return next("route")
-  //   }
-  //   return next()
-  // },
-
   userRequiredMiddleware,
 
   /**
@@ -75,8 +66,7 @@ app.get(
 
       const layout = await stitch({
         basePath: __dirname,
-        layout:
-          "../../components/main_layout/templates/experimental_app_shell.jade",
+        layout: "../../components/main_layout/templates/artsy_v2.jade",
         blocks: {
           body: bodyHTML,
           head: () => <>{headTags}</>,

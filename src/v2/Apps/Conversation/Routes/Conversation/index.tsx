@@ -23,7 +23,7 @@ interface ConversationRouteProps {
   match: Match
 }
 
-export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
+export const ConversationRoute: React.FC<ConversationRouteProps> = (props) => {
   const { me } = props
   const { user } = useContext(SystemContext)
   const isEnabled = userHasLabFeature(user, "User Conversations View")
@@ -80,3 +80,5 @@ export const ConversationFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export default ConversationFragmentContainer
