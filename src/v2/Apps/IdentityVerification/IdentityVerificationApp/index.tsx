@@ -120,62 +120,69 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
       {AlternateComponent ? (
         <AlternateComponent />
       ) : (
-          <>
-            <ErrorModal
-              show={showErrorModal}
-              contactEmail="verification@artsy.net"
-              onClose={() => setShowErrorModal(false)}
-            />
+        <>
+          <ErrorModal
+            show={showErrorModal}
+            contactEmail="verification@artsy.net"
+            onClose={() => setShowErrorModal(false)}
+          />
 
-            <Box px="2" mb="6" mt="3" mx="auto" width="100%" maxWidth="400px">
-              <Serif size="6" textAlign="center">
-                Artsy identity verification
+          <Box px="2" mb="6" mt="3" mx="auto" width="100%" maxWidth="400px">
+            <Serif size="6" textAlign="center">
+              Artsy identity verification
             </Serif>
 
-              <Sans size="4" mt="2" weight="medium">
-                You’ll need
+            <Sans size="4" mt="2" weight="medium">
+              You’ll need
             </Sans>
-              <Sans size="4">
-                • A camera on your phone or computer
+            <Sans size="4">
+              • A camera on your phone or computer
               <br />• Your government ID
             </Sans>
 
-              <Sans size="4" mt="2" weight="medium">
-                Keep in mind
+            <Sans size="4" mt="2" weight="medium">
+              Keep in mind
             </Sans>
-              <Sans size="4">
-                • Verification will take 5–10 minutes
+            <Sans size="4">
+              • Verification may take up to 5–10 minutes
               <br />
               • The name on your ID must match the name on your payment method
+              <br />• Your ID and photo will only be used for verification
+              purposes, and will not be shared
+            </Sans>
+            <Sans size="4" mt="2" weight="medium">
+              Compatible browsers
+            </Sans>
+            <Sans size="4">
+              • iOS: Safari
+              <br />• Android: Chrome, Samsung Internet
+              <br />• Mac/PC: Safari, Chrome, Firefox, Microsoft Edge
               <br />
-              • Your ID and photo will only be used for verification purposes,
-              and will not be shared
               <br />
-                <br />
               By clicking the button, you'll be redirected to our identity
               verification partner.
             </Sans>
 
-              <Button
-                mt="4"
-                width="100%"
-                loading={requesting}
-                onClick={() => {
-                  setRequesting(true)
-                  trackClickedContinueToVerification()
-                  startIdentityVerification()
-                }}
-              >
-                Continue to verification
+            <Button
+              mt="4"
+              width="100%"
+              loading={requesting}
+              onClick={() => {
+                setRequesting(true)
+                trackClickedContinueToVerification()
+                startIdentityVerification()
+              }}
+            >
+              Continue to verification
             </Button>
 
-              <Sans mt="4" size="4" color="black60">
-                For more information, see the{" "}
-                <Link href="/identity-verification-faq">FAQ</Link>.
+            <Sans mt="4" size="4" color="black60">
+              For more information, see the{" "}
+              <Link href="/identity-verification-faq">FAQ</Link>.
             </Sans>
-            </Box>
-          </>
-        )}
+          </Box>
+        </>
+      )}
     </AppContainer>
   )
 }
