@@ -23,21 +23,11 @@ interface ConversationsProps {
 const Conversations: React.FC<ConversationsProps> = props => {
   const { me, selectedConversationID } = props
   const conversations = me.conversationsConnection.edges
-  console.log("CONVEWRSATIONs", conversations)
-  // const selectedConversationIndex = conversations.map()
-
-  // const selectedConversationIndex = conversations.filter(convo => {
-  //   return convo.node.internalID === selectedConversationID
-  // })
 
   const selectedConversationIndex = conversations
     .map(e => e.node.internalID)
     .indexOf(selectedConversationID)
 
-  // conversations.indexOf(edge) === (selectedConversationIndex ||
-  //   selectedConversationIndex - 1)
-
-  console.log("TEXTDTSFSUF", selectedConversationIndex)
   return (
     <>
       <Container width={["100%", "375px"]}>
