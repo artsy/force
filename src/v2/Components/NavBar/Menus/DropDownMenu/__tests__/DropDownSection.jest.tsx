@@ -1,6 +1,6 @@
 import { MenuItem } from "@artsy/palette"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { menuData, MenuLinkData } from "v2/Components/NavBar/menuData"
+import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
 import { DropDownSection } from "../DropDownSection"

@@ -1,4 +1,4 @@
-import { Box, color, Link, Sans, Serif } from "@artsy/palette"
+import { Box, Link, Sans, Serif, color } from "@artsy/palette"
 import { CollectionEntity_collection } from "v2/__generated__/CollectionEntity_collection.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -13,7 +13,7 @@ export interface CollectionProps {
   collection: CollectionEntity_collection
 }
 
-export const Background = styled(Box) <{ collectionImage: string }>`
+export const Background = styled(Box)<{ collectionImage: string }>`
   height: 175px;
   width: 100%;
   background: ${color("black30")};
@@ -67,9 +67,9 @@ export class CollectionEntity extends React.Component<CollectionProps> {
           <Sans size="2">
             Works from $
             {currency(collection.price_guidance, {
-            separator: ",",
-            precision: 0,
-          }).format()}
+              separator: ",",
+              precision: 0,
+            }).format()}
           </Sans>
         </StyledLink>
       </Box>

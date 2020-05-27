@@ -1,4 +1,4 @@
-import { Box, color, Flex, Sans, space } from "@artsy/palette"
+import { Box, Flex, Sans, color, space } from "@artsy/palette"
 import Icon from "v2/Components/Icon"
 import React from "react"
 import styled from "styled-components"
@@ -10,7 +10,7 @@ interface ArtworkPopoutPanelProps {
 
 export class ArtworkPopoutPanel extends React.Component<
   ArtworkPopoutPanelProps
-  > {
+> {
   render() {
     return (
       <Container>

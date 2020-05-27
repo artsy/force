@@ -2,7 +2,7 @@ import { isEqual } from "lodash"
 import React, { useEffect, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -18,8 +18,8 @@ import { SortFilter } from "./ArtworkFilters/SortFilter"
 
 import {
   ArtworkFilterContextProvider,
-  initialArtworkFilterState,
   SharedArtworkFilterContextProps,
+  initialArtworkFilterState,
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 
@@ -59,29 +59,29 @@ export const ArtworkFilter: React.FC<SharedArtworkFilterContextProps & {
   onChange,
   ZeroState,
 }) => {
-    return (
-      <ArtworkFilterContextProvider
-        aggregations={aggregations}
-        counts={counts}
-        filters={filters}
-        sortOptions={sortOptions}
-        onArtworkBrickClick={onArtworkBrickClick}
-        onFilterClick={onFilterClick}
-        onChange={onChange}
-        ZeroState={ZeroState}
-      >
-        <ArtworkFilterRefetchContainer viewer={viewer} />
-      </ArtworkFilterContextProvider>
-    )
-  }
+  return (
+    <ArtworkFilterContextProvider
+      aggregations={aggregations}
+      counts={counts}
+      filters={filters}
+      sortOptions={sortOptions}
+      onArtworkBrickClick={onArtworkBrickClick}
+      onFilterClick={onFilterClick}
+      onChange={onChange}
+      ZeroState={ZeroState}
+    >
+      <ArtworkFilterRefetchContainer viewer={viewer} />
+    </ArtworkFilterContextProvider>
+  )
+}
 
 export const BaseArtworkFilter: React.FC<{
   relay: RelayRefetchProp
   relayVariables?: object
   viewer:
-  | ArtworkFilter_viewer
-  | Collection_collection
-  | ArtistArtworkFilter_artist
+    | ArtworkFilter_viewer
+    | Collection_collection
+    | ArtistArtworkFilter_artist
 }> = ({ relay, viewer, relayVariables = {}, ...props }) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id

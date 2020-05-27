@@ -7,7 +7,7 @@ import { UserSettingsPayments_me } from "v2/__generated__/UserSettingsPayments_m
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { SFC } from "react"
-import { commitMutation, graphql, RelayProp } from "react-relay"
+import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
 import { CreditCardType } from "./UserSettingsPayments"
@@ -32,7 +32,7 @@ interface CreditCardProps {
 export class CreditCard extends React.Component<
   CreditCardProps,
   CreditCardsState
-  > {
+> {
   state = { isErrorModalOpen: false, isCommittingMutation: false }
 
   render() {
@@ -47,10 +47,10 @@ export class CreditCard extends React.Component<
                   <Spinner />
                 </SpinnerContainer>
               ) : (
-                  <RemoveLink onClick={() => this.deleteCreditCard()}>
-                    Remove
-                  </RemoveLink>
-                )}
+                <RemoveLink onClick={() => this.deleteCreditCard()}>
+                  Remove
+                </RemoveLink>
+              )}
             </Sans>
           </Flex>
         </BorderBox>

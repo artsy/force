@@ -7,8 +7,8 @@ import React from "react"
 import {
   AuctionCard,
   LargeAuctionCard,
-  relativeTime,
   SmallAuctionCard,
+  relativeTime,
   upcomingLabel,
 } from "../AuctionCard"
 

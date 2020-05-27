@@ -5,7 +5,7 @@ import {
   newsPanelQuery,
 } from "./queries/news_articles_query"
 import { positronql as _positronql } from "desktop/lib/positronql"
-import { map, sortBy, first, last, reject } from "lodash"
+import { first, last, map, reject, sortBy } from "lodash"
 const { crop } = require("desktop/components/resizer/index.coffee")
 const { PARSELY_KEY, PARSELY_SECRET } = require("../../config.coffee")
 const _topParselyArticles = require("desktop/components/util/parsely.coffee")

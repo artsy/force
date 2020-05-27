@@ -8,10 +8,10 @@ import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import * as React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
@@ -31,8 +31,8 @@ export interface RelayProps {
 
 interface Props
   extends React.HTMLProps<HTMLAnchorElement>,
-  RelayProps,
-  FollowProps { }
+    RelayProps,
+    FollowProps {}
 
 @track({}, { dispatch: data => Events.postEvent(data) })
 class PopularArtistsContent extends React.Component<Props, null> {

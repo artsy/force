@@ -8,7 +8,7 @@ import { get } from "v2/Utils/get"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import React, { useContext } from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { PaymentFormWrapper } from "./PaymentFormWrapper"
 import { SavedCreditCards } from "./SavedCreditCards"
 
@@ -19,7 +19,7 @@ interface UserSettingsPaymentsProps extends SystemContextProps {
 
 export class UserSettingsPayments extends React.Component<
   UserSettingsPaymentsProps
-  > {
+> {
   render() {
     const creditCardEdges = get(this.props, props => props.me.creditCards.edges)
     const creditCards = creditCardEdges.map(({ node: creditCard }) => {

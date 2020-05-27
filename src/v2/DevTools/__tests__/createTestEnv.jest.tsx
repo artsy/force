@@ -3,13 +3,13 @@ import { createTestEnvCreditCardMutation } from "v2/__generated__/createTestEnvC
 import { createTestEnvOrderMutation } from "v2/__generated__/createTestEnvOrderMutation.graphql"
 import { createTestEnvQueryRawResponse } from "v2/__generated__/createTestEnvQuery.graphql"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
-import { expectOne, RootTestPage } from "v2/DevTools/RootTestPage"
+import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 import React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 
 jest.unmock("react-relay")

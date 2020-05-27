@@ -2,11 +2,11 @@ import {
   Box,
   Button,
   CheckCircleIcon,
-  color,
   Flex,
   Input,
   Serif,
   TextArea,
+  color,
 } from "@artsy/palette"
 import { SendFeedbackSearchResultsMutation } from "v2/__generated__/SendFeedbackSearchResultsMutation.graphql"
 import { SystemContextProps } from "v2/Artsy"

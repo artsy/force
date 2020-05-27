@@ -4,32 +4,32 @@ import { URL, resolve } from "url"
 import { App } from "desktop/apps/article/components/App"
 import ArticleQuery from "desktop/apps/article/queries/article"
 import {
-  SuperSubArticlesQuery,
   SuperArticleQuery,
+  SuperSubArticlesQuery,
 } from "desktop/apps/article/queries/superArticle"
 import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import {
-  isCustomEditorial,
   getCustomEditorialId,
-  isVanguardSubArticle,
   getVanguardSubArticleContent,
+  isCustomEditorial,
+  isVanguardSubArticle,
 } from "./editorial_features"
 import { slugify } from "underscore.string"
 import {
-  isUnpublishedVideo,
   getBodyClass,
   getJsonLd,
   getLayoutTemplate,
   getSuperArticleTemplates,
+  isUnpublishedVideo,
 } from "./helpers"
 import cheerio from "cheerio"
 import React from "react"
 import {
-  partnerQuery,
   auctionQuery,
+  partnerQuery,
 } from "desktop/apps/article/queries/promotedContent"
 import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 import { GalleryInsightsRedirects } from "./gallery_insights_redirects"

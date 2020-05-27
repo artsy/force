@@ -1,12 +1,12 @@
 import {
   Box,
-  color,
   Flex,
   Image,
   Link,
   Sans,
   Serif,
   WebImageProps,
+  color,
 } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
 import { track } from "v2/Artsy/Analytics"
@@ -65,7 +65,7 @@ export class RelatedCollectionEntity extends React.Component<CollectionProps> {
                 const artistName = get(artworks[i].artist, a => a.name)
                 const alt = `${artistName ? artistName + ", " : ""}${
                   artworks[i].title
-                  }`
+                }`
                 return (
                   <SingleImgContainer key={i}>
                     <ImgOverlay width={imageSize} />
@@ -80,8 +80,8 @@ export class RelatedCollectionEntity extends React.Component<CollectionProps> {
                 )
               })
             ) : (
-                <ArtworkImage src={headerImage} width={262} />
-              )}
+              <ArtworkImage src={headerImage} width={262} />
+            )}
           </ImgWrapper>
           <CollectionTitle size="3">{title}</CollectionTitle>
           {price_guidance && (
@@ -125,7 +125,7 @@ const SingleImgContainer = styled(Box)`
   }
 `
 
-const ImgOverlay = styled(Box) <{ width: number }>`
+const ImgOverlay = styled(Box)<{ width: number }>`
   height: 125px;
   background-color: ${color("black30")};
   opacity: 0.1;
@@ -135,7 +135,7 @@ const ImgOverlay = styled(Box) <{ width: number }>`
   z-index: 7;
 `
 
-export const ArtworkImage = styled(Image) <WebImageProps>`
+export const ArtworkImage = styled(Image)<WebImageProps>`
   height: 125px;
   background-color: ${color("black10")};
   object-fit: cover;

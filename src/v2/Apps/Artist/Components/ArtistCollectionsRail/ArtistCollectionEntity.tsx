@@ -1,4 +1,4 @@
-import { Box, color, Flex, Image, Sans, Serif } from "@artsy/palette"
+import { Box, Flex, Image, Sans, Serif, color } from "@artsy/palette"
 import { ArtistCollectionEntity_collection } from "v2/__generated__/ArtistCollectionEntity_collection.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -64,7 +64,7 @@ export class ArtistCollectionEntity extends React.Component<CollectionProps> {
                 const artistName = get(artworks[i].artist, a => a.name)
                 const alt = `${artistName ? artistName + ", " : ""}${
                   artworks[i].title
-                  }`
+                }`
                 return (
                   <SingleImgContainer key={i}>
                     <ImgOverlay width={imageSize} />
@@ -80,13 +80,13 @@ export class ArtistCollectionEntity extends React.Component<CollectionProps> {
                 )
               })
             ) : (
-                <ArtworkImage
-                  src={headerImage}
-                  lazyLoad={this.props.lazyLoad}
-                  width={262}
-                  style={{ objectFit: "cover", objectPosition: "center" }}
-                />
-              )}
+              <ArtworkImage
+                src={headerImage}
+                lazyLoad={this.props.lazyLoad}
+                width={262}
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+            )}
           </ImgWrapper>
 
           <CollectionTitle size="3">{formattedTitle}</CollectionTitle>
@@ -131,7 +131,7 @@ const SingleImgContainer = styled(Box)`
   }
 `
 
-const ImgOverlay = styled(Box) <{ width: number }>`
+const ImgOverlay = styled(Box)<{ width: number }>`
   height: 125px;
   background-color: ${color("black30")};
   opacity: 0.1;
@@ -141,7 +141,7 @@ const ImgOverlay = styled(Box) <{ width: number }>`
   z-index: 7;
 `
 
-export const ArtworkImage = styled(Image) <{ width: number }>`
+export const ArtworkImage = styled(Image)<{ width: number }>`
   width: ${({ width }) => width}px;
   height: 125px;
   background-color: ${color("black10")};

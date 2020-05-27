@@ -8,10 +8,10 @@ import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import { data as sd } from "sharify"
 
 import {
+  RelayNetworkLayer,
   cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
-  RelayNetworkLayer,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"

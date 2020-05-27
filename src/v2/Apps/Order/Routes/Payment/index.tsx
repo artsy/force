@@ -5,9 +5,9 @@ import { PaymentRouteSetOrderPaymentMutation } from "v2/__generated__/PaymentRou
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
+  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
-  OrderStepper,
 } from "v2/Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
@@ -30,7 +30,7 @@ import {
 } from "v2/Apps/Order/Utils/commitMutation"
 import { AnalyticsSchema, track } from "v2/Artsy"
 
-export const ContinueButton = (props) => (
+export const ContinueButton = props => (
   <Button size="large" width="100%" {...props}>
     Continue
   </Button>

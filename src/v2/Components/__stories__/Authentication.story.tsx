@@ -4,7 +4,7 @@ import React, { Component, Fragment } from "react"
 import styled from "styled-components"
 import Button from "../Buttons/Default"
 
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Footer,
   TermsOfServiceCheckbox,

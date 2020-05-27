@@ -7,11 +7,11 @@ import { RouteConfig, Router } from "found"
 import React, { Component } from "react"
 import { Media } from "v2/Utils/Responsive"
 import {
-  counterofferFlowSteps,
   OrderStepper,
+  counterofferFlowSteps,
 } from "../../Components/OrderStepper"
 
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 import { AcceptOfferMutation } from "v2/__generated__/AcceptOfferMutation.graphql"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -96,7 +96,7 @@ export class Accept extends Component<AcceptProps> {
     logger.error(error)
     switch (error.code) {
       case "capture_failed": {
-        const parsedData = get(error, (e) => JSON.parse(e.data), {})
+        const parsedData = get(error, e => JSON.parse(e.data), {})
 
         // https://stripe.com/docs/declines/codes
         if (parsedData.decline_code === "insufficient_funds") {
@@ -148,7 +148,7 @@ export class Accept extends Component<AcceptProps> {
   artistId() {
     return get(
       this.props.order,
-      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 
@@ -221,7 +221,7 @@ export class Accept extends Component<AcceptProps> {
               <Flex flexDirection="column">
                 <Flex flexDirection="column">
                   <Media greaterThan="xs">
-                    {(className) => (
+                    {className => (
                       <ArtworkSummaryItem className={className} order={order} />
                     )}
                   </Media>

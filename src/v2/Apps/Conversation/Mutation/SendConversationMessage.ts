@@ -1,12 +1,12 @@
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { SendConversationMessageMutation } from "v2/__generated__/SendConversationMessageMutation.graphql"
 import {
-  commitMutation,
   ConnectionHandler,
   Environment,
-  graphql,
   MutationConfig,
   RecordSourceSelectorProxy,
+  commitMutation,
+  graphql,
 } from "relay-runtime"
 
 export const SendConversationMessage = (

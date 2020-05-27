@@ -51,7 +51,7 @@ export const AuctionRegistrationModal: React.FC<Props> = ({
     if (!show) {
       onClose()
     }
-  }, [show])
+  }, [show, onClose])
 
   function validate() {
     if (acceptedConditions) {
@@ -91,11 +91,11 @@ export const AuctionRegistrationModal: React.FC<Props> = ({
             </Serif>
           </>
         ) : (
-            <Serif my={3} size="4">
-              Welcome back. To complete your registration, please confirm that you
-              agree to the Conditions of Sale.
-            </Serif>
-          )}
+          <Serif my={3} size="4">
+            Welcome back. To complete your registration, please confirm that you
+            agree to the Conditions of Sale.
+          </Serif>
+        )}
 
         <Flex my={4} flexDirection="column" justifyContent="center">
           <Box mx="auto">

@@ -15,7 +15,7 @@ export const NetworkOfflineMonitor: React.FC = () => {
       window.removeEventListener("offline", setOffline)
       window.removeEventListener("online", setOnline)
     }
-  }, [])
+  }, [setOffline, setOnline])
 
   if (!showOfflineModal) {
     return null

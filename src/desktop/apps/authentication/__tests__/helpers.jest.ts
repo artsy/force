@@ -1,8 +1,8 @@
 import {
+  apiAuthWithRedirectUrl,
+  getRedirect,
   handleSubmit,
   setCookies,
-  getRedirect,
-  apiAuthWithRedirectUrl,
 } from "../helpers"
 import Backbone from "backbone"
 import $ from "jquery"

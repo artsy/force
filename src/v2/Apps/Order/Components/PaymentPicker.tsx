@@ -16,7 +16,7 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { injectStripe, ReactStripeElements } from "react-stripe-elements"
+import { ReactStripeElements, injectStripe } from "react-stripe-elements"
 
 import {
   BorderedRadio,
@@ -54,7 +54,7 @@ interface PaymentPickerState {
 export class PaymentPicker extends React.Component<
   PaymentPickerProps,
   PaymentPickerState
-  > {
+> {
   state = {
     hideBillingAddress: true,
     stripeError: null,
@@ -72,9 +72,9 @@ export class PaymentPicker extends React.Component<
     } else {
       return this.props.me.creditCards.edges.length
         ? {
-          type: "existing",
-          id: this.props.me.creditCards.edges[0].node.internalID,
-        }
+            type: "existing",
+            id: this.props.me.creditCards.edges[0].node.internalID,
+          }
         : { type: "new" }
     }
   }

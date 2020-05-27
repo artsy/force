@@ -1,4 +1,4 @@
-import { color, Flex, media, Sans, Separator } from "@artsy/palette"
+import { Flex, Sans, Separator, color, media } from "@artsy/palette"
 import { ArtworkSharePanel_artwork } from "v2/__generated__/ArtworkSharePanel_artwork.graphql"
 import Icon from "v2/Components/Icon"
 import React from "react"
@@ -30,7 +30,7 @@ const COPY_LABELS = {
 export class ArtworkSharePanel extends React.Component<
   ArtworkSharePanelProps,
   ArtworkSharePanelState
-  > {
+> {
   private input: HTMLInputElement
 
   state = {

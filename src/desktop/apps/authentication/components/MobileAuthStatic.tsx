@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "../helpers"
-import { ModalType, ModalOptions } from "v2/Components/Authentication/Types"
-import { Box, color, Flex } from "@artsy/palette"
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
+import { Box, Flex, color } from "@artsy/palette"
 
 interface Props {
   type: string

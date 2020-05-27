@@ -1,4 +1,4 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, EntityHeader, Sans, Spacer } from "@artsy/palette"
 import { RecommendedArtist_artist } from "v2/__generated__/RecommendedArtist_artist.graphql"
 import { SystemContext } from "v2/Artsy"
@@ -30,7 +30,7 @@ const handleOpenAuth = (mediator, artist) => {
   context_module: Schema.ContextModule.RecommendedArtists,
 })
 class RecommendedArtistWithTracking extends React.Component<
-RecommendedArtistProps
+  RecommendedArtistProps
 > {
   @track({
     type: Schema.Type.Thumbnail,

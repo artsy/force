@@ -1,4 +1,4 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
@@ -14,15 +14,15 @@ import { FollowTrackingData } from "./Typings"
 
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
-  Artsy.SystemContextProps {
+    Artsy.SystemContextProps {
   relay?: RelayProp
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
@@ -165,23 +165,23 @@ export class FollowArtistButton extends React.Component<Props, State> {
     const content = render ? (
       <span onClick={this.handleFollow}> {render(artist)}</span>
     ) : (
-        <>
-          {useDeprecatedButtonStyle && (
-            <FollowButtonDeprecated
-              isFollowed={artist && artist.is_followed}
-              handleFollow={this.handleFollow}
-              buttonProps={buttonProps}
-            />
-          )}
-          {!useDeprecatedButtonStyle && (
-            <FollowButton
-              isFollowed={artist && artist.is_followed}
-              handleFollow={this.handleFollow}
-              buttonProps={buttonProps}
-            />
-          )}
-        </>
-      )
+      <>
+        {useDeprecatedButtonStyle && (
+          <FollowButtonDeprecated
+            isFollowed={artist && artist.is_followed}
+            handleFollow={this.handleFollow}
+            buttonProps={buttonProps}
+          />
+        )}
+        {!useDeprecatedButtonStyle && (
+          <FollowButton
+            isFollowed={artist && artist.is_followed}
+            handleFollow={this.handleFollow}
+            buttonProps={buttonProps}
+          />
+        )}
+      </>
+    )
 
     return (
       <>

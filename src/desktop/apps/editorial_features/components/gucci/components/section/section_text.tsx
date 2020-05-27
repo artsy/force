@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { data as sd } from "sharify"
 import { Share } from "reaction/Components/Publishing/Byline/Share"
 import { Text } from "reaction/Components/Publishing"
-import { Flex, Sans, space, media } from "@artsy/palette"
+import { Flex, Sans, media, space } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 interface SectionTextProps {

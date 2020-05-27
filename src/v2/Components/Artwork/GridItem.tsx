@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { color, Image as BaseImage } from "@artsy/palette"
+import { Image as BaseImage, color } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { Mediator } from "v2/Artsy"
 import { withSystemContext } from "v2/Artsy"

@@ -1,13 +1,13 @@
 import React, { FC } from "react"
 import styled from "styled-components"
 import {
-  Flex,
   ArrowLeftIcon,
-  color,
-  Sans,
-  InfoCircleIcon,
-  Separator,
+  Flex,
   FlexProps,
+  InfoCircleIcon,
+  Sans,
+  Separator,
+  color,
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
@@ -15,7 +15,7 @@ import { Media } from "v2/Utils/Responsive"
 interface BorderedFlexProps extends FlexProps {
   bordered?: boolean
 }
-const BorderedFlex = styled(Flex) <BorderedFlexProps>`
+const BorderedFlex = styled(Flex)<BorderedFlexProps>`
   ${props =>
     props.bordered ? `border-right: 1px solid ${color("black10")};` : ""}
   height: 100%;
@@ -113,8 +113,8 @@ export const FullHeader: FC<Partial<ConversationHeaderProps>> = props => {
             Conversation with {props.partnerName}
           </Sans>
         ) : (
-            <>{props.children}</>
-          )}
+          <>{props.children}</>
+        )}
         <Separator mt={1} />
       </BorderedFlex>
       <Flex flexShrink={0} height="100%" alignItems="flex-end">

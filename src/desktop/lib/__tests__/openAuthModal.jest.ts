@@ -1,6 +1,6 @@
-import { openAuthModal, handleScrollingAuthModal } from "../openAuthModal"
+import { handleScrollingAuthModal, openAuthModal } from "../openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 jest.mock("desktop/lib/mediator.coffee", () => ({
   trigger: jest.fn(),

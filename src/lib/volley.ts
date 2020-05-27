@@ -2,11 +2,11 @@ import { data as sd } from "sharify"
 import request from "superagent"
 import {
   getDomComplete,
-  getLoadEventEnd,
-  getFirstPaint,
-  getFirstContentfulPaint,
   getDomContentLoadedEnd,
   getDomContentLoadedStart,
+  getFirstContentfulPaint,
+  getFirstPaint,
+  getLoadEventEnd,
   getTTI,
 } from "./userPerformanceMetrics"
 
@@ -45,16 +45,18 @@ export async function reportLoadTimeToVolley(
   metricsMap: MetricMap = defaultMetrics
 ) {
   if (sd.VOLLEY_ENDPOINT) {
-    const metrics = (await Promise.all(
-      Object.keys(metricsMap).map(async metricName =>
-        metricPayload(
-          pageType,
-          deviceType,
-          metricName,
-          await metricsMap[metricName]()
+    const metrics = (
+      await Promise.all(
+        Object.keys(metricsMap).map(async metricName =>
+          metricPayload(
+            pageType,
+            deviceType,
+            metricName,
+            await metricsMap[metricName]()
+          )
         )
       )
-    )).filter(metric => metric != null)
+    ).filter(metric => metric != null)
     if (metrics.length > 0) {
       return request.post(sd.VOLLEY_ENDPOINT).send({
         serviceName: "force",

@@ -15,7 +15,7 @@ import {
 } from "formik"
 import { dropWhile, find } from "lodash"
 import React from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import Yup from "yup"
 
@@ -46,7 +46,7 @@ export interface FormValues {
   selectedBid: string
 }
 
-Yup.addMethod(Yup.string, "present", function (message) {
+Yup.addMethod(Yup.string, "present", function(message) {
   return this.test("test-present", message, value => {
     return this.trim()
       .required(message)

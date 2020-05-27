@@ -1,9 +1,9 @@
-import { Box, Button, Sans, Flex, color } from "@artsy/palette"
+import { Box, Button, Flex, Sans, color } from "@artsy/palette"
 import React, { SFC } from "react"
 import styled from "styled-components"
 import {
-  useArtworkFilterContext,
   initialArtworkFilterState,
+  useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { isEqual, omit } from "lodash"
 

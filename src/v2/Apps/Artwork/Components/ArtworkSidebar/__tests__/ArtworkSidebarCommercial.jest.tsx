@@ -17,7 +17,7 @@ import {
 import { Button } from "@artsy/palette"
 import { mount } from "enzyme"
 import React from "react"
-import { commitMutation as _commitMutation, RelayProp } from "react-relay"
+import { RelayProp, commitMutation as _commitMutation } from "react-relay"
 
 import { ArtworkSidebarCommercialContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercial"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"

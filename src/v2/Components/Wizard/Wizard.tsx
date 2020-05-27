@@ -1,4 +1,4 @@
-import { Formik, FormikHelpers as FormikActions, Form } from "formik"
+import { Form, Formik, FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
 import PropTypes from "prop-types"
 import React, { Component } from "react"

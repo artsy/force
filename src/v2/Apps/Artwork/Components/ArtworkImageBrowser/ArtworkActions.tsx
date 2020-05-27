@@ -17,7 +17,6 @@ import { ContextModule } from "@artsy/cohesion"
 import {
   BellFillIcon,
   BellIcon,
-  color,
   DownloadIcon,
   EditIcon,
   Flex,
@@ -31,6 +30,7 @@ import {
   Sans,
   ShareIcon,
   Spacer,
+  color,
 } from "@artsy/palette"
 import { userIsAdmin } from "v2/Utils/user"
 import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
@@ -49,8 +49,8 @@ interface ArtworkActionsState {
 
 @track()
 export class ArtworkActions extends React.Component<
-ArtworkActionsProps,
-ArtworkActionsState
+  ArtworkActionsProps,
+  ArtworkActionsState
 > {
   state = {
     showSharePanel: false,
@@ -311,14 +311,14 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
 
 interface UtilButtonProps {
   name:
-  | "bell"
-  | "edit"
-  | "download"
-  | "genome"
-  | "heart"
-  | "more"
-  | "share"
-  | "viewInRoom"
+    | "bell"
+    | "edit"
+    | "download"
+    | "genome"
+    | "heart"
+    | "more"
+    | "share"
+    | "viewInRoom"
   href?: string
   onClick?: () => void
   selected?: boolean
@@ -329,7 +329,7 @@ interface UtilButtonProps {
 export class UtilButton extends React.Component<
   UtilButtonProps,
   { hovered: boolean }
-  > {
+> {
   state = {
     hovered: false,
   }
@@ -391,15 +391,15 @@ export class UtilButton extends React.Component<
             )}
           </UtilButtonLink>
         ) : (
-            <>
-              <ActionIcon {...props} fill={fill} />
-              {label && (
-                <Sans size="2" pl={0.5} pt="1px">
-                  {label}
-                </Sans>
-              )}
-            </>
-          )}
+          <>
+            <ActionIcon {...props} fill={fill} />
+            {label && (
+              <Sans size="2" pl={0.5} pt="1px">
+                {label}
+              </Sans>
+            )}
+          </>
+        )}
       </UtilButtonContainer>
     )
   }

@@ -2,17 +2,17 @@ import {
   // @ts-ignore
   PAGE_CACHE_ENABLED,
   // @ts-ignore
-  PAGE_CACHE_TYPES,
+  PAGE_CACHE_EXPIRY_SECONDS,
   // @ts-ignore
   PAGE_CACHE_NAMESPACE,
   // @ts-ignore
-  PAGE_CACHE_VERSION,
-  // @ts-ignore
-  PAGE_CACHE_EXPIRY_SECONDS,
-  // @ts-ignore
   PAGE_CACHE_RETRIEVAL_TIMEOUT_MS,
+  // @ts-ignore
+  PAGE_CACHE_TYPES,
+  // @ts-ignore
+  PAGE_CACHE_VERSION,
 } from "../../config"
-import { Request, Response, NextFunction } from "express"
+import { NextFunction, Request, Response } from "express"
 const cache = require("lib/cache.coffee")
 const runningTests = Object.keys(
   require("desktop/components/split_test/running_tests.coffee")

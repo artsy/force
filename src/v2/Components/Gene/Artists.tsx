@@ -3,9 +3,9 @@ import { Mediator } from "v2/Artsy"
 import { avantgarde } from "v2/Assets/Fonts"
 import * as React from "react"
 import {
+  RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
 } from "react-relay"
 import styled from "styled-components"
 import Dropdown from "../ArtworkFilter/Dropdown"

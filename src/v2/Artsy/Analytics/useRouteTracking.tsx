@@ -21,7 +21,7 @@ export function useRouteTracking() {
         setShouldTrack(false)
       })
     }
-  }, [isFetching])
+  }, [isFetching, prevFetching])
 
   return shouldTrack
 }

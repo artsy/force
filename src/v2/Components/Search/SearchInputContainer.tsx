@@ -1,4 +1,4 @@
-import { Box, color, MagnifyingGlassIcon } from "@artsy/palette"
+import { Box, MagnifyingGlassIcon, color } from "@artsy/palette"
 import Input from "v2/Components/Input"
 import { isEmpty } from "lodash"
 import React from "react"
@@ -33,7 +33,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<any> = React.
         <Input ref={ref} style={{ width: "100%" }} {...props} />
         <SearchButton
           onClick={event => {
-            ; (event.target as HTMLElement).parentElement.blur()
+            ;(event.target as HTMLElement).parentElement.blur()
             if (isEmpty(props.value)) {
               event.preventDefault()
             }

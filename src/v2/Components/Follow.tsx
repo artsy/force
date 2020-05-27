@@ -7,20 +7,20 @@
  */
 
 import {
-  Intent,
-  ContextModule,
   AuthContextModule,
   AuthIntent,
+  ContextModule,
+  Intent,
 } from "@artsy/cohesion"
 import { Follow_artist } from "v2/__generated__/Follow_artist.graphql"
 import { FollowArtistMutation } from "v2/__generated__/FollowArtistMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import styled from "styled-components"
 import { getMobileAuthLink, openAuthToFollowSave } from "v2/Utils/openAuthModal"
@@ -32,7 +32,7 @@ const SIZE = 32
 
 interface Props
   extends React.HTMLProps<FollowButton>,
-  Artsy.SystemContextProps {
+    Artsy.SystemContextProps {
   style?: any
   relay: RelayProp
   artist: Follow_artist

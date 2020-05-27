@@ -9,7 +9,7 @@ import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/S
 import { TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { ModalButton, ModalDialog } from "v2/Components/Modal/ModalDialog"
-import { expectOne, RootTestPage } from "v2/DevTools/RootTestPage"
+import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 
 export class OrderAppTestPage extends RootTestPage {
   /** COMPONENT SELECTORS **/

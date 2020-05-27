@@ -8,10 +8,10 @@ import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import * as React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
@@ -202,33 +202,33 @@ const ArtistSearchResultsContentContainer = createFragmentContainer(
 
 const ArtistSearchResultsComponent: React.SFC<ContainerProps &
   SystemContextProps> = ({ term, relayEnvironment, updateFollowCount }) => {
-    return (
-      <QueryRenderer<ArtistSearchResultsQuery>
-        environment={relayEnvironment}
-        query={graphql`
+  return (
+    <QueryRenderer<ArtistSearchResultsQuery>
+      environment={relayEnvironment}
+      query={graphql`
         query ArtistSearchResultsQuery($term: String!) {
           viewer {
             ...ArtistSearchResults_viewer
           }
         }
       `}
-        variables={{ term }}
-        render={({ error, props }) => {
-          if (props) {
-            return (
-              <ArtistSearchResultsContentContainer
-                viewer={props.viewer}
-                term={term}
-                updateFollowCount={updateFollowCount}
-              />
-            )
-          } else {
-            return null
-          }
-        }}
-      />
-    )
-  }
+      variables={{ term }}
+      render={({ error, props }) => {
+        if (props) {
+          return (
+            <ArtistSearchResultsContentContainer
+              viewer={props.viewer}
+              term={term}
+              updateFollowCount={updateFollowCount}
+            />
+          )
+        } else {
+          return null
+        }
+      }}
+    />
+  )
+}
 
 export const ArtistSearchResults = withSystemContext(
   ArtistSearchResultsComponent

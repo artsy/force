@@ -6,12 +6,12 @@ import { createMockFetchQuery } from "v2/DevTools/createMockNetworkLayer"
 import { commitMutation, graphql } from "react-relay"
 import {
   Environment,
-  fetchQuery,
   GraphQLTaggedNode,
   Network,
   OperationType,
   RecordSource,
   Store,
+  fetchQuery,
 } from "relay-runtime"
 import { createMockNetworkLayer2 } from "../index"
 jest.unmock("react-relay")

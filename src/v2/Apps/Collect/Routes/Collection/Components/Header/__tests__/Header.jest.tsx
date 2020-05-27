@@ -11,7 +11,7 @@ import { mount } from "enzyme"
 import { cloneDeep } from "lodash"
 import React from "react"
 import sharify from "sharify"
-import { CollectionHeader, getFeaturedArtists, Props } from "../index"
+import { CollectionHeader, Props, getFeaturedArtists } from "../index"
 
 jest.mock("sharify", () => ({
   get data() {

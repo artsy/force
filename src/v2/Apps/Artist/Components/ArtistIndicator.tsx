@@ -1,4 +1,4 @@
-import { color, Flex, Sans } from "@artsy/palette"
+import { Flex, Sans, color } from "@artsy/palette"
 import React from "react"
 
 import {

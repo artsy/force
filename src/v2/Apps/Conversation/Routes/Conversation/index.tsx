@@ -1,4 +1,4 @@
-import { Title, Flex } from "@artsy/palette"
+import { Flex, Title } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationFragmentContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
@@ -13,8 +13,8 @@ import { userHasLabFeature } from "v2/Utils/user"
 import { Media } from "v2/Utils/Responsive"
 import { Conversations_me } from "v2/__generated__/Conversations_me.graphql"
 import {
-  FullHeader,
   ConversationHeader,
+  FullHeader,
 } from "v2/Apps/Conversation/Components/InboxHeaders"
 import { DetailsFragmentContainer as Details } from "../../Components/Details"
 interface ConversationRouteProps {
@@ -23,7 +23,7 @@ interface ConversationRouteProps {
   match: Match
 }
 
-export const ConversationRoute: React.FC<ConversationRouteProps> = (props) => {
+export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const { me } = props
   const { user } = useContext(SystemContext)
   const isEnabled = userHasLabFeature(user, "User Conversations View")

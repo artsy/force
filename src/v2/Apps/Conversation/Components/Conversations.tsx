@@ -1,7 +1,7 @@
-import { Box, media, color } from "@artsy/palette"
+import { Box, color, media } from "@artsy/palette"
 import { Conversations_me } from "v2/__generated__/Conversations_me.graphql"
 import React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { NoMessages } from "./NoMessages"
 import styled from "styled-components"
@@ -32,8 +32,8 @@ const Conversations: React.FC<ConversationsProps> = props => {
             ))}
           </Box>
         ) : (
-            <NoMessages />
-          )}
+          <NoMessages />
+        )}
       </Container>
     </>
   )

@@ -1,4 +1,4 @@
-import { Box, Button, color, Flex, Sans, Serif } from "@artsy/palette"
+import { Box, Button, Flex, Sans, Serif, color } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"

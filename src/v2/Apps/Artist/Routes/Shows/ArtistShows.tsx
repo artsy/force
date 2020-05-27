@@ -2,7 +2,7 @@ import { Box, Col, Flex, Row, Sans, Spacer } from "@artsy/palette"
 import { ArtistShows_artist } from "v2/__generated__/ArtistShows_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { Component } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { ArtistShowBlockItem } from "./ArtistShowBlockItem"
@@ -126,29 +126,29 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
                         )}
                       </Flex>
                     ) : (
-                        <Box>
-                          {this.props.artist.showsConnection.edges.map(
-                            ({ node }, index) => {
-                              return (
-                                <React.Fragment key={index}>
-                                  <ArtistShowListItem
-                                    key={index}
-                                    city={node.city}
-                                    partner={node.partner && node.partner.name}
-                                    name={node.name}
-                                    exhibitionInfo={node.exhibition_period}
-                                    href={node.href}
-                                  />
+                      <Box>
+                        {this.props.artist.showsConnection.edges.map(
+                          ({ node }, index) => {
+                            return (
+                              <React.Fragment key={index}>
+                                <ArtistShowListItem
+                                  key={index}
+                                  city={node.city}
+                                  partner={node.partner && node.partner.name}
+                                  name={node.name}
+                                  exhibitionInfo={node.exhibition_period}
+                                  href={node.href}
+                                />
 
-                                  <Media at="xs">
-                                    <Spacer mb={3} />
-                                  </Media>
-                                </React.Fragment>
-                              )
-                            }
-                          )}
-                        </Box>
-                      )}
+                                <Media at="xs">
+                                  <Spacer mb={3} />
+                                </Media>
+                              </React.Fragment>
+                            )
+                          }
+                        )}
+                      </Box>
+                    )}
                   </LoadingArea>
                 </Col>
               </Row>

@@ -1,9 +1,9 @@
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { mount, ReactWrapper } from "enzyme"
+import { ReactWrapper, mount } from "enzyme"
 import React from "react"
 
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   ModalManager,
   ModalManagerProps,

@@ -4,10 +4,10 @@ import { FollowArtistPopoverRowMutation } from "v2/__generated__/FollowArtistPop
 import { SystemContextProps } from "v2/Artsy"
 import React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import styled from "styled-components"
 import { Subscribe } from "unstated"

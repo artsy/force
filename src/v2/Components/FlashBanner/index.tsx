@@ -27,7 +27,7 @@ export const FlashBanner: React.FunctionComponent<{
       const query = qs.parse(window.location.search.slice(1))
       if (query["flash_message"]) setMessageCode(query["flash_message"])
     }
-  }, [])
+  }, [messageCode])
 
   if (!messageCode) return null
   const Message = messageByQueryParam[messageCode]

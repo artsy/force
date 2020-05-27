@@ -1,6 +1,6 @@
 import React from "react"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
-import { ModalType, ModalOptions } from "v2/Components/Authentication/Types"
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { handleSubmit } from "../helpers"
 import { Box, Flex } from "@artsy/palette"

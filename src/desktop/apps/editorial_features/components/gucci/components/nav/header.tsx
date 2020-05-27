@@ -2,7 +2,7 @@ import styled from "styled-components"
 import React from "react"
 import Icon from "reaction/Components/Icon"
 import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInline"
-import { media, Flex, Sans, Serif } from "@artsy/palette"
+import { Flex, Sans, Serif, media } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 interface HeaderProps {

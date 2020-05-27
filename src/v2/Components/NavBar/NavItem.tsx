@@ -2,7 +2,7 @@ import { Box, BoxProps, Link, Sans, space } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { isFunction, isString } from "lodash"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { animated, config, useSpring } from "react-spring"
 import styled from "styled-components"
 
@@ -54,9 +54,9 @@ export const NavItem: React.FC<NavItemProps> = ({
       name === "opacity"
         ? config.stiff
         : {
-          friction: 10,
-          mass: 0.1,
-        },
+            friction: 10,
+            mass: 0.1,
+          },
   })
 
   const trackClick = () => {
@@ -69,19 +69,19 @@ export const NavItem: React.FC<NavItemProps> = ({
     }
   }
 
-  const trackHover = () => {
+  const trackHover = useCallback(() => {
     if (isString(navItemLabel) || label)
       trackEvent({
         action_type: AnalyticsSchema.ActionType.Hover,
         subject: label || navItemLabel.toString(),
       })
-  }
+  }, [label, navItemLabel, trackEvent])
 
   useEffect(() => {
     if (hover) {
       trackHover()
     }
-  }, [hover])
+  }, [hover, trackHover])
 
   return (
     <Box
@@ -108,11 +108,11 @@ export const NavItem: React.FC<NavItemProps> = ({
           <Box height={25}>
             {isFunction(navItemLabel)
               ? // NavItem children can be called as renderProps so that contents
-              // can operate on UI behaviors (such as changing the color of an
-              // icon on hover).
-              navItemLabel({
-                hover,
-              })
+                // can operate on UI behaviors (such as changing the color of an
+                // icon on hover).
+                navItemLabel({
+                  hover,
+                })
               : navItemLabel}
           </Box>
         </Sans>
@@ -152,7 +152,7 @@ export const NavItem: React.FC<NavItemProps> = ({
   )
 }
 
-const MenuContainer = styled(Box) <{ isFullScreen?: boolean }>`
+const MenuContainer = styled(Box)<{ isFullScreen?: boolean }>`
   position: absolute;
   margin-top: ${p => (p.isFullScreen ? "1px" : "-1px")}; /* Offset border */
   transform: translateX(${p => (p.isFullScreen ? 0 : "-78%")});

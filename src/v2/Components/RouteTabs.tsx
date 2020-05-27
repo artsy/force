@@ -1,11 +1,11 @@
 import {
   Box,
-  color,
   Flex,
   Sans,
+  TabsContainer,
+  color,
   sharedTabsStyles,
   space,
-  TabsContainer,
 } from "@artsy/palette"
 import { ArrowButton, Carousel } from "v2/Components/Carousel"
 import { Link, LinkProps } from "found"

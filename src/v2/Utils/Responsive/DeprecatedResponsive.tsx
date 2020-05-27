@@ -1,7 +1,7 @@
 import {
-  createResponsiveComponents,
   MediaQueryMatches,
   ResponsiveProviderProps as _ResponsiveProviderProps,
+  createResponsiveComponents,
 } from "@artsy/fresnel/dist/DynamicResponsive"
 import { themeProps } from "@artsy/palette"
 import React from "react"

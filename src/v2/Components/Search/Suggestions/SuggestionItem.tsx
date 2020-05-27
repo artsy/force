@@ -1,4 +1,4 @@
-import { Box, color, Flex, Link, Sans, Serif } from "@artsy/palette"
+import { Box, Flex, Link, Sans, Serif, color } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React, { SFC } from "react"

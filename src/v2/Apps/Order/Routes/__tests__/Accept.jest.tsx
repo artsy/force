@@ -2,8 +2,8 @@ import { AcceptTestQueryRawResponse } from "v2/__generated__/AcceptTestQuery.gra
 import {
   Buyer,
   OfferOrderWithShippingDetails,
-  Offers,
   OfferWithTotals,
+  Offers,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { DateTime } from "luxon"

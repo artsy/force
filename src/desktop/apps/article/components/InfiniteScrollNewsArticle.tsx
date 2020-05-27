@@ -17,7 +17,7 @@ import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDiv
 const Cookies = require("desktop/components/cookies/index.coffee")
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 export interface Props {
   article?: ArticleData

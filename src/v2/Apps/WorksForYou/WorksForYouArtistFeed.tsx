@@ -7,9 +7,9 @@ import styled from "styled-components"
 import { get } from "v2/Utils/get"
 
 import {
+  RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
 } from "react-relay"
 
 interface Props extends SystemContextProps {

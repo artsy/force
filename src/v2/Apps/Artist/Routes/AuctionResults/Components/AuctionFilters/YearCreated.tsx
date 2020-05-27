@@ -42,7 +42,7 @@ export const YearCreated: React.FC = () => {
       filterContext.setFilter("createdAfterYear", earliestCreatedYear)
       filterContext.setFilter("createdBeforeYear", latestCreatedYear)
     },
-    [earliestCreatedYear, latestCreatedYear]
+    [earliestCreatedYear, latestCreatedYear, filterContext]
   )
 
   if (

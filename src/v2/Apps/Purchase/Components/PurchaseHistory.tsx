@@ -12,7 +12,7 @@ import {
 } from "@artsy/palette"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
 interface OrderRowProps {
@@ -128,8 +128,8 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       {myOrders.length ? (
         myOrders.map(order => <OrderRow key={order.code} order={order} />)
       ) : (
-          <Sans size="2">No Orders</Sans>
-        )}
+        <Sans size="2">No Orders</Sans>
+      )}
       <LargePagination
         pageCursors={me.orders.pageCursors}
         hasNextPage
@@ -138,8 +138,8 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       />
     </Box>
   ) : (
-      <Spinner />
-    )
+    <Spinner />
+  )
 }
 
 export const PurchaseHistoryFragmentContainer = createRefetchContainer(

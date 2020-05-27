@@ -6,7 +6,7 @@ import React from "react"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 
-import { Box, ChevronIcon, Col, color, Flex, space } from "@artsy/palette"
+import { Box, ChevronIcon, Col, Flex, color, space } from "@artsy/palette"
 
 interface ArtworkBrowserProps {
   imageAlt: string
@@ -31,7 +31,7 @@ export const ArtworkImageBrowser = (props: ArtworkBrowserProps) => {
 
 export class LargeArtworkImageBrowser extends React.Component<
   ArtworkBrowserProps
-  > {
+> {
   render() {
     const hasMultipleImages = this.props.images.length > 1
     const { imageAlt, images, setCarouselRef } = this.props
@@ -116,7 +116,7 @@ export class LargeArtworkImageBrowser extends React.Component<
 
 export class SmallArtworkImageBrowser extends React.Component<
   ArtworkBrowserProps
-  > {
+> {
   render() {
     const { images, imageAlt, setCarouselRef } = this.props
     // FIXME: During SSR pass want to hide other images. Work around for lack

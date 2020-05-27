@@ -3,7 +3,7 @@ import { stitch } from "@artsy/stitch"
 import { routes as featureRoutes } from "v2/Apps/Feature/routes"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import express, { Request, Response, NextFunction } from "express"
+import express, { NextFunction, Request, Response } from "express"
 
 export const app = express()
 

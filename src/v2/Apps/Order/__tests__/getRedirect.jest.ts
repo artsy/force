@@ -1,4 +1,4 @@
-import { getRedirect, RedirectRecord } from "../getRedirect"
+import { RedirectRecord, getRedirect } from "../getRedirect"
 
 describe("getRedirect", () => {
   const aNonMatchingPredicate = ({}) => null

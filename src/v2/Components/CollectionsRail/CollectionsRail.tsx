@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, space, Spacer } from "@artsy/palette"
+import { Box, Flex, Sans, Spacer, space } from "@artsy/palette"
 import { CollectionsRail_collections } from "v2/__generated__/CollectionsRail_collections.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"

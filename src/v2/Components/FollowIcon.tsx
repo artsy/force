@@ -1,4 +1,4 @@
-import { color, Flex, Serif } from "@artsy/palette"
+import { Flex, Serif, color } from "@artsy/palette"
 import Icon from "v2/Components/Icon"
 import React from "react"
 import styled from "styled-components"
@@ -76,10 +76,10 @@ export class FollowIcon extends React.Component<FollowIconProps> {
             <Unfollow />
           </FollowingHover>
         ) : (
-            <FollowHover>
-              <Follow />
-            </FollowHover>
-          )}
+          <FollowHover>
+            <Follow />
+          </FollowHover>
+        )}
       </FollowIconContainer>
     )
   }

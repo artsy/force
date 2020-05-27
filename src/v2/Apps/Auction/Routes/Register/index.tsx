@@ -17,10 +17,10 @@ import { FormikHelpers as FormikActions } from "formik"
 import React from "react"
 import { Title } from "react-head"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import { TrackingProp } from "react-tracking"
 import { data as sd } from "sharify"

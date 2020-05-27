@@ -1,8 +1,8 @@
-import { BorderBox, color, Sans, themeProps } from "@artsy/palette"
+import { BorderBox, Sans, color, themeProps } from "@artsy/palette"
 import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 import {
-  border as inputBorder,
   BorderProps as InputBorderProps,
+  border as inputBorder,
 } from "v2/Components/Mixins"
 import React from "react"
 import { CardElement } from "react-stripe-elements"
@@ -32,7 +32,7 @@ interface CreditCardInputState {
 export class CreditCardInput extends React.Component<
   CreditCardInputProps,
   CreditCardInputState
-  > {
+> {
   state = {
     focused: false,
   }

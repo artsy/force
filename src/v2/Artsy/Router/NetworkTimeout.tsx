@@ -25,7 +25,7 @@ export const NetworkTimeout: React.FC = () => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [])
+  }, [showErrorModal])
 
   if (!showErrorModal) {
     return null

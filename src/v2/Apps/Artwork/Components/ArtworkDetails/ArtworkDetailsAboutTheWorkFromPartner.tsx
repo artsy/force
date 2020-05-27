@@ -15,7 +15,7 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import Events from "v2/Utils/Events"
 
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   EntityHeader,
@@ -41,7 +41,7 @@ export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
   }
 )
 export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
-ArtworkDetailsAboutTheWorkFromPartnerProps
+  ArtworkDetailsAboutTheWorkFromPartnerProps
 > {
   @track({
     action_type: Schema.ActionType.Click,

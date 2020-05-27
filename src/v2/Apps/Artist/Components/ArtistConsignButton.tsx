@@ -9,10 +9,10 @@ import {
   BorderBox,
   Box,
   Button,
-  color,
   Flex,
   Image,
   Sans,
+  color,
 } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
 
@@ -58,85 +58,85 @@ interface Tracking {
 
 export const ArtistConsignButtonLarge: React.FC<ArtistConsignButtonProps &
   Tracking> = props => {
-    const { showImage, imageURL, headline, consignURL } = getData(props)
+  const { showImage, imageURL, headline, consignURL } = getData(props)
 
-    return (
-      <RouterLink
-        to={consignURL}
-        style={{
-          textDecoration: "none",
-        }}
-        onClick={() => {
-          props.trackGetStartedClick({
-            destinationPath: consignURL,
-          })
-        }}
-      >
-        <BorderBox width="100%" p={1}>
-          <Flex alignItems="center" width="100%" justifyContent="space-between">
-            <Flex>
-              {showImage && (
-                <Image src={imageURL} width={50} height={50} mr={1} />
-              )}
-              <Flex flexDirection="column" justifyContent="center">
-                <Sans size="3t" weight="medium">
-                  {headline}
-                </Sans>
-                <Box position="relative">
-                  <Sans size="3t" color={color("black60")}>
-                    Consign with Artsy
-                </Sans>
-                </Box>
-              </Flex>
-            </Flex>
-            <Box>
-              <Button variant="secondaryGray">Get started</Button>
-            </Box>
-          </Flex>
-        </BorderBox>
-      </RouterLink>
-    )
-  }
-
-export const ArtistConsignButtonSmall: React.FC<ArtistConsignButtonProps &
-  Tracking> = props => {
-    const { showImage, imageURL, headline, consignURL } = getData(props)
-
-    return (
-      <RouterLink
-        to={consignURL}
-        style={{
-          textDecoration: "none",
-        }}
-        onClick={() => {
-          props.trackGetStartedClick({
-            destinationPath: consignURL,
-          })
-        }}
-      >
-        <BorderBox p={1}>
-          <Flex alignItems="center">
-            {showImage && <Image src={imageURL} mr={2} />}
+  return (
+    <RouterLink
+      to={consignURL}
+      style={{
+        textDecoration: "none",
+      }}
+      onClick={() => {
+        props.trackGetStartedClick({
+          destinationPath: consignURL,
+        })
+      }}
+    >
+      <BorderBox width="100%" p={1}>
+        <Flex alignItems="center" width="100%" justifyContent="space-between">
+          <Flex>
+            {showImage && (
+              <Image src={imageURL} width={50} height={50} mr={1} />
+            )}
             <Flex flexDirection="column" justifyContent="center">
               <Sans size="3t" weight="medium">
                 {headline}
               </Sans>
-              <Box top="-2px" position="relative">
+              <Box position="relative">
                 <Sans size="3t" color={color("black60")}>
                   Consign with Artsy
-              </Sans>
-              </Box>
-              <Box>
-                <Button size="small" variant="secondaryGray">
-                  Get started
-              </Button>
+                </Sans>
               </Box>
             </Flex>
           </Flex>
-        </BorderBox>
-      </RouterLink>
-    )
-  }
+          <Box>
+            <Button variant="secondaryGray">Get started</Button>
+          </Box>
+        </Flex>
+      </BorderBox>
+    </RouterLink>
+  )
+}
+
+export const ArtistConsignButtonSmall: React.FC<ArtistConsignButtonProps &
+  Tracking> = props => {
+  const { showImage, imageURL, headline, consignURL } = getData(props)
+
+  return (
+    <RouterLink
+      to={consignURL}
+      style={{
+        textDecoration: "none",
+      }}
+      onClick={() => {
+        props.trackGetStartedClick({
+          destinationPath: consignURL,
+        })
+      }}
+    >
+      <BorderBox p={1}>
+        <Flex alignItems="center">
+          {showImage && <Image src={imageURL} mr={2} />}
+          <Flex flexDirection="column" justifyContent="center">
+            <Sans size="3t" weight="medium">
+              {headline}
+            </Sans>
+            <Box top="-2px" position="relative">
+              <Sans size="3t" color={color("black60")}>
+                Consign with Artsy
+              </Sans>
+            </Box>
+            <Box>
+              <Button size="small" variant="secondaryGray">
+                Get started
+              </Button>
+            </Box>
+          </Flex>
+        </Flex>
+      </BorderBox>
+    </RouterLink>
+  )
+}
 
 function getData(props) {
   const {

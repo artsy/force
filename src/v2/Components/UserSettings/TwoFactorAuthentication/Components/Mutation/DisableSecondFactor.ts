@@ -3,7 +3,7 @@ import {
   DisableSecondFactorMutation,
   DisableSecondFactorMutationResponse,
 } from "v2/__generated__/DisableSecondFactorMutation.graphql"
-import { commitMutation, Environment, graphql } from "react-relay"
+import { Environment, commitMutation, graphql } from "react-relay"
 
 export const DisableSecondFactor = (
   environment: Environment,

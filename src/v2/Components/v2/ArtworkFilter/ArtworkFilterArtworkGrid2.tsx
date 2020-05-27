@@ -1,7 +1,7 @@
 import { Box, Spacer } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React, { useEffect } from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkFilterArtworkGrid2_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid2_filtered_artworks.graphql"
 import { useSystemContext } from "v2/Artsy"
@@ -31,7 +31,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     if (isEmpty(context.aggregations) && aggregations.length) {
       context.setAggregations(aggregations as Aggregations)
     }
-  }, [])
+  }, [aggregations, context])
 
   const {
     columnCount,

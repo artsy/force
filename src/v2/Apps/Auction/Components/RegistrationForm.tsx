@@ -13,9 +13,9 @@ import {
 import React, { useEffect, useState } from "react"
 import {
   Elements,
-  injectStripe,
   ReactStripeElements,
   StripeProvider,
+  injectStripe,
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
 import * as Yup from "yup"
@@ -117,7 +117,7 @@ const InnerForm: React.FC<InnerFormProps> = props => {
   )
 }
 
-Yup.addMethod(Yup.string, "present", function (message) {
+Yup.addMethod(Yup.string, "present", function(message) {
   return this.test("test-present", message, value => {
     return this.trim()
       .required(message)

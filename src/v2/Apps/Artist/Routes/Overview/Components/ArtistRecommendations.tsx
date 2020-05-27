@@ -7,9 +7,9 @@ import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import React, { useContext, useState } from "react"
 import {
+  RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
 } from "react-relay"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"

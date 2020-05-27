@@ -1,8 +1,8 @@
 import {
-  isCustomEditorial,
   getCustomEditorialId,
-  isVanguardSubArticle,
   getVanguardSubArticleContent,
+  isCustomEditorial,
+  isVanguardSubArticle,
 } from "../editorial_features"
 import { StandardArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 

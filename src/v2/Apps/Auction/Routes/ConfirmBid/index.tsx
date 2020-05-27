@@ -10,8 +10,8 @@ import {
 import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
 import {
   BidFormFragmentContainer as BidForm,
-  determineDisplayRequirements,
   FormValues,
+  determineDisplayRequirements,
 } from "v2/Apps/Auction/Components/BidForm"
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
 import { bidderPositionQuery } from "v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery"
@@ -25,16 +25,16 @@ import { isEmpty } from "lodash"
 import React, { useEffect, useState } from "react"
 import { Title } from "react-head"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import {
   Elements,
-  injectStripe,
   ReactStripeElements,
   StripeProvider,
+  injectStripe,
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"

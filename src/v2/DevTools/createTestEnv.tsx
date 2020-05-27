@@ -1,6 +1,6 @@
 import { ConnectedModalDialog } from "v2/Apps/Order/Dialogs"
 import { SystemContext, SystemContextProps } from "v2/Artsy"
-import { createMockFetchQuery, MockBoot, renderRelayTree } from "v2/DevTools"
+import { MockBoot, createMockFetchQuery, renderRelayTree } from "v2/DevTools"
 import { merge } from "lodash"
 import React, { ReactElement, useContext } from "react"
 import { GraphQLTaggedNode } from "react-relay"
@@ -62,7 +62,7 @@ class TestEnv<MutationNames extends string, TestPage extends RootTestPage> {
       defaultMutationResults?: Record<MutationNames, any>
       defaultBreakpoint?: Breakpoint
       systemContextProps?: SystemContextProps
-      TestPage: { new(): TestPage }
+      TestPage: { new (): TestPage }
     }
   ) {
     this.opts = opts

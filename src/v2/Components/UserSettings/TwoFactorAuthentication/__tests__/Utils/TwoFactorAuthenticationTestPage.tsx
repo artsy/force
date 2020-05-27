@@ -1,4 +1,4 @@
-import { expectOne, RootTestPage } from "v2/DevTools/RootTestPage"
+import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 
 export class TwoFactorAuthenticationTestPage extends RootTestPage {
   get appSetupButton() {

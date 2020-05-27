@@ -6,7 +6,7 @@ import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface CreateAccountProps {
   contextPath: string

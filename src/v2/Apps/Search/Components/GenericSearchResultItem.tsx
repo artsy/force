@@ -1,12 +1,12 @@
 import {
   Box,
-  color,
   Flex,
   Image,
   Link,
   Sans,
   Serif,
   Spacer,
+  color,
 } from "@artsy/palette"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -28,7 +28,7 @@ interface GenericSearchResultItemProps {
 
 @track()
 export class GenericSearchResultItem extends React.Component<
-GenericSearchResultItemProps
+  GenericSearchResultItemProps
 > {
   @track((props: GenericSearchResultItemProps) => ({
     action_type: Schema.ActionType.SelectedItemFromSearchPage,
@@ -74,8 +74,8 @@ GenericSearchResultItemProps
                 {imageUrl && entityType !== "City" ? (
                   <Image width={70} height={70} src={imageUrl} />
                 ) : (
-                    <FallbackIcon entityType={entityType} />
-                  )}
+                  <FallbackIcon entityType={entityType} />
+                )}
               </Flex>
             </Box>
 

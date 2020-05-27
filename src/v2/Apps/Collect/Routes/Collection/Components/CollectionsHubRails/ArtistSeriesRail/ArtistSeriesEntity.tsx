@@ -1,4 +1,4 @@
-import { Box, color, Flex, Sans, Serif } from "@artsy/palette"
+import { Box, Flex, Sans, Serif, color } from "@artsy/palette"
 import { ArtistSeriesEntity_member } from "v2/__generated__/ArtistSeriesEntity_member.graphql"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -52,25 +52,25 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
         <ImgWrapper>
           {bgImages!.length
             ? bgImages.map((url, i) => {
-              const hit = artworks![i]
-              const artistName = get(hit!.artist, a => a!.name)
-              const alt = `${artistName ? artistName + ", " : ""}${
-                hit!.title
+                const hit = artworks![i]
+                const artistName = get(hit!.artist, a => a!.name)
+                const alt = `${artistName ? artistName + ", " : ""}${
+                  hit!.title
                 }`
-              return (
-                <SingleImgContainer key={i}>
-                  <ImgOverlay width={imageSize} />
-                  {url && (
-                    <ArtworkImage
-                      key={i}
-                      src={url}
-                      width={imageSize}
-                      alt={alt}
-                    />
-                  )}
-                </SingleImgContainer>
-              )
-            })
+                return (
+                  <SingleImgContainer key={i}>
+                    <ImgOverlay width={imageSize} />
+                    {url && (
+                      <ArtworkImage
+                        key={i}
+                        src={url}
+                        width={imageSize}
+                        alt={alt}
+                      />
+                    )}
+                  </SingleImgContainer>
+                )
+              })
             : headerImage && <ArtworkImage src={headerImage} width={221} />}
         </ImgWrapper>
         {
@@ -101,7 +101,7 @@ export const ArtworkImage = styled.img<{ width: number }>`
   opacity: 0.9;
 `
 
-const ImgOverlay = styled(Box) <{ width: number }>`
+const ImgOverlay = styled(Box)<{ width: number }>`
   height: 125px;
   background-color: ${color("black30")};
   opacity: 0.1;

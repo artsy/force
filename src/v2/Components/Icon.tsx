@@ -2,17 +2,17 @@
 import React, { StatelessComponent } from "react"
 import styled from "styled-components"
 import {
-  bottom,
   BottomProps,
+  LeftProps,
+  RightProps,
+  SpaceProps,
+  TopProps,
+  bottom,
   color,
   left,
-  LeftProps,
   right,
-  RightProps,
   space,
-  SpaceProps,
   top,
-  TopProps,
 } from "styled-system"
 import "../Assets/Fonts"
 import icons, { IconName } from "../Assets/Icons"

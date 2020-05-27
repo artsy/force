@@ -14,8 +14,8 @@ import { Media } from "v2/Utils/Responsive"
 import { logger } from "../Respond"
 
 import {
-  counterofferFlowSteps,
   OrderStepper,
+  counterofferFlowSteps,
 } from "v2/Apps/Order/Components/OrderStepper"
 
 import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
@@ -23,7 +23,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 interface RejectProps {
   order: Reject_order

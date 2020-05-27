@@ -1,4 +1,4 @@
-import { Box, color, Flex, Menu, MenuItem } from "@artsy/palette"
+import { Box, Flex, Menu, MenuItem, color } from "@artsy/palette"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"
@@ -85,7 +85,7 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
 
 export const MenuItemContainer = styled(Box)``
 
-const SimpleLinksContainer = styled(Box) <{ viewAllTopMargin: string }>`
+const SimpleLinksContainer = styled(Box)<{ viewAllTopMargin: string }>`
   border-right: 1px solid ${color("black10")};
   ${MenuItemContainer} {
     &:last-child {

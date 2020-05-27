@@ -12,7 +12,7 @@ import { Footer } from "v2/Components/Footer"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 
 import { RouterState, withRouter } from "found"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TrackingProp } from "react-tracking"
 import { get } from "v2/Utils/get"
@@ -27,13 +27,17 @@ const TotalResults: React.SFC<{ count: number; term: string }> = ({
   count,
   term,
 }) => {
-  const formatResults = () =>
-    `${count.toLocaleString()} Result${count > 1 ? "s" : ""} for "${term}"`
+  const formatResults = useCallback(
+    () =>
+      `${count.toLocaleString()} Result${count > 1 ? "s" : ""} for "${term}"`,
+    [count, term]
+  )
+
   const [results, setResults] = useState(formatResults())
 
   useEffect(() => {
     setResults(formatResults())
-  }, [count])
+  }, [count, formatResults])
 
   return <Serif size="5">{results}</Serif>
 }
@@ -129,11 +133,11 @@ export class SearchApp extends React.Component<Props> {
               artworkCount
             )
           ) : (
-              <Box mt={3}>
-                <ZeroState term={term} />
-                {this.renderFooter()}
-              </Box>
-            )}
+            <Box mt={3}>
+              <ZeroState term={term} />
+              {this.renderFooter()}
+            </Box>
+          )}
           <Spacer mb={3} />
         </HorizontalPadding>
       </AppContainer>

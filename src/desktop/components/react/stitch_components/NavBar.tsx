@@ -4,7 +4,7 @@ import { NavBar as ReactionNavBar } from "v2/Components/NavBar"
 import { FlashBanner } from "v2/Components/FlashBanner"
 import { data as sd } from "sharify"
 
-import { SystemContextProvider, SystemContextProps } from "v2/Artsy"
+import { SystemContextProps, SystemContextProvider } from "v2/Artsy"
 import { StagingBanner } from "./StagingBanner"
 
 const mediator = require("desktop/lib/mediator.coffee")

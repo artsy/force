@@ -1,4 +1,4 @@
-import { Color, color, Flex, FlexProps } from "@artsy/palette"
+import { Color, Flex, FlexProps, color } from "@artsy/palette"
 import React from "react"
 
 // Doesn't exist in design system

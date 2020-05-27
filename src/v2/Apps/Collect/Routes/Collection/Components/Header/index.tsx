@@ -1,16 +1,16 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
-import { breakpoints, EntityHeader, ReadMore } from "@artsy/palette"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
 import {
   Box,
   Col,
-  color,
   Flex,
   Grid,
-  media,
   Row,
   Sans,
   Serif,
   Spacer,
+  color,
+  media,
 } from "@artsy/palette"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
@@ -205,13 +205,13 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
                     )}
                   </CollectionSingleImageHeader>
                 ) : (
-                    <CollectionDefaultHeader
-                      headerArtworks={artworks}
-                      collectionId={collection.id}
-                      collectionSlug={collection.slug}
-                      key={collection.slug}
-                    />
-                  )}
+                  <CollectionDefaultHeader
+                    headerArtworks={artworks}
+                    collectionId={collection.id}
+                    collectionSlug={collection.slug}
+                    key={collection.slug}
+                  />
+                )}
 
                 <Box
                   mt={[2, 3]}
@@ -244,8 +244,8 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
                                   content={htmlUnsafeDescription || ""}
                                 />
                               ) : (
-                                  htmlUnsafeDescription
-                                )}
+                                htmlUnsafeDescription
+                              )}
                               {collection.description && <Spacer mt={2} />}
                             </ExtendedSerif>
                           </Flex>
@@ -277,7 +277,7 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
   )
 }
 
-const CollectionSingleImageHeader = styled(Box) <{
+const CollectionSingleImageHeader = styled(Box)<{
   headerImageUrl: string
   height: number
 }>`
