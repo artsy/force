@@ -4,10 +4,10 @@ import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
-  openAuthModal,
   handleScrollingAuthModal,
+  openAuthModal,
 } from "desktop/lib/openAuthModal"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")

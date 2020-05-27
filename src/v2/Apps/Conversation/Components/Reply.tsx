@@ -1,12 +1,12 @@
-import { Button, color, Flex, media, FlexProps } from "@artsy/palette"
+import { Button, Flex, FlexProps, color, media } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
 import { Environment } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
-import { right, RightProps } from "styled-system"
+import { RightProps, right } from "styled-system"
 
-const StyledFlex = styled(Flex) <FlexProps & RightProps>`
+const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   ${right};
   border-top: 1px solid ${color("black10")};
   position: fixed;
@@ -19,7 +19,7 @@ const StyledFlex = styled(Flex) <FlexProps & RightProps>`
   `}
 `
 
-const FullWidthFlex = styled(Flex) <{ height?: string }>`
+const FullWidthFlex = styled(Flex)<{ height?: string }>`
   div {
     width: 100%;
     height: ${({ height }) => height};

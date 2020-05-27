@@ -3,7 +3,7 @@ import { useTracking } from "v2/Artsy/Analytics"
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import { Box, color, Link, Sans } from "@artsy/palette"
+import { Box, Link, Sans, color } from "@artsy/palette"
 
 interface MobileLinkProps {
   contextModule?: any
@@ -54,22 +54,22 @@ export const MobileLink: React.FC<MobileLinkProps> = ({
             </Sans>
           </Link>
         ) : (
-            <Sans size={["5t", "6"]} color={color("black60")}>
-              {children}
-            </Sans>
-          )}
+          <Sans size={["5t", "6"]} color={color("black60")}>
+            {children}
+          </Sans>
+        )}
       </Box>
     </MobileLinkContainer>
   )
 }
 
-const MobileLinkContainer = styled(Box) <{ disableHover?: boolean }>`
+const MobileLinkContainer = styled(Box)<{ disableHover?: boolean }>`
   background-color: white;
   transition: 0.3s linear;
   cursor: pointer;
 
   &:hover {
     background-color: ${p =>
-    p.disableHover ? "transparent" : color("black5")};
+      p.disableHover ? "transparent" : color("black5")};
   }
 `

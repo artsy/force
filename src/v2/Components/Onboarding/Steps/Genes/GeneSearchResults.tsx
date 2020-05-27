@@ -9,10 +9,10 @@ import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQuery
 import { garamond } from "v2/Assets/Fonts"
 import * as React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
@@ -202,32 +202,32 @@ const GeneSearchResultsContentContainer = createFragmentContainer(
 
 const GeneSearchResultsComponent: React.SFC<ContainerProps &
   SystemContextProps> = ({ term, relayEnvironment, updateFollowCount }) => {
-    return (
-      <QueryRenderer<GeneSearchResultsQuery>
-        environment={relayEnvironment}
-        query={graphql`
+  return (
+    <QueryRenderer<GeneSearchResultsQuery>
+      environment={relayEnvironment}
+      query={graphql`
         query GeneSearchResultsQuery($term: String!) {
           viewer {
             ...GeneSearchResults_viewer
           }
         }
       `}
-        variables={{ term }}
-        render={({ error, props }) => {
-          if (props) {
-            return (
-              <GeneSearchResultsContentContainer
-                viewer={props.viewer}
-                term={term}
-                updateFollowCount={updateFollowCount}
-              />
-            )
-          } else {
-            return null
-          }
-        }}
-      />
-    )
-  }
+      variables={{ term }}
+      render={({ error, props }) => {
+        if (props) {
+          return (
+            <GeneSearchResultsContentContainer
+              viewer={props.viewer}
+              term={term}
+              updateFollowCount={updateFollowCount}
+            />
+          )
+        } else {
+          return null
+        }
+      }}
+    />
+  )
+}
 
 export const GeneSearchResults = withSystemContext(GeneSearchResultsComponent)

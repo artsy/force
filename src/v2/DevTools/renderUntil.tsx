@@ -1,4 +1,4 @@
-import { mount, ReactWrapper, RenderUntilPredicate } from "enzyme"
+import { ReactWrapper, RenderUntilPredicate, mount } from "enzyme"
 import * as React from "react"
 
 function renderUntil<

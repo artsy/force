@@ -1,4 +1,4 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   Button,
@@ -23,10 +23,10 @@ import currency from "currency.js"
 import { Router } from "found"
 import React, { FC, useContext } from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import { get } from "v2/Utils/get"

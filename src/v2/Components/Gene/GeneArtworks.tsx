@@ -1,8 +1,8 @@
 import * as React from "react"
 import {
+  RelayPaginationProp,
   createPaginationContainer,
   graphql,
-  RelayPaginationProp,
 } from "react-relay"
 import styled from "styled-components"
 

@@ -7,7 +7,7 @@ import { PaginationFragmentContainer as Pagination } from "v2/Components/Paginat
 import { RouterState, withRouter } from "found"
 import qs from "qs"
 import React from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
 export interface Props extends RouterState {
@@ -153,8 +153,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
             <ZeroState term={term} />
           </Box>
         ) : (
-            this.renderArtists()
-          )}
+          this.renderArtists()
+        )}
       </LoadingArea>
     )
   }

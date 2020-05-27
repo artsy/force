@@ -18,8 +18,8 @@ import {
   Link,
   Sans,
   Serif,
-  space,
   Spacer,
+  space,
 } from "@artsy/palette"
 import styled from "styled-components"
 

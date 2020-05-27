@@ -3,8 +3,8 @@ import { mount } from "enzyme"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import {
-  StandardArticle,
   ShortStandardArticle,
+  StandardArticle,
 } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { clone } from "lodash"

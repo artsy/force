@@ -7,9 +7,9 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Ap
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "v2/Apps/Order/Components/ItemReview"
 import {
+  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
-  OrderStepper,
 } from "v2/Apps/Order/Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -22,7 +22,7 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { RouteConfig, Router } from "found"
 import React, { Component } from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
@@ -65,7 +65,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
     }
   }
 
-  @track<ReviewProps>((props) => ({
+  @track<ReviewProps>(props => ({
     action_type:
       props.order.mode === "BUY"
         ? Schema.ActionType.SubmittedOrder
@@ -97,7 +97,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
       ) {
         this.state.stripe
           .handleCardAction(orderOrError.actionData.clientSecret)
-          .then((result) => {
+          .then(result => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
                 title: "An error occurred",
@@ -115,7 +115,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
       ) {
         this.state.stripe
           .handleCardSetup(orderOrError.actionData.clientSecret)
-          .then((result) => {
+          .then(result => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
                 title: "An error occurred",
@@ -289,14 +289,14 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
   artistId() {
     return get(
       this.props.order,
-      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 
   routeToArtworkPage() {
     const artworkId = get(
       this.props.order,
-      (o) => o.lineItems.edges[0].node.artwork.slug
+      o => o.lineItems.edges[0].node.artwork.slug
     )
     // Don't confirm whether or not you want to leave the page
     this.props.route.onTransition = () => null

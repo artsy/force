@@ -1,5 +1,5 @@
 import express from "express"
-import { index, resetPassword, redirectLoggedInHome } from "./routes"
+import { index, redirectLoggedInHome, resetPassword } from "./routes"
 
 export const app = express()
 

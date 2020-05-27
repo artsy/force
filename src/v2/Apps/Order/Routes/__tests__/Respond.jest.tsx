@@ -4,8 +4,8 @@ import {
   Buyer,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
-  Offers,
   OfferWithTotals,
+  Offers,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { OfferHistoryItemFragmentContainer } from "v2/Apps/Order/Components/OfferHistoryItem"
 import { DateTime } from "luxon"

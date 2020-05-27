@@ -1,5 +1,5 @@
 import React from "react"
-import { extend, cloneDeep } from "lodash"
+import { cloneDeep, extend } from "lodash"
 import { mount } from "enzyme"
 import { FairWeekPageScaffold } from "../PageScaffold"
 

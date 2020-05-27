@@ -26,10 +26,10 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics"
 import { Router } from "found"
 import React, { Component } from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
-import { offerFlowSteps, OrderStepper } from "../../Components/OrderStepper"
+import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 
 export interface OfferProps {
   order: Offer_order
@@ -60,7 +60,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     highSpeedBumpEncountered: false,
   }
 
-  @track<OfferProps>((props) => ({
+  @track<OfferProps>(props => ({
     order_id: props.order.internalID,
     action_type: Schema.ActionType.FocusedOnOfferInput,
     flow: Schema.Flow.MakeOffer,
@@ -69,7 +69,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     // noop
   }
 
-  @track<OfferProps>((props) => ({
+  @track<OfferProps>(props => ({
     order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferTooLow,
     flow: Schema.Flow.MakeOffer,
@@ -84,7 +84,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     })
   }
 
-  @track<OfferProps>((props) => ({
+  @track<OfferProps>(props => ({
     order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferHigherThanListPrice,
     flow: Schema.Flow.MakeOffer,
@@ -235,7 +235,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     showError={
                       this.state.formIsDirty && this.state.offerValue <= 0
                     }
-                    onChange={(offerValue) => this.setState({ offerValue })}
+                    onChange={offerValue => this.setState({ offerValue })}
                     onFocus={this.onOfferInputFocus.bind(this)}
                   />
                 </Flex>
@@ -247,7 +247,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 <Spacer mb={[2, 3]} />
                 <RevealButton align="left" buttonLabel="Add note to seller">
                   <OfferNote
-                    onChange={(offerNoteValue) =>
+                    onChange={offerNoteValue =>
                       this.setState({ offerNoteValue })
                     }
                     artworkId={artworkId}

@@ -1,6 +1,6 @@
 import { AuthStatic } from "../components/AuthStatic"
 import { MobileAuthStatic } from "../components/MobileAuthStatic"
-import { index, resetPassword, redirectLoggedInHome } from "../routes"
+import { index, redirectLoggedInHome, resetPassword } from "../routes"
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),

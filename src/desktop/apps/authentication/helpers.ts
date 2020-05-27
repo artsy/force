@@ -1,14 +1,14 @@
 import Cookies from "cookies-js"
-import { ModalType, ModalOptions } from "v2/Components/Authentication/Types"
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { data as sd } from "sharify"
 import * as qs from "query-string"
 import { Response } from "express"
 import { captureException } from "@sentry/browser"
 import {
-  createdAccount,
   AuthService,
-  successfullyLoggedIn,
+  createdAccount,
   resetYourPassword,
+  successfullyLoggedIn,
 } from "@artsy/cohesion"
 import { omit } from "lodash"
 

@@ -272,7 +272,15 @@ export const CCPARequest: React.SFC<Props> = props => {
         setSubmitted,
       })
     }
-  }, [clickedSubmit])
+  }, [
+    clickedSubmit,
+    email,
+    name,
+    notes,
+    relayEnvironment,
+    triggeredValidation,
+    user,
+  ])
 
   const modalButton = submitted ? (
     <Button width="100%" onClick={() => setShowModal(false)}>

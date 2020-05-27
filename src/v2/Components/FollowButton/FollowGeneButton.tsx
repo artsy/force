@@ -1,14 +1,14 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { FollowGeneButtonMutation } from "v2/__generated__/FollowGeneButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { extend } from "lodash"
 import React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import track, { TrackingProp } from "react-tracking"
 import { FollowGeneButton_gene } from "../../__generated__/FollowGeneButton_gene.graphql"
@@ -17,7 +17,7 @@ import { FollowTrackingData } from "./Typings"
 
 interface Props
   extends React.HTMLProps<FollowGeneButton>,
-  Artsy.SystemContextProps {
+    Artsy.SystemContextProps {
   relay?: RelayProp
   gene?: FollowGeneButton_gene
   tracking?: TrackingProp

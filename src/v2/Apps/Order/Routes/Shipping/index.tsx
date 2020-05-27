@@ -17,9 +17,9 @@ import {
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
+  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
-  OrderStepper,
 } from "v2/Apps/Order/Components/OrderStepper"
 import {
   PhoneNumber,
@@ -49,7 +49,7 @@ import {
 import { Router } from "found"
 import { pick } from "lodash"
 import React, { Component } from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -231,7 +231,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   handleSubmitError(error: { code: string; data: string }) {
     logger.error(error)
-    const parsedData = get(error, (e) => JSON.parse(e.data), {})
+    const parsedData = get(error, e => JSON.parse(e.data), {})
     if (
       error.code === "missing_region" ||
       error.code === "missing_country" ||
@@ -267,8 +267,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       country: validatePresence(country),
       postalCode: usOrCanada && validatePresence(postalCode),
     }
-    const hasErrors =
-      Object.keys(errors).filter((key) => errors[key]).length > 0
+    const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
 
     return {
       errors,
@@ -301,7 +300,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
-  onPhoneNumberChange: PhoneNumberChangeHandler = (phoneNumber) => {
+  onPhoneNumberChange: PhoneNumberChangeHandler = phoneNumber => {
     const { error } = this.validatePhoneNumber(phoneNumber)
     this.setState({
       phoneNumber,
@@ -335,7 +334,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     } = this.state
     const artwork = get(
       this.props,
-      (props) => props.order.lineItems.edges[0].node.artwork
+      props => props.order.lineItems.edges[0].node.artwork
     )
 
     return (

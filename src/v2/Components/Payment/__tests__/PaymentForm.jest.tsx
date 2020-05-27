@@ -28,7 +28,7 @@ import PaymentForm, {
   PaymentFormProps,
 } from "v2/Components/Payment/PaymentForm"
 import { MockBoot } from "v2/DevTools"
-import { commitMutation, RelayProp } from "react-relay"
+import { RelayProp, commitMutation } from "react-relay"
 import Input from "../../Input"
 
 const mutationMock = commitMutation as jest.Mock<any>

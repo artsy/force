@@ -2,6 +2,7 @@
   "name": "force",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "engines": {
     "node": "12",
     "yarn": "1.x.x"
@@ -20,6 +21,7 @@
     "cypress": "./node_modules/.bin/cypress open",
     "integrate": "./scripts/quicklink-to-project.sh",
     "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
+    "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
     "mocha": "scripts/mocha.sh",
     "prepare": "patch-package",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
@@ -41,12 +43,6 @@
     "unlink-all": "yalc remove --all && yarn --check-files",
     "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
-  "prettier": {
-    "bracketSpacing": true,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "es5"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -55,12 +51,32 @@
   },
   "lint-staged": {
     "*.@(js|jsx|ts|tsx)": [
-      "npm run prettier-write --",
-      "git add"
-    ],
-    "{package.json,yarn.lock}": [
-      "node ./scripts/check-for-links.js"
+      "yarn lint --fix",
+      "yarn prettier-write"
     ]
+  },
+  "reporterEnabled": "mocha-junit-reporter, spec",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "reports/mocha/test-results.xml"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "report-dir": "./.nyc_output/",
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "extension": [
+      ".coffee",
+      ".js"
+    ],
+    "lines": 0
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "es5"
   },
   "resolutions": {
     "@types/react": "16.9.34",
@@ -112,7 +128,6 @@
     "artsy-ezel-components": "artsy/artsy-ezel-components",
     "artsy-morgan": "artsy/artsy-morgan",
     "artsy-xapp": "artsy/artsy-xapp",
-    "babel-eslint": "7.2.3",
     "babel-loader": "8.0.6",
     "babel-plugin-dynamic-import-node": "1.2.0",
     "babel-plugin-inline-react-svg": "0.2.0",
@@ -304,7 +319,10 @@
     "@types/underscore.string": "0.0.32",
     "@types/webpack": "4.4.24",
     "@types/webpack-env": "1.13.6",
+    "@typescript-eslint/eslint-plugin": "2.30.0",
+    "@typescript-eslint/parser": "2.30.0",
     "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "10.1.0",
     "babel-jest": "24.8.0",
     "babel-plugin-relay": "7.1.0",
     "benv": "3.3.0",
@@ -316,15 +334,11 @@
     "electron": "3.0.16",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
-    "eslint": "5.6.1",
-    "eslint-config-prettier": "3.1.0",
-    "eslint-config-standard": "12.0.0",
-    "eslint-config-standard-react": "7.0.2",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-node": "7.0.1",
-    "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-react": "7.11.1",
-    "eslint-plugin-standard": "4.0.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-graphql": "3.1.1",
+    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "3.0.0",
     "fork-ts-checker-notifier-webpack-plugin": "0.4.0",
     "fork-ts-checker-webpack-plugin": "0.4.10",
     "friendly-errors-webpack-plugin": "1.6.1",
@@ -344,7 +358,7 @@
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
     "konami-js": "0.0.2",
-    "lint-staged": "9.2.5",
+    "lint-staged": "10.0.8",
     "mime": "2.4.0",
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
@@ -372,10 +386,6 @@
     "stylus-loader": "3.0.2",
     "supertest": "2.0.1",
     "terser-webpack-plugin": "2.3.5",
-    "tslint": "5.11.0",
-    "tslint-config-prettier": "1.15.0",
-    "tslint-config-standard": "8.0.1",
-    "tslint-react": "3.6.0",
     "typescript-styled-plugin": "0.15.0",
     "vscode-apollo-relay": "1.5.0",
     "wait-on": "3.3.0",
@@ -387,28 +397,9 @@
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
     "webpack-notifier": "1.7.0",
-    "webpack-retry-chunk-load-plugin": "1.2.0",
-    "yalc": "1.0.0-pre.34"
+    "webpack-retry-chunk-load-plugin": "1.2.0"
   },
-  "license": "MIT",
   "optionalDependencies": {
     "fsevents": "*"
-  },
-  "reporterEnabled": "mocha-junit-reporter, spec",
-  "mochaJunitReporterReporterOptions": {
-    "mochaFile": "reports/mocha/test-results.xml"
-  },
-  "nyc": {
-    "check-coverage": true,
-    "report-dir": "./.nyc_output/",
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ],
-    "extension": [
-      ".coffee",
-      ".js"
-    ],
-    "lines": 0
   }
 }

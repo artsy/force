@@ -1,6 +1,6 @@
 import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { menuData, SimpleLinkData } from "v2/Components/NavBar/menuData"
+import { SimpleLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
 import {

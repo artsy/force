@@ -73,7 +73,7 @@ const OtpInputTrigger: React.FC<OtpInputTriggerProps> = props => {
         props.next(null, values)
       })
     }
-  }, [status])
+  }, [status, isOtpMissing, props, values])
 
   return null
 }
@@ -86,7 +86,7 @@ interface LoginFormState {
 class MobileLoginFormWithSystemContext extends Component<
   FormProps & { relayEnvironment: Environment },
   LoginFormState
-  > {
+> {
   constructor(props) {
     super(props)
 
@@ -149,25 +149,25 @@ class MobileLoginFormWithSystemContext extends Component<
         wizard,
         form: { errors, touched, values, handleChange, handleBlur, setTouched },
       }) => (
-          <Fragment>
-            <PasswordInput
-              block
-              error={errors.password}
-              name="password"
-              label="Password"
-              placeholder="Password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              setTouched={setTouched}
-              touchedOnChange={false}
-              autoFocus
-            />
-            <Flex alignItems="center" justifyContent="flex-end">
-              <ForgotPassword onClick={() => this.getForgotUrl()} />
-            </Flex>
-          </Fragment>
-        )}
+        <Fragment>
+          <PasswordInput
+            block
+            error={errors.password}
+            name="password"
+            label="Password"
+            placeholder="Password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            setTouched={setTouched}
+            touchedOnChange={false}
+            autoFocus
+          />
+          <Flex alignItems="center" justifyContent="flex-end">
+            <ForgotPassword onClick={() => this.getForgotUrl()} />
+          </Flex>
+        </Fragment>
+      )}
     </Step>,
   ]
 
@@ -208,7 +208,7 @@ class MobileLoginFormWithSystemContext extends Component<
                   <BackButton
                     onClick={e =>
                       this.props.onBackButtonClicked &&
-                        wizard.currentStepIndex === 0
+                      wizard.currentStepIndex === 0
                         ? this.props.onBackButtonClicked(e as any)
                         : wizard.previous(e, values)
                     }

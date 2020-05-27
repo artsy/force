@@ -9,15 +9,15 @@ import { FollowTrackingData } from "./Typings"
 
 import { ButtonProps } from "@artsy/palette"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 
 interface Props
   extends React.HTMLProps<FollowProfileButton>,
-  Artsy.SystemContextProps {
+    Artsy.SystemContextProps {
   relay?: RelayProp
   profile?: FollowProfileButton_profile
   tracking?: TrackingProp

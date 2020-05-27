@@ -1,4 +1,4 @@
-import { color, Flex, Link, Sans, Spacer } from "@artsy/palette"
+import { Flex, Link, Sans, Spacer, color } from "@artsy/palette"
 import { SystemContextConsumer } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"

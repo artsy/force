@@ -97,7 +97,7 @@ export const PostRegistrationModal: React.FC<Props> = ({
     if (!show) {
       onClose()
     }
-  }, [show])
+  }, [show, onClose])
 
   const Content = contentFor[contentKey]
 

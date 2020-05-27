@@ -1,6 +1,6 @@
-import styled, { keyframes, css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 import React from "react"
-import { color, Flex, Sans } from "@artsy/palette"
+import { Flex, Sans, color } from "@artsy/palette"
 
 interface SectionsNavProps {
   animated?: boolean

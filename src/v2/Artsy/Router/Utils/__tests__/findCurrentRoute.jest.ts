@@ -1,5 +1,5 @@
 import { findCurrentRoute } from "../findCurrentRoute"
-import { Match, Router, Location } from "found"
+import { Location, Match, Router } from "found"
 
 describe("findCurrentRoute", () => {
   const getMatch = (config: Partial<Match>): Match => ({

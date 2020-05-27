@@ -35,7 +35,7 @@ export function buildAppRoutes(routeList: RouteList[]): RouteConfig[] {
         router: props.router,
         routes,
       })
-    }, [])
+    }, [props.router, router, setRouter])
 
     return <AppShell {...props} />
   }

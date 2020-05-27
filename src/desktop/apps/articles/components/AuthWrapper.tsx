@@ -2,7 +2,7 @@ import React from "react"
 import { data as sd } from "sharify"
 import qs from "querystring"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")

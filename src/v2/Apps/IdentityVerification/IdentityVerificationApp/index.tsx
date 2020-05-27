@@ -8,10 +8,10 @@ import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { useState } from "react"
 import { Title as HeadTitle } from "react-head"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import { useTracking } from "react-tracking"
 import createLogger from "v2/Utils/logger"

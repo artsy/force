@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, QueryRenderer } from "react-relay"
+import { QueryRenderer, graphql } from "react-relay"
 import { storiesOf } from "storybook/storiesOf"
 
 import { ArtistConsignButtonQuery } from "v2/__generated__/ArtistConsignButtonQuery.graphql"

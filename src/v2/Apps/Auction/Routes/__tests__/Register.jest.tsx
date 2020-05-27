@@ -10,8 +10,8 @@ import { expectOne } from "v2/DevTools/RootTestPage"
 import { routes_RegisterQueryRawResponse } from "v2/__generated__/routes_RegisterQuery.graphql"
 import {
   RegisterQueryResponseFixture,
-  RegisterQueryResponseFixtureWithoutVerificationNeeded,
   RegisterQueryResponseFixtureWithVerifiedUser,
+  RegisterQueryResponseFixtureWithoutVerificationNeeded,
 } from "../../__fixtures__/routes_RegisterQuery"
 import { createBidderSuccessful } from "../__fixtures__/MutationResults/createBidder"
 import {

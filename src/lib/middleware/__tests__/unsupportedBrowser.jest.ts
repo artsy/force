@@ -1,6 +1,6 @@
 import {
-  isUnsupported,
   getRedirectTo,
+  isUnsupported,
   unsupportedBrowserCheck,
 } from "../unsupportedBrowser"
 import useragent from "useragent"

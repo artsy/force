@@ -1,4 +1,4 @@
-import { Box, color, Flex, Image, space } from "@artsy/palette"
+import { Box, Flex, Image, color, space } from "@artsy/palette"
 import { withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import FadeTransition from "v2/Components/Animation/FadeTransition"

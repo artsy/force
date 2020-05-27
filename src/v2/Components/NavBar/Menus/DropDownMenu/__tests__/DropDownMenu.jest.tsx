@@ -1,7 +1,7 @@
 import { MenuItem } from "@artsy/palette"
 import { ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { menuData, MenuLinkData } from "v2/Components/NavBar/menuData"
+import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
 import { DropDownNavMenu, MenuItemContainer } from "../DropDownMenu"

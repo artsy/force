@@ -1,4 +1,4 @@
-import { Box, color, Serif } from "@artsy/palette"
+import { Box, Serif, color } from "@artsy/palette"
 import { OtherCollectionsRail_collectionGroup } from "v2/__generated__/OtherCollectionsRail_collectionGroup.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

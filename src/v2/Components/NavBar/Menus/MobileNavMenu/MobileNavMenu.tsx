@@ -1,13 +1,13 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   ChevronIcon,
   CloseIcon,
-  color,
   Flex,
   MenuIcon,
   Sans,
   Separator,
+  color,
 } from "@artsy/palette"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"

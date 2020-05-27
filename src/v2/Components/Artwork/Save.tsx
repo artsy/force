@@ -6,10 +6,10 @@ import { track } from "v2/Artsy/Analytics"
 import { extend, isNull } from "lodash"
 import React from "react"
 import {
+  RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
-  RelayProp,
 } from "react-relay"
 import { TrackingProp } from "react-tracking"
 import * as RelayRuntimeTypes from "relay-runtime"
@@ -26,7 +26,7 @@ export interface SaveTrackingProps {
 
 export interface SaveProps
   extends Artsy.SystemContextProps,
-  React.HTMLProps<React.ComponentType> {
+    React.HTMLProps<React.ComponentType> {
   artwork: Save_artwork
   contextModule: AuthContextModule
   style?: any

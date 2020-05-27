@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled-components"
 import { unica } from "reaction/Assets/Fonts"
 import { Video } from "reaction/Components/Publishing"
-import { media, Box, Flex, Sans } from "@artsy/palette"
+import { Box, Flex, Sans, media } from "@artsy/palette"
 
 interface SectionVideoProps {
   section: any
@@ -98,10 +98,7 @@ const SectionVideoContainer = styled(Box)`
   `};
 `
 
-const VideoPreview =
-  styled.div <
-  { backgroundSrc: string } >
-  `
+const VideoPreview = styled.div<{ backgroundSrc: string }>`
   height: 59vw;
   max-height: 668px;
   position: relative;

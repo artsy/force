@@ -2,7 +2,7 @@ import * as React from "react"
 import ChannelMemberQuery from "desktop/apps/article/queries/channelMember"
 import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
-import { map, includes } from "lodash"
+import { includes, map } from "lodash"
 import { Box, space } from "@artsy/palette"
 
 interface EditButtonProps {

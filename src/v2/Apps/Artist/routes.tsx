@@ -135,7 +135,6 @@ export const routes: RouteConfig[] = [
           OverviewRoute.preload()
         },
         displayNavigationTabs: true,
-        ignoreScrollBehavior: true,
         query: graphql`
           query routes_OverviewQuery($artistID: String!) @raw_response_type {
             artist(id: $artistID) {

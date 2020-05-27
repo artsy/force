@@ -1,4 +1,4 @@
-import { Box, color, Flex, MenuItem, Sans } from "@artsy/palette"
+import { Box, Flex, MenuItem, Sans, color } from "@artsy/palette"
 import { MenuLinkData, SimpleLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
 

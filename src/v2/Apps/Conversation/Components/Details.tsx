@@ -1,4 +1,4 @@
-import { Flex, FlexProps, color, EntityHeader, Separator } from "@artsy/palette"
+import { EntityHeader, Flex, FlexProps, Separator, color } from "@artsy/palette"
 import React, { FC } from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -2,11 +2,11 @@ import {
   Button,
   Flex,
   Join,
-  media,
   Message,
   Sans,
   Serif,
   Spacer,
+  media,
 } from "@artsy/palette"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -205,7 +205,7 @@ export class StatusRoute extends Component<StatusProps> {
   getFulfilmentDescription(): React.ReactNode {
     const fulfillment = get(
       this.props.order,
-      (o) => o.lineItems.edges[0].node.fulfillments.edges[0].node
+      o => o.lineItems.edges[0].node.fulfillments.edges[0].node
     )
 
     if (!fulfillment) {

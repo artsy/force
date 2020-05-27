@@ -1,4 +1,4 @@
-import { Box, breakpoints, Separator } from "@artsy/palette"
+import { Box, Separator, breakpoints } from "@artsy/palette"
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"
@@ -14,7 +14,7 @@ import { Match } from "found"
 import { HttpError } from "found"
 import React, { Component } from "react"
 import { Link, Meta, Title } from "react-head"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import truncate from "trunc-html"
 import { CollectionAppQuery } from "./CollectionAppQuery"
@@ -71,7 +71,7 @@ export class CollectionApp extends Component<CollectionAppProps> {
 
     const metadataDescription = description
       ? `Buy, bid, and inquire on ${title} on Artsy. ` +
-      truncate(description, 158).text
+        truncate(description, 158).text
       : `Buy, bid, and inquire on ${title} on Artsy.`
 
     const showCollectionHubs = collection.linkedCollections.length > 0

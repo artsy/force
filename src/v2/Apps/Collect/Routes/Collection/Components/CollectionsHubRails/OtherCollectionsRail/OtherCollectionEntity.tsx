@@ -1,4 +1,4 @@
-import { Box, color, Flex, ResponsiveImage, Serif } from "@artsy/palette"
+import { Box, Flex, ResponsiveImage, Serif, color } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

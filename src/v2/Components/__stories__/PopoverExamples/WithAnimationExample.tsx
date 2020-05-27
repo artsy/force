@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, ReactElement } from "react"
+import React, { Children, ReactElement, cloneElement } from "react"
 import Transition, { TransitionProps } from "react-transition-group/Transition"
 import styled from "styled-components"
 import { createGlobalStyle } from "styled-components"

@@ -1,8 +1,8 @@
 import { SearchBarTestQueryRawResponse } from "v2/__generated__/SearchBarTestQuery.graphql"
 import Input from "v2/Components/Input"
 import {
-  getSearchTerm,
   SearchBarRefetchContainer as SearchBar,
+  getSearchTerm,
 } from "v2/Components/Search/SearchBar"
 import { SuggestionItem } from "v2/Components/Search/Suggestions/SuggestionItem"
 import { renderRelayTree } from "v2/DevTools"

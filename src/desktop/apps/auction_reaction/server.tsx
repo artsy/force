@@ -1,5 +1,5 @@
 import express from "express"
-import { bidderRegistration, auctionFAQRoute, confirmBidRoute } from "./routes"
+import { auctionFAQRoute, bidderRegistration, confirmBidRoute } from "./routes"
 
 export const app = express()
 

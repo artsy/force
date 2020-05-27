@@ -5,9 +5,9 @@
 import { SystemContextConsumer } from "v2/Artsy"
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import {
+  ServerRouterConfig,
   __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__,
   buildServerApp,
-  ServerRouterConfig,
 } from "v2/Artsy/Router/buildServerApp"
 import { createMockNetworkLayer } from "v2/DevTools"
 import { render } from "enzyme"

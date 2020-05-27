@@ -1,6 +1,6 @@
 import { LoadingClassName } from "v2/Artsy/Relay/renderWithLoadProgress"
 import "v2/DevTools/renderUntil"
-import { mount, RenderUntilPredicate } from "enzyme"
+import { RenderUntilPredicate, mount } from "enzyme"
 import React from "react"
 import { MockRelayRenderer, MockRelayRendererProps } from "./MockRelayRenderer"
 

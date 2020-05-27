@@ -1,6 +1,6 @@
 import { Link } from "@artsy/palette"
 import { SystemContextProvider } from "v2/Artsy"
-import { mount, ReactWrapper } from "enzyme"
+import { ReactWrapper, mount } from "enzyme"
 import React from "react"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { OfferNote } from "../OfferNote"

@@ -1,4 +1,4 @@
-import { authImpression, AuthModalType } from "@artsy/cohesion"
+import { AuthModalType, authImpression } from "@artsy/cohesion"
 import { Theme } from "@artsy/palette"
 import qs from "querystring"
 import React from "react"
@@ -87,8 +87,8 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
       },
       type === "signup"
         ? {
-          onboarding: !redirectTo,
-        }
+            onboarding: !redirectTo,
+          }
         : null
     )
 
@@ -166,13 +166,13 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
       },
       options.redirectTo || options["redirect-to"]
         ? {
-          "redirect-to": options.redirectTo || options["redirect-to"],
-        }
+            "redirect-to": options.redirectTo || options["redirect-to"],
+          }
         : null,
       options.intent
         ? {
-          "signup-intent": options.intent,
-        }
+            "signup-intent": options.intent,
+          }
         : null
     )
 

@@ -4,8 +4,8 @@ import {
   OfferHistoryItemTestQueryResponse,
 } from "v2/__generated__/OfferHistoryItemTestQuery.graphql"
 import {
-  Offers,
   OfferWithTotals,
+  Offers,
   UntouchedOfferOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { renderRelayTree } from "v2/DevTools"

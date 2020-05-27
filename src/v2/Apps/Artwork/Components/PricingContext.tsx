@@ -15,7 +15,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import Events from "v2/Utils/Events"
-import { createCollectUrl, FilterCategory } from "./../Utils/createCollectUrl"
+import { FilterCategory, createCollectUrl } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 
 interface PricingContextProps {
@@ -82,8 +82,8 @@ export class PricingContext extends React.Component<PricingContextProps> {
       artwork.listPrice.__typename === "PriceRange"
         ? artwork.listPrice.maxPrice.minor || artwork.listPrice.minPrice.minor
         : artwork.listPrice.__typename === "Money"
-          ? artwork.listPrice.minor
-          : 0
+        ? artwork.listPrice.minor
+        : 0
 
     const artworkFallsBeforeFirstBin =
       priceCents < artwork.pricingContext.bins[0].minPriceCents
@@ -127,7 +127,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
               const title = isLastBin
                 ? `${bin.minPrice}+`
                 : // TODO: use artwork's currency
-                `${isFirstBin ? "$0" : bin.minPrice}–${bin.maxPrice}`
+                  `${isFirstBin ? "$0" : bin.minPrice}–${bin.maxPrice}`
               const artworkFallsInThisBin =
                 (isFirstBin && artworkFallsBeforeFirstBin) ||
                 (isLastBin && artworkFallsAfterLastBin) ||
@@ -148,9 +148,9 @@ export class PricingContext extends React.Component<PricingContextProps> {
                 onHover: this.barchartHover.bind(this),
                 highlightLabel: artworkFallsInThisBin
                   ? {
-                    title,
-                    description: "This work",
-                  }
+                      title,
+                      description: "This work",
+                    }
                   : undefined,
               }
             }

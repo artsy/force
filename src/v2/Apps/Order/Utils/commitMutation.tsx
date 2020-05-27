@@ -1,8 +1,8 @@
 import { SystemContext } from "v2/Artsy"
 import React, { useContext } from "react"
 import {
-  commitMutation as relayCommitMutation,
   GraphQLTaggedNode,
+  commitMutation as relayCommitMutation,
 } from "react-relay"
 import { Environment } from "relay-runtime"
 
@@ -32,7 +32,7 @@ const MutationContext = React.createContext<CommitMutationProps>({
 class ProvideMutationContext extends React.Component<
   { relayEnvironment: Environment },
   { isCommittingMutation: boolean }
-  > {
+> {
   execQueue: Array<() => Promise<any>> = []
   state = { isCommittingMutation: false }
   commitMutation: CommitMutation = ({ variables, mutation }) => {

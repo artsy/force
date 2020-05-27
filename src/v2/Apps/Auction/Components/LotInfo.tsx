@@ -2,7 +2,7 @@ import { Box, Flex, ResponsiveImage, Sans, Serif } from "@artsy/palette"
 import { LotInfo_artwork } from "v2/__generated__/LotInfo_artwork.graphql"
 import { LotInfo_saleArtwork } from "v2/__generated__/LotInfo_saleArtwork.graphql"
 import React from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 interface Props {
   artwork: LotInfo_artwork

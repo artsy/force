@@ -6,8 +6,8 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Ap
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "v2/Apps/Order/Components/CreditCardSummaryItem"
 import {
-  counterofferFlowSteps,
   OrderStepper,
+  counterofferFlowSteps,
 } from "v2/Apps/Order/Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -22,7 +22,7 @@ import * as Schema from "v2/Artsy/Analytics/Schema"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { Router } from "found"
 import React, { Component } from "react"
-import { createFragmentContainer, graphql, RelayProp } from "react-relay"
+import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
@@ -110,7 +110,7 @@ export class CounterRoute extends Component<CounterProps> {
     }
   }
 
-  @track<CounterProps>((props) => ({
+  @track<CounterProps>(props => ({
     action_type: Schema.ActionType.SubmittedCounterOffer,
     order_id: props.order.internalID,
   }))

@@ -3,8 +3,8 @@ import React from "react"
 import { data as sd } from "sharify"
 
 import {
-  createdAccount,
   AuthService,
+  createdAccount,
   successfullyLoggedIn,
 } from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "../helpers"

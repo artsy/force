@@ -5,8 +5,8 @@ import {
   handleScrollingAuthModal,
   openAuthModal,
 } from "desktop/lib/openAuthModal"
-import { ModalType, ModalOptions } from "v2/Components/Authentication/Types"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 export const triggerMarketingModal = (
   intent: Intent,

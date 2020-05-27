@@ -2,10 +2,10 @@ import { Flex } from "@artsy/palette"
 import { OfferHistoryItem_order } from "v2/__generated__/OfferHistoryItem_order.graphql"
 import {
   Buyer,
-  mockResolver,
-  Offers,
   OfferWithTotals,
+  Offers,
   UntouchedOfferOrder,
+  mockResolver,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { MockRelayRenderer } from "v2/DevTools"
 import React from "react"
@@ -26,19 +26,19 @@ const render = (
   extraOrderProps?: Partial<OfferHistoryItem_order>,
   extraComponentProps?: Partial<ExtractProps<typeof OfferHistoryItem>>
 ) => (
-    <MockRelayRenderer
-      Component={(props: any) => (
-        <OfferHistoryItem {...extraComponentProps} {...props} />
-      )}
-      mockResolvers={mockResolver({
-        ...UntouchedOfferOrder,
-        buyer: Buyer,
-        lastOffer: OfferWithTotals,
-        ...extraOrderProps,
-      })}
-      query={orderQuery}
-    />
-  )
+  <MockRelayRenderer
+    Component={(props: any) => (
+      <OfferHistoryItem {...extraComponentProps} {...props} />
+    )}
+    mockResolvers={mockResolver({
+      ...UntouchedOfferOrder,
+      buyer: Buyer,
+      lastOffer: OfferWithTotals,
+      ...extraOrderProps,
+    })}
+    query={orderQuery}
+  />
+)
 
 storiesOf("Apps/Order/Components", module).add("OfferHistoryItem", () => {
   return (

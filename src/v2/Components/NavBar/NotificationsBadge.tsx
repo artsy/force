@@ -1,4 +1,4 @@
-import { Box, color, Flex, Sans, space } from "@artsy/palette"
+import { Box, Flex, Sans, color, space } from "@artsy/palette"
 import { NotificationsMenuQueryResponse } from "v2/__generated__/NotificationsMenuQuery.graphql"
 import { SystemContext } from "v2/Artsy"
 import cookie from "cookies-js"
@@ -73,8 +73,8 @@ export const NotificationsBadge: React.FC<{}> = () => {
       }}
     />
   ) : (
-      <CircularCount />
-    )
+    <CircularCount />
+  )
 }
 
 const CircularCount: React.FC<{

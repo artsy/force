@@ -1,4 +1,4 @@
-import { Box, BoxProps, color, Spacer } from "@artsy/palette"
+import { Box, BoxProps, Spacer, color } from "@artsy/palette"
 import React from "react"
 import styled, { css, keyframes } from "styled-components"
 import { BorderRadiusProps } from "styled-system"

@@ -12,7 +12,7 @@ jest.mock("sharify", () => ({
   },
 }))
 
-import { reportLoadTimeToVolley, metricPayload } from "../volley"
+import { metricPayload, reportLoadTimeToVolley } from "../volley"
 
 describe("metricsPayload", () => {
   it("should return null if the duration is null", () => {

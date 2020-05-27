@@ -5,7 +5,7 @@ import { routes } from "v2/Apps/FeatureAKG/routes"
 import JSONPage from "../../components/json_page"
 import React from "react"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import { Request, Response, NextFunction } from "express"
+import { NextFunction, Request, Response } from "express"
 
 export const landingPage = async (
   req: Request,

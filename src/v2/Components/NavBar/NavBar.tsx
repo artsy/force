@@ -8,13 +8,13 @@ import {
   Box,
   Button,
   ChevronIcon,
-  color,
   EnvelopeIcon,
   Flex,
   Link,
   SoloIcon,
-  space,
   Spacer,
+  color,
+  space,
   themeProps,
 } from "@artsy/palette"
 
@@ -31,13 +31,13 @@ import {
 } from "./Menus"
 
 import { ModalType } from "v2/Components/Authentication/Types"
-import { menuData, MenuLinkData } from "v2/Components/NavBar/menuData"
+import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 
 import { NavItem } from "./NavItem"
 import { NotificationsBadge } from "./NotificationsBadge"
 
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import Events from "v2/Utils/Events"

@@ -1,4 +1,4 @@
-import { data as sd, GlobalData } from "sharify"
+import { GlobalData, data as sd } from "sharify"
 
 export function getENV(ENV_VAR: keyof GlobalData) {
   let envVar

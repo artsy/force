@@ -1,4 +1,4 @@
-import React, { cloneElement, ReactInstance } from "react"
+import React, { ReactInstance, cloneElement } from "react"
 import { findDOMNode } from "react-dom"
 import { Overlay } from "react-overlays"
 import styled from "styled-components"

@@ -1,4 +1,4 @@
-import { Box, color, Flex, Separator } from "@artsy/palette"
+import { Box, Flex, Separator, color } from "@artsy/palette"
 import React from "react"
 
 const FilterSidebarSection: React.SFC<any> = props => {

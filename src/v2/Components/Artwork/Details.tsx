@@ -1,4 +1,4 @@
-import { color, Sans, Spacer } from "@artsy/palette"
+import { Sans, Spacer, color } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
@@ -66,8 +66,8 @@ export class Details extends React.Component<Props, null> {
     const artworkTextWithLink = includeLinks ? (
       <TextLink href={this.props.artwork.href}>{artworkText}</TextLink>
     ) : (
-        artworkText
-      )
+      artworkText
+    )
     return <TruncatedLine>{artworkTextWithLink}</TruncatedLine>
   }
 

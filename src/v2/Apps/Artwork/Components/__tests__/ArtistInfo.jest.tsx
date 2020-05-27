@@ -4,7 +4,7 @@ import { mockTracking } from "v2/Artsy/Analytics"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { mount } from "enzyme"
 import React from "react"
-import { graphql, RelayProp } from "react-relay"
+import { RelayProp, graphql } from "react-relay"
 import { ArtistInfo } from "../ArtistInfo"
 
 jest.unmock("react-tracking")

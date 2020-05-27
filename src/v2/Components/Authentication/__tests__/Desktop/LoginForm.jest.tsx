@@ -1,7 +1,7 @@
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
 import { mount } from "enzyme"
 import React from "react"
-import { LoginValues, ChangeEvents } from "../fixtures"
+import { ChangeEvents, LoginValues } from "../fixtures"
 import QuickInput from "v2/Components/QuickInput"
 import { flushPromiseQueue } from "v2/DevTools"
 

@@ -1,4 +1,4 @@
-import { setupArtistSignUpModal, setCookie, query } from "../artistSignupModal"
+import { query, setCookie, setupArtistSignUpModal } from "../artistSignupModal"
 import * as helpers from "desktop/lib/openAuthModal"
 
 jest.mock("desktop/components/cookies/index.coffee", () => ({

@@ -1,7 +1,7 @@
 import { Display, Flex, themeProps } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { BackgroundProps, color, ColorProps } from "styled-system"
+import { BackgroundProps, ColorProps, color } from "styled-system"
 
 // http://24ways.org/2010/calculating-color-contrast/
 function getContrast(hex) {

@@ -1,4 +1,4 @@
-import { color, Flex, Sans, themeProps } from "@artsy/palette"
+import { Flex, Sans, color, themeProps } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 

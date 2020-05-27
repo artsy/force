@@ -1,11 +1,11 @@
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import {
-  NewsArticle as NewsArticleFixture,
   FeatureArticle,
-  StandardArticle,
-  VideoArticle,
+  NewsArticle as NewsArticleFixture,
   SeriesArticle,
+  StandardArticle,
   SuperArticle,
+  VideoArticle,
   VideoArticleUnpublished,
 } from "reaction/Components/Publishing/Fixtures/Articles"
 import React from "react"
@@ -15,11 +15,11 @@ import { mount } from "enzyme"
 import { ArticleLayout } from "desktop/apps/article/components/layouts/Article"
 import { SystemContextProvider } from "reaction/Artsy"
 import {
-  isUnpublishedVideo,
   getBodyClass,
   getJsonLd,
   getLayoutTemplate,
   getSuperArticleTemplates,
+  isUnpublishedVideo,
 } from "../helpers"
 
 describe("ad display logic in Feature and Standard Articles", () => {

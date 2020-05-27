@@ -21,5 +21,5 @@ export function useMaybeReloadAfterInquirySignIn() {
       mediator.off("auth:login:inquiry_form")
       mediator.off("auth:login:inquiry_form:maybeReloadOnModalClose")
     }
-  }, [])
+  }, [mediator])
 }

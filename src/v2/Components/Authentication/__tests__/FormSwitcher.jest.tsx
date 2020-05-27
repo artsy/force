@@ -1,4 +1,4 @@
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Link } from "@artsy/palette"
 import QuickInput from "v2/Components/QuickInput"
 import { mount } from "enzyme"

@@ -1,11 +1,11 @@
 import {
   Box,
-  color,
   Flex,
   ResponsiveImage,
   Sans,
   Serif,
   Spacer,
+  color,
 } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"

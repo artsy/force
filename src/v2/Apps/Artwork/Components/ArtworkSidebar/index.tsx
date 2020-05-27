@@ -1,4 +1,4 @@
-import { Box, space, Spacer } from "@artsy/palette"
+import { Box, Spacer, space } from "@artsy/palette"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { AuctionTimerFragmentContainer as AuctionTimer } from "v2/Components/AuctionTimer"
 import React, { Component, useContext } from "react"
@@ -64,12 +64,12 @@ export class ArtworkSidebar extends Component<ArtworkSidebarProps> {
             )}
           </React.Fragment>
         ) : (
-            <React.Fragment>
-              <Spacer mb={3} />
-              <Commercial artwork={artwork} />
-              <PartnerInfo artwork={artwork} />
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            <Spacer mb={3} />
+            <Commercial artwork={artwork} />
+            <PartnerInfo artwork={artwork} />
+          </React.Fragment>
+        )}
 
         <TrustSignalsContainer>
           <AuthenticityCertificate artwork={artwork} />

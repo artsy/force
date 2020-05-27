@@ -1,4 +1,4 @@
-import { Box, media, Serif, space, Spacer, Theme, Toggle } from "@artsy/palette"
+import { Box, Serif, Spacer, Theme, Toggle, media, space } from "@artsy/palette"
 import { AuctionFAQ_viewer } from "v2/__generated__/AuctionFAQ_viewer.graphql"
 import React from "react"
 import Markdown from "react-markdown"

@@ -2,7 +2,7 @@ import { Box, Col, Row } from "@artsy/palette"
 import { ArtistArticles_artist } from "v2/__generated__/ArtistArticles_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { Component } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArticleItem } from "./ArtistArticle"
 
@@ -24,7 +24,7 @@ interface ArtistArticlesProps {
 export class ArtistArticles extends Component<
   ArtistArticlesProps,
   LoadingAreaState
-  > {
+> {
   state = {
     isLoading: false,
   }

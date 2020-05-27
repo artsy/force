@@ -1,4 +1,4 @@
-import { bidderRegistration, auctionFAQRoute } from "./routes"
+import { auctionFAQRoute, bidderRegistration } from "./routes"
 import { stitch } from "@artsy/stitch"
 
 jest.mock("v2/Artsy/Router/server", () => {
