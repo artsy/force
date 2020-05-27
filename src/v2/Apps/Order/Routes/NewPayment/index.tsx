@@ -28,7 +28,7 @@ import {
 } from "v2/Apps/Order/Utils/commitMutation"
 import { get } from "v2/Utils/get"
 
-export const ContinueButton = props => (
+export const ContinueButton = (props) => (
   <Button size="large" width="100%" {...props}>
     Continue
   </Button>
@@ -54,8 +54,8 @@ const logger = createLogger("Order/Routes/NewPayment/index.tsx")
 
 @track()
 export class NewPaymentRoute extends Component<
-NewPaymentProps,
-NewPaymentState
+  NewPaymentProps,
+  NewPaymentState
 > {
   paymentPicker = React.createRef<PaymentPicker>()
   state = {
@@ -295,7 +295,7 @@ NewPaymentState
   artistId() {
     return get(
       this.props.order,
-      o => o.lineItems.edges[0].node.artwork.artists[0].slug
+      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 
@@ -347,6 +347,3 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default NewPaymentFragmentContainer

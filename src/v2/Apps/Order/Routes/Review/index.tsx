@@ -65,7 +65,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
     }
   }
 
-  @track<ReviewProps>(props => ({
+  @track<ReviewProps>((props) => ({
     action_type:
       props.order.mode === "BUY"
         ? Schema.ActionType.SubmittedOrder
@@ -85,7 +85,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
         this.props.order.mode === "BUY"
           ? (await this.submitBuyOrder()).commerceSubmitOrder.orderOrError
           : (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
-            .orderOrError
+              .orderOrError
 
       if (orderOrError.error) {
         this.handleSubmitError(orderOrError.error)
@@ -97,7 +97,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
       ) {
         this.state.stripe
           .handleCardAction(orderOrError.actionData.clientSecret)
-          .then(result => {
+          .then((result) => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
                 title: "An error occurred",
@@ -115,7 +115,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
       ) {
         this.state.stripe
           .handleCardSetup(orderOrError.actionData.clientSecret)
-          .then(result => {
+          .then((result) => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
                 title: "An error occurred",
@@ -289,14 +289,14 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
   artistId() {
     return get(
       this.props.order,
-      o => o.lineItems.edges[0].node.artwork.artists[0].slug
+      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 
   routeToArtworkPage() {
     const artworkId = get(
       this.props.order,
-      o => o.lineItems.edges[0].node.artwork.slug
+      (o) => o.lineItems.edges[0].node.artwork.slug
     )
     // Don't confirm whether or not you want to leave the page
     this.props.route.onTransition = () => null
@@ -448,6 +448,3 @@ export const ReviewFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default ReviewFragmentContainer

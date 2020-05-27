@@ -96,7 +96,7 @@ export class Accept extends Component<AcceptProps> {
     logger.error(error)
     switch (error.code) {
       case "capture_failed": {
-        const parsedData = get(error, e => JSON.parse(e.data), {})
+        const parsedData = get(error, (e) => JSON.parse(e.data), {})
 
         // https://stripe.com/docs/declines/codes
         if (parsedData.decline_code === "insufficient_funds") {
@@ -148,7 +148,7 @@ export class Accept extends Component<AcceptProps> {
   artistId() {
     return get(
       this.props.order,
-      o => o.lineItems.edges[0].node.artwork.artists[0].slug
+      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 
@@ -221,7 +221,7 @@ export class Accept extends Component<AcceptProps> {
               <Flex flexDirection="column">
                 <Flex flexDirection="column">
                   <Media greaterThan="xs">
-                    {className => (
+                    {(className) => (
                       <ArtworkSummaryItem className={className} order={order} />
                     )}
                   </Media>
@@ -288,6 +288,3 @@ export const AcceptFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default AcceptFragmentContainer

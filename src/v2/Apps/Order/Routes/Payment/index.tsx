@@ -30,7 +30,7 @@ import {
 } from "v2/Apps/Order/Utils/commitMutation"
 import { AnalyticsSchema, track } from "v2/Artsy"
 
-export const ContinueButton = props => (
+export const ContinueButton = (props) => (
   <Button size="large" width="100%" {...props}>
     Continue
   </Button>
@@ -241,6 +241,3 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default PaymentFragmentContainer
