@@ -49,7 +49,7 @@ const CATEGORIES = {
 }
 
 @track<Props>(
-  props =>
+  (props) =>
     ({
       context_module: "Header",
       // TODO: Old schema for the Follow button
@@ -226,7 +226,7 @@ const handleOpenAuth = (mediator, artist) => {
   })
 }
 
-const renderAuctionHighlight = artist => {
+const renderAuctionHighlight = (artist) => {
   const topAuctionResult = get(
     artist,
     () => artist.auctionResultsConnection.edges[0].node.price_realized.display
@@ -243,7 +243,7 @@ const renderAuctionHighlight = artist => {
   }
 }
 
-const renderRepresentationStatus = artist => {
+const renderRepresentationStatus = (artist) => {
   const { artistHightlights } = artist
   const { partnersConnection } = artistHightlights
   if (

@@ -3,14 +3,20 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistTopWorksRail_topRailArtworks = {
-    readonly name: string | null;
-    readonly topRailArtworks: {
+    readonly slug: string;
+    readonly images: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly title: string | null;
+                readonly id: string;
                 readonly image: {
-                    readonly url: string | null;
+                    readonly imageAspectRatio: number;
+                    readonly resized: {
+                        readonly url: string | null;
+                        readonly width: number | null;
+                        readonly height: number | null;
+                    } | null;
                 } | null;
+                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -34,13 +40,13 @@ const node: ReaderFragment = {
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "name",
+      "name": "slug",
       "args": null,
       "storageKey": null
     },
     {
       "kind": "LinkedField",
-      "alias": "topRailArtworks",
+      "alias": "images",
       "name": "artworksConnection",
       "storageKey": "artworksConnection(first:10,sort:\"ICONICITY_DESC\")",
       "args": [
@@ -79,7 +85,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "title",
+                  "name": "id",
                   "args": null,
                   "storageKey": null
                 },
@@ -94,12 +100,55 @@ const node: ReaderFragment = {
                   "selections": [
                     {
                       "kind": "ScalarField",
-                      "alias": null,
-                      "name": "url",
+                      "alias": "imageAspectRatio",
+                      "name": "aspectRatio",
                       "args": null,
                       "storageKey": null
+                    },
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "resized",
+                      "storageKey": "resized(height:300)",
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "height",
+                          "value": 300
+                        }
+                      ],
+                      "concreteType": "ResizedImageUrl",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "url",
+                          "args": null,
+                          "storageKey": null
+                        },
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "width",
+                          "args": null,
+                          "storageKey": null
+                        },
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "height",
+                          "args": null,
+                          "storageKey": null
+                        }
+                      ]
                     }
                   ]
+                },
+                {
+                  "kind": "FragmentSpread",
+                  "name": "FillwidthItem_artwork",
+                  "args": null
                 }
               ]
             }
@@ -109,5 +158,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '4cdf229909a2045c21ac75fa77a18288';
+(node as any).hash = 'f23b426a184a60d5d935783b55b454a7';
 export default node;
