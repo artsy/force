@@ -4,6 +4,7 @@ const sharedConfig = {
     ".(ts|tsx|js|jsx)": "babel-jest",
     "\\.graphql$": "jest-raw-loader",
   },
+  cacheDirectory: ".cache/jest",
   coverageDirectory: "./coverage/",
   collectCoverage: true,
   coverageReporters: ["lcov", "text-summary"],
@@ -18,7 +19,7 @@ module.exports = {
      */
     {
       ...sharedConfig,
-      modulePathIgnorePatterns: ["v2"],
+      modulePathIgnorePatterns: ["v2", "data"],
       testRegex: ".*\\.jest\\.(ts|tsx|js|jsx)$",
       setupFiles: ["<rootDir>/test.config.js"],
       roots: ["<rootDir>/src"],
