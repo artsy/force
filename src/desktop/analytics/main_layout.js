@@ -90,18 +90,15 @@ class PageTimeTracker {
     this.timer = setTimeout(() => {
       let trackingOptions = {}
 
-      // FIXME: Remove once A/B test completes
-      if (sd.CLIENT_NAVIGATION_V5 === "experiment") {
-        const referrer = window.analytics.__artsyReferrer
-        // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-        // single-page-app context and the value will need to be refreshed on route
-        // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
-        if (referrer) {
-          trackingOptions = {
-            page: {
-              referrer,
-            },
-          }
+      const referrer = window.analytics.__artsyReferrer
+      // Grab referrer from our trackingMiddleware in Reaction, since we're in a
+      // single-page-app context and the value will need to be refreshed on route
+      // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+      if (referrer) {
+        trackingOptions = {
+          page: {
+            referrer,
+          },
         }
       }
 

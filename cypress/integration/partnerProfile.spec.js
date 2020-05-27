@@ -46,6 +46,7 @@ describe("/:partner_id", () => {
     })
     it("shows partner articles", () => {
       cy.visit("gagosian-gallery/articles")
+      cy.wait(2000)
       cy.contains("Articles")
     })
 

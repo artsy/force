@@ -1,9 +1,10 @@
 const sharedConfig = {
   transform: {
+    "\\.(gql|graphql)$": "jest-transform-graphql",
     "^.+\\.coffee$": "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
     ".(ts|tsx|js|jsx)": "babel-jest",
-    "\\.graphql$": "jest-raw-loader",
   },
+  cacheDirectory: ".cache/jest",
   coverageDirectory: "./coverage/",
   collectCoverage: true,
   coverageReporters: ["lcov", "text-summary"],

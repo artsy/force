@@ -79,7 +79,7 @@ const logger = createLogger("Order/Routes/Shipping/index.tsx")
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
     shippingOption: (this.props.order.requestedFulfillment &&
-      this.props.order.requestedFulfillment.__typename !== "CommerceShip"
+    this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
     address: this.startingAddress,
@@ -87,8 +87,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     addressTouched: {},
     phoneNumber:
       this.props.order.requestedFulfillment &&
-        (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
-          this.props.order.requestedFulfillment.__typename === "CommercePickup")
+      (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
+        this.props.order.requestedFulfillment.__typename === "CommercePickup")
         ? this.props.order.requestedFulfillment.phoneNumber
         : "",
     phoneNumberError: "",
@@ -231,7 +231,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   handleSubmitError(error: { code: string; data: string }) {
     logger.error(error)
-    const parsedData = get(error, e => JSON.parse(e.data), {})
+    const parsedData = get(error, (e) => JSON.parse(e.data), {})
     if (
       error.code === "missing_region" ||
       error.code === "missing_country" ||
@@ -267,7 +267,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       country: validatePresence(country),
       postalCode: usOrCanada && validatePresence(postalCode),
     }
-    const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
+    const hasErrors =
+      Object.keys(errors).filter((key) => errors[key]).length > 0
 
     return {
       errors,
@@ -300,7 +301,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
-  onPhoneNumberChange: PhoneNumberChangeHandler = phoneNumber => {
+  onPhoneNumberChange: PhoneNumberChangeHandler = (phoneNumber) => {
     const { error } = this.validatePhoneNumber(phoneNumber)
     this.setState({
       phoneNumber,
@@ -334,7 +335,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     } = this.state
     const artwork = get(
       this.props,
-      props => props.order.lineItems.edges[0].node.artwork
+      (props) => props.order.lineItems.edges[0].node.artwork
     )
 
     return (
@@ -508,6 +509,3 @@ export const ShippingFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default ShippingFragmentContainer

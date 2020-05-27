@@ -71,7 +71,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     highSpeedBumpEncountered: false,
   }
 
-  @track<RespondProps>(props => ({
+  @track<RespondProps>((props) => ({
     order_id: props.order.internalID,
     action_type: Schema.ActionType.FocusedOnOfferInput,
     flow: Schema.Flow.MakeOffer,
@@ -80,7 +80,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     // noop
   }
 
-  @track<RespondProps>(props => ({
+  @track<RespondProps>((props) => ({
     order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferTooLow,
     flow: Schema.Flow.MakeOffer,
@@ -95,7 +95,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     })
   }
 
-  @track<RespondProps>(props => ({
+  @track<RespondProps>((props) => ({
     order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferHigherThanListPrice,
     flow: Schema.Flow.MakeOffer,
@@ -272,7 +272,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                         showError={
                           this.state.formIsDirty && this.state.offerValue <= 0
                         }
-                        onChange={offerValue => this.setState({ offerValue })}
+                        onChange={(offerValue) => this.setState({ offerValue })}
                         onFocus={this.onOfferInputFocus.bind(this)}
                       />
                       <Spacer mb={0.5} />
@@ -282,7 +282,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                       >
                         <Spacer mb={1} />
                         <OfferNote
-                          onChange={offerNoteValue =>
+                          onChange={(offerNoteValue) =>
                             this.setState({ offerNoteValue })
                           }
                           artworkId={artworkId}
@@ -393,6 +393,3 @@ export const RespondFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default RespondFragmentContainer

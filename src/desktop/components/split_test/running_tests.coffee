@@ -26,10 +26,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {
-  client_navigation_v5:
-    key: "client_navigation_v5"
-    outcomes:
-      control: 50
-      experiment: 50
-}
+module.exports = {}

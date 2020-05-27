@@ -110,7 +110,7 @@ export class CounterRoute extends Component<CounterProps> {
     }
   }
 
-  @track<CounterProps>(props => ({
+  @track<CounterProps>((props) => ({
     action_type: Schema.ActionType.SubmittedCounterOffer,
     order_id: props.order.internalID,
   }))
@@ -248,6 +248,3 @@ export const CounterFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default CounterFragmentContainer

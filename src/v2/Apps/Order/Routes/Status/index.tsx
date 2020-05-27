@@ -53,26 +53,26 @@ export class StatusRoute extends Component<StatusProps> {
       case "SUBMITTED":
         return isOfferFlow
           ? {
-            title: "Your offer has been submitted",
-            description: (
-              <>
-                The seller will respond to your offer by {stateExpiresAt}.
+              title: "Your offer has been submitted",
+              description: (
+                <>
+                  The seller will respond to your offer by {stateExpiresAt}.
                   Keep in mind making an offer doesn’t guarantee you the work.
-              </>
-            ),
-          }
+                </>
+              ),
+            }
           : {
-            title: "Your order has been submitted",
-            description: (
-              <>
-                Thank you for your purchase. You will receive a confirmation
+              title: "Your order has been submitted",
+              description: (
+                <>
+                  Thank you for your purchase. You will receive a confirmation
                   email by {stateExpiresAt}.
-                <br />
+                  <br />
                   Disruptions caused by COVID-19 may cause delays — we
                   appreciate your understanding.
-              </>
-            ),
-          }
+                </>
+              ),
+            }
       case "APPROVED":
         return {
           title: isOfferFlow ? "Offer accepted" : "Your order is confirmed",
@@ -85,25 +85,25 @@ export class StatusRoute extends Component<StatusProps> {
               your understanding.
             </>
           ) : (
-              <>
-                Thank you for your purchase. A specialist will contact you within
-                2 business days to coordinate pickup.
-                <br />
+            <>
+              Thank you for your purchase. A specialist will contact you within
+              2 business days to coordinate pickup.
+              <br />
               Disruptions caused by COVID-19 may cause delays — we appreciate
               your understanding.
-              </>
-            ),
+            </>
+          ),
         }
       case "FULFILLED": {
         return isShip
           ? {
-            title: "Your order has shipped",
-            description: this.getFulfilmentDescription(),
-          }
+              title: "Your order has shipped",
+              description: this.getFulfilmentDescription(),
+            }
           : {
-            title: "Your order has been picked up",
-            description: null,
-          }
+              title: "Your order has been picked up",
+              description: null,
+            }
       }
       case "CANCELED":
       case "REFUNDED":
@@ -205,7 +205,7 @@ export class StatusRoute extends Component<StatusProps> {
   getFulfilmentDescription(): React.ReactNode {
     const fulfillment = get(
       this.props.order,
-      o => o.lineItems.edges[0].node.fulfillments.edges[0].node
+      (o) => o.lineItems.edges[0].node.fulfillments.edges[0].node
     )
 
     if (!fulfillment) {
@@ -272,16 +272,16 @@ export class StatusRoute extends Component<StatusProps> {
                       />
                     </Flex>
                   ) : (
-                      <Button
-                        onClick={() => {
-                          window.location.href = "/"
-                        }}
-                        size="large"
-                        width="100%"
-                      >
-                        Back to Artsy
-                      </Button>
-                    )}
+                    <Button
+                      onClick={() => {
+                        window.location.href = "/"
+                      }}
+                      size="large"
+                      width="100%"
+                    >
+                      Back to Artsy
+                    </Button>
+                  )}
                 </Join>
               </>
             }
@@ -373,6 +373,3 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
     }
   `,
 })
-
-// For bundle splitting in router
-export default StatusFragmentContainer

@@ -76,9 +76,6 @@ export interface SystemContextProps extends SystemContextState {
    * Useful for passing arbitrary data from Force.
    */
   injectedData?: any
-
-  // TODO: Remove once A/B test completes
-  EXPERIMENTAL_APP_SHELL?: boolean
 }
 
 export const SystemContext = React.createContext<SystemContextProps>({})

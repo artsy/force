@@ -29,14 +29,15 @@ const commitMutation = _commitMutation as jest.Mock<any>
 describe("ArtworkSidebarCommercial", () => {
   let user
   const mediator = { trigger: jest.fn() }
-  const getWrapper = artwork => {
+  const getWrapper = (artwork, otherProps = {}) => {
     return mount(
       <MockBoot>
         <ArtworkSidebarCommercialContainer
-          artwork={artwork as any}
+          artwork={artwork}
           user={user}
           mediator={mediator}
           relay={{ environment: {} } as RelayProp}
+          {...otherProps}
         />
       </MockBoot>
     )
@@ -85,7 +86,7 @@ describe("ArtworkSidebarCommercial", () => {
       }
     )
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("VAT included in price")
   })
@@ -99,7 +100,7 @@ describe("ArtworkSidebarCommercial", () => {
       }
     )
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).not.toContain("VAT included in price")
   })
@@ -107,7 +108,7 @@ describe("ArtworkSidebarCommercial", () => {
   it("displays single editioned hidden availability inquire work", async () => {
     const artwork = Object.assign({}, ArtworkSingleEditionHiddenAvailability)
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).not.toContain("20 × 24 in")
     expect(wrapper.text()).not.toContain("50.8 × 61 cm")
@@ -117,7 +118,7 @@ describe("ArtworkSidebarCommercial", () => {
   it("displays artwork enrolled in Buy Now", async () => {
     const artwork = Object.assign({}, ArtworkBuyNow)
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Buy now")
   })
@@ -125,7 +126,7 @@ describe("ArtworkSidebarCommercial", () => {
   it("displays sold acquireable artwork", async () => {
     const artwork = Object.assign({}, ArtworkSold)
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Sold")
   })
@@ -133,7 +134,7 @@ describe("ArtworkSidebarCommercial", () => {
   it("displays artwork enrolled in Make Offer", async () => {
     const artwork = Object.assign({}, ArtworkMakeOffer)
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Make offer")
   })
@@ -141,7 +142,7 @@ describe("ArtworkSidebarCommercial", () => {
   it("displays artwork enrolled in Make Offer when enabled for both make offer and inquiry", async () => {
     const artwork = Object.assign({}, ArtworkOfferableAndInquireable)
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Make offer")
     expect(wrapper.text()).not.toContain("Contact gallery")
@@ -150,18 +151,20 @@ describe("ArtworkSidebarCommercial", () => {
   it("displays artwork enrolled in both Buy Now and Make Offer", async () => {
     const artwork = Object.assign({}, ArtworkBuyNowMakeOffer)
 
-    const wrapper = await getWrapper(artwork)
+    const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Buy now")
     expect(wrapper.text()).toContain("Make offer")
   })
 
   it("creates a Buy Now order and redirects to the order page", () => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
-    const component = getWrapper(ArtworkBuyNow)
+    const spy = jest.fn()
+    const props = {
+      router: {
+        push: spy,
+      },
+    }
+    const component = getWrapper(ArtworkBuyNow, props)
 
     commitMutation.mockImplementationOnce((_environment, { onCompleted }) => {
       onCompleted(OrderWithSuccess)
@@ -170,7 +173,7 @@ describe("ArtworkSidebarCommercial", () => {
     component.find(Button).simulate("click")
 
     expect(commitMutation).toHaveBeenCalledTimes(1)
-    expect(window.location.assign).toHaveBeenCalledWith("/orders/orderId")
+    expect(spy).toHaveBeenCalledWith("/orders/orderId")
   })
 
   it("displays an error modal when a Buy Now mutation fails", () => {
@@ -201,11 +204,13 @@ describe("ArtworkSidebarCommercial", () => {
   })
 
   it("creates a Make Offer order and redirects to the order offer page", () => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
-    const component = getWrapper(ArtworkMakeOffer)
+    const spy = jest.fn()
+    const props = {
+      router: {
+        push: spy,
+      },
+    }
+    const component = getWrapper(ArtworkMakeOffer, props)
 
     commitMutation.mockImplementationOnce((_environment, { onCompleted }) => {
       onCompleted(OfferOrderWithSuccess)
@@ -213,8 +218,8 @@ describe("ArtworkSidebarCommercial", () => {
 
     component.find(Button).simulate("click")
 
-    expect(commitMutation).toHaveBeenCalledTimes(1)
-    expect(window.location.assign).toHaveBeenCalledWith("/orders/orderId/offer")
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith("/orders/orderId/offer")
   })
 
   it("displays an error modal when a Make Offer mutation fails", () => {

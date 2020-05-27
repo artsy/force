@@ -17,7 +17,7 @@ interface TrackingMiddlewareOptions {
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
-  return store => next => action => {
+  return (store) => (next) => (action) => {
     const { excludePaths = [] } = options
     const { type, payload } = action
 
@@ -26,7 +26,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
         const { pathname } = payload
         const referrer = get(
           store.getState(),
-          state =>
+          (state) =>
             state.found.match.location.pathname +
             state.found.match.location.search
         )
@@ -39,7 +39,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
           // TODO: Pass referrer over to Artwork page if A/B test passes
           // window.sd.routerReferrer = referrer
 
-          const foundExcludedPath = excludePaths.some(excludedPath => {
+          const foundExcludedPath = excludePaths.some((excludedPath) => {
             const matcher = match(excludedPath, { decode: decodeURIComponent })
             const foundMatch = !!matcher(pathname)
             return foundMatch
@@ -57,16 +57,6 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             }
 
             if (referrer) {
-              trackingData.referrer = sd.APP_URL + referrer
-            }
-
-            // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
-            if (
-              ["/collect", "/collections", "/collection/"].some(path =>
-                pathname.includes(path)
-              ) &&
-              referrer
-            ) {
               trackingData.referrer = sd.APP_URL + referrer
             }
 
@@ -90,11 +80,6 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
                 Marketo: false,
               },
             })
-
-            // TODO: Remove after EXPERIMENTAL_APP_SHELL AB test ends.
-            // if (sd.CLIENT_NAVIGATION_V5) {
-            //   trackExperimentViewed("client_navigation_v5", trackingData)
-            // }
           }
 
           // Reset timers that track time on page since we're tracking each order
@@ -104,7 +89,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             window.desktopPageTimeTrackers
 
           if (desktopPageTimeTrackers) {
-            desktopPageTimeTrackers.forEach(tracker => {
+            desktopPageTimeTrackers.forEach((tracker) => {
               // No need to reset the tracker if we're on the same page.
               if (pathname !== tracker.path) {
                 tracker.reset(pathname)

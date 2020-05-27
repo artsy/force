@@ -1,13 +1,16 @@
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-
-// @ts-ignore
 import { RouteConfig } from "found"
-import { PurchaseAppFragmentContainer as PurchaseApp } from "./PurchaseApp"
+
+const PurchasesApp = loadable(() => import("./PurchaseApp"))
 
 export const routes: RouteConfig[] = [
   {
     path: "/user/purchases",
-    Component: PurchaseApp,
+    getComponent: () => PurchasesApp,
+    prepare: () => {
+      PurchasesApp.preload()
+    },
     query: graphql`
       query routes_PurchaseQuery {
         me {
