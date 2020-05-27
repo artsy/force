@@ -7,24 +7,28 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
+import { Media } from "v2/Utils/Responsive"
 
 export interface WorksRouteProps {
   artist: Works_artist
 }
 
-export const WorksRoute: React.FC<WorksRouteProps> = props => {
+export const WorksRoute: React.FC<WorksRouteProps> = (props) => {
   const { artist } = props
   const { sidebarAggregations } = artist
 
   const isClient = typeof window !== "undefined"
   const showRecommendations =
     isClient &&
-    get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
+    get(artist, (a) => a.related.artistsConnection.edges.length, 0) > 0
 
   return (
     <>
       <Box>
         <ArtistTopWorksRail topRailArtworks={artist} />
+        <Media greaterThan="xs">
+          <Separator mx={5} />
+        </Media>
       </Box>
 
       <Box>

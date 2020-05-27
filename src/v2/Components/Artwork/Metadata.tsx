@@ -1,6 +1,6 @@
 import { Metadata_artwork } from "v2/__generated__/Metadata_artwork.graphql"
 import colors from "v2/Assets/Colors"
-import { garamond } from "v2/Assets/Fonts"
+import { unica } from "v2/Assets/Fonts"
 import StyledTextLink from "v2/Components/TextLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,6 +10,9 @@ import { DetailsFragmentContainer as Details } from "./Details"
 export interface MetadataProps extends React.HTMLProps<MetadataContainer> {
   artwork: Metadata_artwork
   extended?: boolean
+  hidePartnerName?: boolean
+  hideArtistName?: boolean
+  useLighterFont?: boolean
 }
 
 export class MetadataContainer extends React.Component<MetadataProps> {
@@ -18,7 +21,14 @@ export class MetadataContainer extends React.Component<MetadataProps> {
   }
 
   render() {
-    const { artwork, className, extended } = this.props
+    const {
+      artwork,
+      className,
+      extended,
+      hidePartnerName,
+      hideArtistName,
+      useLighterFont,
+    } = this.props
 
     return (
       <StyledTextLink href={artwork.href}>
@@ -27,6 +37,9 @@ export class MetadataContainer extends React.Component<MetadataProps> {
             includeLinks={false}
             showSaleLine={extended}
             artwork={artwork}
+            hidePartnerName={hidePartnerName}
+            hideArtistName={hideArtistName}
+            useLighterFont={useLighterFont}
           />
         </div>
       </StyledTextLink>
@@ -35,7 +48,7 @@ export class MetadataContainer extends React.Component<MetadataProps> {
 }
 
 export const Metadata = styled(MetadataContainer)`
-  ${garamond("s15")};
+  ${unica("s14")};
   color: ${colors.graySemibold};
   margin-top: 12px;
   text-align: left;

@@ -38,6 +38,9 @@ export interface FillwidthItemContainerProps
   targetHeight?: number
   width?: number
   lazyLoad?: boolean
+  hidePartnerName?: boolean
+  hideArtistName?: boolean
+  useLighterFont?: boolean
 }
 
 export class FillwidthItemContainer extends React.Component<
@@ -103,6 +106,9 @@ export class FillwidthItemContainer extends React.Component<
       showMetadata,
       targetHeight,
       user,
+      hidePartnerName,
+      hideArtistName,
+      useLighterFont,
     } = this.props
 
     let userSpread = {}
@@ -111,9 +117,9 @@ export class FillwidthItemContainer extends React.Component<
     }
     const isAdmin = userIsAdmin(user)
 
-    const image = get(this.props, p => p.artwork.image)
+    const image = get(this.props, (p) => p.artwork.image)
     if (!image) {
-      const href = get(this.props, p => p.artwork.href, "(unknown href)")
+      const href = get(this.props, (p) => p.artwork.href, "(unknown href)")
       logger.error(`Artwork at ${href} does not have an image!`)
       return null
     }
@@ -149,7 +155,15 @@ export class FillwidthItemContainer extends React.Component<
             style={{ position: "absolute", right: "5px", bottom: "5px" }}
           />
         </Placeholder>
-        {showMetadata && <Metadata artwork={artwork} extended={showExtended} />}
+        {showMetadata && (
+          <Metadata
+            artwork={artwork}
+            extended={showExtended}
+            hidePartnerName={hidePartnerName}
+            hideArtistName={hideArtistName}
+            useLighterFont={useLighterFont}
+          />
+        )}
       </div>
     )
   }
@@ -159,9 +173,9 @@ export const FillwidthItem = styled(FillwidthItemContainer).attrs<
   FillwidthItemContainerProps
 >({})`
   display: inline-block;
-  width: ${props => props.width}px;
+  width: ${(props) => props.width}px;
   vertical-align: top;
-  margin-right: ${props => props.margin || 0}px;
+  margin-right: ${(props) => props.margin || 0}px;
 
   .artwork-save {
     opacity: 0;
