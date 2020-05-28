@@ -43,41 +43,6 @@
     "unlink-all": "yalc remove --all && yarn --check-files",
     "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn type-check"
-    }
-  },
-  "lint-staged": {
-    "*.@(js|jsx|ts|tsx)": [
-      "yarn lint --fix",
-      "yarn prettier-write"
-    ]
-  },
-  "reporterEnabled": "mocha-junit-reporter, spec",
-  "mochaJunitReporterReporterOptions": {
-    "mochaFile": "reports/mocha/test-results.xml"
-  },
-  "nyc": {
-    "check-coverage": true,
-    "report-dir": "./.nyc_output/",
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ],
-    "extension": [
-      ".coffee",
-      ".js"
-    ],
-    "lines": 0
-  },
-  "prettier": {
-    "bracketSpacing": true,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "es5"
-  },
   "resolutions": {
     "@types/react": "16.9.34",
     "babel-core": "7.0.0-bridge.0",
@@ -358,7 +323,7 @@
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
     "konami-js": "0.0.2",
-    "lint-staged": "10.0.8",
+    "lint-staged": "^10.2.6",
     "mime": "2.4.0",
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
@@ -401,5 +366,44 @@
   },
   "optionalDependencies": {
     "fsevents": "*"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn type-check"
+    }
+  },
+  "lint-staged": {
+    "*.{md}": [
+      "yarn prettier-write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "yarn lint --fix",
+      "yarn prettier-write"
+    ]
+  },
+  "reporterEnabled": "mocha-junit-reporter, spec",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "reports/mocha/test-results.xml"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "report-dir": "./.nyc_output/",
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "extension": [
+      ".coffee",
+      ".js"
+    ],
+    "lines": 0
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "es5"
   }
 }
