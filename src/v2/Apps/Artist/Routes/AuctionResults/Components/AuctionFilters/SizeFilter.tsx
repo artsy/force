@@ -4,8 +4,8 @@ import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContex
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
-  { displayName: "Medium (40–70cm)", name: "MEDIUM" },
-  { displayName: "Large (over 70cm)", name: "LARGE" },
+  { displayName: "Medium (40–100cm)", name: "MEDIUM" },
+  { displayName: "Large (over 100cm)", name: "LARGE" },
 ]
 
 export const SizeFilter: React.FC = () => {
