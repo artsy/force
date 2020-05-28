@@ -6,7 +6,6 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { AuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import { TableSidebar } from "./Components/TableSidebar"
-
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/Artsy"
@@ -40,56 +39,18 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   relay,
 }) => {
   const filterContext = useAuctionResultsFilterContext()
-
-  const {
-    sort,
-    organizations,
-    categories,
-    sizes,
-    createdAfterYear,
-    createdBeforeYear,
-    allowEmptyCreatedDates,
-  } = filterContext.filters
-
-  // Detect whether user has paginated at all.
-  const [paginated, togglePaginated] = useState(false)
+  const { pageInfo } = artist.auctionResultsConnection
+  const { hasNextPage, endCursor } = pageInfo
 
   const loadNext = () => {
-    const { hasNextPage, endCursor } = pageInfo
-
+    const nextPageNum = filterContext.filters.pageAndCursor.page + 1
     if (hasNextPage) {
-      loadAfter(endCursor)
+      loadPage(endCursor, nextPageNum)
     }
   }
 
-  const loadAfter = cursor => {
-    setIsLoading(true)
-    togglePaginated(true)
-
-    relay.refetch(
-      {
-        first: PAGE_SIZE,
-        after: cursor,
-        artistID: artist.slug,
-        before: null,
-        last: null,
-        organizations,
-        categories,
-        sizes,
-        sort,
-        createdBeforeYear,
-        createdAfterYear,
-        allowEmptyCreatedDates,
-      },
-      null,
-      error => {
-        setIsLoading(false)
-
-        if (error) {
-          logger.error(error)
-        }
-      }
-    )
+  const loadPage = (cursor, pageNum) => {
+    filterContext.setFilter("pageAndCursor", { page: pageNum, cursor: cursor })
   }
 
   const [isLoading, setIsLoading] = useState(false)
@@ -110,6 +71,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       ([filterKey, currentFilter]) => {
         const previousFilter = previousFilters[filterKey]
         const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
+
         if (filtersHaveUpdated) {
           fetchResults()
 
@@ -134,7 +96,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     const relayParams = {
       first: PAGE_SIZE,
       artistID: artist.slug,
-      after: null,
+      after: filterContext.filters.pageAndCursor.cursor,
       before: null,
       last: null,
     }
@@ -153,7 +115,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     })
   }
 
-  const { pageInfo } = artist.auctionResultsConnection
   const auctionResultsLength = artist.auctionResultsConnection.edges.length
 
   const resultList = (
@@ -166,7 +127,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
               auctionResult={node}
               lastChild={index === auctionResultsLength - 1}
               filtersAtDefault={filtersAtDefault}
-              paginated={paginated}
             />
           </React.Fragment>
         )
@@ -211,8 +171,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             <Pagination
               hasNextPage={pageInfo.hasNextPage}
               pageCursors={artist.auctionResultsConnection.pageCursors}
-              onClick={loadAfter}
-              onNext={loadNext}
+              onClick={(_cursor, page) => loadPage(_cursor, page)}
+              onNext={() => loadNext()}
               scrollTo="#jumpto-ArtistHeader"
             />
           </Box>
