@@ -14,6 +14,8 @@ describe("LoginForm", () => {
   beforeEach(() => {
     props = {
       handleSubmit: jest.fn(),
+      onFacebookLogin: jest.fn(),
+      onAppleLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
   })
@@ -139,6 +141,18 @@ describe("LoginForm", () => {
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
         password: "password",
+      })
+    })
+
+    it("does not render email errors for social sign ups", done => {
+      const wrapper = getWrapper()
+      const socialLink = wrapper.find("Link").at(1)
+      socialLink.simulate("click")
+      wrapper.update()
+
+      setTimeout(() => {
+        expect(wrapper.html()).not.toMatch("Please enter a valid email.")
+        done()
       })
     })
 

@@ -23,6 +23,8 @@ describe("SignUpForm", () => {
   beforeEach(() => {
     props = {
       handleSubmit: jest.fn(),
+      onFacebookLogin: jest.fn(),
+      onAppleLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
   })
@@ -119,7 +121,6 @@ describe("SignUpForm", () => {
 
   it("calls apple callback on tapping link", done => {
     mockEnableRequestSignInWithApple.mockReturnValue(true)
-    props.onAppleLogin = jest.fn()
     props.values = SignupValues
     const wrapper = getWrapper()
 
@@ -167,6 +168,18 @@ describe("SignUpForm", () => {
 
     setTimeout(() => {
       expect(props.onAppleLogin).not.toBeCalled()
+      done()
+    })
+  })
+
+  it("does not render email errors for social sign ups", done => {
+    const wrapper = getWrapper()
+    const socialLink = wrapper.find("Link").at(1)
+    socialLink.simulate("click")
+    wrapper.update()
+
+    setTimeout(() => {
+      expect(wrapper.html()).not.toMatch("Please enter a valid email.")
       done()
     })
   })

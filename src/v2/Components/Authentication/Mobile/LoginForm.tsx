@@ -81,6 +81,7 @@ const OtpInputTrigger: React.FC<OtpInputTriggerProps> = props => {
 interface LoginFormState {
   error: string
   showOtp: boolean
+  isSocialSignUp: boolean
 }
 
 class MobileLoginFormWithSystemContext extends Component<
@@ -91,6 +92,7 @@ class MobileLoginFormWithSystemContext extends Component<
     super(props)
 
     this.state = {
+      isSocialSignUp: false,
       error: props.error,
       showOtp: props.error === "missing two-factor authentication code",
     }
@@ -130,7 +132,7 @@ class MobileLoginFormWithSystemContext extends Component<
       {({ form: { errors, values, handleChange, handleBlur, setTouched } }) => (
         <QuickInput
           block
-          error={errors.email}
+          error={!this.state.isSocialSignUp && errors.email}
           placeholder="Enter your email address"
           name="email"
           label="Email"
@@ -226,7 +228,16 @@ class MobileLoginFormWithSystemContext extends Component<
                   setShowOtp={this.setShowOtp}
                 />
                 <SubmitButton
-                  onClick={handleSubmit}
+                  onClick={e => {
+                    this.setState(
+                      {
+                        isSocialSignUp: false,
+                      },
+                      () => {
+                        handleSubmit(e)
+                      }
+                    )
+                  }}
                   loading={isLastStep && isSubmitting}
                 >
                   {isLastStep ? "Log in" : "Next"}
@@ -234,8 +245,26 @@ class MobileLoginFormWithSystemContext extends Component<
                 <Footer
                   mode={"login" as ModalType}
                   handleTypeChange={this.props.handleTypeChange}
-                  onAppleLogin={this.props.onAppleLogin}
-                  onFacebookLogin={this.props.onFacebookLogin}
+                  onAppleLogin={e => {
+                    this.setState(
+                      {
+                        isSocialSignUp: true,
+                      },
+                      () => {
+                        this.props.onAppleLogin(e)
+                      }
+                    )
+                  }}
+                  onFacebookLogin={e => {
+                    this.setState(
+                      {
+                        isSocialSignUp: true,
+                      },
+                      () => {
+                        this.props.onFacebookLogin(e)
+                      }
+                    )
+                  }}
                 />
               </MobileInnerWrapper>
             </MobileContainer>
