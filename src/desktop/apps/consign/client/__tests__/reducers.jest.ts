@@ -29,12 +29,12 @@ describe("Reducers", () => {
   describe("actions", () => {
     describe("setup", () => {
       it("returns the initial state", () => {
-        const { submissionFlow } = reducers(undefined, {})
+        const { submissionFlow } = reducers(undefined, {} as any)
         submissionFlow.currentStep.should.eql("createAccount")
       })
 
       it("passes URL queryParams into state", () => {
-        const initialState = reducers(undefined, {})
+        const initialState = reducers(undefined, {} as any)
         expect(initialState.submissionFlow.contextPath).toEqual("foo")
         expect(initialState.submissionFlow.subject).toEqual("bar")
       })
@@ -44,7 +44,7 @@ describe("Reducers", () => {
       let initialResponse
 
       beforeEach(() => {
-        initialResponse = reducers(undefined, {})
+        initialResponse = reducers(undefined, {} as any)
       })
 
       describe("#updateSubmission", () => {
@@ -293,7 +293,7 @@ describe("Reducers", () => {
           )
           const scrubbedLocation = reducers(
             updatedAutocomplete,
-            actions.scrubLocation()
+            actions.scrubLocation() as any
           )
           scrubbedLocation.submissionFlow.inputs.location_city.should.eql("")
           scrubbedLocation.submissionFlow.inputs.location_state.should.eql("")
@@ -324,7 +324,7 @@ describe("Reducers", () => {
           )
           const scrubbedLocation = reducers(
             updatedAutocomplete,
-            actions.scrubLocation()
+            actions.scrubLocation() as any
           )
           scrubbedLocation.submissionFlow.inputs.location_city.should.eql("")
           scrubbedLocation.submissionFlow.inputs.location_state.should.eql(

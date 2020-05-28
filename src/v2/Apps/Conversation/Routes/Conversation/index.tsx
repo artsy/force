@@ -23,6 +23,10 @@ interface ConversationRouteProps {
   match: Match
 }
 
+/**
+ * FIXME: Added some @ts-ignores to get TypeScript 3.9 updated
+ */
+
 export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const { me } = props
   const { user } = useContext(SystemContext)
@@ -39,17 +43,21 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
         <Title>Inbox | Artsy</Title>
 
         <Media at="xs">
+          {/* @ts-ignore */}
           <ConversationHeader partnerName={me.conversation.to.name} />
         </Media>
         <Media greaterThan="xs">
+          {/* @ts-ignore */}
           <FullHeader partnerName={me.conversation.to.name} />
         </Media>
         <Flex>
           <Media greaterThan="xs">
             <Conversations me={me as any} />
           </Media>
+          {/* @ts-ignore */}
           <Conversation conversation={me.conversation} />
           <Details
+            // @ts-ignore
             conversation={me.conversation as any /** FIXME: Correct type */}
             display={["none", null, null, null, "flex"]}
             width={["100%", "376px"]}
