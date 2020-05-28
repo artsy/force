@@ -18,7 +18,7 @@ import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
-import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Button, Col, Flex, Row, Spacer, Box } from "@artsy/palette"
 import {
   PaymentPicker,
   PaymentPickerFragmentContainer,
@@ -114,7 +114,7 @@ export class PaymentRoute extends Component<PaymentProps, PaymentState> {
     const isLoading = isGettingCreditCardId || isCommittingMutation
 
     return (
-      <>
+      <Box data-test="orderPayment">
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
@@ -170,7 +170,7 @@ export class PaymentRoute extends Component<PaymentProps, PaymentState> {
             }
           />
         </HorizontalPadding>
-      </>
+      </Box>
     )
   }
   setOrderPayment(variables: PaymentRouteSetOrderPaymentMutation["variables"]) {

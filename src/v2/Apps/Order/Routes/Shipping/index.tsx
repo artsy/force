@@ -8,6 +8,7 @@ import {
   Row,
   Sans,
   Spacer,
+  Box,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
@@ -79,7 +80,7 @@ const logger = createLogger("Order/Routes/Shipping/index.tsx")
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
     shippingOption: (this.props.order.requestedFulfillment &&
-      this.props.order.requestedFulfillment.__typename !== "CommerceShip"
+    this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
     address: this.startingAddress,
@@ -87,8 +88,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     addressTouched: {},
     phoneNumber:
       this.props.order.requestedFulfillment &&
-        (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
-          this.props.order.requestedFulfillment.__typename === "CommercePickup")
+      (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
+        this.props.order.requestedFulfillment.__typename === "CommercePickup")
         ? this.props.order.requestedFulfillment.phoneNumber
         : "",
     phoneNumberError: "",
@@ -338,7 +339,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     )
 
     return (
-      <>
+      <Box data-test="orderShipping">
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
@@ -460,7 +461,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             }
           />
         </HorizontalPadding>
-      </>
+      </Box>
     )
   }
 }
