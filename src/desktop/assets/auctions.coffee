@@ -28,7 +28,6 @@ routes =
   /auction-registration/.*
   /auction/.*/bid/.*
   /auction/.*/buyers-premium
-  /feature/.*/bid/.*
   ''': require('../apps/auction_support/client/index.coffee').init
 
   '''
