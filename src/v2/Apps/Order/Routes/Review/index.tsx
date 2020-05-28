@@ -1,4 +1,13 @@
-import { Button, Col, Flex, Join, Message, Row, Spacer } from "@artsy/palette"
+import {
+  Button,
+  Col,
+  Flex,
+  Join,
+  Message,
+  Row,
+  Spacer,
+  Box,
+} from "@artsy/palette"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"
@@ -327,7 +336,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
     const { order, isCommittingMutation } = this.props
 
     return (
-      <>
+      <Box data-test="orderReview">
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
@@ -407,7 +416,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
             }
           />
         </HorizontalPadding>
-      </>
+      </Box>
     )
   }
 }

@@ -8,6 +8,7 @@ import {
   Row,
   Sans,
   Spacer,
+  Box,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
@@ -338,7 +339,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     )
 
     return (
-      <>
+      <Box data-test="orderShipping">
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
@@ -460,7 +461,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             }
           />
         </HorizontalPadding>
-      </>
+      </Box>
     )
   }
 }
