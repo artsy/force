@@ -18,7 +18,8 @@ COPY package.json yarn.lock ./
 COPY patches ./patches
 
 # Install application dependencies
-RUN yarn install --frozen-lockfile --quiet
+RUN yarn install --frozen-lockfile --quiet && \
+  yarn cache clean --force
 
 # Copy application code
 COPY . ./
