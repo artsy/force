@@ -11,14 +11,13 @@ import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { userHasLabFeature } from "v2/Utils/user"
 import { Media } from "v2/Utils/Responsive"
-import { Conversations_me } from "v2/__generated__/Conversations_me.graphql"
 import {
   ConversationHeader,
   FullHeader,
 } from "v2/Apps/Conversation/Components/InboxHeaders"
 import { DetailsFragmentContainer as Details } from "../../Components/Details"
 interface ConversationRouteProps {
-  me: Conversations_me & Conversation_me
+  me: Conversation_me
   conversationID: string
   match: Match
 }
