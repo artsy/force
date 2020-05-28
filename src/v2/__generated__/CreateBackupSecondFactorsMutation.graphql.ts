@@ -3,6 +3,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CreateBackupSecondFactorsInput = {
     readonly clientMutationId?: string | null;
+    readonly password?: string | null;
 };
 export type CreateBackupSecondFactorsMutationVariables = {
     input: CreateBackupSecondFactorsInput;

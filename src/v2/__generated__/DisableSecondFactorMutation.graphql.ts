@@ -3,6 +3,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type DisableSecondFactorInput = {
     readonly clientMutationId?: string | null;
+    readonly password?: string | null;
     readonly secondFactorID: string;
 };
 export type DisableSecondFactorMutationVariables = {
