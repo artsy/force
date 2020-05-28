@@ -12,6 +12,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Router } from "found"
+
 import styled from "styled-components"
 
 export interface CollectionEntity {
@@ -65,7 +66,7 @@ export class CollectionsGrid extends Component<CollectionsGridProps> {
                     href={`/collection/${collection.slug}`}
                     imageUrl={imageUrl || undefined}
                     name={collection.title}
-                    onClick={event => {
+                    onClick={(event) => {
                       event.preventDefault()
                       router.push(`/collection/${collection.slug}`)
                     }}
