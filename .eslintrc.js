@@ -21,7 +21,9 @@ module.exports = {
       jsx: true,
     },
     ecmaVersion: 6,
-    project: "./tsconfig.json",
+    // This significantly slows down linting and is needed for type-aware lint
+    // checks which we don't have atm.
+    // project: "./tsconfig.json",
     sourceType: "module",
   },
   settings: {
