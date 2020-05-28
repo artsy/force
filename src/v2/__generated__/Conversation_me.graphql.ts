@@ -4,6 +4,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Conversation_me = {
     readonly conversation: {
+        readonly internalID: string | null;
         readonly to: {
             readonly name: string;
         };
@@ -50,6 +51,13 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "internalID",
+          "args": null,
+          "storageKey": null
+        },
+        {
           "kind": "LinkedField",
           "alias": null,
           "name": "to",
@@ -81,5 +89,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '0a5275d37558df9dbd891eaca35402e1';
+(node as any).hash = '403b131f7890429fde0c8562ed693f25';
 export default node;

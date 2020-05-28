@@ -17,18 +17,35 @@ const Container = styled(Box)`
 interface ConversationsProps {
   me: Conversations_me
   relay: RelayRefetchProp
+  selectedConversationID: string
 }
 
 const Conversations: React.FC<ConversationsProps> = props => {
-  const { me } = props
+  const { me, selectedConversationID } = props
   const conversations = me.conversationsConnection.edges
+
+  const selectedConversationIndex = conversations
+    .map(e => e.node.internalID)
+    .indexOf(selectedConversationID)
+
   return (
     <>
       <Container width={["100%", "375px"]}>
         {conversations.length ? (
           <Box>
             {conversations.map(edge => (
-              <ConversationSnippet conversation={edge.node} key={edge.cursor} />
+              <ConversationSnippet
+                selectedConversationID={selectedConversationID}
+                isSelected={edge.node.internalID === selectedConversationID}
+                conversation={edge.node}
+                key={edge.cursor}
+                hasDivider={
+                  conversations.indexOf(edge) !== selectedConversationIndex &&
+                  conversations.indexOf(edge) !==
+                    selectedConversationIndex - 1 &&
+                  conversations.indexOf(edge) !== conversations.length - 1
+                }
+              />
             ))}
           </Box>
         ) : (

@@ -31,6 +31,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const { me } = props
   const { user } = useContext(SystemContext)
   const isEnabled = userHasLabFeature(user, "User Conversations View")
+
   if (isEnabled) {
     const route = findCurrentRoute(props.match)
     let maxWidth
@@ -52,7 +53,10 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
         </Media>
         <Flex>
           <Media greaterThan="xs">
-            <Conversations me={me as any} />
+            <Conversations
+              me={me as any}
+              selectedConversationID={me.conversation.internalID}
+            />
           </Media>
           {/* @ts-ignore */}
           <Conversation conversation={me.conversation} />
@@ -79,6 +83,7 @@ export const ConversationFragmentContainer = createFragmentContainer(
         @argumentDefinitions(conversationID: { type: "String!" }) {
         ...Conversations_me
         conversation(id: $conversationID) {
+          internalID
           to {
             name
           }

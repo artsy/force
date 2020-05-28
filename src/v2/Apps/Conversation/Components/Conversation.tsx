@@ -137,7 +137,6 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   return (
     <Flex flexDirection="column" width="100%">
-      x
       <Box>
         <Spacer mt="45px" />
         <Flex flexDirection="column" width="100%" px={1}>

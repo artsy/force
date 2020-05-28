@@ -48,6 +48,8 @@ const PurpleCircle = styled.div`
 
 interface ConversationSnippetProps {
   conversation: ConversationSnippet_conversation
+  hasDivider: boolean
+  isSelected: boolean
 }
 
 const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
@@ -77,8 +79,10 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
   const conversationText =
     conversation.lastMessage && conversation.lastMessage.replace(/\n/g, " ")
 
+  const backgroundColor = props.isSelected ? "black5" : "white"
+
   return (
-    <Box>
+    <Box bg={backgroundColor}>
       <Link
         href={`/user/conversations/${conversation.internalID}`}
         underlineBehavior="none"
@@ -98,10 +102,10 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                 )}
               />
             ) : (
-                <Flex width="80px" height="80px">
-                  {renderFallbackImage()}
-                </Flex>
-              )}
+              <Flex width="80px" height="80px">
+                {renderFallbackImage()}
+              </Flex>
+            )}
           </StyledFlex>
           <Flex pt={2} pl={1} width="100%" height="100%">
             <Box width="100%">
@@ -142,7 +146,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
           </Flex>
         </Flex>
       </Link>
-      <Separator mx={2} width="auto" />
+      {props.hasDivider && <Separator mx={2} width="auto" />}
     </Box>
   )
 }
