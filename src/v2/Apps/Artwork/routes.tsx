@@ -11,8 +11,12 @@ export const routes = [
       ArtworkApp.preload()
     },
     query: graphql`
-      query routes_ArtworkQuery($artworkID: String!) {
-        artwork(id: $artworkID) @principalField {
+      query routes_ArtworkQuery(
+        $artworkID: String!
+        $includeUnlisted: Boolean
+      ) {
+        artwork(id: $artworkID, includeUnlisted: $includeUnlisted)
+          @principalField {
           ...ArtworkApp_artwork
         }
         me {
@@ -20,6 +24,12 @@ export const routes = [
         }
       }
     `,
+    prepareVariables: ({ artworkID }, _props) => {
+      return {
+        artworkID,
+        includeUnlisted: true,
+      }
+    },
     cacheConfig: {
       force: true,
     },
