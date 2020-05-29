@@ -121,6 +121,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         <Meta name="description" content={artwork.meta.description} />
         {imageURL && <Meta name="thumbnail" content={imageURL} />}
         <Link rel="canonical" href={`${sd.APP_URL}${artwork.href}`} />
+        {artwork.unlisted && <Meta name="robots" content="noindex, nofollow" />}
         <Meta
           property="twitter:description"
           content={artwork.meta.long_description}
@@ -159,6 +160,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         is_in_auction: isInAuction
         is_acquireable: isAcquireable
         is_shareable: isShareable
+        unlisted
         meta_image: image {
           resized(
             width: 640

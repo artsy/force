@@ -15,6 +15,7 @@ export type ArtworkMeta_artwork = {
     readonly is_in_auction: boolean | null;
     readonly is_acquireable: boolean | null;
     readonly is_shareable: boolean | null;
+    readonly unlisted: boolean | null;
     readonly meta_image: {
         readonly resized: {
             readonly width: number | null;
@@ -134,6 +135,13 @@ return {
       "kind": "ScalarField",
       "alias": "is_shareable",
       "name": "isShareable",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "unlisted",
       "args": null,
       "storageKey": null
     },
@@ -284,5 +292,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '3270b3c87f1d4d01b50b768608dc420e';
+(node as any).hash = '88f877c6eaf6756bb1ecaed353cb19dd';
 export default node;
