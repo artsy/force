@@ -698,7 +698,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -4047,7 +4049,9 @@ interface EntityWithFilterArtworksConnectionInterface {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -4185,7 +4189,9 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -4785,7 +4791,9 @@ type Gene implements Node & Searchable {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -5366,7 +5374,7 @@ type MarketingCollection {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -6581,7 +6589,9 @@ type Query {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -7737,7 +7747,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -8115,7 +8127,9 @@ type Tag implements Node {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
@@ -8476,7 +8490,9 @@ type Viewer {
     priceRange: String
     saleID: ID
     size: Int
-    sizeBuckets: [ArtworkSizes]
+
+    # Filter results by Artwork sizes
+    sizes: [ArtworkSizes]
     sort: String
     tagID: String
     width: String
