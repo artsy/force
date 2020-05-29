@@ -14,6 +14,7 @@ app.use(
 app.use(
   require("webpack-dev-middleware")(compiler, {
     quiet: true,
+    stats: webpackConfig.stats,
     publicPath: webpackConfig.output.publicPath,
     serverSideRender: true,
     writeToDisk(filePath) {

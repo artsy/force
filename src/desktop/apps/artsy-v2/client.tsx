@@ -45,10 +45,12 @@ buildClientApp({
       )
     })
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error)
   })
 
 if (module.hot) {
   module.hot.accept()
 }
+
+//

@@ -10,7 +10,7 @@ const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
 const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
 const { NODE_ENV, basePath, isCI } = require("../../src/lib/environment")
-const { PORT, WEBPACK_DEVTOOL } = process.env
+const { PORT, WEBPACK_DEVTOOL, WEBPACK_STATS } = process.env
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -26,6 +26,7 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
 exports.developmentConfig = {
   mode: NODE_ENV,
   devtool: WEBPACK_DEVTOOL,
+  stats: WEBPACK_STATS || "errors-only",
   module: {
     rules: [
       {
