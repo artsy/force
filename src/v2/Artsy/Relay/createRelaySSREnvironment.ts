@@ -9,11 +9,13 @@ import { data as sd } from "sharify"
 
 import {
   RelayNetworkLayer,
-  cacheMiddleware,
+  // cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
+
+import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
