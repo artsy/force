@@ -29,7 +29,7 @@ describe("PriceRangeFilter", () => {
     act(() => {
       wrapper
         .find("Radio")
-        .filterWhere(n => n.text() === "$20k - $40k")
+        .filterWhere(n => n.text() === "$20k – $40k")
         .simulate("click")
 
       setTimeout(() => {

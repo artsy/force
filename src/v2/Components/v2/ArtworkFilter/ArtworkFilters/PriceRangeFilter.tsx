@@ -38,23 +38,23 @@ const priceRanges = [
     value: "50000-*",
   },
   {
-    name: "$20k - $40k",
+    name: "$20k – $40k",
     value: "20000-40000",
   },
   {
-    name: "$10k - $20k",
+    name: "$10k – $20k",
     value: "10000-20000",
   },
   {
-    name: "$5k - $10k",
+    name: "$5k – $10k",
     value: "5000-10000",
   },
   {
-    name: "$1k - $5k",
+    name: "$1k – $5k",
     value: "1000-5000",
   },
   {
-    name: "$0 - $1,000",
+    name: "$0 – $1,000",
     value: "0-1000",
   },
 ]
