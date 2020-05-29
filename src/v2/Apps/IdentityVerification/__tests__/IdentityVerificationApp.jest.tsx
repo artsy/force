@@ -80,6 +80,26 @@ describe("IdentityVerification route", () => {
         expect(page.startVerificationButton.exists()).toBeFalsy()
         expect(page.contactSupportButton.exists()).toBeTruthy()
       })
+
+      it("renders a message about an identity verification that is `watchlist_hit`", async () => {
+        const env = setupTestEnv()
+
+        const page = await env.buildPage({
+          mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
+            me: {
+              identityVerification: {
+                state: "watchlist_hit",
+              },
+            },
+          }),
+        })
+
+        expect(page.text()).toContain(
+          "Artsy is reviewing your identity verification"
+        )
+        expect(page.startVerificationButton.exists()).toBeFalsy()
+        expect(page.returnHomeButton.exists()).toBeTruthy()
+      })
     })
 
     it("allows an identity verification instance's owner to view the landing page", async () => {
