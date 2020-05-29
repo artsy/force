@@ -17,7 +17,7 @@ import { useTracking } from "react-tracking"
 import createLogger from "v2/Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
-import { CompleteWatchlist } from "./CompleteWatchlist"
+import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
@@ -41,7 +41,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
   } else if (identityVerification.state === "passed") {
     AlternateComponent = CompletePassed
   } else if (identityVerification.state === "watchlist_hit") {
-    AlternateComponent = CompleteWatchlist
+    AlternateComponent = CompleteWatchlistHit
   }
   const trackClickedContinueToVerification = () => {
     trackEvent({
