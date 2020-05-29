@@ -48,14 +48,15 @@ jobs:
           name: Duplicates Report
           command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
 
-  danger:
-    executor: node/build
-    steps:
-      - yarn/setup
-      - run:
-          name: Danger
-          # Formatted this way to prevent GitHub's token detection. This is intended to be committed and public.
-          command: DANGER_GITHUB_API_TOKEN="3f715685d9d032e17""48c3368dc8f22c672849136" yarn danger ci
+  # FIXME: Reenable after https://github.com/artsy/force/pull/5673 is addressed
+  # danger:
+  #   executor: node/build
+  #   steps:
+  #     - yarn/setup
+  #     - run:
+  #         name: Danger
+  #         # Formatted this way to prevent GitHub's token detection. This is intended to be committed and public.
+  #         command: DANGER_GITHUB_API_TOKEN="3f715685d9d032e17""48c3368dc8f22c672849136" yarn danger ci
 
   create_or_update_review_app:
     executor: hokusai/deploy
@@ -165,8 +166,8 @@ workflows:
           <<: *not_master_or_staging_or_release
       - build:
           <<: *not_staging_or_release
-      - danger:
-          <<: *not_staging_or_release
+      # - danger:
+      #     <<: *not_staging_or_release
 
       # Staging
       - hokusai/push:
