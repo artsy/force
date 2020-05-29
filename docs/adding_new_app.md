@@ -23,6 +23,7 @@ export const routes = [
           <nav>
           <div>{props.children}</div>
         </div>
+      )
     },
     children: [
       {
