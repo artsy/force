@@ -10,6 +10,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ArtistsProps {
   artwork: ArtworkSidebarArtists_artwork
@@ -21,7 +22,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
   private renderArtistName(artist: Artist) {
     return artist.href ? (
       <Serif size="5t" display="inline" weight="semibold" element="h1">
-        <a href={artist.href}>{artist.name}</a>
+        <RouterLink to={artist.href}>{artist.name}</RouterLink>
       </Serif>
     ) : (
       <Serif size="5t" display="inline" weight="semibold" element="h1">

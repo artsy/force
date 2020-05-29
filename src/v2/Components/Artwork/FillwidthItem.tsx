@@ -13,17 +13,11 @@ import { userIsAdmin } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import SaveButton from "./Save"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 const logger = createLogger("FillwidthItem.tsx")
 
 const IMAGE_QUALITY = 80
-
-const ImageLink = styled.a`
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-`
 
 const Placeholder = styled.div`
   position: relative;
@@ -32,7 +26,7 @@ const Placeholder = styled.div`
 
 export interface FillwidthItemContainerProps
   extends SystemContextProps,
-  React.HTMLProps<FillwidthItemContainer> {
+    React.HTMLProps<FillwidthItemContainer> {
   artwork: FillwidthItem_artwork
   contextModule: AuthContextModule
   imageHeight?: number
@@ -48,7 +42,7 @@ export interface FillwidthItemContainerProps
 
 export class FillwidthItemContainer extends React.Component<
   FillwidthItemContainerProps
-  > {
+> {
   static defaultProps = {
     showMetadata: true,
   }
@@ -92,9 +86,9 @@ export class FillwidthItemContainer extends React.Component<
     // tslint:disable-next-line:max-line-length
     return `${getENV("GEMINI_CLOUDFRONT_URL")}/?resize_to=${type}&width=${
       this.imageWidth
-      }&height=${
+    }&height=${
       this.imageHeight
-      }&quality=${IMAGE_QUALITY}&src=${encodeURIComponent(imageURL)}`
+    }&quality=${IMAGE_QUALITY}&src=${encodeURIComponent(imageURL)}`
   }
 
   render() {
@@ -127,8 +121,8 @@ export class FillwidthItemContainer extends React.Component<
     return (
       <div className={className}>
         <Placeholder style={{ height: targetHeight }}>
-          <ImageLink
-            href={artwork.href}
+          <RouterLink
+            to={artwork.href}
             onClick={() => {
               if (this.props.onClick) {
                 this.props.onClick()
@@ -142,7 +136,7 @@ export class FillwidthItemContainer extends React.Component<
               lazyLoad={lazyLoad}
               preventRightClick={!isAdmin}
             />
-          </ImageLink>
+          </RouterLink>
 
           {showExtended && <Badge artwork={artwork} width={this.imageWidth} />}
 

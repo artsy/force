@@ -1,9 +1,10 @@
-import { Box, Flex, Menu, MenuItem, color } from "@artsy/palette"
+import { Box, Flex, color } from "@artsy/palette"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"
 import styled from "styled-components"
 import { DropDownSection } from "./DropDownSection"
+import { Menu, MenuItem } from "v2/Components/Menu"
 
 interface DropDownNavMenuProps {
   width?: string

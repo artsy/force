@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from "@artsy/palette"
+import { Menu, MenuItem } from "v2/Components/Menu"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"

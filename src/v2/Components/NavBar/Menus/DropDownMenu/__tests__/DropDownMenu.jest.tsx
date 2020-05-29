@@ -1,4 +1,4 @@
-import { MenuItem } from "@artsy/palette"
+import { MenuItem } from "v2/Components/Menu"
 import { ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"

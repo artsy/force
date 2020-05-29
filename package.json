@@ -400,6 +400,7 @@
     "lines": 0
   },
   "prettier": {
+    "arrowParens": "avoid",
     "bracketSpacing": true,
     "printWidth": 80,
     "semi": false,

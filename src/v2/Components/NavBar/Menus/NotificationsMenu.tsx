@@ -16,17 +16,8 @@ import {
   NotificationsMenuQueryResponse,
 } from "v2/__generated__/NotificationsMenuQuery.graphql"
 
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Menu,
-  MenuItem,
-  Sans,
-  Separator,
-  Serif,
-} from "@artsy/palette"
+import { Box, Flex, Image, Link, Sans, Separator, Serif } from "@artsy/palette"
+import { Menu, MenuItem } from "v2/Components/Menu"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = props => {

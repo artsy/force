@@ -4,14 +4,14 @@ import {
   Box,
   Flex,
   HeartIcon,
-  Menu,
-  MenuItem,
   PowerIcon,
   Separator,
   SettingsIcon,
   SoloIcon,
   TagIcon,
 } from "@artsy/palette"
+
+import { Menu, MenuItem } from "v2/Components/Menu"
 
 import { AnalyticsSchema, SystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

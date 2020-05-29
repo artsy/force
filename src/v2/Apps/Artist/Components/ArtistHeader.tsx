@@ -151,11 +151,8 @@ export class LargeArtistHeader extends Component<Props> {
                 data={carousel.images as object[]}
                 render={(slide: Image, slideIndex: number) => {
                   return (
-                    // FIXME: Update this type to appropriately accept children
-                    // @ts-ignore
                     <RouterLink
-                      // FIXME: this `as never` should go away
-                      href={slide.href as never}
+                      to={slide.href}
                       onClick={() => this.onClickSlide(slide)}
                     >
                       <Image
@@ -287,7 +284,10 @@ export class SmallArtistHeader extends Component<Props> {
               options={{ pageDots: false }}
               render={slide => {
                 return (
-                  <a href={slide.href} onClick={() => this.onClickSlide(slide)}>
+                  <RouterLink
+                    to={slide.href}
+                    onClick={() => this.onClickSlide(slide)}
+                  >
                     <Image
                       src={slide.resized.url}
                       px={0.3}
@@ -295,7 +295,7 @@ export class SmallArtistHeader extends Component<Props> {
                       height={slide.resized.height}
                       preventRightClick={!isAdmin}
                     />
-                  </a>
+                  </RouterLink>
                 )
               }}
             />

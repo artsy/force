@@ -1,6 +1,8 @@
-import { Box, Flex, MenuItem, Sans, color } from "@artsy/palette"
+import { Box, Flex, Sans, color } from "@artsy/palette"
 import { MenuLinkData, SimpleLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
+
+import { MenuItem } from "v2/Components/Menu"
 
 interface TwoColumnDropDownSectionProps {
   section: MenuLinkData
