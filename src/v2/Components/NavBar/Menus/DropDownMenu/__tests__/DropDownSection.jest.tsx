@@ -1,9 +1,9 @@
-import { MenuItem } from "@artsy/palette"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
-import { mount } from "enzyme"
 import React from "react"
 import { DropDownSection } from "../DropDownSection"
+import { MenuItem } from "v2/Components/Menu"
+import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
+import { mount } from "enzyme"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 

@@ -15,13 +15,13 @@ import {
   Box,
   Button,
   Flex,
-  Link,
   Sans,
   Serif,
   Spacer,
   space,
 } from "@artsy/palette"
 import styled from "styled-components"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ArtistCardProps {
   artist: ArtistCard_artist
@@ -40,10 +40,10 @@ export class ArtistCard extends React.Component<ArtistCardProps> {
 
   render() {
     return (
-      <Link
+      <RouterLink
         onClick={this.props.onClick}
-        href={this.props.artist.href}
-        noUnderline
+        to={this.props.artist.href}
+        style={{ textDecoration: "none" }}
       >
         <Media at="xs">
           <SmallArtistCard {...this.props} />
@@ -51,7 +51,7 @@ export class ArtistCard extends React.Component<ArtistCardProps> {
         <Media greaterThan="xs">
           <LargeArtistCard {...this.props} />
         </Media>
-      </Link>
+      </RouterLink>
     )
   }
 }

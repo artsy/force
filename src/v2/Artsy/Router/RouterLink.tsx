@@ -55,7 +55,7 @@ export const RouterLink: React.FC<LinkProps> = ({ to, children, ...props }) => {
         href={to as string}
         className={(props as LinkPropsSimple).className}
         style={(props as LinkPropsSimple).style}
-        {...omit(props, ["activeClassName"])}
+        {...omit(props, ["activeClassName", "hasLighterTextColor"])}
       >
         {children}
       </a>
