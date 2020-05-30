@@ -70,7 +70,7 @@ const {
   SESSION_SECRET,
 } = config
 
-export default function(app) {
+export default function (app) {
   app.set("trust proxy", true)
 
   // Denied IPs
@@ -122,7 +122,7 @@ export default function(app) {
   superSync.timeout = API_REQUEST_TIMEOUT
   superSync.cacheClient = cache.client
   superSync.defaultCacheTime = DEFAULT_CACHE_TIME
-  Backbone.sync = function(method, model, options) {
+  Backbone.sync = function (method, model, options) {
     if (options.headers == null) {
       options.headers = {}
     }
@@ -262,7 +262,12 @@ export default function(app) {
 
     // Mount reloadable desktop
     mountAndReload(path.resolve("src/desktop"), {
-      watchModules: ["@artsy/reaction", "@artsy/stitch", "@artsy/palette"],
+      watchModules: [
+        path.resolve(process.cwd(), "src/v2"),
+        "@artsy/reaction",
+        "@artsy/stitch",
+        "@artsy/palette",
+      ],
     })
 
     // In staging or prod, mount routes normally
