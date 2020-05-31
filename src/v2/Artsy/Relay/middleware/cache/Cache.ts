@@ -15,10 +15,11 @@ export class Cache {
   relayCache: RelayQueryResponseCache
 
   redisCache: {
+    del: (key: string) => Promise<void>
+    expire: (key: string, ttl: number) => Promise<void>
+    flushall: () => Promise<void>
     get: (key: string) => Promise<string>
     set: (key: string, value: string) => Promise<void>
-    del: (key: string) => Promise<void>
-    flushall: () => Promise<void>
   }
 
   constructor(cacheConfig: CacheConfig) {
@@ -41,10 +42,11 @@ export class Cache {
     const client = redis.createClient()
 
     this.redisCache = {
+      del: promisify(client.del).bind(client),
+      expire: promisify(client.expire).bind(client),
+      flushall: promisify(client.flushall).bind(client),
       get: promisify(client.get).bind(client),
       set: promisify(client.set).bind(client),
-      del: promisify(client.del).bind(client),
-      flushall: promisify(client.flushall).bind(client),
     }
   }
 
@@ -82,6 +84,7 @@ export class Cache {
 
       try {
         await this.redisCache.set(cacheKey, JSON.stringify(res))
+        await this.redisCache.expire(cacheKey, this.cacheConfig.ttl)
         logger.log("\nCache operation: [set]", cacheKey)
       } catch (error) {
         logger.error("Error setting cache: [set]", cacheKey, error)
