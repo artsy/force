@@ -1,8 +1,9 @@
 import { QueryResponseCache } from "relay-runtime"
 import createLogger from "v2/Utils/logger"
 import RelayQueryResponseCache from "relay-runtime/lib/network/RelayQueryResponseCache"
+import { isServer } from "lib/environment"
 
-const logger = createLogger("[v2/Artsy/middleware/cacheMiddleware]")
+const logger = createLogger("v2/Artsy/middleware/cache/Cache")
 
 export interface CacheConfig {
   size: number
@@ -10,7 +11,6 @@ export interface CacheConfig {
 }
 
 export class Cache {
-  isServer: boolean
   cacheConfig: CacheConfig
   relayCache: RelayQueryResponseCache
 
@@ -22,7 +22,6 @@ export class Cache {
   }
 
   constructor(cacheConfig: CacheConfig) {
-    this.isServer = typeof window === "undefined"
     this.cacheConfig = cacheConfig
     this.initRelayCache()
     this.initRedisCache()
@@ -33,7 +32,7 @@ export class Cache {
   }
 
   initRedisCache() {
-    if (!this.isServer) {
+    if (!isServer) {
       return
     }
 
@@ -49,25 +48,25 @@ export class Cache {
     }
   }
 
-  lookup(query, variables) {
-    const lookupKey = JSON.stringify({ query, variables })
-    return lookupKey
+  getCacheKey(query, variables) {
+    const cacheKey = JSON.stringify({ query, variables })
+    return cacheKey
   }
 
   async get(queryId, variables) {
     let cachedRes = this.relayCache.get(queryId, variables)
 
     // No cache in relay store, check redis
-    if (this.isServer && !cachedRes) {
-      const lookupKey = this.lookup(queryId, variables)
+    if (isServer && !cachedRes) {
+      const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
-        cachedRes = JSON.parse(await this.redisCache.get(lookupKey))
+        cachedRes = JSON.parse(await this.redisCache.get(cacheKey))
         if (cachedRes) {
-          logger.log("\nCache operation: [get]", lookupKey)
+          logger.log("\nCache operation: [get]", cacheKey)
         }
       } catch (error) {
-        logger.error("Error retrieving cache: [get]", lookupKey, error)
+        logger.error("Error retrieving cache: [get]", cacheKey, error)
       }
     }
 
@@ -78,14 +77,14 @@ export class Cache {
     this.relayCache.set(queryId, variables, res)
 
     // Store in redis during server-side pass
-    if (this.isServer) {
-      const lookupKey = this.lookup(queryId, variables)
+    if (isServer) {
+      const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
-        await this.redisCache.set(lookupKey, JSON.stringify(res))
-        logger.log("\nCache operation: [set]", lookupKey)
+        await this.redisCache.set(cacheKey, JSON.stringify(res))
+        logger.log("\nCache operation: [set]", cacheKey)
       } catch (error) {
-        logger.error("Error setting cache: [set]", lookupKey, error)
+        logger.error("Error setting cache: [set]", cacheKey, error)
       }
     }
   }
@@ -93,7 +92,7 @@ export class Cache {
   async clear() {
     this.relayCache.clear()
 
-    if (this.isServer) {
+    if (isServer) {
       await this.redisCache.flushall()
     }
   }
