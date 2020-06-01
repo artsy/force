@@ -91,8 +91,9 @@ const InnerForm: React.FC<InnerFormProps> = props => {
           <ConditionsOfSaleCheckbox
             selected={values.agreeToTerms}
             onSelect={value => {
-              setFieldValue("agreeToTerms", value)
+              // `setFieldTouched` needs to be called first otherwise it would cause race condition.
               setFieldTouched("agreeToTerms")
+              setFieldValue("agreeToTerms", value)
             }}
           />
         </Box>
@@ -117,11 +118,9 @@ const InnerForm: React.FC<InnerFormProps> = props => {
   )
 }
 
-Yup.addMethod(Yup.string, "present", function(message) {
+Yup.addMethod(Yup.string, "present", function (message) {
   return this.test("test-present", message, value => {
-    return this.trim()
-      .required(message)
-      .isValid(value)
+    return this.trim().required(message).isValid(value)
   })
 })
 
