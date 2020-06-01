@@ -160,16 +160,6 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     })
   }
 
-  const createTokenFromAddress = async (address: stripe.TokenOptions) => {
-    const { error, token } = await stripe.createToken(address)
-
-    if (error) {
-      throw new Error(`Stripe error: ${error.message || error.decline_code}`)
-    } else {
-      return token
-    }
-  }
-
   async function handleSubmit(values: FormValues, actions: BidFormActions) {
     const selectedBid = Number(values.selectedBid)
 
@@ -186,7 +176,14 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
           address_zip: address.postalCode,
         }
 
-        const token = await createTokenFromAddress(stripeAddress)
+        const { error, token } = await stripe.createToken(stripeAddress)
+
+        if (error) {
+          actions.setFieldError("creditCard", error.message)
+          actions.setSubmitting(false)
+          return
+        }
+
         await createCreditCardAndUpdatePhone(
           environment,
           address.phoneNumber,
