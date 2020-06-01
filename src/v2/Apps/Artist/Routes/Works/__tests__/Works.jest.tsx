@@ -6,6 +6,7 @@ import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
+import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 
 jest.unmock("react-relay")
 
@@ -105,6 +106,12 @@ describe("Works Route", () => {
       })
 
       expect(wrapper.html()).not.toContain("Mock ArtistRecommendations")
+    })
+  })
+
+  describe("Artist Top Works", () => {
+    it("Displays Top Works rail", () => {
+      expect(wrapper.find(ArtistTopWorksRail).length).toEqual(1)
     })
   })
 })

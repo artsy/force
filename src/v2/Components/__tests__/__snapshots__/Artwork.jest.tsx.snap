@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Artwork renders correctly 1`] = `
-.c7 {
+.c8 {
   margin-bottom: 0.3px;
 }
 
-.c5 {
+.c6 {
   font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: #000;
+  font-size: 14px;
+  line-height: 20px;
+  color: black100;
 }
 
-.c6 {
+.c7 {
   font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 20px;
   color: #000;
 }
 
@@ -30,7 +30,7 @@ exports[`Artwork renders correctly 1`] = `
   text-decoration: none;
 }
 
-.c8 {
+.c5 {
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -38,10 +38,10 @@ exports[`Artwork renders correctly 1`] = `
 }
 
 .c4 {
-  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
-  font-size: 15px;
-  line-height: 1.25em;
+  font-family: Unica77LLWebRegular,Arial,serif;
   -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.4em;
   color: #666666;
   margin-top: 12px;
   text-align: left;
@@ -122,14 +122,40 @@ exports[`Artwork renders correctly 1`] = `
       <div>
         <div
           className="c5"
-          color="#000"
-          fontFamily={
-            Object {
-              "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-              "fontWeight": 500,
+        >
+          <div
+            className="c6"
+            color="black100"
+            fontFamily={
+              Object {
+                "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                "fontWeight": 500,
+              }
             }
-          }
-          fontSize="12px"
+            fontSize="14px"
+            style={Object {}}
+          >
+            Mikael Olson
+          </div>
+        </div>
+        <div
+          className="c5"
+        >
+          <span>
+            Some Kind of Dinosaur
+          </span>
+          , 2015
+        </div>
+        <div
+          className="c5"
+        >
+          Gallery 1261
+        </div>
+        <div
+          className="c7"
+          color="#000"
+          fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+          fontSize="14px"
           style={
             Object {
               "display": "inline",
@@ -140,10 +166,10 @@ exports[`Artwork renders correctly 1`] = `
            
         </div>
         <div
-          className="c6"
+          className="c7"
           color="#000"
           fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-          fontSize="12px"
+          fontSize="14px"
           style={
             Object {
               "display": "inline",
@@ -151,28 +177,8 @@ exports[`Artwork renders correctly 1`] = `
           }
         />
         <div
-          className="c7"
+          className="c8"
         />
-        <div
-          className="c8"
-        >
-          <strong>
-            Mikael Olson
-          </strong>
-        </div>
-        <div
-          className="c8"
-        >
-          <em>
-            Some Kind of Dinosaur
-          </em>
-          , 2015
-        </div>
-        <div
-          className="c8"
-        >
-          Gallery 1261
-        </div>
       </div>
     </div>
   </a>
