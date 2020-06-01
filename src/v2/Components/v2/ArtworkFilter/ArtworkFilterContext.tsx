@@ -13,6 +13,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   majorPeriods: [],
   page: 1,
   sort: "-decayed_merch",
+  sizes: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -38,6 +39,7 @@ export interface ArtworkFilters {
   page?: number
   partnerID?: string
   priceRange?: string
+  sizes?: string[]
   sort?: string
   term?: string
   width?: string
@@ -144,9 +146,11 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const ArtworkFilterContextProvider: React.FC<SharedArtworkFilterContextProps & {
-  children: React.ReactNode
-}> = ({
+export const ArtworkFilterContextProvider: React.FC<
+  SharedArtworkFilterContextProps & {
+    children: React.ReactNode
+  }
+> = ({
   aggregations = [],
   children,
   counts = {},
@@ -196,11 +200,11 @@ export const ArtworkFilterContextProvider: React.FC<SharedArtworkFilterContextPr
     ZeroState,
 
     // Filter manipulation
-    isDefaultValue: field => {
+    isDefaultValue: (field) => {
       return isDefaultFilter(field, artworkFilterState[field])
     },
 
-    rangeToTuple: range => {
+    rangeToTuple: (range) => {
       return rangeToTuple(artworkFilterState, range)
     },
 
@@ -218,7 +222,7 @@ export const ArtworkFilterContextProvider: React.FC<SharedArtworkFilterContextPr
       })
     },
 
-    unsetFilter: name => {
+    unsetFilter: (name) => {
       dispatch({
         type: "UNSET",
         payload: {
@@ -279,7 +283,7 @@ const artworkFilterReducer = (
         "sort",
         "width",
       ]
-      stringFilterTypes.forEach(filter => {
+      stringFilterTypes.forEach((filter) => {
         if (name === filter) {
           filterState[name as any] = value
         }
@@ -293,7 +297,7 @@ const artworkFilterReducer = (
         "inquireableOnly",
         "offerable",
       ]
-      booleanFilterTypes.forEach(filter => {
+      booleanFilterTypes.forEach((filter) => {
         if (name === filter) {
           filterState[name as any] = Boolean(value)
         }
@@ -342,7 +346,7 @@ const artworkFilterReducer = (
         "offerable",
         "partnerID",
       ]
-      filters.forEach(filter => {
+      filters.forEach((filter) => {
         if (name === filter) {
           filterState[name as any] = null
         }

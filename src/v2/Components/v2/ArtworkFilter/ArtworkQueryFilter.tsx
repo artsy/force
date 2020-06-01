@@ -17,6 +17,7 @@ export const ArtworkQueryFilter = graphql`
     $page: Int
     $partnerID: ID
     $priceRange: String
+    $sizes: [ArtworkSizes]
     $sort: String
     $keyword: String
     $width: String
@@ -40,6 +41,7 @@ export const ArtworkQueryFilter = graphql`
           page: $page
           partnerID: $partnerID
           priceRange: $priceRange
+          sizes: $sizes
           sort: $sort
           width: $width
         )
