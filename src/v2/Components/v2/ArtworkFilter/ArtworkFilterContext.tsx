@@ -12,8 +12,8 @@ import { paramsToCamelCase } from "./Utils/urlBuilder"
 export const initialArtworkFilterState: ArtworkFilters = {
   majorPeriods: [],
   page: 1,
-  sort: "-decayed_merch",
   sizes: [],
+  sort: "-decayed_merch",
 
   // TODO: Remove these unneeded default props
   // height: "*-*",

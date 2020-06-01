@@ -95,6 +95,7 @@ describe("ArtworkFilter", () => {
         acquireable: true,
         majorPeriods: [],
         page: 1,
+        sizes: [],
         sort: "-decayed_merch",
       })
     })
@@ -119,6 +120,7 @@ describe("ArtworkFilter", () => {
       expect(onChange).toHaveBeenCalledWith({
         majorPeriods: [],
         page: 1,
+        sizes: [],
         sort: "-partner_updated_at",
       })
     })
