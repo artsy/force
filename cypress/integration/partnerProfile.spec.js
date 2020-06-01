@@ -10,7 +10,10 @@ describe("/:partner_id", () => {
     )
     cy.get("meta[name='description']")
       .should("have.attr", "content")
-      .and("eq", "Explore Artists, Artworks, and Shows from Gagosian on Artsy")
+      .and(
+        "eq",
+        "Gagosian is a global gallery specializing in modern and contemporary art with eighteen locations worldwide."
+      )
   })
 
   it("renders page content", () => {
@@ -32,7 +35,7 @@ describe("/:partner_id", () => {
         .should("have.attr", "content")
         .and(
           "eq",
-          "Explore Artists, Artworks, and Shows from Gagosian on Artsy"
+          "Gagosian is a global gallery specializing in modern and contemporary art with eighteen locations worldwide."
         )
     })
 
