@@ -81,6 +81,9 @@ interface Counts {
   has_make_offer_artworks?: boolean
 }
 
+// TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
+// Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
+// and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
   filters?: ArtworkFilters
 
@@ -253,6 +256,8 @@ const artworkFilterReducer = (
     payload: { name: keyof ArtworkFilters; value?: any }
   }
 ): ArtworkFiltersState => {
+  const arrayFilterTypes: Array<keyof ArtworkFilters> = ["sizes"]
+
   switch (action.type) {
     /**
      * Setting  and updating filters
@@ -272,6 +277,12 @@ const artworkFilterReducer = (
       if (name === "page") {
         filterState[name] = Number(value)
       }
+
+      arrayFilterTypes.forEach((filter) => {
+        if (name === filter) {
+          filterState[name as any] = value || []
+        }
+      })
 
       // String filter types
       const stringFilterTypes: Array<keyof ArtworkFilters> = [
@@ -336,6 +347,12 @@ const artworkFilterReducer = (
           page: 1,
         }
       }
+
+      arrayFilterTypes.forEach((filter) => {
+        if (name === filter) {
+          filterState[name as any] = []
+        }
+      })
 
       const filters: Array<keyof ArtworkFilters> = [
         "acquireable",
