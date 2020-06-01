@@ -16,11 +16,23 @@ import {
   FullHeader,
 } from "v2/Apps/Conversation/Components/InboxHeaders"
 import { DetailsFragmentContainer as Details } from "../../Components/Details"
+import styled from "styled-components"
 interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
   match: Match
 }
+
+const ConstrainedHeightFlex = styled(Flex)`
+  height: calc(100vh - 145px);
+  & > * {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  & > .fresnel-greaterThan-xs {
+    flex-shrink: 0;
+  }
+`
 
 /**
  * FIXME: Added some @ts-ignores to get TypeScript 3.9 updated
@@ -50,7 +62,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           {/* @ts-ignore */}
           <FullHeader partnerName={me.conversation.to.name} />
         </Media>
-        <Flex>
+        <ConstrainedHeightFlex>
           <Media greaterThan="xs">
             <Conversations
               me={me as any}
@@ -65,7 +77,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
             display={["none", null, null, null, "flex"]}
             width={["100%", "376px"]}
           />
-        </Flex>
+        </ConstrainedHeightFlex>
       </AppContainer>
     )
   } else {
