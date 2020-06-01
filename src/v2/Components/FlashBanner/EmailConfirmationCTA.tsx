@@ -2,8 +2,14 @@ import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import { Button, Sans } from "@artsy/palette"
 import { EmailConfirmationCTAMutationResponse } from "v2/__generated__/EmailConfirmationCTAMutation.graphql"
-import { useSystemContext } from "v2/Artsy"
+import {
+  AnalyticsSchema as Schema,
+  useSystemContext,
+  useTracking,
+} from "v2/Artsy"
+
 import createLogger from "v2/Utils/logger"
+
 const logger = createLogger("EmailConfirmationCTA")
 
 export const EmailConfirmationCTA: React.FC = () => {
@@ -11,6 +17,7 @@ export const EmailConfirmationCTA: React.FC = () => {
     null
   )
   const { relayEnvironment } = useSystemContext()
+  const { trackEvent } = useTracking()
 
   const requestConfirmation = () => {
     return new Promise<EmailConfirmationCTAMutationResponse>((done, reject) => {
@@ -43,6 +50,12 @@ export const EmailConfirmationCTA: React.FC = () => {
   }
 
   const handleSubmit = () => {
+    logger.warn("tracking")
+    trackEvent({
+      action_type: Schema.ActionType.Click,
+      subject: Schema.Subject.EmailConfirmationCTA,
+    })
+    logger.warn("tracked")
     requestConfirmation()
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
         const emailToConfirm = confirmationOrError?.unconfirmedEmail

@@ -5,7 +5,7 @@ import { useSystemContext } from "v2/Artsy"
 import qs from "qs"
 import { EmailConfirmationCTA } from "./EmailConfirmationCTA"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"
-
+import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
 interface FlashBannerProps {
   contentCode?: string
   me?: {
@@ -73,6 +73,10 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
   )
 }
 
+const TrackedFlashBanner = track({
+  context_module: Schema.ContextModule.FlashBanner,
+})(FlashBanner)
+
 export const FlashBannerQueryRenderer: React.FC = () => {
   const didMount = useDidMount()
   const { relayEnvironment } = useSystemContext()
@@ -96,7 +100,7 @@ export const FlashBannerQueryRenderer: React.FC = () => {
       `}
       render={({ props, error }) => {
         if (error) console.error(error)
-        return <FlashBanner {...props} />
+        return <TrackedFlashBanner {...props} />
       }}
     />
   )

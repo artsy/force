@@ -5,9 +5,10 @@ import { graphql } from "react-relay"
 import { Banner } from "@artsy/palette"
 import { flushPromiseQueue, renderRelayTree } from "v2/DevTools"
 import { mount } from "enzyme"
+import { mockTracking } from "v2/Artsy/Analytics"
 
-jest.unmock("react-tracking")
 jest.unmock("react-relay")
+jest.unmock("react-tracking")
 
 const { location: originalLocation } = window
 
@@ -20,9 +21,11 @@ const getRelayWrapper = async ({
   delete window.location
   window.location = { search } as any
 
-  return await renderRelayTree({
+  const { Component, dispatch } = mockTracking(FlashBanner)
+
+  const wrapper = await renderRelayTree({
     Component: props => {
-      return <FlashBanner {...props} {...passedProps} />
+      return <Component {...props} {...passedProps} />
     },
     query: graphql`
       query FlashBannerTestQuery @raw_response_type {
@@ -35,6 +38,10 @@ const getRelayWrapper = async ({
     mockData: data,
     mockMutationResults: mutationResults,
   })
+  return {
+    wrapper,
+    dispatch,
+  }
 }
 
 afterEach(() => {
@@ -55,7 +62,7 @@ describe("FlashBanner", () => {
   })
 
   it("renders based on props.me.canRequestEmailConfirmation (from relay)", async () => {
-    const wrapper = await getRelayWrapper({
+    const { wrapper } = await getRelayWrapper({
       data: {
         me: { id: "woot", canRequestEmailConfirmation: true },
       },
@@ -111,13 +118,13 @@ describe("FlashBanner", () => {
 describe("Email Confirmation CTA", () => {
   describe("user cannot request email confirmation", () => {
     it("user is not prompted to request email confirmation if no logged in user is present", async () => {
-      const wrapper = await getRelayWrapper({ data: { me: null } })
+      const { wrapper } = await getRelayWrapper({ data: { me: null } })
 
       expect(wrapper.find(Banner).exists()).toBeFalsy()
     })
 
     it("user is not prompted to request email confirmation if !me.canRequestEmailConfirmation", async () => {
-      const wrapper = await getRelayWrapper({
+      const { wrapper } = await getRelayWrapper({
         data: {
           me: { id: "woot", canRequestEmailConfirmation: false },
         },
@@ -129,7 +136,7 @@ describe("Email Confirmation CTA", () => {
 
   describe("user can request email confirmation (me?.canRequestEmailConfirmation=true)", () => {
     it("user is prompted to request email confirmation if they can", async () => {
-      const wrapper = await getRelayWrapper({
+      const { wrapper } = await getRelayWrapper({
         data: { me: { id: "woot", canRequestEmailConfirmation: true } },
       })
 
@@ -137,7 +144,7 @@ describe("Email Confirmation CTA", () => {
     })
 
     it("user seeing banner can click to trigger email confirmation message", async () => {
-      const wrapper = await getRelayWrapper({
+      const { wrapper } = await getRelayWrapper({
         data: { me: { id: "woot", canRequestEmailConfirmation: true } },
         mutationResults: {
           sendConfirmationEmail: {
@@ -162,8 +169,33 @@ describe("Email Confirmation CTA", () => {
       )
     })
 
+    it("user click on confirm email button is tracked", async () => {
+      const { wrapper, dispatch } = await getRelayWrapper({
+        data: { me: { id: "woot", canRequestEmailConfirmation: true } },
+        mutationResults: {
+          sendConfirmationEmail: {
+            confirmationOrError: {
+              unconfirmedEmail: "ceo@blackwater.biz",
+            },
+          },
+        },
+      })
+
+      expect(wrapper.text()).toContain("Please verify your email address")
+
+      wrapper
+        .find("button")
+        .first()
+        .prop("onClick")({} as any)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        action_type: "Click",
+        subject: "Email Confirmation CTA",
+      })
+    })
+
     it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
-      const wrapper = await getRelayWrapper({
+      const { wrapper } = await getRelayWrapper({
         data: { me: { id: "woot", canRequestEmailConfirmation: true } },
         mutationResults: {
           sendConfirmationEmail: {
@@ -190,7 +222,7 @@ describe("Email Confirmation CTA", () => {
     })
 
     it("a flash_message indicating an error supercedes the confirmation prompt", async () => {
-      const wrapper = await getRelayWrapper({
+      const { wrapper } = await getRelayWrapper({
         data: {
           me: { id: "woot", canRequestEmailConfirmation: true },
         },
@@ -201,7 +233,7 @@ describe("Email Confirmation CTA", () => {
     })
 
     it("user sees an error message to re-trigger verification if flash_message=expired_token", async () => {
-      const wrapper = await getRelayWrapper({
+      const { wrapper } = await getRelayWrapper({
         data: {
           me: { id: "woot", canRequestEmailConfirmation: true },
         },
