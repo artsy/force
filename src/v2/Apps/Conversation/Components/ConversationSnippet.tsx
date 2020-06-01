@@ -25,7 +25,7 @@ const TimeSinceFlex = styled(Flex)`
 `
 
 const StyledSans = styled(Sans)`
-  word-break: break-all;
+  word-break: break-word;
 `
 
 const TruncatedTitle = styled(Sans)`
