@@ -28,6 +28,8 @@ describe("MobileLoginForm", () => {
       values: {},
       handleSubmit: jest.fn(),
       handleTypeChange: jest.fn(),
+      onFacebookLogin: jest.fn(),
+      onAppleLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
     location.assign = jest.fn()
@@ -52,6 +54,18 @@ describe("MobileLoginForm", () => {
 
     setTimeout(() => {
       expect(wrapper.html()).toMatch("Please enter a valid email.")
+      done()
+    })
+  })
+
+  it("does not render email errors for social sign ups", done => {
+    const wrapper = getWrapper()
+    const socialLink = wrapper.find("Link").at(0)
+    socialLink.simulate("click")
+    wrapper.update()
+
+    setTimeout(() => {
+      expect(wrapper.html()).not.toMatch("Please enter a valid email.")
       done()
     })
   })

@@ -205,6 +205,18 @@ describe("MobileSignUpForm", () => {
     expect(wrapper.html()).toMatch("some password error")
   })
 
+  it("does not render email errors for social sign ups", done => {
+    const wrapper = getWrapper()
+    const socialLink = wrapper.find("Link").at(0)
+    socialLink.simulate("click")
+    wrapper.update()
+
+    setTimeout(() => {
+      expect(wrapper.html()).not.toMatch("Please enter a valid email.")
+      done()
+    })
+  })
+
   it("renders the default title", () => {
     const wrapper = getWrapper()
     expect(wrapper.text()).toContain("Sign up for Artsy")

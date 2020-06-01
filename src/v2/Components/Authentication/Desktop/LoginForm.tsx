@@ -57,16 +57,25 @@ const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
 
 export interface LoginFormState {
   error: string
+  isSocialSignUp: boolean
 }
 
 export class LoginForm extends Component<FormProps, LoginFormState> {
   state = {
     error: this.props.error,
+    isSocialSignUp: false,
   }
 
   onSubmit = (values: InputValues, formikBag: FormikProps<InputValues>) => {
     recaptcha("login_submit")
-    this.props.handleSubmit(values, formikBag)
+    this.setState(
+      {
+        isSocialSignUp: false,
+      },
+      () => {
+        this.props.handleSubmit(values, formikBag)
+      }
+    )
   }
 
   render() {
@@ -100,7 +109,9 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
             <Form onSubmit={handleSubmit} data-test="LoginForm">
               <QuickInput
                 block
-                error={touched.email && errors.email}
+                error={
+                  !this.state.isSocialSignUp && touched.email && errors.email
+                }
                 placeholder="Enter your email address"
                 name="email"
                 label="Email"
@@ -136,8 +147,26 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                   this.props.handleTypeChange(ModalType.signup)
                 }
                 mode={"login" as ModalType}
-                onAppleLogin={this.props.onAppleLogin}
-                onFacebookLogin={this.props.onFacebookLogin}
+                onAppleLogin={e => {
+                  this.setState(
+                    {
+                      isSocialSignUp: true,
+                    },
+                    () => {
+                      this.props.onAppleLogin(e)
+                    }
+                  )
+                }}
+                onFacebookLogin={e => {
+                  this.setState(
+                    {
+                      isSocialSignUp: true,
+                    },
+                    () => {
+                      this.props.onFacebookLogin(e)
+                    }
+                  )
+                }}
                 inline
               />
             </Form>
