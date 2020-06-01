@@ -7,12 +7,26 @@ import { DetailsFragmentContainer } from "../Details"
 jest.unmock("react-relay")
 
 describe("Details", () => {
+  let props
+
+  beforeEach(() => {
+    props = {
+      showSaleLine: true,
+    }
+  })
+
   const getWrapper = async (
-    response: Details_Test_QueryRawResponse["artwork"]
+    response: Details_Test_QueryRawResponse["artwork"],
+    restProps?: {
+      showSaleLine: boolean
+      useLighterFont: boolean
+      hidePartnerName: boolean
+      hideArtistName: boolean
+    }
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <DetailsFragmentContainer {...(props as any)} showSaleLine />
+        <DetailsFragmentContainer {...(props as any)} {...restProps} />
       ),
       query: graphql`
         query Details_Test_Query @raw_response_type {
@@ -26,6 +40,25 @@ describe("Details", () => {
       } as Details_Test_QueryRawResponse,
     })
   }
+
+  describe("in artist top works rail", () => {
+    it("removes artwork's partner and artist name metadata", async () => {
+      props = {
+        showSaleLine: false,
+        useLighterFont: true,
+        hidePartnerName: true,
+        hideArtistName: true,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Contact for price")
+      expect(html).not.toContain("Gerhard Richter")
+      expect(html).not.toContain("This Really Great Gallery")
+      expect(html).toContain("$2,600")
+      expect(html).toContain("Tulips (P17)")
+    })
+  })
 
   describe("in sale", () => {
     it("shows highest bid if sale open and highest bid", async () => {
@@ -166,7 +199,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
   sale_message: "$450",
   cultural_maker: null,
   title: "Tulips (P17)",
-  collecting_institution: null,
+  collecting_institution: "This Really Great Gallery",
   partner: {
     id: "opaque-partner-id",
     name: "Forum Auctions",
