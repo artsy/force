@@ -121,6 +121,12 @@ const node: ReaderFragment = {
     },
     {
       "kind": "LocalArgument",
+      "name": "sizes",
+      "type": "[ArtworkSizes]",
+      "defaultValue": null
+    },
+    {
+      "kind": "LocalArgument",
       "name": "sort",
       "type": "String",
       "defaultValue": "-partner_updated_at"
@@ -232,6 +238,11 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
+          "name": "sizes",
+          "variableName": "sizes"
+        },
+        {
+          "kind": "Variable",
           "name": "sort",
           "variableName": "sort"
         },
@@ -260,5 +271,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '56d07aeddc1ae29b870c2b9dc7346e23';
+(node as any).hash = '35138d48a93ef0f71ee5c77428ffce91';
 export default node;
