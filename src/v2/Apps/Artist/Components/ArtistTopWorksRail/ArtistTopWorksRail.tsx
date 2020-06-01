@@ -9,16 +9,38 @@ import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 
 interface ArtistTopWorksRailProps {
   topRailArtworks: ArtistTopWorksRail_topRailArtworks
+  onOverviewTab?: boolean
 }
 
 export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   topRailArtworks,
+  onOverviewTab,
 }) => {
   const carouselHeight = 300
   const artworks = topRailArtworks?.images?.edges ?? []
-  const handleViewWorksClick = () => {
-    // no-op
+  const handleViewWorksClick = event => {
+    return setTimeout(() => scrollToArtworkView(event), 500)
   }
+
+  const scrollToArtworkView = event => {
+    const $element = document.getElementById("jump--artworkFilter")
+
+    if ($element) {
+      const { top } = getElementPosition($element)
+      window.scrollTo({
+        top: top,
+      })
+    }
+  }
+
+  const getElementPosition = $element => {
+    const rect = $element.getBoundingClientRect()
+    return {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+    }
+  }
+
   return artworks.length > 0 ? (
     <Flex mb="75px" flexDirection="column">
       <Flex my={1} justifyContent="space-between">
@@ -26,24 +48,47 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
           Top Works
         </Sans>
         <Media at="xs">
-          <StyledLink
-            onClick={() => handleViewWorksClick()}
-            to={`/artist/${topRailArtworks.slug}/works-for-sale`}
-          >
-            <Sans size="4" color="black60">
-              View all
-            </Sans>
-          </StyledLink>
+          {onOverviewTab ? (
+            <StyledLink
+              onClick={e => handleViewWorksClick(e)}
+              to={`/artist/${topRailArtworks.slug}/works-for-sale`}
+            >
+              <Sans size="4" color="black60">
+                View all
+              </Sans>
+            </StyledLink>
+          ) : (
+            <Box
+              onClick={e => scrollToArtworkView(e)}
+              style={{ cursor: "pointer" }}
+            >
+              <Sans size="4" color="black60">
+                View all
+              </Sans>
+            </Box>
+          )}
         </Media>
         <Media greaterThan="xs">
-          <StyledLink
-            onClick={() => handleViewWorksClick()}
-            to={`/artist/${topRailArtworks.slug}/works-for-sale`}
-          >
-            <Sans size="4" color="black60">
-              View all works
-            </Sans>
-          </StyledLink>
+          {onOverviewTab ? (
+            <StyledLink
+              onClick={e => handleViewWorksClick(e)}
+              data-test="link-to-works-for-sale"
+              to={`/artist/${topRailArtworks.slug}/works-for-sale`}
+            >
+              <Sans size="4" color="black60">
+                View all works
+              </Sans>
+            </StyledLink>
+          ) : (
+            <Box
+              onClick={e => scrollToArtworkView(e)}
+              style={{ cursor: "pointer" }}
+            >
+              <Sans size="4" color="black60">
+                View all works
+              </Sans>
+            </Box>
+          )}
         </Media>
       </Flex>
       <Carousel
