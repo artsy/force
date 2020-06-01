@@ -162,28 +162,53 @@ describe("Email Confirmation CTA", () => {
       )
     })
 
-    describe("with `flash_message` in query string", () => {
-      it("a flash_message indicating an error supercedes the confirmation prompt", async () => {
-        const wrapper = await getRelayWrapper({
-          data: {
-            me: { id: "woot", canRequestEmailConfirmation: true },
+    it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
+      const wrapper = await getRelayWrapper({
+        data: { me: { id: "woot", canRequestEmailConfirmation: true } },
+        mutationResults: {
+          sendConfirmationEmail: {
+            confirmationOrError: {
+              mutationError: {
+                error: "BadError",
+                message: "Something Bad",
+              },
+            },
           },
-          queryString: "?flash_message=invalid_token",
-        })
-
-        expect(wrapper.text()).toContain("An error has occurred.")
+        },
       })
 
-      it("user sees an error message to re-trigger verification if flash_message=expired_token", async () => {
-        const wrapper = await getRelayWrapper({
-          data: {
-            me: { id: "woot", canRequestEmailConfirmation: true },
-          },
-          queryString: "?flash_message=expired_token",
-        })
+      expect(wrapper.text()).toContain("Please verify your email address")
 
-        expect(wrapper.text()).toContain("Link expired.")
+      wrapper
+        .find("button")
+        .first()
+        .prop("onClick")({} as any)
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.text()).toContain("Something went wrong")
+    })
+
+    it("a flash_message indicating an error supercedes the confirmation prompt", async () => {
+      const wrapper = await getRelayWrapper({
+        data: {
+          me: { id: "woot", canRequestEmailConfirmation: true },
+        },
+        queryString: "?flash_message=invalid_token",
       })
+
+      expect(wrapper.text()).toContain("An error has occurred.")
+    })
+
+    it("user sees an error message to re-trigger verification if flash_message=expired_token", async () => {
+      const wrapper = await getRelayWrapper({
+        data: {
+          me: { id: "woot", canRequestEmailConfirmation: true },
+        },
+        queryString: "?flash_message=expired_token",
+      })
+
+      expect(wrapper.text()).toContain("Link expired.")
     })
   })
 })
