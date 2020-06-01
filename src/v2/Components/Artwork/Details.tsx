@@ -14,11 +14,6 @@ const TruncatedLine = styled.div`
   white-space: nowrap;
 `
 
-const LightFontRegular = styled.span`
-  color: ${color("black60")};
-  font-size: 14px;
-`
-
 export interface Props extends React.HTMLProps<Details> {
   showSaleLine: boolean
   includeLinks: boolean
@@ -75,7 +70,7 @@ export class Details extends React.Component<Props, null> {
     const { includeLinks } = this.props
     const artworkText = (
       <>
-        <LightFontRegular>{this.props.artwork.title}</LightFontRegular>
+        <span>{this.props.artwork.title}</span>
         {this.props.artwork.date && `, ${this.props.artwork.date}`}
       </>
     )
@@ -168,7 +163,7 @@ export class Details extends React.Component<Props, null> {
 
     const bidderPositionCounts = get(
       artwork,
-      (a) => a.sale_artwork.counts.bidder_positions,
+      a => a.sale_artwork.counts.bidder_positions,
       0
     )
 
@@ -192,11 +187,11 @@ export class Details extends React.Component<Props, null> {
       } else {
         const highestBidDisplay = get(
           artwork,
-          (p) => p.sale_artwork.highest_bid.display
+          p => p.sale_artwork.highest_bid.display
         )
         const openingBidDisplay = get(
           artwork,
-          (p) => p.sale_artwork.opening_bid.display
+          p => p.sale_artwork.opening_bid.display
         )
 
         return highestBidDisplay || openingBidDisplay || ""
