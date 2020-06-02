@@ -1,5 +1,13 @@
-import { Box, Button, Flex, Sans, color } from "@artsy/palette"
-import React, { SFC } from "react"
+import {
+  Box,
+  Button,
+  Clickable,
+  Flex,
+  ModalBase,
+  Sans,
+  color,
+} from "@artsy/palette"
+import React, { SFC, useRef } from "react"
 import styled from "styled-components"
 import {
   initialArtworkFilterState,
@@ -13,22 +21,42 @@ export const ArtworkFilterMobileActionSheet: SFC<{
 }> = ({ children, onClose }) => {
   const filterContext = useArtworkFilterContext()
 
+  const contentRef = useRef<HTMLDivElement | null>(null)
+
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
     omit(filterContext.filters, "reset", "keyword"),
     initialArtworkFilterState
   )
 
+  const handleScrollToTop = () => {
+    if (!contentRef.current) return
+    contentRef.current.scrollTop = 0
+  }
+
   return (
-    <Container>
+    <ModalBase
+      onClose={onClose}
+      dialogProps={{
+        width: "100%",
+        height: "100%",
+        background: color("white100"),
+        flexDirection: "column",
+      }}
+    >
       <Header p={1}>
         <Button variant="noOutline" size="small" onClick={onClose}>
           Close
         </Button>
 
-        <Title size="3" weight="medium" textAlign="center">
-          Filter
-        </Title>
+        {/* TODO: This extraneous Flex is not necessary, Clickable (and Box) should have Flex props*/}
+        <Flex flex="1">
+          <Clickable width="100%" onClick={handleScrollToTop}>
+            <Title size="3" weight="medium" textAlign="center">
+              Filter
+            </Title>
+          </Clickable>
+        </Flex>
 
         <Button
           size="small"
@@ -40,7 +68,7 @@ export const ArtworkFilterMobileActionSheet: SFC<{
         </Button>
       </Header>
 
-      <Content>
+      <Content ref={contentRef as any}>
         <Box width="100%" p={2}>
           {children}
         </Box>
@@ -51,24 +79,9 @@ export const ArtworkFilterMobileActionSheet: SFC<{
           Apply
         </Button>
       </Footer>
-    </Container>
+    </ModalBase>
   )
 }
-
-const Container = styled(Box)`
-  position: fixed;
-
-  /* The z-index after Force's mobile top-nav header */
-  z-index: 971;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`
 
 const Header = styled(Flex)`
   width: 100%;
