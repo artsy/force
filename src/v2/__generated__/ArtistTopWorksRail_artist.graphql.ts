@@ -2,9 +2,9 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistTopWorksRail_topRailArtworks = {
+export type ArtistTopWorksRail_artist = {
     readonly slug: string;
-    readonly images: {
+    readonly topWorksArtworks: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -20,19 +20,19 @@ export type ArtistTopWorksRail_topRailArtworks = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "ArtistTopWorksRail_topRailArtworks";
+    readonly " $refType": "ArtistTopWorksRail_artist";
 };
-export type ArtistTopWorksRail_topRailArtworks$data = ArtistTopWorksRail_topRailArtworks;
-export type ArtistTopWorksRail_topRailArtworks$key = {
-    readonly " $data"?: ArtistTopWorksRail_topRailArtworks$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_topRailArtworks">;
+export type ArtistTopWorksRail_artist$data = ArtistTopWorksRail_artist;
+export type ArtistTopWorksRail_artist$key = {
+    readonly " $data"?: ArtistTopWorksRail_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_artist">;
 };
 
 
 
 const node: ReaderFragment = {
   "kind": "Fragment",
-  "name": "ArtistTopWorksRail_topRailArtworks",
+  "name": "ArtistTopWorksRail_artist",
   "type": "Artist",
   "metadata": null,
   "argumentDefinitions": [],
@@ -46,7 +46,7 @@ const node: ReaderFragment = {
     },
     {
       "kind": "LinkedField",
-      "alias": "images",
+      "alias": "topWorksArtworks",
       "name": "artworksConnection",
       "storageKey": "artworksConnection(first:10,sort:\"ICONICITY_DESC\")",
       "args": [
@@ -158,5 +158,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'f23b426a184a60d5d935783b55b454a7';
+(node as any).hash = 'bbb7ac2f025df1391a1353bc60656039';
 export default node;

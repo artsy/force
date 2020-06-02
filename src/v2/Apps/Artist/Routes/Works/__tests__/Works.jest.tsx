@@ -119,7 +119,7 @@ describe("Works Route", () => {
 const defaultWorks: Works_Test_QueryRawResponse = {
   artist: {
     slug: "slug-of-the-artist",
-    images: {
+    topWorksArtworks: {
       edges: [
         {
           node: {
