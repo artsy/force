@@ -47,7 +47,12 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   }, [])
 
   useEffect(() => {
-    if (isEnabled && width > breakpoints.xs && conversation && router) {
+    if (
+      isEnabled &&
+      width > parseInt(breakpoints.xs, 10) &&
+      conversation &&
+      router
+    ) {
       router.replace(`/user/conversations/${conversation.internalID}`)
     }
   }, [isEnabled, router, conversation, width])
