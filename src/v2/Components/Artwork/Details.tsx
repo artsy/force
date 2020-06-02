@@ -7,10 +7,11 @@ import styled from "styled-components"
 import { get } from "v2/Utils/get"
 
 const TruncatedLine = styled.div`
-  display: block;
-  text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `
 
 export interface Props extends React.HTMLProps<Details> {
@@ -70,16 +71,15 @@ export class Details extends React.Component<Props, null> {
     const { title, date, href } = artwork
 
     const artworkText = (
-      <Sans size="3t" color="black60">
-        {date ? title + ", " + date : title}
-      </Sans>
+      <TruncatedLine>
+        <Sans size="3t" color="black60">
+          {date ? title + ", " + date : title}
+        </Sans>
+      </TruncatedLine>
     )
+    const artworkTextWithLink = <Link href={href}>{artworkText}</Link>
 
-    const link = <Link href={href}>{artworkText}</Link>
-
-    const artworkTextWithLink = includeLinks ? link : artworkText
-
-    return <TruncatedLine>{artworkTextWithLink}</TruncatedLine>
+    return includeLinks ? artworkTextWithLink : artworkText
   }
 
   line(text) {

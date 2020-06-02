@@ -185,7 +185,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
         <Media greaterThan="xs">
           <Row>
             <Col>
-              <ArtistTopWorksRail topRailArtworks={artist} onOverviewTab />
+              <ArtistTopWorksRail artist={artist} onOverviewTab />
             </Col>
           </Row>
           <Separator mt={5} mb={2} />
@@ -249,7 +249,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
         <Media at="xs">
           {showArtistBio && (
             <>
-              <ArtistTopWorksRail topRailArtworks={artist} />
+              <ArtistTopWorksRail artist={artist} />
               <Separator mt={5} mb={2} />
 
               <Sans size="5">Biography</Sans>
@@ -452,7 +452,7 @@ export const OverviewRouteFragmentContainer = createFragmentContainer(
         ...FollowArtistButton_artist
         ...WorksForSaleRail_artist
         ...ArtistConsignButton_artist
-        ...ArtistTopWorksRail_topRailArtworks
+        ...ArtistTopWorksRail_artist
         slug
         id
         statuses {

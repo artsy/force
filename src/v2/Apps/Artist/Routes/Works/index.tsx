@@ -24,7 +24,7 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
   return (
     <>
       <Box>
-        <ArtistTopWorksRail topRailArtworks={artist} />
+        <ArtistTopWorksRail artist={artist} />
       </Box>
 
       <Box>
@@ -79,7 +79,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         width: { type: "String" }
       ) {
       internalID
-      ...ArtistTopWorksRail_topRailArtworks
+      ...ArtistTopWorksRail_artist
       related {
         artistsConnection(first: 1) {
           edges {
