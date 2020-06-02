@@ -29,9 +29,9 @@ Launching a Force review app can be automated via the [`build_review_app.sh`](ht
 #### Building on Circle
 
 The easiest and fastest way to spin up a review app is to push your work to
-a branch starting with `review-app`. For example, `review-app-new-form`.
+a branch starting with `review-app-` (note the trailing dash). For example, `review-app-new-form`.
 
-CircleCI will match the `review-app` prefix and either:
+CircleCI will match the `review-app-` prefix and either:
 
 1. Create a review app using `build_review_app.sh` if the review app doesn't
    exist yet (i.e. first successful push of the branch), or
@@ -52,7 +52,6 @@ Then launch the script:
 ```sh
 ./scripts/build_review_app.sh review-app-name
 ```
-
 
 ##### Manual Update
 
