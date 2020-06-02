@@ -1,12 +1,12 @@
 import React from "react"
-import { Banner, Flex, Sans } from "@artsy/palette"
-import { graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
 import qs from "qs"
-import { EmailConfirmationCTA } from "./EmailConfirmationCTA"
-import { useDidMount } from "v2/Utils/Hooks/useDidMount"
+import { graphql } from "react-relay"
+import { Banner, Flex, Sans } from "@artsy/palette"
+import { useSystemContext } from "v2/Artsy"
+import { EmailConfirmationCTA } from "v2/Components/FlashBanner/EmailConfirmationCTA"
 import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
 import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+
 interface FlashBannerProps {
   contentCode?: string
   me?: {
@@ -75,13 +75,7 @@ const TrackedFlashBanner = track({
 })(FlashBanner)
 
 export const FlashBannerQueryRenderer: React.FC = () => {
-  const didMount = useDidMount()
   const { relayEnvironment } = useSystemContext()
-
-  // This component is client-only, skip during SSR
-  if (!didMount) {
-    return null
-  }
 
   return (
     <SystemQueryRenderer
@@ -90,8 +84,6 @@ export const FlashBannerQueryRenderer: React.FC = () => {
         query FlashBannerQuery {
           me {
             canRequestEmailConfirmation
-            email
-            id
           }
         }
       `}

@@ -50,12 +50,10 @@ export const EmailConfirmationCTA: React.FC = () => {
   }
 
   const handleSubmit = () => {
-    logger.warn("tracking")
     trackEvent({
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.EmailConfirmationCTA,
     })
-    logger.warn("tracked")
     requestConfirmation()
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
         const emailToConfirm = confirmationOrError?.unconfirmedEmail
