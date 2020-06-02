@@ -7,6 +7,8 @@ import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { Media } from "v2/Utils/Responsive"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { useTracking } from "v2/Artsy"
+import * as Schema from "v2/Artsy/Analytics/Schema"
 
 interface ArtistTopWorksRailProps {
   artist: ArtistTopWorksRail_artist
@@ -17,6 +19,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   artist,
   onOverviewTab,
 }) => {
+  const tracking = useTracking()
   const carouselHeight = 300
   const artworks = artist?.topWorksArtworks?.edges ?? []
   const handleViewWorksClick = overviewTab => {
@@ -34,6 +37,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
           Top Works
         </Sans>
         <StyledLink
+          data-test="link-to-works-for-sale"
           onClick={() => handleViewWorksClick(onOverviewTab)}
           to={onOverviewTab ? `/artist/${artist.slug}/works-for-sale` : null} // no need to route if already on Works tab
         >
@@ -71,6 +75,13 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                 margin={5}
                 showMetadata
                 showExtended={false}
+                onClick={() => {
+                  tracking.trackEvent({
+                    action_type: Schema.ActionType.Click,
+                    subject: "carouselSlide",
+                    destination_path: image.href,
+                  })
+                }}
               />
             </Box>
           )
@@ -91,6 +102,7 @@ export const ArtistTopWorksRailFragmentContainer = createFragmentContainer(
             node {
               id
               image {
+                href
                 imageAspectRatio: aspectRatio
                 resized(height: 300) {
                   url

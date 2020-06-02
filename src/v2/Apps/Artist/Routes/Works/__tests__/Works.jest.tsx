@@ -127,6 +127,7 @@ const defaultWorks: Works_Test_QueryRawResponse = {
             slug: "andy-warhol-roy-lichtenstein-authenticated-3",
             href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
             image: {
+              href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
               imageAspectRatio: 0.78,
               resized: {
                 width: 100,
