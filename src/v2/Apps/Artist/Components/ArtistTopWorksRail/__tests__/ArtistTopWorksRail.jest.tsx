@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "../ArtistTopWorksRail"
-import { ArtistTopWorksRail_topRailArtworks } from "v2/__generated__/ArtistTopWorksRail_topRailArtworks.graphql"
+import { ArtistTopWorksRail_artist } from "v2/__generated__/ArtistTopWorksRail_artist.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 
@@ -11,7 +11,7 @@ describe("Artist Top Works Rail Component", () => {
 
   beforeEach(() => {
     props = {
-      topRailArtworks: topWorksContent,
+      artist: topWorksContent,
     }
   })
 
@@ -25,10 +25,10 @@ describe("Artist Top Works Rail Component", () => {
   })
 })
 
-const topWorksContent: ArtistTopWorksRail_topRailArtworks = {
+const topWorksContent: ArtistTopWorksRail_artist = {
   slug: "artist-slug",
   " $refType": null,
-  images: {
+  topWorksArtworks: {
     edges: [
       {
         node: {
