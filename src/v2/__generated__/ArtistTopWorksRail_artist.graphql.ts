@@ -9,6 +9,7 @@ export type ArtistTopWorksRail_artist = {
             readonly node: {
                 readonly id: string;
                 readonly image: {
+                    readonly href: string | null;
                     readonly imageAspectRatio: number;
                     readonly resized: {
                         readonly url: string | null;
@@ -100,6 +101,13 @@ const node: ReaderFragment = {
                   "selections": [
                     {
                       "kind": "ScalarField",
+                      "alias": null,
+                      "name": "href",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
                       "alias": "imageAspectRatio",
                       "name": "aspectRatio",
                       "args": null,
@@ -158,5 +166,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'bbb7ac2f025df1391a1353bc60656039';
+(node as any).hash = 'c2b8d0f78fc7800e02094649d21fe20d';
 export default node;
