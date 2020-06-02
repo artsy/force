@@ -13,11 +13,11 @@ export default {
       lg: 76, // rem
     },
     breakpoints: {
-      xs: breakpoints.xs, // px
-      sm: breakpoints.sm,
-      md: breakpoints.md,
-      lg: breakpoints.lg,
-      xl: breakpoints.xl,
+      xs: parseInt(breakpoints.xs, 10), // px
+      sm: parseInt(breakpoints.sm, 10),
+      md: parseInt(breakpoints.md, 10),
+      lg: parseInt(breakpoints.lg, 10),
+      xl: parseInt(breakpoints.xl, 10),
     },
   },
   publishing: {

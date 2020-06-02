@@ -1,5 +1,4 @@
-// @ts-ignore
-import React, { StatelessComponent } from "react"
+import React from "react"
 import styled from "styled-components"
 import {
   BottomProps,
