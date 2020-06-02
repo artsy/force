@@ -49,13 +49,13 @@ afterEach(() => {
 })
 
 describe("FlashBanner", () => {
-  it("renders nothing if no banner applies", async () => {
+  it("renders nothing if no banner applies", () => {
     const wrapper = mount(<FlashBanner />)
 
     expect(wrapper.find(Banner).exists()).toBeFalsy()
   })
 
-  it("renders based on a contentCode prop", async () => {
+  it("renders based on a contentCode prop", () => {
     const wrapper = mount(<FlashBanner contentCode="already_confirmed" />)
 
     expect(wrapper.text()).toContain("You have already confirmed your email")
@@ -71,7 +71,7 @@ describe("FlashBanner", () => {
     expect(wrapper.text()).toContain("Please verify your email address")
   })
 
-  it("renders based on a flash_message query param", async () => {
+  it("renders based on a flash_message query param", () => {
     window.location = { search: "?flash_message=expired_token" } as any
 
     const wrapper = mount(<FlashBanner />)
@@ -79,7 +79,7 @@ describe("FlashBanner", () => {
     expect(wrapper.text()).toContain("Link expired. Resend verification email.")
   })
 
-  it("returns nothing for an unsupported content code", async () => {
+  it("returns nothing for an unsupported content code", () => {
     const wrapper = mount(<FlashBanner contentCode="porntipsguzzardo" />)
 
     expect(wrapper.find(Banner).exists()).toBeFalsy()

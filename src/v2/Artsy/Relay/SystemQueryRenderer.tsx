@@ -7,6 +7,7 @@ interface SystemQueryRendererState {
   isMounted: boolean
 }
 
+/** A QueryRenderer that runs only on the client */
 export class SystemQueryRenderer<
   T extends OperationType
 > extends React.Component<QueryRendererProps<T>, SystemQueryRendererState> {

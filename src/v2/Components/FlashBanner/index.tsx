@@ -1,22 +1,17 @@
 import React from "react"
 import { Banner, Flex, Sans } from "@artsy/palette"
-import { QueryRenderer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 import qs from "qs"
 import { EmailConfirmationCTA } from "./EmailConfirmationCTA"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
+import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 interface FlashBannerProps {
   contentCode?: string
   me?: {
     canRequestEmailConfirmation: boolean
   }
-}
-
-type BannerContent = string | React.ComponentType
-
-function isComponent(c: BannerContent): c is React.ComponentType {
-  return typeof c === "function"
 }
 
 /**
@@ -28,16 +23,12 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
    * A map indexing keys (which may come from a contentCode prop, query string or
    * logic internal to the component + its props) to banner content.
    */
-  const contentMap: Record<string, BannerContent> = {
-    /* Comes from actual window.location.search query params */
+  const contentMap: Record<string, string> = {
     confirmed: "Your email has been confirmed.",
     already_confirmed: "You have already confirmed your email.",
     invalid_token: "An error has occurred. Please contact support@artsy.net.",
     blank_token: "An error has occurred. Please contact support@artsy.net.",
     expired_token: "Link expired. Resend verification email.",
-
-    /* Comes from logic */
-    email_confirmation_cta: EmailConfirmationCTA,
   }
 
   let contentCode = props.contentCode
@@ -56,9 +47,15 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
     return null
   }
 
-  const Content: React.ComponentType | string = contentMap[contentCode]
+  let content
 
-  if (!Content) {
+  if (contentCode === "email_confirmation_cta") {
+    content = <EmailConfirmationCTA />
+  } else {
+    content = contentMap[contentCode]
+  }
+
+  if (!content) {
     return null
   }
 
@@ -66,7 +63,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
     <Banner dismissable backgroundColor="black100">
       <Sans color="white100" size="3" lineHeight={1} weight="medium">
         <Flex justifyContent="center" alignItems="center">
-          {isComponent(Content) ? <Content /> : Content}
+          {content}
         </Flex>
       </Sans>
     </Banner>
@@ -87,7 +84,7 @@ export const FlashBannerQueryRenderer: React.FC = () => {
   }
 
   return (
-    <QueryRenderer
+    <SystemQueryRenderer
       environment={relayEnvironment}
       query={graphql`
         query FlashBannerQuery {
