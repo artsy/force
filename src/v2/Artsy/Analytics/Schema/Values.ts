@@ -282,6 +282,7 @@ export enum Subject {
   Login = "Log In",
   Signup = "Sign Up",
   SmallScreenMenuSandwichIcon = "Small Screen Menu Sandwich Icon",
+  EmailConfirmationCTA = "Email Confirmation CTA",
 
   /**
    * CollectionHub
@@ -312,6 +313,7 @@ export enum Subject {
 export enum ContextModule {
   Header = "Header",
   NavigationTabs = "NavigationTabs",
+  FlashBanner = "FlashBanner",
   RecentlyViewedArtworks = "recently_viewed_artworks",
   HeaderMoreDropdown = "HeaderMoreDropdown",
   HeaderUserDropdown = "HeaderUserDropdown",
