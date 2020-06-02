@@ -126,7 +126,7 @@ function setupJquery() {
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and
   // the menu will hide and then remove the `display` property so the default
   // CSS will kick in again.
-  $.fn.hidehover = function() {
+  $.fn.hidehover = function () {
     const $el = $(this)
     $el.css({ display: "none" })
     return setTimeout(() => $el.css({ display: "" }), 200)

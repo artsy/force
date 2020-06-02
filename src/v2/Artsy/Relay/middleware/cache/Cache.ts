@@ -1,17 +1,20 @@
 import { QueryResponseCache } from "relay-runtime"
 import createLogger from "v2/Utils/logger"
 import RelayQueryResponseCache from "relay-runtime/lib/network/RelayQueryResponseCache"
-import { isServer } from "lib/environment"
+import { isDevelopment, isServer } from "lib/environment"
+import { once } from "lodash"
 
 const logger = createLogger("v2/Artsy/middleware/cache/Cache")
 
 export interface CacheConfig {
   size: number
   ttl: number
+  disableServerSideCache?: boolean
 }
 
 export class Cache {
   cacheConfig: CacheConfig
+  enableServerSideCaching: boolean
   relayCache: RelayQueryResponseCache
 
   redisCache: {
@@ -24,6 +27,8 @@ export class Cache {
 
   constructor(cacheConfig: CacheConfig) {
     this.cacheConfig = cacheConfig
+    this.enableServerSideCaching =
+      isServer && !this.cacheConfig.disableServerSideCache
     this.initRelayCache()
     this.initRedisCache()
   }
@@ -33,13 +38,17 @@ export class Cache {
   }
 
   initRedisCache() {
-    if (!isServer) {
+    if (!this.enableServerSideCaching) {
       return
     }
 
     const { promisify } = require("util")
     const redis = require("redis")
-    const client = redis.createClient()
+
+    const client = redis.createClient({
+      url: isDevelopment ? null : process.env.OPENREDIS_URL,
+      retry_strategy: this.handleRedisRetry,
+    })
 
     this.redisCache = {
       del: promisify(client.del).bind(client),
@@ -48,10 +57,40 @@ export class Cache {
       get: promisify(client.get).bind(client),
       set: promisify(client.set).bind(client),
     }
+
+    client.on(
+      "error",
+      once(error => {
+        logger.error("REDIS_CONNECTION_ERROR", error)
+        this.enableServerSideCaching = false
+      })
+    )
   }
 
-  getCacheKey(query, variables) {
-    const cacheKey = JSON.stringify({ query, variables })
+  handleRedisRetry(retryOptions) {
+    if (retryOptions.error && retryOptions.error.code === "ECONNREFUSED") {
+      return new Error("The server refused the connection")
+    }
+    if (
+      retryOptions.total_retry_time >
+      process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS
+    ) {
+      return new Error(
+        `Retry time exhausted: ${process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS}ms`
+      )
+    }
+
+    // End reconnecting with built in error
+    if (retryOptions.attempt > 10) {
+      return undefined
+    }
+
+    const reconnectAfter = Math.min(retryOptions.attempt * 100, 3000)
+    return reconnectAfter
+  }
+
+  getCacheKey(queryId, variables) {
+    const cacheKey = JSON.stringify({ queryId, variables })
     return cacheKey
   }
 
@@ -59,7 +98,7 @@ export class Cache {
     let cachedRes = this.relayCache.get(queryId, variables)
 
     // No cache in relay store, check redis
-    if (isServer && !cachedRes) {
+    if (this.enableServerSideCaching && !cachedRes) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
@@ -75,11 +114,11 @@ export class Cache {
     return cachedRes
   }
 
-  async set(queryId, variables, res) {
+  async set(queryId, variables, res, { cacheConfig }) {
     this.relayCache.set(queryId, variables, res)
 
     // Store in redis during server-side pass
-    if (isServer) {
+    if (this.enableServerSideCaching && !cacheConfig.force) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {

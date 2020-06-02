@@ -11,6 +11,7 @@ interface CacheMiddlewareOpts extends CacheConfig {
   allowFormData?: boolean
   clearOnMutation?: boolean
   cacheErrors?: boolean
+  disableServerSideCache?: boolean
 }
 
 /**
@@ -26,11 +27,13 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
     allowFormData,
     clearOnMutation,
     cacheErrors,
+    disableServerSideCache = true,
   } = opts || {}
 
   const cache = new Cache({
     size: size || 100, // 100 requests
     ttl: ttl || 15 * 60 * 1000, // 15 minutes
+    disableServerSideCache,
   })
 
   if (isFunction(onInit)) {
@@ -51,13 +54,15 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
       return next(req)
     }
 
-    if (req.cacheConfig && req.cacheConfig.force) {
+    if (disableServerSideCache || (req.cacheConfig && req.cacheConfig.force)) {
       const queryId = req.getID()
       const variables = req.getVariables()
       const res = await next(req)
 
       if (!res.errors || (res.errors && cacheErrors)) {
-        await cache.set(queryId, variables, res)
+        await cache.set(queryId, variables, res, {
+          cacheConfig: req.cacheConfig,
+        })
       }
       return res
     }
@@ -73,7 +78,9 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
 
       const res = await next(req)
       if (!res.errors || (res.errors && cacheErrors)) {
-        await cache.set(queryId, variables, res)
+        await cache.set(queryId, variables, res, {
+          cacheConfig: req.cacheConfig,
+        })
       }
 
       return res

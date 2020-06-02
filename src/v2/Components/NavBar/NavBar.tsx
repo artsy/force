@@ -1,5 +1,5 @@
 import cookie from "cookies-js"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import {
@@ -18,7 +18,7 @@ import {
   themeProps,
 } from "@artsy/palette"
 
-import { SystemContext } from "v2/Artsy/SystemContext"
+import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 
 import {
@@ -54,7 +54,7 @@ export const NavBar: React.FC = track(
   }
 )(() => {
   const { trackEvent } = useTracking()
-  const { mediator, user } = useContext(SystemContext)
+  const { mediator, user } = useSystemContext()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = useMatchMedia(themeProps.mediaQueries.xs)
   const sm = useMatchMedia(themeProps.mediaQueries.sm)

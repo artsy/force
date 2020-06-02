@@ -42,6 +42,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
       } = config
 
       const user = getUser(context.user)
+      console.log(user)
       const relayEnvironment =
         context.relayEnvironment ||
         createRelaySSREnvironment({

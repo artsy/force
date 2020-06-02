@@ -100,6 +100,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
       size: 100, // max 100 requests
       ttl: 900000, // 15 minutes
       clearOnMutation: true,
+      disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)

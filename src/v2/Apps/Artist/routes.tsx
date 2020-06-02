@@ -9,7 +9,6 @@ import { isDefaultFilter } from "v2/Components/v2/ArtworkFilter/Utils/isDefaultF
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
 import { hasOverviewContent } from "./Components/NavigationTabs"
-import { isServer } from "lib/environment"
 
 import {
   ArtworkFilters,
@@ -94,17 +93,6 @@ export const routes: RouteConfig[] = [
         }
       }
     `,
-    getCacheConfig: ({ context }) => {
-      if (isServer) {
-        // If there's a user, request new data; otherwise check to see if there
-        // is a cache available in the relay network layer
-        const fetchData = !!context.user
-
-        return {
-          force: fetchData,
-        }
-      }
-    },
     render: ({ Component, props, match }) => {
       if (!(Component && props)) {
         return null
