@@ -30,7 +30,8 @@ export class Details extends React.Component<Props, null> {
   }
 
   artistLine() {
-    const { cultural_maker, artists } = this.props.artwork
+    const cultural_maker = this.props.artwork?.cultural_maker
+    const artists = this.props.artwork?.artists
     const { includeLinks, hideArtistName } = this.props
 
     if (hideArtistName) {
@@ -67,8 +68,10 @@ export class Details extends React.Component<Props, null> {
   }
 
   titleLine() {
-    const { includeLinks, artwork } = this.props
-    const { title, date, href } = artwork
+    const { includeLinks } = this.props
+    const title = this.props?.artwork?.title
+    const date = this.props?.artwork?.date
+    const href = this.props?.artwork?.href
 
     const artworkText = (
       <TruncatedLine>
@@ -103,9 +106,11 @@ export class Details extends React.Component<Props, null> {
   }
 
   partnerLine() {
-    const { hidePartnerName, artwork, includeLinks } = this.props
-    const { collecting_institution, partner } = artwork
-    const { href, name } = partner
+    const { hidePartnerName, includeLinks } = this.props
+    const collecting_institution = this.props?.artwork?.collecting_institution
+    const partner = this.props?.artwork?.partner
+    const href = partner?.href
+    const name = partner?.name
 
     if (hidePartnerName) {
       return
