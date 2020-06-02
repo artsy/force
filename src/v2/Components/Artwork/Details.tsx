@@ -1,11 +1,10 @@
-import { Sans, Spacer, color } from "@artsy/palette"
+import { Flex, Link, Sans, Spacer, color } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
-import TextLink from "../TextLink"
 
 const TruncatedLine = styled.div`
   display: block;
@@ -67,51 +66,67 @@ export class Details extends React.Component<Props, null> {
   }
 
   titleLine() {
-    const { includeLinks } = this.props
+    const { includeLinks, artwork } = this.props
+    const { title, date, href } = artwork
+
     const artworkText = (
-      <>
-        <span>{this.props.artwork.title}</span>
-        {this.props.artwork.date && `, ${this.props.artwork.date}`}
-      </>
+      <Sans size="3t" color="black60">
+        {date ? title + ", " + date : title}
+      </Sans>
     )
-    const artworkTextWithLink = includeLinks ? (
-      <TextLink href={this.props.artwork.href}>{artworkText}</TextLink>
-    ) : (
-      artworkText
-    )
+
+    const link = <Link href={href}>{artworkText}</Link>
+
+    const artworkTextWithLink = includeLinks ? link : artworkText
+
     return <TruncatedLine>{artworkTextWithLink}</TruncatedLine>
   }
 
   line(text) {
-    return <TruncatedLine>{text}</TruncatedLine>
+    return (
+      <TruncatedLine>
+        <Sans size="3t" color="black60">
+          {text}
+        </Sans>
+      </TruncatedLine>
+    )
   }
 
   link(text, href, key) {
     return (
-      <TextLink href={href} key={key}>
-        {text}
-      </TextLink>
+      <Link href={href} key={key}>
+        <Sans size="3t" color="black60">
+          {text}
+        </Sans>
+      </Link>
     )
   }
 
   partnerLine() {
-    if (this.props.hidePartnerName) {
+    const { hidePartnerName, artwork, includeLinks } = this.props
+    const { collecting_institution, partner } = artwork
+    const { href, name } = partner
+
+    if (hidePartnerName) {
       return
     }
 
-    if (this.props.artwork.collecting_institution) {
-      return this.line(this.props.artwork.collecting_institution)
-    } else if (this.props.artwork.partner) {
-      if (this.props.includeLinks) {
+    if (collecting_institution) {
+      return this.line(collecting_institution)
+    } else if (partner) {
+      // TODO: We wrap the entire Metadata comp in an anchor tag linking to the artwork page, so why is there a link here?
+      if (includeLinks) {
         return (
           <TruncatedLine>
-            <TextLink href={this.props.artwork.partner.href}>
-              {this.props.artwork.partner.name}
-            </TextLink>
+            <Link href={href}>
+              <Sans size="3t" color="black60">
+                {name}
+              </Sans>
+            </Link>
           </TruncatedLine>
         )
       } else {
-        return this.line(this.props.artwork.partner.name)
+        return this.line(name)
       }
     }
   }
@@ -130,9 +145,8 @@ export class Details extends React.Component<Props, null> {
     const { useLighterFont } = this.props
 
     return (
-      <>
+      <Flex flexDirection="column">
         <Sans
-          style={{ display: "inline" }}
           color={useLighterFont ? color("black60") : color("black100")}
           weight="regular"
           size="3t"
@@ -140,7 +154,6 @@ export class Details extends React.Component<Props, null> {
           {this.saleMessage()}{" "}
         </Sans>
         <Sans
-          style={{ display: "inline" }}
           size="3t"
           color={useLighterFont ? color("black60") : color("black100")}
           weight={"regular"}
@@ -148,7 +161,7 @@ export class Details extends React.Component<Props, null> {
           {this.bidInfo()}
         </Sans>
         <Spacer mb={0.3} />
-      </>
+      </Flex>
     )
   }
 
