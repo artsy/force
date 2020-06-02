@@ -46,11 +46,9 @@ export interface FormValues {
   selectedBid: string
 }
 
-Yup.addMethod(Yup.string, "present", function(message) {
+Yup.addMethod(Yup.string, "present", function (message) {
   return this.test("test-present", message, value => {
-    return this.trim()
-      .required(message)
-      .isValid(value)
+    return this.trim().required(message).isValid(value)
   })
 })
 
@@ -252,35 +250,27 @@ export const BidForm: React.FC<Props> = ({
                   </Box>
                 )}
 
-                <Flex
-                  pb={3}
-                  flexDirection="column"
-                  justifyContent="center"
-                  width="100%"
-                >
+                <Flex mb={3} flexDirection="column" justifyContent="center">
                   {requiresCheckbox && (
                     <>
                       <Separator mb={3} />
 
-                      <Box mx="auto" mb={3}>
+                      <Box mx="auto">
                         <ConditionsOfSaleCheckbox
                           selected={values.agreeToTerms}
                           onSelect={value => {
-                            setFieldValue("agreeToTerms", value)
+                            // `setFieldTouched` needs to be called first otherwise it would cause race condition.
                             setFieldTouched("agreeToTerms")
+                            setFieldValue("agreeToTerms", value)
                           }}
                         />
-                        {touched.agreeToTerms && errors.agreeToTerms && (
-                          <Sans
-                            mt={1}
-                            color="red100"
-                            size="2"
-                            textAlign="center"
-                          >
-                            {errors.agreeToTerms}
-                          </Sans>
-                        )}
                       </Box>
+
+                      {touched.agreeToTerms && errors.agreeToTerms && (
+                        <Sans mt={1} color="red100" size="2" textAlign="center">
+                          {errors.agreeToTerms}
+                        </Sans>
+                      )}
                     </>
                   )}
 
@@ -289,16 +279,16 @@ export const BidForm: React.FC<Props> = ({
                       {status}.
                     </Sans>
                   )}
-
-                  <Button
-                    size="large"
-                    width="100%"
-                    loading={isSubmitting}
-                    {...({ type: "submit" } as any)}
-                  >
-                    Confirm bid
-                  </Button>
                 </Flex>
+
+                <Button
+                  size="large"
+                  width="100%"
+                  loading={isSubmitting}
+                  {...({ type: "submit" } as any)}
+                >
+                  Confirm bid
+                </Button>
               </Flex>
             </Form>
           )
