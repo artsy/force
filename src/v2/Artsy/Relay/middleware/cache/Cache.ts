@@ -1,8 +1,14 @@
-import { QueryResponseCache } from "relay-runtime"
 import createLogger from "v2/Utils/logger"
 import RelayQueryResponseCache from "relay-runtime/lib/network/RelayQueryResponseCache"
-import { isDevelopment, isServer } from "lib/environment"
-import { once } from "lodash"
+import { isServer } from "lib/environment"
+import { RetryStrategyOptions } from "redis"
+
+import {
+  GraphQLResponse,
+  QueryResponseCache,
+  CacheConfig as RelayCacheConfig,
+  Variables as RelayVariables,
+} from "relay-runtime"
 
 const logger = createLogger("v2/Artsy/middleware/cache/Cache")
 
@@ -14,7 +20,7 @@ export interface CacheConfig {
 
 export class Cache {
   cacheConfig: CacheConfig
-  enableServerSideCaching: boolean
+  enableServerSideCache: boolean
   relayCache: RelayQueryResponseCache
 
   redisCache: {
@@ -27,7 +33,7 @@ export class Cache {
 
   constructor(cacheConfig: CacheConfig) {
     this.cacheConfig = cacheConfig
-    this.enableServerSideCaching =
+    this.enableServerSideCache =
       isServer && !this.cacheConfig.disableServerSideCache
     this.initRelayCache()
     this.initRedisCache()
@@ -38,7 +44,7 @@ export class Cache {
   }
 
   initRedisCache() {
-    if (!this.enableServerSideCaching) {
+    if (!this.enableServerSideCache) {
       return
     }
 
@@ -46,8 +52,8 @@ export class Cache {
     const redis = require("redis")
 
     const client = redis.createClient({
-      url: isDevelopment ? null : process.env.OPENREDIS_URL,
-      retry_strategy: this.handleRedisRetry,
+      url: process.env.OPENREDIS_URL,
+      retry_strategy: this.handleRedisError,
     })
 
     this.redisCache = {
@@ -57,48 +63,43 @@ export class Cache {
       get: promisify(client.get).bind(client),
       set: promisify(client.set).bind(client),
     }
-
-    client.on(
-      "error",
-      once(error => {
-        logger.error("REDIS_CONNECTION_ERROR", error)
-        this.enableServerSideCaching = false
-      })
-    )
   }
 
-  handleRedisRetry(retryOptions) {
-    if (retryOptions.error && retryOptions.error.code === "ECONNREFUSED") {
-      return new Error("The server refused the connection")
-    }
-    if (
-      retryOptions.total_retry_time >
-      process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS
-    ) {
-      return new Error(
-        `Retry time exhausted: ${process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS}ms`
-      )
+  handleRedisError(retryOptions: RetryStrategyOptions) {
+    const TIMEOUT = Number(process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS)
+    const MAX_RETRIES = 10
+
+    const logAndError = errorMsg => {
+      logger.error(errorMsg)
+      return new Error(errorMsg)
     }
 
-    // End reconnecting with built in error
-    if (retryOptions.attempt > 10) {
-      return undefined
+    switch (true) {
+      case retryOptions.error && retryOptions.error.code === "ECONNREFUSED": {
+        return logAndError("[Redis] The server refused the connection")
+      }
+      case retryOptions.total_retry_time > TIMEOUT: {
+        return logAndError(`[Redis] Retry time exhausted: ${TIMEOUT}ms`)
+      }
+      case retryOptions.attempt > MAX_RETRIES: {
+        return logAndError(`[Redis] Retry attempts exceeded: ${MAX_RETRIES}`)
+      }
     }
 
-    const reconnectAfter = Math.min(retryOptions.attempt * 100, 3000)
-    return reconnectAfter
+    const reconnectBackoffTime = Math.min(retryOptions.attempt * 100, 3000)
+    return reconnectBackoffTime
   }
 
-  getCacheKey(queryId, variables) {
+  getCacheKey(queryId: string, variables: RelayVariables) {
     const cacheKey = JSON.stringify({ queryId, variables })
     return cacheKey
   }
 
-  async get(queryId, variables) {
+  async get(queryId: string, variables: RelayVariables) {
     let cachedRes = this.relayCache.get(queryId, variables)
 
     // No cache in relay store, check redis
-    if (this.enableServerSideCaching && !cachedRes) {
+    if (this.enableServerSideCache && !cachedRes) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
@@ -114,11 +115,16 @@ export class Cache {
     return cachedRes
   }
 
-  async set(queryId, variables, res, { cacheConfig }) {
+  async set(
+    queryId: string,
+    variables: RelayVariables,
+    res: GraphQLResponse,
+    options: { cacheConfig: RelayCacheConfig }
+  ) {
     this.relayCache.set(queryId, variables, res)
 
     // Store in redis during server-side pass
-    if (this.enableServerSideCaching && !cacheConfig.force) {
+    if (this.enableServerSideCache && !options?.cacheConfig?.force) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {

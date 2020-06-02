@@ -9,7 +9,6 @@ import { data as sd } from "sharify"
 
 import {
   RelayNetworkLayer,
-  // cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
