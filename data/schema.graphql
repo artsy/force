@@ -5677,6 +5677,9 @@ type Me implements Node {
   secondFactors(kinds: [SecondFactorKind]): [SecondFactor]
   type: String
 
+  # The count of conversations with unread messages.
+  unreadConversationCount: Int!
+
   # A count of unread notifications.
   unreadNotificationsCount: Int!
 }
