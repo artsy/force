@@ -28,7 +28,12 @@ export class Cache {
     expire: (key: string, ttl: number) => Promise<void>
     flushall: () => Promise<void>
     get: (key: string) => Promise<string>
-    set: (key: string, value: string) => Promise<void>
+    set: (
+      key: string,
+      value: string,
+      expirationCommandCode?: string,
+      expirationValue?: string | number
+    ) => Promise<void>
   }
 
   constructor(cacheConfig: CacheConfig) {
@@ -75,8 +80,12 @@ export class Cache {
     }
 
     switch (true) {
-      case retryOptions.error && retryOptions.error.code === "ECONNREFUSED": {
-        return logAndError("[Redis] The server refused the connection")
+      case retryOptions.error &&
+        (retryOptions.error.code === "ECONNREFUSED" ||
+          retryOptions.error.code === "NR_CLOSED"): {
+        return logAndError(
+          "[Redis] The server refused the connection. Retrying..."
+        )
       }
       case retryOptions.total_retry_time > TIMEOUT: {
         return logAndError(`[Redis] Retry time exhausted: ${TIMEOUT}ms`)
@@ -128,8 +137,17 @@ export class Cache {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
-        await this.redisCache.set(cacheKey, JSON.stringify(res))
-        await this.redisCache.expire(cacheKey, this.cacheConfig.ttl)
+        /**
+         * Set a value with an expiry in MS.
+         * @see https://redis.io/commands/set
+         * @see https://github.com/NodeRedis/node-redis/issues/1000#issuecomment-193155582
+         */
+        await this.redisCache.set(
+          cacheKey,
+          JSON.stringify(res),
+          "PX",
+          this.cacheConfig.ttl
+        )
         logger.log("\nCache operation: [set]", cacheKey)
       } catch (error) {
         logger.error("Error setting cache: [set]", cacheKey, error)
@@ -141,7 +159,8 @@ export class Cache {
     this.relayCache.clear()
 
     if (isServer) {
-      await this.redisCache.flushall()
+      // TODO: How should we handle clear's here?
+      // await this.redisCache.flushall()
     }
   }
 }

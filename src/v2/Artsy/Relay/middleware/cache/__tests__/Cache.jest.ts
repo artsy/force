@@ -148,20 +148,14 @@ describe("Cache", () => {
         const response = { data: { artist: { slug: "picasso" } } }
         const options = { cacheConfig: { force: false } }
 
-        const expireSpy = jest.fn(() => Promise.resolve())
         cache.redisCache = {
           get: () => Promise.resolve(JSON.stringify(response)),
           set: () => Promise.resolve(),
-          expire: expireSpy,
         } as any
 
         cache.set(queryId, variables, response, options)
         const res = await cache.get(queryId, variables)
         expect(res).toEqual(response)
-        expect(expireSpy).toHaveBeenCalledWith(
-          cache.getCacheKey(queryId, variables),
-          cache.cacheConfig.ttl
-        )
       })
     })
   })
@@ -172,11 +166,8 @@ describe("Cache", () => {
       cache.enableServerSideCache = true
       const relaySpy = jest.fn()
       cache.relayCache.clear = relaySpy
-      const redisSpy = jest.fn()
-      cache.redisCache.flushall = redisSpy
       cache.clear()
       expect(relaySpy).toHaveBeenCalled()
-      expect(redisSpy).toHaveBeenCalled()
     })
   })
 })
