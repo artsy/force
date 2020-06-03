@@ -6,7 +6,6 @@ import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
-import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 
 jest.unmock("react-relay")
 
@@ -108,67 +107,10 @@ describe("Works Route", () => {
       expect(wrapper.html()).not.toContain("Mock ArtistRecommendations")
     })
   })
-
-  describe("Artist Top Works", () => {
-    it("Displays Top Works rail", () => {
-      expect(wrapper.find(ArtistTopWorksRail).length).toEqual(1)
-    })
-  })
 })
 
 const defaultWorks: Works_Test_QueryRawResponse = {
   artist: {
-    slug: "slug-of-the-artist",
-    topWorksArtworks: {
-      edges: [
-        {
-          node: {
-            id: "QXJ0d29yazo1ZGVjZDRiYjNjN2NiMTAwMTAwYWQzNmQ=",
-            slug: "andy-warhol-roy-lichtenstein-authenticated-3",
-            href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
-            image: {
-              href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
-              imageAspectRatio: 0.78,
-              resized: {
-                width: 100,
-                height: 200,
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/JS5CsvkO_SpL1Vg7R-h_Zw/large.jpg",
-              },
-              aspect_ratio: 1.0,
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/JS5CsvkO_SpL1Vg7R-h_Zw/large.jpg",
-            },
-            internalID: "5decd4bb3c7cb100100ad36d",
-            title: "Roy Lichtenstein (Authenticated)",
-            date: "1975",
-            sale_message: "$11,995",
-            cultural_maker: null,
-            artists: [
-              {
-                id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
-                href: "/artist/andy-warhol",
-                name: "Andy Warhol",
-              },
-            ],
-            collecting_institution: null,
-            partner: {
-              name: "Alpha 137 Gallery",
-              href: "/alpha-137-gallery",
-              id: "UGFydG5lcjo1NzQ4ZDE1M2NkNTMwZTJkNTEwMDAzMWM=",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
-            is_inquireable: true,
-            is_saved: false,
-            is_biddable: false,
-            is_acquireable: false,
-            is_offerable: false,
-          },
-        },
-      ],
-    },
     internalID: "4d8b92b34eb68a1b2c0003f4",
     related: {
       artistsConnection: {

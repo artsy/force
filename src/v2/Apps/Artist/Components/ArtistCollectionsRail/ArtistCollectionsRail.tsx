@@ -14,13 +14,14 @@ import { ArtistCollectionEntityFragmentContainer as ArtistCollectionEntity } fro
 
 interface ArtistCollectionsRailProps {
   collections: ArtistCollectionsRail_collections
+  includeTopSpacer?: boolean
 }
 
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
 export class ArtistCollectionsRail extends React.Component<
-  ArtistCollectionsRailProps
+ArtistCollectionsRailProps
 > {
   @track({
     action_type: Schema.ActionType.Impression,
@@ -42,16 +43,20 @@ export class ArtistCollectionsRail extends React.Component<
     // noop
   }
 
+  static defaultProps = {
+    includeTopSpacer: true,
+  }
+
   render() {
-    const { collections } = this.props
+    const { collections, includeTopSpacer } = this.props
     if (collections.length > 3) {
       return (
         <Box>
           <Waypoint onEnter={once(this.trackImpression.bind(this))} />
 
-          <Separator my={3} />
+          {includeTopSpacer && <Separator my={3} />}
 
-          <Sans size="4" color="black100" my={1}>
+          <Sans size="5" color="black100" mb={2}>
             Iconic Collections
           </Sans>
 
