@@ -49,7 +49,7 @@ const CATEGORIES = {
 }
 
 @track<Props>(
-  (props) =>
+  props =>
     ({
       context_module: "Header",
       // TODO: Old schema for the Follow button
@@ -153,7 +153,9 @@ export class SmallArtistHeader extends Component<Props> {
         <Box mx={2}>
           <Flex flexDirection="column" alignItems="center">
             <H1>
-              <Sans size="5">{props.artist.name}</Sans>
+              <Sans mt={3} size="8">
+                {props.artist.name}
+              </Sans>
             </H1>
             <Flex>
               <Box mx={1}>
@@ -226,7 +228,7 @@ const handleOpenAuth = (mediator, artist) => {
   })
 }
 
-const renderAuctionHighlight = (artist) => {
+const renderAuctionHighlight = artist => {
   const topAuctionResult = get(
     artist,
     () => artist.auctionResultsConnection.edges[0].node.price_realized.display
@@ -243,7 +245,7 @@ const renderAuctionHighlight = (artist) => {
   }
 }
 
-const renderRepresentationStatus = (artist) => {
+const renderRepresentationStatus = artist => {
   const { artistHightlights } = artist
   const { partnersConnection } = artistHightlights
   if (
