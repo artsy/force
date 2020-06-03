@@ -14,6 +14,7 @@ import {
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { isEqual, omit } from "lodash"
+import { countActiveFilters } from "./Utils/countActiveFilters"
 
 export const ArtworkFilterMobileActionSheet: SFC<{
   children: JSX.Element
@@ -102,20 +103,33 @@ export const ArtworkFilterMobileActionSheet: SFC<{
       </Content>
 
       <Footer p={1}>
-        <Button
-          variant="primaryBlack"
-          width="100%"
+        <ApplyButton
           onClick={() => {
             // On apply, replace the actual filter state with the
             // hitherto staged filters
             filterContext.setFilters(filterContext.stagedFilters)
             onClose()
           }}
-        >
-          Apply
-        </Button>
+          activeFilterCount={countActiveFilters(filterContext.stagedFilters)}
+        />
       </Footer>
     </ModalBase>
+  )
+}
+
+interface ApplyButtonProps {
+  activeFilterCount: number
+  onClick: () => void
+}
+
+const ApplyButton: React.SFC<ApplyButtonProps> = ({
+  activeFilterCount,
+  onClick,
+}) => {
+  return (
+    <Button variant="primaryBlack" width="100%" onClick={onClick}>
+      Apply ({activeFilterCount})
+    </Button>
   )
 }
 

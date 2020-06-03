@@ -37,12 +37,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.html()).toContain("Filter")
 
-    expect(
-      wrapper
-        .find("Button")
-        .last()
-        .text()
-    ).toEqual("Apply")
+    expect(wrapper.find("Button").last().text()).toEqual("Apply (0)")
   })
 
   it("resets filters to defaults on `Reset` button click", () => {
