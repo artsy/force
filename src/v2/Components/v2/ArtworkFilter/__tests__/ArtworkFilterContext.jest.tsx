@@ -53,16 +53,13 @@ describe("ArtworkFilterContext", () => {
       )
     })
 
-    it("#hasFilters", done => {
+    it("#hasFilters", () => {
       getWrapper()
       expect(context.hasFilters).toBe(false)
       act(() => {
         context.setFilter("page", 10)
-        setTimeout(() => {
-          expect(context.hasFilters).toBe(true)
-          done()
-        })
       })
+      expect(context.hasFilters).toBe(true)
     })
 
     it("#isDefaultValue", () => {
@@ -75,18 +72,15 @@ describe("ArtworkFilterContext", () => {
       expect(context.rangeToTuple("height")).toEqual([1, 120])
     })
 
-    it("#setFilter", done => {
+    it("#setFilter", () => {
       getWrapper()
       act(() => {
         context.setFilter("page", 10)
-        setTimeout(() => {
-          expect(context.filters.page).toEqual(10)
-          done()
-        })
       })
+      expect(context.filters.page).toEqual(10)
     })
 
-    it("#setFilter resets pagination", done => {
+    it("#setFilter resets pagination", () => {
       getWrapper({
         filters: {
           page: 10,
@@ -95,31 +89,23 @@ describe("ArtworkFilterContext", () => {
       act(() => {
         expect(context.filters.page).toEqual(10)
         context.setFilter("sort", "relevant")
-        setTimeout(() => {
-          expect(context.filters.page).toEqual(1)
-          done()
-        })
       })
+      expect(context.filters.page).toEqual(1)
     })
 
-    it("#unsetFilter", done => {
+    it("#unsetFilter", () => {
       getWrapper()
       act(() => {
         context.setFilter("page", 10)
-        setTimeout(() => {
-          expect(context.filters.page).toEqual(10)
-          act(() => {
-            context.unsetFilter("page")
-            setTimeout(() => {
-              expect(context.filters.page).toEqual(1)
-              done()
-            })
-          })
-        })
       })
+      expect(context.filters.page).toEqual(10)
+      act(() => {
+        context.unsetFilter("page")
+      })
+      expect(context.filters.page).toEqual(1)
     })
 
-    it("#unsetFilter resets pagination", done => {
+    it("#unsetFilter resets pagination", () => {
       getWrapper({
         filters: {
           page: 10,
@@ -129,11 +115,8 @@ describe("ArtworkFilterContext", () => {
       act(() => {
         expect(context.filters.page).toEqual(10)
         context.unsetFilter("sort")
-        setTimeout(() => {
-          expect(context.filters.page).toEqual(1)
-          done()
-        })
       })
+      expect(context.filters.page).toEqual(1)
     })
 
     it("#resetFilters", () => {
@@ -149,9 +132,10 @@ describe("ArtworkFilterContext", () => {
 
       act(() => {
         context.resetFilters()
-        setTimeout(() => {
-          expect(context.filters).toEqual(initialArtworkFilterState)
-        })
+      })
+      expect(context.filters).toEqual({
+        ...initialArtworkFilterState,
+        reset: true,
       })
     })
   })
