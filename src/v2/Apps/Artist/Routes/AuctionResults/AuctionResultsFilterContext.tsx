@@ -163,7 +163,7 @@ const AuctionResultsFilterReducer = (
 
       arrayFilterTypes.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = value || []
+          filterState[name as any] = value || []
         }
       })
 
@@ -178,7 +178,7 @@ const AuctionResultsFilterReducer = (
 
       primitiveFilterTypes.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = value
+          filterState[name as any] = value
         }
       })
 
@@ -224,13 +224,13 @@ const AuctionResultsFilterReducer = (
       const filters: Array<keyof AuctionResultsFilters> = ["sort"]
       filters.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = null
+          filterState[name as any] = null
         }
       })
 
       arrayFilterTypes.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = []
+          filterState[name as any] = []
         }
       })
 

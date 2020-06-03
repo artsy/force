@@ -12,7 +12,6 @@ import { paramsToCamelCase } from "./Utils/urlBuilder"
 export const initialArtworkFilterState: ArtworkFilters = {
   majorPeriods: [],
   page: 1,
-  sizes: [],
   sort: "-decayed_merch",
 
   // TODO: Remove these unneeded default props
@@ -39,7 +38,6 @@ export interface ArtworkFilters {
   page?: number
   partnerID?: string
   priceRange?: string
-  sizes?: string[]
   sort?: string
   term?: string
   width?: string
@@ -81,9 +79,6 @@ interface Counts {
   has_make_offer_artworks?: boolean
 }
 
-// TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
-// Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
-// and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
   filters?: ArtworkFilters
 
@@ -149,11 +144,9 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const ArtworkFilterContextProvider: React.FC<
-  SharedArtworkFilterContextProps & {
-    children: React.ReactNode
-  }
-> = ({
+export const ArtworkFilterContextProvider: React.FC<SharedArtworkFilterContextProps & {
+  children: React.ReactNode
+}> = ({
   aggregations = [],
   children,
   counts = {},
@@ -203,11 +196,11 @@ export const ArtworkFilterContextProvider: React.FC<
     ZeroState,
 
     // Filter manipulation
-    isDefaultValue: (field) => {
+    isDefaultValue: field => {
       return isDefaultFilter(field, artworkFilterState[field])
     },
 
-    rangeToTuple: (range) => {
+    rangeToTuple: range => {
       return rangeToTuple(artworkFilterState, range)
     },
 
@@ -225,7 +218,7 @@ export const ArtworkFilterContextProvider: React.FC<
       })
     },
 
-    unsetFilter: (name) => {
+    unsetFilter: name => {
       dispatch({
         type: "UNSET",
         payload: {
@@ -256,8 +249,6 @@ const artworkFilterReducer = (
     payload: { name: keyof ArtworkFilters; value?: any }
   }
 ): ArtworkFiltersState => {
-  const arrayFilterTypes: Array<keyof ArtworkFilters> = ["sizes"]
-
   switch (action.type) {
     /**
      * Setting  and updating filters
@@ -278,12 +269,6 @@ const artworkFilterReducer = (
         filterState[name] = Number(value)
       }
 
-      arrayFilterTypes.forEach((filter) => {
-        if (name === filter) {
-          filterState[name as string] = value || []
-        }
-      })
-
       // String filter types
       const stringFilterTypes: Array<keyof ArtworkFilters> = [
         "color",
@@ -294,9 +279,9 @@ const artworkFilterReducer = (
         "sort",
         "width",
       ]
-      stringFilterTypes.forEach((filter) => {
+      stringFilterTypes.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = value
+          filterState[name as any] = value
         }
       })
 
@@ -308,9 +293,9 @@ const artworkFilterReducer = (
         "inquireableOnly",
         "offerable",
       ]
-      booleanFilterTypes.forEach((filter) => {
+      booleanFilterTypes.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = Boolean(value)
+          filterState[name as any] = Boolean(value)
         }
       })
 
@@ -348,12 +333,6 @@ const artworkFilterReducer = (
         }
       }
 
-      arrayFilterTypes.forEach((filter) => {
-        if (name === filter) {
-          filterState[name as string] = []
-        }
-      })
-
       const filters: Array<keyof ArtworkFilters> = [
         "acquireable",
         "atAuction",
@@ -363,9 +342,9 @@ const artworkFilterReducer = (
         "offerable",
         "partnerID",
       ]
-      filters.forEach((filter) => {
+      filters.forEach(filter => {
         if (name === filter) {
-          filterState[name as string] = null
+          filterState[name as any] = null
         }
       })
 

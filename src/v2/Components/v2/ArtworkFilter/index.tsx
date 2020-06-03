@@ -246,7 +246,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           page: { type: "Int" }
           partnerID: { type: "ID" }
           priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
           first: { type: "Int", defaultValue: 30 }
@@ -268,7 +267,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           page: $page
           partnerID: $partnerID
           priceRange: $priceRange
-          sizes: $sizes
           sort: $sort
           width: $width
           first: $first
