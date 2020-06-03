@@ -3,7 +3,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomApp_viewingRoom = {
-    readonly formattedEndAt: string | null;
+    readonly status: string;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomMeta_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomClosed_viewingRoom">;
     readonly " $refType": "ViewingRoomApp_viewingRoom";
 };
@@ -25,7 +25,7 @@ const node: ReaderFragment = {
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "formattedEndAt",
+      "name": "status",
       "args": null,
       "storageKey": null
     },
@@ -46,5 +46,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'c3b6c8102fe6a5d190c45fbaadf14faa';
+(node as any).hash = '6881a238219da84b5907fbe6560578c2';
 export default node;
