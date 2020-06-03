@@ -170,7 +170,7 @@ interface BaseCarouselState {
 export class BaseCarousel<T> extends React.Component<
   CarouselProps<T>,
   BaseCarouselState
-  > {
+> {
   state = {
     currentSlideIndex: 0,
     lastItemVisible: true,
@@ -448,7 +448,7 @@ const FlickityCarousel = styled.div<{
   display: ${props => (props.isMounted ? "block" : "flex")};
 `
 
-const CarouselContainer = styled(Box) <{
+const CarouselContainer = styled(Box)<{
   isMounted: boolean
 }>`
   width: 100%;
@@ -494,7 +494,7 @@ const CarouselContainer = styled(Box) <{
   }};
 `
 
-export const ArrowButton = styled(Flex) <LeftProps & RightProps & HeightProps>`
+export const ArrowButton = styled(Flex)<LeftProps & RightProps & HeightProps>`
   position: relative;
   cursor: pointer;
   display: flex;

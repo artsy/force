@@ -9,11 +9,12 @@ import { data as sd } from "sharify"
 
 import {
   RelayNetworkLayer,
-  cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
+
+import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
@@ -98,6 +99,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
       size: 100, // max 100 requests
       ttl: 900000, // 15 minutes
       clearOnMutation: true,
+      disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)

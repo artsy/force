@@ -160,6 +160,7 @@ exports.baseConfig = {
   },
   externals: {
     // Don't bundle modules and consider them external
+    redis: "redis",
     request: "request",
   },
 }
