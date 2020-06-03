@@ -25,7 +25,7 @@ export const ArtworkFilterMobileActionSheet: SFC<{
 
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
-    omit(filterContext.filters, "reset", "keyword"),
+    omit(filterContext.stagedFilters, "reset", "keyword"),
     initialArtworkFilterState
   )
 

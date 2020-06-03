@@ -60,7 +60,9 @@ export const WaysToBuyFilter: FC = () => {
             disabled: checkbox.disabled,
             key: index,
             onSelect: value => filterContext.setFilter(checkbox.state, value),
-            selected: Boolean(filterContext.filters[checkbox.state]),
+            selected: Boolean(
+              filterContext.currentlySelectedFilters()[checkbox.state]
+            ),
           }
           return <Checkbox {...props}>{checkbox.name}</Checkbox>
         })}

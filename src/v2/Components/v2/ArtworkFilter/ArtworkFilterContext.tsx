@@ -85,8 +85,14 @@ interface Counts {
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
+  /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFilters
+
+  /** Interim filter state, to be manipulated before being applied to the current filter state */
   stagedFilters?: ArtworkFilters
+
+  /** Getter for the appropriate source of truth to render in the filter UI */
+  currentlySelectedFilters?: () => ArtworkFilters
 
   // Components
   ZeroState?: React.FC
@@ -196,10 +202,24 @@ export const ArtworkFilterContextProvider: React.FC<
     }
   }, [artworkFilterState])
 
+  // If in staged mode, return the staged filters for UI display
+  const currentlySelectedFilters = () => {
+    return shouldStageFilterChanges
+      ? stagedArtworkFilterState
+      : artworkFilterState
+  }
+
+  // If in staged mode, manipulate the staged version of filter state
+  // instead of "real" one
+  const dispatchOrStage = (action: ArtworkFiltersAction) => {
+    shouldStageFilterChanges ? stage(action) : dispatch(action)
+  }
+
   const artworkFilterContext = {
     filters: artworkFilterState,
     hasFilters: hasFilters(artworkFilterState),
     stagedFilters: stagedArtworkFilterState,
+    currentlySelectedFilters: currentlySelectedFilters,
 
     // Handlers
     onArtworkBrickClick,
@@ -221,12 +241,12 @@ export const ArtworkFilterContextProvider: React.FC<
     },
 
     rangeToTuple: range => {
-      return rangeToTuple(artworkFilterState, range)
+      return rangeToTuple(currentlySelectedFilters(), range)
     },
 
     setFilter: (name, val) => {
       if (onFilterClick) {
-        onFilterClick(name, val, { ...artworkFilterState, [name]: val })
+        onFilterClick(name, val, { ...currentlySelectedFilters(), [name]: val })
       }
 
       const action: ArtworkFiltersAction = {
@@ -236,7 +256,7 @@ export const ArtworkFilterContextProvider: React.FC<
           value: val,
         },
       }
-      shouldStageFilterChanges ? stage(action) : dispatch(action)
+      dispatchOrStage(action)
     },
 
     unsetFilter: name => {
@@ -246,7 +266,7 @@ export const ArtworkFilterContextProvider: React.FC<
           name,
         },
       }
-      shouldStageFilterChanges ? stage(action) : dispatch(action)
+      dispatchOrStage(action)
     },
 
     resetFilters: () => {
@@ -254,9 +274,10 @@ export const ArtworkFilterContextProvider: React.FC<
         type: "RESET",
         payload: null,
       }
-      shouldStageFilterChanges ? stage(action) : dispatch(action)
+      dispatchOrStage(action)
     },
 
+    // Staging & applying filter changes
     shouldStageFilterChanges,
     setShouldStageFilterChanges,
 

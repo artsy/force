@@ -10,7 +10,7 @@ export const ColorFilter: FC<ColorFilterProps> = ({ expanded = false }) => {
   const filterContext = useArtworkFilterContext()
 
   const toggleColor = color => {
-    if (filterContext.filters.color === color) {
+    if (filterContext.currentlySelectedFilters().color === color) {
       filterContext.unsetFilter("color")
     } else {
       filterContext.setFilter("color", color)
@@ -20,7 +20,7 @@ export const ColorFilter: FC<ColorFilterProps> = ({ expanded = false }) => {
   const CheckmarkStyle = {
     position: "relative",
     cursor: "pointer",
-    ...CheckmarkPositions[filterContext.filters.color],
+    ...CheckmarkPositions[filterContext.currentlySelectedFilters().color],
   }
   return (
     <Toggle label="Color" expanded={expanded}>
