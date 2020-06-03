@@ -105,7 +105,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         }}
       >
         <Sans size="3" weight="medium" color={hoverColor}>
-          <Box height={25}>
+          <NavItemInner height={25}>
             {isFunction(navItemLabel)
               ? // NavItem children can be called as renderProps so that contents
                 // can operate on UI behaviors (such as changing the color of an
@@ -114,7 +114,7 @@ export const NavItem: React.FC<NavItemProps> = ({
                   hover,
                 })
               : navItemLabel}
-          </Box>
+          </NavItemInner>
         </Sans>
       </Link>
 
@@ -156,4 +156,10 @@ const MenuContainer = styled(Box)<{ isFullScreen?: boolean }>`
   position: absolute;
   margin-top: ${p => (p.isFullScreen ? "1px" : "-1px")}; /* Offset border */
   transform: translateX(${p => (p.isFullScreen ? 0 : "-78%")});
+`
+
+const NavItemInner = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

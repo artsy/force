@@ -46,9 +46,11 @@ import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
  * doesn't `extend Viewer`, the BaseArtworkFilter can be imported below. See
  * `Apps/Collection` for an example, which queries Kaws for data.
  */
-export const ArtworkFilter: React.FC<SharedArtworkFilterContextProps & {
-  viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
-}> = ({
+export const ArtworkFilter: React.FC<
+  SharedArtworkFilterContextProps & {
+    viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
+  }
+> = ({
   viewer,
   aggregations,
   counts,
@@ -246,7 +248,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           page: { type: "Int" }
           partnerID: { type: "ID" }
           priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
           first: { type: "Int", defaultValue: 30 }
@@ -268,7 +269,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           page: $page
           partnerID: $partnerID
           priceRange: $priceRange
-          sizes: $sizes
           sort: $sort
           width: $width
           first: $first

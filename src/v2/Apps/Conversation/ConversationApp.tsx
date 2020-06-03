@@ -6,7 +6,7 @@ import { Match, Router } from "found"
 import React, { useContext, useEffect, useState } from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Flex, Spinner, unitlessBreakpoints } from "@artsy/palette"
+import { Flex, Spinner, breakpoints } from "@artsy/palette"
 import { debounce } from "lodash"
 import { SystemContext } from "v2/Artsy"
 import { userHasLabFeature } from "v2/Utils/user"
@@ -47,7 +47,12 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   }, [])
 
   useEffect(() => {
-    if (isEnabled && width > unitlessBreakpoints.xs && conversation && router) {
+    if (
+      isEnabled &&
+      width > parseInt(breakpoints.xs, 10) &&
+      conversation &&
+      router
+    ) {
       router.replace(`/user/conversations/${conversation.internalID}`)
     }
   }, [isEnabled, router, conversation, width])

@@ -25,7 +25,7 @@ export class Section extends React.Component<SectionProps> {
     this.setState({ expanded: !this.state.expanded })
   }
   render() {
-    const maxWidth = themeProps.grid.breakpoints.xl + "px"
+    const maxWidth = themeProps.grid.breakpoints.xl
 
     return (
       <React.Fragment>

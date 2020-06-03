@@ -151,7 +151,7 @@ export const BidForm: React.FC<Props> = ({
           agreeToTerms: false,
           address: {
             name: "",
-            country: "",
+            country: "US",
             postalCode: "",
             addressLine1: "",
             addressLine2: "",

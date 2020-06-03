@@ -6,10 +6,9 @@ import { GalleryFilter } from "./GalleryFilter"
 import { InstitutionFilter } from "./InstitutionFilter"
 import { MediumFilter } from "./MediumFilter"
 import { PriceRangeFilter } from "./PriceRangeFilter"
-import { SizeFilter } from "v2/Apps/Components/SizeFilter"
+import { SizeRangeFilter } from "./SizeRangeFilter"
 import { TimePeriodFilter } from "./TimePeriodFilter"
 import { WaysToBuyFilter } from "./WaysToBuyFilter"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
 
 export const ArtworkFilters: React.FC = () => {
   return (
@@ -19,7 +18,7 @@ export const ArtworkFilters: React.FC = () => {
       <WaysToBuyFilter />
       <GalleryFilter />
       <InstitutionFilter />
-      <SizeFilter useFilterContext={useArtworkFilterContext} />
+      <SizeRangeFilter />
       <TimePeriodFilter />
       <ColorFilter />
     </Box>
