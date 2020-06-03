@@ -1,5 +1,4 @@
 import { QueryResponseCache } from "relay-runtime"
-import { isFunction } from "lodash"
 import createLogger from "v2/Utils/logger"
 import { Cache, CacheConfig } from "./Cache"
 
@@ -36,7 +35,7 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
     disableServerSideCache,
   })
 
-  if (isFunction(onInit)) {
+  if (onInit) {
     onInit(cache)
   }
 

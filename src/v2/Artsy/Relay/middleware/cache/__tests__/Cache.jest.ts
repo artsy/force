@@ -45,45 +45,6 @@ describe("Cache", () => {
     expect(cache.redisCache).toBeTruthy()
   })
 
-  describe("redis errors", () => {
-    it("throws error if ECONNREFUSED", () => {
-      const cache = getCache()
-      const err = cache.handleRedisError({
-        error: {
-          code: "ECONNREFUSED",
-        },
-      } as any) as Error
-      expect(err.message).toContain("The server refused the connection")
-    })
-
-    it("throws error if retrieval time exceeds PAGE_CACHE_RETRIEVAL_TIME", () => {
-      process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS = "10"
-      const cache = getCache()
-      const err = cache.handleRedisError({
-        total_retry_time: 100000,
-      } as any) as Error
-      expect(err.message).toContain("Retry time exhausted")
-    })
-
-    it("throws error if number of attempts exceeds MAX_RETRIES", () => {
-      const cache = getCache()
-      const err = cache.handleRedisError({
-        attempt: 11,
-      } as any) as Error
-      expect(err.message).toContain("Retry attempts exceeded")
-    })
-
-    it("returns a retry time that backs off", () => {
-      const cache = getCache()
-      ;[...new Array(10)].forEach(index => {
-        const retryTime = cache.handleRedisError({
-          attempt: index,
-        } as any) as Error
-        expect(retryTime).toEqual(index * 100)
-      })
-    })
-  })
-
   it("returns a cache key", () => {
     const cache = getCache()
     expect(cache.getCacheKey("ArtistQuery", { slug: "picasso" })).toEqual(
@@ -148,20 +109,14 @@ describe("Cache", () => {
         const response = { data: { artist: { slug: "picasso" } } }
         const options = { cacheConfig: { force: false } }
 
-        const expireSpy = jest.fn(() => Promise.resolve())
         cache.redisCache = {
           get: () => Promise.resolve(JSON.stringify(response)),
           set: () => Promise.resolve(),
-          expire: expireSpy,
         } as any
 
         cache.set(queryId, variables, response, options)
         const res = await cache.get(queryId, variables)
         expect(res).toEqual(response)
-        expect(expireSpy).toHaveBeenCalledWith(
-          cache.getCacheKey(queryId, variables),
-          cache.cacheConfig.ttl
-        )
       })
     })
   })
@@ -172,11 +127,8 @@ describe("Cache", () => {
       cache.enableServerSideCache = true
       const relaySpy = jest.fn()
       cache.relayCache.clear = relaySpy
-      const redisSpy = jest.fn()
-      cache.redisCache.flushall = redisSpy
       cache.clear()
       expect(relaySpy).toHaveBeenCalled()
-      expect(redisSpy).toHaveBeenCalled()
     })
   })
 })

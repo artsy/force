@@ -1,7 +1,7 @@
 import createLogger from "v2/Utils/logger"
 import RelayQueryResponseCache from "relay-runtime/lib/network/RelayQueryResponseCache"
 import { isServer } from "lib/environment"
-import { RetryStrategyOptions } from "redis"
+import { redisRetryStrategy } from "./redisRetryStrategy"
 
 import {
   GraphQLResponse,
@@ -28,7 +28,12 @@ export class Cache {
     expire: (key: string, ttl: number) => Promise<void>
     flushall: () => Promise<void>
     get: (key: string) => Promise<string>
-    set: (key: string, value: string) => Promise<void>
+    set: (
+      key: string,
+      value: string,
+      expirationCommandCode?: string,
+      expirationValue?: string | number
+    ) => Promise<void>
   }
 
   constructor(cacheConfig: CacheConfig) {
@@ -53,7 +58,7 @@ export class Cache {
 
     const client = redis.createClient({
       url: process.env.OPENREDIS_URL,
-      retry_strategy: this.handleRedisError,
+      retry_strategy: redisRetryStrategy,
     })
 
     this.redisCache = {
@@ -63,31 +68,6 @@ export class Cache {
       get: promisify(client.get).bind(client),
       set: promisify(client.set).bind(client),
     }
-  }
-
-  handleRedisError(retryOptions: RetryStrategyOptions) {
-    const TIMEOUT = Number(process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS)
-    const MAX_RETRIES = 10
-
-    const logAndError = errorMsg => {
-      logger.error(errorMsg)
-      return new Error(errorMsg)
-    }
-
-    switch (true) {
-      case retryOptions.error && retryOptions.error.code === "ECONNREFUSED": {
-        return logAndError("[Redis] The server refused the connection")
-      }
-      case retryOptions.total_retry_time > TIMEOUT: {
-        return logAndError(`[Redis] Retry time exhausted: ${TIMEOUT}ms`)
-      }
-      case retryOptions.attempt > MAX_RETRIES: {
-        return logAndError(`[Redis] Retry attempts exceeded: ${MAX_RETRIES}`)
-      }
-    }
-
-    const reconnectBackoffTime = Math.min(retryOptions.attempt * 100, 3000)
-    return reconnectBackoffTime
   }
 
   getCacheKey(queryId: string, variables: RelayVariables) {
@@ -128,8 +108,17 @@ export class Cache {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
-        await this.redisCache.set(cacheKey, JSON.stringify(res))
-        await this.redisCache.expire(cacheKey, this.cacheConfig.ttl)
+        /**
+         * Set a value with an expiry in MS.
+         * @see https://redis.io/commands/set
+         * @see https://github.com/NodeRedis/node-redis/issues/1000#issuecomment-193155582
+         */
+        await this.redisCache.set(
+          cacheKey,
+          JSON.stringify(res),
+          "PX",
+          this.cacheConfig.ttl
+        )
         logger.log("\nCache operation: [set]", cacheKey)
       } catch (error) {
         logger.error("Error setting cache: [set]", cacheKey, error)
@@ -141,7 +130,8 @@ export class Cache {
     this.relayCache.clear()
 
     if (isServer) {
-      await this.redisCache.flushall()
+      // TODO: How should we handle clear's here?
+      // await this.redisCache.flushall()
     }
   }
 }
