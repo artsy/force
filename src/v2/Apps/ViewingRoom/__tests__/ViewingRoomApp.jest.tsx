@@ -171,6 +171,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
       href: "/partner-demo-gg",
     },
     formattedEndAt: "Closes in about 1 month",
+    status: "live",
   },
 }
 
@@ -185,5 +186,6 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
       href: "/partner-demo-gg",
     },
     formattedEndAt: "Closed",
+    status: "closed",
   },
 }

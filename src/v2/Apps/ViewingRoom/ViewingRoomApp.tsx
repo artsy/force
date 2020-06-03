@@ -28,7 +28,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
 
-        {viewingRoom.formattedEndAt === "Closed" ? (
+        {viewingRoom.status === "closed" ? (
           <ViewingRoomClosed viewingRoom={viewingRoom} />
         ) : (
           <>
@@ -53,7 +53,7 @@ export default createFragmentContainer(ViewingRoomApp, {
       ...ViewingRoomMeta_viewingRoom
       ...ViewingRoomHeader_viewingRoom
       ...ViewingRoomClosed_viewingRoom
-      formattedEndAt
+      status
     }
   `,
 })
