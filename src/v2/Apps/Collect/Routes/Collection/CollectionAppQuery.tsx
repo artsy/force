@@ -24,6 +24,7 @@ export const CollectionAppQuery = graphql`
     $offerable: Boolean
     $page: Int
     $priceRange: String
+    $sizes: [ArtworkSizes]
     $sort: String
     $slug: String!
     $width: String
@@ -43,6 +44,7 @@ export const CollectionAppQuery = graphql`
           offerable: $offerable
           page: $page
           priceRange: $priceRange
+          sizes: $sizes
           sort: $sort
           width: $width
           first: 30
