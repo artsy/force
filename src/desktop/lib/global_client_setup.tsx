@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
     cdnUrl = "https://d1s2w0upia4e9w.cloudfront.net"
 
     // Localhost
-  } else if (hostname === "localhost") {
+  } else if (hostname === "localhost" || hostname === "local.artsy.net") {
     cdnUrl = ""
 
     // Everything else
@@ -126,7 +126,7 @@ function setupJquery() {
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and
   // the menu will hide and then remove the `display` property so the default
   // CSS will kick in again.
-  $.fn.hidehover = function() {
+  $.fn.hidehover = function () {
     const $el = $(this)
     $el.css({ display: "none" })
     return setTimeout(() => $el.css({ display: "" }), 200)
