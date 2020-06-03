@@ -1,8 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Artwork renders correctly 1`] = `
-.c8 {
+.c4 {
+  margin-top: 12px;
+  text-align: left;
+}
+
+.c10 {
   margin-bottom: 0.3px;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c6 {
@@ -17,34 +32,36 @@ exports[`Artwork renders correctly 1`] = `
   font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 20px;
+  color: black60;
+}
+
+.c9 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 20px;
   color: #000;
 }
 
 .c3 {
-  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
-  font-size: 15px;
-  line-height: 1.25em;
-  -webkit-font-smoothing: antialiased;
-  color: #333333;
+  color: #000;
+  -webkit-transition: color 0.25s;
+  transition: color 0.25s;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c5 {
-  display: block;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+.c3:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #000;
 }
 
-.c4 {
-  font-family: Unica77LLWebRegular,Arial,serif;
-  -webkit-font-smoothing: antialiased;
-  font-size: 14px;
-  line-height: 1.4em;
-  color: #666666;
-  margin-top: 12px;
-  text-align: left;
+.c5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .c0 {
@@ -114,7 +131,6 @@ exports[`Artwork renders correctly 1`] = `
   <a
     className="c3"
     href="/artwork/mikael-olson-some-kind-of-dinosaur"
-    target="_self"
   >
     <div
       className="c4"
@@ -141,44 +157,53 @@ exports[`Artwork renders correctly 1`] = `
         <div
           className="c5"
         >
-          <span>
-            Some Kind of Dinosaur
-          </span>
-          , 2015
+          <div
+            className="c7"
+            color="black60"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize="14px"
+            style={Object {}}
+          >
+            Some Kind of Dinosaur, 2015
+          </div>
         </div>
         <div
           className="c5"
         >
-          Gallery 1261
+          <div
+            className="c7"
+            color="black60"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize="14px"
+            style={Object {}}
+          >
+            Gallery 1261
+          </div>
         </div>
-        <div
-          className="c7"
-          color="#000"
-          fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-          fontSize="14px"
-          style={
-            Object {
-              "display": "inline",
-            }
-          }
-        >
-          $875
-           
-        </div>
-        <div
-          className="c7"
-          color="#000"
-          fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-          fontSize="14px"
-          style={
-            Object {
-              "display": "inline",
-            }
-          }
-        />
         <div
           className="c8"
-        />
+        >
+          <div
+            className="c9"
+            color="#000"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize="14px"
+            style={Object {}}
+          >
+            $875
+             
+          </div>
+          <div
+            className="c9"
+            color="#000"
+            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+            fontSize="14px"
+            style={Object {}}
+          />
+          <div
+            className="c10"
+          />
+        </div>
       </div>
     </div>
   </a>
