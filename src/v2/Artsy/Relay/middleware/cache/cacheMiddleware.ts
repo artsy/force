@@ -1,6 +1,7 @@
 import { QueryResponseCache } from "relay-runtime"
 import createLogger from "v2/Utils/logger"
 import { Cache, CacheConfig } from "./Cache"
+import { isFunction } from "lodash"
 
 const logger = createLogger("v2/Artsy/middleware/cache/cacheMiddleware")
 
@@ -35,7 +36,7 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
     disableServerSideCache,
   })
 
-  if (onInit) {
+  if (isFunction(onInit)) {
     onInit(cache)
   }
 
