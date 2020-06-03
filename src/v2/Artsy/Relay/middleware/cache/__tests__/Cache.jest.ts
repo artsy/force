@@ -5,7 +5,6 @@
 import { Cache } from "../Cache"
 
 jest.mock("lib/environment")
-jest.mock("lib/relayCacheClient")
 
 describe("Cache", () => {
   const getCache = (props = {}) => {

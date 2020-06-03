@@ -48,7 +48,7 @@ global.Promise = require("bluebird")
 
 const artsyXapp = require("artsy-xapp")
 const cache = require("./lib/cache.coffee")
-const { setup: relayCacheSetup } = require("./lib/relayCacheClient")
+const { setup: relayCacheSetup } = require("./lib/cacheClient")
 const express = require("express")
 const once = require("lodash").once
 const setup = require("./lib/setup").default

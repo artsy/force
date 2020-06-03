@@ -16,7 +16,7 @@ interface RedisCache {
 let redisClient
 let cache: RedisCache
 
-const logger = createLogger("lib/relayCacheClient")
+const logger = createLogger("lib/cacheClient")
 
 export const setup = (cb: () => void) => {
   const { promisify } = require("util")
