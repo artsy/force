@@ -23,15 +23,13 @@ describe("SizeFilter", () => {
     return <SizeFilter useFilterContext={useArtworkFilterContext} />
   }
 
-  it("updates context on filter change", done => {
+  it("updates context on filter change", async () => {
     const wrapper = getWrapper() as any
 
-    wrapper.find("Checkbox").at(0).simulate("click")
+    await wrapper.find("Checkbox").at(0).simulate("click")
     expect(context.filters.sizes).toEqual(["SMALL"])
 
-    wrapper.find("Checkbox").at(2).simulate("click")
+    await wrapper.find("Checkbox").at(2).simulate("click")
     expect(context.filters.sizes).toEqual(["SMALL", "LARGE"])
-
-    done()
   })
 })
