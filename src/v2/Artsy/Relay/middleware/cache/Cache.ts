@@ -47,8 +47,10 @@ export class Cache {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
-        cachedRes = JSON.parse(await cache.get(cacheKey))
-        if (cachedRes) {
+        const rawCachedRes = await cache.get(cacheKey)
+
+        if (rawCachedRes) {
+          cachedRes = JSON.parse(rawCachedRes)
           logger.log("\n[RelayCache#get] Success", cacheKey)
         }
       } catch (error) {
