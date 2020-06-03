@@ -1,6 +1,5 @@
 import { mount } from "enzyme"
 import React from "react"
-import { act } from "react-dom/test-utils"
 import {
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
@@ -27,10 +26,10 @@ describe("SizeFilter", () => {
   it("updates context on filter change", done => {
     const wrapper = getWrapper() as any
 
-    act(() => void wrapper.find("Checkbox").at(0).simulate("click"))
+    wrapper.find("Checkbox").at(0).simulate("click")
     expect(context.filters.sizes).toEqual(["SMALL"])
 
-    act(() => void wrapper.find("Checkbox").at(2).simulate("click"))
+    wrapper.find("Checkbox").at(2).simulate("click")
     expect(context.filters.sizes).toEqual(["SMALL", "LARGE"])
 
     done()
