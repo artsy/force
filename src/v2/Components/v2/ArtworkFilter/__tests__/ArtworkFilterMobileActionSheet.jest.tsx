@@ -6,6 +6,7 @@ import {
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
 import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionSheet"
+import { ArtworkFilters } from "../ArtworkFilters"
 
 describe("ArtworkFilterMobileActionSheet", () => {
   let context
@@ -25,7 +26,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     return (
       <ArtworkFilterMobileActionSheet onClose={spy}>
-        <div>found children</div>
+        <ArtworkFilters />
       </ArtworkFilterMobileActionSheet>
     )
   }
@@ -40,7 +41,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
     expect(wrapper.find("Button").last().text()).toEqual("Apply (0)")
   })
 
-  it("resets filters to defaults on `Reset` button click", () => {
+  it("resets staged filters to defaults on `Reset` button click", () => {
     const wrapper = getWrapper({
       filters: {
         ...initialArtworkFilterState,
@@ -66,8 +67,29 @@ describe("ArtworkFilterMobileActionSheet", () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  it("renders childrent content", () => {
+  it("renders children content", () => {
     const wrapper = getWrapper()
-    expect(wrapper.html()).toContain("found children")
+    expect(wrapper.find("ArtworkFilters")).toHaveLength(1)
+  })
+
+  it("mutates staged filter state instead of 'real' filter state", () => {
+    const wrapper = getWrapper()
+    wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+    expect(context.stagedFilters).toMatchObject({ acquireable: true })
+    expect(context.filters).not.toMatchObject({ acquireable: true })
+  })
+
+  it("counts the number of active filters", () => {
+    const wrapper = getWrapper()
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")
+
+    wrapper.find("WaysToBuyFilter").find("Checkbox").at(0).simulate("click")
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+    wrapper.find("WaysToBuyFilter").find("Checkbox").at(1).simulate("click")
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
+
+    wrapper.find("WaysToBuyFilter").find("Checkbox").at(2).simulate("click")
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (3)")
   })
 })
