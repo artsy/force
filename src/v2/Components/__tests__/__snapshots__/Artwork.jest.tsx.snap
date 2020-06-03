@@ -1,67 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Artwork renders correctly 1`] = `
-.c4 {
-  margin-top: 12px;
-  text-align: left;
-}
-
-.c10 {
+.c7 {
   margin-bottom: 0.3px;
 }
 
-.c8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+.c5 {
+  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000;
 }
 
 .c6 {
-  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: black100;
-}
-
-.c7 {
   font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: black60;
-}
-
-.c9 {
-  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 16px;
   color: #000;
 }
 
 .c3 {
-  color: #000;
-  -webkit-transition: color 0.25s;
-  transition: color 0.25s;
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 15px;
+  line-height: 1.25em;
+  -webkit-font-smoothing: antialiased;
+  color: #333333;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c3:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: #000;
-}
-
-.c5 {
-  overflow: hidden;
+.c8 {
+  display: block;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.c4 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 15px;
+  line-height: 1.25em;
+  -webkit-font-smoothing: antialiased;
+  color: #666666;
+  margin-top: 12px;
+  text-align: left;
 }
 
 .c0 {
@@ -131,6 +114,7 @@ exports[`Artwork renders correctly 1`] = `
   <a
     className="c3"
     href="/artwork/mikael-olson-some-kind-of-dinosaur"
+    target="_self"
   >
     <div
       className="c4"
@@ -138,71 +122,56 @@ exports[`Artwork renders correctly 1`] = `
       <div>
         <div
           className="c5"
-        >
-          <div
-            className="c6"
-            color="black100"
-            fontFamily={
-              Object {
-                "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-                "fontWeight": 500,
-              }
+          color="#000"
+          fontFamily={
+            Object {
+              "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+              "fontWeight": 500,
             }
-            fontSize="14px"
-            style={Object {}}
-          >
+          }
+          fontSize="12px"
+          style={
+            Object {
+              "display": "inline",
+            }
+          }
+        >
+          $875
+           
+        </div>
+        <div
+          className="c6"
+          color="#000"
+          fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+          fontSize="12px"
+          style={
+            Object {
+              "display": "inline",
+            }
+          }
+        />
+        <div
+          className="c7"
+        />
+        <div
+          className="c8"
+        >
+          <strong>
             Mikael Olson
-          </div>
-        </div>
-        <div
-          className="c5"
-        >
-          <div
-            className="c7"
-            color="black60"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
-          >
-            Some Kind of Dinosaur, 2015
-          </div>
-        </div>
-        <div
-          className="c5"
-        >
-          <div
-            className="c7"
-            color="black60"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
-          >
-            Gallery 1261
-          </div>
+          </strong>
         </div>
         <div
           className="c8"
         >
-          <div
-            className="c9"
-            color="#000"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
-          >
-            $875
-             
-          </div>
-          <div
-            className="c9"
-            color="#000"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
-          />
-          <div
-            className="c10"
-          />
+          <em>
+            Some Kind of Dinosaur
+          </em>
+          , 2015
+        </div>
+        <div
+          className="c8"
+        >
+          Gallery 1261
         </div>
       </div>
     </div>

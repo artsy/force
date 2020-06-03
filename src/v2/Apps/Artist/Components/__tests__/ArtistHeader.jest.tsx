@@ -1,6 +1,9 @@
 import { ArtistHeader_Test_QueryRawResponse } from "v2/__generated__/ArtistHeader_Test_Query.graphql"
 import { ArtistHeaderFixture } from "v2/Apps/__tests__/Fixtures/Artist/Components/ArtistHeader"
-import { ArtistHeaderFragmentContainer as ArtistHeader } from "v2/Apps/Artist/Components/ArtistHeader"
+import {
+  ArtistHeaderFragmentContainer as ArtistHeader,
+  WorksForSaleButton,
+} from "v2/Apps/Artist/Components/ArtistHeader"
 import { Mediator, SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -29,7 +32,7 @@ describe("ArtistHeader", () => {
     response: ArtistHeader_Test_QueryRawResponse["artist"] = ArtistHeaderFixture,
     context = { mediator, relayEnvironment: {} as Environment, user: null }
   ) => {
-    return renderRelayTree({
+    return await renderRelayTree({
       Component: ({ artist }: any) => {
         return (
           <SystemContextProvider {...context}>
@@ -134,5 +137,31 @@ describe("ArtistHeader", () => {
     const wrapper = await getWrapper(artist)
     const html = wrapper.html()
     expect(html).not.toContain("Blue Chip")
+  })
+
+  it("renders the correct button on the carousel when there are no for sale artworks", async () => {
+    const wrapper = await getWrapper()
+    expect(
+      wrapper
+        .find(WorksForSaleButton)
+        .at(0)
+        .text()
+    ).toEqual("Browse artworks")
+  })
+
+  it("renders the correct button on the carousel when there are for sale artworks", async () => {
+    const wrapper = await getWrapper({
+      ...ArtistHeaderFixture,
+      counts: {
+        ...ArtistHeaderFixture.counts,
+        forSaleArtworks: 21,
+      },
+    })
+    expect(
+      wrapper
+        .find(WorksForSaleButton)
+        .at(0)
+        .text()
+    ).toEqual("Shop works for sale (21)")
   })
 })

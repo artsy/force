@@ -10,6 +10,7 @@ import { ArtistCollectionsRailFragmentContainer as ArtistCollectionsRail } from 
 interface Props {
   artistID: string
   isFeaturedArtistContent?: boolean
+  includeTopSpacer?: boolean
 }
 
 export const ArtistCollectionsRailContent: React.SFC<Props> = passedProps => {

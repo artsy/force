@@ -1,26 +1,23 @@
-import { Flex, Link, Sans, Spacer, color } from "@artsy/palette"
+import { Sans, Spacer, color } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
+import TextLink from "../TextLink"
 
 const TruncatedLine = styled.div`
-  overflow: hidden;
+  display: block;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: nowrap;
 `
 
 export interface Props extends React.HTMLProps<Details> {
   showSaleLine: boolean
   includeLinks: boolean
   artwork: Details_artwork
-  hideArtistName?: boolean
-  hidePartnerName?: boolean
-  useLighterFont?: boolean
 }
 
 export class Details extends React.Component<Props, null> {
@@ -30,20 +27,13 @@ export class Details extends React.Component<Props, null> {
   }
 
   artistLine() {
-    const cultural_maker = this.props.artwork?.cultural_maker
-    const artists = this.props.artwork?.artists
-    const { includeLinks, hideArtistName } = this.props
-
-    if (hideArtistName) {
-      return
-    }
+    const { cultural_maker, artists } = this.props.artwork
+    const { includeLinks } = this.props
 
     if (cultural_maker) {
       return (
         <TruncatedLine>
-          <Sans size="3t" color="black100" weight="medium">
-            {cultural_maker}
-          </Sans>
+          <strong>{cultural_maker}</strong>
         </TruncatedLine>
       )
     } else if (artists && artists.length) {
@@ -59,9 +49,7 @@ export class Details extends React.Component<Props, null> {
         .slice(1)
       return (
         <TruncatedLine>
-          <Sans size="3t" color="black100" weight="medium">
-            {artistLine}
-          </Sans>
+          <strong>{artistLine}</strong>
         </TruncatedLine>
       )
     }
@@ -69,69 +57,46 @@ export class Details extends React.Component<Props, null> {
 
   titleLine() {
     const { includeLinks } = this.props
-    const title = this.props?.artwork?.title
-    const date = this.props?.artwork?.date
-    const href = this.props?.artwork?.href
-
     const artworkText = (
-      <TruncatedLine>
-        <Sans size="3t" color="black60">
-          {date ? title + ", " + date : title}
-        </Sans>
-      </TruncatedLine>
+      <>
+        <em>{this.props.artwork.title}</em>
+        {this.props.artwork.date && `, ${this.props.artwork.date}`}
+      </>
     )
-    const artworkTextWithLink = <Link href={href}>{artworkText}</Link>
-
-    return includeLinks ? artworkTextWithLink : artworkText
+    const artworkTextWithLink = includeLinks ? (
+      <TextLink href={this.props.artwork.href}>{artworkText}</TextLink>
+    ) : (
+      artworkText
+    )
+    return <TruncatedLine>{artworkTextWithLink}</TruncatedLine>
   }
 
   line(text) {
-    return (
-      <TruncatedLine>
-        <Sans size="3t" color="black60">
-          {text}
-        </Sans>
-      </TruncatedLine>
-    )
+    return <TruncatedLine>{text}</TruncatedLine>
   }
 
   link(text, href, key) {
     return (
-      <Link href={href} key={key}>
-        <Sans size="3t" color="black60">
-          {text}
-        </Sans>
-      </Link>
+      <TextLink href={href} key={key}>
+        {text}
+      </TextLink>
     )
   }
 
   partnerLine() {
-    const { hidePartnerName, includeLinks } = this.props
-    const collecting_institution = this.props?.artwork?.collecting_institution
-    const partner = this.props?.artwork?.partner
-    const href = partner?.href
-    const name = partner?.name
-
-    if (hidePartnerName) {
-      return
-    }
-
-    if (collecting_institution) {
-      return this.line(collecting_institution)
-    } else if (partner) {
-      // TODO: We wrap the entire Metadata comp in an anchor tag linking to the artwork page, so why is there a link here?
-      if (includeLinks) {
+    if (this.props.artwork.collecting_institution) {
+      return this.line(this.props.artwork.collecting_institution)
+    } else if (this.props.artwork.partner) {
+      if (this.props.includeLinks) {
         return (
           <TruncatedLine>
-            <Link href={href}>
-              <Sans size="3t" color="black60">
-                {name}
-              </Sans>
-            </Link>
+            <TextLink href={this.props.artwork.partner.href}>
+              {this.props.artwork.partner.name}
+            </TextLink>
           </TruncatedLine>
         )
       } else {
-        return this.line(name)
+        return this.line(this.props.artwork.partner.name)
       }
     }
   }
@@ -147,26 +112,30 @@ export class Details extends React.Component<Props, null> {
   }
 
   saleInfoLine() {
-    const { useLighterFont } = this.props
+    if (!this.props.showSaleLine) {
+      return null
+    }
 
     return (
-      <Flex flexDirection="column">
+      <>
         <Sans
-          color={useLighterFont ? color("black60") : color("black100")}
-          weight="regular"
-          size="3t"
+          style={{ display: "inline" }}
+          color={color("black100")}
+          weight={"medium"}
+          size={"2"}
         >
           {this.saleMessage()}{" "}
         </Sans>
         <Sans
-          size="3t"
-          color={useLighterFont ? color("black60") : color("black100")}
+          style={{ display: "inline" }}
+          size={"2"}
+          color={color("black100")}
           weight={"regular"}
         >
           {this.bidInfo()}
         </Sans>
         <Spacer mb={0.3} />
-      </Flex>
+      </>
     )
   }
 
@@ -230,10 +199,10 @@ export class Details extends React.Component<Props, null> {
         {({ user }) => {
           return (
             <div>
+              {this.saleInfoLine()}
               {this.artistLine()}
               {this.titleLine()}
               {this.partnerLine()}
-              {this.saleInfoLine()}
             </div>
           )
         }}
