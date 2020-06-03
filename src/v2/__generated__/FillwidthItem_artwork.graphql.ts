@@ -7,6 +7,8 @@ export type FillwidthItem_artwork = {
         readonly url: string | null;
         readonly aspect_ratio: number;
     } | null;
+    readonly artistNames: string | null;
+    readonly title: string | null;
     readonly href: string | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "Save_artwork" | "Badge_artwork">;
     readonly " $refType": "FillwidthItem_artwork";
@@ -60,6 +62,20 @@ const node: ReaderFragment = {
     {
       "kind": "ScalarField",
       "alias": null,
+      "name": "artistNames",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "title",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
       "name": "href",
       "args": null,
       "storageKey": null
@@ -81,5 +97,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '1b1fde1e47c05e273bb6e167e42c9e6c';
+(node as any).hash = '6a31600cb34379c2aa7a5ed85a67ef40';
 export default node;

@@ -41,20 +41,6 @@ class Badge extends React.Component<BadgeProps> {
               <Sans size="0">Bid{saleTimingHint}</Sans>
             </Label>
           )}
-          {is_acquireable && (
-            <Label>
-              <BadgeLink href={href} underlineBehavior="none">
-                <Sans size="0">Buy Now</Sans>
-              </BadgeLink>
-            </Label>
-          )}
-          {is_offerable && (
-            <Label>
-              <BadgeLink href={href} underlineBehavior="none">
-                <Sans size="0">Make Offer</Sans>
-              </BadgeLink>
-            </Label>
-          )}
         </Badges>
       </>
     )
@@ -65,8 +51,6 @@ export default createFragmentContainer(Badge, {
   artwork: graphql`
     fragment Badge_artwork on Artwork {
       is_biddable: isBiddable
-      is_acquireable: isAcquireable
-      is_offerable: isOfferable
       href
       sale {
         is_preview: isPreview

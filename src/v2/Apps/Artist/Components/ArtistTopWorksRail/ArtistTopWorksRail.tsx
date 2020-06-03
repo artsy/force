@@ -9,12 +9,17 @@ import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useTracking } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
+import styled from "styled-components"
 
 interface ArtistTopWorksRailProps {
   artist: ArtistTopWorksRail_artist
   onOverviewTab?: boolean
 }
 
+/**
+ * The H2 tag was added for SEO purposes
+ * TODO: Remove when palette provides the ability to override typography element
+ */
 export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   artist,
   onOverviewTab,
@@ -25,7 +30,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   const handleViewWorksClick = overviewTab => {
     const ms = overviewTab ? 500 : 0
     return setTimeout(
-      () => scrollIntoView({ offset: 50, selector: "#jump--artworkFilter" }),
+      () => scrollIntoView({ offset: 60, selector: "#jump--artworkFilter" }),
       ms
     )
   }
@@ -33,9 +38,11 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   return artworks.length > 0 ? (
     <Flex mb="75px" flexDirection="column">
       <Flex my={1} justifyContent="space-between">
-        <Sans size="4" color="black100">
-          Top Works
-        </Sans>
+        <H2>
+          <Sans size="4" color="black100">
+            Top Works
+          </Sans>
+        </H2>
         <StyledLink
           data-test="link-to-works-for-sale"
           onClick={() => handleViewWorksClick(onOverviewTab)}
@@ -90,6 +97,8 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
     </Flex>
   ) : null
 }
+
+const H2 = styled.h2``
 
 export const ArtistTopWorksRailFragmentContainer = createFragmentContainer(
   ArtistTopWorksRail,

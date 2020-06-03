@@ -150,7 +150,7 @@ export class Details extends React.Component<Props, null> {
     const { useLighterFont } = this.props
 
     return (
-      <Flex flexDirection="column">
+      <Flex>
         <Sans
           color={useLighterFont ? color("black60") : color("black100")}
           weight="regular"
@@ -162,6 +162,7 @@ export class Details extends React.Component<Props, null> {
           size="3t"
           color={useLighterFont ? color("black60") : color("black100")}
           weight={"regular"}
+          ml={0.5}
         >
           {this.bidInfo()}
         </Sans>

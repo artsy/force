@@ -117,12 +117,16 @@ export class FillwidthItemContainer extends React.Component<
     }
     const isAdmin = userIsAdmin(user)
 
-    const image = get(this.props, (p) => p.artwork.image)
+    const image = get(this.props, p => p.artwork.image)
     if (!image) {
-      const href = get(this.props, (p) => p.artwork.href, "(unknown href)")
+      const href = get(this.props, p => p.artwork.href, "(unknown href)")
       logger.error(`Artwork at ${href} does not have an image!`)
       return null
     }
+
+    const name = artwork?.artistNames ?? ""
+    const title = artwork?.title ?? ""
+    const alt = name === "" ? "" + title : name + ", " + title
 
     return (
       <div className={className}>
@@ -141,6 +145,7 @@ export class FillwidthItemContainer extends React.Component<
               height={imageHeight}
               lazyLoad={lazyLoad}
               preventRightClick={!isAdmin}
+              alt={alt}
             />
           </RouterLink>
 
@@ -173,9 +178,9 @@ export const FillwidthItem = styled(FillwidthItemContainer).attrs<
   FillwidthItemContainerProps
 >({})`
   display: inline-block;
-  width: ${(props) => props.width}px;
+  width: ${props => props.width}px;
   vertical-align: top;
-  margin-right: ${(props) => props.margin || 0}px;
+  margin-right: ${props => props.margin || 0}px;
 
   .artwork-save {
     opacity: 0;
@@ -193,6 +198,8 @@ export default createFragmentContainer(FillwidthItem, {
         url(version: "large")
         aspect_ratio: aspectRatio
       }
+      artistNames
+      title
       href
       ...Metadata_artwork
       ...Save_artwork
