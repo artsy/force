@@ -72,14 +72,6 @@ describe("ArtworkFilterContext", () => {
       expect(context.rangeToTuple("height")).toEqual([1, 120])
     })
 
-    it("#setFilter", () => {
-      getWrapper()
-      act(() => {
-        context.setFilter("page", 10)
-      })
-      expect(context.filters.page).toEqual(10)
-    })
-
     it("#setFilter resets pagination", () => {
       getWrapper({
         filters: {
@@ -89,18 +81,6 @@ describe("ArtworkFilterContext", () => {
       act(() => {
         expect(context.filters.page).toEqual(10)
         context.setFilter("sort", "relevant")
-      })
-      expect(context.filters.page).toEqual(1)
-    })
-
-    it("#unsetFilter", () => {
-      getWrapper()
-      act(() => {
-        context.setFilter("page", 10)
-      })
-      expect(context.filters.page).toEqual(10)
-      act(() => {
-        context.unsetFilter("page")
       })
       expect(context.filters.page).toEqual(1)
     })
@@ -119,23 +99,138 @@ describe("ArtworkFilterContext", () => {
       expect(context.filters.page).toEqual(1)
     })
 
-    it("#resetFilters", () => {
-      getWrapper({
-        filters: {
+    describe("staged filter changes", () => {
+      beforeEach(() => {
+        let filters = {
           ...initialArtworkFilterState,
-          acquireable: true,
-          at_auction: true,
-        },
-      })
-      expect(context.filters.acquireable).toEqual(true)
-      expect(context.filters.atAuction).toEqual(true)
+          medium: "painting",
+        }
 
-      act(() => {
-        context.resetFilters()
+        // init a 'real' filter state
+        getWrapper({ filters })
+
+        // copy that to a 'staged' filter state
+        act(() => {
+          context.setStagedFilters(filters)
+        })
       })
-      expect(context.filters).toEqual({
-        ...initialArtworkFilterState,
-        reset: true,
+
+      describe("when not in staged mode", () => {
+        beforeEach(() => {
+          act(() => {
+            context.setShouldStageFilterChanges(false)
+          })
+        })
+
+        test("#setFilter sets only 'real' filters", () => {
+          act(() => {
+            context.setFilter("medium", "jewelry")
+          })
+          expect(context.filters.medium).toEqual("jewelry")
+          expect(context.stagedFilters.medium).not.toEqual("jewelry")
+        })
+
+        test("#unsetFilter unsets only 'real' filters", () => {
+          act(() => {
+            context.unsetFilter("medium")
+          })
+          expect(context.filters.medium).not.toEqual("painting")
+          expect(context.stagedFilters.medium).toEqual("painting")
+        })
+
+        test("#resetFilters resets only 'real' filters", () => {
+          act(() => {
+            context.resetFilters()
+          })
+          expect(context.filters).toEqual({
+            ...initialArtworkFilterState,
+            reset: true,
+          })
+          expect(context.stagedFilters).not.toEqual({
+            ...initialArtworkFilterState,
+            reset: true,
+          })
+        })
+
+        test("#currentlySelectedFilters returns the 'real' filters", () => {
+          act(() => {
+            context.setFilter("medium", "design")
+          })
+          expect(context.currentlySelectedFilters()).toEqual(context.filters)
+        })
+      })
+
+      describe("when in staged mode", () => {
+        beforeEach(() => {
+          act(() => {
+            context.setShouldStageFilterChanges(true)
+          })
+        })
+
+        test("#setFilter sets only staged filters", () => {
+          act(() => {
+            context.setFilter("medium", "jewelry")
+          })
+          expect(context.filters.medium).not.toEqual("jewelry")
+          expect(context.stagedFilters.medium).toEqual("jewelry")
+        })
+
+        test("#unsetFilter unsets only staged filters", () => {
+          act(() => {
+            context.unsetFilter("medium")
+          })
+          expect(context.filters.medium).toEqual("painting")
+          expect(context.stagedFilters.medium).not.toEqual("painting")
+        })
+
+        test("#resetFilters resets only staged filters", () => {
+          act(() => {
+            context.resetFilters()
+          })
+          expect(context.filters).not.toEqual({
+            ...initialArtworkFilterState,
+            reset: true,
+          })
+          expect(context.stagedFilters).toEqual({
+            ...initialArtworkFilterState,
+            reset: true,
+          })
+        })
+
+        test("#currentlySelectedFilters returns the staged filters", () => {
+          act(() => {
+            context.setFilter("medium", "design")
+          })
+          expect(context.currentlySelectedFilters()).toEqual(
+            context.stagedFilters
+          )
+        })
+      })
+
+      describe("regardless of mode", () => {
+        test("#setFilters replaces only the 'real' filters", () => {
+          act(() => {
+            context.setFilters({
+              ...initialArtworkFilterState,
+              medium: "jewelry",
+            })
+          })
+
+          expect(context.filters.medium).toEqual("jewelry")
+          expect(context.stagedFilters.medium).not.toEqual("jewelry")
+        })
+
+        test("#setStagedFilters replaces only the staged filters", () => {
+          act(() => {
+            context.setStagedFilters({
+              ...initialArtworkFilterState,
+              medium: "jewelry",
+            })
+          })
+
+          expect(context.filters.medium).not.toEqual("jewelry")
+          expect(context.stagedFilters.medium).toEqual("jewelry")
+        })
       })
     })
   })
