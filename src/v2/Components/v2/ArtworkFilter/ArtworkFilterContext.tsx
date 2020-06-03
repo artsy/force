@@ -280,7 +280,7 @@ const artworkFilterReducer = (
 
       arrayFilterTypes.forEach((filter) => {
         if (name === filter) {
-          filterState[name as any] = value || []
+          filterState[name as string] = value || []
         }
       })
 
@@ -296,7 +296,7 @@ const artworkFilterReducer = (
       ]
       stringFilterTypes.forEach((filter) => {
         if (name === filter) {
-          filterState[name as any] = value
+          filterState[name as string] = value
         }
       })
 
@@ -310,7 +310,7 @@ const artworkFilterReducer = (
       ]
       booleanFilterTypes.forEach((filter) => {
         if (name === filter) {
-          filterState[name as any] = Boolean(value)
+          filterState[name as string] = Boolean(value)
         }
       })
 
@@ -350,7 +350,7 @@ const artworkFilterReducer = (
 
       arrayFilterTypes.forEach((filter) => {
         if (name === filter) {
-          filterState[name as any] = []
+          filterState[name as string] = []
         }
       })
 
@@ -365,7 +365,7 @@ const artworkFilterReducer = (
       ]
       filters.forEach((filter) => {
         if (name === filter) {
-          filterState[name as any] = null
+          filterState[name as string] = null
         }
       })
 
