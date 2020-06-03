@@ -183,7 +183,6 @@ const overviewArtist: routes_ArtistTopLevelQueryRawResponse["artist"] = {
   id: "opaque-artist-id",
   slug: "juan-gris",
   formattedNationalityAndBirthday: "British, 1890-1970",
-  carousel: null,
   is_followed: false,
   statuses: {
     shows: true,
