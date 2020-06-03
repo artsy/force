@@ -229,22 +229,14 @@ export const NavBar: React.FC = track(
                         new_notification_count: getNotificationCount(),
                       })
                     }
-                    return (
-                      <BellIcon
-                        top={3}
-                        fill={hover ? "purple100" : "black80"}
-                      />
-                    )
+                    return <BellIcon fill={hover ? "purple100" : "black80"} />
                   }}
                 </NavItem>
                 {conversationsEnabled && (
                   <NavItem href="/user/conversations">
                     {({ hover }) => {
                       return (
-                        <EnvelopeIcon
-                          top={3}
-                          fill={hover ? "purple100" : "black80"}
-                        />
+                        <EnvelopeIcon fill={hover ? "purple100" : "black80"} />
                       )
                     }}
                   </NavItem>
@@ -257,12 +249,7 @@ export const NavBar: React.FC = track(
                         subject: "User",
                       })
                     }
-                    return (
-                      <SoloIcon
-                        top={3}
-                        fill={hover ? "purple100" : "black80"}
-                      />
-                    )
+                    return <SoloIcon fill={hover ? "purple100" : "black80"} />
                   }}
                 </NavItem>
               </>
