@@ -7,7 +7,7 @@ import {
   Sans,
   color,
 } from "@artsy/palette"
-import React, { SFC, useRef } from "react"
+import React, { SFC, useEffect, useRef } from "react"
 import styled from "styled-components"
 import {
   initialArtworkFilterState,
@@ -34,6 +34,22 @@ export const ArtworkFilterMobileActionSheet: SFC<{
     contentRef.current.scrollTop = 0
   }
 
+  useEffect(() => {
+    // While mobile sheet is mounted, the effect of the user's filter selections
+    // should be merely staged until the Apply button is pressed, rather than
+    // applied immediately. Therefore…
+    //
+    // On mount, enter staged mode, and initialize a set of staged filter
+    // changes from the current filter choices.
+    filterContext.setShouldStageFilterChanges(true)
+    filterContext.setStagedFilters(filterContext.filters)
+
+    // On unmount, exit staged mode.
+    return () => {
+      filterContext.setShouldStageFilterChanges(false)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <ModalBase
       onClose={onClose}
@@ -45,8 +61,16 @@ export const ArtworkFilterMobileActionSheet: SFC<{
       }}
     >
       <Header p={1}>
-        <Button variant="noOutline" size="small" onClick={onClose}>
-          Close
+        <Button
+          variant="noOutline"
+          size="small"
+          onClick={() => {
+            // On close, abandon any staged filter changes
+            filterContext.setStagedFilters({})
+            onClose()
+          }}
+        >
+          Cancel
         </Button>
 
         {/* TODO: This extraneous Flex is not necessary, Clickable (and Box) should have Flex props*/}
@@ -62,7 +86,10 @@ export const ArtworkFilterMobileActionSheet: SFC<{
           size="small"
           variant="secondaryGray"
           disabled={isReset}
-          onClick={() => filterContext.resetFilters()}
+          onClick={() => {
+            // On clear, reset (staged) filter changes to initial state
+            filterContext.resetFilters()
+          }}
         >
           Clear all
         </Button>
@@ -75,7 +102,16 @@ export const ArtworkFilterMobileActionSheet: SFC<{
       </Content>
 
       <Footer p={1}>
-        <Button variant="primaryBlack" width="100%" onClick={onClose}>
+        <Button
+          variant="primaryBlack"
+          width="100%"
+          onClick={() => {
+            // On apply, replace the actual filter state with the
+            // hitherto staged filters
+            filterContext.setFilters(filterContext.stagedFilters)
+            onClose()
+          }}
+        >
           Apply
         </Button>
       </Footer>

@@ -33,12 +33,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
   it("contains correct UI elements", () => {
     const wrapper = getWrapper()
 
-    expect(
-      wrapper
-        .find("Button")
-        .first()
-        .text()
-    ).toEqual("Close")
+    expect(wrapper.find("Button").first().text()).toEqual("Cancel")
 
     expect(wrapper.html()).toContain("Filter")
 
@@ -63,7 +58,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
       .first()
       .simulate("click")
 
-    expect(context.filters).toEqual({
+    expect(context.stagedFilters).toEqual({
       ...initialArtworkFilterState,
       reset: true,
     })
@@ -71,10 +66,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
   it("calls onClose callback on `Apply` button click", () => {
     const wrapper = getWrapper()
-    wrapper
-      .find("Button")
-      .last()
-      .simulate("click")
+    wrapper.find("Button").last().simulate("click")
 
     expect(spy).toHaveBeenCalled()
   })
