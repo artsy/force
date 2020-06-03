@@ -28,7 +28,18 @@ const Image = styled(BaseImage)`
   height: 100%;
   position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
+
+  /**
+   * HACK: the border here is to hack around an issue where Chrome doesn't
+   * pick up the lazyLoad intersection observer unless there's a border around
+   * the element or some modification to the sub-tree occurs. 'box-sizing' is set
+   * to 'content-box' so the image appears to be the same dimensions.
+   */
+  border: 1px solid transparent;
+  box-sizing: content-box;
 `
 
 interface Props extends React.HTMLProps<ArtworkGridItemContainer> {

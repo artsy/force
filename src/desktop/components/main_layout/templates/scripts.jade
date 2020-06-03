@@ -1,4 +1,4 @@
-- defaultOptions = {grecaptcha: true, stripev3: false, sailthru: true, marketo: true, quantcast: false}
+- defaultOptions = {grecaptcha: true, stripev3: false, sailthru: true, marketo: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
@@ -127,23 +127,6 @@ else
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other'
   script( src=asset('/assets/analytics.js') )
-
-//- Quantcast
-if options.quantcast
-  script( type="text/javascript" ).
-    var ezt = ezt ||[];
-    (function(){
-      var elem = document.createElement('script');
-      elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://pixel") + ".quantserve.com/aquant.js?a=p-cMwS3F29bthyC";
-      elem.async = true;
-      elem.type = "text/javascript";
-      var scpt = document.getElementsByTagName('script')[0];
-      scpt.parentNode.insertBefore(elem,scpt);
-    }());
-    ezt.push({qacct: 'p-cMwS3F29bthyC', orderid: '', revenue: ''});
-
-  noscript
-    img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast" )
 
 //- Sailthru Horizon JS - user interest data, personalization
 if options.sailthru && sd.SAILTHRU_CUSTOMER_ID

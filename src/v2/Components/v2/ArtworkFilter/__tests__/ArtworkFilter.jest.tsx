@@ -19,12 +19,12 @@ describe("ArtworkFilter", () => {
     passedProps = {}
   ) => {
     return await renderRelayTree({
-      Component: (props) => (
+      Component: props => (
         <ArtworkFilter {...(props as any)} {...passedProps} />
       ),
       query: ArtworkQueryFilter,
       mockData: ArtworkFilterFixture,
-      wrapper: (children) => {
+      wrapper: children => {
         return <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
       },
     })
@@ -63,13 +63,16 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onFilterClick,
       })
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+      wrapper
+        .find("WaysToBuyFilter")
+        .find("Checkbox")
+        .first()
+        .simulate("click")
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
         acquireable: true,
         majorPeriods: [],
         page: 1,
-        sizes: [],
         sort: "-decayed_merch",
       })
     })
@@ -79,7 +82,10 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onArtworkBrickClick,
       })
-      wrapper.find("ArtworkGridItemContainer a").first().simulate("click")
+      wrapper
+        .find("ArtworkGridItemContainer a")
+        .first()
+        .simulate("click")
 
       expect(onArtworkBrickClick).toHaveBeenCalled()
     })
@@ -89,13 +95,16 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onChange,
       })
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+      wrapper
+        .find("WaysToBuyFilter")
+        .find("Checkbox")
+        .first()
+        .simulate("click")
 
       expect(onChange).toHaveBeenCalledWith({
         acquireable: true,
         majorPeriods: [],
         page: 1,
-        sizes: [],
         sort: "-decayed_merch",
       })
     })
@@ -115,12 +124,15 @@ describe("ArtworkFilter", () => {
         ],
       })
 
-      wrapper.find("SelectSmall").find("option").at(1).simulate("change")
+      wrapper
+        .find("SelectSmall")
+        .find("option")
+        .at(1)
+        .simulate("change")
 
       expect(onChange).toHaveBeenCalledWith({
         majorPeriods: [],
         page: 1,
-        sizes: [],
         sort: "-partner_updated_at",
       })
     })
@@ -130,7 +142,11 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onFilterClick,
       })
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+      wrapper
+        .find("WaysToBuyFilter")
+        .find("Checkbox")
+        .first()
+        .simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Commercial filter params changed",
@@ -139,7 +155,6 @@ describe("ArtworkFilter", () => {
           acquireable: true,
           majorPeriods: [],
           page: 1,
-          sizes: [],
           sort: "-decayed_merch",
         },
       })
@@ -160,7 +175,10 @@ describe("ArtworkFilter", () => {
       const actionSheet = wrapper.find("ArtworkFilterMobileActionSheet")
       expect(actionSheet.length).toEqual(1)
       expect(document.body.style.overflowY).toEqual("hidden")
-      actionSheet.find("Button").last().simulate("click")
+      actionSheet
+        .find("Button")
+        .last()
+        .simulate("click")
       expect(wrapper.find("ArtworkFilterMobileActionSheet").length).toEqual(0)
       expect(document.body.style.overflowY).toEqual("visible")
     })
