@@ -709,6 +709,15 @@ describe("Routes/ConfirmBid", () => {
       }
     )
 
+    it("renders a form with a pre-selected country", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: FixtureForUnregisteredUserWithoutCreditCard,
+      })
+
+      expect(page.find("select").at(1).props().value).toMatch("US")
+    })
+
     it("allows the user to place a bid after agreeing to terms", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
