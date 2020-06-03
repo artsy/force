@@ -1,9 +1,6 @@
 import createLogger from "v2/Utils/logger"
 
 interface RedisCache {
-  del: (key: string) => Promise<void>
-  expire: (key: string, ttl: number) => Promise<void>
-  flushall: () => Promise<void>
   get: (key: string) => Promise<string>
   set: (
     key: string,
@@ -17,6 +14,8 @@ let redisClient
 let cache: RedisCache
 
 const logger = createLogger("lib/cacheClient")
+const cacheAccessTimeoutMs =
+  process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS || "200"
 
 const safeCacheCommand = async (func, ...args) => {
   try {
@@ -25,10 +24,10 @@ const safeCacheCommand = async (func, ...args) => {
       let timeoutId: NodeJS.Timer | null = setTimeout(() => {
         timeoutId = null
         const error = new Error(
-          `Timeout of ${process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS}ms, skipping...`
+          `Timeout of ${cacheAccessTimeoutMs}ms, skipping...`
         )
         reject(error)
-      }, process.env.PAGE_CACHE_RETRIEVAL_TIMEOUT_MS as any)
+      }, parseInt(cacheAccessTimeoutMs))
 
       const cb = (_err, resp) => {
         if (!timeoutId) return // Already timed out.
@@ -44,12 +43,11 @@ const safeCacheCommand = async (func, ...args) => {
     })
     return data
   } catch (e) {
-    console.log(`[cacheClient#${func}]: ${e.message}`)
+    logger.error(`[cacheClient#${func}]: ${e.message}`)
   }
 }
 
 export const setup = (cb: () => void) => {
-  const { promisify } = require("util")
   const redis = require("redis")
 
   redisClient = redis.createClient({
@@ -57,7 +55,7 @@ export const setup = (cb: () => void) => {
   })
 
   redisClient.on("error", err => {
-    logger.error("Redis Connection Error", err)
+    logger.error("[cacheClient#setup]", err)
     cb() // TODO: Should this block Force from booting/retry?
   })
 
@@ -81,9 +79,6 @@ export const setup = (cb: () => void) => {
   }
 
   cache = {
-    del: promisify(redisClient.del).bind(redisClient),
-    expire: promisify(redisClient.expire).bind(redisClient),
-    flushall: promisify(redisClient.flushall).bind(redisClient),
     get: cacheGet,
     set: cacheSet,
   }

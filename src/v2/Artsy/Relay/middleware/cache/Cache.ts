@@ -94,10 +94,5 @@ export class Cache {
 
   async clear() {
     this.relayCache.clear()
-
-    if (isServer) {
-      // TODO: How should we handle clear's here?
-      // await this.redisCache.flushall()
-    }
   }
 }
