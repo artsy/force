@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
-openMultiPageModal = require '../../multi_page_modal/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
 { setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
@@ -10,16 +9,12 @@ openMultiPageModal = require '../../multi_page_modal/index.coffee'
 module.exports = class FooterView extends Backbone.View
   events:
     'click .mlf-specialist': 'openSpecialist'
-    'click .mlf-collector-faq': 'openCollectorModal'
-    'click .mlf-auction-faq': 'openAuctionModal'
     'click .mlf-login': 'login'
     'click .mlf-signup': 'signup'
 
   initialize: ->
     @listenTo mediator, 'infinite:scroll:start', @hide
     @listenTo mediator, 'infinite:scroll:end', @show
-    @listenTo mediator, 'openCollectorFAQModal', @openCollectorModal
-    @listenTo mediator, 'openAuctionFAQModal', @openAuctionModal
     @$recentlyViewedArtworks = $('#recently-viewed-artworks')
     if shouldShowRVARail() && @$recentlyViewedArtworks.length > 0
       setupRail @$recentlyViewedArtworks
@@ -31,14 +26,6 @@ module.exports = class FooterView extends Backbone.View
   show: ->
     @$el.show()
     reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail() && @$recentlyViewedArtworks.length > 0
-
-  openCollectorModal: (e) ->
-    e?.preventDefault()
-    openMultiPageModal 'collector-faqs'
-
-  openAuctionModal: (e) ->
-    e?.preventDefault()
-    openMultiPageModal 'auction-faqs'
 
   signup: (e) ->
     e.preventDefault()
