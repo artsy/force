@@ -12,6 +12,10 @@ type BaseFilterContext<T> = () => {
   setFilter: (key: string, value: any) => void
 }
 
+/**
+ * Note: This implementation was cloned to:
+ * src/v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter.tsx
+ */
 export const SizeFilter: React.FC<{
   useFilterContext: BaseFilterContext<{ sizes: string[] }>
 }> = ({ useFilterContext }) => {
@@ -22,7 +26,7 @@ export const SizeFilter: React.FC<{
     if (selected) {
       sizes.push(name)
     } else {
-      sizes = sizes.filter((item) => item !== name)
+      sizes = sizes.filter(item => item !== name)
     }
     filterContext.setFilter("sizes", sizes)
   }
@@ -38,7 +42,7 @@ export const SizeFilter: React.FC<{
             const { name, displayName } = checkbox
             const props = {
               key: index,
-              onSelect: (selected) => {
+              onSelect: selected => {
                 toggleSelection(selected, name)
               },
               selected: filterContext.filters.sizes.includes(name),
