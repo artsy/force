@@ -146,13 +146,9 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   )
 }
 
-const TrackingWrappedRegisterRoute: React.FC<RegisterProps> = props => {
-  const Component = track({
-    context_page: Schema.PageName.AuctionRegistrationPage,
-  })(RegisterRoute)
-
-  return <Component {...props} />
-}
+const TrackingWrappedRegisterRoute = track({
+  context_page: Schema.PageName.AuctionRegistrationPage,
+})(RegisterRoute)
 
 export const RegisterRouteFragmentContainer = createFragmentContainer(
   TrackingWrappedRegisterRoute,
