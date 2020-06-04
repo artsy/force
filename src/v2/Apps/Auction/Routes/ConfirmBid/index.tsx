@@ -1,5 +1,5 @@
 import { Box, Separator, Serif } from "@artsy/palette"
-import { Location, Match } from "found"
+import { Match } from "found"
 
 import { BidderPositionQueryResponse } from "v2/__generated__/BidderPositionQuery.graphql"
 import { ConfirmBid_me } from "v2/__generated__/ConfirmBid_me.graphql"
@@ -37,17 +37,12 @@ import {
   injectStripe,
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
-import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { toStripAddress } from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
 type BidFormActions = FormikActions<FormValues>
-
-interface OptionalQueryStrings {
-  bid?: string
-}
 
 interface ConfirmBidProps extends ReactStripeElements.InjectedStripeProps {
   artwork: routes_ConfirmBidQueryResponse["artwork"]
@@ -72,8 +67,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     me as any
   )
 
-  let bidderId: string | null =
-    sale.registrationStatus && sale.registrationStatus.internalID
+  let bidderId = sale.registrationStatus?.internalID
 
   function createBidderPosition(maxBidAmountCents: number) {
     return new Promise<ConfirmBidCreateBidderPositionMutationResponse>(
@@ -206,10 +200,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
 
     if (!bidderId && !registrationTracked) {
       const newBidderId =
-        position &&
-        position.saleArtwork &&
-        position.saleArtwork.sale &&
-        position.saleArtwork.sale.registrationStatus.internalID
+        position?.saleArtwork?.sale?.registrationStatus?.internalID
 
       trackEvent({
         action_type: Schema.ActionType.RegistrationSubmitted,
@@ -219,11 +210,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     }
 
     bidderId =
-      bidderId ||
-      (position &&
-        position.saleArtwork &&
-        position.saleArtwork.sale &&
-        position.saleArtwork.sale.registrationStatus.internalID)
+      bidderId || position?.saleArtwork?.sale?.registrationStatus?.internalID
 
     if (result.status === "SUCCESS") {
       bidderPositionQuery(environment, {
@@ -292,7 +279,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
 
         <BidForm
           artworkSlug={artwork.slug}
-          initialSelectedBid={getInitialSelectedBid(props.match.location)}
+          initialSelectedBid={props.match?.location?.query?.bid}
           saleArtwork={saleArtwork}
           onSubmit={handleSubmit}
           onMaxBidSelect={trackMaxBidSelected}
@@ -303,14 +290,6 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
         />
       </Box>
     </AppContainer>
-  )
-}
-
-const getInitialSelectedBid = (location: Location): string | undefined => {
-  return get(
-    location,
-    ({ query }) => (query as OptionalQueryStrings).bid,
-    undefined
   )
 }
 

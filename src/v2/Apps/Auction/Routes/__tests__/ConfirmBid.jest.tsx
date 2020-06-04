@@ -574,7 +574,7 @@ describe("Routes/ConfirmBid", () => {
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -584,7 +584,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["Sale Closed to Bids"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -607,7 +607,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["JavaScript error: failed to fetch"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -834,7 +834,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["Your card number is incomplete."],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -864,7 +864,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["JavaScript error: Network request failed"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -897,7 +897,7 @@ describe("Routes/ConfirmBid", () => {
         ],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -925,7 +925,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["Telephone is required"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
