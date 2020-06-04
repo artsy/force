@@ -6,7 +6,6 @@ import {
   Flex,
   FlexProps,
   Icon,
-  InfoCircleIcon,
   Path,
   Sans,
   Separator,
@@ -44,6 +43,8 @@ interface ConversationHeaderProps extends DetailsProps {
 }
 export const ConversationHeader: FC<ConversationHeaderProps> = ({
   partnerName,
+  showDetails,
+  setShowDetails,
 }) => {
   return (
     <ConversationHeaderContainer
@@ -59,7 +60,7 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
       <Sans size="3t" weight="medium">
         Conversation with {partnerName}
       </Sans>
-      <InfoCircleIcon />
+      <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
     </ConversationHeaderContainer>
   )
 }
@@ -181,4 +182,5 @@ const DetailIcon: React.FC<DetailsProps> = props => {
 
 const StatefulIcon = styled(Icon)<{ active?: boolean }>`
   background-color: ${({ active }) => (active ? color("black30") : "")};
+  cursor: pointer;
 `

@@ -34,10 +34,6 @@ const ConstrainedHeightFlex = styled(Flex)`
   }
 `
 
-/**
- * FIXME: Added some @ts-ignores to get TypeScript 3.9 updated
- */
-
 export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const { me } = props
   const { user } = useContext(SystemContext)
@@ -56,7 +52,6 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
         <Title>Inbox | Artsy</Title>
 
         <Media at="xs">
-          {/* @ts-ignore */}
           <ConversationHeader
             showDetails={showDetails}
             setShowDetails={setShowDetails}
@@ -64,7 +59,6 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           />
         </Media>
         <Media greaterThan="xs">
-          {/* @ts-ignore */}
           <FullHeader
             showDetails={showDetails}
             setShowDetails={setShowDetails}
@@ -78,13 +72,11 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
               selectedConversationID={me.conversation.internalID}
             />
           </Media>
-          {/* @ts-ignore */}
           <Conversation conversation={me.conversation} />
           <Details
-            // @ts-ignore
-            conversation={me.conversation as any /** FIXME: Correct type */}
+            conversation={me.conversation}
             display="flex"
-            width={showDetails ? "376px" : "0"}
+            showDetails={showDetails}
           />
         </ConstrainedHeightFlex>
       </AppContainer>
