@@ -55,16 +55,7 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
     }
 
     if (disableServerSideCache || (req.cacheConfig && req.cacheConfig.force)) {
-      const queryId = req.getID()
-      const variables = req.getVariables()
-      const res = await next(req)
-
-      if (!res.errors || (res.errors && cacheErrors)) {
-        await cache.set(queryId, variables, res, {
-          cacheConfig: req.cacheConfig,
-        })
-      }
-      return res
+      return next(req)
     }
 
     try {

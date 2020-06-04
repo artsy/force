@@ -3,8 +3,19 @@
  */
 
 import { Cache } from "../Cache"
-
 jest.mock("lib/environment")
+jest.mock("lib/cacheClient", () => {
+  return {
+    cache: {
+      get: () =>
+        Promise.resolve(
+          JSON.stringify({ data: { artist: { slug: "picasso" } } })
+        ),
+      set: jest.fn(),
+    },
+  }
+})
+import { cache as cacheClient } from "lib/cacheClient"
 
 describe("Cache", () => {
   const getCache = (props = {}) => {
@@ -67,45 +78,44 @@ describe("Cache", () => {
     })
 
     describe("server", () => {
-      // it("does not set cache if enableServerSideCaching=false", async () => {
-      //   const cache = getCache()
-      //   cache.enableServerSideCache = false
-      //   const queryId = "ArtistQuery"
-      //   const variables = { slug: "picasso" }
-      //   const response = { data: { artist: { slug: "picasso" } } }
-      //   const options = { cacheConfig: { force: false } }
-      //   cache.set(queryId, variables, response, options)
-      //   await cache.get(queryId, variables)
-      //   expect(cache.redisCache.get).not.toHaveBeenCalled()
-      // })
-      // it("does not set cache if cacheConfig.force=true", async () => {
-      //   const cache = getCache()
-      //   cache.enableServerSideCache = true
-      //   cache.redisCache.get = jest.fn()
-      //   const queryId = "ArtistQuery"
-      //   const variables = { slug: "picasso" }
-      //   const response = { data: { artist: { slug: "picasso" } } }
-      //   const options = { cacheConfig: { force: true } }
-      //   cache.set(queryId, variables, response, options)
-      //   await cache.get(queryId, variables)
-      //   expect(cache.redisCache.get).not.toHaveBeenCalled()
-      // })
-      // it("gets / sets the cache by cacheKey", async () => {
-      //   const cache = getCache()
-      //   cache.enableServerSideCache = true
-      //   cache.relayCache.get = jest.fn()
-      //   const queryId = "ArtistQuery"
-      //   const variables = { slug: "picasso" }
-      //   const response = { data: { artist: { slug: "picasso" } } }
-      //   const options = { cacheConfig: { force: false } }
-      //   cache.redisCache = {
-      //     get: () => Promise.resolve(JSON.stringify(response)),
-      //     set: () => Promise.resolve(),
-      //   } as any
-      //   cache.set(queryId, variables, response, options)
-      //   const res = await cache.get(queryId, variables)
-      //   expect(res).toEqual(response)
-      // })
+      it("does not set cache if enableServerSideCaching=false", async () => {
+        const cacheSpy = jest.spyOn(cacheClient, "set")
+        const cache = getCache()
+        cache.enableServerSideCache = false
+        const queryId = "ArtistQuery"
+        const variables = { slug: "picasso" }
+        const response = { data: { artist: { slug: "picasso" } } }
+        const options = { cacheConfig: { force: false } }
+        cache.set(queryId, variables, response, options)
+        await cache.get(queryId, variables)
+        expect(cacheSpy).not.toHaveBeenCalled()
+      })
+
+      it("does not set cache if cacheConfig.force=true", async () => {
+        const cacheSpy = jest.spyOn(cacheClient, "get")
+        const cache = getCache()
+        cache.enableServerSideCache = true
+        const queryId = "ArtistQuery"
+        const variables = { slug: "picasso" }
+        const response = { data: { artist: { slug: "picasso" } } }
+        const options = { cacheConfig: { force: true } }
+        cache.set(queryId, variables, response, options)
+        await cache.get(queryId, variables)
+        expect(cacheSpy).not.toHaveBeenCalled()
+      })
+
+      it("gets / sets the cache by cacheKey", async () => {
+        const cache = getCache()
+        cache.enableServerSideCache = true
+        cache.relayCache.get = jest.fn()
+        const queryId = "ArtistQuery"
+        const variables = { slug: "picasso" }
+        const options = { cacheConfig: { force: false } }
+        const cacheResp = { data: { artist: { slug: "picasso" } } }
+        cache.set(queryId, variables, cacheResp, options)
+        const res = await cache.get(queryId, variables)
+        expect(res).toEqual(cacheResp)
+      })
     })
   })
 

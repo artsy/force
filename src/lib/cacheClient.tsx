@@ -21,6 +21,8 @@ const safeCacheCommand = async (func, ...args) => {
   try {
     let data
     await new Promise((resolve, reject) => {
+      // Will reject promise after configured timeout if the
+      // cache command has not completed yet.
       let timeoutId: NodeJS.Timer | null = setTimeout(() => {
         timeoutId = null
         const error = new Error(
@@ -29,18 +31,22 @@ const safeCacheCommand = async (func, ...args) => {
         reject(error)
       }, parseInt(cacheAccessTimeoutMs))
 
+      // Callback to the cache command.
+      // * Will clear the timer monitoring the overall length of time.
+      // * Will assign the cache response to be returned.
+      // * Resolves the promise.
       const cb = (_err, resp) => {
         if (!timeoutId) return // Already timed out.
 
         clearTimeout(timeoutId)
-
         data = resp
-
         resolve()
       }
 
+      // Invoke cache command, passing a callback.
       redisClient[func](...args, cb)
     })
+
     return data
   } catch (e) {
     logger.error(`[cacheClient#${func}]: ${e.message}`)
@@ -56,7 +62,6 @@ export const setup = (cb: () => void) => {
 
   redisClient.on("error", err => {
     logger.error("[cacheClient#setup]", err)
-    cb() // TODO: Should this block Force from booting/retry?
   })
 
   const cacheSet = async (

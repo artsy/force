@@ -42,8 +42,10 @@ export class Cache {
   async get(queryId: string, variables: RelayVariables) {
     let cachedRes = this.relayCache.get(queryId, variables)
 
+    if (cachedRes) return cachedRes
+
     // No cache in relay store, check redis
-    if (this.enableServerSideCache && !cachedRes) {
+    if (this.enableServerSideCache) {
       const cacheKey = this.getCacheKey(queryId, variables)
 
       try {
