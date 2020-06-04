@@ -15,22 +15,8 @@ export const countActiveFilters = (filters: ArtworkFilters) => {
   if (filters.atAuction) count += 1
   if (filters.inquireableOnly) count += 1
 
-  /**
-   * should these be counted separately, as above?
-   * or coalesced into one number, as below?
-   */
-
-  // if (
-  //   filters.offerable ||
-  //   filters.acquireable ||
-  //   filters.atAuction ||
-  //   filters.inquireableOnly
-  // )
-  //   count += 1
-
   // Size
-  if (filters.width) count += 1
-  if (filters.height) count += 1
+  if (filters.sizes?.length) count += filters.sizes.length
 
   // Time period
   if (filters.majorPeriods?.length) count += 1

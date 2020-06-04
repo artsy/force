@@ -74,9 +74,18 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
   it("mutates staged filter state instead of 'real' filter state", () => {
     const wrapper = getWrapper()
+
     wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
-    expect(context.stagedFilters).toMatchObject({ acquireable: true })
-    expect(context.filters).not.toMatchObject({ acquireable: true })
+    wrapper.find("SizeFilter").find("Checkbox").first().simulate("click")
+
+    expect(context.stagedFilters).toMatchObject({
+      acquireable: true,
+      sizes: ["SMALL"],
+    })
+    expect(context.filters).not.toMatchObject({
+      acquireable: true,
+      sizes: ["SMALL"],
+    })
   })
 
   it("counts the number of active filters", () => {
