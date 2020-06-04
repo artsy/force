@@ -6,6 +6,7 @@ import { useSystemContext } from "v2/Artsy"
 import { EmailConfirmationCTA } from "v2/Components/FlashBanner/EmailConfirmationCTA"
 import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
 import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 
 interface FlashBannerProps {
   contentCode?: string
@@ -28,7 +29,6 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
     already_confirmed: "You have already confirmed your email.",
     invalid_token: "An error has occurred. Please contact support@artsy.net.",
     blank_token: "An error has occurred. Please contact support@artsy.net.",
-    expired_token: "Link expired. Resend verification email.",
   }
 
   let contentCode = props.contentCode
@@ -49,10 +49,15 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
 
   let content
 
-  if (contentCode === "email_confirmation_cta") {
-    content = <EmailConfirmationCTA />
-  } else {
-    content = contentMap[contentCode]
+  switch (contentCode) {
+    case "email_confirmation_cta":
+      content = <EmailConfirmationCTA />
+      break
+    case "expired_token":
+      content = <EmailConfirmationLinkExpired />
+      break
+    default:
+      content = contentMap[contentCode]
   }
 
   if (!content) {
