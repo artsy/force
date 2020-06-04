@@ -26,7 +26,7 @@ import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { OnSubmitValidationError, TrackErrors } from "./RegistrationForm"
-import { Bidding as BiddingValidationSchemas } from "v2/Apps/Auction/Components/ValidationSchemas"
+import { initialValuesForRegistration, Bidding as BiddingValidationSchemas } from "v2/Apps/Auction/Components/Form"
 
 const {
   validationSchemaForRegisteredUsers,
@@ -116,18 +116,8 @@ export const BidForm: React.FC<Props> = ({
     <Box maxWidth={550}>
       <Formik<FormValues>
         initialValues={{
+          ...initialValuesForRegistration,
           selectedBid,
-          agreeToTerms: false,
-          address: {
-            name: "",
-            country: "US",
-            postalCode: "",
-            addressLine1: "",
-            addressLine2: "",
-            city: "",
-            region: "",
-            phoneNumber: "",
-          },
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}

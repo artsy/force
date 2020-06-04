@@ -19,7 +19,7 @@ import {
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
 import createLogger from "v2/Utils/logger"
-import { Registration } from "v2/Apps/Auction/Components/ValidationSchemas"
+import { initialValuesForRegistration, Registration } from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Components/RegistrationForm")
 
@@ -181,21 +181,6 @@ export interface RegistrationFormProps
 }
 
 export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
-  const initialValues: FormValues = {
-    address: {
-      name: "",
-      addressLine1: "",
-      addressLine2: "",
-      country: "US",
-      city: "",
-      region: "",
-      postalCode: "",
-      phoneNumber: "",
-    },
-    creditCard: undefined,
-    agreeToTerms: false,
-  }
-
   async function createTokenAndSubmit(
     values: FormValues,
     actions: FormikActions<object>
@@ -242,7 +227,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
 
       <Box mt={2}>
         <Formik
-          initialValues={initialValues}
+          initialValues={initialValuesForRegistration}
           onSubmit={createTokenAndSubmit}
           validationSchema={Registration.validationSchema}
         >
