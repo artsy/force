@@ -14,7 +14,7 @@ import {
   determineDisplayRequirements,
 } from "v2/Apps/Auction/Components/BidForm"
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
-import { bidderPositionQuery } from "v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery"
+import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Routes/Register"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy"

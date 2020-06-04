@@ -4,7 +4,7 @@ import {
   createCreditCardAndUpdatePhoneSuccessful,
 } from "../__fixtures__/MutationResults/createCreditCardAndUpdatePhone"
 
-jest.mock("v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery", () => ({
+jest.mock("v2/Apps/Auction/Operations/BidderPositionQuery", () => ({
   bidderPositionQuery: jest.fn(),
 }))
 
@@ -32,7 +32,7 @@ import { graphql } from "react-relay"
 
 import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
-import { bidderPositionQuery } from "v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery"
+import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { createMockFetchQuery } from "v2/DevTools/createMockNetworkLayer"
 import { TrackingProp } from "react-tracking"
