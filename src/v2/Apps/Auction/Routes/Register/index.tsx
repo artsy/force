@@ -5,7 +5,7 @@ import {
   RegisterCreateBidderMutation,
   RegisterCreateBidderMutationResponse,
 } from "v2/__generated__/RegisterCreateBidderMutation.graphql"
-import { RegisterCreateCreditCardAndUpdatePhoneMutation } from "v2/__generated__/RegisterCreateCreditCardAndUpdatePhoneMutation.graphql"
+import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
 import {
   FormResult,
   StripeWrappedRegistrationForm,
@@ -34,68 +34,6 @@ interface RegisterProps {
   me: Register_me
   relay: RelayProp
   tracking: TrackingProp
-}
-
-// TODO: Extract.
-export function createCreditCardAndUpdatePhone(relayEnvironment, phone, token) {
-  return new Promise(async (resolve, reject) => {
-    commitMutation<RegisterCreateCreditCardAndUpdatePhoneMutation>(
-      relayEnvironment,
-      {
-        onCompleted: (data, errors) => {
-          const {
-            createCreditCard: { creditCardOrError },
-          } = data
-
-          if (creditCardOrError.creditCardEdge) {
-            resolve()
-          } else {
-            if (errors) {
-              reject(errors)
-            } else {
-              reject(creditCardOrError.mutationError)
-            }
-          }
-        },
-        onError: reject,
-        mutation: graphql`
-          mutation RegisterCreateCreditCardAndUpdatePhoneMutation(
-            $creditCardInput: CreditCardInput!
-            $profileInput: UpdateMyProfileInput!
-          ) {
-            updateMyUserProfile(input: $profileInput) {
-              user {
-                internalID
-              }
-            }
-
-            createCreditCard(input: $creditCardInput) {
-              creditCardOrError {
-                ... on CreditCardMutationSuccess {
-                  creditCardEdge {
-                    node {
-                      lastDigits
-                    }
-                  }
-                }
-                ... on CreditCardMutationFailure {
-                  mutationError {
-                    type
-                    message
-                    detail
-                  }
-                }
-              }
-            }
-          }
-        `,
-        variables: {
-          creditCardInput: { token },
-          profileInput: { phone },
-        },
-      }
-    )
-  })
 }
 
 export const RegisterRoute: React.FC<RegisterProps> = props => {

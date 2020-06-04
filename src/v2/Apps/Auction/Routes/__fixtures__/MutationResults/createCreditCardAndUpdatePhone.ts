@@ -1,6 +1,6 @@
-import { RegisterCreateCreditCardAndUpdatePhoneMutationResponse } from "v2/__generated__/RegisterCreateCreditCardAndUpdatePhoneMutation.graphql"
+import { CreateCreditCardAndUpdatePhoneMutationResponse } from "v2/__generated__/CreateCreditCardAndUpdatePhoneMutation.graphql"
 
-export const createCreditCardAndUpdatePhoneSuccessful: RegisterCreateCreditCardAndUpdatePhoneMutationResponse = {
+export const createCreditCardAndUpdatePhoneSuccessful: CreateCreditCardAndUpdatePhoneMutationResponse = {
   updateMyUserProfile: {
     user: {
       internalID: "example-user-id",
@@ -17,7 +17,7 @@ export const createCreditCardAndUpdatePhoneSuccessful: RegisterCreateCreditCardA
   },
 }
 
-export const createCreditCardAndUpdatePhoneFailed: RegisterCreateCreditCardAndUpdatePhoneMutationResponse = {
+export const createCreditCardAndUpdatePhoneFailed: CreateCreditCardAndUpdatePhoneMutationResponse = {
   updateMyUserProfile: {
     user: {
       internalID: "example-user-id",

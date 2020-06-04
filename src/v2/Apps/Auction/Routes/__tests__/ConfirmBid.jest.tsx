@@ -747,7 +747,7 @@ describe("Routes/ConfirmBid", () => {
       })
       expect(env.mutations.mockFetch).toHaveBeenCalledWith(
         expect.objectContaining({
-          name: "RegisterCreateCreditCardAndUpdatePhoneMutation",
+          name: "CreateCreditCardAndUpdatePhoneMutation",
         }),
         {
           creditCardInput: { token: "tok_abcabcabcabcabcabcabc" },
