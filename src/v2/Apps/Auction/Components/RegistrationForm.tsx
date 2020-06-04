@@ -19,7 +19,11 @@ import {
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
 import createLogger from "v2/Utils/logger"
-import { initialValuesForRegistration, Registration } from "v2/Apps/Auction/Components/Form"
+import {
+  Registration,
+  initialValuesForRegistration,
+  toStripAddress,
+} from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Components/RegistrationForm")
 
@@ -185,16 +189,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
     values: FormValues,
     actions: FormikActions<object>
   ) {
-    const address = {
-      name: values.address.name,
-      address_line1: values.address.addressLine1,
-      address_line2: values.address.addressLine2,
-      address_country: values.address.country,
-      address_city: values.address.city,
-      address_state: values.address.region,
-      address_zip: values.address.postalCode,
-    }
-
+    const address = toStripAddress(values.address)
     const { setFieldError, setSubmitting, setStatus } = actions
     const { stripe } = props
 

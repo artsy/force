@@ -39,6 +39,7 @@ import {
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
+import { toStripAddress } from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
@@ -166,16 +167,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     if (requiresPaymentInformation) {
       try {
         const { address } = values
-        const stripeAddress = {
-          name: address.name,
-          address_line1: address.addressLine1,
-          address_line2: address.addressLine2,
-          address_country: address.country,
-          address_city: address.city,
-          address_state: address.region,
-          address_zip: address.postalCode,
-        }
-
+        const stripeAddress = toStripAddress(address)
         const { error, token } = await stripe.createToken(stripeAddress)
 
         if (error) {
