@@ -151,7 +151,7 @@ export const BidForm: React.FC<Props> = ({
           agreeToTerms: false,
           address: {
             name: "",
-            country: "",
+            country: "US",
             postalCode: "",
             addressLine1: "",
             addressLine2: "",
@@ -169,6 +169,7 @@ export const BidForm: React.FC<Props> = ({
           errors,
           isSubmitting,
           isValid,
+          setFieldError,
           setFieldValue,
           setFieldTouched,
           setSubmitting,
@@ -235,6 +236,9 @@ export const BidForm: React.FC<Props> = ({
 
                     <CreditCardInput
                       error={{ message: errors.creditCard } as stripe.Error}
+                      onChange={({ error }) =>
+                        setFieldError("creditCard", error?.message)
+                      }
                     />
 
                     <Box mt={2}>

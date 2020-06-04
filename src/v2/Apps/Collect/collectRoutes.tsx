@@ -34,6 +34,7 @@ export const collectRoutes: RouteConfig[] = [
         $page: Int
         $partnerID: ID
         $priceRange: String
+        $sizes: [ArtworkSizes]
         $sort: String
         $keyword: String
         $width: String
@@ -67,6 +68,7 @@ export const collectRoutes: RouteConfig[] = [
               page: $page
               partnerID: $partnerID
               priceRange: $priceRange
+              sizes: $sizes
               sort: $sort
               width: $width
             )

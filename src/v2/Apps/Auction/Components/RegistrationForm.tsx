@@ -19,6 +19,9 @@ import {
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
 import * as Yup from "yup"
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("Apps/Auction/Components/RegistrationForm")
 
 export interface FormResult {
   token: stripe.Token
@@ -41,8 +44,10 @@ const InnerForm: React.FC<InnerFormProps> = props => {
     errors,
     isSubmitting,
     values,
+    setFieldError,
     setFieldValue,
     setFieldTouched,
+    status,
     needsIdentityVerification,
   } = props
 
@@ -55,6 +60,9 @@ const InnerForm: React.FC<InnerFormProps> = props => {
           </Serif>
           <CreditCardInput
             error={{ message: errors.creditCard } as stripe.Error}
+            onChange={({ error }) =>
+              setFieldError("creditCard", error?.message)
+            }
           />
         </Box>
       </Box>
@@ -104,6 +112,12 @@ const InnerForm: React.FC<InnerFormProps> = props => {
           </Sans>
         )}
       </Flex>
+
+      {status && (
+        <Sans textAlign="center" size="3" color="red100" mb={2}>
+          {status}.
+        </Sans>
+      )}
 
       <Button
         mt={1}
@@ -204,7 +218,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
     agreeToTerms: false,
   }
 
-  function createTokenAndSubmit(
+  async function createTokenAndSubmit(
     values: FormValues,
     actions: FormikActions<object>
   ) {
@@ -218,10 +232,12 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
       address_zip: values.address.postalCode,
     }
 
-    const { setFieldError, setSubmitting } = actions
+    const { setFieldError, setSubmitting, setStatus } = actions
     const { stripe } = props
 
-    stripe.createToken(address).then(({ error, token }) => {
+    try {
+      const { error, token } = await stripe.createToken(address)
+
       if (error) {
         setFieldError("creditCard", error.message)
         setSubmitting(false)
@@ -233,7 +249,13 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
 
         props.onSubmit(actions, result)
       }
-    })
+    } catch (error) {
+      logger.error(error)
+      setSubmitting(false)
+      setStatus(
+        "Something went wrong while processing your bid. Please make sure your internet connection is active and try again"
+      )
+    }
   }
 
   return (

@@ -175,6 +175,7 @@ export const routes: RouteConfig[] = [
             $page: Int
             $partnerID: ID
             $priceRange: String
+            $sizes: [ArtworkSizes]
             $sort: String
             $width: String
           ) @raw_response_type {
@@ -197,6 +198,7 @@ export const routes: RouteConfig[] = [
                   page: $page
                   partnerID: $partnerID
                   priceRange: $priceRange
+                  sizes: $sizes
                   sort: $sort
                   width: $width
                 )
