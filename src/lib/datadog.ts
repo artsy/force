@@ -23,7 +23,7 @@ if (process.env.DD_APM_ENABLED) {
        * TODO: Update this logic by parsing our routes via `path-to-regex`.
        */
       request: (span: Span, req: Request) => {
-        if (req.route.path.includes("*")) {
+        if (req?.route?.path?.includes("*")) {
           const pathname = url.parse(req.originalUrl).pathname
           const pathWithoutParams = pathname?.replace(/\/$/, "") // Remove query string, fragment and trailing slash
           const rootPath = pathWithoutParams?.split("/")?.[1] ?? "" // eg, /artist
