@@ -7,7 +7,7 @@ import { SystemContext } from "v2/Artsy"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { Match } from "found"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { userHasLabFeature } from "v2/Utils/user"
 import { Media } from "v2/Utils/Responsive"
@@ -42,6 +42,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const { me } = props
   const { user } = useContext(SystemContext)
   const isEnabled = userHasLabFeature(user, "User Conversations View")
+  const [showDetails, setShowDetails] = useState(false) // TODO based on screen size
 
   if (isEnabled) {
     const route = findCurrentRoute(props.match)
@@ -56,11 +57,19 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
 
         <Media at="xs">
           {/* @ts-ignore */}
-          <ConversationHeader partnerName={me.conversation.to.name} />
+          <ConversationHeader
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+            partnerName={me.conversation.to.name}
+          />
         </Media>
         <Media greaterThan="xs">
           {/* @ts-ignore */}
-          <FullHeader partnerName={me.conversation.to.name} />
+          <FullHeader
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+            partnerName={me.conversation.to.name}
+          />
         </Media>
         <ConstrainedHeightFlex>
           <Media greaterThan="xs">
@@ -74,8 +83,8 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           <Details
             // @ts-ignore
             conversation={me.conversation as any /** FIXME: Correct type */}
-            display={["none", null, null, null, "flex"]}
-            width={["100%", "376px"]}
+            display="flex"
+            width={showDetails ? "376px" : "0"}
           />
         </ConstrainedHeightFlex>
       </AppContainer>
