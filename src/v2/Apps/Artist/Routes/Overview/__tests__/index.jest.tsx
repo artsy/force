@@ -290,6 +290,7 @@ const defaultArtist: routes_OverviewQueryRawResponse["artist"] = {
     edges: [
       {
         node: {
+          artistNames: "Alex Katz",
           id: "QXJ0d29yazo1ZGVjZDRiYjNjN2NiMTAwMTAwYWQzNmQ=",
           slug: "andy-warhol-roy-lichtenstein-authenticated-3",
           href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
@@ -330,8 +331,6 @@ const defaultArtist: routes_OverviewQueryRawResponse["artist"] = {
           is_inquireable: true,
           is_saved: false,
           is_biddable: false,
-          is_acquireable: false,
-          is_offerable: false,
         },
       },
     ],

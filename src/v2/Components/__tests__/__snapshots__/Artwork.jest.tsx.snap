@@ -6,7 +6,7 @@ exports[`Artwork renders correctly 1`] = `
   text-align: left;
 }
 
-.c10 {
+.c11 {
   margin-bottom: 0.3px;
 }
 
@@ -15,9 +15,6 @@ exports[`Artwork renders correctly 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
 }
 
 .c6 {
@@ -40,6 +37,14 @@ exports[`Artwork renders correctly 1`] = `
   font-size: 14px;
   line-height: 20px;
   color: #000;
+}
+
+.c10 {
+  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000;
+  margin-left: 0.5px;
 }
 
 .c3 {
@@ -194,14 +199,14 @@ exports[`Artwork renders correctly 1`] = `
              
           </div>
           <div
-            className="c9"
+            className="c10"
             color="#000"
             fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
             fontSize="14px"
             style={Object {}}
           />
           <div
-            className="c10"
+            className="c11"
           />
         </div>
       </div>
