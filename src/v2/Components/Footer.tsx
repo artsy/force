@@ -60,14 +60,6 @@ const FooterContainer: React.SFC<FlexDirectionProps & Props> = props => {
             Buy
           </Sans>
           <Serif size="2">
-            <Link
-              onClick={() => props.mediator.trigger("openCollectorFAQModal")}
-            >
-              Buying from Galleries FAQ
-            </Link>
-            <Link onClick={() => props.mediator.trigger("openAuctionFAQModal")}>
-              Buying from Auctions FAQ
-            </Link>
             <Link href="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
               Buying on Artsy
             </Link>
