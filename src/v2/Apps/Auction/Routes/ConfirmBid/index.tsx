@@ -73,8 +73,8 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     return new Promise<ConfirmBidCreateBidderPositionMutationResponse>(
       (resolve, reject) => {
         commitMutation<ConfirmBidCreateBidderPositionMutation>(environment, {
-          onCompleted: data => resolve(data),
-          onError: error => reject(error),
+          onCompleted: resolve,
+          onError: reject,
           mutation: graphql`
             mutation ConfirmBidCreateBidderPositionMutation(
               $input: BidderPositionInput!

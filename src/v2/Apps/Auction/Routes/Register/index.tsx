@@ -65,12 +65,8 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   function createBidder() {
     return new Promise(async (resolve, reject) => {
       commitMutation<RegisterCreateBidderMutation>(relay.environment, {
-        onCompleted: data => {
-          resolve(data)
-        },
-        onError: error => {
-          reject(error)
-        },
+        onCompleted: resolve,
+        onError: reject,
         // TODO: Inputs to the mutation might have changed case of the keys!
         mutation: graphql`
           mutation RegisterCreateBidderMutation($input: CreateBidderInput!) {
