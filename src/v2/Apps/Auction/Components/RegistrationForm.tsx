@@ -18,8 +18,8 @@ import {
   injectStripe,
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
-import * as Yup from "yup"
 import createLogger from "v2/Utils/logger"
+import { Registration } from "v2/Apps/Auction/Components/ValidationSchemas"
 
 const logger = createLogger("Apps/Auction/Components/RegistrationForm")
 
@@ -131,28 +131,6 @@ const InnerForm: React.FC<InnerFormProps> = props => {
     </Form>
   )
 }
-
-Yup.addMethod(Yup.string, "present", function (message) {
-  return this.test("test-present", message, value => {
-    return this.trim().required(message).isValid(value)
-  })
-})
-
-const validationSchema = Yup.object().shape({
-  address: Yup.object({
-    name: Yup.string().present("Name is required"),
-    addressLine1: Yup.string().present("Address is required"),
-    country: Yup.string().present("Country is required"),
-    city: Yup.string().present("City is required"),
-    region: Yup.string().present("State is required"),
-    postalCode: Yup.string().present("Postal code is required"),
-    phoneNumber: Yup.string().present("Telephone is required"),
-  }),
-  agreeToTerms: Yup.bool().oneOf(
-    [true],
-    "You must agree to the Conditions of Sale"
-  ),
-})
 
 export type TrackErrors = (errors: string[]) => void
 
@@ -266,7 +244,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
         <Formik
           initialValues={initialValues}
           onSubmit={createTokenAndSubmit}
-          validationSchema={validationSchema}
+          validationSchema={Registration.validationSchema}
         >
           {(formikProps: FormikProps<FormValues>) => (
             <>

@@ -17,7 +17,6 @@ import { dropWhile, find } from "lodash"
 import React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
-import Yup from "yup"
 
 import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"
 import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphql"
@@ -27,6 +26,13 @@ import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { OnSubmitValidationError, TrackErrors } from "./RegistrationForm"
+import { Bidding as BiddingValidationSchemas } from "v2/Apps/Auction/Components/ValidationSchemas"
+
+const {
+  validationSchemaForRegisteredUsers,
+  validationSchemaForUnregisteredUsersWithCreditCard,
+  validationSchemaForUnregisteredUsersWithoutCreditCard,
+} = BiddingValidationSchemas
 
 interface Props {
   artworkSlug: string
@@ -45,43 +51,6 @@ export interface FormValues {
   creditCard?: string
   selectedBid: string
 }
-
-Yup.addMethod(Yup.string, "present", function (message) {
-  return this.test("test-present", message, value => {
-    return this.trim().required(message).isValid(value)
-  })
-})
-
-const validationSchemaForRegisteredUsers = Yup.object().shape({
-  selectedBid: Yup.string().required(),
-})
-
-const validationSchemaForUnregisteredUsersWithCreditCard = Yup.object().shape({
-  selectedBid: Yup.string().required(),
-  agreeToTerms: Yup.bool().oneOf(
-    [true],
-    "You must agree to the Conditions of Sale"
-  ),
-})
-
-const validationSchemaForUnregisteredUsersWithoutCreditCard = Yup.object().shape(
-  {
-    selectedBid: Yup.string().required(),
-    address: Yup.object({
-      name: Yup.string().present("Name is required"),
-      addressLine1: Yup.string().present("Address is required"),
-      country: Yup.string().present("Country is required"),
-      city: Yup.string().present("City is required"),
-      region: Yup.string().present("State is required"),
-      postalCode: Yup.string().present("Postal code is required"),
-      phoneNumber: Yup.string().present("Telephone is required"),
-    }),
-    agreeToTerms: Yup.bool().oneOf(
-      [true],
-      "You must agree to the Conditions of Sale"
-    ),
-  }
-)
 
 const getSelectedBid = ({
   initialSelectedBid,
