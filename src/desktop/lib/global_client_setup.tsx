@@ -10,14 +10,14 @@ if (process.env.NODE_ENV === "production") {
   let cdnUrl
 
   // Production
-  if (hostname.endsWith("artsy.net")) {
+  if (hostname === "artsy.net" || hostname === "www.artsy.net") {
     cdnUrl = "https://d1s2w0upia4e9w.cloudfront.net"
 
     // Localhost
   } else if (hostname === "localhost" || hostname === "local.artsy.net") {
     cdnUrl = ""
 
-    // Everything else
+    // Everything else, including staging and review apps
   } else {
     cdnUrl = "https://d1rmpw1xlv9rxa.cloudfront.net"
   }
