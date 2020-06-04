@@ -189,6 +189,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           offerable: { type: "Boolean" }
           page: { type: "Int" }
           priceRange: { type: "String" }
+          sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
           first: { type: "Int" }
@@ -278,6 +279,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           offerable: $offerable
           page: $page
           priceRange: $priceRange
+          sizes: $sizes
           first: $first
           sort: $sort
           width: $width

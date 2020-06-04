@@ -72,6 +72,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         page: { type: "Int" }
         partnerID: { type: "ID" }
         priceRange: { type: "String" }
+        sizes: { type: "[ArtworkSizes]" }
         sort: { type: "String", defaultValue: "-partner_updated_at" }
         width: { type: "String" }
       ) {
@@ -135,6 +136,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
           page: $page
           partnerID: $partnerID
           priceRange: $priceRange
+          sizes: $sizes
           sort: $sort
           width: $width
         )
