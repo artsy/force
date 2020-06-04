@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === "production") {
   let cdnUrl
 
   // Production
-  if (hostname === "artsy.net" || hostname === "www.artsy.net") {
+  if (hostname.endsWith("artsy.net")) {
     cdnUrl = "https://d1s2w0upia4e9w.cloudfront.net"
 
     // Localhost
