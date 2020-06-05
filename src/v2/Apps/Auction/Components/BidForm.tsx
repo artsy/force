@@ -16,7 +16,6 @@ import {
 import { dropWhile } from "lodash"
 import React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 
 import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"
 import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphql"
@@ -67,7 +66,6 @@ export const BidForm: React.FC<Props> = ({
   saleArtwork,
   trackSubmissionErrors,
 }) => {
-  const { ENABLE_PRICE_TRANSPARENCY } = sd
   const displayIncrements = dropWhile(
     saleArtwork.increments,
     increment => increment.cents < saleArtwork.minimumNextBid.cents
@@ -140,14 +138,12 @@ export const BidForm: React.FC<Props> = ({
                     </Sans>
                   )}
 
-                  {ENABLE_PRICE_TRANSPARENCY && (
-                    <PricingTransparency
-                      relayEnvironment={relay.environment}
-                      saleId={saleArtwork.sale.slug}
-                      artworkId={artworkSlug}
-                      bidAmountMinor={parseInt(values.selectedBid)}
-                    />
-                  )}
+                  <PricingTransparency
+                    relayEnvironment={relay.environment}
+                    saleId={saleArtwork.sale.slug}
+                    artworkId={artworkSlug}
+                    bidAmountMinor={parseInt(values.selectedBid)}
+                  />
                 </Flex>
 
                 {requiresPaymentInformation && (

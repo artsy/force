@@ -61,15 +61,6 @@ const createTokenMock = require("react-stripe-elements").__stripeMock
   .createToken as jest.Mock
 
 const mockEnablePriceTransparency = jest.fn()
-
-jest.mock("sharify", () => ({
-  data: {
-    get ENABLE_PRICE_TRANSPARENCY() {
-      return mockEnablePriceTransparency()
-    },
-  },
-}))
-
 const mockLocation: Partial<Location> = {
   query: {
     bid: null,
