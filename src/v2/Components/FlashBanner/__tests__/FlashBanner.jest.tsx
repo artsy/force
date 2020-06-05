@@ -120,88 +120,86 @@ describe("FlashBanner", () => {
 })
 
 describe("Email confirmation link expired", () => {
-  describe("user can request email confirmation (me?.canRequestEmailConfirmation=true)", () => {
-    it("user is prompted to re-request email confirmation if they can", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: {
-          me: { canRequestEmailConfirmation: true },
-        },
-        queryString: "?flash_message=expired_token",
-      })
-
-      expect(wrapper.text()).toContain("Link expired.")
+  it("user is prompted to re-request email confirmation if they can", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
     })
 
-    it.only("user seeing banner can click to re-trigger email confirmation message", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: {
-          me: { canRequestEmailConfirmation: true },
+    expect(wrapper.text()).toContain("Link expired. Resend verification email")
+  })
+
+  it("user seeing banner can click to re-trigger email confirmation message", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+      mutationResults: {
+        sendConfirmationEmail: {
+          confirmationOrError: {
+            unconfirmedEmail: "ceo@blackwater.biz",
+          },
         },
-        queryString: "?flash_message=expired_token",
-        mutationResults: {
-          sendConfirmationEmail: {
-            confirmationOrError: {
-              unconfirmedEmail: "ceo@blackwater.biz",
+      },
+    })
+
+    expect(wrapper.text()).toContain("Link expired.")
+
+    wrapper.find("button").first().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
+
+    expect(wrapper.text()).toContain(
+      "An email has been sent to ceo@blackwater.biz"
+    )
+  })
+
+  it("user click to re-trigger is tracked", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+    })
+
+    expect(wrapper.text()).toContain("Link expired.")
+
+    wrapper.find("button").first().simulate("click")
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action_type: "Click",
+      subject: "Email Confirmation Link Expired",
+    })
+  })
+
+  it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+      mutationResults: {
+        sendConfirmationEmail: {
+          confirmationOrError: {
+            mutationError: {
+              error: "BadError",
+              message: "Something Bad",
             },
           },
         },
-      })
-
-      expect(wrapper.text()).toContain("Link expired.")
-
-      wrapper.find("button").first().prop("onClick")({} as any)
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain(
-        "An email has been sent to ceo@blackwater.biz"
-      )
+      },
     })
 
-    it("user click to re-trigger is tracked", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: {
-          me: { canRequestEmailConfirmation: true },
-        },
-        queryString: "?flash_message=expired_token",
-      })
+    expect(wrapper.text()).toContain("Link expired.")
 
-      expect(wrapper.text()).toContain("Link expired.")
+    wrapper.find("button").first().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
 
-      wrapper.find("button").first().simulate("click")
-
-      expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "Click",
-        subject: "Email Confirmation Link Expired",
-      })
-    })
-
-    it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: {
-          me: { canRequestEmailConfirmation: true },
-        },
-        queryString: "?flash_message=expired_token",
-        mutationResults: {
-          sendConfirmationEmail: {
-            confirmationOrError: {
-              mutationError: {
-                error: "BadError",
-                message: "Something Bad",
-              },
-            },
-          },
-        },
-      })
-
-      expect(wrapper.text()).toContain("Link expired.")
-
-      wrapper.find("button").first().prop("onClick")({} as any)
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain("Something went wrong")
-    })
+    expect(wrapper.text()).toContain("Something went wrong")
   })
 })
 
@@ -247,7 +245,7 @@ describe("Email Confirmation CTA", () => {
 
       expect(wrapper.text()).toContain("Please verify your email address")
 
-      wrapper.find("button").first().prop("onClick")({} as any)
+      wrapper.find("button").first().simulate("click")
       await flushPromiseQueue()
       wrapper.update()
 
@@ -295,7 +293,7 @@ describe("Email Confirmation CTA", () => {
 
       expect(wrapper.text()).toContain("Please verify your email address")
 
-      wrapper.find("button").first().prop("onClick")({} as any)
+      wrapper.find("button").first().simulate("click")
       await flushPromiseQueue()
       wrapper.update()
 

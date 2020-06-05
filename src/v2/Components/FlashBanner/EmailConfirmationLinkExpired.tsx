@@ -10,7 +10,9 @@ import {
 
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("EmailConfirmationLinkExpired")
+const logger = createLogger(
+  "v2/Components/FlashBanner/EmailConfirmationLinkExpired"
+)
 
 export const EmailConfirmationLinkExpired: React.FC = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<string>(
@@ -52,12 +54,10 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
   }
 
   const handleSubmit = () => {
-    logger.warn("click")
     trackEvent({
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.EmailConfirmationLinkExpired,
     })
-    logger.warn("track")
     requestConfirmation()
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
         const emailToConfirm = confirmationOrError?.unconfirmedEmail

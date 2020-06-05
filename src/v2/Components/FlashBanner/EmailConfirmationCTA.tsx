@@ -10,7 +10,7 @@ import {
 
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("EmailConfirmationCTA")
+const logger = createLogger("v2/Components/FlashBanner/EmailConfirmationCTA")
 
 export const EmailConfirmationCTA: React.FC = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<string>(
