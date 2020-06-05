@@ -85,10 +85,7 @@ export const BidForm: React.FC<Props> = ({
   return (
     <Box maxWidth={550}>
       <Formik<FormValues>
-        initialValues={{
-          ...initialValuesForRegistration,
-          selectedBid,
-        }}
+        initialValues={{ ...initialValuesForRegistration, selectedBid }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
@@ -104,126 +101,124 @@ export const BidForm: React.FC<Props> = ({
           setSubmitting,
           status,
           submitCount,
-        }) => {
-          return (
-            <Form>
-              <OnSubmitValidationError
-                cb={trackSubmissionErrors}
-                formikProps={{
-                  errors,
-                  isSubmitting,
-                  isValid,
-                  setSubmitting,
-                  submitCount,
-                }}
-              />
+        }) => (
+          <Form>
+            <OnSubmitValidationError
+              cb={trackSubmissionErrors}
+              formikProps={{
+                errors,
+                isSubmitting,
+                isValid,
+                setSubmitting,
+                submitCount,
+              }}
+            />
 
-              <Flex flexDirection="column">
-                <Flex flexDirection="column" py={4}>
-                  <Serif pb={0.5} size="4t" weight="semibold" color="black100">
-                    Set your max bid
-                  </Serif>
-                  <LargeSelect
-                    selected={values.selectedBid}
-                    onSelect={value => {
-                      onMaxBidSelect && onMaxBidSelect(value)
-                      setFieldValue("selectedBid", value)
-                      setFieldTouched("selectedBid")
-                    }}
-                    options={displayIncrements}
-                  />
-                  {touched.selectedBid && errors.selectedBid && (
-                    <Sans mt={1} color="red100" size="2">
-                      {errors.selectedBid}
-                    </Sans>
-                  )}
-
-                  <PricingTransparency
-                    relayEnvironment={relay.environment}
-                    saleId={saleArtwork.sale.slug}
-                    artworkId={artworkSlug}
-                    bidAmountMinor={parseInt(values.selectedBid)}
-                  />
-                </Flex>
-
-                {requiresPaymentInformation && (
-                  <Box>
-                    <Separator mb={3} />
-                    <CreditCardInstructions />
-
-                    <Serif
-                      mt={4}
-                      mb={2}
-                      size="4t"
-                      weight="semibold"
-                      color="black100"
-                    >
-                      Card Information
-                    </Serif>
-
-                    <CreditCardInput
-                      error={{ message: errors.creditCard } as stripe.Error}
-                      onChange={({ error }) =>
-                        setFieldError("creditCard", error?.message)
-                      }
-                    />
-
-                    <Box mt={2}>
-                      <AddressForm
-                        value={values.address}
-                        onChange={address => setFieldValue("address", address)}
-                        errors={errors.address}
-                        touched={touched.address}
-                        billing
-                        showPhoneNumberInput
-                      />
-                    </Box>
-                  </Box>
+            <Flex flexDirection="column">
+              <Flex flexDirection="column" py={4}>
+                <Serif pb={0.5} size="4t" weight="semibold" color="black100">
+                  Set your max bid
+                </Serif>
+                <LargeSelect
+                  selected={values.selectedBid}
+                  onSelect={value => {
+                    onMaxBidSelect && onMaxBidSelect(value)
+                    setFieldValue("selectedBid", value)
+                    setFieldTouched("selectedBid")
+                  }}
+                  options={displayIncrements}
+                />
+                {touched.selectedBid && errors.selectedBid && (
+                  <Sans mt={1} color="red100" size="2">
+                    {errors.selectedBid}
+                  </Sans>
                 )}
 
-                <Flex mb={3} flexDirection="column" justifyContent="center">
-                  {requiresCheckbox && (
-                    <>
-                      <Separator mb={3} />
-
-                      <Box mx="auto">
-                        <ConditionsOfSaleCheckbox
-                          selected={values.agreeToTerms}
-                          onSelect={value => {
-                            // `setFieldTouched` needs to be called first otherwise it would cause race condition.
-                            setFieldTouched("agreeToTerms")
-                            setFieldValue("agreeToTerms", value)
-                          }}
-                        />
-                      </Box>
-
-                      {touched.agreeToTerms && errors.agreeToTerms && (
-                        <Sans mt={1} color="red100" size="2" textAlign="center">
-                          {errors.agreeToTerms}
-                        </Sans>
-                      )}
-                    </>
-                  )}
-
-                  {status && (
-                    <Sans textAlign="center" size="3" color="red100" mb={2}>
-                      {status}.
-                    </Sans>
-                  )}
-                </Flex>
-
-                <Button
-                  size="large"
-                  width="100%"
-                  loading={isSubmitting}
-                  {...({ type: "submit" } as any)}
-                >
-                  Confirm bid
-                </Button>
+                <PricingTransparency
+                  relayEnvironment={relay.environment}
+                  saleId={saleArtwork.sale.slug}
+                  artworkId={artworkSlug}
+                  bidAmountMinor={parseInt(values.selectedBid)}
+                />
               </Flex>
-            </Form>
-          )
-        }}
+
+              {requiresPaymentInformation && (
+                <Box>
+                  <Separator mb={3} />
+                  <CreditCardInstructions />
+
+                  <Serif
+                    mt={4}
+                    mb={2}
+                    size="4t"
+                    weight="semibold"
+                    color="black100"
+                  >
+                    Card Information
+                  </Serif>
+
+                  <CreditCardInput
+                    error={{ message: errors.creditCard } as stripe.Error}
+                    onChange={({ error }) =>
+                      setFieldError("creditCard", error?.message)
+                    }
+                  />
+
+                  <Box mt={2}>
+                    <AddressForm
+                      value={values.address}
+                      onChange={address => setFieldValue("address", address)}
+                      errors={errors.address}
+                      touched={touched.address}
+                      billing
+                      showPhoneNumberInput
+                    />
+                  </Box>
+                </Box>
+              )}
+
+              <Flex mb={3} flexDirection="column" justifyContent="center">
+                {requiresCheckbox && (
+                  <>
+                    <Separator mb={3} />
+
+                    <Box mx="auto">
+                      <ConditionsOfSaleCheckbox
+                        selected={values.agreeToTerms}
+                        onSelect={value => {
+                          // `setFieldTouched` needs to be called first otherwise it would cause race condition.
+                          setFieldTouched("agreeToTerms")
+                          setFieldValue("agreeToTerms", value)
+                        }}
+                      />
+                    </Box>
+
+                    {touched.agreeToTerms && errors.agreeToTerms && (
+                      <Sans mt={1} color="red100" size="2" textAlign="center">
+                        {errors.agreeToTerms}
+                      </Sans>
+                    )}
+                  </>
+                )}
+
+                {status && (
+                  <Sans textAlign="center" size="3" color="red100" mb={2}>
+                    {status}.
+                  </Sans>
+                )}
+              </Flex>
+
+              <Button
+                size="large"
+                width="100%"
+                loading={isSubmitting}
+                type="submit"
+              >
+                Confirm bid
+              </Button>
+            </Flex>
+          </Form>
+        )}
       </Formik>
     </Box>
   )
