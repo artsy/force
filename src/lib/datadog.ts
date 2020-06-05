@@ -33,6 +33,9 @@ if (process.env.DD_APM_ENABLED) {
     },
   })
   ddTracer.use("http", {
-    service: `force.http-client`,
+    service: "force.http-client",
+  })
+  ddTracer.use("redis", {
+    service: "force.redis",
   })
 }

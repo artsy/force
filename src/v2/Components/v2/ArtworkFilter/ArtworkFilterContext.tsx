@@ -85,7 +85,14 @@ interface Counts {
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
+  /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFilters
+
+  /** Interim filter state, to be manipulated before being applied to the current filter state */
+  stagedFilters?: ArtworkFilters
+
+  /** Getter for the appropriate source of truth to render in the filter UI */
+  currentlySelectedFilters?: () => ArtworkFilters
 
   // Components
   ZeroState?: React.FC
@@ -112,6 +119,12 @@ export interface ArtworkFilterContextProps {
   resetFilters: () => void
   setFilter: (name: keyof ArtworkFilters, value: any) => void
   unsetFilter: (name: keyof ArtworkFilters) => void
+
+  // Staging filter changes
+  shouldStageFilterChanges?: boolean
+  setShouldStageFilterChanges?: (value: boolean) => void
+  setStagedFilters?: (state: ArtworkFilters) => void
+  setFilters?: (state: ArtworkFilters) => void
 }
 
 /**
@@ -174,9 +187,14 @@ export const ArtworkFilterContextProvider: React.FC<
     initialFilterState
   )
 
+  const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
+
   // TODO: Consolidate this into additional reducer
   const [filterAggregations, setAggregations] = useState(aggregations)
   const [artworkCounts, setCounts] = useState(counts)
+  const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
+    false
+  )
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -184,9 +202,24 @@ export const ArtworkFilterContextProvider: React.FC<
     }
   }, [artworkFilterState])
 
+  // If in staged mode, return the staged filters for UI display
+  const currentlySelectedFilters = () => {
+    return shouldStageFilterChanges
+      ? stagedArtworkFilterState
+      : artworkFilterState
+  }
+
+  // If in staged mode, manipulate the staged version of filter state
+  // instead of "real" one
+  const dispatchOrStage = (action: ArtworkFiltersAction) => {
+    shouldStageFilterChanges ? stage(action) : dispatch(action)
+  }
+
   const artworkFilterContext = {
     filters: artworkFilterState,
     hasFilters: hasFilters(artworkFilterState),
+    stagedFilters: stagedArtworkFilterState,
+    currentlySelectedFilters: currentlySelectedFilters,
 
     // Handlers
     onArtworkBrickClick,
@@ -203,42 +236,65 @@ export const ArtworkFilterContextProvider: React.FC<
     ZeroState,
 
     // Filter manipulation
-    isDefaultValue: (field) => {
+    isDefaultValue: field => {
       return isDefaultFilter(field, artworkFilterState[field])
     },
 
-    rangeToTuple: (range) => {
-      return rangeToTuple(artworkFilterState, range)
+    rangeToTuple: range => {
+      return rangeToTuple(currentlySelectedFilters(), range)
     },
 
     setFilter: (name, val) => {
       if (onFilterClick) {
-        onFilterClick(name, val, { ...artworkFilterState, [name]: val })
+        onFilterClick(name, val, { ...currentlySelectedFilters(), [name]: val })
       }
 
-      dispatch({
+      const action: ArtworkFiltersAction = {
         type: "SET",
         payload: {
           name,
           value: val,
         },
-      })
+      }
+      dispatchOrStage(action)
     },
 
-    unsetFilter: (name) => {
-      dispatch({
+    unsetFilter: name => {
+      const action: ArtworkFiltersAction = {
         type: "UNSET",
         payload: {
           name,
         },
-      })
+      }
+      dispatchOrStage(action)
     },
 
     resetFilters: () => {
-      dispatch({
+      const action: ArtworkFiltersAction = {
         type: "RESET",
         payload: null,
-      })
+      }
+      dispatchOrStage(action)
+    },
+
+    // Staging & applying filter changes
+    shouldStageFilterChanges,
+    setShouldStageFilterChanges,
+
+    setStagedFilters: currentState => {
+      const action: ArtworkFiltersAction = {
+        type: "SET_STAGED_FILTERS",
+        payload: currentState,
+      }
+      stage(action)
+    },
+
+    setFilters: newState => {
+      const action: ArtworkFiltersAction = {
+        type: "SET_FILTERS",
+        payload: newState,
+      }
+      dispatch(action)
     },
   }
 
@@ -249,12 +305,14 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 }
 
+interface ArtworkFiltersAction {
+  type: "SET" | "UNSET" | "RESET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
+  payload: { name: keyof ArtworkFilters; value?: any }
+}
+
 const artworkFilterReducer = (
   state: ArtworkFiltersState,
-  action: {
-    type: "SET" | "UNSET" | "RESET"
-    payload: { name: keyof ArtworkFilters; value?: any }
-  }
+  action: ArtworkFiltersAction
 ): ArtworkFiltersState => {
   const arrayFilterTypes: Array<keyof ArtworkFilters> = ["sizes"]
 
@@ -278,7 +336,7 @@ const artworkFilterReducer = (
         filterState[name] = Number(value)
       }
 
-      arrayFilterTypes.forEach((filter) => {
+      arrayFilterTypes.forEach(filter => {
         if (name === filter) {
           filterState[name as string] = value || []
         }
@@ -294,7 +352,7 @@ const artworkFilterReducer = (
         "sort",
         "width",
       ]
-      stringFilterTypes.forEach((filter) => {
+      stringFilterTypes.forEach(filter => {
         if (name === filter) {
           filterState[name as string] = value
         }
@@ -308,7 +366,7 @@ const artworkFilterReducer = (
         "inquireableOnly",
         "offerable",
       ]
-      booleanFilterTypes.forEach((filter) => {
+      booleanFilterTypes.forEach(filter => {
         if (name === filter) {
           filterState[name as string] = Boolean(value)
         }
@@ -348,7 +406,7 @@ const artworkFilterReducer = (
         }
       }
 
-      arrayFilterTypes.forEach((filter) => {
+      arrayFilterTypes.forEach(filter => {
         if (name === filter) {
           filterState[name as string] = []
         }
@@ -363,7 +421,7 @@ const artworkFilterReducer = (
         "offerable",
         "partnerID",
       ]
-      filters.forEach((filter) => {
+      filters.forEach(filter => {
         if (name === filter) {
           filterState[name as string] = null
         }
@@ -385,13 +443,27 @@ const artworkFilterReducer = (
       }
     }
 
+    /**
+     * Initializing a staged filter state from current choices (mobile)
+     */
+    case "SET_STAGED_FILTERS": {
+      return action.payload as ArtworkFiltersState
+    }
+
+    /**
+     * Replacing current filters eventually with staged filter choices (mobile)
+     */
+    case "SET_FILTERS": {
+      return action.payload as ArtworkFiltersState
+    }
+
     default:
       return state
   }
 }
 
 /**
- * Hook to conveniently access fiter state context
+ * Hook to conveniently access filter state context
  */
 export const useArtworkFilterContext = () => {
   const artworkFilterContext = useContext(ArtworkFilterContext)
