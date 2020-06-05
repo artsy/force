@@ -74,7 +74,7 @@ const Item: React.FC<ItemProps> = props => {
   }
 }
 
-type Message = Conversation_conversation["messages"]["edges"][number]["node"]
+type Message = Conversation_conversation["messagesConnection"]["edges"][number]["node"]
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days
@@ -151,7 +151,7 @@ const Conversation: React.FC<ConversationProps> = props => {
             />
           ))}
           {groupMessages(
-            conversation.messages.edges.map(edge => edge.node)
+            conversation.messagesConnection.edges.map(edge => edge.node)
           ).map((messageGroup, groupIndex) => {
             const today = fromToday(messageGroup[0].createdAt)
             return (
@@ -221,8 +221,8 @@ export const ConversationFragmentContainer = createFragmentContainer(
         initialMessage
         lastMessageID
         unread
-        messages(first: $count, after: $after, sort: DESC)
-          @connection(key: "Messages_messages", filters: []) {
+        messagesConnection(first: $count, after: $after, sort: DESC)
+          @connection(key: "Messages_messagesConnection", filters: []) {
           pageInfo {
             startCursor
             endCursor
