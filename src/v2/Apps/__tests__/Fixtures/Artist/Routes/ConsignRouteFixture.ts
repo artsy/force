@@ -9,7 +9,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
         artworks: [
           {
             artwork: {
-              artistNames: "Alex Katz",
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/JB8GqSuSHtsDHDIQ9nyPUw/medium.jpg",
@@ -77,7 +77,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
           },
           {
             artwork: {
-              artistNames: "Alex Katz",
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/NcjBjx9Xz_pTqQp1G0gXWQ/medium.jpg",
@@ -126,7 +126,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
           },
           {
             artwork: {
-              artistNames: "Alex Katz",
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/2PzNL_vTOOx3Py9zfe7upw/medium.jpg",
@@ -196,7 +196,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
           },
           {
             artwork: {
-              artistNames: "Alex Katz",
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/WNHtB_gQLN3HxPW4nNGAjA/medium.jpg",

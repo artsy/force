@@ -139,7 +139,7 @@ const defaultWorks: Works_Test_QueryRawResponse = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/JS5CsvkO_SpL1Vg7R-h_Zw/large.jpg",
             },
-            artistNames: "Roy Lichtenstein",
+            imageTitle: "This Image Has a Title, A. Artist, 2020",
             internalID: "5decd4bb3c7cb100100ad36d",
             title: "Roy Lichtenstein (Authenticated)",
             date: "1975",

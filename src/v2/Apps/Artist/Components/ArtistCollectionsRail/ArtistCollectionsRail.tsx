@@ -16,10 +16,6 @@ interface ArtistCollectionsRailProps {
   collections: ArtistCollectionsRail_collections
 }
 
-/**
- * The H2 tag was added for SEO purposes
- * TODO: Remove when palette provides the ability to override typography element
- */
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
@@ -54,7 +50,10 @@ export class ArtistCollectionsRail extends React.Component<
           <Waypoint onEnter={once(this.trackImpression.bind(this))} />
 
           <Separator my={3} />
-
+          {/**
+           * The H2 tag was added for SEO purposes
+           * TODO: Remove when palette provides the ability to override typography element
+           */}
           <H2>
             <Sans size="4" color="black100" my={1}>
               Iconic Collections

@@ -16,10 +16,6 @@ interface ArtistTopWorksRailProps {
   onOverviewTab?: boolean
 }
 
-/**
- * The H2 tag was added for SEO purposes
- * TODO: Remove when palette provides the ability to override typography element
- */
 export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   artist,
   onOverviewTab,
@@ -38,6 +34,10 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   return artworks.length > 0 ? (
     <Flex mb="75px" flexDirection="column">
       <Flex my={1} justifyContent="space-between">
+        {/**
+         * The H2 tag was added for SEO purposes
+         * TODO: Remove when palette provides the ability to override typography element
+         */}
         <H2>
           <Sans size="4" color="black100">
             Top Works

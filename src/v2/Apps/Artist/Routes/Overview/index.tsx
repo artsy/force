@@ -247,7 +247,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
         </Media>
 
         <Media at="xs">
-          <ArtistTopWorksRail artist={artist} />
+          <ArtistTopWorksRail artist={artist} onOverviewTab />
 
           {showArtistBio && (
             <>

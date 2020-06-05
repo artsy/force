@@ -290,7 +290,7 @@ const defaultArtist: routes_OverviewQueryRawResponse["artist"] = {
     edges: [
       {
         node: {
-          artistNames: "Alex Katz",
+          imageTitle: "This Image Has a Title, A. Artist, 2020",
           id: "QXJ0d29yazo1ZGVjZDRiYjNjN2NiMTAwMTAwYWQzNmQ=",
           slug: "andy-warhol-roy-lichtenstein-authenticated-3",
           href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",

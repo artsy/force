@@ -124,10 +124,6 @@ export class FillwidthItemContainer extends React.Component<
       return null
     }
 
-    const name = artwork?.artistNames ?? ""
-    const title = artwork?.title ?? ""
-    const alt = name === "" ? "" + title : name + ", " + title
-
     return (
       <div className={className}>
         <Placeholder style={{ height: targetHeight }}>
@@ -145,7 +141,7 @@ export class FillwidthItemContainer extends React.Component<
               height={imageHeight}
               lazyLoad={lazyLoad}
               preventRightClick={!isAdmin}
-              alt={alt}
+              alt={artwork?.imageTitle}
             />
           </RouterLink>
 
@@ -198,7 +194,7 @@ export default createFragmentContainer(FillwidthItem, {
         url(version: "large")
         aspect_ratio: aspectRatio
       }
-      artistNames
+      imageTitle
       title
       href
       ...Metadata_artwork
