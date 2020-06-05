@@ -9,6 +9,8 @@ export const artworkClient = () => {
   const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
   const openAuctionBuyerPremium = require("desktop/components/artworkBuyersPremium/index.coffee")
   const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
+  const openMultiPageModal = require("desktop/components/multi_page_modal/index.coffee")
+
   const $ = require("jquery")
   const mediator = require("desktop/lib/mediator.coffee")
   const pageType = window.location.pathname.split("/")[1]
@@ -59,6 +61,14 @@ export const artworkClient = () => {
       { ask_specialist: true },
       { is_in_auction: true }
     )
+  })
+
+  mediator.on("openCollectorFAQModal", () => {
+    openMultiPageModal("collector-faqs")
+  })
+
+  mediator.on("openAuctionFAQModal", () => {
+    openMultiPageModal("auction-faqs")
   })
 
   mediator.on("openViewInRoom", options => {
