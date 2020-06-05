@@ -210,10 +210,7 @@ describe("FeatureAKG", () => {
 
       it("tracks a click event", async () => {
         const defaultWrapper = await getWrapper()
-        defaultWrapper
-          .find("FeaturedContentLink")
-          .at(0)
-          .simulate("click")
+        defaultWrapper.find("FeaturedContentLink").at(0).simulate("click")
         expect(trackEvent).toHaveBeenCalledWith({
           action_type: "Click",
           context_module: "FeaturedThisWeek",
@@ -1042,8 +1039,6 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               is_inquireable: true,
               is_saved: false,
               is_biddable: false,
-              is_acquireable: false,
-              is_offerable: false,
             },
           },
           {
@@ -1084,8 +1079,6 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               is_inquireable: true,
               is_saved: false,
               is_biddable: false,
-              is_acquireable: false,
-              is_offerable: false,
             },
           },
         ],

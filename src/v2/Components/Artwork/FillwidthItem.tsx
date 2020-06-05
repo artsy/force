@@ -38,6 +38,9 @@ export interface FillwidthItemContainerProps
   targetHeight?: number
   width?: number
   lazyLoad?: boolean
+  hidePartnerName?: boolean
+  hideArtistName?: boolean
+  useLighterFont?: boolean
 }
 
 export class FillwidthItemContainer extends React.Component<
@@ -103,6 +106,9 @@ export class FillwidthItemContainer extends React.Component<
       showMetadata,
       targetHeight,
       user,
+      hidePartnerName,
+      hideArtistName,
+      useLighterFont,
     } = this.props
 
     let userSpread = {}
@@ -135,6 +141,7 @@ export class FillwidthItemContainer extends React.Component<
               height={imageHeight}
               lazyLoad={lazyLoad}
               preventRightClick={!isAdmin}
+              alt={artwork?.imageTitle}
             />
           </RouterLink>
 
@@ -149,7 +156,15 @@ export class FillwidthItemContainer extends React.Component<
             style={{ position: "absolute", right: "5px", bottom: "5px" }}
           />
         </Placeholder>
-        {showMetadata && <Metadata artwork={artwork} extended={showExtended} />}
+        {showMetadata && (
+          <Metadata
+            artwork={artwork}
+            extended={showExtended}
+            hidePartnerName={hidePartnerName}
+            hideArtistName={hideArtistName}
+            useLighterFont={useLighterFont}
+          />
+        )}
       </div>
     )
   }
@@ -179,6 +194,8 @@ export default createFragmentContainer(FillwidthItem, {
         url(version: "large")
         aspect_ratio: aspectRatio
       }
+      imageTitle
+      title
       href
       ...Metadata_artwork
       ...Save_artwork

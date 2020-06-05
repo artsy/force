@@ -13,7 +13,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
           "https://d32dm0rphc51dk.cloudfront.net/qu24dwWrXHfw5Z3e6KhXPQ/large.jpg",
       },
       is_biddable: false,
-      is_acquireable: false,
       href: "/artwork/kaws-pinocchio-3",
       title: "Pinocchio",
       image_title: "KAWS, Pinocchio, 2018",
@@ -40,7 +39,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       is_inquireable: true,
       slug: "kaws-pinocchio-3",
       is_saved: false,
-      is_offerable: false,
     },
   },
   {
@@ -55,7 +53,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
           "https://d32dm0rphc51dk.cloudfront.net/oQDgNpsXPr14ZN1Bh_-03A/large.jpg",
       },
       is_biddable: false,
-      is_acquireable: true,
       href: "/artwork/kaws-kaws-x-undercover-5",
       title: "KAWS x Undercover ",
       image_title: "KAWS, KAWS x Undercover, 1999",
@@ -82,7 +79,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       is_inquireable: true,
       slug: "kaws-kaws-x-undercover-5",
       is_saved: false,
-      is_offerable: false,
     },
   },
   {
@@ -97,7 +93,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
           "https://d32dm0rphc51dk.cloudfront.net/uW1NTw1GoTtuViaEFwxX-A/large.jpg",
       },
       is_biddable: false,
-      is_acquireable: true,
       href: "/artwork/kaws-kaws-x-undercover-4",
       title: "KAWS x Undercover ",
       image_title: "KAWS, KAWS x Undercover, 1999",
@@ -124,7 +119,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       is_inquireable: true,
       slug: "kaws-kaws-x-undercover-4",
       is_saved: false,
-      is_offerable: false,
     },
   },
   {
@@ -142,7 +136,6 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
         url:
           "https://d32dm0rphc51dk.cloudfront.net/USLhDw-XGCq7haTeCRPeDg/large.jpg",
       },
-      is_acquireable: true,
       is_biddable: false,
       is_inquireable: true,
       is_saved: false,
@@ -159,7 +152,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       image_title: "PASSING THROUGH BROWN (OPEN EDITION)",
       internalID: "5b9c4afc2779fa4c5c47a748",
       slug: "kaws-passing-through-brown-open-edition",
-      is_offerable: false,
+
       artists: null,
     },
   },

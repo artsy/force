@@ -18,6 +18,8 @@ describe("/artist/:id", () => {
 
   it("renders page content", () => {
     cy.get("h1").should("contain", "Pablo Picasso")
-    cy.get("h2").should("have.text", "Spanish, 1881–1973")
+    cy.get("h2").should("contain", "Spanish, 1881–1973")
+    cy.get("h2").should("contain", "Top Works")
+    cy.get("h2").should("contain", "Iconic Collections")
   })
 })

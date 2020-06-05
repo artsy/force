@@ -11,6 +11,8 @@ export type RecentlyViewed_me = {
                     readonly aspect_ratio: number;
                     readonly url: string | null;
                 } | null;
+                readonly imageTitle: string | null;
+                readonly title: string | null;
                 readonly href: string | null;
                 readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "Save_artwork" | "Badge_artwork">;
             } | null;
@@ -103,6 +105,20 @@ const node: ReaderFragment = {
                       "storageKey": "url(version:\"large\")"
                     }
                   ]
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "imageTitle",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "title",
+                  "args": null,
+                  "storageKey": null
                 },
                 {
                   "kind": "ScalarField",

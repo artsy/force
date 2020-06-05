@@ -67,6 +67,7 @@ const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
     edges: [
       {
         node: {
+          imageTitle: "This Image Has a Title, A. Artist, 2020",
           id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=",
           slug: "andy-warhol-cow-ii-dot-12-31",
           href: "/artwork/andy-warhol-cow-ii-dot-12-31",
@@ -99,12 +100,11 @@ const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
           is_inquireable: true,
           is_saved: false,
           is_biddable: false,
-          is_acquireable: false,
-          is_offerable: false,
         },
       },
       {
         node: {
+          imageTitle: "This Image Has a Title, A. Artist, 2020",
           id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=sss",
           slug: "andy-warhol-cow-ii-dot-12-31",
           href: "/artwork/andy-warhol-cow-ii-dot-12-31",
@@ -137,8 +137,6 @@ const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
           is_inquireable: true,
           is_saved: false,
           is_biddable: false,
-          is_acquireable: false,
-          is_offerable: false,
         },
       },
     ],

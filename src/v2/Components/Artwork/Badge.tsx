@@ -1,4 +1,4 @@
-import { Box, Flex, Link, Sans, space } from "@artsy/palette"
+import { Box, Flex, Sans, space } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -28,7 +28,7 @@ class Badge extends React.Component<BadgeProps> {
 
   render() {
     const { artwork } = this.props
-    const { is_biddable, is_acquireable, is_offerable, href, sale } = artwork
+    const { is_biddable, sale } = artwork
     const includeBidBadge = is_biddable || (sale && sale.is_preview)
     // E.g.(ENDS IN 59M)
     const saleTimingHint =
@@ -41,20 +41,6 @@ class Badge extends React.Component<BadgeProps> {
               <Sans size="0">Bid{saleTimingHint}</Sans>
             </Label>
           )}
-          {is_acquireable && (
-            <Label>
-              <BadgeLink href={href} underlineBehavior="none">
-                <Sans size="0">Buy Now</Sans>
-              </BadgeLink>
-            </Label>
-          )}
-          {is_offerable && (
-            <Label>
-              <BadgeLink href={href} underlineBehavior="none">
-                <Sans size="0">Make Offer</Sans>
-              </BadgeLink>
-            </Label>
-          )}
         </Badges>
       </>
     )
@@ -65,8 +51,6 @@ export default createFragmentContainer(Badge, {
   artwork: graphql`
     fragment Badge_artwork on Artwork {
       is_biddable: isBiddable
-      is_acquireable: isAcquireable
-      is_offerable: isOfferable
       href
       sale {
         is_preview: isPreview
@@ -85,10 +69,6 @@ const Label = styled(Box)`
   text-transform: uppercase;
   margin-left: ${space(0.5)}px;
   margin-top: ${space(0.5)}px;
-`
-
-const BadgeLink = styled(Link)`
-  cursor: pointer;
 `
 
 const Badges = styled(Flex)`
