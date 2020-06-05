@@ -8,9 +8,11 @@ import {
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("v2/Components/FlashBanner/EmailConfirmationCTA")
+const logger = createLogger(
+  "v2/Components/FlashBanner/EmailConfirmationLinkExpired"
+)
 
-export const EmailConfirmationCTA: React.FC = () => {
+export const EmailConfirmationLinkExpired: React.FC = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<string>(
     null
   )
@@ -20,7 +22,7 @@ export const EmailConfirmationCTA: React.FC = () => {
   const handleSubmit = () => {
     trackEvent({
       action_type: Schema.ActionType.Click,
-      subject: Schema.Subject.EmailConfirmationCTA,
+      subject: Schema.Subject.EmailConfirmationLinkExpired,
     })
     requestEmailConfirmation(relayEnvironment)
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
@@ -47,10 +49,10 @@ export const EmailConfirmationCTA: React.FC = () => {
   if (!afterSubmitContent) {
     return (
       <>
-        Please verify your email address{" "}
+        Link expired.{" "}
         <Button variant="primaryWhite" mx={1} inline onClick={handleSubmit}>
           <Sans size="3" py={0.5} px={2} lineHeight={0.2}>
-            Send email
+            Resend verification email
           </Sans>
         </Button>
       </>

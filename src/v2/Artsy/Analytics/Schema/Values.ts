@@ -283,6 +283,7 @@ export enum Subject {
   Signup = "Sign Up",
   SmallScreenMenuSandwichIcon = "Small Screen Menu Sandwich Icon",
   EmailConfirmationCTA = "Email Confirmation CTA",
+  EmailConfirmationLinkExpired = "Email Confirmation Link Expired",
 
   /**
    * CollectionHub

@@ -76,11 +76,11 @@ describe("FlashBanner", () => {
   })
 
   it("renders based on a flash_message query param", () => {
-    window.location = { search: "?flash_message=expired_token" } as any
+    window.location = { search: "?flash_message=blank_token" } as any
 
     const wrapper = mount(<FlashBanner />)
 
-    expect(wrapper.text()).toContain("Link expired. Resend verification email.")
+    expect(wrapper.text()).toContain("An error has occurred.")
   })
 
   it("returns nothing for an unsupported content code", () => {
@@ -115,7 +115,91 @@ describe("FlashBanner", () => {
       />
     )
 
-    expect(wrapper.text()).toContain("Link expired. Resend verification email.")
+    expect(wrapper.text()).toContain("Link expired.")
+  })
+})
+
+describe("Email confirmation link expired", () => {
+  it("user is prompted to re-request email confirmation if they can", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+    })
+
+    expect(wrapper.text()).toContain("Link expired. Resend verification email")
+  })
+
+  it("user seeing banner can click to re-trigger email confirmation message", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+      mutationResults: {
+        sendConfirmationEmail: {
+          confirmationOrError: {
+            unconfirmedEmail: "ceo@blackwater.biz",
+          },
+        },
+      },
+    })
+
+    expect(wrapper.text()).toContain("Link expired.")
+
+    wrapper.find("button").first().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
+
+    expect(wrapper.text()).toContain(
+      "An email has been sent to ceo@blackwater.biz"
+    )
+  })
+
+  it("user click to re-trigger is tracked", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+    })
+
+    expect(wrapper.text()).toContain("Link expired.")
+
+    wrapper.find("button").first().simulate("click")
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action_type: "Click",
+      subject: "Email Confirmation Link Expired",
+    })
+  })
+
+  it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
+    const { wrapper } = await getRelayWrapper({
+      data: {
+        me: { canRequestEmailConfirmation: true },
+      },
+      queryString: "?flash_message=expired_token",
+      mutationResults: {
+        sendConfirmationEmail: {
+          confirmationOrError: {
+            mutationError: {
+              error: "BadError",
+              message: "Something Bad",
+            },
+          },
+        },
+      },
+    })
+
+    expect(wrapper.text()).toContain("Link expired.")
+
+    wrapper.find("button").first().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
+
+    expect(wrapper.text()).toContain("Something went wrong")
   })
 })
 
@@ -161,10 +245,7 @@ describe("Email Confirmation CTA", () => {
 
       expect(wrapper.text()).toContain("Please verify your email address")
 
-      wrapper
-        .find("button")
-        .first()
-        .prop("onClick")({} as any)
+      wrapper.find("button").first().simulate("click")
       await flushPromiseQueue()
       wrapper.update()
 
@@ -187,10 +268,7 @@ describe("Email Confirmation CTA", () => {
 
       expect(wrapper.text()).toContain("Please verify your email address")
 
-      wrapper
-        .find("button")
-        .first()
-        .simulate("click")
+      wrapper.find("button").first().simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
@@ -215,10 +293,7 @@ describe("Email Confirmation CTA", () => {
 
       expect(wrapper.text()).toContain("Please verify your email address")
 
-      wrapper
-        .find("button")
-        .first()
-        .prop("onClick")({} as any)
+      wrapper.find("button").first().simulate("click")
       await flushPromiseQueue()
       wrapper.update()
 
