@@ -10,17 +10,12 @@ import {
   FormikHelpers as FormikActions,
   FormikProps,
 } from "formik"
-import React, { useEffect, useState } from "react"
-import {
-  Elements,
-  ReactStripeElements,
-  StripeProvider,
-  injectStripe,
-} from "react-stripe-elements"
-import { data as sd } from "sharify"
+import React from "react"
+import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import {
   Registration,
+  createStripeWrapper,
   initialValuesForRegistration,
   toStripAddress,
 } from "v2/Apps/Auction/Components/Form"
@@ -250,34 +245,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
   )
 }
 
-const StripeInjectedRegistrationForm = injectStripe(RegistrationForm)
-
-export const StripeWrappedRegistrationForm: React.FC<RegistrationFormProps> = props => {
-  const [stripe, setStripe] = useState(null)
-
-  function setupStripe() {
-    setStripe(window.Stripe(sd.STRIPE_PUBLISHABLE_KEY))
-  }
-
-  useEffect(() => {
-    if (window.Stripe) {
-      setStripe(window.Stripe(sd.STRIPE_PUBLISHABLE_KEY))
-    } else {
-      document.querySelector("#stripe-js").addEventListener("load", setupStripe)
-
-      return () => {
-        document
-          .querySelector("#stripe-js")
-          .removeEventListener("load", setupStripe)
-      }
-    }
-  }, [])
-
-  return (
-    <StripeProvider stripe={stripe}>
-      <Elements>
-        <StripeInjectedRegistrationForm {...props} />
-      </Elements>
-    </StripeProvider>
-  )
-}
+export const StripeWrappedRegistrationForm = createStripeWrapper(
+  RegistrationForm
+)

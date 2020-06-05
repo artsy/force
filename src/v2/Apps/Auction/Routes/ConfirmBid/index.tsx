@@ -21,7 +21,7 @@ import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Title } from "react-head"
 import {
   RelayProp,
@@ -29,15 +29,10 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import {
-  Elements,
-  ReactStripeElements,
-  StripeProvider,
-  injectStripe,
-} from "react-stripe-elements"
-import { data as sd } from "sharify"
+import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import {
+  createStripeWrapper,
   determineDisplayRequirements,
   toStripAddress,
 } from "v2/Apps/Auction/Components/Form"
@@ -295,37 +290,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
   )
 }
 
-const StripeInjectedConfirmBidRoute = injectStripe(ConfirmBidRoute)
-
-export const StripeWrappedConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
-  const [stripe, setStripe] = useState(null)
-
-  function setupStripe() {
-    setStripe(window.Stripe(sd.STRIPE_PUBLISHABLE_KEY))
-  }
-
-  useEffect(() => {
-    if (window.Stripe) {
-      setStripe(window.Stripe(sd.STRIPE_PUBLISHABLE_KEY))
-    } else {
-      document.querySelector("#stripe-js").addEventListener("load", setupStripe)
-
-      return () => {
-        document
-          .querySelector("#stripe-js")
-          .removeEventListener("load", setupStripe)
-      }
-    }
-  }, [])
-
-  return (
-    <StripeProvider stripe={stripe}>
-      <Elements>
-        <StripeInjectedConfirmBidRoute {...props} />
-      </Elements>
-    </StripeProvider>
-  )
-}
+const StripeWrappedConfirmBidRoute = createStripeWrapper(ConfirmBidRoute)
 
 const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(props => ({
   context_page: Schema.PageName.AuctionConfirmBidPage,
