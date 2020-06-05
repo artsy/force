@@ -61,7 +61,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
   const { trackEvent } = useTracking()
   const { requiresPaymentInformation } = determineDisplayRequirements(
     sale.registrationStatus,
-    me as any
+    me
   )
 
   let bidderId = sale.registrationStatus?.internalID

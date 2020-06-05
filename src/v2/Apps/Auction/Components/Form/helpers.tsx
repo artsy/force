@@ -3,8 +3,6 @@ import { Elements, StripeProvider, injectStripe } from "react-stripe-elements"
 import React, { useEffect, useState } from "react"
 import { data as sd } from "sharify"
 
-import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphql"
-import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"
 import { Address } from "v2/Components/AddressForm"
 
 export const toStripAddress = (address: Address): stripe.TokenOptions => {
@@ -42,8 +40,8 @@ export const getSelectedBid = ({
 }
 
 export const determineDisplayRequirements = (
-  bidder: BidForm_saleArtwork["sale"]["registrationStatus"],
-  me: BidForm_me
+  bidder: object,
+  me: { hasQualifiedCreditCards: boolean }
 ) => {
   const isRegistered = !!bidder
 
