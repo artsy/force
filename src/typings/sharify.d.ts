@@ -24,6 +24,7 @@ declare module "sharify" {
       readonly CDN_URL: string
       CURRENT_PATH: string
       CURRENT_USER: User
+      readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_SIGN_IN_WITH_APPLE: string // TODO: Remove once sign in with apple is rolled out.
       readonly ENABLE_PRICE_TRANSPARENCY: string
       readonly FACEBOOK_APP_NAMESPACE: string

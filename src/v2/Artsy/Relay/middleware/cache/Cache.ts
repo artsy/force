@@ -9,6 +9,7 @@ import {
   CacheConfig as RelayCacheConfig,
   Variables as RelayVariables,
 } from "relay-runtime"
+import { getENV } from "v2/Utils/getENV"
 
 const logger = createLogger("v2/Artsy/middleware/cache/Cache")
 
@@ -26,7 +27,9 @@ export class Cache {
   constructor(cacheConfig: CacheConfig) {
     this.cacheConfig = cacheConfig
     this.enableServerSideCache =
-      isServer && !this.cacheConfig.disableServerSideCache
+      getENV("ENABLE_SERVER_SIDE_CACHE") === "true" &&
+      isServer &&
+      !this.cacheConfig.disableServerSideCache
     this.initRelayCache()
   }
 
