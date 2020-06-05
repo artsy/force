@@ -21,44 +21,46 @@ interface FlashBannerProps {
  */
 export const FlashBanner: React.FC<FlashBannerProps> = props => {
   /**
-   * A map indexing keys (which may come from a contentCode prop, query string or
-   * logic internal to the component + its props) to banner content.
+   * Choose which flash message should be shown in the banner, if any
    */
-  const contentMap: Record<string, string> = {
-    confirmed: "Your email has been confirmed.",
-    already_confirmed: "You have already confirmed your email.",
-    invalid_token: "An error has occurred. Please contact support@artsy.net.",
-    blank_token: "An error has occurred. Please contact support@artsy.net.",
+  const selectContent = () => {
+    let contentCode = props.contentCode
+
+    if (!contentCode) {
+      contentCode = qs.parse(window.location.search.slice(1))["flash_message"]
+    }
+
+    if (!contentCode) {
+      contentCode = props.me?.canRequestEmailConfirmation
+        ? "email_confirmation_cta"
+        : null
+    }
+
+    if (!contentCode) {
+      return null
+    }
+
+    /**
+     * A map indexing keys (which may come from a contentCode prop, query string or
+     * logic internal to the component + its props) to banner content.
+     */
+    const contentMap: Record<string, string> = {
+      confirmed: "Your email has been confirmed.",
+      already_confirmed: "You have already confirmed your email.",
+      invalid_token: "An error has occurred. Please contact support@artsy.net.",
+      blank_token: "An error has occurred. Please contact support@artsy.net.",
+    }
+    switch (contentCode) {
+      case "email_confirmation_cta":
+        return <EmailConfirmationCTA />
+      case "expired_token":
+        return <EmailConfirmationLinkExpired />
+      default:
+        return contentMap[contentCode]
+    }
   }
 
-  let contentCode = props.contentCode
-
-  if (!contentCode) {
-    contentCode = qs.parse(window.location.search.slice(1))["flash_message"]
-  }
-
-  if (!contentCode) {
-    contentCode = props.me?.canRequestEmailConfirmation
-      ? "email_confirmation_cta"
-      : null
-  }
-
-  if (!contentCode) {
-    return null
-  }
-
-  let content
-
-  switch (contentCode) {
-    case "email_confirmation_cta":
-      content = <EmailConfirmationCTA />
-      break
-    case "expired_token":
-      content = <EmailConfirmationLinkExpired />
-      break
-    default:
-      content = contentMap[contentCode]
-  }
+  const content = selectContent()
 
   if (!content) {
     return null
