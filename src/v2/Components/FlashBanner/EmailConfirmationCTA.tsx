@@ -1,13 +1,11 @@
 import React from "react"
-import { commitMutation, graphql } from "react-relay"
 import { Button, Sans } from "@artsy/palette"
-import { EmailConfirmationCTAMutationResponse } from "v2/__generated__/EmailConfirmationCTAMutation.graphql"
 import {
   AnalyticsSchema as Schema,
   useSystemContext,
   useTracking,
 } from "v2/Artsy"
-
+import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "v2/Utils/logger"
 
 const logger = createLogger("v2/Components/FlashBanner/EmailConfirmationCTA")
@@ -19,42 +17,12 @@ export const EmailConfirmationCTA: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
   const { trackEvent } = useTracking()
 
-  const requestConfirmation = () => {
-    return new Promise<EmailConfirmationCTAMutationResponse>((done, reject) => {
-      commitMutation(relayEnvironment, {
-        onCompleted: (data, errors) => {
-          errors && errors.length ? reject(errors) : done(data)
-        },
-        onError: error => {
-          reject(error)
-        },
-        mutation: graphql`
-          mutation EmailConfirmationCTAMutation {
-            sendConfirmationEmail(input: {}) {
-              confirmationOrError {
-                ... on SendConfirmationEmailMutationSuccess {
-                  unconfirmedEmail
-                }
-                ... on SendConfirmationEmailMutationFailure {
-                  mutationError {
-                    error
-                    message
-                  }
-                }
-              }
-            }
-          }
-        `,
-      })
-    })
-  }
-
   const handleSubmit = () => {
     trackEvent({
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.EmailConfirmationCTA,
     })
-    requestConfirmation()
+    requestEmailConfirmation(relayEnvironment)
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
         const emailToConfirm = confirmationOrError?.unconfirmedEmail
 

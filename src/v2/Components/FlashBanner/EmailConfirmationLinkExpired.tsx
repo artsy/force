@@ -1,13 +1,11 @@
 import React from "react"
-import { commitMutation, graphql } from "react-relay"
 import { Button, Sans } from "@artsy/palette"
-import { EmailConfirmationLinkExpiredMutationResponse } from "v2/__generated__/EmailConfirmationLinkExpiredMutation.graphql"
 import {
   AnalyticsSchema as Schema,
   useSystemContext,
   useTracking,
 } from "v2/Artsy"
-
+import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "v2/Utils/logger"
 
 const logger = createLogger(
@@ -21,44 +19,12 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
   const { trackEvent } = useTracking()
 
-  const requestConfirmation = () => {
-    return new Promise<EmailConfirmationLinkExpiredMutationResponse>(
-      (done, reject) => {
-        commitMutation(relayEnvironment, {
-          onCompleted: (data, errors) => {
-            errors && errors.length ? reject(errors) : done(data)
-          },
-          onError: error => {
-            reject(error)
-          },
-          mutation: graphql`
-            mutation EmailConfirmationLinkExpiredMutation {
-              sendConfirmationEmail(input: {}) {
-                confirmationOrError {
-                  ... on SendConfirmationEmailMutationSuccess {
-                    unconfirmedEmail
-                  }
-                  ... on SendConfirmationEmailMutationFailure {
-                    mutationError {
-                      error
-                      message
-                    }
-                  }
-                }
-              }
-            }
-          `,
-        })
-      }
-    )
-  }
-
   const handleSubmit = () => {
     trackEvent({
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.EmailConfirmationLinkExpired,
     })
-    requestConfirmation()
+    requestEmailConfirmation(relayEnvironment)
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
         const emailToConfirm = confirmationOrError?.unconfirmedEmail
 

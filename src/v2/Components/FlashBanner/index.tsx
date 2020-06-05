@@ -23,7 +23,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
   /**
    * Choose which flash message should be shown in the banner, if any
    */
-  const selectContent = () => {
+  const selectContent = (): string | JSX.Element | null | undefined => {
     let contentCode = props.contentCode
 
     if (!contentCode) {
