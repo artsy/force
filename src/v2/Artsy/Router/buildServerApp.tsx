@@ -139,9 +139,11 @@ export function buildServerApp(
           )
         }
 
+        const assetPublicPath = (getENV("CDN_URL") || "") + "/assets"
         const extractor = new ChunkExtractor({
           statsFile,
           entrypoints: [],
+          publicPath: assetPublicPath,
         })
 
         // Wrap component tree in library contexts to extract usage
@@ -169,7 +171,7 @@ export function buildServerApp(
               if (getENV("CDN_URL")) {
                 const scriptTagWithCDN = script.replace(
                   /src="\/assets/g,
-                  `src="${getENV("CDN_URL")}/assets`
+                  `src="${assetPublicPath}`
                 )
                 return scriptTagWithCDN
               } else {
