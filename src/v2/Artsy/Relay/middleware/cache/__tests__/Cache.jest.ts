@@ -31,14 +31,24 @@ describe("Cache", () => {
   })
 
   describe("enableServerSideCaching", () => {
-    it("disables if disableServerSideCache=false", () => {
+    it("disables if disableServerSideCache=true", () => {
+      process.env.ENABLE_SERVER_SIDE_CACHE = "true"
       const cache = getCache({ disableServerSideCache: true })
       expect(cache.enableServerSideCache).toBe(false)
     })
 
-    it("enables if disableServerSideCache=true", () => {
+    it("enables if disableServerSideCache=false", () => {
+      process.env.ENABLE_SERVER_SIDE_CACHE = "true"
       const cache = getCache({ disableServerSideCache: false })
       expect(cache.enableServerSideCache).toBe(true)
+    })
+
+    describe("env var overides via ENABLE_SERVER_SIDE_CACHE", () => {
+      it("enables if disableServerSideCache=false", () => {
+        process.env.ENABLE_SERVER_SIDE_CACHE = "false"
+        const cache = getCache({ disableServerSideCache: false })
+        expect(cache.enableServerSideCache).toBe(false)
+      })
     })
   })
 
