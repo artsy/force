@@ -5,7 +5,7 @@ const ArtworkApp = loadable(() => import("./ArtworkApp"))
 
 export const routes = [
   {
-    path: "/artwork/:artworkID/(confirm-bid)?",
+    path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
     getComponent: () => ArtworkApp,
     prepare: () => {
       ArtworkApp.preload()
