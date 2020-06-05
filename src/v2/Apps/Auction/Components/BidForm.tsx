@@ -13,7 +13,7 @@ import {
   FormikHelpers as FormikActions,
   FormikValues,
 } from "formik"
-import { dropWhile, find } from "lodash"
+import { dropWhile } from "lodash"
 import React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -26,7 +26,12 @@ import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { OnSubmitValidationError, TrackErrors } from "./RegistrationForm"
-import { initialValuesForRegistration, Bidding as BiddingValidationSchemas } from "v2/Apps/Auction/Components/Form"
+import {
+  Bidding as BiddingValidationSchemas,
+  determineDisplayRequirements,
+  getSelectedBid,
+  initialValuesForRegistration,
+} from "v2/Apps/Auction/Components/Form"
 
 const {
   validationSchemaForRegisteredUsers,
@@ -50,39 +55,6 @@ export interface FormValues {
   agreeToTerms: boolean
   creditCard?: string
   selectedBid: string
-}
-
-const getSelectedBid = ({
-  initialSelectedBid,
-  displayIncrements,
-}: {
-  initialSelectedBid: Props["initialSelectedBid"]
-  displayIncrements: Array<{ value: string; text: string }>
-}): string => {
-  let selectedIncrement: { value: string }
-  if (!initialSelectedBid) {
-    selectedIncrement = displayIncrements[0]
-  } else {
-    const selectedNum = Number(initialSelectedBid)
-    const lastGoodIncrement = find(
-      displayIncrements,
-      i => Number(i.value) === selectedNum
-    )
-    selectedIncrement = lastGoodIncrement || displayIncrements[0]
-  }
-  return selectedIncrement.value
-}
-
-export const determineDisplayRequirements = (
-  bidder: BidForm_saleArtwork["sale"]["registrationStatus"],
-  me: BidForm_me
-) => {
-  const isRegistered = !!bidder
-
-  return {
-    requiresCheckbox: !isRegistered,
-    requiresPaymentInformation: !(isRegistered || me.hasQualifiedCreditCards),
-  }
 }
 
 export const BidForm: React.FC<Props> = ({

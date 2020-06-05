@@ -11,7 +11,6 @@ import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmB
 import {
   BidFormFragmentContainer as BidForm,
   FormValues,
-  determineDisplayRequirements,
 } from "v2/Apps/Auction/Components/BidForm"
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
@@ -38,7 +37,10 @@ import {
 } from "react-stripe-elements"
 import { data as sd } from "sharify"
 import createLogger from "v2/Utils/logger"
-import { toStripAddress } from "v2/Apps/Auction/Components/Form"
+import {
+  determineDisplayRequirements,
+  toStripAddress,
+} from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
@@ -63,7 +65,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
   const { environment } = relay
   const { trackEvent } = useTracking()
   const { requiresPaymentInformation } = determineDisplayRequirements(
-    (sale as any).registrationStatus,
+    sale.registrationStatus,
     me as any
   )
 
