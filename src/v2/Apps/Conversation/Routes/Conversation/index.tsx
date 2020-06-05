@@ -72,8 +72,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           {/* @ts-ignore */}
           <Conversation conversation={me.conversation} />
           <Details
-            // @ts-ignore
-            conversation={me.conversation as any /** FIXME: Correct type */}
+            conversation={me.conversation}
             display={["none", null, null, null, "flex"]}
             width={["100%", "376px"]}
           />
@@ -99,6 +98,7 @@ export const ConversationFragmentContainer = createFragmentContainer(
             name
           }
           ...Conversation_conversation
+          ...Details_conversation
         }
       }
     `,
