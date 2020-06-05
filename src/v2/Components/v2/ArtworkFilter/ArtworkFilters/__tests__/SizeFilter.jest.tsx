@@ -5,7 +5,7 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { SizeFilter } from "./SizeFilter"
+import { SizeFilter } from "../SizeFilter"
 
 describe("SizeFilter", () => {
   let context: ArtworkFilterContextProps
@@ -20,7 +20,7 @@ describe("SizeFilter", () => {
 
   const SizeFilterTest = () => {
     context = useArtworkFilterContext()
-    return <SizeFilter useFilterContext={useArtworkFilterContext} />
+    return <SizeFilter />
   }
 
   it("updates context on filter change", async () => {

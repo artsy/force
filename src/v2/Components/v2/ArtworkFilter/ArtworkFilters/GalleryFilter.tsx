@@ -11,7 +11,7 @@ export const GalleryFilter: FC = () => {
     return null
   }
 
-  const selectedGallery = filterContext.filters.partnerID
+  const selectedGallery = filterContext.currentlySelectedFilters().partnerID
 
   return (
     <Toggle label="Gallery">

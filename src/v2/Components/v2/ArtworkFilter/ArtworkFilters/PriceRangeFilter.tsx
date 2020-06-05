@@ -4,7 +4,7 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 
 export const PriceRangeFilter: React.FC = () => {
   const filterContext = useArtworkFilterContext()
-  const initialRange = filterContext.filters.priceRange
+  const initialRange = filterContext.currentlySelectedFilters().priceRange
 
   return (
     <Toggle label="Price" expanded>
@@ -15,7 +15,7 @@ export const PriceRangeFilter: React.FC = () => {
           onSelect={selectedOption => {
             filterContext.setFilter("priceRange", selectedOption)
           }}
-          disabled={filterContext.filters.atAuction ?? false}
+          disabled={filterContext.currentlySelectedFilters().atAuction ?? false}
           disabledText="Disabled for biddable works"
         >
           {priceRanges.map((range, index) => (

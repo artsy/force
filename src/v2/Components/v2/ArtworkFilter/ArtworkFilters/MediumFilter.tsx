@@ -11,7 +11,7 @@ export const MediumFilter: FC = () => {
   const allowedMediums =
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 
-  const selectedMedium = filterContext.filters.medium
+  const selectedMedium = filterContext.currentlySelectedFilters().medium
   const isExpanded = !counts.artworks || counts.artworks > 0
 
   return (
