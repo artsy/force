@@ -5,13 +5,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
 import { Media } from "v2/Utils/Responsive"
 
-export const DETAIL_BOX_ANIMATION = `transition: width 0.2s ease-in-out;`
-const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s ease-in-out;`
+export const DETAIL_BOX_ANIMATION = `transition: width 0.3s ;`
+const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s;`
 
 const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1 }>`
   border-left: 1px solid ${color("black10")};
   flex-shrink: 0;
   ${DETAIL_BOX_ANIMATION}
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${color("white100")};
 `
 // XS screen has opacity animation instead of width
