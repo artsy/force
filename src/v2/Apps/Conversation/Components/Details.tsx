@@ -65,6 +65,7 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
           top="114px" /* FIXME: why this is needed? */
           width="376px"
           opacity={props.showDetails ? 1 : 0}
+          zIndex={props.showDetails ? 1 : -1}
           {...props}
         >
           {content}
