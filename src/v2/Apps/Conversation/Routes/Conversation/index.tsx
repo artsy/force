@@ -73,11 +73,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
             />
           </Media>
           <Conversation conversation={me.conversation} />
-          <Details
-            conversation={me.conversation}
-            display="flex"
-            showDetails={showDetails}
-          />
+          <Details conversation={me.conversation} showDetails={showDetails} />
         </ConstrainedHeightFlex>
       </AppContainer>
     )
